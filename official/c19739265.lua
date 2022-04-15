@@ -16,15 +16,15 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.filter(c)
-	return c:IsFacedown() or (c:IsFaceup() and c:IsCanTurnSet())
+function s.filter(c,e)
+	return c:IsFacedown() or (c:IsFaceup() and c:IsCanTurnSet()) and c:IsCanBeEffectTarget(e)
 end
 function s.rescon(sg,e,tp,mg)
     return sg:FilterCount(Card.IsControler,nil,tp)==1
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	local rg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local rg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,e)
 	if chk==0 then return aux.SelectUnselectGroup(rg,e,tp,2,2,s.rescon,0) end
 	local tg=aux.SelectUnselectGroup(rg,e,tp,2,2,s.rescon,1,tp,HINTMSG_TARGET)
 	Duel.SetTargetCard(tg)

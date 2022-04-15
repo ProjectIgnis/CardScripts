@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	if not GhostBelleTable then GhostBelleTable={} end
 	table.insert(GhostBelleTable,e1)
-	--special summon
+	--Special Summon "Vernalizer Fairy" monsters from your GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
@@ -32,7 +32,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x27e}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x27e)and c:IsMonster() and (c:IsAbleToHand() or (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
+	return c:IsSetCard(0x27e) and c:IsMonster() and (c:IsAbleToHand() or (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end
@@ -70,32 +70,41 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ct=1 end
 	local sg=aux.SelectUnselectGroup(g,e,tp,ct,ct,aux.dncheck,1,tp,HINTMSG_SPSUMMON)
 	if #sg==0 then return end
-	for tc in aux.Next(sg) do
-		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
-		local fid=tc:GetFieldID()
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
-		--Return it to the hand during the End Phase
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetDescription(aux.Stringid(id,3))
-		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_PHASE+PHASE_END)
-		e1:SetCountLimit(1)
-		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-		e1:SetLabel(fid)
-		e1:SetLabelObject(tc)
-		e1:SetCondition(s.thcon)
-		e1:SetOperation(s.thop)
-		Duel.RegisterEffect(e1,tp)
+	local c=e:GetHandler()
+	local fid=c:GetFieldID()
+	for tc in sg:Iter() do
+		if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
+			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
+		end
 	end
-	Duel.SpecialSummonComplete()
+	if Duel.SpecialSummonComplete()==0 then return end
+	sg:KeepAlive()
+	--Return them to the hand during the End Phase
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,3))
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e1:SetCode(EVENT_PHASE+PHASE_END)
+	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+	e1:SetCountLimit(1)
+	e1:SetLabel(fid)
+	e1:SetLabelObject(sg)
+	e1:SetCondition(s.thcon)
+	e1:SetOperation(s.thop)
+	Duel.RegisterEffect(e1,tp)
+end
+function s.thcfilter(c,fid)
+	return c:GetFlagEffectLabel(id)==fid
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetLabelObject()
-	if tc:GetFlagEffectLabel(id)~=e:GetLabel() then
+	local g=e:GetLabelObject()
+	if not g:IsExists(s.thcfilter,1,nil,e:GetLabel()) then
+		g:DeleteGroup()
 		e:Reset()
 		return false
 	else return true end
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SendtoHand(e:GetLabelObject(),nil,REASON_EFFECT)
+	local g=e:GetLabelObject()
+	local tg=g:Filter(s.thcfilter,nil,e:GetLabel())
+	Duel.SendtoHand(tg,nil,REASON_EFFECT)
 end

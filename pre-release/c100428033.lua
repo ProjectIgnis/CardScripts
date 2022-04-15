@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	-- Special Summon self from hand or GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_HAND+LOCATION_GRAVE)
@@ -43,11 +43,6 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and s.spthfilter(tc,tp) and Duel.SendtoHand(tc,nil,REASON_EFFECT)>0
-		and tc:IsLocation(LOCATION_HAND) and c:IsRelateToEffect(e) then
-		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
-	end
 	-- Cannot Special Summon from the Extra Deck, except "Amazoness" monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,2))
@@ -60,6 +55,11 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 	-- Clock Lizard check
 	aux.addTempLizardCheck(c,tp,function(e,c) return not c:IsOriginalSetCard(0x4) end)
+	local tc=Duel.GetFirstTarget()
+	if tc:IsRelateToEffect(e) and s.spthfilter(tc,tp) and Duel.SendtoHand(tc,nil,REASON_EFFECT)>0
+		and tc:IsLocation(LOCATION_HAND) and c:IsRelateToEffect(e) then
+		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
+	end
 end
 function s.thfilter(c)
 	return c:IsCode(CARD_POLYMERIZATION) and c:IsAbleToHand()

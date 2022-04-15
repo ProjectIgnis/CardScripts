@@ -1,4 +1,5 @@
---Royal Demon’s Break 
+--ロイヤルデモンズ・ブレイク
+--Royal Rebel's Break
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon
@@ -16,8 +17,8 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
     return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsLevelAbove,8),tp,0,LOCATION_MZONE,1,nil)
 end
-function s.filter(c,e,sp)
-	return c:IsLevelAbove(5) and c:IsRace(RACE_FIEND) and c:IsType(TYPE_NORMAL) and c:IsCanBeSpecialSummoned(e,0,sp,false,false,POS_FACEUP_ATTACK)
+function s.filter(c,e,tp)
+	return c:IsLevelAbove(5) and c:IsRace(RACE_FIEND) and c:IsType(TYPE_NORMAL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

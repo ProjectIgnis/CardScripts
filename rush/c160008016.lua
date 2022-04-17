@@ -1,6 +1,5 @@
--- Ｃ背番号３９ 球児皇ホームプレート
+--Ｃ背番号３９ 球児皇ホームプレート
 --Captain Uniform No. 39: Junior Baseball King, Home Plate
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Make itself gain 1500 ATK until end of this turn
@@ -36,7 +35,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(1500)
 		c:RegisterEffect(e1)
 		local dg=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
-		if #dg>0 and Duel.GetLP(tp)<=1000 and Duel.SelectYesNo(tp,aux.Stringid(id,0))  then
+		if #dg>0 and Duel.GetLP(tp)<=1000 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 			local tc=dg:Select(tp,1,1,nil):GetFirst()
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)

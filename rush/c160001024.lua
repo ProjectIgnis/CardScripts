@@ -1,6 +1,5 @@
 --ドラゴンズ・セットアッパ
 --Dragon’s Setupper
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 "Dragon's Upsetter" from GY
@@ -16,7 +15,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={160001025}
-
 function s.condition(e,tp)
 	return not Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_ONFIELD,0,1,e:GetHandler(),TYPE_MONSTER)
 end

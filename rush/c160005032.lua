@@ -1,6 +1,5 @@
 -- 花牙シノビ・ガトリング
 --Flower Fang Shinobi Gatring
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Destroy 2 of opponent's monsters
@@ -15,7 +14,6 @@ function s.initial_effect(c)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
 end
-
 function s.costfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsType(TYPE_NORMAL) and c:IsRace(RACE_PLANT) and c:IsAbleToGraveAsCost()
 end
@@ -27,7 +25,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return #g>0 end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,LOCATION_MZONE)
 end
-function s.filter(c,tp)
+function s.filter(c)
 	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsLevelBelow(8) and not c:IsMaximumModeSide()
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)

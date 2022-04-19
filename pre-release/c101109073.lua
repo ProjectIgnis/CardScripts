@@ -27,11 +27,11 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={CARD_VISAS_STAFROST}
+s.listed_names={CARD_VISAS_STARFROST}
 s.listed_series={0x282}
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE)) and Duel.IsChainNegatable(ev)
-		and (Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_VISAS_STAFROST),tp,LOCATION_ONFIELD,0,1,nil)
+		and (Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_VISAS_STARFROST),tp,LOCATION_ONFIELD,0,1,nil)
 		or Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x282),tp,LOCATION_MZONE,0,1,nil))
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)

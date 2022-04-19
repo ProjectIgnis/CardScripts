@@ -24,9 +24,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x17c}
-s.listed_names={CARD_VISAS_STAFROST}
+s.listed_names={CARD_VISAS_STARFROST}
 function s.spfilter(c,e,tp)
-	return (c:IsSetCard(0x17c) or c:IsCode(CARD_VISAS_STAFROST)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return (c:IsSetCard(0x17c) or c:IsCode(CARD_VISAS_STARFROST)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end

@@ -34,10 +34,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={CARD_VISAS_STAFROST}
+s.listed_names={CARD_VISAS_STARFROST}
 s.listed_series={0x282}
 function s.thfilter(c)
-	return c:IsAbleToHand() and ((c:IsSetCard(0x282) and c:IsMonster()) or c:IsCode(CARD_VISAS_STAFROST))
+	return c:IsAbleToHand() and ((c:IsSetCard(0x282) and c:IsMonster()) or c:IsCode(CARD_VISAS_STARFROST))
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

@@ -28,14 +28,14 @@ function s.initial_effect(c)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={CARD_VISAS_STAFROST}
+s.listed_names={CARD_VISAS_STARFROST}
 s.listed_series={0x17c}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.atkfilter(c,e,tp)
 	return c:IsFaceup() and c:IsCanBeEffectTarget(e) 
-		and (c:IsSetCard(0x17c) or c:IsCode(CARD_VISAS_STAFROST) or c:IsControler(1-tp))
+		and (c:IsSetCard(0x17c) or c:IsCode(CARD_VISAS_STARFROST) or c:IsControler(1-tp))
 end
 function s.atkrescon(sg,e,tp,mg)
     return sg:GetClassCount(Card.GetControler)==2
@@ -67,7 +67,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.disconfilter(c,tp)
 	return c:IsFaceup() and c:IsOnField() and c:IsControler(tp)
-		and ((c:IsSetCard(0x17c) and c:IsMonster()) or c:IsCode(CARD_VISAS_STAFROST))
+		and ((c:IsSetCard(0x17c) and c:IsMonster()) or c:IsCode(CARD_VISAS_STARFROST))
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end

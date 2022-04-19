@@ -28,10 +28,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={CARD_VISAS_STAFROST,56063182}
+s.listed_names={CARD_VISAS_STARFROST,56063182}
 s.listed_series={0x17c}
 function s.matfilter(c,sc,st,tp)
-	return c:IsInMainMZone(tp) and (c:IsSetCard(0x17c,sc,st,tp) or c:IsSummonCode(sc,st,tp,CARD_VISAS_STAFROST))
+	return c:IsInMainMZone(tp) and (c:IsSetCard(0x17c,sc,st,tp) or c:IsSummonCode(sc,st,tp,CARD_VISAS_STARFROST))
 end
 function s.thcon(e)
 	local c=e:GetHandler()
@@ -53,7 +53,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_VISAS_STAFROST),tp,LOCATION_ONFIELD,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_VISAS_STARFROST),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

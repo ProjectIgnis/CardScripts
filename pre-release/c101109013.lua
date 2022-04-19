@@ -28,6 +28,8 @@ function s.initial_effect(c)
 	e2:SetTarget(Fusion.SummonEffTG(table.unpack(fusparams)))
 	e2:SetOperation(Fusion.SummonEffOP(table.unpack(fusparams)))
 	c:RegisterEffect(e2)
+	if not GhostBelleTable then GhostBelleTable={} end
+	table.insert(GhostBelleTable,e2)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and re:IsActiveType(TYPE_MONSTER) and re:GetActivateLocation()==LOCATION_MZONE

@@ -30,6 +30,8 @@ function s.initial_effect(c)
 	e3:SetTarget(Fusion.SummonEffTG(table.unpack(fusparams)))
 	e3:SetOperation(Fusion.SummonEffOP(table.unpack(fusparams)))
 	c:RegisterEffect(e3)
+	if not GhostBelleTable then GhostBelleTable={} end
+	table.insert(GhostBelleTable,e3)
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,3) end

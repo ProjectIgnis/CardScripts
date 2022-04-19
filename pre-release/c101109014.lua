@@ -26,6 +26,8 @@ function s.initial_effect(c)
 	e2:SetTarget(Fusion.SummonEffTG(table.unpack(fusparams)))
 	e2:SetOperation(Fusion.SummonEffOP(table.unpack(fusparams)))
 	c:RegisterEffect(e2)
+	if not GhostBelleTable then GhostBelleTable={} end
+	table.insert(GhostBelleTable,e2)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

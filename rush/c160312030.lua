@@ -30,7 +30,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,3,3,nil)
 	if #g==0 then return end
 	Duel.HintSelection(g,true)
-	if Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)>0 then
+	if Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)==0 then return end
 	--Effect
 	local g=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(Card.IsAttackPos),tp,0,LOCATION_MZONE,nil)
 	if #g>0 then

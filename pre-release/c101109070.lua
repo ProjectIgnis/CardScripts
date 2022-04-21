@@ -48,6 +48,10 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local albaz=aux.IsMaterialListCode(rc,CARD_ALBAZ)
 	Duel.Release(rc,REASON_COST)
 	local tg=nil
+	local ft1=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ft2=Duel.GetLocationCount(1-tp,LOCATION_MZONE)
+	b1=b1 and ft1>0 and ft2>0
+	b2=b2 and ft1>=2
 	if b1 and not b2 then
 		tg=aux.SelectUnselectGroup(g1+g2,e,tp,2,2,function(sg) return #(sg&g1)>0 and #(sg&g2)>0 end,1,tp,HINTMSG_SPSUMMON)
 	elseif not b1 and b2 then

@@ -1,7 +1,8 @@
+--摩頂の武士
 --Spirit Summit Warrior
 local s,id=GetID()
 function s.initial_effect(c)
-	--summon success
+	--Summon 1 Level 3 or lower Warrior-type monster 
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(15871676,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,e,tp)
-	return c:IsRace(RACE_WARRIOR) and c:GetLevel()==3 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsRace(RACE_WARRIOR) and c:IsLevelBelow(3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

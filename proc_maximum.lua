@@ -44,41 +44,41 @@ function Maximum.AddProcedure(c,desc,...)
 	e2:SetCondition(Maximum.centerCon)
 	c:RegisterEffect(e2)
 	--tribute handler
-    local e3=Effect.CreateEffect(c)
-    e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-    e3:SetRange(0xff)
-    e3:SetCode(EVENT_RELEASE)
-    e3:SetProperty(EFFECT_FLAG_DELAY)
-    e3:SetCountLimit(1)
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e3:SetRange(0xff)
+	e3:SetCode(EVENT_RELEASE)
+	e3:SetProperty(EFFECT_FLAG_DELAY)
+	e3:SetCountLimit(1)
 	e3:SetCondition(Maximum.tribcon)
-    e3:SetOperation(Maximum.tribop)
-    c:RegisterEffect(e3)
+	e3:SetOperation(Maximum.tribop)
+	c:RegisterEffect(e3)
 	--leave
 	local e4=Effect.CreateEffect(c)
-    e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-    e4:SetRange(0xff)
-    e4:SetCode(EVENT_BATTLE_DESTROYED)
-    e4:SetProperty(EFFECT_FLAG_DELAY)
-    e4:SetCountLimit(1)
+	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e4:SetRange(0xff)
+	e4:SetCode(EVENT_BATTLE_DESTROYED)
+	e4:SetProperty(EFFECT_FLAG_DELAY)
+	e4:SetCountLimit(1)
 	e4:SetCondition(Maximum.battlecon)
-    e4:SetOperation(Maximum.battleop)
-    c:RegisterEffect(e4)
+	e4:SetOperation(Maximum.battleop)
+	c:RegisterEffect(e4)
 end
 --that function check if you can maximum summon the monster and its other part(s)
 function Maximum.Condition(mats)
-    local ct=#mats
-    return  function(e,c,og)
-        if c==nil then return true end
-        local tp=c:GetControler()
-        if not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_MAXIMUM,tp,false,false,POS_FACEUP_ATTACK) then return false end
-        local g=nil
-        if og then
-            g=og:Filter(Card.IsLocation,nil,LOCATION_HAND)
-        else
-            g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
-        end
-        return Duel.GetMZoneCount(tp,Duel.GetFieldGroup(tp,LOCATION_MZONE,0))>=3 and aux.SelectUnselectGroup(g,e,tp,ct,ct,Maximum.spcheck(mats),0)
-    end
+	local ct=#mats
+	return  function(e,c,og)
+		if c==nil then return true end
+		local tp=c:GetControler()
+		if not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_MAXIMUM,tp,false,false,POS_FACEUP_ATTACK) then return false end
+		local g=nil
+		if og then
+			g=og:Filter(Card.IsLocation,nil,LOCATION_HAND)
+		else
+			g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
+		end
+		return Duel.GetMZoneCount(tp,Duel.GetFieldGroup(tp,LOCATION_MZONE,0))>=3 and aux.SelectUnselectGroup(g,e,tp,ct,ct,Maximum.spcheck(mats),0)
+	end
 end
 function Maximum.spcheck(filters)
 	return function(sg,e,tp,mg)
@@ -348,20 +348,20 @@ function Card.RegisterEffectRush(c,eff)
 end
 -- summon only in attack
 local function initial_effect()
-    local e1=Effect.GlobalEffect()
-    e1:SetType(EFFECT_TYPE_FIELD)
-    e1:SetCode(EFFECT_FORCE_SPSUMMON_POSITION)
-    e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-    e1:SetTargetRange(1,1)
-    e1:SetTarget(aux.TargetBoolFunction(Card.IsSummonType,SUMMON_TYPE_MAXIMUM))
-    e1:SetValue(POS_FACEUP_ATTACK)
-    Duel.RegisterEffect(e1,0)
-    local e2=Effect.GlobalEffect()
-    e2:SetType(EFFECT_TYPE_FIELD)
-    e2:SetCode(EFFECT_FORCE_MZONE)
-    e2:SetTargetRange(0xff,0xff)
-    e2:SetTarget(aux.TargetBoolFunction(Card.IsSummonType,SUMMON_TYPE_MAXIMUM))
-    e2:SetValue(function(e,c)
+	local e1=Effect.GlobalEffect()
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_FORCE_SPSUMMON_POSITION)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetTargetRange(1,1)
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSummonType,SUMMON_TYPE_MAXIMUM))
+	e1:SetValue(POS_FACEUP_ATTACK)
+	Duel.RegisterEffect(e1,0)
+	local e2=Effect.GlobalEffect()
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetCode(EFFECT_FORCE_MZONE)
+	e2:SetTargetRange(0xff,0xff)
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSummonType,SUMMON_TYPE_MAXIMUM))
+	e2:SetValue(function(e,c)
 					if c:IsMaximumModeCenter() then
 						return 0x4
 					elseif c:IsMaximumModeLeft() then
@@ -369,7 +369,7 @@ local function initial_effect()
 					else return 0x8
 					end
 				end)
-    Duel.RegisterEffect(e2,0)
+	Duel.RegisterEffect(e2,0)
 end
 initial_effect()
 
@@ -377,10 +377,10 @@ initial_effect()
 
 -- handling for tribute summon
 function Maximum.cfilter(c,tp)
-    return c:IsReason(REASON_SUMMON) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp) and c:WasMaximumMode()
+	return c:IsReason(REASON_SUMMON) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp) and c:WasMaximumMode()
 end
 function Maximum.tribcon(e,tp,eg,ep,ev,re,r,rp)
-    return eg:IsExists(Maximum.cfilter,1,nil,tp)
+	return eg:IsExists(Maximum.cfilter,1,nil,tp)
 end
 function Maximum.tribop(e,tp,eg,ep,ev,re,r,rp)
 	local c=eg:GetFirst()
@@ -402,19 +402,34 @@ function Maximum.battleop(e,tp,eg,ep,ev,re,r,rp)
 		tc:SetReason(eg:GetFirst():GetReason())
 	end
 end
-if not traprush then
-		traprush=Effect.GlobalEffect()
-		traprush:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		traprush:SetCode(EVENT_CHAINING)
-		traprush:SetCondition(function() return Duel.IsDuelType(DUEL_INVERTED_QUICK_PRIORITY) end)
-		traprush:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
+if Duel.IsDuelType(DUEL_INVERTED_QUICK_PRIORITY) then
+	--Traps cannot be chained to each other
+	local traprush1=Effect.GlobalEffect()
+	traprush1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	traprush1:SetCode(EVENT_CHAINING)
+	traprush1:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
 							local rc=re:GetHandler()
 							if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_TRAP) then
 								Duel.SetChainLimit(aux.FALSE)
 							end
 						end)
-		Duel.RegisterEffect(traprush,0)
-	end
+	Duel.RegisterEffect(traprush1,0)
+	--Traps cannot miss timing and can be activated in the Damage Step
+	local traprush2=Effect.GlobalEffect()
+	traprush2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	traprush2:SetCode(EVENT_STARTUP)
+	traprush2:SetOperation(function()
+							local g=Duel.GetMatchingGroup(Card.IsType,0,0xffffff,0xffffff,nil,TYPE_TRAP)
+							for tc in g:Iter() do
+								local effs={tc:GetActivateEffect()}
+								for _,eff in ipairs(effs) do
+									local prop1,prop2=eff:GetProperty()
+									eff:SetProperty(prop1|EFFECT_FLAG_DELAY|EFFECT_FLAG_DAMAGE_STEP,prop2)
+								end
+							end
+						end)
+	Duel.RegisterEffect(traprush2,0)
+end
 function Card.IsCanChangePositionRush(c)
 	return c:IsCanChangePosition() and not c:IsMaximumMode()
 end

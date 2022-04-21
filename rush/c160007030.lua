@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.costfilter(c)
-return c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_EARTH)  and c:IsType(TYPE_MONSTER) and c:IsAbleToDeckOrExtraAsCost()
+	return c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_EARTH)  and c:IsType(TYPE_MONSTER) and c:IsAbleToDeckOrExtraAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_GRAVE,0,1,nil) end
@@ -40,15 +40,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ShuffleDeck(tp)
 		--Effect
 		Duel.DiscardDeck(tp,2,REASON_EFFECT)
-		local g=Duel.GetOperatedGroup()
-		local ct=g:FilterCount(s.cfilter,nil)
-		if ct>0 then
+		local ct=Duel.GetOperatedGroup():FilterCount(s.cfilter,nil)
+		if ct>0 and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-			local g2=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_GRAVE,0,1,1,nil)
-			Duel.HintSelection(g2)
-			if #g2>0 then
-				Duel.SendtoHand(g2,nil,REASON_EFFECT)
-				Duel.ConfirmCards(1-tp,g2)
+			local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_GRAVE,0,1,1,nil)
+			Duel.HintSelection(g)
+			if #g>0 then
+				Duel.SendtoHand(g,nil,REASON_EFFECT)
+				Duel.ConfirmCards(1-tp,g)
 			end
 		end
 	end

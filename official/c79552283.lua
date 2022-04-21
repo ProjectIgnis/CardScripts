@@ -34,9 +34,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x17c}
-s.listed_names={CARD_VISAS_STAFROST}
+s.listed_names={CARD_VISAS_STARFROST}
 function s.atkfilter(c)
-	return c:IsFaceup() and (c:IsSetCard(0x17c) or c:IsCode(CARD_VISAS_STAFROST)) and not c:IsHasEffect(EFFECT_CANNOT_ATTACK)
+	return c:IsFaceup() and (c:IsSetCard(0x17c) or c:IsCode(CARD_VISAS_STARFROST)) and not c:IsHasEffect(EFFECT_CANNOT_ATTACK)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingTarget(s.atkfilter,tp,LOCATION_MZONE,0,1,nil) end

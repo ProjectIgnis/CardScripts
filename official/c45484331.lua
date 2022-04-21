@@ -1,6 +1,6 @@
--- スプリガンズ・キット
--- Springans Kitt
--- Scripted by Hatter
+--スプリガンズ・キット
+--Springans Kitt
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	-- Special Summon
@@ -63,6 +63,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_DECK+LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil):GetFirst()
 	if not (tc and Duel.SendtoHand(tc,nil,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_HAND)) then return end
 	Duel.ConfirmCards(1-tp,tc)
+	Duel.ShuffleHand(tp)
 	if tc:IsPreviousLocation(LOCATION_DECK) then Duel.ShuffleDeck(tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local td=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_HAND,0,1,1,nil)

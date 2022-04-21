@@ -1,4 +1,4 @@
--- ドスオドン
+--ドスオドン
 --Dosodon
 local s,id=GetID()
 function s.initial_effect(c)
@@ -41,5 +41,5 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rescon(sg,e,tp,mg)
-	return sg:IsExists(Card.IsType,1,nil,TYPE_NORMAL) 
+	return sg:IsExists(Card.IsType,1,nil,TYPE_NORMAL)
 end

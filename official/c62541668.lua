@@ -1,4 +1,4 @@
---No.77 ザ・セブン・シンズ
+--Ｎｏ．７７ ザ・セブン・シンズ
 --Number 77: The Seven Sins
 local s,id=GetID()
 function s.initial_effect(c)
@@ -37,7 +37,7 @@ function s.xyzop(e,tp,chk)
 	return true
 end
 function s.rmfilter(c)
-	return c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:IsAbleToRemove()
+	return c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:IsAbleToRemove() and c:IsMonster()
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetFlagEffect(id)==0
@@ -47,15 +47,15 @@ function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.rmfilter,tp,0,LOCATION_MZONE,nil)
-	if #g>0 then
-		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
-		local og=Duel.GetOperatedGroup():Filter(Card.IsLocation,nil,LOCATION_REMOVED)
-		if #og>0 then
-			Duel.BreakEffect()
-			Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
-			local sg=og:Select(tp,1,1,nil)
-			Duel.Overlay(e:GetHandler(),sg)
-		end
+	if #g==0 then return end
+	local c=e:GetHandler()
+	if Duel.Remove(g,POS_FACEUP,REASON_EFFECT)==0 or not c:IsRelateToEffect(e) then return end
+	local og=Duel.GetOperatedGroup():Filter(Card.IsLocation,nil,LOCATION_REMOVED)
+	if #og>0 then
+		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
+		local sg=og:Select(tp,1,1,nil)
+		Duel.BreakEffect()
+		Duel.Overlay(c,sg)
 	end
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)

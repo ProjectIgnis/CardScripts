@@ -6,7 +6,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon 1 "Despia" or level 8+ fusion monster from GY
-	local fparams={aux.FilterBoolFunction(Card.IsLevelAbove,8),Fusion.OnFieldMat,s.fextra,Fusion.BanishMaterial,nil,nil}
+	local fparams={aux.FilterBoolFunction(Card.IsLevelAbove,8),Fusion.OnFieldMat(Card.IsAbleToRemove),s.fextra,Fusion.BanishMaterial,nil,nil}
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON+CATEGORY_REMOVE)

@@ -1195,3 +1195,8 @@ function Auxiliary.WelcomeLabrynthTrapDestroyOperation(e,tp)
 		Duel.Destroy(g,REASON_EFFECT)
 	end
 end
+
+-- checks if `c` can be used as cost by `tp` for "Rikka" cards that tribute Plant monsters
+function Card.IsRikkaReleasable(c,tp)
+	return c:IsControler(tp) and c:IsRace(RACE_PLANT) or c:IsHasEffect(CARD_RIKKA_ARRIVAL)
+end

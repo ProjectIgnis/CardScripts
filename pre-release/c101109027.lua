@@ -55,9 +55,9 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToDeckAsCost() and Duel.CheckReleaseGroupCost(tp,Card.IsRace,1,false,nil,nil,RACE_PLANT) end
+	if chk==0 then return c:IsAbleToDeckAsCost() and Duel.CheckReleaseGroupCost(tp,Card.IsRikkaReleasable,1,false,nil,nil,tp) end
 	Duel.SendtoDeck(c,nil,SEQ_DECKSHUFFLE,REASON_COST)
-	local g=Duel.SelectReleaseGroupCost(tp,Card.IsRace,1,1,false,nil,nil,RACE_PLANT)
+	local g=Duel.SelectReleaseGroupCost(tp,Card.IsRikkaReleasable,1,1,false,nil,nil,tp)
 	Duel.Release(g,REASON_COST)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)

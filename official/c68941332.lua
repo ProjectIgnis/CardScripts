@@ -19,13 +19,16 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x141}
+function s.cfilter(c,tp)
+	return c:IsRikkaReleasable(tp) and Duel.GetMZoneCount(tp,c,tp,LOCATION_REASON_CONTROL)>0
+		and Duel.IsExistingTarget(aux.FilterFaceupFunction(Card.IsControlerCanBeChanged),tp,0,LOCATION_MZONE,1,c)
+end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local a=Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil)
-	local b=Duel.IsExistingTarget(aux.FilterFaceupFunction(Card.IsControlerCanBeChanged),tp,0,LOCATION_MZONE,1,nil)
+	local b=Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil,tp)
 	if chk==0 then return a or b end
-	if b and Duel.CheckReleaseGroupCost(tp,Card.IsRace,1,false,nil,nil,RACE_PLANT)
-		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-		local g=Duel.SelectReleaseGroupCost(tp,Card.IsRace,1,1,false,nil,nil,RACE_PLANT)
+	if b and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+		local g=Duel.SelectReleaseGroupCost(tp,s.cfilter,1,1,false,nil,nil,tp)
 		Duel.Release(g,REASON_COST)
 		e:SetLabel(1)
 	else

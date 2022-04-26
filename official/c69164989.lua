@@ -18,19 +18,19 @@ function s.initial_effect(c)
 end
 s.listed_series={0x141}
 function s.filter(c,e,tp,check)
-	return c:IsSetCard(0x141) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x141) and c:IsMonster() and c:IsAbleToHand()
 		and (check==0 or Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK,0,1,nil,c:GetOriginalLevel(),c:GetCode()))
 end
 function s.filter2(c,lv,code)
-	return c:IsRace(RACE_PLANT) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and c:GetOriginalLevel()==lv and not c:IsCode(code)
+	return c:IsRace(RACE_PLANT) and c:IsMonster() and c:IsAbleToHand() and c:GetOriginalLevel()==lv and not c:IsCode(code)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local a=Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp,0)
 	local b=Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp,1)
 	if chk==0 then return a or b end
-	if b and Duel.CheckReleaseGroupCost(tp,Card.IsRace,1,false,nil,nil,RACE_PLANT)
+	if b and Duel.CheckReleaseGroupCost(tp,Card.IsRikkaReleasable,1,false,nil,nil,tp)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-		local g=Duel.SelectReleaseGroupCost(tp,Card.IsRace,1,1,false,nil,nil,RACE_PLANT)
+		local g=Duel.SelectReleaseGroupCost(tp,Card.IsRikkaReleasable,1,1,false,nil,nil,tp)
 		Duel.Release(g,REASON_COST)
 		e:SetLabel(1)
 	else

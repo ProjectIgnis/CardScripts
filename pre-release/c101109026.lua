@@ -22,6 +22,8 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
+	if not AshBlossomTable then AshBlossomTable={} end
+	table.insert(AshBlossomTable,e2)
 end
 s.listed_names={CARD_RICE_SUSHIP}
 s.listed_series={0x168}

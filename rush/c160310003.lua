@@ -2,7 +2,7 @@
 --Dark Factory of Mass Production (Rush)
 local s,id=GetID()
 function s.initial_effect(c)
-	Card.Alias(c,88975532)
+	Card.Alias(90928333)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND)

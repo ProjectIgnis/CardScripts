@@ -1198,5 +1198,5 @@ end
 
 -- checks if `c` can be used as cost by `tp` for "Rikka" cards that tribute Plant monsters
 function Card.IsRikkaReleasable(c,tp)
-	return c:IsControler(tp) and c:IsRace(RACE_PLANT) or c:IsHasEffect(CARD_RIKKA_ARRIVAL)
+	return c:IsRace(RACE_PLANT) or (c:IsControler(1-tp) and c:IsHasEffect(CARD_RIKKA_ARRIVAL))
 end

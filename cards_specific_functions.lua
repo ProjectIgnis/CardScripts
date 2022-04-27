@@ -1118,10 +1118,10 @@ end)()
 		it can also return an optional passcode (int) which will be excluded from the special summon
 --]]
 Effect.CreateVernalizerSPEffect=(function()
-	local stringbase=101109016 -- use strings from "Hills and Blooms" so they don't need to be stored in every card
+	local stringbase=9350312 -- use strings from "Hills and Blooms" so they don't need to be stored in every card
 
 	local function verncostfilter(c)
-		return (c:IsMonster() or c:IsSetCard(0x27e)) and c:IsDiscardable()
+		return (c:IsMonster() or c:IsSetCard(0x183)) and c:IsDiscardable()
 	end
 
 	local function verncost(e,tp,eg,ep,ev,re,r,rp,chk)

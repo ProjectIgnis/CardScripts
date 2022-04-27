@@ -30,10 +30,6 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		 Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,nil,tp)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,3,tp,LOCATION_GRAVE)
-	Duel.SetChainLimit(s.chlimit)
-end
-function s.chlimit(e,ep,tp)
-	return not e:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function s.spfilter(c,e,sp)
 	return c:IsLevelBelow(7) and c:IsCanBeSpecialSummoned(e,0,sp,false,false)

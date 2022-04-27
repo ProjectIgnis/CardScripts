@@ -23,10 +23,6 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local at=Duel.GetAttacker()
 	if chk==0 then return at:IsControler(1-tp) and at:IsAttackPos() and at:IsOnField() and at:IsCanChangePosition() end
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,at,1,0,0)
-	Duel.SetChainLimit(s.chlimit)
-end
-function s.chlimit(e,ep,tp)
-	return not e:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function s.spfilter(c,e,tp)
 	return c:IsType(TYPE_MONSTER) and c:IsType(TYPE_NORMAL) and c:GetAttack()==0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

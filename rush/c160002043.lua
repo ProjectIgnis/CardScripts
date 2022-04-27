@@ -31,7 +31,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.attfilter,tg:GetAttribute()),tp,0,LOCATION_MZONE,1,3,nil,tg:GetAttribute())
 			Duel.HintSelection(g)
 			if g and #g>0 then
-				for tc in aux.Next(g) do
+				for tc in g:Iter() do
 					local e1=Effect.CreateEffect(e:GetHandler())
 					e1:SetType(EFFECT_TYPE_SINGLE)
 					e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)

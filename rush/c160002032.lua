@@ -32,7 +32,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local g2=Duel.SelectMatchingCard(tp,s.dirfilter,tp,LOCATION_MZONE,0,1,2,nil)
 		Duel.HintSelection(g2)
 		if #g2>0 then
-			for tc in aux.Next(g2) do
+			for tc in g2:Iter() do
 				local e1=Effect.CreateEffect(e:GetHandler())
 				e1:SetDescription(3205)
 				e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)

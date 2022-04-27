@@ -78,7 +78,7 @@ function s.op2(e,tp,eg,ep,ev,re,r,rp)
 		-- Effect
 		local c=e:GetHandler()
 		local ag=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(s.filter2),tp,0,LOCATION_MZONE,nil)
-		for tc in aux.Next(ag) do
+		for tc in ag:Iter() do
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)

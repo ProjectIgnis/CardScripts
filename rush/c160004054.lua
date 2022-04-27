@@ -1,3 +1,4 @@
+--幻刃封鎖
 --Mythic Sword Blockade
 local s,id=GetID()
 function s.initial_effect(c)
@@ -12,24 +13,17 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.filter1(c,e,tp)
+function s.filter1(c,tp)
 	return c:IsSummonPlayer(1-tp) and c:IsLocation(LOCATION_MZONE) and c:IsLevelAbove(7)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.filter1,1,nil,e,tp) and Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE,0,1,nil)
+	return eg:IsExists(s.filter1,1,nil,tp) and Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.costfilter(c)
 	return c:IsRace(RACE_WYRM) and c:IsFaceup() and c:IsAbleToGraveAsCost() and not c:IsMaximumModeSide()
 end
-function s.filter(c,e,tp)
-	return c:IsFaceup()
-end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil,e,tp) end
-	Duel.SetChainLimit(s.chlimit)
-end
-function s.chlimit(e,ep,tp)
-	return not e:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	-- requirement
@@ -40,7 +34,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.SendtoGrave(g,REASON_COST)
 	if ct>0 then
 		--Effect
-		local g=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil,e,tp)
+		local g=Duel.SelectMatchingCard(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
 		Duel.HintSelection(g)
 		if #g>0 then
 			--cannot attack

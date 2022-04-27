@@ -45,7 +45,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 				c:RegisterEffect(e1)
 				local ag=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsLevel,8),tp,0,LOCATION_MZONE,nil)
-				for tc in aux.Next(ag) do
+				for tc in ag:Iter() do
 					local e1=Effect.CreateEffect(c)
 					e1:SetType(EFFECT_TYPE_SINGLE)
 					e1:SetCode(EFFECT_UPDATE_ATTACK)

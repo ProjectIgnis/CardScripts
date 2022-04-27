@@ -22,10 +22,6 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(Card.IsAbleToHand),tp,0,LOCATION_MZONE,1,nil) end
 	local g=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(Card.IsAbleToHand),tp,LOCATION_MZONE,0,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
-	Duel.SetChainLimit(s.chlimit)
-end
-function s.chlimit(e,ep,tp)
-	return not e:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Effect

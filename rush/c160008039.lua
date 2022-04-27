@@ -71,7 +71,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if #g<1 then return end
 	Duel.HintSelection(g,true)
 	local c=e:GetHandler()
-	for tc in aux.Next(g) do
+	for tc in g:Iter() do
 		-- Reduce ATK/DEF
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

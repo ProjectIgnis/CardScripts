@@ -22,7 +22,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if tc and tc:IsLocation(LOCATION_GRAVE) then
 			if ((op==0 and tc:IsType(TYPE_MONSTER)) or (op==1 and tc:IsType(TYPE_SPELL)) or (op==2 and tc:IsType(TYPE_TRAP))) then return end
 			local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
-			for tc in aux.Next(g) do
+			for tc in g:Iter() do
 				local e1=Effect.CreateEffect(e:GetHandler())
 				e1:SetType(EFFECT_TYPE_SINGLE)
 				e1:SetCode(EFFECT_DIRECT_ATTACK)

@@ -33,7 +33,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g2=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,0,1,2,nil)
 	if #g2>0 then
 		Duel.HintSelection(g2)
-		for tc in aux.Next(g2) do
+		for tc in g2:Iter() do
 			Duel.ChangePosition(tc,POS_FACEUP_DEFENSE)
 		end
 			local ge0=Effect.CreateEffect(e:GetHandler())

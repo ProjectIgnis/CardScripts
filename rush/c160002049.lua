@@ -26,10 +26,6 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,nil,1,0,0)
-	Duel.SetChainLimit(s.chlimit)
-end
-function s.chlimit(e,ep,tp)
-	return not e:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsCanTurnSet() and c:IsCanChangePositionRush()
@@ -44,7 +40,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local g2=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_MZONE,1,2,nil)
 		if #g2>0 then
 			Duel.HintSelection(g2)
-			for tc in aux.Next(g2) do
+			for tc in g2:Iter() do
 				Duel.ChangePosition(tc,POS_FACEDOWN_DEFENSE)
 			end
 		end

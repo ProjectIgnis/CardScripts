@@ -99,6 +99,7 @@ TOKEN_OJAMA_DUO                     = 14470846
 SUMMON_WITH_MONSTER_REBORN = 1010
 
 --Commonly used Rush Cards
+CARD_AMALILITH            = 160428037
 CARD_BIG_OCEAN            = 160003050
 CARD_CAN_D                = 160005002
 CARD_FUSION               = 160204050

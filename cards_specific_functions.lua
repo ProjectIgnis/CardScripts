@@ -1016,7 +1016,7 @@ Effect.CreateMysteruneQPEffect = (function()
 	end
 
 	local function rmop(e,tp,eg,ep,ev,re,r,rp,uniqueop,rmcount)
-		if not uniqueop or uniqueop(e,tp,eg,ep,ev,re,r,rp) and Duel.IsPlayerCanRemove(tp) then
+		if (not uniqueop or uniqueop(e,tp,eg,ep,ev,re,r,rp)) and Duel.IsPlayerCanRemove(tp) then
 			local ct=type(rmcount)=="number" and rmcount or rmcount(e,tp,eg,ep,ev,re,r,rp)
 			local rg=Duel.GetDecktopGroup(1-tp,ct)
 			if #rg>0 then

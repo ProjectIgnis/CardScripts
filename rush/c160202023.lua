@@ -32,6 +32,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SendtoDeck(tg,nil,0,REASON_EFFECT)>0 then
 		Duel.ShuffleDeck(tp)
 		Duel.BreakEffect()
-        Duel.Draw(tp,1,REASON_EFFECT)
+		Duel.Draw(tp,1,REASON_EFFECT)
 	end
 end

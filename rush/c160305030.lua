@@ -15,7 +15,8 @@ function s.initial_effect(c)
 end
 s.listed_names={160001029,160201001,160004020}
 function s.filter(c,tp,re)
-	return c:GetReasonPlayer()==1-tp and c:IsPreviousControler(tp) and c:IsRace(RACE_WARRIOR) and c:IsLevelAbove(7) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_ATTACK)
+	return c:GetReasonPlayer()==1-tp and c:IsPreviousControler(tp)
+		and c:IsRace(RACE_WARRIOR) and c:IsLevelAbove(7) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_ATTACK)
 		and ((c:IsReason(REASON_EFFECT) and re:IsActiveType(TYPE_TRAP)) or (c:IsReason(REASON_BATTLE) and Duel.GetAttacker():IsControler(1-tp)))
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
@@ -33,5 +34,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
-	Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
+	if #g>0 then
+		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
+	end
 end

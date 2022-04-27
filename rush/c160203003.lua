@@ -1,3 +1,4 @@
+-- 超魔旗艦マグナム・オーバーロード[R]
 --Super Magiflag Ship Magnum Over Road [R]
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
+-- 寿司天使タイガーロール
 -- Tiger Roll the Sushi Angel
---寿司天使タイガーロール
 local s,id=GetID()
 function s.initial_effect(c)
 	--Add to hand
@@ -43,7 +43,6 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.AddNoTributeCheck(c,tp,id,0,1,0)
 	end
 end
-
 function s.sumlimit(e,c)
 	return c:IsLocation(LOCATION_HAND)
 end

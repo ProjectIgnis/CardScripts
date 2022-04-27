@@ -1,8 +1,8 @@
---刷新戦士シャイン・O Kasshin Senshi Shine Organizer (Remodeled Corporate Soldier Shine Organizer/Remodeled Corporate Warrior Shine Organizer)
-
+--刷新戦士シャイン・O
+--Remodeled Corporate Soldier Shine Organizer
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special summon 1 Arktalk  from Hand
+	--Special summon 1 Arktalk from Hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_IGNITION)

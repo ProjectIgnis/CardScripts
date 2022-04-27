@@ -1,4 +1,4 @@
---  花牙悲願
+-- 花牙悲願
 -- Shadow Flower Wish
 local s,id=GetID()
 function s.initial_effect(c)
@@ -37,7 +37,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g2=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 		if #g2>0 then
-			Duel.SpecialSummon(g2,0,tp,tp,false,false,POS_FACEUP)			
+			Duel.SpecialSummon(g2,0,tp,tp,false,false,POS_FACEUP)
 		end
 	end
 end

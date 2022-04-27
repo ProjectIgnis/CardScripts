@@ -1,4 +1,5 @@
--- Super Magiflag Ship Magnum Over Road
+-- 超魔旗艦マグナム・オーバーロード
+-- Supreme Flagship Magnum Overlord
 local s,id=GetID()
 function s.initial_effect(c)
 	Maximum.AddProcedure(c,nil,s.filter1,s.filter2)
@@ -23,7 +24,6 @@ end
 function s.filter2(c)
 	return c:IsCode(160203003)
 end
-
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
 end
@@ -40,7 +40,6 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_HAND)
 end
-
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tg=Group.CreateGroup()
@@ -53,7 +52,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local sg=g:Select(tp,1,2,nil)
 			if Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)~=0 then
-				local dg=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_ONFIELD,nil)
+				local dg=Duel.GetMatchingGroup(Card.IsType,tp,0,LOCATION_ONFIELD,nil,TYPE_SPELL+TYPE_TRAP)
 				if #dg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 					local sg=dg:Select(tp,1,1,nil)
@@ -63,7 +62,4 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			end
 		end
 	end
-end
-function s.desfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
 end

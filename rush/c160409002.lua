@@ -1,4 +1,5 @@
---装魂竜ガイギアス Sougonryuu Gygias (Armsoul Dragon Gygias)
+--装魂竜ガイギアス
+--Cladsoul Dragon Gaigias
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon
@@ -38,14 +39,14 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
-	if #g>0 then
-		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_ATTACK)
+	local rg=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
+	if #rg>0 then
+		Duel.SpecialSummon(rg,0,tp,tp,false,false,POS_FACEUP_ATTACK)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(1500)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
-		g:GetFirst():RegisterEffect(e1)
+		rg:GetFirst():RegisterEffect(e1)
 	end
 end

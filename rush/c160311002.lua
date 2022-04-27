@@ -36,7 +36,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	e1:SetValue(-800)
-	sg:GetFirst():RegisterEffect(e1)
+	sg:GetFirst():RegisterEffectRush(e1)
 	local tc=g:GetFirst()
 	if tc:IsRace(RACE_GALAXY) and tc:IsType(TYPE_NORMAL) and tc:IsLocation(LOCATION_GRAVE) then
 		Duel.BreakEffect()

@@ -37,7 +37,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.HintSelection(g)
 		if #g>0 then
 			local g2=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_GRAVE,0,g)
-			if Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)>0 and g:GetFirst():IsLevel(7) and #g2>0  and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+			if Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)>0 and g:GetFirst():IsLevel(7) and #g2>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 				local sg=g2:Select(tp,1,1,nil)
 				Duel.HintSelection(sg)
 				Duel.SendtoHand(sg,nil,REASON_EFFECT)

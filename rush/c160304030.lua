@@ -1,4 +1,5 @@
---ドラゴニック・ディスオーダー Dragonic Disorder
+--ドラゴニック・ディスオーダー
+--Dragonic Disorder
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

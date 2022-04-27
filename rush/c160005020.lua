@@ -18,8 +18,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,1) end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-    return Duel.GetFieldGroupCountRush(tp,0,LOCATION_MZONE)>0
-	and Duel.IsExistingMatchingCard(Card.IsAttack,tp,LOCATION_GRAVE,0,1,nil,0)
+	return Duel.GetFieldGroupCountRush(tp,0,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(Card.IsAttack,tp,LOCATION_GRAVE,0,1,nil,0)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_MZONE,0,1,nil) end

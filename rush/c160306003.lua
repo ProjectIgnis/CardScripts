@@ -1,3 +1,4 @@
+--ギフトタリスト
 --Giftarist
 
 local s,id=GetID()

@@ -38,7 +38,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,g)
 			local g2=Duel.GetMatchingGroup(s.filter,tp,LOCATION_HAND,0,nil,e,tp)
-			if #g2>0 and Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.cfilter),tp,0,LOCATION_MZONE,3,nil) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+			if #g2>0 and Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(Card.IsAttackPos),tp,0,LOCATION_MZONE,3,nil) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 				local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 				if #g>0 then
@@ -47,9 +47,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			end
 		end
 	end
-end
-function s.cfilter(c)
-	return c:IsPosition(POS_FACEUP_ATTACK)
 end
 function s.filter(c,e,tp)
 	return c:IsType(TYPE_NORMAL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

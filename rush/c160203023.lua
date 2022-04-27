@@ -22,9 +22,8 @@ function s.filter(c)
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local dg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_ONFIELD,e:GetHandler())
 	if chkc then return chkc:IsOnField() end
-	if chk==0 then return #dg>0 end
+	if chk==0 then return Duel.GetMatchingGroupCount(s.filter,tp,LOCATION_MZONE,LOCATION_ONFIELD,e:GetHandler())>0 end
 end
 	--Send 1 card from hand to GY to destroy 1 monster
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

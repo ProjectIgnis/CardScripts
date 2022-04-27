@@ -1,4 +1,5 @@
--- ハイパー・ナリキング・レックス Hyper Nariking Rex (Hyper Upstart King Rex)
+-- ハイパー・ナリキング・レックス
+-- Hyper Upstart King Rex
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -33,24 +34,24 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	elseif opt==1 then
 		Duel.SendtoDeck(tg,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 	end
-		-- Effect
-		if c:IsRelateToEffect(e) and c:IsFaceup() then
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
-			e1:SetValue(700)
-			c:RegisterEffect(e1)
-			local ct=Duel.GetMatchingGroupCount(Card.IsCode,tp,LOCATION_GRAVE,0,nil,CARD_UPSTART_GOBLIN)
-			if ct>0 and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,e:GetHandler()) and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
-			local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_GRAVE,0,1,1,e:GetHandler())
-				if #g>0 then
-					Duel.SendtoHand(g,nil,REASON_EFFECT)
-					Duel.ConfirmCards(1-tp,g)
-				end
+	-- Effect
+	if c:IsRelateToEffect(e) and c:IsFaceup() then
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_ATTACK)
+		e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+		e1:SetValue(700)
+		c:RegisterEffect(e1)
+		local ct=Duel.GetMatchingGroupCount(Card.IsCode,tp,LOCATION_GRAVE,0,nil,CARD_UPSTART_GOBLIN)
+		if ct>0 and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,e:GetHandler()) and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
+		local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_GRAVE,0,1,1,e:GetHandler())
+			if #g>0 then
+				Duel.SendtoHand(g,nil,REASON_EFFECT)
+				Duel.ConfirmCards(1-tp,g)
 			end
 		end
+	end
 end
 function s.thfilter(c)
 	return c:IsType(TYPE_SPELL) and c:IsAbleToHand()

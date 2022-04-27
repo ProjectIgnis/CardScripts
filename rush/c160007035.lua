@@ -1,10 +1,11 @@
 --ＣＡＮ：Ｄ ＬＩＶＥ
+--CAN:D LIVE
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
 	Fusion.AddProcMix(c,true,true,CARD_CAN_D,160007014)
-	--
+	--Take Damage and increase ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DAMAGE+CATEGORY_ATKCHANGE)
@@ -28,7 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-    return Duel.GetFieldGroupCount(e:GetHandler():GetControler(),0,LOCATION_MZONE)>=1
+	return Duel.GetFieldGroupCount(e:GetHandler():GetControler(),0,LOCATION_MZONE)>=1
 end
 --damage then atk change
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -41,7 +42,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Damage(p,d,REASON_EFFECT)
-	local g=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(s.filter),tp,0,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(Card.IsFaceup),tp,0,LOCATION_MZONE,nil)
 	if #g==0 then return end
 	if Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 		for tc in g:Iter() do
@@ -55,9 +56,6 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function s.filter(c)
-	return c:IsFaceup()
-end
 --recover then summon
 function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -65,13 +63,12 @@ function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetTargetParam(1000)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,1000)
 end
-function s.spfilter(c,e,sp)
-	return c:IsLevelAbove(7) and c:IsRace(RACE_PSYCHIC) and c:IsCanBeSpecialSummoned(e,0,sp,false,false)
+function s.spfilter(c,e,tp)
+	return c:IsLevelAbove(7) and c:IsRace(RACE_PSYCHIC) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.recop(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	
 	--Effect
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_GRAVE,0,nil,e,tp)

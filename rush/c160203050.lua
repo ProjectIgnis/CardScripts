@@ -16,10 +16,10 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and r==REASON_RULE
 end
 function s.filter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsLevelBelow(8) and c:IsAbleToHand() and c:IsFaceup()
+	return c:IsMonster() and c:IsLevelBelow(8) and c:IsAbleToHand() and c:IsFaceup()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil)  end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -27,7 +27,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil)
 	Duel.HintSelection(g)
 	g=g:AddMaximumCheck()
-	if #g>0 then 
+	if #g>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT) 
 	end
 end

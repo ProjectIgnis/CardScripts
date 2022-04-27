@@ -28,8 +28,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.DiscardDeck(tp,1,REASON_COST)<1 then return end
 	--Effect
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-		if Duel.Draw(p,d,REASON_EFFECT)>0 then
-			local dam=Duel.GetFieldGroupCount(1-tp,LOCATION_HAND,0)*100
-			Duel.Damage(p,dam,REASON_EFFECT)
-		end
+	if Duel.Draw(p,d,REASON_EFFECT)>0 then
+		local dam=Duel.GetFieldGroupCount(1-tp,LOCATION_HAND,0)*100
+		Duel.Damage(p,dam,REASON_EFFECT)
+	end
 end

@@ -1,4 +1,4 @@
---ケミカルキュア・ブルー 
+--ケミカルキュア・ブルー
 --Chemical Cure Blue
 local s,id=GetID()
 function s.initial_effect(c)
@@ -24,7 +24,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,400)
 end
 function s.filter(c)
-    return c:IsCode(20871001) and c:IsAbleToHand()
+	return c:IsCode(20871001) and c:IsAbleToHand()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement

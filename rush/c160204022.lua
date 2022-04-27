@@ -1,4 +1,5 @@
--- Supergeardragon Dragearstar F
+--超撃龍ドラギアスターＦ
+--Superstrike Dragon Dragiastar F
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -57,12 +58,12 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetValue(1)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e2)
-	
 	end
 end
 --piercing
 function s.condition2(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsAbleToEnterBP() and Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,0,1,nil,TYPE_MONSTER) and not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil)
+	return Duel.IsAbleToEnterBP() and Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,0,1,nil,TYPE_MONSTER)
+		and not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil)
 end
 function s.piercingOp(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -81,6 +82,5 @@ function s.piercingOp(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetValue(1)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e2)
-	
 	end
 end

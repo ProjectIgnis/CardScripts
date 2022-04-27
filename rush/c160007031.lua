@@ -17,13 +17,13 @@ function s.initial_effect(c)
 end
 s.listed_names={160003041,160004049}
 function s.cfilter(c)
-    return (c:IsCode(160003041) or c:IsCode(160004049)) and c:IsAbleToDeckOrExtraAsCost()
+	return (c:IsCode(160003041) or c:IsCode(160004049)) and c:IsAbleToDeckOrExtraAsCost()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,nil) end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-    return Duel.GetFieldGroupCount(e:GetHandler():GetControler(),0,LOCATION_MZONE)>=1
+	return Duel.GetFieldGroupCount(e:GetHandler():GetControler(),0,LOCATION_MZONE)>=1
 end
 function s.filter(c,e,sp)
 	return c:IsRace(RACE_FISH+RACE_SEASERPENT) and c:IsCanBeSpecialSummoned(e,0,sp,false,false)
@@ -37,7 +37,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	--Requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-    local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.HintSelection(g)
 	Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 	--Effect
@@ -58,7 +58,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-
 function s.ftarget(e,c)
 	return not c:IsAttribute(ATTRIBUTE_WATER)
 end

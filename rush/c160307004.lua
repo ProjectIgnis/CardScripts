@@ -1,4 +1,5 @@
---永冥のフォロール Eimei no Followl (Followl of the Fornether)
+--永冥のフォロール
+--Followl of the Fornether
 
 local s,id=GetID()
 function s.initial_effect(c)
@@ -17,8 +18,8 @@ end
 function s.spcond(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsStatus(STATUS_SUMMON_TURN)
 end
-function s.filter(c,e,sp)
-	return c:IsType(TYPE_NORMAL) and c:IsRace(RACE_FIEND) and c:IsLevel(3) and c:IsCanBeSpecialSummoned(e,0,sp,false,false)
+function s.filter(c,e,tp)
+	return c:IsType(TYPE_NORMAL) and c:IsRace(RACE_FIEND) and c:IsLevel(3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

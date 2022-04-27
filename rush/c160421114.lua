@@ -1,4 +1,5 @@
---夢幻刃龍ビルドリム Mugenbaryuu Buildream (Buildream the Infinidream Mythic Sword Dragon)
+--夢幻刃龍ビルドリム
+--Infinidream Constructor Wyrm Buildrim
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -21,7 +22,6 @@ function s.costfilter(c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_ONFIELD,0,1,nil,e,tp) end
-	
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(aux.TRUE),tp,0,LOCATION_MZONE,nil)
@@ -31,7 +31,7 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	-- requirement
 	local c=e:GetHandler()
-    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_ONFIELD,0,1,1,nil)
 	local ct=Duel.SendtoGrave(g,REASON_COST)
 	if ct>0 then

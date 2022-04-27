@@ -1,5 +1,5 @@
--- Emitter Stag
 -- エミッタ・スタッグ
+-- Emitter Stag
 local s,id=GetID()
 function s.initial_effect(c)
 	-- atk change
@@ -18,7 +18,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,1) end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return  Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) end
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsLevelAbove(5) and c:IsRace(RACE_THUNDER)

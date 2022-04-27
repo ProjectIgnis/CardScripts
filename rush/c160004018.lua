@@ -28,11 +28,9 @@ function s.cfilter(c)
 	return c:IsLocation(LOCATION_GRAVE) and c:GetAttack()==0 and c:IsType(TYPE_MONSTER)
 end
 function s.spfilter(c,e,tp)
-	return c:GetAttack()==0  and c:IsType(TYPE_MONSTER) and c:IsType(TYPE_NORMAL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:GetAttack()==0 and c:IsType(TYPE_MONSTER) and c:IsType(TYPE_NORMAL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	--Requirement
-	
 	--Effect
 	Duel.DiscardDeck(tp,2,REASON_EFFECT)
 	local g=Duel.GetOperatedGroup()

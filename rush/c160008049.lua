@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.costfilter(c)
-	return  c:IsAttribute(ATTRIBUTE_FIRE) and c:IsFaceup() and c:IsAbleToGraveAsCost()
+	return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsFaceup() and c:IsAbleToGraveAsCost()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE,0,1,nil)

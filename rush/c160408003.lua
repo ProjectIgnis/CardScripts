@@ -2,7 +2,7 @@
 --Monster Reincarnation (Rush)
 
 local s,id=GetID()
-function s.initial_effect(c)	
+function s.initial_effect(c)
 	Card.Alias(c,74848038)
 	--add 1 monster from the grave to the hand
 	local e1=Effect.CreateEffect(c)
@@ -32,10 +32,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SendtoGrave(g,REASON_COST)~=0 then
 		--Effect
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_GRAVE,0,1,1,nil)
-		if #g>0 then
-			Duel.SendtoHand(g,nil,REASON_EFFECT)
-			Duel.ConfirmCards(1-tp,g)
+		local dg=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+		if #dg>0 then
+			Duel.SendtoHand(dg,nil,REASON_EFFECT)
+			Duel.ConfirmCards(1-tp,dg)
 		end
 	end
 end

@@ -1,4 +1,4 @@
---メック・テリジノラプトル 
+-- メック・テリジノラプトル 
 -- Mech Therizinoraptor
 local s,id=GetID()
 function s.initial_effect(c)

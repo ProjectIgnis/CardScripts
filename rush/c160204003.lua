@@ -69,7 +69,6 @@ function s.tdop2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.HintSelection(tg)
 	if Duel.SendtoDeck(tg,nil,SEQ_DECKBOTTOM,REASON_COST)==1 then
 		--Effect
-		
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.tdfilter2),tp,0,LOCATION_MZONE,1,2,nil)
 		g=g:AddMaximumCheck()

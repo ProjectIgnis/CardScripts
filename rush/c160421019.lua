@@ -33,7 +33,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 		local ct=g:GetFirst()
 		if ct then
 			--If it was a monster, destroy 2
-			if ct:IsType(TYPE_MONSTER) and  Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,2,nil,ct:GetRace()) and Duel.SelectYesNo(tp,aux.Stringid(id,0))  then
+			if ct:IsType(TYPE_MONSTER) and Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,2,nil,ct:GetRace()) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 				local g=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_MZONE,2,2,nil,ct:GetRace())
 				g=g:AddMaximumCheck()
 				Duel.Destroy(g,REASON_EFFECT)

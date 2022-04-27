@@ -55,10 +55,10 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e2)
 end
 function s.tg(e,c,rp,sumtype,pos,tp,re)
-    if sumtype==SUMMON_TYPE_MAXIMUM then
-        return c.MaximumAttack and c:IsLevelBelow(9)
-    end
-    return c:IsLevelBelow(9)
+	if sumtype==SUMMON_TYPE_MAXIMUM then
+		return c.MaximumAttack and c:IsLevelBelow(9)
+	end
+	return c:IsLevelBelow(9)
 end
 --position
 function s.filter(c)

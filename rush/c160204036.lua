@@ -1,5 +1,5 @@
---Winged Celestial Dragon of Weal and Woe
 --禍福の翔天竜
+--Winged Celestial Dragon of Weal and Woe
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material

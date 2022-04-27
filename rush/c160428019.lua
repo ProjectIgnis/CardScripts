@@ -21,8 +21,8 @@ end
 function s.descond(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
-function s.costfilter(c,e,tp)
-	return c:IsMonster() and c:IsAttribute(ATTRIBUTE_DARK) and c:IsAbleToGraveAsCost() 
+function s.costfilter(c)
+	return c:IsMonster() and c:IsAttribute(ATTRIBUTE_DARK) and c:IsAbleToGraveAsCost()
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end

@@ -1,4 +1,5 @@
--- エンシェント・アライブ・ドラゴン Ancient Arrive Dragon
+-- エンシェント・アライブ・ドラゴン
+-- Ancient Arrive Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	-- atk change

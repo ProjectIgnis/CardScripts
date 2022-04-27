@@ -1,4 +1,4 @@
---ナリキング・レックス 
+-- ナリキング・レックス 
 -- Upstart King Rex
 local s,id=GetID()
 function s.initial_effect(c)

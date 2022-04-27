@@ -1,4 +1,4 @@
---虚鋼演機再動
+-- 虚鋼演機再動
 -- Imaginary Ark Turnback
 local s,id=GetID()
 function s.initial_effect(c)
@@ -22,7 +22,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spfilter(c,e,tp)
 	return ((c:IsType(TYPE_NORMAL) and c:IsDefense(500) and c:IsAttribute(ATTRIBUTE_LIGHT)) or c:IsRace(RACE_CYBORG))
-	and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

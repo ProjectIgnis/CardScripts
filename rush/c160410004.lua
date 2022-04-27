@@ -1,5 +1,5 @@
 -- 幻撃竜ミラギアス
---Fantastrike Dragon Miragears
+-- Fantastrike Dragon Miragears
 local s,id=GetID()
 function s.initial_effect(c)
 	-- atk change
@@ -64,8 +64,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.macon(e,tp,eg,ep,ev,re,r,rp)
-    return e:GetHandler():GetFlagEffect(id+1)>0
+	return e:GetHandler():GetFlagEffect(id+1)>0
 end
 function s.bdop(e,tp,eg,ep,ev,re,r,rp)
-    e:GetHandler():RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	e:GetHandler():RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 end

@@ -1,4 +1,5 @@
---B・B・Q (BBQ – Burning Beast Quality)
+--Ｂ・Ｂ・Ｑ
+--Burning Beast Quality
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -17,6 +18,9 @@ end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_GRAVE,0,1,nil) end
 end
+function s.filter(c)
+	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_FIRE)
+end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 end
@@ -29,16 +33,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		--Effect
 		local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 		local tc=g:GetFirst()
-		for tc in aux.Next(g) do
+		for tc in g:Iter() do
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(#g*100)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			tc:RegisterEffect(e1)
+			tc:RegisterEffectRush(e1)
 		end
 	end
-end
-function s.filter(c)
-	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_FIRE)
 end

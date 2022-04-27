@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,r,rp)
-	return Duel.IsExistingMatchingCard(Card.IsFaceup,0,LOCATION_FZONE,LOCATION_FZONE,1,nil)
+	return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_FZONE,LOCATION_FZONE,1,nil)
 end
 function s.filter(c,e,sp)
 	return c:IsType(TYPE_NORMAL) and c:IsRace(RACE_WYRM) and c:IsCanBeSpecialSummoned(e,0,sp,false,false)

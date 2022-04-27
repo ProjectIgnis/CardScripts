@@ -28,24 +28,24 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	--Requirement
 	Duel.PayLPCost(tp,600) 
-		--Effect
-		if c:IsRelateToEffect(e) and c:IsFaceup() then
-			local atk=Duel.GetMatchingGroupCount(Card.IsRace,tp,LOCATION_GRAVE,0,e:GetHandler(),RACE_MACHINE)
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
-			e1:SetValue(atk*200)
-			c:RegisterEffect(e1)
-			local g=Duel.GetMatchingGroup(s.tdfilter,tp,LOCATION_GRAVE,0,nil,tp)
-			if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-				local td=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil)
-				if Duel.SendtoDeck(td,nil,SEQ_DECKBOTTOM,REASON_COST)~0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
-					Duel.Draw(tp,1,REASON_EFFECT)
-				end
+	--Effect
+	if c:IsRelateToEffect(e) and c:IsFaceup() then
+		local atk=Duel.GetMatchingGroupCount(Card.IsRace,tp,LOCATION_GRAVE,0,e:GetHandler(),RACE_MACHINE)
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_ATTACK)
+		e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+		e1:SetValue(atk*200)
+		c:RegisterEffect(e1)
+		local g=Duel.GetMatchingGroup(s.tdfilter,tp,LOCATION_GRAVE,0,nil,tp)
+		if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+			local td=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+			if Duel.SendtoDeck(td,nil,SEQ_DECKBOTTOM,REASON_COST)~0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+				Duel.Draw(tp,1,REASON_EFFECT)
 			end
 		end
+	end
 end
 function s.tdfilter(c,tp)
 	return c:IsCode(160006062,160006063) and c:IsAbleToDeckOrExtraAsCost()

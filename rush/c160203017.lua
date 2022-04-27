@@ -22,13 +22,9 @@ end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,e:GetHandler()) end
 end
-function s.filter2(c)
-	return c:IsFacedown()
-end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local dg=Duel.GetMatchingGroup(s.filter2,tp,0,LOCATION_ONFIELD,nil)
-	if chkc then return chkc:IsOnField() and s.filter2(chkc) and chkc~=e:GetHandler() end
-	if chk==0 then return #dg>0 end
+	if chkc then return chkc:IsOnField() and chkc:IsFacedown() and chkc~=e:GetHandler() end
+	if chk==0 then return Duel.GetMatchingGroupCount(Card.IsFacedown,tp,0,LOCATION_ONFIELD,nil)>0 end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
@@ -38,7 +34,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 	if Duel.SendtoGrave(g,REASON_COST)~=0 then
 		--effect
-		local dg=Duel.GetMatchingGroup(s.filter2,tp,0,LOCATION_ONFIELD,nil)
+		local dg=Duel.GetMatchingGroup(Card.IsFacedown,tp,0,LOCATION_ONFIELD,nil)
 		if #dg>0 then
 			local sg=dg:Select(tp,1,1,nil)
 			Duel.HintSelection(sg)

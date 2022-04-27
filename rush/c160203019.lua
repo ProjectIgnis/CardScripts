@@ -13,11 +13,11 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.filter1(c,e,tp)
+function s.filter1(c,tp)
 	return c:IsSummonPlayer(1-tp) and c:IsLocation(LOCATION_MZONE) and c:IsLevelAbove(7)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.filter1,1,nil,e,tp)
+	return eg:IsExists(s.filter1,1,nil,tp)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_DINOSAUR) and c:IsLevelAbove(7)

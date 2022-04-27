@@ -1,5 +1,5 @@
 -- 戦士の生還
--- the warrior returning alive (rush)
+-- The Warrior Returning Alive (Rush)
 local s,id=GetID()
 function s.initial_effect(c)
 	Card.Alias(c,95281259)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.thfilter(c)
-		return c:IsRace(RACE_WARRIOR) and c:IsAbleToHand()
+	return c:IsRace(RACE_WARRIOR) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,nil) end

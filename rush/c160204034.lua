@@ -1,5 +1,5 @@
---Fearstute Followl
 --フィアスチュート・フォロール
+--Fearstute Followl
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -52,5 +52,4 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 		end
 	end
-
 end

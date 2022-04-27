@@ -1,4 +1,5 @@
---救惺の巫女 Kyuusei no Miko (Priestess of Star Salvation/Priestess of World Salvation)
+--救惺の巫女
+--Priestess of Star Salvation
 
 local s,id=GetID()
 function s.initial_effect(c)
@@ -40,17 +41,15 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			local ct=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsLevel,9),tp,LOCATION_MZONE,0,nil)
 			local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
 			if #g==0 or ct==0 then return end
-			for tc in aux.Next(g) do
+			for tc in g:Iter() do
 				local e1=Effect.CreateEffect(e:GetHandler())
 				e1:SetType(EFFECT_TYPE_SINGLE)
 				e1:SetCode(EFFECT_UPDATE_ATTACK)
 				e1:SetValue(400)
 				e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 				e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-				tc:RegisterEffect(e1)
+				tc:RegisterEffectRush(e1)
 			end
-		end		
+		end
 	end
 end
-
-

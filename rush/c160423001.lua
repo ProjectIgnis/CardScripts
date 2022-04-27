@@ -1,11 +1,11 @@
---ドラゴンに乗るワイバーン
+-- ドラゴンに乗るワイバーン
 -- Alligator’s Sword Dragon (Rush)
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
 	Fusion.AddProcMix(c,true,true,88819587,64428736)
-		--Can attack directly
+	--Can attack directly
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -29,8 +29,6 @@ function s.dirtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.dirop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	--Requirement
-	
 	--Effect
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
 		--Direct attack

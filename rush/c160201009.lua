@@ -15,17 +15,17 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:IsHasType(EFFECT_TYPE_ACTIVATE)
 		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.HasDefense),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
-    local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.HasDefense),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-    Duel.SetTargetCard(g)
+	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.HasDefense),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	Duel.SetTargetCard(g)
 end
 function s.filter(c,e)
-	return c:IsFaceup()  and c:HasDefense() and c:IsRelateToEffect(e) and not c:IsImmuneToEffect(e)
+	return c:IsFaceup() and c:HasDefense() and c:IsRelateToEffect(e) and not c:IsImmuneToEffect(e)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,e)
-	local c=e:GetHandler()
-	for tc in aux.Next(sg) do
-		local e1=Effect.CreateEffect(c)
+	if #sg==0 then return end
+	for tc in sg:Iter() do
+		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SWAP_BASE_AD)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)

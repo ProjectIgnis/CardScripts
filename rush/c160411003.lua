@@ -1,4 +1,4 @@
---強欲な壺
+-- 強欲な壺
 -- Pot of Greed (Rush)
 
 local s,id=GetID()

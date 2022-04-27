@@ -1,5 +1,5 @@
 -- ベルセクタクル・マニ
---Berceptacle Mani
+-- Berceptacle Mani
 local s,id=GetID()
 function s.initial_effect(c)
 	--ATK increase
@@ -13,19 +13,14 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-function s.cfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToDeckOrExtraAsCost() 
+function s.cfilter(c)
+	return c:IsType(TYPE_MONSTER) and c:IsAbleToDeckOrExtraAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,2,nil,tp) end
-end
-
-function s.filter(c)
-	return c:IsRace(RACE_CYBERSE) and c:IsFaceup()
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,2,nil) end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetMatchingGroupCount(s.filter2,tp,0,LOCATION_MZONE,1,nil)>0
-	end
+	if chk==0 then return Duel.GetMatchingGroupCount(s.filter2,tp,0,LOCATION_MZONE,1,nil)>0 end
 end
 function s.filter2(c)
 	return c:IsFaceup() and not c:IsMaximumModeSide()
@@ -34,12 +29,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	--Requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_GRAVE,0,2,2,nil,tp)
+	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_GRAVE,0,2,2,nil)
 	Duel.HintSelection(g)
 	if #g>0 and Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
 		local tc=Duel.SelectMatchingCard(tp,s.filter2,tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
-		local atk=Duel.GetMatchingGroupCount(s.filter,tp,LOCATION_MZONE,0,nil)
+		local atk=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsRace,RACE_CYBERSE),tp,LOCATION_MZONE,0,nil)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)

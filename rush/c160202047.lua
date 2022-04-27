@@ -17,11 +17,11 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 end
-function s.filter1(c,e,tp)
+function s.filter1(c,tp)
 	return c:IsSummonPlayer(1-tp) and c:IsLocation(LOCATION_MZONE) and c:IsLevelAbove(5)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.filter1,1,nil,e,tp)
+	return eg:IsExists(s.filter1,1,nil,tp)
 end
 function s.recfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_PYRO) and c:IsLevelAbove(1)
@@ -44,8 +44,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local rec=tc:GetLevel()*200
 		if Duel.Recover(tp,rec,REASON_EFFECT)>0 then
 			Duel.BreakEffect()
-            Duel.SendtoHand(g,nil,REASON_EFFECT)
-            Duel.ConfirmCards(1-tp,e:GetHandler())
+			Duel.SendtoHand(g,nil,REASON_EFFECT)
+			Duel.ConfirmCards(1-tp,e:GetHandler())
 		end
 	end
 end

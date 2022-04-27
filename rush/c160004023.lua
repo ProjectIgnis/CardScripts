@@ -32,7 +32,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local dg=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler())
 	if chkc then return chkc:IsOnField() and s.desfilter(chkc) and chkc~=e:GetHandler() end
 	if chk==0 then return e:GetHandler():IsMaximumMode() and #dg>0 and Duel.IsPlayerCanDraw(tp,1) end
-    Duel.SetOperationInfo(0,CATEGORY_DESTROY,dg,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,dg,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)

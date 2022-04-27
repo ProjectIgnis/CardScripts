@@ -20,7 +20,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() and (chkc:IsType(TYPE_SPELL+TYPE_TRAP) and chkc~=e:GetHandler() end
+	if chkc then return chkc:IsOnField() and chkc:IsType(TYPE_SPELL+TYPE_TRAP) and chkc~=e:GetHandler() end
 	if chk==0 then return Duel.GetMatchingGroupCount(Card.IsType,tp,0,LOCATION_ONFIELD,e:GetHandler(),TYPE_SPELL+TYPE_TRAP)>0 end
 end
 	--Send 1 card from hand to GY to destroy 1 spell/trap your opponent controls

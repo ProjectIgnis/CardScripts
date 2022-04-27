@@ -31,7 +31,7 @@ function s.trop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=aux.SelectUnselectGroup(g,e,tp,2,2,s.trrescon,1,tp,HINTMSG_FACEUP)
 	if #tg>0 then
 		local c=e:GetHandler()
-		for tc tg:Iter() do
+		for tc in tg:Iter() do
 			-- Treat as 2 tributes
 			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 			local e1=aux.summonproc(c,true,true,1,1,SUMMON_TYPE_TRIBUTE,aux.Stringid(id,1),s.otfilter)

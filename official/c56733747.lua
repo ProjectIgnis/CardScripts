@@ -52,9 +52,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_names={CARD_NEOS}
-s.material_setcode={0x8,0x3008,0x9,0x27c}
+s.material_setcode={0x8,0x3008,0x9,0x185}
 function s.ffilter(c,fc,sumtype,tp)
-	return c:IsType(TYPE_FUSION,fc,sumtype,tp) and c:IsSetCard(0x27c,fc,sumtype,tp) 
+	return c:IsType(TYPE_FUSION,fc,sumtype,tp) and c:IsSetCard(0x185,fc,sumtype,tp) 
 end
 --Destroy opponent's cards up to the number of different Attributes
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)

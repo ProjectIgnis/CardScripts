@@ -30,10 +30,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x282}
+s.listed_series={0x182}
 s.listed_names={id}
 function s.tgfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x282) and c:IsAbleToGrave() and not c:IsCode(id) 
+	return c:IsMonster() and c:IsSetCard(0x182) and c:IsAbleToGrave() and not c:IsCode(id) 
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -47,7 +47,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.disfilter(c)
-	return c:IsSetCard(0x282) and c:IsAbleToGrave()
+	return c:IsSetCard(0x182) and c:IsAbleToGrave()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

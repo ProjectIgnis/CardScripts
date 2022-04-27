@@ -14,9 +14,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.actop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x158,0x17b,0x280}
+s.listed_series={0x158,0x17b,0x181}
 function s.actcostfilter(c,tp,dsp,gg,rg)
-	if not ((c:IsSetCard(0x158) or c:IsSetCard(0x17b) or c:IsSetCard(0x280)) and c:IsAbleToRemoveAsCost() 
+	if not ((c:IsSetCard(0x158) or c:IsSetCard(0x17b) or c:IsSetCard(0x181)) and c:IsAbleToRemoveAsCost() 
 		and (c:IsLocation(LOCATION_HAND) or aux.SpElimFilter(c,true))) then return false end
 	return (Duel.GetMZoneCount(tp,c)>0 and (dsp or #(gg-c)>0)) or (rg and #(rg-c)>0)
 end

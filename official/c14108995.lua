@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetTarget(aux.TargetBoolFunction(Card.IsAttribute,ATTRIBUTE_EARTH))
-	e2:SetValue(0x27e)
+	e2:SetValue(0x183)
 	c:RegisterEffect(e2)
 	-- "Vernalizer Fairy" cost replacement
 	local e3=Effect.CreateEffect(c)
@@ -30,10 +30,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.repop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x27e}
+s.listed_series={0x183}
 function s.repval(base,e,tp,eg,ep,ev,re,r,rp,chk,extracon)
 	local c=e:GetHandler()
-	return c:IsMonster() and c:IsSetCard(0x27e) and c:IsDiscardable()
+	return c:IsMonster() and c:IsSetCard(0x183) and c:IsDiscardable()
 end
 function s.repop(base,e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)

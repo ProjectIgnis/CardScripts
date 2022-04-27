@@ -36,10 +36,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_VISAS_STARFROST}
-s.listed_series={0x282}
+s.listed_series={0x182}
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_VISAS_STARFROST),tp,LOCATION_ONFIELD,0,1,nil)
-		or Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x282),tp,LOCATION_MZONE,0,1,nil)
+		or Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x182),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.tgfilter(c)
 	return c:IsType(TYPE_EFFECT) and aux.disfilter1(c)
@@ -77,7 +77,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x282) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(0x182) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

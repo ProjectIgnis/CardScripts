@@ -9,16 +9,16 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x27e))
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x183))
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
 	-- Search 1 "Vernalizer Fairy" card
 	c:RegisterEffect(Effect.CreateVernalizerSPEffect(c,id,0,CATEGORY_TOHAND+CATEGORY_SEARCH,s.thtg,s.thop))
 end
 s.listed_names={id}
-s.listed_series={0x27e}
+s.listed_series={0x183}
 function s.thfilter(c)
-	return c:IsSetCard(0x27e) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(0x183) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

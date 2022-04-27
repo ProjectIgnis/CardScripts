@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	Fusion.AddProcMixN(c,true,true,101109015,1,aux.FilterBoolFunctionEx(Card.IsRace,RACE_AQUA),2)
+	Fusion.AddProcMixN(c,true,true,73956664,1,aux.FilterBoolFunctionEx(Card.IsRace,RACE_AQUA),2)
 	--Cannot be Fusion Material
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
@@ -43,8 +43,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={101009015}
-s.listed_series={0x282}
+s.listed_names={73956664}
+s.listed_series={0x182}
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and chkc:IsControler(1-tp) and chkc:IsAbleToDeck() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD,1,nil) end
@@ -65,7 +65,7 @@ function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.tdcfilter,1,nil,tp)
 end
 function s.gyfilter(c)
-	return c:IsSetCard(0x282) and c:IsAbleToGrave()
+	return c:IsSetCard(0x182) and c:IsAbleToGrave()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

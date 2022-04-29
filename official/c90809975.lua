@@ -78,14 +78,14 @@ function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 	local dc=re:GetHandler()
-	if dc:IsRelateToEffect(re)  then
+	if dc:IsRelateToEffect(re) then
 		if dc:IsDestructable() then
 			Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
 		end
 		local cat=e:GetCategory()
 		if dc:GetOriginalType()&TYPE_MONSTER~=0 then
 			e:SetCategory(cat|CATEGORY_SPECIAL_SUMMON)
-			Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,dc,1,0,dc:GetLocation())
+			Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,dc,1,0,0)
 		else
 			e:SetCategory(cat&~CATEGORY_SPECIAL_SUMMON)
 		end

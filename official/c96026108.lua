@@ -1,5 +1,5 @@
 --竜儀巧－アルζ
---Draitron Al-Zeta
+--Drytron Zeta Aldhibah
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -36,6 +36,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,c:GetLocation())
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.thfilter(c)
 	return c:IsRitualSpell() and c:IsAbleToHand()

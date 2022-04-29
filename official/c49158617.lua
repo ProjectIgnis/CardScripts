@@ -1,5 +1,5 @@
 --双天の調伏
---Souten Exorcism
+--Dual Avatar Defeating Evil
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -27,6 +27,8 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g2=Duel.SelectTarget(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,1,nil)
 	g1:Merge(g2)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g1,2,0,0)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_DRAW,nil,1,tp,1)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_GRAVE)
 end
 function s.filter(c,tp)
 	return c:IsSetCard(0x14e) and c:IsType(TYPE_FUSION) and c:IsPreviousControler(tp)

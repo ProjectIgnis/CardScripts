@@ -3,7 +3,7 @@
 --fixed by CCM
 local s,id=GetID()
 function s.initial_effect(c)
-	--dam register
+	--Register battle damage received
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.atkcon)
 	e1:SetOperation(s.damop)
 	c:RegisterEffect(e1)
-	--LP
+	--Recover LP equal to the damage received
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_DAMAGE)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.rectg)
 	e2:SetOperation(s.recop)
 	c:RegisterEffect(e2)
-	--indes
+	--Cannot be destroyed by battle
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -43,21 +43,23 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local dam=0
 	if c:GetFlagEffectLabel(id)~=nil then dam=c:GetFlagEffectLabel(id) end
 	c:ResetFlagEffect(id)
-	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,dam+ev)
+	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,dam+ev)
 end
 function s.reccon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)<=1 and e:GetHandler():GetBattledGroupCount()>0 and Duel.GetTurnPlayer()~=e:GetHandlerPlayer()
 end
 function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk ==0 then return true end
-	local heal=e:GetHandler():GetFlagEffectLabel(id)
+	if chk==0 then return true end
+	local c=e:GetHandler()
+	local heal=0
+	if c:GetFlagEffectLabel(id)~=nil then heal=c:GetFlagEffectLabel(id) end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(heal)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,heal)
 end
 function s.recop(e,tp,eg,ep,ev,re,r,rp)
-	local heal=e:GetHandler():GetFlagEffectLabel(id)
-	Duel.Recover(tp,heal,REASON_EFFECT)
+	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
+	Duel.Recover(p,d,REASON_EFFECT)
 end
 function s.condition(e)
 	return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_MZONE,0)<=1

@@ -1,5 +1,5 @@
 --守護神-ネフティス
---Nephthys the Palladium Deity
+--Nephthys, the Sacred Preserver
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -51,6 +51,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		e:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 		e:SetOperation(s.thop)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
+		Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
 	elseif op==1 then
 		e:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON)
 		e:SetOperation(s.desop)

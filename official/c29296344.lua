@@ -1,12 +1,12 @@
 --ソーンヴァレル・ドラゴン
---Sawnborrel Dragon
+--Quadborrel Dragon
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
+	--Link Summon
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_DRAGON),2,2,s.lcheck)
 	c:EnableReviveLimit()
-	--destroy
+	--Destroy 1 monster and special summon "Rokket" monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON)
@@ -33,6 +33,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_GRAVE)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x102) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

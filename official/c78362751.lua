@@ -1,5 +1,5 @@
 --しらうおの軍貫
---Icefish Suship
+--Gunkan Suship Shirauo
 --Logical Nonsense
 
 --Substitute ID
@@ -60,6 +60,7 @@ function s.sstg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(s.ssfilter,tp,LOCATION_HAND,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TODECK,nil,1,0,LOCATION_GRAVE)
 end
 	--Check for "Rice Suship"
 function s.tdfilter(c)

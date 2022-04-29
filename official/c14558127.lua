@@ -25,7 +25,7 @@ function s.check(ev,re)
 		local g=Group.CreateGroup()
 		if g1 then g:Merge(g1) end
 		if g2 then g:Merge(g2) end
-		return (((dv1 or 0)|(dv2 or 0))&LOCATION_DECK)~=0 or g:IsExists(Card.IsLocation,nil,LOCATION_DECK)
+		return (((dv1 or 0)|(dv2 or 0))&LOCATION_DECK)~=0 or g:IsExists(Card.IsLocation,1,nil,LOCATION_DECK)
 	end
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)

@@ -1,4 +1,5 @@
 --しっぺ返し
+--Retort
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -21,6 +22,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if re:GetHandler():IsRelateToEffect(re) then
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
 	end
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
 end
 function s.filter(c,code)
 	return c:IsCode(code) and c:IsAbleToHand()

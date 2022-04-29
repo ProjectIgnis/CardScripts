@@ -57,6 +57,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		Duel.SetOperationInfo(0,CATEGORY_DISABLE,nil,1,0,0)
 	elseif op==2 then
 		e:SetCategory(CATEGORY_SPECIAL_SUMMON)
+		Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 	end
 end
 function s.spfilter(c,e,tp)

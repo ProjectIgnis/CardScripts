@@ -1,4 +1,5 @@
 --星墜つる地に立つ閃珖
+--Stardust Re-Spark
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -22,6 +23,8 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1)
 		and at:IsOnField() and at:GetAttack()>=Duel.GetLP(tp)
 		and at:IsSummonType(SUMMON_TYPE_SPECIAL) end
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA+LOCATION_GRAVE)
 end
 function s.filter(c,e,tp)
 	return c:IsSetCard(0xa3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

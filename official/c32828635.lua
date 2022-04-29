@@ -1,5 +1,5 @@
 --エンドレス・オブ・ザ・ワールド
---Endless of the World
+--Cycle of the World
 local s,id=GetID()
 function s.initial_effect(c)
 	Ritual.AddProcGreater({handler=c,filter=s.ritualfil,matfilter=s.forcedgroup})
@@ -39,6 +39,7 @@ end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)

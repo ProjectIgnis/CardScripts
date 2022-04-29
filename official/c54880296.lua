@@ -28,17 +28,18 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_ONFIELD,0,1,nil) end
 	local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_ONFIELD,0,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,#g,0,0)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_DRAW,nil,1,tp,1)
 end
 function s.rtfilter(c,p)
 	return c:IsLocation(LOCATION_HAND) and c:IsControler(p)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_ONFIELD,0,nil) --group to return
-	if #g>0 and Duel.SendtoHand(g,nil,REASON_EFFECT)~=0 then --returns the group
-		local ct=Duel.GetOperatedGroup():FilterCount(s.rtfilter,nil,tp) --gets the returned group
-		if ct==#g then --checks if returned the whole group
-			local ct=5-Duel.GetFieldGroupCount(tp,LOCATION_HAND,0) --gets what I could draw
-			if ct>0 and Duel.IsPlayerCanDraw(tp,ct) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then --if I can AND want to draw
+	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_ONFIELD,0,nil)
+	if #g>0 and Duel.SendtoHand(g,nil,REASON_EFFECT)~=0 then
+		local ct=Duel.GetOperatedGroup():FilterCount(s.rtfilter,nil,tp)
+		if ct==#g then
+			local ct=5-Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
+			if ct>0 and Duel.IsPlayerCanDraw(tp,ct) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 				Duel.Draw(tp,ct,REASON_EFFECT) 
 			end
 		end

@@ -1,5 +1,5 @@
 -- 烙印の気炎
--- Jubilation of the Branded
+-- Branded in High Spirits
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -54,6 +54,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.revfilter,tp,LOCATION_HAND,0,1,nil,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_EXTRA)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.thfilter(c)
 	return (c:IsCode(CARD_ALBAZ) or (c:IsMonster() and aux.IsCodeListed(c,CARD_ALBAZ))) and c:IsAbleToHand()

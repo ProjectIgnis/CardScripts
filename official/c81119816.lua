@@ -1,5 +1,5 @@
 -- プランキッズ・パルス
--- Prankids Pulse 
+-- Prank-Kids Fansies
 local s,id=GetID()
 function s.initial_effect(c)
 	--indes
@@ -23,7 +23,7 @@ end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,0,tp,LOCATION_DECK+LOCATION_HAND)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK+LOCATION_HAND)
 end
 function s.tgfilter(c)
 	return c:IsSetCard(0x120) and c:IsAbleToGrave() and not c:IsCode(id)

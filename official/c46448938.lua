@@ -1,4 +1,5 @@
 --魔導書の神判
+--Spellbook of Judgment
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -15,6 +16,7 @@ s.listed_series={0x106e}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,0,tp,LOCATION_DECK)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

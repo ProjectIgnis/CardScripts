@@ -1,4 +1,5 @@
 --紅玉の宝札
+--Cards of the Red Stone
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -26,6 +27,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(2)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
 function s.tgfilter(c)
 	return c:IsSetCard(0x3b) and c:GetLevel()==7 and c:IsAbleToGrave()

@@ -1,5 +1,5 @@
 --竜輝巧－ルタδ
---Draitron Lta-Delta
+--Draitron Delta Altais
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -36,6 +36,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,c:GetLocation())
+	Duel.SetPossibleOperationInfo(0,CATEGORY_DRAW,nil,1,tp,1)
 end
 function s.drfilter(c,e,tp)
 	return (c:IsRitualMonster() or c:IsRitualSpell()) and not c:IsPublic()

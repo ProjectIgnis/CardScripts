@@ -25,7 +25,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.thfilter(c,lv)
-	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_ROCK) and c:IsLevelBelow(lv)
+	return c:IsMonster() and c:IsRace(RACE_ROCK) and c:IsLevelBelow(lv) and c:IsAbleToHand()
 end
 	--Excavate equal to the number of rock monsters controlled +5, add 1 rock to hand whose level is equal/less than number of revealed cards
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -35,10 +35,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetDecktopGroup(tp,ct)
 	local db=0
 	local dc=g:Filter(s.thfilter,nil,ct)
-	if #g>0 then
+	if #dc>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.DisableShuffleCheck()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local sg=dc:FilterSelect(tp,Card.IsAbleToHand,1,1,nil)
+		local sg=dc:Select(tp,1,1,nil)
 		Duel.SendtoHand(sg,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,sg)
 		Duel.ShuffleHand(tp)

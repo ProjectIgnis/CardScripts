@@ -34,8 +34,6 @@ function s.initial_effect(c)
 	e3:SetTarget(s.gytg)
 	e3:SetOperation(s.gyop)
 	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
-	if not GhostBelleTable then GhostBelleTable={} end
-	table.insert(GhostBelleTable,e3)
 end
 function s.lvtg(e,c)
 	return c:IsLevelAbove(1) and c:GetOwner()~=e:GetHandlerPlayer()

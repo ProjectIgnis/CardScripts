@@ -23,8 +23,6 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	if not GhostBelleTable then GhostBelleTable={} end
-	table.insert(GhostBelleTable,e2)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.sumfilter)
 end
 s.listed_series={0x151}

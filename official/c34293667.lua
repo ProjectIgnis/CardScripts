@@ -21,8 +21,6 @@ function s.initial_effect(c)
 	e2:SetTarget(s.tgtg)
 	e2:SetOperation(s.tgop)
 	c:RegisterEffect(e2)
-	if not GhostBelleTable then GhostBelleTable={} end
-	table.insert(GhostBelleTable,e2)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttackTarget()

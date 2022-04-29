@@ -2,7 +2,7 @@
 --Evil Thorn
 local s,id=GetID()
 function s.initial_effect(c)
-	--Inflict damage and Special SUmmon
+	--Inflict damage and Special Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DAMAGE+CATEGORY_SPECIAL_SUMMON)
@@ -22,6 +22,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,300)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function s.filter(c,e,tp)
 	return c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -39,7 +40,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local sg=g:Select(tp,1,ft,nil)
 		for tc in aux.Next(sg) do
 			if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_ATTACK) then
-				--cannot trigger
+				--Prevent the activation of the effects
 				local e1=Effect.CreateEffect(e:GetHandler())
 				e1:SetType(EFFECT_TYPE_SINGLE)
 				e1:SetCode(EFFECT_CANNOT_TRIGGER)

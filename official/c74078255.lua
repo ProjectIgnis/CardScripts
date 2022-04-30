@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e3:SetCountLimit(1,{id,1})
 	e3:SetCondition(function(e) return e:GetHandler():IsReason(REASON_EFFECT) end)
 	e3:SetTarget(Fusion.SummonEffTG(fusparams))
-	e3:SetOperation(Fusion.SummonEffOP((fusparams))
+	e3:SetOperation(Fusion.SummonEffOP(fusparams))
 	c:RegisterEffect(e3)
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)

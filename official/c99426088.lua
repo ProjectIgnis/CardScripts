@@ -1,10 +1,10 @@
 --魔鍵－マフテア
---Magikey - Maphteah
+--Magikey - Maftea
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
 	--Fusion/Ritual summon
-	local fparams={fusfilter=aux.FilterBoolFunction(Card.IsSetCard,0x167),extrafil=s.fextra}
+	local fparams={fusfilter=aux.FilterBoolFunction(Card.IsSetCard,0x167),extrafil=s.fextra,extratg=s.extfustargt}
 	local rparams={filter=aux.FilterBoolFunction(Card.IsSetCard,0x167),lvtype=RITPROC_GREATER,extrafil=s.rextra,extraop=s.extraop,forcedselection=s.rcheck}
 	local fustg,fusop,rittg,ritop=Fusion.SummonEffTG(fparams),Fusion.SummonEffOP(fparams),Ritual.Target(rparams),Ritual.Operation(rparams)
 	local e1=Effect.CreateEffect(c)
@@ -26,6 +26,10 @@ function s.fextra(e,tp,mg)
 		end
 	end
 	return nil
+end
+function s.extfustargt(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TODECK,nil,0,tp,LOCATION_GRAVE)
 end
 function s.fexfilter(c)
 	return c:IsType(TYPE_NORMAL) and c:IsAbleToGrave()

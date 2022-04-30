@@ -2,11 +2,9 @@
 --Lunalight Fusion
 local s,id=GetID()
 function s.initial_effect(c)
-	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,0xdf),nil,s.fextra)
+	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,0xdf),nil,s.fextra,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,s.extratg)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	c:RegisterEffect(e1)
-	AshBlossomTable=AshBlossomTable or {}
-	table.insert(AshBlossomTable,e1)
 end
 s.listed_series={0xdf}
 function s.fcheck(tp,sg,fc)
@@ -24,3 +22,7 @@ end
 function s.exfilter(c)
 	return c:IsMonster() and c:IsSetCard(0xdf) and c:IsAbleToGrave()
 end
+function s.extratg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK+LOCATION_EXTRA)
+end 

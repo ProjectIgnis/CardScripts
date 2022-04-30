@@ -38,7 +38,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x64}
 s.listed_names={CARD_HARPIE_LADY,CARD_HARPIE_LADY_SISTERS}
-function s.regtg(e,tp,eg,ep,ev,re,r,rp)
+function s.regtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,0,tp,LOCATION_GRAVE)
 end

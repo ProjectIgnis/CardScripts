@@ -18,8 +18,6 @@ function s.initial_effect(c)
 	e1:SetTarget(s.ghtg)
 	e1:SetOperation(s.ghop)
 	c:RegisterEffect(e1)
-	if not GhostBelleTable then GhostBelleTable={} end
-	table.insert(GhostBelleTable,e1)
 	-- Destroy
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))

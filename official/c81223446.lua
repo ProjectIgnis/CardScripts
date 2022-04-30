@@ -5,8 +5,6 @@ function s.initial_effect(c)
 	--Fusion summon 1 fusion monster by banishing monsters from GY, face-down, as material
 	local e1=Fusion.CreateSummonEff(c,nil,s.matfilter,s.fextra,s.extraop,nil,s.stage2,nil,nil,nil,nil,nil,nil,nil,s.extratg)
 	c:RegisterEffect(e1)
-	if not GhostBelleTable then GhostBelleTable={} end
-	table.insert(GhostBelleTable,e1)
 end
 function s.matfilter(c)
 	return aux.SpElimFilter(c) and c:IsAbleToRemove(tp,POS_FACEDOWN)

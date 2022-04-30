@@ -18,8 +18,6 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	e1:SetCountLimit(1,id)
 	c:RegisterEffect(e1)
-	if not GhostBelleTable then GhostBelleTable={} end
-	table.insert(GhostBelleTable,e1)
 end
 function s.lcheck(g,lc,sumtype,tp)
 	return g:CheckDifferentProperty(Card.GetCode,lc,sumtype,tp)

@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
 	--Fusion summon "Gem-Knight" fusion monster
-	local params = {aux.FilterBoolFunction(Card.IsSetCard,0x1047),aux.FALSE,s.fextra,Fusion.ShuffleMaterial,nil,s.stage2}
+	local params = {aux.FilterBoolFunction(Card.IsSetCard,0x1047),aux.FALSE,s.fextra,Fusion.ShuffleMaterial,nil,s.stage2,nil,nil,nil,nil,nil,nil,nil,s.extratarget}
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
@@ -31,8 +31,6 @@ function s.initial_effect(c)
 	e2:SetTarget(Fusion.SummonEffTG(table.unpack(params)))
 	e2:SetOperation(Fusion.SummonEffOP(table.unpack(params)))
 	c:RegisterEffect(e2)
-	if not GhostBelleTable then GhostBelleTable={} end
-	table.insert(GhostBelleTable,e2)
 end
 s.listed_series={0x1047,0x47}
 
@@ -72,4 +70,8 @@ function s.stage2(e,tc,tp,mg,chk)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
 	end
+end
+function s.extratarget(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TODECK,nil,0,tp,LOCATION_GRAVE+LOCATION_REMOVED)
 end

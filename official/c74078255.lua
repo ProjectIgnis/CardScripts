@@ -42,7 +42,7 @@ function s.extramat(e,tp,mg)
 	return Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,LOCATION_GRAVE,0,nil)
 end
 function s.extratarget(e,tp,eg,ep,ev,re,r,rp,chk)
-	--if chk==0 then return true end
+	if chk==0 then return true end
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TODECK,e:GetHandler(),1,tp,LOCATION_GRAVE)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TODECK,nil,0,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE)
 end

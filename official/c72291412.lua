@@ -22,6 +22,6 @@ function s.fextra(e,tp,mg)
 	return nil
 end
 function s.extratarget(e,tp,eg,ep,ev,re,r,rp,chk)
-	--if chk==0 then return true end
+	if chk==0 then return true end
 	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,e:GetHandler(),0,tp,LOCATION_GRAVE)
 end

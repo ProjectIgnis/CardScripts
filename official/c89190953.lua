@@ -6,8 +6,6 @@ function s.initial_effect(c)
 	--activate
 	local e1=Fusion.RegisterSummonEff{handler=c,fusfilter=aux.FilterBoolFunction(Card.IsSetCard,0x145),extrafil=s.fextra,
 									chkf=FUSPROC_NOTFUSION|FUSPROC_LISTEDMATS,stage2=s.stage2,extraop=Fusion.BanishMaterial,extratg=s.extratg}
-	if not GhostBelleTable then GhostBelleTable={} end
-	table.insert(GhostBelleTable,e1)
 end
 s.listed_series={0x145}
 s.listed_names={6007213,32491822,69890967}
@@ -34,4 +32,5 @@ function s.extratg(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,6007213,32491822,69890967),tp,LOCATION_MZONE,0,1,nil) then
 		Duel.SetChainLimit(s.chlimit)
 	end
+	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,nil,0,tp,LOCATION_PUBLIC)
 end

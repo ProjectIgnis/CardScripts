@@ -62,6 +62,6 @@ function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return not c:IsType(TYPE_FUSION) and c:IsLocation(LOCATION_EXTRA)
 end
 function s.extratg(e,tp,eg,ep,ev,re,r,rp,chk)
-	--if chk==0 then return true end
+	if chk==0 then return true end
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TODECK,nil,0,tp,LOCATION_PUBLIC)
 end

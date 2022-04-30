@@ -2,11 +2,9 @@
 --Ghost Fusion
 local s,id=GetID()
 function s.initial_effect(c)
-	local e1=Fusion.CreateSummonEff(c,nil,Fusion.OnFieldMat(aux.FilterBoolFunction(Card.IsRace,RACE_ZOMBIE)),s.fextra,s.extraop)
+	local e1=Fusion.CreateSummonEff(c,nil,Fusion.OnFieldMat(aux.FilterBoolFunction(Card.IsRace,RACE_ZOMBIE)),s.fextra,s.extraop,nil,nil,nil,nil,nil,nil,nil,nil,nil,s.extratg)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	c:RegisterEffect(e1)
-	if not GhostBelleTable then GhostBelleTable={} end
-	table.insert(GhostBelleTable,e1)
 end
 local LOCATION_HAND_DECK_GRAVE=LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE
 function s.fcheck(tp,sg,fc)
@@ -30,4 +28,8 @@ function s.extraop(e,tc,tp,sg)
 		Duel.Remove(rg,POS_FACEUP,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
 		sg:Sub(rg)
 	end
+end
+function s.extratg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,nil,0,tp,LOCATION_HAND_DECK_GRAVE)
 end

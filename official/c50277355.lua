@@ -61,9 +61,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if s.syntg(e,tp,eg,ep,ev,re,r,rp,0) then 
 		s.syntg(e,tp,eg,ep,ev,re,r,rp,1)
 	end
-	if s.xyztg(e,tp,eg,ep,ev,re,r,rp,0) then 
+	if s.xyztg(e,tp,eg,ep,ev,re,r,rp,0) then
 		s.xyztg(e,tp,eg,ep,ev,re,r,rp,1)
 	end
+	Duel.SetPossibleOperationInfo(0,CATEGORY_DRAW,nil,1,tp,2)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_HANDES,nil,1,tp,2)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function s.ritop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Draw(tp,2,REASON_EFFECT)==2 then

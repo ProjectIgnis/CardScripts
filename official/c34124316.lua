@@ -10,13 +10,12 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	if not AshBlossomTable then AshBlossomTable={} end
-	table.insert(AshBlossomTable,e1)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,LOCATION_MZONE)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,0,PLAYER_ALL,LOCATION_DECK)
 end
 function s.spchk(c,e,tp)
 	return c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK|POS_FACEDOWN_DEFENSE)

@@ -1,6 +1,6 @@
+--インペリアル・バウアー
 --Imperial Bower
 --Scripted by fiftyfour
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 2 face card monsters from deck
@@ -15,8 +15,6 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	if not AshBlossomTable then AshBlossomTable={} end
-	table.insert(AshBlossomTable,e1)
 end
 s.listed_names={CARD_JACK_KNIGHT,CARD_KING_KNIGHT,CARD_QUEEN_KNIGHT}
 function s.spcond(e,tp,eg,ep,ev,re,r,rp)
@@ -34,6 +32,8 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_DECK,0,nil,e,tp,ft)
 	if chk==0 then return aux.SelectUnselectGroup(g,e,tp,2,2,aux.dncheck,0) end
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,2,tp,LOCATION_DECK)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_DECK)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)

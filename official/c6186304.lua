@@ -11,8 +11,6 @@ function s.initial_effect(c)
 	e0:SetTarget(s.target)
 	e0:SetOperation(s.activate)
 	c:RegisterEffect(e0)
-	if not GhostBelleTable then GhostBelleTable={} end
-	table.insert(GhostBelleTable,e0)
 	--Cannot draw
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)

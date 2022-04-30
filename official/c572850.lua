@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 	-- Fusion Summon
-	local fusparams={nil,Card.IsAbleToDeck,s.extramat,s.extraop,Fusion.ForcedHandler}
+	local fusparams = {matfilter=Card.IsAbleToDeck,extrafil=s.extramat,extraop=s.extraop,gc=Fusion.ForcedHandler,extratg=s.extratarget}
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
@@ -23,11 +23,9 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_TO_GRAVE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(function(e) return e:GetHandler():IsReason(REASON_EFFECT) end)
-	e2:SetTarget(Fusion.SummonEffTG(table.unpack(fusparams)))
-	e2:SetOperation(Fusion.SummonEffOP(table.unpack(fusparams)))
+	e2:SetTarget(Fusion.SummonEffTG(fusparams))
+	e2:SetOperation(Fusion.SummonEffOP(fusparams))
 	c:RegisterEffect(e2)
-	if not GhostBelleTable then GhostBelleTable={} end
-	table.insert(GhostBelleTable,e2)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -51,6 +49,11 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.extramat(e,tp,mg)
 	return Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,LOCATION_GRAVE,0,nil)
+end
+function s.extratarget(e,tp,eg,ep,ev,re,r,rp,chk)
+	--if chk==0 then return true end
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TODECK,e:GetHandler(),1,tp,LOCATION_GRAVE)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TODECK,nil,0,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE)
 end
 function s.extraop(e,tc,tp,sg)
 	local gg=sg:Filter(Card.IsLocation,nil,LOCATION_HAND+LOCATION_GRAVE)

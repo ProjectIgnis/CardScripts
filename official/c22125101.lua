@@ -85,7 +85,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e0,tp)
 end
 function s.psfilter(c,tp)
-	return c:IsSummonPlayer(tp) and c:IsSummonType(SUMMON_TYPE_PENDULUM)
+	return c:IsSummonPlayer(tp) and c:IsSummonType(SUMMON_TYPE_PENDULUM) and c:HasLevel()
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local ef=e:GetLabelObject()

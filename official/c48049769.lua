@@ -31,17 +31,20 @@ end
 function s.filter(c)
 	return c:IsRace(RACE_THUNDER) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsLevel(4) and c:IsAttackBelow(1600) and c:IsAbleToHand()
 end
+function s.rescon(sg,e,tp,mg)
+	return sg:GetClassCount(Card.GetCode)==1
+end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK,0,nil)
-		return #g>1 and aux.SelectUnselectGroup(g,e,tp,2,2,aux.NOT(aux.dncheck),0)
+		return aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,2,tp,LOCATION_DECK)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK,0,nil)
 	if #g<2 then return end
-	local hg=aux.SelectUnselectGroup(g,e,tp,2,2,aux.NOT(aux.dncheck),1,tp,HINTMSG_ATOHAND)
+	local hg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_ATOHAND)
 	if #hg==2 then
 		Duel.SendtoHand(hg,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,hg)

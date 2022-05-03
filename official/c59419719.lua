@@ -49,9 +49,9 @@ function s.stage2(e,tc,tp,sg,chk)
 		end
 	end
 end
-function s.extratg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.extratarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,nil,0,PLAYER_ALL,LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,0,PLAYER_ALL,LOCATION_GRAVE)
 end
 function s.tgval(e,re,rp)
 	local rc=re:GetHandler()

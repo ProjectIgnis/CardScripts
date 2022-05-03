@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCountLimit(1)
-	e3:SetCondition(function(_,tp) return Duel.IsTurnPlayer(tp)) end
+	e3:SetCondition(function(_,tp) return Duel.IsTurnPlayer(tp) end)
 	e3:SetTarget(s.damtg)
 	e3:SetOperation(s.damop)
 	c:RegisterEffect(e3)

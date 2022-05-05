@@ -1,4 +1,5 @@
---デストーイ・マーチ
+--デストーイ・マーチ (Anime)
+--Frightfur March (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -55,8 +56,7 @@ function s.filter(c,e,tp)
 	return c:IsCanBeEffectTarget(e) and Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c)
 end
 function s.tgfilter(c,e,tp,tc)
-	return c:IsSetCard(0xad) and c:GetLevel()==tc:GetLevel() and c:IsAbleToGrave() and Duel.IsChainDisablable(ev) 
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,c,e,tp,tc)
+	return c:IsSetCard(0xad) and c:GetLevel()==tc:GetLevel() and c:IsAbleToGrave() and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,c,e,tp,tc)
 end
 function s.spfilter(c,e,tp,tc)
 	return c:IsSetCard(0xad) and c:IsType(TYPE_FUSION) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) 

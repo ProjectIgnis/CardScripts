@@ -2,32 +2,32 @@
 --Performage Magic Tactician
 local s,id=GetID()
 function s.initial_effect(c)
-	--pendulum summon
+	--Pendulum summon
 	Pendulum.AddProcedure(c)
-	--
-	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(63251695,0))
-	e2:SetCategory(CATEGORY_DISABLE)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_QUICK_O)
-	e2:SetCode(EVENT_CHAINING)
-	e2:SetRange(LOCATION_PZONE)
-	e2:SetCondition(s.discon)
-	e2:SetCost(s.discost)
-	e2:SetTarget(s.distg)
-	e2:SetOperation(s.disop)
-	c:RegisterEffect(e2)
-	--replace
+	--Negate effect that targets Spell/Trap cards
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(21501505,0))
+	e1:SetDescription(aux.Stringid(63251695,0))
+	e1:SetCategory(CATEGORY_DISABLE)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_QUICK_O)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_CHAINING)
-	e1:SetRange(LOCATION_HAND)
-	e1:SetCondition(s.repcon)
-	e1:SetCost(s.repcost)
-	e1:SetTarget(s.reptg)
-	e1:SetOperation(s.repop)
+	e1:SetRange(LOCATION_PZONE)
+	e1:SetCondition(s.discon)
+	e1:SetCost(s.discost)
+	e1:SetTarget(s.distg)
+	e1:SetOperation(s.disop)
 	c:RegisterEffect(e1)
+	--Target redirect
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(21501505,0))
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_QUICK_O)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e2:SetCode(EVENT_CHAINING)
+	e2:SetRange(LOCATION_HAND)
+	e2:SetCondition(s.repcon)
+	e2:SetCost(s.repcost)
+	e2:SetTarget(s.reptg)
+	e2:SetOperation(s.repop)
+	c:RegisterEffect(e2)
 	--Double Snare
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
@@ -47,8 +47,10 @@ end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local lc=Duel.GetFieldCard(tp,LOCATION_PZONE,0)
 	local rc=Duel.GetFieldCard(tp,LOCATION_PZONE,1)
-	if chk==0 then return (not lc or lc:IsDestructable()) and (not rc or rc:IsDestructable()) end
-	local g=Group.FromCards(lc,rc)
+	if chk==0 then return (lc and lc:IsDestructable()) or (rc and rc:IsDestructable()) end
+	local g=Group.CreateGroup()
+	if lc then g:Add(lc) end
+	if rc then g:Add(rc) end
 	Duel.Destroy(g,REASON_COST)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)

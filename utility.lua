@@ -494,6 +494,17 @@ function Auxiliary.IsCardTypeListed(c,...)
 	end
 	return false
 end
+--Returns true if the Card "c" lists any of the setcodes passed in "..."
+function Auxiliary.HasListedSetCode(c,...)
+	if not c.listed_series then return false end
+	local listed_archetypes={...}
+	for _,wanted in ipairs(listed_archetypes) do
+		for _,listed in ipairs(c.listed_series) do
+			if wanted==listed then return true end
+		end
+	end
+	return false
+end
 --"Can be negated" check for monsters
 function Auxiliary.disfilter1(c)
 	return c:IsFaceup() and not c:IsDisabled() and (not c:IsNonEffectMonster() or c:GetOriginalType()&TYPE_EFFECT~=0)

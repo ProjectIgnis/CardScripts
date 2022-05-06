@@ -1,4 +1,4 @@
---LL-バード・サンクチュアリ
+--ＬＬ－バード・サンクチュアリ
 --Lyrilusc - Bird Sanctuary
 --Scripted by Eerie Code
 local s,id=GetID()
@@ -51,7 +51,7 @@ function s.xyzop(e,tp,eg,ep,ev,re,r,rp)
 	local xc=g:GetNext()
 	if tc:IsImmuneToEffect(e) or xc:IsImmuneToEffect(e) then return end
 	if xc==e:GetLabelObject() then tc,xc=xc,tc end
-	Duel.Overlay(tc,xc,true)
+	Duel.Overlay(tc,xc)
 end
 function s.drcfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:GetOverlayCount()>=3

@@ -23,7 +23,7 @@ function s.tgfilter(c,e,tp)
 end
 function s.rescon(sg,e,tp,mg)
 	local rg=sg:Filter(Card.IsControler,nil,tp)
-    return #rg==1 and Duel.GetMZoneCount(tp,rg)>0
+	return #rg==1 and Duel.GetMZoneCount(tp,rg)>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -43,7 +43,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tg2=g:GetNext()
 	if tg2==e:GetLabelObject() then tg1,tg2=tg2,tg1 end
 	if tg1:IsControler(tp) and Duel.SendtoHand(tg1,nil,REASON_EFFECT)>0 and tg1:IsLocation(LOCATION_HAND)
-		and tg2:IsControler(1-tp) then
+		and tg2 and tg2:IsControler(1-tp) then
 		Duel.GetControl(tg2,tp)
 		if not tg1:IsRitualMonster() then
 			local c=e:GetHandler()

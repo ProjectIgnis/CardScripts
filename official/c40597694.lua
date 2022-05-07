@@ -39,11 +39,21 @@ function s.extrafil(e,tp,mg1)
 end
 function s.stage2(e,tc,tp,sg,chk)
 	if chk==1 then
-		e:GetHandler():SetCardTarget(tc)
+		local c=e:GetHandler()
+		c:SetCardTarget(tc)
+		--Cannot Special Summon from the Extra Deck, except "Gem-Knight" monsters
+		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(aux.Stringid(id,1))
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+		e1:SetTargetRange(1,0)
+		e1:SetTarget(function(_,c) return not c:IsSetCard(0x1047) and c:IsLocation(LOCATION_EXTRA) end)
+		e1:SetReset(RESET_PHASE+PHASE_END)
+		Duel.RegisterEffect(e1,tp)
+		--Clock Lizard check
+		aux.addTempLizardCheck(c,tp,function(_,c) return not c:IsSetCard(0x1047) end)
 	end
-end
-function s.desfilter(c,rc)
-	return rc:GetCardTarget():IsContains(c)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

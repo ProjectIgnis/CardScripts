@@ -55,6 +55,9 @@ function s.stage2(e,tc,tp,sg,chk)
 		aux.addTempLizardCheck(c,tp,function(_,c) return not c:IsSetCard(0x1047) end)
 	end
 end
+function s.desfilter(c,rc)
+	return rc:GetCardTarget():IsContains(c)
+end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:GetCardTargetCount()>0 then

@@ -72,6 +72,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		if ct>0 and #cg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 			local sg=cg:Select(tp,1,ct,nil)
+			Duel.BreakEffect()
 			for tc in aux.Next(sg) do
 				Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 				local e1=Effect.CreateEffect(c)

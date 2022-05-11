@@ -39,7 +39,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
-	e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,1)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,1)
 	e1:SetValue(500)
 	c:RegisterEffect(e1)
 	--Summon limit
@@ -48,17 +48,17 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCode(EFFECT_FORCE_SPSUMMON_POSITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e2:SetTargetRange(1,1)	
+	e2:SetTargetRange(1,1)
 	e2:SetTarget(s.tg)
 	e2:SetValue(POS_DEFENSE)
 	e2:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,1)
 	c:RegisterEffect(e2)
 end
 function s.tg(e,c,rp,sumtype,pos,tp,re)
-    if sumtype==SUMMON_TYPE_MAXIMUM then
-        return c.MaximumAttack and c:IsLevelBelow(9)
-    end
-    return c:IsLevelBelow(9)
+	if sumtype==SUMMON_TYPE_MAXIMUM then
+		return c.MaximumAttack and c:IsLevelBelow(9)
+	end
+	return c:IsLevelBelow(9)
 end
 --position
 function s.filter(c)

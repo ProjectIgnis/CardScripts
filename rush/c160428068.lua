@@ -19,7 +19,7 @@ function s.filter1(c,tp)
 	return c:IsSummonPlayer(1-tp) and c:IsLevelAbove(7) and c:IsFaceup()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.filter,1,nil,tp) 
+	return eg:IsExists(s.filter1,1,nil,tp) 
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

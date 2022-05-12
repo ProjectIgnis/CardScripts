@@ -3,7 +3,7 @@
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
-	--
+	--Place 1 monsters in the S/T zone and place 1 Prey Counter on it
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_COUNTER)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -21,15 +21,15 @@ function s.filter2(c,rc)
 end
 function s.target(e,tp,eg,ev,ep,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_SZONE) and chkc:IsControler(tp) and s.filter1(chkc,tp) end
-	if chk==0 then return Duel.IsExistingTarget(s.filter1,tp,LOCATION_SZONE,0,1,nil,tp) 
+	if chk==0 then return Duel.IsExistingTarget(s.filter1,tp,LOCATION_SZONE,0,1,nil,tp)
 		and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	Duel.SelectTarget(tp,s.filter1,tp,LOCATION_SZONE,0,1,1,nil)
+	Duel.SelectTarget(tp,s.filter1,tp,LOCATION_SZONE,0,1,1,nil,tp)
 end
 function s.activate(e,tp,eg,ev,ep,re,r,rp,chk)
 	local tc=Duel.GetFirstTarget()
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
-	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local g=Duel.SelectMatchingCard(tp,s.filter2,tp,0,LOCATION_MZONE,1,1,nil,tc:GetRace())
 		local tc2=g:GetFirst()
 		if tc2 then

@@ -17,7 +17,7 @@ function s.cfilter(c)
 	return c:IsRace(RACE_AQUA) and c:IsFaceup() and c:IsLevelAbove(8)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,nil)
+	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.desfilter(c)
 	return c:IsLevelBelow(8) and c:IsFaceup()

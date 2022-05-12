@@ -1,4 +1,4 @@
---ソラプヨ
+--トランザム・クライネ
 --Transamu Klein
 local s,id=GetID()
 function s.initial_effect(c)
@@ -17,7 +17,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsExistingMatchingCard(nil,tp,LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.thfilter(c)
-	return c:IsRace(RACE_GALAXY) and c:IsAtttribute(ATTRIBUTE_LIGHT) and c:IsType(TYPE_NORMAL) and c:IsAbleToHand()
+	return c:IsRace(RACE_GALAXY) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsType(TYPE_NORMAL) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,nil) end

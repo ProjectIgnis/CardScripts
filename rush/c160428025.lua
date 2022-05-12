@@ -34,13 +34,15 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	--Effect
 	local g=Duel.GetMatchingGroup(Card.IsCanChangePositionRush,tp,LOCATION_MZONE,0,nil)
-	if #g>0 then
-		Duel.ChangePosition(g,POS_FACEUP_DEFENSE,POS_FACEDOWN_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)
+	if #g>0 and Duel.ChangePosition(g,POS_FACEUP_DEFENSE,POS_FACEDOWN_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)>0
+		and Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(Card.IsFaceup),tp,0,LOCATION_MZONE,1,nil)
+		and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
 		local g2=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(Card.IsFaceup),tp,0,LOCATION_MZONE,1,1,nil)
-		if #g2>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+		if #g2>0 then
 			Duel.HintSelection(g2,true)
 			local atk=(Duel.GetFieldGroupCountRush(tp,LOCATION_MZONE,0)*-800)
-			local tc=g:GetFirst()
+			local tc=g2:GetFirst()
 			--decrease ATK
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)

@@ -51,7 +51,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetTargetRange(1,1)
 	e2:SetTarget(s.tg)
 	e2:SetValue(POS_DEFENSE)
-	e2:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,1)
+	e2:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,1)
 	c:RegisterEffect(e2)
 end
 function s.tg(e,c,rp,sumtype,pos,tp,re)

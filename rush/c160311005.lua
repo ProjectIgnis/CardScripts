@@ -34,6 +34,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	if #g==0 then return end
 	Duel.HintSelection(g,true)
 	if Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)>0 then
+		Duel.ShuffleDeck(tp)
 		--Effect
 		local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 		Duel.Draw(p,d,REASON_EFFECT)

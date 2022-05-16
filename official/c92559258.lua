@@ -101,7 +101,7 @@ function s.ctcost2(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.cttg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCanAddCounter,COUNTER_SPELL,1),tp,LOCATION_ONFIELD,0,1,nil) end
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsCanAddCounter,COUNTER_SPELL,1),tp,LOCATION_ONFIELD,0)
+	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsCanAddCounter,COUNTER_SPELL,1),tp,LOCATION_ONFIELD,0,nil)
 	Duel.SetOperationInfo(0,CATEGORY_COUNTER,g,#g,tp,0)
 end
 function s.ctop2(e,tp,eg,ep,ev,re,r,rp)

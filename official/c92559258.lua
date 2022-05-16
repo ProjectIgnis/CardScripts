@@ -1,4 +1,4 @@
---サーヴァント・オブ・エンディミオン
+--?????????????????
 --Servant of Endymion
 --Scripted by AlphaKretin
 local s,id=GetID()
@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	c:SetSPSummonOnce(id)
 	c:EnableCounterPermit(COUNTER_SPELL,LOCATION_PZONE+LOCATION_MZONE)
 	Pendulum.AddProcedure(c)
-	--Add counter (self)
+	--Place a Spell Counter on itself each time a Spell resolves
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e1:SetCode(EVENT_CHAIN_SOLVING)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_PZONE)
 	e1:SetOperation(s.ctop)
 	c:RegisterEffect(e1)
-	--Special Summon
+	--Special Summon itself and a monster from the Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_COUNTER)
@@ -24,13 +24,13 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--direct attack
+	--Can attack direct while it has Spell Counters
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_DIRECT_ATTACK)
-	e3:SetCondition(s.atkcon)
+	e3:SetCondition(function(e) return e:GetHandler():GetCounter(0x1)>0 end)
 	c:RegisterEffect(e3)
-	--Add counter (mass)
+	--Place 1 Spell Counter on each card that can hold Spell Counters
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_COUNTER)
@@ -38,19 +38,19 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_FREE_CHAIN)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1)
-	e4:SetCondition(s.ctcon2)
+	e4:SetCondition(function(_,tp) return Duel.IsTurnPlayer(1-tp) end)
 	e4:SetCost(s.ctcost2)
 	e4:SetTarget(s.cttg2)
 	e4:SetOperation(s.ctop2)
 	c:RegisterEffect(e4)
-	--counter check
+	--Spell Counter check
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e5:SetCode(EVENT_DESTROY)
 	e5:SetOperation(s.ctchk)
 	e5:SetLabel(0)
 	c:RegisterEffect(e5)
-	--pendulum
+	--Place itself in the Pendulum Zone
 	local e6=Effect.CreateEffect(c)
 	e6:SetDescription(aux.Stringid(id,2))
 	e6:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -79,15 +79,13 @@ function s.spfilter(c,e,tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>1 and c:IsCanBeSpecialSummoned(e,0,tp,false,false) 
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>=2 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,2,tp,LOCATION_PZONE+LOCATION_DECK)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e)
-		or not c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		or not (Duel.GetLocationCount(tp,LOCATION_MZONE)>1)
+	if not (c:IsRelateToEffect(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and (Duel.GetLocationCount(tp,LOCATION_MZONE)>=2))
 		or Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	if #g>0 then
@@ -97,27 +95,18 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetCounter(0x1)>0
-end
-function s.ctcon2(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
-end
 function s.ctcost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
 end
 function s.cttg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsCanAddCounter(COUNTER_SPELL,1)
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCanAddCounter,COUNTER_SPELL,1),tp,LOCATION_ONFIELD,0,1,c) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCanAddCounter,COUNTER_SPELL,1),tp,LOCATION_ONFIELD,0,1,nil) end
+	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsCanAddCounter,COUNTER_SPELL,1),tp,LOCATION_ONFIELD,0)
+	Duel.SetOperationInfo(0,CATEGORY_COUNTER,g,#g,tp,0)
 end
 function s.ctop2(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) or not c:IsFaceup() or not c:IsCanAddCounter(COUNTER_SPELL,1) then return end
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsCanAddCounter,COUNTER_SPELL,1),tp,LOCATION_ONFIELD,0,c)
+	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsCanAddCounter,COUNTER_SPELL,1),tp,LOCATION_ONFIELD,0,nil)
 	if #g>0 then
-		g:AddCard(c)
 		g:ForEach(Card.AddCounter,COUNTER_SPELL,1)
 	end
 end

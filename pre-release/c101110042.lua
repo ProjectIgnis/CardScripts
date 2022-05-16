@@ -107,7 +107,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return ep==1-tp and re:IsActiveType(TYPE_MONSTER) and c:GetFlagEffect(id)~=0
+	return ep==1-tp and re:IsActiveType(TYPE_MONSTER) and c:GetFlagEffect(1)~=0
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

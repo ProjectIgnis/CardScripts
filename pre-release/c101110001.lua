@@ -35,7 +35,7 @@ function s.spcon(e,c)
 end
 function s.spfilter(c,e,tp,ec)
 	return c:IsCode(CARD_BLACK_WINGED_DRAGON) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and Duel.GetLocationCountFromEx(tp,tp,c,ec)>0
+		and Duel.GetLocationCountFromEx(tp,tp,ec,c)>0
 end
 function s.tgfilter(c)
 	return c:IsSetCard(0x33) and not c:IsType(TYPE_TUNER) and c:HasLevel() and c:IsAbleToGrave()

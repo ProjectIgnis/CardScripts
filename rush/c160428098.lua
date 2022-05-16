@@ -22,7 +22,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,600)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsLevelAbove(7)
+	return c:IsFaceup() and c:IsLevel(7)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)

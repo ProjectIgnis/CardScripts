@@ -1,5 +1,5 @@
 --DDD赦俿王デス・マキナ
---D/D/D Amnesty King Doom Makina
+--D/D/D Deviser King Deus Machinex
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	c:SetUniqueOnField(1,0,id,LOCATION_MZONE)
 	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_FIEND),10,2,s.ovfilter,aux.Stringid(id,0))
 	Pendulum.AddProcedure(c,false)
-	--special summon
+	--Special Summon a card from the Pendulum Zone
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--attach
+	--Attach opponent's monster card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,2))
 	e2:SetCategory(CATEGORY_DESTROY)
@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.distg)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
-	--pendulum zone
+	--Place itsel in the Pendulum zone
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,3))
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -81,8 +81,9 @@ function s.desfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0xae)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():GetOverlayCount()>=2
-		or Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_ONFIELD,0,1,nil) end
+	local c=e:GetHandler()
+	if chk==0 then return c:IsType(TYPE_XYZ) and (c:GetOverlayCount()>=2
+		or Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_ONFIELD,0,1,nil)) end
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -101,7 +102,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		success=#dg>0 and Duel.Destroy(dg,REASON_EFFECT)>0
 	end
 	local rc=re:GetHandler()
-	if success and rc:IsRelateToEffect(re) and c:IsRelateToEffect(e) and not rc:IsImmuneToEffect(e) then
+	if success and rc:IsRelateToEffect(re) and c:IsRelateToEffect(e) and c:IsType(TYPE_XYZ) and not rc:IsImmuneToEffect(e) then
 		Duel.Overlay(c,rc,true)
 	end
 end

@@ -2,7 +2,7 @@
 --Tag-Up-Magic Sacrifice Force
 local s,id=GetID()
 function s.initial_effect(c)
---Activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.costfilter(c)
-	return  c:IsAttribute(ATTRIBUTE_FIRE) and c:IsFaceup() and c:IsAbleToGraveAsCost()
+	return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsFaceup() and c:IsAbleToGraveAsCost()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -28,25 +28,22 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	-- requirement
+	--Requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.costfilter),tp,LOCATION_MZONE,0,1,1,nil)
+	g=g:AddMaximumCheck()
 	local ct=Duel.SendtoGrave(g,REASON_COST)
-	if ct>0 then
-		--Effect
-		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local g2=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
-		if #g2>0 then
-			Duel.SpecialSummon(g2,0,tp,tp,false,false,POS_FACEUP)
-			if g:GetFirst():IsLevel(8) and Duel.GetFieldGroupCount(tp,0,LOCATION_SZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
-				Duel.BreakEffect()
-				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-				local sg=Duel.SelectMatchingCard(tp,nil,tp,0,LOCATION_SZONE,1,1,nil)
-				if #sg>0 then
-					Duel.Destroy(sg,REASON_EFFECT)
-				end
-			end
+	if ct==0 or Duel.GetLocationCount(tp,LOCATION_MZONE)==0 then return end
+	--Effect
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local g2=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
+	if #g2>0 and Duel.SpecialSummon(g2,0,tp,tp,false,false,POS_FACEUP)>0 and g:GetFirst():IsLevel(8)
+		and Duel.GetFieldGroupCount(tp,0,LOCATION_SZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+		Duel.BreakEffect()
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+		local sg=Duel.SelectMatchingCard(tp,nil,tp,0,LOCATION_SZONE,1,1,nil)
+		if #sg>0 then
+			Duel.Destroy(sg,REASON_EFFECT)
 		end
 	end
 end

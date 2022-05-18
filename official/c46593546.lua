@@ -81,9 +81,8 @@ function s.desfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0xae)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsType(TYPE_XYZ) and (c:GetOverlayCount()>=2
-		or Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_ONFIELD,0,1,nil)) end
+	if chk==0 then return e:GetHandler():GetOverlayCount()>=2
+		or Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_ONFIELD,0,1,nil) end
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

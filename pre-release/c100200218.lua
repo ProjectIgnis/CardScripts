@@ -5,6 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Set Cont. Trap from hand or GY
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetTarget(s.sttg)
@@ -40,19 +41,19 @@ function s.stop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_TRAP),tp,LOCATION_ONFIELD,0,1,nil) end
+	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsType,TYPE_TRAP),tp,LOCATION_ONFIELD,0,nil)
-	if #g==0 then return end
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,2)
 	local c=e:GetHandler()
-	for tc in g:Iter() do
-		--Cannot be destroyed by opponent's card effects
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-		e1:SetValue(aux.indoval)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,2)
-		tc:RegisterEffect(e1)
-	end
+	--Your face-up Traps cannot be destroyed by the opponent's effects
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+	e1:SetTargetRange(LOCATION_ONFIELD,0)
+	e1:SetTarget(function(_,c) return c:IsFaceup() and c:IsType(TYPE_TRAP) end)
+	e1:SetValue(aux.indoval)
+	e1:SetReset(RESET_PHASE+PHASE_END,2)
+	Duel.RegisterEffect(e1,tp)
+	aux.RegisterClientHint(c,0,tp,1,0,aux.Stringid(id,2),0,2)
 end

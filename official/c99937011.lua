@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.rmop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={100428025,CARD_EXCHANGE_SPIRIT}
+s.listed_names={98715423,CARD_EXCHANGE_SPIRIT}
 function s.spcostfilter(c)
 	return c:IsAttribute(ATTRIBUTE_EARTH) and c:IsRace(RACE_FAIRY) and c:IsDiscardable()
 end
@@ -45,7 +45,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
 function s.plfilter(c)
-	return c:IsCode(100428025) and not c:IsForbidden()
+	return c:IsCode(98715423) and not c:IsForbidden()
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

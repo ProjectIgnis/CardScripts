@@ -55,6 +55,7 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	Duel.SetTargetCard(eg:GetFirst())
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 	--Special summon itself from hand
@@ -62,7 +63,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 and (tc:IsFaceup() and c:IsFaceup()) and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+	if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 and tc:IsRelateToEffect(e) and tc:IsFaceup() and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 		local g=Group.FromCards(c,tc):Filter(Card.IsFaceup,nil,nil)
 		--This card and the normal summoned monster becomes level 5 or 7
 		local lv=Duel.AnnounceLevel(tp,5,7,6)

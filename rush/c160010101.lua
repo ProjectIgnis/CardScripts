@@ -30,7 +30,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	if Duel.DiscardDeck(tp,1,REASON_COST)<1 then return end
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(s.desfilter,tp),0,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(s.desfilter),tp,0,LOCATION_MZONE,nil)
 	if Duel.Destroy(g,REASON_EFFECT)>0 and c:IsRelateToEffect(e) and c:IsFaceup() then
 		Duel.BreakEffect()
 		local ct=Duel.GetOperatedGroup():GetCount()

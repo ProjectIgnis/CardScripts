@@ -18,7 +18,7 @@ function s.psyfilter(c)
 	return c:IsFaceup() and (c:IsRace(RACE_PSYCHIC) or c:IsRace(RACE_OMEGAPSYCHIC))
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.psyfilter,tp,0,LOCATION_MZONE,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(s.psyfilter,tp,LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) end

@@ -26,7 +26,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		{b1,aux.Stringid(id,1)},
 		{b2,aux.Stringid(id,2)},
 		{b3,aux.Stringid(id,3)})
-	if op==0 then return end
+	if not op then return end
 	local code=0
 	if op==1 then
 		code=EFFECT_CANNOT_ACTIVATE

@@ -49,7 +49,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g=Duel.SelectTarget(tp,s.thfilter,tp,0,LOCATION_MZONE,1,1,nil)
 	g:AddCard(e:GetHandler())
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,2,0,LOCATION_MZONE)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,g,2,0,LOCATION_MZONE)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOGRAVE,nil,1,1-tp,LOCATION_DECK+LOCATION_EXTRA)
 end
 function s.cfilter(c,code)

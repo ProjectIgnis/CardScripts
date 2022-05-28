@@ -21,11 +21,11 @@ end
 function s.check(ev,category)
 	local ex1,g1,gc1,dp1,loc1=Duel.GetOperationInfo(ev,category)
 	local ex2,g2,gc2,dp2,loc2=Duel.GetPossibleOperationInfo(ev,category)
-	if not ex1 and not ex2 then return false end
+	if not (ex1 or ex2) then return false end
 	local g=Group.CreateGroup()
 	if g1 then g:Merge(g1) end
 	if g2 then g:Merge(g2) end
-	return (((loc1 or 0)|(loc2 or 0))&LOCATION_GRAVE)~=0 or g:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE)
+	return (((loc1 or 0)|(loc2 or 0))&LOCATION_GRAVE)~=0 or (#g>0 and g:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE))
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsChainNegatable(ev) then return false end

@@ -49,10 +49,16 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 	--Activation legality
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
-	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
+	local rc=e:GetLabelObject():GetFirst()
+	if rc:IsCode(CARD_RICE_SUSHIP) then
+		Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
+	else
+		Duel.SetOperationInfo(0,CATEGORY_TODECK,rc,1,0,0)
+	end
 end
 	--Special summon itself from hand
 function s.spop(e,tp,eg,ep,ev,re,r,rp)

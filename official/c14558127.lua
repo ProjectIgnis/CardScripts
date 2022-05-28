@@ -21,19 +21,20 @@ function s.check(ev,re)
 		if not checkloc and re:IsHasCategory(category) then return true end
 		local ex1,g1,gc1,dp1,dv1=Duel.GetOperationInfo(ev,category)
 		local ex2,g2,gc2,dp2,dv2=Duel.GetPossibleOperationInfo(ev,category)
-		if not ex1 and not ex2 then return false end
+		if not (ex1 or ex2) then return false end
+		if category==CATEGORY_DRAW or category==CATEGORY_DECKDES then return true end
 		local g=Group.CreateGroup()
 		if g1 then g:Merge(g1) end
 		if g2 then g:Merge(g2) end
-		return (((dv1 or 0)|(dv2 or 0))&LOCATION_DECK)~=0 or g:IsExists(Card.IsLocation,1,nil,LOCATION_DECK)
+		return (((dv1 or 0)|(dv2 or 0))&LOCATION_DECK)~=0 or (#g>0 and g:IsExists(Card.IsLocation,1,nil,LOCATION_DECK))
 	end
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if re:GetHandler():IsDisabled() or not Duel.IsChainDisablable(ev) then return false end
 	local checkfunc=s.check(ev,re)
 	return checkfunc(CATEGORY_TOHAND,true) or checkfunc(CATEGORY_SPECIAL_SUMMON,true)
-		or checkfunc(CATEGORY_TOGRAVE,true) or checkfunc(CATEGORY_DRAW,false)
-		or checkfunc(CATEGORY_SEARCH,false) or checkfunc(CATEGORY_DECKDES,false)
+		or checkfunc(CATEGORY_TOGRAVE,true) or checkfunc(CATEGORY_DRAW,true) or checkfunc(CATEGORY_DRAW,false)
+		or checkfunc(CATEGORY_SEARCH,false) or checkfunc(CATEGORY_DECKDES,true) or checkfunc(CATEGORY_DECKDES,false)
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

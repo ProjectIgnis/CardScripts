@@ -5,7 +5,7 @@ function s.initial_effect(c)
 	--Draw 1 card, shuffle 1 Dinousaur monster into the deck and search 1 "Evoltile" monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_DRAW+CATEGORY_SEARCH)
+	e1:SetCategory(CATEGORY_DRAW+CATEGORY_SEARCH+CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_TRIGGER_F+EFFECT_TYPE_SINGLE)
 	e1:SetCode(EVENT_RELEASE)
 	e1:SetCondition(s.condition)

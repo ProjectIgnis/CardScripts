@@ -47,7 +47,7 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.fdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetPossibleOperationInfo(0,CATEGORY_POSITION,nil,0,0,0) --uncertain
+	Duel.SetPossibleOperationInfo(0,CATEGORY_POSITION,nil,0,PLAYER_ALL,LOCATION_MZONE)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function s.fdop(e,tp,eg,ep,ev,re,r,rp)

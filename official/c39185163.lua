@@ -45,7 +45,7 @@ function s.disrmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.GetFlagEffect(tp,id+1)==0
 	if chk==0 then return b1 or b2 end
 	Duel.SetPossibleOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
-	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_MZONE+LOCATION_GRAVE)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,nil,1,PLAYER_EITHER,LOCATION_MZONE+LOCATION_GRAVE)
 end
 function s.disrmop(e,tp,eg,ep,ev,re,r,rp)
 	local b1=Duel.IsChainDisablable(ev) and Duel.GetFlagEffect(tp,id)==0

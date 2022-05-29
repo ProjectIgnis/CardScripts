@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	--Destroy 1 monster and special summon "Rokket" monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON)
+	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_MZONE)
@@ -34,7 +34,10 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tc=Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil):GetFirst()
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tc,1,0,0)
 	if tc:IsLinkMonster() then
+		e:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON)
 		Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_GRAVE)
+	else
+		e:SetCategory(CATEGORY_DESTROY)
 	end
 end
 function s.spfilter(c,e,tp)

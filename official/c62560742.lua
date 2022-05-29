@@ -27,7 +27,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
 	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,1,0,0)
-	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,LOCATION_GRAVE)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function s.mgfilter(c,e,tp,sync)
 	return c:IsControler(tp) and c:IsLocation(LOCATION_GRAVE)

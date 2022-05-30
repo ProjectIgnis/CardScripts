@@ -23,7 +23,7 @@ end
 s.listed_names={54493213}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
 end
 function s.filter(c,e,sp)
 	return c:IsCode(54493213) and c:IsCanBeSpecialSummoned(e,0,sp,false,false)

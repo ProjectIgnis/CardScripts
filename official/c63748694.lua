@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetCode(EFFECT_CHANGE_CODE)
 	e1:SetRange(LOCATION_MZONE+LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE)
-	e1:SetValue(CARD_RICE_SUSHIP)
+	e1:SetValue(CARD_SUSHIP_SHARI)
 	c:RegisterEffect(e1)
 	--Special Summon itself from the hand
 	local e2=Effect.CreateEffect(c)
@@ -25,10 +25,10 @@ function s.initial_effect(c)
 	if not AshBlossomTable then AshBlossomTable={} end
 	table.insert(AshBlossomTable,e2)
 end
-s.listed_names={CARD_RICE_SUSHIP}
+s.listed_names={CARD_SUSHIP_SHARI}
 s.listed_series={0x168}
 function s.cfilter(c)
-	return c:IsCode(CARD_RICE_SUSHIP) and not c:IsPublic()
+	return c:IsCode(CARD_SUSHIP_SHARI) and not c:IsPublic()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -45,7 +45,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
 function s.spfilter(c,e,tp,mc)
-	return c:IsSetCard(0x168) and not c:IsCode(CARD_RICE_SUSHIP) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x168) and not c:IsCode(CARD_SUSHIP_SHARI) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,mc,c)
 end
 function s.xyzfilter(c,e,tp,mc1,mc2)

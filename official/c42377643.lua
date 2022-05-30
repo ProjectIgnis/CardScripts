@@ -1,5 +1,5 @@
 --うにの軍貫
---Urchin Suship
+--Gunkan Suship Uni
 --Logical Nonsense
 
 --Substitute ID
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--Change targeted "Suship" monster's level to 4 or 5
+	--Change targeted "Gunkan" monster's level to 4 or 5
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -28,12 +28,12 @@ function s.initial_effect(c)
 	e2:SetOperation(s.lvop)
 	c:RegisterEffect(e2)
 end
-	--Lists "Suship" archetype
+	--Lists "Gunkan" archetype
 s.listed_series={0x168}
-	--Specifically lists "Rice Suship"
-s.listed_names={CARD_RICE_SUSHIP}
+	--Specifically lists "Gunkan Suship Shari"
+s.listed_names={CARD_SUSHIP_SHARI}
 
-	--Check for a "Suship" card to reveal
+	--Check for a "Gunkan" card to reveal
 function s.cfilter(c)
 	return c:IsSetCard(0x168) and not c:IsPublic()
 end
@@ -59,17 +59,17 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 
 		and g:GetFirst():IsRelateToEffect(e) then
-		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and g:GetFirst():IsCode(CARD_RICE_SUSHIP) and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
+		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and g:GetFirst():IsCode(CARD_SUSHIP_SHARI) and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
 			Duel.BreakEffect()
 			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
-		elseif not g:GetFirst():IsCode(CARD_RICE_SUSHIP) then
+		elseif not g:GetFirst():IsCode(CARD_SUSHIP_SHARI) then
 			Duel.BreakEffect()
 			Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 		end
 	end
 	g:DeleteGroup()
 end
-	--Check for a "Suship" monster with a level
+	--Check for a "Gunkan" monster with a level
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x168) and c:HasLevel()
 end
@@ -80,11 +80,11 @@ function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)
 end
-	--Check for "Rice Suship" to add
+	--Check for "Gunkan Suship Shari" to add
 function s.thfilter(c)
-	return c:IsCode(CARD_RICE_SUSHIP) and c:IsAbleToHand()
+	return c:IsCode(CARD_SUSHIP_SHARI) and c:IsAbleToHand()
 end
-	--Change targeted "Suship" monster's level to 4 or 5
+	--Change targeted "Gunkan" monster's level to 4 or 5
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then

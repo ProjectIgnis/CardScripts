@@ -1,7 +1,7 @@
 --弩級軍貫－いくら型一番艦
---Dreadnought Suship - Roe-class First Wardish
+--Gunkan Suship Ikura-class Dreadnought
 --Scripted by The Razgriz
-
+local CARD_SUSHIP_IKURA=61027400
 local s,id=GetID()
 function s.initial_effect(c)
 	--Xyz summon
@@ -40,8 +40,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x168}
-s.listed_names={CARD_RICE_SUSHIP,61027400}
-
+s.listed_names={CARD_SUSHIP_SHARI,CARD_SUSHIP_IKURA}
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	if ep==tp then return false end
 	local rc=eg:GetFirst()
@@ -70,11 +69,11 @@ end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local effs=e:GetLabel()
-	--"Rice Suship": Draw 1 card.
+	--"Gukan Suship Shari": Draw 1 card
 	if (effs&1)~=0 and Duel.IsPlayerCanDraw(tp,1) then
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end
-	--"Roe Suship": This card can make a second attack during each Battle Phase.
+	--"Gukan Suship Ikura": This card can make a second attack during each Battle Phase.
 	if (effs&(1<<1))~=0 then
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(3201)
@@ -82,15 +81,16 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_EXTRA_ATTACK)
 		e1:SetValue(1)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e1)
 	end
 end
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	local effs=0
-	--Check for "Rice Suship".
-	if g:IsExists(Card.IsCode,1,nil,CARD_RICE_SUSHIP) then effs=1 end
-	--Check for "Roe Suship".
-	if g:IsExists(Card.IsCode,1,nil,61027400) then effs=effs|(1<<1) end
+	--Check for "Gukan Suship Shari":
+	if g:IsExists(Card.IsCode,1,nil,CARD_SUSHIP_SHARI) then effs=1 end
+	--Check for "Gukan Suship Ikura":
+	if g:IsExists(Card.IsCode,1,nil,CARD_SUSHIP_IKURA) then effs=effs|(1<<1) end
 	e:GetLabelObject():SetLabel(effs)
 end

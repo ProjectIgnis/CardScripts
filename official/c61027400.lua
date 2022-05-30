@@ -1,5 +1,5 @@
 --いくらの軍貫
---Roe Suship
+--Gunkan Suship Ikura
 --Coded by V.J.Wilson
 
 local s,id=GetID()
@@ -25,18 +25,18 @@ function s.initial_effect(c)
 	e2:SetOperation(s.excop)
 	c:RegisterEffect(e2)
 end
-s.listedNames={CARD_RICE_SUSHIP}
+s.listed_names={CARD_SUSHIP_SHARI}
 
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_RICE_SUSHIP),c:GetControler(),LOCATION_ONFIELD,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_SUSHIP_SHARI),c:GetControler(),LOCATION_ONFIELD,0,1,nil)
 end
 function s.exctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>2 end
 end
 function s.excfilter(c,e,tp)
-	return c:IsCode(CARD_RICE_SUSHIP) and (c:IsAbleToHand() or c:IsCanBeSpecialSummoned(e,0,tp,false,false))
+	return c:IsCode(CARD_SUSHIP_SHARI) and (c:IsAbleToHand() or c:IsCanBeSpecialSummoned(e,0,tp,false,false))
 end
 function s.excop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<3 then return end

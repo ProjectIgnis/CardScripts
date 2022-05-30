@@ -1,5 +1,5 @@
 --しらうおの軍貫
---Icefish Suship
+--Gunkan Suship Shirauo
 --Logical Nonsense
 
 --Substitute ID
@@ -27,14 +27,14 @@ function s.initial_effect(c)
 	e2:SetOperation(s.ssop)
 	c:RegisterEffect(e2)
 end
-	--Lists "Suship" archetype
+	--Lists "Gunkan" archetype
 s.listed_series={0x168}
-	--Specifically lists itself and "Rice Suship"
-s.listed_names={id,CARD_RICE_SUSHIP}
+	--Specifically lists itself and "Gunkan Suship Shari"
+s.listed_names={id,CARD_SUSHIP_SHARI}
 
-	--Check for a "Rice Suship" you control (in MZ or as overlay material)
+	--Check for a "Gunkan Suship Shari" you control (in MZ or as overlay material)
 function s.xyzfilter(c)
-	return c:IsFaceup() and (c:IsCode(CARD_RICE_SUSHIP) or (c:GetOverlayCount()>0 and c:GetOverlayGroup():IsExists(Card.IsCode,1,nil,CARD_RICE_SUSHIP)))
+	return c:IsFaceup() and(c:IsCode(CARD_SUSHIP_SHARI) or (c:GetOverlayCount()>0 and c:GetOverlayGroup():IsExists(Card.IsCode,1,nil,CARD_SUSHIP_SHARI)))
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -51,7 +51,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
-	--Check for a "Suship" monster, except "Icefish Suship"
+	--Check for a "Gunkan" monster, except "Gunkan Suship Shirauo"
 function s.ssfilter(c,e,tp)
 	return c:IsSetCard(0x168) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -61,11 +61,11 @@ function s.sstg(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.IsExistingMatchingCard(s.ssfilter,tp,LOCATION_HAND,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
-	--Check for "Rice Suship"
+	--Check for "Gunkan Sushup Shari"
 function s.tdfilter(c)
-	return c:IsCode(CARD_RICE_SUSHIP) and c:IsAbleToDeck()
+	return c:IsCode(CARD_SUSHIP_SHARI) and c:IsAbleToDeck()
 end
-	--Special summon 1 "Suship" monster from hand, except "Icefish Suship"
+	--Special summon 1 "Gunkan" monster from hand, except "Gunkan Suship Shirauo"
 function s.ssop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -73,7 +73,7 @@ function s.ssop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)>0 then
 		local sg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.tdfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,nil)
 		if #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
-			--Move any number of "Rice Suships" from deck/GY to top of deck
+			--Move any number of "Gunkan Suship Shari" from deck/GY to top of deck
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 			local tg=sg:Select(tp,1,#sg,nil)

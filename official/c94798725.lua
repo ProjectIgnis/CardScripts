@@ -1,9 +1,7 @@
 --超弩級軍貫－うに型二番艦
---Superdreadnought Suship - Urchin-Class Second Wardish
+--Gunkan Suship Uni-class Super-Dreadnought
 --Scripted by DyXel
-
-local URCHIN_SUSHIP_CODE=42377643 --TODO: Update when released.
-
+local CARD_SUSHIP_UNI=42377643
 local s,id=GetID()
 function s.initial_effect(c)
 	--Xyz Summon.
@@ -43,7 +41,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x168}
-s.listed_names={CARD_RICE_SUSHIP,URCHIN_SUSHIP_CODE}
+s.listed_names={CARD_SUSHIP_SHARI,CARD_SUSHIP_UNI}
 
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return (Duel.IsTurnPlayer(tp) and Duel.IsMainPhase()) or
@@ -102,11 +100,11 @@ end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local effs=e:GetLabel()
-	--"Rice Suship": Draw 1 card.
+	--"Gunkan Suship Shari": Draw 1 card.
 	if (effs&1)~=0 then
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end
-	--"Urchin Suship": This card can attack directly.
+	--"Gunkan Suship Uni: This card can attack directly.
 	if (effs&(1<<1))~=0 then
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(3205)
@@ -120,9 +118,9 @@ end
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	local effs=0
-	--Check for "Rice Suship".
-	if g:IsExists(Card.IsCode,1,nil,CARD_RICE_SUSHIP) then effs=1 end
-	--Check for "Urchin Suship".
-	if g:IsExists(Card.IsCode,1,nil,URCHIN_SUSHIP_CODE) then effs=effs|(1<<1) end
+	--Check for "Gunkan Suship Shari".
+	if g:IsExists(Card.IsCode,1,nil,CARD_SUSHIP_SHARI) then effs=1 end
+	--Check for "Gunkan Suship Uni".
+	if g:IsExists(Card.IsCode,1,nil,CARD_SUSHIP_UNI) then effs=effs|(1<<1) end
 	e:GetLabelObject():SetLabel(effs)
 end

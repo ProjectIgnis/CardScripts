@@ -1,9 +1,8 @@
 --きまぐれ軍貫握り
---Suship Roll Specials
-
+--Gunkan Suship Daily Special
 local s,id=GetID()
 function s.initial_effect(c)
-	--Select 3 "Suship" monster from deck, add 1 to hand
+	--Reveal 3 "Gunkan" monsters from deck and add 1 to hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -13,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--Shuffle 3 "Suship" monsters to deck, draw 1
+	--Shuffle 3 "Gunkan" monsters to deck and draw 1 card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW)
@@ -28,10 +27,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x168}
-s.listed_series={CARD_RICE_SUSHIP}
-
+s.listed_series={CARD_SUSHIP_SHARI}
 function s.cfilter(c)
-	return c:IsCode(CARD_RICE_SUSHIP) and not c:IsPublic() 
+	return c:IsCode(CARD_SUSHIP_SHARI) and not c:IsPublic() 
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -80,15 +78,17 @@ function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		and Duel.IsExistingTarget(s.tdfilter,tp,LOCATION_GRAVE,0,3,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectTarget(tp,s.tdfilter,tp,LOCATION_GRAVE,0,3,3,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,#g,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,#g,tp,0)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
-	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
-	if #tg<=0 then return end
+	local tg=Duel.GetTargetCards(e)
+	if #tg==0 then return end
 	Duel.SendtoDeck(tg,nil,0,REASON_EFFECT)
 	local g=Duel.GetOperatedGroup()
-	if g:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then Duel.ShuffleDeck(tp) end
+	if g:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then
+		Duel.ShuffleDeck(tp)
+	end
 	local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_DECK+LOCATION_EXTRA)
 	if ct>0 then
 		Duel.BreakEffect()

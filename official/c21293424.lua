@@ -1,15 +1,13 @@
 --空母軍貫－しらうお型特務艦
---Carrier Suship - Icefish-Class Auxiliary Dish
+--Gunkan Suship Shirauo-class Carrier
 --Scripted by DyXel
-
-local ICEFISH_SUSHIP_CODE=78362751 --TODO: Update when released.
-
+local CARD_SUSHIP_SHIRAUO=78362751
 local s,id=GetID()
 function s.initial_effect(c)
 	--Xyz Summon.
 	Xyz.AddProcedure(c,nil,4,2)
 	c:EnableReviveLimit()
-	--Protection agaisnt opp effects, atk+=base_def.
+	--"Gunkan" monsters cannot be destroyed by opponent's effects
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_FIELD)
 	e0:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
@@ -19,6 +17,7 @@ function s.initial_effect(c)
 	e0:SetTarget(s.conttg)
 	e0:SetValue(aux.indoval)
 	c:RegisterEffect(e0)
+	--"Gunkan" monsters gain ATK equal to their original DEF
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetRange(LOCATION_MZONE)
@@ -28,7 +27,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.conttg)
 	e1:SetValue(function(_,c)return c:GetBaseDefense() end)
 	c:RegisterEffect(e1)
-	--Gains effects based on material.
+	--Gains effects based on material
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_DRAW+CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -48,8 +47,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x168}
-s.listed_names={CARD_RICE_SUSHIP,ICEFISH_SUSHIP_CODE}
-
+s.listed_names={CARD_SUSHIP_SHARI,CARD_SUSHIP_SHIRAUO}
 function s.contcon(e)
 	return Duel.IsExistingMatchingCard(Card.IsFaceup,0,LOCATION_FZONE,LOCATION_FZONE,1,nil)
 end
@@ -75,11 +73,11 @@ end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local effs=e:GetLabel()
-	--"Rice Suship": Draw 1 card.
+	--"Gukan Suship Shari": Draw 1 card.
 	if (effs&1)~=0 then
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end
-	--"Icefish Suship": Add 1 "Suship" Spell/Trap from your Deck to your hand.
+	--"Gukan Suship Sharauo": Add 1 "Gunkan" Spell/Trap from your Deck to your hand.
 	if (effs&(1<<1))~=0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,s.sfilter,tp,LOCATION_DECK,0,1,1,nil)
@@ -92,9 +90,9 @@ end
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	local effs=0
-	--Check for "Rice Suship".
-	if g:IsExists(Card.IsCode,1,nil,CARD_RICE_SUSHIP) then effs=1 end
-	--Check for "Icefish Suship".
-	if g:IsExists(Card.IsCode,1,nil,ICEFISH_SUSHIP_CODE) then effs=effs|(1<<1) end
+	--Check for "Gukan Suship Shari":
+	if g:IsExists(Card.IsCode,1,nil,CARD_SUSHIP_SHARI) then effs=1 end
+	--Check for "Gukan Suship Shirauo":
+	if g:IsExists(Card.IsCode,1,nil,CARD_SUSHIP_SHIRAUO) then effs=effs|(1<<1) end
 	e:GetLabelObject():SetLabel(effs)
 end

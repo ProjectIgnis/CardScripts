@@ -29,7 +29,7 @@ function s.fextra(e,tp,mg)
 end
 function s.extfustargt(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,0,tp,LOCATION_GRAVE)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOGRAVE,nil,0,tp,LOCATION_DECK)
 end
 function s.fexfilter(c)
 	return c:IsType(TYPE_NORMAL) and c:IsAbleToGrave()

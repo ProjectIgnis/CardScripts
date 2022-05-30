@@ -29,6 +29,16 @@ function s.thfilter(c,lv)
 end
 	--Excavate equal to the number of rock monsters controlled +5, add 1 rock to hand whose level is equal/less than number of revealed cards
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
+	--Cannot special summon monsters, except rock monsters, for rest of the turn
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetDescription(aux.Stringid(id,1))
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH+EFFECT_FLAG_CLIENT_HINT)
+	e1:SetTargetRange(1,0)
+	e1:SetTarget(s.splimit)
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e1,tp)
 	local ct=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsRace,RACE_ROCK),tp,LOCATION_MZONE,0,nil)+5
 	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<ct then return end
 	Duel.ConfirmDecktop(tp,ct)
@@ -49,16 +59,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.MoveToDeckBottom(ac,tp)
 		Duel.SortDeckbottom(tp,tp,ac)
 	end
-	--Cannot special summon monsters, except rock monsters, for rest of the turn
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetDescription(aux.Stringid(id,1))
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH+EFFECT_FLAG_CLIENT_HINT)
-	e1:SetTargetRange(1,0)
-	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e1,tp)
 end
 	--Locked into rock monsters
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)

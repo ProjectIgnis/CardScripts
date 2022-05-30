@@ -40,8 +40,7 @@ function s.extraop(e,tc,tp,sg)
 end
 function s.extratg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,nil,0,tp,LOCATION_MZONE)
-	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,nil,0,PLAYER_ALL,LOCATION_GRAVE)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,nil,0,PLAYER_EITHER,LOCATION_MZONE+LOCATION_GRAVE)
 end
 function s.thfilter(c)
 	return c:IsFaceup() and c:IsCode(86120751) and c:IsAbleToDeck()

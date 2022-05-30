@@ -52,7 +52,7 @@ end
 function s.dtop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
-	local g=Duel.SelectMatchingCard(tp,Card.IsSetCard,tp,LOCATION_DECK,0,1,1,nil,0x168):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,Card.IsSetCard,tp,LOCATION_DECK,0,1,1,nil,0x168):GetFirst()
 	if tc then
 		Duel.ShuffleDeck(tp)
 		Duel.MoveSequence(tc,0)

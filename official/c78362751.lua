@@ -34,7 +34,7 @@ s.listed_names={id,CARD_SUSHIP_SHARI}
 
 	--Check for a "Gunkan Suship Shari" you control (in MZ or as overlay material)
 function s.xyzfilter(c)
-	return c:IsFaceup() and(c:IsCode(CARD_SUSHIP_SHARI) or (c:GetOverlayCount()>0 and c:GetOverlayGroup():IsExists(Card.IsCode,1,nil,CARD_SUSHIP_SHARI)))
+	return c:IsFaceup() and (c:IsCode(CARD_SUSHIP_SHARI) or (c:GetOverlayCount()>0 and c:GetOverlayGroup():IsExists(Card.IsCode,1,nil,CARD_SUSHIP_SHARI)))
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_MZONE,0,1,nil)

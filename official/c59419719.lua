@@ -1,7 +1,6 @@
 --化石融合－フォッシル・フュージョン
 --Fossil Fusion
 --Scripted by Eerie Code and edo9300
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Fusion summon 1 "Fossil" fusion monster
@@ -24,7 +23,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x14c}
-
 function s.fextra(e,tp,mg)
 	if not Duel.IsPlayerAffectedByEffect(tp,69832741) then
 		return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToRemove),tp,LOCATION_GRAVE,LOCATION_GRAVE,nil)
@@ -51,7 +49,7 @@ function s.stage2(e,tc,tp,sg,chk)
 end
 function s.extratarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,0,PLAYER_ALL,LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,PLAYER_EITHER,LOCATION_GRAVE)
 end
 function s.tgval(e,re,rp)
 	local rc=re:GetHandler()

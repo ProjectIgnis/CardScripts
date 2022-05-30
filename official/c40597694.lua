@@ -42,7 +42,7 @@ function s.stage2(e,tc,tp,sg,chk)
 end
 function s.extratg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetPossibleOperationInfo(0,CATEGORY_TOGRAVE,nil,0,tp,LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,0,tp,LOCATION_DECK)
 end
 function s.desfilter(c,rc)
 	return rc:GetCardTarget():IsContains(c)

@@ -1009,11 +1009,7 @@ function Card.GetToBeLinkedZone(tc,c,tp,clink,emz)
 	return zone
 end
 function Group.GetToBeLinkedZone(g,c,tp,clink,emz)
-	local zone=0
-	for tc in aux.Next(g) do
-		zone=zone|tc:GetToBeLinkedZone(c,tp,clink,emz)
-	end
-	return zone
+	return g:GetBitwiseOr(Card.GetToBeLinkedZone,c,tp,clink,emz)
 end
 function Auxiliary.ResetEffects(g,eff)
 	for c in aux.Next(g) do

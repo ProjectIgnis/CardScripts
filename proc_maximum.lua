@@ -67,7 +67,7 @@ end
 --that function check if you can maximum summon the monster and its other part(s)
 function Maximum.Condition(mats)
 	local ct=#mats
-	return  function(e,c,og)
+	return function(e,c,og)
 		if c==nil then return true end
 		local tp=c:GetControler()
 		if not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_MAXIMUM,tp,false,false,POS_FACEUP_ATTACK) then return false end
@@ -295,24 +295,24 @@ function Card.HasDefense(c)
 end
 
 --functions to handle counting monsters but without the side Maximum monsters (the L/R max monsters are subtracted from the count)
-function Duel.GetMatchingGroupCountRush(f,tp,LOCP1,LOCP2,exclude)
-	local maxi=Duel.GetMatchingGroupCount(aux.FilterMaximumSideFunction(f),tp,LOCP1,LOCP2,exclude)
-	return Duel.GetMatchingGroupCount(f,tp,LOCP1,LOCP2,exclude)-maxi
+function Duel.GetMatchingGroupCountRush(f,tp,LOCP1,LOCP2,exclude,...)
+	local maxi=Duel.GetMatchingGroupCount(aux.FilterMaximumSideFunction(f),tp,LOCP1,LOCP2,exclude,...)
+	return Duel.GetMatchingGroupCount(f,tp,LOCP1,LOCP2,exclude,...)-maxi
 end
 --function that return only the side monsters
 function Auxiliary.FilterMaximumSideFunction(f,...)
 	local params={...}
-	return 	function(target)
+	return function(target)
 				return target:IsMaximumModeSide() and f(target,table.unpack(params))
 			end
 end
 --function that exclude L/R Maximum Mode
 function Auxiliary.FilterMaximumSideFunctionEx(f,...)
 	local params={...}
-	return 	function(target)
-				 return 
-				 ((not target:IsMaximumMode()) or (not (target:IsMaximumMode() and not target:IsMaximumModeCenter())))
-				 and f(target,table.unpack(params))
+	return function(target)
+				return
+				((not target:IsMaximumMode()) or (not (target:IsMaximumMode() and not target:IsMaximumModeCenter())))
+				and f(target,table.unpack(params))
 			end
 end
 -- function that return the count of a location P1 et P2 minus the Maximum Side

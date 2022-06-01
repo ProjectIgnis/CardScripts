@@ -18,7 +18,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,1) end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-    return Duel.GetMatchingGroupCountRush(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)>1
+	return Duel.GetMatchingGroupCountRush(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)>1
 end
 function s.attfilter(c)
 	return c:IsFaceup() and not c:IsAttribute(ATTRIBUTE_LIGHT)

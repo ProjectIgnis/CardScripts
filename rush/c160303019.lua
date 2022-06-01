@@ -1,8 +1,9 @@
---アメイジング・ディーラー Amazing Dealer
+--アメイジング・ディーラー
+--Amazing Dealer
 
 local s,id=GetID()
 function s.initial_effect(c)
-	--send 3 cards from hand to GY then draw 3
+	--Send 3 cards from hand to GY then draw 3
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -15,10 +16,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.CheckLPCost(tp,300) and Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,LOCATION_HAND,0,3,nil) and not Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,0,4,nil,TYPE_MONSTER)
+	return Duel.CheckLPCost(tp,300) and Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,LOCATION_HAND,0,3,nil)
+		and not Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,0,4,nil,TYPE_MONSTER)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-if chk==0 then return Duel.IsPlayerCanDraw(tp,3) end
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,3) end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(3)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,3)

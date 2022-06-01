@@ -16,7 +16,6 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-
 function s.tdfilter(c)
 	return c:IsCode(160201031,160201035) and c:IsAbleToDeckOrExtraAsCost()
 end
@@ -33,9 +32,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil)
-	Duel.HintSelection(g)
-	Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_COST)	
-	--Effect
-	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	Duel.Damage(p,d,REASON_EFFECT)
+	if #g>0 then
+		Duel.HintSelection(g)
+		if Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_COST)==0 then return end
+		--Effect
+		local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
+		Duel.Damage(p,d,REASON_EFFECT)
+	end
 end

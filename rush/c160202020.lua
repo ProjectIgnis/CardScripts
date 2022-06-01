@@ -29,10 +29,6 @@ if chk==0 then return Duel.IsPlayerCanDraw(tp,2) end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(2)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
-	Duel.SetChainLimit(s.chlimit)
-end
-function s.chlimit(e,ep,tp)
-	return not e:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 	--Draw 2 card, then return 2 cards from hand to the deck
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

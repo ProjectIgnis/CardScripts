@@ -27,7 +27,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local atk=0
 	Duel.HintSelection(g)
 	local tc=g:GetFirst()
-	for tc in aux.Next(g) do
+	for tc in g:Iter() do
 		atk=atk+tc:GetAttack()
 	end
 	Duel.Recover(tp,atk,REASON_EFFECT)

@@ -17,12 +17,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 	--Check if opponent special summoned a monster with 1500+ ATK
-function s.filter(c,e,tp)
+function s.filter(c,tp)
 	return c:IsLocation(LOCATION_MZONE) and c:IsAttackAbove(1500) and c:IsSummonPlayer(1-tp)
 end
 	--If it ever happened
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.filter,1,nil,e,tp)
+	return eg:IsExists(s.filter,1,nil,tp)
 end
 	--Check for normal monsters to shuffle to deck as cost
 function s.cfilter(c)
@@ -38,10 +38,6 @@ end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingTarget(s.desfilter,tp,0,LOCATION_MZONE,1,nil) end
-	Duel.SetChainLimit(s.chlimit)
-end
-function s.chlimit(e,ep,tp)
-	return not e:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 	--Destroy 1 of opponent's monsters
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

@@ -19,7 +19,7 @@ function s.fupfilter(c)
 	return c:IsFaceup() and (c:IsCode(CARD_UMI) or c:IsCode(CARD_BIG_OCEAN))
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer() and Duel.GetAttackTarget()==nil and  Duel.IsExistingMatchingCard(s.fupfilter,tp,LOCATION_ONFIELD,0,1,nil)
+	return tp~=Duel.GetTurnPlayer() and Duel.GetAttackTarget()==nil and Duel.IsExistingMatchingCard(s.fupfilter,tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsCanChangePositionRush()

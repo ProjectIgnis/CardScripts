@@ -30,10 +30,6 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		 Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,nil,tp)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,3,tp,LOCATION_GRAVE)
-	Duel.SetChainLimit(s.chlimit)
-end
-function s.chlimit(e,ep,tp)
-	return not e:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function s.spfilter(c,e,sp)
 	return c:IsLevelBelow(7) and c:IsCanBeSpecialSummoned(e,0,sp,false,false)
@@ -50,7 +46,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.SendtoDeck(sg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 then
 			--effect
 			if Duel.GetMatchingGroupCount(Card.IsAttackPos,tp,LOCATION_MZONE,0,nil)<1 then
-				if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) and Duel.SelectYesNo(tp,aux.Stringid(id,0))  then
+				if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
+				and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 					local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 					if #g>0 then

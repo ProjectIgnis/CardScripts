@@ -24,8 +24,6 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return #dg>0 end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	--requirement
-	
 	--effect
 	local dg=Duel.GetMatchingGroup(s.filter2,tp,0,LOCATION_ONFIELD,nil)
 	if #dg>0 then

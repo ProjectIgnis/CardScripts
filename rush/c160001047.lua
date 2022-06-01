@@ -20,10 +20,6 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		local at=Duel.GetAttackTarget()
 		return ag:IsExists(aux.TRUE,1,at) or (at~=nil and da)
 	end
-	Duel.SetChainLimit(s.chlimit)
-end
-function s.chlimit(e,ep,tp)
-	return not e:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ag,da=eg:GetFirst():GetAttackableTarget()

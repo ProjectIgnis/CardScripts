@@ -17,7 +17,7 @@ function s.filter(c)
 	return c:IsMonster() and c:IsRace(RACE_BEAST) and c:IsAttribute(ATTRIBUTE_FIRE)
 end
 function s.confilter(c)
-	return  c:IsRace(RACE_BEAST) and c:IsFaceup() and c:IsLevelAbove(7)
+	return c:IsRace(RACE_BEAST) and c:IsFaceup() and c:IsLevelAbove(7)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.confilter,tp,LOCATION_ONFIELD,0,1,nil)

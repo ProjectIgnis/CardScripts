@@ -17,7 +17,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tp~=Duel.GetTurnPlayer() and Duel.GetAttackTarget()==nil and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,3,nil)
 end
 function s.filter(c)
-	return c:IsRace(RACE_PLANT)  and c:IsAbleToDeckOrExtraAsCost()
+	return c:IsRace(RACE_PLANT) and c:IsAbleToDeckOrExtraAsCost()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tg=Duel.GetAttacker()
@@ -34,7 +34,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local tc=Duel.GetFirstTarget()
 		if tc:IsRelateToEffect(e) and tc:CanAttack() and not tc:IsStatus(STATUS_ATTACK_CANCELED) then
 			if Duel.Destroy(tc,REASON_EFFECT)>0 then
-				if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) and Duel.SelectYesNo(tp,aux.Stringid(id,0))  then
+				if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
+				and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 					local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 					g:AddMaximumCheck()

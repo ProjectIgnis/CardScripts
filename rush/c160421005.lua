@@ -1,5 +1,5 @@
 --ロイヤルデモンズ・ヘヴィメタル
---Royal Demon’s Heavymetal
+--Royal Rebel's Heavy Metal
 
 local s,id=GetID()
 function s.initial_effect(c)
@@ -31,12 +31,12 @@ end
 function s.descond(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsStatus(STATUS_SUMMON_TURN) and e:GetLabelObject():GetLabel()~=0
 end
-function s.filter(c,tp)
+function s.filter(c)
 	return c:IsFaceup() and c:IsLevelBelow(8) and not c:IsMaximumModeSide()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil,tp)
-	if chk==0 then return #g>0 and Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil,tp) end
+	local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil)
+	if chk==0 then return #g>0 and Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,e:GetHandler(),1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end

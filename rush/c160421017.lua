@@ -1,4 +1,5 @@
 --地砕き
+--Smashing Ground (Rush)
 local s,id=GetID()
 function s.initial_effect(c)
 	Card.Alias(c,97169186)
@@ -29,6 +30,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			local sg=tg:Select(tp,1,1,nil)
 			Duel.HintSelection(sg)
 			Duel.Destroy(sg,REASON_EFFECT)
-		else Duel.Destroy(tg,REASON_EFFECT) end
+		else
+			Duel.Destroy(tg,REASON_EFFECT)
+		end
 	end
 end

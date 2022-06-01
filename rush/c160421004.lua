@@ -1,5 +1,5 @@
 --ジャンク・ブレイカー
---Fiendish Commander Yameruler
+--Yamiruler the Dark Delayer
 local s,id=GetID()
 function s.initial_effect(c)
 	--disable
@@ -28,7 +28,6 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

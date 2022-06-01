@@ -28,10 +28,6 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetTargetParam(lv*200)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,lv*200)
-	Duel.SetChainLimit(s.chlimit)
-end
-function s.chlimit(e,ep,tp)
-	return not e:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 	--Send 1 card from hand to GY to inflict damage equal to opponent's attacking monster level x 200
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

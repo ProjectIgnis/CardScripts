@@ -1,5 +1,5 @@
 -- セブンスロード・ウォーロック
---Sevens Road Warlock
+-- Sevens Road Warlock
 local s,id=GetID()
 function s.initial_effect(c)
 	--Add card to hand

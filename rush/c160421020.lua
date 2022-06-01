@@ -36,7 +36,7 @@ end
 function s.spfilter2(c,e,tp)
 	return c:IsType(TYPE_NORMAL) and (c:IsLevel(5) or c:IsLevel(6)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function s.filter(c,tp)
+function s.filter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToDeckOrExtraAsCost()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
@@ -55,7 +55,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			local c=e:GetHandler()
 			local ag=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(Card.IsLevelAbove,5),tp,0,LOCATION_MZONE,nil)
 			if #ag>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
-				for tc in aux.Next(ag) do
+				for tc in ag:Iter() do
 					tc:UpdateLevel(-4,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,c)
 				end
 			end

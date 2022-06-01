@@ -17,7 +17,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={160202046}
-
 function s.costfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_PYRO) and c:IsAbleToGraveAsCost()
 end

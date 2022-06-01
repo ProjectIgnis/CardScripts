@@ -1,4 +1,4 @@
--- 天の啓示 
+-- 天の啓示
 -- Heavenly Revelation
 local s,id=GetID()
 function s.initial_effect(c)

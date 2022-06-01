@@ -20,11 +20,8 @@ end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE,0,2,nil) end
 end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsLevelAbove(7)
-end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,0,LOCATION_MZONE,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsLevelAbove,7),tp,0,LOCATION_MZONE,1,nil)
 end
 function s.spfilter(c,e,tp)
 	return c:IsRace(RACE_MACHINE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)

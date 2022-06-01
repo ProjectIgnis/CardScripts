@@ -15,8 +15,8 @@ function s.filter(c)
 	return c:IsFaceup() and c:GetBaseAttack()>0 and c:IsLevelBelow(8)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_AQUA),tp,LOCATION_MZONE,0,3,nil)
-        and Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_AQUA),tp,LOCATION_MZONE,0,3,nil)
+		and Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

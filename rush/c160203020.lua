@@ -1,4 +1,4 @@
---ダイノミック・プレッシャー 
+-- ダイノミック・プレッシャー 
 -- Dinomic Pressure
 
 local s,id=GetID()
@@ -27,19 +27,16 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
 end
-function s.filter(c)
-	return c:IsFaceup()
-end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_GRAVE,0,3,3,nil)
 	Duel.HintSelection(g)
 	if #g>0 and Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)>0 then
-		local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil)
+		local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 		if #g==0 then return end
 		local tc=g:GetFirst()
-		for tc in aux.Next(g) do
+		for tc in g:Iter() do
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)

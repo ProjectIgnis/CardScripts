@@ -17,10 +17,8 @@ function s.cfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_DRAGON) and not c:IsLevel(3)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return 
-	Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsLevelAbove,7),tp,0,LOCATION_MZONE,1,nil)
-	and 
-	Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,2,nil)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsLevelAbove,7),tp,0,LOCATION_MZONE,1,nil)
+		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,2,nil)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end

@@ -1,4 +1,5 @@
---Yggdrago the Heavenly Emperor Dragon Tree
+--天帝龍樹ユグドラゴ
+--Yggdrago the Sky Emperor
 Duel.LoadCardScript("c160202011.lua")
 local s,id=GetID()
 function s.initial_effect(c)

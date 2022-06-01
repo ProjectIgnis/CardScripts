@@ -1,5 +1,5 @@
---魔将分隊 待組 
--- Matsugumi of the Fiendish Commander Squad/Matsugumi of the Dark Division
+-- 魔将分隊 待組 
+-- Matsugumi the Ruler's Squad
 local s,id=GetID()
 function s.initial_effect(c)
 	--Draw
@@ -23,12 +23,11 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_NORMAL) and c:IsStatus(STATUS_SUMMON_TURN)		
+	return c:IsSummonType(SUMMON_TYPE_NORMAL) and c:IsStatus(STATUS_SUMMON_TURN)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.sfilter(chkc) end
 	if chk==0 then return Duel.IsExistingMatchingCard(s.sfilter,tp,LOCATION_GRAVE,0,1,nil) end
-	
 end
 function s.sfilter(c)
 	return (c:IsCode(160006060) or c:IsCode(160006042) or c:IsCode(160305030)) and c:IsSSetable()
@@ -41,7 +40,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
 		local sg=Duel.GetMatchingGroup(s.sfilter,tp,LOCATION_GRAVE,0,nil)
 		if ft>0 and #sg>0 then
-			local tg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.sfilter),tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
+			local tg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.sfilter),tp,LOCATION_GRAVE,0,1,1,nil)
 			Duel.HintSelection(tg)
 			Duel.SSet(tp,tg)
 		end

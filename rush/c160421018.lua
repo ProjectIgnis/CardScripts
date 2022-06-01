@@ -24,5 +24,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Draw(p,d,REASON_EFFECT)<1 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGrave,tp,LOCATION_HAND,0,1,1,nil)
-	if #g>0 then Duel.SendtoGrave(g,REASON_EFFECT) end
+	if #g>0 then
+		Duel.SendtoGrave(g,REASON_EFFECT)
+	end
 end

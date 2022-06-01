@@ -26,10 +26,6 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	if chk==0 then return eg and eg:IsExists(Card.IsSummonPlayer,1,nil,1-tp) and #g>0 end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
-	Duel.SetChainLimit(s.chlimit)
-end
-function s.chlimit(e,ep,tp)
-	return not e:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND,0,2,2,nil)

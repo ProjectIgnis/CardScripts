@@ -31,7 +31,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local atk=0
 		if #g>0 then
 			local bc=g:GetFirst()
-			for bc in aux.Next(g) do
+			for bc in g:Iter() do
 				atk=atk+(bc:GetLevel()*100)
 			end
 			local e1=Effect.CreateEffect(c)

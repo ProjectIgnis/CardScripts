@@ -29,6 +29,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.ChangePosition(tc,0,0,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)>0 and tc:IsType(TYPE_NORMAL) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 			Duel.Draw(tp,1,REASON_EFFECT)
 		end
-		
 	end
 end

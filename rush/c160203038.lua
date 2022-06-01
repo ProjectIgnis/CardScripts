@@ -16,13 +16,12 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 end
-function s.filter1(c,e,tp)
+function s.filter1(c,tp)
 	return c:IsSummonPlayer(1-tp) and c:IsLocation(LOCATION_MZONE)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.filter1,1,nil,e,tp) and Duel.GetFieldGroupCountRush(tp,0,LOCATION_MZONE)==3
+	return eg:IsExists(s.filter1,1,nil,tp) and Duel.GetFieldGroupCountRush(tp,0,LOCATION_MZONE)==3
 end
-
 function s.filter(c)
 	return c:IsAttribute(ATTRIBUTE_WIND) and c:IsRace(RACE_WARRIOR) and c:IsFaceup()
 end
@@ -30,7 +29,6 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.filter),tp,LOCATION_MZONE,0,1,nil) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	--requirement
 	--effect
 	local g=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(s.filter),tp,LOCATION_MZONE,0,nil)
 	for tc in g:Iter() do

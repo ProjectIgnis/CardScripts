@@ -34,7 +34,7 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		Duel.ChangePosition(g,POS_FACEUP_ATTACK)
 		local tc=g:GetFirst()
-		for tc in aux.Next(g) do
+		for tc in g:Iter() do
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_SET_BASE_ATTACK)

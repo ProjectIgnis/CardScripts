@@ -35,7 +35,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local count=Duel.SendtoGrave(g,REASON_COST)
 	--Effect
 	Duel.Draw(tp,count,REASON_EFFECT)
-	if count>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then		
+	if count>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.Recover(tp,900,REASON_EFFECT)
 	end
 end

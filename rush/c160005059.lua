@@ -1,5 +1,5 @@
 -- ハートブレイクルック
---Heartbreak Look
+-- Heartbreak Look
 
 local s,id=GetID()
 function s.initial_effect(c)
@@ -17,14 +17,14 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 end
-function s.filter1(c,e,tp)
+function s.filter1(c,tp)
 	return c:IsSummonPlayer(1-tp) and c:IsLocation(LOCATION_MZONE) and c:IsLevelAbove(5)
 end
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_WINGEDBEAST)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.filter1,1,nil,e,tp) and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	return eg:IsExists(s.filter1,1,nil,tp) and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.filter(c,e,tp)
 	return c:IsAttackPos() and c:IsCanChangePositionRush()

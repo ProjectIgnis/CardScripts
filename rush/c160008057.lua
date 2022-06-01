@@ -32,7 +32,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if ft>=2 then ft=2 end
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
 	
-	if #g>0 and #g2>0 and Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_HAND,0)==0  and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+	if #g>0 and #g2>0 and Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_HAND,0)==0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=g2:Select(tp,1,ft,nil)

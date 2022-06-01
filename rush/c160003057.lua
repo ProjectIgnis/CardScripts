@@ -22,10 +22,6 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tg=Duel.GetAttackTarget()
 	if chk==0 then return tg:IsControler(tp) and tg:IsOnField() end
-	Duel.SetChainLimit(s.chlimit)
-end
-function s.chlimit(e,ep,tp)
-	return not e:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
@@ -38,6 +34,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(-atk)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffectRush(e1)
-		
 	end
 end

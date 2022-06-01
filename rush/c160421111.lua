@@ -1,11 +1,10 @@
---天翔流那キメテラス
+-- 天翔流那キメテラス
 -- Kimeterasu the Rising Luna
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
 	Fusion.AddProcMix(c,true,true,160007017,CARD_VALKYRIAN_SEWKYRIE)
-	
 	--add 1 0 atk monster to hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -27,10 +26,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-
 --add 1 monster to hand
 function s.thfilter(c)
-	return  c:GetAttack()==0 and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:GetAttack()==0 and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,nil) end
@@ -49,9 +47,6 @@ end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDefensePos,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,tp,LOCATION_MZONE)
-end
-function s.desfilter(c)
-	return c:IsPosition(POS_DEFENSE)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement

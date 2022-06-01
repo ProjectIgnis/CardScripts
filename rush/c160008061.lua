@@ -1,5 +1,5 @@
 -- 警告鱗光
---Warning Scale Phosphorescence
+-- Warning Scale Phosphorescence
 local s,id=GetID()
 function s.initial_effect(c)
 	--When your opponent normal/special summons a monster, prevent attack and shuffle monsters from the GY
@@ -16,14 +16,14 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 end
-function s.filter1(c,e,tp)
+function s.filter1(c,tp)
 	return c:IsSummonPlayer(1-tp) and c:IsLevelAbove(7) and c:IsFaceup() and c:IsLocation(LOCATION_MZONE)
 end
 function s.filter(c)
-	return c:IsRace(RACE_REPTILE) and c:IsFaceup() 
+	return c:IsRace(RACE_REPTILE) and c:IsFaceup()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.filter1,1,nil,e,tp) and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)
+	return eg:IsExists(s.filter1,1,nil,tp) and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.gyfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_REPTILE) and c:IsAbleToDeck()
@@ -33,7 +33,6 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,#g,0,0)
 end
-
 	--Destroy 1 of opponent's monsters
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Effect

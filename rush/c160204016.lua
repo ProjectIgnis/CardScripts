@@ -39,7 +39,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.HintSelection(g)
 	if #g>0 then
 		Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
-		local g2=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(s.filter2),tp,0,LOCATION_MZONE,nil)
+		local g2=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(Card.IsFaceup),tp,0,LOCATION_MZONE,nil)
 		if #g2==0 then return end
 		if Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 			for tc in g2:Iter() do
@@ -53,7 +53,4 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			end
 		end
 	end
-end
-function s.filter2(c)
-	return c:IsFaceup()
 end

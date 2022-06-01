@@ -1,4 +1,4 @@
---大くしゃみのゼニゲバザウルス 
+-- 大くしゃみのゼニゲバザウルス 
 -- Zenigebazauls
 local s,id=GetID()
 function s.initial_effect(c)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetLP(tp)<Duel.GetLP(1-tp) 
+	return Duel.GetLP(tp)<Duel.GetLP(1-tp)
 end
 function s.costfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_DINOSAUR) and c:IsAbleToGraveAsCost()
@@ -28,18 +28,15 @@ end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,2) and Duel.IsPlayerCanDiscardDeck(1-tp,2) end
 end
-
 function s.filter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsLocation(LOCATION_GRAVE)
 end
-
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local dg=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_HAND,0,1,1,nil)
 	if Duel.SendtoDeck(dg,nil,SEQ_DECKBOTTOM,REASON_EFFECT)>0 then
 		Duel.DiscardDeck(tp,2,REASON_EFFECT)
 		local g=Duel.GetOperatedGroup()
-	
 		Duel.DiscardDeck(1-tp,2,REASON_EFFECT)
 		local g2=Duel.GetOperatedGroup()
 		local dam=(g:FilterCount(s.filter,nil) + g2:FilterCount(s.filter,nil))*400

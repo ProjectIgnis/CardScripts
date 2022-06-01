@@ -33,10 +33,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 --1 monster lose 1500 atk/def
 function s.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.filter),tp,0,LOCATION_MZONE,1,e:GetHandler()) end
-end
-function s.filter(c)
-	return c:IsFaceup()
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(Card.IsFaceup),tp,0,LOCATION_MZONE,1,e:GetHandler()) end
 end
 function s.op1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -47,7 +44,7 @@ function s.op1(e,tp,eg,ep,ev,re,r,rp)
 		--effect
 		if c:IsRelateToEffect(e) and c:IsFaceup() then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-			local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.filter),tp,0,LOCATION_MZONE,1,1,nil)
+			local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(Card.IsFaceup),tp,0,LOCATION_MZONE,1,1,nil)
 			if #g>0 then
 				Duel.HintSelection(g)
 				local e1=Effect.CreateEffect(c)
@@ -81,7 +78,7 @@ function s.op2(e,tp,eg,ep,ev,re,r,rp)
 		-- Effect
 		local c=e:GetHandler()
 		local ag=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(s.filter2),tp,0,LOCATION_MZONE,nil)
-		for tc in aux.Next(ag) do
+		for tc in ag:Iter() do
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)

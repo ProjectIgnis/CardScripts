@@ -1,5 +1,5 @@
 --天帝龍樹ユグドラゴ［Ｒ］
---Yggdrago the Heavenly Emperor Dragon Tree [R]
+--Yggdrago the Sky Emperor [R]
 
 local s,id=GetID()
 function s.initial_effect(c)

@@ -22,7 +22,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.filter,1,nil,tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsCode(160406003)  and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsCode(160406003) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	 if chk==0 then return Duel.IsPlayerCanDraw(tp,2) end

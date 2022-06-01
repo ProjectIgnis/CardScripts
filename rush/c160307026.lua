@@ -1,4 +1,5 @@
--- キングス・ライト King’s Right
+-- キングス・ライト
+-- King’s Right
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -18,7 +19,7 @@ function s.filter(c)
 	return c:IsType(TYPE_NORMAL) and c:IsRace(RACE_FIEND) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_GRAVE,0,nil,tp)
+	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_GRAVE,0,nil)
 	if chk==0 then return g:GetClassCount(Card.GetLevel)>=2 end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
 end

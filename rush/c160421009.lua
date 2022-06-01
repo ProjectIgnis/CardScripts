@@ -1,7 +1,8 @@
--- エンシェント・アライブ・ドラゴン Ancient Arrive Dragon
+-- エンシェント・アライブ・ドラゴン
+-- Ancient Arrive Dragon
 local s,id=GetID()
 function s.initial_effect(c)
-	-- atk change
+	--ATK change
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
@@ -32,7 +33,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 			local g2=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.atkfilter),tp,0,LOCATION_MZONE,1,2,nil)
 			if #g2>0 then
-				for tc in aux.Next(g2) do
+				for tc in g2:Iter() do
 					local e1=Effect.CreateEffect(c)
 					e1:SetType(EFFECT_TYPE_SINGLE)
 					e1:SetCode(EFFECT_UPDATE_ATTACK)

@@ -19,7 +19,6 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ep==1-tp and Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.cfilter),tp,LOCATION_MZONE,0,3,nil)
 end
-
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,nil,1,0,0)
@@ -34,14 +33,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g2=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,0,1,2,nil)
 	if #g2>0 then
 		Duel.HintSelection(g2)
-		for tc in aux.Next(g2) do
+		for tc in g2:Iter() do
 			Duel.ChangePosition(tc,POS_FACEUP_DEFENSE)
 		end
 			local ge0=Effect.CreateEffect(e:GetHandler())
 			ge0:SetType(EFFECT_TYPE_SINGLE)
 			ge0:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
 			ge0:SetValue(s.vala)
-			
 			local ge1=Effect.CreateEffect(e:GetHandler())
 			ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
 			ge1:SetProperty(EFFECT_FLAG_OATH)
@@ -51,7 +49,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			ge1:SetLabelObject(ge0)
 			ge1:SetReset(RESET_PHASE+PHASE_END)
 			Duel.RegisterEffect(ge1,tp)
-			
 			--cannot attack directly with other cards
 			local ge2=Effect.CreateEffect(e:GetHandler())
 			ge2:SetType(EFFECT_TYPE_FIELD)
@@ -62,7 +59,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			ge2:SetReset(RESET_PHASE+PHASE_END)
 			Duel.RegisterEffect(ge2,tp)
 	end
-	
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.effilter,e:GetHandler():GetControler(),LOCATION_MZONE,0,1,nil)

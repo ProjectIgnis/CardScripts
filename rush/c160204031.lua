@@ -1,4 +1,4 @@
---ケミカルキュア・ブルー 
+--ケミカルキュア・ブルー
 --Chemical Cure Red
 local s,id=GetID()
 function s.initial_effect(c)
@@ -19,7 +19,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-    return Duel.GetFieldGroupCount(e:GetHandler():GetControler(),0,LOCATION_MZONE)>=1
+	return Duel.GetFieldGroupCount(e:GetHandler():GetControler(),0,LOCATION_MZONE)>=1
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -28,7 +28,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,500)
 end
 function s.filter(c)
-    return c:IsCode(38199696) and c:IsAbleToHand()
+	return c:IsCode(38199696) and c:IsAbleToHand()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement

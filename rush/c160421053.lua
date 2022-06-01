@@ -1,5 +1,5 @@
 -- 黒竜の怒号
---Black Dragon's Bellow
+-- Black Dragon's Bellow
 local s,id=GetID()
 function s.initial_effect(c)
 	--Increase ATK
@@ -14,11 +14,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={CARD_REDEYES_B_DRAGON}
-function s.filter1(c,e,tp)
+function s.filter1(c,tp)
 	return c:IsSummonPlayer(1-tp) and c:IsLocation(LOCATION_MZONE) and c:IsLevelAbove(5)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.filter1,1,nil,e,tp)
+	return eg:IsExists(s.filter1,1,nil,tp)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_DRAGON) and c:IsType(TYPE_NORMAL)
@@ -46,7 +46,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_UPDATE_DEFENSE)
 		tc:RegisterEffectRush(e2)
 	end
-	if Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_GRAVE,0,1,nil) and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_REDEYES_B_DRAGON),tp,LOCATION_MZONE,0,1,nil) and  Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+	if Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_GRAVE,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_REDEYES_B_DRAGON),tp,LOCATION_MZONE,0,1,nil)
+		and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		local tg=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 		Duel.SendtoDeck(tg,nil,0,REASON_EFFECT)
 	end

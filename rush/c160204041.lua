@@ -1,4 +1,5 @@
--- キャノン・ソルジャー Cannon Soldier
+-- キャノン・ソルジャー
+-- Cannon Soldier (Rush)
 local s,id=GetID()
 function s.initial_effect(c)
 	--inflict 500 damage

@@ -1,5 +1,5 @@
+--セブンスロード・エンチャンター
 --Sevens Road Enchanter
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Return 1 spellcaster to hand

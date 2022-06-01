@@ -16,7 +16,7 @@ end
 s.listed_names={160202026,160202027,160202029}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,160202026),tp,LOCATION_ONFIELD,0,1,nil)
-	and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,160202027),tp,LOCATION_ONFIELD,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,160202027),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.filter(c)
 	return c:IsCode(160202029) and c:IsAbleToHand()

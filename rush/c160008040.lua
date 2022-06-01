@@ -32,7 +32,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsRace,RACE_THUNDER),tp,LOCATION_MZONE,0,nil)
 	if not g then return end
-	for tc in aux.Next(g) do
+	for tc in g:Iter() do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)

@@ -29,7 +29,7 @@ function s.cfilter(c)
 	return c:IsLocation(LOCATION_GRAVE) and c:IsRace(RACE_REPTILE) and c:IsType(TYPE_MONSTER)
 end
 function s.spfilter(c,e,tp)
-	return  c:IsRace(RACE_REPTILE)  and c:IsType(TYPE_MONSTER) and c:IsType(TYPE_NORMAL) and c:IsLevelBelow(6) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsRace(RACE_REPTILE) and c:IsType(TYPE_MONSTER) and c:IsType(TYPE_NORMAL) and c:IsLevelBelow(6) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

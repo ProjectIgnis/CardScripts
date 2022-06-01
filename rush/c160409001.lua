@@ -1,5 +1,5 @@
 -- 零撃竜ゼロギアス 
--- Zerogias the Nullstriking Dragon
+-- Nullstrike Dragon Zerogias
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted monster loses ATK
@@ -52,7 +52,4 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			c:RegisterEffect(e2)
 		end
 	end
-end
-function s.atkfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsFaceup() and c:GetAttack()>0 and c:IsLevelBelow(7)
 end

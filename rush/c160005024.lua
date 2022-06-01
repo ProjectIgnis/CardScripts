@@ -45,7 +45,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local dg=Duel.GetOperatedGroup()
 	local tc=dg:GetFirst()
 	local dam=0
-	for tc in aux.Next(dg) do
+	for tc in dg:Iter() do
 		if not tc:WasMaximumModeSide() then
 			local lvl=tc:GetLevel()
 			if lvl<0 then lvl=0 end

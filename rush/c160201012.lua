@@ -41,7 +41,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc2=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_MZONE,0,1,1,tc1,tc1:GetLevel()):GetFirst()
 	local g=Group.FromCards(tc1,tc2)
 	Duel.HintSelection(g)
-	for tc in aux.Next(g) do
+	for tc in g:Iter() do
 		tc:AddPiercing(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,c)
 	end
 end

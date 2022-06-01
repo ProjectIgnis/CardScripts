@@ -1,9 +1,9 @@
---不成ゴブリン
+-- 不成ゴブリン
 -- Unfulfilled Goblin
 
 local s,id=GetID()
 function s.initial_effect(c)
-	--
+	--Increase ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DESTROY+CATEGORY_TODECK)
@@ -35,7 +35,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 	local tc=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.filter),tp,0,LOCATION_MZONE,1,1,e:GetHandler()):GetFirst()
 	Duel.HintSelection(tc)
-	
 	if tc then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

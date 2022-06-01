@@ -1,4 +1,4 @@
---成金ゴブリン
+-- 成金ゴブリン
 -- Upstart Goblin (Rush)
 local s,id=GetID()
 function s.initial_effect(c)

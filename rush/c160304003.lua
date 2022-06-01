@@ -1,7 +1,8 @@
---ドラゴンズ・ロック・クローザー Dragon’s Lock Closer
+--ドラゴンズ・ロック・クローザー
+--Dragon’s Lock Closer
 local s,id=GetID()
 function s.initial_effect(c)
-	-- atk change
+	--Increase ATK by 2000
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
@@ -20,9 +21,8 @@ function s.confilter(c)
 	return c:IsFaceup() and c:IsPosition(POS_ATTACK) and c:IsLevelBelow(9)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return  Duel.IsExistingMatchingCard(s.confilter,tp,0,LOCATION_MZONE,1,nil)
+	return Duel.IsExistingMatchingCard(s.confilter,tp,0,LOCATION_MZONE,1,nil)
 end
-
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	--requirement
@@ -35,17 +35,17 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	c:RegisterEffect(e1)
 	local g=Duel.GetMatchingGroup(Card.IsType,tp,0,LOCATION_GRAVE,nil,TYPE_MONSTER)
-	if #g>=8  then
-	--Cannot be destroyed by opponent's trap
-	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(3012)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-	e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-	e1:SetValue(s.efilter)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-	c:RegisterEffect(e1)
+	if #g>=8 then
+		--Cannot be destroyed by opponent's trap
+		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3012)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
+		e1:SetValue(s.efilter)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		c:RegisterEffect(e1)
 	end
 end
 function s.efilter(e,te)

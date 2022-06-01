@@ -1,5 +1,5 @@
 --『守備』封じ
---Seal “Defense”/Stop Defense
+--Stop Defense (Rush)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Position change

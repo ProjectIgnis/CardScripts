@@ -33,11 +33,11 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(p,d,REASON_EFFECT)
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
 	local sg=Duel.GetMatchingGroup(s.setfilter,tp,LOCATION_GRAVE,0,nil)
-    if Duel.Draw(tp,1,REASON_EFFECT)>0 and ft>0 and #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-    	local tg=aux.SelectUnselectGroup(sg,1,tp,1,ft,function(sg)return #sg==sg:GetClassCount(Card.GetCode)end,1,tp)
-    	if #tg>0 then
+	if Duel.Draw(tp,1,REASON_EFFECT)>0 and ft>0 and #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+		local tg=aux.SelectUnselectGroup(sg,1,tp,1,ft,function(sg)return #sg==sg:GetClassCount(Card.GetCode)end,1,tp)
+		if #tg>0 then
 			Duel.BreakEffect()
 			Duel.SSet(tp,tg)
 		end
-    end
+	end
 end

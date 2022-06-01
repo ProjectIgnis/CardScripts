@@ -13,8 +13,8 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-function s.filter(c,e,sp)
-	return c:IsLevelAbove(7) and c:IsAttack(0) and c:IsCanBeSpecialSummoned(e,0,sp,false,false,POS_FACEUP_ATTACK)
+function s.filter(c,e,tp)
+	return c:IsLevelAbove(7) and c:IsAttack(0) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

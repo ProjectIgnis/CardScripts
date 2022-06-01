@@ -25,13 +25,13 @@ function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	local ct=Duel.SendtoGrave(g,REASON_COST)
 	if ct>0 then
 		local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 		Duel.Damage(p,d,REASON_EFFECT)
 		Duel.BreakEffect()
-        Duel.Draw(tp,1,REASON_EFFECT)
+	Duel.Draw(tp,1,REASON_EFFECT)
 	end
 end

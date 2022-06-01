@@ -25,10 +25,6 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tg=Duel.GetAttackTarget()
 	if chk==0 then return tg:IsControler(tp) and tg:IsOnField() end
-	Duel.SetChainLimit(s.chlimit)
-end
-function s.chlimit(e,ep,tp)
-	return not e:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function s.tdfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_PLANT) and c:IsAbleToDeckOrExtraAsCost()

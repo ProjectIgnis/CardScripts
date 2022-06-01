@@ -68,19 +68,19 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	local c=e:GetHandler()
 	if Duel.DiscardDeck(tp,1,REASON_COST)<1 then return end
-		--Effect
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-		local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)
-		local g2=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(s.filter2),tp,0,LOCATION_MZONE,nil)
-		local atk=g2:GetSum(Card.GetAttack)
-		if #g>0 and atk>0 then
-			Duel.HintSelection(g)
-			local tc=g:GetFirst()
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetValue(atk)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			tc:RegisterEffectRush(e1)
-		end
+	--Effect
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)
+	local g2=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(s.filter2),tp,0,LOCATION_MZONE,nil)
+	local atk=g2:GetSum(Card.GetAttack)
+	if #g>0 and atk>0 then
+		Duel.HintSelection(g)
+		local tc=g:GetFirst()
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_ATTACK)
+		e1:SetValue(atk)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		tc:RegisterEffectRush(e1)
+	end
 end

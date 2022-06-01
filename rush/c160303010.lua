@@ -1,8 +1,9 @@
+--アクセルワンダー・フレア
 --Accel Wonder Flare
 
 local s,id=GetID()
 function s.initial_effect(c)
-	--Change selected monster's race to Spellcaster
+	--Change selected monster's Type to Spellcaster
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
@@ -32,7 +33,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.HintSelection(g)
-	if #g>0 and Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)>0 then	
+	if #g>0 and Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)>0 then
 		--Effect
 		local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 		if Duel.Damage(p,d,REASON_EFFECT)==0 then return end
@@ -44,7 +45,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCode(EFFECT_CHANGE_RACE)
 			e1:SetValue(RACE_SPELLCASTER)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			tc:RegisterEffect(e1)
+			tc:RegisterEffectRush(e1)
 		end
 	end
 end

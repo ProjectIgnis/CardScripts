@@ -25,7 +25,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local lvl=0
 	Duel.HintSelection(g)
 	local tc=g:GetFirst()
-	for tc in aux.Next(g) do
+	for tc in g:Iter() do
 		lvl=lvl+(tc:GetLevel()*100)
 	end
 	Duel.Recover(tp,lvl,REASON_EFFECT)

@@ -1,4 +1,5 @@
--- Magical Knight - Sevens Palladion
+--魔導騎士－セブンス・パラディン
+--Sevens Paladin the Magical Knight
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.atktg)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
-	--to deck and draw
+	--To deck and draw
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW)
@@ -60,17 +61,17 @@ function s.tdfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()	
+	local c=e:GetHandler()
 	--requirement
 	if Duel.DiscardDeck(tp,1,REASON_COST)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		local g=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 		if #g>0 then
-		Duel.HintSelection(g)
+			Duel.HintSelection(g)
 			if Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT) then
 				 Duel.ShuffleDeck(tp)
 				 Duel.Draw(tp,1,REASON_EFFECT)
-			end		
+			end
 		end
 	end
 end

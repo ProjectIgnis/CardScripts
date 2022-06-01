@@ -1,5 +1,5 @@
 -- 幻撃竜ミラギアス
---Fantastrike Dragon Miragears
+-- Fantastrike Dragon Miragears
 local s,id=GetID()
 function s.initial_effect(c)
 	-- atk change
@@ -35,7 +35,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 			local g2=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.atkfilter),tp,0,LOCATION_MZONE,1,2,nil)
 			if #g2>0 then
-				for tc in aux.Next(g2) do
+				for tc in g2:Iter() do
 					local e1=Effect.CreateEffect(c)
 					e1:SetType(EFFECT_TYPE_SINGLE)
 					e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -64,8 +64,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.macon(e,tp,eg,ep,ev,re,r,rp)
-    return e:GetHandler():GetFlagEffect(id+1)>0
+	return e:GetHandler():GetFlagEffect(id+1)>0
 end
 function s.bdop(e,tp,eg,ep,ev,re,r,rp)
-    e:GetHandler():RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	e:GetHandler():RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 end

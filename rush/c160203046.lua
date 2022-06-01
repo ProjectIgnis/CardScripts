@@ -1,5 +1,5 @@
 -- ローリング・ネバーダイ
---Rolling Never Die
+-- Rolling Never Die
 
 local s,id=GetID()
 function s.initial_effect(c)
@@ -17,8 +17,7 @@ function s.cfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_FAIRY) and c:IsPosition(POS_FACEUP_ATTACK) 
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetAttacker():IsControler(1-tp)
-		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.GetAttacker():IsControler(1-tp) and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

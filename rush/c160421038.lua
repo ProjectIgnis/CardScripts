@@ -1,5 +1,5 @@
- -- 陰陽士カラタケ
- -- Onmyou Warrior Karatake
+-- 陰陽士カラタケ
+-- Onmyou Warrior Karatake
 local s,id=GetID()
 function s.initial_effect(c)
 	--Pay LP to deal damage

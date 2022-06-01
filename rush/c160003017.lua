@@ -16,10 +16,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c)
-    return (c:IsRace(RACE_SPELLCASTER) or c:IsRace(RACE_WARRIOR)) and c:IsAbleToDeckOrExtraAsCost()
+	return (c:IsRace(RACE_SPELLCASTER) or c:IsRace(RACE_WARRIOR)) and c:IsAbleToDeckOrExtraAsCost()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,4,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,4,nil) end
 end
 function s.filter(c,e,sp)
 	return c:IsRace(RACE_WARRIOR) and c:IsLevel(7) and c:IsCanBeSpecialSummoned(e,0,sp,false,false)
@@ -32,7 +32,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-    local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_GRAVE,0,4,4,nil)
+	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_GRAVE,0,4,4,nil)
 	Duel.HintSelection(g)
 	Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 	Duel.SortDeckbottom(tp,tp,#g)

@@ -1,4 +1,5 @@
---貫貴益荒男 Pierce-Enforcing Brave
+--貫貴益荒男
+--Pierce-Enforcing Brave
 local s,id=GetID()
 function s.initial_effect(c)
 	--Give Piercing
@@ -16,10 +17,10 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,1) end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-    return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_MZONE,0,3,nil)
+	return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_MZONE,0,3,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.filter),tp,LOCATION_MZONE,0,1,nil)  end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.filter),tp,LOCATION_MZONE,0,1,nil) end
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_WARRIOR)

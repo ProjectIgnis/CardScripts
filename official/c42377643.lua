@@ -31,7 +31,7 @@ end
 	--Lists "Suship" archetype
 s.listed_series={0x168}
 	--Specifically lists "Rice Suship"
-s.listed_names={CARD_RICE_SUSHIP}
+s.listed_names={CARD_SUSHIP_SHARI}
 
 	--Check for a "Suship" card to reveal
 function s.cfilter(c)
@@ -54,8 +54,8 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 	local rc=e:GetLabelObject():GetFirst()
-	if rc:IsCode(CARD_RICE_SUSHIP) then
-		Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
+	if rc:IsCode(CARD_SUSHIP_SHARI) then
+		Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,rc,1,tp,LOCATION_HAND)
 	else
 		Duel.SetOperationInfo(0,CATEGORY_TODECK,rc,1,0,0)
 	end
@@ -66,10 +66,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 
 		and g:GetFirst():IsRelateToEffect(e) then
-		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and g:GetFirst():IsCode(CARD_RICE_SUSHIP) and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
+		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and g:GetFirst():IsCode(CARD_SUSHIP_SHARI) and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
 			Duel.BreakEffect()
 			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
-		elseif not g:GetFirst():IsCode(CARD_RICE_SUSHIP) then
+		elseif not g:GetFirst():IsCode(CARD_SUSHIP_SHARI) then
 			Duel.BreakEffect()
 			Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 		end
@@ -90,7 +90,7 @@ function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 	--Check for "Rice Suship" to add
 function s.thfilter(c)
-	return c:IsCode(CARD_RICE_SUSHIP) and c:IsAbleToHand()
+	return c:IsCode(CARD_SUSHIP_SHARI) and c:IsAbleToHand()
 end
 	--Change targeted "Suship" monster's level to 4 or 5
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)

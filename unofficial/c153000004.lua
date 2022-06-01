@@ -32,7 +32,7 @@ end
 function s.dmcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetOwner()
 	local dm=Duel.GetDeckMaster(tp)
-	return (Duel.GetBattleDamage(tp)>0 or aux.damcon1(e,tp,eg,ep,ev,re,r,rp)) and dm:IsCode(40640057)
+	return (Duel.GetBattleDamage(tp)>0 or aux.damcon1(e,tp,eg,ep,ev,re,r,rp)) and dm and dm:IsCode(40640057)
 		and (dm:IsLocation(LOCATION_MZONE) or Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and dm:IsCanBeSpecialSummoned(e,0,tp,false,false))
 end
 function s.dmop1(e,tp,eg,ep,ev,re,r,rp)

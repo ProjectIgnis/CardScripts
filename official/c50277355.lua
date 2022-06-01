@@ -1,5 +1,5 @@
 --クロシープ
---Clotheep
+--Cross-Sheep
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -112,4 +112,3 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		s.xyzop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
-

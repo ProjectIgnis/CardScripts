@@ -1,5 +1,5 @@
 --暴虐の報い
---Reward of Tyranny
+--Brutal Retributtion
 
 local s,id=GetID()
 function s.initial_effect(c)

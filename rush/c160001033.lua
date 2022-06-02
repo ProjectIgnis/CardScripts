@@ -1,9 +1,10 @@
 --ソニック・イェーガー
---Sonic Jaeger
+--Sonic Attacker
 local s,id=GetID()
 function s.initial_effect(c)
 	--ATK increase
 	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_RECOVER+)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
@@ -12,13 +13,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,c,1,tp,1000)
+	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,1,1-tp,1000)
+	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,e:GetHandler(),1,tp,1000)
 end
 function s.operation(e,tp)
-	if Duel.Recover(1-tp,1000,REASON_EFFECT)>0 then
-		local c=e:GetHandler()
+	local c=e:GetHandler()
+	if Duel.Recover(1-tp,1000,REASON_EFFECT)>0 and c:IsFaceup() then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)

@@ -1,5 +1,5 @@
 --カウンター・ボム
---Counter Bomb
+--Counter Cannonball
 
 --Substitute ID
 local s,id=GetID()

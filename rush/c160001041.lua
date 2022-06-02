@@ -14,18 +14,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-	--Check for spell/trap
-function s.filter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
-end
 	--Check for card in hand to send to GY
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,e:GetHandler()) end
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local dg=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_ONFIELD,e:GetHandler())
-	if chkc then return chkc:IsOnField() and s.filter(chkc) and chkc~=e:GetHandler() end
+	local dg=Duel.GetMatchingGroup(Card.IsType,tp,0,LOCATION_ONFIELD,nil,TYPE_SPELL+TYPE_TRAP)
 	if chk==0 then return #dg>0 end
 end
 	--Send 1 card from hand to GY to destroy 1 spell/trap your opponent controls
@@ -36,7 +31,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,1,e:GetHandler())
 	--Effect
 	if Duel.SendtoGrave(g,REASON_COST)~=0 then
-		local dg=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_ONFIELD,e:GetHandler())
+		local dg=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_ONFIELD,nil,TYPE_SPELL+TYPE_TRAP)
 		if #dg>0 then
 			local sg=dg:Select(tp,1,1,nil)
 			Duel.HintSelection(sg)

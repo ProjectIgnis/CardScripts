@@ -1,8 +1,8 @@
 --ドラゴンズ・セットアッパ
---Dragon’s Setupper
+--Sportsdragon Pitcher
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special summon 1 "Dragon's Upsetter" from GY
+	--Special Summon 1 "Sportsdragon Slugger" from GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)

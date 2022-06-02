@@ -2,7 +2,7 @@
 --Fire Golem
 local s,id=GetID()
 function s.initial_effect(c)
-	--DEF increase
+	--Decrease DEF by 600
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DEFCHANGE)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -20,7 +20,7 @@ function s.filter(c)
 	return c:IsFaceup() and c:GetDefense()>0 and c:HasDefense()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,e:GetHandler()) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil) end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

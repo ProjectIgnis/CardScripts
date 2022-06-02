@@ -1,5 +1,5 @@
 --聖剣士の柄持ちヒルト
---Hilt the Noble Arms Bearer
+--Hilt, the Bearer of Noble Arms
 local s,id=GetID()
 function s.initial_effect(c)
 	--Increase ATK
@@ -16,7 +16,7 @@ function s.filter(c)
 	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsRace(RACE_WARRIOR)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,e:GetHandler()) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

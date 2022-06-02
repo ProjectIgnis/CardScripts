@@ -1,5 +1,5 @@
 --交戦魚サメガロン
---Warfish Sharkmegalon
+--Battle Shark Samegalon
 local s,id=GetID()
 function s.initial_effect(c)
 	--Position change
@@ -23,19 +23,17 @@ function s.filter(c)
 	return c:IsDefensePos() and c:IsCanChangePositionRush()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,e:GetHandler()) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil) end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	--requirement
 	if Duel.DiscardHand(tp,s.costfilter,1,1,REASON_COST)>0 then
-		--effect
-		if c:IsRelateToEffect(e) and c:IsFaceup() then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-			local g=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil)
-			if #g>0 then
-				Duel.ChangePosition(g,0,0,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)
-			end
+	--effect
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+		local g=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil)
+		if #g>0 then
+			Duel.ChangePosition(g,0,0,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)
 		end
 	end
 end

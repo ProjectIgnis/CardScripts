@@ -20,8 +20,8 @@ function s.filter(c)
 	return c:IsRace(RACE_DRAGON) and c:IsLevelAbove(7) and c:IsFaceup()
 end
 	--If the player controls a level 7+ dragon monster
-function s.condition(e)
-	return Duel.IsExistingMatchingCard(s.filter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
+function s.condition(e,tp,eg,ep,ev,re,r,rp,)
+	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,e:GetHandler())
 end
 	--Check for spell/trap card
 function s.filter2(c)

@@ -1,5 +1,5 @@
 --守護の竜魔導士
---Defensive Dragon Mage
+--Defender of Dragon Sorcerers
 
 local s,id=GetID()
 function s.initial_effect(c)
@@ -30,13 +30,15 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoGrave(g,REASON_COST)
 	--Effect
 	local tc=Duel.SelectMatchingCard(tp,aux.TRUE,tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
-	Duel.HintSelection(Group.FromCards(tc))
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetDescription(3060)
-	e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-	e1:SetValue(aux.indoval)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-	tc:RegisterEffect(e1)
+	if tc then
+		Duel.HintSelection(Group.FromCards(tc))
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3060)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+		e1:SetValue(aux.indoval)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		tc:RegisterEffectRush(e1)
+	end
 end

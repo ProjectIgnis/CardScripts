@@ -1,5 +1,5 @@
 --イカズチのサンダー
---Thunder the Lightning
+--Thunder the Thunder
 local s,id=GetID()
 function s.initial_effect(c)
 	--ATK Change
@@ -23,7 +23,7 @@ function s.filter(c)
 	return c:IsFaceup() and c:GetAttack()>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,e:GetHandler()) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil) end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

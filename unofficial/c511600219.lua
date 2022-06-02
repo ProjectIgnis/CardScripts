@@ -3,7 +3,7 @@
 --scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Special Summon 1 "Hydradrive Token" 
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--Grave
+	--Change battle damage
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
@@ -55,11 +55,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetValue(HALF_DAMAGE)
 	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
 	Duel.RegisterEffect(e1,tp)
-	local e2=Effect.CreateEffect(e:GetHandler())
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e2:SetCode(EFFECT_BOTH_BATTLE_DAMAGE)
-	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e2:SetTargetRange(1,1)
-	e2:SetReset(RESET_PHASE+PHASE_DAMAGE_CAL)
-	Duel.RegisterEffect(e2,tp)
+	local tc=Duel.GetAttacker()
+	if tc:IsFaceup() then
+		local e2=Effect.CreateEffect(e:GetHandler())
+		e2:SetType(EFFECT_TYPE_SINGLE)
+		e2:SetCode(EFFECT_BOTH_BATTLE_DAMAGE)
+		e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+		e2:SetReset(RESET_PHASE+PHASE_DAMAGE_CAL)
+		tc:RegisterEffect(e2)
+	end
 end

@@ -20,7 +20,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.filter(c,tid)
 	return c:IsSetCard(0x577) and c:IsType(TYPE_LINK) and c:GetTurnID()==tid
-		and c:GetReason()&REASON_BATTLE~=0 and c:GetLink()>0
+		and c:GetReason()&REASON_DESTROY~=0 and c:GetLink()>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc,Duel.GetTurnCount()) end

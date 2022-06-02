@@ -1,5 +1,5 @@
 --ドレミコード・ハルモニア
---Doremichord Harmonia
+--Solfachord Harmonia
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -105,7 +105,9 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then 
 		local pg1=Duel.GetMatchingGroup(s.descfilter,tp,LOCATION_ONFIELD,0,nil,Card.IsOddScale)
 		local pg2=Duel.GetMatchingGroup(s.descfilter,tp,LOCATION_ONFIELD,0,nil,Card.IsEvenScale)
-		return Duel.GetFlagEffect(tp,id+2)==0 and #g>0 and (pg1:GetClassCount(Card.GetCode)>=3 or pg2:GetClassCount(Card.GetCode)>=3)
+		return Duel.GetFlagEffect(tp,id+2)==0 and #g>0 and
+		(pg1:GetClassCount(Card.GetLeftScale)>=3 or pg2:GetClassCount(Card.GetLeftScale)>=3
+		or pg1:GetClassCount(Card.GetRightScale)>=3 or pg2:GetClassCount(Card.GetRightScale)>=3)
 	end
 	Duel.RegisterFlagEffect(tp,id+2,RESET_PHASE+PHASE_END,0,1)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)

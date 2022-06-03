@@ -27,7 +27,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		Duel.HintSelection(g)
 		local ct=Duel.GetMatchingGroupCount(Card.IsLevel,tp,LOCATION_GRAVE,0,nil,1)
-		local e1=Effect.CreateEffect(c)
+		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(ct*100)

@@ -1,5 +1,5 @@
 --砕光のエスパレイド
---Esperaid of the Smashing Light
+--Esperade the Smashing Superstar
 
 local s,id=GetID()
 function s.initial_effect(c)

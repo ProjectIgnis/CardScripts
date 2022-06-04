@@ -1,5 +1,5 @@
 --邪影ダーク・ルーカー
---Wicked Shadow - Dark Rooker
+--Wicked Shadow Dark Lurker
 
 local s,id=GetID()
 function s.initial_effect(c)
@@ -19,7 +19,9 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsType,tp,0,LOCATION_ONFIELD,1,nil,TYPE_SPELL+TYPE_TRAP) end
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,1-tp,LOCATION_SZONE)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,1,1-tp,1000)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,e:GetHandler(),1,tp,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
@@ -28,10 +30,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local tc=Duel.SelectMatchingCard(tp,Card.IsType,tp,0,LOCATION_ONFIELD,1,1,nil,TYPE_SPELL+TYPE_TRAP):GetFirst()
 		Duel.HintSelection(Group.FromCards(tc))
-		if tc and Duel.Destroy(tc,REASON_EFFECT)>0 and Duel.Damage(1-tp,1000,REASON_EFFECT)>0 then
-			Duel.BreakEffect()
-			Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT)
-			Duel.ConfirmCards(1-tp,e:GetHandler())
+		if Duel.Destroy(tc,REASON_EFFECT)>0 then
+			local c=e:GetHandler()
+			if Duel.Damage(1-tp,1000,REASON_EFFECT)==1000 and c:IsFaceup() and c:IsRelateToEffect(e) then
+				Duel.BreakEffect()
+				Duel.SendToHand(c,REASON_EFFECT)
+				Duel.ConfirmCards(1-tp,c)
+			end
 		end
 	end
 end

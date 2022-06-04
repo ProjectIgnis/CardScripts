@@ -1,5 +1,5 @@
 --逆玉の神 ディアン・ケト
---Dian Keto the Gold-digging Master
+--Dian Keto the Boogie Master
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

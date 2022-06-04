@@ -1,10 +1,9 @@
 --スーパー・キング・レックス
 --Super King Rex
 --Scripted by Naim
-
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special summon level 6 or lower dinosaur normal monster from GY
+	--Special summon level 6 or lower Dinosaur normal monster from GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -19,8 +18,8 @@ end
 function s.spcond(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsStatus(STATUS_SUMMON_TURN+STATUS_SPSUMMON_TURN)
 end
-function s.filter(c,e,sp)
-	return c:IsType(TYPE_NORMAL) and c:IsRace(RACE_DINOSAUR) and c:IsLevelBelow(6) and c:IsCanBeSpecialSummoned(e,0,sp,false,false)
+function s.filter(c,e,tp)
+	return c:IsType(TYPE_NORMAL) and c:IsRace(RACE_DINOSAUR) and c:IsLevelBelow(6) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,1)

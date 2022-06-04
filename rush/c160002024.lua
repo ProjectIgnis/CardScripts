@@ -1,5 +1,5 @@
 --ロミックンローラー
---Romic’n’Roller
+--Romic n' Roller
 local s,id=GetID()
 function s.initial_effect(c)
 	--Decrease ATK/DEF

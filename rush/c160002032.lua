@@ -1,5 +1,5 @@
 --波導砲ビッグ・マグロム
---Hydrocannon Big Magurom
+--Hydro Cannon Big Bluefin
 
 local s,id=GetID()
 function s.initial_effect(c)
@@ -30,8 +30,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		--Effect
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 		local g2=Duel.SelectMatchingCard(tp,s.dirfilter,tp,LOCATION_MZONE,0,1,2,nil)
-		Duel.HintSelection(g2)
 		if #g2>0 then
+		Duel.HintSelection(g2)
 			for tc in g2:Iter() do
 				local e1=Effect.CreateEffect(e:GetHandler())
 				e1:SetDescription(3205)

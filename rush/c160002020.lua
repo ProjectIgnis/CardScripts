@@ -1,5 +1,5 @@
 --ドラゴンズ・ストライカー
---Dragon's Striker
+--Sportsdragon Striker
 
 local s,id=GetID()
 function s.initial_effect(c)

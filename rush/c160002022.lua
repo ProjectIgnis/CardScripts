@@ -1,5 +1,5 @@
 --穿撃竜バンカー・ストライク
---Thrust Dragon Bunker Strike
+--Piercing Dragon Bunker Strike
 local s,id=GetID()
 function s.initial_effect(c)
 	--Draw and return to the Deck
@@ -28,22 +28,21 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	--Requirement
-	if Duel.DiscardDeck(tp,1,REASON_COST)>0 then
-		--Effect
-		local ct=Duel.GetFieldGroupCountRush(tp,0,LOCATION_MZONE)
-		if ct>0 then
-			local drawn=Duel.Draw(tp,ct,REASON_EFFECT)
-			if drawn>0 then
-				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-				local dg=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_HAND,0,drawn,drawn,nil)
-				local opt=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))
-				if opt==0 then
-					Duel.SendtoDeck(dg,nil,SEQ_DECKTOP,REASON_EFFECT)
-					Duel.SortDecktop(tp,tp,#dg)
-				elseif opt==1 then
-					Duel.SendtoDeck(dg,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
-					Duel.SortDeckbottom(tp,tp,#dg)
-				end
+	if Duel.DiscardDeck(tp,1,REASON_COST)==0 then return end
+	--Effect
+	local ct=Duel.GetFieldGroupCountRush(tp,0,LOCATION_MZONE)
+	if ct>0 then
+		local drawn=Duel.Draw(tp,ct,REASON_EFFECT)
+		if drawn>0 then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+			local dg=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_HAND,0,drawn,drawn,nil)
+			local opt=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))
+			if opt==0 then
+				Duel.SendtoDeck(dg,nil,SEQ_DECKTOP,REASON_EFFECT)
+				Duel.SortDecktop(tp,tp,#dg)
+			elseif opt==1 then
+				Duel.SendtoDeck(dg,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
+				Duel.SortDeckbottom(tp,tp,#dg)
 			end
 		end
 	end

@@ -1,5 +1,5 @@
 --ロマンス・ピック
---Romance Pick
+--Romanpick
 
 local s,id=GetID()
 function s.initial_effect(c)
@@ -24,6 +24,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,3) end
 	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,3)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
 end
 function s.cfilter(c)
 	return c:IsLocation(LOCATION_GRAVE) and c:IsRace(RACE_PSYCHIC) and c:IsType(TYPE_MONSTER)

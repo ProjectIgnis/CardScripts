@@ -1,5 +1,5 @@
 --世紀末獣機界ビーストギア・ワールド
---Beast Gear World
+--Apocalypse - Beast Gear World
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

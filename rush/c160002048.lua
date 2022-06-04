@@ -1,5 +1,5 @@
 --死霊の束縛
---Spirit Shackles
+--Phantom Bind
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -23,10 +23,9 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=Duel.GetAttacker()
 	if chk==0 then return tc and Duel.IsExistingMatchingCard(s.ctfilter,tp,0,LOCATION_GRAVE,1,nil,tc:GetRace()) end
 end
-
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
-	if not tc or not tc:IsRelateToBattle() then return end
+	if not (tc and tc:IsRelateToBattle()) then return end
 	local ct=Duel.GetMatchingGroupCount(s.ctfilter,tp,0,LOCATION_GRAVE,nil,tc:GetRace())
 	if ct>0 and tc:IsFaceup() then
 		local e1=Effect.CreateEffect(e:GetHandler())

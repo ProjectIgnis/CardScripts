@@ -1,5 +1,5 @@
 --ビックリード・ドラゴン
---Shocklead Dragon
+--Shock Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
@@ -19,7 +19,7 @@ function s.filter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsFaceup() and c:GetAttack()>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil) end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -28,7 +28,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--effect
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
 		local pg=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
-		local og=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil,tp)
+		local og=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil)
 		local _,atk=pg:GetMaxGroup(Card.GetAttack)
 		local sub1,_=og:GetMaxGroup(Card.GetAttack)
 		for tc in sub1:Iter() do

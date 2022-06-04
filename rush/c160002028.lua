@@ -1,7 +1,6 @@
 --獣機界王カタパルト・デビルコング
---Catapult Devilkong, King of the Beast Gear World
+--Beast Gear Emperor Catapult King
 --Scripted by Naim
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Destroy up to 2 of opponent's defense position monsters
@@ -19,7 +18,7 @@ function s.costfilter(c)
 	return c:IsRace(RACE_BEASTWARRIOR) and c:IsFaceup() and c:IsAbleToGraveAsCost()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE,0,1,e:GetHandler()) 
+	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE,0,1,e:GetHandler())
 		and Duel.IsExistingMatchingCard(Card.IsDefensePos,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,tp,LOCATION_MZONE)
 end

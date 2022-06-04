@@ -1,5 +1,5 @@
 --２ブロック
---2-Block
+--Double Block
 
 local s,id=GetID()
 function s.initial_effect(c)
@@ -15,7 +15,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer()
+	local at=Duel.GetAttacker()
+	return at and at:IsControler(1-tp)
 end
 function s.cfilter(c)
 	return c:IsType(TYPE_NORMAL) and c:IsLevel(2) and c:IsAbleToGraveAsCost()

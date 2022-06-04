@@ -1,5 +1,5 @@
 --狂暴と共謀
---Crazy and Complicit
+--Rage and Conspiracy
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -20,7 +20,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsLevelBelow,6),tp,0,LOCATION_MZONE,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,0,LOCATION_MZONE)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,1-tp,LOCATION_MZONE)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Effect

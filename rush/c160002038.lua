@@ -1,5 +1,5 @@
 --オールナイトフィーバー
---All-Night Fever
+--Party Party Party
 --Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -17,8 +17,8 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) end
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)
-	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,#g,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,#g)
+	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,#g,tp,0)
+	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,#g*400)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)

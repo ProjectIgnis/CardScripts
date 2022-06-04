@@ -34,7 +34,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			local c=e:GetHandler()
 			if Duel.Damage(1-tp,1000,REASON_EFFECT)==1000 and c:IsFaceup() and c:IsRelateToEffect(e) then
 				Duel.BreakEffect()
-				Duel.Sendtohand(c,REASON_EFFECT)
+				Duel.Sendtohand(c,nil,REASON_EFFECT)
 				Duel.ConfirmCards(1-tp,c)
 			end
 		end

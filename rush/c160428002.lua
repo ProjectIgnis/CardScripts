@@ -27,5 +27,5 @@ function s.indcon(e)
 	return e:GetHandler():IsMaximumMode()
 end
 function s.indval(e,re,rp)
-	return re:IsActiveType(TYPE_TRAP) and re:GetOwnerPlayer()==1-e:GetHandlerPlayer()
+	return re:IsActiveType(TYPE_TRAP) and aux.indoval(e,re,rp)
 end

@@ -1688,6 +1688,10 @@ function Auxiliary.SelectEffect(tp,...)
     return sel[Duel.SelectOption(tp,table.unpack(eff))+1]
 end
 
+function Auxiliary.CheckPendulumZones(player)
+	return Duel.CheckLocation(player,LOCATION_PZONE,0) or Duel.CheckLocation(player,LOCATION_PZONE,1)
+end
+
 Duel.LoadScript("cards_specific_functions.lua")
 Duel.LoadScript("proc_fusion.lua")
 Duel.LoadScript("proc_fusion_spell.lua")

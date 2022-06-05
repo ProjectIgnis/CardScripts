@@ -27,7 +27,8 @@ end
 s.listed_series={0x14b}
 s.xyz_number=1
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetAttackTarget()~=nil
+	local c=e:GetHandler()
+	return c:IsStatus(STATUS_OPPO_BATTLE) and c:IsRelateToBattle()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x14b),tp,LOCATION_MZONE,0,1,nil) end

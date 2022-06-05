@@ -31,7 +31,7 @@ end
 s.listed_series={0x1034}
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsLevelAbove,10),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	return #g>1 and g:GetClassCount(Card.GetCode)>1 and Duel.GetFlagEffect(tp,id)==0
+	return #g>1 and g:GetClassCount(Card.GetRace)>1 and Duel.GetFlagEffect(tp,id)==0
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local loc=LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE

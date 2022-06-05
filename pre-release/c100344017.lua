@@ -48,20 +48,17 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)>0
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+100,0x1034,TYPES_TOKEN,s.getprops(tc)) then
-		Duel.BreakEffect()
 		local token=Duel.CreateToken(tp,id+100)
-		if Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP) then
-			-- Change Type, Attribute, Level, and ATK/DEF
-			token:Race(tc:GetOriginalRace())
-			token:Attribute(tc:GetOriginalAttribute())
-			token:Level(tc:GetOriginalLevel())
-			token:Attack(math.max(0,tc:GetTextAttack()))
-			token:Defense(math.max(0,tc:GetTextDefense()))
-		end
-		Duel.SpecialSummonComplete()
+		-- Change Type, Attribute, Level, and ATK/DEF
+		token:Race(tc:GetOriginalRace())
+		token:Attribute(tc:GetOriginalAttribute())
+		token:Level(tc:GetOriginalLevel())
+		token:Attack(math.max(0,tc:GetTextAttack()))
+		token:Defense(math.max(0,tc:GetTextDefense()))
+		Duel.BreakEffect()
+		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
 function s.spconfilter(c,tp)

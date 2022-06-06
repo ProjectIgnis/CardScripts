@@ -22,11 +22,11 @@ end
 s.MaximumSide="Left"
 function s.maxCon(e)
 	--maximum mode check to do
-	return e:GetHandler():IsMaximumModeCenter()
+	return e:GetHandler():IsMaximumMode()
 end
 function s.val(e,c)
 	return Duel.GetFieldGroupCountRush(c:GetControler(),0,LOCATION_MZONE)*500
 end
 function s.pcon(e)
-	return e:GetHandler():IsMaximumModeCenter() and Duel.GetMatchingGroupCount(Card.IsMonster,e:GetHandler():GetControler(),LOCATION_GRAVE,0,nil)>=10
+	return e:GetHandler():IsMaximumMode() and Duel.GetMatchingGroupCount(Card.IsMonster,e:GetHandler():GetControler(),LOCATION_GRAVE,0,nil)>=10
 end

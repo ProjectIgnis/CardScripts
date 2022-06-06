@@ -1,4 +1,5 @@
---�l�N���E�J�I�X
+--ネクロ・カオス
+--Grave Chaos
 Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)

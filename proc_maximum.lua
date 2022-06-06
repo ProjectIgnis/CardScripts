@@ -296,7 +296,7 @@ end
 
 --functions to handle counting monsters but without the side Maximum monsters (the L/R max monsters are subtracted from the count)
 function Duel.GetMatchingGroupCountRush(f,tp,LOCP1,LOCP2,exclude,...)
-	local maxi=Duel.GetMatchingGroupCount(aux.FilterMaximumSideFunction(f),tp,LOCP1,LOCP2,exclude,...)
+	local maxi=Duel.GetMatchingGroupCount(aux.FilterMaximumSideFunction(f,...),tp,LOCP1,LOCP2,exclude)
 	return Duel.GetMatchingGroupCount(f,tp,LOCP1,LOCP2,exclude,...)-maxi
 end
 --function that return only the side monsters

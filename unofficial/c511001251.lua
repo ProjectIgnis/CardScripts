@@ -1,4 +1,5 @@
---�g�D�[���E�L���O�_��
+--トゥーン・キングダム
+--Toon Kingdom (VG)
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -26,6 +27,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 end
+s.listed_names={15259703}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetDecktopGroup(tp,5):IsExists(Card.IsAbleToRemove,5,nil) end
 end

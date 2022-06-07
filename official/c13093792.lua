@@ -1,4 +1,5 @@
 --D－HERO ダイヤモンドガイ
+--Destiny HERO - Diamond Dude
 local s,id=GetID()
 function s.initial_effect(c)
 	--
@@ -51,7 +52,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			s.checktable(GhostBelleTable, e1, ae)
 		end
 	else
-		Duel.MoveSequence(tc,1)
+		Duel.MoveToDeckBottom(tc)
 	end
 end
 function s.spellcon(e,tp,eg,ep,ev,re,r,rp,chk)

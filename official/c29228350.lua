@@ -1,4 +1,5 @@
 --ドラゴンレーザー
+--Dragon Laser
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -13,18 +14,18 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={48568432,12079734}
-function s.filter(c)
+function s.filter(c,tp)
 	local ec=c:GetEquipTarget()
-	return ec and c:IsCode(48568432) and ec:IsCode(12079734)
+	return ec and ec:IsControler(tp) and c:IsCode(48568432) and ec:IsCode(12079734)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_SZONE) and s.filter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_SZONE,0,1,nil)
-		and Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_MZONE,1,nil) end
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_SZONE) and s.filter(chkc,tp) end
+	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_SZONE,LOCATION_SZONE,1,nil,tp)
+		and Duel.GetFieldGroupCount(1-tp,LOCATION_MZONE,0)>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_SZONE,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_SZONE,LOCATION_SZONE,1,1,nil,tp)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,1,0,0)
-	local sg=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_MZONE,nil)
+	local sg=Duel.GetFieldGroup(1-tp,LOCATION_MZONE,0)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,sg,#sg,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -32,6 +33,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) then
 		Duel.SendtoGrave(tc,REASON_EFFECT)
 	end
-	local sg=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_MZONE,nil)
+	local sg=Duel.GetFieldGroup(1-tp,LOCATION_MZONE,0)
 	Duel.Destroy(sg,REASON_EFFECT)
 end

@@ -54,19 +54,13 @@ function s.tscon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.tstg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:IsSummonable(true,nil,1) or c:IsMSetable(true,nil,1) end
+	if chk==0 then return c:CanSummonOrSet(true,nil,1) end
 	Duel.SetOperationInfo(0,CATEGORY_SUMMON,c,1,tp,LOCATION_HAND)
 end
 function s.tsop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
-		local s1=c:IsSummonable(true,nil,1)
-		local s2=c:IsMSetable(true,nil,1)
-		if (s1 and s2 and Duel.SelectPosition(tp,c,POS_FACEUP_ATTACK+POS_FACEDOWN_DEFENSE)==POS_FACEUP_ATTACK) or not s2 then
-			Duel.Summon(tp,c,true,nil,1)
-		else
-			Duel.MSet(tp,c,true,nil,1)
-		end
+		Duel.SummonOrSet(tp,c,true,nil,1)
 	end
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)

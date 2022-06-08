@@ -1,5 +1,5 @@
 --逢華妖麗譚－不知火語
---Shiranui Story Saga
+--Ghost Meets Girl - A Shiranui's Story
 --scripted by Logical Nonsense
 local s,id=GetID()
 function s.initial_effect(c)
@@ -8,7 +8,6 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(s.condition)
 	e1:SetCost(s.cost)
@@ -63,4 +62,3 @@ end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return not c:IsRace(RACE_ZOMBIE)
 end
-

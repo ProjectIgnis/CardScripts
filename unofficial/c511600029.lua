@@ -1,3 +1,4 @@
+--戦線撹乱
 --Frontline Disturbance
 local s,id=GetID()
 function s.initial_effect(c)
@@ -18,14 +19,14 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,0,LOCATION_MZONE,1,nil) end
 	local g=Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil)
 end
-function s.activate(e)
+function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
 		e1:SetCode(EVENT_LEAVE_FIELD)
 		e1:SetOperation(s.lfop)
-		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e1:SetReset(RESET_EVENT+RESET_MSCHANGE+RESET_OVERLAY+RESET_TURN_SET)
 		tc:RegisterEffect(e1,true)
 	end
 end
@@ -33,6 +34,7 @@ function s.lfop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,e:GetOwnerPlayer(),HINTMSG_FACEUP)
 	local g=Duel.SelectMatchingCard(e:GetOwnerPlayer(),Card.IsFaceup,e:GetOwnerPlayer(),LOCATION_MZONE,0,1,1,nil)
 	local tc=g:GetFirst()
+	
 	if tc and tc:AddCounter(0x1112,1) then
 		--atkdown
 		local e1=Effect.CreateEffect(e:GetOwner())
@@ -63,13 +65,10 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,g,1,1-tp,LOCATION_MZONE)
 end
-function s.atkfilter(c)
-	return c:IsFaceup() and c:IsDefensePos()
-end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
-		local g=Duel.GetMatchingGroup(s.atkfilter,tp,0,LOCATION_MZONE,nil)
+		local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsDefensePos),tp,0,LOCATION_MZONE,nil)
 		local def=g:GetSum(Card.GetDefense)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

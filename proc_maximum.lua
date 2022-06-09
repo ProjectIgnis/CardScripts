@@ -315,13 +315,17 @@ function Auxiliary.FilterMaximumSideFunctionEx(f,...)
 				and f(target,table.unpack(params))
 			end
 end
+--function used only in Duel.GetFieldGroupCountRush because the old implementation did not want to work
+function Maximum.GroupCountFunction(c)
+	return ((not c:IsMaximumMode()) or (not (c:IsMaximumMode() and not c:IsMaximumModeCenter()))) 
+end
 -- function that return the count of a location P1 et P2 minus the Maximum Side
 function Duel.GetFieldGroupCountRush(player, p1, p2)
 	return Duel.GetMatchingGroupCount(Maximum.GroupCountFunction,player,p1,p2,nil)
 end
---function used only in Duel.GetFieldGroupCountRush because the old implementation did not wanted to work
-function Maximum.GroupCountFunction(c)
-	return ((not c:IsMaximumMode()) or (not (c:IsMaximumMode() and not c:IsMaximumModeCenter()))) 
+--Function that returns the same as GetMatchingGroup, but removes L/R Maximum mode monsters from the group
+function Duel.GetMatchingGroupRush(f,player,loc1,loc2,exc,...)
+	return Duel.GetMatchingGroup(Auxiliary.FilterMaximumSideFunctionEx(f,...),player,loc1,loc2,exc)
 end
 --function that add every parts of the Maximum Mode monster to the group
 function Group.AddMaximumCheck(group)

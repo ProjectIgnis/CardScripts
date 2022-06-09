@@ -28,7 +28,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--effect
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
 		local pg=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
-		local og=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil)
+		local og=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(s.filter),tp,0,LOCATION_MZONE,nil)
 		local _,atk=pg:GetMaxGroup(Card.GetAttack)
 		local sub1,_=og:GetMaxGroup(Card.GetAttack)
 		for tc in sub1:Iter() do

@@ -1,5 +1,5 @@
--- Fiendish Commander Current
 --魔将気流
+--Fiendish Commander Current
 local s,id=GetID()
 function s.initial_effect(c)
 	--Increase ATK
@@ -19,7 +19,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsRace(RACE_WARRIOR) and c:IsDefenseAbove(2000)
+	return c:IsFaceup() and c:IsRace(RACE_WARRIOR) and c:IsDefenseAbove(2000) and c:GetBaseDefense()>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) end

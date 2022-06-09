@@ -1,5 +1,5 @@
 --深淵竜アルバ・レナトゥス
---Abyssal Dragon Alba Renatus
+--Alba-Lenatus the Abyss Dragon
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -33,8 +33,11 @@ s.listed_series={0x46}
 function s.splimit(e,se,sp,st)
 	return (st&SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
 end
+function s.matfilter(c,tp)
+	return c:IsAbleToGraveAsCost() and (c:IsFaceup() or c:IsControler(tp))
+end
 function s.contactfil(tp)
-	return Duel.GetMatchingGroup(Card.IsAbleToGraveAsCost,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	return Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp)
 end
 function s.contactop(g)
 	Duel.SendtoGrave(g,REASON_COST+REASON_MATERIAL)

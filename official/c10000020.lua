@@ -78,18 +78,18 @@ function s.atkfilter(c,tp)
 	return c:IsControler(1-tp) and c:IsPosition(POS_FACEUP_ATTACK)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.atkfilter,1,nil,tp)
+	return not eg:IsContains(e:GetHandler()) and eg:IsExists(s.atkfilter,1,nil,tp)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsRelateToEffect(e) end
-	Duel.SetTargetCard(eg)
+	Duel.SetTargetCard(eg:Filter(s.atkfilter,nil,tp))
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetTargetCards(e):Filter(Card.IsFaceup,nil)
+	local g=Duel.GetTargetCards(e):Match(Card.IsFaceup,nil)
 	if #g==0 then return end
 	local dg=Group.CreateGroup()
 	local c=e:GetHandler()
-	for tc in aux.Next(g) do
+	for tc in g:Iter() do
 		local preatk=tc:GetAttack()
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

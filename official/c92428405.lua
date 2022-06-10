@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Special Summon "Supreme king Z-Arc"
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--Special Summon
+	--Special Summon up 4 for monsters
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -29,6 +29,7 @@ function s.initial_effect(c)
 end
 s.listed_names={13331639}
 s.listed_series={0x10f2,0x2073,0x2017,0x1046}
+local LOCATION_HDEG=LOCATION_HAND+LOCATION_DECK+LOCATION_EXTRA+LOCATION_GRAVE
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.PayLPCost(tp,math.floor(Duel.GetLP(tp)/2))
@@ -90,7 +91,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcfilter(c,e,tp)
 	return c:IsFaceup() and c:IsCode(13331639) and c:IsAbleToRemoveAsCost()
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_EXTRA+LOCATION_GRAVE,0,1,nil,e,tp,c)
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HDEG,0,1,nil,e,tp,c)
 end
 function s.spfilter(c,e,tp,rmc)
 	local loc_extr=c:IsLocation(LOCATION_EXTRA)
@@ -108,7 +109,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_EXTRA+LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HDEG)
 end
 function s.resfilter(c)
 	return c:IsLocation(LOCATION_EXTRA) and c:IsType(TYPE_PENDULUM) and c:IsFaceup()
@@ -119,8 +120,8 @@ function s.rescon(checkfunc)
 	end
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND+LOCATION_DECK+LOCATION_EXTRA+LOCATION_GRAVE,0,nil,e,tp)
-	local ft=math.min(Duel.GetLocationCount(tp,LOCATION_MZONE),4)
+	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HDEG,0,nil,e,tp)
+	local ft=math.min(Duel.GetLocationCount(tp,LOCATION_MZONE)+Duel.GetLocationCountFromEx(tp,tp),4)
 	if #g>0 and ft>0 then 
 		local checkfunc=aux.PropertyTableFilter(Card.GetSetCard,0x10f2,0x2073,0x2017,0x1046)
 		if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
@@ -128,10 +129,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		if #sg==0 then return end
 		local exg=sg:Filter(Card.IsLocation,nil,LOCATION_EXTRA)
 		local nexg=sg-exg
-		for tc in exg:Iter() do
+		for tc in nexg:Iter() do
 			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
 		end
-		for tc in nexg:Iter() do
+		for tc in exg:Iter() do
 			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
 		end
 		Duel.SpecialSummonComplete()

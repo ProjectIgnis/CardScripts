@@ -67,7 +67,7 @@ function s.setfilter(c)
 	return c:IsType(TYPE_TRAP) and c:IsSSetable()
 end
 function s.mlop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.DiscardDeck((tp,5,REASON_EFFECT)+Duel.DiscardDeck(1-tp,5,REASON_EFFECT))>0
+	if (Duel.DiscardDeck(tp,5,REASON_EFFECT)+Duel.DiscardDeck(1-tp,5,REASON_EFFECT))>0
 		and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,CARD_EXCHANGE_SPIRIT)
 		and Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_GRAVE,0,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then

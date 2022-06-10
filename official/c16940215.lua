@@ -29,7 +29,7 @@ function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return c:IsReleasable() and not c:IsStatus(STATUS_BATTLE_DESTROYED)
 		and Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,c) end
 	local g=Duel.SelectReleaseGroupCost(tp,s.cfilter,1,1,false,nil,c)
-	Duel.Release(c+g,REASON_COST)
+	Duel.Release(g:AddCard(c),REASON_COST)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

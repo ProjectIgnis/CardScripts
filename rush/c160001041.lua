@@ -4,7 +4,7 @@
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
-	--Destroy 1 spell/trap your opponent controls
+	--Destroy 1 Spell/Trap your opponent controls
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -30,8 +30,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,1,e:GetHandler())
 	--Effect
-	if Duel.SendtoGrave(g,REASON_COST)~=0 then
-		local dg=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_ONFIELD,nil,TYPE_SPELL+TYPE_TRAP)
+	if Duel.SendtoGrave(g,REASON_COST)>0 then
+		local dg=Duel.GetMatchingGroup(Card.IsType,tp,0,LOCATION_ONFIELD,nil,TYPE_SPELL+TYPE_TRAP)
 		if #dg>0 then
 			local sg=dg:Select(tp,1,1,nil)
 			Duel.HintSelection(sg)

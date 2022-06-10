@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_SUMMON+TIMING_SPSUMMON)
 	c:RegisterEffect(e1)
-	--to grave
+	--Send the top card in the Deck to the GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOGRAVE)
@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
-	--to hand
+	--Add 1 card from the GY to the hand
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_TOHAND)
@@ -35,13 +35,15 @@ function s.initial_effect(c)
 	e4:SetCondition(s.thcon)
 	e4:SetTarget(s.thtg)
 	e4:SetOperation(s.thop)
-	c:RegisterEffect(e4)	
+	c:RegisterEffect(e4)
 end
 function s.gycon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(Card.IsControler,1,nil,tp)
 end
 function s.gytg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,1) end
+	local c=e:GetHandler()
+	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,1) and c:GetFlagEffect(id)==0 end
+	c:RegisterFlagEffect(id,RESET_CHAIN,0,1)
 	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,1)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,0,tp,LOCATION_DECK)
 end
@@ -51,7 +53,7 @@ function s.gyop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsPreviousLocation(LOCATION_DECK) and r & REASON_EFFECT ~= 0
+	return e:GetHandler():IsPreviousLocation(LOCATION_DECK) and (r&REASON_EFFECT)~=0
 end
 function s.thfilter(c,turn)
 	return c:IsAbleToHand() and c:GetTurnID()==turn and not c:IsCode(id)

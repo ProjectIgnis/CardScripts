@@ -61,11 +61,13 @@ function s.zcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.zfilter,1,nil,tp)
 end
 function s.ztg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE,PLAYER_NONE,0)+Duel.GetLocationCount(1-tp,LOCATION_MZONE,PLAYER_NONE,0)
-		+Duel.GetLocationCount(tp,LOCATION_SZONE,PLAYER_NONE,0)+Duel.GetLocationCount(1-tp,LOCATION_SZONE,PLAYER_NONE,0)>0 end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE,PLAYER_NONE,0)
+		+Duel.GetLocationCount(tp,LOCATION_SZONE,PLAYER_NONE,0)
+		+Duel.GetLocationCount(1-tp,LOCATION_MZONE,PLAYER_NONE,0)
+		+Duel.GetLocationCount(1-tp,LOCATION_SZONE,PLAYER_NONE,0)>0 end
 	local dis=Duel.SelectDisableField(tp,1,LOCATION_ONFIELD,LOCATION_ONFIELD,0)
 	Duel.Hint(HINT_ZONE,tp,dis)
-	e:SetLabel(dis)
+	Duel.SetTargetParam(dis)
 end
 function s.zop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -77,7 +79,7 @@ function s.zop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetOperation(function(e) return e:GetLabel() end)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
-	e1:SetLabel(e:GetLabel())
+	e1:SetLabel(Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM))
 	c:RegisterEffect(e1)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)

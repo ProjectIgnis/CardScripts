@@ -9,7 +9,6 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_CHAIN_SOLVING)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCountLimit(1)
 	e1:SetCondition(s.negcon)
 	e1:SetOperation(s.negop)
 	c:RegisterEffect(e1)
@@ -41,11 +40,15 @@ function s.initial_effect(c)
 end
 s.listed_series={0x183}
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==1-tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainDisablable(ev)
+	return rp==1-tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainDisablable(ev) and e:GetHandler():GetFlagEffect(id)==0
 		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsAttribute,ATTRIBUTE_EARTH),tp,LOCATION_MZONE,0,5,nil)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.SelectEffectYesNo(tp,e:GetHandler()) then return end
+	local c=e:GetHandler()
+	local cid=Duel.GetChainInfo(ev,CHAININFO_CHAIN_ID)
+	if Duel.GetFlagEffectLabel(tp,id)==cid or not Duel.SelectEffectYesNo(tp,c) then return end
+	c:RegisterFlagEffect(id,RESETS_STANDARD,0,1)
+	Duel.RegisterFlagEffect(tp,id,RESET_CHAIN,0,1,cid)
 	Duel.Hint(HINT_CARD,0,id)
 	local rc=re:GetHandler()
 	if Duel.NegateEffect(ev) and rc:IsRelateToEffect(re) then

@@ -1,5 +1,5 @@
 --烙印の使徒
---Branded Servants
+--Branded Disciple
 --scripted by Rundas
 local s,id=GetID()
 function s.initial_effect(c)
@@ -13,7 +13,6 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_CHAIN_SOLVING)
 	e1:SetRange(LOCATION_SZONE)
-	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.discon)
 	e1:SetOperation(s.disop)
 	c:RegisterEffect(e1)
@@ -25,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_DAMAGE_STEP_END)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetCountLimit(1,{id,1})
+	e2:SetCountLimit(1,id)
 	e2:SetCondition(s.descon)
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
@@ -41,7 +40,8 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) and (rc:IsAttack(0) or rc:IsDefense(0))
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.SelectEffectYesNo(tp,e:GetHandler()) then
+	if Duel.GetFlagEffect(tp,id)==0 and Duel.SelectEffectYesNo(tp,e:GetHandler()) then
+		Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 		Duel.Hint(HINT_CARD,0,id)
 		Duel.NegateEffect(ev)
 	end

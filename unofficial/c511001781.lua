@@ -110,10 +110,10 @@ end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.eqfilter(chkc,tp) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingTarget(s.eqfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,tp) end
+		and Duel.IsExistingTarget(s.eqfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler(),tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	local g=Duel.SelectTarget(tp,s.eqfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,tp)
-	Duel.SetOperationInfo(0,CATEGORY_EQUIP,g,1,0,0)
+	local g=Duel.SelectTarget(tp,s.eqfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,e:GetHandler(),tp)
+	Duel.SetOperationInfo(0,CATEGORY_EQUIP,g,1,tp,0)
 end
 function s.equipop(c,e,tp,tc)
 	aux.EquipByEffectAndLimitRegister(c,e,tp,tc,id)
@@ -133,7 +133,7 @@ function s.eqtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return tc and not tc:IsType(TYPE_TOKEN) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and tc:IsAbleToChangeControler() and not c:IsStatus(STATUS_BATTLE_DESTROYED) and c:IsOnField() end
 	Duel.SetTargetCard(tc)
-	Duel.SetOperationInfo(0,CATEGORY_EQUIP,tc,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_EQUIP,tc,1,tp,0)
 end
 function s.eqtc(c)
 	return c:GetFlagEffect(id)>0
@@ -155,9 +155,9 @@ function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,tp,0)
 	if re:GetHandler():IsRelateToEffect(re) and re:GetHandler():IsDestructable() then
-		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,tp,0)
 	end
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
@@ -185,8 +185,7 @@ function s.lpop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SetLP(1-tp,1)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return tp==Duel.GetTurnPlayer() and c:GetOverlayCount()==0
+	return Duel.IsTurnPlayer(tp) and e:GetHandler():GetOverlayCount()==0
 end
 function s.spfilter(c,e,tp,mc,pg)
 	return c:IsCode(9161357) and mc:IsCanBeXyzMaterial(c,tp) and (#pg<=0 or pg:IsContains(mc))

@@ -53,8 +53,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rmvcond(e,tp,eg,ep,ev,re,r,rp)
-	return rp==1-tp and re:IsActiveType(TYPE_TRAP)
-		and e:GetHandler():IsStatus(STATUS_EFFECT_ENABLED)
+	local c=e:GetHandler()
+	return rp==1-tp and re:IsActiveType(TYPE_TRAP) and c:IsRelateToEffect(re) and c:IsStatus(STATUS_EFFECT_ENABLED)
 end
 function s.rmvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x285),tp,LOCATION_MZONE,0,1,nil)

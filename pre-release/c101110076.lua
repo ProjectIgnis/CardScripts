@@ -21,6 +21,13 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 	--Look at the opponent's hand and banish 1 card face-down
+	local e3a=Effect.CreateEffect(c)
+	e3a:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
+	e3a:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e3a:SetCode(EVENT_CHAINING)
+	e3a:SetRange(LOCATION_SZONE)
+	e3a:SetOperation(s.chainreg)
+	c:RegisterEffect(e3a)
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_REMOVE)
@@ -52,9 +59,15 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
+function s.chainreg(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if c:GetFlagEffect(id)==0 then
+		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_CHAIN,0,1)
+	end
+end
 function s.rmvcond(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return rp==1-tp and re:IsActiveType(TYPE_TRAP) and c:IsRelateToEffect(re) and c:IsStatus(STATUS_EFFECT_ENABLED)
+	return rp==1-tp and re:IsActiveType(TYPE_TRAP) and c:IsStatus(STATUS_EFFECT_ENABLED) and c:GetFlagEffect(id)>0
 end
 function s.rmvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x285),tp,LOCATION_MZONE,0,1,nil)

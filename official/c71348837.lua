@@ -10,24 +10,23 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--Additional Normal Summon
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x71))
-	e2:SetCountLimit(1,id)
+	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
 	e2:SetRange(LOCATION_SZONE)
+	e2:SetCountLimit(1,id)
+	e2:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x71))
 	c:RegisterEffect(e2)
-	--Set 1 "Madolche" Spell/Trap from the deck
+	--Set 1 "Madolche" Spell/Trap from your Deck
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,0))
+	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+	e3:SetCode(EVENT_TO_DECK)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCountLimit(1,{id,1})
-	e3:SetCode(EVENT_TO_DECK)
-	e3:SetCondition(s.condition)
-	e3:SetTarget(s.target)
-	e3:SetOperation(s.operation)
+	e3:SetCondition(s.setcon)
+	e3:SetOperation(s.setop)
 	c:RegisterEffect(e3)
 	local e4=e3:Clone()
 	e4:SetCode(EVENT_TO_HAND)
@@ -36,28 +35,20 @@ end
 s.listed_names={id}
 s.listed_series={0x71}
 function s.cfilter(c,tp)
-	return c:IsControler(tp) and c:GetPreviousControler()==tp
-		and (c:IsPreviousLocation(LOCATION_GRAVE) or (c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)))
-		and c:IsSetCard(0x71) and not c:IsLocation(LOCATION_EXTRA)
+	return c:IsControler(tp) and c:IsPreviousControler(tp) and c:IsReason(REASON_EFFECT) and c:IsPreviousPosition(POS_FACEUP) and c:IsSetCard(0x71)
+		and (c:IsPreviousLocation(LOCATION_GRAVE) or (c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousSetCard(0x71)))
+		and not c:IsLocation(LOCATION_EXTRA)
 end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return (r&REASON_EFFECT)~=0 and eg:IsExists(s.cfilter,1,nil,tp)
+function s.setcon(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(s.cfilter,1,nil,tp)
 end
-function s.filter(c)
-	return c:IsSetCard(0x71) and c:IsType(TYPE_TRAP+TYPE_SPELL) and c:IsSSetable() and not c:IsForbidden() and not c:IsCode(id)
+function s.setfilter(c)
+	return c:IsSetCard(0x71) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable() and not c:IsForbidden() and not c:IsCode(id)
 end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-end
-function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK,0,nil)
+function s.setop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
+	local g=Duel.SelectMatchingCard(tp,s.setfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if #g>0 then
-		Duel.BreakEffect()
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
-		local sg=g:Select(tp,1,1,nil)
-		Duel.SSet(tp,sg)
-		Duel.ConfirmCards(1-tp,sg)
+		Duel.SSet(tp,g)
 	end
 end
-

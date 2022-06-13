@@ -1168,7 +1168,11 @@ Effect.CreateVernalizerSPEffect=(function()
 		e1:SetRange(LOCATION_HAND)
 		e1:SetCountLimit(1,{id,desc})
 		e1:SetCost(aux.CostWithReplace(verncost,CARD_VERNALIZER_FLOWER_CROWN))
-		e1:SetTarget(uniquetg)
+		e1:SetTarget(function(e,tp,eg,ep,ev,re,r,rp,chk)
+			if chk==0 then return uniquetg(e,tp,eg,ep,ev,re,r,rp,chk) end
+			uniquetg(e,tp,eg,ep,ev,re,r,rp,chk)
+			Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
+		end)
 		e1:SetOperation(function(...) vernop(uniqueop,...) end)
 		return e1
 	end

@@ -39,6 +39,11 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atklimit(e,c)
 	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.HasLevel),e:GetHandlerPlayer(),LOCATION_MZONE,0,nil)
-	local _,lv=g:GetMaxGroup(Card.GetLevel)
-	return c:IsFaceup() and (not c:HasLevel() or c:IsLevelAbove(lv))
+	local maxg,lv=g:GetMaxGroup(Card.GetLevel)
+	if not maxg then return end
+	if #g==#maxg then
+		return c:IsFaceup() and not c:HasLevel()
+	else
+		return c:IsFaceup() and (not c:HasLevel() or c:IsLevelAbove(lv))
+	end
 end

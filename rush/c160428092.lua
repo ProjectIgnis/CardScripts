@@ -23,7 +23,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetDecktopGroup(tp,3)
 	if #g>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local sg=g:Select(p,1,1,nil)
+		local sg=g:Select(tp,1,1,nil)
 		Duel.SendtoGrave(sg,REASON_EFFECT)
 		Duel.BreakEffect()
 		Duel.ShuffleDeck(tp)

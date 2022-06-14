@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,1000) end
+	if chk==0 then return Duel.CheckLPCost(tp,600) end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,2) end
@@ -27,7 +27,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
-	 Duel.PayLPCost(tp,1000) 
+	 Duel.PayLPCost(tp,600) 
 	 --Effect
 	local res=Duel.TossCoin(tp,1)
 	Duel.Draw(tp,res+1,REASON_EFFECT)

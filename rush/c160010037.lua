@@ -40,7 +40,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 		if #g>0 then
 			Duel.HintSelection(g)
-			Duel.SendtoHand(sg,nil,REASON_EFFECT)
+			Duel.SendtoHand(g,nil,REASON_EFFECT)
 		end
 	end
 end

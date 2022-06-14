@@ -15,7 +15,7 @@ end
 function s.costfilter(c)
 	return c:IsAttackAbove(1600) and c:IsFaceup() and c:IsAbleToGraveAsCost()
 end
-function s.cost(e,tp,eg,ep,ev,re,r,rp)
+function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE,0,1,nil) end
 end
 function s.spfilter(c,e,tp)

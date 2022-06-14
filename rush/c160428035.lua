@@ -19,10 +19,10 @@ function s.tdfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToDeckAsCost()
 end
 function s.tdcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then Duel.IsExistingTarget(s.tdfilter,tp,LOCATION_GRAVE,0,5,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_GRAVE,0,5,nil) end
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToDeck,tp,0,LOCATION_GRAVE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToDeck,tp,0,LOCATION_GRAVE,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,5,tp,LOCATION_GRAVE)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,2,1-tp,LOCATION_GRAVE)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)

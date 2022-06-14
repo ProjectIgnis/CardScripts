@@ -32,7 +32,7 @@ function s.rescon(ft)
 	end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local hg=Duel.GetFieldGroup(p,0,LOCATION_HAND)
+	local hg=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
 	if #hg>0 then
 		Duel.ConfirmCards(tp,hg)
 		local ft=Duel.GetLocationCount(1-tp,LOCATION_SZONE)

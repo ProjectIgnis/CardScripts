@@ -22,7 +22,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ConfirmDecktop(tp,3)
 	local g=Duel.GetDecktopGroup(tp,3)
 	if #g>0 then
-		Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TOGRAVE)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local sg=g:Select(p,1,1,nil)
 		Duel.SendtoGrave(sg,REASON_EFFECT)
 		Duel.BreakEffect()

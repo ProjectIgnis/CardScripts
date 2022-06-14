@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
 end
-s.listed_names={160010029}
+s.listed_names={160010048}
 function s.atkcond(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetMatchingGroupCountRush(aux.FilterFaceupFunction(Card.IsRace,RACE_AQUA),tp,LOCATION_MZONE,0,nil)>=3
 end
@@ -28,7 +28,7 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,nil,1,tp,0)
 end
 function s.thfilter(c)
-	return c:IsCode(160010029) and c:IsAbleToHand()
+	return c:IsCode(160010048) and c:IsAbleToHand()
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement

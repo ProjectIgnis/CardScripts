@@ -1,0 +1,55 @@
+--御茶女邪神ヌヴィア
+--Nuvia the Wicked Mischief Maker
+--scripted by Naim
+local s,id=GetID()
+function s.initial_effect(c)
+	--Increase ATK of Aqua monsters by 200
+	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_TOHAND)
+	e1:SetType(EFFECT_TYPE_IGNITION)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetCountLimit(1)
+	e1:SetCondition(s.atkcond)
+	e1:SetCost(s.atkcost)
+	e1:SetTarget(s.atktg)
+	e1:SetOperation(s.atkop)
+	c:RegisterEffect(e1)
+end
+s.listed_names={160010029}
+function s.atkcond(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetMatchingGroupCountRush(aux.FilterFaceupFunction(Card.IsRace,RACE_AQUA),tp,LOCATION_MZONE,0,nil)>=3
+end
+function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) end
+end
+function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsRace,RACE_AQUA),tp,LOCATION_MZONE,0,nil)>0 end
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,nil,1,tp,0)
+end
+function s.thfilter(c)
+	return c:IsCode(160010029) and c:IsAbleToHand()
+end
+function s.atkop(e,tp,eg,ep,ev,re,r,rp)
+	--Requirement
+	if Duel.DiscardDeck(tp,1,REASON_COST)<1 then return end
+	--effect
+	local g=Duel.GetMatchingGroupRush(aux.FilterFaceupFunction(Card.IsRace,RACE_AQUA),tp,LOCATION_MZONE,0,nil)
+	if #g==0 then return end
+	local c=e:GetHandler()
+	for tc in g:Iter() do
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_ATTACK)
+		e1:SetValue(200)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		tc:RegisterEffectRush(e1)
+	end
+	local thg=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_GRAVE,0,nil)
+	if #thg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+		local sg=thg:Select(tp,1,1,nil)
+		Duel.HintSelection(sg)
+		Duel.BreakEffect()
+		Duel.SendtoHand(sg,nil,REASON_EFFECT)
+	end
+end

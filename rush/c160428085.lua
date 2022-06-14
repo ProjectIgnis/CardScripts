@@ -42,5 +42,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SSet(1-tp,sg,1-tp,true)
 			Duel.Damage(1-tp,#sg*300,REASON_EFFECT)
 		end
+		Duel.ShuffleHand(1-tp)
 	end
 end

@@ -40,7 +40,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if res~=#g or res==0 then return end --if at least 1 was not changed, the cost was not paid, right?
 	--Effect
 	local hg=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
-	local mct=Duel.GetMatchingGroup(s.defposfilter,tp,LOCATION_MZONE,0,nil)
+	local mct=Duel.GetMatchingGroupCount(s.defposfilter,tp,LOCATION_MZONE,0,nil)
 	local ct=math.min(mct,#hg)
 	if ct==0 then return end
 	local total=Duel.AnnounceNumberRange(tp,1,ct)

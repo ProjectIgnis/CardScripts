@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e2:SetTarget(aux.TargetBoolFunction(Card.Race,RACE_ZOMBIE))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_ZOMBIE))
 	e2:SetValue(s.value)
 	c:RegisterEffect(e2)
 	--Increase DEF

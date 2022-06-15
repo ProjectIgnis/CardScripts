@@ -35,8 +35,9 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	if chk==0 then return #g>0 end
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,0,0)
+	local exg=g:GetMaxGroup(Card.GetLevel)
+	if chk==0 then return #(g-exg)>0 end
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,tp,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
@@ -73,7 +74,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToHand() end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,e:GetHandler(),1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,e:GetHandler(),1,tp,0)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

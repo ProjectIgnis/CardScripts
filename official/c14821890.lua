@@ -27,17 +27,20 @@ function s.initial_effect(c)
 end
 s.listed_names={TOKEN_SWORDSOUL}
 s.listed_series={0x16d}
+function s.desfilter(c,e,tp)
+	return c:IsCanBeEffectTarget(e) and (c:IsControler(1-tp) or (c:IsFaceup() and c:IsMonster() and c:IsRace(RACE_WYRM)))
+end
+function s.desrescon(sg,e,tp,mg)
+    local own=sg:FilterCount(Card.IsControler,nil,tp)
+    return own==1,own>1
+end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then 
-		return Duel.IsExistingTarget(aux.FilterFaceupFunction(Card.IsRace,RACE_WYRM),tp,LOCATION_MZONE,0,1,nil)
-			and Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_ONFIELD,2,nil) 
-	end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,aux.FilterFaceupFunction(Card.IsRace,RACE_WYRM),tp,LOCATION_MZONE,0,1,1,nil)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	g=g+Duel.SelectTarget(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,2,2,nil)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
+	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,e,tp)
+	if chk==0 then return aux.SelectUnselectGroup(g,e,tp,3,3,s.desrescon,0) end
+	local dg=aux.SelectUnselectGroup(g,e,tp,3,3,s.desrescon,1,tp,HINTMSG_DESTROY)
+	Duel.SetTargetCard(dg)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,dg,#dg,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetTargetCards(e)

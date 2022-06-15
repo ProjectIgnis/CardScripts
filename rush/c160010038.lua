@@ -19,7 +19,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,2) end
-	Duel.SetPossibleOperationInfo(0,CATEGORY_DECKDES,nil,2,tp,0)
+	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,2,tp,0)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_POSITION,nil,1,tp,0)
 end
 function s.cfilter(c)
@@ -27,9 +27,7 @@ function s.cfilter(c)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.DiscardDeck(tp,2,REASON_EFFECT)==0 then return end
-	if Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil)
-		and Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.cfilter),tp,0,LOCATION_MZONE,1,nil)
-		and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+	if Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.cfilter),tp,0,LOCATION_MZONE,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		local tc=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.cfilter),tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
 		if tc then
 			Duel.BreakEffect()

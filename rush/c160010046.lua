@@ -21,7 +21,7 @@ function s.cstfilter(c)
 	return c:IsRace(RACE_BEAST) and c:IsType(TYPE_NORMAL) and c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if ckh==0 then return Duel.IsExistingMatchingCard(s.cstfilter,tp,LOCATION_HAND,0,2,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cstfilter,tp,LOCATION_HAND,0,2,nil) end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsLevelBelow,8),tp,0,LOCATION_MZONE,1,nil) end

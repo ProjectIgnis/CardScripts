@@ -44,7 +44,6 @@ function s.initial_effect(c)
 	--Cannot be used as material for a Fusion/Synchro/Xyz Summon
 	local e7=Effect.CreateEffect(c)
 	e7:SetType(EFFECT_TYPE_SINGLE)
-	e7:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e7:SetCode(EFFECT_CANNOT_BE_MATERIAL)
 	e7:SetValue(aux.cannotmatfilter(SUMMON_TYPE_FUSION,SUMMON_TYPE_SYNCHRO,SUMMON_TYPE_XYZ))
 	c:RegisterEffect(e7)

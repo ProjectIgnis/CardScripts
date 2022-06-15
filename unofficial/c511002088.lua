@@ -37,6 +37,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectMatchingCard(tp,Card.IsDestructable,tp,0,LOCATION_MZONE,1,1,nil)
+	if #g==0 then return end
 	local tc=g:GetFirst()
 	local atk=tc:GetAttack()
 	if tc then

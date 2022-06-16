@@ -23,9 +23,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.roll_dice=true
-s.listed_names={100290006} --Dimension Dice's ID, to be replaced by the official ID later
+s.listed_names={47292920}
 function s.thfilter(c)
-	return c:IsCode(100290006) and c:IsAbleToHand()
+	return c:IsCode(47292920) and c:IsAbleToHand()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

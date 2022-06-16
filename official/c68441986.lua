@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.counterop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={100290029} --to be later replaced by Number 2: Ninja Shadow Mosquito's official ID
+s.listed_names={32453837}
 s.counter_place_list={0x1101} --same as the anime version for now. Or 0x120d, according to CCM
 function s.spfilter(c,e,tp)
 	return c:IsLevelBelow(4) and c:IsRace(RACE_INSECT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -51,7 +51,7 @@ function s.spcheck(sg,e,tp,mg)
 	return sg:GetClassCount(Card.GetLevel)==1
 end
 function s.countercond(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,100290029),tp,LOCATION_ONFIELD,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,32453837),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.countertg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsFaceup() end

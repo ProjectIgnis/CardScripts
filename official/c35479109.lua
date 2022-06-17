@@ -31,17 +31,16 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
+	local tg=Duel.GetTargetCards(e)
+	if #tg==0 then return end
+	local rg=tg:Filter(aux.AND(Card.IsAbleToHand,Card.IsFacedown),nil)
+	if #rg==0 then return end
 	c:CancelToGrave()
 	if not c:IsAbleToHand() then
 		c:CancelToGrave(false)
 		return
 	end
-	local tg=Duel.GetTargetCards(e)
-	if #tg==0 then return end
-	local rg=tg:Filter(aux.AND(Card.IsAbleToHand,Card.IsFacedown),nil)
-	if #rg==0 then return end
-	rg:AddCard(c)
-	if Duel.SendtoHand(rg,nil,REASON_EFFECT)>0 then
+	if Duel.SendtoHand(rg:AddCard(c),nil,REASON_EFFECT)>0 then
 		local og=Duel.GetOperatedGroup():Filter(Card.IsLocation,nil,LOCATION_HAND):Match(Card.IsControler,nil,tp)
 		local rt_ct=#og
 		if rt_ct==0 then return end

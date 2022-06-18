@@ -17,11 +17,12 @@ end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) end
 end
-function s.tdfilter(c,slct)
-	return c:IsMonster() and c:IsAbleToDeck() and (slct or c:IsType(TYPE_NORMAL))
+function s.tdfilter(c)
+	return c:IsMonster() and c:IsAbleToDeck()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.tdfilter,tp,0,LOCATION_GRAVE,1,nil,false) end
+	local g=Duel.GetMatchingGroup(s.tdfilter,tp,0,LOCATION_GRAVE,nil)
+	if chk==0 then return #g>1 and g:IsExists(Card.IsType,1,nil,TYPE_NORMAL) end
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,2,1-tp,LOCATION_GRAVE)
 end
 function s.rescon(sg,e,tp,mg)
@@ -29,11 +30,11 @@ function s.rescon(sg,e,tp,mg)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	-- Requirement
-	if Duel.DiscardDeck(tp,1,REASON_COST)<1 then return end
+	if Duel.DiscardDeck(tp,1,REASON_COST)==0 then return end
 	--Effect:
-	local g=Duel.GetMatchingGroup(s.tdfilter,tp,0,LOCATION_GRAVE,nil,true)
+	local g=Duel.GetMatchingGroup(s.tdfilter,tp,0,LOCATION_GRAVE,nil)
 	if #g==0 then return end
-	local sg=aux.SelectUnselectGroup(g,e,tp,1,2,s.rescon,1,tp,HINTMSG_TODECK)
+	local sg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_TODECK)
 	if #sg>0 then
 		Duel.SendtoDeck(sg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end

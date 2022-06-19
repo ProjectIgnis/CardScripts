@@ -624,8 +624,8 @@ if not AnimeArchetype then
 	Card.IsMelodiousSongtress=MakeCheck({0x209b},{14763299,62895219})
 
 	-- Motor モーター
-	-- Fiendish Engine Ω/Motor Shell
-	Card.IsMotor=MakeCheck({0x537},{82556058,78394032})
+	-- Fiendish Engine Ω/Motor Shell/Motor Frenzy
+	Card.IsMotor=MakeCheck({0x537},{82556058,78394032,77672444})
 
 	-- Neko 猫
 	-- Dark Cat with White Tail/Kinka-byo/Black Cat-astrophe

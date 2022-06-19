@@ -35,7 +35,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local tg=Duel.SelectMatchingCard(tp,Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,1,nil)
+	local tg=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_HAND,0,1,1,nil)
 	if Duel.SendtoGrave(tg,REASON_COST)>0 then
 	--Effect
 		local ct=Duel.GetMatchingGroupCount(aux.FilterMaximumSideFunctionEx(s.aquafilter),tp,LOCATION_MZONE,0,nil)

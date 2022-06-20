@@ -34,6 +34,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local tc=Duel.SelectMatchingCard(tp,Card.IsAbleToHand,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 	if #tc>0 then
+		tc=tc:AddMaximumCheck()
 		Duel.HintSelection(tc,true)
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end

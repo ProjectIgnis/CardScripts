@@ -79,7 +79,15 @@ function s.banop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetOperation(s.retop)
 		Duel.RegisterEffect(e1,tp)
 	end
-	if c:CanChainAttack() then Duel.ChainAttack() end
+	if c:IsRelateToEffect(e) and c:CanChainAttack() then
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e2:SetCode(EVENT_DAMAGE_STEP_END)
+		e2:SetRange(LOCATION_MZONE)
+		e2:SetOperation(function(e) Duel.ChainAttack() end)
+		e2:SetReset(RESET_PHASE+PHASE_DAMAGE)
+		c:RegisterEffect(e2)
+	end
 end
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetLabelObject():GetFlagEffect(id)~=0

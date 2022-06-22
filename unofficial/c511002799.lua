@@ -1,3 +1,4 @@
+--傷竜の鞭
 --Scar-Dragon Whip
 local s,id=GetID()
 function s.initial_effect(c)
@@ -10,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
-	--Atk up
+	--Increase ATK by 500
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
@@ -23,7 +24,7 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e3:SetValue(1)
 	c:RegisterEffect(e3)
-	--return
+	--Return banished cards to the hand
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(47126872,1))
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
@@ -39,10 +40,8 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,0,LOCATION_HAND,2,2,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
-	local tc=g:GetFirst()
-	while tc do
+	for tc in g:Iter() do
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
-		tc=g:GetNext()
 	end
 	g:KeepAlive()
 	e:SetLabelObject(g)
@@ -52,7 +51,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,tp,0)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_CHAIN_SOLVING)
@@ -78,6 +77,6 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local g=tg:Filter(Card.IsRelateToEffect,nil,e)
 	if #g>0 then
-		Duel.SendtoHand(g,1-tp,REASON_EFFECT)
+		Duel.SendtoHand(g,nil,REASON_EFFECT)
 	end
 end

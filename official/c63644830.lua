@@ -35,19 +35,19 @@ function s.indct(e,re,r,rp)
 		return 0
 	end
 end
-function s.tdfilter(c)
-	return c:IsRace(RACE_BEAST) and c:IsAbleToDeck()
+function s.tdfilter(c,e)
+	return c:IsRace(RACE_BEAST) and c:IsAbleToDeck() and c:IsCanBeEffectTarget(e)
 end
 function s.tdcheck(sg,e,tp)
 	return sg:GetClassCount(Card.GetCode)==#sg
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local g=Duel.GetMatchingGroup(s.tdfilter,tp,LOCATION_GRAVE,0,nil,e,tp)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.tdfilter(chkc) end
+	local g=Duel.GetMatchingGroup(s.tdfilter,tp,LOCATION_GRAVE,0,nil,e)
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.tdfilter(chkc,e) end
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and aux.SelectUnselectGroup(g,e,tp,3,3,s.tdcheck,0) end
 	local tg=aux.SelectUnselectGroup(g,e,tp,3,3,s.tdcheck,1,tp,HINTMSG_TODECK)
 	Duel.SetTargetCard(tg)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,tg,#tg,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,tg,#tg,tp,0)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)

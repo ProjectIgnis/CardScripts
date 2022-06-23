@@ -69,8 +69,8 @@ if not AnimeArchetype then
 	Card.IsAssassin=MakeCheck({0x504},AnimeArchetype.OCGAssassin)
 
 	-- Astral アストラル
-	-- Astral Barrier/Astral Barrier
-	Card.IsAstral=MakeCheck({0x505},{37053871,45950291})
+	-- Astral Barrier/RUM Astral Force/Astral Kuriboh/Astraltopia
+	Card.IsAstral=MakeCheck({0x505},{37053871,45950291,64591429,69852487})
 
 	-- Atlandis アトランタル
 	-- Number C6: Chronomaly Chaos Atlandis/Number 6: Chronomaly Atlandis

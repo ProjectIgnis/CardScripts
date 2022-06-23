@@ -631,9 +631,9 @@ function Auxiliary.cannotmatfilter(val1,...)
 	return function(e,c,sumtype,tp)
 		local sum=tot&sumtype
 		for _,val in pairs(allowed) do
-			if sum==val then return 1 end
+			if sum==val then return true end
 		end
-		return 0
+		return false
 	end
 end
 --effects inflicting damage to tp

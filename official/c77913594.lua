@@ -35,9 +35,9 @@ end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local sc=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
-	if not sc then return end
-	Duel.SendtoHand(sc,nil,REASON_EFFECT)
+	if not sc or Duel.SendtoHand(sc,nil,REASON_EFFECT)<1 or not sc:IsLocation(LOCATION_HAND) then return end
 	Duel.ConfirmCards(1-tp,sc)
+	Duel.ShuffleHand(tp)
 	if sc:IsMonster() and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
 		and sc:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsExistingMatchingCard(s.listfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,sc) 

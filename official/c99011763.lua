@@ -1,5 +1,5 @@
 --魔界の警邏課デスポリス
---Police Patrol of the Underworld
+--Beat Cop from the Underworld
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)
@@ -42,7 +42,7 @@ end
 function s.addtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsFaceup() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
+	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))
 	Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 end
 function s.addop(e,tp,eg,ep,ev,re,r,rp)

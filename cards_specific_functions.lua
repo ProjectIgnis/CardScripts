@@ -1139,10 +1139,10 @@ Effect.CreateVernalizerSPEffect=(function()
 	local function vernop(uniqueop,e,tp,eg,ep,ev,re,r,rp)
 		local proceed,exemptID=uniqueop(e,tp,eg,ep,ev,re,r,rp)
 		if proceed and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-			and Duel.IsExistingMatchingCard(vernspfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,exemptID)
+			and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(vernspfilter),tp,LOCATION_GRAVE,0,1,nil,e,tp,exemptID)
 			and Duel.SelectYesNo(tp,aux.Stringid(stringbase,1)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-			local sg=Duel.SelectMatchingCard(tp,vernspfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,exemptID)
+			local sg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(vernspfilter),tp,LOCATION_GRAVE,0,1,1,nil,e,tp,exemptID)
 			if #sg>0 then
 				Duel.BreakEffect()
 				Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)

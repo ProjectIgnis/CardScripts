@@ -329,7 +329,7 @@ if not AnimeArchetype then
 	-- Gorgonic Gargoyle/Gorgonic Guardian/Gorgonic Ghoul
 	-- Gorgonic Cerberus/Gorgonic Golem
 	AnimeArchetype.OCGGorgonic={
-		64379261,84401683,98637386,37168514,90764875
+		64379261,84401683,37984162,37168514,90764875
 	}
 	Card.IsGorgonic=MakeCheck({0x522},AnimeArchetype.OCGGorgonic)
 	-- Goyo ゴヨウ

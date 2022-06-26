@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x1034,0x2034,0x284}
+s.listed_series={0x1034,0x2034,0x188}
 s.listed_names={40854824}
 local LOCATION_HAND_DECK_GRAVE_SZONE=LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE+LOCATION_SZONE
 function s.cfilter(c)
@@ -35,7 +35,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.thfilter(c)
-	return (c:IsSetCard(0x284) or c:IsCode(40854824)) and (c:IsAbleToHand() or c:IsAbleToGrave())
+	return (c:IsSetCard(0x188) or c:IsCode(40854824)) and (c:IsAbleToHand() or c:IsAbleToGrave())
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x1034) and c:IsOriginalType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

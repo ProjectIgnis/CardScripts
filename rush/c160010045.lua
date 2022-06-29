@@ -19,16 +19,16 @@ function s.desrescon(sg,e,tp,mg)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then
-		local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+		local g=Duel.GetMatchingGroupRush(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 		return aux.SelectUnselectGroup(g,e,tp,2,2,s.desrescon,0)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,2,PLAYER_ALL,LOCATION_MZONE)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroupRush(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	local dg=aux.SelectUnselectGroup(g,e,tp,2,2,s.desrescon,1,tp,HINTMSG_DESTROY)
 	if #dg==2 then
 		Duel.HintSelection(dg,true)
-		Duel.Destroy(dg,REASON_EFFECT)
+		Duel.Destroy(dg:AddMaximumCheck(),REASON_EFFECT)
 	end
 end

@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_ONFIELD)
 	c:RegisterEffect(e2)
 	--Perform a Fusion Summon
-	local params = {nil,Fusion.OnFieldMat,nil,nil,Fusion.ForcedHandler,s.stage2}
+	local params = {gc=Fusion.ForcedHandler,stage2=s.stage2}
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
@@ -24,8 +24,8 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e3:SetCondition(s.spcon)
-	e3:SetTarget(Fusion.SummonEffTG(table.unpack(params)))
-	e3:SetOperation(Fusion.SummonEffOP(table.unpack(params)))
+	e3:SetTarget(Fusion.SummonEffTG(params))
+	e3:SetOperation(Fusion.SummonEffOP(params))
 	c:RegisterEffect(e3)
 	--Destruction replacement effect
 	local e4=Effect.CreateEffect(c)

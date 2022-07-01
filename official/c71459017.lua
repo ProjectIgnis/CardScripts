@@ -1,5 +1,5 @@
 --禰須三破鳴比
---Nezumihanabi
+--Hinezumi Hanabi
 --scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -46,7 +46,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.desop)
 	c:RegisterEffect(e5)
 end
-s.toss_dice=true
+s.roll_dice=true
 function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,3,0,0x203)

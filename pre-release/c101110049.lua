@@ -34,7 +34,7 @@ function s.lcheck(g,lc,sumtype,tp)
 	return g:CheckDifferentPropertyBinary(Card.GetRace,lc,sumtype,tp)
 end
 function s.desfilter(c,e,tp)
-	return c:IsControler(1-tp) or (c:IsFaceup() and c:IsSetCard(0x114)) and c:IsCanBeEffectTarget(e)
+	return c:IsCanBeEffectTarget(e) and (c:IsControler(1-tp) or (c:IsFaceup() and c:IsSetCard(0x114)))
 end
 function s.desrescon(sg,e,tp,mg)
 	return sg:GetClassCount(Card.GetControler)==2

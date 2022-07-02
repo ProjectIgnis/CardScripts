@@ -31,7 +31,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	g=g:AddMaximumCheck()
 	local ct=Duel.SendtoGrave(g,REASON_COST)
 	
-	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,Card.IsDefensePos,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil):GetFirst()
 	if not tc:IsAttackPos() then
 		if Duel.ChangePosition(tc,0,0,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 			Duel.Draw(tp,1,REASON_EFFECT)

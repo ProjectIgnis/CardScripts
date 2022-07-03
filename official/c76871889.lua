@@ -1,3 +1,4 @@
+--ヴェンデット・ナイト
 --Vendread Nights
 --Scripted by Eerie Code
 local s,id=GetID()
@@ -55,7 +56,7 @@ function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	local bc=ec:GetBattleTarget()
 	e:SetLabelObject(ec)
 	return ec:IsControler(tp) and ec:IsSetCard(0x106) and bc and bc:IsType(TYPE_MONSTER) 
-		and ec:CanChainAttack(2,true) and ec:IsStatus(STATUS_OPPO_BATTLE)
+		and ec:CanChainAttack(0,true) and ec:IsStatus(STATUS_OPPO_BATTLE)
 end
 function s.atcfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x106) and c:IsAbleToRemoveAsCost()

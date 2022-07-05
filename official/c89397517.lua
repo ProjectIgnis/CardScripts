@@ -1,4 +1,5 @@
 --レジェンド・オブ・ハート
+--Legend of Heart
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -13,22 +14,21 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0xa1,0xa0}
-function s.cfilter(c,ft,tp)
-	return c:IsRace(RACE_WARRIOR) and (ft>0 or (c:GetSequence()<5 and c:IsControler(tp))) and (c:IsFaceup() or c:IsControler(tp))
+function s.cfilter(c,tp)
+	return c:IsRace(RACE_WARRIOR) and Duel.GetMZoneCount(tp,c)>0
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if chk==0 then return ft>-1 and Duel.CheckLPCost(tp,2000) and Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil,ft,tp) end
+	if chk==0 then return Duel.CheckLPCost(tp,2000) and Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil,tp) end
 	Duel.PayLPCost(tp,2000)
-	local sg=Duel.SelectReleaseGroupCost(tp,s.cfilter,1,1,false,nil,nil,ft,tp)
+	local sg=Duel.SelectReleaseGroupCost(tp,s.cfilter,1,1,false,nil,nil,tp)
 	Duel.Release(sg,REASON_COST)
 end
 function s.rmfilter(c)
 	return c:IsSetCard(0xa1) and c:IsType(TYPE_SPELL) and c:IsAbleToRemove()
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xa0) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,true,true)
+	return c:IsSetCard(0xa0) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,true,true)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -37,24 +37,26 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		return Duel.IsExistingMatchingCard(s.rmfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil)
 			and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_DECK,0,1,nil,e,tp)
 	end
-	local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,nil)
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_HAND+LOCATION_GRAVE)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_DECK)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ft<=0 then return end
 	local rmg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.rmfilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,nil)
+	if #rmg==0 then return end
 	local rmct=rmg:GetClassCount(Card.GetCode)
 	local spg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_DECK,0,nil,e,tp)
+	if #spg==0 then return end
 	local spct=spg:GetClassCount(Card.GetCode)
 	local ct=math.min(3,ft,spct,rmct)
 	if ct==0 then return end
 	local g=aux.SelectUnselectGroup(rmg,e,tp,1,ct,aux.dncheck,1,tp,HINTMSG_REMOVE)
-	Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
-	ct=g:FilterCount(Card.IsLocation,nil,LOCATION_REMOVED)
+	if #g==0 or Duel.Remove(g,POS_FACEUP,REASON_EFFECT)==0 then return end
+	ct=Duel.GetOperatedGroup():FilterCount(Card.IsLocation,nil,LOCATION_REMOVED)
 	local sg=aux.SelectUnselectGroup(spg,e,tp,ct,ct,aux.dncheck,1,tp,HINTMSG_SPSUMMON)
-	for tc in aux.Next(sg) do
+	if #sg==0 then return end
+	for tc in sg:Iter() do
 		Duel.SpecialSummonStep(tc,0,tp,tp,true,true,POS_FACEUP)
 		tc:CompleteProcedure()
 	end

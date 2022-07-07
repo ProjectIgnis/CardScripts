@@ -55,7 +55,7 @@ end
 function s.sspcon(e,tp,eg,ep,ev,re,r,rp)
 	if rp==tp or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	if not tg or #tg>1 then return false end
+	if not tg or #tg~=1 then return false end
 	local tc=tg:GetFirst()
 	return tc:IsControler(tp) and tc:IsLocation(LOCATION_ONFIELD) and ((tc:IsSetCard(0x2b) and tc:IsFaceup()) or (tc:IsMonster() and tc:IsPosition(POS_FACEDOWN_DEFENSE)))
 		and tc:IsAbleToHand()

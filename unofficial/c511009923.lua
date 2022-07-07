@@ -1,7 +1,8 @@
+--Ｄスケイル・チャフ
 --D-Scale Chaff
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DISABLE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -17,13 +18,13 @@ function s.cfilter(c,lk)
 	return c:IsFaceup() and c:IsSetCard(0x579) and c:IsLink(lk)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil,Duel.GetFieldGroupCount(tp,0,LOCATION_HAND))
+	local ct=Duel.GetFieldGroupCount(tp,0,LOCATION_HAND+LOCATION_MZONE)
+	return ct>0 and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil,ct)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(aux.disfilter1,tp,0,LOCATION_MZONE,nil)
-	local tc=g:GetFirst()
-	while tc do
+	for tc in g:Iter() do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
@@ -47,11 +48,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e4:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			tc:RegisterEffect(e4)
 		end
-		tc=g:GetNext()
 	end
-	local g=Duel.GetMatchingGroup(aux.disfilter1,tp,0,LOCATION_HAND,nil)
-	local tc=g:GetFirst()
-	while tc do
+	local g2=Duel.GetMatchingGroup(aux.disfilter1,tp,0,LOCATION_HAND,nil)
+	for tc in g2:Iter() do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
@@ -62,9 +61,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e2)
-		tc=g:GetNext()
 	end
-end
-function s.distarget(e,c)
-	return c:IsType(TYPE_EQUIP)
 end

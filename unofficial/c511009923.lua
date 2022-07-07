@@ -45,7 +45,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetReset(resets)
 		tc:RegisterEffect(e3)
 	end
-	local g2=Duel.GetMatchingGroup(,tp,0,LOCATION_HAND,nil)
+	local g2=Duel.GetMatchingGroup(nil,tp,0,LOCATION_HAND,nil)
 	for tc in g2:Iter() do
 		--Negate its effects
 		local e4=Effect.CreateEffect(c)

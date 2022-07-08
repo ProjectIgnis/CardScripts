@@ -1,4 +1,5 @@
 --素早いマンボウ
+--Nimble Sunfish
 local s,id=GetID()
 function s.initial_effect(c)
 	--battle destroyed
@@ -19,6 +20,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function s.filter1(c)
 	return c:IsRace(RACE_FISH) and c:IsAbleToGrave()

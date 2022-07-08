@@ -34,8 +34,6 @@ function s.initial_effect(c)
 	e3:SetTarget(s.gytg)
 	e3:SetOperation(s.gyop)
 	c:RegisterEffect(e3)
-	if not GhostBelleTable then GhostBelleTable={} end
-	table.insert(GhostBelleTable,e2)
 end
 s.listed_series={0x13f}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -51,6 +49,8 @@ function s.costg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local sel=g:FilterSelect(tp,Card.IsDifferentAttribute,1,1,nil,att)
 	Duel.SetTargetCard(sel)
 	e:SetLabel(att)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_GRAVE)
 end
 function s.filter(c,e,tp,ft)
 	return c:IsSetCard(0x13f) and c:IsType(TYPE_MONSTER)

@@ -1,15 +1,13 @@
 --白の烙印
---Stigmata of White
+--Branded in White
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--fusion
-	local e1=Fusion.CreateSummonEff(c,nil,nil,s.fextra,s.extraop)
+	--Fusion Summon
+	local e1=Fusion.CreateSummonEff(c,nil,nil,s.fextra,s.extraop,nil,nil,nil,nil,nil,nil,nil,nil,nil,s.extratg)
 	e1:SetCountLimit(1,id)
 	c:RegisterEffect(e1)
-	if not GhostBelleTable then GhostBelleTable={} end
-	table.insert(GhostBelleTable,e1)
-	--set
+	--Set itself during the End Phase
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -43,6 +41,10 @@ function s.extraop(e,tc,tp,sg)
 		Duel.Remove(rg,POS_FACEUP,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
 		sg:Sub(rg)
 	end
+end
+function s.extratg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,nil,0,tp,LOCATION_GRAVE)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

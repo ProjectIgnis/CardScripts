@@ -1,4 +1,5 @@
 --漆黒のトバリ
+--Veil of Darkness
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -45,6 +46,7 @@ function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetLabelObject()
 	tc:CreateEffectRelation(e)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,tc,1,0,0)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_DRAW,nil,1,tp,1)
 end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()

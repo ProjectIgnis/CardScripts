@@ -31,6 +31,7 @@ end
 s.listed_names={CARD_DARK_MAGICIAN}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>2 end
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.filter(c)
 	return ((aux.IsCodeListed(c,CARD_DARK_MAGICIAN) and c:IsType(TYPE_SPELL+TYPE_TRAP)) or c:IsCode(CARD_DARK_MAGICIAN)) and c:IsAbleToHand()

@@ -34,6 +34,8 @@ function s.spcon(e,c)
 end
 function s.exctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>2 end
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function s.excfilter(c,e,tp)
 	return c:IsCode(CARD_SUSHIP_SHARI) and (c:IsAbleToHand() or c:IsCanBeSpecialSummoned(e,0,tp,false,false))

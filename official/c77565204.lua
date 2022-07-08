@@ -16,6 +16,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e2:SetCountLimit(1)
 	e2:SetCondition(s.tgcon)
+	e2:SetTarget(s.tgtg)
 	e2:SetOperation(s.tgop)
 	c:RegisterEffect(e2)
 	--Turn 2
@@ -43,8 +44,6 @@ function s.initial_effect(c)
 	e5:SetCondition(s.descon2)
 	e5:SetOperation(s.desop2)
 	c:RegisterEffect(e5)
-	if not AshBlossomTable then AshBlossomTable={} end
-	table.insert(AshBlossomTable,e2)
 end
 function s.reg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -72,6 +71,10 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp and e:GetHandler():GetTurnCounter()==1
+end
+function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
 function s.filter1(c,e)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToGrave() and not c:IsImmuneToEffect(e)

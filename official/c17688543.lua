@@ -11,6 +11,8 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
+	if not GhostBelleTable then GhostBelleTable={} end
+	table.insert(GhostBelleTable,e1)
 end
 function s.filter(c,e,tp)
 	if c:IsHasEffect(EFFECT_SPSUMMON_CONDITION) then
@@ -28,8 +30,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc,e,tp) end
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local sg=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,1,nil,e,tp)
-	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,sg,1,tp,LOCATION_GRAVE)
+	Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,1,nil,e,tp)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
@@ -49,7 +50,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	tc:CreateEffectRelation(e1)
 end
 function s.spcon(e,tp)
-	return Duel.GetTurnCount()==e:GetLabel() and Duel.IsTurnPlayer(tp)
+	return Duel.GetTurnCount()==e:GetLabel() and Duel.GetTurnPlayer()==tp
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()

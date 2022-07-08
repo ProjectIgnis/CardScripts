@@ -49,7 +49,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	tc:CreateEffectRelation(e1)
 end
 function s.spcon(e,tp)
-	return Duel.GetTurnCount()==e:GetLabel() and Duel.GetTurnPlayer()==tp
+	return Duel.GetTurnCount()==e:GetLabel() and Duel.IsTurnPlayer(tp)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()

@@ -615,10 +615,10 @@ function Card.CanBeDoubleTribute(c,...)
 	if c:GetFlagEffect(FLAG_DOUBLE_TRIB)~=0 then return false end
 	local totalFlags=0
 	for i,flag in ipairs{...} do
-		totalFlags+=flag
+		totalFlags=totalFlags+flag
 		if c:GetFlagEffect(flag)~=0 then return false end
 	end
-	if c:GetFlagEffect(totalFlags)~0 then return false end
+	if c:GetFlagEffect(totalFlags)~=0 then return false end
 	return true
 end
 --function to check if the monster can get the corresponding double tribute flags

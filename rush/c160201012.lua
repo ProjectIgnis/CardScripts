@@ -20,10 +20,10 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,e:GetHandler()) end
 end
 function s.filter1(c,tp)
-	return c:IsFaceup() and c:HasLevel() and c:CanAttack() and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_MZONE,0,1,c,c:GetLevel()) and not c:IsMaximumModeSide()
+	return c:IsFaceup() and c:HasLevel() and not c:IsHasEffect(EFFECT_CANNOT_ATTACK) and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_MZONE,0,1,c,c:GetLevel()) and not c:IsMaximumModeSide()
 end
 function s.filter2(c,lvl)
-	return c:IsFaceup() and c:IsLevel(lvl) and c:CanAttack() and not c:IsMaximumModeSide()
+	return c:IsFaceup() and c:IsLevel(lvl) and not c:IsHasEffect(EFFECT_CANNOT_ATTACK) and not c:IsMaximumModeSide()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_MZONE,0,1,nil,tp) end

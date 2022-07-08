@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.pcfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_GALAXY) and c:CanAttack()
+	return c:IsFaceup() and c:IsRace(RACE_GALAXY) and not c:IsHasEffect(EFFECT_CANNOT_ATTACK)
 end
 function s.pctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.pcfilter,tp,LOCATION_MZONE,0,1,nil) end

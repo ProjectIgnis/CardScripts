@@ -17,9 +17,13 @@ end
 function s.trrescon(sg)
 	return #sg==2 and not sg:GetFirst():IsRace(sg:GetNext():GetRace())
 end
+function s.filter(c)
+	return c:IsFaceup() and c:CanBeDoubleTribute(FLAG_DOUBLE_TRIB)
+end
 function s.trtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		local g=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(Card.IsFaceup),tp,LOCATION_MZONE,0,nil)
+		local g=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(s.filter),tp,LOCATION_MZONE,0,nil)
+		
 		return #g>1 and aux.SelectUnselectGroup(g,e,tp,2,2,s.trrescon,0)
 	end
 end
@@ -27,22 +31,13 @@ function s.damfilter(c)
 	return c:IsFaceup() and c:IsLevel(6) and c:IsDefense(500)
 end
 function s.trop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(Card.IsFaceup),tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(s.filter),tp,LOCATION_MZONE,0,nil)
 	local tg=aux.SelectUnselectGroup(g,e,tp,2,2,s.trrescon,1,tp,HINTMSG_FACEUP)
 	if #tg>0 then
 		local c=e:GetHandler()
 		for tc in tg:Iter() do
 			-- Treat as 2 tributes
-			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
-			local e1=aux.summonproc(c,true,true,1,1,SUMMON_TYPE_TRIBUTE,aux.Stringid(id,1),s.otfilter)
-			local e2=Effect.CreateEffect(c)
-			e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
-			e2:SetRange(LOCATION_MZONE)
-			e2:SetTargetRange(LOCATION_HAND,0)
-			e2:SetTarget(s.eftg)
-			e2:SetLabelObject(e1)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			tc:RegisterEffect(e2)
+			tc:AddDoubleTribute(id,s.otfilter,s.eftg,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,FLAG_DOUBLE_TRIB)
 		end
 	end
 	if Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.damfilter),tp,LOCATION_MZONE,0,1,nil) then
@@ -50,7 +45,7 @@ function s.trop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.otfilter(c,tp)
-	return c:GetFlagEffect(id)~=0 and c:IsControler(tp) and c:IsFaceup()
+	return c:IsDoubleTribute(FLAG_DOUBLE_TRIB) and c:IsControler(tp) and c:IsFaceup()
 end
 function s.eftg(e,c)
 	return c:IsLevelAbove(7) and c:IsSummonableCard()

@@ -17,7 +17,9 @@ function s.fupfilter(c)
 	return c:IsFaceup() and c:IsCode(CARD_SPIRIT_STADIUM)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.fupfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) and aux.DoubleTributeCon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsExistingMatchingCard(s.fupfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
+		and (not Duel.IsPlayerAffectedByEffect(tp,FLAG_NO_TRIBUTE)) 
+		and e:GetHandler():CanBeDoubleTribute(FLAG_DOUBLE_TRIB_FIRE)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,500) end
@@ -27,10 +29,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.PayLPCost(tp,500)
 	--effect
 	local c=e:GetHandler()
-	c:AddDoubleTribute(id,s.otfilter,s.eftg)
+	c:AddDoubleTribute(id,s.otfilter,s.eftg,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,FLAG_DOUBLE_TRIB_FIRE)
 end
 function s.otfilter(c,tp)
-	return c:GetFlagEffect(id)~=0 and (c:IsControler(tp) or c:IsFaceup())
+	return c:IsDoubleTribute(FLAG_DOUBLE_TRIB_FIRE) and (c:IsControler(tp) or c:IsFaceup())
 end
 function s.eftg(e,c)
 	return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsLevelAbove(7) and c:IsSummonableCard()

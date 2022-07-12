@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id,CARD_ALBAZ}
+s.miracle_synchro_fusion=true
 function s.cfilter(c)
 	return c:IsType(TYPE_FUSION) and c:IsAbleToGraveAsCost() and aux.IsMaterialListCode(c,CARD_ALBAZ)
 end

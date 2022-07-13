@@ -57,7 +57,7 @@ function s.tgcond(e)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	if (rc:IsSetCard(0x17f) or not rc:IsCode(id)) or (re:IsHasType(EFFECT_TYPE_ACTIVATE) and rc:GetType()==TYPE_TRAP) then
+	if (rc:IsSetCard(0x17f) and not rc:IsCode(id)) or (re:IsHasType(EFFECT_TYPE_ACTIVATE) and rc:GetType()==TYPE_TRAP) then
 		Duel.RegisterFlagEffect(0,id,RESET_PHASE+PHASE_END,0,1)
 	end
 end

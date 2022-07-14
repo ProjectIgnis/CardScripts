@@ -627,8 +627,6 @@ end
 function Card.IsDoubleTribute(c,...)
 	--check for each individual flag
 	for i,flag in ipairs{...} do
-		--Debug.Message(flag)
-		--Debug.Message(c:GetFlagEffect(flag))
 		if c:GetFlagEffect(flag)==0 then return false end
 	end
 	return true

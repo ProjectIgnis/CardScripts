@@ -52,10 +52,11 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 end
 --Add itself to hand
 function s.cfilter(c,re)
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsReason(REASON_EFFECT) and re:GetActiveType()==TYPE_TRAP
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsReason(REASON_EFFECT)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==tp and eg:IsExists(s.cfilter,1,e:GetHandler(),re)
+	return rp==tp and re and re:IsActiveType(TYPE_TRAP) and re:GetHandler():GetOriginalType()==TYPE_TRAP
+		and eg:IsExists(s.cfilter,1,nil) and not eg:IsContains(e:GetHandler())
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

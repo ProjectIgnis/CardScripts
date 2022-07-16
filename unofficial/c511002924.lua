@@ -1,3 +1,4 @@
+--愚者のサイコロ
 --Fool's Dice
 local s,id=GetID()
 function s.initial_effect(c)

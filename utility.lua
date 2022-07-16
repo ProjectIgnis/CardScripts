@@ -1705,14 +1705,14 @@ include Link Spells then use LOCATION_ONFIELD, or LOCATION_SZONE to exclude Link
 - "target_player" defaults to "player" if not provided.
 - Any additional parameters that "by_filter" might need can be passed to this function as "..." after "target_player".
 --]]
-function s.link_card_filter(c,f,...)
+local function link_card_filter(c,f,...)
 	return c:IsFaceup() and c:IsType(TYPE_LINK) and (not f or f(c,...))
 end
 function Auxiliary.GetMMZonesPointedTo(player,by_filter,player_location,oppo_location,target_player,...)
 	local loc1=player_location==nil and LOCATION_MZONE or player_location
 	local loc2=oppo_location==nil and loc1 or oppo_location
 	target_player=target_player==nil and player or target_player
-	return Duel.GetMatchingGroup(s.link_card_filter,player,loc1,loc2,nil,by_filter,...):GetLinkedZone(target_player)&0x1f
+	return Duel.GetMatchingGroup(link_card_filter,player,loc1,loc2,nil,by_filter,...):GetLinkedZone(target_player)&0x1f
 end
 
 Duel.LoadScript("cards_specific_functions.lua")

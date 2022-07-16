@@ -70,7 +70,9 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 end
 function s.spfilter(c,e,tp)
-	return c:IsType(TYPE_FLIP) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
+	if not c:IsType(TYPE_FLIP) then return false end
+	local code_chk=c:IsCode(101110038)
+	return c:IsCanBeSpecialSummoned(e,0,tp,code_chk,code_chk,POS_FACEDOWN_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -81,9 +83,11 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,e,tp)
-	if #g>0 then
-		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)
-		Duel.ConfirmCards(1-tp,g)
+	local sc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,e,tp):GetFirst()
+	if sc then
+		local code_chk=sc:IsCode(101110038)
+		Duel.SpecialSummon(sc,0,tp,tp,code_chk,code_chk,POS_FACEDOWN_DEFENSE)
+		Duel.ConfirmCards(1-tp,sc)
+		if code_chk then sc:CompleteProcedure() end
 	end
 end

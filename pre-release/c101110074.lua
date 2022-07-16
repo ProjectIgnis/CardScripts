@@ -14,13 +14,6 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.lnkfilter(c)
-	return c:IsLinkMonster() and c:IsLink(2)
-end
-function s.getzones(tp)
-	local lg=Duel.GetMatchingGroup(s.lnkfilter,tp,LOCATION_MZONE,0,nil)
-	return lg:GetLinkedZone(tp)
-end
 function s.atchfilter(c,tp)
 	return (c:IsControler(tp) or c:IsLocation(LOCATION_GRAVE) or c:IsAbleToChangeControler()) and c:IsMonster()
 		and Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_MZONE,0,1,c)
@@ -35,7 +28,7 @@ function s.spfilter(c,e,tp,zone)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local zone=s.getzones(tp)
+	local zone=aux.GetMMZonesPointedTo(tp,Card.IsLink,LOCATION_MZONE,0,nil,2)
 	local b1=Duel.IsExistingTarget(s.atchfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,1,nil,tp)
 	local b2=Duel.IsExistingTarget(s.ctrlfilter,tp,0,LOCATION_MZONE,1,nil,zone)
 	local b3=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,e,tp,zone)
@@ -77,7 +70,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) then return end
-	local zone=s.getzones(tp)
+	local zone=aux.GetMMZonesPointedTo(tp,Card.IsLink,LOCATION_MZONE,0,nil,2)
 	local op=e:GetLabel()
 	if op==1 then --Attach it to a Rank 2
 		if not tc:IsImmuneToEffect(e) and Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_MZONE,0,1,tc) then

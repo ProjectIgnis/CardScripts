@@ -85,7 +85,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local bc=e:GetHandler():GetBattleTarget()
-	local zone=Duel.GetLinkedZone(tp)&0x1f
+	local zone=aux.GetMMZonesPointedTo(tp)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and bc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone) end
 	Duel.SetTargetCard(bc)
@@ -94,7 +94,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	local zone=Duel.GetLinkedZone(tp)&0x1f
+	local zone=aux.GetMMZonesPointedTo(tp)
 	if zone~=0 and tc and tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP,zone)~=0 then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

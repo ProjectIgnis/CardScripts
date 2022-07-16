@@ -76,7 +76,6 @@ end
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,tp):GetFirst()
-	-- aux.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsType(TYPE_FIELD) then
 		aux.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
 	else

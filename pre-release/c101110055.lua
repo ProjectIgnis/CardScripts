@@ -42,7 +42,7 @@ function s.thcond(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.thfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x14f) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(0x14f) and c:IsFaceup() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_REMOVED) and s.thfilter(chkc) end

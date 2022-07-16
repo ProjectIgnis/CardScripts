@@ -62,8 +62,11 @@ function s.indcon(e)
 	return e:GetHandler():GetFlagEffect(id)~=0
 end
 function s.filter(c,this,tp)
-	if not c:IsFaceup() or not c:IsCanBeSynchroMaterial() then return false end
-	if c:IsControler(tp) then return true end
+	if not (c:IsFaceup() and c:HasLevel() and c:IsCanBeSynchroMaterial()) then return false end
+	if c:IsControler(tp) then
+		local mg=Group.FromCards(this,c)
+		return Duel.IsExistingMatchingCard(Card.IsSynchroSummonable,tp,LOCATION_EXTRA,0,1,nil,nil,mg)
+	end
 	--Temporarily register EFFECT_SYNCHRO_MATERIAL otherwise IsSynchroSummonable will fail with opponent's monsters 
 	local e1=Effect.CreateEffect(this)
 	e1:SetType(EFFECT_TYPE_SINGLE)

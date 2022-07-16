@@ -1,15 +1,13 @@
 --天穹のパラディオン
 --Crusadia Maximus
 --Scripted by ahtelel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon itself from hand
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SPSUM_PARAM)
+	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetTargetRange(POS_FACEUP_DEFENSE,0)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
@@ -17,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--Make 1 "Crusadia" link monster deal double battle damage
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCountLimit(1,{id,1})
@@ -28,15 +26,14 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x116}
-
 function s.spval(e,c)
-	return 0,Duel.GetLinkedZone(c:GetControler())&0x1f
+	return 0,aux.GetMMZonesPointedTo(c:GetControler())
 end
 function s.dbcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP()
 end
 function s.dbfilter(c)
-	return c:IsFaceup() and c:IsLinkMonster() and c:IsSetCard(0x116) and c:GetFlagEffect(id)==0
+	return c:IsFaceup() and c:IsLinkMonster() and c:IsSetCard(0x116)
 end
 function s.dbtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.dbfilter(chkc) end
@@ -45,10 +42,9 @@ function s.dbtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SelectTarget(tp,s.dbfilter,tp,LOCATION_MZONE,0,1,1,nil)
 end
 function s.dbop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,0)
+	if tc:IsRelateToEffect(e) then
+		local c=e:GetHandler()
 		--Deal double battle damage
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(3209)

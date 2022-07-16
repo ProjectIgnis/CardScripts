@@ -54,17 +54,6 @@ end
 function s.spcfilter(c,tp)
 	return c:IsFaceup() and c:IsLinkMonster() and c:IsSummonType(SUMMON_TYPE_LINK) and c:IsControler(tp)
 end
-function s.spfilter(c,e,tp,fid,zone)
-	return c:GetFlagEffectLabel(id)==fid and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
-end
-function s.zonefilter(eg,tp)
-	local lg=eg:Filter(s.spcfilter,nil,tp)
-	local zone=0
-	for tc in aux.Next(lg) do
-		zone=zone|tc:GetFreeLinkedZone()&0x1f
-	end
-	return zone
-end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.spcfilter,1,nil,tp)
 end
@@ -73,16 +62,18 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return c:IsAbleToGraveAsCost() end
 	Duel.SendtoGrave(c,REASON_COST)
 end
+function s.spfilter(c,e,tp,fid,zone)
+	return c:GetFlagEffectLabel(id)==fid and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
+end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local zone=s.zonefilter(eg,tp)
+	local zone=aux.GetMMZonesPointedTo(tp)
 	local fid=e:GetLabel()
-	if chk==0 then return zone~=0
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_REMOVED,0,1,nil,e,tp,fid,zone) end
+	if chk==0 then return zone>0 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_REMOVED,0,1,nil,e,tp,fid,zone) end
 	local sg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_REMOVED,0,nil,e,tp,fid,zone)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,sg,1,tp,LOCATION_REMOVED)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	local zone=s.zonefilter(eg,tp)
+	local zone=aux.GetMMZonesPointedTo(tp)
 	local tc=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_REMOVED,0,nil,e,tp,e:GetLabel(),zone):GetFirst()
 	if tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP,zone) then
 		local c=e:GetHandler()

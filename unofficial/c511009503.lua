@@ -38,7 +38,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.zones(e,tp,eg,ep,ev,re,r,rp)
-	return (Duel.GetLinkedZone(tp)>>8) & 0xff
+	return (Duel.GetMatchingGroup(aux.AND(Card.IsFaceup,Card.IsLinkMonster),tp,LOCATION_MZONE,LOCATION_MZONE,nil):GetLinkedZone(tp)>>8) & 0xff
 end
 function s.atkcon(e)
 	if Duel.GetCurrentPhase()~=PHASE_DAMAGE_CAL then return false end

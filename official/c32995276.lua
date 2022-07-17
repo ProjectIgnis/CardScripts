@@ -2,10 +2,10 @@
 --Link Disciple
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
 	c:EnableReviveLimit()
+	--Link Summon procedure
 	Link.AddProcedure(c,s.matfilter,1,1)
-	--draw
+	--Draw 1 card and return 1 card to the Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DRAW)
@@ -39,6 +39,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	if Duel.Draw(p,d,REASON_EFFECT)==0 then return end
+	Duel.ShuffleHand(tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_HAND,0,1,1,nil)
 	if #g>0 then

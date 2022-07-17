@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.labelcon)
 	e2:SetOperation(s.labelop)
 	c:RegisterEffect(e2)
-	--reset during End Phase
+	--Set itself during End Phase
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(35498188,0))
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
@@ -90,7 +90,9 @@ function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and c:IsSSetable() then
-		Duel.SSet(tp,c)
+	if c:IsRelateToEffect(e) and c:IsSSetable(true) then
+		Duel.ChangePosition(c,POS_FACEDOWN)
+		c:SetStatus(STATUS_SET_TURN,true)
+		Duel.RaiseEvent(c,EVENT_SSET,e,REASON_EFFECT,tp,tp,0)
 	end
 end

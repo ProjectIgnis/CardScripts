@@ -35,7 +35,6 @@ function s.initial_effect(c)
 	e3:SetOperation(s.tgop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x160,0x189}
 function s.spfilter(c,tp)
 	return c:IsAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK) and c:IsAbleToRemove() and aux.SpElimFilter(c,true)
 		and c:IsFaceup() and Duel.GetMZoneCount(tp,c)>0

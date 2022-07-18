@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.tkop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={id+100}
+s.listed_names={id+1}
 function s.spfilter(c,e,tp)
 	return c:IsType(TYPE_NORMAL) and c:IsRace(RACE_FISH) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -53,16 +53,16 @@ function s.tkcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+100,0,TYPES_TOKEN,0,0,1,RACE_FISH,ATTRIBUTE_WATER) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,0,0,1,RACE_FISH,ATTRIBUTE_WATER) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 end
 function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if ft==0 or not Duel.IsPlayerCanSpecialSummonMonster(tp,id+100,0,TYPES_TOKEN,0,0,1,RACE_FISH,ATTRIBUTE_WATER) then return end
+	if ft==0 or not Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,0,0,1,RACE_FISH,ATTRIBUTE_WATER) then return end
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
 	for i=1,ft do
-		local token=Duel.CreateToken(tp,id+100)
+		local token=Duel.CreateToken(tp,id+1)
 		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
 		if i<ft and not Duel.SelectYesNo(tp,aux.Stringid(id,2)) then break end
 	end

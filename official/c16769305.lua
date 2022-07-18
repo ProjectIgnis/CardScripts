@@ -58,9 +58,6 @@ function s.lvlop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 	end
 end
-function s.indcon(e)
-	return e:GetHandler():GetFlagEffect(id)~=0
-end
 function s.filter(c,this,tp)
 	if not (c:IsFaceup() and c:HasLevel() and c:IsCanBeSynchroMaterial()) then return false end
 	if c:IsControler(tp) then

@@ -29,14 +29,14 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x33}
-s.listed_names={101110052,CARD_BLACK_WINGED_DRAGON}
+s.listed_names={7602800,CARD_BLACK_WINGED_DRAGON}
 function s.tfcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToGraveAsCost() end
 	Duel.SendtoGrave(c,REASON_COST)
 end
 function s.tffilter(c,tp)
-	return c:IsCode(101110052) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
+	return c:IsCode(7602800) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
 end
 function s.tftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0

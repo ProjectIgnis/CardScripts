@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
-s.listed_names={id,CARD_BLACK_WINGED_DRAGON,id+100}
+s.listed_names={id,CARD_BLACK_WINGED_DRAGON,id+1}
 function s.counterfilter(c)
 	return not c:IsSummonLocation(LOCATION_EXTRA) or c:IsType(TYPE_SYNCHRO)
 end
@@ -71,15 +71,15 @@ function s.lizfilter(e,c)
 	return not c:IsOriginalType(TYPE_SYNCHRO)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanSpecialSummonMonster(tp,id+100,0,TYPES_TOKEN+TYPE_TUNER,700,700,2,RACE_WINGEDBEAST,ATTRIBUTE_DARK) end
+	if chk==0 then return Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN+TYPE_TUNER,700,700,2,RACE_WINGEDBEAST,ATTRIBUTE_DARK) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,tp,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,1,tp,700)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)==0 then return end
-	if not Duel.IsPlayerCanSpecialSummonMonster(tp,id+100,0,TYPES_TOKEN+TYPE_TUNER,700,700,2,RACE_WINGEDBEAST,ATTRIBUTE_DARK) then return end
-	local token=Duel.CreateToken(tp,id+100)
+	if not Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN+TYPE_TUNER,700,700,2,RACE_WINGEDBEAST,ATTRIBUTE_DARK) then return end
+	local token=Duel.CreateToken(tp,id+1)
 	if Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)>0 then
 		Duel.BreakEffect()
 		Duel.Damage(tp,700,REASON_EFFECT)

@@ -42,7 +42,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-s.listed_names={63708033,101110025}
+s.listed_names={63708033,55125728}
 s.listed_series={0x183}
 function s.atkcon(e)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsAttribute,ATTRIBUTE_EARTH),e:GetHandlerPlayer(),LOCATION_MZONE,0,5,nil)
@@ -57,7 +57,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.spfilter(c,e,tp)
-	return c:IsCode(101110025) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsCode(55125728) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

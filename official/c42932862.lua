@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.posop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={101110063,94997874}
+s.listed_names={8428836,94997874}
 function s.spconvalue(e,se,sp,st)
 	return aux.ritlimit(e,se,sp,st) or se:GetHandler():IsCode(94997874)
 end

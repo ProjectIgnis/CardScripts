@@ -1,5 +1,5 @@
--- クシャトリラ・ユニコーン
--- Kshatri-La Unicorn
+-- クシャトリラ・オーガ
+-- Kshatri-La Ogre
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.spcon)
 	c:RegisterEffect(e1)
-	-- Search 1 "Kshatri-la" Spell
+	-- Search 1 "Kshatri-la" Trap
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -39,14 +39,14 @@ function s.initial_effect(c)
 	e4:SetCondition(s.rmeffcon)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x285}
+s.listed_series={0x18a}
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=e:GetHandlerPlayer()
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0,nil)==0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x285) and c:IsType(TYPE_SPELL) and c:IsAbleToHand()
+	return c:IsSetCard(0x18a) and c:IsType(TYPE_TRAP) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -61,18 +61,18 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_EXTRA)>0 and Duel.IsPlayerCanRemove(tp) end
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_EXTRA)
+	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)>=5 and Duel.IsPlayerCanRemove(tp) end
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_DECK)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetFieldGroup(tp,0,LOCATION_EXTRA)
-	if #g<1 then return end
-	Duel.ConfirmCards(tp,g)
+	if Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)<5 then return end
+	Duel.ConfirmDecktop(1-tp,5)
+	local g=Duel.GetDecktopGroup(1-tp,5)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local sg=g:FilterSelect(tp,Card.IsAbleToRemove,1,1,nil,tp,POS_FACEDOWN)
 	if #sg>0 then
+		Duel.DisableShuffleCheck(true)
 		Duel.Remove(sg,POS_FACEDOWN,REASON_EFFECT)
-		Duel.ShuffleExtra(1-tp)
 	end
 end
 function s.rmeffcon(e,tp,eg,ep,ev,re,r,rp)

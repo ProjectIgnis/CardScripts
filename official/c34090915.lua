@@ -49,7 +49,7 @@ function s.initial_effect(c)
 	e5:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x286}
+s.listed_series={0x189}
 function s.cfilter(c,e)
 	return c:IsAttribute(ATTRIBUTE_DARK+ATTRIBUTE_LIGHT) and c:IsFaceup() and c:IsAbleToDeck() and c:IsCanBeEffectTarget(e)
 end
@@ -91,14 +91,14 @@ function s.spcond(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(Card.IsSummonPlayer,1,nil,1-tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x286) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x189) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.spfilter(chkc,e,tp) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
-		and Duel.GetFlagEffect(tp,id+100)==0 end
-	Duel.RegisterFlagEffect(tp,id+100,RESET_CHAIN,0,1)
+		and Duel.GetFlagEffect(tp,id+1)==0 end
+	Duel.RegisterFlagEffect(tp,id+1,RESET_CHAIN,0,1)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,s.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,tp,LOCATION_GRAVE)

@@ -1694,8 +1694,8 @@ end
 
 --[[
 Returns the zone values (bitfield mask) of the Main Monster Zones on the field of "target_player"
-that any Link Cards, which match the "by_filter" function/filter, in the locations "player_location"
-and "oppo_location", from the perspective of "player", point to.
+that are pointed to by any Link Cards, which match the "by_filter" function/filter, in the locations "player_location"
+and "oppo_location", from the perspective of "player".
 
 - The first parameter, "player", is mandatory, all other parameters are optional, to use the default value of a parameter just pass it as nil.
 - The filter by default checks that the card is face-up and is a Link Card, any additional check (e.g. archetype) is added onto that.

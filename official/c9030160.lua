@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	local e5=e3:Clone()
 	e5:SetCode(EFFECT_CANNOT_BE_MATERIAL)
-	e5:SetValue(aux.AND(function(e,c,sumtype,tp) return tp~=e:GetHandlerPlayer() end,aux.cannotmatfilter(SUMMON_TYPE_FUSION,SUMMON_TYPE_SYNCHRO,SUMMON_TYPE_XYZ)))
+	e5:SetValue(aux.AND(s.matlimit,aux.cannotmatfilter(SUMMON_TYPE_FUSION,SUMMON_TYPE_SYNCHRO,SUMMON_TYPE_XYZ)))
 	c:RegisterEffect(e5)
 	--Inflict 2000 damage
 	local e8=Effect.CreateEffect(c)
@@ -45,6 +45,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e8)
 end
 s.listed_series={0xaf}
+function s.matlimit(e,c,sumtype,tp)
+	if tp==PLAYER_NONE then tp=c:GetControler() end
+	return e:GetHandlerPlayer()==1-tp
+end
 function s.condition(e)
 	return Duel.IsExistingMatchingCard(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_PZONE,0,2,nil,0xaf)
 end

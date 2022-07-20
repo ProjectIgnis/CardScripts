@@ -604,7 +604,7 @@ function Card.AddDoubleTribute(c,id,otfilter,eftg,reset,...)
 	e2:SetTargetRange(LOCATION_HAND,0)
 	e2:SetTarget(eftg)
 	e2:SetLabelObject(e1)
-	if not reset==0 then e2:SetReset(reset) end
+	if reset~=0 then e2:SetReset(reset) end
 	c:RegisterEffect(e2)
 end
 function aux.DoubleTributeCon(e,tp,eg,ep,ev,re,r,rp)

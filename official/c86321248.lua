@@ -1,13 +1,14 @@
 --古代の機械合成獣
+--Ancient Gear Gadjiltron Chimera
 local s,id=GetID()
 function s.initial_effect(c)
-	--mat check
+	--Material check
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_MATERIAL_CHECK)
 	e1:SetValue(s.valcheck)
 	c:RegisterEffect(e1)
-	--summon success
+	--Gain effects based on the monsters used for its summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -17,11 +18,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	e2:SetLabelObject(e1)
 end
+s.listed_names={41172955,86445415,13839120}
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	local flag=0
-	local tc=g:GetFirst()
-	for tc in aux.Next(g) do
+	for tc in g:Iter() do
 		local code=tc:GetCode()
 		if code==41172955 then
 			flag=(flag|0x1)
@@ -73,7 +74,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.damcon1(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and Duel.GetAttackTarget()==nil
+	return ep==1-tp and Duel.GetAttackTarget()==nil
 end
 function s.damtg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

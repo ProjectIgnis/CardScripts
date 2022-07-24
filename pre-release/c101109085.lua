@@ -37,6 +37,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not (c:IsRelateToEffect(e) and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,TYPE_MONSTER+TYPE_EFFECT,0,2000,2,RACE_BEAST,ATTRIBUTE_EARTH)) then return end
 	c:AddMonsterAttribute(TYPE_EFFECT)
 	Duel.SpecialSummonStep(c,0,tp,tp,true,false,POS_FACEUP)
+	c:AddMonsterAttributeComplete()
 	Duel.SpecialSummonComplete()
 end
 function s.chfilter(c,e)
@@ -46,7 +47,7 @@ function s.tgfilter(c,rc,att)
 	return c:IsDifferentRace(rc) and c:IsDifferentAttribute(att)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.atfilter(chkc,table.unpack(e:GetLabelObject())) end
+	if chkc then return chkc:IsFaceup() and chkc:IsLocation(LOCATION_MZONE) and s.tgfilter(chkc,e:GetLabel()) end
 	local g=Duel.GetMatchingGroup(s.chfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,e)
 	if chk==0 then return #g>0 end
 	local rc=aux.AnnounceAnotherRace(g,tp)
@@ -54,12 +55,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local sg=g:FilterSelect(tp,s.tgfilter,1,1,nil,rc,att)
 	Duel.SetTargetCard(sg:GetFirst())
-	e:SetLabelObject({rc,att})
+	e:SetLabel(rc,att)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) or tc:IsFacedown() then return end
-	local rc,att=table.unpack(e:GetLabelObject())
+	local rc,att=e:GetLabel()
 	local c=e:GetHandler()
 	if tc:IsDifferentRace(rc) then
 		-- Change monster type

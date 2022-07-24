@@ -40,7 +40,7 @@ function s.lkcon(e)
 	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsSummonType(SUMMON_TYPE_LINK)
 end
 function s.repfilter(c,tp)
-	return c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsRace(RACE_FIEND)
+	return c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
 		and c:IsReason(REASON_EFFECT+REASON_BATTLE) and not c:IsReason(REASON_REPLACE)
 end
 function s.cfilter(c,e)

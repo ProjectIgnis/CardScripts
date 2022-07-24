@@ -26,7 +26,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,500)
 end
 function s.filter(c)
-	return c:IsRace(RACE_GALAXY) and c:IsCanChangePositionRush()
+	return c:IsRace(RACE_GALAXY) and c:IsFaceup() and c:IsCanChangePositionRush()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

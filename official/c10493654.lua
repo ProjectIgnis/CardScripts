@@ -41,8 +41,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	if tc and Duel.SendtoDeck(tc,nil,1,REASON_EFFECT)==1 then
+	if tc and Duel.SendtoDeck(tc,nil,SEQ_DECKBOTTOM,REASON_EFFECT)==1 then
 		Duel.Draw(p,d,REASON_EFFECT)
 	end
 end
-

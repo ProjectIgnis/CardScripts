@@ -15,7 +15,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.atchfilter(c,tp)
-	return (c:IsControler(tp) or c:IsLocation(LOCATION_GRAVE) or c:IsAbleToChangeControler()) and c:IsMonster()
+	return c:IsMonster() and not c:IsType(TYPE_TOKEN)
+		and (c:IsControler(tp) or c:IsLocation(LOCATION_GRAVE) or c:IsAbleToChangeControler())
 		and Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_MZONE,0,1,c)
 end
 function s.xyzfilter(c)

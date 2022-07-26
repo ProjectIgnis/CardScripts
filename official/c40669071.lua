@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_CYBERSE),2)
-	--lock zones
+	--Make zones unusable
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -15,16 +15,17 @@ function s.initial_effect(c)
 	e1:SetTarget(s.lztg)
 	e1:SetOperation(s.lzop)
 	c:RegisterEffect(e1)
-	--atk up/indestructable
+	--Prevent destruction of monsters it points to
 	local e2=Effect.CreateEffect(c)
-	e2:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+	e2:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e2:SetTarget(s.tgtg)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
+	--Increase ATK of monsters it points to
 	local e3=e2:Clone()
 	e3:SetProperty(0)
 	e3:SetCode(EFFECT_UPDATE_ATTACK)
@@ -50,8 +51,9 @@ function s.lzop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EFFECT_DISABLE_FIELD)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetOperation(s.disop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	e1:SetLabel(e:GetLabel())
 	e:GetHandler():RegisterEffect(e1)
 end
@@ -61,4 +63,3 @@ end
 function s.tgtg(e,c)
 	return e:GetHandler():GetLinkedGroup():IsContains(c)
 end
-

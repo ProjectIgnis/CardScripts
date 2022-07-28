@@ -9,6 +9,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCost(s.cost)
+	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 	--Damage
@@ -31,7 +32,11 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,3,3,false,nil,nil,0x17c)
 	Duel.Release(g,REASON_COST)
 end
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end
+end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 	--Can only Special Summon in Defense Position
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetDescription(aux.Stringid(id,2))

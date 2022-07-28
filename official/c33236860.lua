@@ -1,10 +1,11 @@
 --BF－孤高のシルバー・ウィンド
+--Blackwing - Silverwind the Ascendant
 local s,id=GetID()
 function s.initial_effect(c)
-	--synchro summon
+	--Synchro Summon
 	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x33),1,1,Synchro.NonTuner(nil),2,99)
 	c:EnableReviveLimit()
-	--destroy
+	--Destroy up to 2 monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)
@@ -16,14 +17,14 @@ function s.initial_effect(c)
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
-	--destroy replace
+	--Prevent the destruction of a "Blackwing" monster by battle
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-	e2:SetCode(EFFECT_DESTROY_REPLACE)
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCondition(s.drpcon)
-	e2:SetTarget(s.drptg)
-	e2:SetValue(aux.TRUE)
+	e2:SetCondition(function(e) return Duel.IsTurnPlayer(1-e:GetHandlerPlayer()) end)
+	e2:SetTarget(function (e,c) return c:IsSetCard(0x33) end)
+	e2:SetValue(s.indesval)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x33}
@@ -61,11 +62,6 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=g:Filter(s.desfilter,nil,e,c:GetAttack())
 	Duel.Destroy(sg,REASON_EFFECT)
 end
-function s.drpcon(e,tp,eg,ep,ev,re,r,rp)
-	return r==REASON_BATTLE and tp~=Duel.GetTurnPlayer() and eg:GetFirst():IsSetCard(0x33)
-end
-function s.drptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():GetFlagEffect(id)==0 end
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
-	return true
+function s.indesval(e,re,r,rp)
+	return r&REASON_BATTLE>0
 end

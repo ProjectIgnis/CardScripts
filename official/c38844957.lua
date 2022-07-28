@@ -1,8 +1,10 @@
 --緊急儀式術
+--Urgent Ritual Art
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCondition(s.condition)
@@ -11,11 +13,8 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsRitualMonster()
-end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRitualMonster),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.filter(c)
 	return c:GetType()==TYPE_SPELL+TYPE_RITUAL and c:IsAbleToRemoveAsCost() and c:CheckActivateEffect(true,true,false)~=nil

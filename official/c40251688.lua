@@ -57,7 +57,7 @@ function s.thfilter(c)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local gc=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_DECK,0,1,1,nil):GetFirst
+	local gc=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
 	if gc and Duel.SendtoGrave(gc,REASON_EFFECT)>0 and gc:IsLocation(LOCATION_GRAVE) then
 		local sg=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil)
 		if #sg==0 then return end

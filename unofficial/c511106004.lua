@@ -4,16 +4,16 @@
 
 local s,id=GetID()
 function s.initial_effect(c)
-	--destroy replace
+	--Destruction replacement
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetCode(EFFECT_DESTROY_REPLACE)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCondition(s.incon)
+	e1:SetCondition(function(e) return e:GetHandler():IsAttackPos() end)
 	e1:SetTarget(s.reptg)
 	c:RegisterEffect(e1)
-	--change position
+	--Change itself to Defense position
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_POSITION)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
@@ -21,12 +21,13 @@ function s.initial_effect(c)
 	e2:SetCondition(s.poscon)
 	e2:SetOperation(s.posop)
 	c:RegisterEffect(e2)
-	--special summon
+	--Special summon 1 "Dinowrestler Capoeiraptor" from the Deck
 	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_SEARCH)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e3:SetRange(LOCATION_MZONE)
 	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,id)
 	e3:SetCondition(s.spcon)
 	e3:SetTarget(s.sptg)
@@ -34,9 +35,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={29996433}
-function s.incon(e)
-	return e:GetHandler():IsAttackPos()
-end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReason(REASON_BATTLE) end
 	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
@@ -53,7 +51,7 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsDefensePos()
+	return e:GetHandler():IsDefensePos() and Duel.IsTurnPlayer(tp)
 end
 function s.spfilter(c,e,tp)
 	return c:IsCode(29996433) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -71,4 +69,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
- 

@@ -593,6 +593,8 @@ FLAG_DOUBLE_TRIB_FIRE=160007025 --dododo second
 FLAG_DOUBLE_TRIB_WINGEDBEAST=160005033 --blasting bird
 FLAG_DOUBLE_TRIB_LIGHT=160414001 --ultimate flag beast surge bicorn
 FLAG_DOUBLE_TRIB_MACHINE=160414002
+FLAG_DOUBLE_TRIB_DARK=160317015 --Voidvelgr Globule
+FLAG_DOUBLE_TRIB_GALAXY=160317115
 function Card.AddDoubleTribute(c,id,otfilter,eftg,reset,...)
 	for i,flag in ipairs{...} do
 		c:RegisterFlagEffect(flag,reset,0,1)

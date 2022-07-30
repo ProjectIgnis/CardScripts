@@ -48,18 +48,21 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local og=Group.CreateGroup()
 	local break_chk=0
 	if g:IsExists(Card.IsType,1,nil,TYPE_FUSION) and rg:IsExists(Card.IsLocation,1,nil,LOCATION_MZONE) then
+		--Fusion: Banish 1 monster the opponent controls
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		og=rg:FilterSelect(tp,Card.IsLocation,1,1,nil,LOCATION_MZONE)
 		Duel.HintSelection(og,true)
 		break_chk=Duel.Remove(og,POS_FACEUP,REASON_EFFECT)
 	end
 	if g:IsExists(Card.IsType,1,nil,TYPE_SYNCHRO) and rg:IsExists(s.exfilter,3,nil) then
+		--Synchro: Banish 3 random face-down cards from the opponent's Extra Deck
 		if break_chk>0 then Duel.BreakEffect() end
 		og=rg:Filter(s.exfilter,nil):RandomSelect(tp,3)
 		Duel.HintSelection(og,true)
 		break_chk=Duel.Remove(og,POS_FACEUP,REASON_EFFECT)
 	end
 	if g:IsExists(Card.IsType,1,nil,TYPE_XYZ) and rg:IsExists(s.stfilter,1,nil) then
+		--Xyz: Banish 1 Spell/Trap the opponent controls
 		if break_chk>0 then Duel.BreakEffect() end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		og=rg:FilterSelect(tp,s.stfilter,1,1,nil)
@@ -67,6 +70,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		break_chk=Duel.Remove(og,POS_FACEUP,REASON_EFFECT)
 	end
 	if g:IsExists(Card.IsType,1,nil,TYPE_LINK) and rg:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE) then
+		--Link: Banish up to 3 cards in the opponent's GY
 		if break_chk>0 then Duel.BreakEffect() end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		og=rg:FilterSelect(tp,Card.IsLocation,1,3,nil,LOCATION_GRAVE)

@@ -3,8 +3,9 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -24,8 +25,8 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		local lp=Duel.GetLP(1-tp)-Duel.GetLP(tp)
 		return lp>0 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp,Duel.GetLocationCount(tp,LOCATION_MZONE),lp)
 	end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local lp=Duel.GetLP(1-tp)-Duel.GetLP(tp)
@@ -38,19 +39,19 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 								function(c)
 									Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP) 
 								end,aux.Stringid(id,0))
+		--Cannot activate cards or the effects of cards with the same name
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e1:SetCode(EFFECT_CANNOT_ACTIVATE)
 		e1:SetTargetRange(1,0)
 		e1:SetValue(s.aclimit)
-		e1:SetLabelObject(tc)
+		e1:SetLabel(tc:GetCode())
 		e1:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 	end
 end
 function s.aclimit(e,re,tp)
-	local tc=e:GetLabelObject()
+	local tc=e:GetLabel()
 	return re:GetHandler():IsCode(tc:GetCode())
 end
-

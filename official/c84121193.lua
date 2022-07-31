@@ -49,14 +49,16 @@ function s.spfilter(c,e,tp,p,zones)
 	return c:IsCode(8662794) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,p,zones)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp,tp,Duel.GetLinkedZone(tp)&0x1f)
-		or Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp,1-tp,Duel.GetLinkedZone(1-tp)&0x1f) end
+	local zones_tp=aux.GetMMZonesPointedTo(tp)
+	local zones_opp=aux.GetMMZonesPointedTo(1-tp)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp,tp,zones_tp)
+		or Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp,1-tp,zones_opp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local zones={}
-	zones[tp]=Duel.GetLinkedZone(tp)&0x1f
-	zones[1-tp]=Duel.GetLinkedZone(1-tp)&0x1f
+	zones[tp]=aux.GetMMZonesPointedTo(tp)
+	zones[1-tp]=aux.GetMMZonesPointedTo(1-tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=(Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,nil,e,tp,tp,zones[tp])+Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,nil,e,tp,1-tp,zones[1-tp])):Select(tp,1,1,nil):GetFirst()
 	if tc then

@@ -1,5 +1,5 @@
---海晶乙女 マンダリン
---Marincess Mandarin
+--海晶乙女 マンダリン (Anime)
+--Marincess Mandarin (Anime)
 --scripted by Larry126
 local s,id,alias=GetID()
 function s.initial_effect(c)
@@ -20,25 +20,15 @@ s.listed_series={0x12b}
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x12b) and c:IsType(TYPE_LINK) and c:IsType(TYPE_MONSTER)
 end
-function s.spzone(tp,g)
-	local zone=0
-	for c in aux.Next(g) do
-		zone=zone|c:GetLinkedZone(tp)
-	end
-	return zone&0x1f
-end
 function s.condition(e,c)
 	if c==nil then return true end
 	local tp=e:GetHandlerPlayer()
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)
-	local zone=s.spzone(tp,g)
-	return #g>1 and zone~=0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
+	local zone=aux.GetMMZonesPointedTo(tp,Card.IsSetCard,LOCATION_MZONE,0,nil,0x12b)
+	return #g>1 and zone>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function s.spval(e,c)
-	local tp=e:GetHandlerPlayer()
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)
-	local zone=s.spzone(tp,g)
-	return 0,zone
+	return 0,aux.GetMMZonesPointedTo(e:GetHandlerPlayer(),Card.IsSetCard,LOCATION_MZONE,0,nil,0x12b)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp,c)
 	local e1=Effect.CreateEffect(c)

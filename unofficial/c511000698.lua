@@ -1,3 +1,4 @@
+--ディメンション・エクシーズ
 --Dimension Xyz
 local s,id=GetID()
 function s.initial_effect(c)
@@ -10,6 +11,9 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
+end
+function s.xyzmatfilter(c)
+	return c:IsCanBeXyzMaterial() and (not c:IsLocation(LOCATION_MZONE) or c:IsFaceup())
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetLP(tp)<=1000
@@ -35,23 +39,20 @@ end
 function s.xyzfilter(c,g)
 	return c:IsXyzSummonable(nil,g,3,3)
 end
+function s.matcond(sg,e,tp)
+	return sg:GetClassCount(Card.GetCode)==1 and Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_EXTRA,0,1,nil,sg)
+end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,nil)
-	if chk==0 then return g:IsExists(s.filter,1,nil,g,tp) end
+	local g=Duel.GetMatchingGroup(s.xyzmatfilter,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,nil)
+	if chk==0 then return g:IsExists(s.filter,1,nil,g,tp) and
+		Duel.GetLocationCountFromEx(tp,tp,g:Filter(Card.IsLocation,nil,LOCATION_MZONE))>0 end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,nil)
+	local g=Duel.GetMatchingGroup(s.xyzmatfilter,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,nil)
 	local mg=g:Filter(s.filter,nil,g,tp)
-	local matg=Group.CreateGroup()
-	for i=1,3 do
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-		local sg=mg:FilterSelect(tp,s.mfilter,1,1,nil,mg,matg,i-1,tp)
-		local tc=sg:GetFirst()
-		mg=mg:Filter(Card.IsCode,nil,tc:GetCode())
-		matg:AddCard(tc)
-		mg:RemoveCard(tc)
-	end
+	if #mg<3 then return end
+	local matg=aux.SelectUnselectGroup(mg,e,tp,3,3,s.matcond,1,tp,HINTMSG_XMATERIAL)
 	local xyzg=Duel.GetMatchingGroup(s.xyzfilter,tp,LOCATION_EXTRA,0,nil,matg)
 	if #xyzg>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

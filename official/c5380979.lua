@@ -3,7 +3,7 @@
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon
+	-- Special Summon 1 "Labrynth" monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	-- Set
+	-- Set itself if a monster leaves the field due to a Normal Trap's effect
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_LEAVE_GRAVE)
@@ -62,7 +62,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return aux.exccon(e,tp,eg,ep,ev,re,r,rp) and rp==tp and r&REASON_EFFECT==REASON_EFFECT
-		and re:GetActiveType()==TYPE_TRAP and eg:IsExists(Card.IsPreviousLocation,1,nil,LOCATION_MZONE)
+		and re and re:IsActiveType(TYPE_TRAP) and re:GetHandler():GetOriginalType()==TYPE_TRAP
+		and eg:IsExists(Card.IsPreviousLocation,1,nil,LOCATION_MZONE)
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

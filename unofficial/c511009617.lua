@@ -40,7 +40,7 @@ function s.atcon(e)
 	return e:GetHandler():GetMutualLinkedGroupCount()>0
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local zone=Duel.GetLinkedZone(tp)&0x1f
+	local zone=aux.GetMMZonesPointedTo(tp)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK,tp,zone) end
@@ -48,7 +48,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local zone=Duel.GetLinkedZone(tp)&0x1f
+	local zone=aux.GetMMZonesPointedTo(tp)
 	if c:IsRelateToEffect(e) and zone~=0 then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP,zone)
 	end

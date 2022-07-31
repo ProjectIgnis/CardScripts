@@ -17,7 +17,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetRange(LOCATION_DECK)
-	e2:SetProperty(EFFECT_FLAG2_NAGA)
 	c:RegisterEffect(e2)
 	--Add 1 Spell to hand
 	local e3=Effect.CreateEffect(c)

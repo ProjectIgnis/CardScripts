@@ -1692,6 +1692,29 @@ function Auxiliary.CheckPendulumZones(player)
 	return Duel.CheckLocation(player,LOCATION_PZONE,0) or Duel.CheckLocation(player,LOCATION_PZONE,1)
 end
 
+--[[
+Returns the zone values (bitfield mask) of the Main Monster Zones on the field of "target_player"
+that are pointed to by any Link Cards, which match the "by_filter" function/filter, in the locations "player_location"
+and "oppo_location", from the perspective of "player".
+
+- The first parameter, "player", is mandatory, all other parameters are optional, to use the default value of a parameter just pass it as nil.
+- The filter by default checks that the card is face-up and is a Link Card, any additional check (e.g. archetype) is added onto that.
+- Both locations default to LOCATION_MZONE if not provided since most cards care about zones that any Link Monster points to, if you want to
+include Link Spells then use LOCATION_ONFIELD, or LOCATION_SZONE to exclude Link Monsters and check for Link Spells only.
+- The second location defaults to the first one if not provided, if you want to not count a side of the field then you need to specifically pass 0 for that location.
+- "target_player" defaults to "player" if not provided.
+- Any additional parameters that "by_filter" might need can be passed to this function as "..." after "target_player".
+--]]
+local function link_card_filter(c,f,...)
+	return c:IsFaceup() and c:IsType(TYPE_LINK) and (not f or f(c,...))
+end
+function Auxiliary.GetMMZonesPointedTo(player,by_filter,player_location,oppo_location,target_player,...)
+	local loc1=player_location==nil and LOCATION_MZONE or player_location
+	local loc2=oppo_location==nil and loc1 or oppo_location
+	target_player=target_player==nil and player or target_player
+	return Duel.GetMatchingGroup(link_card_filter,player,loc1,loc2,nil,by_filter,...):GetLinkedZone(target_player)&0x1f
+end
+
 Duel.LoadScript("cards_specific_functions.lua")
 Duel.LoadScript("proc_fusion.lua")
 Duel.LoadScript("proc_fusion_spell.lua")

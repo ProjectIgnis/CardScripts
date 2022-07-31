@@ -85,20 +85,9 @@ function s.sumcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
 	return tc and eg:IsContains(tc)
 end
-function s.lkfilter(c)
-	return c:IsSetCard(0x1157) and c:IsFaceup() and c:IsLinkMonster()
-end
-function s.zonefilter(tp)
-	local lg=Duel.GetMatchingGroup(s.lkfilter,tp,LOCATION_MZONE,0,nil)
-	local zone=0
-	lg:ForEach(function(tc)
-		zone=zone|tc:GetLinkedZone()
-	end)
-	return zone&0x1f
-end
 function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
-	local zone=s.zonefilter(tp)
+	local zone=aux.GetMMZonesPointedTo(tp,Card.IsSetCard,LOCATION_MZONE,0,nil,0x1157)
 	if zone>0 and tc:IsLocation(LOCATION_GRAVE) and tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP,zone)
 	end

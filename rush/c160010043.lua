@@ -24,10 +24,12 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-	local tc=Duel.SelectMatchingCard(tp,Card.IsAbleToHand,tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
+	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToHand,tp,0,LOCATION_MZONE,1,1,nil)
+	local tc=g:GetFirst()
 	if not tc then return end
-	Duel.HintSelection(tc,true)
-	if Duel.SendtoHand(tc,nil,REASON_EFFECT)==0 or not tc:IsLocation(LOCATION_HAND) then return end
+	g=g:AddMaximumCheck()
+	Duel.HintSelection(g,true)
+	if Duel.SendtoHand(g,nil,REASON_EFFECT)==0 or not tc:IsLocation(LOCATION_HAND) then return end
 	local opp=1-tp
 	local g=Duel.GetMatchingGroup(Card.IsCanBeSpecialSummoned,opp,LOCATION_HAND,0,nil,e,0,opp,false,false,POS_FACEUP_ATTACK)
 	if #g==0 or not Duel.SelectYesNo(opp,aux.Stringid(id,1)) then return end

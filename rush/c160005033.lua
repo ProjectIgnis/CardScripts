@@ -1,5 +1,5 @@
 --バクハート
---Bombheart
+--Blasting Bird
 local s,id=GetID()
 function s.initial_effect(c)
 	--double tribute
@@ -8,10 +8,13 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	e1:SetCondition(aux.DoubleTributeCon)
+	e1:SetCondition(s.condition)
 	e1:SetCost(s.cost)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
+end
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	return (not Duel.IsPlayerAffectedByEffect(tp,FLAG_NO_TRIBUTE)) and e:GetHandler():CanBeDoubleTribute(FLAG_DOUBLE_TRIB_WINGEDBEAST)
 end
 function s.revfilter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and not c:IsPublic()
@@ -27,10 +30,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ShuffleHand(tp)
 	--double tribute
 	local c=e:GetHandler()
-	c:AddDoubleTribute(id,s.otfilter,s.eftg)
+	c:AddDoubleTribute(id,s.otfilter,s.eftg,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,FLAG_DOUBLE_TRIB_WINGEDBEAST)
 end
 function s.otfilter(c,tp)
-	return c:GetFlagEffect(id)~=0 and (c:IsControler(tp) or c:IsFaceup())
+	return c:IsDoubleTribute(FLAG_DOUBLE_TRIB_WINGEDBEAST) and (c:IsControler(tp) or c:IsFaceup())
 end
 function s.eftg(e,c)
 	return c:IsRace(RACE_WINGEDBEAST) and c:IsLevelAbove(7) and c:IsSummonableCard()

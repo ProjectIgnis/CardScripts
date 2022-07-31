@@ -1,8 +1,9 @@
--- Elemental HERO Bubbleman (Anime)
--- scripted by: UnknownGuest
+--Ｅ・ＨＥＲＯ バブルマン (Anime)
+--Elemental HERO Bubbleman (Anime)
+--scripted by: UnknownGuest
 local s,id=GetID()
 function s.initial_effect(c)
-	-- special summon
+	--Special Summon this card
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
@@ -10,11 +11,11 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.spcon)
 	c:RegisterEffect(e1)
-	-- draw
+	--Draw 2 cards if there are no other cards on your field 
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DRAW)
-	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e2:SetCode(EVENT_SUMMON_SUCCESS)
 	e2:SetCondition(s.condition)

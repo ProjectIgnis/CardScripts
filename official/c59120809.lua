@@ -1,5 +1,5 @@
 --スケアクロー・トライヒハート
---Scareclaw Trich Heart
+--Scareclaw Tri-Heart
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e1:SetValue(aux.lnklimit)
 	c:RegisterEffect(e1)
-	--Change to Defense Position
+	--Change monsters to Defense Position
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_SET_POSITION)
@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetValue(s.immval)
 	c:RegisterEffect(e3)
-	--Special Summon and search
+	--Special Summon 1 "Scareclaw" and add another to the hand
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,0))
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -45,7 +45,8 @@ end
 s.listed_series={0x17c}
 function s.immval(e,te)
 	local tc=te:GetHandler()
-	return te:IsActiveType(TYPE_MONSTER) and te:IsActivated() and tc:IsLocation(LOCATION_MZONE) and tc:IsDefensePos()
+	return te:IsActiveType(TYPE_MONSTER) and te:IsActivated() and te:GetActivateLocation()==LOCATION_MZONE
+		and ((tc:IsDefensePos() and tc:IsRelateToEffect(te)) or (tc:IsPreviousPosition(POS_DEFENSE) and not tc:IsRelateToEffect(te)))
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsInExtraMZone()

@@ -3,10 +3,10 @@
 --fixed by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
-	Link.AddProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x56f),3,3)
 	c:EnableReviveLimit()
-	--atk
+	--Link Summon procedure
+	Link.AddProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x56f),3,3)
+	--Increase ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -14,29 +14,30 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(s.atkval)
 	c:RegisterEffect(e1)
-	--damage
+	--Damage
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(114932,0))
+	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DAMAGE)
-	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e2:SetRange(LOCATION_MZONE)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetCode(EVENT_DRAW)
-	e2:SetCost(s.drcost)
-	e2:SetTarget(s.drtg)
-	e2:SetOperation(s.drop)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCost(s.damcost)
+	e2:SetTarget(s.damtg)
+	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
-	--destroy
+	--Destroy
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(122520,1))
+	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_DESTROY)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_SUMMON_SUCCESS)
+	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
+	e3:SetCode(EVENT_SUMMON_SUCCESS)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,0,EFFECT_COUNT_CODE_SINGLE)
-	e3:SetTarget(s.sptg)
-	e3:SetOperation(s.spop)
+	e3:SetCondition(s.descon)
+	e3:SetTarget(s.destg)
+	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 	local e4=e3:Clone()
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -47,14 +48,14 @@ function s.initial_effect(c)
 end
 s.listed_series={0x56f}
 function s.atkval(e,c)
-	return c:GetLinkedGroup():FilterCount(Card.IsType,nil,TYPE_MONSTER)*600
+	return c:GetLinkedGroup():FilterCount(Card.IsMonster,nil)*600
 end
-function s.filter(c)
+function s.damcfilter(c)
 	return c:IsType(TYPE_TRAP) and not c:IsPublic()
 end
-function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return ep==tp and eg:IsExists(s.filter,1,nil) end
-	local g=eg:Filter(s.filter,nil)
+function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return ep==tp and eg:IsExists(s.damcfilter,1,nil) end
+	local g=eg:Filter(s.damcfilter,nil)
 	if #g==1 then
 		Duel.ConfirmCards(1-tp,g)
 		Duel.ShuffleHand(tp)
@@ -65,41 +66,40 @@ function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.ShuffleHand(tp)
 	end
 end
-function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetTargetParam(500)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,500)
 end
-function s.drop(e,tp,eg,ep,ev,re,r,rp)
+function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Damage(p,d,REASON_EFFECT)
 end
-function s.cfilter(c,tp,zone,e)
-	local seq=c:GetSequence()
-	if c:IsControler(tp) then seq=seq+16 end
-	return bit.extract(zone,seq)~=0 and (not e or c:IsRelateToEffect(e))
+function s.desfilter(c,tp,zone1,zone2)
+	return aux.IsZone(c,zone1,tp) or aux.IsZone(c,zone2,1-tp)
 end
-function s.lkfilter(c)
-	return c:IsFaceup() and c:IsLinkMonster()
-end
-function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local zone=0
-	local lg=Duel.GetMatchingGroup(s.lkfilter,tp,0,LOCATION_MZONE,nil)
-	for tc in aux.Next(lg) do
-		zone=zone|tc:GetLinkedZone()
+function s.descon(e,tp,eg,ep,ev,re,r,rp)
+	local zone1=aux.GetMMZonesPointedTo(tp,nil,0,LOCATION_MZONE)
+	local zone2=aux.GetMMZonesPointedTo(tp,nil,0,LOCATION_MZONE,1-tp)
+	local g=eg:Filter(s.desfilter,nil,tp,zone1,zone2)
+	if #g==0 then return false end
+	for tc in g:Iter() do
+		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_CHAIN,0,1)
 	end
-	if chk==0 then return eg:IsExists(s.cfilter,1,nil,tp,zone) end
-	Duel.SetTargetCard(eg)
-	local g=eg:Filter(s.cfilter,nil,tp,zone)
+	return true
+end
+function s.cfilter(c)
+	return c:GetFlagEffect(id)>0
+end
+function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local g=eg:Filter(s.cfilter,nil)
+	if chk==0 then return #g>0 end
+	Duel.SetTargetCard(g)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,LOCATION_MZONE)
 end
-function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	local zone=0
-	local lg=Duel.GetMatchingGroup(s.lkfilter,tp,0,LOCATION_MZONE,nil)
-	for tc in aux.Next(lg) do
-		zone=zone|tc:GetLinkedZone()
-	end
-	local g=eg:Filter(s.cfilter,nil,tp,zone,e)
+function s.desop(e,tp,eg,ep,ev,re,r,rp)
+	local g=Duel.GetTargetCards(e)
+	if #g==0 then return end
 	Duel.Destroy(g,REASON_EFFECT)
 end

@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.negcon)
 	e1:SetOperation(s.negop)
 	c:RegisterEffect(e1)
-	--Special summon itsekf from hand
+	--Special Summon itself from hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_SPSUMMON_PROC)
@@ -33,16 +33,14 @@ function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 		and g and g:IsExists(s.tfilter,1,e:GetHandler(),tp) and Duel.IsChainDisablable(ev)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.SelectEffectYesNo(tp,e:GetHandler()) then
-		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+	local c=e:GetHandler()
+	if Duel.SelectEffectYesNo(tp,c) then
+		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
 		if Duel.NegateEffect(ev) then
 			Duel.BreakEffect()
-			Duel.Destroy(e:GetHandler(),REASON_EFFECT)
+			Duel.Destroy(c,REASON_EFFECT)
 		end
 	end
-end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsCode(id)
 end
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -51,6 +49,6 @@ function s.spcon(e,c)
 	if #g==0 then return false end
 	local tg=g:GetMaxGroup(Card.GetAttack)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
+		and not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,id),tp,LOCATION_MZONE,0,1,nil)
 		and tg:IsExists(Card.IsControler,1,nil,1-tp)
 end

@@ -40,22 +40,18 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.MoveSequence(c,nseq)
 	end
 end
-function s.zonefilter(c)
+function s.lnkfilter(c,tc)
 	local lg=c:GetLinkedGroup()
-	local zone=0
-	for lc in aux.Next(lg) do
-		zone=zone|lc:GetLinkedZone()&0x1f
-	end
-	return zone
+	return lg:IsContains(tc)
 end
 function s.target2(e,tp,eg,ep,ev,re,r,rp,chk)
-	local zone=s.zonefilter(e:GetHandler())
+	local zone=aux.GetMMZonesPointedTo(tp,s.lnkfilter,LOCATION_ONFIELD,nil,nil,e:GetHandler())
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_CONTROL,zone)>0 end
 end
 function s.operation2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	local zone=s.zonefilter(c)
+	local zone=aux.GetMMZonesPointedTo(tp,s.lnkfilter,LOCATION_ONFIELD,nil,nil,e:GetHandler())
 	if Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_CONTROL,zone)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
 		local nseq=math.log(Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,~zone),2)

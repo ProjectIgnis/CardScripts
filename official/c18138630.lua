@@ -1,5 +1,5 @@
 --デストーイ・ポット
---Frightfur Vendor
+--Frightfur Jar
 --Logical Nonsense
 --Substitute ID
 local s,id=GetID()
@@ -70,6 +70,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Destroy(tg,REASON_EFFECT)
 		end
 	else
+		Duel.ShuffleHand(tp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		local g=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_HAND,0,1,1,nil)
 		if Duel.SelectOption(tp,aux.Stringid(id,3),aux.Stringid(id,4))==0 then
@@ -90,7 +91,7 @@ end
 	--Halve the ATK of opponent's monster until the end of the turn
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
+	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)

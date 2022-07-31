@@ -22,7 +22,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
 	e3:SetRange(LOCATION_DECK)
-	e3:SetProperty(EFFECT_FLAG2_NAGA)
 	c:RegisterEffect(e3)
 	--atkup
 	local e4=Effect.CreateEffect(c)

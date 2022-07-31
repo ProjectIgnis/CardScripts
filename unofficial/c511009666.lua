@@ -49,28 +49,16 @@ end
 function s.filter(c,e,tp,zone)
 	return c:IsSetCard(0x2157) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
-function s.lkfilter(c)
-	return c:IsSetCard(0x1157) and c:IsFaceup() and c:IsLinkMonster()
-end
-function s.zonefilter(tp)
-	local lg=Duel.GetMatchingGroup(s.lkfilter,tp,LOCATION_MZONE,0,nil)
-	local zone=0
-	lg:ForEach(function(tc)
-		zone=zone|tc:GetLinkedZone()
-	end)
-	return zone
-end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local zone=s.zonefilter(tp)
 	if chk==0 then
-		local zone=s.zonefilter(tp)
-		return zone~=0 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,zone)
+		local zone=aux.GetMMZonesPointedTo(tp,Card.IsSetCard,LOCATION_MZONE,0,nil,0x1157)
+		return zone>0 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,zone)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,ev)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	local zone=s.zonefilter(tp)
+	local zone=aux.GetMMZonesPointedTo(tp,Card.IsSetCard,LOCATION_MZONE,0,nil,0x1157)
 	if zone==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,zone)

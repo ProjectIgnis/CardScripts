@@ -23,7 +23,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.filter),tp,LOCATION_MZONE,0,1,nil) end
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsRace(RACE_WARRIOR)
+	return c:IsFaceup() and c:IsRace(RACE_WARRIOR) and not c:IsHasEffect(EFFECT_CANNOT_ATTACK)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

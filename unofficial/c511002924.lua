@@ -1,3 +1,4 @@
+--愚者のサイコロ
 --Fool's Dice
 local s,id=GetID()
 function s.initial_effect(c)
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return #eg==1 and not tc:IsPreviousControler(tp)
+	return #eg==1 and not tc:IsPreviousControler(tp) and tc:IsMonster() and tc:HasLevel()
 end
 function s.filter(c)
 	return c:IsType(TYPE_NORMAL) and c:IsLevelBelow(2) and c:IsDiscardable()

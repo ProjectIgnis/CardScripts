@@ -1,7 +1,6 @@
 --星遺物－『星冠』
 --World Legacy - "World Crown"
 --Scripted by ahtelel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon itself from hand
@@ -42,9 +41,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0xfe}
-
 function s.spval(e,c)
-	return 0,Duel.GetLinkedZone(c:GetControler())&0x1f
+	return 0,aux.GetMMZonesPointedTo(c:GetControler())
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()

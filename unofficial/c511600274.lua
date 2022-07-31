@@ -50,12 +50,12 @@ function s.spfilter(c,e,tp,zones)
 	return c:IsLevelBelow(4) and c:IsSetCard(0x13c) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,1-tp,zones)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local zones=Duel.GetLinkedZone(1-tp)&0x1f
+	local zones=aux.GetMMZonesPointedTo(1-tp)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp,zones) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_GRAVE)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local zones=Duel.GetLinkedZone(1-tp)&0x1f
+	local zones=aux.GetMMZonesPointedTo(1-tp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE,1-tp,LOCATION_REASON_TOFIELD,zones)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,1,math.min(ft,2),nil,e,tp,zones)

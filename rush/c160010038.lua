@@ -25,9 +25,14 @@ end
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_NORMAL) and c:IsCanChangePosition()
 end
+function s.szonefilter(c)
+	return c:GetSequence()<5
+end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.DiscardDeck(tp,2,REASON_EFFECT)==0 then return end
-	if Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.cfilter),tp,0,LOCATION_MZONE,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+	if Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.cfilter),tp,0,LOCATION_MZONE,1,nil)
+		and Duel.IsExistingMatchingCard(s.szonefilter,tp,0,LOCATION_SZONE,1,nil)
+		and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		local tc=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.cfilter),tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
 		if tc then
 			Duel.BreakEffect()

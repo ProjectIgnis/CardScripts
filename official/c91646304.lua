@@ -1,7 +1,6 @@
 --神樹のパラディオン
 --Crusadia Arboria
 --Scripted by ahtelel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon itself from hand
@@ -26,9 +25,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x116}
-
 function s.spval(e,c)
-	return 0,Duel.GetLinkedZone(c:GetControler())&0x1f
+	return 0,aux.GetMMZonesPointedTo(c:GetControler())
 end
 function s.repfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0x116) and c:IsLocation(LOCATION_MZONE)

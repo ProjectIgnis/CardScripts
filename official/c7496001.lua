@@ -1,5 +1,5 @@
 --スプリガンズ・ブーティー
---Sprigguns Booty
+--Springans Booty
 --Logical Nonsense
 
 --Substitute ID
@@ -14,9 +14,9 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e1:SetRange(LOCATION_SZONE)
 	e1:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_LEAVE_FIELD)
+	e1:SetRange(LOCATION_SZONE)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)return eg:IsExists(s.atrfilter,1,nil,tp,rp)end)
 	e1:SetTarget(s.catg)
@@ -70,10 +70,19 @@ end
 	--Check for "Vast Desert – Gold Golgonda"
 function s.filter(c,tp)
 	return c:IsCode(60884672) and c:GetActivateEffect() and c:GetActivateEffect():IsActivatable(tp,true,true)
+		and (c:IsType(TYPE_FIELD) or Duel.GetLocationCount(tp,LOCATION_SZONE)>0)
 end
 	--Activate 1 "Vast Desert – Gold Golgonda" from deck or GY
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,tp):GetFirst()
-	aux.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
+	if tc:IsType(TYPE_FIELD) then
+		aux.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
+	else
+		Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+		local te=tc:GetActivateEffect()
+		local tep=tc:GetControler()
+		local cost=te:GetCost()
+		if cost then cost(te,tep,eg,ep,ev,re,r,rp,1) end
+	end
 end

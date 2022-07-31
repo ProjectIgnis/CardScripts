@@ -587,8 +587,18 @@ end
 
 --Double tribute handler
 FLAG_NO_TRIBUTE=160001029
-function Card.AddDoubleTribute(c,id,otfilter,eftg)
-	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+FLAG_DOUBLE_TRIB=160009052 --Executie up
+FLAG_DOUBLE_TRIB_DRAGON=160402002 --righteous dragon
+FLAG_DOUBLE_TRIB_FIRE=160007025 --dododo second
+FLAG_DOUBLE_TRIB_WINGEDBEAST=160005033 --blasting bird
+FLAG_DOUBLE_TRIB_LIGHT=160414001 --ultimate flag beast surge bicorn
+FLAG_DOUBLE_TRIB_MACHINE=160414002
+FLAG_DOUBLE_TRIB_DARK=160317015 --Voidvelgr Globule
+FLAG_DOUBLE_TRIB_GALAXY=160317115
+function Card.AddDoubleTribute(c,id,otfilter,eftg,reset,...)
+	for i,flag in ipairs{...} do
+		c:RegisterFlagEffect(flag,reset,0,1)
+	end
 	local e1=aux.summonproc(c,true,true,1,1,SUMMON_TYPE_TRIBUTE,aux.Stringid(id,0),otfilter)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
@@ -596,11 +606,32 @@ function Card.AddDoubleTribute(c,id,otfilter,eftg)
 	e2:SetTargetRange(LOCATION_HAND,0)
 	e2:SetTarget(eftg)
 	e2:SetLabelObject(e1)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	if reset~=0 then e2:SetReset(reset) end
 	c:RegisterEffect(e2)
 end
 function aux.DoubleTributeCon(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsPlayerAffectedByEffect(tp,FLAG_NO_TRIBUTE)
+end
+--function to check if the monster have the flag for double tribute (used in otfilter)
+function Card.CanBeDoubleTribute(c,...)
+	if c:GetFlagEffect(FLAG_DOUBLE_TRIB)~=0 then return false end
+	local totalFlags=0
+	for i,flag in ipairs{...} do
+		totalFlags=totalFlags+flag
+		if c:GetFlagEffect(flag)~=0 then return false end
+	end
+	if c:GetFlagEffect(totalFlags)~=0 then return false end
+	return true
+end
+--function to check if the monster can get the corresponding double tribute flags
+--explanation: you can use Executie up on a monster like Rightous dragon that used its own effect to become a double tribute for dragon, it then become usable as 2 tribute for any monsters not just dragon
+--but the opposite scenario don't work, if you used executie up on a Righteous dragon making it a double tribute for any monster, you can't activate righteous dragon effect
+function Card.IsDoubleTribute(c,...)
+	--check for each individual flag
+	for i,flag in ipairs{...} do
+		if c:GetFlagEffect(flag)==0 then return false end
+	end
+	return true
 end
 function Card.AddNoTributeCheck(c,id,stringid,rangeP1,rangeP2)
 	local e1=Effect.CreateEffect(c)

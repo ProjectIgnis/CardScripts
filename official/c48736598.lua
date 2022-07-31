@@ -40,15 +40,15 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local zones={}
-	zones[0]=Duel.GetLinkedZone(0)&0x1f
-	zones[1]=Duel.GetLinkedZone(1)&0x1f
+	zones[0]=aux.GetMMZonesPointedTo(0)
+	zones[1]=aux.GetMMZonesPointedTo(1)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp,tp,zones) or Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp,1-tp,zones) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_GRAVE)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local zones={}
-	zones[0]=Duel.GetLinkedZone(0)&0x1f
-	zones[1]=Duel.GetLinkedZone(1)&0x1f
+	zones[0]=aux.GetMMZonesPointedTo(0)
+	zones[1]=aux.GetMMZonesPointedTo(1)
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,nil,e,tp,tp,zones)+Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,nil,e,tp,1-tp,zones)
 	if #g==0 then return end
 	local ft=Duel.GetLocationCount(0,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zones[0])+Duel.GetLocationCount(1,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zones[1])
@@ -82,4 +82,3 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(g,REASON_EFFECT)
 	end
 end
-

@@ -29,25 +29,17 @@ function s.initial_effect(c)
 	e3:SetOperation(s.setop)
 	c:RegisterEffect(e3)
 	--register attributes
-	if not s.global_flag then
-		s.global_flag=true
+	aux.GlobalCheck(s,function()
 		s.attr_list={}
 		s.attr_list[0]=0
 		s.attr_list[1]=0
-		local ge1=Effect.CreateEffect(c)
-		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge1:SetCode(EVENT_PHASE+PHASE_END)
-		ge1:SetCountLimit(1)
-		ge1:SetCondition(s.resetop)
-		Duel.RegisterEffect(ge1,0)
-	end	
+		aux.AddValuesReset(function()
+			s.attr_list[0]=0
+			s.attr_list[1]=0
+		end)
+	end)
 end
 s.listed_series={0x135}
-function s.resetop(e,tp,eg,ep,ev,re,r,rp)
-	s.attr_list[0]=0
-	s.attr_list[1]=0
-	return false
-end
 function s.cfilter(c)
 	return c:GetSequence()<5
 end

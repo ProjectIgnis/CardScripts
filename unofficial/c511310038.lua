@@ -22,18 +22,13 @@ function s.initial_effect(c)
 		s.name_list={}
 		s.name_list[0]={}
 		s.name_list[1]={}
-		local ge1=Effect.CreateEffect(c)
-		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge1:SetCode(EVENT_PHASE+PHASE_END)
-		ge1:SetOperation(s.resetop)
-		Duel.RegisterEffect(ge1,0)
+		aux.AddValuesReset(function()
+			s.name_list[0]={}
+			s.name_list[1]={}
+		end)
 	end)
 end
 s.listed_series={0x10b}
-function s.resetop(e,tp,eg,ep,ev,re,r,rp)
-	s.name_list[0]={}
-	s.name_list[1]={}
-end
 function s.cfilter(c,tp)
 	return c:IsSetCard(0x10b) and c:IsDiscardable(REASON_EFFECT) and not s.name_list[tp][c:GetCode()]
 end

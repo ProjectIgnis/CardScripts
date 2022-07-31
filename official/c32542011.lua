@@ -46,7 +46,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--WATER: Special Summon from the GY
 	if Duel.IsExistingMatchingCard(s.cfilter2,tp,LOCATION_MZONE,0,1,nil,ATTRIBUTE_WATER) then
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-		local ct=Duel.GetMatchingGroupCount(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE,0,nil,Duel.GetTurnCount(),e,tp))
+		local ct=Duel.GetMatchingGroupCount(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE,0,nil,Duel.GetTurnCount(),e,tp)
 		ft=math.min(ft,ct)
 		if ft>0 then
 			if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end

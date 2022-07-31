@@ -2,12 +2,12 @@
 --Sylvan Waterslide
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--attack
+	--Excavate the top card of your Deck when the opponent attacks directly
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DECKDES)
@@ -19,10 +19,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	e2:SetLabel(1)
 	c:RegisterEffect(e2)
-	--draw
+	--Replace your normal draw
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
-	e3:SetCategory(CATEGORY_TOHAND)
+	e3:SetCategory(CATEGORY_DECKDES+CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e3:SetCode(EVENT_PREDRAW)
 	e3:SetRange(LOCATION_SZONE)
@@ -68,6 +68,7 @@ function s.cftg(e,tp,eg,ep,ev,re,r,rp,chk)
 		e1:SetValue(0)
 		Duel.RegisterEffect(e1,tp)
 	end
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.cfop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

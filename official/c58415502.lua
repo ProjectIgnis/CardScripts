@@ -22,7 +22,7 @@ end
 s.listfilter=aux.OR(aux.IsCodeListed,aux.IsMaterialListCode)
 function s.spfilter(c,e,tp)
 	if not (s.listfilter(c,CARD_JACK_KNIGHT) and s.listfilter(c,CARD_QUEEN_KNIGHT) and s.listfilter(c,CARD_KING_KNIGHT)) then return end
-	local code_chk=c:IsCode(11020863)
+	local code_chk=c:IsCode(11020863) and e:GetHandler():IsCode(id)
 	return c:IsCanBeSpecialSummoned(e,0,tp,code_chk,code_chk)
 end
 function s.spchkfilter(c,sg,tp)
@@ -55,7 +55,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sc=summg:FilterSelect(tp,s.spchkfilter,1,1,nil,nil,tp):GetFirst()
 		if sc then
-			local code_chk=sc:IsCode(11020863)
+			local code_chk=sc:IsCode(11020863) and e:GetHandler():IsCode(id)
 			Duel.BreakEffect()
 			Duel.SpecialSummon(sc,0,tp,tp,code_chk,code_chk,POS_FACEUP)
 			if code_chk then sc:CompleteProcedure() end

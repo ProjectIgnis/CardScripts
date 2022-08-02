@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_UNIFORM_39,CARD_UNIFORM_99}
 function s.filter(c,tp)
-	return c:GetReasonPlayer()==1-tp and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_ATTACK)
+	return c:GetReasonPlayer()==1-tp and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
 		and c:IsReason(REASON_EFFECT)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

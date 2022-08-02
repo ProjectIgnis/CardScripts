@@ -2,9 +2,8 @@
 --Red-Eyes Transmigration
 local s,id=GetID()
 function s.initial_effect(c)
-	local e1=Ritual.AddProcGreater(c,s.ritualfil,8,nil,s.extrafil)
-	if not GhostBelleTable then GhostBelleTable={} end
-	table.insert(GhostBelleTable,e1)
+	--Activate
+	Ritual.AddProcGreater{handler=c,filter=s.ritualfil,lv=8,extrafil=s.extrafil,extratg=s.extratg}
 end
 s.listed_series={0x3b}
 s.fit_monster={19025379} --should be removed in hardcode overhaul
@@ -18,4 +17,8 @@ function s.mfilter(c)
 end
 function s.extrafil(e,tp,eg,ep,ev,re,r,rp,chk)
 	return Duel.GetMatchingGroup(s.mfilter,tp,LOCATION_GRAVE,0,nil)
+end
+function s.extratg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_GRAVE)
 end

@@ -50,12 +50,12 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,tp,0)
 	else
 		local cat=CATEGORY_TODECK
-		Duel.SetOperationInfo(0,CATEGORY_TODECK,c,1,tp,0)
 		if c:IsLocation(LOCATION_HAND) then
 			cat=cat+CATEGORY_DRAW
 			Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 		end
 		e:SetCategory(cat)
+		Duel.SetOperationInfo(0,CATEGORY_TODECK,c,1,tp,0)
 	end
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)

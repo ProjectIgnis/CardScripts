@@ -3,7 +3,7 @@
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)
-	--Equip
+	--Equip 1 "Dragunity" Tuner monster to itself
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_EQUIP)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--Destruction replacement
 	local e2=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,1))
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_DESTROY_REPLACE)
 	e2:SetRange(LOCATION_MZONE)
@@ -83,16 +83,15 @@ function s.repfilter(c,tp)
 		and (c:IsReason(REASON_BATTLE) or c:IsReason(REASON_EFFECT)) and not c:IsReason(REASON_REPLACE)
 end
 function s.desfilter(c,e,tp)
-	return c:IsControler(tp) and c:IsLocation(LOCATION_SZONE) and c:IsSetCard(0x29)
-		and e:GetHandler():GetEquipGroup():IsContains(c)
+	return e:GetHandler():GetEquipGroup():IsContains(c) and c:IsSetCard(0x29)
 		and c:IsDestructable(e) and not c:IsStatus(STATUS_DESTROY_CONFIRMED)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(s.repfilter,1,nil,tp)
-		and Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_SZONE,0,1,nil,e,tp) end
+		and Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil,e,tp) end
 	if Duel.SelectEffectYesNo(tp,e:GetHandler(),96) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESREPLACE)
-		local g=Duel.SelectMatchingCard(tp,s.desfilter,tp,LOCATION_SZONE,0,1,1,nil,e,tp)
+		local g=Duel.SelectMatchingCard(tp,s.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil,e,tp)
 		e:SetLabelObject(g:GetFirst())
 		g:GetFirst():SetStatus(STATUS_DESTROY_CONFIRMED,true)
 		return true

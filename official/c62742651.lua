@@ -1,7 +1,8 @@
 --アーマード・サイキッカー
+--Armored Axon Kicker
 local s,id=GetID()
 function s.initial_effect(c)
-	--summon with no tribute
+	--Normal Summon without tributing
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
@@ -9,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_SUMMON_PROC)
 	e1:SetCondition(s.ntcon)
 	c:RegisterEffect(e1)
-	--damage
+	--Take damage and Special Summon 1 monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DAMAGE+CATEGORY_SPECIAL_SUMMON)
@@ -36,6 +37,7 @@ function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if dam<0 then dam=0 end
 	Duel.SetTargetParam(dam)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,tp,dam)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function s.spfilter(c,e,tp,atk)
 	return c:IsAttackBelow(atk) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

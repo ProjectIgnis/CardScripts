@@ -47,6 +47,7 @@ function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local ac=Duel.AnnounceCard(tp)
 	Duel.SetTargetParam(ac)
 	Duel.SetOperationInfo(0,CATEGORY_ANNOUNCE,nil,0,tp,ANNOUNCE_CARD)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,g,1,tp,0)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local ac=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)

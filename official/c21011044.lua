@@ -1,5 +1,5 @@
 --影依の偽典
---Shaddoll Ruq
+--Shaddoll Schism
 --scripted by Naim and edo9300
 local s,id=GetID()
 function s.initial_effect(c)
@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--fusion
 	local e2=Fusion.CreateSummonEff({handler=c,fusfilter=aux.FilterBoolFunction(Card.IsSetCard,0x9d),matfilter=Fusion.OnFieldMat(Card.IsAbleToRemove),
-									extrafil=s.fextra,extraop=Fusion.BanishMaterial,stage2=s.sstage2,desc=aux.Stringid(id,0)})
+									extrafil=s.fextra,extraop=Fusion.BanishMaterial,stage2=s.sstage2,desc=aux.Stringid(id,0),extratg=s.extratarget})
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON+CATEGORY_TOGRAVE)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetHintTiming(0,TIMING_MAIN_END)
@@ -19,8 +19,6 @@ function s.initial_effect(c)
 	e2:SetCondition(s.spcon)
 	e2:SetRange(LOCATION_SZONE)
 	c:RegisterEffect(e2)
-	if not GhostBelleTable then GhostBelleTable={} end
-	table.insert(GhostBelleTable,e2)
 end
 s.listed_series={0x9d}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -53,4 +51,9 @@ function s.sstage2(e,tc,tp,sg,chk)
 end
 function s.sameatt(c,att)
 	return c:IsFaceup() and c:IsAttribute(att) and c:IsAbleToGrave()
+end
+function s.extratarget(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_MZONE+LOCATION_GRAVE)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOGRAVE,nil,1,1-tp,LOCATION_MZONE)
 end

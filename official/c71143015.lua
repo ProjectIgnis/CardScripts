@@ -5,13 +5,11 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Fusion.CreateSummonEff({handler=c,fusfilter=s.ffilter,matfilter=Card.IsAbleToDeck,
-									 extrafil=s.fextra,extraop=Fusion.ShuffleMaterial,stage2=s.desop})
+									 extrafil=s.fextra,extraop=Fusion.ShuffleMaterial,stage2=s.desop,extratg=s.extrtarget})
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetHintTiming(0,TIMING_MAIN_END)
 	e1:SetCondition(s.condition)
 	c:RegisterEffect(e1)
-	if not GhostBelleTable then GhostBelleTable={} end
-	table.insert(GhostBelleTable,e1)
 end
 s.listed_names={CARD_BLUEEYES_W_DRAGON,23995346}
 function s.ffilter(c)
@@ -40,4 +38,9 @@ function s.desop(e,tc,tp,mg,chk)
 			end
 		end
 	end
+end
+function s.extrtarget(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,0,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_DESTROY,nil,0,1-tp,LOCATION_ONFIELD)
 end

@@ -1,12 +1,12 @@
 --ソーンヴァレル・ドラゴン
---Sawnborrel Dragon
+--Quadborrel Dragon
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
+	--Link Summon
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_DRAGON),2,2,s.lcheck)
 	c:EnableReviveLimit()
-	--destroy
+	--Destroy 1 monster and special summon "Rokket" monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON)
@@ -33,24 +33,27 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_GRAVE)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x102) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local ge1=Effect.CreateEffect(e:GetHandler())
+	local c=e:GetHandler()
+	--Cannot Special Summon Link-2 or lower monsters from the Extra Deck
+	local ge1=Effect.CreateEffect(c)
+	ge1:SetDescription(aux.Stringid(id,2))
 	ge1:SetType(EFFECT_TYPE_FIELD)
 	ge1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	ge1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	ge1:SetDescription(aux.Stringid(id,2))
 	ge1:SetTargetRange(1,0)
-	ge1:SetTarget(s.splimit)
+	ge1:SetTarget(function(_,c) return c:IsLinkBelow(2) and c:IsLocation(LOCATION_EXTRA) end)
 	ge1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(ge1,tp)
-	--lizard check
-	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)
+	--Clock Lizard check
+	aux.addTempLizardCheck(c,tp,function(_,c) return not c:IsLinkBelow(2) end)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)~=0 and tc:IsLinkMonster() and tc:GetLink()>0
+	if tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)>0 and tc:IsLinkMonster() and tc:GetLink()>0
 		and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.BreakEffect()
@@ -60,14 +63,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		ft=math.min(ft,lk)
 		local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,nil,e,tp)
 		ft=math.min(ft,g:GetClassCount(Card.GetCode))
-		local sg=aux.SelectUnselectGroup(g,e,tp,nil,ft,aux.dncheck,1,tp,HINTMSG_SPSUMMON)
+		local sg=aux.SelectUnselectGroup(g,e,tp,1,ft,aux.dncheck,1,tp,HINTMSG_SPSUMMON)
 		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 	end
-end
-function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return c:IsLinkBelow(2) and c:IsLocation(LOCATION_EXTRA)
-end
---there is no GetOriginalLinkRating() function?
-function s.lizfilter(e,c)
-	return not c:IsLinkBelow(2)
 end

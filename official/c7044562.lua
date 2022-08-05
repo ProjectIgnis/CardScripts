@@ -1,4 +1,5 @@
 --魂のカード
+--Card of the Soul
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -13,6 +14,7 @@ function s.initial_effect(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0 end
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.filter(c,lp)
 	return c:GetAttack()>=0 and c:GetDefense()>=0 and c:GetAttack()+c:GetDefense()==lp and c:IsAbleToHand()

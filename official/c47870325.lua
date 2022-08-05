@@ -5,8 +5,10 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_REMOVE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 	--Negate attack
@@ -19,21 +21,29 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_GRAVE)
+end
 function s.rmfilter(c)
 	return c:IsType(TYPE_SPELL) and c:IsAbleToRemove(POS_FACEDOWN)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local rg=Group.CreateGroup()
-	for p=0,1 do
+	local turn_p=Duel.GetTurnPlayer()
+	local step=turn_p==0 and 1 or -1
+	for p=turn_p,1-turn_p,step do
 		if Duel.IsExistingMatchingCard(s.rmfilter,p,LOCATION_GRAVE,0,1,nil) and Duel.SelectYesNo(p,aux.Stringid(id,1)) then
 			Duel.Hint(HINT_SELECTMSG,p,HINTMSG_REMOVE)
 			local g=Duel.SelectMatchingCard(p,s.rmfilter,p,LOCATION_GRAVE,0,1,5,nil)
 			rg:Merge(g)
 		end
 	end
-	if #rg>0 and Duel.Remove(rg,POS_FACEDOWN,REASON_EFFECT)>0 then
+	if #rg==0 then return end
+	Duel.HintSelection(rg,true)
+	if Duel.Remove(rg,POS_FACEDOWN,REASON_EFFECT)>0 then
 		local og=Duel.GetOperatedGroup()
-		for tc in aux.Next(og) do
+		for tc in og:Iter() do
 			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
 		end
 	end
@@ -45,8 +55,8 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local at=Duel.GetAttacker()
 	local p=1-at:GetControler()
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,p,LOCATION_REMOVED)
-	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,1,p,LOCATION_HAND)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,p,LOCATION_REMOVED)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_HANDES,nil,1,p,LOCATION_HAND)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()

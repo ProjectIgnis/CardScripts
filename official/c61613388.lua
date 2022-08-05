@@ -1,6 +1,5 @@
 --Ｕ．Ａ．ターンオーバー・タクティクス
 --U.A. Turnover Tactics
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -38,6 +37,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,#g,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,1-tp,LOCATION_DECK)
 end
 function s.locfilter(c,sp)
 	return c:IsLocation(LOCATION_DECK) and c:IsControler(sp)

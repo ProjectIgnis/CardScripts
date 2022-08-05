@@ -8,10 +8,9 @@ function s.initial_effect(c)
 	e0:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e0:SetType(EFFECT_TYPE_ACTIVATE)
 	e0:SetCode(EVENT_FREE_CHAIN)
+	e0:SetTarget(s.target)
 	e0:SetOperation(s.activate)
 	c:RegisterEffect(e0)
-	if not GhostBelleTable then GhostBelleTable={} end
-	table.insert(GhostBelleTable,e0)
 	--Cannot draw
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -60,6 +59,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e6)
 end
 s.listed_names={83965310}
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
+end
 function s.thfilter(c)
 	return c:IsCode(83965310) and c:IsAbleToHand()
 end

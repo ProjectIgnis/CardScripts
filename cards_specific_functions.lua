@@ -1139,10 +1139,10 @@ Effect.CreateVernalizerSPEffect=(function()
 	local function vernop(uniqueop,e,tp,eg,ep,ev,re,r,rp)
 		local proceed,exemptID=uniqueop(e,tp,eg,ep,ev,re,r,rp)
 		if proceed and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-			and Duel.IsExistingMatchingCard(vernspfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,exemptID)
+			and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(vernspfilter),tp,LOCATION_GRAVE,0,1,nil,e,tp,exemptID)
 			and Duel.SelectYesNo(tp,aux.Stringid(stringbase,1)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-			local sg=Duel.SelectMatchingCard(tp,vernspfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,exemptID)
+			local sg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(vernspfilter),tp,LOCATION_GRAVE,0,1,1,nil,e,tp,exemptID)
 			if #sg>0 then
 				Duel.BreakEffect()
 				Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
@@ -1168,7 +1168,11 @@ Effect.CreateVernalizerSPEffect=(function()
 		e1:SetRange(LOCATION_HAND)
 		e1:SetCountLimit(1,{id,desc})
 		e1:SetCost(aux.CostWithReplace(verncost,CARD_VERNALIZER_FLOWER_CROWN))
-		e1:SetTarget(uniquetg)
+		e1:SetTarget(function(e,tp,eg,ep,ev,re,r,rp,chk)
+			if chk==0 then return uniquetg(e,tp,eg,ep,ev,re,r,rp,chk) end
+			uniquetg(e,tp,eg,ep,ev,re,r,rp,chk)
+			Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
+		end)
 		e1:SetOperation(function(...) vernop(uniqueop,...) end)
 		return e1
 	end

@@ -3,10 +3,8 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(aux.IsMaterialListCode,CARD_NEOS),nil,s.fextra,nil,nil,s.stage2,2,0,nil,FUSPROC_NOTFUSION|FUSPROC_LISTEDMATS)
+	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(aux.IsMaterialListCode,CARD_NEOS),nil,s.fextra,nil,nil,s.stage2,2,0,nil,FUSPROC_NOTFUSION|FUSPROC_LISTEDMATS,nil,nil,nil,s.extratg)
 	c:RegisterEffect(e1)
-	if not AshBlossomTable then AshBlossomTable={} end
-	table.insert(AshBlossomTable,e1)
 	--destroy replace
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -20,6 +18,10 @@ end
 s.listed_names={CARD_NEOS}
 function s.fextra(e,tp,mg)
 	return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToGrave),tp,LOCATION_DECK,0,nil)
+end
+function s.extratg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOGRAVE,nil,2,tp,LOCATION_DECK)
 end
 function s.stage2(e,tc,tp,mg,chk)
 	if chk==2 then

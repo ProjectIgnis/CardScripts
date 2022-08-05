@@ -2,11 +2,12 @@
 --Final Light
 local s, id = GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1 = Effect.CreateEffect(c)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(s.condition)
@@ -52,6 +53,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local sg=aux.SelectUnselectGroup(g,e,tp,pay,pay,aux.dncheck,1,tp,HINTMSG_SPSUMMON)
 	Duel.SetTargetCard(sg)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,sg,#sg,tp,LOCATION_GRAVE)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,1-tp,LOCATION_GRAVE)
 end
 function s.filter2(c,e,sp)
 	return c:IsAttackBelow(2000) and c:IsCanBeSpecialSummoned(e,0,sp,false,false)

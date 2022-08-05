@@ -18,22 +18,22 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	if not GhostBelleTable then GhostBelleTable={} end
 end
+function s.check(ev,category)
+	local ex1,g1,gc1,dp1,loc1=Duel.GetOperationInfo(ev,category)
+	local ex2,g2,gc2,dp2,loc2=Duel.GetPossibleOperationInfo(ev,category)
+	if not (ex1 or ex2) then return false end
+	local g=Group.CreateGroup()
+	if g1 then g:Merge(g1) end
+	if g2 then g:Merge(g2) end
+	return (((loc1 or 0)|(loc2 or 0))&LOCATION_GRAVE)~=0 or (#g>0 and g:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE))
+end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsChainNegatable(ev) then return false end
-	local ex1,g1,gc1,dp1,loc1=Duel.GetOperationInfo(ev,CATEGORY_TOHAND)
-	local ex2,g2,gc2,dp2,loc2=Duel.GetOperationInfo(ev,CATEGORY_TODECK)
-	local ex3,g3,gc3,dp3,loc3=Duel.GetOperationInfo(ev,CATEGORY_SPECIAL_SUMMON)
-	local ex4,g4,gc4,dp4,loc4=Duel.GetOperationInfo(ev,CATEGORY_REMOVE)
-	if (ex1 and loc1&LOCATION_GRAVE==LOCATION_GRAVE)
-		or (ex2 and loc2&LOCATION_GRAVE==LOCATION_GRAVE) 
-		or (ex3 and loc3&LOCATION_GRAVE==LOCATION_GRAVE)
-		or (ex4 and loc4&LOCATION_GRAVE==LOCATION_GRAVE) 
-		or (ex1 and g1 and g1:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE))
-		or (ex2 and g2 and g2:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE)) 
-		or (ex3 and g3 and g3:IsExists(function (c) return c:IsType(TYPE_MONSTER) and c:IsLocation(LOCATION_GRAVE) end,1,nil))
-		or (ex4 and g4 and g4:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE))
-		then return true
-	end
+	if (s.check(ev,CATEGORY_SPECIAL_SUMMON)
+		or s.check(ev,CATEGORY_REMOVE)
+		or s.check(ev,CATEGORY_TOHAND)
+		or s.check(ev,CATEGORY_TODECK)
+		or s.check(ev,CATEGORY_TOEXTRA)) then return true end
 	for i,eff in ipairs(GhostBelleTable) do
 		if eff==re then return true end
 	end

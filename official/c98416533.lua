@@ -24,10 +24,6 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_BE_BATTLE_TARGET)
 	e3:SetCondition(s.thcon2)
 	c:RegisterEffect(e3)
-	if not AshBlossomTable then AshBlossomTable={} end
-	table.insert(AshBlossomTable,e1)
-	table.insert(AshBlossomTable,e2)
-	table.insert(AshBlossomTable,e3)
 	--Special Summon itself from the hand during the End Phase
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
@@ -53,6 +49,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToHand() end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,c,1,0,0)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_DECK)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x147) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

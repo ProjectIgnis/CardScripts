@@ -1,5 +1,5 @@
 --楽天禍カルクラグラ
---Cataclysmic Cheerful Calcragra
+--Cataclysmic Crusted Calcifida
 --scripted by Logical Nonsense
 --Substitute ID
 local s,id=GetID()
@@ -33,7 +33,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
 	--Check for a monster
 function s.tgfilter(c,tp)

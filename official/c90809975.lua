@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e1:SetCountLimit(1)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCost(s.spcost)
+	e1:SetCost(aux.dxmcostgen(1,1,nil))
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
@@ -44,10 +44,6 @@ function s.initial_effect(c)
 	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 s.listed_series={0x12}
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x12) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -81,13 +77,15 @@ end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
-	if re:GetHandler():IsRelateToEffect(re)  then
-		if re:GetHandler():IsDestructable() then
+	local dc=re:GetHandler()
+	if dc:IsRelateToEffect(re) then
+		if dc:IsDestructable() then
 			Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
 		end
 		local cat=e:GetCategory()
-		if re:GetHandler():GetOriginalType()&TYPE_MONSTER~=0 then
+		if dc:GetOriginalType()&TYPE_MONSTER~=0 then
 			e:SetCategory(cat|CATEGORY_SPECIAL_SUMMON)
+			Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,dc,1,0,LOCATION_GRAVE) --Ghost Belle requires this location
 		else
 			e:SetCategory(cat&~CATEGORY_SPECIAL_SUMMON)
 		end

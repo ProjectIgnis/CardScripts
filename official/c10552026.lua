@@ -2,13 +2,13 @@
 --Gouki Heel Ogre
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
+	--Link Summon
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0xfc),2,2)
-	--negate
+	--Negate monster effect
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
+	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e1:SetCode(EVENT_CHAINING)
@@ -34,6 +34,7 @@ function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) then
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
 	end
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0xfc) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -50,4 +51,3 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

@@ -29,9 +29,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--Gains effects based on material
 	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_DRAW+CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
+	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetCountLimit(1,id)
 	e2:SetLabel(0)
@@ -66,9 +65,16 @@ function s.regtg(e,tp,eg,ep,ev,re,r,rp,chk)
 		return ((effs&1)==0 or Duel.IsPlayerCanDraw(tp,1)) and
 		       ((effs&(1<<1))==0 or Duel.IsExistingMatchingCard(s.sfilter,tp,LOCATION_DECK,0,1,nil))
 	end
+	local cat=0
+	if (effs&1)~=0 then
+		cat=CATEGORY_DRAW
+		Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
+	end
 	if (effs&(1<<1))~=0 then
+		cat=cat+CATEGORY_TOHAND+CATEGORY_SEARCH
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 	end
+	e:SetCategory(cat)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

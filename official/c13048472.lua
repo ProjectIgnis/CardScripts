@@ -11,8 +11,6 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	if not GhostBelleTable then GhostBelleTable={} end
-	table.insert(GhostBelleTable,e1)
 end
 function s.filter(c,tp)
 	return c:IsRitualSpell() and c:IsAbleToHand()

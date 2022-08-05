@@ -1,7 +1,8 @@
 --暗黒界の鬼神 ケルト
+--Lucent, Netherlord of Dark World
 local s,id=GetID()
 function s.initial_effect(c)
-	--spsummon
+	--Special summon itself
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -20,7 +21,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 	if rp~=tp and tp==e:GetLabel() then
-		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
+		Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 	end
 end
 function s.filter(c,e,tp)

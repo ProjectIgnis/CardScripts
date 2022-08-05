@@ -1,12 +1,12 @@
+--リヴェンデット・バース
 --Revendread Evolution
 local s,id=GetID()
 function s.initial_effect(c)
+	--Activate
 	local e1=Ritual.CreateProc({handler=c,lvtype=RITPROC_EQUAL,filter=aux.FilterBoolFunction(Card.IsSetCard,0x106),extrafil=s.extragroup,
-								extraop=s.extraop,stage2=s.stage2,location=LOCATION_HAND|LOCATION_GRAVE,forcedselection=s.ritcheck})
+								extraop=s.extraop,stage2=s.stage2,location=LOCATION_HAND|LOCATION_GRAVE,forcedselection=s.ritcheck,extratg=s.extratg})
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	c:RegisterEffect(e1)
-	if not AshBlossomTable then AshBlossomTable={} end
-	table.insert(AshBlossomTable,e1)
 end
 s.listed_series={0x106}
 function s.extragroup(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -20,6 +20,10 @@ function s.extraop(mat,e,tp,eg,ep,ev,re,r,rp,tc)
 	mat:Sub(mat2)
 	Duel.ReleaseRitualMaterial(mat)
 	Duel.SendtoGrave(mat2,REASON_EFFECT+REASON_MATERIAL+REASON_RITUAL)
+end
+function s.extratg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
 function s.stage2(mat,e,tp,eg,ep,ev,re,r,rp,tc)
 	tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,0))

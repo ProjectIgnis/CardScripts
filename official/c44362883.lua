@@ -4,12 +4,10 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
-	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(aux.IsMaterialListCode,CARD_ALBAZ),nil,s.fextra,nil,nil,nil,2)
+	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(aux.IsMaterialListCode,CARD_ALBAZ),nil,s.fextra,nil,nil,nil,2,nil,nil,nil,nil,nil,nil,s.extratg)
 	e1:SetCost(s.cost)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	c:RegisterEffect(e1)
-	if not AshBlossomTable then AshBlossomTable={} end
-	table.insert(AshBlossomTable,e1)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
 s.listed_names={CARD_ALBAZ}
@@ -40,4 +38,8 @@ function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 end
 function s.lizfilter(e,c)
 	return not c:IsOriginalType(TYPE_FUSION)
+end
+function s.extratg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,0,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_DECK)
 end

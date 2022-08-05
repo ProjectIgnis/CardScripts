@@ -1,43 +1,39 @@
 --マジェスペクター・キャット
+--Majespecter Cat - Nekomata
 local s,id=GetID()
 function s.initial_effect(c)
-	--pendulum summon
+	--Pendulum Summon
 	Pendulum.AddProcedure(c)
-	--search
-	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
-	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCode(EVENT_SUMMON_SUCCESS)
-	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
-	e2:SetCountLimit(1,id)
-	e2:SetTarget(s.regtg)
-	e2:SetOperation(s.regop)
+	--Search 1 "Majespecter" card during the End Phase
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e1:SetCode(EVENT_SUMMON_SUCCESS)
+	e1:SetCountLimit(1,id)
+	e1:SetTarget(s.regtg)
+	e1:SetOperation(s.regop)
+	c:RegisterEffect(e1)
+	local e2=e1:Clone()
+	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
-	local e3=e2:Clone()
-	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
+	--Cannot be targeted by the opponent's effects
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
+	e3:SetValue(aux.tgoval)
 	c:RegisterEffect(e3)
-	--cannot target
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e4:SetRange(LOCATION_MZONE)
-	e4:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
-	e4:SetValue(aux.tgoval)
+	--Cannot be destroyed by the opponent's effects
+	local e4=e3:Clone()
+	e4:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+	e4:SetValue(aux.indoval)
 	c:RegisterEffect(e4)
-	--indes
-	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_SINGLE)
-	e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e5:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-	e5:SetRange(LOCATION_MZONE)
-	e5:SetValue(s.indval)
-	c:RegisterEffect(e5)
-end
-function s.thfilter(c)
-	return c:IsSetCard(0xd0) and c:IsAbleToHand()
 end
 function s.regtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_DECK,0,1,nil,0xd0) end
+	if chk==0 then return true end
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -48,6 +44,9 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetOperation(s.thop)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
+end
+function s.thfilter(c)
+	return c:IsSetCard(0xd0) and c:IsAbleToHand()
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil)
@@ -60,7 +59,4 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
-end
-function s.indval(e,re,tp)
-	return tp~=e:GetHandlerPlayer()
 end

@@ -1,5 +1,5 @@
 --黒衣竜アルビオン
---Blackclad Dragon Albion
+--Albion the Shrouded Dragon
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -11,10 +11,9 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE+LOCATION_GRAVE)
 	e1:SetValue(CARD_ALBAZ)
 	c:RegisterEffect(e1)
-	--special Summon / return to Deck and draw 1
+	--Apply the appropriate effect
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TODECK+CATEGORY_DRAW)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_HAND+LOCATION_GRAVE)
 	e2:SetCountLimit(1,id)
@@ -26,23 +25,20 @@ end
 s.listed_names={CARD_ALBAZ}
 s.listed_series={0x160}
 function s.cfilter(c,e,tp)
-	if (c:IsCode(CARD_ALBAZ) or (c:IsSetCard(0x160) and c:IsType(TYPE_SPELL+TYPE_TRAP)))
-		and c:IsAbleToGraveAsCost() then
-		local hc=e:GetHandler()
-		if c:IsLocation(LOCATION_HAND) then
-			return Duel.GetLocationCount(tp,LOCATION_MZONE,0)>0 and hc:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		else
-			return hc:IsAbleToDeck() and (hc:IsLocation(LOCATION_GRAVE) or Duel.IsPlayerCanDraw(tp,1))
-		end
+	if not ((c:IsCode(CARD_ALBAZ) or (c:IsSetCard(0x160) and c:IsType(TYPE_SPELL+TYPE_TRAP))) and c:IsAbleToGraveAsCost()) then return false end
+	local hc=e:GetHandler()
+	if c:IsLocation(LOCATION_HAND) then
+		return Duel.GetLocationCount(tp,LOCATION_MZONE,0)>0 and hc:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	else
+		return hc:IsAbleToDeck() and (hc:IsLocation(LOCATION_GRAVE) or Duel.IsPlayerCanDraw(tp,1))
 	end
-	return false
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local tc=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp):GetFirst()
-	e:SetLabel(0)
-	if tc:IsLocation(LOCATION_DECK) then e:SetLabel(1) end
+	local label=tc:IsLocation(LOCATION_DECK) and 1 or 0
+	e:SetLabel(label)
 	Duel.SendtoGrave(tc,REASON_COST)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -50,12 +46,16 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local label=e:GetLabel()
 	if label==0 then
-		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,tp,c:GetLocation())
+		e:SetCategory(CATEGORY_SPECIAL_SUMMON)
+		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,tp,0)
 	else
-		Duel.SetOperationInfo(0,CATEGORY_TODECK,c,1,tp,c:GetLocation())
+		local cat=CATEGORY_TODECK
 		if c:IsLocation(LOCATION_HAND) then
+			cat=cat+CATEGORY_DRAW
 			Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 		end
+		e:SetCategory(cat)
+		Duel.SetOperationInfo(0,CATEGORY_TODECK,c,1,tp,0)
 	end
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -63,10 +63,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	local label=e:GetLabel()
 	if label==0 and Duel.GetLocationCount(tp,LOCATION_MZONE,0)>0 then
+		--Hand: Special Summon this card
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	else
+		--Deck: Place this card on the bottom of the Deck
 		local loc=c:GetLocation()
-		if Duel.SendtoDeck(c,nil,SEQ_DECKBOTTOM,REASON_EFFECT)>0 and loc==LOCATION_HAND then
+		if Duel.SendtoDeck(c,nil,SEQ_DECKBOTTOM,REASON_EFFECT)>0 and c:IsLocation(LOCATION_DECK) and loc==LOCATION_HAND then
 			Duel.BreakEffect()
 			Duel.Draw(tp,1,REASON_EFFECT)
 		end

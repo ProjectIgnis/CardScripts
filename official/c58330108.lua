@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	--pay LP and apply an effect
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
+	e3:SetCategory(CATEGORY_DESTROY+CATEGORY_REMOVE)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
@@ -80,17 +81,8 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		local b3=Duel.IsExistingMatchingCard(s.rmfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,1,c)
 		return (gc==1 and b1) or (gc==2 and b2) or (gc>2 and b3)
 	end
-	if gc==1 then
-		e:SetCategory(CATEGORY_DESTROY)
-		local g=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,c)
-		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
-	else
-		e:SetCategory(CATEGORY_REMOVE)
-		local loc=LOCATION_ONFIELD
-		if gc>2 then loc=LOCATION_ONFIELD+LOCATION_GRAVE end
-		local g=Duel.GetMatchingGroup(s.rmfilter,tp,loc,loc,c)
-		Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,0,0)
-	end
+	Duel.SetPossibleOperationInfo(0,CATEGORY_DESTROY,nil,1,PLAYER_ALL,LOCATION_ONFIELD)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,nil,1,PLAYER_ALL,LOCATION_ONFIELD+LOCATION_GRAVE)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

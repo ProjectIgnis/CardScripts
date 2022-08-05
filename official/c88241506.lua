@@ -1,7 +1,8 @@
 --青き眼の乙女
+--Maiden with Eyes of Blue
 local s,id=GetID()
 function s.initial_effect(c)
-	--negate attack
+	--Negate attack, change battle position and special summon 1 BEWD from hand, Deck or GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_POSITION+CATEGORY_SPECIAL_SUMMON)
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.natg)
 	e1:SetOperation(s.naop)
 	c:RegisterEffect(e1)
-	--spsummon
+	--Special Summon 1 BEWD from hand, Deck or GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -31,7 +32,7 @@ end
 function s.natg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,e:GetHandler(),1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,0,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE)
 end
 function s.naop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

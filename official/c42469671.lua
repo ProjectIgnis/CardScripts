@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_DRAW)
+	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_NEGATE+EFFECT_FLAG_CANNOT_INACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -23,6 +23,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
 	local sg=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,sg,#sg,0,0)
+	if Duel.IsMainPhase() and Duel.IsTurnPlayer(tp) then
+		e:SetCategory(CATEGORY_DESTROY+CATEGORY_DRAW)
+		Duel.SetPossibleOperationInfo(0,CATEGORY_DRAW,nil,1,tp,1)
+	else
+		e:SetCategory(CATEGORY_DESTROY)
+	end
 end
 function s.filter(c,p)
 	return c:IsControler(p) and c:IsLocation(LOCATION_GRAVE) and c:IsType(TYPE_MONSTER)

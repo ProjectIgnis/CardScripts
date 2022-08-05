@@ -1,11 +1,11 @@
 --魔鍵－マフテア
---Magikey - Maphteah
+--Magikey Maftea
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
 	--Fusion/Ritual summon
-	local fparams={fusfilter=aux.FilterBoolFunction(Card.IsSetCard,0x167),extrafil=s.fextra}
-	local rparams={filter=aux.FilterBoolFunction(Card.IsSetCard,0x167),lvtype=RITPROC_GREATER,extrafil=s.rextra,extraop=s.extraop,forcedselection=s.rcheck}
+	local fparams={fusfilter=aux.FilterBoolFunction(Card.IsSetCard,0x167),extrafil=s.fextra,extratg=s.extratg}
+	local rparams={filter=aux.FilterBoolFunction(Card.IsSetCard,0x167),lvtype=RITPROC_GREATER,extrafil=s.rextra,extraop=s.extraop,forcedselection=s.rcheck,extratg=s.extratg}
 	local fustg,fusop,rittg,ritop=Fusion.SummonEffTG(fparams),Fusion.SummonEffOP(fparams),Ritual.Target(rparams),Ritual.Operation(rparams)
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
@@ -14,8 +14,6 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target(fustg,rittg))
 	e1:SetOperation(s.operation(fustg,fusop,rittg,ritop))
 	c:RegisterEffect(e1)
-	if not AshBlossomTable then AshBlossomTable={} end
-	table.insert(AshBlossomTable,e1)
 end
 s.listed_series={0x167}
 function s.fextra(e,tp,mg)
@@ -26,6 +24,10 @@ function s.fextra(e,tp,mg)
 		end
 	end
 	return nil
+end
+function s.extratg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
 function s.fexfilter(c)
 	return c:IsType(TYPE_NORMAL) and c:IsAbleToGrave()

@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
 	--If Fusion Summoned, Fusion Summon 1 level 8 or lower Fusion Monster
-	local params = {s.fusfilter,Card.IsAbleToRemove,s.fextra,Fusion.BanishMaterial}
+	local params = {fusfilter=s.fusfilter,matfilter=Card.IsAbleToRemove,extrafil=s.fextra,extraop=Fusion.BanishMaterial,extratg=s.extratarget}
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
@@ -18,11 +18,9 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.spcon)
-	e1:SetTarget(Fusion.SummonEffTG(table.unpack(params)))
-	e1:SetOperation(Fusion.SummonEffOP(table.unpack(params)))
+	e1:SetTarget(Fusion.SummonEffTG(params))
+	e1:SetOperation(Fusion.SummonEffOP(params))
 	c:RegisterEffect(e1)
-	if not GhostBelleTable then GhostBelleTable={} end
-	table.insert(GhostBelleTable,e1)
 	--Search or Set 1 "Branded" Spell/Trap from Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -37,7 +35,6 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_ALBAZ}
 s.listed_series={0x160}
-
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
 end
@@ -49,6 +46,10 @@ function s.fextra(e,tp,mg)
 		return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToRemove),tp,LOCATION_GRAVE,0,nil)
 	end
 	return nil
+end
+function s.extratarget(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,0,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetTurnID()==Duel.GetTurnCount() and not e:GetHandler():IsReason(REASON_RETURN)

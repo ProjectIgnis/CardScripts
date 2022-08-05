@@ -1,5 +1,5 @@
 --デスピアン・プロスケニオン
---Despian Proscenium
+--Despian Proskenion
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -9,8 +9,8 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetCode(CATEGORY_REMOVE+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
-	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetHintTiming(0,TIMING_MAIN_END)
 	e1:SetCountLimit(1,id)
@@ -18,8 +18,6 @@ function s.initial_effect(c)
 	e1:SetTarget(s.rmtg)
 	e1:SetOperation(s.rmop)
 	c:RegisterEffect(e1)
-	if not GhostBelleTable then GhostBelleTable={} end
-	table.insert(GhostBelleTable,e1)
 	--Damage
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_DAMAGE)
@@ -47,25 +45,21 @@ function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,s.tgfilter,tp,0,LOCATION_GRAVE,1,1,nil,e,tp,lc)
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,1,0,0)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,1-tp,LOCATION_GRAVE)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,g,1,1-tp,LOCATION_GRAVE)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if not (tc and tc:IsRelateToEffect(e)) then return end
+	if not tc:IsRelateToEffect(e) then return end
 	local b1=tc:IsAbleToRemove()
 	local b2=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and tc:IsCanBeSpecialSummoned(e,0,tp,false,false)
-	local opt
-	if b1 and b2 then
-		opt=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))
-	elseif b1 then
-		opt=Duel.SelectOption(tp,aux.Stringid(id,0))
-	elseif b2 then
-		opt=Duel.SelectOption(tp,aux.Stringid(id,1))+1
-	else
-		return
-	end
-	if opt==0 then
+	local op=aux.SelectEffect(tp,
+		{b1,aux.Stringid(id,0)},
+		{b2,aux.Stringid(id,1)})
+	if not op then return end
+	if op==1 then
 		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
-	else
+	elseif op==2 then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

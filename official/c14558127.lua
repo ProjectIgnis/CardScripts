@@ -1,5 +1,5 @@
 --灰流うらら
---Ghost Ash & Beautiful Spring
+--Ash Blossom & Joyous Spring
 local s,id=GetID()
 function s.initial_effect(c)
 	--negate
@@ -16,23 +16,25 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	if not AshBlossomTable then AshBlossomTable={} end
 end
-function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	if re:GetHandler():IsDisabled() then return false end
-	local ex1,g1,gc1,dp1,dv1=Duel.GetOperationInfo(ev,CATEGORY_TOHAND)
-	local ex2,g2,gc2,dp2,dv2=Duel.GetOperationInfo(ev,CATEGORY_SPECIAL_SUMMON)
-	local ex3,g3,gc3,dp3,dv3=Duel.GetOperationInfo(ev,CATEGORY_TOGRAVE)
-	local ex4=(Duel.GetOperationInfo(ev,CATEGORY_DRAW) or re:IsHasCategory(CATEGORY_DRAW))
-	local ex5=(Duel.GetOperationInfo(ev,CATEGORY_SEARCH) or re:IsHasCategory(CATEGORY_SEARCH))
-	local ex6=(Duel.GetOperationInfo(ev,CATEGORY_DECKDES) or re:IsHasCategory(CATEGORY_DECKDES))
-	if not Duel.IsChainDisablable(ev) then return false end
-	if (ex1 and (dv1&LOCATION_DECK)==LOCATION_DECK)
-		or (ex2 and (dv2&LOCATION_DECK)==LOCATION_DECK)
-		or (ex3 and (dv3&LOCATION_DECK)==LOCATION_DECK)
-		or ex4 or ex5 or ex6 then return true end
-	for i,eff in ipairs(AshBlossomTable) do
-		if eff==re then return true end
+function s.check(ev,re)
+	return function(category,checkloc)
+		if not checkloc and re:IsHasCategory(category) then return true end
+		local ex1,g1,gc1,dp1,dv1=Duel.GetOperationInfo(ev,category)
+		local ex2,g2,gc2,dp2,dv2=Duel.GetPossibleOperationInfo(ev,category)
+		if not (ex1 or ex2) then return false end
+		if category==CATEGORY_DRAW or category==CATEGORY_DECKDES then return true end
+		local g=Group.CreateGroup()
+		if g1 then g:Merge(g1) end
+		if g2 then g:Merge(g2) end
+		return (((dv1 or 0)|(dv2 or 0))&LOCATION_DECK)~=0 or (#g>0 and g:IsExists(Card.IsLocation,1,nil,LOCATION_DECK))
 	end
-	return false
+end
+function s.discon(e,tp,eg,ep,ev,re,r,rp)
+	if re:GetHandler():IsDisabled() or not Duel.IsChainDisablable(ev) then return false end
+	local checkfunc=s.check(ev,re)
+	return checkfunc(CATEGORY_TOHAND,true) or checkfunc(CATEGORY_SPECIAL_SUMMON,true)
+		or checkfunc(CATEGORY_TOGRAVE,true) or checkfunc(CATEGORY_DRAW,true) or checkfunc(CATEGORY_DRAW,false)
+		or checkfunc(CATEGORY_SEARCH,false) or checkfunc(CATEGORY_DECKDES,true) or checkfunc(CATEGORY_DECKDES,false)
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

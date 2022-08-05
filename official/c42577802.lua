@@ -1,15 +1,14 @@
---
+--フュージョン・ミュートリアス
 --Myutant Fusion
 --Scripted by edo9300
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Fusion.CreateSummonEff({handler=c,fusfilter=aux.FilterBoolFunction(Card.IsSetCard,0x159),
-										matfilter=Card.IsAbleToRemove,extrafil=s.extrafil,extraop=Fusion.BanishMaterial})
+									matfilter=Card.IsAbleToRemove,extrafil=s.extrafil,
+									extraop=Fusion.BanishMaterial,extratg=s.extrtarget})
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	c:RegisterEffect(e1)
-	if not GhostBelleTable then GhostBelleTable={} end
-	table.insert(GhostBelleTable,e1)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_CHAIN,aux.FALSE)
 end
 s.listed_series={0x159}
@@ -29,4 +28,9 @@ function s.extrafil(e,tp,mg)
 	end
 	local g=Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToRemove),tp,loc,0,mg)
 	return g,s.check(g:Split(Card.IsLocation,nil,LOCATION_GRAVE))
+end
+function s.extrtarget(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,0,tp,LOCATION_HAND+LOCATION_MZONE)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,nil,0,tp,LOCATION_GRAVE+LOCATION_DECK)
 end

@@ -1,5 +1,5 @@
 --SRルーレット
---Speedroid Roulette
+--Speedroid Wheel
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -13,8 +13,6 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	if not AshBlossomTable then AshBlossomTable={} end
-	table.insert(AshBlossomTable,e1)
 end
 s.roll_dice=true
 s.listed_series={0x2016}
@@ -26,6 +24,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_DICE,nil,0,tp,1)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_HAND+LOCATION_DECK)
 end
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x2016) and c:HasLevel() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

@@ -1,9 +1,8 @@
 --ティンダングル・アポストル
---Tindangle Apostle
---
+--Tindangle Protector
 local s,id=GetID()
 function s.initial_effect(c)
-	--flip
+	--Change monsters to face-up Defense position and search "Tindangle" cards
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_POSITION+CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -18,6 +17,7 @@ s.listed_series={0x10b}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFacedown,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,nil,1,0,0)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.thfilter(c)
 	return c:IsSetCard(0x10b) and c:IsAbleToHand()

@@ -1,9 +1,10 @@
 --呪術抹消
+--Spell Vanishing
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY+CATEGORY_DECKDES)
+	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY+CATEGORY_DECKDES+CATEGORY_HANDES)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetCondition(s.condition)
@@ -21,21 +22,27 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.DiscardHand(tp,Card.IsDiscardable,2,2,REASON_COST+REASON_DISCARD)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
+	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_HAND+LOCATION_DECK)>0 end
+	local rc=re:GetHandler()
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
-	if re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) then
+	if rc:IsDestructable() and rc:IsRelateToEffect(re) then
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
 	end
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOGRAVE,nil,1,1-tp,LOCATION_HAND+LOCATION_DECK)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
+	local rc=re:GetHandler()
+	if Duel.NegateActivation(ev) and rc:IsRelateToEffect(re) then
 		Duel.Destroy(eg,REASON_EFFECT)
 	end
-	Duel.BreakEffect()
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND+LOCATION_DECK)
+	if #g==0 then return end
+	Duel.BreakEffect()
 	Duel.ConfirmCards(tp,g)
-	local sg=g:Filter(Card.IsCode,nil,re:GetHandler():GetCode())
-	Duel.SendtoGrave(sg,REASON_EFFECT)
+	local sg=g:Filter(Card.IsCode,nil,rc:GetCode())
+	if #sg>0 then
+		Duel.SendtoGrave(sg,REASON_EFFECT)
+	end
 	Duel.ShuffleHand(1-tp)
 	Duel.ShuffleDeck(1-tp)
 end

@@ -8,11 +8,10 @@ function s.initial_effect(c)
 	--Using monsters from your field as material
 	--If "Dream Mirror of Joy" is on the field, include from hand as well
 	--If "Dream Mirror of Terror" is on the field, banish from GY as well
-	local e1=Fusion.CreateSummonEff({handler=c,fusfilter=aux.FilterBoolFunction(Card.IsSetCard,0x131),matfilter=Fusion.OnFieldMat,extrafil=s.fextra,extraop=s.extraop})
+	local e1=Fusion.CreateSummonEff({handler=c,fusfilter=aux.FilterBoolFunction(Card.IsSetCard,0x131),
+		matfilter=Fusion.OnFieldMat,extrafil=s.fextra,extraop=s.extraop,extratg=s.extrtarget})
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	c:RegisterEffect(e1)
-	if not GhostBelleTable then GhostBelleTable={} end
-	table.insert(GhostBelleTable,e1)
 end
 s.listed_series={0x131}
 s.listed_names={CARD_DREAM_MIRROR_JOY,CARD_DREAM_MIRROR_TERROR}
@@ -33,4 +32,9 @@ function s.extraop(e,tc,tp,sg)
 	local g1=sg:Filter(Card.IsLocation,nil,LOCATION_GRAVE)
 	Duel.Remove(g1,POS_FACEUP,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
 	sg:Sub(g1)
+end
+function s.extrtarget(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOGRAVE,nil,0,tp,LOCATION_HAND)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,nil,0,tp,LOCATION_GRAVE)
 end

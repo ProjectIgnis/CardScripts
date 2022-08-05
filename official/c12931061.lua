@@ -8,8 +8,9 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
+	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 	--Extra Normal Summon for a "U.A" or "F.A." monster
@@ -23,15 +24,18 @@ function s.initial_effect(c)
 	e2:SetOperation(s.sumop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={19814508,id}
+s.listed_names={19814508}
 s.listed_series={0x107,0xb2}
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
+end
 function s.thfilter(c)
-	return c:IsAbleToHand() and ((c:IsType(TYPE_MONSTER) and c:IsLocation(LOCATION_DECK) and (c:IsSetCard(0x107) or c:IsSetCard(0xb2)))
-		or  (c:IsCode(19814508) and c:IsLocation(LOCATION_GRAVE)))
+	return c:IsAbleToHand() and ((c:IsMonster() and c:IsLocation(LOCATION_DECK) and (c:IsSetCard(0x107) or c:IsSetCard(0xb2)))
+		or (c:IsCode(19814508) and c:IsLocation(LOCATION_GRAVE)))
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
-	if Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+	if Duel.IsExistingMatchingCard(aux.NecroValleyFilter(s.thfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
 		if #g>0 then
@@ -59,17 +63,13 @@ function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanSummon(tp) end
 end
 function s.sumop(e,tp,eg,ep,ev,re,r,rp)
-	--if not e:GetHandler():IsRelateToEffect(e) then return end --Already handled by the core
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetDescription(aux.Stringid(id,3))
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
 	e1:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
-	e1:SetTarget(s.nstg)
+	e1:SetTarget(function(_,c) return c:IsSetCard(0xb2) or c:IsSetCard(0x107) end)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
-end
-function s.nstg(e,c)
-	return c:IsSetCard(0xb2) or c:IsSetCard(0x107)
 end

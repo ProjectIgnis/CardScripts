@@ -14,7 +14,7 @@ function s.initial_effect(c)
 							e:SetLabel(0)
 						end
 					end
-					if e:GetLabel()==1 then
+					if chk==1 and e:GetLabel()==1 then
 						Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_GRAVE)
 					end
 					return tg(e,tp,eg,ep,ev,re,r,rp,chk,...)

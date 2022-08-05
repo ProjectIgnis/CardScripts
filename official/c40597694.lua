@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
 	--Fusion Summon
-	local params = {s.fusfilter,aux.FALSE,s.extrafil,nil,nil,s.stage2,nil,nil,nil,nil,nil,nil,nil,s.extratg}
+	local params = {fusfilter=s.fusfilter,matfilter=aux.FALSE,extrafil=s.extrafil,stage2=s.stage2,extratg=s.extratg}
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
@@ -17,8 +17,8 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(function(_,tp) return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0 end)
-	e2:SetTarget(Fusion.SummonEffTG(table.unpack(params)))
-	e2:SetOperation(Fusion.SummonEffOP(table.unpack(params)))
+	e2:SetTarget(Fusion.SummonEffTG(params))
+	e2:SetOperation(Fusion.SummonEffOP(params))
 	c:RegisterEffect(e2)
 	--Destroy
 	local e3=Effect.CreateEffect(c)

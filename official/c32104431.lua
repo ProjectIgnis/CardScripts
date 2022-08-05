@@ -12,15 +12,15 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 	--fusion summon
-	local params = {aux.FilterBoolFunction(Card.IsCode,86240887),s.matfilter,s.fextra,Fusion.BanishMaterial,nil,nil,nil,nil,nil,nil,nil,nil,nil,s.extratg}
+	local params = {fusfilter=aux.FilterBoolFunction(Card.IsCode,86240887),matfilter=s.matfilter,extrafil=s.fextra,extraop=Fusion.BanishMaterial,extratg=s.extratg}
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCost(aux.bfgcost)
-	e2:SetTarget(Fusion.SummonEffTG(table.unpack(params)))
-	e2:SetOperation(Fusion.SummonEffOP(table.unpack(params)))
+	e2:SetTarget(Fusion.SummonEffTG(params))
+	e2:SetOperation(Fusion.SummonEffOP(params))
 	c:RegisterEffect(e2)
 end
 s.listed_series={0xd6,0xd7}

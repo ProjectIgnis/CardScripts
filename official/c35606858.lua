@@ -70,7 +70,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,e,tp,ft)
-	return c:IsRace(RACE_FIEND)	and c:IsControler(tp) and (c:IsAbleToHand() or c:IsAbleToDeck()
+	return c:IsRace(RACE_FIEND) and c:IsControler(tp) and (c:IsAbleToHand() or c:IsAbleToDeck()
 		or (ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
 end
 function s.dctg(e,tp,eg,ep,ev,re,r,rp,chk)

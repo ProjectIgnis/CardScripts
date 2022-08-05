@@ -51,6 +51,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.aclimit(e,re,tp)
-	local tc=e:GetLabel()
-	return re:GetHandler():IsCode(tc:GetCode())
+	local code=e:GetLabel()
+	return re:GetHandler():IsCode(code)
 end

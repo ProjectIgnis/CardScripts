@@ -38,7 +38,7 @@ s.listed_series={0xfb}
 function s.counterfilter(c)
 	return c:IsSetCard(0xfb)
 end
-function s.target(e,tp,eg,ep,ev,re,r,rp,cjk)
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
 end

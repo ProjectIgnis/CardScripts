@@ -1,8 +1,9 @@
---Earthbound Wave
+--地縛波
+--Earthbound Wave (Anime)
 --cleaned up by MLD
 local s,id=GetID()
 function s.initial_effect(c)
-	--negate
+	--Negate the activation of a Sepll/Trap and destroy it
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -12,12 +13,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_SPELL)
-end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev) 
-		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_SZONE,0,1,nil)
+	return rp==1-tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev) 
+		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_FIELD),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

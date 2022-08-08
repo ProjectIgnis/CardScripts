@@ -37,7 +37,7 @@ function s.retinfo(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToHand,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,e:GetHandler(),tp)
-	Duel.SendToHand(g,nil,REASON_EFFECT)
+	Duel.SendtoHand(g,nil,REASON_EFFECT)
 end
 function s.atkval(e,c)
 	return Duel.GetFieldGroupCount(0,LOCATION_ONFIELD,LOCATION_ONFIELD)*400

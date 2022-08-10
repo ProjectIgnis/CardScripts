@@ -39,7 +39,7 @@ function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:CheckRemoveOverlayCard(tp,1,REASON_EFFECT)
 		and Duel.IsExistingMatchingCard(aux.disfilter1,tp,0,LOCATION_MZONE,1,nil) end
-	if c:GetMaterial():IsExists(s.disfilter,1,nil) then
+	if c:GetOverlayGroup():IsExists(s.disfilter,1,nil) then
 		Duel.SetChainLimit(s.chlimit)
 	end
 end

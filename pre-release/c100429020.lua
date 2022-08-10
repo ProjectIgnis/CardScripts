@@ -58,7 +58,8 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.xyzfilter(c,tp,rp)
-	return c:IsPreviousPosition(POS_FACEUP) and c:IsType(TYPE_XYZ) and c:IsPreviousSetCard(0x289) and c:IsPreviousControler(tp) and rp==1-tp
+	return c:IsPreviousPosition(POS_FACEUP) and c:IsType(TYPE_XYZ) and c:IsPreviousSetCard(0x289) and c:IsPreviousControler(tp)
+		and (rp==1-tp or (c:IsReason(REASON_BATTLE) and c:IsStatus(STATUS_OPPO_BATTLE)))
 end
 function s.rthcond(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.xyzfilter,1,nil,tp,rp)

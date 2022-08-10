@@ -1725,10 +1725,12 @@ FLAG_TEMPORARY_BANISH=2
 function Auxiliary.DefaultFieldReturnOp(rg,e,tp)
 	if #rg==0 then return end
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE,0)
-	local tg=rg
-	if ft>0 and #tg>1 and #tg>ft then
+	local tg=nil
+	if ft>0 and #rg>1 and #rg>ft then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 		tg=rg:Select(tp,ft,ft,nil)
+	else
+		tg=rg:Clone()
 	end
 	for tc in tg:Iter() do
 		Duel.ReturnToField(tc)

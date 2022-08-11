@@ -72,8 +72,8 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=g:FilterSelect(tp,Card.IsAbleToRemove,1,1,nil,tp,POS_FACEDOWN)
 	if #sg>0 then
 		Duel.Remove(sg,POS_FACEDOWN,REASON_EFFECT)
-		Duel.ShuffleExtra(1-tp)
 	end
+	Duel.ShuffleExtra(1-tp)
 end
 function s.rmeffcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==1-tp and re:IsActiveType(TYPE_MONSTER)

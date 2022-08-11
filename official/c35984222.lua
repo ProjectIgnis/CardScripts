@@ -1,4 +1,5 @@
 --超魔神イド
+--Ido the Supreme Magical Force
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,0,id)
@@ -33,6 +34,9 @@ function s.initial_effect(c)
 	local e5=e3:Clone()
 	e5:SetCode(EFFECT_CANNOT_SUMMON)
 	c:RegisterEffect(e5)
+	local e6=e3:Clone()
+	e6:SetCode(EFFECT_CANNOT_MSET)
+	c:RegisterEffect(e6)
 end
 function s.spr(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -45,11 +45,12 @@ s.listed_series={0x289}
 function s.tgfilter(e,c)
 	return c:IsFaceup() and c:IsSetCard(0x289) and c:IsStatus(STATUS_SPSUMMON_TURN)
 end
-function s.xyzfilter(c,tp,rp)
-	return c:IsPreviousPosition(POS_FACEUP) and c:IsType(TYPE_XYZ) and c:IsPreviousSetCard(0x289) and c:IsPreviousControler(tp) and rp==1-tp
+function s.xyzfilter(c,tp)
+	return c:IsPreviousPosition(POS_FACEUP) and c:IsType(TYPE_XYZ) and c:IsPreviousSetCard(0x289)
+		and c:IsPreviousControler(tp) and c:GetReasonPlayer()==1-tp
 end
 function s.spcond(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.xyzfilter,1,nil,tp,rp)
+	return eg:IsExists(s.xyzfilter,1,nil,tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

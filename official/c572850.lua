@@ -57,6 +57,8 @@ end
 function s.extraop(e,tc,tp,sg)
 	local gg=sg:Filter(Card.IsLocation,nil,LOCATION_HAND+LOCATION_GRAVE)
 	if #gg>0 then Duel.HintSelection(gg,true) end
+	local rg=sg:Filter(Card.IsFacedown,nil)
+	if #rg>0 then Duel.ConfirmCards(1-tp,rg) end
 	Duel.SendtoDeck(sg,nil,SEQ_DECKBOTTOM,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
 	local dg=Duel.GetOperatedGroup():Filter(Card.IsLocation,nil,LOCATION_DECK)
 	local ct=dg:FilterCount(Card.IsControler,nil,tp)

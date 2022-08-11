@@ -1,5 +1,5 @@
 --クロシープ
---Clotheep
+--Cross-Sheep
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -18,8 +18,6 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	e1:SetCountLimit(1,id)
 	c:RegisterEffect(e1)
-	if not GhostBelleTable then GhostBelleTable={} end
-	table.insert(GhostBelleTable,e1)
 end
 function s.lcheck(g,lc,sumtype,tp)
 	return g:CheckDifferentProperty(Card.GetCode,lc,sumtype,tp)
@@ -61,9 +59,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if s.syntg(e,tp,eg,ep,ev,re,r,rp,0) then 
 		s.syntg(e,tp,eg,ep,ev,re,r,rp,1)
 	end
-	if s.xyztg(e,tp,eg,ep,ev,re,r,rp,0) then 
+	if s.xyztg(e,tp,eg,ep,ev,re,r,rp,0) then
 		s.xyztg(e,tp,eg,ep,ev,re,r,rp,1)
 	end
+	Duel.SetPossibleOperationInfo(0,CATEGORY_DRAW,nil,1,tp,2)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_HANDES,nil,1,tp,2)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function s.ritop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Draw(tp,2,REASON_EFFECT)==2 then
@@ -111,4 +112,3 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		s.xyzop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
-

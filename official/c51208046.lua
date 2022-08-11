@@ -9,6 +9,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCategory(CATEGORY_TOHAND)
+	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 	--Special summon a "Trickstar" token if you control a "Trickstar" link, ignition effect
@@ -30,14 +31,16 @@ function s.initial_effect(c)
 	e3:SetCountLimit(1,{id,1})
 	c:RegisterEffect(e3)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
-	if not GhostBelleTable then GhostBelleTable={} end
-	table.insert(GhostBelleTable,e1)
 end
 s.listed_names={TOKEN_TRICKSTAR}
 s.listed_series={0xfb}
 	--Check for anything but "Trickstar" monsters
 function s.counterfilter(c)
 	return c:IsSetCard(0xfb)
+end
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
 end
 	--Check for "Trickstar" monster
 function s.thfilter(c)

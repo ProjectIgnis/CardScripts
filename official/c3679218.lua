@@ -1,15 +1,13 @@
 --トロイメア・マーメイド
---Troymare Mermaid
---
+--Knightmare Mermaid
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
-	Link.AddProcedure(c,s.matfilter,1,1)
 	c:EnableReviveLimit()
-	--special summon
+	--Link Summon procedure
+	Link.AddProcedure(c,s.matfilter,1,1)
+	--Special Summon 1 "Knightmare" from your Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DRAW)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetCountLimit(1,id)
@@ -18,13 +16,13 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--atk/def
+	--Decrease ATK/DEF
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e2:SetTarget(s.atktg)
+	e2:SetTarget(function(_,c) return c:GetMutualLinkedGroupCount()==0 end)
 	e2:SetValue(-1000)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
@@ -54,6 +52,9 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	else
 		e:SetLabel(0)
 	end
+	local cat=CATEGORY_SPECIAL_SUMMON
+	if e:GetLabel()==1 then cat=cat+CATEGORY_DRAW end
+	e:SetCategory(cat)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
@@ -67,7 +68,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end
 end
-function s.atktg(e,c)
-	return c:GetMutualLinkedGroupCount()==0
-end
-

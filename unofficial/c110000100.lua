@@ -66,7 +66,8 @@ function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(g,REASON_COST)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==1-tp
+	local tg=Duel.GetAttacker()
+	return tg:GetControler()==1-tp and Duel.GetAttackTarget()==nil
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tg=Duel.GetAttacker()

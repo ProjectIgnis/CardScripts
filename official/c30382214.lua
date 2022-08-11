@@ -3,7 +3,7 @@
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special summon itself from hand
+	--Special Summon itself from hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -13,10 +13,10 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_CARDIAN)
-	--Draw 1 and special summon
+	--Draw 1 and search or Special Summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
-	e2:SetCategory(CATEGORY_DRAW+CATEGORY_SPECIAL_SUMMON)
+	e2:SetCategory(CATEGORY_DRAW+CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_SPECIAL_SUMMON+CATEGORY_TOGRAVE)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetCountLimit(1)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -71,6 +71,9 @@ function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(1)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_HAND)
 end
 function s.spfilter(c)
 	return c:IsSetCard(0xe6) and not c:IsCode(id)
@@ -86,13 +89,15 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 				Duel.BreakEffect()
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 				local sc=sg:Select(tp,1,1,nil):GetFirst()
-				aux.ToHandOrElse(sc,tp,function(c)
-											return sc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-										end,
-										function(c)
-											return Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)
-										end,
-				aux.Stringid(id,0))
+				aux.ToHandOrElse(sc,tp,
+					function(c)
+						return sc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+					end,
+					function(c)
+						return Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)
+					end,
+					aux.Stringid(id,0)
+				)
 			end
 		else
 			Duel.SendtoGrave(tc,REASON_EFFECT)

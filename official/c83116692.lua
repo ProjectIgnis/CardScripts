@@ -1,5 +1,5 @@
 --死眼の伝霊－プシュコポンポス
---Messenger Spirit of the Fatal Eye - Psychopompos
+--Doombearer Psychopompos
 --scripted by Rundas
 local s,id=GetID()
 function s.initial_effect(c)
@@ -25,8 +25,6 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sstg)
 	e2:SetOperation(s.ssop)
 	c:RegisterEffect(e2)
-	if not GhostBelleTable then GhostBelleTable={} end
-	table.insert(GhostBelleTable,e2)
 end
 --Special Summon
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -49,6 +47,9 @@ function s.remfilter(c)
 end
 function s.sstg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
+	local c=e:GetHandler()
+	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,c,2,PLAYER_ALL,LOCATION_MZONE+LOCATION_GRAVE)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOGRAVE,c,2,PLAYER_ALL,LOCATION_MZONE)
 end
 function s.ssop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

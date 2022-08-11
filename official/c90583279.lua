@@ -1,5 +1,5 @@
 --八雷天神
---Yakusa-Ikazuchi-no-Kami
+--Yakusa, Lord of the Eight Thunders
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon procedure
@@ -59,9 +59,7 @@ function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local tc=Duel.SelectTarget(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil,tp):GetFirst()
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,tc,1,tp,LOCATION_GRAVE)
-	if tc:IsType(TYPE_RITUAL|TYPE_FUSION) then
-		Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
-	end
+	Duel.SetPossibleOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

@@ -3,8 +3,9 @@
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
-	Ritual.AddProcGreater(c,s.ritualfil,nil,nil,s.extrafil,s.extraop)
-	--special summon
+	--Activate
+	Ritual.AddProcGreater{handler=c,filter=s.ritualfil,extrafil=s.extrafil,extraop=s.extraop,extratg=s.extratg}
+	--Special Summon 1 "Salamangreat Emerald Eagle from your hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -40,9 +41,13 @@ function s.extraop(mg,e,tp,eg,ep,ev,re,r,rp)
 	Duel.ReleaseRitualMaterial(mg)
 	Duel.SendtoDeck(mat2,nil,2,REASON_EFFECT+REASON_MATERIAL+REASON_RITUAL)
 end
+function s.extratg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_GRAVE)
+end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return rp~=tp and c:IsPreviousControler(tp) and c:IsReason(REASON_EFFECT)
+	return rp==1-tp and c:IsPreviousControler(tp) and c:IsReason(REASON_EFFECT)
 end
 function s.spfilter(c,e,tp)
 	return c:IsCode(16313112) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
@@ -60,4 +65,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(sg,0,tp,tp,true,false,POS_FACEUP)
 	end
 end
-

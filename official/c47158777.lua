@@ -1,5 +1,5 @@
 --破壊剣士の守護絆竜
---Companion Whelp of the Destruction Swordsman
+--Protector Whelp of the Destruction Swordsman
 --Logical Nonsense
 
 --Substitute ID
@@ -8,11 +8,12 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
+	--Link Summon procedure
 	Link.AddProcedure(c,nil,2,2)
 	--Upon link summon, send 1 "Destruction Sword" from deck to GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_TOGRAVE)
+	e1:SetCategory(CATEGORY_TOGRAVE+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
@@ -54,18 +55,18 @@ end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,0,tp,LOCATION_HAND)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 	--Send 1 "Destruction Sword" to GY, then can special summon "Buster Blader" monster from hand
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g1=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
 	local g2=Duel.GetMatchingGroup(s.filter,tp,LOCATION_HAND,0,nil,e,tp)
-	if #g1>0 and Duel.SendtoGrave(g1,REASON_EFFECT)~=0 
+	if #g1>0 and Duel.SendtoGrave(g1,REASON_EFFECT)>0 and g1:GetFirst():IsLocation(LOCATION_GRAVE)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and #g2>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
-		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g3=g2:Select(tp,1,1,nil)
+		Duel.BreakEffect()
 		Duel.SpecialSummon(g3,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
@@ -92,4 +93,3 @@ function s.dmgop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Damage(1-tp,tc:GetAttack(),REASON_EFFECT)
 	end
 end
-

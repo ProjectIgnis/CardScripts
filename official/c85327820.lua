@@ -3,6 +3,7 @@
 --Scripted by edo9300
 local s,id=GetID()
 function s.initial_effect(c)
+	--Activate
 	local e1=Ritual.CreateProc(c,RITPROC_GREATER,aux.FilterBoolFunction(Card.IsRace,RACE_CYBERSE),nil,nil,s.extrafil,nil,aux.FilterBoolFunction(Card.IsSetCard,0x135))
 	local tg=e1:GetTarget()
 	e1:SetTarget(function(e,tp,eg,ep,ev,re,r,rp,chk,...)
@@ -12,6 +13,9 @@ function s.initial_effect(c)
 						else
 							e:SetLabel(0)
 						end
+					end
+					if chk==1 and e:GetLabel()==1 then
+						Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_GRAVE)
 					end
 					return tg(e,tp,eg,ep,ev,re,r,rp,chk,...)
 				end)

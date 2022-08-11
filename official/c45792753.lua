@@ -16,14 +16,14 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x288}
+s.listed_series={0x18b}
 local LOCATION_REMOVED_HAND_DECK_GRAVE=LOCATION_REMOVED+LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE
 function s.spcostfilter(c,e,tp)
 	return c:IsFaceup() and c:IsRace(RACE_FISH) and c:IsAbleToRemoveAsCost() and Duel.GetMZoneCount(tp,c)>0
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_REMOVED_HAND_DECK_GRAVE,0,1,nil,e,tp,c:GetOriginalCode())
 end
 function s.spfilter(c,e,tp,code)
-	return c:IsSetCard(0x288) and (c:IsFaceup() or not c:IsLocation(LOCATION_REMOVED))
+	return c:IsSetCard(0x18b) and (c:IsFaceup() or not c:IsLocation(LOCATION_REMOVED))
 		and not c:IsOriginalCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)

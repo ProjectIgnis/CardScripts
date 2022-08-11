@@ -1,5 +1,5 @@
 --覇蛇大公ゴルゴンダ
---Supreme Archserpent Golgonda
+--Supreme Sovereign Serpent of Golgonda
 --Logical Nonsense
 
 --Substitute ID
@@ -22,10 +22,10 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCode(EFFECT_SET_BASE_ATTACK)
-	e2:SetCondition(function(e)return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,60884672),e:GetHandlerPlayer(),LOCATION_FZONE,LOCATION_FZONE,1,nil)end)
+	e2:SetCondition(s.atkcon)
 	e2:SetValue(3000)
 	c:RegisterEffect(e2)
-	--Substitute destruction for "Vast Desert – Gold Golgonda"
+	--Substitute destruction for "Great Grand Sea – Gold Golgonda"
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EFFECT_DESTROY_REPLACE)
@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.repop)
 	c:RegisterEffect(e3)
 end
-	--Specifically lists "Vast Desert – Gold Golgonda"
+	--Specifically lists "Great Grand Sea – Gold Golgonda"
 s.listed_names={60884672}
 	
 	--Activation legality
@@ -59,7 +59,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1,true)
 	end
 end
-	--Check for "Vast Desert – Gold Golgonda"
+	--Check for "Great Grand Sea – Gold Golgonda" on the field
+function s.atkcon(e)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,60884672),0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
+		or Duel.IsEnvironment(60884672)
+end
+	--Check for "Great Grand Sea – Gold Golgonda" being destroyed
 function s.repfilter(c,tp,rp)
 	return c:IsFaceup() and c:IsCode(60884672) and c:IsOnField()
 		and not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_EFFECT)

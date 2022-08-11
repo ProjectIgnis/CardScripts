@@ -1,4 +1,5 @@
 --虹の行方
+--Rainbow Path
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -30,6 +31,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc==tg end
 	if chk==0 then return tg:IsOnField() and tg:IsCanBeEffectTarget(e) end
 	Duel.SetTargetCard(tg)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.filter(c)
 	return c:IsSetCard(0x2034) and c:IsAbleToHand()

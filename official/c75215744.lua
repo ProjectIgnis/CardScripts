@@ -22,9 +22,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--Gains effects based on material
 	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_DRAW)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
+	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetCountLimit(1,id)
 	e2:SetLabel(0)
@@ -65,6 +64,12 @@ end
 function s.regtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local effs=e:GetLabel()
 	if chk==0 then return (effs&1)==0 or Duel.IsPlayerCanDraw(tp,1) end
+	if (effs&1)~=0 then
+		e:SetCategory(CATEGORY_DRAW)
+		Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
+	else
+		e:SetCategory(0)
+	end
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -1,4 +1,5 @@
---D－HERO ディシジョンガイ
+--Ｄ－ＨＥＲＯ ディシジョンガイ
+--Destiny HERO - Decider
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot be battle target
@@ -16,6 +17,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SUMMON_SUCCESS)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCountLimit(1,id,EFFECT_COUNT_CODE_DUEL)
+	e2:SetTarget(s.regtg)
 	e2:SetOperation(s.regop)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
@@ -39,8 +41,9 @@ function s.atlimit(e,c)
 	local tp=e:GetHandlerPlayer()
 	return c:IsControler(1-tp) and c:IsLevelAbove(6) and not c:IsImmuneToEffect(e)
 end
-function s.thfilter(c)
-	return c:IsSetCard(0x8) and c:IsAbleToHand()
+function s.regtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -51,6 +54,9 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetOperation(s.thop)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
+end
+function s.thfilter(c)
+	return c:IsSetCard(0x8) and c:IsAbleToHand()
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,nil)

@@ -1,7 +1,8 @@
 --妖精伝姫－カグヤ
+--Fairy Tail - Luna
 local s,id=GetID()
 function s.initial_effect(c)
-	--search
+	--Add to hand 1 Spellcaster with 1850 ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -10,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--to hand
+	--Return monsters to the hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND)
@@ -23,8 +24,6 @@ function s.initial_effect(c)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
-	if not AshBlossomTable then AshBlossomTable={} end
-	table.insert(AshBlossomTable,e2)
 end
 function s.filter(c)
 	return c:GetAttack()==1850 and c:IsRace(RACE_SPELLCASTER) and c:IsAbleToHand()
@@ -50,7 +49,8 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g=Duel.SelectTarget(tp,s.thfilter,tp,0,LOCATION_MZONE,1,1,nil)
 	g:AddCard(e:GetHandler())
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,2,0,0)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,g,2,0,LOCATION_MZONE)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOGRAVE,nil,1,1-tp,LOCATION_DECK+LOCATION_EXTRA)
 end
 function s.cfilter(c,code)
 	return c:IsCode(code) and c:IsAbleToGraveAsCost()

@@ -11,8 +11,6 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	if not GhostBelleTable then GhostBelleTable={} end
-	table.insert(GhostBelleTable,e1)
 end
 s.listed_series={0x1034}
 function s.costfilter(c)
@@ -40,6 +38,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	e:SetLabel(0)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,#g,tp,0)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function s.ctfilter(c,tp)
 	return c:IsPreviousControler(1-tp) and c:IsLocation(LOCATION_GRAVE)

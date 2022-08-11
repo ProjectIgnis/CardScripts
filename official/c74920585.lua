@@ -55,7 +55,7 @@ function s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if not tc:IsFaceup() or not tc:IsRelateToEffect(e) then return end
+	if not (tc:IsFaceup() and tc:IsRelateToEffect(e)) or tc:IsImmuneToEffect(e) then return end
 	-- Negate its effects
 	Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -67,7 +67,6 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCode(EFFECT_DISABLE_EFFECT)
 	e2:SetValue(RESET_TURN_SET)
 	tc:RegisterEffect(e2)
-	if tc:IsImmuneToEffect(e1) or tc:IsImmuneToEffect(e2) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGrave,tp,LOCATION_MZONE,0,1,1,nil)
 	if #g>0 then

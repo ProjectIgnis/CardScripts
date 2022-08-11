@@ -1,5 +1,5 @@
 --ピースリア
---Peacelia
+--Shinning Piecephilia
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -27,6 +27,8 @@ function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return c:GetBattleTarget() and c:IsStatus(STATUS_OPPO_BATTLE) and c:IsLocation(LOCATION_MZONE)
 		and c:IsRelateToBattle() and c:IsCanAddCounter(0x20a,1) end
 	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,0x20a)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_DRAW,nil,1,tp,1)
 end
 function s.thfilter(c)
 	return c:IsAbleToHand() and c:IsMonster()

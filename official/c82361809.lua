@@ -30,11 +30,13 @@ end
 s.listed_series={0x17c}
 s.sclawfilter=aux.FilterFaceupFunction(Card.IsSetCard,0x17c)
 function s.hspval(e,c)
-	local tp=c:GetControler()
 	local zone=0
+	local left_right=0
+	local tp=c:GetControler()
 	local lg=Duel.GetMatchingGroup(s.sclawfilter,tp,LOCATION_MZONE,0,nil)
-	for tc in aux.Next(lg) do
-		zone=(zone|tc:GetColumnZone(LOCATION_MZONE,1,1,tp))
+	for tc in lg:Iter() do
+		left_right=tc:IsInMainMZone() and 1 or 0
+		zone=(zone|tc:GetColumnZone(LOCATION_MZONE,left_right,left_right,tp))
 	end
 	return 0,zone&0x1f
 end
@@ -44,6 +46,7 @@ end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_DRAW,nil,1,tp,1)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)

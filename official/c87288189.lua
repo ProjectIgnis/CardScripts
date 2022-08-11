@@ -23,6 +23,7 @@ function s.initial_effect(c)
 	e4:SetLabelObject(e3)
 	c:RegisterEffect(e4)
 end
+local LOCATION_HAND_DECK_EXTRA_GRAVE=LOCATION_HAND+LOCATION_DECK+LOCATION_EXTRA+LOCATION_GRAVE
 function s.otfilter(c)
 	return (c:GetSummonType()&SUMMON_TYPE_TRIBUTE)==SUMMON_TYPE_TRIBUTE
 end
@@ -38,6 +39,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.SelectTarget(tp,nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,ct,nil)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,1000)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,nil,1,g:GetFirst():GetControler(),LOCATION_HAND_DECK_EXTRA_GRAVE)
 end
 function s.rmfilter(c,code)
 	return c:IsCode(code) and (c:IsLocation(0x43) or aux.SpElimFilter(c,true))
@@ -51,7 +53,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local tc=og:GetFirst()
 		for tc in aux.Next(og) do
 			if tc:IsAttribute(ATTRIBUTE_DARK) then
-				local sg=Duel.GetMatchingGroup(s.rmfilter,tc:GetControler(),0x57,0,nil,tc:GetCode())
+				local sg=Duel.GetMatchingGroup(s.rmfilter,tc:GetControler(),LOCATION_HAND_DECK_EXTRA_GRAVE,0,nil,tc:GetCode())
 				rg:Merge(sg)
 			end
 		end

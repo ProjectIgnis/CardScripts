@@ -1,5 +1,5 @@
 --機巧伝－神使記紀図
---Gizmek Legend - Kamitsukawashiime-no-Kikie
+--Sacred Scrolls of the Gizmek Legend
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -43,6 +43,8 @@ function s.initial_effect(c)
 end
 function s.exctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>2 end
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_DECK)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.excfilter(c)
 	return c:IsRace(RACE_MACHINE) and c:IsDefense(c:GetAttack()) and c:IsAbleToHand()

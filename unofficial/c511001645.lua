@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMixN(c,false,false,CARD_NEOS,1,s.ffilter,6)
+	Fusion.AddProcMixRep(c,false,false,s.ffilter,6,6,s.neosfilter)
 	Fusion.AddContactProc(c,s.contactfil,s.contactop,s.splimit)
 	--copy
 	local e1=Effect.CreateEffect(c)
@@ -18,11 +18,15 @@ function s.initial_effect(c)
 end
 s.material_setcode={0x8,0x3008,0x9,0x1f}
 s.listed_names={CARD_NEOS}
-function s.ffilter(c,fc,sub,sub2,mg,sg)
-	return c:IsSetCard(0x1f,fc,SUMMON_TYPE_FUSION,fc:GetControler()) and (not sg or not sg:IsExists(s.fusfilter,1,c,c:GetCode(),fc,fc:GetControler()))
+function s.neosfilter(c,fc,sumtype,tp,sub,mg,sg,contact)
+    return (not contact or c:IsLocation(LOCATION_ONFIELD)) and
+		(c:IsSummonCode(fc,sumtype,fc:GetControler(),CARD_NEOS) or (sub and c:CheckFusionSubstitute(fc)))
 end
-function s.fusfilter(c,code,fc,tp)
-	return c:IsSummonCode(fc,SUMMON_TYPE_FUSION,tp,code) and not c:IsHasEffect(511002961)
+function s.ffilter(c,fc,sumtype,tp,sub,mg,sg)
+	return c:IsSetCard(0x1f,fc,sumtype,fc:GetControler()) and (not sg or not sg:IsExists(s.fusfilter,1,c,c:GetCode(),fc,fc:GetControler(),sumtype))
+end
+function s.fusfilter(c,code,fc,tp,sumtype)
+	return c:IsSummonCode(fc,sumtype,tp,code) and not c:IsHasEffect(511002961)
 end
 function s.contactfil(tp)
 	return Duel.GetMatchingGroup(Card.IsAbleToDeckOrExtraAsCost,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)

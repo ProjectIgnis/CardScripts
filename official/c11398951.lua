@@ -2,7 +2,8 @@
 --Machine Angel Absolute Ritual
 local s,id=GetID()
 function s.initial_effect(c)
-	Ritual.AddProcEqual(c,s.ritualfil,nil,nil,s.extrafil,s.extraop)
+	--Activate
+	Ritual.AddProcEqual{handler=c,filter=s.ritualfil,extrafil=s.extrafil,extraop=s.extraop,extratg=s.extratg}
 end
 s.listed_series={0x2093}
 function s.ritualfil(c)
@@ -19,4 +20,8 @@ function s.extraop(mg,e,tp,eg,ep,ev,re,r,rp)
 	mg:Sub(mat2)
 	Duel.ReleaseRitualMaterial(mg)
 	Duel.SendtoDeck(mat2,nil,2,REASON_EFFECT+REASON_MATERIAL+REASON_RITUAL)
+end
+function s.extratg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_GRAVE)
 end

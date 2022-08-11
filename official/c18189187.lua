@@ -1,5 +1,5 @@
 --夢魔鏡の使徒－ネイロイ
---Oneiroi, the Dream Mirror Emissary
+--Neiroy, the Dream Mirror Disciple
 --Scripted by Naim
 
 local s,id=GetID()
@@ -60,7 +60,9 @@ function s.cond2(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.tg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,1-tp,LOCATION_SZONE)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_DRAW,nil,1,tp,1)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_HAND)
 end
 function s.ffilter(c,code)
 	return c:IsFaceup() and c:IsCode(code)

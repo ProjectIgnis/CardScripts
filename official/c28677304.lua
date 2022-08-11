@@ -1,22 +1,23 @@
 --E・HERO ブラック・ネオス
+--Elemental Hero Darkneos
 local s,id=GetID()
 function s.initial_effect(c)
-	--fusion material
+	--Fusion Material
 	c:EnableReviveLimit()
 	Fusion.AddProcMix(c,true,true,CARD_NEOS,43237273)
 	Fusion.AddContactProc(c,s.contactfil,s.contactop,s.splimit)
 	aux.EnableNeosReturn(c)
-	--disable
-	local e5=Effect.CreateEffect(c)
-	e5:SetDescription(aux.Stringid(id,1))
-	e5:SetCategory(CATEGORY_DISABLE)
-	e5:SetType(EFFECT_TYPE_IGNITION)
-	e5:SetRange(LOCATION_MZONE)
-	e5:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e5:SetCondition(s.discon)
-	e5:SetTarget(s.distg)
-	e5:SetOperation(s.disop)
-	c:RegisterEffect(e5)
+	--Negate the effects of 1 face-up monster
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,1))
+	e1:SetCategory(CATEGORY_DISABLE)
+	e1:SetType(EFFECT_TYPE_IGNITION)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetCondition(s.discon)
+	e1:SetTarget(s.distg)
+	e1:SetOperation(s.disop)
+	c:RegisterEffect(e1)
 end
 s.listed_names={CARD_NEOS}
 s.material_setcode={0x8,0x3008,0x9,0x1f}
@@ -46,7 +47,7 @@ end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
+	if c:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		c:SetCardTarget(tc)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -55,7 +56,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_DISABLE)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		e1:SetCondition(s.rcon)
-		tc:RegisterEffect(e1,true)
+		tc:RegisterEffect(e1)
 	end
 end
 function s.rcon(e)

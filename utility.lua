@@ -435,16 +435,19 @@ function Auxiliary.IsMaterialListCode(c,...)
 	end
 	return false
 end
+local function MatchSetcode(set_code,to_match)
+	return (set_code&0xfff)==(to_match&0xfff) and (set_code&to_match)==set_code;
+end
 function Auxiliary.IsMaterialListSetCard(c,...)
 	if not c.material_setcode then return false end
 	local setcodes={...}
 	for _,setcode in ipairs(setcodes) do
 		if type(c.material_setcode)=='table' then
 			for _,v in ipairs(c.material_setcode) do
-				if v==setcode then return true end
+				if MatchSetcode(setcode,v) then return true end
 			end
 		else
-			if c.material_setcode==setcode then return true end
+			if MatchSetcode(setcode,c.material_setcode) then return true end
 		end
 	end
 	return false
@@ -461,28 +464,21 @@ function Auxiliary.IsCodeListed(c,...)
 	return false
 end
 --Returns true if the Card "c" specifically lists the name of a card that is part of an archetype in "..."
-Auxiliary.IsArchetypeCodeListed=(function()
-	local sc=Debug.AddCard(946,0,0,0,0,0)
-	Debug.ReloadFieldBegin=(function()
-		local old=Debug.ReloadFieldBegin
-		return function(...)
-				old(...)
-				sc=Debug.AddCard(946,0,0,0,0,0)
-			end
-		end
-	)()
-	return function(c,...)
-		if not c.listed_names then return false end
-		local setcodes={...}
-		for _,ccode in ipairs(c.listed_names) do
-			sc:Recreate(ccode)
+function Auxiliary.IsArchetypeCodeListed(c,...)
+	if not c.listed_names then return false end
+	local setcodes={...}
+	for _,ccode in ipairs(c.listed_names) do
+		local match_setcodes={Duel.GetCardSetcodeFromCode(ccode)}
+		if #match_setcodes>0 then
 			for _,setcode in ipairs(setcodes) do
-				if sc:IsSetCard(setcode) then return true end
+				for _,to_match in ipairs(match_setcodes) do
+					if MatchSetcode(setcode,to_match) then return true end
+				end
 			end
 		end
-		return false
 	end
-end)()
+	return false
+end
 --Returns true if the Card "c" specifically lists any of the card types in "..."
 function Auxiliary.IsCardTypeListed(c,...)
 	if not c.listed_card_types then return false end

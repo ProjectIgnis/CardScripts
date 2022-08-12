@@ -94,7 +94,9 @@ function Fusion.ConditionMix(insf,sub,...)
 				local contact=(chkfnf&FUSPROC_CONTACTFUS)~=0
 				local listedmats=(chkfnf&FUSPROC_LISTEDMATS)~=0
 				local sumtype=SUMMON_TYPE_FUSION|MATERIAL_FUSION
-				if notfusion or contact then
+				if notfusion then
+					sumtype=0
+				elseif contact then
 					sumtype=MATERIAL_FUSION
 				end
 				local matcheck=e:GetValue()
@@ -123,7 +125,9 @@ function Fusion.OperationMix(insf,sub,...)
 				local contact=(chkfnf&FUSPROC_CONTACTFUS)~=0
 				local listedmats=(chkfnf&FUSPROC_LISTEDMATS)~=0
 				local sumtype=SUMMON_TYPE_FUSION|MATERIAL_FUSION
-				if notfusion or contact then
+				if notfusion then
+					sumtype=0
+				elseif contact then
 					sumtype=MATERIAL_FUSION
 				end
 				local matcheck=e:GetValue()

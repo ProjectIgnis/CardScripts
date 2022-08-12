@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Fusion.CreateSummonEff{handler=c,fusfilter=s.spfilter,matfilter=Card.IsAbleToDeck,extrafil=s.fextra,
-									extraop=s.extraop,value=0,chkf=FUSPROC_NOTFUSION,stage2=s.stage2}
+									extraop=s.extraop,value=0,chkf=FUSPROC_NOTFUSION|FUSPROC_LISTEDMATS,stage2=s.stage2}
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	c:RegisterEffect(e1)
 end

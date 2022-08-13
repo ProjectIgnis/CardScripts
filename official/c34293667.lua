@@ -30,7 +30,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetAttacker()
 	if tc:IsControler(tp) then tc=Duel.GetAttackTarget() end
-	if tc and tc:IsFaceup() and tc:CanAttack() then
+	if tc and tc:IsFaceup() then
 		--Change attack to 0
 		local e1=Effect.CreateEffect(c)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)

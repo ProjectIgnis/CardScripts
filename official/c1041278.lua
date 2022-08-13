@@ -1,5 +1,5 @@
 -- 分かつ烙印
--- Branded Separation
+-- Branded Expulsion
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -68,6 +68,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		Duel.SetTargetCard(tg)
 		e:SetLabel(albaz and 100 or 0)
 	end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,tg,#tg,0,LOCATION_GRAVE+LOCATION_REMOVED)
 end
 function s.spownfilter(c,e,tp,tg)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false)

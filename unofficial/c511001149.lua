@@ -1,4 +1,4 @@
---Card of Demise
+--Card of Demise (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -34,20 +34,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetOperation(s.disop)
 	e1:SetLabel(0)
 	Duel.RegisterEffect(e1,tp)
-	local descnum=tp==c:GetOwner() and 0 or 1
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetDescription(aux.Stringid(4931121,descnum))
-	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_SET_AVAILABLE)
-	e3:SetCode(1082946)
-	e3:SetLabelObject(e1)
-	e3:SetOwnerPlayer(tp)
-	e3:SetOperation(s.reset)
-	e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,5)
-	c:RegisterEffect(e3)
-end
-function s.reset(e,tp,eg,ep,ev,re,r,rp)
-	s.disop(e:GetLabelObject(),tp,eg,ep,ev,e,r,rp)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp

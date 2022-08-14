@@ -76,6 +76,12 @@ function Maximum.AddProcedure(c,desc,...)
 	e4:SetCondition(Maximum.battlecon)
 	e4:SetOperation(Maximum.battleop)
 	c:RegisterEffect(e4)
+	--makes so it virtually cannot have any DEF
+	local e5=Effect.CreateEffect(c)
+	e5:SetType(EFFECT_TYPE_SINGLE)
+	e5:SetCode(EFFECT_UPDATE_DEFENSE)
+	e5:SetValue(-1000000)
+	c:RegisterEffect(e5)
 end
 --that function check if you can maximum summon the monster and its other part(s)
 function Maximum.Condition(mats)
@@ -220,6 +226,11 @@ function Card.AddSideMaximumHandler(c,eff)
 	e1:SetCode(EFFECT_SET_BASE_ATTACK)
 	e1:SetValue(Maximum.maxCenterVal(Card.GetMaximumAttack))
 	c:RegisterEffect(e1)
+
+	local e0=baseeff:Clone()
+	e0:SetCode(EFFECT_SET_ATTACK_FINAL)
+	e0:SetValue(Maximum.maxCenterVal(Card.GetAttack))
+	c:RegisterEffect(e0)
 	
 	--change level
 	local e2=baseeff:Clone()

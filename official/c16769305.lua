@@ -114,6 +114,8 @@ function s.syncsumop(e,tp,eg,ep,ev,re,r,rp)
 		end
 		--Perform the Syncro Summon
 		Duel.SynchroSummon(tp,sc,nil,mg)
+	else
+		e1:Reset()
 	end
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)

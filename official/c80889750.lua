@@ -27,10 +27,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	--Cannot be destroyed
 	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e4:SetCondition(s.indcon)
-	e4:SetOperation(s.indop)
+	e4:SetType(EFFECT_TYPE_SINGLE)
+	e4:SetCode(EFFECT_MATERIAL_CHECK)
+	e4:SetValue(s.valcheck)
 	c:RegisterEffect(e4)
 end
 s.listed_series={0xad}
@@ -61,21 +60,22 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-function s.indcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return (c:GetSummonType()&SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION and c:GetMaterialCount()>=3
+function s.valcheck(e,c)
+	if c:GetMaterialCount()>=3 then
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+		e1:SetValue(1)
+		e1:SetCondition(s.indcon)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
+		c:RegisterEffect(e1,true)
+		local e2=e1:Clone()
+		e2:SetDescription(aux.Stringid(id,1))
+		e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+		e2:SetProperty(EFFECT_FLAG_CLIENT_HINT)
+		c:RegisterEffect(e2,true)
+	end
 end
-function s.indop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e1:SetValue(1)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-	c:RegisterEffect(e1)
-	local e2=e1:Clone()
-	e2:SetDescription(aux.Stringid(id,1))
-	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-	e2:SetProperty(EFFECT_FLAG_CLIENT_HINT)
-	c:RegisterEffect(e2)
+function s.indcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
 end

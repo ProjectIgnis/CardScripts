@@ -2,16 +2,16 @@
 --The Wicked Avatar
 local s,id=GetID()
 function s.initial_effect(c)
-	--summon with 3 tribute
+	--Summon with 3 tribute
 	local e1=aux.AddNormalSummonProcedure(c,true,false,3,3)
 	local e2=aux.AddNormalSetProcedure(c,true,false,3,3)
-	--cannot special summon
+	--Cannot be Special Summoned
 	local e3=Effect.CreateEffect(c)
 	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e3)
-	--atk
+	--Increase its own ATK
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetCode(EFFECT_SET_ATTACK_FINAL)
@@ -22,13 +22,13 @@ function s.initial_effect(c)
 	local e5=e4:Clone()
 	e5:SetCode(EFFECT_SET_DEFENSE_FINAL)
 	c:RegisterEffect(e5)
-	--aclimit
+	--Prevent activations
 	local e6=Effect.CreateEffect(c)
 	e6:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e6:SetCode(EVENT_SUMMON_SUCCESS)
 	e6:SetOperation(s.regop)
 	c:RegisterEffect(e6)
-	--atk check
+	--ATK check
 	local e7=Effect.CreateEffect(c)
 	e7:SetType(EFFECT_TYPE_SINGLE)
 	e7:SetCode(id)
@@ -53,8 +53,9 @@ end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e1:SetTargetRange(0,1)
 	e1:SetValue(s.aclimit)
@@ -80,12 +81,6 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetOperation(s.reset)
 	e3:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,2)
 	c:RegisterEffect(e3)
-	local e4=Effect.CreateEffect(e:GetHandler())
-	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
-	e4:SetDescription(aux.Stringid(id,1))
-	e4:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,2)
-	e4:SetTargetRange(0,1)
-	Duel.RegisterEffect(e4,tp)
 end
 function s.reset(e,tp,eg,ep,ev,re,r,rp)
 	s.turnop(e:GetLabelObject(),tp,eg,ep,ev,e,r,rp)
@@ -102,5 +97,5 @@ function s.turnop(e,tp,eg,ep,ev,re,r,rp)
 	if ct==2 then
 		e:GetLabelObject():Reset()
 		if re then re:Reset() end
-	end
+	else e:SetLabel(ct) end
 end

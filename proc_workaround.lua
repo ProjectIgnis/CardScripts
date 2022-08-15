@@ -57,6 +57,15 @@ end
 function Card.IsMonster(c)
 	return c:IsType(TYPE_MONSTER)
 end
+function Card.IsSpell(c)
+	return c:IsType(TYPE_SPELL)
+end
+function Card.IsTrap(c)
+	return c:IsType(TYPE_TRAP)
+end
+function Card.IsSpellTrap(c)
+	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+end
 function Group.GetLinkedZone(g,tp)
 	return g:GetBitwiseOr(Card.GetLinkedZone,tp)
 end

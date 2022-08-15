@@ -55,12 +55,16 @@ function s.spcon(e,c)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_ONFIELD,0,nil,tp)
-	local ct=0
-	while ct<6 do
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELECT)
-		local tc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_ONFIELD,0,1,1,nil,tp):GetFirst()
-		tc:RemoveCounter(tp,COUNTER_SPELL,1,REASON_COST)
-		ct=ct+1
+	if #g==1 then
+		g:GetFirst():RemoveCounter(tp,COUNTER_SPELL,6,REASON_COST)
+	else
+		local ct=0
+		while ct<6 do
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELECT)
+			local tc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_ONFIELD,0,1,1,nil,tp):GetFirst()
+			tc:RemoveCounter(tp,COUNTER_SPELL,1,REASON_COST)
+			ct=ct+1
+		end
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

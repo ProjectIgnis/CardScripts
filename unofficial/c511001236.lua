@@ -1,5 +1,6 @@
 --モンスターレジスター
 --Monster Register
+--Fixed by The Razgriz
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -15,9 +16,10 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_DECKDES)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e2:SetRange(LOCATION_SZONE)
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetCode(EVENT_SUMMON_SUCCESS)
 	e2:SetTarget(s.target)
-	e2:SetOperation(s.activate)
+	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -32,37 +34,43 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local res,teg,tep,tev,tre,tr,trp=Duel.CheckEvent(EVENT_SPSUMMON_SUCCESS,true)
-	if res and s.target(e,tp,teg,tep,tev,tre,tr,trp,0) then
+	local ex,teg,tep,tev,tre,tr,trp=Duel.CheckEvent(EVENT_SUMMON_SUCCESS,true)
+	if not ex then
+		ex,teg,tep,tev,tre,tr,trp=Duel.CheckEvent(EVENT_SPSUMMON_SUCCESS,true)
+		if not ex then
+			ex,teg,tep,tev,tre,tr,trp=Duel.CheckEvent(EVENT_FLIP_SUMMON_SUCCESS,true)
+		end
+	end
+	if ex and s.target(e,tp,teg,tep,tev,tre,tr,trp,0) then
+		e:SetCategory(CATEGORY_DECKDES)
+		e:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e:SetOperation(s.activate)
 		s.target(e,tp,teg,tep,tev,tre,tr,trp,1)
-		e:SetCategory(CATEGORY_DECKDES)
 	else
-		e:SetOperation(nil)
 		e:SetCategory(0)
+		e:SetProperty(0)
+		e:SetOperation(nil)
 	end
-end
-function s.cfilter(c)
-	return c:GetLevel()>0
 end
 function s.filter(c,tp)
-	return c:GetLevel()>0 and c:IsControler(tp)
+	return c:IsFaceup() and c:IsControler(tp) or (c:IsPreviousControler(tp) and c:GetPreviousPosition()==POS_FACEUP_ATTACK 
+	or c:GetPreviousPosition()==POS_FACEUP_DEFENSE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return eg:IsExists(s.cfilter,1,nil) end
-	local g1=eg:Filter(s.filter,nil,tp)
-	local g2=eg:Filter(s.filter,nil,1-tp)
-	if #g1>0 then
-		Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,1)
-	end
-	if #g2>0 then
-		Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,1-tp,1)
-	end
+	if chk==0 then return e:GetHandler():IsRelateToEffect(e) end
+	local tg=eg:Filter(Card.IsFaceup,nil)
+	Duel.SetTargetCard(tg)
+	local b1=tg:IsExists(s.filter,1,nil,tp)
+	local b2=tg:IsExists(s.filter,1,nil,1-tp)
+	local p=b1 and b2 and PLAYER_ALL or b1 and tp or 1-tp
+	Duel.SetTargetPlayer(p)
+	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,p,tg:GetSum(Card.GetLevel))
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local g1=eg:Filter(s.filter,nil,tp)
-	local g2=eg:Filter(s.filter,nil,1-tp)
+	local tg=Duel.GetTargetCards(e)
+	local g1=tg:Filter(s.filter,nil,tp)
+	local g2=tg:Filter(s.filter,nil,1-tp)
 	local lv1=g1:GetSum(Card.GetLevel)
 	local lv2=g2:GetSum(Card.GetLevel)
 	if #g1>0 and lv1>0 then

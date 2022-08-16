@@ -1711,7 +1711,70 @@ function Auxiliary.GetMMZonesPointedTo(player,by_filter,player_location,oppo_loc
 	return Duel.GetMatchingGroup(link_card_filter,player,loc1,loc2,nil,by_filter,...):GetLinkedZone(target_player)&0x1f
 end
 
-FLAG_TEMPORARY_BANISH=2
+FLAG_DELAYED_OPERATION=2
+
+--[[
+	Performs an operation to a card(s) the next time a given phase is entered.
+	Returns the effect that would perform the operation.
+
+		Card|Group card_or_group: the cards that will be affected
+		int phase: the phase when `oper` will be applied to the banished cards
+		Effect e: the effect performing the banishment
+		int tp: the player performing the banishment, and will later perform `oper`
+		function oper: a function with the signature (ag,e,tp,eg,ep,ev,re,r,rp)
+			where `ag` is the group of affected cards
+		function|nil con: an additional condition function with the signature (ag,e,tp,eg,ep,ev,re,r,rp).
+			`ag` is already checked if it's not empty.
+--]]
+function Auxiliary.DelayedOperation(card_or_group,phase,e,tp,oper,cond,custom_flag)
+	local g=(type(card_or_group)=="Group" and card_or_group or Group.FromCards(card_or_group))
+	local fid=e:GetFieldID()
+	local flag=custom_flag or FLAG_DELAYED_OPERATION
+	for tc in g:Iter() do
+		tc:RegisterFlagEffect(flag,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+phase,0,1,fid)
+	end
+	g:KeepAlive()
+	local function get_affected_group()
+		return g:Match(function(c) return c:GetFlagEffectLabel(flag)==fid end,nil)
+	end
+	--Apply operation
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e1:SetCode(EVENT_PHASE|phase)
+	e1:SetReset(RESET_PHASE|phase)
+	e1:SetCountLimit(1)
+	e1:SetCondition(function(eff,...)
+		local ag=get_affected_group()
+		return #ag>0 and (not cond or cond(ag,eff,...))
+	end)
+	e1:SetOperation(function(eff,...)
+		if oper then oper(get_affected_group(),eff,...) end
+	end)
+	Duel.RegisterEffect(e1,tp)
+	return e1
+end
+
+--[[
+	Banishes card(s) and performs an operation to them in a given phase (usually return them to their current location).
+	Returns the effect that would perform the operation if a card is successfully banished, otherwise returns nil.
+
+		Card|Group card_or_group: the cards to banish
+		int|nil pos: the cards' position when banished. `nil` will use their current position
+		int reason: the reason for banishing
+		int phase: the phase when `oper` will be applied to the banished cards
+		Effect e: the effect performing the banishment
+		int tp: the player performing the banishment, and will later perform `op`
+		function oper: a function with the signature (rg,e,tp,eg,ep,ev,re,r,rp)
+			where `rg` is the group of cards that can be returned
+		function|nil con: an additional condition function with the signature (rg,e,tp,eg,ep,ev,re,r,rp).
+			`rg` is already checked if it's not empty.
+--]]
+function Auxiliary.RemoveUntil(card_or_group,pos,reason,phase,e,tp,oper,cond)
+	local g=(type(card_or_group)=="Group" and card_or_group or Group.FromCards(card_or_group))
+	if Duel.Remove(g,pos,reason|REASON_TEMPORARY)>0 and #g:Match(Card.IsLocation,nil,LOCATION_REMOVED)>0 then
+		return aux.DelayedOperation(g,phase,e,tp,oper,cond)
+	end
+end
 
 --[[
 	An operation function to be used with `aux.RemoveUntil`.
@@ -1734,52 +1797,6 @@ function Auxiliary.DefaultFieldReturnOp(rg,e,tp)
 	for tc in rg:Sub(tg):Iter() do
 		Duel.ReturnToField(tc)
 	end
-end
-
---[[
-	Banishes card(s) and applies an operation to them in a given phase (usually return them to their current location).
-
-		Card|Group card_or_group: the cards to banish
-		int|nil pos: the cards' position when banished. `nil` will use their current position
-		int reason: the reason for banishing
-		int phase: the phase when `op` will be applied to the banished cards
-		Effect e: the effect performing the banishment
-		int tp: the player performing the banishment, and will later perform `op`
-		function op: a function with the signature (rg,e,tp,eg,ep,ev,re,r,rp)
-			where `rg` is the group of cards that can be returned
-		function|nil con: an additional condition function with the signature (rg,e,tp,eg,ep,ev,re,r,rp).
-			By default, `rg` is automatically checked if it's not empty.
---]]
-function Auxiliary.RemoveUntil(card_or_group,pos,reason,phase,e,tp,op,con)
-	local g=(type(card_or_group)=="Group" and card_or_group or Group.FromCards(card_or_group))
-	if Duel.Remove(g,pos,reason|REASON_TEMPORARY)==0 or g:Match(Card.IsLocation,nil,LOCATION_REMOVED)==0 then return end
-	local fid=e:GetFieldID()
-	for tc in g:Iter() do
-		tc:RegisterFlagEffect(FLAG_TEMPORARY_BANISH,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+phase,0,1,fid)
-	end
-	g:KeepAlive()
-	local function get_returnable_group(e)
-		return e:GetLabelObject():Filter(function(c)
-			return c:GetFlagEffectLabel(FLAG_TEMPORARY_BANISH)==e:GetLabel()
-		end,nil)
-	end
-	--Return
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_PHASE|phase)
-	e1:SetReset(RESET_PHASE|phase)
-	e1:SetLabelObject(g)
-	e1:SetLabel(fid)
-	e1:SetCountLimit(1)
-	e1:SetCondition(function(eff,...)
-		local rg=get_returnable_group(eff)
-		return #rg>0 and (not con or con(rg,eff,...))
-	end)
-	e1:SetOperation(function(eff,...)
-		if op then op(get_returnable_group(eff),eff,...) end
-	end)
-	Duel.RegisterEffect(e1,tp)
-	return e1
 end
 
 Duel.LoadScript("cards_specific_functions.lua")

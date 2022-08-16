@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
-	e3:SetCondition(s.pencon)
+	e3:SetCondition(function(e,tp) return Duel.IsTurnPlayer(tp) end)
 	e3:SetTarget(s.pentg)
 	e3:SetOperation(s.penop)
 	c:RegisterEffect(e3)
@@ -101,12 +101,9 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		success=#dg>0 and Duel.Destroy(dg,REASON_EFFECT)>0
 	end
 	local rc=re:GetHandler()
-	if success and rc:IsRelateToEffect(re) and c:IsRelateToEffect(e) and c:IsType(TYPE_XYZ) and not rc:IsImmuneToEffect(e) then
+	if success and rc:IsRelateToEffect(re) and rc:IsControler(1-tp) and c:IsRelateToEffect(e) and c:IsType(TYPE_XYZ) and not rc:IsImmuneToEffect(e) then
 		Duel.Overlay(c,rc,true)
 	end
-end
-function s.pencon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsTurnPlayer(tp)
 end
 function s.pentg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1) end

@@ -1,33 +1,35 @@
 --ブレイク・オブ・ザ・ワールド
---Break of the World
+--Breaking of the World
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--change level
+	--Change the level of Ritual monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetRange(LOCATION_FZONE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e2:SetRange(LOCATION_FZONE)
 	e2:SetCountLimit(1)
 	e2:SetTarget(s.lvtg)
 	e2:SetOperation(s.lvop)
 	c:RegisterEffect(e2)
-	--draw
+	--Draw 1 card or destroy 1 card on the field
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
-	e3:SetCountLimit(1)
 	e3:SetRange(LOCATION_FZONE)
+	e3:SetCountLimit(1)
 	e3:SetCondition(s.condition)
 	e3:SetTarget(s.target)
 	c:RegisterEffect(e3)
 end
+s.listed_names={46427957,72426662}
 function s.lvfilter(c,tp)
 	return c:IsFaceup() and c:IsType(TYPE_RITUAL)
 		and Duel.IsExistingMatchingCard(s.lvcfilter,tp,LOCATION_HAND,0,1,nil,c)
@@ -75,16 +77,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	local b2=#g>0
 	if chk==0 then return b1 or b2 end
-	local sel=0
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EFFECT)
-	if b1 and b2 then
-		sel=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))
-	elseif b1 then
-		sel=Duel.SelectOption(tp,aux.Stringid(id,0))
-	else
-		sel=Duel.SelectOption(tp,aux.Stringid(id,1))+1
-	end
-	if sel==0 then
+	local sel=aux.SelectEffect(tp,
+		{b1,aux.Stringid(id,0)},
+		{b2,aux.Stringid(id,1)})
+	if sel==1 then
 		e:SetCategory(CATEGORY_DRAW)
 		e:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_PLAYER_TARGET)
 		e:SetOperation(s.drop)
@@ -107,4 +103,3 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(g,REASON_EFFECT)
 	end
 end
-

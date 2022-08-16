@@ -7,8 +7,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	c:RegisterEffect(e1)
 end
-s.listed_names={72426662}
+s.listed_names={46427957,72426662}
 function s.mfilter(c)
 	return c:IsLocation(LOCATION_HAND) and c:IsType(TYPE_RITUAL)
 end
-

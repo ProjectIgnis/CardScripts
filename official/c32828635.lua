@@ -3,17 +3,17 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	Ritual.AddProcGreater({handler=c,filter=s.ritualfil,matfilter=s.forcedgroup})
-	--salvage
-	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetCategory(CATEGORY_TOHAND)
-	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCondition(s.thcon)
-	e2:SetCost(s.thcost)
-	e2:SetTarget(s.thtg)
-	e2:SetOperation(s.thop)
-	c:RegisterEffect(e2)
+	--Add 1 listed Ritual monster from the GY to the hand
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_TOHAND)
+	e1:SetType(EFFECT_TYPE_IGNITION)
+	e1:SetRange(LOCATION_GRAVE)
+	e1:SetCondition(aux.exccon)
+	e1:SetCost(s.thcost)
+	e1:SetTarget(s.thtg)
+	e1:SetOperation(s.thop)
+	c:RegisterEffect(e1)
 end
 s.listed_names={8198712}
 s.fit_monster={46427957,72426662}
@@ -22,9 +22,6 @@ function s.ritualfil(c)
 end
 function s.forcedgroup(c,e,tp)
 	return c:IsLocation(LOCATION_ONFIELD)
-end
-function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return aux.exccon(e)
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToDeckAsCost() end

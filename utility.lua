@@ -454,11 +454,19 @@ function Auxiliary.IsMaterialListSetCard(c,...)
 end
 --Returns true if the Card "c" specifically lists any of the card IDs in "..."
 function Auxiliary.IsCodeListed(c,...)
-	if not c.listed_names then return false end
-	local codes={...}
-	for _,code in ipairs(codes) do
-		for _,ccode in ipairs(c.listed_names) do
-			if code==ccode then return true end
+	if c.listed_names then
+		local codes={...}
+		for _,wanted in ipairs(codes) do
+			for _,cardcode in ipairs(c.listed_names) do
+				if wanted==cardcode then return true end
+			end
+		end
+	elseif c.fit_monster then
+		local codes={...}
+		for _,wanted in ipairs(codes) do
+			for _,listed in ipairs(c.fit_monster) do
+				if wanted==listed then return true end
+			end
 		end
 	end
 	return false
@@ -467,8 +475,8 @@ end
 function Auxiliary.IsArchetypeCodeListed(c,...)
 	if not c.listed_names then return false end
 	local setcodes={...}
-	for _,ccode in ipairs(c.listed_names) do
-		local match_setcodes={Duel.GetCardSetcodeFromCode(ccode)}
+	for _,cardcode in ipairs(c.listed_names) do
+		local match_setcodes={Duel.GetCardSetcodeFromCode(cardcode)}
 		if #match_setcodes>0 then
 			for _,setcode in ipairs(setcodes) do
 				for _,to_match in ipairs(match_setcodes) do
@@ -1252,24 +1260,20 @@ function Duel.GetZoneWithLinkedCount(count,tp)
 end
 --Checks whether a card (c) has an effect that mentions a certain type of counter
 --This includes adding, removing, gaining ATK/DEF per counter, etc.
-function aux.HasCounterListed(c,counter_type)
-	if c.counter_list or c.counter_place_list then
-		if c.counter_place_list then
-			--if it generates, it always manipulates
-			for _,ccounter in ipairs(c.counter_place_list) do
-				if counter_type==ccounter then return true end
-			end
-		else
-			for _,ccounter in ipairs(c.counter_list) do
-				if counter_type==ccounter then return true end
-			end
+function Auxiliary.HasCounterListed(c,counter_type)
+	if c.counter_place_list then
+		for _,ccounter in ipairs(c.counter_place_list) do --if it generates, it always manipulates
+			if counter_type==ccounter then return true end
 		end
-	else
-		return false
+	elseif c.counter_list then
+		for _,ccounter in ipairs(c.counter_list) do
+			if counter_type==ccounter then return true end
+		end
 	end
+	return false
 end
 --Checks whether a card (c) has an effect that places a certain type of counter
-function aux.CanPlaceCounter(c,counter_type)
+function Auxiliary.CanPlaceCounter(c,counter_type)
 	if not c.counter_place_list then return false end
 	for _,ccounter in ipairs(c.counter_place_list) do
 		if counter_type==ccounter then return true end

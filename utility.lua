@@ -1714,7 +1714,7 @@ end
 FLAG_DELAYED_OPERATION=2
 
 --[[
-	Performs an operation to a card(s) the next time a given phase is entered.
+	Performs an operation to a card(s) each time a given phase is entered.
 	Returns the effect that would perform the operation.
 
 		Card|Group card_or_group: the cards that will be affected
@@ -1731,7 +1731,7 @@ function Auxiliary.DelayedOperation(card_or_group,phase,e,tp,oper,cond,custom_fl
 	local fid=e:GetFieldID()
 	local flag=custom_flag or FLAG_DELAYED_OPERATION
 	for tc in g:Iter() do
-		tc:RegisterFlagEffect(flag,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+phase,0,1,fid)
+		tc:RegisterFlagEffect(flag,RESET_EVENT+RESETS_STANDARD,0,1,fid)
 	end
 	g:KeepAlive()
 	local function get_affected_group()
@@ -1741,7 +1741,6 @@ function Auxiliary.DelayedOperation(card_or_group,phase,e,tp,oper,cond,custom_fl
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_PHASE|phase)
-	e1:SetReset(RESET_PHASE|phase)
 	e1:SetCountLimit(1)
 	e1:SetCondition(function(eff,...)
 		local ag=get_affected_group()
@@ -1772,7 +1771,8 @@ end
 function Auxiliary.RemoveUntil(card_or_group,pos,reason,phase,e,tp,oper,cond)
 	local g=(type(card_or_group)=="Group" and card_or_group or Group.FromCards(card_or_group))
 	if Duel.Remove(g,pos,reason|REASON_TEMPORARY)>0 and #g:Match(Card.IsLocation,nil,LOCATION_REMOVED)>0 then
-		return aux.DelayedOperation(g,phase,e,tp,oper,cond)
+		local e1=aux.DelayedOperation(g,phase,e,tp,oper,cond)
+		if e1 then e1:SetReset(RESET_PHASE+phase) end
 	end
 end
 

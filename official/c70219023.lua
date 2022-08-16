@@ -1,11 +1,11 @@
---
---Triphasic Dealmon Coordius
+--三相魔神コーディウス
+--Coordius the Triphasic Dealmon
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	Fusion.AddProcMix(c,true,true,s.fusfilter(TYPE_SYNCHRO),s.fusfilter(TYPE_XYZ),s.fusfilter(TYPE_LINK))
-	--apply effect
+	--Apply up to 3 effects
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DESTROY+CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -64,12 +64,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			desctable[t]=aux.Stringid(id,0)
 			t=t+1
 		end
-		if b1 and (opt&2)==0 then
+		if b2 and (opt&2)==0 then
 			idtable[t]=2
 			desctable[t]=aux.Stringid(id,1)
 			t=t+1
 		end
-		if b1 and (opt&4)==0 then
+		if b3 and (opt&4)==0 then
 			idtable[t]=4
 			desctable[t]=aux.Stringid(id,2)
 			t=t+1

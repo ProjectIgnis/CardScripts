@@ -1,8 +1,9 @@
 --ＦＮｏ．０ 未来皇ホープ
---Number F0: Utopic Future (Amine)
+--Number F0: Utopic Future (Anime)
 Duel.LoadCardScript("c65305468.lua")
 local s,id=GetID()
 function s.initial_effect(c)
+	c:EnableReviveLimit()
 	--Xyz Summon
 	Xyz.AddProcedure(c,s.xyzfilter,nil,2)
 	--Treat its Rank as 0

@@ -1,7 +1,8 @@
+--イーバ・アブダクター
 --Eva Abductor
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Discard 1 card to take control of 1 monster your opponent controls
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(17955766,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.tg)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
-	--change pos
+	--Change battle positions when this card changes position
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(13215230,0))
 	e2:SetCategory(CATEGORY_POSITION)
@@ -21,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.postg)
 	e2:SetOperation(s.posop)
 	c:RegisterEffect(e2)
-	--
+	--Forces your controlled monsters by this card's effect to attack when this card attacks
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EVENT_ATTACK_ANNOUNCE)
@@ -38,7 +39,7 @@ end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,0,LOCATION_MZONE,1,nil) end
 	local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_CONTROL,g,1,0,0)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

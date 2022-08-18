@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_WIND),2,2)
 	c:EnableReviveLimit()
-	--summon
+	--Normal Summon 1 WIND monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SUMMON)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.nstg)
 	e1:SetOperation(s.nsop)
 	c:RegisterEffect(e1)
-	--search
+	--Add 1 "Speedroid" monster to the hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SEARCH+CATEGORY_TOGRAVE+CATEGORY_TOHAND)
@@ -68,15 +68,15 @@ function s.rescon(lv)
 		return sg:GetSum(Card.GetLevel)==lv and sg:GetClassCount(Card.GetCode)==2
 	end
 end
-function s.cfilter(c,g)
+function s.cfilter(c,g,e,tp)
 	return c:IsAttribute(ATTRIBUTE_WIND) and c:IsType(TYPE_SYNCHRO) and c:IsAbleToRemoveAsCost()
 		and aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon(c:GetLevel()),0)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK,0,nil)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_EXTRA,0,1,nil,g) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_EXTRA,0,1,nil,g,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local sc=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_EXTRA,0,1,1,nil,g):GetFirst()
+	local sc=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_EXTRA,0,1,1,nil,g,e,tp):GetFirst()
 	Duel.Remove(sc,POS_FACEUP,REASON_COST)
 	e:SetLabel(sc:GetLevel())
 end
@@ -98,4 +98,3 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	sg:RemoveCard(tc)
 	Duel.SendtoGrave(sg,REASON_EFFECT)
 end
-

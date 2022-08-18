@@ -71,7 +71,9 @@ function s.tefilter(c,tp)
 	return c:GetOwner()==tp and c:IsType(TYPE_XYZ) and c:IsAbleToExtra()
 end
 function s.tetg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():GetOverlayGroup():IsExists(s.tefilter,1,nil,tp) end
+	local c=e:GetHandler()
+	if chk==0 then return c:GetFlagEffect(id)==0 and c:GetOverlayGroup():IsExists(s.tefilter,1,nil,tp) end
+	c:RegisterFlagEffect(id,RESET_CHAIN,0,1)
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_OVERLAY)
 end

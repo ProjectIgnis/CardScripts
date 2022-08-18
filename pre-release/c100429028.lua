@@ -1,4 +1,4 @@
--- オオヒメの御巫
+-- 天御巫の闔
 -- Doorway of the Celestial Mikanko
 -- Scripted by Hatter
 local s,id=GetID()

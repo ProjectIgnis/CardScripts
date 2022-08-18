@@ -1261,12 +1261,13 @@ end
 --Checks whether a card (c) has an effect that mentions a certain type of counter
 --This includes adding, removing, gaining ATK/DEF per counter, etc.
 function Auxiliary.HasCounterListed(c,counter_type)
-	if c.counter_place_list then
-		for _,ccounter in ipairs(c.counter_place_list) do --if it generates, it always manipulates
+	if c.counter_list then
+		for _,ccounter in ipairs(c.counter_list) do
 			if counter_type==ccounter then return true end
 		end
-	elseif c.counter_list then
-		for _,ccounter in ipairs(c.counter_list) do
+	elseif c.counter_place_list then
+		--if it generates, it always manipulates
+		for _,ccounter in ipairs(c.counter_place_list) do
 			if counter_type==ccounter then return true end
 		end
 	end

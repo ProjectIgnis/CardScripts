@@ -29,9 +29,9 @@ s.listed_names={53025096,id,82768499}
 s.listed_series={0x99}
 function s.spcheck(sg,tp)
 	local mzone_chk=Duel.GetMZoneCount(tp,sg)>0
-	return Duel.IsExistingMatchingCard(s.gyfilter,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_DECK,0,1,sg,mzone_chk)
+	return Duel.IsExistingMatchingCard(s.gyfilter,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_DECK,0,1,sg,tp,mzone_chk)
 end
-function s.gyfilter(c,mzone_chk)
+function s.gyfilter(c,tp,mzone_chk)
 	return c:IsCode(53025096) and (c:IsFaceup() or not c:IsLocation(LOCATION_MZONE)) and c:IsAbleToGrave()
 		and (mzone_chk or Duel.GetMZoneCount(tp,c)>0)
 end
@@ -49,7 +49,7 @@ end
 function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local gc=Duel.SelectMatchingCard(tp,s.gyfilter,tp,LOCATION_DECK+LOCATION_HAND+LOCATION_MZONE,0,1,1,nil):GetFirst()
+	local gc=Duel.SelectMatchingCard(tp,s.gyfilter,tp,LOCATION_DECK+LOCATION_HAND+LOCATION_MZONE,0,1,1,nil,tp,false):GetFirst()
 	if gc and Duel.SendtoGrave(gc,REASON_EFFECT)>0 and gc:IsLocation(LOCATION_GRAVE) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and c:IsRelateToEffect(e) then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)

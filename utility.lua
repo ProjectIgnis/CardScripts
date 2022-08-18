@@ -1266,7 +1266,7 @@ function Auxiliary.HasCounterListed(c,counter_type)
 			if counter_type==ccounter then return true end
 		end
 	elseif c.counter_place_list then
-		--if it generates, it always manipulates
+		--if it places counters, it always lists them
 		for _,ccounter in ipairs(c.counter_place_list) do
 			if counter_type==ccounter then return true end
 		end

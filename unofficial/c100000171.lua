@@ -23,7 +23,7 @@ end
 function s.con(e,c)
 	return e:GetHandler():IsAttackPos() 
 end
-function s.costfilter(c,ft)
+function s.costfilter(c,ft,tp)
 	return c:IsLevel(1) and c:IsRace(RACE_BEAST) and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5)) and (c:IsControler(tp) or c:IsFaceup())
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

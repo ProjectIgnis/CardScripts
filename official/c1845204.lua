@@ -40,9 +40,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1,true)
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
 		tc:CompleteProcedure()
 		--Destroy it during end phase
-		aux.DelayedOperation(tc,PHASE_END,e,tp,function(ag) Duel.Destroy(ag,REASON_EFFECT) end)
+		aux.DelayedOperation(tc,PHASE_END,id,e,tp,function(ag) Duel.Destroy(ag,REASON_EFFECT) end,nil,0)
 	end
 end

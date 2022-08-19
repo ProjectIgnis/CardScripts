@@ -86,7 +86,7 @@ function s.qpovop(e,tp,eg,ep,ev,re,r,rp)
 			if #g==0 then return end
 			Duel.HintSelection(g,true)
 			Duel.BreakEffect()
-			aux.RemoveUntil(g,nil,REASON_EFFECT,PHASE_END,e,tp,aux.DefaultFieldReturnOp)
+			aux.RemoveUntil(g,nil,REASON_EFFECT,PHASE_END,id,e,tp,aux.DefaultFieldReturnOp)
 		end
 	end
 end

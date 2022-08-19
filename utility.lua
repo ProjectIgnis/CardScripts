@@ -1716,46 +1716,54 @@ function Auxiliary.GetMMZonesPointedTo(player,by_filter,player_location,oppo_loc
 	return Duel.GetMatchingGroup(link_card_filter,player,loc1,loc2,nil,by_filter,...):GetLinkedZone(target_player)&0x1f
 end
 
-FLAG_DELAYED_OPERATION=2
-
 --[[
 	Performs an operation to a card(s) each time a given phase is entered.
-	Returns the effect that would perform the operation.
+	Returns the effect that would perform the operation, or nil if no card/group or an empty group is passed.
 
 		Card|Group card_or_group: the cards that will be affected
 		int phase: the phase when `oper` will be applied to the banished cards
+		int flag: a unique integer to be registered as a flag on the affected cards
 		Effect e: the effect performing the banishment
 		int tp: the player performing the banishment, and will later perform `oper`
 		function oper: a function with the signature (ag,e,tp,eg,ep,ev,re,r,rp)
 			where `ag` is the group of affected cards
-		function|nil con: an additional condition function with the signature (ag,e,tp,eg,ep,ev,re,r,rp).
+		function|nil cond: an additional condition function with the signature (ag,e,tp,eg,ep,ev,re,r,rp).
 			`ag` is already checked if it's not empty.
+		int|nil reset: the reset value. If not passed, the reset will be `RESET_PHASE+phase`.
+		int|nil reset_count: how many times the reset value must happen.
+			If not passed, the count will be 1.
+		int|nil hint: a string to show on the affected cards
 --]]
-function Auxiliary.DelayedOperation(card_or_group,phase,e,tp,oper,cond,custom_flag)
-	local g=(type(card_or_group)=="Group" and card_or_group or Group.FromCards(card_or_group))
-	local fid=e:GetFieldID()
-	local flag=custom_flag or FLAG_DELAYED_OPERATION
-	for tc in g:Iter() do
-		tc:RegisterFlagEffect(flag,RESET_EVENT+RESETS_STANDARD,0,1,fid)
-	end
-	g:KeepAlive()
-	local function get_affected_group()
-		return g:Match(function(c) return c:GetFlagEffectLabel(flag)==fid end,nil)
-	end
-	--Apply operation
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_PHASE|phase)
-	e1:SetCountLimit(1)
-	e1:SetCondition(function(eff,...)
-		local ag=get_affected_group()
-		return #ag>0 and (not cond or cond(ag,eff,...))
-	end)
-	e1:SetOperation(function(eff,...)
-		if oper then oper(get_affected_group(),eff,...) end
-	end)
-	Duel.RegisterEffect(e1,tp)
-	return e1
+function Auxiliary.DelayedOperation(card_or_group,phase,flag,e,tp,oper,cond,reset,reset_count,hint)
+    local g=(type(card_or_group)=="Group" and card_or_group or Group.FromCards(card_or_group))
+    if #g==0 then return end
+    reset=reset or (RESET_PHASE+phase)
+    reset_count=reset_count or 1
+    local fid=e:GetFieldID()
+    local flagprop=hint and EFFECT_FLAG_CLIENT_HINT or 0
+    for tc in g:Iter() do
+        tc:RegisterFlagEffect(flag,RESET_EVENT+RESETS_STANDARD+reset,flagprop,reset_count,fid,hint)
+    end
+    g:KeepAlive()
+    local function get_affected_group()
+        return g:Filter(function(c) return c:GetFlagEffectLabel(flag)==fid end,nil)
+    end
+    --Apply operation
+    local e1=Effect.CreateEffect(e:GetHandler())
+    e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+    e1:SetCode(EVENT_PHASE|phase)
+    e1:SetReset(reset,resetcount)
+    e1:SetCountLimit(1)
+    e1:SetLabelObject(g) -- in case something needs access to it after registry (e.g. when overwriting oper and cond) 
+    e1:SetCondition(function(...)
+        local ag=get_affected_group()
+        return #ag>0 and (not cond or cond(ag,...))
+    end)
+    e1:SetOperation(function(...)
+        if oper then oper(get_affected_group(),...) end
+    end)
+    Duel.RegisterEffect(e1,tp)
+    return e1
 end
 
 --[[
@@ -1766,18 +1774,22 @@ end
 		int|nil pos: the cards' position when banished. `nil` will use their current position
 		int reason: the reason for banishing
 		int phase: the phase when `oper` will be applied to the banished cards
+		int flag: a unique integer to be registered as a flag on the affected cards
 		Effect e: the effect performing the banishment
-		int tp: the player performing the banishment, and will later perform `op`
+		int tp: the player performing the banishment, and will later perform `oper`
 		function oper: a function with the signature (rg,e,tp,eg,ep,ev,re,r,rp)
 			where `rg` is the group of cards that can be returned
-		function|nil con: an additional condition function with the signature (rg,e,tp,eg,ep,ev,re,r,rp).
-			`rg` is already checked if it's not empty.
+		function|nil cond: an additional condition function with the signature (rg,e,tp,eg,ep,ev,re,r,rp).
+			`rg` is already checked if it's not empty
+		int|nil reset: the reset value. If not passed, the reset will be `RESET_PHASE+phase`.
+		int|nil reset_count: how many times the reset value must happen.
+			If not passed, the count will be 1.
+		int|nil hint: a string to show on the affected cards
 --]]
-function Auxiliary.RemoveUntil(card_or_group,pos,reason,phase,e,tp,oper,cond)
+function Auxiliary.RemoveUntil(card_or_group,pos,reason,phase,flag,e,tp,oper,cond,reset,reset_count,hint)
 	local g=(type(card_or_group)=="Group" and card_or_group or Group.FromCards(card_or_group))
-	if Duel.Remove(g,pos,reason|REASON_TEMPORARY)>0 and #g:Match(Card.IsLocation,nil,LOCATION_REMOVED)>0 then
-		local e1=aux.DelayedOperation(g,phase,e,tp,oper,cond)
-		if e1 then e1:SetReset(RESET_PHASE+phase) end
+	if #g>0 and Duel.Remove(g,pos,reason|REASON_TEMPORARY)>0 and #g:Match(Card.IsLocation,nil,LOCATION_REMOVED)>0 then
+		return aux.DelayedOperation(g,phase,flag,e,tp,oper,cond,reset,reset_count,hint)
 	end
 end
 
@@ -1790,7 +1802,7 @@ function Auxiliary.DefaultFieldReturnOp(rg,e,tp)
 	if #rg==0 then return end
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE,0)
 	local tg=nil
-	if ft>0 and #rg>1 and #rg>ft then
+	if ft>0 and #rg>ft then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 		tg=rg:Select(tp,ft,ft,nil)
 	else

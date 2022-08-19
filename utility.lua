@@ -1678,15 +1678,15 @@ end
 --and makes the player choose among the strings whose conditions are met
 --it returns the index of the choosen element starting from 1, nil if none was selected
 function Auxiliary.SelectEffect(tp,...)
-    local eff,sel={},{}
-    for i,val in ipairs({...}) do
-        if val[1] then
-            table.insert(eff,val[2])
-            table.insert(sel,i)
-        end
-    end
-    if #eff==0 then return nil end
-    return sel[Duel.SelectOption(tp,table.unpack(eff))+1]
+	local eff,sel={},{}
+	for i,val in ipairs({...}) do
+		if val[1] then
+			table.insert(eff,val[2])
+			table.insert(sel,i)
+		end
+	end
+	if #eff==0 then return nil end
+	return sel[Duel.SelectOption(tp,table.unpack(eff))+1]
 end
 
 function Auxiliary.CheckPendulumZones(player)
@@ -1735,35 +1735,35 @@ end
 		int|nil hint: a string to show on the affected cards
 --]]
 function Auxiliary.DelayedOperation(card_or_group,phase,flag,e,tp,oper,cond,reset,reset_count,hint)
-    local g=(type(card_or_group)=="Group" and card_or_group or Group.FromCards(card_or_group))
-    if #g==0 then return end
-    reset=reset or (RESET_PHASE+phase)
-    reset_count=reset_count or 1
-    local fid=e:GetFieldID()
-    local flagprop=hint and EFFECT_FLAG_CLIENT_HINT or 0
-    for tc in g:Iter() do
-        tc:RegisterFlagEffect(flag,RESET_EVENT+RESETS_STANDARD+reset,flagprop,reset_count,fid,hint)
-    end
-    g:KeepAlive()
-    local function get_affected_group()
-        return g:Filter(function(c) return c:GetFlagEffectLabel(flag)==fid end,nil)
-    end
-    --Apply operation
-    local e1=Effect.CreateEffect(e:GetHandler())
-    e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-    e1:SetCode(EVENT_PHASE|phase)
-    e1:SetReset(reset,resetcount)
-    e1:SetCountLimit(1)
-    e1:SetLabelObject(g) -- in case something needs access to it after registry (e.g. when overwriting oper and cond) 
-    e1:SetCondition(function(...)
-        local ag=get_affected_group()
-        return #ag>0 and (not cond or cond(ag,...))
-    end)
-    e1:SetOperation(function(...)
-        if oper then oper(get_affected_group(),...) end
-    end)
-    Duel.RegisterEffect(e1,tp)
-    return e1
+	local g=(type(card_or_group)=="Group" and card_or_group or Group.FromCards(card_or_group))
+	if #g==0 then return end
+	reset=reset or (RESET_PHASE+phase)
+	reset_count=reset_count or 1
+	local fid=e:GetFieldID()
+	local flagprop=hint and EFFECT_FLAG_CLIENT_HINT or 0
+	for tc in g:Iter() do
+		tc:RegisterFlagEffect(flag,RESET_EVENT+RESETS_STANDARD+reset,flagprop,reset_count,fid,hint)
+	end
+	g:KeepAlive()
+	local function get_affected_group()
+		return g:Filter(function(c) return c:GetFlagEffectLabel(flag)==fid end,nil)
+	end
+	--Apply operation
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e1:SetCode(EVENT_PHASE|phase)
+	e1:SetReset(reset,resetcount)
+	e1:SetCountLimit(1)
+	e1:SetLabelObject(g) --in case something needs access to it after registry (e.g. when overwriting oper and cond) 
+	e1:SetCondition(function(...)
+		local ag=get_affected_group()
+		return #ag>0 and (not cond or cond(ag,...))
+	end)
+	e1:SetOperation(function(...)
+		if oper then oper(get_affected_group(),...) end
+	end)
+	Duel.RegisterEffect(e1,tp)
+	return e1
 end
 
 --[[

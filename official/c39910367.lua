@@ -46,14 +46,16 @@ end
 s.listed_names={id}
 s.counter_place_list={COUNTER_SPELL}
 function s.op(e,tp,eg,ep,ev,re,r,rp)
-	local c=re:GetHandler()
-	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and c~=e:GetHandler() then
-		e:GetHandler():AddCounter(COUNTER_SPELL,1)
+	local c=e:GetHandler()
+	local rc=re:GetHandler()
+	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and rc~=c then
+		c:AddCounter(COUNTER_SPELL,1)
 	end
 end
 function s.rcon(e,tp,eg,ep,ev,re,r,rp)
-	return (r&REASON_COST)~=0 and ep==e:GetOwnerPlayer() and e:GetHandler():GetCounter(COUNTER_SPELL)>=ev
-		and re:GetHandler()~=e:GetHandler()
+	local c=e:GetHandler()
+	return (r&REASON_COST)~=0 and re:IsActivated() and ep==e:GetOwnerPlayer() and c:GetCounter(COUNTER_SPELL)>=ev
+		and re:GetHandler()~=c
 end
 function s.rop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RemoveCounter(ep,COUNTER_SPELL,ev,REASON_EFFECT)

@@ -57,12 +57,12 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ShuffleDeck(tp)
 	end
 end
-function s.xyzfilter(c,tp,rp)
+function s.xyzfilter(c,tp)
 	return c:IsPreviousPosition(POS_FACEUP) and c:IsType(TYPE_XYZ) and c:IsPreviousSetCard(0x289) and c:IsPreviousControler(tp)
-		and (rp==1-tp or (c:IsReason(REASON_BATTLE) and c:IsStatus(STATUS_OPPO_BATTLE)))
+		and c:GetReasonPlayer()==1-tp
 end
 function s.rthcond(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.xyzfilter,1,nil,tp,rp)
+	return eg:IsExists(s.xyzfilter,1,nil,tp)
 end
 function s.qpfilter(c)
 	return c:IsSetCard(0x289) and c:IsType(TYPE_SPELL) and c:IsType(TYPE_QUICKPLAY) and c:IsAbleToHand()

@@ -1,5 +1,5 @@
 -- ティアラメンツ・メイルゥ
--- Tearalaments Meiru
+-- Tearalaments Merrli
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_TO_GRAVE)
 	e3:SetCountLimit(1,{id,1})
-	e3:SetCondition(function(e) return e:GetHandler():IsReason(REASON_EFFECT) end)
+	e3:SetCondition(function(e) return Duel.GetCurrentPhase()~=PHASE_DAMAGE and e:GetHandler():IsReason(REASON_EFFECT) end)
 	e3:SetTarget(Fusion.SummonEffTG(fusparams))
 	e3:SetOperation(Fusion.SummonEffOP(fusparams))
 	c:RegisterEffect(e3)

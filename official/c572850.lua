@@ -1,5 +1,5 @@
 -- ティアラメンツ・シェイレーン
--- Tearalaments Shaylen
+-- Tearalaments Scheiren
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_TO_GRAVE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCondition(function(e) return e:GetHandler():IsReason(REASON_EFFECT) end)
+	e2:SetCondition(function(e) return Duel.GetCurrentPhase()~=PHASE_DAMAGE and e:GetHandler():IsReason(REASON_EFFECT) end)
 	e2:SetTarget(Fusion.SummonEffTG(fusparams))
 	e2:SetOperation(Fusion.SummonEffOP(fusparams))
 	c:RegisterEffect(e2)

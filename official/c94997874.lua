@@ -1,4 +1,5 @@
 --聖占術姫タロットレイ
+--Prediction Princess Tarotrei
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -71,7 +72,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spfilter(c,e,tp)
 	if not c:IsType(TYPE_FLIP) then return false end
-	local code_chk=c:IsCode(42932862)
+	local code_chk=c:IsCode(42932862) and e:GetHandler():IsCode(id)
 	return c:IsCanBeSpecialSummoned(e,0,tp,code_chk,code_chk,POS_FACEDOWN_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -85,7 +86,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,e,tp):GetFirst()
 	if sc then
-		local code_chk=sc:IsCode(42932862)
+		local code_chk=sc:IsCode(42932862) and e:GetHandler():IsCode(id)
 		Duel.SpecialSummon(sc,0,tp,tp,code_chk,code_chk,POS_FACEDOWN_DEFENSE)
 		Duel.ConfirmCards(1-tp,sc)
 		if code_chk then sc:CompleteProcedure() end

@@ -58,6 +58,7 @@ function s.edtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x48) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function s.edop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_EXTRA)
@@ -66,7 +67,7 @@ function s.edop(e,tp,eg,ep,ev,re,r,rp)
 	local rg=g:Filter(Card.IsAbleToRemove,nil,POS_FACEUP)
 	local sg=g:Filter(s.spfilter,nil,e,tp)
 	local b1=#rg>0
-	local b2=#sg>0 and Duel.GetLocationCountFromEx(tp,tp)>0 
+	local b2=#sg>0
 	if not ((b1 or b2) and Duel.SelectYesNo(tp,aux.Stringid(id,2))) then return Duel.ShuffleExtra(1-tp) end
 	local op=aux.SelectEffect(tp,
 		{b1,aux.Stringid(id,3)},

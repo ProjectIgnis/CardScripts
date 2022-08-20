@@ -1,5 +1,6 @@
 --フルアーマー・グラビテーション
 --Full Armor Gravitation
+--reworked effect by senpaizuri
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -28,44 +29,25 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if g:FilterCount(Card.IsAbleToRemove,nil)~=10 then return end
 	Duel.DisableShuffleCheck()
 	Duel.ConfirmDecktop(tp,10)
-	if not Duel.IsPlayerCanSpecialSummon(tp) or ft<=0 then
-		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
-		return
+	--hardcode with tables due to groups sorting automatically, and without customization
+	local tg={}
+	for tc in aux.Next(g) do
+		if s.filter(tc,e,tp) then table.insert(tg,tc) end
 	end
-	local ct=g:FilterCount(s.filter,nil,e,tp)
-	if ct>0 and ft>=ct then
-		local g2=g:Filter(s.filter,nil,e,tp)
-		Duel.SpecialSummon(g2,0,tp,tp,false,false,POS_FACEUP)
-		g:Sub(g2)
-		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
-		return
+	--sort by sequence to ensure correct summoning as described by the text
+	local function sortbyseq(a,b)
+		return a:GetSequence()>b:GetSequence()
 	end
-	ct=1
-	local g1=Duel.GetDecktopGroup(tp,ct)
-	local g2=Duel.GetDecktopGroup(tp,ct+1)
-	g2:Sub(g1)
-	if g1:GetFirst():IsType(TYPE_ARMOR) and g1:GetFirst():IsCanBeSpecialSummoned(e,0,tp,false,false) and ft>0 then
-		Duel.SpecialSummonStep(g1:GetFirst(),0,tp,tp,false,false,POS_FACEUP)
-		g:RemoveCard(g1:GetFirst())
-		ft=ft-1
-	end
-	local tc=g2:GetFirst()
-	if tc:IsType(TYPE_ARMOR) and tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and ft>0 then
-		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
-		g:RemoveCard(tc)
-		ft=ft-1
-	end
-	while ct+1<10 do
-		ct=ct+1
-		g1=Duel.GetDecktopGroup(tp,ct)
-		g2=Duel.GetDecktopGroup(tp,ct+1)
-		g2:Sub(g1)
-		tc=g2:GetFirst()
-		if tc:IsType(TYPE_ARMOR) and tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and ft>0 then
-			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
+	--sorting by function above
+	table.sort(tg,sortbyseq)
+	local sg=Group.CreateGroup()
+	for _,tc in pairs(tg) do
+		if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
+			sg:AddCard(tc)
 			g:RemoveCard(tc)
-			ft=ft-1
 		end
+		--stop checking to summon if there are no more zones
+		if #sg==ft then break end
 	end
 	Duel.SpecialSummonComplete()
 	Duel.Remove(g,POS_FACEUP,REASON_EFFECT)

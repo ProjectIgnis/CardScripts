@@ -59,7 +59,7 @@ function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 end
 function s.atkfilter(c)
-	return c:IsFaceup() and aux.nzdef(c) and c:IsSetCard(0x19)
+	return c:IsFaceup() and c:HasNonZeroDefense() and c:IsSetCard(0x19)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.atkfilter(chkc) end

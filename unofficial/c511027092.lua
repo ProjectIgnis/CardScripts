@@ -69,7 +69,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local att=2^(dice-1)
 	local tg=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	local g=Group.CreateGroup()
-	for tc in aux.Next(tg) do
+	for tc in tg:Iter() do
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
@@ -85,7 +85,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 	end
 	if #g>0 then
-		local dg=g:Filter(aux.NOT(aux.nzatk),nil)
+		local dg=g:Filter(aux.NOT(Card.HasNonZeroAttack),nil)
 		local dam1=dg:Filter(Card.IsControler,nil,tp):GetSum(s.atkfilter)
 		local dam2=dg:Filter(Card.IsControler,nil,1-tp):GetSum(s.atkfilter)
 		Duel.Damage(tp,dam1,REASON_EFFECT,true)

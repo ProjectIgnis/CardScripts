@@ -21,7 +21,7 @@ function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
 function s.negfilter(c,p,eg)
-	return c:IsSummonPlayer(p) and eg:IsContains(c) and (aux.nzatk(c) or aux.disfilter1(c))
+	return c:IsSummonPlayer(p) and eg:IsContains(c) and (c:HasNonZeroAttack() or aux.disfilter1(c))
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.negfilter(chkc,1-tp,eg) end

@@ -963,11 +963,11 @@ function Auxiliary.indoval(e,re,rp)
 	return rp==1-e:GetHandlerPlayer()
 end
 --filter for non-zero ATK monsters
-function Auxiliary.nzatk(c)
+function Card.HasNonZeroAttack(c)
 	return c:IsFaceup() and c:GetAttack()>0
 end
 --filter for non-zero DEF monsters
-function Auxiliary.nzdef(c)
+function Card.HasNonZeroDefense(c)
 	return c:IsFaceup() and c:GetDefense()>0
 end
 --flag effect for summon/sp_summon turn

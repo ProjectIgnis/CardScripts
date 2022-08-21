@@ -49,7 +49,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	return true
 end
 function s.filter(c,tp,costchk)
-	return c:IsFaceup() and aux.nzdef(c) and (not costchk or s[tp]==0 or c:GetFlagEffect(id)~=0)
+	return c:IsFaceup() and c:HasNonZeroDefense() and (not costchk or s[tp]==0 or c:GetFlagEffect(id)~=0)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local costchk=e:GetLabel()==1
@@ -79,7 +79,7 @@ function s.ftarget(e,c)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -88,4 +88,3 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 	end
 end
-

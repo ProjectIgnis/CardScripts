@@ -20,7 +20,7 @@ function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	if c:IsFacedown() then return false end
 	e:SetLabelObject(tc)
-	return tc:IsLocation(LOCATION_MZONE) and tc:IsType(TYPE_MONSTER)
+	return tc:IsLocation(LOCATION_MZONE) and tc:IsMonster()
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

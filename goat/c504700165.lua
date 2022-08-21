@@ -37,7 +37,7 @@ s.listed_series={0x45}
 function s.lrcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
 	local rc=re:GetHandler()
-	return Duel.GetCurrentPhase()==PHASE_STANDBY and rc:IsSetCard(0x45) and rc:IsType(TYPE_MONSTER)
+	return Duel.GetCurrentPhase()==PHASE_STANDBY and rc:IsSetCard(0x45) and rc:IsMonster()
 end
 function s.regfilter(c)
 	return c:IsReason(REASON_DESTROY) and not c:IsReason(REASON_BATTLE) and c:IsSetCard(0x45) and c:HasLevel()

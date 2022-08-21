@@ -83,7 +83,7 @@ end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
 	local rc=re:GetHandler()
-	return e:GetHandler():IsReason(REASON_EFFECT) and rc:IsSetCard(0xe6) and rc:IsType(TYPE_MONSTER)
+	return e:GetHandler():IsReason(REASON_EFFECT) and rc:IsSetCard(0xe6) and rc:IsMonster()
 end
 	--Add 1 spell/trap card from GY to hand
 function s.thop(e,tp,eg,ep,ev,re,r,rp)

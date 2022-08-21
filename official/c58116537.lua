@@ -71,7 +71,7 @@ function s.atkcon1(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp
 end
 function s.atkcon2(e,tp,eg,ep,ev,re,r,rp)
-	return rp==tp and re:GetHandler():IsSetCard(0x137) and re:GetHandler():IsType(TYPE_MONSTER)
+	return rp==tp and re:GetHandler():IsSetCard(0x137) and re:GetHandler():IsMonster()
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x137),tp,LOCATION_MZONE,0,1,nil) end

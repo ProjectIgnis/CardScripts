@@ -38,5 +38,5 @@ function s.indtg(e,c)
 	return c:IsRace(RACE_DINOSAUR) and c:IsFaceup()
 end
 function s.indesval(e,re)
-	return re:GetHandler():IsType(TYPE_MONSTER)
+	return re:GetHandler():IsMonster()
 end

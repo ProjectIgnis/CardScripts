@@ -13,7 +13,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0xaf}
 function s.filter(c)
-	return c:IsSetCard(0xaf) and (c:IsType(TYPE_MONSTER) or c:IsLocation(LOCATION_PZONE)) and (c:IsFaceup() or c:IsLocation(LOCATION_HAND)) and c:IsAbleToDeck()
+	return c:IsSetCard(0xaf) and (c:IsMonster() or c:IsLocation(LOCATION_PZONE)) and (c:IsFaceup() or c:IsLocation(LOCATION_HAND)) and c:IsAbleToDeck()
 end
 function s.thfilter(c)
 	return c:IsSetCard(0xaf) and c:IsMonster() and c:IsAbleToHand()

@@ -59,6 +59,6 @@ end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if not tc or not tc:IsType(TYPE_MONSTER) then return end
+	if not tc or not tc:IsMonster() then return end
 	if not s.equipop(c,e,tp,tc) then return end
 end

@@ -46,7 +46,7 @@ end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsType(TYPE_MONSTER) then
+	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsMonster() then
 		if not Duel.Equip(tp,tc,c,false) then return end
 		--Add Equip limit
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)

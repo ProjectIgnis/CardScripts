@@ -52,7 +52,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	Duel.Draw(p,d,REASON_EFFECT)
 	Duel.ConfirmCards(1-p,tc)
-	if tc and tc:IsType(TYPE_MONSTER) then
+	if tc and tc:IsMonster() then
 		Duel.Damage(1-tp,tc:GetLevel()*300,REASON_EFFECT)
 	end
 	Duel.ShuffleHand(p)

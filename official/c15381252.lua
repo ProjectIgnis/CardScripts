@@ -35,7 +35,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmDecktop(tp,1)
 		local g=Duel.GetDecktopGroup(tp,1)
 		local tc=g:GetFirst()
-		if tc:IsType(TYPE_MONSTER) then
+		if tc:IsMonster() then
 			Duel.DisableShuffleCheck()
 			Duel.SendtoGrave(tc,REASON_EFFECT+REASON_REVEAL)
 			if tc:IsLocation(LOCATION_GRAVE) then

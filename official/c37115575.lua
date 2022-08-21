@@ -70,7 +70,7 @@ function s.descon(e)
 end
 function s.decon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsRelateToBattle() and c:GetBattleTarget():IsType(TYPE_MONSTER)
+	return c:IsRelateToBattle() and c:GetBattleTarget():IsMonster()
 end
 function s.defilter(c)
 	return c:IsFaceup()

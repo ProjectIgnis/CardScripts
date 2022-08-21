@@ -26,7 +26,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x79,0x7c}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:GetHandler():IsSetCard(0x79) and re:GetHandler():IsType(TYPE_MONSTER)
+	return re:GetHandler():IsSetCard(0x79) and re:GetHandler():IsMonster()
 end
 function s.thfilter(c)
 	return c:IsSetCard(0x79) and c:IsMonster() and c:IsAbleToHand()

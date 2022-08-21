@@ -67,7 +67,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,1,1,nil,tp):GetFirst()
 	Duel.SendtoGrave(tc,REASON_COST)
 	local tpe=0
-	if tc:IsType(TYPE_MONSTER) then tpe=tpe|TYPE_MONSTER end
+	if tc:IsMonster() then tpe=tpe|TYPE_MONSTER end
 	if tc:IsSpell() then tpe=tpe|TYPE_SPELL end
 	if tc:IsTrap() then tpe=tpe|TYPE_TRAP end
 	e:SetLabel(tpe)

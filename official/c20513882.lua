@@ -21,7 +21,7 @@ function s.cfilter(c,tp)
 		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,c)
 end
 function s.thfilter(c,tc)
-	return c:IsType(TYPE_MONSTER)
+	return c:IsMonster()
 		and c:GetOriginalLevel()==tc:GetOriginalLevel()
 		and c:GetOriginalRace()==tc:GetOriginalRace()
 		and c:GetOriginalAttribute()==tc:GetOriginalAttribute()

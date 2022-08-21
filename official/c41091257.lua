@@ -40,7 +40,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetDecktopGroup(1-tp,1)
 	local tc=g:GetFirst()
 	local opt=e:GetLabel()
-	if (opt==0 and tc:IsType(TYPE_MONSTER)) or (opt==1 and tc:IsSpell()) or (opt==2 and tc:IsTrap()) then
+	if (opt==0 and tc:IsMonster()) or (opt==1 and tc:IsSpell()) or (opt==2 and tc:IsTrap()) then
 		if not c:IsRelateToEffect(e) then return end
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end

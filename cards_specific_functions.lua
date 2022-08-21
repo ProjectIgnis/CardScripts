@@ -123,7 +123,7 @@ end
 function Auxiliary.SpElimFilter(c,mustbefaceup,includemzone)
 	--includemzone - contains MZONE in original requirement
 	--NOTE: Should only check LOCATION_MZONE+LOCATION_GRAVE
-	if c:IsType(TYPE_MONSTER) then
+	if c:IsMonster() then
 		if mustbefaceup and c:IsLocation(LOCATION_MZONE) and c:IsFacedown() then return false end
 		if includemzone then return c:IsLocation(LOCATION_MZONE) or not Duel.IsPlayerAffectedByEffect(c:GetControler(),69832741) end
 		if Duel.IsPlayerAffectedByEffect(c:GetControler(),69832741) then

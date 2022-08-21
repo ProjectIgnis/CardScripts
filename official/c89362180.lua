@@ -35,7 +35,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsGeminiState() then return false end
 	local bc=c:GetBattleTarget()
 	if not c:IsRelateToBattle() or c:IsFacedown() then return false end
-	return bc:IsLocation(LOCATION_GRAVE) and bc:IsType(TYPE_MONSTER)
+	return bc:IsLocation(LOCATION_GRAVE) and bc:IsMonster()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local bc=e:GetHandler():GetBattleTarget()

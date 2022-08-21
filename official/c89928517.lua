@@ -29,7 +29,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc2=hg2:Select(1-tp,1,1,nil):GetFirst()
 	Duel.ConfirmCards(1-tp,tc1)
 	Duel.ConfirmCards(tp,tc2)
-	if tc1:IsType(TYPE_MONSTER) and tc2:IsType(TYPE_MONSTER) then
+	if tc1:IsMonster() and tc2:IsMonster() then
 		local ask1=Duel.SelectYesNo(tp,aux.Stringid(id,1))
 		local ask2=Duel.SelectYesNo(1-tp,aux.Stringid(id,1))
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and tc1:IsCanBeSpecialSummoned(e,0,tp,false,false) and ask1 then

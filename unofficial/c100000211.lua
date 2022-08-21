@@ -19,7 +19,7 @@ function s.atcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) end
 	Duel.DiscardDeck(tp,1,REASON_COST)
 	local tc=Duel.GetOperatedGroup():GetFirst()
-	if tc:IsType(TYPE_MONSTER) then
+	if tc:IsMonster() then
 		e:SetLabel(tc:GetLevel()-1)
 	else
 		e:SetLabel(0)

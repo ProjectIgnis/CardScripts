@@ -240,12 +240,12 @@ if not SealedDuel then
 			Duel.Hint(HINT_OPSELECTED,1-tp,aux.Stringid(4009,0)) 
 			local getrc=Card.GetRace
 			Card.GetRace=function(c)
-				if c:IsType(TYPE_MONSTER) then return 0xfffffff end
+				if c:IsMonster() then return 0xfffffff end
 				return getrc(c)
 			end
 			local getorigrc=Card.GetOriginalRace
 			Card.GetOriginalRace=function(c)
-				if c:IsType(TYPE_MONSTER) then return 0xfffffff end
+				if c:IsMonster() then return 0xfffffff end
 				return getorigrc(c)
 			end
 			local getprevrc=Card.GetPreviousRaceOnField
@@ -255,7 +255,7 @@ if not SealedDuel then
 			end
 			local isrc=Card.IsRace
 			Card.IsRace=function(c,r)
-				if c:IsType(TYPE_MONSTER) then return true end
+				if c:IsMonster() then return true end
 				return isrc(c,r)
 			end
 		end

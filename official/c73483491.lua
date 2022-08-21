@@ -26,7 +26,7 @@ end
 s.listed_series={0x2}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsRelateToBattle() and c:GetBattleTarget():IsType(TYPE_MONSTER)
+	return c:IsRelateToBattle() and c:GetBattleTarget():IsMonster()
 end
 function s.filter(c)
 	return c:IsSetCard(0x2) and c:IsAbleToHand()

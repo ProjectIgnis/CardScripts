@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return (e:GetHandler():GetReasonEffect() and e:GetHandler():GetReasonEffect():GetOwner():IsType(TYPE_MONSTER)) 
+	if chk==0 then return (e:GetHandler():GetReasonEffect() and e:GetHandler():GetReasonEffect():GetOwner():IsMonster()) 
 		or (e:GetHandler():IsReason(REASON_BATTLE) and e:GetHandler():GetReasonCard():IsRelateToBattle()) end
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)

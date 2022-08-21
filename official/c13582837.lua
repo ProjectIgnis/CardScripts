@@ -28,7 +28,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if tc then
 		Duel.ConfirmCards(1-tp,tc)
 		Duel.BreakEffect()
-		if tc:IsType(TYPE_MONSTER) then
+		if tc:IsMonster() then
 			Duel.Damage(1-tp,tc:GetLevel()*200,REASON_EFFECT)
 		else
 			Duel.Damage(tp,500,REASON_EFFECT)

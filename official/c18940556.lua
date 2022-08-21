@@ -74,7 +74,7 @@ function s.posfilter(c)
 	return c:IsFaceup() and c:IsCanTurnSet()
 end
 function s.filter(c)
-	return not c:IsPublic() or c:IsType(TYPE_MONSTER)
+	return not c:IsPublic() or c:IsMonster()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil,TYPE_MONSTER)

@@ -443,7 +443,7 @@ end
 --For Links: false. For Xyzs: false, except if affected by  "EFFECT_RANK_LEVEL..." effects
 --For Dark Synchros: true, because they have a negative level. For level 0: true, because 0 is a value
 function Card.HasLevel(c)
-	if c:IsType(TYPE_MONSTER) then
+	if c:IsMonster() then
 		return c:GetType()&TYPE_LINK~=TYPE_LINK
 			and (c:GetType()&TYPE_XYZ~=TYPE_XYZ and not (c:IsHasEffect(EFFECT_RANK_LEVEL) or c:IsHasEffect(EFFECT_RANK_LEVEL_S)))
 			and not c:IsStatus(STATUS_NO_LEVEL)
@@ -919,13 +919,13 @@ end
 function Auxiliary.bdgcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
-	return c:IsRelateToBattle() and bc:IsLocation(LOCATION_GRAVE) and bc:IsType(TYPE_MONSTER)
+	return c:IsRelateToBattle() and bc:IsLocation(LOCATION_GRAVE) and bc:IsMonster()
 end
 --condition of EVENT_BATTLE_DESTROYING + opponent monster + to_grave
 function Auxiliary.bdogcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
-	return c:IsRelateToBattle() and c:IsStatus(STATUS_OPPO_BATTLE) and bc:IsLocation(LOCATION_GRAVE) and bc:IsType(TYPE_MONSTER)
+	return c:IsRelateToBattle() and c:IsStatus(STATUS_OPPO_BATTLE) and bc:IsLocation(LOCATION_GRAVE) and bc:IsMonster()
 end
 --condition of EVENT_TO_GRAVE + destroyed_by_opponent_from_field
 function Auxiliary.dogcon(e,tp,eg,ep,ev,re,r,rp)
@@ -1065,7 +1065,7 @@ end
 --Cost for effect "You can banish this card from your Graveyard"
 function Auxiliary.bfgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return (not Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),69832741) or not c:IsType(TYPE_MONSTER)
+	if chk==0 then return (not Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),69832741) or not c:IsMonster()
 		or not c:IsLocation(LOCATION_GRAVE)) and c:IsAbleToRemoveAsCost() end
 	Duel.Remove(c,POS_FACEUP,REASON_COST)
 end

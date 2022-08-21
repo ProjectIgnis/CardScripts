@@ -22,7 +22,7 @@ end
 function s.condtion(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
 	local rc=re:GetHandler()
-	return rp==tp and (r&REASON_EFFECT)~=0 and not rc:IsCode(id) and rc:IsSetCard(0x38) and rc:IsType(TYPE_MONSTER)
+	return rp==tp and (r&REASON_EFFECT)~=0 and not rc:IsCode(id) and rc:IsSetCard(0x38) and rc:IsMonster()
 		and re:GetActivateLocation()==LOCATION_MZONE and eg:IsExists(s.cfilter,1,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

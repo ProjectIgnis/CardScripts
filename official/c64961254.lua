@@ -58,7 +58,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	if not tc then return end
 	local opt=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
-	if (opt==0 and tc:IsType(TYPE_MONSTER)
+	if (opt==0 and tc:IsMonster()
 		and Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0
 		and tc:IsCanBeSpecialSummoned(e,0,1-tp,false,false,POS_FACEDOWN_DEFENSE,1-tp)) then
 		Duel.SpecialSummon(tc,0,1-tp,1-tp,false,false,POS_FACEDOWN_DEFENSE)

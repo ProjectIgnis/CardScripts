@@ -17,7 +17,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			Duel.ConfirmCards(1-tp,td)
 			local desc
 			local label
-			if td:IsType(TYPE_MONSTER) then
+			if td:IsMonster() then
 				label=TYPE_MONSTER
 				desc=70
 			elseif td:IsType(TYPE_SPELL) then

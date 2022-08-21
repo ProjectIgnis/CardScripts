@@ -46,7 +46,7 @@ function s.sp(e,tp,ct)
 	if dt==0 then return end
 	local dlist={}
 	for tc in g:Iter() do
-		if tc:IsType(TYPE_MONSTER) then dlist[tc:GetSequence()]=tc end
+		if tc:IsMonster() then dlist[tc:GetSequence()]=tc end
 	end
 	local i=dt-1
 	local a=0

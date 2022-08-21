@@ -63,7 +63,7 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=e:GetLabelObject()
 	local bc=tc:GetBattleTarget()
-	return eg:IsContains(tc) and bc:IsLocation(LOCATION_GRAVE) and bc:IsType(TYPE_MONSTER)
+	return eg:IsContains(tc) and bc:IsLocation(LOCATION_GRAVE) and bc:IsMonster()
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

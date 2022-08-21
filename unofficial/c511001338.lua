@@ -91,7 +91,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
 		local atk=tc:GetAttack()
-		if tc:IsFacedown() or not tc:IsType(TYPE_MONSTER) then
+		if tc:IsFacedown() or not tc:IsMonster() then
 			atk=0
 		end
 		if Duel.Destroy(tc,REASON_EFFECT)>0 and atk>0 then

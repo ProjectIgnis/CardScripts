@@ -44,7 +44,7 @@ function s.filter3(c,tp)
 	return c:IsMonster() and c:IsCubicSeed()
 end
 function s.condition0(e,tp,eg,ev,ep,re,r,rp)
-	return eg:IsExists(s.filter3,1,nil,tp) and re:GetHandler():IsType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0xe3) and Duel.GetTurnPlayer()~=tp
+	return eg:IsExists(s.filter3,1,nil,tp) and re:GetHandler():IsMonster() and re:GetHandler():IsSetCard(0xe3) and Duel.GetTurnPlayer()~=tp
 end
 function s.cost0(e,tp,eg,ev,ep,re,r,rp,chk)
 	local c=e:GetHandler()

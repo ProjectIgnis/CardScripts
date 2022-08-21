@@ -49,22 +49,22 @@ function s.costfilter(c,g)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local lg=e:GetHandler():GetLinkedGroup()
-	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and aux.disfilter3(chkc) end
+	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and chkc:IsNegatable() end
 	if chk==0 then
 		if e:GetLabel()==1 then
 			e:SetLabel(0)
 			return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE,0,1,nil,lg)
-				and Duel.IsExistingTarget(aux.disfilter3,tp,0,LOCATION_ONFIELD,1,nil)
+				and Duel.IsExistingTarget(Card.IsNegatable,tp,0,LOCATION_ONFIELD,1,nil)
 		else return false end
 	end
 	e:SetLabel(0)
-	local rt=Duel.GetTargetCount(aux.disfilter3,tp,0,LOCATION_ONFIELD,nil)
+	local rt=Duel.GetTargetCount(Card.IsNegatable,tp,0,LOCATION_ONFIELD,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local cg=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_MZONE,0,1,rt,nil,lg)
 	local ct=#cg
 	Duel.SendtoHand(cg,nil,REASON_COST)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local g=Duel.SelectTarget(tp,aux.disfilter3,tp,0,LOCATION_ONFIELD,ct,ct,nil)
+	local g=Duel.SelectTarget(tp,Card.IsNegatable,tp,0,LOCATION_ONFIELD,ct,ct,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,#g,0,0)
 end
 function s.disfilter(c,e)

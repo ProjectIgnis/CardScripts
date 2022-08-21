@@ -30,7 +30,7 @@ function s.cfilter(c,tp)
 	return c:IsFaceup() and c:IsRace(RACE_WARRIOR) and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
 end
 function s.distg(e,c)
-	return c:GetCardTargetCount()>0 and c:IsType(TYPE_SPELL)
+	return c:GetCardTargetCount()>0 and c:IsSpell()
 		and c:GetCardTarget():IsExists(s.cfilter,1,nil,e:GetHandlerPlayer())
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)

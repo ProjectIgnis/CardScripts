@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	end)
 end
 function s.filter(c,tp)
-	return c:IsType(TYPE_LINK) and c:IsType(TYPE_SPELL) and c:GetActivateEffect() and c:GetActivateEffect():IsActivatable(tp,true,true)
+	return c:IsType(TYPE_LINK) and c:IsSpell() and c:GetActivateEffect() and c:GetActivateEffect():IsActivatable(tp,true,true)
 end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--condition

@@ -30,7 +30,7 @@ function s.moneqfilter(c,tp,ft,sc)
 		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x56),tp,LOCATION_MZONE,0,1,sc)
 end
 function s.eqspfilter(c,tp,ft,sc)
-	return c:IsSetCard(0x56) and c:IsType(TYPE_EQUIP) and c:IsType(TYPE_SPELL)
+	return c:IsSetCard(0x56) and c:IsType(TYPE_EQUIP) and c:IsSpell()
 		and (ft>0 or (sc and sc:IsLocation(LOCATION_SZONE) and sc:GetSequence()<5))
 		and Duel.IsExistingMatchingCard(s.eqfilter,tp,LOCATION_MZONE,0,1,sc,c)
 end

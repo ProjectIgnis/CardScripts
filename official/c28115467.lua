@@ -48,7 +48,7 @@ function s.thfilter(c)
 	return c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and chkc:IsType(TYPE_SPELL+TYPE_TRAP) and chkc:IsAbleToHand() and chkc:IsController(1-tp) end
+	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and chkc:IsSpellTrap() and chkc:IsAbleToHand() and chkc:IsController(1-tp) end
 	if chk==0 then return Duel.IsExistingTarget(s.thfilter,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g=Duel.SelectTarget(tp,s.thfilter,tp,0,LOCATION_ONFIELD,1,1,nil)

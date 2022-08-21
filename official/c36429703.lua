@@ -86,7 +86,7 @@ function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	]]
 end
 function s.setfilter(c)
-	return c:IsType(TYPE_SPELL) and c:IsSetCard(0x95) and c:IsSSetable()
+	return c:IsSpell() and c:IsSetCard(0x95) and c:IsSSetable()
 end
 function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<1 then return end

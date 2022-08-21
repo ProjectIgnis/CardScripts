@@ -18,7 +18,7 @@ function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return re and re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and e:GetHandler():IsPreviousControler(tp)
 end
 function s.filter(c)
-	return c:IsType(TYPE_SPELL) and c:IsSSetable()
+	return c:IsSpell() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>=2

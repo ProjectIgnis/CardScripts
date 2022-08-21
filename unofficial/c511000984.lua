@@ -43,7 +43,7 @@ function s.filter(c,tp)
 			if type(prev)~='function' or prev(eff,te,tp) then return false end
 		end
 	end
-	return c:IsType(TYPE_SPELL) and c:CheckActivateEffect(false,false,false)~=nil
+	return c:IsSpell() and c:CheckActivateEffect(false,false,false)~=nil
 end
 function s.actg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>-1

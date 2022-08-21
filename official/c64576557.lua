@@ -41,7 +41,7 @@ end
 s.listed_series={0xe2}
 s.listed_names={id}
 function s.thconfilter(c)
-	return c:IsFaceup() and c:IsLocation(LOCATION_FZONE) and c:IsType(TYPE_SPELL) and c:IsType(TYPE_FIELD)
+	return c:IsFaceup() and c:IsLocation(LOCATION_FZONE) and c:IsSpell() and c:IsType(TYPE_FIELD)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,tp)
-	return c:IsControler(1-tp) and c:IsAbleToHand() and c:IsType(TYPE_SPELL)
+	return c:IsControler(1-tp) and c:IsAbleToHand() and c:IsSpell()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.filter,nil,tp)

@@ -33,7 +33,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if #g==0 then return end
 	local sg=g:RandomSelect(ep,1)
 	Duel.ConfirmCards(tp,sg)
-	if sg:GetFirst():IsType(TYPE_SPELL) then
+	if sg:GetFirst():IsSpell() then
 		Duel.SendtoGrave(sg,REASON_EFFECT)
 	end
 	Duel.ShuffleHand(1-tp)

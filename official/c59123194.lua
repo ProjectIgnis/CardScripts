@@ -32,7 +32,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsSummonType(SUMMON_TYPE_SYNCHRO) and c:GetMaterial():IsExists(s.pmfilter,1,nil,c)
 end
 function s.thfilter(c)
-	return c:IsType(TYPE_SPELL) and c:IsAbleToHand()
+	return c:IsSpell() and c:IsAbleToHand()
 end
 function s.pmfilter(c,sc)
 	return c:IsSetCard(0x98) and c:IsType(TYPE_PENDULUM,sc,SUMMON_TYPE_SYNCHRO)

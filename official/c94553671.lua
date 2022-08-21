@@ -42,7 +42,7 @@ function s.tdfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_SPELLCASTER)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x128) and c:IsType(TYPE_SPELL) and c:IsAbleToHand()
+	return c:IsSetCard(0x128) and c:IsSpell() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and chkc:IsControler(tp) and s.tdfilter(chkc) end
@@ -67,7 +67,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter2(c)
-	return c:IsSetCard(0x128) and c:IsType(TYPE_SPELL) and c:IsFaceup() and c:IsAbleToHand()
+	return c:IsSetCard(0x128) and c:IsSpell() and c:IsFaceup() and c:IsAbleToHand()
 end
 function s.thcheck(sg)
 	return sg:GetClassCount(Card.GetCode)==#sg

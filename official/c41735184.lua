@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_DARK_MAGICIAN,CARD_DARK_MAGICIAN_GIRL}
 function s.cfilter(c)
-	return c:IsType(TYPE_SPELL) and c:IsAbleToRemoveAsCost()
+	return c:IsSpell() and c:IsAbleToRemoveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,2,nil) end

@@ -55,7 +55,7 @@ function s.accon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cfilter(c,e,tp,eg,ep,ev,re,r,rp,chain,chk)
 	local te=c:GetActivateEffect()
-	if not te or not c:IsType(TYPE_SPELL+TYPE_TRAP) or not c:IsAbleToGraveAsCost() then return false end
+	if not te or not c:IsSpellTrap() or not c:IsAbleToGraveAsCost() then return false end
 	local condition=te:GetCondition()
 	local cost=te:GetCost()
 	local target=te:GetTarget()

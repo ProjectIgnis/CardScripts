@@ -30,7 +30,7 @@ function s.tgval(e,re,rp)
 	return re:IsActiveType(TYPE_SPELL)
 end
 function s.costfilter(c)
-	return c:IsType(TYPE_SPELL) and c:IsDiscardable()
+	return c:IsSpell() and c:IsDiscardable()
 end
 function s.eqcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end

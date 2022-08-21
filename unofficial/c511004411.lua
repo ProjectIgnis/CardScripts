@@ -51,7 +51,7 @@ function s.operation(e,tp,eg,ev,ep,re,r,rp)
 	e1:SetValue(code)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
 	c:RegisterEffect(e1)
-	if te:GetHandler():IsType(TYPE_SPELL) then
+	if te:GetHandler():IsSpell() then
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_CHANGE_TYPE)
 		e2:SetValue(TYPE_SPELL+TYPE_CONTINUOUS)

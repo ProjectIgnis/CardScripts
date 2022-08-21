@@ -94,7 +94,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	aux.RegisterClientHint(c,nil,tp,1,0,aux.Stringid(id,0),nil)
 end
 function s.aclimit(e,re,tp)
-	return re:GetHandler():IsType(TYPE_SPELL)
+	return re:GetHandler():IsSpell()
 end
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp)
 	return (sumpos&POS_FACEDOWN)~=0

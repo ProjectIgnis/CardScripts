@@ -51,7 +51,7 @@ function s.shcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsContains(tc) and tc:GetFlagEffect(id)~=0
 end
 function s.shfilter(c)
-	return c:IsSetCard(0x106e) and c:IsType(TYPE_SPELL) and c:IsAbleToHand()
+	return c:IsSetCard(0x106e) and c:IsSpell() and c:IsAbleToHand()
 end
 function s.shtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.shfilter,tp,LOCATION_DECK,0,1,nil) end

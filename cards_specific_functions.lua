@@ -357,7 +357,7 @@ end
 --Discard cost for Witchcrafter monsters, supports the replacements from the Continuous Spells
 local Witchcrafter={}
 function Witchcrafter.DiscardSpell(c)
-	return c:IsDiscardable() and c:IsType(TYPE_SPELL)
+	return c:IsDiscardable() and c:IsSpell()
 end
 function Witchcrafter.DiscardCost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Witchcrafter.DiscardSpell,tp,LOCATION_HAND,0,1,nil) end

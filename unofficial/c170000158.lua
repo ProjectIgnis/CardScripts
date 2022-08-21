@@ -17,7 +17,7 @@ end
 s.listed_names={1784686,CARD_DARK_MAGICIAN}
 s.material_setcode=0x10a2
 function s.cfilter(c)
-	return c:IsType(TYPE_SPELL) and c:IsAbleToRemove()
+	return c:IsSpell() and c:IsAbleToRemove()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_GRAVE,0,e:GetHandler())

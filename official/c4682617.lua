@@ -30,7 +30,7 @@ function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x10ec) and c:IsType(TYPE_PENDULUM) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.ctfilter(c)
-	return c:IsType(TYPE_SPELL) and c:IsSetCard(0x20ec)
+	return c:IsSpell() and c:IsSetCard(0x20ec)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.ctfilter,tp,LOCATION_GRAVE,0,1,nil) and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_EXTRA,0,1,nil) end

@@ -13,9 +13,6 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.dfilter(c)
-	return c:IsType(TYPE_SPELL)
-end
 function s.filter(c,e,tp)
 	return c:IsControler(tp) and (not c:IsReason(REASON_DRAW)) and (not e or c:IsRelateToEffect(e))
 end
@@ -32,7 +29,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.filter,nil,e,1-tp)
 	if #g==0 then return end
 	Duel.ConfirmCards(1-ep,g)
-	local dg=g:Filter(s.dfilter,nil)
+	local dg=g:Filter(Card.IsSpell,nil)
 	Duel.Destroy(dg,REASON_EFFECT)
 	Duel.ShuffleHand(ep)
 end

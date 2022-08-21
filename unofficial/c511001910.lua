@@ -15,7 +15,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,5,tp,LOCATION_DECK)
 end
 function s.filter(c)
-	return c:IsLocation(LOCATION_GRAVE) and c:IsType(TYPE_SPELL)
+	return c:IsLocation(LOCATION_GRAVE) and c:IsSpell()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToGrave,tp,LOCATION_DECK,0,nil)

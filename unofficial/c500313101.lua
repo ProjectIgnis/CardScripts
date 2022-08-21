@@ -34,7 +34,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_SZONE) and e:GetHandler():IsPreviousPosition(POS_FACEUP)
 end
 function s.thfilter(c)
-	return c:IsType(TYPE_SPELL) and c:IsAbleToHand() and c:GetFlagEffect(id)~=0
+	return c:IsSpell() and c:IsAbleToHand() and c:GetFlagEffect(id)~=0
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

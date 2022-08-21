@@ -27,7 +27,7 @@ function s.filter2(c,e,tp,mft,sft,code)
 end
 function s.filter(c,e,tp,mft,sft)
 	return  c:IsAbleToHand() and
-	((c:IsType(TYPE_MONSTER) and (c:IsSetCard(0xbf) or c:IsSetCard(0x10c0))) or (c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0xc0)))
+	((c:IsType(TYPE_MONSTER) and (c:IsSetCard(0xbf) or c:IsSetCard(0x10c0))) or (c:IsSpellTrap() and c:IsSetCard(0xc0)))
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK,0,1,c,e,tp,mft,sft,c:GetCode())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

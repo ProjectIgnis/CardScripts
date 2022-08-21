@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x95}
 function s.cfilter(c)
-	return c:IsDiscardable() and c:IsType(TYPE_SPELL)
+	return c:IsDiscardable() and c:IsSpell()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
@@ -22,7 +22,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.filter1(c,e,tp,eg,ep,ev,re,r,rp)
 	local te=c:CheckActivateEffect(false,false,false)
-	if c:IsType(TYPE_SPELL) and te then
+	if c:IsSpell() and te then
 		if c:IsSetCard(0x95) then
 			local tg=te:GetTarget()
 			return not tg or tg(e,tp,eg,ep,ev,re,r,rp,0)
@@ -34,7 +34,7 @@ function s.filter1(c,e,tp,eg,ep,ev,re,r,rp)
 end
 function s.filter2(c,e,tp,eg,ep,ev,re,r,rp)
 	local te=c:CheckActivateEffect(false,false,false)
-	if c:IsType(TYPE_SPELL) and not c:IsType(TYPE_EQUIP+TYPE_CONTINUOUS) and te then
+	if c:IsSpell() and not c:IsType(TYPE_EQUIP+TYPE_CONTINUOUS) and te then
 		if c:IsSetCard(0x95) then
 			local tg=te:GetTarget()
 			return not tg or tg(e,tp,eg,ep,ev,re,r,rp,0)

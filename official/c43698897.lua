@@ -31,7 +31,7 @@ end
 s.listed_series={0x46,0xad}
 s.listed_names={6077601}
 function s.spfilter(c)
-	return c:IsSetCard(0x46) and c:IsType(TYPE_SPELL) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(0x46) and c:IsSpell() and c:IsAbleToRemoveAsCost()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil) end

@@ -58,7 +58,7 @@ function s.copycost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function s.copyfilter(c)
-	return c:IsAbleToGraveAsCost() and c:IsSetCard(0x95) and c:IsType(TYPE_SPELL)
+	return c:IsAbleToGraveAsCost() and c:IsSetCard(0x95) and c:IsSpell()
 		and c:CheckActivateEffect(true,true,false)~=nil 
 end
 function s.copytg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

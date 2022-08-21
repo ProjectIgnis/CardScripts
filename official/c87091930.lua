@@ -61,7 +61,7 @@ function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsPreviousLocation(LOCATION_SZONE) and c:IsPreviousPosition(POS_FACEUP) and c:IsReason(REASON_EFFECT)
 end
 function s.setfilter(c)
-	return c:IsSetCard(0x95) and c:IsType(TYPE_SPELL) and c:IsSSetable()
+	return c:IsSetCard(0x95) and c:IsSpell() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) end

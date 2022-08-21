@@ -17,7 +17,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE)
 end
 function s.cfilter(c,tp)
-	return c:IsType(TYPE_SPELL) and c:IsAbleToRemoveAsCost()
+	return c:IsSpell() and c:IsAbleToRemoveAsCost()
 		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,c:GetCode())
 end
 function s.thfilter(c,code)

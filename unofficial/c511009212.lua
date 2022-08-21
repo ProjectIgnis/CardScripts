@@ -117,7 +117,7 @@ function s.resetop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetLabelObject():SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 end
 function s.afilter(c)
-	return c:IsType(TYPE_SPELL) and c:IsAbleToHand()
+	return c:IsSpell() and c:IsAbleToHand()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	_replace_count=_replace_count+1

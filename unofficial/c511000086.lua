@@ -17,7 +17,7 @@ function s.filter(c,tp)
 	local bool_a=c:IsType(TYPE_PENDULUM) and Duel.GetLocationCount(tp,LOCATION_PZONE)>0
 	local bool_b=c:IsType(TYPE_FIELD)
 	local bool_c=not c:IsType(TYPE_PENDULUM) and not c:IsType(TYPE_FIELD) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-	return c:IsType(TYPE_SPELL) and (bool_a or bool_b or bool_c) and c:IsFaceup()
+	return c:IsSpell() and (bool_a or bool_b or bool_c) and c:IsFaceup()
 		and c:IsAbleToChangeControler() and c:CheckActivateEffect(true,true,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

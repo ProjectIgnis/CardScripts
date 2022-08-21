@@ -54,5 +54,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tdfilter(c)
-	return c:IsAbleToDeck() and c:IsType(TYPE_SPELL)
+	return c:IsAbleToDeck() and c:IsSpell()
 end

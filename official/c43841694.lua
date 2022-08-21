@@ -17,7 +17,7 @@ function s.filter(c,e,tp)
 	return c:IsType(TYPE_XYZ) and c:IsRace(RACE_SPELLCASTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.filter2(c)
-	return c:IsFaceup() and c:IsSetCard(0x106e) and c:IsType(TYPE_SPELL)
+	return c:IsFaceup() and c:IsSetCard(0x106e) and c:IsSpell()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

@@ -31,7 +31,7 @@ end
 s.listed_series={0x122}
 s.listed_names={92182447}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return re and re:GetHandler():IsType(TYPE_SPELL) and e:GetHandler():IsPreviousLocation(LOCATION_HAND)
+	return re and re:GetHandler():IsSpell() and e:GetHandler():IsPreviousLocation(LOCATION_HAND)
 end
 function s.thfilter(c)
 	return c:IsCode(92182447) and c:IsAbleToHand()

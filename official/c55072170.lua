@@ -34,7 +34,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x128),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.cfilter(c,tp)
-	return c:IsType(TYPE_SPELL) and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,c)
+	return c:IsSpell() and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,c)
 end
 function s.thfilter(c,oc)
 	return c:IsCode(oc:GetCode()) and c:IsAbleToHand()
@@ -61,7 +61,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	return true
 end
 function s.cfilter2(c)
-	return c:IsType(TYPE_SPELL) and c:IsAbleToRemoveAsCost()
+	return c:IsSpell() and c:IsAbleToRemoveAsCost()
 end
 function s.spfilter(c,e,tp,lv)
 	return c:IsSetCard(0x128) and c:IsLevelBelow(lv) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

@@ -61,7 +61,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
 end
 function s.cfilter1(c)
-	return c:IsType(TYPE_EQUIP) and c:IsType(TYPE_SPELL) and c:IsAbleToRemove()
+	return c:IsType(TYPE_EQUIP) and c:IsSpell() and c:IsAbleToRemove()
 end
 function s.cfilter2(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemove()

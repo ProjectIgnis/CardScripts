@@ -220,7 +220,7 @@ function s.spelloperation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFieldCard(tp,LOCATION_DECK,an)
 	Duel.ConfirmCards(tp,tc)
 	Duel.ConfirmCards(1-tp,tc)
-	if tc:IsType(TYPE_SPELL) then
+	if tc:IsSpell() then
 		local tpe=tc:GetType()
 		local te=tc:GetActivateEffect()
 		local tg=te:GetTarget()

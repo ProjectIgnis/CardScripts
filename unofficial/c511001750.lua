@@ -92,7 +92,7 @@ function s.drop1(e,tp,eg,ep,ev,re,r,rp,c,og)
 		local tpe=0
 		if tc:IsType(TYPE_MONSTER) then
 			tpe=TYPE_MONSTER
-		elseif tc:IsType(TYPE_SPELL) then
+		elseif tc:IsSpell() then
 			tpe=TYPE_SPELL
 		elseif tc:IsType(TYPE_TRAP) then
 			tpe=TYPE_TRAP
@@ -139,7 +139,7 @@ function s.drop2(e,tp,eg,ep,ev,re,r,rp)
 		local tpe=0
 		if tc:IsType(TYPE_MONSTER) then
 			tpe=TYPE_MONSTER
-		elseif tc:IsType(TYPE_SPELL) then
+		elseif tc:IsSpell() then
 			tpe=TYPE_SPELL
 		elseif tc:IsType(TYPE_TRAP) then
 			tpe=TYPE_TRAP

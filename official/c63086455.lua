@@ -20,7 +20,7 @@ function s.tgfilter(c,e)
 	return c:IsAbleToGrave() and c:IsCanBeEffectTarget(e)
 end
 function s.setfilter(c,e,tp)
-	return c:IsCanBeEffectTarget(e) and ((c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable(true))
+	return c:IsCanBeEffectTarget(e) and ((c:IsSpellTrap() and c:IsSSetable(true))
 		or c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE,1-tp))
 end
 function s.rescon(sg,e,tp)
@@ -28,7 +28,7 @@ function s.rescon(sg,e,tp)
 	if #g1~=1 or #g2~=1 then return end
 	local c1,c2=g1:GetFirst(),g2:GetFirst()
 	if c2:IsMonster() then return Duel.GetMZoneCount(1-tp,c1)>0 end
-	return (c2:IsType(TYPE_SPELL) and c2:IsType(TYPE_FIELD))
+	return (c2:IsSpell() and c2:IsType(TYPE_FIELD))
 		or Duel.GetLocationCount(1-tp,LOCATION_SZONE)>0
 		or (c1:IsLocation(LOCATION_SZONE) and c1:GetSequence()<5 --[[and check if exc's zone is not disabled]])
 end

@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 end
 function s.filter(c)
-	return c:IsSummonType(SUMMON_TYPE_SPECIAL) and aux.nzatk(c)
+	return c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:HasNonZeroAttack()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end
@@ -43,7 +43,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if aux.nzatk(tc) and tc:IsRelateToEffect(e) then
+	if tc:HasNonZeroAttack() and tc:IsRelateToEffect(e) then
 		local c=e:GetHandler()
 		local fid=c:GetFieldID()
 		tc:RegisterFlagEffect(alias,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,fid)

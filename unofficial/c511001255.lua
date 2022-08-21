@@ -32,7 +32,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(p,d,REASON_EFFECT)
 	if h then
 		Duel.ConfirmCards(1-p,h)
-		if h:IsType(TYPE_MONSTER) then
+		if h:IsMonster() then
 			Duel.Damage(tp,h:GetTextAttack(),REASON_EFFECT)
 		end
 		Duel.ShuffleHand(p)

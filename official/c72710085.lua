@@ -21,7 +21,7 @@ function s.initial_effect(c)
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return #eg==1 and tc:IsPreviousLocation(LOCATION_GRAVE) and tc:IsControler(tp) and tc:IsType(TYPE_MONSTER)
+	return #eg==1 and tc:IsPreviousLocation(LOCATION_GRAVE) and tc:IsControler(tp) and tc:IsMonster()
 end
 function s.filter(c,att)
 	return not c:IsAttribute(att) and c:IsMonster() and c:IsAbleToGrave()

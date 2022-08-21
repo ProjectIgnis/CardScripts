@@ -17,7 +17,7 @@ s.listed_series={0x9f}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
-	return c:IsRelateToBattle() and bc:IsLocation(LOCATION_GRAVE) and bc:IsType(TYPE_MONSTER)
+	return c:IsRelateToBattle() and bc:IsLocation(LOCATION_GRAVE) and bc:IsMonster()
 end
 function s.filter(c)
 	return c:IsSetCard(0x9f) and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()

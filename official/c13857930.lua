@@ -41,7 +41,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Draw(tp,1,REASON_EFFECT)==0 then return end
 	local tc=Duel.GetOperatedGroup():GetFirst()
 	Duel.ConfirmCards(1-tp,tc)
-	if tc:IsType(TYPE_MONSTER) then
+	if tc:IsMonster() then
 		Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 	elseif tc:IsSpell() then
 		if c==Duel.GetAttacker() and not c:IsHasEffect(EFFECT_CANNOT_DIRECT_ATTACK)

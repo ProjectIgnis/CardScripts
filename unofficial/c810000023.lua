@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.sumtg(e,c)
-	return c:IsType(TYPE_MONSTER)
+	return c:IsMonster()
 end
 function s.ccost(e,c,tp)
 	return Duel.CheckLPCost(tp,1000)

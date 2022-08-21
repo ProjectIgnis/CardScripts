@@ -27,7 +27,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:RandomSelect(tp,1):GetFirst()
 	if tc then
 		Duel.ConfirmCards(1-tp,tc)
-		if tc:IsType(TYPE_MONSTER) then
+		if tc:IsMonster() then
 			if Duel.NegateAttack() and Duel.SendtoGrave(tc,REASON_EFFECT)>0 then
 				Duel.BreakEffect()
 				Duel.Draw(tp,1,REASON_EFFECT)

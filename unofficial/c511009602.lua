@@ -42,7 +42,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local sg=g:RandomSelect(tp,1)
 		if Duel.SendtoGrave(sg,REASON_EFFECT)>0 and sg:GetFirst():IsLocation(LOCATION_GRAVE) then
 			local tc=Duel.GetOperatedGroup():GetFirst()
-			if tc:IsType(TYPE_MONSTER) then
+			if tc:IsMonster() then
 				local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
 				if #g>0 then
 					local sg2=g:RandomSelect(tp,1)

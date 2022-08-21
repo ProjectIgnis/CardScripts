@@ -55,7 +55,7 @@ function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=eg:GetFirst()
 	local bc=ec:GetBattleTarget()
 	e:SetLabelObject(ec)
-	return ec:IsControler(tp) and ec:IsSetCard(0x106) and bc and bc:IsType(TYPE_MONSTER) 
+	return ec:IsControler(tp) and ec:IsSetCard(0x106) and bc and bc:IsMonster() 
 		and ec:CanChainAttack(0,true) and ec:IsStatus(STATUS_OPPO_BATTLE)
 end
 function s.atcfilter(c)

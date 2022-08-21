@@ -45,7 +45,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoGrave(hg,REASON_EFFECT+REASON_DISCARD)
 	Duel.ShuffleHand(1-tp)
 	local tc=hg:GetFirst()
-	if tc:IsType(TYPE_MONSTER) then
+	if tc:IsMonster() then
 		Duel.Damage(1-tp,tc:GetLevel()*200,REASON_EFFECT)
 	end
 	if Duel.GetOperationInfo(0,CATEGORY_DAMAGE) then

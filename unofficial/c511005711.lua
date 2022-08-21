@@ -192,7 +192,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	if tg:FilterCount(s.setfilter,nil,e,tp)~=#tg or Duel.GetMZoneCount(tp)<tg:FilterCount(Card.IsType,nil,TYPE_MONSTER)
 		or Duel.GetLocationCount(tp,LOCATION_SZONE)<tg:FilterCount(s.nffilter,nil) then return end
 	for tc in aux.Next(tg) do
-		if tc:IsType(TYPE_MONSTER) then
+		if tc:IsMonster() then
 			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)
 			Duel.ConfirmCards(1-tp,tc)
 		else

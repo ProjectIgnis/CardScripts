@@ -47,7 +47,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if c1 and c2 then
 		Duel.SendtoHand(c1,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,c1)
-		if c2:GetFirst():IsType(TYPE_MONSTER) then
+		if c2:GetFirst():IsMonster() then
 			Duel.SpecialSummon(c2,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)
 			Duel.ConfirmCards(1-tp,c2)
 		else

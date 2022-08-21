@@ -35,7 +35,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Draw(tp,1,REASON_EFFECT)>0 then
 		local tc=Duel.GetOperatedGroup():GetFirst()
 		Duel.ConfirmCards(1-tp,tc)
-		if tc:IsType(TYPE_MONSTER) then
+		if tc:IsMonster() then
 			Duel.BreakEffect()
 			Duel.Recover(tp,tc:GetAttack(),REASON_EFFECT)
 		end

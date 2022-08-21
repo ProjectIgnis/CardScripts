@@ -27,7 +27,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=sg:GetFirst()
 	if tc then
 		Duel.ConfirmCards(1-tp,tc)
-		if tc:IsSetCard(0x3008) and tc:IsType(TYPE_MONSTER) then
+		if tc:IsSetCard(0x3008) and tc:IsMonster() then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 			local dg=Duel.SelectMatchingCard(tp,aux.TRUE,tp,0,LOCATION_MZONE,1,1,nil)
 			Duel.Destroy(dg,REASON_EFFECT)

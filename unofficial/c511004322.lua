@@ -166,7 +166,7 @@ function s.normalsetoperation(e,tp,eg,ep,ev,re,r,rp)
 	local c=Duel.GetFieldCard(tp,LOCATION_DECK,an)
 	local tmin=0
 	local tmax=0
-	if c:IsType(TYPE_MONSTER) then
+	if c:IsMonster() then
 		tmin,tmax=c:GetTributeRequirement()
 	end
 	Duel.ConfirmCards(tp,c)

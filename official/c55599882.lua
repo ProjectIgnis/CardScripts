@@ -37,7 +37,7 @@ end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
-	if chk==0 then return bc and bc:IsLocation(LOCATION_GRAVE) and bc:IsReason(REASON_BATTLE) and bc:IsType(TYPE_MONSTER)
+	if chk==0 then return bc and bc:IsLocation(LOCATION_GRAVE) and bc:IsReason(REASON_BATTLE) and bc:IsMonster()
 		and c:GetBaseAttack()<=bc:GetAttack() and bc:IsAbleToRemove() end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,bc,1,0,0)
 end

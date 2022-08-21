@@ -25,7 +25,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local sg=g:RandomSelect(1-tp,1)
 		Duel.SendtoGrave(sg,REASON_EFFECT+REASON_DISCARD)
 		local tc=sg:GetFirst()
-		if tc:IsType(TYPE_MONSTER) then
+		if tc:IsMonster() then
 			Duel.Damage(1-tp,tc:GetLevel()*100,REASON_EFFECT)
 		end
 	end

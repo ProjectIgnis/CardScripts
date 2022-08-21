@@ -32,7 +32,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 			if not c.listed_names then end
 			for _,v in ipairs(c.listed_names) do
 				tok:Recreate(v)
-				if tok:IsType(TYPE_MONSTER) then
+				if tok:IsMonster() then
 					local tempg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil,e,tp,v)
 					if #tempg==0 then return false end
 					tg:Merge(tempg)
@@ -54,7 +54,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			if not c.listed_names then end
 			for _,v in ipairs(c.listed_names) do
 				tok:Recreate(v)
-				if tok:IsType(TYPE_MONSTER) then
+				if tok:IsMonster() then
 					local tempg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil,e,tp,v)
 					if #tempg==0 then return end
 					tg:Merge(tempg)

@@ -47,7 +47,7 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local d=Duel.GetAttacker()
 	if d==c then d=Duel.GetAttackTarget() end
-	return c:IsRelateToBattle() and d:IsLocation(LOCATION_GRAVE) and d:IsReason(REASON_BATTLE) and d:IsType(TYPE_MONSTER)
+	return c:IsRelateToBattle() and d:IsLocation(LOCATION_GRAVE) and d:IsReason(REASON_BATTLE) and d:IsMonster()
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

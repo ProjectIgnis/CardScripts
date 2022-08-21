@@ -60,7 +60,7 @@ function s.aclimit(e,re,tp)
 	return re:GetHandler():IsOnField() and e:GetHandler()~=re:GetHandler()
 end
 function s.disable(e,c)
-	return c~=e:GetHandler() and (not c:IsType(TYPE_MONSTER) or (c:IsType(TYPE_EFFECT) or (c:GetOriginalType()&TYPE_EFFECT)==TYPE_EFFECT))
+	return c~=e:GetHandler() and (not c:IsMonster() or (c:IsType(TYPE_EFFECT) or (c:GetOriginalType()&TYPE_EFFECT)==TYPE_EFFECT))
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end

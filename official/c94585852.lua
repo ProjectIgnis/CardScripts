@@ -61,7 +61,7 @@ end
 function s.lrcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
 	local rc=re:GetHandler()
-	return Duel.GetCurrentPhase()==PHASE_STANDBY and rc:IsSetCard(0x45) and rc:IsType(TYPE_MONSTER)
+	return Duel.GetCurrentPhase()==PHASE_STANDBY and rc:IsSetCard(0x45) and rc:IsMonster()
 end
 function s.filter(c,lv)
 	return c:GetLevel()<lv and c:IsSetCard(0x45) and c:IsMonster() and c:IsAbleToHand()

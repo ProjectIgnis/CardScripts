@@ -34,7 +34,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local ct=g:GetFirst()
 	if ct then
 		--If it was a monster, make 1 warrior monster gain ATK equal to sent monster's level x 300 and take damage equal to that amount
-		if ct:IsType(TYPE_MONSTER) and ct:IsRace(RACE_WARRIOR) and ct:IsAttribute(ATTRIBUTE_WIND) and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil) then
+		if ct:IsMonster() and ct:IsRace(RACE_WARRIOR) and ct:IsAttribute(ATTRIBUTE_WIND) and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
 			local tc=Duel.SelectMatchingCard(tp,s.cfilter,tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
 			Duel.HintSelection(Group.FromCards(tc))

@@ -114,7 +114,7 @@ function s.operation(e,tp,eg,ev,ep,re,r,rp)
 	end
 end
 function s.disable(e,c)
-	return c:IsType(TYPE_MONSTER)
+	return c:IsMonster()
 end
 function s.disablecon(e)
 	return e:GetHandler():IsControler(e:GetLabel())

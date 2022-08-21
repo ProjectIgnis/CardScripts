@@ -19,7 +19,7 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
 	if not c:IsRelateToBattle() or c:IsFacedown() then return false end
-	return bc:IsLocation(LOCATION_GRAVE) and bc:IsReason(REASON_BATTLE) and bc:IsType(TYPE_MONSTER)
+	return bc:IsLocation(LOCATION_GRAVE) and bc:IsReason(REASON_BATTLE) and bc:IsMonster()
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -94,7 +94,7 @@ function s.desop2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(e:GetHandler(),REASON_EFFECT)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and chkc:IsType(TYPE_MONSTER) end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and chkc:IsMonster() end
 	if chk==0 then
 		local tc=e:GetHandler():GetFirstCardTarget()
 		return tc and tc:IsLocation(LOCATION_MZONE) and tc:IsFaceup() and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 

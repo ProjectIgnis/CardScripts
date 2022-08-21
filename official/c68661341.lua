@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c)
-	return c:IsType(TYPE_MONSTER) or not c:IsAbleToRemoveAsCost()
+	return c:IsMonster() or not c:IsAbleToRemoveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)

@@ -53,7 +53,7 @@ end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Draw(tp,1,REASON_EFFECT)==0 then return end
 	local tc=Duel.GetOperatedGroup():GetFirst()
-	if tc:IsType(TYPE_MONSTER) then
+	if tc:IsMonster() then
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 		if tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 			Duel.ConfirmCards(1-tp,tc)

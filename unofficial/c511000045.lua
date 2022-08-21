@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(1-tp) and chkc:IsType(TYPE_MONSTER) end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(1-tp) and chkc:IsMonster() end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
 		and Duel.IsExistingTarget(Card.IsType,tp,0,LOCATION_GRAVE,1,nil,TYPE_MONSTER)
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,0x11,0,0,4,RACE_SPELLCASTER,ATTRIBUTE_LIGHT) end

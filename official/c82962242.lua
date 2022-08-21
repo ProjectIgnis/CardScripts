@@ -82,7 +82,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsType(TYPE_MONSTER) then
+	if tc and tc:IsRelateToEffect(e) and tc:IsMonster() then
 		s.equipop(c,e,tp,tc)
 	end
 end

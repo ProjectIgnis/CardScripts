@@ -31,7 +31,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(tp,1,REASON_EFFECT)
 	if tc then
 		Duel.ConfirmCards(1-tp,tc)
-		if not tc:IsType(TYPE_MONSTER) then
+		if not tc:IsMonster() then
 			Duel.BreakEffect()
 			Duel.SendtoGrave(tc,REASON_EFFECT)
 			if e:GetHandler():IsRelateToEffect(e) then

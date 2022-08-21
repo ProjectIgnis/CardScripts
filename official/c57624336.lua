@@ -57,7 +57,7 @@ function s.destg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.desop2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsType(TYPE_MONSTER) then
+	if tc:IsRelateToEffect(e) and tc:IsMonster() then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end

@@ -53,7 +53,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		local c=e:GetHandler()
 		if c:IsFacedown() or not c:IsRelateToEffect(e) then return end
 		--Cannot attack this turn
-		if tc:IsType(TYPE_MONSTER) then
+		if tc:IsMonster() then
 			local e1=Effect.CreateEffect(c)
 			e1:SetDescription(3206)
 			e1:SetType(EFFECT_TYPE_SINGLE)

@@ -25,7 +25,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.IsExistingMatchingCard(s.cfilter2,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.filter(c,e,tp)
-	if c:IsType(TYPE_MONSTER) then
+	if c:IsMonster() then
 		return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 	else
 		local ct=Duel.GetLocationCount(tp,LOCATION_SZONE)
@@ -38,7 +38,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,0,LOCATION_GRAVE,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_GRAVE,1,1,nil,e,tp)
-	if g:GetFirst():IsType(TYPE_MONSTER) then
+	if g:GetFirst():IsMonster() then
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 	else
 		Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,1,0,0)
@@ -47,7 +47,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) then return end
-	if tc:IsType(TYPE_MONSTER) then
+	if tc:IsMonster() then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	elseif (tc:IsType(TYPE_FIELD) or Duel.GetLocationCount(tp,LOCATION_SZONE)>0) then
 		Duel.SSet(tp,tc)

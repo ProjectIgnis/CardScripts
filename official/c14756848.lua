@@ -111,7 +111,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		if not tc then return end
 		Duel.HintSelection(g)
 		if Duel.Destroy(g,REASON_EFFECT)~=0
-			and (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1))
+			and Duel.CheckPendulumZones(tp)
 			and not tc:IsLocation(LOCATION_HAND+LOCATION_DECK) and not tc:IsForbidden()
 			and Duel.SelectYesNo(tp,aux.Stringid(id,4)) then
 			Duel.BreakEffect()

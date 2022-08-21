@@ -27,17 +27,14 @@ function s.initial_effect(c)
 	e2:SetOperation(s.penop)
 	c:RegisterEffect(e2)
 end
-function s.pzcheck(tp)
-	return Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1)
-end
 function s.pcfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_PENDULUM) and not c:IsForbidden()
 end
 function s.pctg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return s.pzcheck(tp) and Duel.IsExistingMatchingCard(s.pcfilter,tp,LOCATION_EXTRA,0,1,nil) end
+	if chk==0 then return Duel.CheckPendulumZones(tp) and Duel.IsExistingMatchingCard(s.pcfilter,tp,LOCATION_EXTRA,0,1,nil) end
 end
 function s.pcop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) or not s.pzcheck(tp) then return end
+	if not e:GetHandler():IsRelateToEffect(e) or not Duel.CheckPendulumZones(tp) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 	local g=Duel.SelectMatchingCard(tp,s.pcfilter,tp,LOCATION_EXTRA,0,1,1,nil)
 	if #g>0 then
@@ -49,10 +46,10 @@ function s.pencon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsFaceup() and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function s.pentg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return s.pzcheck(tp) end
+	if chk==0 then return Duel.CheckPendulumZones(tp) end
 end
 function s.penop(e,tp,eg,ep,ev,re,r,rp)
-	if not s.pzcheck(tp) then return end
+	if not Duel.CheckPendulumZones(tp) then return end
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
 		Duel.MoveToField(c,tp,tp,LOCATION_PZONE,POS_FACEUP,true)

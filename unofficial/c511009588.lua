@@ -204,15 +204,14 @@ function s.repfilter(c,tp)
 		and not c:IsReason(REASON_REPLACE)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1)) 
-		and eg:IsExists(s.repfilter,1,nil,tp) end
+	if chk==0 then return Duel.CheckPendulumZones(tp) and eg:IsExists(s.repfilter,1,nil,tp) end
 	return Duel.SelectYesNo(tp,aux.Stringid(45974017,0))
 end
 function s.repval(e,c)
 	return s.repfilter(c,e:GetHandlerPlayer())
 end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.CheckLocation(tp,LOCATION_PZONE,0) and not Duel.CheckLocation(tp,LOCATION_PZONE,1) then return false end
+	if not Duel.CheckPendulumZones(tp) then return false end
 	Duel.MoveToField(e:GetHandler(),tp,tp,LOCATION_PZONE,POS_FACEUP,true)
 end
 function s.valcheck(e,c)

@@ -70,7 +70,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.ConfirmCards(1-tp,g)
 		end
 	else
-		if not Duel.CheckLocation(tp,LOCATION_PZONE,0) or not Duel.CheckLocation(tp,LOCATION_PZONE,1) then return end
+		if not Duel.CheckPendulumZones(tp) then return end
 		local tc1=Duel.GetFirstMatchingCard(s.pzfilter,tp,LOCATION_DECK,0,nil,65025250)
 		local tc2=Duel.GetFirstMatchingCard(s.pzfilter,tp,LOCATION_DECK,0,nil,91420254)
 		if not (tc1 and tc2) then return end

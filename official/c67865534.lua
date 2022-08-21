@@ -80,7 +80,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		tc:RegisterEffect(e2)
-		if (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1))
+		if Duel.CheckPendulumZones(tp)
 			and c:IsRelateToEffect(e) and c:IsFaceup()
 			and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
 			Duel.MoveToField(c,tp,tp,LOCATION_PZONE,POS_FACEUP,true)

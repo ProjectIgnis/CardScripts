@@ -63,7 +63,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 				if type(prev)~='function' or prev(eff,te,tp) then return false end
 			end
 		end
-		if tc:IsType(TYPE_TRAP) and tc:CheckActivateEffect(false,false,false)~=nil and not tc:IsHasEffect(EFFECT_CANNOT_TRIGGER) then
+		if tc:IsTrap() and tc:CheckActivateEffect(false,false,false)~=nil and not tc:IsHasEffect(EFFECT_CANNOT_TRIGGER) then
 			Duel.Destroy(e:GetHandler(),REASON_EFFECT)
 			local tpe=tc:GetType()
 			local tg=te:GetTarget()

@@ -22,7 +22,7 @@ function s.filter1(c,e)
 	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and c:IsCanBeEffectTarget(e)
 end
 function s.filter2(c,e)
-	return c:IsType(TYPE_TRAP) and c:IsAbleToHand() and c:IsCanBeEffectTarget(e)
+	return c:IsTrap() and c:IsAbleToHand() and c:IsCanBeEffectTarget(e)
 end
 function s.filter3(c,e)
 	return c:IsSpell() and c:GetCode()~=id and c:IsAbleToHand() and c:IsCanBeEffectTarget(e)

@@ -82,7 +82,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return c:IsType(TYPE_TRAP) and c:IsAbleToHand() and c:IsFaceup() and c:IsSetCard(0x159)
+	return c:IsTrap() and c:IsAbleToHand() and c:IsFaceup() and c:IsSetCard(0x159)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and e:GetHandler():IsPreviousControler(tp)

@@ -13,7 +13,7 @@ function s.initial_effect(c)
 end
 function s.filter1(c)
 	return c:IsFaceup() and c:IsType(TYPE_EQUIP)
-		and (not c:IsType(TYPE_TRAP) or c:IsPreviousLocation(LOCATION_MZONE))
+		and (not c:IsTrap() or c:IsPreviousLocation(LOCATION_MZONE))
 end
 function s.filter2(c)
 	return c:IsFacedown()

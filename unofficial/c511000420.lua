@@ -38,7 +38,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		end
 	elseif (opt==1 and tc:IsSpell()) then
 		Duel.SSet(1-tp,tc)
-	elseif (opt==2 and tc:IsType(TYPE_TRAP))then
+	elseif (opt==2 and tc:IsTrap())then
 		Duel.SSet(1-tp,tc)
 	end
 end

@@ -31,7 +31,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 		return
 	end
-	if tc:IsType(TYPE_TRAP) then
+	if tc:IsTrap() then
 		local te=tc:GetActivateEffect()
 		local tep=tc:GetControler()
 		local condition

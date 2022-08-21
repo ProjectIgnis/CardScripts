@@ -63,7 +63,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.etarget(e,c)
 	local ec=e:GetHandler():GetEquipTarget()
-	return c:IsType(TYPE_TRAP) and ec and c:GetControler()==ec:GetControler()
+	return c:IsTrap() and ec and c:GetControler()==ec:GetControler()
 end
 function s.efilter(e,re)
 	return re:GetHandler()==e:GetHandler():GetEquipTarget()

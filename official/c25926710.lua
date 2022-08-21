@@ -64,7 +64,7 @@ function s.mltg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,PLAYER_ALL,5)
 end
 function s.setfilter(c)
-	return c:IsType(TYPE_TRAP) and c:IsSSetable()
+	return c:IsTrap() and c:IsSSetable()
 end
 function s.mlop(e,tp,eg,ep,ev,re,r,rp)
 	if (Duel.DiscardDeck(tp,5,REASON_EFFECT)+Duel.DiscardDeck(1-tp,5,REASON_EFFECT))>0

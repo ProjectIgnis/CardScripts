@@ -20,7 +20,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x7c}
 function s.filter1(c)
-	return c:IsSetCard(0x7c) and c:IsType(TYPE_TRAP) and c:IsSSetable()
+	return c:IsSetCard(0x7c) and c:IsTrap() and c:IsSSetable()
 end
 function s.filter2(c)
 	return c:IsSetCard(0x7c) and c:IsSpell() and c:IsSSetable()

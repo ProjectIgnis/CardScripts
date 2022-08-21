@@ -39,7 +39,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			if type(prev)~='function' or prev(eff,te,tp) then return end
 		end
 	end
-	if tc:IsType(TYPE_TRAP) and tc:CheckActivateEffect(false,false,false)~=nil and not tc:IsHasEffect(EFFECT_CANNOT_TRIGGER)
+	if tc:IsTrap() and tc:CheckActivateEffect(false,false,false)~=nil and not tc:IsHasEffect(EFFECT_CANNOT_TRIGGER)
 		and Duel.GetLocationCount(tp,LOCATION_SZONE) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.ConfirmCards(1-p,tc)
 		local tpe=tc:GetType()

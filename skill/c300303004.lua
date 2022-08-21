@@ -28,7 +28,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:Select(tp,1,1,nil):GetFirst()
 	if not tc then return end
 	Duel.ConfirmCards(tp,tc)
-	if tc:IsType(TYPE_TRAP) then
+	if tc:IsTrap() then
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end
 end

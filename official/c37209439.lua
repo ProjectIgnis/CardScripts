@@ -70,7 +70,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e3,tp)
 end
 function s.distg(e,c)
-	return c:GetFieldID()~=e:GetLabel() and c:IsType(TYPE_TRAP)
+	return c:GetFieldID()~=e:GetLabel() and c:IsTrap()
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local tl=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)

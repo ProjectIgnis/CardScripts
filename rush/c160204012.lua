@@ -37,5 +37,5 @@ function s.indtg(e,c)
 	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsLevel(9) and c:IsFaceup()
 end
 function s.indesval(e,re)
-	return re:GetHandler():IsType(TYPE_TRAP)
+	return re:GetHandler():IsTrap()
 end

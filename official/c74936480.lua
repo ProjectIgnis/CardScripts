@@ -51,7 +51,7 @@ end
 function s.lpcostval(e,re,rp,val)
 	if not re then return val end
 	local rc=re:GetHandler()
-	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and rc:IsType(TYPE_TRAP) then return 0 end
+	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and rc:IsTrap() then return 0 end
 	if re:IsActiveType(TYPE_MONSTER) and rc:IsSetCard(0x175) then return 0 end
 	return val
 end

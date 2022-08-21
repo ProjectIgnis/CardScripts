@@ -46,7 +46,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer()
 end
 function s.trapfilter(c)
-	return c:IsType(TYPE_TRAP) and c:IsDiscardable()
+	return c:IsTrap() and c:IsDiscardable()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.trapfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end

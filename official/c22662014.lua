@@ -26,7 +26,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x15f}
 function s.costfilter(c)
-	return c:IsSetCard(0x15f) and c:IsType(TYPE_TRAP) and not c:IsPublic()
+	return c:IsSetCard(0x15f) and c:IsTrap() and not c:IsPublic()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end
@@ -47,7 +47,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,tp)
-	if not (c:IsSetCard(0x15f) and c:IsType(TYPE_TRAP) and c:IsAbleToGraveAsCost()) then return false end
+	if not (c:IsSetCard(0x15f) and c:IsTrap() and c:IsAbleToGraveAsCost()) then return false end
 	if not c:IsLocation(LOCATION_SZONE) then
 		return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil)
 	else
@@ -56,7 +56,7 @@ function s.cfilter(c,tp)
 	end
 end
 function s.filter(c,ignore)
-	return c:IsSetCard(0x15f) and c:IsType(TYPE_TRAP) and c:IsSSetable(ignore)
+	return c:IsSetCard(0x15f) and c:IsTrap() and c:IsSSetable(ignore)
 end
 function s.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,nil,tp) end

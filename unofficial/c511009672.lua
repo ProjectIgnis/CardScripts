@@ -78,7 +78,7 @@ function s.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.setfilter(c)
-	return c:IsType(TYPE_TRAP) and c:IsSSetable(true) and not c:IsType(TYPE_FIELD)
+	return c:IsTrap() and c:IsSSetable(true) and not c:IsType(TYPE_FIELD)
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.setfilter(chkc) end

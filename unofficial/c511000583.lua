@@ -21,7 +21,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer()
 end
 function s.filter(c)
-	return c:IsType(TYPE_TRAP) and c:IsSSetable()
+	return c:IsTrap() and c:IsSSetable()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -44,7 +44,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x15e,0x15f}
 function s.eqcfilter(c,tp)
-	return c:IsSetCard(0x15f) and c:IsType(TYPE_TRAP) and c:IsControler(tp)
+	return c:IsSetCard(0x15f) and c:IsTrap() and c:IsControler(tp)
 end
 function s.eqfilter(c,e,tp)
 	return aux.CheckStealEquip(c,e,tp) and c:GetEquipGroup():IsExists(s.eqcfilter,1,nil,tp)

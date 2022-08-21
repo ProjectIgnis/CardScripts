@@ -51,5 +51,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.efilter(e,re,rp)
-	return re:GetOwner():IsType(TYPE_TRAP) and e:GetHandlerPlayer()==1-rp
+	return re:GetOwner():IsTrap() and e:GetHandlerPlayer()==1-rp
 end

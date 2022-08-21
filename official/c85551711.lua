@@ -48,7 +48,7 @@ function s.costtg(e,te,tp)
 	return Duel.GetTurnPlayer()~=e:GetHandlerPlayer()
 		and tc:IsLocation(LOCATION_HAND) and tc:GetEffectCount(id)>0
 		and ((tc:GetEffectCount(EFFECT_QP_ACT_IN_NTPHAND)<=tc:GetEffectCount(id) and tc:IsType(TYPE_QUICKPLAY))
-			or (tc:GetEffectCount(EFFECT_TRAP_ACT_IN_HAND)<=tc:GetEffectCount(id) and tc:IsType(TYPE_TRAP)))
+			or (tc:GetEffectCount(EFFECT_TRAP_ACT_IN_HAND)<=tc:GetEffectCount(id) and tc:IsTrap()))
 end
 function s.costchk(e,te_or_c,tp)
 	return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_EFFECT)

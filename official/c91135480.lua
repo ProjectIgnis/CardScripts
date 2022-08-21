@@ -35,7 +35,7 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ty=0
 	if c:IsFaceup() then ty=ty | TYPE_MONSTER end
 	if Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsControlerCanBeChanged),tp,0,LOCATION_MZONE,1,nil) then ty=ty | TYPE_SPELL end
-	if Duel.IsExistingMatchingCard(aux.disfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) then ty=ty | TYPE_TRAP end
+	if Duel.IsExistingMatchingCard(Card.IsNegatableMonster,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) then ty=ty | TYPE_TRAP end
 	if chk==0 then return ty>0 and g:IsExists(Card.IsType,1,nil,ty) end
 end
 	--Detach and apply multiple effects
@@ -46,7 +46,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local ty=0
 	if c:IsFaceup() then ty=ty | TYPE_MONSTER end
 	if Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsControlerCanBeChanged),tp,0,LOCATION_MZONE,1,nil) then ty=ty | TYPE_SPELL end
-	if Duel.IsExistingMatchingCard(aux.disfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) then ty=ty | TYPE_TRAP end
+	if Duel.IsExistingMatchingCard(Card.IsNegatableMonster,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) then ty=ty | TYPE_TRAP end
 	if ty==0 then return end
 	local sg=aux.SelectUnselectGroup(g:Filter(Card.IsType,nil,ty),e,tp,1,3,s.rescon,1,tp,HINTMSG_XMATERIAL)
 	local lb=0
@@ -90,7 +90,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	end
 	if lb & TYPE_TRAP ~=0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_NEGATE)
-		local g=Duel.SelectMatchingCard(tp,aux.disfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+		local g=Duel.SelectMatchingCard(tp,Card.IsNegatableMonster,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 		if #g>0 then
 			--Negate effects of a monster
 			local tc=g:GetFirst()

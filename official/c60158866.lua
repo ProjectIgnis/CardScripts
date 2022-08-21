@@ -31,7 +31,7 @@ function s.nmbrfilter(c)
 	return c:IsSetCard(0x48) and no and no>=101 and no<=107
 end
 function s.disfilter(c,atk)
-	return aux.disfilter1(c) and c:IsAttackBelow(atk)
+	return c:IsNegatableMonster() and c:IsAttackBelow(atk)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then

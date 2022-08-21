@@ -38,7 +38,7 @@ end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:CheckRemoveOverlayCard(tp,1,REASON_EFFECT)
-		and Duel.IsExistingMatchingCard(aux.disfilter1,tp,0,LOCATION_MZONE,1,nil) end
+		and Duel.IsExistingMatchingCard(Card.IsNegatableMonster,tp,0,LOCATION_MZONE,1,nil) end
 	if c:GetOverlayGroup():IsExists(s.disfilter,1,nil) then
 		Duel.SetChainLimit(s.chlimit)
 	end
@@ -47,7 +47,7 @@ function s.chlimit(e,ep,tp)
 	return tp==ep
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(aux.disfilter1,tp,0,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(Card.IsNegatableMonster,tp,0,LOCATION_MZONE,nil)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:RemoveOverlayCard(tp,1,1,REASON_EFFECT) and #g>0 then
 		for tc in g:Iter() do

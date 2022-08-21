@@ -51,7 +51,7 @@ end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
 	local rc=re:GetHandler()
-	return (loc&LOCATION_ONFIELD)~=0 and re:IsActiveType(TYPE_MONSTER) and aux.disfilter1(re:GetHandler())
+	return (loc&LOCATION_ONFIELD)~=0 and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsNegatableMonster()
 		and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
 		and re:GetHandler():IsRelateToEffect(re) and rc:IsCanBeEffectTarget(e)
 end
@@ -66,7 +66,7 @@ end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and ((tc:IsFaceup() and not tc:IsDisabled()) or tc:IsType(TYPE_TRAPMONSTER)) and tc:IsRelateToEffect(e) then
+	if ((tc:IsFaceup() and not tc:IsDisabled()) or tc:IsType(TYPE_TRAPMONSTER)) and tc:IsRelateToEffect(e) then
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		--Negate effects
 		local e1=Effect.CreateEffect(c)

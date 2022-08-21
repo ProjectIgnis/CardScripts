@@ -67,7 +67,7 @@ function s.dcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(tov,REASON_COST)
 end
 function s.dfilter(c)
-	return (c:GetAttack()~=c:GetBaseAttack() and c:GetDefense()~=c:GetBaseDefense()) or aux.disfilter1(c)
+	return (c:GetAttack()~=c:GetBaseAttack() and c:GetDefense()~=c:GetBaseDefense()) or c:IsNegatableMonster()
 end
 function s.dtarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)

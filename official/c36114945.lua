@@ -34,7 +34,7 @@ end
 s.listed_names={id}
 --Negate
 function s.negfilter(c)
-	return c:IsType(TYPE_EFFECT) and aux.disfilter1(c)
+	return c:IsType(TYPE_EFFECT) and c:IsNegatableMonster()
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.negfilter(chkc) and chkc:IsControler(1-tp) end
@@ -45,7 +45,7 @@ function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and aux.disfilter1(tc) then
+	if tc:IsRelateToEffect(e) and tc:IsNegatableMonster() then
 		local c=e:GetHandler()
 		--Negate its effects
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)

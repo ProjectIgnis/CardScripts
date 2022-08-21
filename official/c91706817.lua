@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.tgfilter(c,ac)
-	return aux.disfilter1(c) and Duel.GetMatchingGroupCount(nil,c:GetControler(),0,LOCATION_HAND,ac)>0
+	return c:IsNegatableMonster() and Duel.GetMatchingGroupCount(nil,c:GetControler(),0,LOCATION_HAND,ac)>0
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

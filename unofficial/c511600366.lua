@@ -74,10 +74,10 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and aux.disfilter1(chkc) end
+	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsNegatableMonster() end
 	local ct=Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)
-	if chk==0 then return ct>0 and Duel.GetTargetCount(aux.disfilter1,tp,0,LOCATION_MZONE,nil)==ct end
-	local g=Duel.GetMatchingGroup(aux.disfilter1,tp,0,LOCATION_MZONE,nil)
+	if chk==0 then return ct>0 and Duel.GetTargetCount(Card.IsNegatableMonster,tp,0,LOCATION_MZONE,nil)==ct end
+	local g=Duel.GetMatchingGroup(Card.IsNegatableMonster,tp,0,LOCATION_MZONE,nil)
 	Duel.SetTargetCard(g)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,#g,0,0)
 end

@@ -51,7 +51,7 @@ end
 	--Special summon this card from hand, then if player controls another "Dogmatika" monster, negate 1 monster
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(aux.disfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(Card.IsNegatableMonster,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0
 		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x146),tp,LOCATION_MZONE,0,1,e:GetHandler())
 		and #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then

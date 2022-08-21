@@ -64,7 +64,7 @@ function s.eptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local op=0
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EFFECT)
-	if aux.disfilter1(c) then op=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
+	if c:IsNegatableMonster() then op=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
 	else op=Duel.SelectOption(tp,aux.Stringid(id,1)) end
 	if op==0 then
 		e:SetCategory(0)

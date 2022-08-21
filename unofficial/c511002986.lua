@@ -40,7 +40,7 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SetLP(rp,Duel.GetLP(rp)/2,REASON_EFFECT)
-	local g=Duel.GetMatchingGroup(aux.disfilter1,rp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(Card.IsNegatableMonster,rp,LOCATION_MZONE,0,nil)
 	local tc=g:GetFirst()
 	while tc do
 		local e1=Effect.CreateEffect(e:GetHandler())

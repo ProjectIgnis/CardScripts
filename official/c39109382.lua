@@ -38,7 +38,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x13}
 function s.filter(c)
-	return c:IsSetCard(0x13) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x13) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

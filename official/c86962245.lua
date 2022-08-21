@@ -32,7 +32,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x119}
 function s.cfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x119)
+	return c:IsMonster() and c:IsSetCard(0x119)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,3,nil)
@@ -45,7 +45,7 @@ function s.filter(c)
 	return c:GetSequence()<5
 end
 function s.tdfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x119) and c:IsLinkMonster() and c:IsAbleToExtra()
+	return c:IsMonster() and c:IsSetCard(0x119) and c:IsLinkMonster() and c:IsAbleToExtra()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

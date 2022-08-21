@@ -28,13 +28,13 @@ function s.initial_effect(c)
 	end)
 end
 function s.cfilter(c,tp)
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsType(TYPE_MONSTER)
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsMonster()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return #eg==1 and s.cfilter(eg:GetFirst(),tp)
 end
 function s.hlfilter(c)
-	return c:IsHell() and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
+	return c:IsHell() and c:IsMonster() and c:IsAbleToRemoveAsCost()
 end
 function s.rescon(tc)
 	return function(sg,e,tp,mg)

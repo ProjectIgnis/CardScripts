@@ -45,7 +45,7 @@ end
 
 --to hand
 function card.thcfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_ZOMBIE) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c, true)
+	return c:IsMonster() and c:IsRace(RACE_ZOMBIE) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c, true)
 end
 
 --unselect checking function - group must all be of same name and there must be a card left to add

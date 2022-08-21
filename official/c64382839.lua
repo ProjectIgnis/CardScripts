@@ -27,7 +27,7 @@ end
 s.listed_names={64382840}
 function s.cfilter(c,tp)
 	return c:IsPreviousControler(1-tp) and c:IsPreviousLocation(LOCATION_ONFIELD)
-		and c:IsType(TYPE_MONSTER) and not c:IsType(TYPE_TOKEN)
+		and c:IsMonster() and not c:IsType(TYPE_TOKEN)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

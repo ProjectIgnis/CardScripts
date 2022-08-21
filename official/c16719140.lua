@@ -34,7 +34,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 end
 function s.costfilter(c,e,tp,mg,rlv)
-	if not (c:HasLevel() and c:IsSetCard(0xed) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+	if not (c:HasLevel() and c:IsSetCard(0xed) and c:IsMonster() and c:IsAbleToGraveAsCost()
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_DEFENSE)) then return false end
 	local lv=c:GetLevel()-rlv
 	return #mg>0 and (lv<=0 or mg:CheckWithSumGreater(Card.GetOriginalLevel,lv))

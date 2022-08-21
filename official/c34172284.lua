@@ -71,7 +71,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.lffilter(c,tp)
-	return c:IsPreviousControler(tp) and c:IsType(TYPE_MONSTER) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsReason(REASON_EFFECT)
+	return c:IsPreviousControler(tp) and c:IsMonster() and c:IsPreviousLocation(LOCATION_MZONE) and c:IsReason(REASON_EFFECT)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.lffilter,1,nil,1-tp)

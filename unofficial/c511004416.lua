@@ -31,10 +31,10 @@ function s.operation(e,tp,eg,ev,ep,re,r,rp)
 	Duel.RegisterEffect(e2,tp)
 end
 function s.filter1(c,e,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x9f) and c:IsAbleToChangeControler() and c:IsFaceup() and c:GetBattledGroupCount()~=0
+	return c:IsMonster() and c:IsSetCard(0x9f) and c:IsAbleToChangeControler() and c:IsFaceup() and c:GetBattledGroupCount()~=0
 end
 function s.filter2(c,e,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToChangeControler() and c:IsFaceup()
+	return c:IsMonster() and c:IsAbleToChangeControler() and c:IsFaceup()
 end
 function s.tg(e,tp,eg,ev,ep,re,r,rp,chk)
 	local no=Duel.GetMatchingGroupCount(s.filter1,tp,LOCATION_MZONE,0,nil,e,tp)

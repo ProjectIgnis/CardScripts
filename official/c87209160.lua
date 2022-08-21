@@ -28,7 +28,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x14f}
 function s.tgfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsLevelBelow(3) and c:IsRace(RACES_BEAST_BWARRIOR_WINGB) and c:IsAbleToGrave()
+	return c:IsMonster() and c:IsLevelBelow(3) and c:IsRace(RACES_BEAST_BWARRIOR_WINGB) and c:IsAbleToGrave()
 end
 function s.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end

@@ -39,7 +39,7 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetLinkedGroupCount()==0
 end
 function s.damfilter(c)
-	return c:IsSetCard(0xfb) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0xfb) and c:IsMonster()
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.damfilter,tp,LOCATION_GRAVE,0,1,nil) end

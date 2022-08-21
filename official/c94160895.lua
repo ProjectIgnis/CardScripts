@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.desfilter(c)
-	return c:IsType(TYPE_MONSTER) and (c:IsLocation(LOCATION_HAND) or c:IsFaceup())
+	return c:IsMonster() and (c:IsLocation(LOCATION_HAND) or c:IsFaceup())
 end
 function s.desfilter2(c)
 	return c:IsFaceup() and c:GetSequence()<5

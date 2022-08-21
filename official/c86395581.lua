@@ -44,7 +44,7 @@ function s.shcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 	--Check for WIND monster with <= 1500 DEF
 function s.shfilter(c)
-	return c:IsDefenseBelow(1500) and c:IsType(TYPE_MONSTER) and c:IsAttribute(ATTRIBUTE_WIND) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsDefenseBelow(1500) and c:IsMonster() and c:IsAttribute(ATTRIBUTE_WIND) and not c:IsCode(id) and c:IsAbleToHand()
 end
 	--Activation legality
 function s.shtg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -16,7 +16,7 @@ end
 s.listed_names={id}
 s.listed_series={0x134}
 function s.cfilter(c)
-	return c:IsSetCard(0x134) and c:IsType(TYPE_MONSTER) and not c:IsPublic() and c:IsAbleToDeck()
+	return c:IsSetCard(0x134) and c:IsMonster() and not c:IsPublic() and c:IsAbleToDeck()
 end
 function s.thfilter(c)
 	return not c:IsCode(id) and c:IsSetCard(0x134) and c:IsSpellTrap() and c:IsAbleToHand()

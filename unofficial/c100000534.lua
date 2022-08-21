@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.rmfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_MONSTER)
+	return c:IsFaceup() and c:IsMonster()
 end
 function s.atkvalue(e,c)
 	return Duel.GetMatchingGroupCount(s.rmfilter,c:GetControler(),0,LOCATION_REMOVED,nil)*100

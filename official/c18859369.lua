@@ -27,12 +27,12 @@ function s.initial_effect(c)
 end
 	--Discard filter
 function s.tgfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsAttribute(ATTRIBUTE_DARK+ATTRIBUTE_LIGHT) and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and c:IsAttribute(ATTRIBUTE_DARK+ATTRIBUTE_LIGHT) and c:IsAbleToGraveAsCost()
 		and Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_DECK,0,1,nil,c:GetAttribute())
 end
 	--Filter to send 1 monster with opposite attribute of discard monster
 function s.filter1(c,att)
-	return c:IsAbleToGrave() and c:IsType(TYPE_MONSTER) and c:IsAttribute(ATTRIBUTE_DARK+ATTRIBUTE_LIGHT) and not c:IsAttribute(att)
+	return c:IsAbleToGrave() and c:IsMonster() and c:IsAttribute(ATTRIBUTE_DARK+ATTRIBUTE_LIGHT) and not c:IsAttribute(att)
 end
 	--Discard 1 LIGHT/DARK as cost
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

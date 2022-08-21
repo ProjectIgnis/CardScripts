@@ -20,7 +20,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.GetFlagEffect(tp,id)==0
 end
 function s.filter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToHandAsCost() and c:IsSetCard(0xfb)
+	return c:IsMonster() and c:IsAbleToHandAsCost() and c:IsSetCard(0xfb)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil) end

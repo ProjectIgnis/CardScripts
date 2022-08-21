@@ -62,7 +62,7 @@ function s.gbcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetOverlayCount()==0
 end
 function s.gbfilter(c)
-	return c:IsSetCard(0x19) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x19) and c:IsMonster()
 end
 function s.gbtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.gbfilter,tp,LOCATION_DECK,0,1,nil) end

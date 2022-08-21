@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	e3:SetLabelObject(g)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and c:IsSetCard(0xe3)
+	return c:IsFaceup() and c:IsMonster() and c:IsSetCard(0xe3)
 end
 function s.target(e,tp,eg,ev,ep,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil) and Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end

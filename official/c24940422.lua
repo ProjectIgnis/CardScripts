@@ -54,7 +54,7 @@ function s.aclimit(e,re,tp)
 	return not re:GetHandler():IsCode(id) and re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
 end
 function s.tdfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
+	return c:IsMonster() and c:IsAbleToDeck()
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1)

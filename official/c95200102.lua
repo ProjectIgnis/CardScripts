@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,e,tp)
-	return c:IsCanBeSpecialSummoned(e,0,tp,true,false) and c.illegal and c:IsType(TYPE_MONSTER)
+	return c:IsCanBeSpecialSummoned(e,0,tp,true,false) and c.illegal and c:IsMonster()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

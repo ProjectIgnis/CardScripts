@@ -45,7 +45,7 @@ function s.exfilter(c,e,tp,sg)
 		and c:IsLevel(sg:GetSum(Card.GetLevel)) and Duel.GetLocationCountFromEx(tp,tp,sg,c)>0
 end
 function s.cgfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xad)
+	return c:IsMonster() and c:IsSetCard(0xad)
 end
 function s.excost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100)
@@ -74,7 +74,7 @@ function s.exop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0xad) and c:IsType(TYPE_MONSTER)
+	return c:IsFaceup() and c:IsSetCard(0xad) and c:IsMonster()
 end
 function s.atkcon(e)
 	return Duel.IsExistingMatchingCard(s.filter,e:GetHandlerPlayer(),LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler())

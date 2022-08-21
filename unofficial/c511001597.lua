@@ -32,10 +32,10 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.GetDrawCount(tp)>0
 end
 function s.filter(c)
-	return c:IsSetCard(0x23) and c:IsAbleToHand() and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x23) and c:IsAbleToHand() and c:IsMonster()
 end
 function s.filter2(c)
-	return c:IsSetCard(0x23) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x23) and c:IsMonster()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) 

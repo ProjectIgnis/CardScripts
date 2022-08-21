@@ -82,7 +82,7 @@ end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsType(TYPE_MONSTER) and tc:IsControler(1-tp) then
+	if tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsMonster() and tc:IsControler(1-tp) then
 		s.equipop(c,e,tp,tc)
 	end
 end
@@ -119,7 +119,7 @@ function s.disablefilter1(c)
 end
 function s.distg(e,c)
 	local g=e:GetHandler():GetEquipGroup():Filter(s.disablefilter1,nil)
-	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and g:IsExists(Card.IsCode,1,nil,c:GetCode())
+	return c:IsFaceup() and c:IsMonster() and g:IsExists(Card.IsCode,1,nil,c:GetCode())
 end
 function s.disablefilter2(c,typ)
 	return c:GetOriginalType()&typ==typ

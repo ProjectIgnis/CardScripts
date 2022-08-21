@@ -43,7 +43,7 @@ function s.estg(e,c)
 end
 	--Check for FIRE monsters
 function s.filter(c,ft)
-	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and c:IsAttribute(ATTRIBUTE_FIRE) and (ft>0 or c:GetSequence()<5)
+	return c:IsFaceup() and c:IsMonster() and c:IsAttribute(ATTRIBUTE_FIRE) and (ft>0 or c:GetSequence()<5)
 end
 	--Activation legality
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

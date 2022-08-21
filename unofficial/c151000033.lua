@@ -59,7 +59,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	if lv2>0 then Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+id,e,0,1,1,lv2) end
 end
 function s.filter(c,lv)
-	return c:GetLevel()<lv and c:IsSetCard(0x45) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:GetLevel()<lv and c:IsSetCard(0x45) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsRelateToEffect(e)

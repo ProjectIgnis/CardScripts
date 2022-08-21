@@ -52,7 +52,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c,atk)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x119) and c:GetAttack()~=atk
+	return c:IsMonster() and c:IsSetCard(0x119) and c:GetAttack()~=atk
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()

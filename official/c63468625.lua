@@ -52,7 +52,7 @@ function s.eqval(ec,c,tp)
 	return ec:IsType(TYPE_SYNCHRO) and ec:IsControler(1-tp)
 end
 function s.spfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x13) and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and c:IsSetCard(0x13) and c:IsAbleToGraveAsCost()
 end
 function s.spcon(e,c)
 	if c==nil then return true end

@@ -21,6 +21,6 @@ function s.cond(e)
 	return tc and tc:GetControler()==e:GetHandler():GetControler()
 end
 function s.efftg(e,c)
-	return c~=e:GetHandler():GetEquipTarget() and c:IsType(TYPE_MONSTER)
+	return c~=e:GetHandler():GetEquipTarget() and c:IsMonster()
 		and (c:IsFaceup() or not c:IsLocation(LOCATION_REMOVED))--face-down banished cards can still be targeted
 end

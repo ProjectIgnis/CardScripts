@@ -71,7 +71,7 @@ function s.repfilter(c,tp,rp)
 end
 	--Activation legality
 function s.rmfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.repval(e,c)
 	return s.repfilter(c,e:GetHandlerPlayer(),c:GetReasonPlayer())

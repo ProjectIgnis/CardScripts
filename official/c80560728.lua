@@ -29,7 +29,7 @@ function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	return at==tc and d and d:IsRelateToBattle()
 end
 function s.costfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
+	return c:IsMonster() and c:IsAbleToRemoveAsCost()
 end
 function s.atcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_GRAVE,0,1,nil) end

@@ -32,7 +32,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x10}
 function s.thcfilter(c)
-	return c:IsAttribute(ATTRIBUTE_WIND) and c:IsType(TYPE_MONSTER) and c:IsDiscardable()
+	return c:IsAttribute(ATTRIBUTE_WIND) and c:IsMonster() and c:IsDiscardable()
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost()

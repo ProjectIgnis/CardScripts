@@ -64,7 +64,7 @@ function s.thcfilter(c,tp)
 	return c:IsSetCard(0x2066) and c:IsLevelBelow(4) and c:IsLocation(LOCATION_MZONE) and Duel.IsExistingMatchingCard(s.thfilter2,tp,LOCATION_DECK,0,1,nil,code)
 end
 function s.thfilter2(c,code)
-	return c:IsSetCard(0x2066) and c:IsLevelBelow(4) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and not c:IsCode(code)
+	return c:IsSetCard(0x2066) and c:IsLevelBelow(4) and c:IsMonster() and c:IsAbleToHand() and not c:IsCode(code)
 end
 function s.flipcon2(e,tp,eg,ep,ev,re,r,rp)
 	--opd check

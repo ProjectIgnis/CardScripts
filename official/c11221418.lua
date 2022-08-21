@@ -110,7 +110,7 @@ function s.spresetcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsTurnPlayer(tp) and e:GetLabel()==Duel.GetTurnCount(tp)
 end
 function s.mfilter(c)
-	return c:IsSetCard(0x88) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x88) and c:IsMonster()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.mfilter(chkc) end

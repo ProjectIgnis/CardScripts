@@ -20,7 +20,7 @@ end
 s.listed_series={0x2b,0x61}
 s.listed_names={id}
 function s.costfilter(c)
-	return c:IsSetCard(0x2b) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(0x2b) and c:IsMonster() and c:IsAbleToGraveAsCost()
 end
 function s.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end

@@ -57,7 +57,7 @@ function s.eqfilter1(c)
 		and Duel.IsExistingMatchingCard(s.eqfilter2,0,LOCATION_GRAVE,LOCATION_GRAVE,1,nil)
 end
 function s.eqfilter2(c)
-	return c:IsRace(RACE_DRAGON+RACE_MACHINE) and c:IsType(TYPE_MONSTER) and not c:IsForbidden()
+	return c:IsRace(RACE_DRAGON+RACE_MACHINE) and c:IsMonster() and not c:IsForbidden()
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.eqfilter1(chkc) end

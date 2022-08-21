@@ -29,7 +29,7 @@ function s.ffilter(c,fc,sumtype,tp)
 	return c:IsSetCard(0x8,fc,sumtype,tp) or c:IsSetCard(0x9,fc,sumtype,tp) or c:IsSetCard(0x1f,fc,sumtype,tp)
 end
 function s.filter(c)
-	return (c:IsSetCard(0x9) or c:IsSetCard(0x1f) or c:IsSetCard(0x8)) and c:IsType(TYPE_MONSTER)
+	return (c:IsSetCard(0x9) or c:IsSetCard(0x1f) or c:IsSetCard(0x8)) and c:IsMonster()
 		and not c:IsForbidden() and c:IsAbleToRemove() and aux.SpElimFilter(c,true)
 end
 function s.copytg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

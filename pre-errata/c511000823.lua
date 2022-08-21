@@ -29,7 +29,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.filter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAttackAbove(1500)
+	return c:IsMonster() and c:IsAttackAbove(1500)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local conf=Duel.GetFieldGroup(tp,0,LOCATION_MZONE+LOCATION_HAND)

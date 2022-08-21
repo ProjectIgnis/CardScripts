@@ -40,7 +40,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0xe2}
 function s.actfilter(c,tp)
-	return c and c:IsFaceup() and c:IsSetCard(0xe2) and c:IsType(TYPE_MONSTER) and c:IsControler(tp)
+	return c and c:IsFaceup() and c:IsSetCard(0xe2) and c:IsMonster() and c:IsControler(tp)
 end
 function s.actcon(e)
 	local tp=e:GetHandlerPlayer()

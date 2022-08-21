@@ -43,7 +43,7 @@ s.listed_series={0xdc}
 s.listed_names={58753372}
 function s.costfilter(c,tp)
 	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup())
-	and not c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsSetCard(0xdc) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost() and Duel.GetMZoneCount(tp,c)>0
+	and not c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsSetCard(0xdc) and c:IsMonster() and c:IsAbleToGraveAsCost() and Duel.GetMZoneCount(tp,c)>0
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	--if c==nil then return true end
@@ -63,7 +63,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tgfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xdc) and c:IsAbleToGrave()
+	return c:IsMonster() and c:IsSetCard(0xdc) and c:IsAbleToGrave()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil,e:GetHandler():GetLevel(),e:GetHandler():GetAttribute()) end

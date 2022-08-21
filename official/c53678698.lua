@@ -74,7 +74,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.rfilter(c,tp)
 	return c:IsControler(tp) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_HAND)
-		and c:IsSetCard(0x88) and c:IsType(TYPE_MONSTER)
+		and c:IsSetCard(0x88) and c:IsMonster()
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.rfilter,1,nil,tp)

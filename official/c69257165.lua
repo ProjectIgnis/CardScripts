@@ -16,7 +16,7 @@ function s.ctffilter(c,lv)
 	return c:IsFaceup() and c:IsControlerCanBeChanged() and c:GetLevel()==lv
 end
 function s.ctfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsDiscardable()
+	return c:IsMonster() and c:IsDiscardable()
 		and Duel.IsExistingTarget(s.ctffilter,tp,0,LOCATION_MZONE,1,nil,c:GetLevel())
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

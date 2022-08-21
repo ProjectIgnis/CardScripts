@@ -95,7 +95,7 @@ function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 		and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.filter(c,e,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xe8) and not c:IsCode(id)
+	return c:IsMonster() and c:IsSetCard(0xe8) and not c:IsCode(id)
 		and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)

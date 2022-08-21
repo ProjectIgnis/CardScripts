@@ -60,7 +60,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.mtfilter(c)
-	return c:IsSetCard(0x48) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x48) and c:IsMonster()
 end
 function s.mttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.mtfilter,tp,0,LOCATION_GRAVE,1,nil) end

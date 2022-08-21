@@ -58,7 +58,7 @@ function s.ovfilter(c)
 	return c:IsFaceup() and c:IsCode(65676461)
 end
 function s.rfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsShark() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsMonster() and c:IsShark() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST)

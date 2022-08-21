@@ -60,7 +60,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rmfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true,false)
+	return c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true,false)
 end
 function s.rescon(sg,e,tp,mg)
 	return sg:GetClassCount(Card.GetOriginalRace)==#sg and sg:GetClassCount(Card.GetOriginalAttribute)==#sg

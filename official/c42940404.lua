@@ -17,7 +17,7 @@ end
 s.listed_series={0x36}
 s.listed_names={id}
 function s.sfilter(c)
-	return c:IsSetCard(0x36) and c:GetCode()~=id and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x36) and c:GetCode()~=id and c:IsMonster() and c:IsAbleToHand()
 end
 function s.stg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.sfilter,tp,LOCATION_DECK,0,1,nil) end

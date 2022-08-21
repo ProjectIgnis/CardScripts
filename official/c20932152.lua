@@ -29,7 +29,7 @@ function s.synlimit(e,c)
 	return not aux.IsMaterialListSetCard(c,0x1017)
 end
 function s.spfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and c:IsAbleToGraveAsCost()
 end
 function s.spcon(e,c)
 	if c==nil then return true end

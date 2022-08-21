@@ -46,7 +46,7 @@ function s.damcon2(e,tp,eg,ep,ev,re,r,rp)
 		and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.damfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xad)
+	return c:IsMonster() and c:IsSetCard(0xad)
 end
 function s.damtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local gc=Duel.GetMatchingGroupCount(s.damfilter,tp,LOCATION_GRAVE,0,nil)

@@ -29,7 +29,7 @@ function s.cfilter1(c)
 	return c:IsCode(36623431) and c:IsAbleToGraveAsCost()
 end
 function s.cfilter2(c)
-	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_ZOMBIE) and not c:IsPublic()
+	return c:IsMonster() and c:IsRace(RACE_ZOMBIE) and not c:IsPublic()
 end
 function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -62,7 +62,7 @@ function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x1d) and c:IsAbleToRemove() and aux.SpElimFilter(c,true)
+	return c:IsMonster() and c:IsSetCard(0x1d) and c:IsAbleToRemove() and aux.SpElimFilter(c,true)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

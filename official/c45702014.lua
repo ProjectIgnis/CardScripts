@@ -28,7 +28,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x400d}
 function s.costfilter(c)
-	return c:IsSetCard(0x400d) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(0x400d) and c:IsMonster() and c:IsAbleToGraveAsCost()
 end
 function s.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local fg=Group.CreateGroup()

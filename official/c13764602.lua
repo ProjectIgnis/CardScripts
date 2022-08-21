@@ -27,7 +27,7 @@ end
 s.listed_series={0x14e}
 s.listed_names={TOKEN_DUAL_AVATAR_SPIRIT}
 function s.thfilter(c)
-	return c:IsSetCard(0x14e) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x14e) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

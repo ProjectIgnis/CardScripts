@@ -17,7 +17,7 @@ end
 s.listed_series={0x3008,0x1f,0xa4}
 function s.filter(c,e,tp,lc,lp)
 	return (c:IsSetCard(0x3008) or c:IsSetCard(0x1f) or c:IsSetCard(0xa4))
-		and c:IsType(TYPE_MONSTER) and c:IsAttackBelow(lp)
+		and c:IsMonster() and c:IsAttackBelow(lp)
 		and (c:IsAbleToHand() or (lc>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

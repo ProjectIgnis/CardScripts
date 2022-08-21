@@ -15,13 +15,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ConfirmDecktop(tp,1)
 	Duel.ConfirmDecktop(1-tp,1)
 	local tc=g1:GetFirst()
-	if tc:IsType(TYPE_MONSTER) and tc:IsAbleToHand() then
+	if tc:IsMonster() and tc:IsAbleToHand() then
 		Duel.DisableShuffleCheck()
 		Duel.SendtoHand(g1,nil,REASON_EFFECT)
 		Duel.ShuffleHand(tp)
 	end
 	tc=g2:GetFirst()
-	if tc:IsType(TYPE_MONSTER) and tc:IsAbleToHand() then
+	if tc:IsMonster() and tc:IsAbleToHand() then
 		Duel.DisableShuffleCheck()
 		Duel.SendtoHand(g2,nil,REASON_EFFECT)
 		Duel.ShuffleHand(1-tp)

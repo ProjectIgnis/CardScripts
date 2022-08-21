@@ -40,7 +40,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.filter(c)
-	return c:IsPreviousLocation(LOCATION_HAND) and c:IsType(TYPE_MONSTER)
+	return c:IsPreviousLocation(LOCATION_HAND) and c:IsMonster()
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.filter,1,nil)

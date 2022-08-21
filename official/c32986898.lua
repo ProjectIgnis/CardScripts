@@ -27,7 +27,7 @@ function s.matfilter(c,lc,st,tp)
 	return not c:IsType(TYPE_LINK,lc,st,tp)
 end
 function s.mfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsType(TYPE_XYZ)
+	return c:IsMonster() and c:IsType(TYPE_XYZ)
 end
 function s.matcheck(e,c)
 	local g=c:GetMaterial():Filter(aux.NOT(Card.IsType),nil,TYPE_LINK)

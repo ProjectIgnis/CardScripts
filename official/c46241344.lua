@@ -32,7 +32,7 @@ function s.thfilter(c)
 		and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
 end
 function s.gyfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x79) and c:IsAbleToGrave()
+	return c:IsMonster() and c:IsSetCard(0x79) and c:IsAbleToGrave()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_ONFIELD+LOCATION_GRAVE) and s.thfilter(chkc) end

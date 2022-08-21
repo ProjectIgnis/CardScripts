@@ -50,7 +50,7 @@ function s.eqfilter1(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0x29) and Duel.IsExistingMatchingCard(s.eqfilter2,tp,LOCATION_GRAVE,0,1,nil,c,tp)
 end
 function s.eqfilter2(c,tc,tp)
-	return c:IsSetCard(0x29) and c:IsType(TYPE_MONSTER) and not c:IsForbidden()
+	return c:IsSetCard(0x29) and c:IsMonster() and not c:IsForbidden()
 end
 
 function s.eftg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

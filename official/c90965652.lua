@@ -31,7 +31,7 @@ function s.codefilter(c,code)
 	return c:IsCode(code) and c:IsAbleToHand()
 end
 function s.chemfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xeb) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(0xeb) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local f1 = Duel.IsExistingMatchingCard(s.codefilter,tp,LOCATION_DECK,0,1,nil,65959844)

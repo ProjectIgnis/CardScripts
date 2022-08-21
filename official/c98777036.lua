@@ -73,7 +73,7 @@ function s.ctffilter(c,lv)
 	return c:IsControlerCanBeChanged() and c:IsFaceup() and c:GetLevel()==lv
 end
 function s.ctfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and c:IsAbleToGraveAsCost()
 		and Duel.IsExistingTarget(s.ctffilter,tp,0,LOCATION_MZONE,1,nil,c:GetLevel())
 end
 function s.ctcos(e,tp,eg,ep,ev,re,r,rp,chk)

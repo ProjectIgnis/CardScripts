@@ -32,7 +32,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x9c}
 function s.cfilter(c)
-	return c:IsSetCard(0x9c) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x9c) and c:IsMonster()
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_GRAVE,0,nil)

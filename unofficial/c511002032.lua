@@ -18,7 +18,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x33}
 function s.filter(c)
-	return c:IsSetCard(0x33) and c:IsLevelBelow(3) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x33) and c:IsLevelBelow(3) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.synfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x33) and c:IsType(TYPE_SYNCHRO)

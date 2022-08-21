@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c)
-	return c:IsType(TYPE_MONSTER) and (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsAbleToRemoveAsCost(POS_FACEDOWN)
+	return c:IsMonster() and (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsAbleToRemoveAsCost(POS_FACEDOWN)
 		and not c:IsSummonableCard() and not c:IsType(TYPE_TOKEN)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

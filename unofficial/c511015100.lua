@@ -87,7 +87,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.discfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x99) and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and c:IsSetCard(0x99) and c:IsAbleToGraveAsCost()
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.discfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil) end
@@ -130,7 +130,7 @@ function s.dmcon(e,tp,eg,ep,ev,re,r,rp)
 	return (a:IsControler(tp) or (d and d:IsControler(tp))) and Duel.GetFlagEffect(tp,id)==0
 end
 function s.dmfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToHandAsCost() and c:IsSetCard(0x99)
+	return c:IsMonster() and c:IsAbleToHandAsCost() and c:IsSetCard(0x99)
 end
 function s.dmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.dmfilter,tp,LOCATION_MZONE,0,1,e:GetLabelObject()) end
@@ -170,7 +170,7 @@ function s.dm2con(e,tp,eg,ep,ev,re,r,rp)
 	return (a:IsControler(tp) or (d and d:IsControler(tp))) and Duel.GetFlagEffect(tp,id+1)==0
 end
 function s.dm2filter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost() and c:IsSetCard(0x99)
+	return c:IsMonster() and c:IsAbleToGraveAsCost() and c:IsSetCard(0x99)
 end
 function s.dm2cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.dm2filter,tp,LOCATION_HAND,0,2,nil) end

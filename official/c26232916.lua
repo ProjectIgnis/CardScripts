@@ -46,7 +46,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.thcfilter,1,nil,tp)
 end
 function s.thfilter(c)
-	return ((c:IsType(TYPE_MONSTER) and c:IsSetCard(0x2b)) or c:IsSetCard(0x61))
+	return ((c:IsMonster() and c:IsSetCard(0x2b)) or c:IsSetCard(0x61))
 		and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -78,12 +78,12 @@ function s.aclimit(e,re,tp)
 	return re:GetHandler():IsCode(tc:GetCode())
 end
 function s.repfilter(c,tp,rp)
-	return c:IsFaceup() and ((c:IsType(TYPE_MONSTER) and c:IsSetCard(0x2b)) or c:IsSetCard(0x61))
+	return c:IsFaceup() and ((c:IsMonster() and c:IsSetCard(0x2b)) or c:IsSetCard(0x61))
 		and c:IsOnField() and c:IsControler(tp)
 		and not c:IsReason(REASON_REPLACE) and (c:IsReason(REASON_BATTLE) or (c:IsReason(REASON_EFFECT) and rp~=tp))
 end
 function s.rmfilter(c)
-	return c:IsSetCard(0x2b) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsSetCard(0x2b) and c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.repval(e,c)
 	return s.repfilter(c,e:GetHandlerPlayer(),c:GetReasonPlayer())

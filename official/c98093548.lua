@@ -68,7 +68,7 @@ function s.shfilter(c)
 	return c:IsAbleToDeck() and c:IsSetCard(0x7c) and (c:IsSpell() or c:IsTrap())
 end
 function s.addfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x79) and c:IsAbleToHand() and c:IsLevelAbove(5)
+	return c:IsMonster() and c:IsSetCard(0x79) and c:IsAbleToHand() and c:IsLevelAbove(5)
 end
 function s.addtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.shfilter(chkc) end

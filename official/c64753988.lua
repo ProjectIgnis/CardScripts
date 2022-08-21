@@ -32,7 +32,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x4093}
 function s.thfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x4093) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(0x4093) and c:IsAbleToHand()
 		and not Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,c:GetCode())
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

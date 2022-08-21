@@ -89,7 +89,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for 1 of your face-up banished "Myutant" monsters
 function s.thfilter(c)
-	return c:IsSetCard(0x159) and c:IsType(TYPE_MONSTER) and c:IsFaceup() and c:IsAbleToHand()
+	return c:IsSetCard(0x159) and c:IsMonster() and c:IsFaceup() and c:IsAbleToHand()
 end
 	--Activation legality
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

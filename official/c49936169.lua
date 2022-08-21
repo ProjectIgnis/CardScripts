@@ -19,7 +19,7 @@ end
 s.listed_names={id}
 s.listed_series={0x107,0xb2}
 function s.thfilter(c)
-	return c:IsAbleToHand() and c:IsType(TYPE_MONSTER) and (c:IsSetCard(0x107) or c:IsSetCard(0xb2)) and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
+	return c:IsAbleToHand() and c:IsMonster() and (c:IsSetCard(0x107) or c:IsSetCard(0xb2)) and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE+LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end
@@ -30,7 +30,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,500)
 end
 function s.tdfilter(c)
-	return  c:IsAbleToDeck() and c:IsType(TYPE_MONSTER) and not c:IsPublic() and (c:IsSetCard(0x107) or c:IsSetCard(0xb2))
+	return  c:IsAbleToDeck() and c:IsMonster() and not c:IsPublic() and (c:IsSetCard(0x107) or c:IsSetCard(0xb2))
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

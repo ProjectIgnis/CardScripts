@@ -34,7 +34,7 @@ function s.atkcfilter(c)
 		and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true,false)
 end
 function s.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x10f) and c:IsType(TYPE_MONSTER)
+	return c:IsFaceup() and c:IsSetCard(0x10f) and c:IsMonster()
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.atkcfilter,tp,LOCATION_MZONE+LOCATION_HAND+LOCATION_GRAVE,0,1,nil) end

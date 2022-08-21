@@ -123,7 +123,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cyberse(c)
-	return c:IsRace(RACE_CYBERSE) and c:IsFaceup() and c:IsType(TYPE_MONSTER)
+	return c:IsRace(RACE_CYBERSE) and c:IsFaceup() and c:IsMonster()
 end
 ------------------------------------
 function s.sumlimit(e,c,tp,sumtp,sumpos)

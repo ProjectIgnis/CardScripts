@@ -72,7 +72,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for a "Sprigguns" monster or "Fallen of Albaz"
 function s.thfilter(c,e,tp,ft)
-	return c:IsType(TYPE_MONSTER) and (c:IsSetCard(0x158) or c:IsCode(CARD_ALBAZ))
+	return c:IsMonster() and (c:IsSetCard(0x158) or c:IsCode(CARD_ALBAZ))
 		and (c:IsAbleToHand() or (c:IsCanBeSpecialSummoned(e,0,tp,false,false) and ft>0))
 end
 	--Activation legality

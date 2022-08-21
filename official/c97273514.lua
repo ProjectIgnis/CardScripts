@@ -66,7 +66,7 @@ function s.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_INSECT)
 end
 function s.eqfilter(c,tp)
-	return c:IsRace(RACE_INSECT) and c:CheckUniqueOnField(tp) and c:IsType(TYPE_MONSTER) and not c:IsForbidden()
+	return c:IsRace(RACE_INSECT) and c:CheckUniqueOnField(tp) and c:IsMonster() and not c:IsForbidden()
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()

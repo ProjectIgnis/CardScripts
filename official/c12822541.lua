@@ -18,7 +18,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0xaf}
 function s.filter1(c)
-	return c:IsSetCard(0xaf) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0xaf) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.filter2(c)
 	return c:IsFaceup() and c:IsSetCard(0xaf) and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()

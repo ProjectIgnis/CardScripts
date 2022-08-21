@@ -39,7 +39,7 @@ end
 s.listed_names={15259703}
 
 function s.spfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsType(TYPE_TOON) and c:HasLevel() and c:IsLevelAbove(1) and c:IsReleasable()
+	return c:IsMonster() and c:IsType(TYPE_TOON) and c:HasLevel() and c:IsLevelAbove(1) and c:IsReleasable()
 end
 function s.rescon(sg,e,tp,mg)
 	if #sg>1 then

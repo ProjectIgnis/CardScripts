@@ -61,7 +61,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return s[tp]>0
 end
 function s.thfilter(c)
-	return (c:GetReason()&0x40008)==0x40008 and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return (c:GetReason()&0x40008)==0x40008 and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,nil) end

@@ -121,7 +121,7 @@ function Card.IsLinkSpell(c)
 end
 
 function Card.IsNonEffectMonster(c)
-	return c:IsType(TYPE_MONSTER) and not c:IsType(TYPE_EFFECT)
+	return c:IsMonster() and not c:IsType(TYPE_EFFECT)
 end
 
 

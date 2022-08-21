@@ -39,7 +39,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return bc:IsFaceup() and bc:IsRace(RACE_FIEND)
 end
 function s.atkcfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x6008) and c:HasLevel() and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and c:IsSetCard(0x6008) and c:HasLevel() and c:IsAbleToGraveAsCost()
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.atkcfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,nil) end

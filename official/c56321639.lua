@@ -77,7 +77,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return ct>0 and c:IsReason(REASON_DESTROY)
 end
 function s.filter(c,level)
-	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_SPELLCASTER) and c:IsLevelBelow(level) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsRace(RACE_SPELLCASTER) and c:IsLevelBelow(level) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e:GetLabel()) end

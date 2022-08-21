@@ -19,7 +19,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp) and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,3,nil)
 end
 function s.ctfilter(c,race)
-	return c:IsType(TYPE_MONSTER) and c:IsRace(race)
+	return c:IsMonster() and c:IsRace(race)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=Duel.GetAttacker()

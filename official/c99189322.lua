@@ -16,7 +16,7 @@ function s.filter(c)
 	return c:IsSetCard(0x5) and c:GetFlagEffect(36690018)>0
 end
 function s.rfilter(c)
-	return c:IsSetCard(0x5) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemove() and aux.SpElimFilter(c,true)
+	return c:IsSetCard(0x5) and c:IsMonster() and c:IsAbleToRemove() and aux.SpElimFilter(c,true)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

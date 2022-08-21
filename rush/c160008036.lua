@@ -47,10 +47,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 --to deck
 function s.tdfilter(c)
-	return c:IsAbleToDeck() and c:IsType(TYPE_MONSTER)
+	return c:IsAbleToDeck() and c:IsMonster()
 end
 function s.cfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:GetAttack()==0
+	return c:IsMonster() and c:GetAttack()==0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetMatchingGroupCount(s.cfilter,tp,LOCATION_GRAVE,0,nil)

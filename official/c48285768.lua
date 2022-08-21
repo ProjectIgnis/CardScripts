@@ -40,7 +40,7 @@ s.listed_series={0x158}
 
 	--Check for a "Sprigguns" monster
 function s.tgfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x158) and c:IsAbleToGrave()
+	return c:IsMonster() and c:IsSetCard(0x158) and c:IsAbleToGrave()
 end
 	--Activation legality
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)

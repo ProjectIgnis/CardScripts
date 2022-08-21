@@ -34,7 +34,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,1),nil)
 end
 function s.filter(c,e,tp)
-	return c:IsAttackBelow(2000) and c:IsSetCard(0x33) and c:IsType(TYPE_MONSTER)
+	return c:IsAttackBelow(2000) and c:IsSetCard(0x33) and c:IsMonster()
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

@@ -29,7 +29,7 @@ function s.rev(e,re,r,rp,rc)
 	return (r&REASON_EFFECT)>0
 end
 function s.filter(c)
-	return c:IsOnField() and c:IsType(TYPE_MONSTER)
+	return c:IsOnField() and c:IsMonster()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if e==re or e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) or not Duel.IsChainNegatable(ev) then return false end

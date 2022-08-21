@@ -31,7 +31,7 @@ function s.cfilter2(c)
 	return s.cfilter1(c) and c:IsSetCard(0x36)
 end
 function s.filter1(c)
-	return c:IsSetCard(0x36) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x36) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.filter2(c)
 	return c:IsSetCard(0x36) and not c:IsCode(id) and c:IsAbleToHand()

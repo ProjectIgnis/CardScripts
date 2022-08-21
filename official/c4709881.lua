@@ -38,7 +38,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0xfe,0xfd}
 function s.atkfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xfe)
+	return c:IsMonster() and c:IsSetCard(0xfe)
 end
 function s.atkval(e,c)
 	return Duel.GetMatchingGroup(s.atkfilter,c:GetControler(),LOCATION_GRAVE,0,nil):GetClassCount(Card.GetCode)*300

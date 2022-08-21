@@ -33,7 +33,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.GetDrawCount(tp)>0
 end
 function s.thfilter(c)
-	return c:IsType(TYPE_ARMOR) and c:IsAbleToHand() and c:IsType(TYPE_MONSTER)
+	return c:IsType(TYPE_ARMOR) and c:IsAbleToHand() and c:IsMonster()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

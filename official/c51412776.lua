@@ -33,7 +33,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x107a,0x207a}
 function s.filter(c)
-	return ((c:IsSetCard(0x107a) and c:IsType(TYPE_MONSTER)) or c:IsSetCard(0x207a)) and c:IsAbleToHand()
+	return ((c:IsSetCard(0x107a) and c:IsMonster()) or c:IsSetCard(0x207a)) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) end

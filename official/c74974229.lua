@@ -35,7 +35,7 @@ end
 s.counter_place_list={COUNTER_A}
 	--Defining cost
 function s.costfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsDiscardable() and c:GetOriginalLevel()>0
+	return c:IsMonster() and c:IsDiscardable() and c:GetOriginalLevel()>0
 end
 	--Cost of discarding a monster card with a level
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

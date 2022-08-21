@@ -52,7 +52,7 @@ function s.banfilter(c)
 	return c:IsRace(RACE_DRAGON) and c:IsAbleToRemove()
 end
 function s.banfilter2(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemove()
+	return c:IsMonster() and c:IsAbleToRemove()
 end
 function s.bantg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.banfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -84,7 +84,7 @@ function s.val(e,c)
 	local g=e:GetHandler():GetOverlayGroup()
 	local val=0
 	for tc in g:Iter() do
-		local atk=tc:IsType(TYPE_MONSTER) and tc:GetAttack() or 0
+		local atk=tc:IsMonster() and tc:GetAttack() or 0
 		val=val+atk
 	end
 	return val

@@ -25,7 +25,7 @@ function s.atktg(e,c)
 	return (e:GetHandler():GetLinkedGroup():IsContains(c) or c==e:GetHandler()) and c:IsSetCard(0x8) and c:IsFaceup()
 end
 function s.atkfilter(c)
-	return c:IsSetCard(0x8) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x8) and c:IsMonster()
 end
 function s.atkval(e,c)
 	return Duel.GetMatchingGroup(s.atkfilter,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil):GetClassCount(Card.GetCode)*100

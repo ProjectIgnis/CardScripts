@@ -17,7 +17,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x579}
 function s.costfilter(c)
-	return c:IsSetCard(0x579) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(0x579) and c:IsMonster() and c:IsAbleToGraveAsCost()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

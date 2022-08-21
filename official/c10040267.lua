@@ -62,7 +62,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for a monster that specifically lists "Fossil Fusion"
 function s.thfilter(c)
-	return aux.IsCodeListed(c,CARD_FOSSIL_FUSION) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return aux.IsCodeListed(c,CARD_FOSSIL_FUSION) and c:IsMonster() and c:IsAbleToHand()
 end
 	--Activation legality
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -29,7 +29,7 @@ end
 s.listed_names={id}
 s.listed_series={0x19}
 function s.costfilter(c,ec)
-	return c:IsSetCard(0x19) and not c:IsCode(id) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(0x19) and not c:IsCode(id) and c:IsMonster() and c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

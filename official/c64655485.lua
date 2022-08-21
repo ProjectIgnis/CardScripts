@@ -38,7 +38,7 @@ function s.ffilter(c,fc,sumtype,tp)
 	return c:IsType(TYPE_EFFECT,fc,sumtype,tp) and c:IsLevelBelow(4)
 end
 function s.atkfilter(c)
-	return c:IsFaceup() and (c:IsSetCard(0x1f) or c:IsSetCard(0x8)) and c:IsType(TYPE_MONSTER)
+	return c:IsFaceup() and (c:IsSetCard(0x1f) or c:IsSetCard(0x8)) and c:IsMonster()
 end
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(s.atkfilter,c:GetControler(),LOCATION_GRAVE,0,nil)*100

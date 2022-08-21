@@ -31,7 +31,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x106}
 function s.lvcfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x106)
+	return c:IsMonster() and c:IsSetCard(0x106)
 end
 function s.lvfilter(c,e)
 	return c:IsFaceup() and c:IsLevelAbove(1) and (not e or c:IsCanBeEffectTarget(e))

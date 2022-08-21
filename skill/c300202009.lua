@@ -16,11 +16,11 @@ function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	return aux.CanActivateSkill(tp) and (b1 or b2 or b3)
 end
 function s.Amafilter(c,tp)
-	return c:IsSetCard(0x4) and c:IsType(TYPE_MONSTER) and not c:IsPublic()
+	return c:IsSetCard(0x4) and c:IsMonster() and not c:IsPublic()
 		and Duel.IsExistingMatchingCard(s.Hapfilter,tp,LOCATION_HAND,0,1,c)
 end
 function s.Hapfilter(c)
-	return c:IsSetCard(0x64) and c:IsType(TYPE_MONSTER) and not c:IsPublic()
+	return c:IsSetCard(0x64) and c:IsMonster() and not c:IsPublic()
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))

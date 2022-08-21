@@ -54,7 +54,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 	--Check for "Nekroz" monsters to tribute
 function s.filter(c)
-	return c:IsSetCard(0xb4) and c:IsType(TYPE_MONSTER) and c:IsReleasableByEffect()
+	return c:IsSetCard(0xb4) and c:IsMonster() and c:IsReleasableByEffect()
 end
 	--Check for "Nekroz" cards to send to GY
 function s.sendfilter(c)

@@ -51,7 +51,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 		and c:GetPreviousAttackOnField()<=1000 and c:GetPreviousControler()==tp
 end
 function s.desfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAttackAbove(1500)
+	return c:IsMonster() and c:IsAttackAbove(1500)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local conf=Duel.GetFieldGroup(tp,0,LOCATION_MZONE+LOCATION_HAND+LOCATION_DECK)

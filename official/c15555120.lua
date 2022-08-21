@@ -15,7 +15,7 @@ s.listed_series={0x2016}
 s.check=false
 function s.cfilter(c,tp)
 	local lv=c:GetLevel()
-	return lv>0 and c:IsSetCard(0x2016) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return lv>0 and c:IsSetCard(0x2016) and c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 		and Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,c,lv)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

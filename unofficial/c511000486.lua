@@ -66,7 +66,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	Duel.ConfirmCards(tp,tc)
-	if tc and tc:IsType(TYPE_MONSTER) and tc:IsCanBeSpecialSummoned(e,0,tp,true,false) then
+	if tc and tc:IsMonster() and tc:IsCanBeSpecialSummoned(e,0,tp,true,false) then
 		Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEUP)
 	end
 	Duel.ShuffleHand(tp)

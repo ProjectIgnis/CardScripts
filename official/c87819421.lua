@@ -13,7 +13,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x8,0xa5}
 function s.filter1(c)
-	return c:IsSetCard(0x8) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x8) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.filter2(c)
 	return c:IsSetCard(0xa5) and c:IsType(TYPE_QUICKPLAY) and c:IsAbleToHand()

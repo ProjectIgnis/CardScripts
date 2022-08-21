@@ -48,7 +48,7 @@ function s.atlimit(e,c)
 	return c:IsFaceup() and c:IsSetCard(0x64)
 end
 function s.efftg(e,c)
-	return c:IsSetCard(0x64) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x64) and c:IsMonster()
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp

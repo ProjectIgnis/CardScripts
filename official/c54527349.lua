@@ -44,7 +44,7 @@ function s.extrafil(e,tp,mg1)
 end
 function s.costfilter(c,target,e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabelObject(c)
-	local res=c:IsSetCard(0xef) and c:IsType(TYPE_MONSTER) and (c:IsLocation(LOCATION_HAND) or c:IsFaceup())
+	local res=c:IsSetCard(0xef) and c:IsMonster() and (c:IsLocation(LOCATION_HAND) or c:IsFaceup())
 				and c:IsAbleToGraveAsCost() and target(e,tp,eg,ep,ev,re,r,rp,0)
 	e:SetLabelObject(nil)
 	return res

@@ -68,7 +68,7 @@ function s.tgval(e,re,rp)
 	return re:IsActiveType(TYPE_MONSTER) and rp~=e:GetHandlerPlayer()
 end
 function s.repfilter(c,e)
-	return c:IsType(TYPE_FRSX) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemove()
+	return c:IsType(TYPE_FRSX) and c:IsMonster() and c:IsAbleToRemove()
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

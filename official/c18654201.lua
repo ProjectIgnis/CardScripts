@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.filter(c,tp)
-	return c:IsControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsType(TYPE_MONSTER)
+	return c:IsControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsMonster()
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local p1=false local p2=false

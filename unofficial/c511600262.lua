@@ -18,7 +18,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x12b}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x12b) and c:IsType(TYPE_LINK) and c:IsType(TYPE_MONSTER)
+	return c:IsFaceup() and c:IsSetCard(0x12b) and c:IsType(TYPE_LINK) and c:IsMonster()
 end
 function s.condition(e,c)
 	if c==nil then return true end

@@ -25,7 +25,7 @@ function s.lcheck(g,lc,sumtype,tp)
 	return g:CheckDifferentProperty(Card.GetCode,lc,sumtype,tp)
 end
 function s.filter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsLevelAbove(7)
+	return c:IsMonster() and c:IsLevelAbove(7)
 end
 function s.matcheck(e,c)
 	local g=c:GetMaterial()

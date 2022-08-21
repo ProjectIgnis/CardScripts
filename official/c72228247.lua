@@ -50,7 +50,7 @@ function s.atklimit(e,c)
 	return e:GetHandler():GetLinkedGroup():IsContains(c)
 end
 function s.thfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x116) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(0x116) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,tp) end

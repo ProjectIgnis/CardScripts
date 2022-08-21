@@ -17,11 +17,11 @@ function s.initial_effect(c)
 end
 
 function s.costfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_PYRO) and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and c:IsRace(RACE_PYRO) and c:IsAbleToGraveAsCost()
 	and Duel.IsExistingMatchingCard(s.desfilter,tp,0,LOCATION_MZONE,1,nil,c:GetLevel()) 
 end
 function s.desfilter(c,lvl)
-	return c:IsType(TYPE_MONSTER) and c:IsPosition(POS_FACEUP_DEFENSE) and c:IsLevel(lvl)
+	return c:IsMonster() and c:IsPosition(POS_FACEUP_DEFENSE) and c:IsLevel(lvl)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil,tp) end

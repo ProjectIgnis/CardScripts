@@ -32,7 +32,7 @@ function s.cfilter(c,tp)
 	return c:IsDiscardable() and Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,c)
 end
 function s.tgfilter(c)
-	return c:IsSetCard(0xc008) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
+	return c:IsSetCard(0xc008) and c:IsMonster() and c:IsAbleToGrave()
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil,tp) end
@@ -46,7 +46,7 @@ function s.atkfilter(c)
 	return c:IsSetCard(0xc008) and c:IsFaceup()
 end
 function s.ctfilter(c)
-	return c:IsSetCard(0xc008) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0xc008) and c:IsMonster()
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)

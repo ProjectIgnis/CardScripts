@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c,e,tp,eg,ep,ev,re,r,rp,chain)
-	if not c:IsType(TYPE_MONSTER) and (c:IsHasEffect(511001283) or c:IsHasEffect(511001408)) then return false end
+	if not c:IsMonster() and (c:IsHasEffect(511001283) or c:IsHasEffect(511001408)) then return false end
 	return s.filter(c,e,tp,eg,ep,ev,re,r,rp)
 end
 function s.filter(c,e,tp,eg,ep,ev,re,r,rp,chain)

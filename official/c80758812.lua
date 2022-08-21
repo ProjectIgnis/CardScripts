@@ -75,7 +75,7 @@ function s.costfilter(c,e,tp)
 end
 	--Check for a FIRE warrior monster
 function s.spfilter2(c,e,tp)
-	return c:IsRace(RACE_WARRIOR) and c:IsType(TYPE_MONSTER) and c:IsAttribute(ATTRIBUTE_FIRE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsRace(RACE_WARRIOR) and c:IsMonster() and c:IsAttribute(ATTRIBUTE_FIRE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 	--Activation legality
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)

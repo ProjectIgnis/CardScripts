@@ -30,7 +30,7 @@ end
 s.listed_series={0x119}
 	--Defining what to check
 function s.cfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x119)
+	return c:IsMonster() and c:IsSetCard(0x119)
 end
 	--Check for 3+ "Salamangreat" monsters in your GY
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

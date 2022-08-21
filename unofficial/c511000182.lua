@@ -21,7 +21,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.DisableShuffleCheck()
 		local tg=g:RandomSelect(1-tp,1)
 		local tc=tg:GetFirst()
-		if tc:IsType(TYPE_MONSTER) and tc:IsCanBeSpecialSummoned(e,0,tp,false,false) then
+		if tc:IsMonster() and tc:IsCanBeSpecialSummoned(e,0,tp,false,false) then
 			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 			local g2=g:Filter(aux.TRUE,tg)
 			Duel.SendtoHand(g2,nil,REASON_EFFECT)

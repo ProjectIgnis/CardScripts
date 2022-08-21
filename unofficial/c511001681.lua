@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x56a) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x56a) and c:IsMonster()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local sg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_DECK,0,nil)

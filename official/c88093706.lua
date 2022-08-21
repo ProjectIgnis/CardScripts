@@ -134,7 +134,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return tc:IsLocation(LOCATION_GRAVE) and tc:IsType(TYPE_MONSTER) and not tc:IsPreviousControler(tp)
+	return tc:IsLocation(LOCATION_GRAVE) and tc:IsMonster() and not tc:IsPreviousControler(tp)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

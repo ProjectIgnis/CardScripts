@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.retfilter(c)
-	return c:IsSetCard(0x26) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
+	return c:IsSetCard(0x26) and c:IsMonster() and c:IsAbleToDeck()
 end
 function s.filter(c)
 	return c:IsSpellTrap() and c:IsAbleToHand()

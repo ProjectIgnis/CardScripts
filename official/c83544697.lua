@@ -13,7 +13,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x10}
 function s.filter1(c)
-	return c:IsSetCard(0x10) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
+	return c:IsSetCard(0x10) and c:IsMonster() and c:IsAbleToDeck()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

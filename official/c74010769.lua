@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c)
-	return (c:IsFacedown() or not c:IsAttribute(ATTRIBUTE_FIRE)) and c:IsType(TYPE_MONSTER)
+	return (c:IsFacedown() or not c:IsAttribute(ATTRIBUTE_FIRE)) and c:IsMonster()
 end
 function s.spcon(e,c)
 	if c==nil then return true end

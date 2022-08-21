@@ -89,7 +89,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e2,tp)
 end
 function s.desfilter(c,g)
-	return c:IsLocation(LOCATION_ONFIELD) and c:IsType(TYPE_MONSTER)
+	return c:IsLocation(LOCATION_ONFIELD) and c:IsMonster()
 		and c:IsReason(REASON_BATTLE) and c:IsRelateToBattle() and g:IsContains(c)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)

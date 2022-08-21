@@ -86,7 +86,7 @@ function s.eqval(ec,c,tp)
 	return ec:IsControler(tp)
 end
 function s.filter(c)
-	return c:IsType(TYPE_MONSTER) and not c:IsForbidden()
+	return c:IsMonster() and not c:IsForbidden()
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0

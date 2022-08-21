@@ -57,11 +57,11 @@ function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Destroy(g,REASON_COST)
 end
 function s.rmfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemove()
+	return c:IsMonster() and c:IsAbleToRemove()
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=Duel.GetFieldCard(1-tp,LOCATION_GRAVE,Duel.GetFieldGroupCount(1-tp,LOCATION_GRAVE,0)-1)
-	if chk==0 then return tc and tc:IsType(TYPE_MONSTER) and tc:IsAbleToRemove() and tc:GetAttack()>0 end
+	if chk==0 then return tc and tc:IsMonster() and tc:IsAbleToRemove() and tc:GetAttack()>0 end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,0,0)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
@@ -69,7 +69,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	local tc=Duel.GetFieldCard(1-tp,LOCATION_GRAVE,Duel.GetFieldGroupCount(1-tp,LOCATION_GRAVE,0)-1)
 	local sum=0
-	while tc and tc:IsType(TYPE_MONSTER) and tc:IsAbleToRemove() and tc:GetAttack()>0 do
+	while tc and tc:IsMonster() and tc:IsAbleToRemove() and tc:GetAttack()>0 do
 		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 		sum=sum+tc:GetAttack()
 		tc=Duel.GetFieldCard(1-tp,LOCATION_GRAVE,Duel.GetFieldGroupCount(1-tp,LOCATION_GRAVE,0)-1)

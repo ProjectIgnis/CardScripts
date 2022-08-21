@@ -23,7 +23,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.filter1,1,nil,tp) and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_AQUA),tp,LOCATION_MZONE,0,3,nil)
 end
 function s.desfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsLevelBelow(8) and not c:IsMaximumModeSide() and c:IsFaceup()
+	return c:IsMonster() and c:IsLevelBelow(8) and not c:IsMaximumModeSide() and c:IsFaceup()
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

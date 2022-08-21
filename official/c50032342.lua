@@ -17,7 +17,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x2f}
 function s.cfilter(c)
-	return c:IsSetCard(0x2f) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x2f) and c:IsMonster()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end

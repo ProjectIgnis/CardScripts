@@ -33,7 +33,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x24}
 function s.cfilter(c,tp)
-	return c:IsSetCard(0x24) and c:IsType(TYPE_MONSTER) and (c:GetReason()&0x41)==0x41
+	return c:IsSetCard(0x24) and c:IsMonster() and (c:GetReason()&0x41)==0x41
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

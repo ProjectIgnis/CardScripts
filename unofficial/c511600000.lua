@@ -34,7 +34,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x9f}
 function s.emfilter(c)
-	return c:IsAbleToGraveAsCost() and c:IsSetCard(0x9f) and c:IsType(TYPE_MONSTER)
+	return c:IsAbleToGraveAsCost() and c:IsSetCard(0x9f) and c:IsMonster()
 end
 function s.pencon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_BATTLE_STEP

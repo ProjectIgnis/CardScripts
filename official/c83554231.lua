@@ -27,7 +27,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x119}
 function s.filter(c,e)
-	return c:IsSetCard(0x119) and c:IsType(TYPE_MONSTER) 
+	return c:IsSetCard(0x119) and c:IsMonster() 
 		and c:IsCanBeEffectTarget(e) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

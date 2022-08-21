@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	end)
 end
 function s.cfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsControler(tp)
+	return c:IsMonster() and c:IsControler(tp)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(s.cfilter,1,nil,tp) then

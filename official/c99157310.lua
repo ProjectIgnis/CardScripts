@@ -32,7 +32,7 @@ s.listed_series={0x10b}
 s.listed_names={75119040}
 
 function s.cfilter1(c)
-	return c:IsSetCard(0x10b) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x10b) and c:IsMonster()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp and Duel.GetAttacker():IsControler(1-tp)

@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x13}
 function s.cfilter(c)
-	return c:IsSetCard(0x13) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeckAsCost()
+	return c:IsSetCard(0x13) and c:IsMonster() and c:IsAbleToDeckAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end

@@ -11,7 +11,7 @@ function s.cfilter(c)
 	return c:IsSetCard(0xfb) and c:IsAbleToGrave()
 end
 function s.tkfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xfb)
+	return c:IsMonster() and c:IsSetCard(0xfb)
 end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--condition

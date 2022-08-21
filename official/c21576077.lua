@@ -30,7 +30,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x151}
 function s.thfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x151) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(0x151) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.thfilter(chkc) end

@@ -38,7 +38,7 @@ s.listed_names={id}
 
 	--Check for a "Destiny HERO" monster
 function s.filter(c)
-	return c:IsSetCard(0xc008) and c:IsType(TYPE_MONSTER) and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE+LOCATION_DECK))
+	return c:IsSetCard(0xc008) and c:IsMonster() and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE+LOCATION_DECK))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK+LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil) end

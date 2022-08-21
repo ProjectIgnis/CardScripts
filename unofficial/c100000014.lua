@@ -88,7 +88,7 @@ function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
 end
 function s.cosfilter(c)
-	return c:IsSetCard(0x4a) and c:IsType(TYPE_MONSTER) and c:IsDiscardable()
+	return c:IsSetCard(0x4a) and c:IsMonster() and c:IsDiscardable()
 end
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cosfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end

@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	end)
 end
 function s.filter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x9f) and c:IsPreviousLocation(LOCATION_MZONE)
+	return c:IsMonster() and c:IsSetCard(0x9f) and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	if not eg then return end

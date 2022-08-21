@@ -21,7 +21,7 @@ function s.val(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil,0x54d)*200
 end
 function s.filter2(c)
-	return c:IsFaceup() and c:IsType(TYPE_MONSTER)
+	return c:IsFaceup() and c:IsMonster()
 end
 function s.val2(e,c)
 	return Duel.GetMatchingGroupCount(s.filter2,c:GetControler(),LOCATION_REMOVED,LOCATION_REMOVED,nil)*300

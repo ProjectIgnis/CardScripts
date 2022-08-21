@@ -39,7 +39,7 @@ function s.indtg(e,c)
 	return c:IsSetCard(0xba)
 end
 function s.cfilter(c)
-	return c:IsSetCard(0xba) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0xba) and c:IsMonster()
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFlagEffect(tp,id+1)==0 and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,nil)

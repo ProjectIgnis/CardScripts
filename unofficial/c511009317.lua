@@ -60,7 +60,7 @@ function s.sumcon(e,tp,eg,ep,ev,re,r,rp)
 		and not e:GetHandler():IsStatus(STATUS_CHAINING)
 end
 function s.ovfilter(c,e)
-	return c:IsSetCard(0xba) and c:IsType(TYPE_XYZ) and c:IsType(TYPE_MONSTER) and (not e or c:IsCanBeEffectTarget(e))
+	return c:IsSetCard(0xba) and c:IsType(TYPE_XYZ) and c:IsMonster() and (not e or c:IsCanBeEffectTarget(e))
 end
 function s.spfilter(c,e,tp,e2)
 	return c:IsSetCard(0xba) and c:IsType(TYPE_XYZ) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

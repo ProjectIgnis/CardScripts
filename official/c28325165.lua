@@ -17,7 +17,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x10cd}
 function s.cfilter(c)
-	return c:IsSetCard(0x10cd) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x10cd) and c:IsMonster()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())

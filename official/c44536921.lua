@@ -31,7 +31,7 @@ end
 s.counter_place_list={COUNTER_PREDATOR}
 s.listed_series={0x10f3}
 function s.thcfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x10f3) and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and c:IsSetCard(0x10f3) and c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thcfilter,tp,LOCATION_DECK,0,1,nil) end

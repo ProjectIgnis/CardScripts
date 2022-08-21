@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.etarget(e,c)
-	return c:IsSetCard(0x38) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x38) and c:IsMonster()
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer()

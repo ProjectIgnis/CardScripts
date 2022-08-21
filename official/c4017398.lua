@@ -36,7 +36,7 @@ s.listed_names={id}
 
 	--Check for a "Utopia", "ZW -", or "ZS -" monster
 function s.ssfilter(c,ft,e,tp)
-	return (c:IsSetCard(0x107f) or c:IsSetCard(0x107e) or c:IsSetCard(0x207e)) and c:IsType(TYPE_MONSTER) and ((ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)) or c:IsAbleToHand())
+	return (c:IsSetCard(0x107f) or c:IsSetCard(0x107e) or c:IsSetCard(0x207e)) and c:IsMonster() and ((ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)) or c:IsAbleToHand())
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

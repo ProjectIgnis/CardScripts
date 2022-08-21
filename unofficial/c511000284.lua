@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x52}
 function s.filter(c)
-	return c:IsSetCard(0x52) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x52) and c:IsMonster()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil) 

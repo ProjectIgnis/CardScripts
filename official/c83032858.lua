@@ -26,7 +26,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x400d,0x113}
 function s.costfilter(c)
-	return c:IsSetCard(0x400d) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(0x400d) and c:IsMonster() and c:IsAbleToGraveAsCost()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local fg=Group.CreateGroup()
@@ -51,7 +51,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(tc,REASON_COST)
 end
 function s.spfilter(c,e,tp)
-	return c:IsType(TYPE_MONSTER) and not c:IsCode(id) and (c:IsSetCard(0x400d) or c:IsSetCard(0x113)) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsMonster() and not c:IsCode(id) and (c:IsSetCard(0x400d) or c:IsSetCard(0x113)) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end

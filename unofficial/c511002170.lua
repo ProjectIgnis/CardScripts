@@ -19,7 +19,7 @@ function s.filter(c,tid)
 	return c:GetTurnID()==tid and c:IsAbleToRemove()
 end
 function s.filter2(c,tid)
-	return c:GetTurnID()==tid and c:IsReason(REASON_DESTROY) and c:IsType(TYPE_MONSTER)
+	return c:GetTurnID()==tid and c:IsReason(REASON_DESTROY) and c:IsMonster()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tid=Duel.GetTurnCount()

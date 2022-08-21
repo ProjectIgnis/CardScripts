@@ -13,6 +13,13 @@ if not c946 then
 	c946.initial_effect=function()end
 end
 
+function deprecated_alias(funcname)
+	return function(...)
+		Debug.Message("deprecated, use ".. funcname.. " instead")
+		return load('return '..funcname..'(...)')(...)
+	end
+end
+
 local function cost_replace_getvalideffs(replacecode,extracon,e,tp,eg,ep,ev,re,r,rp,chk)
 	local t={}
 	for _,eff in ipairs({Duel.GetPlayerEffect(tp,replacecode)}) do

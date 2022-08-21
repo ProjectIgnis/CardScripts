@@ -5,7 +5,6 @@ function GetID()
 	return self_table,self_code
 end
 
-
 --Multi purpose token
 if not c946 then
 	c946 = {}
@@ -76,6 +75,7 @@ local function setcodecondition(e)
 		return true
 	end
 end
+
 function Card.AddSetcodesRule(c,code,copyable,...)
 	local prop=0
 	if not copyable then prop=EFFECT_FLAG_UNCOPYABLE end
@@ -92,6 +92,244 @@ function Card.AddSetcodesRule(c,code,copyable,...)
 		table.insert(t,e)
 	end
 	return t
+end
+
+function Card.CheckAdjacent(c)
+	local p=c:GetControler()
+	local seq=c:GetSequence()
+	if seq>4 then return false end
+	return (seq>0 and Duel.CheckLocation(p,LOCATION_MZONE,seq-1))
+		or (seq<4 and Duel.CheckLocation(p,LOCATION_MZONE,seq+1))
+end
+
+function Card.MoveAdjacent(c)
+	local tp=c:GetControler()
+	local seq=c:GetSequence()
+	if seq>4 then return end
+	local flag=0
+	if seq>0 and Duel.CheckLocation(tp,LOCATION_MZONE,seq-1) then flag=flag|(0x1<<seq-1) end
+	if seq<4 and Duel.CheckLocation(tp,LOCATION_MZONE,seq+1) then flag=flag|(0x1<<seq+1) end
+	if flag==0 then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
+	Duel.MoveSequence(c,math.log(Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,~flag),2))
+end
+
+function Card.IsColumn(c,seq,tp,loc)
+	if not c:IsOnField() then return false end
+	local cseq=c:GetSequence()
+	local seq=seq
+	local loc=loc and loc or c:GetLocation()
+	local tp=tp and tp or c:GetControler()
+	if c:IsLocation(LOCATION_MZONE) then
+		if cseq==5 then cseq=1 end
+		if cseq==6 then cseq=3 end
+	else
+		if cseq==6 then cseq=5 end
+	end
+	if loc==LOCATION_MZONE then
+		if seq==5 then seq=1 end
+		if seq==6 then seq=3 end
+	else
+		if seq==6 then seq=5 end
+	end
+	if c:IsControler(tp) then
+		return cseq==seq
+	else
+		return cseq==4-seq
+	end
+end
+
+function Card.UpdateAttack(c,amt,reset,rc)
+	rc=rc and rc or c
+	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
+	reset=reset and reset or RESET_EVENT+r
+	local atk=c:GetAttack()
+	if atk>=-amt then --If amt is positive, it would become negative and always be lower than or equal to atk, if amt is negative, it would become postive and if it is too much it would be higher than atk
+		local e1=Effect.CreateEffect(rc)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_ATTACK)
+		if c==rc then
+			e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
+		end
+		e1:SetValue(amt)
+		e1:SetReset(reset)
+		c:RegisterEffect(e1)
+		return c:GetAttack()-atk
+	end
+	return 0
+end
+
+function Card.UpdateDefense(c,amt,reset,rc)
+	rc=rc and rc or c
+	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
+	reset=reset and reset or RESET_EVENT+r
+	local def=c:GetDefense()
+	if def and def>=-amt then --See Card.UpdateAttack
+		local e1=Effect.CreateEffect(rc)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_DEFENSE)
+		if c==rc then
+			e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
+		end
+		e1:SetValue(amt)
+		e1:SetReset(reset)
+		c:RegisterEffect(e1)
+		return c:GetDefense()-def
+	end
+	return 0
+end
+
+function Card.UpdateLevel(c,amt,reset,rc)
+	rc=rc and rc or c
+	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
+	reset=reset and reset or RESET_EVENT+r
+	local lv=c:GetLevel()
+	if c:IsLevelBelow(2147483647) then
+		if lv+amt<=0 then amt=-(lv-1) end --Unlike ATK, if amt is too much should reduce as much as possible
+		local e1=Effect.CreateEffect(rc)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_LEVEL)
+		e1:SetValue(amt)
+		e1:SetReset(reset)
+		c:RegisterEffect(e1)
+		return c:GetLevel()-lv
+	end
+	return 0
+end
+
+function Card.UpdateRank(c,amt,reset,rc)
+	rc=rc and rc or c
+	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
+	reset=reset and reset or RESET_EVENT+r
+	local rk=c:GetRank()
+	if c:IsRankBelow(2147483647) then
+		if rk+amt<=0 then amt=-(rk-1) end --See Card.UpdateLevel
+		local e1=Effect.CreateEffect(rc)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_RANK)
+		e1:SetValue(amt)
+		e1:SetReset(reset)
+		c:RegisterEffect(e1)
+		return c:GetRank()-rk
+	end
+	return 0
+end
+
+function Card.UpdateLink(c,amt,reset,rc)
+	rc=rc and rc or c
+	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
+	reset=reset and reset or RESET_EVENT+r
+	local lk=c:GetLink()
+	if c:IsLinkBelow(2147483647) then
+		if lk+amt<=0 then amt=-(lk-1) end --See Card.UpdateLevel
+		local e1=Effect.CreateEffect(rc)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_LINK)
+		e1:SetValue(amt)
+		e1:SetReset(reset)
+		c:RegisterEffect(e1)
+		return c:GetLink()-lk
+	end
+	return 0
+end
+
+function Card.UpdateScale(c,amt,reset,rc)
+	rc=rc and rc or c
+	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
+	reset=reset and reset or RESET_EVENT+r
+	local scl=c:GetLeftScale()
+	if scl then
+		if scl+amt<=0 then amt = -(scl-1) end --See Card.UpdateLevel
+		local e1=Effect.CreateEffect(rc)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_LSCALE)
+		e1:SetValue(amt)
+		e1:SetReset(reset)
+		c:RegisterEffect(e1)
+		local e2=e1:Clone()
+		e2:SetCode(EFFECT_UPDATE_RSCALE)
+		c:RegisterEffect(e2)
+		return c:GetLeftScale()-scl
+	end
+	return 0
+end
+
+function Card.GetToBeLinkedZone(tc,c,tp,clink,emz)
+	local zone=0
+	local seq=tc:GetSequence()
+	if tc:IsLocation(LOCATION_MZONE) and tc:IsControler(tp) then
+		if c:IsLinkMarker(LINK_MARKER_LEFT) and seq < 4 and (not clink or tc:IsLinkMarker(LINK_MARKER_RIGHT)) then zone=zone|(1<<seq+1) end
+		if c:IsLinkMarker(LINK_MARKER_RIGHT) and seq > 0 and seq <= 4 and (not clink or tc:IsLinkMarker(LINK_MARKER_LEFT)) then zone=zone|(1<<seq-1) end
+		if c:IsLinkMarker(LINK_MARKER_TOP_RIGHT) and (seq == 5 or seq == 6) and (not clink or tc:IsLinkMarker(LINK_MARKER_BOTTOM_LEFT)) then zone=zone|(1<<2*(seq-5)) end
+		if c:IsLinkMarker(LINK_MARKER_TOP) and (seq == 5 or seq == 6) and (not clink or tc:IsLinkMarker(LINK_MARKER_BOTTOM)) then zone=zone|(1<<2*(seq-5)+1) end
+		if c:IsLinkMarker(LINK_MARKER_TOP_LEFT) and (seq == 5 or seq == 6) and (not clink or tc:IsLinkMarker(LINK_MARKER_BOTTOM_RIGHT)) then zone=zone|(1<<2*(seq-5)+2) end
+		if emz and c:IsLinkMarker(LINK_MARKER_BOTTOM_LEFT) and (seq == 0 or seq == 2) and (not clink or tc:IsLinkMarker(LINK_MARKER_TOP_RIGHT)) then zone=zone|(1<<5+seq/2) end
+		if emz and c:IsLinkMarker(LINK_MARKER_BOTTOM) and (seq == 1 or seq == 3) and (not clink or tc:IsLinkMarker(LINK_MARKER_TOP)) then zone=zone|(1<<5+(seq-1)/2) end
+		if emz and c:IsLinkMarker(LINK_MARKER_BOTTOM_RIGHT) and (seq == 2 or seq == 4) and (not clink or tc:IsLinkMarker(LINK_MARKER_TOP_LEFT)) then zone=zone|(1<<5+(seq-2)/2) end
+	elseif tc:IsLocation(LOCATION_MZONE) then
+		if c:IsLinkMarker(LINK_MARKER_TOP_RIGHT) and (seq == 5 or seq == 6 or (emz and (seq == 0 or seq == 2))) and (not clink or tc:IsLinkMarker(LINK_MARKER_TOP_RIGHT)) then
+			if seq == 5 or seq == 6 then
+				zone=zone|(1<<-2*(seq-5)+2)
+			else
+				zone=zone|(1<<-seq/2+6)
+			end
+		end
+		if c:IsLinkMarker(LINK_MARKER_TOP) and (seq == 5 or seq == 6 or (emz and (seq == 1 or seq == 3))) and (not clink or tc:IsLinkMarker(LINK_MARKER_TOP)) then
+			if seq == 5 or seq == 6 then
+				zone=zone|(1<<-2*(seq-5)+3)
+			else
+				zone=zone|(1<<-(seq-1)/2+6)
+			end
+		end
+		if c:IsLinkMarker(LINK_MARKER_TOP_LEFT) and (seq == 2 or seq == 4 or (emz and (seq == 2 or seq == 4))) and (not clink or tc:IsLinkMarker(LINK_MARKER_TOP_LEFT)) then
+			if seq == 5 or seq == 6 then
+				zone=zone|(1<<-2*(seq-5)+4)
+			else
+				zone=zone|(1<<-(seq-2)/2+6)
+			end
+		end
+	elseif tc:IsLocation(LOCATION_SZONE) and tc:IsControler(tp) then
+		if c:IsLinkMarker(LINK_MARKER_BOTTOM_LEFT) and seq < 4 and (not clink or tc:IsLinkMarker(LINK_MARKER_TOP_RIGHT)) then zone=zone|(1<<(seq+1)) end
+		if c:IsLinkMarker(LINK_MARKER_BOTTOM) and seq <= 4 and (not clink or tc:IsLinkMarker(LINK_MARKER_TOP)) then zone=zone|(1<<seq) end
+		if c:IsLinkMarker(LINK_MARKER_BOTTOM_RIGHT) and seq > 0 and seq <= 4 and (not clink or tc:IsLinkMarker(LINK_MARKER_TOP_LEFT)) then zone=zone(1<<(seq-1)) end
+	end
+	return zone
+end
+
+
+function Card.GetScale(c)
+	if not c:IsType(TYPE_PENDULUM) then return 0 end
+	local sc=0
+	if c:IsLocation(LOCATION_PZONE) then
+		local seq=c:GetSequence()
+		if seq==0 or seq==6 then sc=c:GetLeftScale() else sc=c:GetRightScale() end
+	else
+		sc=c:GetLeftScale()
+	end
+	return sc
+end
+
+function Card.IsOddScale(c)
+	if not c:IsType(TYPE_PENDULUM) then return false end
+	return c:GetScale() % 2 ~= 0
+end
+
+function Card.IsEvenScale(c)
+	if not c:IsType(TYPE_PENDULUM) then return false end
+	return c:GetScale() % 2 == 0
+end
+
+function Card.CanSummonOrSet(...)
+	return Card.IsSummonable(...) or Card.IsMSetable(...)
+end
+
+function Card.GetMetatable(c,currentCode)
+	if currentCode then return _G["c" .. c:GetCode()] end
+	return c.__index
+end
+
+function Duel.GetMetatable(code)
+	return _G["c" .. code]
 end
 
 function Duel.LoadCardScript(code)
@@ -112,15 +350,6 @@ function Duel.LoadCardScript(code)
 		self_table=oldtable
 		self_code=oldcode
 	end
-end
-
-function Card.GetMetatable(c,currentCode)
-	if currentCode then return _G["c" .. c:GetCode()] end
-	return c.__index
-end
-
-function Duel.GetMetatable(code)
-	return _G["c" .. code]
 end
 
 bit={}
@@ -654,166 +883,6 @@ function Auxiliary.damcon1(e,tp,eg,ep,ev,re,r,rp)
 	return ex and (cp==tp or cp==PLAYER_ALL) and rr and not Duel.IsPlayerAffectedByEffect(tp,EFFECT_NO_EFFECT_DAMAGE)
 end
 
-function Card.CheckAdjacent(c)
-	local p=c:GetControler()
-	local seq=c:GetSequence()
-	if seq>4 then return false end
-	return (seq>0 and Duel.CheckLocation(p,LOCATION_MZONE,seq-1))
-		or (seq<4 and Duel.CheckLocation(p,LOCATION_MZONE,seq+1))
-end
-
-function Card.MoveAdjacent(c)
-	local tp=c:GetControler()
-	local seq=c:GetSequence()
-	if seq>4 then return end
-	local flag=0
-	if seq>0 and Duel.CheckLocation(tp,LOCATION_MZONE,seq-1) then flag=flag|(0x1<<seq-1) end
-	if seq<4 and Duel.CheckLocation(tp,LOCATION_MZONE,seq+1) then flag=flag|(0x1<<seq+1) end
-	if flag==0 then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
-	Duel.MoveSequence(c,math.log(Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,~flag),2))
-end
-
-function Card.IsColumn(c,seq,tp,loc)
-	if not c:IsOnField() then return false end
-	local cseq=c:GetSequence()
-	local seq=seq
-	local loc=loc and loc or c:GetLocation()
-	local tp=tp and tp or c:GetControler()
-	if c:IsLocation(LOCATION_MZONE) then
-		if cseq==5 then cseq=1 end
-		if cseq==6 then cseq=3 end
-	else
-		if cseq==6 then cseq=5 end
-	end
-	if loc==LOCATION_MZONE then
-		if seq==5 then seq=1 end
-		if seq==6 then seq=3 end
-	else
-		if seq==6 then seq=5 end
-	end
-	if c:IsControler(tp) then
-		return cseq==seq
-	else
-		return cseq==4-seq
-	end
-end
-
-function Card.UpdateAttack(c,amt,reset,rc)
-	rc=rc and rc or c
-	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
-	reset=reset and reset or RESET_EVENT+r
-	local atk=c:GetAttack()
-	if atk>=-amt then --If amt is positive, it would become negative and always be lower than or equal to atk, if amt is negative, it would become postive and if it is too much it would be higher than atk
-		local e1=Effect.CreateEffect(rc)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		if c==rc then
-			e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
-		end
-		e1:SetValue(amt)
-		e1:SetReset(reset)
-		c:RegisterEffect(e1)
-		return c:GetAttack()-atk
-	end
-	return 0
-end
-
-function Card.UpdateDefense(c,amt,reset,rc)
-	rc=rc and rc or c
-	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
-	reset=reset and reset or RESET_EVENT+r
-	local def=c:GetDefense()
-	if def and def>=-amt then --See Card.UpdateAttack
-		local e1=Effect.CreateEffect(rc)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_DEFENSE)
-		if c==rc then
-			e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
-		end
-		e1:SetValue(amt)
-		e1:SetReset(reset)
-		c:RegisterEffect(e1)
-		return c:GetDefense()-def
-	end
-	return 0
-end
-
-function Card.UpdateLevel(c,amt,reset,rc)
-	rc=rc and rc or c
-	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
-	reset=reset and reset or RESET_EVENT+r
-	local lv=c:GetLevel()
-	if c:IsLevelBelow(2147483647) then
-		if lv+amt<=0 then amt=-(lv-1) end --Unlike ATK, if amt is too much should reduce as much as possible
-		local e1=Effect.CreateEffect(rc)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_LEVEL)
-		e1:SetValue(amt)
-		e1:SetReset(reset)
-		c:RegisterEffect(e1)
-		return c:GetLevel()-lv
-	end
-	return 0
-end
-
-function Card.UpdateRank(c,amt,reset,rc)
-	rc=rc and rc or c
-	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
-	reset=reset and reset or RESET_EVENT+r
-	local rk=c:GetRank()
-	if c:IsRankBelow(2147483647) then
-		if rk+amt<=0 then amt=-(rk-1) end --See Card.UpdateLevel
-		local e1=Effect.CreateEffect(rc)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_RANK)
-		e1:SetValue(amt)
-		e1:SetReset(reset)
-		c:RegisterEffect(e1)
-		return c:GetRank()-rk
-	end
-	return 0
-end
-
-function Card.UpdateLink(c,amt,reset,rc)
-	rc=rc and rc or c
-	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
-	reset=reset and reset or RESET_EVENT+r
-	local lk=c:GetLink()
-	if c:IsLinkBelow(2147483647) then
-		if lk+amt<=0 then amt=-(lk-1) end --See Card.UpdateLevel
-		local e1=Effect.CreateEffect(rc)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_LINK)
-		e1:SetValue(amt)
-		e1:SetReset(reset)
-		c:RegisterEffect(e1)
-		return c:GetLink()-lk
-	end
-	return 0
-end
-
-function Card.UpdateScale(c,amt,reset,rc)
-	rc=rc and rc or c
-	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
-	reset=reset and reset or RESET_EVENT+r
-	local scl=c:GetLeftScale()
-	if scl then
-		if scl+amt<=0 then amt = -(scl-1) end --See Card.UpdateLevel
-		local e1=Effect.CreateEffect(rc)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_LSCALE)
-		e1:SetValue(amt)
-		e1:SetReset(reset)
-		c:RegisterEffect(e1)
-		local e2=e1:Clone()
-		e2:SetCode(EFFECT_UPDATE_RSCALE)
-		c:RegisterEffect(e2)
-		return c:GetLeftScale()-scl
-	end
-	return 0
-end
-
 function Auxiliary.BeginPuzzle()
 	local e1=Effect.GlobalEffect()
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -971,47 +1040,7 @@ function Auxiliary.ComposeNumberDigitByDigit(tp,min,max)
 	end
 	return number
 end
-function Card.GetToBeLinkedZone(tc,c,tp,clink,emz)
-	local zone=0
-	local seq=tc:GetSequence()
-	if tc:IsLocation(LOCATION_MZONE) and tc:IsControler(tp) then
-		if c:IsLinkMarker(LINK_MARKER_LEFT) and seq < 4 and (not clink or tc:IsLinkMarker(LINK_MARKER_RIGHT)) then zone=zone|(1<<seq+1) end
-		if c:IsLinkMarker(LINK_MARKER_RIGHT) and seq > 0 and seq <= 4 and (not clink or tc:IsLinkMarker(LINK_MARKER_LEFT)) then zone=zone|(1<<seq-1) end
-		if c:IsLinkMarker(LINK_MARKER_TOP_RIGHT) and (seq == 5 or seq == 6) and (not clink or tc:IsLinkMarker(LINK_MARKER_BOTTOM_LEFT)) then zone=zone|(1<<2*(seq-5)) end
-		if c:IsLinkMarker(LINK_MARKER_TOP) and (seq == 5 or seq == 6) and (not clink or tc:IsLinkMarker(LINK_MARKER_BOTTOM)) then zone=zone|(1<<2*(seq-5)+1) end
-		if c:IsLinkMarker(LINK_MARKER_TOP_LEFT) and (seq == 5 or seq == 6) and (not clink or tc:IsLinkMarker(LINK_MARKER_BOTTOM_RIGHT)) then zone=zone|(1<<2*(seq-5)+2) end
-		if emz and c:IsLinkMarker(LINK_MARKER_BOTTOM_LEFT) and (seq == 0 or seq == 2) and (not clink or tc:IsLinkMarker(LINK_MARKER_TOP_RIGHT)) then zone=zone|(1<<5+seq/2) end
-		if emz and c:IsLinkMarker(LINK_MARKER_BOTTOM) and (seq == 1 or seq == 3) and (not clink or tc:IsLinkMarker(LINK_MARKER_TOP)) then zone=zone|(1<<5+(seq-1)/2) end
-		if emz and c:IsLinkMarker(LINK_MARKER_BOTTOM_RIGHT) and (seq == 2 or seq == 4) and (not clink or tc:IsLinkMarker(LINK_MARKER_TOP_LEFT)) then zone=zone|(1<<5+(seq-2)/2) end
-	elseif tc:IsLocation(LOCATION_MZONE) then
-		if c:IsLinkMarker(LINK_MARKER_TOP_RIGHT) and (seq == 5 or seq == 6 or (emz and (seq == 0 or seq == 2))) and (not clink or tc:IsLinkMarker(LINK_MARKER_TOP_RIGHT)) then
-			if seq == 5 or seq == 6 then
-				zone=zone|(1<<-2*(seq-5)+2)
-			else
-				zone=zone|(1<<-seq/2+6)
-			end
-		end
-		if c:IsLinkMarker(LINK_MARKER_TOP) and (seq == 5 or seq == 6 or (emz and (seq == 1 or seq == 3))) and (not clink or tc:IsLinkMarker(LINK_MARKER_TOP)) then
-			if seq == 5 or seq == 6 then
-				zone=zone|(1<<-2*(seq-5)+3)
-			else
-				zone=zone|(1<<-(seq-1)/2+6)
-			end
-		end
-		if c:IsLinkMarker(LINK_MARKER_TOP_LEFT) and (seq == 2 or seq == 4 or (emz and (seq == 2 or seq == 4))) and (not clink or tc:IsLinkMarker(LINK_MARKER_TOP_LEFT)) then
-			if seq == 5 or seq == 6 then
-				zone=zone|(1<<-2*(seq-5)+4)
-			else
-				zone=zone|(1<<-(seq-2)/2+6)
-			end
-		end
-	elseif tc:IsLocation(LOCATION_SZONE) and tc:IsControler(tp) then
-		if c:IsLinkMarker(LINK_MARKER_BOTTOM_LEFT) and seq < 4 and (not clink or tc:IsLinkMarker(LINK_MARKER_TOP_RIGHT)) then zone=zone|(1<<(seq+1)) end
-		if c:IsLinkMarker(LINK_MARKER_BOTTOM) and seq <= 4 and (not clink or tc:IsLinkMarker(LINK_MARKER_TOP)) then zone=zone|(1<<seq) end
-		if c:IsLinkMarker(LINK_MARKER_BOTTOM_RIGHT) and seq > 0 and seq <= 4 and (not clink or tc:IsLinkMarker(LINK_MARKER_TOP_LEFT)) then zone=zone(1<<(seq-1)) end
-	end
-	return zone
-end
+
 function Group.GetToBeLinkedZone(g,c,tp,clink,emz)
 	return g:GetBitwiseOr(Card.GetToBeLinkedZone,c,tp,clink,emz)
 end
@@ -1516,10 +1545,8 @@ end
 function Auxiliary.thoeSend(card)
 	return Duel.SendtoGrave(card,REASON_EFFECT)
 end
---Helper functions to use with cards that normal summon or set a monster
-function Card.CanSummonOrSet(...)
-	return Card.IsSummonable(...) or Card.IsMSetable(...)
-end
+
+--Helper function to use with cards that normal summon or set a monster
 function Duel.SummonOrSet(tp,...)
 	local s1=Card.IsSummonable(...)
 	local s2=Card.IsMSetable(...)
@@ -1652,27 +1679,6 @@ function Auxiliary.ChangeBattleDamage(player,value)
 				end
 		end
 end
-
-function Card.GetScale(c)
-	if not c:IsType(TYPE_PENDULUM) then return 0 end
-	local sc=0
-	if c:IsLocation(LOCATION_PZONE) then
-		local seq=c:GetSequence()
-		if seq==0 or seq==6 then sc=c:GetLeftScale() else sc=c:GetRightScale() end
-	else
-		sc=c:GetLeftScale()
-	end
-	return sc
-end
-function Card.IsOddScale(c)
-	if not c:IsType(TYPE_PENDULUM) then return false end
-	return c:GetScale() % 2 ~= 0
-end
-function Card.IsEvenScale(c)
-	if not c:IsType(TYPE_PENDULUM) then return false end
-	return c:GetScale() % 2 == 0
-end
-
 --Helper function to choose 1 among possible effects
 --In input it takes tables of the form of {condition,stringid}
 --and makes the player choose among the strings whose conditions are met

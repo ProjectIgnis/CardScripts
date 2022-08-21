@@ -51,7 +51,7 @@ function s.costfilter(c,dg,lg)
 	return c:IsFaceup() and c:IsRace(RACE_PLANT) and c:IsLinkMonster() and lg:IsContains(c)
 end
 function s.desfilter(c,e)
-	return c:IsFaceup() and c:IsType(TYPE_SPELL+TYPE_TRAP) and (not e or c:IsCanBeEffectTarget(e))
+	return c:IsFaceup() and c:IsSpellTrap() and (not e or c:IsCanBeEffectTarget(e))
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100)

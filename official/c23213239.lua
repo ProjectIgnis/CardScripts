@@ -55,7 +55,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.descfilter(c)
-	return c:IsSetCard(0x11e) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(0x11e) and c:IsSpellTrap() and c:IsAbleToRemoveAsCost()
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.descfilter,tp,LOCATION_GRAVE,0,1,nil)

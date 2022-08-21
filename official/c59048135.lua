@@ -67,7 +67,7 @@ function s.splimit(e,c)
 	return not (c:IsRace(RACE_PSYCHIC) and c:IsType(TYPE_XYZ)) and not c:IsSetCard(0x76)
 end
 function s.filter(c)
-	return c:IsSetCard(0x92) and c:IsType(TYPE_SPELL+TYPE_TRAP) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(0x92) and c:IsSpellTrap() and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

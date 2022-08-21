@@ -31,7 +31,7 @@ end
 s.listed_series={0x17f}
 --Set 1 "Labrynth" Spell/Trap from the hand or deck
 function s.setfilter(c)
-	return c:IsSetCard(0x17f) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable()
+	return c:IsSetCard(0x17f) and c:IsSpellTrap() and c:IsSSetable()
 end
 function s.setcostfilter(c,tp)
 	return c:IsDiscardable() and Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,c)

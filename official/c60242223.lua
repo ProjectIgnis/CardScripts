@@ -62,7 +62,7 @@ function s.spquickcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.tgfilter(c)
 	return ((c:IsSetCard(0x189) and c:IsMonster() and not c:IsCode(id))
-		or (c:IsSetCard(0x160) and c:IsType(TYPE_SPELL+TYPE_TRAP))) and c:IsAbleToGrave()
+		or (c:IsSetCard(0x160) and c:IsSpellTrap())) and c:IsAbleToGrave()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end

@@ -31,7 +31,7 @@ end
 s.listed_names={id}
 s.listed_series={0x137}
 function s.tgfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_CONTINUOUS) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToGrave()
+	return c:IsFaceup() and c:IsType(TYPE_CONTINUOUS) and c:IsSpellTrap() and c:IsAbleToGrave()
 end
 function s.atkfilter(c)
 	return c:IsFaceup() and c:GetAttack()>0

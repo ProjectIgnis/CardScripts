@@ -35,7 +35,7 @@ end
 s.listed_series={0x122}
 	--Check for face-up spell/trap that can be sent to GY
 function s.tgfilter(c,tp)
-	return c:IsFaceup() and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToGrave()
+	return c:IsFaceup() and c:IsSpellTrap() and c:IsAbleToGrave()
 end
 	--Activation legality
 function s.sptg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

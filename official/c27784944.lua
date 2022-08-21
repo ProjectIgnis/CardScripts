@@ -64,7 +64,7 @@ function s.tfop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.immtg(e,c)
-	return c:IsSetCard(0x109) and c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSetCard(0x109) and c:IsSpellTrap()
 end
 function s.spreg(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return end

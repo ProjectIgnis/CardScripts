@@ -28,7 +28,7 @@ end
 s.listed_names={id}
 s.listed_series={0x177,0x1178,0x95}
 function s.filter(c,dct) 
-	return ((((c:IsSetCard(0x177) and not c:IsCode(id)) or c:IsSetCard(0x1178)) and c:IsType(TYPE_SPELL+TYPE_TRAP))
+	return ((((c:IsSetCard(0x177) and not c:IsCode(id)) or c:IsSetCard(0x1178)) and c:IsSpellTrap())
 		or (c:IsSetCard(0x95) and c:GetType()==TYPE_QUICKPLAY+TYPE_SPELL))
 		and (c:IsAbleToHand() or dct>1)
 end

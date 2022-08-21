@@ -68,7 +68,7 @@ function s.tg2(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 --Effect 3
 function s.thfilter(c)
-	return c:IsSetCard(0x128) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSetCard(0x128) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.tg3(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,nil) end

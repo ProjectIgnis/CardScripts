@@ -35,7 +35,7 @@ end
 s.listed_series={0x133}
 	--Check for "Dragonmaid" spell/trap
 function s.filter(c)
-	return c:IsSetCard(0x133) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSetCard(0x133) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 	--Activation legality
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

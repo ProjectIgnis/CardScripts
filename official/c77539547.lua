@@ -34,7 +34,7 @@ function s.gvfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_CONTINUOUS) and c:IsAbleToGrave()
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x137) and c:IsAbleToHand() and c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSetCard(0x137) and c:IsAbleToHand() and c:IsSpellTrap()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and s.gvfilter(chkc) end

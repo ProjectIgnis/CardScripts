@@ -25,7 +25,7 @@ end
 s.listed_names={CARD_ALBAZ}
 s.listed_series={0x160}
 function s.cfilter(c,e,tp)
-	if not ((c:IsCode(CARD_ALBAZ) or (c:IsSetCard(0x160) and c:IsType(TYPE_SPELL+TYPE_TRAP))) and c:IsAbleToGraveAsCost()) then return false end
+	if not ((c:IsCode(CARD_ALBAZ) or (c:IsSetCard(0x160) and c:IsSpellTrap())) and c:IsAbleToGraveAsCost()) then return false end
 	local hc=e:GetHandler()
 	if c:IsLocation(LOCATION_HAND) then
 		return Duel.GetLocationCount(tp,LOCATION_MZONE,0)>0 and hc:IsCanBeSpecialSummoned(e,0,tp,false,false)

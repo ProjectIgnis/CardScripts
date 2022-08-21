@@ -13,7 +13,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0xc5,0xbb}
 function s.costfilter(c,ft)
-	return c:IsSetCard(0xc5) and c:IsType(TYPE_SPELL+TYPE_TRAP) and (c:IsFaceup() or c:IsLocation(LOCATION_HAND)) and c:IsAbleToGraveAsCost() 
+	return c:IsSetCard(0xc5) and c:IsSpellTrap() and (c:IsFaceup() or c:IsLocation(LOCATION_HAND)) and c:IsAbleToGraveAsCost() 
 		and (ft>0 or (c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5))
 end
 function s.rescon(sg,e,tp,mg)

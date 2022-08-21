@@ -44,7 +44,7 @@ function s.repfilter(c,tp)
 		and (c:IsReason(REASON_BATTLE) or c:IsReason(REASON_EFFECT)) and not c:IsReason(REASON_REPLACE)
 end
 function s.desfilter(c,e,tp)
-	return c:IsControler(tp) and c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsControler(tp) and c:IsSpellTrap()
 		and c:IsDestructable(e) and not c:IsStatus(STATUS_DESTROY_CONFIRMED+STATUS_BATTLE_DESTROYED)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)

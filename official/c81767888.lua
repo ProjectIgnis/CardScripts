@@ -33,7 +33,7 @@ end
 s.listed_names={CARD_ALBAZ,id+1}
 s.listed_series={0x160}
 function s.cfilter(c)
-	return c:IsSetCard(0x160) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(0x160) and c:IsSpellTrap() and c:IsAbleToRemoveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)

@@ -12,7 +12,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x43}
 function s.tffilter(c)
-	return c:IsSetCard(0x43) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:CheckActivateEffect(false,false,false)~=nil
+	return c:IsSetCard(0x43) and c:IsSpellTrap() and c:CheckActivateEffect(false,false,false)~=nil
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler()==Duel.GetAttackTarget()

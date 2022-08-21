@@ -899,7 +899,7 @@ function Card.IsNegatableMonster(c)
 end
 --"Can be negated" check for Spells/Traps
 function Card.IsNegatableSpellTrap(c)
-	return c:IsFaceup() and not c:IsDisabled() and c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsFaceup() and not c:IsDisabled() and c:IsSpellTrap()
 end
 --"Can be negated" check for cards
 function Card.IsNegatable(c)

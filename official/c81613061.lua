@@ -42,7 +42,7 @@ function s.limval(e,re,tp)
 	return re:GetActivateLocation()==LOCATION_MZONE and re:IsActiveType(TYPE_MONSTER)
 end
 function s.setfilter(c)
-	return c:IsSetCard(0x161) and not c:IsCode(id) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable()
+	return c:IsSetCard(0x161) and not c:IsCode(id) and c:IsSpellTrap() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK,0,1,nil) end

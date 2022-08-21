@@ -28,21 +28,21 @@ function s.chfilter(c,e)
 	return c:IsFaceup() and c:IsType(TYPE_SYNCHRO) and c:IsCanBeEffectTarget(e)
 end
 function s.chtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-    local g=Duel.GetMatchingGroup(s.chfilter,tp,LOCATION_MZONE,0,nil,e)
-    if chk==0 then return #g>0 end
-    if Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))==0 then
-        local rc=aux.AnnounceAnotherRace(g,tp)
-        Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-        local sg=g:FilterSelect(tp,Card.IsDifferentRace,1,1,nil,rc)
-        Duel.SetTargetCard(sg)
-        e:SetLabel(0,rc)
-    else
-        local att=aux.AnnounceAnotherAttribute(g,tp)
-        Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-        local sg=g:FilterSelect(tp,Card.IsDifferentAttribute,1,1,nil,att)
-        Duel.SetTargetCard(sg)
-        e:SetLabel(1,att)
-    end
+	local g=Duel.GetMatchingGroup(s.chfilter,tp,LOCATION_MZONE,0,nil,e)
+	if chk==0 then return #g>0 end
+	if Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))==0 then
+		local rc=Duel.AnnounceAnotherRace(g,tp)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+		local sg=g:FilterSelect(tp,Card.IsDifferentRace,1,1,nil,rc)
+		Duel.SetTargetCard(sg)
+		e:SetLabel(0,rc)
+	else
+		local att=Duel.AnnounceAnotherAttribute(g,tp)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+		local sg=g:FilterSelect(tp,Card.IsDifferentAttribute,1,1,nil,att)
+		Duel.SetTargetCard(sg)
+		e:SetLabel(1,att)
+	end
 end
 function s.chop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

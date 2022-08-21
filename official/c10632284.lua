@@ -50,8 +50,8 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsFaceup() and chkc:IsLocation(LOCATION_MZONE) and s.tgfilter(chkc,e:GetLabel()) end
 	local g=Duel.GetMatchingGroup(s.chfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,e)
 	if chk==0 then return #g>0 end
-	local rc=aux.AnnounceAnotherRace(g,tp)
-	local att=aux.AnnounceAnotherAttribute(g,tp)
+	local rc=Duel.AnnounceAnotherRace(g,tp)
+	local att=Duel.AnnounceAnotherAttribute(g,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local sg=g:FilterSelect(tp,s.tgfilter,1,1,nil,rc,att)
 	Duel.SetTargetCard(sg:GetFirst())

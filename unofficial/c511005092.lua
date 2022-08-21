@@ -220,7 +220,7 @@ if not SealedDuel then
 		Duel.Hint(HINT_CARD,0,id)
 		--tag variable defining
 		local z,o=tp,1-tp
-		if not aux.AskEveryone(aux.Stringid(4006,9)) then
+		if not Duel.AskEveryone(aux.Stringid(4006,9)) then
 			return
 		end
 		
@@ -236,7 +236,7 @@ if not SealedDuel then
 		end
 		
 		--treat as all monster types
-		if aux.AskEveryone(aux.Stringid(4009,0)) then
+		if Duel.AskEveryone(aux.Stringid(4009,0)) then
 			Duel.Hint(HINT_OPSELECTED,1-tp,aux.Stringid(4009,0)) 
 			local getrc=Card.GetRace
 			Card.GetRace=function(c)

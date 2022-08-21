@@ -26,7 +26,7 @@ function s.costg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) and chkc:IsDifferentAttribute(e:GetLabel()) end
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil) end
 	local g=Duel.GetMatchingGroup(aux.AND(s.filter,Card.IsCanBeEffectTarget),tp,LOCATION_MZONE,0,nil,e)
-	local att=aux.AnnounceAnotherAttribute(g,tp)
+	local att=Duel.AnnounceAnotherAttribute(g,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local sel=g:FilterSelect(tp,Card.IsDifferentAttribute,1,1,nil,att)
 	Duel.SetTargetCard(sel)

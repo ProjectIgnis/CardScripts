@@ -1204,13 +1204,13 @@ function Group.GetToBeLinkedZone(g,c,tp,clink,emz)
 	return g:GetBitwiseOr(Card.GetToBeLinkedZone,c,tp,clink,emz)
 end
 
-function Auxiliary.AnnounceAnotherAttribute(g,tp)
+function Duel.AnnounceAnotherAttribute(g,tp)
 	local att=g:GetBitwiseOr(Card.GetAttribute)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)
 	return Duel.AnnounceAttribute(tp,1,att&(att-1)==0 and ~att or ATTRIBUTE_ALL)
 end
 
-function Auxiliary.AnnounceAnotherRace(g,tp)
+function Duel.AnnounceAnotherRace(g,tp)
 	local race=g:GetBitwiseOr(Card.GetRace)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RACE)
 	return Duel.AnnounceRace(tp,1,race&(race-1)==0 and ~race or RACE_ALL)
@@ -1709,7 +1709,7 @@ function Auxiliary.PropertyTableFilter(f,...)
 		return table.unpack(cachetab[c])
 	end
 end
-function Auxiliary.AskEveryone(stringid)
+function Duel.AskEveryone(stringid)
 	local count0 = Duel.GetPlayersCount(0)
 	local count1 = Duel.GetPlayersCount(1)
 	--check if people want to duel
@@ -1734,7 +1734,7 @@ function Auxiliary.AskEveryone(stringid)
 	return not stop
 end
 
-function Auxiliary.AskAny(stringid)
+function Duel.AskAny(stringid)
 	local count0 = Duel.GetPlayersCount(0)
 	local count1 = Duel.GetPlayersCount(1)
 	--check if people want to duel

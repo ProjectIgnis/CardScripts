@@ -19,8 +19,8 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_NORMAL),tp,LOCATION_MZONE,0,1,nil) end
 	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsType,TYPE_NORMAL),tp,LOCATION_MZONE,0,nil)
-	local race=aux.AnnounceAnotherRace(g,tp)
-	local att=aux.AnnounceAnotherAttribute(g,tp)
+	local race=Duel.AnnounceAnotherRace(g,tp)
+	local att=Duel.AnnounceAnotherAttribute(g,tp)
 	local param=(race<<8)|att
 	Duel.SetTargetParam(param)
 end

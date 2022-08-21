@@ -216,15 +216,15 @@ function Duel.SelectReleaseGroupCost(tp,f,minc,maxc,use_hand,check,ex,...)
 end
 
 --Functions to be deprecated in version 40.0:
---[[
-
 Auxiliary.AskAny=deprecated_alias("Duel.AskAny")
 Auxiliary.AskEveryone=deprecated_alias("Duel.AskEveryone")
+Auxiliary.AnnounceAnotherAttribute=deprecated_alias("Duel.AnnounceAnotherAttribute")
+Auxiliary.AnnounceAnotherRace=deprecated_alias("Duel.AnnounceAnotherRace")
+
+--[[
 Auxiliary.PlayFieldSpell=deprecated_alias("Duel.PlayFieldSpell")
 Auxiliary.SelectEffect=deprecated_alias("Duel.SelectEffect")
 Auxiliary.CheckPendulumZones=deprecated_alias("Duel.CheckPendulumZones")
-Auxiliary.AnnounceAnotherAttribute=deprecated_alias("Duel.AnnounceAnotherAttribute")
-Auxiliary.AnnounceAnotherRace=deprecated_alias("Duel.AnnounceAnotherRace")
 
 Auxiliary.HasCounterListed=deprecated_alias("Card.HasCounterListed")
 Auxiliary.CanPlaceCounter=deprecated_alias("Card.CanPlaceCounter")

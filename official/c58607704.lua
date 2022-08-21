@@ -22,7 +22,7 @@ function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return tc:IsOnField() and tc:IsType(TYPE_SPELL+TYPE_TRAP)
 end
 function s.filter(c,ct)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and Duel.CheckChainTarget(ct,c)
+	return c:IsSpellTrap() and Duel.CheckChainTarget(ct,c)
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc~=e:GetLabelObject() and chkc:IsOnField() and chkc:IsType(TYPE_SPELL+TYPE_TRAP) and s.filter(chkc,ev) end

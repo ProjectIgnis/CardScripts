@@ -28,7 +28,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x7c,0x79}
 function s.thfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x7c) and c:IsAbleToHand()
+	return c:IsSpellTrap() and c:IsSetCard(0x7c) and c:IsAbleToHand()
 		and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
 end
 function s.gyfilter(c)

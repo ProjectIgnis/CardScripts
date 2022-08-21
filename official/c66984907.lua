@@ -30,7 +30,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x15e}
 function s.gyfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToGrave()
+	return c:IsSpellTrap() and c:IsAbleToGrave()
 end
 function s.gytg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and s.gyfilter(chkc) end

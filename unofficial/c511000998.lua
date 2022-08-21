@@ -18,7 +18,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_LOST_TARGET) and ec:IsLocation(LOCATION_GRAVE)
 end
 function s.dfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsDestructable()
+	return c:IsSpellTrap() and c:IsDestructable()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

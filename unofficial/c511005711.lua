@@ -174,7 +174,7 @@ function s.setfilter(c,e,tp)
 		and (c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE) or c:IsSSetable(true))
 end
 function s.nffilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and not c:IsType(TYPE_FIELD)
+	return c:IsSpellTrap() and not c:IsType(TYPE_FIELD)
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tg=eg:Filter(Card.IsLocation,nil,LOCATION_HAND)

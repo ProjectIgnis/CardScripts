@@ -43,7 +43,7 @@ end
 s.listed_names={id}
 s.listed_series={0x151}
 function s.thfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x151) and c:IsAbleToHand() and not c:IsCode(id)
+	return c:IsSpellTrap() and c:IsSetCard(0x151) and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

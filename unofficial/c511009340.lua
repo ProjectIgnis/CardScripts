@@ -81,7 +81,7 @@ function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveOverlayCard(tp,ct,ct,REASON_COST)
 end
 function s.negfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsFaceup() and not c:IsDisabled()
+	return c:IsSpellTrap() and c:IsFaceup() and not c:IsDisabled()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.negfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end

@@ -48,7 +48,7 @@ function s.aclimit(e,re,tp)
 	return re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function s.filter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable()
+	return c:IsSpellTrap() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 

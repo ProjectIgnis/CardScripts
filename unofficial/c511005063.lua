@@ -56,7 +56,7 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,n,tp,0)
 end
 function s.sum_fil(c,e,tp)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and Duel.IsPlayerCanSpecialSummonMonster(tp,c:GetCode(),nil,0x11,0,0,0,0,0)
+	return c:IsSpellTrap() and Duel.IsPlayerCanSpecialSummonMonster(tp,c:GetCode(),nil,0x11,0,0,0,0,0)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

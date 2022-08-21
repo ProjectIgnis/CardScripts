@@ -30,7 +30,7 @@ function s.remcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.remfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToRemove() 
+	return c:IsSpellTrap() and c:IsAbleToRemove() 
 end
 function s.remtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(1-tp) and s.remfilter(chkc) end

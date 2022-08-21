@@ -361,6 +361,8 @@ function Card.IsSpellTrap(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP)
 end
 
+chkc:IsSpellTrap()
+
 function Card.AnnounceAnotherAttribute(c,tp)
 	local att=c:GetAttribute()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)

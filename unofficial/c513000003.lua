@@ -89,7 +89,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToDeck()
+	return c:IsSpellTrap() and c:IsAbleToDeck()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -37,7 +37,7 @@ function s.cop(e,tp,eg,ev,ep,re,r,rp)
 	end
 end
 function s.cfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToGraveAsCost()
+	return c:IsSpellTrap() and c:IsAbleToGraveAsCost()
 end
 function s.bcost(e,tp,eg,ev,ep,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end

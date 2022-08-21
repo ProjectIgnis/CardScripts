@@ -39,7 +39,7 @@ function s.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
 end
 function s.setfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable()
+	return c:IsSpellTrap() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.setfilter(chkc) end

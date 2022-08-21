@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.thfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.IsPlayerCanDraw(tp,2)

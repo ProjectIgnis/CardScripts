@@ -91,10 +91,10 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.retfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:GetFlagEffect(id)>0
+	return c:IsSpellTrap() and c:GetFlagEffect(id)>0
 end
 function s.retfilter2(c,tp)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:GetFlagEffect(id)>0
+	return c:IsSpellTrap() and c:GetFlagEffect(id)>0
 		and not Duel.IsExistingMatchingCard(function(c,seq)return c:GetSequence()==seq end,tp,LOCATION_SZONE,0,1,c,((c:GetFlagEffectLabel(id)&4)>>0xf))
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)

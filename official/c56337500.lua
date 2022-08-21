@@ -63,7 +63,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	s.cost(e,tp,eg,ep,ev,re,r,rp,1)
 end
 function s.thfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x118) and c:IsAbleToHand()
+	return c:IsSpellTrap() and c:IsSetCard(0x118) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end

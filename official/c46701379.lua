@@ -37,7 +37,7 @@ function s.gycon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.gycfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.gyfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToGrave()
+	return c:IsSpellTrap() and c:IsAbleToGrave()
 end
 function s.gytg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.gyfilter,tp,LOCATION_DECK,0,1,nil) end

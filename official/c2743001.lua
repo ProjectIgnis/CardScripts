@@ -34,7 +34,7 @@ function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
 function s.rmfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToRemove()
+	return c:IsSpellTrap() and c:IsAbleToRemove()
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.rmfilter,tp,0,LOCATION_GRAVE+LOCATION_ONFIELD,1,nil) end

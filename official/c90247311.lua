@@ -38,7 +38,7 @@ function s.cfilter(c)
 		and c:IsAbleToGraveAsCost()
 end
 function s.filter(c,e)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and (not e or c:IsCanBeEffectTarget(e))
+	return c:IsSpellTrap() and (not e or c:IsCanBeEffectTarget(e))
 end
 function s.costfilter(c,rg,dg)
 	if not (c:IsType(TYPE_MONSTER) and c:IsSetCard(0x2b)) then return false end

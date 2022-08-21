@@ -39,7 +39,7 @@ function s.initial_effect(c)
 end
 s.listed_names={id}
 function s.tg(e,c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c~=e:GetHandler()
+	return c:IsSpellTrap() and c~=e:GetHandler()
 end
 function s.val(e,re,rp)
 	return rp~=e:GetHandlerPlayer()

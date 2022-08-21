@@ -57,7 +57,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST+REASON_DISCARD)
 end
 function s.tgfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToRemove()
+	return c:IsSpellTrap() and c:IsAbleToRemove()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and chkc:IsControler(1-tp) and s.tgfilter(chkc) end

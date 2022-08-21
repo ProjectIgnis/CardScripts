@@ -32,7 +32,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE) and e:GetLabel()==1
 end
 function s.filter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToRemove()
+	return c:IsSpellTrap() and c:IsAbleToRemove()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

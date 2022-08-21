@@ -32,7 +32,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x26}
 function s.tdfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToDeck()
+	return c:IsSpellTrap() and c:IsAbleToDeck()
 end
 function s.mpfilter(c)
 	return c:IsSetCard(0x26) and c:IsMonster() and c:IsAbleToDeck()

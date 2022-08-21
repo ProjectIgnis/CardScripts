@@ -31,7 +31,7 @@ s.listed_names={37630732}
 s.listed_series={0x93,0x4093}
 --Search + Extra Fusion Material
 function s.dcfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsDiscardable()
+	return c:IsSpellTrap() and c:IsDiscardable()
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.dcfilter,tp,LOCATION_HAND,0,1,nil) end

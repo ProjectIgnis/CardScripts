@@ -74,7 +74,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.drcfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToGraveAsCost()
+	return c:IsSpellTrap() and c:IsAbleToGraveAsCost()
 end
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.drcfilter,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,nil) end

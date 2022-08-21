@@ -33,7 +33,7 @@ function s.eftg(e,c)
 	return c:IsType(TYPE_EFFECT) and c:IsSetCard(0x109) and c:GetSequence()<5 and g:IsContains(c)
 end
 function s.thfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.announcecost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,chk) end

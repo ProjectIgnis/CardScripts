@@ -59,7 +59,7 @@ function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0xaf)
 end
 function s.disfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsFaceup() and not c:IsDisabled()
+	return c:IsSpellTrap() and c:IsFaceup() and not c:IsDisabled()
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and s.disfilter(chkc) end

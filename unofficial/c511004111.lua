@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.setfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable()
+	return c:IsSpellTrap() and c:IsSSetable()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_SZONE) and chkc:IsType(TYPE_SPELL+TYPE_TRAP) and chkc~=e:GetHandler() end

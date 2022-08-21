@@ -60,7 +60,7 @@ function s.miltg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>4 end
 end
 function s.milfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.milop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<5 then return end

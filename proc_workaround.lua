@@ -225,9 +225,9 @@ Auxiliary.PlayFieldSpell=deprecated_alias("Duel.PlayFieldSpell")
 Auxiliary.CheckPendulumZones=deprecated_alias("Duel.CheckPendulumZones")
 Auxiliary.nzatk=deprecated_alias("Card.HasNonZeroAttack")
 Auxiliary.nzdef=deprecated_alias("Card.HasNonZeroDefense")
+Auxiliary.disfilter2=deprecated_alias("Card.IsNegatableSpellTrap")
 
 --[[
-Auxiliary.ChangeBattleDamage=deprecated_alias("Duel.ChangeBattleDamage")
 Auxiliary.HasCounterListed=deprecated_alias("Card.HasCounterListed")
 Auxiliary.CanPlaceCounter=deprecated_alias("Card.CanPlaceCounter")
 Auxiliary.EquipByEffectLimit=deprecated_alias("Card.EquipByEffectLimit")
@@ -239,6 +239,6 @@ Auxiliary.IsCodeListed=deprecated_alias("Card.IsCodeListed")
 Auxiliary.IsCardTypeListed=deprecated_alias("Card.IsCardTypeListed")
 Auxiliary.HasListedSetCode=deprecated_alias("Card.HasListedSetCode")
 Auxiliary.disfilter1=deprecated_alias("Card.IsNegatableMonster")
-Auxiliary.disfilter2=deprecated_alias("Card.IsNegatableSpellTrap")
+
 Auxiliary.disfilter3=deprecated_alias("Card.IsNegatable")
 --]]

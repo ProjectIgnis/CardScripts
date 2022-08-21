@@ -898,12 +898,12 @@ function Auxiliary.disfilter1(c)
 	return c:IsFaceup() and not c:IsDisabled() and (not c:IsNonEffectMonster() or c:GetOriginalType()&TYPE_EFFECT~=0)
 end
 --"Can be negated" check for Spells/Traps
-function Auxiliary.disfilter2(c)
+function Card.IsNegatableSpellTrap(c)
 	return c:IsFaceup() and not c:IsDisabled() and c:IsType(TYPE_SPELL+TYPE_TRAP)
 end
 --"Can be negated" check for cards
 function Auxiliary.disfilter3(c)
-	return aux.disfilter1(c) or aux.disfilter2(c)
+	return aux.disfilter1(c) or c:IsNegatableSpellTrap()
 end
 --condition of EVENT_BATTLE_DESTROYING
 function Auxiliary.bdcon(e,tp,eg,ep,ev,re,r,rp)

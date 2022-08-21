@@ -71,7 +71,7 @@ function s.mlop(e,tp,eg,ep,ev,re,r,rp)
 	local b1=Duel.IsPlayerCanDiscardDeck(tp,5)
 	local b2=Duel.IsPlayerCanDiscardDeck(1-tp,5)
 	if (b1 or b2) and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
-		local op=aux.SelectEffect(tp,
+		local op=Duel.SelectEffect(tp,
 			{b1,aux.Stringid(id,4)},
 			{b2,aux.Stringid(id,5)})
 		Duel.DiscardDeck(op==1 and tp or 1-tp,5,REASON_EFFECT)

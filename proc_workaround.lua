@@ -220,11 +220,12 @@ Auxiliary.AskAny=deprecated_alias("Duel.AskAny")
 Auxiliary.AskEveryone=deprecated_alias("Duel.AskEveryone")
 Auxiliary.AnnounceAnotherAttribute=deprecated_alias("Duel.AnnounceAnotherAttribute")
 Auxiliary.AnnounceAnotherRace=deprecated_alias("Duel.AnnounceAnotherRace")
+Auxiliary.SelectEffect=deprecated_alias("Duel.SelectEffect")
+Auxiliary.PlayFieldSpell=deprecated_alias("Duel.PlayFieldSpell")
+Auxiliary.CheckPendulumZones=deprecated_alias("Duel.CheckPendulumZones")
 
 --[[
-Auxiliary.PlayFieldSpell=deprecated_alias("Duel.PlayFieldSpell")
-Auxiliary.SelectEffect=deprecated_alias("Duel.SelectEffect")
-Auxiliary.CheckPendulumZones=deprecated_alias("Duel.CheckPendulumZones")
+Auxiliary.ChangeBattleDamage=deprecated_alias("Duel.ChangeBattleDamage")
 
 Auxiliary.HasCounterListed=deprecated_alias("Card.HasCounterListed")
 Auxiliary.CanPlaceCounter=deprecated_alias("Card.CanPlaceCounter")

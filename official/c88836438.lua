@@ -37,7 +37,7 @@ function s.actcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local cg=Duel.SelectMatchingCard(tp,s.actcostfilter,tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_MZONE,0,1,1,c,tp,dsp,gg,rg)
 	Duel.Remove(cg,POS_FACEUP,REASON_COST)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local op=aux.SelectEffect(tp,
+	local op=Duel.SelectEffect(tp,
 		{ft>0 and dsp,aux.Stringid(id,1)},
 		{ft>0 and #(gg-cg)>0,aux.Stringid(id,2)},
 		{rg and #(rg-cg)>0,aux.Stringid(id,3)})

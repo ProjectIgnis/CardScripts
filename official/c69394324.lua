@@ -50,7 +50,7 @@ function s.stop(e,tp,eg,ep,ev,re,r,rp)
 	local b1=Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>4
 	local b2=Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)>4
 	if not (b1 or b2) then return end
-	local op=aux.SelectEffect(tp,
+	local op=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,3)},
 		{b2,aux.Stringid(id,4)})
 	Duel.SortDecktop(tp,tp==0 and op-1 or 2-op,5)

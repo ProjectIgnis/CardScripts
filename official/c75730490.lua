@@ -89,7 +89,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local b1=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(s.ffilter,tp,LOCATION_HAND,0,1,nil,e,tp)
 	local b2=Duel.IsExistingMatchingCard(s.stfilter,tp,LOCATION_HAND,0,1,nil)
 	if (b1 or b2) and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
-		local op=aux.SelectEffect(tp,
+		local op=Duel.SelectEffect(tp,
 			{b1,aux.Stringid(id,3)},
 			{b2,aux.Stringid(id,4)})
 		if op==1 then

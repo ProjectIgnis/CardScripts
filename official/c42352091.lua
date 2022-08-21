@@ -48,7 +48,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.SelectMatchingCard(tp,s.field,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,tp):GetFirst()
-	return aux.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
+	return Duel.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcond(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp

@@ -43,7 +43,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 		local tc=g:Select(tp,1,1,nil):GetFirst()
 		if tc:IsType(TYPE_FIELD) then
-			aux.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
+			Duel.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
 		else
 			Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 			local te=tc:GetActivateEffect()

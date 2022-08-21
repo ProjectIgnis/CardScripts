@@ -1916,7 +1916,7 @@ end
 function Auxiliary.HarmonizingMagFilter(c,e,f)
 	return f and not f(e,c)
 end
-function Auxiliary.PlayFieldSpell(c,e,tp,eg,ep,ev,re,r,rp,target_p)
+function Duel.PlayFieldSpell(c,e,tp,eg,ep,ev,re,r,rp,target_p)
 	if not target_p then target_p=tp end
 	if c then
 		local fc=Duel.GetFieldCard(target_p,LOCATION_SZONE,5)
@@ -1996,7 +1996,7 @@ end
 --In input it takes tables of the form of {condition,stringid}
 --and makes the player choose among the strings whose conditions are met
 --it returns the index of the choosen element starting from 1, nil if none was selected
-function Auxiliary.SelectEffect(tp,...)
+function Duel.SelectEffect(tp,...)
 	local eff,sel={},{}
 	for i,val in ipairs({...}) do
 		if val[1] then
@@ -2008,7 +2008,7 @@ function Auxiliary.SelectEffect(tp,...)
 	return sel[Duel.SelectOption(tp,table.unpack(eff))+1]
 end
 
-function Auxiliary.CheckPendulumZones(player)
+function Duel.CheckPendulumZones(player)
 	return Duel.CheckLocation(player,LOCATION_PZONE,0) or Duel.CheckLocation(player,LOCATION_PZONE,1)
 end
 

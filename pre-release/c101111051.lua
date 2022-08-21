@@ -69,7 +69,7 @@ function s.edop(e,tp,eg,ep,ev,re,r,rp)
 	local b1=#rg>0
 	local b2=#sg>0
 	if not ((b1 or b2) and Duel.SelectYesNo(tp,aux.Stringid(id,2))) then return Duel.ShuffleExtra(1-tp) end
-	local op=aux.SelectEffect(tp,
+	local op=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,3)},
 		{b2,aux.Stringid(id,4)})
 	--Banish 1 monster

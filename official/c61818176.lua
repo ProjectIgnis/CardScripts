@@ -45,7 +45,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 			local sc=g:Select(tp,1,1,nil):GetFirst()
-			aux.PlayFieldSpell(sc,e,tp,eg,ep,ev,re,r,rp)
+			Duel.PlayFieldSpell(sc,e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end

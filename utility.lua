@@ -83,6 +83,48 @@ local function setcodecondition(e)
 	end
 end
 
+
+function Card.IsMonster(c)
+	return c:IsType(TYPE_MONSTER)
+end
+
+function Card.IsSpell(c)
+	return c:IsType(TYPE_SPELL)
+end
+
+function Card.IsTrap(c)
+	return c:IsType(TYPE_TRAP)
+end
+
+function Card.IsSpellTrap(c)
+	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+end
+
+function Card.IsRitualMonster(c)
+	local tp=TYPE_RITUAL+TYPE_MONSTER
+	return c:GetType() & tp == tp
+end
+
+function Card.IsRitualSpell(c)
+	local tp=TYPE_RITUAL+TYPE_SPELL
+	return c:GetType() & tp == tp
+end
+
+function Card.IsLinkMonster(c)
+	local tp=TYPE_LINK+TYPE_MONSTER
+	return c:GetType() & tp == tp
+end
+
+function Card.IsLinkSpell(c)
+	local tp=TYPE_LINK+TYPE_SPELL
+	return c:GetType() & tp == tp
+end
+
+function Card.IsNonEffectMonster(c)
+	return c:IsType(TYPE_MONSTER) and not c:IsType(TYPE_EFFECT)
+end
+
+
 function Card.AddSetcodesRule(c,code,copyable,...)
 	local prop=0
 	if not copyable then prop=EFFECT_FLAG_UNCOPYABLE end
@@ -341,26 +383,6 @@ function Card.IsInExtraMZone(c,tp)
 	return c:IsLocation(LOCATION_MZONE) and c:GetSequence()>4 and (not tp or c:IsControler(tp))
 end
 
-function Card.IsNonEffectMonster(c)
-	return c:IsType(TYPE_MONSTER) and not c:IsType(TYPE_EFFECT)
-end
-
-function Card.IsMonster(c)
-	return c:IsType(TYPE_MONSTER)
-end
-
-function Card.IsSpell(c)
-	return c:IsType(TYPE_SPELL)
-end
-
-function Card.IsTrap(c)
-	return c:IsType(TYPE_TRAP)
-end
-
-function Card.IsSpellTrap(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
-end
-
 function Card.AnnounceAnotherAttribute(c,tp)
 	local att=c:GetAttribute()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)
@@ -381,26 +403,6 @@ end
 function Card.IsDifferentRace(c,race)
 	local _race=c:GetRace()
 	return (_race&race)~=_race
-end
-
-function Card.IsRitualMonster(c)
-	local tp=TYPE_RITUAL+TYPE_MONSTER
-	return c:GetType() & tp == tp
-end
-
-function Card.IsRitualSpell(c)
-	local tp=TYPE_RITUAL+TYPE_SPELL
-	return c:GetType() & tp == tp
-end
-
-function Card.IsLinkMonster(c)
-	local tp=TYPE_LINK+TYPE_MONSTER
-	return c:GetType() & tp == tp
-end
-
-function Card.IsLinkSpell(c)
-	local tp=TYPE_LINK+TYPE_SPELL
-	return c:GetType() & tp == tp
 end
 
 function Card.IsOriginalType(c,val)
@@ -475,8 +477,6 @@ function Card.IsOriginalCodeRule(c,...)
 	end
 	return false
 end
-
-
 
 function Card.GetMetatable(c,currentCode)
 	if currentCode then return _G["c" .. c:GetCode()] end

@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,e)
-	return c:IsFacedown() and c:IsDestructable(e) and c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsFacedown() and c:IsDestructable(e) and c:IsSpellTrap()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_SZONE,0,1,e:GetHandler(),e) end

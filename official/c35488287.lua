@@ -71,7 +71,7 @@ function s.repfilter(c,tp)
 		and c:GetReasonPlayer()~=tp
 end
 function s.tgfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x7c) and c:IsType(TYPE_SPELL+TYPE_TRAP) and not c:IsStatus(STATUS_DESTROY_CONFIRMED)
+	return c:IsFaceup() and c:IsSetCard(0x7c) and c:IsSpellTrap() and not c:IsStatus(STATUS_DESTROY_CONFIRMED)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

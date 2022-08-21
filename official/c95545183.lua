@@ -33,7 +33,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)>0
 end
 function s.ninjitsu(c,zone_chk)
-	return c:IsSetCard(0x61) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable() and not c:IsCode(id) and (zone_chk or c:IsType(TYPE_FIELD))
+	return c:IsSetCard(0x61) and c:IsSpellTrap() and c:IsSSetable() and not c:IsCode(id) and (zone_chk or c:IsType(TYPE_FIELD))
 end
 function s.ninja(c,e,tp)
 	return c:IsSetCard(0x2b) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE) and not c:IsCode(id)

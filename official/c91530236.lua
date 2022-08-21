@@ -23,7 +23,7 @@ end
 function s.filter2(c,e,tp,mft,sft,code)
 	return  not c:IsCode(code) and 
 		((mft>0 and c:IsType(TYPE_MONSTER) and (c:IsSetCard(0xbf) or c:IsSetCard(0x10c0)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE))
-		or (sft>0 and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0xc0) and c:IsSSetable()))
+		or (sft>0 and c:IsSpellTrap() and c:IsSetCard(0xc0) and c:IsSSetable()))
 end
 function s.filter(c,e,tp,mft,sft)
 	return  c:IsAbleToHand() and

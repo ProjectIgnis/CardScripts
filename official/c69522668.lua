@@ -56,7 +56,7 @@ function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) and obj and obj:GetLabel()>1
 end
 function s.setfilter(c)
-	return c:IsSetCard(0x167) and c:IsType(TYPE_SPELL+TYPE_TRAP) and not c:IsType(TYPE_FIELD) and c:IsSSetable()
+	return c:IsSetCard(0x167) and c:IsSpellTrap() and not c:IsType(TYPE_FIELD) and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0

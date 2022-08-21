@@ -43,7 +43,7 @@ function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.setfilter(c)
-	return c:IsSetCard(0x71) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable() and not c:IsForbidden() and not c:IsCode(id)
+	return c:IsSetCard(0x71) and c:IsSpellTrap() and c:IsSSetable() and not c:IsForbidden() and not c:IsCode(id)
 end
 function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)

@@ -45,7 +45,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter1(c)
-	return c:IsFaceup() and c:IsSetCard(0x7c) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and c:IsSetCard(0x7c) and c:IsSpellTrap() and c:IsAbleToGraveAsCost()
 		and Duel.IsExistingTarget(s.filter2,0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -53,7 +53,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return bc and bc:IsFaceup() and bc:IsSetCard(0x4)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x4) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSetCard(0x4) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(c) end

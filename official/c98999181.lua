@@ -68,7 +68,7 @@ function s.spr(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c,e,tp)
-	return c:IsSetCard(0x11f) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSetCard(0x11f) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.thcon2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

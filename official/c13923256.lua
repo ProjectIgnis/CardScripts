@@ -32,7 +32,7 @@ function s.gvfilter(c,tp)
 	return c:IsFaceup() and c:IsType(TYPE_CONTINUOUS) and c:IsAbleToGrave() and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,nil,c:GetCode())
 end
 function s.thfilter(c,code)
-	return c:IsSetCard(0x137) and c:IsAbleToHand() and c:IsType(TYPE_SPELL+TYPE_TRAP) and not c:IsCode(code)
+	return c:IsSetCard(0x137) and c:IsAbleToHand() and c:IsSpellTrap() and not c:IsCode(code)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and s.gvfilter(chkc,tp) end

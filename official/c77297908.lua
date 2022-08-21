@@ -76,7 +76,7 @@ function s.confilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x10ec) and c:IsSummonType(SUMMON_TYPE_PENDULUM)
 end
 function s.desfilter(c)
-	return c:IsFacedown() and c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsFacedown() and c:IsSpellTrap()
 end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)

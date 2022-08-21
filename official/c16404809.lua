@@ -36,7 +36,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,5) end
 end
 function s.filter(c)
-	return c:IsAbleToHand() and c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsAbleToHand() and c:IsSpellTrap()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsPlayerCanDiscardDeck(tp,5) then return end

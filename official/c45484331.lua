@@ -50,7 +50,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x160) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSetCard(0x160) and c:IsSpellTrap() and c:IsAbleToHand()
 		and (c:IsFaceup() or c:IsLocation(LOCATION_DECK))
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

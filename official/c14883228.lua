@@ -27,7 +27,7 @@ function s.handcon(e)
 		and Duel.IsExistingMatchingCard(s.cfilter,tp,0,LOCATION_ONFIELD,2,nil)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsFaceup() and c:IsSpellTrap()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and s.filter(chkc) and chkc~=e:GetHandler() end

@@ -22,7 +22,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.filter(c,tp)
-	return (c:IsFacedown() or c:IsControler(1-tp) or c:GetCode()~=CARD_UMI) and c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return (c:IsFacedown() or c:IsControler(1-tp) or c:GetCode()~=CARD_UMI) and c:IsSpellTrap()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

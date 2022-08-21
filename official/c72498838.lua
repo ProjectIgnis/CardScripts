@@ -31,7 +31,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x152}
 function s.schfilter(c)
-	return c:IsSetCard(0x152) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSetCard(0x152) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.tgfilter(c)
 	return c:IsRace(RACE_SPELLCASTER) and c:IsLevelBelow(4) and c:IsFaceup()

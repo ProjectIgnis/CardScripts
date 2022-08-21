@@ -36,7 +36,7 @@ end
 s.listed_series={0xdb}
 
 function s.tgfilter(c)
-	return c:IsSetCard(0xdb) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToGrave()
+	return c:IsSetCard(0xdb) and c:IsSpellTrap() and c:IsAbleToGrave()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -82,7 +82,7 @@ function s.defcon(e)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1
 end
 function s.filter(c)
-	return c:IsSetCard(0xdb) and c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSetCard(0xdb) and c:IsSpellTrap()
 end
 function s.defval(e,c)
 	return Duel.GetMatchingGroupCount(s.filter,c:GetControler(),LOCATION_GRAVE,0,nil)*300

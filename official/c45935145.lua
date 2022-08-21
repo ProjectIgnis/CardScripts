@@ -40,7 +40,7 @@ function s.spfilter(c,e,tp)
 	return c:IsMonster() and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP|POS_FACEDOWN_DEFENSE)
 end
 function s.setfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable()
+	return c:IsSpellTrap() and c:IsSSetable()
 end
 function s.eftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

@@ -60,7 +60,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tffilter(c,tp)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsType(TYPE_CONTINUOUS) and c:IsSetCard(0x0c0) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
+	return c:IsSpellTrap() and c:IsType(TYPE_CONTINUOUS) and c:IsSetCard(0x0c0) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
 end
 function s.tftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.tffilter(chkc,tp) end

@@ -95,7 +95,7 @@ function s.chainlm(e,rp,tp)
 	return tp==rp
 end
 function s.indtg(e,c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSpellTrap()
 end
 function s.efilter(e,re)
 	return e:GetOwnerPlayer()~=re:GetOwnerPlayer()

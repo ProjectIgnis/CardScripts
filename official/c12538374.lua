@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 s.listed_names={id}
 function s.filter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) or (c:IsCode(id) and c:IsFaceup())
+	return c:IsSpellTrap() or (c:IsCode(id) and c:IsFaceup())
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer() and not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_ONFIELD,0,1,nil) 

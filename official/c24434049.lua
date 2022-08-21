@@ -42,7 +42,7 @@ function s.gyovcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:IsHasType(EFFECT_TYPE_QUICK_O)==e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,55584558)
 end
 function s.gyovfilter(c,xc,tp)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsCanBeXyzMaterial(xc,tp,REASON_EFFECT)
+	return c:IsSpellTrap() and c:IsCanBeXyzMaterial(xc,tp,REASON_EFFECT)
 end
 function s.gyovtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()

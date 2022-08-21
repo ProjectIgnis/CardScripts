@@ -115,7 +115,7 @@ end
 s.l4tg=s.tg(s.l4filter)
 s.l4op=s.op(s.l4filter)
 function s.stfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSpellTrap() and c:IsAbleToHand()
 end
 s.sttg=s.tg(s.stfilter)
 s.stop=s.op(s.stfilter)

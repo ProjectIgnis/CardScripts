@@ -31,7 +31,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 		return not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,nil)
 end
 function s.desfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsDestructable()
+	return c:IsSpellTrap() and c:IsDestructable()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		if chkc then return chkc:IsOnField() and s.desfilter(chkc) end

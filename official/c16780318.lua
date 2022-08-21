@@ -77,7 +77,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for spell/trap card
 function s.addfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSpellTrap() and c:IsAbleToHand()
 end
 	--If sent to GY by "Flower Cardian" monster effect
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)

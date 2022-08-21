@@ -86,7 +86,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.setfilter(c,tp)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable() and aux.IsCodeListed(c,CARD_BLUEEYES_W_DRAGON)
+	return c:IsSpellTrap() and c:IsSSetable() and aux.IsCodeListed(c,CARD_BLUEEYES_W_DRAGON)
 		and not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,c:GetCode()),tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil)
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)

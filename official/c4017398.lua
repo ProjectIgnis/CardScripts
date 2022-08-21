@@ -72,7 +72,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for "ZEXAL" spell/trap, except "ZEXAL Entrust"
 function s.thfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x7e) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSpellTrap() and c:IsSetCard(0x7e) and not c:IsCode(id) and c:IsAbleToHand()
 end
 	--Activation legality
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

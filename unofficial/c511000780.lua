@@ -26,7 +26,7 @@ function s.monfilter(c)
 	return lv>0 and lv<4 and c:IsAbleToHand()
 end
 function s.stfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.monfilter,tp,LOCATION_GRAVE,0,1,nil) 

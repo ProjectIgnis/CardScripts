@@ -38,7 +38,7 @@ function s.cfilter(c,tp)
 		and Duel.IsExistingMatchingCard(s.tffilter,tp,LOCATION_DECK,0,1,nil,c,tp)
 end
 function s.tffilter(c,cc,tp)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x109) and not c:IsForbidden()
+	return c:IsSpellTrap() and c:IsSetCard(0x109) and not c:IsForbidden()
 		and c:CheckUniqueOnField(tp,LOCATION_ONFIELD,cc) and not c:IsType(TYPE_FIELD)
 end
 function s.tfcost(e,tp,eg,ep,ev,re,r,rp,chk)

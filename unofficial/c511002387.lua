@@ -18,7 +18,7 @@ function s.cfilter(c,e,tp,eg,ep,ev,re,r,rp)
 	return not c:IsHasEffect(511001408) and not c:IsHasEffect(511001283) and s.filter(c,e,tp,eg,ep,ev,re,r,rp)
 end
 function s.filter(c,e,tp,eg,ep,ev,re,r,rp)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:CheckActivateEffect(false,false,false)~=nil
+	return c:IsSpellTrap() and c:CheckActivateEffect(false,false,false)~=nil
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) or chkc:IsLocation(LOCATION_MZONE) and chkc:GetControler()~=tp and s.filter(chkc) end

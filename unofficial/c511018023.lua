@@ -36,7 +36,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(tc,REASON_COST)
 end
 function s.filter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x46) and c:IsAbleToRemove()
+	return c:IsSpellTrap() and c:IsSetCard(0x46) and c:IsAbleToRemove()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk then return Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)>0 end

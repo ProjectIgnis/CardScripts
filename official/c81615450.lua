@@ -27,7 +27,7 @@ function s.mthtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.stfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x3c) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSpellTrap() and c:IsSetCard(0x3c) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.stthtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.stfilter,tp,LOCATION_DECK,0,1,nil) end

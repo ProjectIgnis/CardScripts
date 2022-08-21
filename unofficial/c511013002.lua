@@ -61,7 +61,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	 and (c:GetPreviousLocation()&LOCATION_ONFIELD)~=0
 end
 function s.filter2(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsDestructable()
+	return c:IsSpellTrap() and c:IsDestructable()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_SZONE) and s.filter2(chkc) and chkc~=e:GetHandler() end

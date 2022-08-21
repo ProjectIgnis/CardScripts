@@ -29,7 +29,7 @@ function s.athfilter(c)
 	return c:IsSetCard(0x133) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.rthfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.thfilter(chkc) end

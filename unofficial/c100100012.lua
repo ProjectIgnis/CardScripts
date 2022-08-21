@@ -33,7 +33,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsFacedown() and tc:IsRelateToEffect(e) then
 		Duel.Destroy(tc,REASON_EFFECT,LOCATION_REMOVED)
-		if tc:IsType(TYPE_TRAP) then
+		if tc:IsTrap() then
 			local code=tc:GetCode()
 			local g=Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_DECK,LOCATION_DECK,nil,code)
 			Duel.Remove(g,POS_FACEUP,REASON_EFFECT)

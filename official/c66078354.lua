@@ -67,7 +67,7 @@ function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFlagEffect(tp,id)>0
 end
 function s.setfilter(c)
-	return c:IsType(TYPE_TRAP) and aux.IsCodeListed(c,TOKEN_BRAVE) and c:IsSSetable()
+	return c:IsTrap() and aux.IsCodeListed(c,TOKEN_BRAVE) and c:IsSSetable()
 		and not c:IsForbidden()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)

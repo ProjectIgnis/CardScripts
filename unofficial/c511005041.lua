@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.spfilter(c,tp)
-	return (c:IsType(TYPE_TRAP) and c:IsType(TYPE_CONTINUOUS)) and c:IsReleasable() and (not tp or Duel.GetMZoneCount(tp,c)>0)
+	return (c:IsTrap() and c:IsType(TYPE_CONTINUOUS)) and c:IsReleasable() and (not tp or Duel.GetMZoneCount(tp,c)>0)
 end
 function s.spcon(e,c)
 	if c==nil then return true end

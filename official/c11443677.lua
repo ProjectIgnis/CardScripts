@@ -70,7 +70,7 @@ function s.efilter(e,te)
 	return te:IsActiveType(TYPE_TRAP)
 end
 function s.stfilter(c)
-	return c:IsType(TYPE_TRAP) and c:IsSSetable()
+	return c:IsTrap() and c:IsSSetable()
 end
 function s.fgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.stfilter(chkc) end

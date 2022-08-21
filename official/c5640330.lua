@@ -40,7 +40,7 @@ function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveCounter(tp,COUNTER_SPELL,1,REASON_COST)
 end
 function s.filter(c)
-	return c:IsType(TYPE_TRAP) and c:IsFaceup()
+	return c:IsTrap() and c:IsFaceup()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and s.filter(chkc) end

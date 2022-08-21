@@ -20,7 +20,7 @@ function s.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST+REASON_DISCARD,e:GetHandler())
 end
 function s.filter(c)
-	return c:IsType(TYPE_TRAP) and c:IsSSetable(true)
+	return c:IsTrap() and c:IsSSetable(true)
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)

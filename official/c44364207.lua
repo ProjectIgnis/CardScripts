@@ -29,7 +29,7 @@ function s.indestg(e,c)
 	return c:IsRace(RACE_MACHINE) and c:IsAttackBelow(1200)
 end
 function s.indesval(e,re)
-	return re:GetHandler():IsType(TYPE_TRAP)
+	return re:GetHandler():IsTrap()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

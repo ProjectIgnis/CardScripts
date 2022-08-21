@@ -42,7 +42,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function s.cfilter(c)
-	return not c:IsPublic() and c:IsType(TYPE_TRAP)
+	return not c:IsPublic() and c:IsTrap()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsChainDisablable(0) then

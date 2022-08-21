@@ -32,7 +32,7 @@ function s.spfilter(c,e,tp)
 	return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_ONFIELD,0,1,nil,code,c,tp)
 end
 function s.tgfilter(c,code,sc,tp)
-	return c:IsType(TYPE_TRAP) and c:IsAbleToGrave() and code==c:GetCode() and Duel.GetLocationCountFromEx(tp,tp,c,sc)>0
+	return c:IsTrap() and c:IsAbleToGrave() and code==c:GetCode() and Duel.GetLocationCountFromEx(tp,tp,c,sc)>0
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

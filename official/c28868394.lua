@@ -47,7 +47,7 @@ function s.efilter(e,te)
 end
 	--Check for a set trap
 function s.cfilter(c)
-	return c:IsType(TYPE_TRAP) and c:IsFacedown() and c:IsAbleToGraveAsCost()
+	return c:IsTrap() and c:IsFacedown() and c:IsAbleToGraveAsCost()
 end
 	--Send 1 set trap to GY as cost
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)

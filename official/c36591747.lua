@@ -28,7 +28,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x15e,0x15f}
 function s.setfilter(c)
-	return c:IsSetCard(0x15f) and c:IsType(TYPE_TRAP) and c:IsSSetable()
+	return c:IsSetCard(0x15f) and c:IsTrap() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetHandler():GetEquipTarget()

@@ -94,7 +94,7 @@ function s.drop1(e,tp,eg,ep,ev,re,r,rp,c,og)
 			tpe=TYPE_MONSTER
 		elseif tc:IsSpell() then
 			tpe=TYPE_SPELL
-		elseif tc:IsType(TYPE_TRAP) then
+		elseif tc:IsTrap() then
 			tpe=TYPE_TRAP
 		else
 			return
@@ -141,7 +141,7 @@ function s.drop2(e,tp,eg,ep,ev,re,r,rp)
 			tpe=TYPE_MONSTER
 		elseif tc:IsSpell() then
 			tpe=TYPE_SPELL
-		elseif tc:IsType(TYPE_TRAP) then
+		elseif tc:IsTrap() then
 			tpe=TYPE_TRAP
 		else
 			return

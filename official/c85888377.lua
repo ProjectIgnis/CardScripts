@@ -22,7 +22,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_DISABLE,nil,0,1-tp,LOCATION_ONFIELD)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_TRAP) and c:IsType(TYPE_CONTINUOUS)
+	return c:IsFaceup() and c:IsTrap() and c:IsType(TYPE_CONTINUOUS)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

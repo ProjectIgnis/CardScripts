@@ -18,7 +18,7 @@ function s.costfilter1(c)
 	return c:IsSpell() and not c:IsPublic()
 end
 function s.costfilter2(c)
-	return c:IsType(TYPE_TRAP) and not c:IsPublic()
+	return c:IsTrap() and not c:IsPublic()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_SZONE) and chkc:IsControler(1-tp) and s.filter(chkc) end
@@ -53,7 +53,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				end
 			end
 		end
-		if tc:IsType(TYPE_TRAP) then
+		if tc:IsTrap() then
 			if Duel.IsExistingMatchingCard(s.costfilter2,tp,LOCATION_HAND,0,1,nil) then
 				local g=Duel.SelectMatchingCard(tp,s.costfilter2,tp,LOCATION_HAND,0,1,1,nil)
 				Duel.ConfirmCards(1-tp,g)

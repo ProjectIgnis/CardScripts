@@ -56,7 +56,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e7)
 end
 function s.filter(c)
-	return c:IsType(TYPE_TRAP) and c:IsDisabled()
+	return c:IsTrap() and c:IsDisabled()
 end
 function s.dmcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(s.filter),tp,0,LOCATION_ONFIELD,1,nil) and Duel.IsDeckMaster(tp,id)

@@ -17,7 +17,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x15f,0x15e}
 function s.setfilter(c)
-	return c:IsSetCard(0x15f) and c:IsType(TYPE_TRAP) and c:IsSSetable()
+	return c:IsSetCard(0x15f) and c:IsTrap() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK,0,1,nil) end

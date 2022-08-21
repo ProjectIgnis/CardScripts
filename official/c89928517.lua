@@ -43,7 +43,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.IsPlayerCanDraw(tp,2) and Duel.IsPlayerCanDraw(1-tp,2) then
 		Duel.Draw(tp,2,REASON_EFFECT)
 		Duel.Draw(1-tp,2,REASON_EFFECT)
-	elseif tc1:IsType(TYPE_TRAP) and tc2:IsType(TYPE_TRAP)
+	elseif tc1:IsTrap() and tc2:IsTrap()
 		and Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,LOCATION_DECK,0,2,nil)
 		and Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,0,LOCATION_DECK,2,nil) then
 		for p=0,1 do

@@ -51,7 +51,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return true
 end
 function s.atkcfilter(c)
-	return c:IsType(TYPE_TRAP) and c:IsAbleToGraveAsCost()
+	return c:IsTrap() and c:IsAbleToGraveAsCost()
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.atkcfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,e:GetHandler()) end

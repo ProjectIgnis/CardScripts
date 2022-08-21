@@ -36,7 +36,7 @@ function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.tgfilter,1,nil,tp)
 end
 function s.filter(c)
-	return c:IsSetCard(0x7c) and c:IsType(TYPE_TRAP) and c:IsSSetable()
+	return c:IsSetCard(0x7c) and c:IsTrap() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsRelateToEffect(e) and e:GetHandler():IsFaceup()

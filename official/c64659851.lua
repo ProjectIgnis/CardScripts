@@ -30,7 +30,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function s.setfilter(c)
-	return c:IsType(TYPE_TRAP) and c:IsSSetable(true)
+	return c:IsTrap() and c:IsSSetable(true)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local summon=false

@@ -730,7 +730,7 @@ function Auxiliary.AttractionEquipCon(self)
 	end
 end
 function AA.eqsfilter(c,tp)
-	return c:IsSetCard(0x15f) and c:IsType(TYPE_TRAP) and c:GetEquipTarget() and
+	return c:IsSetCard(0x15f) and c:IsTrap() and c:GetEquipTarget() and
 		   Duel.IsExistingMatchingCard(AA.eqmfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c:GetEquipTarget(),tp)
 end
 function AA.eqmfilter(c,tp)

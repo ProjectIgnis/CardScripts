@@ -52,5 +52,5 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.aclimit(e,re,tp)
-	return re:GetHandler():IsType(TYPE_TRAP)
+	return re:GetHandler():IsTrap()
 end

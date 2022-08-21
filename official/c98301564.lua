@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.costchange(e,re,rp,val)
-	if re and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:GetHandler():IsType(TYPE_TRAP) and re:GetHandler():IsType(TYPE_COUNTER) then
+	if re and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:GetHandler():IsTrap() and re:GetHandler():IsType(TYPE_COUNTER) then
 		return 0
 	else
 		return val
@@ -41,7 +41,7 @@ function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	return (r&REASON_EFFECT+REASON_BATTLE)~=0
 end
 function s.cfilter(c)
-	return c:IsType(TYPE_TRAP) and c:IsType(TYPE_COUNTER) and c:IsAbleToHand()
+	return c:IsTrap() and c:IsType(TYPE_COUNTER) and c:IsAbleToHand()
 end
 function s.regtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsLocation(LOCATION_DECK)

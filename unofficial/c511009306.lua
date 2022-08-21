@@ -101,7 +101,7 @@ function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)>0
 end
 function s.setfilter(c)
-	return c:IsSetCard(0x19) and c:IsType(TYPE_TRAP) and c:IsSSetable()
+	return c:IsSetCard(0x19) and c:IsTrap() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0

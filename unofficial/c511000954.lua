@@ -79,7 +79,7 @@ function s.revop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.BreakEffect()
 			Duel.ShuffleHand(1-tp)
 		end
-	elseif tc:IsType(TYPE_TRAP) then
+	elseif tc:IsTrap() then
 		Duel.DiscardDeck(1-tp,1,REASON_EFFECT+REASON_REVEAL+REASON_DISCARD)
 		local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
 		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_DISCARD)

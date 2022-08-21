@@ -300,7 +300,7 @@ function s.trapoperation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFieldCard(tp,LOCATION_DECK,an)
 	Duel.ConfirmCards(tp,tc)
 	Duel.ConfirmCards(1-tp,tc)
-	if tc:IsType(TYPE_TRAP) then
+	if tc:IsTrap() then
 		local tpe=tc:GetType()
 		local te=tc:GetActivateEffect()
 		local tg=te:GetTarget()

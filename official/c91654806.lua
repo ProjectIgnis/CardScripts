@@ -84,7 +84,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	if g and #g>0 then
 		Duel.ConfirmCards(tp,g)
 		local opt=e:GetLabel()
-		if (opt==0 and tc:IsType(TYPE_MONSTER)) or (opt==1 and tc:IsSpell()) or (opt==2 and tc:IsType(TYPE_TRAP)) then
+		if (opt==0 and tc:IsType(TYPE_MONSTER)) or (opt==1 and tc:IsSpell()) or (opt==2 and tc:IsTrap()) then
 			if c:IsRelateToEffect(e) and Duel.SendtoGrave(c,REASON_EFFECT)~=0 and c:IsLocation(LOCATION_GRAVE) then
 				Duel.Draw(tp,1,REASON_EFFECT)
 			end

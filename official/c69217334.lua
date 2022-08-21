@@ -77,7 +77,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	local b2=#g>0
 	if chk==0 then return b1 or b2 end
-	local sel=aux.SelectEffect(tp,
+	local sel=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,0)},
 		{b2,aux.Stringid(id,1)})
 	if sel==1 then

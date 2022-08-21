@@ -31,10 +31,10 @@ function s.pzfilter(c)
 end
 function s.pztg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.pzfilter,tp,LOCATION_DECK,0,1,nil)
-		and aux.CheckPendulumZones(tp) end
+		and Duel.CheckPendulumZones(tp) end
 end
 function s.pzop(e,tp,eg,ep,ev,re,r,rp)
-	if not aux.CheckPendulumZones(tp) then return end
+	if not Duel.CheckPendulumZones(tp) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 	local tc=Duel.SelectMatchingCard(tp,s.pzfilter,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
 	if tc then

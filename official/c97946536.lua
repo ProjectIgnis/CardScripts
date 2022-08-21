@@ -51,7 +51,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
 	local b1=Duel.IsExistingMatchingCard(s.monfilter,tp,LOCATION_DECK,0,1,nil,e,tp,ft)
 	local b2=Duel.IsExistingMatchingCard(s.eqspfilter,tp,LOCATION_DECK,0,1,nil,tp,ft)
-	local op=aux.SelectEffect(tp,
+	local op=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,0)},
 		{b2,aux.Stringid(id,1)})
 	e:SetLabel(op)
@@ -74,7 +74,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if not sc then return end
 		local sp=s.monspfilter(sc,e,tp)
 		local eq=s.moneqfilter(sc,tp,ft)
-		local op=aux.SelectEffect(tp,
+		local op=Duel.SelectEffect(tp,
 			{sp,aux.Stringid(id,3)},
 			{eq,aux.Stringid(id,4)})
 		if op==1 then

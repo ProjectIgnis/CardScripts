@@ -32,7 +32,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE+LOCATION_EXTRA)
 end
 function s.pendfilter(c,tp)
-	return c:IsType(TYPE_PENDULUM) and not c:IsForbidden() and aux.CheckPendulumZones(tp)
+	return c:IsType(TYPE_PENDULUM) and not c:IsForbidden() and Duel.CheckPendulumZones(tp)
 end
 function s.cfilter(c,tp)
 	return c:IsMonster() and c:IsSetCard(0x4) and c:IsFaceup() and (c:IsAbleToHand() or s.pendfilter(c,tp))

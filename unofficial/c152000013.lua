@@ -32,7 +32,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,tp):GetFirst()
 	if tc then
 		if tc:IsType(TYPE_FIELD) then
-			aux.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
+			Duel.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
 		else
 			local zone=0xff
 			local te=tc:GetActivateEffect()

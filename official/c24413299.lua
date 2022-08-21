@@ -34,7 +34,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		if g:IsExists(Card.IsCode,1,nil,ac) then
 			local g1=Duel.GetMatchingGroup(Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,nil)
 			local g2=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_ONFIELD,nil)
-			local op=aux.SelectEffect(tp,{#g1>0,aux.Stringid(id,1)},{#g2>0,aux.Stringid(id,2)})
+			local op=Duel.SelectEffect(tp,{#g1>0,aux.Stringid(id,1)},{#g2>0,aux.Stringid(id,2)})
 			if op==1 then
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
 				local tc=g1:Select(tp,1,1,nil):GetFirst()

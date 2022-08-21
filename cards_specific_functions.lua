@@ -1034,7 +1034,7 @@ Effect.CreateMysteruneQPEffect = (function()
 			local b1=rmtg(e,tp,eg,ep,ev,re,r,rp,0,uniquetg,rmcount)
 			local b2=sptg(e,tp,eg,ep,ev,re,r,rp,0)
 			if chk==0 then return b1 or b2 end
-			local sel=aux.SelectEffect(tp,
+			local sel=Duel.SelectEffect(tp,
 				{b1,aux.Stringid(id,0)},
 				{b2,aux.Stringid(id,1)})
 			if sel==1 then

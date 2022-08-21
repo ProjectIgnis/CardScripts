@@ -53,7 +53,7 @@ end
 function s.dtarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local b3=Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
-	local op=aux.SelectEffect(tp,
+	local op=Duel.SelectEffect(tp,
 		{true,aux.Stringid(id,1)},
 		{true,aux.Stringid(id,2)},
 		{b3,aux.Stringid(id,3)})

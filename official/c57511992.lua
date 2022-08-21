@@ -78,7 +78,7 @@ function s.lvnmop(e,tp,eg,ep,ev,re,r,rp)
 	if not (tc and tc:IsRelateToEffect(e)) then return end
 	local b1=s.lvnmfilter(tc,c) and c:IsRelateToEffect(e) and c:IsFaceup()
 	local b2=s.spfilter(tc,e,tp)
-	local op=aux.SelectEffect(tp,
+	local op=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,2)},
 		{b2,aux.Stringid(id,3)})
 	if op==1 then

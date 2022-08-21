@@ -36,7 +36,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x38}
 function s.filter(c)
-	return c:IsSetCard(0x38) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x38) and c:IsMonster()
 end
 function s.value(e,c)
 	local g=Duel.GetMatchingGroup(s.filter,c:GetControler(),LOCATION_GRAVE,0,nil)

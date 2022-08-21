@@ -40,7 +40,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return (e:GetHandler():GetPreviousLocation()&LOCATION_ONFIELD)>0
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x3008) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(0x3008) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:GetControler()==tp and chkc:IsLocation(LOCATION_REMOVED) and s.filter(chkc) end

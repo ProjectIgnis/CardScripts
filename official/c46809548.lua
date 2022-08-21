@@ -46,14 +46,14 @@ function s.nscon(e,c)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.GetFieldGroupCount(tp,LOCATION_REMOVED,0)>5
 end
 function s.thcfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsDiscardable()
+	return c:IsMonster() and c:IsDiscardable()
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thcfilter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.DiscardHand(tp,s.thcfilter,1,1,REASON_COST+REASON_DISCARD)
 end
 function s.thfilter(c)
-	return not c:IsCode(id) and c:IsType(TYPE_MONSTER) and c:IsDefense(c:GetAttack()) and c:IsAttackAbove(0) and c:IsDefenseAbove(0)
+	return not c:IsCode(id) and c:IsMonster() and c:IsDefense(c:GetAttack()) and c:IsAttackAbove(0) and c:IsDefenseAbove(0)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

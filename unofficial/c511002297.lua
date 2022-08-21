@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c)
-	return c:IsSphere() and c:IsType(TYPE_MONSTER)
+	return c:IsSphere() and c:IsMonster()
 end
 function s.filter(c,e,tp)
 	return c:IsSphere() and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

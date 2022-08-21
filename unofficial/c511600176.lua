@@ -35,7 +35,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0xfb}
 function s.thfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xfb) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(0xfb) and c:IsAbleToHand()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) or Duel.GetFlagEffect(tp,id)>0 then return end

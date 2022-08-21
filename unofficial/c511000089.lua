@@ -26,19 +26,19 @@ function s.splimit(e,se,sp,st)
 	return se:GetHandler():IsCode(511000088)
 end
 function s.desfilter1(c)
-	return c:IsType(TYPE_MONSTER) and c:GetLevel()==1 and c:IsAbleToGrave()
+	return c:IsMonster() and c:GetLevel()==1 and c:IsAbleToGrave()
 end
 function s.desfilter2(c)
-	return c:IsType(TYPE_MONSTER) and c:GetLevel()==2 and c:IsAbleToGrave()
+	return c:IsMonster() and c:GetLevel()==2 and c:IsAbleToGrave()
 end
 function s.desfilter3(c)
-	return c:IsType(TYPE_MONSTER) and c:GetLevel()==3 and c:IsAbleToGrave()
+	return c:IsMonster() and c:GetLevel()==3 and c:IsAbleToGrave()
 end
 function s.desfilter4(c)
-	return c:IsType(TYPE_MONSTER) and c:GetLevel()==4 and c:IsAbleToGrave()
+	return c:IsMonster() and c:GetLevel()==4 and c:IsAbleToGrave()
 end
 function s.desfilter5(c)
-	return c:IsType(TYPE_MONSTER) and c:GetLevel()==5 and c:IsAbleToGrave()
+	return c:IsMonster() and c:GetLevel()==5 and c:IsAbleToGrave()
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.desfilter1,tp,LOCATION_DECK,0,1,nil)

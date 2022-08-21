@@ -37,7 +37,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 	--Check for a monster
 function s.tgfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
+	return c:IsMonster() and c:IsAbleToGrave()
 end
 	--Special summon from hand, then can mill a monster
 function s.spop(e,tp,eg,ep,ev,re,r,rp)

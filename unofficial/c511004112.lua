@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x66) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x66) and c:IsMonster()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=eg:Filter(s.cfilter,nil)

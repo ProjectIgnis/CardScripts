@@ -44,7 +44,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 		local tc=g:GetFirst()
 		Duel.ConfirmCards(1-tp,tc)
 		Duel.BreakEffect()
-		if tc:IsType(TYPE_MONSTER) and tc:IsSetCard(0xe6) then
+		if tc:IsMonster() and tc:IsSetCard(0xe6) then
 			if c:IsRelateToEffect(e) then
 				if Duel.SpecialSummon(c,0,tp,tp,true,false,POS_FACEUP)~=0 then
 					c:CompleteProcedure()

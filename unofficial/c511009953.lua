@@ -55,5 +55,5 @@ function s.sdesop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tg(e,c)
-	return c:IsType(TYPE_MONSTER) and c:IsDrone()
+	return c:IsMonster() and c:IsDrone()
 end

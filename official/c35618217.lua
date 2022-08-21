@@ -35,7 +35,7 @@ end
 s.listed_series={0xdf}
 s.listed_names={CARD_POLYMERIZATION}
 function s.costfilter(c,ec)
-	return c:IsSetCard(0xdf) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(0xdf) and c:IsMonster() and c:IsAbleToGraveAsCost()
 		and not c:IsSummonCode(nil,SUMMON_TYPE_FUSION,PLAYER_NONE,ec:GetCode(nil,SUMMON_TYPE_FUSION))
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

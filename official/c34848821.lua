@@ -64,7 +64,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)>0
 end
 function s.filter(c,e,tp)
-	return (c:IsCode(CARD_ALBAZ) or (c:IsSetCard(0x14f) and c:IsType(TYPE_MONSTER)))
+	return (c:IsCode(CARD_ALBAZ) or (c:IsSetCard(0x14f) and c:IsMonster()))
 		and (c:IsAbleToHand() or (c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

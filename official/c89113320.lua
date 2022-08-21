@@ -24,7 +24,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x9f,0x99}
 function s.filter(c)
-	return (c:IsSetCard(0x9f) or c:IsSetCard(0x99)) and c:IsType(TYPE_MONSTER)
+	return (c:IsSetCard(0x9f) or c:IsSetCard(0x99)) and c:IsMonster()
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,e:GetHandler()) end

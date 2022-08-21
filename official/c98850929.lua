@@ -19,7 +19,7 @@ function s.typecast(c)
 	return (c:GetType()&TYPE_FUSION+TYPE_RITUAL+TYPE_SYNCHRO+TYPE_XYZ)
 end
 function s.filter1(c,e)
-	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and c:IsCanBeEffectTarget(e)
+	return c:IsFaceup() and c:IsMonster() and c:IsAbleToHand() and c:IsCanBeEffectTarget(e)
 end
 function s.filter2(c,e)
 	return c:IsTrap() and c:IsAbleToHand() and c:IsCanBeEffectTarget(e)

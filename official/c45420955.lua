@@ -36,7 +36,7 @@ function s.disfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and not c:IsDisabled()
 end
 function s.dfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsDiscardable()
+	return c:IsMonster() and c:IsDiscardable()
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp and Duel.IsMainPhase()
@@ -69,7 +69,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_FIEND) and c:IsControler(tp) and c:IsPreviousLocation(LOCATION_HAND)
+	return c:IsMonster() and c:IsRace(RACE_FIEND) and c:IsControler(tp) and c:IsPreviousLocation(LOCATION_HAND)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

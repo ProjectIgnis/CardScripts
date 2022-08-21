@@ -22,7 +22,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsMainPhase() or Duel.IsBattlePhase()
 end
 function s.thfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:GetTextAttack()==-2 and c:IsLevel(10)
+	return c:IsMonster() and c:GetTextAttack()==-2 and c:IsLevel(10)
 		and not c:IsAttribute(ATTRIBUTE_DARK) and c:IsAbleToHand()
 end
 function s.mfilter(c,code)

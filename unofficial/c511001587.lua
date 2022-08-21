@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c)
-	return c:IsLevelBelow(4) and c:IsType(TYPE_MONSTER)
+	return c:IsLevelBelow(4) and c:IsMonster()
 end
 function s.filter(c,e,tp)
 	return c:IsLevelBelow(4) and c:IsType(TYPE_NORMAL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.spfilter(c)
-	return c:IsType(TYPE_MONSTER) and (c:IsFaceup() or not c:IsOnField()) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true,true)
+	return c:IsMonster() and (c:IsFaceup() or not c:IsOnField()) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true,true)
 end
 function s.rescon(sg,e,tp)
 	return aux.ChkfMMZ(1)(sg,e,tp,nil) and sg:GetClassCount(Card.GetRace)==#sg,sg:GetClassCount(Card.GetRace)~=#sg

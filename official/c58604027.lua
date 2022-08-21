@@ -61,7 +61,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x40}
 function s.atkfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x40)
+	return c:IsMonster() and c:IsSetCard(0x40)
 end
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(s.atkfilter,c:GetControler(),LOCATION_GRAVE,0,nil)*1000
@@ -95,7 +95,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 end
 function s.thfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x40) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(0x40) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

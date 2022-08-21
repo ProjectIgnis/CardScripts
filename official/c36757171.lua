@@ -35,7 +35,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,tp,1)
 end
 function s.dfilter(c)
-	return c:IsSetCard(0xa) and c:IsType(TYPE_MONSTER) and c:IsDiscardable()
+	return c:IsSetCard(0xa) and c:IsMonster() and c:IsDiscardable()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)

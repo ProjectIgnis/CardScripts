@@ -21,7 +21,7 @@ end
 s.listed_series={0x140}
 	--Check for "Adamacia" monster
 function s.cfilter(c)
-	return c:IsSetCard(0x140) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x140) and c:IsMonster()
 end
 function s.spcheck(sg,tp,exg,oc)
 	local ex=sg:Clone()

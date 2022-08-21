@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.tdfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_PSYCHIC) and c:IsAbleToDeckOrExtraAsCost()
+	return c:IsMonster() and c:IsRace(RACE_PSYCHIC) and c:IsAbleToDeckOrExtraAsCost()
 end
 function s.thfilter(c,tp)
 	return c:IsType(TYPE_NORMAL) and c:IsRace(RACE_PSYCHIC) and c:IsAbleToHand()

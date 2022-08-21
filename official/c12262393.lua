@@ -31,7 +31,7 @@ end
 s.listed_series={0x2066}
 s.listed_names={75347539}
 function s.tgfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x2066) and c:IsLevelBelow(4) and c:IsAbleToGrave()
+	return c:IsMonster() and c:IsSetCard(0x2066) and c:IsLevelBelow(4) and c:IsAbleToGrave()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -45,7 +45,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x2066) and c:IsLevelBelow(4) and not c:IsCode(id) 
+	return c:IsMonster() and c:IsSetCard(0x2066) and c:IsLevelBelow(4) and not c:IsCode(id) 
 		and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -16,7 +16,7 @@ end
 s.listed_series={0xef}
 function s.costfilter(c)
 	return c:IsSetCard(0xef)
-		and c:IsType(TYPE_MONSTER) and (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsAbleToGraveAsCost()
+		and c:IsMonster() and (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsAbleToGraveAsCost()
 		and Duel.IsExistingMatchingCard(s.filter,0,LOCATION_MZONE,LOCATION_MZONE,1,c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

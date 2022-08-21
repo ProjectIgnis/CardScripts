@@ -33,7 +33,7 @@ function s.setfilter(c)
 	return c:IsCode(70245411) and c:IsSSetable()
 end
 function s.gyfilter(c)
-	return c:IsType(TYPE_MONSTER) and (c:IsCode(30068120) or c:IsSetCard(0xa9)) and c:IsAbleToGrave()
+	return c:IsMonster() and (c:IsCode(30068120) or c:IsSetCard(0xa9)) and c:IsAbleToGrave()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.setfilter(chkc) end

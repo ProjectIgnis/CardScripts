@@ -17,7 +17,7 @@ function s.tgfilter(c)
 	return c:IsFaceup() and Duel.IsExistingMatchingCard(s.cfilter,c:GetControler(),LOCATION_DECK,0,1,nil,c)
 end
 function s.cfilter(c,tc)
-	return c:IsSetCard(0x3008) and not c:IsCode(tc:GetCode()) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
+	return c:IsSetCard(0x3008) and not c:IsCode(tc:GetCode()) and c:IsMonster() and c:IsAbleToGrave()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.tgfilter(chkc) end

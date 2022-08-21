@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 s.listed_names={27780618}
 function s.cfilter(c,tp)
-	return c:IsPreviousLocation(LOCATION_ONFIELD) and (c:IsSetCard(0x5008) or c:IsCode(27780618)) and c:IsType(TYPE_MONSTER)
+	return c:IsPreviousLocation(LOCATION_ONFIELD) and (c:IsSetCard(0x5008) or c:IsCode(27780618)) and c:IsMonster()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

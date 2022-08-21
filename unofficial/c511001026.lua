@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsButterfly() and not c:IsPublic()
+	return c:IsMonster() and c:IsButterfly() and not c:IsPublic()
 end
 function s.cost1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,1000) end

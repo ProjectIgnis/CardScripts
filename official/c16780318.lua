@@ -60,7 +60,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			if Duel.Draw(tp,1,REASON_EFFECT)==0 then return end
 			local tc=Duel.GetOperatedGroup():GetFirst()
 			Duel.ConfirmCards(1-tp,tc)
-			if tc:IsType(TYPE_MONSTER) and tc:IsSetCard(0xe6) then
+			if tc:IsMonster() and tc:IsSetCard(0xe6) then
 				if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 					Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEUP)
 				end

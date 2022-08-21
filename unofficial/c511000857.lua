@@ -18,7 +18,7 @@ function s.cfilter1(c,e,tid)
 end
 function s.cfilter2(c,ban1,e)
 	local tp=c:GetControler()
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost() and Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp,ban1,c)
+	return c:IsMonster() and c:IsAbleToRemoveAsCost() and Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp,ban1,c)
 end
 function s.filter(c,e,tp,ban1,ban2)
 	return c:IsType(TYPE_SYNCHRO) and c~=ban1 and c~=ban2 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

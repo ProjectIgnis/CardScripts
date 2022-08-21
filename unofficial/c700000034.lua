@@ -25,7 +25,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.matfilter(c,e,tp,fc,se)
-	return c:IsType(TYPE_MONSTER) and c:IsCanBeFusionMaterial(fc) and (not se or not c:IsImmuneToEffect(se)) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsMonster() and c:IsCanBeFusionMaterial(fc) and (not se or not c:IsImmuneToEffect(se)) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.spfilter(c,e,tp,rg,se)
 	if not c:IsType(TYPE_FUSION) or not c:IsSetCard(0x7) or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) then return false end

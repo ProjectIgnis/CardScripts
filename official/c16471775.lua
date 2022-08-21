@@ -33,7 +33,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x165) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x165) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,2,2,nil) end
@@ -52,7 +52,7 @@ function s.repcon(e)
 end
 function s.repval(base,e,tp,eg,ep,ev,re,r,rp,chk,extracon)
 	local c=e:GetHandler()
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x165) and (not extracon or extracon(base,c,e,tp,eg,ep,ev,re,r,rp,chk))
+	return c:IsMonster() and c:IsSetCard(0x165) and (not extracon or extracon(base,c,e,tp,eg,ep,ev,re,r,rp,chk))
 end
 function s.repop(base,e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)

@@ -21,7 +21,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.filter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsLocation(LOCATION_GRAVE) and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsAttackBelow,c:GetDefense()),tp,0,LOCATION_MZONE,1,nil)
+	return c:IsMonster() and c:IsLocation(LOCATION_GRAVE) and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsAttackBelow,c:GetDefense()),tp,0,LOCATION_MZONE,1,nil)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)

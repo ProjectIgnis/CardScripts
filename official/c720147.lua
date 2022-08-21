@@ -22,7 +22,7 @@ function s.filter(c,sg,tp)
 		and Duel.IsExistingMatchingCard(s.matfilter,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,#sg,sg,c)
 end
 function s.matfilter(c,tc)
-	return c:IsSetCard(0x134) and c:IsType(TYPE_MONSTER) and not c:IsType(TYPE_TOKEN)
+	return c:IsSetCard(0x134) and c:IsMonster() and not c:IsType(TYPE_TOKEN)
 		and (c:IsFaceup() or not c:IsLocation(LOCATION_MZONE)) and c~=tc
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

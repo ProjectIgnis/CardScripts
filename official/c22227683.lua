@@ -28,7 +28,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetBattleTarget()~=nil
 end
 function s.tgfilter(c)
-	return c:IsSetCard(0xab) and c:IsType(TYPE_MONSTER) and not c:IsCode(id) and c:IsAbleToGrave()
+	return c:IsSetCard(0xab) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToGrave()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetFlagEffect(id)==0
@@ -65,12 +65,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e3,tp)
 end
 function s.spfilter1(c,e,tp)
-	return c:IsSetCard(0xab) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0xab) and c:IsMonster()
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 		and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_GRAVE+LOCATION_HAND,0,1,c,e,tp,c:GetLevel())
 end
 function s.spfilter2(c,e,tp,lv)
-	return c:IsSetCard(0xab) and c:IsType(TYPE_MONSTER) and c:GetLevel()~=lv
+	return c:IsSetCard(0xab) and c:IsMonster() and c:GetLevel()~=lv
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

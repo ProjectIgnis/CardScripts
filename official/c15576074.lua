@@ -13,7 +13,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x57}
 function s.filter(c)
-	return c:IsSetCard(0x57) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
+	return c:IsSetCard(0x57) and c:IsMonster() and c:IsAbleToDeck()
 end
 function s.filter2(c)
 	return c:GetLevel()==4 and c:IsAbleToHand()

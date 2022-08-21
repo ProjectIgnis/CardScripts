@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0xfe,0x11b}
 function s.cfilter(c,ft)
-	return (c:IsSetCard(0xfe) or c:IsSetCard(0x11b)) and c:IsType(TYPE_MONSTER) and (c:IsFaceup() or not c:IsLocation(LOCATION_MZONE)) and c:IsAbleToGraveAsCost()
+	return (c:IsSetCard(0xfe) or c:IsSetCard(0x11b)) and c:IsMonster() and (c:IsFaceup() or not c:IsLocation(LOCATION_MZONE)) and c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil) end

@@ -38,7 +38,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 		and re:GetHandler():IsCode(90173539)
 end
 function s.thfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x11a) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(0x11a) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:GetControler()==tp and chkc:GetLocation()==LOCATION_GRAVE and s.thfilter(chkc) end

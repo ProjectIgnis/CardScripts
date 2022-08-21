@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c)
-	return c:IsOnField() and c:IsType(TYPE_MONSTER)
+	return c:IsOnField() and c:IsMonster()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if tp==ep or not Duel.IsChainNegatable(ev) then return false end

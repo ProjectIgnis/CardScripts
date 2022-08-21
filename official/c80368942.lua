@@ -12,7 +12,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x1f,0x1e}
 function s.gfilter(c)
-	return c:IsSetCard(0x1f) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x1f) and c:IsMonster()
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x1e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

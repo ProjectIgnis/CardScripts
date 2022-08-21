@@ -42,11 +42,11 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rmfilter(c,tp)
-	return c:IsRace(RACE_MACHINE) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true) 
+	return c:IsRace(RACE_MACHINE) and c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true) 
 		and Duel.IsExistingTarget(s.thfilter,tp,LOCATION_GRAVE,0,1,c)
 end
 function s.thfilter(c)
-	return (c:IsSetCard(0x85) or c:IsCode(71071546)) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return (c:IsSetCard(0x85) or c:IsCode(71071546)) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.rmfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,tp) end

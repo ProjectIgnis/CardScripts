@@ -53,7 +53,7 @@ function s.costg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_GRAVE)
 end
 function s.filter(c,e,tp,ft)
-	return c:IsSetCard(0x13f) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x13f) and c:IsMonster()
 		and (c:IsAbleToDeck() or (ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
 end
 function s.cosop(e,tp,eg,ep,ev,re,r,rp)

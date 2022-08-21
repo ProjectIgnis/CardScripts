@@ -30,7 +30,7 @@ end
 s.listed_names={id}
 	--Check for a fusion/synchro/Xyz/link monster
 function s.costfilter(c,ft)
-	return c:IsType(TYPE_FUSION|TYPE_SYNCHRO|TYPE_XYZ|TYPE_LINK) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
+	return c:IsType(TYPE_FUSION|TYPE_SYNCHRO|TYPE_XYZ|TYPE_LINK) and c:IsMonster() and c:IsAbleToRemoveAsCost()
 end
 	--Banish a fusion/synchro/Xyz/link monster as cost
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

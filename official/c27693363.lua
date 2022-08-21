@@ -106,7 +106,7 @@ function s.extracon(base,c,e,tp)
 	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,c,ft,base,tp)
 end
 function s.filter(c,ft,e,tp)
-	return (c:IsSetCard(0x165) and c:IsType(TYPE_MONSTER)) and (c:IsAbleToHand() or (ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
+	return (c:IsSetCard(0x165) and c:IsMonster()) and (c:IsAbleToHand() or (ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

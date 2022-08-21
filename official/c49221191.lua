@@ -28,7 +28,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetLP(tp)<=1000 and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
 end
 function s.rfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c) 
+	return c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c) 
 		and Duel.IsExistingTarget(s.filter,0,LOCATION_MZONE,LOCATION_MZONE,1,c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -33,7 +33,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 	--Check for a monster to destroy
 function s.desfilter(c)
-	return c:IsType(TYPE_MONSTER) and not c:IsMaximumModeSide()
+	return c:IsMonster() and not c:IsMaximumModeSide()
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

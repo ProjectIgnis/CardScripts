@@ -30,7 +30,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0xb}
 function s.spfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xb) and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and c:IsSetCard(0xb) and c:IsAbleToGraveAsCost()
 end
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -59,7 +59,7 @@ function s.lvcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)==0
 end
 function s.lvfilter(c)
-	return c:IsSetCard(0xb) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsSetCard(0xb) and c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.lvcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.lvfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,e:GetHandler()) end

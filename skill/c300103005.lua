@@ -61,13 +61,13 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.costfilter1(c)
-	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_DINOSAUR) and c:IsAbleToRemoveAsCost()
+	return c:IsMonster() and c:IsRace(RACE_DINOSAUR) and c:IsAbleToRemoveAsCost()
 		and (c:IsLocation(LOCATION_HAND) or aux.SpElimFilter(c,true))
 end
 function s.costfilter2(c)
-	return c:IsType(TYPE_MONSTER) and not c:IsRace(RACE_DINOSAUR) and c:IsAbleToRemoveAsCost()
+	return c:IsMonster() and not c:IsRace(RACE_DINOSAUR) and c:IsAbleToRemoveAsCost()
 		and (c:IsLocation(LOCATION_HAND) or aux.SpElimFilter(c,true))
 end
 function s.filter(c,e,tp)
-	return c:IsRace(RACE_DINOSAUR) and c:IsLevelAbove(7) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsRace(RACE_DINOSAUR) and c:IsLevelAbove(7) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end

@@ -38,7 +38,7 @@ s.listed_names={id}
 
 	--Check for "Sprigguns" monster or "Fallen of Albaz"
 function s.filter(c,e,tp)
-	return ((c:IsType(TYPE_MONSTER) and c:IsSetCard(0x158)) or c:IsCode(CARD_ALBAZ)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return ((c:IsMonster() and c:IsSetCard(0x158)) or c:IsCode(CARD_ALBAZ)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

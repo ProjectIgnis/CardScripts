@@ -16,7 +16,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function s.tgfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:GetLevel()<=3 and c:IsRace(RACE_MACHINE) and c:IsAbleToGrave()
+	return c:IsMonster() and c:GetLevel()<=3 and c:IsRace(RACE_MACHINE) and c:IsAbleToGrave()
 end
 function s.filter(c)
 	return c:IsFaceup() and c:GetLevel()<5 and c:IsDestructable() and not c:IsType(TYPE_XYZ)

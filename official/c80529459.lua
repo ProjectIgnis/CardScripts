@@ -54,7 +54,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_EFFECT) and re and re:GetHandler():IsSetCard(0x24)
 end
 function s.thfilter(c)
-	return (c:IsCode(28388296) or (c:IsSetCard(0x24) and c:IsType(TYPE_MONSTER) and not c:IsType(TYPE_TUNER))) and c:IsAbleToHand()
+	return (c:IsCode(28388296) or (c:IsSetCard(0x24) and c:IsMonster() and not c:IsType(TYPE_TUNER))) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

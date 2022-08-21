@@ -70,7 +70,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 end
 --Search
 function s.thfilter(c)
-	return c:IsSetCard(0x167) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x167) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

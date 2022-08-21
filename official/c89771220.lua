@@ -74,7 +74,7 @@ function s.repcon(e)
 end
 function s.repval(base,e,tp,eg,ep,ev,re,r,rp,chk,extracon)
 	local c=e:GetHandler()
-	return c:IsType(TYPE_MONSTER) and (c:IsSetCard(0x165) or c:IsSetCard(0x151)) and (not extracon or extracon(base,c,e,tp,eg,ep,ev,re,r,rp,chk))
+	return c:IsMonster() and (c:IsSetCard(0x165) or c:IsSetCard(0x151)) and (not extracon or extracon(base,c,e,tp,eg,ep,ev,re,r,rp,chk))
 end
 function s.repop(base,e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)

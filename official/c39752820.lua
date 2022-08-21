@@ -62,7 +62,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c)
-	return c:IsSetCard(0xfe) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0xfe) and c:IsMonster()
 end
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsExistingMatchingCard(s.cfilter,e:GetHandlerPlayer(),LOCATION_GRAVE,0,1,nil)

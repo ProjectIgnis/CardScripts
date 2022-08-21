@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
+	return c:IsFaceup() and c:IsMonster() and c:IsAbleToDeck()
 end
 function s.sfilter(c,tp)
 	return c:IsLocation(LOCATION_DECK) and c:IsControler(tp)

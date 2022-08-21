@@ -26,7 +26,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:GetFirst()==e:GetHandler():GetEquipTarget()
 end
 function s.filter(c,atk)
-	return c:IsType(TYPE_MONSTER) and c:IsAttackBelow(atk) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsAttackBelow(atk) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local eatk=e:GetHandler():GetEquipTarget():GetAttack()

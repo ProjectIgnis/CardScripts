@@ -58,7 +58,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
 end
 function s.thfilter(c)
-	if not (c:IsAbleToHand() and c:IsType(TYPE_MONSTER)) then return false end
+	if not (c:IsAbleToHand() and c:IsMonster()) then return false end
 	local lv=c:GetLevel()
 	if lv==7 then
 		return c:IsRace(RACE_DRAGON) and c:IsAttribute(ATTRIBUTE_DARK)

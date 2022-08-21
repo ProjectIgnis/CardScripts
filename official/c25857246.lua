@@ -56,7 +56,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsReleasableByEffect()
+	return c:IsMonster() and c:IsReleasableByEffect()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1)

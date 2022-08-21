@@ -37,7 +37,7 @@ function s.sccost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(c,REASON_COST)
 end
 function s.mfilter(c)
-	return c:IsSetCard(0x9e) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x9e) and c:IsMonster()
 end
 function s.checkaddition(tp,sg,sc)
 	return sg:IsExists(s.mfilter,1,nil)

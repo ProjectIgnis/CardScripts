@@ -83,7 +83,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Draw(p,d,REASON_EFFECT)~=0 then
 		local tc=Duel.GetOperatedGroup():GetFirst()
 		Duel.ConfirmCards(1-tp,tc)
-		if tc:IsType(TYPE_MONSTER) and tc:IsSetCard(0xe6) then
+		if tc:IsMonster() and tc:IsSetCard(0xe6) then
 			local sg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
 			if #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
 				Duel.BreakEffect()

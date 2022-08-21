@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	aux.AddEREquipLimit(c,s.eqcon,function(ec,_,tp) return ec:IsControler(1-tp) end,s.equipop,e2)
 end
 function s.gfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
+	return c:IsMonster() and c:IsAbleToRemoveAsCost()
 end
 function s.spcon(e,c)
 	if c==nil then return true end

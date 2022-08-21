@@ -20,7 +20,7 @@ function s.crfilter(c,tp)
 	return c:IsAbleToRemoveAsCost() and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,c)
 end
 function s.cfilter(c)
-	return c:IsType(TYPE_MONSTER) and (c:IsRace(RACE_DRAGON) or c:IsSetCard(0xc2))
+	return c:IsMonster() and (c:IsRace(RACE_DRAGON) or c:IsSetCard(0xc2))
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.crfilter,tp,LOCATION_MZONE,0,1,nil,tp) 

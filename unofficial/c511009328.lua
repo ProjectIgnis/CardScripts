@@ -62,7 +62,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.chkfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsLocation(LOCATION_GRAVE) 
+	return c:IsMonster() and c:IsLocation(LOCATION_GRAVE) 
 		and c:IsPreviousControler(tp)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)

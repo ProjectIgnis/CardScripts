@@ -91,7 +91,7 @@ function s.efilter(e,re)
 	return e:GetHandlerPlayer()~=re:GetHandlerPlayer()
 end
 function s.eqfilter(c)
-	return c:IsType(TYPE_MONSTER) and not c:IsForbidden()
+	return c:IsMonster() and not c:IsForbidden()
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.eqfilter(chkc) end

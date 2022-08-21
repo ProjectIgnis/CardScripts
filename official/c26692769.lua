@@ -38,7 +38,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x10db,0xdb}
 function s.tgfilter(c,tp)
-	return c:IsSetCard(0x10db) and c:IsAbleToGrave() and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x10db) and c:IsAbleToGrave() and c:IsMonster()
 		and Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK,0,1,c)
 end
 function s.setfilter(c)

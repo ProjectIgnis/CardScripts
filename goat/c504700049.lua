@@ -35,7 +35,7 @@ function s.addcount(e,tp,eg,ep,ev,re,r,rp)
 		local pl=tc:GetPreviousLocation()
 		local p=tc:GetPreviousControler()
 		if (pl==LOCATION_MZONE and tc:GetPreviousRaceOnField()==RACE_DRAGON)
-			or (pl==LOCATION_HAND and tc:IsType(TYPE_MONSTER) and tc:GetOriginalRace()==RACE_DRAGON) then
+			or (pl==LOCATION_HAND and tc:IsMonster() and tc:GetOriginalRace()==RACE_DRAGON) then
 			s[p]=s[p]+1
 		end
 	end

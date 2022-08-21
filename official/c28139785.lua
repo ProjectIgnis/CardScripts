@@ -39,7 +39,7 @@ function s.ddop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.DiscardDeck(tp,1,REASON_EFFECT)
 	local c=e:GetHandler()
 	local tc=Duel.GetOperatedGroup():GetFirst()
-	if tc and c:IsRelateToEffect(e) and c:IsFaceup() and tc:IsType(TYPE_MONSTER) and tc:IsLocation(LOCATION_GRAVE) then
+	if tc and c:IsRelateToEffect(e) and c:IsFaceup() and tc:IsMonster() and tc:IsLocation(LOCATION_GRAVE) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -56,7 +56,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsPreviousControler(tp) and rp~=tp and c:IsReason(REASON_DESTROY)
 end
 function s.thfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:GetLevel()>0 and c:IsAbleToHand()
+	return c:IsMonster() and c:GetLevel()>0 and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,nil) end

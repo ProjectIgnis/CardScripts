@@ -18,7 +18,7 @@ function s.initial_effect(c)
 end
 s.listed_names={160202046}
 function s.costfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_PYRO) and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and c:IsRace(RACE_PYRO) and c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,2,nil) end

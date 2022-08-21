@@ -62,7 +62,7 @@ function s.tnop(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e1)
 end
 function s.atkfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x33)
+	return c:IsMonster() and c:IsSetCard(0x33)
 end
 function s.value(e,c)
 	return Duel.GetMatchingGroupCount(s.atkfilter,c:GetControler(),LOCATION_GRAVE,0,nil)*300

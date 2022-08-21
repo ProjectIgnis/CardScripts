@@ -31,7 +31,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.cfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsDiscardable() and c:GetAttack()>=0 and c:GetDefense()>=0
+	return c:IsMonster() and c:IsDiscardable() and c:GetAttack()>=0 and c:GetDefense()>=0
 		and Duel.IsExistingTarget(s.tgfilter,0,LOCATION_MZONE,LOCATION_MZONE,1,nil,c)
 end
 function s.tgfilter(c,dc)

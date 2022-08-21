@@ -15,7 +15,7 @@ function s.filter(c,e,tp)
 	return c:IsMotor() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.rfilter(c)
-	return c:IsMotor() and c:IsType(TYPE_MONSTER) and c:IsAbleToRemove() and aux.SpElimFilter(c,true)
+	return c:IsMotor() and c:IsMonster() and c:IsAbleToRemove() and aux.SpElimFilter(c,true)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 

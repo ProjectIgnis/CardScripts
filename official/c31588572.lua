@@ -31,7 +31,7 @@ s.listed_names={id}
 s.listed_series={0x130}
 function s.setfilter(c,e,tp)
 	if not c:IsSetCard(0x130) then return end
-	if c:IsType(TYPE_MONSTER) and not c:IsCode(id) then 
+	if c:IsMonster() and not c:IsCode(id) then 
 		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
 	elseif c:IsType(TYPE_SPELL+TYPE_TRAP) then 
 		return (c:IsType(TYPE_FIELD) or Duel.GetLocationCount(tp,LOCATION_SZONE)>0) and c:IsSSetable()

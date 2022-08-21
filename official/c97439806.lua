@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x35}
 function s.costfilter(c)
-	return c:IsSetCard(0x35) and c:IsType(TYPE_MONSTER) and c:GetCode()~=id and c:IsDiscardable()
+	return c:IsSetCard(0x35) and c:IsMonster() and c:GetCode()~=id and c:IsDiscardable()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end

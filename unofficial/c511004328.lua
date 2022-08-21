@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsLocation(LOCATION_ONFIELD)
+	return c:IsMonster() and c:IsLocation(LOCATION_ONFIELD)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_TOHAND)

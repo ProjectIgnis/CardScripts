@@ -30,7 +30,7 @@ end
 s.listed_names={62265044}
 s.listed_series={0x29}
 function s.spcfilter(c)
-	return c:IsFaceup() and ((c:IsType(TYPE_MONSTER) and c:IsSetCard(0x29)) or c:IsCode(62265044))
+	return c:IsFaceup() and ((c:IsMonster() and c:IsSetCard(0x29)) or c:IsCode(62265044))
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.spcfilter,tp,LOCATION_ONFIELD,0,1,nil)

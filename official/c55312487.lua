@@ -39,11 +39,11 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 end
 function s.costfilter(c,e,tp)
-	return c:IsType(TYPE_MONSTER) and (c:IsSetCard(0x116) or c:IsSetCard(0xfe))
+	return c:IsMonster() and (c:IsSetCard(0x116) or c:IsSetCard(0xfe))
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp,c)
 end
 function s.spfilter(c,e,tp,tc)
-	return c:IsType(TYPE_MONSTER) and (c:IsSetCard(0x116) or c:IsSetCard(0xfe)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsMonster() and (c:IsSetCard(0x116) or c:IsSetCard(0xfe)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and not c:IsOriginalCode(tc:GetOriginalCode())
 end
 function s.sptarget(e,tp,eg,ep,ev,re,r,rp,chk)

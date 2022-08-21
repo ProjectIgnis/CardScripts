@@ -18,7 +18,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp and ((ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE) or (ph==PHASE_DAMAGE and not Duel.IsDamageCalculated()))
 end
 function s.cfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost() and c:IsLocation(LOCATION_HAND) and s.cfilter2(c,tp)
+	return c:IsMonster() and c:IsAbleToGraveAsCost() and c:IsLocation(LOCATION_HAND) and s.cfilter2(c,tp)
 end
 function s.cfilter2(c,tp)
 	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,c)

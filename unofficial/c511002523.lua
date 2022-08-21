@@ -16,7 +16,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp and Duel.GetBattleDamage(tp)>=3000
 end
 function s.filter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemove() and (c:IsLocation(LOCATION_DECK) or aux.SpElimFilter(c))
+	return c:IsMonster() and c:IsAbleToRemove() and (c:IsLocation(LOCATION_DECK) or aux.SpElimFilter(c))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK+LOCATION_MZONE+LOCATION_GRAVE,LOCATION_DECK+LOCATION_MZONE+LOCATION_GRAVE,1,nil) end

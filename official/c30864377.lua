@@ -41,7 +41,7 @@ function s.matfilter(c,fc,sumtype,tp)
 	return c:IsLevelAbove(5) and c:IsSetCard(0x19,fc,sumtype,tp)
 end
 function s.contactfil(tp)
-	return Duel.GetMatchingGroup(function(c) return c:IsType(TYPE_MONSTER) and c:IsAbleToDeckOrExtraAsCost() end,tp,LOCATION_ONFIELD,0,nil)
+	return Duel.GetMatchingGroup(function(c) return c:IsMonster() and c:IsAbleToDeckOrExtraAsCost() end,tp,LOCATION_ONFIELD,0,nil)
 end
 function s.contactop(g,tp)
 	Duel.ConfirmCards(1-tp,g)

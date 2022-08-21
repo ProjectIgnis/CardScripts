@@ -57,7 +57,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 	--Check for "ZW -" or "ZS -" monster
 function s.topfilter(c)
-	return (c:IsSetCard(0x107e) or c:IsSetCard(0x207e)) and c:IsType(TYPE_MONSTER)
+	return (c:IsSetCard(0x107e) or c:IsSetCard(0x207e)) and c:IsMonster()
 end
 	--Xyz summon 1 "Utopia" or "ZW -" monster, that is 1 rank higher than targeted Xyz
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

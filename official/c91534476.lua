@@ -20,12 +20,12 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	return true
 end
 function s.cfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and c:IsAbleToGraveAsCost()
 		and Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,c)
 end
 function s.filter(c)
 	return (c:IsFaceup() or not c:IsLocation(LOCATION_REMOVED)) 
-		and c:IsType(TYPE_MONSTER) and c:IsLevel(1) and c:IsAbleToHand()
+		and c:IsMonster() and c:IsLevel(1) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and s.filter(chkc) and chkc~=e:GetLabelObject() end

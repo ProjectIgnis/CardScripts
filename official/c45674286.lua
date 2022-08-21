@@ -73,7 +73,7 @@ function s.splimit(e,c,sump,sumtype,sumpos,targetp)
 end
 	--Check for "Machina" monster, except "Machina Unclasspare"
 function s.tgfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x36) and not c:IsCode(id) and c:IsAbleToGrave()
+	return c:IsMonster() and c:IsSetCard(0x36) and not c:IsCode(id) and c:IsAbleToGrave()
 end
 	--Activation legality
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)

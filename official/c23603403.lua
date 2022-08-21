@@ -73,7 +73,7 @@ function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.atkfilter(c)
-	return c:IsSetCard(0xba) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0xba) and c:IsMonster()
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsFaceup() end

@@ -50,7 +50,7 @@ function s.initial_effect(c)
 end
 s.mark=1
 function s.eqfilter(c,tp)
-	return (c:IsAbleToChangeControler() or c:IsControler(tp)) and c:IsType(TYPE_MONSTER)
+	return (c:IsAbleToChangeControler() or c:IsControler(tp)) and c:IsMonster()
 end
 function s.equipop(c,e,tp,tc)
 	local atk=tc:GetTextAttack()

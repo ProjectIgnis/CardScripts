@@ -82,7 +82,7 @@ function s.negcond(e,tp,eg,ep,ev,re,r,rp)
 	return ex and tg~=nil and tc+tg:FilterCount(Card.IsOnField,nil)-#tg>0
 end
 function s.cfilter2(c,tp)
-	return (c:IsSetCard(0x153) or c:IsSetCard(0x154)) and c:IsType(TYPE_MONSTER)
+	return (c:IsSetCard(0x153) or c:IsSetCard(0x154)) and c:IsMonster()
 end
 function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.cfilter2,1,false,nil,nil) end

@@ -18,7 +18,7 @@ end
 s.listed_names={CARD_UMI,CARD_BIG_OCEAN}
 	--Check for a monster that can be returned to deck
 function s.filter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
+	return c:IsMonster() and c:IsAbleToDeck()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) end

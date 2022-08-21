@@ -43,7 +43,7 @@ function s.matfilter(c,scard,sumtype,tp)
 end
 	--Check for "Ancient Gear" monster or Geartown
 function s.thfilter(c)
-	return ((c:IsSetCard(0x7) and c:IsType(TYPE_MONSTER)) or c:IsCode(37694547)) and c:IsAbleToHand()
+	return ((c:IsSetCard(0x7) and c:IsMonster()) or c:IsCode(37694547)) and c:IsAbleToHand()
 end
 	--If link summoned
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)

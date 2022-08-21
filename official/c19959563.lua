@@ -45,7 +45,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x38}
 function s.spfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x38) and c:IsType(TYPE_MONSTER)
+	return c:IsFaceup() and c:IsSetCard(0x38) and c:IsMonster()
 end
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -59,7 +59,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,1000)
 end
 function s.filter(c)
-	return (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE)) and not (c:IsSetCard(0x38) and c:IsType(TYPE_MONSTER)) and c:IsAbleToDeck()
+	return (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE)) and not (c:IsSetCard(0x38) and c:IsMonster()) and c:IsAbleToDeck()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE+LOCATION_REMOVED,LOCATION_GRAVE+LOCATION_REMOVED,1,e:GetHandler()) end

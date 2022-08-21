@@ -56,7 +56,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReincarnationSummoned()
 end
 function s.filter1(c,tp)
-	return c:IsType(TYPE_MONSTER) and Duel.IsExistingTarget(s.filter2,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,c:GetAttack())
+	return c:IsMonster() and Duel.IsExistingTarget(s.filter2,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,c:GetAttack())
 end
 function s.filter2(c,atk)
 	return c:IsFaceup() and c:GetAttack()~=atk

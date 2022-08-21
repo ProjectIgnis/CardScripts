@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end 
 function s.costfilter(c)
-	return c:IsSetCard(0x10f3) and c:IsLevelBelow(4) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(0x10f3) and c:IsLevelBelow(4) and c:IsMonster() and c:IsAbleToGraveAsCost()
 end
 s.listed_series={0x10f3}
 function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)

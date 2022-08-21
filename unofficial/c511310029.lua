@@ -15,7 +15,7 @@ function card.initial_effect(c)
 end
 
 function card.cfilter(c)
-	return not c:IsPublic() and c:IsType(TYPE_MONSTER) and c:IsRace(RACE_MACHINE)
+	return not c:IsPublic() and c:IsMonster() and c:IsRace(RACE_MACHINE)
 end
 
 function card.rescon(sg, e, tp, mg)
@@ -32,7 +32,7 @@ function card.spcost(e, tp, eg, ep, ev, re, r, rp, chk)
 end
 
 function card.spfilter(c, e, tp)
-	return c:IsType(TYPE_MONSTER) and not c:IsRace(RACE_MACHINE) and c:IsCanBeSpecialSummoned(e, 0, tp, false, false)
+	return c:IsMonster() and not c:IsRace(RACE_MACHINE) and c:IsCanBeSpecialSummoned(e, 0, tp, false, false)
 end
 
 function card.sptg(e, tp, eg, ep, ev, re, r, rp, chk)

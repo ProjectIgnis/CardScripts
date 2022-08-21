@@ -17,14 +17,14 @@ function s.initial_effect(c)
 end
 s.listed_series={0x11e}
 function s.disthfilter(c)
-	return c:IsSetCard(0x11e) and c:IsType(TYPE_MONSTER) and c:IsLevelAbove(5) and c:IsDiscardable()
+	return c:IsSetCard(0x11e) and c:IsMonster() and c:IsLevelAbove(5) and c:IsDiscardable()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.disthfilter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.DiscardHand(tp,s.disthfilter,1,1,REASON_COST+REASON_DISCARD,nil)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x11e) and c:IsType(TYPE_MONSTER) and c:IsLevelBelow(4) and c:IsAbleToHand()
+	return c:IsSetCard(0x11e) and c:IsMonster() and c:IsLevelBelow(4) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

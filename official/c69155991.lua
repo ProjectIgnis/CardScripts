@@ -62,7 +62,7 @@ function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return (c:GetReason()&0x41)==0x41 and re:GetOwner():IsSetCard(0x24)
 end
 function s.filter(c)
-	return c:IsSetCard(0x24) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
+	return c:IsSetCard(0x24) and c:IsMonster() and c:IsAbleToGrave()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

@@ -12,7 +12,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x100d}
 function s.spfilter(c)
-	return c:IsSetCard(0x100d) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x100d) and c:IsMonster()
 end
 function s.spcon(e,c)
 	if c==nil then return true end

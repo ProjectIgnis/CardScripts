@@ -44,7 +44,7 @@ function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.setcheck,tp,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,1,nil)
 end
 function s.setcfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c)
+	return c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c)
 		and Duel.IsExistingTarget(s.setfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c)
 end
 function s.setfilter(c)

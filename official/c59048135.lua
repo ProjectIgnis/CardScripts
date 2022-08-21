@@ -43,7 +43,7 @@ function s.evalue(e,re,rp)
 	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x76) and c:IsType(TYPE_MONSTER) and c:IsDiscardable()
+	return c:IsSetCard(0x76) and c:IsMonster() and c:IsDiscardable()
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SUMMON)==0

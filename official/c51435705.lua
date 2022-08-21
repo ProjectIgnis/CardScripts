@@ -26,7 +26,7 @@ function s.shcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(e:GetHandler(),REASON_DISCARD+REASON_COST)
 end
 function s.filter(c)
-	return c:IsSetCard(0x70) and c:GetCode()~=id and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x70) and c:GetCode()~=id and c:IsMonster() and c:IsAbleToHand()
 end
 function s.shtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE+LOCATION_DECK,0,1,nil) end

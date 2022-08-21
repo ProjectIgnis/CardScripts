@@ -171,7 +171,7 @@ function s.normalsetoperation(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.ConfirmCards(tp,c)
 	Duel.ConfirmCards(1-tp,c)
-	if c:IsType(TYPE_MONSTER) and (c:IsSummonable(true,nil) or c:IsMSetable(true,nil)) and ((Duel.IsExistingMatchingCard(Card.IsReleasable,tp,LOCATION_MZONE,0,tmin,nil) and Duel.GetLocationCount(tp,LOCATION_MZONE)>-tmin) or (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and tmin==0)) then
+	if c:IsMonster() and (c:IsSummonable(true,nil) or c:IsMSetable(true,nil)) and ((Duel.IsExistingMatchingCard(Card.IsReleasable,tp,LOCATION_MZONE,0,tmin,nil) and Duel.GetLocationCount(tp,LOCATION_MZONE)>-tmin) or (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and tmin==0)) then
 		local poi=0 --set/summon control variable
 		if c:IsSummonable(true,nil) or c:IsMSetable(true,nil) then 
 			poi=Duel.SelectOption(tp,1,1153)

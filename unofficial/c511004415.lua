@@ -26,7 +26,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	return true
 end
 function s.cfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xc008) and c:IsAbleToRemove() and aux.SpElimFilter(c,true)
+	return c:IsMonster() and c:IsSetCard(0xc008) and c:IsAbleToRemove() and aux.SpElimFilter(c,true)
 end
 function s.target(e,tp,eg,ev,ep,re,r,rp,chk,chkc)
 	if chkc then return s.filter(chkc,e,tp) and eg:IsContains(chkc) end
@@ -45,7 +45,7 @@ function s.target(e,tp,eg,ev,ep,re,r,rp,chk,chkc)
 	Duel.Remove(rc,POS_FACEUP,REASON_COST)
 end
 function s.afilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xc008) and c:GetAttackedCount()~=0
+	return c:IsMonster() and c:IsSetCard(0xc008) and c:GetAttackedCount()~=0
 end
 function s.operation(e,tp,eg,ev,ep,re,r,rp)
 	local atk=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)

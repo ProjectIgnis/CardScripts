@@ -14,11 +14,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.tdfilter(c,tp,sc)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToDeckOrExtraAsCost()
+	return c:IsMonster() and c:IsAbleToDeckOrExtraAsCost()
 		and Duel.IsExistingMatchingCard(s.tdfilter2,tp,LOCATION_GRAVE,0,2,Group.FromCards(c,sc),c:GetRace())
 end
 function s.tdfilter2(c,race)
-	return c:IsType(TYPE_MONSTER) and c:IsRace(race) and c:IsAbleToDeckOrExtraAsCost()
+	return c:IsMonster() and c:IsRace(race) and c:IsAbleToDeckOrExtraAsCost()
 end
 function s.spfilter(c,e,tp)
 	return c:IsType(TYPE_NORMAL) and (c:IsLevel(5) or c:IsLevel(6))
@@ -37,7 +37,7 @@ function s.spfilter2(c,e,tp)
 	return c:IsType(TYPE_NORMAL) and (c:IsLevel(5) or c:IsLevel(6)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.filter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToDeckOrExtraAsCost()
+	return c:IsMonster() and c:IsAbleToDeckOrExtraAsCost()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement

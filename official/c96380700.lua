@@ -24,7 +24,7 @@ function s.matfilter(c,lc,sumtype,tp)
 	return c:IsLevelBelow(2) and c:IsRace(RACE_CYBERSE,lc,sumtype,tp)
 end
 function s.cfilter(c,e,tp,zone)
-	return c:IsRace(RACE_CYBERSE) and c:IsType(TYPE_MONSTER) and Duel.GetMZoneCount(tp,c,tp,LOCATION_REASON_TOFIELD,zone)>0
+	return c:IsRace(RACE_CYBERSE) and c:IsMonster() and Duel.GetMZoneCount(tp,c,tp,LOCATION_REASON_TOFIELD,zone)>0
 		and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,c)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -36,7 +36,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabelObject(g:GetFirst())
 end
 function s.spfilter(c,e,tp,rc)
-	return c:IsSetCard(0x101) and c:IsType(TYPE_MONSTER) and not c:IsOriginalCodeRule(rc:GetOriginalCodeRule()) 
+	return c:IsSetCard(0x101) and c:IsMonster() and not c:IsOriginalCodeRule(rc:GetOriginalCodeRule()) 
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

@@ -39,7 +39,7 @@ function s.splimit(e,se,sp,st)
 	return not e:GetHandler():IsLocation(LOCATION_EXTRA)
 end
 function s.copyfilter(c)
-	return c:IsSetCard(0x1f) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x1f) and c:IsMonster()
 		and not c:IsForbidden() and c:IsAbleToRemove()
 end
 function s.copytg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -36,7 +36,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x90}
 function s.cfilter(c)
-	return c:IsSetCard(0x90) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x90) and c:IsMonster()
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil)

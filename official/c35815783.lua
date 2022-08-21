@@ -34,7 +34,7 @@ end
 s.listed_series={0x167}
 s.listed_names={99426088}
 function s.thfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x167) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(0x167) and c:IsAbleToHand()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

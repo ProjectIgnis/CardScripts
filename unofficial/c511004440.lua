@@ -42,7 +42,7 @@ function s.gchk(e,tp,eg,ev,ep,re,r,rp)
 	end
 end
 function s.sfilter(c,e,tp,g)
-	return c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SPECIAL,tp,true,false) and (not g or g:IsContains(c))
+	return c:IsMonster() and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SPECIAL,tp,true,false) and (not g or g:IsContains(c))
 end
 function s.target(e,tp,eg,ev,ep,re,r,rp,chk)
 	local g=e:GetLabelObject()

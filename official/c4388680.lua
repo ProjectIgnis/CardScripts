@@ -62,7 +62,7 @@ function s.thfilter(c)
 	return c:GetType()==TYPE_RITUAL+TYPE_SPELL and c:IsAbleToHand()
 end
 function s.tgfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x106) and c:IsAbleToGrave()
+	return c:IsMonster() and c:IsSetCard(0x106) and c:IsAbleToGrave()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil)

@@ -19,6 +19,6 @@ end
 function s.attg(e,c)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,e:GetHandlerPlayer(),0,LOCATION_MZONE,nil)
 	local _,atk=Group.GetMinGroup(g,Card.GetAttack)
-	return c:IsType(TYPE_MONSTER) and c:IsFaceup() and c:IsLevelBelow(2) and c:IsRace(RACE_SPELLCASTER)
+	return c:IsMonster() and c:IsFaceup() and c:IsLevelBelow(2) and c:IsRace(RACE_SPELLCASTER)
 		and not c:IsHasEffect(EFFECT_CANNOT_ATTACK) and c:GetAttack()<atk
 end

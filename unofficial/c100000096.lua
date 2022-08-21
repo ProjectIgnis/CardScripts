@@ -40,7 +40,7 @@ function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_DRAW
 end
 function s.tdfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsControler(Duel.GetTurnPlayer())
+	return c:IsMonster() and c:IsControler(Duel.GetTurnPlayer())
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(s.tdfilter,1,nil) end

@@ -80,7 +80,7 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local bc=tc:GetBattleTarget()
 	return tc:IsRelateToBattle() and tc:IsControler(tp)
 		and bc:IsLocation(LOCATION_GRAVE) and bc:IsReason(REASON_BATTLE)
-		and bc:IsType(TYPE_MONSTER) and bc:IsPreviousControler(1-tp)
+		and bc:IsMonster() and bc:IsPreviousControler(1-tp)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

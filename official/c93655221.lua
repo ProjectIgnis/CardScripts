@@ -20,7 +20,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)
 end
 function s.filter(c)
-	return c:IsOnField() and c:IsType(TYPE_MONSTER)
+	return c:IsOnField() and c:IsMonster()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsChainNegatable(ev) then return false end

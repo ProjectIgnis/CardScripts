@@ -93,7 +93,7 @@ function s.regop2(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e1)
 end
 function s.thfilter(c,e,tp,ft)
-	return c:IsType(TYPE_MONSTER) and (c:IsSetCard(0x146) or c:IsCode(CARD_ALBAZ))
+	return c:IsMonster() and (c:IsSetCard(0x146) or c:IsCode(CARD_ALBAZ))
 		and (c:IsAbleToHand() or (c:IsCanBeSpecialSummoned(e,0,tp,false,false) and ft>0))
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

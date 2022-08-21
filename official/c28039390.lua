@@ -43,7 +43,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tgfilter(c)
-	return c:IsFaceup() and (c:IsSetCard(0xa9) or c:IsSetCard(0xad)) and c:IsType(TYPE_MONSTER)
+	return c:IsFaceup() and (c:IsSetCard(0xa9) or c:IsSetCard(0xad)) and c:IsMonster()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and s.tgfilter(chkc) end

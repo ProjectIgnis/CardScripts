@@ -29,7 +29,7 @@ end
 s.listed_series={0x77}
 s.listed_names={id}
 function s.cfilter(c,tp)
-	return c:IsSetCard(0x77) and c:IsType(TYPE_MONSTER) and not c:IsCode(id) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(0x77) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToGraveAsCost()
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

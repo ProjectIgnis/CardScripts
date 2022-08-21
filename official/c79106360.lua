@@ -18,7 +18,7 @@ function s.filter(c)
 	return not c:IsStatus(STATUS_BATTLE_DESTROYED) and c:IsAbleToDeck()
 end
 function s.filter2(c)
-	return c:IsLocation(LOCATION_DECK) and c:IsType(TYPE_MONSTER)
+	return c:IsLocation(LOCATION_DECK) and c:IsMonster()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local rg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)

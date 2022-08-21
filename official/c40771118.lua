@@ -39,7 +39,7 @@ function s.filter(c)
 	return c:IsFaceup() and (c:IsCode(CARD_DESTINY_BOARD) or c:IsSetCard(0x1c))
 end
 function s.thfilter(c)
-	return c:IsRace(RACE_FIEND) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsRace(RACE_FIEND) and c:IsMonster() and c:IsAbleToHand()
 		and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

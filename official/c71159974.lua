@@ -86,11 +86,11 @@ function s.chainlm(e,rp,tp)
 end
 --Destroy
 function s.attfilter(c,tp)
-	return ((c:IsSetCard(0x167) or c:IsType(TYPE_NORMAL)) and c:IsType(TYPE_MONSTER))
+	return ((c:IsSetCard(0x167) or c:IsType(TYPE_NORMAL)) and c:IsMonster())
 		and Duel.IsExistingMatchingCard(s.desfilter,tp,0,LOCATION_MZONE,1,nil,c:GetAttribute())
 end
 function s.desfilter(c,att)
-	return c:IsAttribute(att) and c:IsType(TYPE_MONSTER) and c:IsFaceup()
+	return c:IsAttribute(att) and c:IsMonster() and c:IsFaceup()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.attfilter(chkc,tp) end

@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x82}
 function s.cfilter(c)
-	return c:IsSetCard(0x82) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(0x82) and c:IsMonster() and c:IsAbleToGraveAsCost()
 		and (c:IsLocation(LOCATION_HAND) or c:IsFaceup())
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

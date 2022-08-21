@@ -76,7 +76,7 @@ function s.thcfilter(c,e,tp)
 		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,code)
 end
 function s.thfilter(c,code)
-	return c:IsSetCard(0x137) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and not c:IsCode(code)
+	return c:IsSetCard(0x137) and c:IsMonster() and c:IsAbleToHand() and not c:IsCode(code)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return eg:IsContains(chkc) and s.thcfilter(chkc,e,tp) end

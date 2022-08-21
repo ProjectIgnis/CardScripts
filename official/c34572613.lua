@@ -53,7 +53,7 @@ function s.atkval(e,c)
 	return g:GetClassCount(Card.GetCode)*100
 end
 function s.drfilter(c)
-	return c:IsSetCard(0x159) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
+	return c:IsSetCard(0x159) and c:IsMonster() and c:IsAbleToDeck()
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) 

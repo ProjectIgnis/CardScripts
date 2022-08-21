@@ -83,7 +83,7 @@ function s.xyzfilter(c,mg,tp)
 	return c:IsXyzSummonable(nil,mg,5,5) and Duel.GetLocationCountFromEx(tp,tp,mg,c)>0
 end
 function s.matfilter(c)
-	return c:IsSetCard(0x48) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x48) and c:IsMonster()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local mg1=Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,nil,CARD_NUMERON_NETWORK)

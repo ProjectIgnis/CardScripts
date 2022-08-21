@@ -30,10 +30,10 @@ end
 s.listed_series={0x133}
 s.listed_names={}
 function s.thfilter(c)
-	return not c:IsCode(id) and c:IsSetCard(0x133) and c:IsAbleToHand() and c:IsType(TYPE_MONSTER)
+	return not c:IsCode(id) and c:IsSetCard(0x133) and c:IsAbleToHand() and c:IsMonster()
 end
 function s.disfilter(c)
-	return c:IsSetCard(0x133) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x133) and c:IsMonster()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

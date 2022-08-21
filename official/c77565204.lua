@@ -77,7 +77,7 @@ function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
 function s.filter1(c,e)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToGrave() and not c:IsImmuneToEffect(e)
+	return c:IsMonster() and c:IsAbleToGrave() and not c:IsImmuneToEffect(e)
 end
 function s.filter2(c,m)
 	return c:IsFusionSummonableCard() and c:CheckFusionMaterial(m)

@@ -30,7 +30,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.filter1(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemove() and aux.SpElimFilter(c,true)
+	return c:IsMonster() and c:IsAbleToRemove() and aux.SpElimFilter(c,true)
 		and Duel.IsExistingMatchingCard(s.filter3,tp,LOCATION_MZONE,0,1,c)
 end
 function s.filter2(c,rc)

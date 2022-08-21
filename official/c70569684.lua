@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.filter(c,e)
-	return c:IsType(TYPE_MONSTER) and c:IsDestructable(e)
+	return c:IsMonster() and c:IsDestructable(e)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp)

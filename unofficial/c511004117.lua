@@ -55,7 +55,7 @@ function s.efilter(e,re)
 			or re:GetHandler():GetCode()==54974237)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_MONSTER)
+	return c:IsFaceup() and c:IsMonster()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end

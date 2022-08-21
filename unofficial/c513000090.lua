@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x601}
 function s.cfilter(c,tp)
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSetCard(0x601) and c:IsType(TYPE_MONSTER) 
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSetCard(0x601) and c:IsMonster() 
 		and c:IsControler(tp) and c:IsType(TYPE_SYNCHRO)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

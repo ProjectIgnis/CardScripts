@@ -73,7 +73,7 @@ function s.spconfilter(c,e,tp,eg)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,eg)
 end
 function s.spfilter(c,e,tp,eg)
-	return c:IsSetCard(0xe2) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xe2) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and not eg:IsExists(Card.IsCode,1,nil,c:GetCode())
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

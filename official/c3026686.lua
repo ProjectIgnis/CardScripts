@@ -44,7 +44,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rmfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_MONSTER)
+	return c:IsFaceup() and c:IsMonster()
 end
 function s.atkvalue(e,c)
 	return Duel.GetMatchingGroupCount(s.rmfilter,c:GetControler(),0,LOCATION_REMOVED,nil)*200

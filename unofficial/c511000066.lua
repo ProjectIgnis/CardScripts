@@ -27,7 +27,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_SZONE,1,1,nil)
 end
 function s.dfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsFaceup() and c:IsLevelBelow(2) and c:IsRace(RACE_SPELLCASTER)
+	return c:IsMonster() and c:IsFaceup() and c:IsLevelBelow(2) and c:IsRace(RACE_SPELLCASTER)
 		and not c:IsHasEffect(EFFECT_CANNOT_ATTACK)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -75,6 +75,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.attg(e,c,tp,eg,ep,ev,re,r,rp)
-	return c:IsType(TYPE_MONSTER) and c:IsFaceup() and c:IsLevelBelow(2) and c:IsRace(RACE_SPELLCASTER)
+	return c:IsMonster() and c:IsFaceup() and c:IsLevelBelow(2) and c:IsRace(RACE_SPELLCASTER)
 		and not c:IsHasEffect(EFFECT_CANNOT_ATTACK) and not not Duel.IsExistingMatchingCard(c511000060.filter,e:GetHandlerPlayer(),0,LOCATION_MZONE,1,nil,e:GetHandler():GetAttack())
 end

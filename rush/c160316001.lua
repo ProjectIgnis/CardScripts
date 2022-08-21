@@ -24,7 +24,7 @@ function s.oppfilter(c)
 	return c:IsFaceup() and c:IsAttackPos() and c:IsLevelBelow(8)
 end
 function s.tdfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_PYRO) and c:IsAbleToDeck() and c:HasLevel()
+	return c:IsMonster() and c:IsRace(RACE_PYRO) and c:IsAbleToDeck() and c:HasLevel()
 end
 function s.rescon(lvl)
 	return function(sg,e,tp,mg)

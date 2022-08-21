@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x2f}
 function s.cfilter(c)
-	return c:IsSetCard(0x2f) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(0x2f) and c:IsMonster() and c:IsAbleToGraveAsCost()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

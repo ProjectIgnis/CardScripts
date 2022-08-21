@@ -13,7 +13,7 @@ function s.ritualfil(c)
 end
 function s.mfilter(c)
 	return not Duel.IsPlayerAffectedByEffect(c:GetControler(),69832741) and c:HasLevel() and c:IsSetCard(0x3b)
-		and c:IsType(TYPE_MONSTER) and c:IsAbleToRemove()
+		and c:IsMonster() and c:IsAbleToRemove()
 end
 function s.extrafil(e,tp,eg,ep,ev,re,r,rp,chk)
 	return Duel.GetMatchingGroup(s.mfilter,tp,LOCATION_GRAVE,0,nil)

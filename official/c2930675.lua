@@ -20,7 +20,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x10c,0xfe}
 function s.thfilter(c)
-	return ((c:IsSetCard(0x10c) and c:IsType(TYPE_MONSTER)) or c:IsSetCard(0xfe)) and c:IsFaceup() and c:IsAbleToHand()
+	return ((c:IsSetCard(0x10c) and c:IsMonster()) or c:IsSetCard(0xfe)) and c:IsFaceup() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and s.thfilter(chkc) end

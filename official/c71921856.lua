@@ -36,7 +36,7 @@ end
 s.listed_series={0x84}
 s.xyz_number=79
 function s.filter(c)
-	return c:IsSetCard(0x84) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x84) and c:IsMonster()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsType(TYPE_XYZ) 

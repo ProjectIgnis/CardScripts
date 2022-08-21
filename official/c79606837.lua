@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 function s.rmtarget(e,c)
-	return c:IsType(TYPE_MONSTER) and Duel.IsPlayerCanRemove(e:GetHandlerPlayer(),c)
+	return c:IsMonster() and Duel.IsPlayerCanRemove(e:GetHandlerPlayer(),c)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

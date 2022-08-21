@@ -63,5 +63,5 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e2,tp)
 end
 function s.actfilter(e,c)
-	return c:GetControler()==e:GetHandlerPlayer() and c:IsType(TYPE_MONSTER) and not c:IsAttribute(ATTRIBUTE_WATER)
+	return c:GetControler()==e:GetHandlerPlayer() and c:IsMonster() and not c:IsAttribute(ATTRIBUTE_WATER)
 end

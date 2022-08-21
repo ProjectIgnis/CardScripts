@@ -70,7 +70,7 @@ function s.xyzcon(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for "ZW -" monster
 function s.filter(c)
-	return c:IsSetCard(0x107e) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x107e) and c:IsMonster() and c:IsAbleToHand()
 end
 	--Activation legality
 function s.xyztg(e,tp,eg,ep,ev,re,r,rp,chk)

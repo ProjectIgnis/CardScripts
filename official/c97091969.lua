@@ -33,7 +33,7 @@ function s.optfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x111) and c:HasLevel()
 end
 function s.thfilter(c,lvl)
-	return c:IsSetCard(0x111) and c:IsType(TYPE_MONSTER) and c:IsLevelBelow(lvl) and c:IsAbleToHand()
+	return c:IsSetCard(0x111) and c:IsMonster() and c:IsLevelBelow(lvl) and c:IsAbleToHand()
 end
 function s.opttarget(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.optfilter(chkc) end

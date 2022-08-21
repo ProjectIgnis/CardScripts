@@ -19,7 +19,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_BATTLE) and Duel.IsPlayerAffectedByEffect(tp,511000380)
 end
 function s.filter(c)
-	return c:IsSetCard(0x51e) and c:IsLevelBelow(3) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x51e) and c:IsLevelBelow(3) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

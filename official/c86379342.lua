@@ -33,7 +33,7 @@ function s.lkfilter(c,e,tp)
 	return c:IsType(TYPE_LINK) and c:IsFaceup() and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp,c:GetRace())
 end
 function s.spfilter(c,e,tp,race)
-	return c:IsRace(RACES_BEAST_BWARRIOR_WINGB) and c:IsType(TYPE_MONSTER) and not c:IsRace(race) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsRace(RACES_BEAST_BWARRIOR_WINGB) and c:IsMonster() and not c:IsRace(race) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.lkfilter(chkc,e,tp) end

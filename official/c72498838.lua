@@ -84,7 +84,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.eqfilter(c)
-	return c:IsSetCard(0x152) and not c:IsLevel(4) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x152) and not c:IsLevel(4) and c:IsMonster()
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()

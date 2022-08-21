@@ -52,7 +52,7 @@ function s.matfilter(c)
 	return aux.SpElimFilter(c) and c:IsAbleToRemove()
 end
 function s.extrafil(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemove()
+	return c:IsMonster() and c:IsAbleToRemove()
 end
 function s.fextra(e,tp,mg)
 	if not Duel.IsPlayerAffectedByEffect(tp,69832741) then

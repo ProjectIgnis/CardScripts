@@ -19,7 +19,7 @@ function s.costfilter(c,tp)
 	return c:IsAbleToGraveAsCost() and Duel.IsExistingMatchingCard(s.costfilter2,tp,LOCATION_HAND,0,1,c)
 end
 function s.costfilter2(c)
-	return c:IsType(TYPE_MONSTER) and c:IsType(TYPE_NORMAL) and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and c:IsType(TYPE_NORMAL) and c:IsAbleToGraveAsCost()
 end
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil,tp) end

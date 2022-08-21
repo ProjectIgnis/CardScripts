@@ -35,7 +35,7 @@ end
 s.listed_series={0x70,0x48}
 	--Check for "Chronomaly" monster
 function s.atkcfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x70) and (c:IsLevelAbove(1) or c:IsRankAbove(1)) and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and c:IsSetCard(0x70) and (c:IsLevelAbove(1) or c:IsRankAbove(1)) and c:IsAbleToGraveAsCost()
 end
 	--Cost of sending "Chronomaly" with Level/Rank to GY
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)

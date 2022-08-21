@@ -36,7 +36,7 @@ s.listed_names={id}
 s.listed_series={0x12b}
 	--Check for "Marincess" monster, besides same name
 function s.tgfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x12b) and not c:IsCode(id) and c:IsAbleToGrave()
+	return c:IsMonster() and c:IsSetCard(0x12b) and not c:IsCode(id) and c:IsAbleToGrave()
 end
 	--Activation legality
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)

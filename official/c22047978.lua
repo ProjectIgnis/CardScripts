@@ -24,7 +24,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.cfilter(c)
-	return not c:IsPublic() and c:IsType(TYPE_MONSTER)
+	return not c:IsPublic() and c:IsMonster()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsChainDisablable(0) then

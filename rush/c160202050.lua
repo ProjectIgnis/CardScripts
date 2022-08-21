@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 	--Check for a monster
 function s.tgfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
+	return c:IsMonster() and c:IsAbleToGrave()
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

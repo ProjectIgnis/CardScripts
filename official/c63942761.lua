@@ -17,7 +17,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,5) end
 end
 function s.filter(c)
-	return c:GetType()==0x82 or (c:IsSetCard(0x3a) and c:IsType(TYPE_MONSTER))
+	return c:GetType()==0x82 or (c:IsSetCard(0x3a) and c:IsMonster())
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsPlayerCanDiscardDeck(tp,5) then return end

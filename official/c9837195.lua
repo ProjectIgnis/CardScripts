@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x10}
 function s.filter1(c)
-	return c:IsSetCard(0x10) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
+	return c:IsSetCard(0x10) and c:IsMonster() and c:IsAbleToDeck()
 end
 function s.filter2(c)
 	return c:IsFaceup() and c:IsType(TYPE_EFFECT)

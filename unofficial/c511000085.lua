@@ -21,7 +21,7 @@ function s.filter(c,tp)
 		and Duel.IsExistingMatchingCard(s.rfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,mi,nil) and not c:IsPublic()
 end
 function s.rfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsClear() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsMonster() and c:IsClear() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

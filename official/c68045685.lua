@@ -56,7 +56,7 @@ function s.target(e,c)
 end
 	--Define cost
 function s.tgfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x88) and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and c:IsSetCard(0x88) and c:IsAbleToGraveAsCost()
 		and (c:IsFaceup() or c:IsLocation(LOCATION_HAND))
 end
 	--Send 1 "Bujin" monster from hand/face-up to GY as cost

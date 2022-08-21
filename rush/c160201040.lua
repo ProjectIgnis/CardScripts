@@ -20,7 +20,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tc and tc:IsFaceup() and tc:IsControler(tp) and tc:IsRace(RACE_PSYCHIC)
 end
 function s.cfilter(c)
-	return c:IsRace(RACE_PSYCHIC) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeckOrExtraAsCost()
+	return c:IsRace(RACE_PSYCHIC) and c:IsMonster() and c:IsAbleToDeckOrExtraAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,nil) end

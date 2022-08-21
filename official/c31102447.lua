@@ -26,7 +26,7 @@ end
 s.listed_series={0x4}
 s.listed_names={id}
 function s.cfilter(c)
-	return c:IsSetCard(0x4) and c:IsType(TYPE_MONSTER) and not c:IsPublic()
+	return c:IsSetCard(0x4) and c:IsMonster() and not c:IsPublic()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
@@ -47,7 +47,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x4) and not c:IsCode(id) and (c:IsAbleToHand() or c:IsAbleToDeck())
+	return c:IsMonster() and c:IsSetCard(0x4) and not c:IsCode(id) and (c:IsAbleToHand() or c:IsAbleToDeck())
 end
 function s.thtg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and s.thfilter(chkc) end

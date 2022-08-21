@@ -45,7 +45,7 @@ function s.tgfilter(c)
 	return c:IsFaceup()
 end
 function s.filter(c)
-	return c:IsType(TYPE_NORMAL) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
+	return c:IsType(TYPE_NORMAL) and c:IsMonster() and c:IsAbleToGrave()
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.tgfilter(chkc) end

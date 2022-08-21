@@ -21,7 +21,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x134}
 function s.cfilter(c,tp)
-	return (c:IsRace(RACE_ROCK) or (c:IsSetCard(0x134) and c:IsType(TYPE_MONSTER))) and (c:IsControler(tp) or c:IsFaceup())
+	return (c:IsRace(RACE_ROCK) or (c:IsSetCard(0x134) and c:IsMonster())) and (c:IsControler(tp) or c:IsFaceup())
 end
 function s.check(sg,tp)
 	return Duel.IsExistingTarget(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,sg)

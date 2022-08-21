@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c,e,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsDiscardable()
+	return c:IsMonster() and c:IsDiscardable()
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,c:GetRace(),c:GetAttribute(),c:GetLevel(),e,tp)
 end
 function s.filter(c,race,att,lv,e,tp)

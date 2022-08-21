@@ -12,7 +12,7 @@ function s.ritualfil(c)
 	return c:IsCode(7987191) and c:IsRitualMonster()
 end
 function s.mfilter(c,e)
-	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:HasLevel() and c:IsSetCard(0x102) and c:IsType(TYPE_MONSTER) and c:IsDestructable(e)
+	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:HasLevel() and c:IsSetCard(0x102) and c:IsMonster() and c:IsDestructable(e)
 end
 function s.extrafil(e,tp,eg,ep,ev,re,r,rp,chk)
 	return Duel.GetMatchingGroup(s.mfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,nil,e)

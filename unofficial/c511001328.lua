@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,tid)
-	return c:GetTurnID()==tid and c:IsType(TYPE_MONSTER) and not c:IsReason(REASON_RETURN)
+	return c:GetTurnID()==tid and c:IsMonster() and not c:IsReason(REASON_RETURN)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tid=Duel.GetTurnCount()

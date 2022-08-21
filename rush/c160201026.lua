@@ -17,7 +17,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==1-tp
 end
 function s.filter(c)
-	return c:IsType(TYPE_NORMAL) and c:IsType(TYPE_MONSTER) and c:IsRace(RACE_FIEND) and c:IsLevel(1) and c:IsAbleToDeckOrExtraAsCost()
+	return c:IsType(TYPE_NORMAL) and c:IsMonster() and c:IsRace(RACE_FIEND) and c:IsLevel(1) and c:IsAbleToDeckOrExtraAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil) end

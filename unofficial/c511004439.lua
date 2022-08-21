@@ -72,7 +72,7 @@ function s.operation(e,tp,eg,ev,ep,re,r,rp)
 	end
 end
 function s.spfilter(c,e,tp)
-	return c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SPECIAL,tp,true,false) and c:IsType(TYPE_MONSTER) and c:IsCubicSeed()
+	return c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SPECIAL,tp,true,false) and c:IsMonster() and c:IsCubicSeed()
 end
 function s.target0(e,tp,eg,ev,ep,re,r,rp,chk)
 	local c=e:GetHandler()

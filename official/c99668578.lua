@@ -22,7 +22,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x9c}
 function s.filter(c)
-	return c:IsSetCard(0x9c) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x9c) and c:IsMonster()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1)

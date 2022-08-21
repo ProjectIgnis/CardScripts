@@ -47,7 +47,7 @@ function s.tgcon2(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_DESTROY)
 end
 function s.tgfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAttribute(ATTRIBUTE_FIRE) and c:IsAbleToGrave()
+	return c:IsMonster() and c:IsAttribute(ATTRIBUTE_FIRE) and c:IsAbleToGrave()
 end
 function s.tgop2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)

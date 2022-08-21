@@ -17,11 +17,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,e,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsLevelBelow(4) and not c:IsForbidden()
+	return c:IsMonster() and c:IsLevelBelow(4) and not c:IsForbidden()
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp,c:GetLevel())
 end
 function s.spfilter(c,e,tp,lv)
-	return c:IsType(TYPE_MONSTER) and not c:IsForbidden() and c:IsLevelBelow(lv)
+	return c:IsMonster() and not c:IsForbidden() and c:IsLevelBelow(lv)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

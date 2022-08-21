@@ -25,7 +25,7 @@ end
 s.listed_series={0xaf,0xae}
 s.listed_names={id}
 function s.tgfilter1(c,tp)
-	return ((c:IsSetCard(0xaf) and c:IsType(TYPE_MONSTER) and not c:IsCode(id)) or c:IsSetCard(0xae))
+	return ((c:IsSetCard(0xaf) and c:IsMonster() and not c:IsCode(id)) or c:IsSetCard(0xae))
 		and Duel.IsExistingMatchingCard(s.tgfilter2,tp,LOCATION_DECK,0,1,nil,c:GetCode())
 end
 function s.tgfilter2(c,cd)
@@ -50,7 +50,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rtgfilter(c)
-	return c:IsFaceup() and ((c:IsSetCard(0xaf) and c:IsType(TYPE_MONSTER) and not c:IsCode(id)) or c:IsSetCard(0xae))
+	return c:IsFaceup() and ((c:IsSetCard(0xaf) and c:IsMonster() and not c:IsCode(id)) or c:IsSetCard(0xae))
 end
 function s.rtgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and s.rtgfilter(chkc) end

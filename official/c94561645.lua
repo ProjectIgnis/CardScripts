@@ -21,7 +21,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateAttack() and Duel.Draw(tp,1,REASON_EFFECT)~=0 then
 		local tc=Duel.GetOperatedGroup():GetFirst()
-		if tc:IsType(TYPE_MONSTER) and tc:IsSummonable(true,nil)
+		if tc:IsMonster() and tc:IsSummonable(true,nil)
 			and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 			Duel.Summon(tp,tc,true,nil)
 		end

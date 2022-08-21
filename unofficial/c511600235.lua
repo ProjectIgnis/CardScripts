@@ -35,7 +35,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.GetAttacker():IsControler(tp)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x103) and c:IsType(TYPE_MONSTER) and c:IsAbleToHandAsCost()
+	return c:IsFaceup() and c:IsSetCard(0x103) and c:IsMonster() and c:IsAbleToHandAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil) end

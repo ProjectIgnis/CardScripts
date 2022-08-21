@@ -29,7 +29,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x71}
 function s.thfilter(c)
-	return c:IsSetCard(0x71) and c:IsType(TYPE_MONSTER) and (c:IsFaceup() or not c:IsLocation(LOCATION_MZONE)) and c:IsAbleToHand()
+	return c:IsSetCard(0x71) and c:IsMonster() and (c:IsFaceup() or not c:IsLocation(LOCATION_MZONE)) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -81,7 +81,7 @@ function s.xyzfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x71) and c:IsType(TYPE_XYZ)
 end
 function s.matfilter(c)
-	return c:IsSetCard(0x71) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x71) and c:IsMonster()
 end
 function s.mattg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.xyzfilter(chkc) end

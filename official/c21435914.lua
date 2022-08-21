@@ -33,7 +33,7 @@ end
 function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
-	return bc:IsLocation(LOCATION_GRAVE) and bc:IsType(TYPE_MONSTER) and c:CanChainAttack(2,true) and c:IsStatus(STATUS_OPPO_BATTLE)
+	return bc:IsLocation(LOCATION_GRAVE) and bc:IsMonster() and c:CanChainAttack(2,true) and c:IsStatus(STATUS_OPPO_BATTLE)
 end
 function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

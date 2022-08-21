@@ -18,7 +18,7 @@ s.listed_series={0x70}
 
 function s.cfilter(c,tp)
 	return c:IsLocation(LOCATION_GRAVE) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
-		and c:IsSetCard(0x70) and c:IsType(TYPE_MONSTER)
+		and c:IsSetCard(0x70) and c:IsMonster()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

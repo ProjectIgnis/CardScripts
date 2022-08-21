@@ -37,7 +37,7 @@ end
 s.listed_names={id}
 s.listed_series={0xc1}
 function s.cfilter(c,tp)
-	return c:IsSetCard(0xc1) and c:IsType(TYPE_MONSTER) and (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(0xc1) and c:IsMonster() and (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsAbleToRemoveAsCost()
 		and Duel.IsExistingTarget(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c,tp,POS_FACEDOWN)
 end
 function s.cost2(e,tp,eg,ep,ev,re,r,rp,chk)

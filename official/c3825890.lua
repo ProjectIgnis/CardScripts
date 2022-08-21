@@ -27,7 +27,7 @@ function s.otfilter(c,tp)
 	return c:IsSetCard(0x2e) and (c:IsControler(tp) or c:IsFaceup())
 end
 function s.filter(c)
-	return c:IsSetCard(0x2e) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x2e) and c:IsMonster()
 end
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(s.filter,c:GetControler(),LOCATION_GRAVE,0,nil)*200

@@ -33,7 +33,7 @@ function s.recon(e,c)
 	return not c:IsRace(RACE_WARRIOR)
 end
 function s.filter(c)
-	return c:IsType(TYPE_MONSTER) and not c:IsRace(RACE_WARRIOR)
+	return c:IsMonster() and not c:IsRace(RACE_WARRIOR)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer() and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0

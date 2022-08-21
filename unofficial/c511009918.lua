@@ -47,7 +47,7 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x119) and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and c:IsSetCard(0x119) and c:IsAbleToGraveAsCost()
 end
 function s.spcost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spcfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end

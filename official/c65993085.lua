@@ -24,7 +24,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.costfilter(c,e,tp)
 	local lv=c:GetOriginalLevel()
-	return lv>1 and c:IsType(TYPE_MONSTER) and c:IsDiscardable()
+	return lv>1 and c:IsMonster() and c:IsDiscardable()
 		and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,lv)
 end
 function s.spfilter(c,e,tp,lv)

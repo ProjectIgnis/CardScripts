@@ -34,7 +34,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0xed}
 function s.tgfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xed) and c:IsDiscardable()
+	return c:IsMonster() and c:IsSetCard(0xed) and c:IsDiscardable()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_HAND,0,1,nil)

@@ -36,7 +36,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_SYNCHRO),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function s.thfilter(c)
-	return c:IsType(TYPE_SPELL) and c:IsType(TYPE_FIELD) and c:IsAbleToHand()
+	return c:IsSpell() and c:IsType(TYPE_FIELD) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end

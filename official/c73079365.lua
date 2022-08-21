@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,tp)
-	return c:IsType(TYPE_SPELL) and c:IsPreviousLocation(LOCATION_SZONE) and c:IsPreviousControler(tp)
+	return c:IsSpell() and c:IsPreviousLocation(LOCATION_SZONE) and c:IsPreviousControler(tp)
 		and (c:GetReason()&0x41)==0x41
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

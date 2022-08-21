@@ -28,7 +28,7 @@ end
 s.listed_names={63394872}
 s.listed_series={0x17e}
 function s.thfilter(c)
-	return c:IsType(TYPE_FIELD) and c:IsType(TYPE_SPELL) and c:IsSetCard(0x17e) and c:IsAbleToHand()
+	return c:IsType(TYPE_FIELD) and c:IsSpell() and c:IsSetCard(0x17e) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

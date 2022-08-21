@@ -18,7 +18,7 @@ function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
 		and e:GetHandler():GetReasonCard():IsRace(RACE_SPELLCASTER)
 end
 function s.filter(c)
-	return c:IsType(TYPE_SPELL) and c:IsAbleToDeck()
+	return c:IsSpell() and c:IsAbleToDeck()
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc) end

@@ -47,7 +47,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c)
-	return c:IsSetCard(0x128) and c:IsType(TYPE_SPELL) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(0x128) and c:IsSpell() and c:IsAbleToRemoveAsCost()
 		and c:CheckActivateEffect(false,true,false)~=nil and c:CheckActivateEffect(false,true,false):GetOperation()~=nil
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

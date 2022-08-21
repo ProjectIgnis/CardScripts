@@ -19,7 +19,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ConfirmDecktop(tp,1)
 	local g=Duel.GetDecktopGroup(tp,1)
 	local tc=g:GetFirst()
-	if tc:IsType(TYPE_SPELL) and tc:IsAbleToHand() then
+	if tc:IsSpell() and tc:IsAbleToHand() then
 		Duel.DisableShuffleCheck()
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ShuffleHand(tp)

@@ -72,7 +72,7 @@ function s.revop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ConfirmDecktop(1-tp,1)
 	local g=Duel.GetDecktopGroup(1-tp,1)
 	local tc=g:GetFirst()
-	if tc:IsType(TYPE_SPELL) then
+	if tc:IsSpell() then
 		if tc:IsAbleToHand() then
 			Duel.SendtoHand(tc,nil,REASON_EFFECT)
 			Duel.ConfirmCards(tp,tc)

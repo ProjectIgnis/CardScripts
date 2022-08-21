@@ -37,7 +37,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.copfilter(c)
 	return c:IsAbleToGraveAsCost() and aux.IsCodeListed(c,CARD_JACK_KNIGHT,CARD_KING_KNIGHT,CARD_QUEEN_KNIGHT) 
-		and c:IsType(TYPE_SPELL) and c:CheckActivateEffect(true,true,false)~=nil
+		and c:IsSpell() and c:CheckActivateEffect(true,true,false)~=nil
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.copfilter,tp,LOCATION_DECK,0,1,nil) end

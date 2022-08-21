@@ -45,11 +45,9 @@ end
 function s.rumcheck(e,tp,eg,ev,ep,re,r,rp)
 	if not re then return end
 	local rc=re:GetHandler()
-	if rc:IsSetCard(0x95) and rc:IsType(TYPE_SPELL) then
-		local ec=eg:GetFirst()
-		while ec do
+	if rc:IsSetCard(0x95) and rc:IsSpell() then
+		for ec in eg:Iter() do
 			ec:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
-			ec=eg:GetNext()
 		end
 	end
 end

@@ -43,7 +43,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 end
 --destroy spell
 function s.sfilter(c)
-	return c:IsFacedown() or c:IsType(TYPE_SPELL)
+	return c:IsFacedown() or c:IsSpell()
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()

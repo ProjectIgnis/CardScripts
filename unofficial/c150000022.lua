@@ -19,7 +19,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.filter(c)
-	return c:IsType(TYPE_ACTION) and c:IsType(TYPE_SPELL) and not c:IsType(TYPE_FIELD)
+	return c:IsType(TYPE_ACTION) and c:IsSpell() and not c:IsType(TYPE_FIELD)
 		and c:CheckActivateEffect(false,false,false)~=nil
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -48,7 +48,7 @@ function s.sumcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsPlayerCanSummon(tp) and Duel.IsPlayerCanAdditionalSummon(tp)
 end
 function s.rvlfilter(c)
-	return c:IsType(TYPE_SPELL) and c:IsType(TYPE_FIELD) and not c:IsPublic()
+	return c:IsSpell() and c:IsType(TYPE_FIELD) and not c:IsPublic()
 end
 function s.sumcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,1000) and Duel.GetFlagEffect(tp,id)==0

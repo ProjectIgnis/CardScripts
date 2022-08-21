@@ -35,7 +35,7 @@ function s.initial_effect(c)
 end
 s.listed_names={34767865}
 function s.cfilter(c,tp)
-	return c:IsType(TYPE_SPELL) and c:IsAbleToRemoveAsCost()
+	return c:IsSpell() and c:IsAbleToRemoveAsCost()
 end
 function s.thfilter(c,tp)
 	return c:IsCode(34767865) and c:IsAbleToHand()

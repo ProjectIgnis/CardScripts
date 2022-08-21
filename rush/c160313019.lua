@@ -21,7 +21,7 @@ function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsStatus(STATUS_SUMMON_TURN) and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==1
 end
 function s.filter(c)
-	return c:IsType(TYPE_SPELL) and c:IsAbleToDeckOrExtraAsCost()
+	return c:IsSpell() and c:IsAbleToDeckOrExtraAsCost()
 end
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,2,nil) end

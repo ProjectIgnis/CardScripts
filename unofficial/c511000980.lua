@@ -49,5 +49,5 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.aclimit(e,re,tp)
-	return re:GetHandler():IsType(TYPE_SPELL) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
+	return re:GetHandler():IsSpell() and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end

@@ -44,7 +44,7 @@ s.listed_series={0x180}
 
 	--Check for a non-Quick-Play "Mysterune" Spell
 function s.thfilter(c)
-	return c:IsSetCard(0x180) and not c:IsType(TYPE_QUICKPLAY) and c:IsType(TYPE_SPELL) and c:IsAbleToHand()
+	return c:IsSetCard(0x180) and not c:IsType(TYPE_QUICKPLAY) and c:IsSpell() and c:IsAbleToHand()
 end
 	--Activation legality
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

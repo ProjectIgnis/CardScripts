@@ -34,7 +34,7 @@ function s.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_MACHINE)
 end
 function s.tfilter1(c,tc)
-	return c:IsType(TYPE_SPELL) and c:IsHasCardTarget(tc)
+	return c:IsSpell() and c:IsHasCardTarget(tc)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -70,7 +70,7 @@ function s.discon(e)
 end
 function s.distg(e,c)
 	local ec=e:GetHandler():GetFirstCardTarget()
-	return c:GetFieldID()<=e:GetLabel() and ec and c:IsHasCardTarget(ec) and c:IsType(TYPE_SPELL)
+	return c:GetFieldID()<=e:GetLabel() and ec and c:IsHasCardTarget(ec) and c:IsSpell()
 end
 function s.discon2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetFirstCardTarget()

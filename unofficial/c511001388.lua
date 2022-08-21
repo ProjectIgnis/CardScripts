@@ -54,7 +54,7 @@ end
 function s.cfilter(c,tp)
 	local tpe=0
 	if c:IsType(TYPE_MONSTER) then tpe=tpe|TYPE_MONSTER end
-	if c:IsType(TYPE_SPELL) then tpe=tpe|TYPE_SPELL end
+	if c:IsSpell() then tpe=tpe|TYPE_SPELL end
 	if c:IsType(TYPE_TRAP) then tpe=tpe|TYPE_TRAP end
 	return c:IsAbleToGraveAsCost() and Duel.IsExistingTarget(s.banfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil,tpe)
 end
@@ -68,7 +68,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(tc,REASON_COST)
 	local tpe=0
 	if tc:IsType(TYPE_MONSTER) then tpe=tpe|TYPE_MONSTER end
-	if tc:IsType(TYPE_SPELL) then tpe=tpe|TYPE_SPELL end
+	if tc:IsSpell() then tpe=tpe|TYPE_SPELL end
 	if tc:IsType(TYPE_TRAP) then tpe=tpe|TYPE_TRAP end
 	e:SetLabel(tpe)
 end

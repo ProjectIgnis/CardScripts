@@ -26,7 +26,7 @@ function s.desfilter(c,tp)
 end
 function s.thfilter(c,oc)
 	if not c:IsAbleToHand() then return false end
-	if (c:IsType(TYPE_SPELL) and c:IsSetCard(0x10e)) then return true end
+	if (c:IsSpell() and c:IsSetCard(0x10e)) then return true end
 	return c:IsType(TYPE_MONSTER) and oc:HasLevel() and c:GetOriginalLevel()==oc:GetOriginalLevel()
 		and (c:IsRace(RACE_WINGEDBEAST) or c:IsRace(RACE_REPTILE) or c:IsRace(RACE_SEASERPENT))
 end

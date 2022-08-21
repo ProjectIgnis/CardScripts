@@ -25,7 +25,7 @@ function s.filter2(c,e)
 	return c:IsType(TYPE_TRAP) and c:IsAbleToHand() and c:IsCanBeEffectTarget(e)
 end
 function s.filter3(c,e)
-	return c:IsType(TYPE_SPELL) and c:GetCode()~=id and c:IsAbleToHand() and c:IsCanBeEffectTarget(e)
+	return c:IsSpell() and c:GetCode()~=id and c:IsAbleToHand() and c:IsCanBeEffectTarget(e)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

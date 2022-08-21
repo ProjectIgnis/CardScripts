@@ -47,7 +47,7 @@ function s.aclimit(e,re,tp)
 		and c:GetControler()==Duel.GetTurnPlayer()
 end
 function s.cfilter(c)
-	return c:IsType(TYPE_SPELL) and c:IsDiscardable()
+	return c:IsSpell() and c:IsDiscardable()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetLabelObject():GetLabel()~=1 

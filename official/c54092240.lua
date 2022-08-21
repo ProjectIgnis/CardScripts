@@ -71,7 +71,7 @@ function s.splimit(e,c)
 	return not (c:IsCode(TOKEN_BRAVE) or (aux.IsCodeListed(c,TOKEN_BRAVE) and c:IsMonster()))
 end
 function s.thfilter(c)
-	return c:IsType(TYPE_SPELL) and c:GetType()~=TYPE_SPELL and aux.IsCodeListed(c,TOKEN_BRAVE) and c:IsAbleToHand()
+	return c:IsSpell() and c:GetType()~=TYPE_SPELL and aux.IsCodeListed(c,TOKEN_BRAVE) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

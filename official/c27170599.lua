@@ -17,7 +17,7 @@ end
 s.listed_series={0x8d}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x8d) and ((c:IsType(TYPE_LINK) and c:IsMonster())
-		or (c:IsType(TYPE_FIELD) and c:IsType(TYPE_SPELL)))
+		or (c:IsType(TYPE_FIELD) and c:IsSpell()))
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil)

@@ -81,7 +81,7 @@ end
 
 --copy stats
 function card.cpfilter(c)
-	return c:IsFaceup() and (c:GetOriginalType() & (TYPE_MONSTER)) == TYPE_MONSTER and c:IsType(TYPE_SPELL) and
+	return c:IsFaceup() and (c:GetOriginalType() & (TYPE_MONSTER)) == TYPE_MONSTER and c:IsSpell() and
 		c:IsType(TYPE_CONTINUOUS) and c:GetOriginalType() & (TYPE_XYZ | TYPE_LINK) == 0
 end
 

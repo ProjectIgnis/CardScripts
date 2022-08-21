@@ -46,7 +46,7 @@ function s.thfilter(c,code)
 	return c:IsCode(code) and c:IsAbleToHand()
 end
 function s.filter(c,e,tp)
-	return c:IsFaceup() and c:IsType(TYPE_SPELL) and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,c:GetCode())
+	return c:IsFaceup() and c:IsSpell() and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,c:GetCode())
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end

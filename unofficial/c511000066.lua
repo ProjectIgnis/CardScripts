@@ -15,7 +15,7 @@ function s.filter(c)
 	return c:IsFacedown() and c:IsDestructable()
 end
 function s.costfilter1(c)
-	return c:IsType(TYPE_SPELL) and not c:IsPublic()
+	return c:IsSpell() and not c:IsPublic()
 end
 function s.costfilter2(c)
 	return c:IsType(TYPE_TRAP) and not c:IsPublic()
@@ -34,7 +34,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and tc:IsFacedown() then
 		Duel.ConfirmCards(tp,tc)
-		if tc:IsType(TYPE_SPELL) then 
+		if tc:IsSpell() then 
 			if Duel.IsExistingMatchingCard(s.costfilter1,tp,LOCATION_HAND,0,1,nil) then
 				local g=Duel.SelectMatchingCard(tp,s.costfilter1,tp,LOCATION_HAND,0,1,1,nil)
 				Duel.ConfirmCards(1-tp,g)

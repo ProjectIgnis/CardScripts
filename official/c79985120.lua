@@ -31,7 +31,7 @@ end
 s.listed_series={0x95,0xba}
 s.listed_names={81927732}
 function s.cfilter(c)
-	return c:IsSetCard(0x95) and c:IsType(TYPE_SPELL) and c:IsDiscardable()
+	return c:IsSetCard(0x95) and c:IsSpell() and c:IsDiscardable()
 end
 function s.ovfilter(c,tp,xyzc)
 	return c:IsFaceup() and c:IsSetCard(0xba,xyzc,SUMMON_TYPE_XYZ,tp) and c:IsType(TYPE_XYZ,xyzc,SUMMON_TYPE_XYZ,tp) and c:IsRankBelow(5)

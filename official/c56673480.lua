@@ -89,7 +89,7 @@ function s.pubtg(e,c)
 	return e:GetLabelObject():IsContains(c) and c:GetFlagEffect(id+1)~=0
 end
 function s.sfilter(c,pg)
-	return c:IsPublic() and pg:IsContains(c) and c:GetFlagEffect(id+1)>0 and c:IsType(TYPE_SPELL)
+	return c:IsPublic() and pg:IsContains(c) and c:GetFlagEffect(id+1)>0 and c:IsSpell()
 end
 function s.scon1(e)
 	local tp=e:GetHandlerPlayer()

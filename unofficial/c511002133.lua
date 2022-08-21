@@ -28,7 +28,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(p,d,REASON_EFFECT)
 	local tc=Duel.GetOperatedGroup():GetFirst()
 	Duel.ConfirmCards(1-p,tc)
-	if tc:IsType(TYPE_SPELL) and not c:IsType(TYPE_QUICKPLAY) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+	if tc:IsSpell() and not c:IsType(TYPE_QUICKPLAY) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetCode(EFFECT_ADD_TYPE)
 		e1:SetType(EFFECT_TYPE_SINGLE)

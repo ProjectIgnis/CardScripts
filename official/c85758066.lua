@@ -30,7 +30,7 @@ function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return at:IsControler(1-tp)
 end
 function s.setfilter(c,ft)
-	return c:IsType(TYPE_SPELL) and c:IsSSetable(true) and (c:IsType(TYPE_FIELD) or ft>0)
+	return c:IsSpell() and c:IsSSetable(true) and (c:IsType(TYPE_FIELD) or ft>0)
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)

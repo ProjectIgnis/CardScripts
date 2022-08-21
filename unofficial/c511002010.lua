@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.damfil(c,tp)
-	return c:IsControler(tp) and c:IsAbleToGrave() and c:IsType(TYPE_SPELL)
+	return c:IsControler(tp) and c:IsAbleToGrave() and c:IsSpell()
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(s.damfil,1,nil,tp) end

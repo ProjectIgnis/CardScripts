@@ -28,7 +28,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x149}
 function s.filter(c)
-	return c:IsType(TYPE_SPELL) and c:IsType(TYPE_EQUIP) and c:IsAbleToRemove()
+	return c:IsSpell() and c:IsType(TYPE_EQUIP) and c:IsAbleToRemove()
 end
 function s.rmvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil) end

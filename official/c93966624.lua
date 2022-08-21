@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.rmfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_SPELL) and c:IsAbleToRemove()
+	return c:IsFaceup() and c:IsSpell() and c:IsAbleToRemove()
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

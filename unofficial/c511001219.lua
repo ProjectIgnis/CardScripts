@@ -40,7 +40,7 @@ function s.initial_effect(c)
 end
 s.listed_names={511001218}
 function s.rmtarget(e,c)
-	if not c:IsLocation(0x80) and not c:IsType(TYPE_SPELL+TYPE_TRAP) then
+	if not c:IsLocation(0x80) and not c:IsSpellTrap() then
 		if c:GetOwner()==e:GetHandler():GetOwner() then
 			c:RegisterFlagEffect(id,RESET_EVENT+0x1760000,0,0)
 		end

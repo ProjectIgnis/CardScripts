@@ -39,7 +39,7 @@ function s.distg(e,c)
 	local ec=e:GetHandler()
 	if c==ec or c:GetCardTargetCount()==0 then return false end
 	local eq=ec:GetEquipTarget()
-	return eq and (c:IsHasCardTarget(eq) or c:GetCardTarget():IsExists(s.eqfilter,1,nil,eq,c)) and c:IsType(TYPE_SPELL)
+	return eq and (c:IsHasCardTarget(eq) or c:GetCardTarget():IsExists(s.eqfilter,1,nil,eq,c)) and c:IsSpell()
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler()

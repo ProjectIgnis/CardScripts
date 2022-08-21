@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.distg(e,c)
-	return c:IsType(TYPE_SPELL) and c:GetCardTarget():IsContains(e:GetHandler())
+	return c:IsSpell() and c:GetCardTarget():IsContains(e:GetHandler())
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	if not re:IsActiveType(TYPE_SPELL) then return end

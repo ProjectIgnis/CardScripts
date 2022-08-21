@@ -27,7 +27,7 @@ function s.filter(c,e,tp,eg,ep,ev,re,r,rp)
 	if op and (not tg or tg(e,tp,eg,ep,ev,re,r,rp,0)) then
 		check=true
 	end
-	return c:IsType(TYPE_SPELL) and c:IsAbleToRemove() and te:GetCode()==EVENT_FREE_CHAIN
+	return c:IsSpell() and c:IsAbleToRemove() and te:GetCode()==EVENT_FREE_CHAIN
 		and Duel.IsExistingTarget(s.filter2,tp,LOCATION_GRAVE,0,1,c,c:GetCode(),check)
 end
 function s.filter2(c,code,check,e,tp,eg,ep,ev,re,r,rp)
@@ -35,7 +35,7 @@ function s.filter2(c,code,check,e,tp,eg,ep,ev,re,r,rp)
 	if not te then return false end
 	local tg=te:GetTarget()
 	local op=te:GetOperation()
-	return c:IsCode(code) and c:IsType(TYPE_SPELL) and c:IsAbleToRemove()
+	return c:IsCode(code) and c:IsSpell() and c:IsAbleToRemove()
 		and (check or op and (not tg or tg(e,tp,eg,ep,ev,re,r,rp,0)))
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

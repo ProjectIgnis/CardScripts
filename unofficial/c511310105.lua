@@ -84,7 +84,7 @@ function s.faop(e,tp,eg,ep,ev,re,r,rp)
 	local te=tc:GetActivateEffect()
 	local tep=tc:GetControler()
 	if te and te:GetCode()==EVENT_FREE_CHAIN and te:IsActivatable(tep)
-		and (not tc:IsType(TYPE_SPELL) or tc:IsType(TYPE_QUICKPLAY)) then
+		and (not tc:IsSpell() or tc:IsType(TYPE_QUICKPLAY)) then
 		Duel.Activate(te)
 	end
 	e:Reset()

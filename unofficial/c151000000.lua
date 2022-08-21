@@ -8,7 +8,7 @@ if not ActionDuel then
 	end
 
 	function Card.IsActionSpell(c)
-		return c:IsType(TYPE_ACTION) and c:IsType(TYPE_SPELL) and not c.af
+		return c:IsType(TYPE_ACTION) and c:IsSpell() and not c.af
 	end
 
 	function Card.IsActionTrap(c)

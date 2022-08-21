@@ -32,7 +32,7 @@ function s.cfilter(c,tp)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsControler(1-tp)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return re and eg:IsExists(s.cfilter,1,nil,tp) and re:GetHandler():IsType(TYPE_SPELL) and re:GetHandler():IsSetCard(0x95)
+	return re and eg:IsExists(s.cfilter,1,nil,tp) and re:GetHandler():IsSpell() and re:GetHandler():IsSetCard(0x95)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

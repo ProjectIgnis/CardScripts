@@ -42,6 +42,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local lg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsLinkMonster),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	if #lg==0 then return end
 	local ct=lg:GetClassCount(Card.GetOriginalAttribute)
 	if ct==1 then
 		local g1=lg:Filter(Card.IsControler,nil,tp)>0

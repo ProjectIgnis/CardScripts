@@ -52,7 +52,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 	local d=Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)
-	local g=Duel.GetMatchingGroup(aux.disfilter3,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
+	local g=Duel.GetMatchingGroup(Card.IsNegatable,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	if Duel.Draw(p,d,REASON_EFFECT)~=0 and #g>0 then
 		Duel.BreakEffect()
 		local sg=g:Select(tp,1,1,nil)

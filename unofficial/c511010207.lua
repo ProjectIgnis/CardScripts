@@ -87,7 +87,7 @@ function s.retfilter(c)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local dg=Duel.GetMatchingGroup(aux.disfilter3,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,c)
+	local dg=Duel.GetMatchingGroup(Card.IsNegatable,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,c)
 	local nochk=false
 	for tc in aux.Next(dg) do
 		if not nochk then nochk=true end

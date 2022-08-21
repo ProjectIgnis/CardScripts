@@ -66,7 +66,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(0)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
 		tg:RegisterEffect(e1)
-		local g=Duel.GetMatchingGroup(aux.disfilter3,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,c)
+		local g=Duel.GetMatchingGroup(Card.IsNegatable,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,c)
 		local tc=g:GetFirst()
 		while tc do
 			local e4=Effect.CreateEffect(c)

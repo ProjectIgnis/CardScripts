@@ -30,8 +30,8 @@ function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local lg=e:GetHandler():GetLinkedGroup():Filter(Card.IsType,nil,TYPE_LINK)
-	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and aux.disfilter3(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(aux.disfilter3,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) and #lg>0 end
+	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and chkc:IsNegatable() end
+	if chk==0 then return Duel.IsExistingTarget(Card.IsNegatable,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) and #lg>0 end
 	local lgc=lg:GetFirst()
 	local maxlink=lgc:GetLink()
 	while lgc do
@@ -39,7 +39,7 @@ function s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		lgc=lg:GetNext()
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local g=Duel.SelectTarget(tp,aux.disfilter3,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,maxlink,nil)
+	local g=Duel.SelectTarget(tp,Card.IsNegatable,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,maxlink,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,maxlink,0,0)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)

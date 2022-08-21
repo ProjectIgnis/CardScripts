@@ -902,7 +902,7 @@ function Card.IsNegatableSpellTrap(c)
 	return c:IsFaceup() and not c:IsDisabled() and c:IsType(TYPE_SPELL+TYPE_TRAP)
 end
 --"Can be negated" check for cards
-function Auxiliary.disfilter3(c)
+function CardIsNegatable(c)
 	return aux.disfilter1(c) or c:IsNegatableSpellTrap()
 end
 --condition of EVENT_BATTLE_DESTROYING

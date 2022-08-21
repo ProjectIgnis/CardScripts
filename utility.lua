@@ -296,7 +296,6 @@ function Card.GetToBeLinkedZone(tc,c,tp,clink,emz)
 	return zone
 end
 
-
 function Card.GetScale(c)
 	if not c:IsType(TYPE_PENDULUM) then return 0 end
 	local sc=0
@@ -322,6 +321,155 @@ end
 function Card.CanSummonOrSet(...)
 	return Card.IsSummonable(...) or Card.IsMSetable(...)
 end
+
+function Card.IsBattleDestroyed(c)
+	return c:IsStatus(STATUS_BATTLE_DESTROYED) and c:IsReason(REASON_BATTLE)
+end
+
+function Card.IsInMainMZone(c,tp)
+	return c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5 and (not tp or c:IsControler(tp))
+end
+
+function Card.IsInExtraMZone(c,tp)
+	return c:IsLocation(LOCATION_MZONE) and c:GetSequence()>4 and (not tp or c:IsControler(tp))
+end
+
+function Card.IsNonEffectMonster(c)
+	return c:IsType(TYPE_MONSTER) and not c:IsType(TYPE_EFFECT)
+end
+
+function Card.IsMonster(c)
+	return c:IsType(TYPE_MONSTER)
+end
+
+function Card.IsSpell(c)
+	return c:IsType(TYPE_SPELL)
+end
+
+function Card.IsTrap(c)
+	return c:IsType(TYPE_TRAP)
+end
+
+function Card.IsSpellTrap(c)
+	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+end
+
+function Card.AnnounceAnotherAttribute(c,tp)
+	local att=c:GetAttribute()
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)
+	return Duel.AnnounceAttribute(tp,1,att&(att-1)==0 and ~att or ATTRIBUTE_ALL)
+end
+
+function Card.IsDifferentAttribute(c,att)
+	local _att=c:GetAttribute()
+	return (_att&att)~=_att
+end
+
+function Card.AnnounceAnotherRace(c,tp)
+	local race=c:GetRace()
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RACE)
+	return Duel.AnnounceRace(tp,1,race&(race-1)==0 and ~race or RACE_ALL)
+end
+
+function Card.IsDifferentRace(c,race)
+	local _race=c:GetRace()
+	return (_race&race)~=_race
+end
+
+function Card.IsRitualMonster(c)
+	local tp=TYPE_RITUAL+TYPE_MONSTER
+	return c:GetType() & tp == tp
+end
+
+function Card.IsRitualSpell(c)
+	local tp=TYPE_RITUAL+TYPE_SPELL
+	return c:GetType() & tp == tp
+end
+
+function Card.IsLinkMonster(c)
+	local tp=TYPE_LINK+TYPE_MONSTER
+	return c:GetType() & tp == tp
+end
+
+function Card.IsLinkSpell(c)
+	local tp=TYPE_LINK+TYPE_SPELL
+	return c:GetType() & tp == tp
+end
+
+function Card.IsOriginalType(c,val)
+	return c:GetOriginalType() & val > 0
+end
+
+function Card.IsOriginalAttribute(c,val)
+	return c:GetOriginalAttribute() & val > 0
+end
+
+function Card.IsOriginalRace(c,val)
+	return c:GetOriginalRace() & val > 0
+end
+
+function Card.IsSummonPlayer(c,tp)
+	return c:GetSummonPlayer()==tp
+end
+
+function Card.IsPreviousControler(c,tp)
+	return c:GetPreviousControler()==tp
+end
+
+function Card.IsSummonLocation(c,loc)
+	return c:GetSummonLocation() & loc~=0
+end
+
+--Checks whether the card is located at any of the sequences passed as arguments.
+function Card.IsSequence(c,...)
+	local arg={...}
+	local seq=c:GetSequence()
+	for _,v in ipairs(arg) do
+		if seq==v then return true end
+	end
+	return false
+end
+
+--Checks wheter a card has a level or not
+--For Links: false. For Xyzs: false, except if affected by  "EFFECT_RANK_LEVEL..." effects
+--For Dark Synchros: true, because they have a negative level. For level 0: true, because 0 is a value
+function Card.HasLevel(c)
+	if c:IsType(TYPE_MONSTER) then
+		return c:GetType()&TYPE_LINK~=TYPE_LINK
+			and (c:GetType()&TYPE_XYZ~=TYPE_XYZ and not (c:IsHasEffect(EFFECT_RANK_LEVEL) or c:IsHasEffect(EFFECT_RANK_LEVEL_S)))
+			and not c:IsStatus(STATUS_NO_LEVEL)
+	elseif c:IsOriginalType(TYPE_MONSTER) then
+		return not (c:IsOriginalType(TYPE_XYZ+TYPE_LINK) or c:IsStatus(STATUS_NO_LEVEL))
+	end
+	return false
+end
+
+function Card.IsOriginalCode(c,...)
+	local args={...}
+	if #args==0 then
+		Debug.Message("Card.IsOriginalCode requires at least 2 params")
+		return false
+	end
+	for _,cd in ipairs(args) do
+		if c:GetOriginalCode()==cd then return true end
+	end
+	return false
+end
+
+function Card.IsOriginalCodeRule(c,...)
+	local args={...}
+	if #args==0 then
+		Debug.Message("Card.IsOriginalCodeRule requires at least 2 params")
+		return false
+	end
+	local c1,c2=c:GetOriginalCodeRule()
+	for _,cd in ipairs(args) do
+		if c1==cd or c2==cd then return true end
+	end
+	return false
+end
+
+
 
 function Card.GetMetatable(c,currentCode)
 	if currentCode then return _G["c" .. c:GetCode()] end
@@ -1041,9 +1189,26 @@ function Auxiliary.ComposeNumberDigitByDigit(tp,min,max)
 	return number
 end
 
+function Group.GetLinkedZone(g,tp)
+	return g:GetBitwiseOr(Card.GetLinkedZone,tp)
+end
+
 function Group.GetToBeLinkedZone(g,c,tp,clink,emz)
 	return g:GetBitwiseOr(Card.GetToBeLinkedZone,c,tp,clink,emz)
 end
+
+function Auxiliary.AnnounceAnotherAttribute(g,tp)
+	local att=g:GetBitwiseOr(Card.GetAttribute)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)
+	return Duel.AnnounceAttribute(tp,1,att&(att-1)==0 and ~att or ATTRIBUTE_ALL)
+end
+
+function Auxiliary.AnnounceAnotherRace(g,tp)
+	local race=g:GetBitwiseOr(Card.GetRace)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RACE)
+	return Duel.AnnounceRace(tp,1,race&(race-1)==0 and ~race or RACE_ALL)
+end
+
 function Auxiliary.ResetEffects(g,eff)
 	for c in aux.Next(g) do
 		local effs={c:GetCardEffect(eff)}
@@ -1263,6 +1428,132 @@ function Auxiliary.seqmovop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or c:IsControler(1-tp) then return end
 	c:MoveAdjacent()
+end
+
+
+function Duel.MoveToDeckTop(obj)
+	local typ=type(obj)
+	if typ=="Group" then
+		for c in aux.Next(obj:Filter(Card.IsLocation,nil,LOCATION_DECK)) do
+			Duel.MoveSequence(c,SEQ_DECKTOP)
+		end
+	elseif typ=="Card" then
+		if obj:IsLocation(LOCATION_DECK) then
+			Duel.MoveSequence(obj,SEQ_DECKTOP)
+		end
+	else
+		error("Parameter 1 should be \"Card\" or \"Group\"",2)
+	end
+end
+
+function Duel.MoveToDeckBottom(obj,tp)
+	local typ=type(obj)
+	if typ=="number" then
+		if type(tp)~="number" then
+			error("Parameter 2 should be \"number\"",2)
+		end
+		for i=1,obj do
+			local mg=Duel.GetDecktopGroup(tp,1)
+			Duel.MoveSequence(mg:GetFirst(),SEQ_DECKBOTTOM)
+		end
+	elseif typ=="Group" then
+		for c in aux.Next(obj:Filter(Card.IsLocation,nil,LOCATION_DECK)) do
+			Duel.MoveSequence(c,SEQ_DECKBOTTOM)
+		end
+	elseif typ=="Card" then
+		if obj:IsLocation(LOCATION_DECK) then
+			Duel.MoveSequence(obj,SEQ_DECKBOTTOM)
+		end
+	else
+		error("Parameter 1 should be \"Card\" or \"Group\" or \"number\"",2)
+	end
+end
+
+function Duel.GetTargetCards(e)
+	return Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+end
+
+--for zone checking (zone is the zone, tp is referencial player)
+function Auxiliary.IsZone(c,zone,tp)
+	local rzone = c:IsControler(tp) and (1 <<c:GetSequence()) or (1 << (16+c:GetSequence()))
+	if c:IsSequence(5,6) then
+		rzone = rzone | (c:IsControler(tp) and (1 << (16 + 11 - c:GetSequence())) or (1 << (11 - c:GetSequence())))
+	end
+	return (rzone & zone) > 0
+end
+
+--Helpers to print hints for attribute-related cards such as Cynet Codec
+function Auxiliary.BitSplit(v)
+	local res={}
+	local i=0
+	while 2^i<=v do
+		local p=2^i
+		if v & p~=0 then
+			table.insert(res,p)
+		end
+		i=i+1
+	end
+	return pairs(res)
+end
+
+function Auxiliary.GetAttributeStrings(v)
+	local t = {
+		[ATTRIBUTE_EARTH] = 1010,
+		[ATTRIBUTE_WATER] = 1011,
+		[ATTRIBUTE_FIRE] = 1012,
+		[ATTRIBUTE_WIND] = 1013,
+		[ATTRIBUTE_LIGHT] = 1014,
+		[ATTRIBUTE_DARK] = 1015,
+		[ATTRIBUTE_DIVINE] = 1016
+	}
+	local res={}
+	local ct=0
+	for _,att in Auxiliary.BitSplit(v) do
+		if t[att] then
+			table.insert(res,t[att])
+			ct=ct+1
+		end
+	end
+	return pairs(res)
+end
+
+function Auxiliary.GetRaceStrings(v)
+	local t = {
+		[RACE_WARRIOR] = 1020,
+		[RACE_SPELLCASTER] = 1021,
+		[RACE_FAIRY] = 1022,
+		[RACE_FIEND] = 1023,
+		[RACE_ZOMBIE] = 1024,
+		[RACE_MACHINE] = 1025,
+		[RACE_AQUA] = 1026,
+		[RACE_PYRO] = 1027,
+		[RACE_ROCK] = 1028,
+		[RACE_WINGEDBEAST] = 1029,
+		[RACE_PLANT] = 1030,
+		[RACE_INSECT] = 1031,
+		[RACE_THUNDER] = 1032,
+		[RACE_DRAGON] = 1033,
+		[RACE_BEAST] = 1034,
+		[RACE_BEASTWARRIOR] = 1035,
+		[RACE_DINOSAUR] = 1036,
+		[RACE_FISH] = 1037,
+		[RACE_SEASERPENT] = 1038,
+		[RACE_REPTILE] = 1039,
+		[RACE_PSYCHIC] = 1040,
+		[RACE_DIVINE] = 1041,
+		[RACE_CREATORGOD] = 1042,
+		[RACE_WYRM] = 1043,
+		[RACE_CYBERSE] = 1044
+	}
+	local res={}
+	local ct=0
+	for _,att in Auxiliary.BitSplit(v) do
+		if t[att] then
+			table.insert(res,t[att])
+			ct=ct+1
+		end
+	end
+	return pairs(res)
 end
 
 --Returns the zones, on the specified player's field, pointed by the specified number of Link markers. Includes Extra Monster Zones.

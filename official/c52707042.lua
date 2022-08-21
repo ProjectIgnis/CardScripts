@@ -48,7 +48,7 @@ function s.immval(e,re,rp)
 	return aux.tgoval(e,re,rp) and re:IsActiveType(TYPE_MONSTER)
 end
 function s.disfilter(c)
-	return c:IsFaceup() and (not c:IsAttack(0) or aux.disfilter1(c))
+	return c:IsFaceup() and (not c:IsAttack(0) or c:IsNegatableMonster())
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.disfilter(chkc) and chkc:IsControler(1-tp) end

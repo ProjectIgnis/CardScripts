@@ -83,7 +83,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.disfilter(c,tp)
 	return c:IsFaceup() and c:IsType(TYPE_PENDULUM)
-		and Duel.IsExistingMatchingCard(aux.disfilter1,tp,0,LOCATION_MZONE,1,c)
+		and Duel.IsExistingMatchingCard(Card.IsNegatableMonster,tp,0,LOCATION_MZONE,1,c)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not eg:IsContains(e:GetHandler())
@@ -93,7 +93,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,1-tp,aux.Stringid(id,2))
 	local pc=Duel.SelectMatchingCard(1-tp,s.disfilter,tp,0,LOCATION_MZONE,1,1,nil,tp):GetFirst()
 	if not pc then return end
-	local g=Duel.GetMatchingGroup(aux.disfilter1,tp,0,LOCATION_MZONE,pc)
+	local g=Duel.GetMatchingGroup(Card.IsNegatableMonster,tp,0,LOCATION_MZONE,pc)
 	local tc=g:GetFirst()
 	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(e:GetHandler())

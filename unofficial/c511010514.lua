@@ -52,12 +52,12 @@ end
 s.listed_series={0xaf}
 function s.pfilter(c,tp)
 	return c:IsFaceup() and c:IsType(TYPE_PENDULUM)
-		and Duel.IsExistingMatchingCard(aux.disfilter1,tp,0,LOCATION_MZONE,1,c)
+		and Duel.IsExistingMatchingCard(Card.IsNegatableMonster,tp,0,LOCATION_MZONE,1,c)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not eg:IsContains(e:GetHandler())
 		and Duel.IsExistingMatchingCard(s.pfilter,tp,0,LOCATION_MZONE,1,nil,tp) end
-	local g=Duel.GetMatchingGroup(aux.disfilter1,tp,0,LOCATION_MZONE,pc)
+	local g=Duel.GetMatchingGroup(Card.IsNegatableMonster,tp,0,LOCATION_MZONE,pc)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,#g-1,0,0)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
@@ -68,7 +68,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.HintSelection(pg)
 	local c=e:GetHandler()
 	local flag=(id+c:GetFieldID()+e:GetFieldID())*2
-	local g=Duel.GetMatchingGroup(aux.disfilter1,tp,0,LOCATION_MZONE,pc)
+	local g=Duel.GetMatchingGroup(Card.IsNegatableMonster,tp,0,LOCATION_MZONE,pc)
 	g:ForEach(function(tc)
 		tc:RegisterFlagEffect(flag,RESET_EVENT+RESETS_STANDARD,0,1)
 		--negate

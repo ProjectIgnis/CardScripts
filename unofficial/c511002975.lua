@@ -43,7 +43,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_GRAVE,0,nil)
 	if #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(12744567,0)) then
 		Duel.Overlay(c,sg)
-		local g=Duel.GetMatchingGroup(aux.disfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+		local g=Duel.GetMatchingGroup(Card.IsNegatableMonster,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 		local tc=g:GetFirst()
 		while tc do
 			local e1=Effect.CreateEffect(c)

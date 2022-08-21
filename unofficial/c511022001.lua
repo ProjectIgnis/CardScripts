@@ -23,14 +23,14 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if not sg then return false end
 	local dinlk=sg:GetFirst():GetLink()
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and rp==1-tp and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsLinkMonster()
-		and re:GetHandler():GetLink()>=dinlk and Duel.IsExistingMatchingCard(aux.disfilter1,tp,0,LOCATION_MZONE,1,nil)
+		and re:GetHandler():GetLink()>=dinlk and Duel.IsExistingMatchingCard(Card.IsNegatableMonster,tp,0,LOCATION_MZONE,1,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(aux.disfilter1,tp,0,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(Card.IsNegatableMonster,tp,0,LOCATION_MZONE,nil)
 	local tc=g:GetFirst()
 	if not tc then return end
 	local c=e:GetHandler()

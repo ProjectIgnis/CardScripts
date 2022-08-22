@@ -1062,6 +1062,14 @@ function Auxiliary.PuzzleOp(e,tp)
 	Duel.SetLP(0,0)
 end
 
+
+--Cost for cards with "You can tribute this card" (name might be changed)
+function Auxiliary.selfreleasecost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return e:GetHandler():IsReleasable() end
+	Duel.Release(e:GetHandler(),REASON_COST)
+end
+
+
 --Cost for effect "You can banish this card from your Graveyard"
 function Auxiliary.bfgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

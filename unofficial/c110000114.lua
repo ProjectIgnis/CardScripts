@@ -29,25 +29,18 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if g:FilterCount(Card.IsAbleToRemove,nil)~=10 then return end
 	Duel.DisableShuffleCheck()
 	Duel.ConfirmDecktop(tp,10)
-	--hardcode with tables due to groups sorting automatically, and without customization
 	local tg={}
 	for tc in aux.Next(g) do
 		if s.filter(tc,e,tp) then table.insert(tg,tc) end
 	end
-	--sort by sequence to ensure correct summoning as described by the text
-	local function sortbyseq(a,b)
-		return a:GetSequence()>b:GetSequence()
-	end
-	--sorting by function above
-	table.sort(tg,sortbyseq)
+	table.sort(tg,function(a,b) return a:GetSequence()>b:GetSequence() end)
 	local sg=Group.CreateGroup()
 	for _,tc in pairs(tg) do
+		if #sg==ft then break end
 		if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
 			sg:AddCard(tc)
 			g:RemoveCard(tc)
 		end
-		--stop checking to summon if there are no more zones
-		if #sg==ft then break end
 	end
 	Duel.SpecialSummonComplete()
 	Duel.Remove(g,POS_FACEUP,REASON_EFFECT)

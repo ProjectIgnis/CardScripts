@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetTargetRange(LOCATION_HAND,0)
-	e4:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_MONSTER))
+	e4:SetTarget(aux.TargetBoolFunction(Card.IsMonster))
 	e4:SetLabelObject(e3)
 	c:RegisterEffect(e4)
 end

@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_ADD_EXTRA_TRIBUTE)
 	e1:SetTargetRange(LOCATION_SZONE,0)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_TRAP))
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsTrap))
 	e1:SetValue(POS_FACEUP)
 	c:RegisterEffect(e1)
 	--When normal summoned, destroy all of opponent's spells/traps

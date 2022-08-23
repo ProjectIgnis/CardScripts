@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e4:SetCode(EFFECT_DISABLE)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetTargetRange(LOCATION_SZONE,LOCATION_SZONE)
-	e4:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_TRAP))
+	e4:SetTarget(aux.TargetBoolFunction(Card.IsTrap))
 	c:RegisterEffect(e4)
 	--disable effect
 	local e5=Effect.CreateEffect(c)
@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	e6:SetCode(EFFECT_DISABLE_TRAPMONSTER)
 	e6:SetRange(LOCATION_MZONE)
 	e6:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e6:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_TRAP))
+	e6:SetTarget(aux.TargetBoolFunction(Card.IsTrap))
 	c:RegisterEffect(e6)
 	--self destroy
 --[[

@@ -16,17 +16,14 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.con(e,tp)
-	return not Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.filter),tp,LOCATION_MZONE,0,1,e:GetHandler())
+	return not Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(Card.IsMonster),tp,LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ct=Duel.GetMatchingGroupCount(aux.FilterMaximumSideFunctionEx(s.filter),tp,0,LOCATION_MZONE,nil)
+	local ct=Duel.GetMatchingGroupCount(aux.FilterMaximumSideFunctionEx(Card.IsMonster),tp,0,LOCATION_MZONE,nil)
 	if chk==0 then return ct>0 and Duel.IsPlayerCanDiscardDeck(tp,ct) end
 	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,ct)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
-	local ct=Duel.GetMatchingGroupCount(aux.FilterMaximumSideFunctionEx(s.filter),tp,0,LOCATION_MZONE,nil)
+	local ct=Duel.GetMatchingGroupCount(aux.FilterMaximumSideFunctionEx(Card.IsMonster),tp,0,LOCATION_MZONE,nil)
 	Duel.DiscardDeck(tp,ct,REASON_EFFECT)
-end
-function s.filter(c)
-	return c:IsType(TYPE_MONSTER)
 end

@@ -64,7 +64,7 @@ function s.hspop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 function s.value(e,c)
-	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsType,TYPE_MONSTER),0,LOCATION_REMOVED,LOCATION_REMOVED,nil)*300
+	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsMonster),0,LOCATION_REMOVED,LOCATION_REMOVED,nil)*300
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_BATTLE) and e:GetHandler():GetTurnID()==Duel.GetTurnCount()

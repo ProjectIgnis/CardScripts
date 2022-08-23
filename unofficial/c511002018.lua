@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.eqtg)
 	e1:SetOperation(s.eqop)
 	c:RegisterEffect(e1)
-	aux.AddEREquipLimit(c,nil,aux.FilterBoolFunction(Card.IsType,TYPE_MONSTER),s.equipop,e1)
+	aux.AddEREquipLimit(c,nil,aux.FilterBoolFunction(Card.IsMonster),s.equipop,e1)
 end
 s.material_setcode={0xc3,0xa9}
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
@@ -33,7 +33,7 @@ end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and c:IsFaceup() and tc and tc:IsRelateToEffect(e) then
+	if c:IsRelateToEffect(e) and c:IsFaceup() and tc:IsRelateToEffect(e) then
 		s.equipop(c,e,tp,tc)
 	end
 end

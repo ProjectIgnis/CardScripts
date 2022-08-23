@@ -16,9 +16,6 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(1-tp,5) end
 end
-function s.filter(c)
-	return c:IsType(TYPE_MONSTER)
-end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) end
 end
@@ -29,7 +26,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.ConfirmDecktop(1-tp,5)
 	local g=Duel.GetDecktopGroup(1-tp,5)
-	local sg=g:Filter(s.filter,nil)
+	local sg=g:Filter(Card.IsMonster,nil)
 	if #sg>0 then
 		local atkval=#sg*100
 		local e1=Effect.CreateEffect(c)

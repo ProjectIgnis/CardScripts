@@ -83,7 +83,6 @@ local function setcodecondition(e)
 	end
 end
 
-
 function Card.IsMonster(c)
 	return c:IsType(TYPE_MONSTER)
 end

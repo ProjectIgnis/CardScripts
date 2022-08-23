@@ -78,7 +78,7 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)==0 then return end
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_ONFIELD)
-	local ct=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsType,TYPE_SPELL+TYPE_TRAP),tp,LOCATION_ONFIELD,0,nil):GetClassCount(Card.GetCode)
+	local ct=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSpellTrap),tp,LOCATION_ONFIELD,0,nil):GetClassCount(Card.GetCode)
 	if #g>0 and ct>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)

@@ -18,13 +18,10 @@ function s.initial_effect(c)
 	e2:SetCondition(s.handcon)
 	c:RegisterEffect(e2)
 end
-function s.cfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
-end
 function s.handcon(e)
 	local tp=e:GetHandlerPlayer()
-	return not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
-		and Duel.IsExistingMatchingCard(s.cfilter,tp,0,LOCATION_ONFIELD,2,nil)
+	return not Duel.IsExistingMatchingCard(Card.IsSpellTrap,tp,LOCATION_ONFIELD,0,1,nil)
+		and Duel.IsExistingMatchingCard(Card.IsSpellTrap,tp,0,LOCATION_ONFIELD,2,nil)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsSpellTrap()

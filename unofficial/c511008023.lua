@@ -61,5 +61,5 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if not g then return end
 	local g=target:GetFirst()
 	if g:IsFacedown() then Duel.ConfirmCards(tp,g) end
-	if g:IsType(TYPE_SPELL) then Duel.Destroy(g,REASON_EFFECT) end
+	if g:Card.IsSpell then Duel.Destroy(g,REASON_EFFECT) end
 end

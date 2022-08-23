@@ -20,7 +20,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			if td:IsMonster() then
 				label=TYPE_MONSTER
 				desc=70
-			elseif td:IsType(TYPE_SPELL) then
+			elseif td:Card.IsSpell then
 				label=TYPE_SPELL
 				desc=71
 			else

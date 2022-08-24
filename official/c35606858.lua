@@ -94,11 +94,12 @@ function s.dcop(e,tp,eg,ep,ev,re,r,rp)
 		if not tc then return end
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,tc)
-	elseif d==6 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+	elseif d==6 then
+		if Duel.GetLocationCount(tp,LOCATION_MZONE)==0 then return end
 		tc=s.mon_select(g,tp,Card.IsCanBeSpecialSummoned,HINTMSG_SPSUMMON,e,0,tp,false,false)
 		if not tc then return end
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
-	else
+	elseif d>1 and d<6 then
 		tc=s.mon_select(g,tp,Card.IsAbleToDeck,HINTMSG_TODECK)
 		if not tc then return end
 		Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)

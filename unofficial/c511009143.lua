@@ -1,5 +1,5 @@
---プロモーション
---Promotion
+--プロモーション (Manga)
+--Promotion (Manga)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,6 +12,8 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+--511009178 Bishop
+--511009179 Knight
 s.listed_names={77590412,15001619,511009178,511009179,89839552}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsCode,1,false,nil,nil,89839552) end

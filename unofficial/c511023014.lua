@@ -42,10 +42,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SUMMON_PROC)
 		e1:SetCondition(s.ntcon)
-		e1:SetReset(RESET_CHAIN)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
 		Duel.Summon(tp,tc,true,nil)
-		e1:Reset()
 	end
 end
 function s.ntcon(e,c,minc)

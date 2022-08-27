@@ -40,11 +40,12 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		and aux.SelectUnselectGroup(g,e,tp,2,2,s.spcheck,0) end
 	local tg=aux.SelectUnselectGroup(g,e,tp,2,2,s.spcheck,1,tp,HINTMSG_SPSUMMON)
 	Duel.SetTargetCard(tg)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,tg,2,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,tg,2,tp,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetTargetCards(e)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<#g or (#g>1 and Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)) then return end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<2 or Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
+	local g=Duel.GetTargetCards(e):Filter(Card.IsCanBeSpecialSummoned,nil,e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	if #g<2 then return end
 	local c=e:GetHandler()
 	local fid=c:GetFieldID()
 	for tc in g:Iter() do
@@ -59,6 +60,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
+		e2:SetValue(RESET_TURN_SET)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e2,true)
 		--Change its ATK/DEF to 0
@@ -72,7 +74,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e4:SetCode(EFFECT_SET_DEFENSE_FINAL)
 		tc:RegisterEffect(e4,true)
 	end
+	Duel.SpecialSummonComplete()
 	g:KeepAlive()
+	--Destroy them during the End Phase
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e5:SetCode(EVENT_PHASE+PHASE_END)
@@ -83,7 +87,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e5:SetCondition(s.descon)
 	e5:SetOperation(s.desop)
 	Duel.RegisterEffect(e5,tp)
-	Duel.SpecialSummonComplete()
 end
 function s.desfilter(c,fid)
 	return c:GetFlagEffectLabel(id)==fid

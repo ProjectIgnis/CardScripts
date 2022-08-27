@@ -1,5 +1,5 @@
 --地圧の爆発 
--- Geoatsu Explosion
+--Earth Pressure Explosion
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 s.listed_names={160004036,160004037}
 function s.filter(c,tp,re)
-	return c:GetReasonPlayer()==1-tp and c:IsPreviousControler(tp) and c:IsRace(RACE_PYRO) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_ATTACK)
+	return c:GetReasonPlayer()==1-tp and c:IsPreviousControler(tp) and c:GetPreviousRaceOnField()&RACE_PYRO>0 and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_ATTACK)
 		and ((c:IsReason(REASON_EFFECT) and re:IsActiveType(TYPE_TRAP)) or (c:IsReason(REASON_BATTLE) and Duel.GetAttacker():IsControler(1-tp)))
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

@@ -1,21 +1,20 @@
 --ドラゴンに乗るワイバーン
+--Alligator’s Sword Dragon
 local s,id=GetID()
 function s.initial_effect(c)
-	--fusion material
 	c:EnableReviveLimit()
+	--Fusion Material
 	Fusion.AddProcMix(c,true,true,88819587,64428736)
-	--direct attack
+	--Can attack directly
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_DIRECT_ATTACK)
 	e2:SetCondition(s.dircon)
 	c:RegisterEffect(e2)
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsAttribute(0xf8)
-end
 function s.dircon(e)
-	local tp=e:GetHandlerPlayer()
-	return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil)
-		and not Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil)
+	local ATTRIBUTE_EARTH_WATER_FIRE=ATTRIBUTE_EARTH|ATTRIBUTE_WATER|ATTRIBUTE_FIRE
+	local g=Duel.GetMatchingGroup(Card.IsFaceup,e:GetHandlerPlayer(),0,LOCATION_MZONE,nil)
+	local ct=#g
+	return ct>0 and g:FilterCount(Card.IsAttribute,nil,ATTRIBUTE_EARTH_WATER_FIRE)==ct
 end

@@ -1,9 +1,9 @@
--- ドラゴンに乗るワイバーン
+-- ドラゴンに乗るワイバーン (Rush)
 -- Alligator’s Sword Dragon (Rush)
 local s,id=GetID()
 function s.initial_effect(c)
-	--fusion material
 	c:EnableReviveLimit()
+	--Fusion Material
 	Fusion.AddProcMix(c,true,true,88819587,64428736)
 	--Can attack directly
 	local e1=Effect.CreateEffect(c)
@@ -12,24 +12,18 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.dircon)
-	e1:SetTarget(s.dirtg)
 	e1:SetOperation(s.dirop)
 	c:RegisterEffect(e1)
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsAttribute(0xf8)
-end
-function s.dircon(e)
-	local tp=e:GetHandlerPlayer()
-	return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil)
-		and not Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil)
-end
-function s.dirtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,1) end
+function s.dircon(e,tp,eg,ep,ev,re,r,rp)
+	local ATTRIBUTE_EARTH_WATER_FIRE=ATTRIBUTE_EARTH|ATTRIBUTE_WATER|ATTRIBUTE_FIRE
+	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
+	local ct=#g
+	return ct>0 and g:FilterCount(Card.IsAttribute,nil,ATTRIBUTE_EARTH_WATER_FIRE)==ct and Duel.IsAbleToEnterBP()
+		and not e:GetHandler():IsHasEffect(EFFECT_DIRECT_ATTACK)
 end
 function s.dirop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	--Effect
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
 		--Direct attack
 		local e1=Effect.CreateEffect(c)

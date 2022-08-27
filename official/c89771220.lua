@@ -51,8 +51,9 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	local g=Duel.GetMatchingGroup(s.rmfilter,tp,loc,0,nil)
 	if chk==0 then return aux.SelectUnselectGroup(g,e,tp,2,2,s.spcheck,0) end
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,2,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,2,tp,LOCATION_HAND+LOCATION_ONFIELD)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_DECK)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local loc=LOCATION_HAND | LOCATION_ONFIELD 

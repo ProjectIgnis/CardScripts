@@ -26,7 +26,7 @@ function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not (c:IsRelateToBattle() and c:IsFaceup()) then return false end
 	local bc=c:GetBattleTarget()
-	if not bc then return end
+	if not bc then return false end
 	local ct=bc:GetCounter(0x1109)
 	return ct>0 and c:IsCanAddCounter(0x1109,ct)
 end

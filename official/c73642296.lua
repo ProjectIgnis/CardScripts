@@ -2,7 +2,7 @@
 --Ghost Belle & Haunted Mansion
 local s,id=GetID()
 function s.initial_effect(c)
-	--negate
+	--Negate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_NEGATE)
@@ -16,7 +16,6 @@ function s.initial_effect(c)
 	e1:SetTarget(s.distg)
 	e1:SetOperation(s.disop)
 	c:RegisterEffect(e1)
-	if not GhostBelleTable then GhostBelleTable={} end
 end
 function s.check(ev,category)
 	local ex1,g1,gc1,dp1,loc1=Duel.GetOperationInfo(ev,category)

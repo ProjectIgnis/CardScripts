@@ -2,8 +2,9 @@
 --Ash Blossom & Joyous Spring
 local s,id=GetID()
 function s.initial_effect(c)
-	--negate
+	--Negate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DISABLE)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_CHAINING)
@@ -14,7 +15,6 @@ function s.initial_effect(c)
 	e1:SetTarget(s.distg)
 	e1:SetOperation(s.disop)
 	c:RegisterEffect(e1)
-	if not AshBlossomTable then AshBlossomTable={} end
 end
 function s.check(ev,re)
 	return function(category,checkloc)

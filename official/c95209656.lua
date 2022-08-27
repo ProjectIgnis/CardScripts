@@ -50,7 +50,7 @@ end
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	if g:GetSum(Card.GetOriginalLevel)<=2 then
-		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD&~(RESET_TOFIELD|RESET_LEAVE|RESET_TEMP_REMOVE),0,1)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD&~(RESET_TOFIELD|RESET_LEAVE|RESET_TEMP_REMOVE),EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,2))
 	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)

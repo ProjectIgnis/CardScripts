@@ -1,9 +1,9 @@
---バスター・ブレイダー
--- Buster Blader (rush)
+--バスター・ブレイダー (Rush)
+--Buster Blader (Rush)
 local s,id=GetID()
 function s.initial_effect(c)
 	Card.Alias(c,78193831)
-	--atkup
+	--Increase ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -13,8 +13,5 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.val(e,c)
-	return Duel.GetMatchingGroupCount(s.filter,c:GetControler(),0,LOCATION_GRAVE+LOCATION_MZONE,nil)*500
-end
-function s.filter(c)
-	return c:IsRace(RACE_DRAGON) and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())
+	return Duel.GetMatchingGroupCountRush(aux.FilterFaceupFunction(Card.IsRace,RACE_DRAGON),c:GetControler(),0,LOCATION_MZONE+LOCATION_GRAVE,nil)*500
 end

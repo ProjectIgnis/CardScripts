@@ -1,32 +1,21 @@
---D－HERO ダイヤモンドガイ
+--Ｄ－ＨＥＲＯ ダイヤモンドガイ
 --Destiny HERO - Diamond Dude
 local s,id=GetID()
 function s.initial_effect(c)
-	--
+	--Excavate the top card of your Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DECKDES)
 	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetCountLimit(1)
 	e1:SetRange(LOCATION_MZONE)
+	e1:SetCountLimit(1)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0 end
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,0,0)
-end
-function s.checktable(t, e, re)
-	local is = false
-	if t then
-		for i, e in pairs(t) do
-			if e == re then is = true end
-		end
-	end
-	if is then
-		table.insert(t, e)
-	end
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)==0 then return end
@@ -48,8 +37,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetTarget(s.spelltg)
 			e1:SetOperation(s.spellop)
 			tc:RegisterEffect(e1)
-			s.checktable(AshBlossomTable, e1, ae)
-			s.checktable(GhostBelleTable, e1, ae)
 		end
 	else
 		Duel.MoveToDeckBottom(tc)

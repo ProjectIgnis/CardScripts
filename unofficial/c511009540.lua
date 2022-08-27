@@ -1,4 +1,5 @@
---D/D Vice Typhon (anime)
+--ＤＤヴァイス・テュポーン (Anime)
+--D/D Vice Typhon (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--to grave
@@ -11,8 +12,9 @@ function s.initial_effect(c)
 end
 s.listed_series={0x10af}
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	local params = {aux.FilterBoolFunction(Card.IsSetCard,0x10af),aux.FALSE,s.fextra,Fusion.BanishMaterial,Fusion.ForcedHandler}
+	local params = {aux.FilterBoolFunction(Card.IsSetCard,0x10af),aux.FALSE,s.fextra,Fusion.BanishMaterial,Fusion.ForcedHandler,nil,nil,nil,nil,nil,nil,nil,nil,s.extratg}
 	local c=e:GetHandler()
+	--Fusion Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
@@ -22,12 +24,14 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetOperation(Fusion.SummonEffOP(table.unpack(params)))
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	c:RegisterEffect(e1)
-	if not GhostBelleTable then GhostBelleTable={} end
-	table.insert(GhostBelleTable,e1)
 end
 function s.fextra(e,tp,mg)
 	if not Duel.IsPlayerAffectedByEffect(tp,69832741) then
 		return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToRemove),tp,LOCATION_GRAVE,0,nil)
 	end
 	return nil
+end
+function s.extratg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,e:GetHandler(),1,tp,LOCATION_GRAVE)
 end

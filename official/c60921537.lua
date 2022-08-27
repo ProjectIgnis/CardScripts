@@ -1,5 +1,5 @@
 -- 凶導の葬列
--- Dogmatikabre
+-- Dogmatikamacabre
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -7,16 +7,14 @@ function s.initial_effect(c)
 	local e1=Ritual.AddProcGreater({
 		handler=c,
 		filter=aux.FilterBoolFunction(Card.IsSetCard,0x146),
-		location=LOCATION_HAND+LOCATION_GRAVE,
+		location=LOCATION_HAND|LOCATION_GRAVE,
 		extrafil=s.extramat,
+		extratg=s.extratg,
 		stage2=s.stage2
 	})
 	e1:SetCategory(e1:GetCategory()+CATEGORY_TOGRAVE)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	c:RegisterEffect(e1)
-	-- Negatable by "Ghost Belle & Haunted Mansion"
-	if not GhostBelleTable then GhostBelleTable={} end
-	table.insert(GhostBelleTable,e1)
 end
 s.listed_names={40352445,48654323}
 s.listed_series={0x146}
@@ -26,6 +24,11 @@ end
 function s.extramat(e,tp,eg,ep,ev,re,r,rp,chk)
 	return Duel.IsPlayerAffectedByEffect(tp,69832741)
 		and Group.NewGroup() or Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_GRAVE,0,nil)
+end
+function s.extratg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_GRAVE)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOGRAVE,nil,1,PLAYER_EITHER,LOCATION_EXTRA)
 end
 function s.onfield(code)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,code),0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)

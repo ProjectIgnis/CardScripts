@@ -33,9 +33,6 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 		or s.check(ev,CATEGORY_TOHAND)
 		or s.check(ev,CATEGORY_TODECK)
 		or s.check(ev,CATEGORY_TOEXTRA)) then return true end
-	for i,eff in ipairs(GhostBelleTable) do
-		if eff==re then return true end
-	end
 	return false
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)

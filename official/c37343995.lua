@@ -1,5 +1,5 @@
 -- エクソシスター・マルファ
--- Exosister Malfa
+-- Exosister Martha
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -60,15 +60,15 @@ function s.hsptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.hspop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) or Duel.GetLocationCount(tp,LOCATION_MZONE)==0 or Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
+	if not c:IsRelateToEffect(e) or Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
 	if Duel.SpecialSummonStep(c,0,tp,tp,false,false,POS_FACEUP) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local g=Duel.SelectMatchingCard(tp,s.dspfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
-		if #g>0 then
-			Duel.SpecialSummonStep(g:GetFirst(),0,tp,tp,false,false,POS_FACEUP)
+		local sc=Duel.SelectMatchingCard(tp,s.dspfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp):GetFirst()
+		if sc then
+			Duel.SpecialSummonStep(sc,0,tp,tp,false,false,POS_FACEUP)
 		end
-		Duel.SpecialSummonComplete()
 	end
+	Duel.SpecialSummonComplete()
 end
 function s.xspfilter(c,e,tp,mc)
 	return c:IsType(TYPE_XYZ,c,SUMMON_TYPE_XYZ,tp) and c:IsSetCard(0x174) and mc:IsCanBeXyzMaterial(c,tp)

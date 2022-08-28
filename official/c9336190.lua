@@ -1,42 +1,41 @@
 --幻影騎士団ミストクロウズ
 --The Phantom Knights of Mist Claws
-
 local s,id=GetID()
 function s.initial_effect(c)
-	--Add 1 of your banished "The Phantom Knights" monsters
+	--Add 1 of your banished "The Phantom Knights" monsters to your hand
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetHintTiming(0,TIMING_END_PHASE)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
-	e1:SetHintTiming(0,TIMING_END_PHASE)
 	c:RegisterEffect(e1)
 	--Special summon itself from GY as a monster
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCondition(s.spcon)
+	e2:SetCondition(function(_,tp) return Duel.GetAttacker():IsControler(1-tp) and Duel.GetAttackTarget()==nil end)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x10db}
-
-function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x10db) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+function s.thfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0x10db) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and s.filter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_REMOVED,0,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and s.thfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(s.thfilter,tp,LOCATION_REMOVED,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_REMOVED,0,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
+	local g=Duel.SelectTarget(tp,s.thfilter,tp,LOCATION_REMOVED,0,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,tp,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
@@ -45,12 +44,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,tc)
 	end
 end
-function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetAttacker():IsControler(1-tp) and Duel.GetAttackTarget()==nil
-end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x10db) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0x10db,0x11,0,0,c:GetLevel(),RACE_WARRIOR,ATTRIBUTE_DARK)
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0x10db,0x11,0,0,c:GetOriginalLevel(),RACE_WARRIOR,ATTRIBUTE_DARK)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.spfilter(chkc,e,tp) end
@@ -61,28 +57,37 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,s.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	g:AddCard(e:GetHandler())
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,2,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,2,tp,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)==0 or Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0  and c:IsRelateToEffect(e) 
-		and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0x10db,0x11,0,0,tc:GetLevel(),RACE_WARRIOR,ATTRIBUTE_DARK) then
-		c:AddMonsterAttribute(TYPE_NORMAL,0,0,tc:GetLevel(),0,0)
+	if not tc:IsRelateToEffect(e) then return end
+	local c=e:GetHandler()
+	local lv=tc:GetOriginalLevel()
+	if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsRelateToEffect(e) 
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0x10db,0x11,0,0,lv,RACE_WARRIOR,ATTRIBUTE_DARK) then
+		c:AddMonsterAttribute(TYPE_NORMAL,0,0,lv,0,0)
 		c:AssumeProperty(ASSUME_RACE,RACE_WARRIOR)
 		if Duel.SpecialSummonStep(c,0,tp,tp,true,false,POS_FACEUP) then
-		c:AddMonsterAttributeComplete()
-		--Banish it if it leaves the field
-		local e1=Effect.CreateEffect(c)
-		e1:SetDescription(3300)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
-		e1:SetValue(LOCATION_REMOVED)
-		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
-		c:RegisterEffect(e1,true)
+			c:AddMonsterAttributeComplete()
+			--Banish it if it leaves the field
+			local e1=Effect.CreateEffect(c)
+			e1:SetDescription(3300)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
+			e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
+			e1:SetValue(LOCATION_REMOVED)
+			e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+			c:RegisterEffect(e1,true)
+			--Change Level
+			local e2=Effect.CreateEffect(c)
+			e2:SetType(EFFECT_TYPE_SINGLE)
+			e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+			e2:SetCode(EFFECT_CHANGE_LEVEL_FINAL)
+			e2:SetValue(lv)
+			e2:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
+			c:RegisterEffect(e2,true)
 		end
 	end
 	Duel.SpecialSummonComplete()

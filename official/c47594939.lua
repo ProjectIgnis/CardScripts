@@ -1,4 +1,5 @@
 --召喚制限－ディスコードセクター
+--And the Band Played On
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -6,47 +7,21 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--adjust
+	--Cannot Special Summon monsters with the same Level/Rank
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-	e2:SetCode(EVENT_ADJUST)
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetOperation(s.adjustop)
+	e2:SetTargetRange(1,1)
+	e2:SetTarget(s.splimit)
 	c:RegisterEffect(e2)
-	--disable spsummon
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD)
-	e3:SetRange(LOCATION_SZONE)
-	e3:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e3:SetTargetRange(1,1)
-	e3:SetTarget(s.splimit)
-	c:RegisterEffect(e3)
-	local g=Group.CreateGroup()
-	g:KeepAlive()
-	e2:SetLabelObject(g)
-	e3:SetLabelObject(g)
-end
-function s.lvfilter(c,lv,tp)
-	return c:GetLevel()==lv and c:IsControler(tp)
-end
-function s.rkfilter(c,rk,tp)
-	return c:GetRank()==rk and c:IsControler(tp)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp)
-	local lv=c:GetLevel()
-	local rk=c:GetRank()
-	if lv>0 then
-		return e:GetLabelObject():IsExists(s.lvfilter,1,nil,lv,sump)
-	elseif rk>0 then
-		return e:GetLabelObject():IsExists(s.rkfilter,1,nil,rk,sump)
-	else return false end
-end
-function s.adjustop(e,tp,eg,ep,ev,re,r,rp)
-	local phase=Duel.GetCurrentPhase()
-	if (phase==PHASE_DAMAGE and not Duel.IsDamageCalculated()) or phase==PHASE_DAMAGE_CAL then return end
-	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	e:GetLabelObject():Clear()
-	e:GetLabelObject():Merge(g)
+	if c:HasLevel() then
+		return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsLevel,c:GetLevel()),sump,LOCATION_MZONE,0,1,nil)
+	elseif c:IsRankAbove(0) then
+		return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRank,c:GetRank()),sump,LOCATION_MZONE,0,1,nil)
+	end
+	return false
 end

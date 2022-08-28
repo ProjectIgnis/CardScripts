@@ -42,14 +42,12 @@ if not AnimeArchetype then
 	-- Graceful Tear/Graceful Charity/Numinous Healer
 	-- Cherubini, Black Angel of the Burning Abyss
 	-- Fallen Angel of Roses/Muse-A/Queen Angel of Roses
-
 	-- Tellus the Little Angel
 	AnimeArchetype.OCGAngel={
 		79575620,39996157,15914410,53334641,16972957,42216237,
 		42418084,18378582,59509952,81146288,85399281,47852924,
 		74137509,17653779,9032529,79571449,2130625,49674183,
-		69992868,96470883,11398951,
-		100274002
+		69992868,96470883,11398951,19280589
 	}
 	Card.IsAngel=MakeCheck({0x154a,0xef},AnimeArchetype.OCGAngel)
 

@@ -1,5 +1,5 @@
---機塊コンバート
---Appliancer Conversion
+--機塊コンバート (Anime)
+--Appliancer Conversion (Anime)
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

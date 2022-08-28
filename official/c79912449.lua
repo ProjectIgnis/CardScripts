@@ -3,7 +3,7 @@
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	local e0=aux.AddEquipProcedure(c,1)
+	local e0=aux.AddEquipProcedure(c,1,nil,s.eqlimit)
 	e0:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	--Can only control 1 "Inviting Rondo of the Mikanko"
 	c:SetUniqueOnField(1,0,id)
@@ -28,6 +28,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x18e}
+function s.eqlimit(e,c)
+	return e:GetHandler():GetEquipTarget()==c or e:GetHandlerPlayer()~=c:GetControler()
+end
 function s.contcond(e)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x18e),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end

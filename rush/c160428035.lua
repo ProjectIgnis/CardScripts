@@ -46,7 +46,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.SendtoDeck(g3,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 then
 			local g4=Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_GRAVE,0,nil,67169062,id)
 			local dct=g4:GetClassCount(Card.GetCode)
-			if Duel.IsPlayerCanDraw(tp,dct) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+			if #g4>0 and Duel.IsPlayerCanDraw(tp,dct) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 				Duel.BreakEffect()
 				Duel.Draw(tp,dct,REASON_EFFECT)
 			end

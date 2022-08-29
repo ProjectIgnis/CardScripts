@@ -14,10 +14,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c,tp)
-	return c:IsPreviousLocation(LOCATION_SZONE) and c:IsPreviousControler(tp) and c:GetPreviousSequence()<5
+	return c:IsPreviousLocation(LOCATION_SZONE) and c:IsPreviousControler(tp) and c:GetPreviousSequence()<5 and c:IsReason(REASON_EFFECT)
+		and c:GetReasonPlayer()==1-tp
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil,tp) and rp==1-tp
+	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.ssfilter(c)
 	return c:IsSpellTrap() and c:IsSSetable() and not c:IsType(TYPE_FIELD)

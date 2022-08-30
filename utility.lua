@@ -1438,10 +1438,25 @@ function Auxiliary.seqmovcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():CheckAdjacent()
 end
 --operation for effects that make the monster change its current sequence
+--where the new sequence is choosen during resolution
 function Auxiliary.seqmovop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or c:IsControler(1-tp) then return end
 	c:MoveAdjacent()
+end
+--target for effects that make the monster change its current sequence
+--where the new sequence is choosen at target time
+function Auxiliary.seqmovtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	e:SetLabel(e:GetHandler():SelectAdjacent())
+end
+--operation for effects that make the monster change its current sequence
+--where the new sequence is choosen at target time
+function Auxiliary.seqmovtgop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local seq=e:GetLabel()
+	if not c:IsRelateToEffect(e) or c:IsControler(1-tp) or not Duel.CheckLocation(tp,LOCATION_MZONE,seq) then return end
+	Duel.MoveSequence(c,seq)
 end
 
 

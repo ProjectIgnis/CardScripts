@@ -150,6 +150,18 @@ function Card.CheckAdjacent(c)
 		or (seq<4 and Duel.CheckLocation(p,LOCATION_MZONE,seq+1))
 end
 
+function Card.SelectAdjacent(c)
+	local tp=c:GetControler()
+	local seq=c:GetSequence()
+	local flag=0
+	if seq>0 and Duel.CheckLocation(tp,LOCATION_MZONE,seq-1) then flag=flag|(0x1<<seq-1) end
+	if seq<4 and Duel.CheckLocation(tp,LOCATION_MZONE,seq+1) then flag=flag|(0x1<<seq+1) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
+	local sel=Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,~flag)
+	Duel.Hint(HINT_ZONE,tp,sel)
+	return math.log(sel,2)
+end
+
 function Card.MoveAdjacent(c)
 	local tp=c:GetControler()
 	local seq=c:GetSequence()

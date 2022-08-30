@@ -1,5 +1,5 @@
 --ポジションチェンジ
---Senet Switch
+--Senet Switch (Pre-errata)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -22,13 +22,11 @@ function s.seqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:CheckAdjacent() end
 	if chk==0 then return Duel.IsExistingTarget(Card.CheckAdjacent,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
-	local tc=Duel.SelectTarget(tp,Card.CheckAdjacent,tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
-	e:SetLabel(tc:SelectAdjacent())
+	Duel.SelectTarget(tp,Card.CheckAdjacent,tp,LOCATION_MZONE,0,1,1,nil)
 end
 function s.seqop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
-	local seq=e:GetLabel()
-	if tc:IsImmuneToEffect(e) or not tc:IsRelateToEffect(e) or tc:IsControler(1-tp) or not Duel.CheckLocation(tp,LOCATION_MZONE,seq) then return end
-	Duel.MoveSequence(tc,seq)
+	if tc:IsImmuneToEffect(e) or not tc:IsRelateToEffect(e) or tc:IsControler(1-tp) then return end
+	tc:MoveAdjacent()
 end

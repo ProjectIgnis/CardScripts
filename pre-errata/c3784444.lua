@@ -1,5 +1,5 @@
 --突撃ライノス
---Rampaging Rhynos
+--Rampaging Rhynos (Pre-errata)
 local s,id=GetID()
 function s.initial_effect(c)
 	--move
@@ -9,8 +9,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
 	e1:SetCondition(aux.seqmovcon)
-	e1:SetTarget(aux.seqmovtg)
-	e1:SetOperation(aux.seqmovtgop)
+	e1:SetOperation(aux.seqmovop)
 	c:RegisterEffect(e1)
 	--
 	local e2=Effect.CreateEffect(c)

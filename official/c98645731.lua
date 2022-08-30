@@ -78,6 +78,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		else
 			Duel.SendtoGrave(sg,REASON_RULE)
 		end
+		Duel.BreakEffect()
 		Duel.ShuffleDeck(p)
 	end
 end

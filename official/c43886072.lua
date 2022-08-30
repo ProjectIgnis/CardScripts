@@ -1,12 +1,10 @@
 --プランキッズ・バウワウ
 --Prank-Kids Bow-Wow-Bark
 --Scripted by AlphaKretin
-
 local s,id=GetID()
 function s.initial_effect(c)
-	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--Link summon procedure
+	--2 "Prank-Kids" monsters
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x120),2,2)
 	--A "Prank-Kids" pointed by this card gains 1000 ATK/DEF
 	local e1=Effect.CreateEffect(c)
@@ -22,19 +20,18 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCountLimit(1,id)
+	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E+TIMING_MAIN_END)
 	e2:SetCondition(s.thcon)
-	e2:SetCost(s.thcost)
+	e2:SetCost(aux.CostWithReplace(s.thcost,CARD_PRANKKIDS_MEOWMU))
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
-	e2:SetHintTiming(0,TIMING_BATTLE_START+TIMING_END_PHASE)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x120}
-
 function s.atktg(e,c)
 	return e:GetHandler():GetLinkedGroup():IsContains(c) and c:IsSetCard(0x120)
 end
@@ -42,8 +39,9 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsTurnPlayer(tp)
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsReleasable() end
+	Duel.Release(c,REASON_COST)
 end
 function s.thfilter(c,e)
 	return c:IsSetCard(0x120) and not c:IsLinkMonster() and c:IsCanBeEffectTarget(e) and c:IsAbleToHand()
@@ -64,6 +62,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 	end
+	--"Prank-Kids" monsters cannot be destroyed by opponent's card effects
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)

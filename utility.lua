@@ -53,11 +53,29 @@ function Auxiliary.CostWithReplace(base,replacecode,extracon,alwaysexecute)
 		if not cond or (cond and #effs>0 and Duel.SelectYesNo(tp,98)) then
 			local eff=effs[1]
 			if #effs>1 then
-				local desctable={}
+				local effsPerCard={}
+				local effsHandlersGroup=Group.CreateGroup()
 				for _,_eff in ipairs(effs) do
-					table.insert(desctable,_eff:GetDescription())
+					local _effCard=_eff:GetHandler()
+					effsHandlersGroup:AddCard(_effCard)
+					if not effsPerCard[_effCard] then effsPerCard[_effCard]={} end
+					table.insert(effsPerCard[_effCard],_eff)
 				end
-				eff=effs[Duel.SelectOption(tp,false,table.unpack(desctable)) + 1]
+				local effCard=effsHandlersGroup:GetFirst()
+				if #effsHandlersGroup>1 then
+					effCard=effsHandlersGroup:Select(tp,1,1,nil):GetFirst()
+					Duel.HintSelection(effCard,true)
+				end
+				local effsOfThatCard=effsPerCard[effCard]
+				if #effsOfThatCard==1 then
+					eff=effsOfThatCard[1]
+				else
+					local desctable={}
+					for _,_eff in ipairs(effsOfThatCard) do
+						table.insert(desctable,_eff:GetDescription())
+					end
+					eff=effsOfThatCard[Duel.SelectOption(tp,false,table.unpack(desctable)) + 1]
+				end
 			end
 			local res={eff:GetOperation()(eff,e,tp,eg,ep,ev,re,r,rp,chk)}
 			eff:UseCountLimit(tp)

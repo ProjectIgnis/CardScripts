@@ -1,5 +1,5 @@
 -- 春化精の花冠
--- Flower Crown of the Vernalizer Fairy
+-- Vernusylph Corolla
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	-- EARTH monsters become "Vernalizer Fairy" monsters
+	-- EARTH monsters become "Vernusylph" monsters
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_ADD_SETCODE)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetTarget(aux.TargetBoolFunction(Card.IsAttribute,ATTRIBUTE_EARTH))
 	e2:SetValue(0x183)
 	c:RegisterEffect(e2)
-	-- "Vernalizer Fairy" cost replacement
+	-- "Vernusylph" cost replacement
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetType(EFFECT_TYPE_FIELD)
@@ -37,5 +37,9 @@ function s.repval(base,e,tp,eg,ep,ev,re,r,rp,chk,extracon)
 end
 function s.repop(base,e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)
+	if #{Duel.GetPlayerEffect(tp,CARD_VERNALIZER_FLOWER_CROWN)}>1 then
+		Duel.HintSelection(base:GetHandler(),true)
+	end
+	base:GetHandler():RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,EFFECT_FLAG_CLIENT_HINT,1,nil,aux.Stringid(id,1))
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end

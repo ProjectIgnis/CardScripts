@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	--synchro summon
 	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_SYNCHRO),1,1,aux.FilterBoolFunction(Card.IsCode,CARD_STARDUST_DRAGON),1,1)
 	c:EnableReviveLimit()
-	--opponent's turn synchro
+	--Synchto Summon this card on your opponent's turn
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(575512,0))
 	e1:SetHintTiming(0,TIMING_END_PHASE+TIMING_MAIN_END)
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.syntg)
 	e1:SetOperation(s.synop)
 	c:RegisterEffect(e1)
-	--multi attack
+	--Additional attack for each Tuner monster excavated
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(24696097,0))
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.mtcon)
 	e2:SetOperation(s.mtop)
 	c:RegisterEffect(e2)
-	--negate
+	--Negate activation of card or effect that would destroy 1 card on your field
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(24696097,1))
 	e3:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
@@ -38,7 +38,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.distg)
 	e3:SetOperation(s.disop)
 	c:RegisterEffect(e3)
-	--banish
+	--Banish to negate the attack of 1 monster your opponent controls
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(24696097,2))
 	e4:SetCategory(CATEGORY_REMOVE)
@@ -50,10 +50,10 @@ function s.initial_effect(c)
 	e4:SetCost(s.bancost)
 	e4:SetOperation(s.banop)
 	c:RegisterEffect(e4)
-	--Return
+	--Return to field during the End Phase
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(24696097,3))
-	e5:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_FIELD)
+	e5:SetType(EFFECT_TYPE_TRIGGER_F+EFFECT_TYPE_FIELD)
 	e5:SetCode(EVENT_PHASE+PHASE_END)
 	e5:SetRange(LOCATION_REMOVED)
 	e5:SetCountLimit(1)

@@ -3,7 +3,6 @@
 --fixed by MLD & Larry126
 local s,id=GetID()
 function s.initial_effect(c)
-	c:EnableCounterPermit(0x1113)
 	--Negate attacks that target "Satellite Cannon"
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -47,14 +46,14 @@ end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
-		c:AddCounter(0x1113,1)
+		c:AddCounter(0x1105,1)
 	end
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local ct=c:GetCounter(0x1113)
-	if chk==0 then return ct>0 and c:IsCanRemoveCounter(tp,0x1113,ct,REASON_COST) end
-	c:RemoveCounter(tp,0x1113,ct,REASON_COST)
+	local ct=c:GetCounter(0x1105)
+	if chk==0 then return ct>0 and c:IsCanRemoveCounter(tp,0x1105,ct,REASON_COST) end
+	c:RemoveCounter(tp,0x1105,ct,REASON_COST)
 	e:SetLabel(ct)
 end
 function s.atkcon(e)

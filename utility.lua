@@ -65,13 +65,11 @@ function Auxiliary.CostWithReplace(base,replacecode,extracon,alwaysexecute)
 				if #effsHandlersGroup==1 and (not cost_chk or Duel.SelectEffectYesNo(tp,effCard)) then
 					effCard=effsHandlersGroup:GetFirst()
 				elseif #effsHandlersGroup>1 then
-					local effSelect=Group.CreateGroup()
-					while #effSelect==0 and (not cost_chk or Duel.SelectYesNo(tp,98)) do
+					while effCard==nil and (not cost_chk or Duel.SelectYesNo(tp,98)) do
 						Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RESOLVEEFFECT)
-						effSelect=effsHandlersGroup:Select(tp,1,1,cost_chk,nil) or Group.CreateGroup()
+						effCard=effsHandlersGroup:Select(tp,1,1,cost_chk,nil)
 					end
-					effCard=effSelect:GetFirst()
-					Duel.HintSelection(effSelect,true)
+					if effCard then effCard=effCard:GetFirst() end
 				end
 				if not effCard then return base(e,tp,eg,ep,ev,re,r,rp,1) end
 				local effsOfThatCard=effsPerCard[effCard]

@@ -153,7 +153,8 @@ function Fusion.OperationMix(insf,sub,...)
 				local p=tp
 				local sfhchk=false
 				if not contact and Duel.IsPlayerAffectedByEffect(tp,511004008) and Duel.SelectYesNo(1-tp,65) then
-					p=1-tp Duel.ConfirmCards(1-tp,mg)
+					p=1-tp
+					Duel.ConfirmCards(1-tp,mg)
 					if mg:IsExists(Card.IsLocation,1,nil,LOCATION_HAND) then sfhchk=true end
 				end
 				while #sg<#funs do
@@ -361,7 +362,8 @@ function Fusion.OperationMixRep(insf,sub,fun1,minc,maxc,...)
 				local p=tp
 				local sfhchk=false
 				if not contact and Duel.IsPlayerAffectedByEffect(tp,511004008) and Duel.SelectYesNo(1-tp,65) then
-					p=1-tp Duel.ConfirmCards(1-tp,mg)
+					p=1-tp
+					Duel.ConfirmCards(1-tp,mg)
 					if mg:IsExists(Card.IsLocation,1,nil,LOCATION_HAND) then sfhchk=true end
 				end
 				while #sg<maxc+#funs do
@@ -655,7 +657,8 @@ function Fusion.OperationMixRepUnfix(insf,sub,minc,maxc,...)
 				local p=tp
 				local sfhchk=false
 				if not contact and Duel.IsPlayerAffectedByEffect(tp,511004008) and Duel.SelectYesNo(1-tp,65) then
-					p=1-tp Duel.ConfirmCards(1-tp,mg)
+					p=1-tp
+					Duel.ConfirmCards(1-tp,mg)
 					if mg:IsExists(Card.IsLocation,1,nil,LOCATION_HAND) then sfhchk=true end
 				end
 				while #sg<maxc do

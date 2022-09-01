@@ -42,9 +42,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if tc then
 		if tc:IsLocation(LOCATION_DECK) then
 			Duel.ShuffleDeck(tp)
-			Duel.MoveSequence(tc,0)
+			Duel.MoveToDeckTop(tc)
 		else 
-			Duel.SendtoDeck(tc,nil,0,REASON_EFFECT) 
+			Duel.HintSelection(tc,true)
+			Duel.SendtoDeck(tc,nil,SEQ_DECKTOP,REASON_EFFECT)
 		end
 		if not tc:IsLocation(LOCATION_EXTRA) then
 			Duel.ConfirmDecktop(tp,1)

@@ -50,7 +50,7 @@ function Auxiliary.CostWithReplace(base,replacecode,extracon,alwaysexecute)
 		end
 		if alwaysexecute then alwaysexecute(e,tp,eg,ep,ev,re,r,rp,1) end
 		local effs=cost_replace_getvalideffs(replacecode,extracon,e,tp,eg,ep,ev,re,r,rp,chk)
-		if not cost_chk or (cost_chk and #effs>0) then
+		if not cost_chk or #effs>0 then
 			local eff=effs[1]
 			if #effs>1 then
 				local effsPerCard={}
@@ -61,19 +61,19 @@ function Auxiliary.CostWithReplace(base,replacecode,extracon,alwaysexecute)
 					if not effsPerCard[_effCard] then effsPerCard[_effCard]={} end
 					table.insert(effsPerCard[_effCard],_eff)
 				end
-				local effCard=effsHandlersGroup:GetFirst()
+				local effCard=nil
 				if #effsHandlersGroup==1 and (not cost_chk or Duel.SelectEffectYesNo(tp,effCard)) then
 					effCard=effsHandlersGroup:GetFirst()
-				elseif #effsHandlersGroup>1 and (not cost_chk or Duel.SelectYesNo(tp,98)) then
-					repeat
-						if effCard==nil and not Duel.SelectYesNo(tp,98) then return base(e,tp,eg,ep,ev,re,r,rp,1) end
+				elseif #effsHandlersGroup>1 then
+					local effSelect=Group.CreateGroup()
+					while #effSelect==0 and (not cost_chk or Duel.SelectYesNo(tp,98)) do
 						Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RESOLVEEFFECT)
-						effCard=effsHandlersGroup:Select(tp,1,1,cost_chk,nil)
-					until effCard~=nil
-					effCard=effCard:GetFirst()
-				else
-					return base(e,tp,eg,ep,ev,re,r,rp,1)
+						effSelect=effsHandlersGroup:Select(tp,1,1,cost_chk,nil) or Group.CreateGroup()
+					end
+					effCard=effSelect:GetFirst()
+					Duel.HintSelection(effSelect,true)
 				end
+				if not effCard then return base(e,tp,eg,ep,ev,re,r,rp,1) end
 				local effsOfThatCard=effsPerCard[effCard]
 				if #effsOfThatCard==1 then
 					eff=effsOfThatCard[1]

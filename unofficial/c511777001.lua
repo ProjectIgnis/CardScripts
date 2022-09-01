@@ -4,14 +4,14 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x1113)
-	--negate attack
+	--Negate attacks that target "Satellite Cannon"
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EVENT_BE_BATTLE_TARGET)
 	e1:SetOperation(s.negop)
 	c:RegisterEffect(e1)
-	--counter
+	--Add 1 Charge Counter to this card during controller's End Phase
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e2:SetRange(LOCATION_MZONE)
@@ -20,12 +20,15 @@ function s.initial_effect(c)
 	e2:SetCondition(s.ccon)
 	e2:SetOperation(s.ctop)
 	c:RegisterEffect(e2)
-	--atk
+	--Remove all Charge Counters from this card during controller's Battle Phase to increase ATK by 1000 for each Charge Counter removed until End Phase
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(13893596,0))
 	e3:SetCategory(CATEGORY_ATKCHANGE)
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e3:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
+	e3:SetType(EFFECT_TYPE_QUICK_O)
+	e3:SetProperty(EFFECT_TYPE_SINGLE_RANGE)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetCode(EVENT_FREE_CHAIN)
+	e3:SetCost(s.atkcost)
 	e3:SetCondition(s.atkcon)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
@@ -47,32 +50,27 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 		c:AddCounter(0x1113,1)
 	end
 end
+function s.atkcost(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local ct=c:GetCounter(0x1113)
+	if chk==0 then return ct>0 and c:IsCanRemoveCounter(tp,0x1113,ct,REASON_COST) end
+	c:RemoveCounter(tp,0x1113,ct,REASON_COST)
+	e:SetLabel(ct)
+end
 function s.atkcon(e)
-	return e:GetHandler()==Duel.GetAttacker()
+	return Duel.IsBattlePhase() and Duel.GetTurnPlayer()==e:GetHandlerPlayer()
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and c:IsFaceup() then
+	local ct=e:GetLabel()
+	if ct>0 then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-		e1:SetValue(c:GetCounter(0x1113)*1000)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetValue(ct*1000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)
-		--counter remove
-		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-		e2:SetCode(EVENT_BATTLED)
-		e2:SetRange(LOCATION_MZONE)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE)
-		e2:SetOperation(s.rctop)
-		c:RegisterEffect(e2)
+
 	end
 end
-function s.rctop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local ct=c:GetCounter(0x1113)
-	if Duel.GetAttacker()==c and ct>0 then
-		c:RemoveCounter(tp,0x1113,ct,REASON_EFFECT)
-	end
-end
+

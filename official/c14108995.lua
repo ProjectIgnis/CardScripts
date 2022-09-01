@@ -40,6 +40,6 @@ function s.repop(base,e,tp,eg,ep,ev,re,r,rp)
 	if #{Duel.GetPlayerEffect(tp,CARD_VERNALIZER_FLOWER_CROWN)}>1 then
 		Duel.HintSelection(base:GetHandler(),true)
 	end
-	base:GetHandler():RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,EFFECT_FLAG_CLIENT_HINT,1,nil,aux.Stringid(id,1))
+	base:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,EFFECT_FLAG_CLIENT_HINT,1,nil,aux.Stringid(id,1))
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end

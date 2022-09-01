@@ -308,7 +308,8 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 	sumpos = sumpos or POS_FACEUP
 	return	function(e,tp,eg,ep,ev,re,r,rp)
 				location=location or LOCATION_EXTRA
-				chkf = (chkf and chkf|tp or tp)|FUSPROC_CANCELABLE
+				chkf = chkf and chkf|tp or tp
+				if not preselect then chkf=chkf|FUSPROC_CANCELABLE end
 				local sumlimit=(chkf&(FUSPROC_NOTFUSION|FUSPROC_NOLIMIT))~=0
 				local notfusion=(chkf&FUSPROC_NOTFUSION)~=0
 				if not value then value=0 end

@@ -22,13 +22,14 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id,CARD_STARDUST_DRAGON}
-function s.lffilter(c,r,rp,tp)
+function s.lffilter(c,tp)
 	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp)
 		and (c:IsCode(CARD_STARDUST_DRAGON) or (aux.IsCodeListed(c,CARD_STARDUST_DRAGON) and c:IsType(TYPE_SYNCHRO)))
-		and rp==tp and ((r&REASON_EFFECT)==REASON_EFFECT or (r&REASON_COST)==REASON_COST)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.lffilter,1,nil,r,rp,tp)
+	return rp==tp and ((r&REASON_EFFECT)==REASON_EFFECT
+		or ((r&REASON_COST)==REASON_COST and re and re:IsActivated()))
+		and eg:IsExists(s.lffilter,1,nil,r,rp,tp)
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,id)

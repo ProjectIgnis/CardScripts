@@ -54,7 +54,8 @@ end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==tp and r&REASON_COST==REASON_COST and re and re:IsActivated()
 		and eg:IsExists(Card.IsPreviousLocation,1,e:GetHandler(),LOCATION_HAND)
-		and (re:GetActiveType()==TYPE_TRAP or (re:GetHandler():IsSetCard(0x17f) and not re:GetHandler():IsCode(id)))
+		and ((re:IsActiveType(TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE))
+		or (re:GetHandler():IsSetCard(0x17f) and not re:GetHandler():IsCode(id)))
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

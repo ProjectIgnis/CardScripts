@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
-	local e1=Fusion.CreateSummonEff{handler=c,matfilter=Fusion.OnFieldMat,extrafil=s.fextra,extratg=s.extratg,exactcount=2,preselect=s.preselect}
+	local e1=Fusion.CreateSummonEff{handler=c,matfilter=Fusion.OnFieldMat,extrafil=s.fextra,extratg=s.extratg,exactcount=2,extraop=s.extraop}
 	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
 	e1:SetCost(s.cost)
 	c:RegisterEffect(e1)
@@ -26,7 +26,7 @@ function s.extratg(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SetChainLimit(aux.FALSE)
 	end
 end
-function s.preselect(e,tc)
+function s.extraop(e,tc,tp,mat)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)

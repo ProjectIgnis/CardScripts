@@ -123,6 +123,7 @@ function Fusion.OperationMix(insf,sub,...)
 				local tp=c:GetControler()
 				local notfusion=(chkfnf&FUSPROC_NOTFUSION)~=0
 				local contact=(chkfnf&FUSPROC_CONTACTFUS)~=0
+				local cancelable=(chkfnf&(FUSPROC_CONTACTFUS|FUSPROC_CANCELABLE))~=0
 				local listedmats=(chkfnf&FUSPROC_LISTEDMATS)~=0
 				local sumtype=SUMMON_TYPE_FUSION|MATERIAL_FUSION
 				if listedmats then
@@ -152,12 +153,13 @@ function Fusion.OperationMix(insf,sub,...)
 				local p=tp
 				local sfhchk=false
 				if not contact and Duel.IsPlayerAffectedByEffect(tp,511004008) and Duel.SelectYesNo(1-tp,65) then
-					p=1-tp Duel.ConfirmCards(1-tp,mg)
+					p=1-tp
+					Duel.ConfirmCards(1-tp,mg)
 					if mg:IsExists(Card.IsLocation,1,nil,LOCATION_HAND) then sfhchk=true end
 				end
 				while #sg<#funs do
 					Duel.Hint(HINT_SELECTMSG,p,HINTMSG_FMATERIAL)
-					local tc=Group.SelectUnselect(mg:Filter(Fusion.SelectMix,sg,tp,mg,sg,mustg:Filter(aux.TRUE,sg),c,sub,sub,contact,sumtype,chkf,table.unpack(funs)),sg,p,false,contact and #sg==0,#funs,#funs)
+					local tc=Group.SelectUnselect(mg:Filter(Fusion.SelectMix,sg,tp,mg,sg,mustg:Filter(aux.TRUE,sg),c,sub,sub,contact,sumtype,chkf,table.unpack(funs)),sg,p,false,cancelable and #sg==0,#funs,#funs)
 					if not tc then break end
 					if #mustg==0 or not mustg:IsContains(tc) then
 						if not sg:IsContains(tc) then
@@ -338,6 +340,7 @@ function Fusion.OperationMixRep(insf,sub,fun1,minc,maxc,...)
 				local tp=c:GetControler()
 				local notfusion=(chkfnf&FUSPROC_NOTFUSION)~=0
 				local contact=(chkfnf&FUSPROC_CONTACTFUS)~=0
+				local cancelable=(chkfnf&(FUSPROC_CONTACTFUS|FUSPROC_CANCELABLE))~=0
 				local listedmats=(chkfnf&FUSPROC_LISTEDMATS)~=0
 				local sumtype=SUMMON_TYPE_FUSION|MATERIAL_FUSION
 				if listedmats then
@@ -359,14 +362,15 @@ function Fusion.OperationMixRep(insf,sub,fun1,minc,maxc,...)
 				local p=tp
 				local sfhchk=false
 				if not contact and Duel.IsPlayerAffectedByEffect(tp,511004008) and Duel.SelectYesNo(1-tp,65) then
-					p=1-tp Duel.ConfirmCards(1-tp,mg)
+					p=1-tp
+					Duel.ConfirmCards(1-tp,mg)
 					if mg:IsExists(Card.IsLocation,1,nil,LOCATION_HAND) then sfhchk=true end
 				end
 				while #sg<maxc+#funs do
 					local cg=mg:Filter(Fusion.SelectMixRep,sg,tp,mg,sg,mustg,c,sub,sub,contact,sumtype,chkf,fun1,minc,maxc,table.unpack(funs))
 					if #cg==0 then break end
 					local finish=Fusion.CheckMixRepGoal(tp,sg,mustg,c,sub,sub,contact,sumtype,chkf,fun1,minc,maxc,table.unpack(funs)) and not Fusion.CheckExact and not (Fusion.CheckMin and #sg<Fusion.CheckMin)
-					local cancel=(contact and #sg==0)
+					local cancel=(cancelable and #sg==0)
 					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
 					local tc=Group.SelectUnselect(cg,sg,p,finish,cancel)
 					if not tc then break end
@@ -623,6 +627,7 @@ function Fusion.OperationMixRepUnfix(insf,sub,minc,maxc,...)
 				local tp=c:GetControler()
 				local notfusion=(chkfnf&FUSPROC_NOTFUSION)~=0
 				local contact=(chkfnf&FUSPROC_CONTACTFUS)~=0
+				local cancelable=(chkfnf&(FUSPROC_CONTACTFUS|FUSPROC_CANCELABLE))~=0
 				local listedmats=(chkfnf&FUSPROC_LISTEDMATS)~=0
 				local sumtype=SUMMON_TYPE_FUSION|MATERIAL_FUSION
 				if listedmats then
@@ -652,7 +657,8 @@ function Fusion.OperationMixRepUnfix(insf,sub,minc,maxc,...)
 				local p=tp
 				local sfhchk=false
 				if not contact and Duel.IsPlayerAffectedByEffect(tp,511004008) and Duel.SelectYesNo(1-tp,65) then
-					p=1-tp Duel.ConfirmCards(1-tp,mg)
+					p=1-tp
+					Duel.ConfirmCards(1-tp,mg)
 					if mg:IsExists(Card.IsLocation,1,nil,LOCATION_HAND) then sfhchk=true end
 				end
 				while #sg<maxc do
@@ -660,7 +666,7 @@ function Fusion.OperationMixRepUnfix(insf,sub,minc,maxc,...)
 					local cg=mg:Filter(Fusion.SelectMixRepUnfix,sg,tp,mg,sg,mustg:Filter(aux.TRUE,sg),c,sub,sub,minc,maxc,chkf,table.unpack(funs))
 					if #cg==0 then break end
 					local finish=(sg:IsExists(Fusion.CheckMixRepUnfixSelected,1,nil,tp,sg,sg,mustg,Group.CreateGroup(),c,sub,sub2,chkf,minc,maxc,table.unpack(funs))) and not Fusion.CheckExact
-					local cancel=(contact and #sg==0) and not Fusion.CheckExact
+					local cancel=(cancelable and #sg==0) and not Fusion.CheckExact
 					local tc=Group.SelectUnselect(cg,sg,p,finish,cancel,minc,maxc)
 					if not tc then break end
 					if #mustg==0 or not mustg:IsContains(tc) then

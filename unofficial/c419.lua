@@ -599,14 +599,21 @@ if not GenerateEffect then
 
 	finish_setup()
 
+	TYPE_PLUSMINUS = (TYPE_PLUS|TYPE_MINUS)
+	function Card.IsPlusOrMinus(c)
+		local tpe=c:GetType()&TYPE_PLUSMINUS
+		return tpe~=0 and tpe~=TYPE_PLUSMINUS
+	end
 	function Card.AddPlusMinusAttribute(c)
+		--Negate attack
 		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
-		e1:SetCondition(GenerateEffect.chargeCon)
-		e1:SetValue(GenerateEffect.repel)
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e1:SetCode(EVENT_ADJUST)
+		e1:SetRange(LOCATION_MZONE)
+		e1:SetCondition(GenerateEffect.nacon)
+		e1:SetOperation(GenerateEffect.naop)
 		c:RegisterEffect(e1)
-		--must attack
+		--Must attack
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_MUST_ATTACK)
@@ -617,24 +624,23 @@ if not GenerateEffect then
 		e3:SetValue(GenerateEffect.attract)
 		c:RegisterEffect(e3)
 	end
-	function GenerateEffect.chargeCon(e)
-		return e:GetHandler():IsType(TYPE_PLUS+TYPE_MINUS)
+	function GenerateEffect.nacon(e,tp,eg,ep,ev,re,r,rp)
+		local c=e:GetHandler()
+		if not c:IsPlusOrMinus() then return false end
+		local bc=c:GetBattleTarget()
+		return bc and bc:IsFaceup() and bc:IsType(c:GetType()&TYPE_PLUSMINUS)
+			and (Duel.GetCurrentPhase()<PHASE_DAMAGE or Duel.GetCurrentPhase()>PHASE_DAMAGE_CAL)
 	end
-	function GenerateEffect.repel(e,c)
-		return c:IsFaceup() and e:GetHandler():GetType()&(TYPE_PLUS|TYPE_MINUS)==c:GetType()&(TYPE_PLUS|TYPE_MINUS)
-			and c:GetType()&(TYPE_PLUS|TYPE_MINUS)~=(TYPE_PLUS|TYPE_MINUS)
-	end
-	function GenerateEffect.attractfilter(c,tpe)
-		local t=(~tpe)&(TYPE_PLUS|TYPE_MINUS)~=0 and (~tpe)&(TYPE_PLUS|TYPE_MINUS) or (TYPE_PLUS|TYPE_MINUS)
-		return c:IsFaceup() and c:IsType(t)
+	function GenerateEffect.naop(e,tp,eg,ep,ev,re,r,rp)
+		Duel.Hint(HINT_CARD,1-tp,e:GetHandler():GetOriginalCode())
+		Duel.NegateAttack()
 	end
 	function GenerateEffect.attractcon(e)
-		return GenerateEffect.chargeCon(e) and e:GetHandler():CanAttack()
-			and Duel.IsExistingMatchingCard(GenerateEffect.attractfilter,e:GetHandlerPlayer(),0,LOCATION_MZONE,1,nil,e:GetHandler():GetType())
+		local c=e:GetHandler()
+		return c:IsPlusOrMinus() and c:CanAttack()
+			and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,(~c:GetType())&TYPE_PLUSMINUS),c:GetControler(),0,LOCATION_MZONE,1,nil)
 	end
 	function GenerateEffect.attract(e,c)
-		local tpe=e:GetHandler():GetType()
-		local t=(~tpe)&(TYPE_PLUS|TYPE_MINUS)~=0 and (~tpe)&(TYPE_PLUS|TYPE_MINUS) or (TYPE_PLUS|TYPE_MINUS)
-		return c:IsType(t)
+		return c:IsFaceup() and c:IsType((~e:GetHandler():GetType())&TYPE_PLUSMINUS)
 	end
 end

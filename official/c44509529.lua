@@ -40,13 +40,14 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsTurnPlayer(1-tp)
 end
 function s.spcostextracon(base,e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<2 then return false end
-	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_GRAVE,0,base:GetHandler(),e,tp)
+	local bc=base:GetHandler()
+	if Duel.GetMZoneCount(tp,bc)<2 then return false end
+	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_GRAVE,0,bc,e,tp)
 	return aux.SelectUnselectGroup(g,e,tp,2,2,s.spcheck,0)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:IsReleasable() and Duel.GetMZoneCount(tp,e:GetHandler())>1 end
+	if chk==0 then return c:IsReleasable() and Duel.GetMZoneCount(tp,c)>1 end
 	Duel.Release(c,REASON_COST)
 end
 function s.spfilter(c,e,tp)

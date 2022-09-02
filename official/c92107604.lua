@@ -1,5 +1,5 @@
 --神碑の泉
---Spring of the Mysterune
+--Runick Fountain
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--Activate "Mysterune" Quick-Play Spells from your hand
+	--Activate "Runick" Quick-Play Spells from your hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_QP_ACT_IN_NTPHAND)
@@ -16,13 +16,13 @@ function s.initial_effect(c)
 	e2:SetTargetRange(LOCATION_HAND,0)
 	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x180))
 	c:RegisterEffect(e2)
-	--Recycle and Draw
+	--Return up to 3 "Runick" Quick-Play Spells to the Deck and draw the same number
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
-	e3:SetCode(EVENT_CHAIN_SOLVED)
+	e3:SetCode(EVENT_CHAINING)
 	e3:SetRange(LOCATION_FZONE)
 	e3:SetCountLimit(1)
 	e3:SetCondition(s.drcon)

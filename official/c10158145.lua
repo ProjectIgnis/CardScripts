@@ -34,14 +34,14 @@ function s.initial_effect(c)
 	e3:SetTarget(s.target)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
-	--cannot special from Main Deck check
+	--Cannot Special Summon from the Main Deck check
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
-	e4:SetCode(CARD_EHERO_BLAZEMAN)
 	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e4:SetRange(LOCATION_MZONE)
+	e4:SetCode(CARD_EHERO_BLAZEMAN)
 	e4:SetTargetRange(1,0)
-	c:RegisterEffect(e4)
+	e4:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e4,tp)
 end
 function s.spfilter(c,e,tp,ec)
 	local zone=ec:GetToBeLinkedZone(c,tp)
@@ -82,7 +82,11 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.splimit(e,c,tp,sumtp,sumpos)
-	return not c:IsLinkMonster()
+	if c:IsMonster() then
+		return not c:IsType(TYPE_LINK)
+	else
+		return not c:IsOriginalType(TYPE_LINK)
+	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD) and e:GetHandler():IsPreviousControler(tp)

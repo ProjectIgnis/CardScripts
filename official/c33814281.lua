@@ -91,9 +91,18 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetRange(LOCATION_FZONE)
 	e1:SetTargetRange(0,1)
-	e1:SetTarget(function(_,sc) return sc:IsType(ty) end)
+	e1:SetTarget(s.sumlimit)
+	e1:SetLabel(ty)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	c:RegisterEffect(e1)
+end
+function s.sumlimit(e,c,sump,sumtype,sumpos,targetp)
+	local typ=e:GetLabel()
+	if c:IsMonster() then
+		return c:IsType(typ)
+	else
+		return c:IsOriginalType(typ)
+	end
 end
 function s.thfilter(c)
 	return c:IsMonster() and c:IsSetCard(0xaf) and (c:IsFaceup() or not c:IsLocation(LOCATION_EXTRA)) and c:IsAbleToHand()

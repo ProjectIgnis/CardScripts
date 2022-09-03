@@ -1,4 +1,5 @@
 --ナンバーズハンター
+--Numeral Hunter
 local s,id=GetID()
 function s.initial_effect(c)
 	--todeck
@@ -56,7 +57,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.splimit(e,c)
-	return c:IsSetCard(0x48)
+	if not c:IsSetCard(0x48) then return false end
+	if c:IsMonster() then
+		return c:IsType(TYPE_XYZ)
+	else
+		return c:IsOriginalType(TYPE_XYZ)
+	end
 end
 function s.indval(e,c)
 	return c:IsType(TYPE_XYZ)

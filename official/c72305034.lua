@@ -1,11 +1,10 @@
 --重起士道－ゴルドナイト
---Dualize Lord - Goldknight
+--Geminize Lord Golknight
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--Gemini status
-	aux.EnableGeminiAttribute(c)
-	--Search
+	Gemini.RegisterAbility(c)
+	--Search 1 Spell/Trap card that mentions "Gemini monster"
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -13,30 +12,30 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetCountLimit(1,id)
-	e1:SetCondition(aux.IsGeminiState)
+	e1:SetCondition(Gemini.IsHandlerEnabled)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
-	--change race
+	--Becomes a Machine monster
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetCode(EFFECT_CHANGE_RACE)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e3:SetCode(EFFECT_CHANGE_RACE)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCondition(aux.IsGeminiState)
+	e3:SetCondition(Gemini.IsHandlerEnabled)
 	e3:SetValue(RACE_MACHINE)
 	c:RegisterEffect(e3)
-	--atk up
+	--Gain 500 ATK
 	local e4=e3:Clone()
 	e4:SetCode(EFFECT_UPDATE_ATTACK)
 	e4:SetValue(500)
 	c:RegisterEffect(e4)
 end
 function s.thfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and aux.IsCardTypeListed(c,TYPE_GEMINI) and c:IsAbleToHand()
+	return c:IsSpellTrap() and aux.IsCardTypeListed(c,TYPE_GEMINI) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

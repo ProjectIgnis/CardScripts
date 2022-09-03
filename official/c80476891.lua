@@ -1,24 +1,25 @@
 --進化合獣ヒュードラゴン
+--Poly-Chemicritter Hydragon
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.EnableGeminiAttribute(c)
-	--atkup
+	Gemini.RegisterAbility(c)
+	--Increast ATK/DEF of 1 Gemini monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
-	e1:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_FIELD)
-	e1:SetRange(LOCATION_MZONE)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
-	e1:SetCondition(aux.IsGeminiState)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetCondition(Gemini.IsHandlerEnabled)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--destroy replace
+	--Replace destruction of a Gemini monster(s)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EFFECT_DESTROY_REPLACE)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCondition(aux.IsGeminiState)
+	e2:SetCondition(Gemini.IsHandlerEnabled)
 	e2:SetTarget(s.reptg)
 	e2:SetValue(s.repval)
 	e2:SetOperation(s.repop)
@@ -30,10 +31,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetTargetCard(tc)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
-		local e1=Effect.CreateEffect(c)
+		--Gain 500 ATK/DEF
+		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(500)
@@ -53,24 +54,22 @@ function s.desfilter(c,e,tp)
 		and c:IsDestructable(e) and not c:IsStatus(STATUS_DESTROY_CONFIRMED+STATUS_BATTLE_DESTROYED)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_ONFIELD,0,1,nil,e,tp)
-		and eg:IsExists(s.repfilter,1,nil,tp) end
-	if Duel.SelectEffectYesNo(tp,e:GetHandler(),96) then
-		local g=eg:Filter(s.repfilter,nil,tp)
-		if #g==1 then
-			e:SetLabelObject(g:GetFirst())
-		else
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESREPLACE)
-			local cg=g:Select(tp,1,1,nil)
-			e:SetLabelObject(cg:GetFirst())
-		end
+	local g=eg:Filter(s.repfilter,nil,tp)
+	if chk==0 then return #g>0 and Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_ONFIELD,0,1,nil,e,tp) end
+	if not Duel.SelectEffectYesNo(tp,e:GetHandler(),96) then return false end
+	if #g==1 then
+		e:SetLabelObject(g:GetFirst())
+	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESREPLACE)
-		local tg=Duel.SelectMatchingCard(tp,s.desfilter,tp,LOCATION_ONFIELD,0,1,1,nil,e,tp)
-		Duel.SetTargetCard(tg)
-		tg:GetFirst():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_CHAIN,0,1)
-		tg:GetFirst():SetStatus(STATUS_DESTROY_CONFIRMED,true)
-		return true
-	else return false end
+		local cg=g:Select(tp,1,1,nil)
+		e:SetLabelObject(cg:GetFirst())
+	end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESREPLACE)
+	local tc=Duel.SelectMatchingCard(tp,s.desfilter,tp,LOCATION_ONFIELD,0,1,1,nil,e,tp):GetFirst()
+	Duel.SetTargetCard(tc)
+	tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_CHAIN,0,1)
+	tc:SetStatus(STATUS_DESTROY_CONFIRMED,true)
+	return true
 end
 function s.repval(e,c)
 	return c==e:GetLabelObject()

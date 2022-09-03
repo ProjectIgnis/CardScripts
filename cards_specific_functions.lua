@@ -1,26 +1,35 @@
-function Auxiliary.IsGeminiState(effect)
+--[[
+	Abilities
+--]]
+
+Gemini={}
+Gemini.IsEnabledCard=Card.IsGeminiState
+Gemini.EnableCard=Card.EnableGeminiState
+function Gemini.IsHandlerEnabled(effect)
 	local c=effect:GetHandler()
-	return not c:IsDisabled() and c:IsGeminiState()
+	return not c:IsDisabled() and Gemini.IsEnabledCard(c)
 end
-function Auxiliary.IsNotGeminiState(effect)
+function Gemini.IsHandlerNotEnabled(effect)
 	local c=effect:GetHandler()
-	return c:IsDisabled() or not c:IsGeminiState()
+	return c:IsDisabled() or not Gemini.IsEnabledCard(c)
 end
-function Auxiliary.GeminiNormalCondition(effect)
+function Gemini.IsHandlerNormal(effect)
 	local c=effect:GetHandler()
-	return c:IsFaceup() and not c:IsGeminiState()
+	return c:IsFaceup() and not Gemini.IsEnabledCard(c)
 end
-function Auxiliary.EnableGeminiAttribute(c)
+function Gemini.RegisterAbility(c)
+	--Can be Normal Summoned again
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_GEMINI_SUMMONABLE)
 	c:RegisterEffect(e1)
+	--Becomes Normal Type if not yet summoned twice
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_ADD_TYPE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_IGNORE_IMMUNE)
-	e2:SetRange(LOCATION_MZONE+LOCATION_GRAVE)
-	e2:SetCondition(aux.GeminiNormalCondition)
+	e2:SetCode(EFFECT_ADD_TYPE)
+	e2:SetRange(LOCATION_MZONE|LOCATION_GRAVE)
+	e2:SetCondition(Gemini.IsHandlerNormal)
 	e2:SetValue(TYPE_NORMAL)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
@@ -28,6 +37,7 @@ function Auxiliary.EnableGeminiAttribute(c)
 	e3:SetValue(TYPE_EFFECT)
 	c:RegisterEffect(e3)
 end
+
 --register effect of return to hand for Spirit monsters
 function Auxiliary.EnableSpiritReturn(c,event1,...)
 	local e1=Effect.CreateEffect(c)

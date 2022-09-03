@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_BE_BATTLE_TARGET)
 	e1:SetOperation(s.negop)
 	c:RegisterEffect(e1)
-	--Add 1 Charge Counter to this card during controller's End Phase
+	--Add 1 Turn Counter to this card during controller's End Phase
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e2:SetRange(LOCATION_MZONE)
@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.ccon)
 	e2:SetOperation(s.ctop)
 	c:RegisterEffect(e2)
-	--Remove all Charge Counters from this card during controller's Battle Phase to increase ATK by 1000 for each Charge Counter removed until End Phase
+	--Remove all Turn Counters from this card during controller's Battle Phase to increase ATK by 1000 for each Turn Counter removed until End Phase
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(13893596,0))
 	e3:SetCategory(CATEGORY_ATKCHANGE)
@@ -65,7 +65,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if ct>0 then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
+		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(ct*1000)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)

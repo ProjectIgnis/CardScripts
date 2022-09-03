@@ -45,7 +45,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,p,LOCATION_HAND,0,1,1,nil)
 		if #g>0 then
 			Duel.BreakEffect()
-			Duel.SendtoDeck(sg,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
+			Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 		end
 	end
 	if not e:IsHasType(EFFECT_TYPE_ACTIVATE) then return end

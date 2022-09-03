@@ -49,7 +49,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 		c:AddCounter(0x1105,1)
 	end
 end
-function s.atkcost(e,tp,eg,ep,ev,re,r,rp)
+function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local ct=c:GetCounter(0x1105)
 	if chk==0 then return ct>0 and c:IsCanRemoveCounter(tp,0x1105,ct,REASON_COST) end

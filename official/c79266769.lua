@@ -1,14 +1,13 @@
 --闇鋼龍ダークネスメタル
 --Darkness Metal, the Dragon of Dark Steel
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--Link summon procedure
+	--Link Summon procedure
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_EFFECT),2,nil,s.spcheck)
-	--Special summon 1 of your monsters that is banished or in GY
+	--Special Summon 1 of your monsters that is banished or in GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -64,17 +63,21 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e3)
 		--Cannot special summon link monsters for rest of turn
 		local e4=Effect.CreateEffect(c)
+		e4:SetDescription(aux.Stringid(id,1))
 		e4:SetType(EFFECT_TYPE_FIELD)
-		e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
+		e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 		e4:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 		e4:SetTargetRange(1,0)
 		e4:SetTarget(s.splimit)
 		e4:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e4,tp)
-		aux.RegisterClientHint(c,nil,tp,1,0,aux.Stringid(id,1),nil)
 	end
 	Duel.SpecialSummonComplete()
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return c:IsLinkMonster()
+	if c:IsMonster() then
+		return c:IsType(TYPE_LINK)
+	else
+		return c:IsOriginalType(TYPE_LINK)
+	end
 end

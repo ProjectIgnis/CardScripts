@@ -18,7 +18,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ct=math.min(5,Duel.GetFieldGroupCount(tp,LOCATION_DECK,0))
 	if ct~=0 then
 		local ac=ct==1 and ct or Duel.AnnounceNumberRange(tp,1,ct)
-		Duel.SortDecktop(tp,tp,ct)
+		Duel.SortDecktop(tp,tp,ac)
 	end
 	if Duel.GetFlagEffect(tp,id)~=0 then return end
 	local e1=Effect.CreateEffect(e:GetHandler())

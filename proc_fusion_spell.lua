@@ -309,6 +309,7 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 	return	function(e,tp,eg,ep,ev,re,r,rp)
 				location=location or LOCATION_EXTRA
 				chkf = chkf and chkf|tp or tp
+				if not preselect then chkf=chkf|FUSPROC_CANCELABLE end
 				local sumlimit=(chkf&(FUSPROC_NOTFUSION|FUSPROC_NOLIMIT))~=0
 				local notfusion=(chkf&FUSPROC_NOTFUSION)~=0
 				if not value then value=0 end
@@ -413,17 +414,35 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 				end
 				if #sg1>0 then
 					local sg=sg1:Clone()
-					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-					local tc=sg:Select(tp,1,1,nil):GetFirst()
-					if preselect and preselect(e,tc)==false then
-						return
-					end
-					local sel=effswithgroup[Fusion.ChainMaterialPrompt(effswithgroup,tc:GetCardID(),tp,e)]
+					local mat1=Group.CreateGroup()
+					local sel=nil
 					local backupmat=nil
+					local tc=nil
+					local ce=nil
+					while #mat1==0 do
+						Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+						tc=sg:Select(tp,1,1,nil):GetFirst()
+						if preselect and preselect(e,tc)==false then
+							return
+						end
+						sel=effswithgroup[Fusion.ChainMaterialPrompt(effswithgroup,tc:GetCardID(),tp,e)]
+						if sel[1]==e then
+							Fusion.CheckAdditional=checkAddition
+							Fusion.ExtraGroup=extragroup
+							mat1=Duel.SelectFusionMaterial(tp,tc,mg1,gc,chkf)
+						else
+							ce=sel[1]
+							local fcheck=nil
+							if ce:GetLabelObject() then fcheck=ce:GetLabelObject():GetOperation() end
+							Fusion.CheckAdditional=checkAddition
+							if fcheck then
+								if checkAddition then Fusion.CheckAdditional=aux.AND(checkAddition,fcheck) else Fusion.CheckAdditional=fcheck end
+							end
+							Fusion.ExtraGroup=ce:GetTarget()(ce,e,tp,value)
+							mat1=Duel.SelectFusionMaterial(tp,tc,Fusion.ExtraGroup,gc,chkf)
+						end
+					end
 					if sel[1]==e then
-						Fusion.CheckAdditional=checkAddition
-						Fusion.ExtraGroup=extragroup
-						local mat1=Duel.SelectFusionMaterial(tp,tc,mg1,gc,chkf)
 						Fusion.ExtraGroup=nil
 						backupmat=mat1:Clone()
 						tc:SetMaterial(mat1)
@@ -506,18 +525,9 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 						Duel.BreakEffect()
 						Duel.SpecialSummonStep(tc,value,tp,tp,sumlimit,false,sumpos)
 					else
-						local ce=sel[1]
-						local fcheck=nil
-						if ce:GetLabelObject() then fcheck=ce:GetLabelObject():GetOperation() end
-						Fusion.CheckAdditional=checkAddition
-						if fcheck then
-							if checkAddition then Fusion.CheckAdditional=aux.AND(checkAddition,fcheck) else Fusion.CheckAdditional=fcheck end
-						end
-						Fusion.ExtraGroup=ce:GetTarget()(ce,e,tp,value)
-						local mat2=Duel.SelectFusionMaterial(tp,tc,Fusion.ExtraGroup,gc,chkf)
 						Fusion.CheckAdditional=nil
 						Fusion.ExtraGroup=nil
-						ce:GetOperation()(sel[1],e,tp,tc,mat2,value,nil,sumpos)
+						ce:GetOperation()(sel[1],e,tp,tc,mat1,value,nil,sumpos)
 						backupmat=tc:GetMaterial():Clone()
 					end
 					stage2(e,tc,tp,backupmat,0)

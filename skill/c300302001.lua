@@ -1,7 +1,7 @@
 --Fusion Party!
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddSkillProcedure(c,1,false,s.flipcon(Fusion.SummonEffTG()),s.flipop(Fusion.SummonEffOP{preselect=s.preselect}),1)
+	aux.AddSkillProcedure(c,1,false,s.flipcon(Fusion.SummonEffTG()),s.flipop(Fusion.SummonEffOP{extraop=s.extraop}),1)
 end
 function s.flipcon(fustg)
 	return function(e,tp,eg,ep,ev,re,r,rp)
@@ -11,7 +11,7 @@ function s.flipcon(fustg)
 		return aux.CanActivateSkill(tp) and fustg(e,tp,eg,ep,ev,re,r,rp,0)
 	end
 end
-function s.preselect(e,tc)
+function s.extraop(e,tc,tp,mat)
 	return tc:RegisterEffect(e:GetLabelObject())
 end
 function s.flipop(fusop)

@@ -1,19 +1,19 @@
 --ミュステリオンの竜冠
---Dracrown of Mysterion
+--Mysterion the Dragon Crown
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--fusion material
+	--Fusion Summon
 	c:EnableReviveLimit()
 	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsRace,RACE_SPELLCASTER),aux.FilterBoolFunctionEx(Card.IsRace,RACE_DRAGON))
-	--cannot fusion material
+	--Cannot be used as Fusion Material
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
 	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e0:SetCode(EFFECT_CANNOT_BE_FUSION_MATERIAL)
 	e0:SetValue(1)
 	c:RegisterEffect(e0)
-	--atk down
+	--Decreak ATK by 100 per banished card
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -21,11 +21,12 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(function(e,cc) return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_REMOVED,0)*-100 end)
 	c:RegisterEffect(e1)
-	--banish
+	--Banish monsters
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
+	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,id)
 	e2:SetTarget(s.target)
@@ -39,7 +40,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local rc=re:GetHandler()
 	if chkc then return eg:IsContains(chkc) and s.cfilter(chkc,e,rc) end
-	if chk==0 then return re:IsActivated() and rc and eg:IsExists(s.cfilter,1,nil,e,rc) end
+	if chk==0 then return re and re:IsActivated() and re:IsActiveType(TYPE_MONSTER) and rc and eg:IsExists(s.cfilter,1,nil,e,rc) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=eg:FilterSelect(tp,s.cfilter,1,1,nil,e,rc)
 	Duel.SetTargetCard(g)

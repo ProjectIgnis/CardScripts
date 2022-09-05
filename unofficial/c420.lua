@@ -42,14 +42,12 @@ if not AnimeArchetype then
 	-- Graceful Tear/Graceful Charity/Numinous Healer
 	-- Cherubini, Black Angel of the Burning Abyss
 	-- Fallen Angel of Roses/Muse-A/Queen Angel of Roses
-
 	-- Tellus the Little Angel
 	AnimeArchetype.OCGAngel={
 		79575620,39996157,15914410,53334641,16972957,42216237,
 		42418084,18378582,59509952,81146288,85399281,47852924,
 		74137509,17653779,9032529,79571449,2130625,49674183,
-		69992868,96470883,11398951,
-		100274002
+		69992868,96470883,11398951,19280589
 	}
 	Card.IsAngel=MakeCheck({0x154a,0xef},AnimeArchetype.OCGAngel)
 
@@ -374,8 +372,9 @@ if not AnimeArchetype then
 	-- 地獄
 	-- ヘル
 	-- Hundred-Footed Horror/Chthonian Soldier/Mefist the Infernal General
+	-- Hellfire Spearsman - Ghost Lancer/Ghost Sleeper/Ghost Wyvern
 	AnimeArchetype.OCGHell={
-		36029076,46820049,50916353
+		36029076,46820049,50916353,64104037,99370594,61103515
 	}
 	Card.IsHell=MakeCheck({0x567},AnimeArchetype.OCGHell)
 
@@ -971,7 +970,6 @@ if not AnimeArchetype then
 	-- Naturia White Oak/White Night Dragon/Blue-Eyes Alternative White Dragon/
 	-- Blue-Eyes White Dragon/ The White Stone of Ancients/The White Stone of Legend/
 	-- White Aura Dolphin/White Aura Biphamet/White Aura Whale/
-
 	-- White Aura Monokeros/ White Salvation/White Magical Hat/
 	-- White Stingray/White Duston/White Dolphin/
 	-- White Night Queen/White ninja/White Howling/
@@ -1047,7 +1045,6 @@ if not AnimeArchetype then
 	}
 	Card.IsInfinity=MakeCheck({0x562},AnimeArchetype.OCGInfinity)
 
-
 	-- Monarch
 	-- 帝
 	-- てい
@@ -1087,4 +1084,21 @@ if not AnimeArchetype then
 	}
 	Card.IsMonarch=MakeCheck({0x571,0xbe},AnimeArchetype.OCGMonarch)
 
+	-- Cenozoic
+	-- 新生代
+	-- しんせいだい
+	-- Fossil Dragon Skullgar/Fossil Machine Skull Buggy/Fossil Warrior Skull Bone
+	Card.IsCenozoic=MakeCheck({0x57c},{12015000,10040267,86520461})
+
+	-- Mesozoic
+	-- 中生代
+	-- ちゅうせいだい
+	-- Fossil Machine Skull Wagon/Fossil Warrior Skull Knight
+	Card.IsMesozoic=MakeCheck({0x57d},{83656563,59531356})
+
+	-- Paleozoic
+	-- 古生代
+	-- こせいだい
+	-- Fossil Dragon Skullgios/Fossil Machine Skull Convoy/Fossil Warrior Skull King
+	Card.IsPaleozoic=MakeCheck({0x57e},{21225115,57157964,96897184})
 end

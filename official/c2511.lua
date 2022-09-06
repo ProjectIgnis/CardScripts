@@ -1,5 +1,5 @@
 -- 白銀の城の狂時計
--- Labrynth Cuclock
+-- Labrynth Cooclock
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -32,8 +32,8 @@ s.listed_names={id}
 s.listed_series={0x17f}
 function s.accost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(c,REASON_COST)
+	if chk==0 then return c:IsDiscardable() end
+	Duel.SendtoGrave(c,REASON_COST+REASON_DISCARD)
 end
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())

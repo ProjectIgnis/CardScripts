@@ -58,7 +58,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for fusion monster that lists "Fallen of Albaz"
 function s.matfilter(c)
-	return c:IsType(TYPE_FUSION) and aux.IsMaterialListCode(c,CARD_ALBAZ)
+	return c:IsType(TYPE_FUSION) and c:IsMaterialListCode(CARD_ALBAZ)
 end
 	--Check for "Sprigguns" Xyz monster
 function s.xyzfilter(c)

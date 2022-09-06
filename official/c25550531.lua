@@ -60,7 +60,7 @@ function s.spcfilter(c,e,tp,mc)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,mc,c)
 end
 function s.spfilter(c,e,tp,mc,sc)
-	return c:IsType(TYPE_XYZ,c,SUMMON_TYPE_XYZ,tp) and aux.IsCodeListed(c,sc:GetCode()) and mc:IsCanBeXyzMaterial(c,tp)
+	return c:IsType(TYPE_XYZ,c,SUMMON_TYPE_XYZ,tp) and c:IsCodeListed(sc:GetCode()) and mc:IsCanBeXyzMaterial(c,tp)
 		and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

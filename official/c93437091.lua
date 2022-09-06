@@ -16,7 +16,7 @@ end
 s.listed_series={0xdd}
 s.listed_names={CARD_BLUEEYES_W_DRAGON,23995346}
 function s.filter(c)
-	return ( ( (c:IsSetCard(0xdd) and c:IsMonster()) ) or ( (aux.IsCodeListed(c,CARD_BLUEEYES_W_DRAGON) or aux.IsCodeListed(c,23995346)) and c:IsSpellTrap() and not c:IsCode(id) ) ) 
+	return ( ( (c:IsSetCard(0xdd) and c:IsMonster()) ) or ( (c:IsCodeListed(CARD_BLUEEYES_W_DRAGON) or c:IsCodeListed(23995346)) and c:IsSpellTrap() and not c:IsCode(id) ) ) 
 		and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

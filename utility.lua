@@ -1180,7 +1180,7 @@ function Auxiliary.EquipByEffectAndLimitRegister(c,e,tp,tc,code,mustbefaceup)
 	e1:SetProperty(EFFECT_FLAG_OWNER_RELATE)
 	e1:SetCode(EFFECT_EQUIP_LIMIT)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-	e1:SetValue(Auxiliary.EquipByEffectLimit)
+	e1:SetValue(Card.EquipByEffectLimit)
 	e1:SetLabelObject(te)
 	tc:RegisterEffect(e1)
 	return true

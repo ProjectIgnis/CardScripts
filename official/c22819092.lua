@@ -17,7 +17,7 @@ end
 s.listed_names={CARD_UMI}
 function s.thfilter(c)
 	return c:IsLevelBelow(7) and c:IsAbleToHand()
-		and ((c:IsType(TYPE_NORMAL) and c:IsAttribute(ATTRIBUTE_WATER)) or aux.IsCodeListed(c,CARD_UMI))
+		and ((c:IsType(TYPE_NORMAL) and c:IsAttribute(ATTRIBUTE_WATER)) or c:IsCodeListed(CARD_UMI))
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,tp) end

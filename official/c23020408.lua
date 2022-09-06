@@ -28,7 +28,7 @@ end
 s.listed_names={CARD_DARK_MAGICIAN,CARD_DARK_MAGICIAN_GIRL,id}
 s.listed_series={0x13a}
 function s.filter(c,deckCount)
-	return not c:IsCode(id) and (c:IsCode(CARD_DARK_MAGICIAN) or aux.IsCodeListed(c,CARD_DARK_MAGICIAN,CARD_DARK_MAGICIAN_GIRL))
+	return not c:IsCode(id) and (c:IsCode(CARD_DARK_MAGICIAN) or c:IsCodeListed(CARD_DARK_MAGICIAN,CARD_DARK_MAGICIAN_GIRL))
 		and (c:IsLocation(LOCATION_DECK) and deckCount>1 or not c:IsLocation(LOCATION_DECK) and c:IsAbleToDeck())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

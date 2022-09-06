@@ -30,7 +30,7 @@ function s.counterfilter(c)
 	return not c:IsSummonLocation(LOCATION_EXTRA) or c:IsType(TYPE_SYNCHRO)
 end
 function s.thfilter(c)
-	return aux.IsCodeListed(c,CARD_BLACK_WINGED_DRAGON) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsCodeListed(CARD_BLACK_WINGED_DRAGON) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

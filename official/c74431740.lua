@@ -62,7 +62,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tdfilter(c,e)
-	return (c:IsCode(CARD_ASSAULT_MODE) or aux.IsCodeListed(c,CARD_ASSAULT_MODE)) and not c:IsCode(id)
+	return (c:IsCode(CARD_ASSAULT_MODE) or c:IsCodeListed(CARD_ASSAULT_MODE)) and not c:IsCode(id)
 		and c:IsCanBeEffectTarget(e) and c:IsAbleToDeck()
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

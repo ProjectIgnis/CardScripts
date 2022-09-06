@@ -39,7 +39,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.texfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:IsMonster() and c:IsAbleToExtra()
-		and aux.IsMaterialListCode(c,CARD_ALBAZ)
+		and c:IsMaterialListCode(CARD_ALBAZ)
 end
 function s.rescon(sg,e,tp,mg)
 	return (#sg==1 and sg:IsExists(Card.IsLocation,1,nil,LOCATION_MZONE))

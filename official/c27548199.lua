@@ -50,7 +50,7 @@ function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,nil,1,tp,LOCATION_GRAVE)
 end
 function s.equipop(c,e,tp,tc)
-	if not aux.EquipByEffectAndLimitRegister(c,e,tp,tc,id,true) then return end
+	if not c:EquipByEffectAndLimitRegister(e,tp,tc,id,true) then return end
 	local lk=tc:GetLink()
 	local atk=tc:GetTextAttack()/2
 	if atk<0 then atk=0 end

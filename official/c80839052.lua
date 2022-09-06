@@ -48,7 +48,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return c:IsAbleToHand() and not c:IsCode(id) and (c:IsCode(36623431) or aux.IsCodeListed(c,36623431))
+	return c:IsAbleToHand() and not c:IsCode(id) and (c:IsCode(36623431) or c:IsCodeListed(36623431))
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

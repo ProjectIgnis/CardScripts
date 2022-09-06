@@ -78,7 +78,7 @@ function s.lizfilter(e,c)
 	return not c:IsOriginalType(TYPE_FUSION)
 end
 function s.spcfilter(c,tp)
-	return c:IsPreviousPosition(POS_FACEUP) and c:IsType(TYPE_FUSION) and aux.IsMaterialListCode(c,CARD_NEOS)
+	return c:IsPreviousPosition(POS_FACEUP) and c:IsType(TYPE_FUSION) and c:IsMaterialListCode(CARD_NEOS)
 		and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

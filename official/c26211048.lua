@@ -36,7 +36,7 @@ function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	end
 end
 function s.equipop(c,e,tp,tc)
-	if not aux.EquipByEffectAndLimitRegister(c,e,tp,tc) then return end
+	if not c:EquipByEffectAndLimitRegister(e,tp,tc) then return end
 	if tc:IsFaceup() then
 		local atk=tc:GetTextAttack()/2
 		if atk<0 then atk=0 end

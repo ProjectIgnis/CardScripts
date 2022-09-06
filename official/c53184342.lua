@@ -37,7 +37,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.eqptg)
 	e3:SetOperation(s.eqpop)
 	c:RegisterEffect(e3)
-	aux.AddEREquipLimit(c,nil,aux.FilterBoolFunction(Card.IsMonster),aux.EquipByEffectAndLimitRegister,e3)
+	aux.AddEREquipLimit(c,nil,aux.FilterBoolFunction(Card.IsMonster),Card.EquipByEffectAndLimitRegister,e3)
 end
 function s.spfilter(c)
 	return c:IsRace(RACE_WINGEDBEAST+RACE_DRAGON) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)

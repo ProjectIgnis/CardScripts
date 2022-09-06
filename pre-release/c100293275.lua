@@ -34,7 +34,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_RA,id,10000090}
 function s.thfilter(c)
-	return (c:IsCode(CARD_RA) or aux.IsCodeListed(c,CARD_RA)) and not c:IsCode(id) and c:IsAbleToHand()
+	return (c:IsCode(CARD_RA) or c:IsCodeListed(CARD_RA)) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

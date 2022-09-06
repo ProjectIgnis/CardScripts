@@ -260,7 +260,7 @@ if not SealedDuel then
 			end
 		end
 		--anime counterparts select
-		anime=aux.AskEveryone(aux.Stringid(4006,15))
+		anime=Duel.AskEveryone(aux.Stringid(4006,15))
 		if anime then
 			Duel.Hint(HINT_OPSELECTED,tp,aux.Stringid(4006,15))
 			Duel.Hint(HINT_OPSELECTED,1-tp,aux.Stringid(4006,15))

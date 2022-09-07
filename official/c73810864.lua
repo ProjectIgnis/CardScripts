@@ -13,7 +13,6 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetCountLimit(1,id)
-	e1:SetCondition(s.spcon)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
@@ -43,10 +42,6 @@ end
 s.listed_series={0x153}
 	--Specifically lists itself
 s.listed_names={id}
-	--Check if no other monsters
-function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(nil,tp,LOCATION_MZONE,0,1,e:GetHandler())
-end
 	--Check for "Kisikil" monster
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x153) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)

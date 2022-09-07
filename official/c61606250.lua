@@ -60,27 +60,25 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not tc:IsRelateToEffect(e) or tc:IsFacedown() then return end
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELECT)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.opfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,tc:GetCode(),ft,e,tp)
-	if #g>0 then
-		local sc=g:GetFirst()
-		aux.ToHandOrElse(sc,tp,
-			function(c)
-				return sc:IsCanBeSpecialSummoned(e,0,tp,true,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-			end,
-			function(c)
-				if Duel.SpecialSummonStep(sc,0,tp,tp,true,false,POS_FACEUP)~=0 then
-					--Cannot attack directly
-					local e1=Effect.CreateEffect(c)
-					e1:SetDescription(3207)
-					e1:SetType(EFFECT_TYPE_SINGLE)
-					e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
-					e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_CLIENT_HINT)
-					e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-					sc:RegisterEffect(e1)
-					Duel.SpecialSummonComplete()
-				end
-			end,
-			aux.Stringid(id,1)
-		)
-	end
+	local sc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.opfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,tc:GetCode(),ft,e,tp):GetFirst()
+	if not sc then return end
+	aux.ToHandOrElse(sc,tp,
+		function(c)
+			return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and sc:IsCanBeSpecialSummoned(e,0,tp,true,false)
+		end,
+		function(c)
+			if Duel.SpecialSummonStep(sc,0,tp,tp,true,false,POS_FACEUP) then
+				--Cannot attack directly
+				local e1=Effect.CreateEffect(c)
+				e1:SetDescription(3207)
+				e1:SetType(EFFECT_TYPE_SINGLE)
+				e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_CLIENT_HINT)
+				e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
+				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+				sc:RegisterEffect(e1)
+			end
+			Duel.SpecialSummonComplete()
+		end,
+		aux.Stringid(id,1)
+	)
 end

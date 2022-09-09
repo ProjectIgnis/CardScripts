@@ -52,9 +52,9 @@ function s.accon(e)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x17f),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
+	if not (rp==tp and r&REASON_COST==REASON_COST and re and re:IsActivated()) then return false end
 	local rc=re:GetHandler()
-	return rp==tp and r&REASON_COST==REASON_COST and re and re:IsActivated()
-		and eg:IsExists(Card.IsPreviousLocation,1,e:GetHandler(),LOCATION_HAND)
+	return eg:IsExists(Card.IsPreviousLocation,1,e:GetHandler(),LOCATION_HAND)
 		and ((re:IsActiveType(TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE))
 		or (rc:IsSetCard(0x17f) and not rc:IsCode(id)))
 end

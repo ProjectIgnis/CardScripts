@@ -1,4 +1,4 @@
---
+--粉砕せし破壊神
 --The Breaking Ruin God
 --Scripted by Eerie Code
 local s,id=GetID()
@@ -59,10 +59,14 @@ end
 function s.rmcfilter(c,tp)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
 end
+function s.oblskfilter(c,tp)
+	return s.rmcfilter(c,tp) and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousCodeOnField()==10000000
+end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==tp and r&REASON_COST==REASON_COST and re and re:IsActivated()
 		and eg:IsExists(s.rmcfilter,2,nil,tp)
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,10000000),tp,LOCATION_ONFIELD,0,1,nil)
+		and (Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,10000000),tp,LOCATION_ONFIELD,0,1,nil)
+		or eg:IsExists(s.oblskfilter,1,nil,tp))
 end
 function s.rmfilter(c)
 	return c:IsMonster() and c:IsAbleToRemove()

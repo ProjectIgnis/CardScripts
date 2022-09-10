@@ -1,4 +1,4 @@
---
+--真なる太陽神
 --The True Sun God
 --Scripted by The Razgriz
 local s,id=GetID()

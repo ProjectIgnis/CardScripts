@@ -25,6 +25,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SendtoHand(sg,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,sg)
 		Duel.ShuffleHand(tp)
+		Duel.BreakEffect()
 		Duel.SortDecktop(tp,tp,2)
 	else Duel.SortDecktop(tp,tp,3) end
 end

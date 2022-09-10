@@ -1,5 +1,5 @@
 -- 白銀の城の狂時計
--- Labrynth Cuclock
+-- Labrynth Cooclock
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -32,8 +32,8 @@ s.listed_names={id}
 s.listed_series={0x17f}
 function s.accost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(c,REASON_COST)
+	if chk==0 then return c:IsDiscardable() end
+	Duel.SendtoGrave(c,REASON_COST+REASON_DISCARD)
 end
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -52,10 +52,11 @@ function s.accon(e)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x17f),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==tp and r&REASON_COST==REASON_COST and re and re:IsActivated()
-		and eg:IsExists(Card.IsPreviousLocation,1,e:GetHandler(),LOCATION_HAND)
+	if not (rp==tp and r&REASON_COST==REASON_COST and re and re:IsActivated()) then return false end
+	local rc=re:GetHandler()
+	return eg:IsExists(Card.IsPreviousLocation,1,e:GetHandler(),LOCATION_HAND)
 		and ((re:IsActiveType(TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE))
-		or (re:GetHandler():IsSetCard(0x17f) and not re:GetHandler():IsCode(id)))
+		or (rc:IsSetCard(0x17f) and not rc:IsCode(id)))
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

@@ -346,6 +346,9 @@ function Auxiliary.ParamsFromTable(tab,key,...)
 		if ... then
 			return val,Auxiliary.ParamsFromTable(tab,...)
 		else
+			if key == "vaargs" and type(val)=="table" then
+				return table.unpack(val)
+			end
 			return val
 		end
 	end

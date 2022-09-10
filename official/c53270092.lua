@@ -3,11 +3,9 @@
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--Pendulum Summon
 	Pendulum.AddProcedure(c)
-	--Spirit return
-	aux.EnableSpiritReturn(c,EVENT_SUMMON_SUCCESS,EVENT_FLIP)
-	--Return itself to hand
+	Spirit.AddProcedure(c,EVENT_SUMMON_SUCCESS,EVENT_FLIP)
+	--Return this card from the Pendulum Zone
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND)
@@ -55,20 +53,19 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.thfilter(c)
-	return c:GetAttack()==2400 and c:GetDefense()==1000 and c:IsAbleToHand() and not c:IsCode(id)
+	return c:IsAttack(2400) and c:IsDefense(1000) and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.pzfilter,tp,LOCATION_ONFIELD,0,nil,tp)
-	if #g==0 then return end
-	if Duel.SendtoHand(g,nil,REASON_EFFECT)>0 then
-		local og=Duel.GetOperatedGroup():Filter(Card.IsLocation,nil,LOCATION_HAND)
-		local hg=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil)
-		if #og>0 and #hg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-			local sg=hg:Select(tp,1,1,nil)
-			Duel.BreakEffect()
-			Duel.SendtoHand(sg,nil,REASON_EFFECT)
-			Duel.ConfirmCards(1-tp,sg)
-		end
+	if #g==0 or Duel.SendtoHand(g,nil,REASON_EFFECT)==0
+		or not Duel.GetOperatedGroup():IsExists(Card.IsLocation,1,nil,LOCATION_HAND) then return end
+	local hg=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil)
+	if #hg==0 or not Duel.SelectYesNo(tp,aux.Stringid(id,2)) then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+	local sg=hg:Select(tp,1,1,nil)
+	if #sg>0 then
+		Duel.BreakEffect()
+		Duel.SendtoHand(sg,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,sg)
 	end
 end

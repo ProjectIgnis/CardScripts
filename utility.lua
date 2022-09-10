@@ -1592,21 +1592,20 @@ Function to simplify registering EFFECT_FLAG_CLIENT_HINT to players
 -reset: additional resets, other than RESET_PHASE+PHASE_END
 ]]
 function Auxiliary.RegisterClientHint(card,property,tp,player1,player2,str,reset,ct)
-	if card then
-	if not property then property=0 end
-	if not reset then reset=0 end
-		local eff=Effect.CreateEffect(card)
-		eff:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT|property)
-		eff:SetTargetRange(player1,player2)
-		if str then
-			eff:SetDescription(str)
-		else
-			eff:SetDescription(aux.Stringid(card:GetOriginalCode(),1))
-		end
-		if ct==nil then ct=1 end
-		eff:SetReset(RESET_PHASE+PHASE_END|reset,ct)
-		Duel.RegisterEffect(eff,tp)
+	if not card then return end
+	property=property or 0
+	reset=reset or 0
+	local eff=Effect.CreateEffect(card)
+	eff:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT|property)
+	eff:SetTargetRange(player1,player2)
+	if str then
+		eff:SetDescription(str)
+	else
+		eff:SetDescription(aux.Stringid(card:GetOriginalCode(),1))
 	end
+	eff:SetReset(RESET_PHASE+PHASE_END|reset,ct or 1)
+	Duel.RegisterEffect(eff,tp)
+	return eff
 end
 function Auxiliary.FieldSummonProcTg(fun1,fun2)
 	return function(e,tp,eg,ep,ev,re,r,rp,chk,c,...)

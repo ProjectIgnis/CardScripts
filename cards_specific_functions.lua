@@ -38,59 +38,78 @@ function Gemini.RegisterAbility(c)
 	c:RegisterEffect(e3)
 end
 
---register effect of return to hand for Spirit monsters
-function Auxiliary.EnableSpiritReturn(c,event1,...)
+Spirit={}
+FLAG_SPIRIT_RETURN=2
+function Spirit.AddProcedure(c,...)
+	--Return in the End Phase
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(event1)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetOperation(Auxiliary.SpiritReturnReg)
-	c:RegisterEffect(e1)
-	for i,event in ipairs{...} do
-		local e2=e1:Clone()
-		e2:SetCode(event)
-		c:RegisterEffect(e2)
-	end
-end
-function Auxiliary.SpiritReturnReg(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e1:SetDescription(1104)
+	e1:SetDescription(1105)
 	e1:SetCategory(CATEGORY_TOHAND)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e1:SetCode(EVENT_PHASE+PHASE_END)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	if e:GetCode() == EVENT_FLIP_SUMMON_SUCCESS or e:GetCode() == EVENT_FLIP then
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-	else
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TEMP_REMOVE-RESET_LEAVE+RESET_PHASE+PHASE_END)
-	end
-	e1:SetCondition(Auxiliary.SpiritReturnCondition)
-	e1:SetTarget(Auxiliary.SpiritReturnTarget)
-	e1:SetOperation(Auxiliary.SpiritReturnOperation)
+	e1:SetCondition(Spirit.MandatoryReturnCondition)
+	e1:SetTarget(Spirit.MandatoryReturnTarget)
+	e1:SetOperation(Spirit.ReturnOperation)
 	c:RegisterEffect(e1)
+	--Optional return in case of "SPIRIT_MAYNOT_RETURN" effects
 	local e2=e1:Clone()
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e2:SetCondition(Spirit.OptionalReturnCondition)
+	e2:SetTarget(Spirit.OptionalReturnTarget)
 	c:RegisterEffect(e2)
+	--Effects that register the flags
+	local feffs={}
+	for _,event in ipairs{...} do
+		local fe1=Effect.CreateEffect(c)
+		fe1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+		fe1:SetCode(event)
+		fe1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		fe1:SetOperation(Spirit.SummmonRegister)
+		c:RegisterEffect(fe1)
+		table.insert(feffs,fe1)
+	end
+	return e1,e2,table.unpack(feffs)
 end
-function Auxiliary.SpiritReturnCondition(e,tp,eg,ep,ev,re,r,rp)
+function Spirit.SummmonRegister(e,tp,eg,ep,ev,re,r,rp)
+	local event=e:GetCode()
+	local reset=RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END
+	if event~=EVENT_FLIP_SUMMON_SUCCESS and event~=EVENT_FLIP then
+		reset=reset&~(RESET_TEMP_REMOVE|RESET_LEAVE)
+	end
+	e:GetHandler():RegisterFlagEffect(FLAG_SPIRIT_RETURN,reset,0,1)
+end
+function Spirit.CommonCondition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsHasEffect(EFFECT_SPIRIT_DONOT_RETURN) then return false end
-	if e:IsHasType(EFFECT_TYPE_TRIGGER_F) then
-		return not c:IsHasEffect(EFFECT_SPIRIT_MAYNOT_RETURN)
-	else return c:IsHasEffect(EFFECT_SPIRIT_MAYNOT_RETURN) end
+	return c:GetFlagEffect(FLAG_SPIRIT_RETURN)>0 and not c:IsHasEffect(EFFECT_SPIRIT_DONOT_RETURN)
 end
-function Auxiliary.SpiritReturnTarget(e,tp,eg,ep,ev,re,r,rp,chk)
+function Spirit.MandatoryReturnCondition(e,tp,eg,ep,ev,re,r,rp)
+	return Spirit.CommonCondition(e) and not e:GetHandler():IsHasEffect(EFFECT_SPIRIT_MAYNOT_RETURN)
+end
+function Spirit.MandatoryReturnTarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,e:GetHandler(),1,0,0)
 end
-function Auxiliary.SpiritReturnOperation(e,tp,eg,ep,ev,re,r,rp)
+function Spirit.OptionalReturnCondition(e,tp,eg,ep,ev,re,r,rp)
+	return Spirit.CommonCondition(e) and e:GetHandler():IsHasEffect(EFFECT_SPIRIT_MAYNOT_RETURN)
+end
+function Spirit.OptionalReturnTarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and c:IsFaceup() then
+	if chk==0 then return c:IsAbleToHand() end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,c,1,0,0)
+end
+function Spirit.ReturnOperation(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if c:IsRelateToEffect(e) then
 		Duel.SendtoHand(c,nil,REASON_EFFECT)
 	end
 end
+
+--[[
+	Archetypes
+--]]
+
 --filter for the immune effect of qli monsters
 function Auxiliary.qlifilter(e,te)
 	if te:IsActiveType(TYPE_MONSTER) and te:IsActivated() then

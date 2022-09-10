@@ -3,57 +3,54 @@
 --If the Draw Phase is skipped, the effect is used during the next available phase
 local s,id=GetID()
 function s.initial_effect(c)
-	--spirit return
-	aux.EnableSpiritReturn(c,EVENT_SUMMON_SUCCESS,EVENT_FLIP)
-	--cannot special summon
+	Spirit.AddProcedure(c,EVENT_SUMMON_SUCCESS,EVENT_FLIP)
+	--Cannot be Special Summoned
 	local e1=Effect.CreateEffect(c)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e1:SetValue(aux.FALSE)
 	c:RegisterEffect(e1)
-	--tograve
-	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(id,1))
-	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e4:SetCode(EVENT_BATTLE_DAMAGE)
-	e4:SetCondition(s.hdcon)
-	e4:SetOperation(s.hdreg)
-	c:RegisterEffect(e4)
-end
-function s.hdcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
+	--Opponent discards their hand next Draw Phase
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e2:SetCode(EVENT_BATTLE_DAMAGE)
+	e2:SetCondition(function(_,tp,_,ep) return ep==1-tp end)
+	e2:SetOperation(s.hdreg)
+	c:RegisterEffect(e2)
 end
 function s.hdreg(e,tp,eg,ep,ev,re,r,rp)
-	local e1=Effect.CreateEffect(e:GetHandler())
+	local c=e:GetHandler()
+	local effs={}
+	--Discard hand in the Draw Phase
+	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_PREDRAW)
+	e1:SetLabelObject(effs)
+	e1:SetOperation(s.hdop)
 	e1:SetReset(RESET_PHASE+PHASE_DRAW)
+	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
-	e1:SetReset(RESET_PHASE+PHASE_MAIN1)
+	e2:SetReset(RESET_PHASE+PHASE_MAIN1)
+	Duel.RegisterEffect(e2,tp)
 	local e3=e1:Clone()
 	e3:SetCode(EVENT_ADJUST)
-	e3:SetCondition(function() return Duel.IsMainPhase() and Duel.GetTurnPlayer()==1-tp end)
-	
-	e1:SetOperation(s.hdop(e2,e3))
-	e2:SetOperation(s.hdop(e3))
-	e3:SetOperation(s.hdop())
-
-	Duel.RegisterEffect(e1,tp)
-	Duel.RegisterEffect(e2,tp)
+	e3:SetCondition(function() return Duel.IsMainPhase() and Duel.IsTurnPlayer(1-tp) end)
 	Duel.RegisterEffect(e3,tp)
+	local hinteff=aux.RegisterClientHint(c,0,tp,0,1,aux.Stringid(id,1))
+	hinteff:SetReset(0)
+	table.insert(effs,e1)
+	table.insert(effs,e2)
+	table.insert(effs,e3)
+	table.insert(effs,hinteff)
 end
-function s.hdop(...)
-	local effs={...}
-	return function(e,tp,eg,ep,ev,re,r,rp)
-		local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
-		if #g>0 then
-			Duel.SendtoGrave(g,REASON_DISCARD+REASON_EFFECT)
-		end
-		for _,eff in pairs(effs) do
-			eff:Reset()
-		end
-		e:Reset()
+function s.hdop(e,tp,eg,ep,ev,re,r,rp)
+	local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
+	if #g>0 then
+		Duel.SendtoGrave(g,REASON_DISCARD+REASON_EFFECT)
+	end
+	for _,eff in pairs(e:GetLabelObject()) do
+		eff:Reset()
 	end
 end

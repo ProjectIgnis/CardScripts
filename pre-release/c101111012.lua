@@ -30,7 +30,7 @@ function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return c:HasLevel() and (#rmg>0 or #tgg>0) end
 	e:SetCategory(0)
 	e:SetProperty(0)
-	local op=aux.SelectEffect(tp,
+	local op=Duel.SelectEffect(tp,
 		{#rmg>0,aux.Stringid(id,1)},
 		{#tgg>0,aux.Stringid(id,2)})
 	if op==1 then
@@ -60,7 +60,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	if not (c:IsRelateToEffect(e) and c:IsFaceup() and c:HasLevel()) then return end
 	local b1=c:IsLevelAbove(ct+1)
 	local b2=true
-	local lvop=aux.SelectEffect(tp,
+	local lvop=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,3)},
 		{b2,aux.Stringid(id,4)})
 	if lvop then

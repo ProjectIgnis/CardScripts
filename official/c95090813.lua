@@ -36,7 +36,7 @@ function s.cfilter1(c)
 	return c:IsCode(36623431) and c:IsAbleToGraveAsCost()
 end
 function s.cfilter2(c)
-	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_WARRIOR) and not c:IsPublic()
+	return c:IsMonster() and c:IsRace(RACE_WARRIOR) and not c:IsPublic()
 end
 function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -81,7 +81,7 @@ function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,g,1,0,0)
 end
 function s.equipop(c,e,tp,tc)
-	if not aux.EquipByEffectAndLimitRegister(c,e,tp,tc) then return end
+	if not c:EquipByEffectAndLimitRegister(e,tp,tc) then return end
 	local atk=tc:GetAttack()
 	if atk<0 then atk=0 end
 	local e2=Effect.CreateEffect(c)

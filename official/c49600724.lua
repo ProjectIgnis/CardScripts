@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,e)
-	return c:IsType(TYPE_MONSTER) and c:IsCanBeEffectTarget(e) and c:IsAbleToRemove() and aux.SpElimFilter(c,true)
+	return c:IsMonster() and c:IsCanBeEffectTarget(e) and c:IsAbleToRemove() and aux.SpElimFilter(c,true)
 end
 function s.filter1(c,g)
 	return g:IsExists(Card.IsAttribute,1,c,c:GetAttribute())

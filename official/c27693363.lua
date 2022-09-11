@@ -94,7 +94,7 @@ end
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 	local tc=Duel.SelectMatchingCard(tp,s.fieldfilter,tp,LOCATION_DECK,0,1,1,nil,tp):GetFirst()
-	aux.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
+	Duel.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsLevelAbove,1,false,nil,nil,7) end
@@ -106,7 +106,7 @@ function s.extracon(base,c,e,tp)
 	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,c,ft,base,tp)
 end
 function s.filter(c,ft,e,tp)
-	return (c:IsSetCard(0x165) and c:IsType(TYPE_MONSTER)) and (c:IsAbleToHand() or (ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
+	return (c:IsSetCard(0x165) and c:IsMonster()) and (c:IsAbleToHand() or (ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

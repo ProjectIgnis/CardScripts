@@ -18,7 +18,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetDecktopGroup(tp,1)
 	local tc=g:GetFirst()
 	if not tc then return end
-	if tc:IsType(TYPE_MONSTER) then
+	if tc:IsMonster() then
 		Duel.Damage(1-tp,1000,REASON_EFFECT)
 	end
 	Duel.SendtoGrave(g,REASON_EFFECT+REASON_REVEAL)

@@ -40,7 +40,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return s.eqcon2(e)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x107a) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x107a) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end

@@ -73,7 +73,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetTargetCard(e:GetLabelObject())
 end
 function s.cfilter(c,e)
-	return c:IsOnField() and c:IsType(TYPE_MONSTER) and c:IsRelateToEffect(e) and c:IsRelateToBattle()
+	return c:IsOnField() and c:IsMonster() and c:IsRelateToEffect(e) and c:IsRelateToBattle()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -38,7 +38,7 @@ end
 s.listed_series={0x7c}
 
 function s.damfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x7c)
+	return c:IsFaceup() and c:IsSpellTrap() and c:IsSetCard(0x7c)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetMatchingGroupCount(s.damfilter,tp,LOCATION_ONFIELD,0,nil)
@@ -58,7 +58,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 		and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
 end
 function s.descfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x7c) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and c:IsSetCard(0x7c) and c:IsSpellTrap() and c:IsAbleToGraveAsCost()
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local nc=Duel.IsExistingMatchingCard(s.descfilter,tp,LOCATION_ONFIELD,0,1,nil)

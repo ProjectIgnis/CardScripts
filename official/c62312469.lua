@@ -49,7 +49,7 @@ function s.value(e,c)
 	return ct*200
 end
 function s.spfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAttribute(ATTRIBUTES)
+	return c:IsMonster() and c:IsAttribute(ATTRIBUTES)
 end
 function s.rescon(sg,e,tp,mg)
 	return true,not sg:CheckDifferentPropertyBinary(function(c)return c:GetAttribute()&(ATTRIBUTES)end)

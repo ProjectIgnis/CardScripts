@@ -60,13 +60,13 @@ function s.con(e,tp,eg,ev,ep,re,r,rp)
 	local c=e:GetHandler()
 	local tc=c:GetReasonCard()
 	local at=Duel.GetAttacker()
-	return (e:GetHandler():IsReason(REASON_RELEASE) and not e:GetHandler():IsReason(REASON_EFFECT)) and tc and tc:IsType(TYPE_MONSTER) and at==tc
+	return (e:GetHandler():IsReason(REASON_RELEASE) and not e:GetHandler():IsReason(REASON_EFFECT)) and tc and tc:IsMonster() and at==tc
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local at=Duel.GetAttacker()
 	local tc=e:GetHandler():GetReasonCard()
-	if (e:GetHandler():IsReason(REASON_RELEASE) and not e:GetHandler():IsReason(REASON_EFFECT)) and tc:IsReason(REASON_SUMMON) and tc:IsType(TYPE_MONSTER) and at==tc then
+	if (e:GetHandler():IsReason(REASON_RELEASE) and not e:GetHandler():IsReason(REASON_EFFECT)) and tc:IsReason(REASON_SUMMON) and tc:IsMonster() and at==tc then
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,tc,1,0,0)
 		Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,2000)
 	end

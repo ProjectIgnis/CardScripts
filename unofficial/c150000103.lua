@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,tid)
-	return c:IsType(TYPE_TRAP) and c:IsSSetable() and c:GetTurnID()==tid and c:IsStatus(STATUS_ACTIVATED)
+	return c:IsTrap() and c:IsSSetable() and c:GetTurnID()==tid and c:IsStatus(STATUS_ACTIVATED)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,Duel.GetTurnCount()) end

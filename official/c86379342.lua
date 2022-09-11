@@ -33,7 +33,7 @@ function s.lkfilter(c,e,tp)
 	return c:IsType(TYPE_LINK) and c:IsFaceup() and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp,c:GetRace())
 end
 function s.spfilter(c,e,tp,race)
-	return c:IsRace(RACES_BEAST_BWARRIOR_WINGB) and c:IsType(TYPE_MONSTER) and not c:IsRace(race) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsRace(RACES_BEAST_BWARRIOR_WINGB) and c:IsMonster() and not c:IsRace(race) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.lkfilter(chkc,e,tp) end
@@ -57,10 +57,10 @@ function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_WINGEDBEAST),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and aux.disfilter2(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(aux.disfilter2,tp,0,LOCATION_ONFIELD,1,nil) end
+	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and chkc:IsNegatableSpellTrap() end
+	if chk==0 then return Duel.IsExistingTarget(Card.IsNegatableSpellTrap,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_NEGATE)
-	Duel.SelectTarget(tp,aux.disfilter2,tp,0,LOCATION_ONFIELD,1,1,nil)
+	Duel.SelectTarget(tp,Card.IsNegatableSpellTrap,tp,0,LOCATION_ONFIELD,1,1,nil)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

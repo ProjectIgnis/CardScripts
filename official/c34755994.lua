@@ -76,7 +76,7 @@ function s.eqlimit(e,c)
 	return c==e:GetLabelObject()
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x152) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x152) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetEquipTarget()

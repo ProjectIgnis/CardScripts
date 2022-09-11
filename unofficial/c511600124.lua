@@ -26,7 +26,7 @@ function s.spfilter(c,e,tp,sc)
 		and sc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,c:GetFreeLinkedZone()&0x1f)
 end
 function s.rfilter(c)
-	return c:IsSetCard(0x119) and c:IsAbleToDeck() and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x119) and c:IsAbleToDeck() and c:IsMonster()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

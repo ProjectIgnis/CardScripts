@@ -87,7 +87,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 				tc2:RegisterEffect(e1)
 			end
 		end
-		local g3=Duel.GetMatchingGroup(aux.disfilter1,tp,0,LOCATION_MZONE,nil)
+		local g3=Duel.GetMatchingGroup(Card.IsNegatableMonster,tp,0,LOCATION_MZONE,nil)
 		if #g3>0 then
 			for tc3 in aux.Next(g3) do
 				local e1=Effect.CreateEffect(c)

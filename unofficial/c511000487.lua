@@ -23,10 +23,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_DICE,nil,0,tp,1)
 end
 function s.dfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsDestructable()
+	return c:IsSpellTrap() and c:IsDestructable()
 end
 function s.desfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsDestructable()
+	return c:IsMonster() and c:IsDestructable()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

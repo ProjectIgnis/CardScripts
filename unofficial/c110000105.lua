@@ -29,7 +29,7 @@ function s.cfilter(c,tp)
 	return c:IsFaceup() and c:IsType(TYPE_ARMOR) and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
 end
 function s.distg(e,c)
-	return c:GetCardTargetCount()>0 and c:IsType(TYPE_TRAP) 
+	return c:GetCardTargetCount()>0 and c:IsTrap() 
 		and c:GetCardTarget():FilterCount(s.cfilter,nil,e:GetHandlerPlayer())==1
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)

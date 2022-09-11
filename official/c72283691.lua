@@ -66,7 +66,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,2),nil)
 end
 function s.spfilter(c,e,tp)
-	return aux.IsCodeListed(c,id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsCodeListed(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

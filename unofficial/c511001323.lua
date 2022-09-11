@@ -41,7 +41,7 @@ function s.distg(e,c)
 	local ec=e:GetHandler()
 	if c==ec or c:GetCardTargetCount()==0 then return false end
 	local eq=ec:GetEquipTarget()
-	return eq and c:GetCardTarget():IsContains(eq) and c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return eq and c:GetCardTarget():IsContains(eq) and c:IsSpellTrap()
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler()

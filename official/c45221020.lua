@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToRemoveAsCost(POS_FACEDOWN)
+	return c:IsSpellTrap() and c:IsAbleToRemoveAsCost(POS_FACEDOWN)
 end
 function s.filter(c,e,tp,lv)
 	return c:IsType(TYPE_NORMAL) and c:IsLevelBelow(lv) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

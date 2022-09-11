@@ -32,7 +32,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x12b}
 function s.cfilter(c)
-	return c:GetPreviousTypeOnField()&TYPE_MONSTER>0 or (c:IsType(TYPE_MONSTER) and c:IsPreviousLocation(LOCATION_GRAVE))
+	return c:GetPreviousTypeOnField()&TYPE_MONSTER>0 or (c:IsMonster() and c:IsPreviousLocation(LOCATION_GRAVE))
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil)
@@ -58,7 +58,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e1)
 end
 function s.costfilter(c)
-	return c:IsSetCard(0x12b) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(0x12b) and c:IsMonster() and c:IsAbleToGraveAsCost()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end

@@ -18,7 +18,7 @@ function s.filter(c)
 	return not c:IsStatus(STATUS_BATTLE_DESTROYED) and c:IsAbleToDeck()
 end
 function s.filter2(c)
-	return c:IsLocation(LOCATION_DECK) and c:IsType(TYPE_MONSTER)
+	return c:IsLocation(LOCATION_DECK) and c:IsMonster()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local rg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
@@ -46,7 +46,7 @@ function s.sp(e,tp,ct)
 	if dt==0 then return end
 	local dlist={}
 	for tc in g:Iter() do
-		if tc:IsType(TYPE_MONSTER) then dlist[tc:GetSequence()]=tc end
+		if tc:IsMonster() then dlist[tc:GetSequence()]=tc end
 	end
 	local i=dt-1
 	local a=0

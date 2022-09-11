@@ -83,5 +83,5 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.efilter(e,re)
-	return re:GetOwner():IsType(TYPE_TRAP)
+	return re:GetOwner():IsTrap()
 end

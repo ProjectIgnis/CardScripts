@@ -32,7 +32,7 @@ function s.initial_effect(c)
 end
 s.listed_names={TOKEN_ROSE}
 function s.filter(c)
-	return c:IsType(TYPE_SPELL) and c:IsType(TYPE_FIELD) and c:IsFaceup() and c:IsAbleToHand()
+	return c:IsSpell() and c:IsType(TYPE_FIELD) and c:IsFaceup() and c:IsAbleToHand()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_FZONE) end

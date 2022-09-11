@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.filter(c)
-	return c:IsLevelAbove(7) and c:IsType(TYPE_MONSTER) and not c:IsPublic()
+	return c:IsLevelAbove(7) and c:IsMonster() and not c:IsPublic()
 end
 function s.spcon(e,c)
 	if c==nil then return true end

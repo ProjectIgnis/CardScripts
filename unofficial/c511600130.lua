@@ -34,7 +34,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local dc=Duel.GetOperatedGroup():GetFirst()
 		Duel.ConfirmCards(1-tp,dc)
 		Duel.BreakEffect()
-		if dc:IsType(TYPE_MONSTER) and Duel.SendtoGrave(dc,REASON_EFFECT+REASON_DISCARD)>0 and dc:IsLocation(LOCATION_GRAVE) then
+		if dc:IsMonster() and Duel.SendtoGrave(dc,REASON_EFFECT+REASON_DISCARD)>0 and dc:IsLocation(LOCATION_GRAVE) then
 			Duel.ChainAttack()
 			local e1=Effect.GlobalEffect()
 			e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -56,7 +56,7 @@ function s.caop(e,tp,eg,ep,ev,re,r,rp)
 		local dc=Duel.GetOperatedGroup():GetFirst()
 		Duel.ConfirmCards(1-tp,dc)
 		Duel.BreakEffect()
-		if dc:IsType(TYPE_MONSTER) and Duel.SendtoGrave(dc,REASON_COST+REASON_DISCARD)>0 and dc:IsLocation(LOCATION_GRAVE) then
+		if dc:IsMonster() and Duel.SendtoGrave(dc,REASON_COST+REASON_DISCARD)>0 and dc:IsLocation(LOCATION_GRAVE) then
 			Duel.ChainAttack()
 		else
 			e:Reset()

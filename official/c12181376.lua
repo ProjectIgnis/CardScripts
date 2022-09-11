@@ -57,5 +57,5 @@ function s.aclimit(e,re,tp)
 	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_TRAP)
 end
 function s.distg(e,c)
-	return c:IsType(TYPE_TRAP)
+	return c:IsTrap()
 end

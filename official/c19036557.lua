@@ -26,7 +26,7 @@ end
 s.listed_series={0x400d,0x113}
 s.listed_names={}
 function s.costfilter(c,tp)
-	return c:IsSetCard(0x400d) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(0x400d) and c:IsMonster() and c:IsAbleToGraveAsCost()
 		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,c)
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -52,7 +52,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(tc,REASON_COST)
 end
 function s.thfilter(c)
-	return c:IsType(TYPE_MONSTER) and not c:IsCode(id) and (c:IsSetCard(0x400d) or c:IsSetCard(0x113)) and c:IsAbleToHand()
+	return c:IsMonster() and not c:IsCode(id) and (c:IsSetCard(0x400d) or c:IsSetCard(0x113)) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

@@ -5,13 +5,20 @@ function GetID()
 	return self_table,self_code
 end
 
-
 --Multi purpose token
 if not c946 then
 	c946 = {}
 	setmetatable(c946, Card)
 	rawset(c946,"__index",c946)
 	c946.initial_effect=function()end
+end
+
+function deprecated_alias(funcname)
+	return function(...)
+		Debug.PrintStacktrace()
+		Debug.Message("deprecated, use ".. funcname.. " instead")
+		return load('return '..funcname..'(...)')(...)
+	end
 end
 
 local function cost_replace_getvalideffs(replacecode,extracon,e,tp,eg,ep,ev,re,r,rp,chk)
@@ -102,6 +109,48 @@ local function setcodecondition(e)
 		return true
 	end
 end
+
+function Card.IsMonster(c)
+	return c:IsType(TYPE_MONSTER)
+end
+
+function Card.IsSpell(c)
+	return c:IsType(TYPE_SPELL)
+end
+
+function Card.IsTrap(c)
+	return c:IsType(TYPE_TRAP)
+end
+
+function Card.IsSpellTrap(c)
+	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+end
+
+function Card.IsRitualMonster(c)
+	local tp=TYPE_RITUAL+TYPE_MONSTER
+	return c:GetType() & tp == tp
+end
+
+function Card.IsRitualSpell(c)
+	local tp=TYPE_RITUAL+TYPE_SPELL
+	return c:GetType() & tp == tp
+end
+
+function Card.IsLinkMonster(c)
+	local tp=TYPE_LINK+TYPE_MONSTER
+	return c:GetType() & tp == tp
+end
+
+function Card.IsLinkSpell(c)
+	local tp=TYPE_LINK+TYPE_SPELL
+	return c:GetType() & tp == tp
+end
+
+function Card.IsNonEffectMonster(c)
+	return c:IsMonster() and not c:IsType(TYPE_EFFECT)
+end
+
+
 function Card.AddSetcodesRule(c,code,copyable,...)
 	local prop=0
 	if not copyable then prop=EFFECT_FLAG_UNCOPYABLE end
@@ -118,6 +167,362 @@ function Card.AddSetcodesRule(c,code,copyable,...)
 		table.insert(t,e)
 	end
 	return t
+end
+
+function Card.CheckAdjacent(c)
+	local p=c:GetControler()
+	local seq=c:GetSequence()
+	if seq>4 then return false end
+	return (seq>0 and Duel.CheckLocation(p,LOCATION_MZONE,seq-1))
+		or (seq<4 and Duel.CheckLocation(p,LOCATION_MZONE,seq+1))
+end
+
+function Card.SelectAdjacent(c)
+	local tp=c:GetControler()
+	local seq=c:GetSequence()
+	local flag=0
+	if seq>0 and Duel.CheckLocation(tp,LOCATION_MZONE,seq-1) then flag=flag|(0x1<<seq-1) end
+	if seq<4 and Duel.CheckLocation(tp,LOCATION_MZONE,seq+1) then flag=flag|(0x1<<seq+1) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
+	local sel=Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,~flag)
+	Duel.Hint(HINT_ZONE,tp,sel)
+	return math.log(sel,2)
+end
+
+function Card.MoveAdjacent(c)
+	local tp=c:GetControler()
+	local seq=c:GetSequence()
+	if seq>4 then return end
+	local flag=0
+	if seq>0 and Duel.CheckLocation(tp,LOCATION_MZONE,seq-1) then flag=flag|(0x1<<seq-1) end
+	if seq<4 and Duel.CheckLocation(tp,LOCATION_MZONE,seq+1) then flag=flag|(0x1<<seq+1) end
+	if flag==0 then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
+	Duel.MoveSequence(c,math.log(Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,~flag),2))
+end
+
+function Card.IsColumn(c,seq,tp,loc)
+	if not c:IsOnField() then return false end
+	local cseq=c:GetSequence()
+	local seq=seq
+	local loc=loc and loc or c:GetLocation()
+	local tp=tp and tp or c:GetControler()
+	if c:IsLocation(LOCATION_MZONE) then
+		if cseq==5 then cseq=1 end
+		if cseq==6 then cseq=3 end
+	else
+		if cseq==6 then cseq=5 end
+	end
+	if loc==LOCATION_MZONE then
+		if seq==5 then seq=1 end
+		if seq==6 then seq=3 end
+	else
+		if seq==6 then seq=5 end
+	end
+	if c:IsControler(tp) then
+		return cseq==seq
+	else
+		return cseq==4-seq
+	end
+end
+
+function Card.UpdateAttack(c,amt,reset,rc)
+	rc=rc and rc or c
+	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
+	reset=reset and reset or RESET_EVENT+r
+	local atk=c:GetAttack()
+	if atk>=-amt then --If amt is positive, it would become negative and always be lower than or equal to atk, if amt is negative, it would become postive and if it is too much it would be higher than atk
+		local e1=Effect.CreateEffect(rc)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_ATTACK)
+		if c==rc then
+			e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
+		end
+		e1:SetValue(amt)
+		e1:SetReset(reset)
+		c:RegisterEffect(e1)
+		return c:GetAttack()-atk
+	end
+	return 0
+end
+
+function Card.UpdateDefense(c,amt,reset,rc)
+	rc=rc and rc or c
+	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
+	reset=reset and reset or RESET_EVENT+r
+	local def=c:GetDefense()
+	if def and def>=-amt then --See Card.UpdateAttack
+		local e1=Effect.CreateEffect(rc)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_DEFENSE)
+		if c==rc then
+			e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
+		end
+		e1:SetValue(amt)
+		e1:SetReset(reset)
+		c:RegisterEffect(e1)
+		return c:GetDefense()-def
+	end
+	return 0
+end
+
+function Card.UpdateLevel(c,amt,reset,rc)
+	rc=rc and rc or c
+	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
+	reset=reset and reset or RESET_EVENT+r
+	local lv=c:GetLevel()
+	if c:IsLevelBelow(2147483647) then
+		if lv+amt<=0 then amt=-(lv-1) end --Unlike ATK, if amt is too much should reduce as much as possible
+		local e1=Effect.CreateEffect(rc)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_LEVEL)
+		e1:SetValue(amt)
+		e1:SetReset(reset)
+		c:RegisterEffect(e1)
+		return c:GetLevel()-lv
+	end
+	return 0
+end
+
+function Card.UpdateRank(c,amt,reset,rc)
+	rc=rc and rc or c
+	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
+	reset=reset and reset or RESET_EVENT+r
+	local rk=c:GetRank()
+	if c:IsRankBelow(2147483647) then
+		if rk+amt<=0 then amt=-(rk-1) end --See Card.UpdateLevel
+		local e1=Effect.CreateEffect(rc)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_RANK)
+		e1:SetValue(amt)
+		e1:SetReset(reset)
+		c:RegisterEffect(e1)
+		return c:GetRank()-rk
+	end
+	return 0
+end
+
+function Card.UpdateLink(c,amt,reset,rc)
+	rc=rc and rc or c
+	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
+	reset=reset and reset or RESET_EVENT+r
+	local lk=c:GetLink()
+	if c:IsLinkBelow(2147483647) then
+		if lk+amt<=0 then amt=-(lk-1) end --See Card.UpdateLevel
+		local e1=Effect.CreateEffect(rc)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_LINK)
+		e1:SetValue(amt)
+		e1:SetReset(reset)
+		c:RegisterEffect(e1)
+		return c:GetLink()-lk
+	end
+	return 0
+end
+
+function Card.UpdateScale(c,amt,reset,rc)
+	rc=rc and rc or c
+	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
+	reset=reset and reset or RESET_EVENT+r
+	local scl=c:GetLeftScale()
+	if scl then
+		if scl+amt<=0 then amt = -(scl-1) end --See Card.UpdateLevel
+		local e1=Effect.CreateEffect(rc)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_LSCALE)
+		e1:SetValue(amt)
+		e1:SetReset(reset)
+		c:RegisterEffect(e1)
+		local e2=e1:Clone()
+		e2:SetCode(EFFECT_UPDATE_RSCALE)
+		c:RegisterEffect(e2)
+		return c:GetLeftScale()-scl
+	end
+	return 0
+end
+
+function Card.GetToBeLinkedZone(tc,c,tp,clink,emz)
+	local zone=0
+	local seq=tc:GetSequence()
+	if tc:IsLocation(LOCATION_MZONE) and tc:IsControler(tp) then
+		if c:IsLinkMarker(LINK_MARKER_LEFT) and seq < 4 and (not clink or tc:IsLinkMarker(LINK_MARKER_RIGHT)) then zone=zone|(1<<seq+1) end
+		if c:IsLinkMarker(LINK_MARKER_RIGHT) and seq > 0 and seq <= 4 and (not clink or tc:IsLinkMarker(LINK_MARKER_LEFT)) then zone=zone|(1<<seq-1) end
+		if c:IsLinkMarker(LINK_MARKER_TOP_RIGHT) and (seq == 5 or seq == 6) and (not clink or tc:IsLinkMarker(LINK_MARKER_BOTTOM_LEFT)) then zone=zone|(1<<2*(seq-5)) end
+		if c:IsLinkMarker(LINK_MARKER_TOP) and (seq == 5 or seq == 6) and (not clink or tc:IsLinkMarker(LINK_MARKER_BOTTOM)) then zone=zone|(1<<2*(seq-5)+1) end
+		if c:IsLinkMarker(LINK_MARKER_TOP_LEFT) and (seq == 5 or seq == 6) and (not clink or tc:IsLinkMarker(LINK_MARKER_BOTTOM_RIGHT)) then zone=zone|(1<<2*(seq-5)+2) end
+		if emz and c:IsLinkMarker(LINK_MARKER_BOTTOM_LEFT) and (seq == 0 or seq == 2) and (not clink or tc:IsLinkMarker(LINK_MARKER_TOP_RIGHT)) then zone=zone|(1<<5+seq/2) end
+		if emz and c:IsLinkMarker(LINK_MARKER_BOTTOM) and (seq == 1 or seq == 3) and (not clink or tc:IsLinkMarker(LINK_MARKER_TOP)) then zone=zone|(1<<5+(seq-1)/2) end
+		if emz and c:IsLinkMarker(LINK_MARKER_BOTTOM_RIGHT) and (seq == 2 or seq == 4) and (not clink or tc:IsLinkMarker(LINK_MARKER_TOP_LEFT)) then zone=zone|(1<<5+(seq-2)/2) end
+	elseif tc:IsLocation(LOCATION_MZONE) then
+		if c:IsLinkMarker(LINK_MARKER_TOP_RIGHT) and (seq == 5 or seq == 6 or (emz and (seq == 0 or seq == 2))) and (not clink or tc:IsLinkMarker(LINK_MARKER_TOP_RIGHT)) then
+			if seq == 5 or seq == 6 then
+				zone=zone|(1<<-2*(seq-5)+2)
+			else
+				zone=zone|(1<<-seq/2+6)
+			end
+		end
+		if c:IsLinkMarker(LINK_MARKER_TOP) and (seq == 5 or seq == 6 or (emz and (seq == 1 or seq == 3))) and (not clink or tc:IsLinkMarker(LINK_MARKER_TOP)) then
+			if seq == 5 or seq == 6 then
+				zone=zone|(1<<-2*(seq-5)+3)
+			else
+				zone=zone|(1<<-(seq-1)/2+6)
+			end
+		end
+		if c:IsLinkMarker(LINK_MARKER_TOP_LEFT) and (seq == 2 or seq == 4 or (emz and (seq == 2 or seq == 4))) and (not clink or tc:IsLinkMarker(LINK_MARKER_TOP_LEFT)) then
+			if seq == 5 or seq == 6 then
+				zone=zone|(1<<-2*(seq-5)+4)
+			else
+				zone=zone|(1<<-(seq-2)/2+6)
+			end
+		end
+	elseif tc:IsLocation(LOCATION_SZONE) and tc:IsControler(tp) then
+		if c:IsLinkMarker(LINK_MARKER_BOTTOM_LEFT) and seq < 4 and (not clink or tc:IsLinkMarker(LINK_MARKER_TOP_RIGHT)) then zone=zone|(1<<(seq+1)) end
+		if c:IsLinkMarker(LINK_MARKER_BOTTOM) and seq <= 4 and (not clink or tc:IsLinkMarker(LINK_MARKER_TOP)) then zone=zone|(1<<seq) end
+		if c:IsLinkMarker(LINK_MARKER_BOTTOM_RIGHT) and seq > 0 and seq <= 4 and (not clink or tc:IsLinkMarker(LINK_MARKER_TOP_LEFT)) then zone=zone(1<<(seq-1)) end
+	end
+	return zone
+end
+
+function Card.GetScale(c)
+	if not c:IsType(TYPE_PENDULUM) then return 0 end
+	local sc=0
+	if c:IsLocation(LOCATION_PZONE) then
+		local seq=c:GetSequence()
+		if seq==0 or seq==6 then sc=c:GetLeftScale() else sc=c:GetRightScale() end
+	else
+		sc=c:GetLeftScale()
+	end
+	return sc
+end
+
+function Card.IsOddScale(c)
+	if not c:IsType(TYPE_PENDULUM) then return false end
+	return c:GetScale() % 2 ~= 0
+end
+
+function Card.IsEvenScale(c)
+	if not c:IsType(TYPE_PENDULUM) then return false end
+	return c:GetScale() % 2 == 0
+end
+
+function Card.CanSummonOrSet(...)
+	return Card.IsSummonable(...) or Card.IsMSetable(...)
+end
+
+function Card.IsBattleDestroyed(c)
+	return c:IsStatus(STATUS_BATTLE_DESTROYED) and c:IsReason(REASON_BATTLE)
+end
+
+function Card.IsInMainMZone(c,tp)
+	return c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5 and (not tp or c:IsControler(tp))
+end
+
+function Card.IsInExtraMZone(c,tp)
+	return c:IsLocation(LOCATION_MZONE) and c:GetSequence()>4 and (not tp or c:IsControler(tp))
+end
+
+function Card.AnnounceAnotherAttribute(c,tp)
+	local att=c:GetAttribute()
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)
+	return Duel.AnnounceAttribute(tp,1,att&(att-1)==0 and ~att or ATTRIBUTE_ALL)
+end
+
+function Card.IsDifferentAttribute(c,att)
+	local _att=c:GetAttribute()
+	return (_att&att)~=_att
+end
+
+function Card.AnnounceAnotherRace(c,tp)
+	local race=c:GetRace()
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RACE)
+	return Duel.AnnounceRace(tp,1,race&(race-1)==0 and ~race or RACE_ALL)
+end
+
+function Card.IsDifferentRace(c,race)
+	local _race=c:GetRace()
+	return (_race&race)~=_race
+end
+
+function Card.IsOriginalType(c,val)
+	return c:GetOriginalType() & val > 0
+end
+
+function Card.IsOriginalAttribute(c,val)
+	return c:GetOriginalAttribute() & val > 0
+end
+
+function Card.IsOriginalRace(c,val)
+	return c:GetOriginalRace() & val > 0
+end
+
+function Card.IsSummonPlayer(c,tp)
+	return c:GetSummonPlayer()==tp
+end
+
+function Card.IsPreviousControler(c,tp)
+	return c:GetPreviousControler()==tp
+end
+
+function Card.IsSummonLocation(c,loc)
+	return c:GetSummonLocation() & loc~=0
+end
+
+--Checks whether the card is located at any of the sequences passed as arguments.
+function Card.IsSequence(c,...)
+	local arg={...}
+	local seq=c:GetSequence()
+	for _,v in ipairs(arg) do
+		if seq==v then return true end
+	end
+	return false
+end
+
+--Checks wheter a card has a level or not
+--For Links: false. For Xyzs: false, except if affected by  "EFFECT_RANK_LEVEL..." effects
+--For Dark Synchros: true, because they have a negative level. For level 0: true, because 0 is a value
+function Card.HasLevel(c)
+	if c:IsMonster() then
+		return c:GetType()&TYPE_LINK~=TYPE_LINK
+			and (c:GetType()&TYPE_XYZ~=TYPE_XYZ and not (c:IsHasEffect(EFFECT_RANK_LEVEL) or c:IsHasEffect(EFFECT_RANK_LEVEL_S)))
+			and not c:IsStatus(STATUS_NO_LEVEL)
+	elseif c:IsOriginalType(TYPE_MONSTER) then
+		return not (c:IsOriginalType(TYPE_XYZ+TYPE_LINK) or c:IsStatus(STATUS_NO_LEVEL))
+	end
+	return false
+end
+
+function Card.IsOriginalCode(c,...)
+	local args={...}
+	if #args==0 then
+		Debug.Message("Card.IsOriginalCode requires at least 2 params")
+		return false
+	end
+	for _,cd in ipairs(args) do
+		if c:GetOriginalCode()==cd then return true end
+	end
+	return false
+end
+
+function Card.IsOriginalCodeRule(c,...)
+	local args={...}
+	if #args==0 then
+		Debug.Message("Card.IsOriginalCodeRule requires at least 2 params")
+		return false
+	end
+	local c1,c2=c:GetOriginalCodeRule()
+	for _,cd in ipairs(args) do
+		if c1==cd or c2==cd then return true end
+	end
+	return false
+end
+
+function Card.GetMetatable(c,currentCode)
+	if currentCode then return _G["c" .. c:GetCode()] end
+	return c.__index
+end
+
+function Duel.GetMetatable(code)
+	return _G["c" .. code]
 end
 
 function Duel.LoadCardScript(code)
@@ -138,15 +543,6 @@ function Duel.LoadCardScript(code)
 		self_table=oldtable
 		self_code=oldcode
 	end
-end
-
-function Card.GetMetatable(c,currentCode)
-	if currentCode then return _G["c" .. c:GetCode()] end
-	return c.__index
-end
-
-function Duel.GetMetatable(code)
-	return _G["c" .. code]
 end
 
 bit={}
@@ -454,7 +850,7 @@ function Card.RegisterEffect(c,e,forced,...)
 	return reg_e
 end
 
-function Auxiliary.IsMaterialListCode(c,...)
+function Card.IsMaterialListCode(c,...)
 	if not c.material then return false end
 	local codes={...}
 	for _,code in ipairs(codes) do
@@ -467,7 +863,7 @@ end
 local function MatchSetcode(set_code,to_match)
 	return (set_code&0xfff)==(to_match&0xfff) and (set_code&to_match)==set_code;
 end
-function Auxiliary.IsMaterialListSetCard(c,...)
+function Card.IsMaterialListSetCard(c,...)
 	if not c.material_setcode then return false end
 	local setcodes={...}
 	for _,setcode in ipairs(setcodes) do
@@ -482,7 +878,7 @@ function Auxiliary.IsMaterialListSetCard(c,...)
 	return false
 end
 --Returns true if the Card "c" specifically lists any of the card IDs in "..."
-function Auxiliary.IsCodeListed(c,...)
+function Card.IsCodeListed(c,...)
 	if c.listed_names then
 		local codes={...}
 		for _,wanted in ipairs(codes) do
@@ -501,7 +897,7 @@ function Auxiliary.IsCodeListed(c,...)
 	return false
 end
 --Returns true if the Card "c" specifically lists the name of a card that is part of an archetype in "..."
-function Auxiliary.IsArchetypeCodeListed(c,...)
+function Card.IsArchetypeCodeListed(c,...)
 	if not c.listed_names then return false end
 	local setcodes={...}
 	for _,cardcode in ipairs(c.listed_names) do
@@ -517,7 +913,7 @@ function Auxiliary.IsArchetypeCodeListed(c,...)
 	return false
 end
 --Returns true if the Card "c" specifically lists any of the card types in "..."
-function Auxiliary.IsCardTypeListed(c,...)
+function Card.IsCardTypeListed(c,...)
 	if not c.listed_card_types then return false end
 	local card_types={...}
 	for _,typ in ipairs(card_types) do
@@ -528,7 +924,7 @@ function Auxiliary.IsCardTypeListed(c,...)
 	return false
 end
 --Returns true if the Card "c" lists any of the setcodes passed in "..."
-function Auxiliary.HasListedSetCode(c,...)
+function Card.HasListedSetCode(c,...)
 	if not c.listed_series then return false end
 	local listed_archetypes={...}
 	for _,wanted in ipairs(listed_archetypes) do
@@ -539,16 +935,16 @@ function Auxiliary.HasListedSetCode(c,...)
 	return false
 end
 --"Can be negated" check for monsters
-function Auxiliary.disfilter1(c)
+function Card.IsNegatableMonster(c)
 	return c:IsFaceup() and not c:IsDisabled() and (not c:IsNonEffectMonster() or c:GetOriginalType()&TYPE_EFFECT~=0)
 end
 --"Can be negated" check for Spells/Traps
-function Auxiliary.disfilter2(c)
-	return c:IsFaceup() and not c:IsDisabled() and c:IsType(TYPE_SPELL+TYPE_TRAP)
+function Card.IsNegatableSpellTrap(c)
+	return c:IsFaceup() and not c:IsDisabled() and c:IsSpellTrap()
 end
 --"Can be negated" check for cards
-function Auxiliary.disfilter3(c)
-	return aux.disfilter1(c) or aux.disfilter2(c)
+function Card.IsNegatable(c)
+	return c:IsNegatableMonster() or c:IsNegatableSpellTrap()
 end
 --condition of EVENT_BATTLE_DESTROYING
 function Auxiliary.bdcon(e,tp,eg,ep,ev,re,r,rp)
@@ -564,13 +960,13 @@ end
 function Auxiliary.bdgcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
-	return c:IsRelateToBattle() and bc:IsLocation(LOCATION_GRAVE) and bc:IsType(TYPE_MONSTER)
+	return c:IsRelateToBattle() and bc:IsLocation(LOCATION_GRAVE) and bc:IsMonster()
 end
 --condition of EVENT_BATTLE_DESTROYING + opponent monster + to_grave
 function Auxiliary.bdogcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
-	return c:IsRelateToBattle() and c:IsStatus(STATUS_OPPO_BATTLE) and bc:IsLocation(LOCATION_GRAVE) and bc:IsType(TYPE_MONSTER)
+	return c:IsRelateToBattle() and c:IsStatus(STATUS_OPPO_BATTLE) and bc:IsLocation(LOCATION_GRAVE) and bc:IsMonster()
 end
 --condition of EVENT_TO_GRAVE + destroyed_by_opponent_from_field
 function Auxiliary.dogcon(e,tp,eg,ep,ev,re,r,rp)
@@ -608,11 +1004,11 @@ function Auxiliary.indoval(e,re,rp)
 	return rp==1-e:GetHandlerPlayer()
 end
 --filter for non-zero ATK monsters
-function Auxiliary.nzatk(c)
+function Card.HasNonZeroAttack(c)
 	return c:IsFaceup() and c:GetAttack()>0
 end
 --filter for non-zero DEF monsters
-function Auxiliary.nzdef(c)
+function Card.HasNonZeroDefense(c)
 	return c:IsFaceup() and c:GetDefense()>0
 end
 --flag effect for summon/sp_summon turn
@@ -683,178 +1079,6 @@ function Auxiliary.damcon1(e,tp,eg,ep,ev,re,r,rp)
 	return ex and (cp==tp or cp==PLAYER_ALL) and rr and not Duel.IsPlayerAffectedByEffect(tp,EFFECT_NO_EFFECT_DAMAGE)
 end
 
-function Card.CheckAdjacent(c)
-	local p=c:GetControler()
-	local seq=c:GetSequence()
-	if seq>4 then return false end
-	return (seq>0 and Duel.CheckLocation(p,LOCATION_MZONE,seq-1))
-		or (seq<4 and Duel.CheckLocation(p,LOCATION_MZONE,seq+1))
-end
-
-function Card.SelectAdjacent(c)
-	local tp=c:GetControler()
-	local seq=c:GetSequence()
-	local flag=0
-	if seq>0 and Duel.CheckLocation(tp,LOCATION_MZONE,seq-1) then flag=flag|(0x1<<seq-1) end
-	if seq<4 and Duel.CheckLocation(tp,LOCATION_MZONE,seq+1) then flag=flag|(0x1<<seq+1) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
-	local sel=Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,~flag)
-	Duel.Hint(HINT_ZONE,tp,sel)
-	return math.log(sel,2)
-end
-
-function Card.MoveAdjacent(c)
-	local tp=c:GetControler()
-	local seq=c:GetSequence()
-	if seq>4 then return end
-	local flag=0
-	if seq>0 and Duel.CheckLocation(tp,LOCATION_MZONE,seq-1) then flag=flag|(0x1<<seq-1) end
-	if seq<4 and Duel.CheckLocation(tp,LOCATION_MZONE,seq+1) then flag=flag|(0x1<<seq+1) end
-	if flag==0 then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
-	Duel.MoveSequence(c,math.log(Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,~flag),2))
-end
-
-function Card.IsColumn(c,seq,tp,loc)
-	if not c:IsOnField() then return false end
-	local cseq=c:GetSequence()
-	local seq=seq
-	local loc=loc and loc or c:GetLocation()
-	local tp=tp and tp or c:GetControler()
-	if c:IsLocation(LOCATION_MZONE) then
-		if cseq==5 then cseq=1 end
-		if cseq==6 then cseq=3 end
-	else
-		if cseq==6 then cseq=5 end
-	end
-	if loc==LOCATION_MZONE then
-		if seq==5 then seq=1 end
-		if seq==6 then seq=3 end
-	else
-		if seq==6 then seq=5 end
-	end
-	if c:IsControler(tp) then
-		return cseq==seq
-	else
-		return cseq==4-seq
-	end
-end
-
-function Card.UpdateAttack(c,amt,reset,rc)
-	rc=rc and rc or c
-	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
-	reset=reset and reset or RESET_EVENT+r
-	local atk=c:GetAttack()
-	if atk>=-amt then --If amt is positive, it would become negative and always be lower than or equal to atk, if amt is negative, it would become postive and if it is too much it would be higher than atk
-		local e1=Effect.CreateEffect(rc)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		if c==rc then
-			e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
-		end
-		e1:SetValue(amt)
-		e1:SetReset(reset)
-		c:RegisterEffect(e1)
-		return c:GetAttack()-atk
-	end
-	return 0
-end
-
-function Card.UpdateDefense(c,amt,reset,rc)
-	rc=rc and rc or c
-	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
-	reset=reset and reset or RESET_EVENT+r
-	local def=c:GetDefense()
-	if def and def>=-amt then --See Card.UpdateAttack
-		local e1=Effect.CreateEffect(rc)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_DEFENSE)
-		if c==rc then
-			e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
-		end
-		e1:SetValue(amt)
-		e1:SetReset(reset)
-		c:RegisterEffect(e1)
-		return c:GetDefense()-def
-	end
-	return 0
-end
-
-function Card.UpdateLevel(c,amt,reset,rc)
-	rc=rc and rc or c
-	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
-	reset=reset and reset or RESET_EVENT+r
-	local lv=c:GetLevel()
-	if c:IsLevelBelow(2147483647) then
-		if lv+amt<=0 then amt=-(lv-1) end --Unlike ATK, if amt is too much should reduce as much as possible
-		local e1=Effect.CreateEffect(rc)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_LEVEL)
-		e1:SetValue(amt)
-		e1:SetReset(reset)
-		c:RegisterEffect(e1)
-		return c:GetLevel()-lv
-	end
-	return 0
-end
-
-function Card.UpdateRank(c,amt,reset,rc)
-	rc=rc and rc or c
-	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
-	reset=reset and reset or RESET_EVENT+r
-	local rk=c:GetRank()
-	if c:IsRankBelow(2147483647) then
-		if rk+amt<=0 then amt=-(rk-1) end --See Card.UpdateLevel
-		local e1=Effect.CreateEffect(rc)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_RANK)
-		e1:SetValue(amt)
-		e1:SetReset(reset)
-		c:RegisterEffect(e1)
-		return c:GetRank()-rk
-	end
-	return 0
-end
-
-function Card.UpdateLink(c,amt,reset,rc)
-	rc=rc and rc or c
-	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
-	reset=reset and reset or RESET_EVENT+r
-	local lk=c:GetLink()
-	if c:IsLinkBelow(2147483647) then
-		if lk+amt<=0 then amt=-(lk-1) end --See Card.UpdateLevel
-		local e1=Effect.CreateEffect(rc)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_LINK)
-		e1:SetValue(amt)
-		e1:SetReset(reset)
-		c:RegisterEffect(e1)
-		return c:GetLink()-lk
-	end
-	return 0
-end
-
-function Card.UpdateScale(c,amt,reset,rc)
-	rc=rc and rc or c
-	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
-	reset=reset and reset or RESET_EVENT+r
-	local scl=c:GetLeftScale()
-	if scl then
-		if scl+amt<=0 then amt = -(scl-1) end --See Card.UpdateLevel
-		local e1=Effect.CreateEffect(rc)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_LSCALE)
-		e1:SetValue(amt)
-		e1:SetReset(reset)
-		c:RegisterEffect(e1)
-		local e2=e1:Clone()
-		e2:SetCode(EFFECT_UPDATE_RSCALE)
-		c:RegisterEffect(e2)
-		return c:GetLeftScale()-scl
-	end
-	return 0
-end
-
 function Auxiliary.BeginPuzzle()
 	local e1=Effect.GlobalEffect()
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -879,10 +1103,18 @@ function Auxiliary.PuzzleOp(e,tp)
 	Duel.SetLP(0,0)
 end
 
+
+--Cost for cards with "You can tribute this card" (name might be changed)
+function Auxiliary.selfreleasecost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return e:GetHandler():IsReleasable() end
+	Duel.Release(e:GetHandler(),REASON_COST)
+end
+
+
 --Cost for effect "You can banish this card from your Graveyard"
 function Auxiliary.bfgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return (not Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),69832741) or not c:IsType(TYPE_MONSTER)
+	if chk==0 then return (not Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),69832741) or not c:IsMonster()
 		or not c:IsLocation(LOCATION_GRAVE)) and c:IsAbleToRemoveAsCost() end
 	Duel.Remove(c,POS_FACEUP,REASON_COST)
 end
@@ -927,7 +1159,7 @@ function Auxiliary.dxmcostgen(min,max,op)
 	end
 end
 
-function Auxiliary.EquipByEffectLimit(e,c)
+function Card.EquipByEffectLimit(e,c)
 	if e:GetOwner()~=c then return false end
 	local eff={c:GetCardEffect(89785779+EFFECT_EQUIP_LIMIT)}
 	for _,te in ipairs(eff) do
@@ -936,7 +1168,7 @@ function Auxiliary.EquipByEffectLimit(e,c)
 	return false
 end
 --register for "Equip to this card by its effect"
-function Auxiliary.EquipByEffectAndLimitRegister(c,e,tp,tc,code,mustbefaceup)
+function Card.EquipByEffectAndLimitRegister(c,e,tp,tc,code,mustbefaceup)
 	local up=false or mustbefaceup
 	if not Duel.Equip(tp,tc,c,up) then return false end
 	--Add Equip limit
@@ -949,7 +1181,7 @@ function Auxiliary.EquipByEffectAndLimitRegister(c,e,tp,tc,code,mustbefaceup)
 	e1:SetProperty(EFFECT_FLAG_OWNER_RELATE)
 	e1:SetCode(EFFECT_EQUIP_LIMIT)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-	e1:SetValue(Auxiliary.EquipByEffectLimit)
+	e1:SetValue(Card.EquipByEffectLimit)
 	e1:SetLabelObject(te)
 	tc:RegisterEffect(e1)
 	return true
@@ -1012,50 +1244,27 @@ function Auxiliary.ComposeNumberDigitByDigit(tp,min,max)
 	end
 	return number
 end
-function Card.GetToBeLinkedZone(tc,c,tp,clink,emz)
-	local zone=0
-	local seq=tc:GetSequence()
-	if tc:IsLocation(LOCATION_MZONE) and tc:IsControler(tp) then
-		if c:IsLinkMarker(LINK_MARKER_LEFT) and seq < 4 and (not clink or tc:IsLinkMarker(LINK_MARKER_RIGHT)) then zone=zone|(1<<seq+1) end
-		if c:IsLinkMarker(LINK_MARKER_RIGHT) and seq > 0 and seq <= 4 and (not clink or tc:IsLinkMarker(LINK_MARKER_LEFT)) then zone=zone|(1<<seq-1) end
-		if c:IsLinkMarker(LINK_MARKER_TOP_RIGHT) and (seq == 5 or seq == 6) and (not clink or tc:IsLinkMarker(LINK_MARKER_BOTTOM_LEFT)) then zone=zone|(1<<2*(seq-5)) end
-		if c:IsLinkMarker(LINK_MARKER_TOP) and (seq == 5 or seq == 6) and (not clink or tc:IsLinkMarker(LINK_MARKER_BOTTOM)) then zone=zone|(1<<2*(seq-5)+1) end
-		if c:IsLinkMarker(LINK_MARKER_TOP_LEFT) and (seq == 5 or seq == 6) and (not clink or tc:IsLinkMarker(LINK_MARKER_BOTTOM_RIGHT)) then zone=zone|(1<<2*(seq-5)+2) end
-		if emz and c:IsLinkMarker(LINK_MARKER_BOTTOM_LEFT) and (seq == 0 or seq == 2) and (not clink or tc:IsLinkMarker(LINK_MARKER_TOP_RIGHT)) then zone=zone|(1<<5+seq/2) end
-		if emz and c:IsLinkMarker(LINK_MARKER_BOTTOM) and (seq == 1 or seq == 3) and (not clink or tc:IsLinkMarker(LINK_MARKER_TOP)) then zone=zone|(1<<5+(seq-1)/2) end
-		if emz and c:IsLinkMarker(LINK_MARKER_BOTTOM_RIGHT) and (seq == 2 or seq == 4) and (not clink or tc:IsLinkMarker(LINK_MARKER_TOP_LEFT)) then zone=zone|(1<<5+(seq-2)/2) end
-	elseif tc:IsLocation(LOCATION_MZONE) then
-		if c:IsLinkMarker(LINK_MARKER_TOP_RIGHT) and (seq == 5 or seq == 6 or (emz and (seq == 0 or seq == 2))) and (not clink or tc:IsLinkMarker(LINK_MARKER_TOP_RIGHT)) then
-			if seq == 5 or seq == 6 then
-				zone=zone|(1<<-2*(seq-5)+2)
-			else
-				zone=zone|(1<<-seq/2+6)
-			end
-		end
-		if c:IsLinkMarker(LINK_MARKER_TOP) and (seq == 5 or seq == 6 or (emz and (seq == 1 or seq == 3))) and (not clink or tc:IsLinkMarker(LINK_MARKER_TOP)) then
-			if seq == 5 or seq == 6 then
-				zone=zone|(1<<-2*(seq-5)+3)
-			else
-				zone=zone|(1<<-(seq-1)/2+6)
-			end
-		end
-		if c:IsLinkMarker(LINK_MARKER_TOP_LEFT) and (seq == 2 or seq == 4 or (emz and (seq == 2 or seq == 4))) and (not clink or tc:IsLinkMarker(LINK_MARKER_TOP_LEFT)) then
-			if seq == 5 or seq == 6 then
-				zone=zone|(1<<-2*(seq-5)+4)
-			else
-				zone=zone|(1<<-(seq-2)/2+6)
-			end
-		end
-	elseif tc:IsLocation(LOCATION_SZONE) and tc:IsControler(tp) then
-		if c:IsLinkMarker(LINK_MARKER_BOTTOM_LEFT) and seq < 4 and (not clink or tc:IsLinkMarker(LINK_MARKER_TOP_RIGHT)) then zone=zone|(1<<(seq+1)) end
-		if c:IsLinkMarker(LINK_MARKER_BOTTOM) and seq <= 4 and (not clink or tc:IsLinkMarker(LINK_MARKER_TOP)) then zone=zone|(1<<seq) end
-		if c:IsLinkMarker(LINK_MARKER_BOTTOM_RIGHT) and seq > 0 and seq <= 4 and (not clink or tc:IsLinkMarker(LINK_MARKER_TOP_LEFT)) then zone=zone(1<<(seq-1)) end
-	end
-	return zone
+
+function Group.GetLinkedZone(g,tp)
+	return g:GetBitwiseOr(Card.GetLinkedZone,tp)
 end
+
 function Group.GetToBeLinkedZone(g,c,tp,clink,emz)
 	return g:GetBitwiseOr(Card.GetToBeLinkedZone,c,tp,clink,emz)
 end
+
+function Duel.AnnounceAnotherAttribute(g,tp)
+	local att=g:GetBitwiseOr(Card.GetAttribute)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)
+	return Duel.AnnounceAttribute(tp,1,att&(att-1)==0 and ~att or ATTRIBUTE_ALL)
+end
+
+function Duel.AnnounceAnotherRace(g,tp)
+	local race=g:GetBitwiseOr(Card.GetRace)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RACE)
+	return Duel.AnnounceRace(tp,1,race&(race-1)==0 and ~race or RACE_ALL)
+end
+
 function Auxiliary.ResetEffects(g,eff)
 	for c in aux.Next(g) do
 		local effs={c:GetCardEffect(eff)}
@@ -1292,6 +1501,132 @@ function Auxiliary.seqmovtgop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.MoveSequence(c,seq)
 end
 
+
+function Duel.MoveToDeckTop(obj)
+	local typ=type(obj)
+	if typ=="Group" then
+		for c in aux.Next(obj:Filter(Card.IsLocation,nil,LOCATION_DECK)) do
+			Duel.MoveSequence(c,SEQ_DECKTOP)
+		end
+	elseif typ=="Card" then
+		if obj:IsLocation(LOCATION_DECK) then
+			Duel.MoveSequence(obj,SEQ_DECKTOP)
+		end
+	else
+		error("Parameter 1 should be \"Card\" or \"Group\"",2)
+	end
+end
+
+function Duel.MoveToDeckBottom(obj,tp)
+	local typ=type(obj)
+	if typ=="number" then
+		if type(tp)~="number" then
+			error("Parameter 2 should be \"number\"",2)
+		end
+		for i=1,obj do
+			local mg=Duel.GetDecktopGroup(tp,1)
+			Duel.MoveSequence(mg:GetFirst(),SEQ_DECKBOTTOM)
+		end
+	elseif typ=="Group" then
+		for c in aux.Next(obj:Filter(Card.IsLocation,nil,LOCATION_DECK)) do
+			Duel.MoveSequence(c,SEQ_DECKBOTTOM)
+		end
+	elseif typ=="Card" then
+		if obj:IsLocation(LOCATION_DECK) then
+			Duel.MoveSequence(obj,SEQ_DECKBOTTOM)
+		end
+	else
+		error("Parameter 1 should be \"Card\" or \"Group\" or \"number\"",2)
+	end
+end
+
+function Duel.GetTargetCards(e)
+	return Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+end
+
+--for zone checking (zone is the zone, tp is referencial player)
+function Auxiliary.IsZone(c,zone,tp)
+	local rzone = c:IsControler(tp) and (1 <<c:GetSequence()) or (1 << (16+c:GetSequence()))
+	if c:IsSequence(5,6) then
+		rzone = rzone | (c:IsControler(tp) and (1 << (16 + 11 - c:GetSequence())) or (1 << (11 - c:GetSequence())))
+	end
+	return (rzone & zone) > 0
+end
+
+--Helpers to print hints for attribute-related cards such as Cynet Codec
+function Auxiliary.BitSplit(v)
+	local res={}
+	local i=0
+	while 2^i<=v do
+		local p=2^i
+		if v & p~=0 then
+			table.insert(res,p)
+		end
+		i=i+1
+	end
+	return pairs(res)
+end
+
+function Auxiliary.GetAttributeStrings(v)
+	local t = {
+		[ATTRIBUTE_EARTH] = 1010,
+		[ATTRIBUTE_WATER] = 1011,
+		[ATTRIBUTE_FIRE] = 1012,
+		[ATTRIBUTE_WIND] = 1013,
+		[ATTRIBUTE_LIGHT] = 1014,
+		[ATTRIBUTE_DARK] = 1015,
+		[ATTRIBUTE_DIVINE] = 1016
+	}
+	local res={}
+	local ct=0
+	for _,att in Auxiliary.BitSplit(v) do
+		if t[att] then
+			table.insert(res,t[att])
+			ct=ct+1
+		end
+	end
+	return pairs(res)
+end
+
+function Auxiliary.GetRaceStrings(v)
+	local t = {
+		[RACE_WARRIOR] = 1020,
+		[RACE_SPELLCASTER] = 1021,
+		[RACE_FAIRY] = 1022,
+		[RACE_FIEND] = 1023,
+		[RACE_ZOMBIE] = 1024,
+		[RACE_MACHINE] = 1025,
+		[RACE_AQUA] = 1026,
+		[RACE_PYRO] = 1027,
+		[RACE_ROCK] = 1028,
+		[RACE_WINGEDBEAST] = 1029,
+		[RACE_PLANT] = 1030,
+		[RACE_INSECT] = 1031,
+		[RACE_THUNDER] = 1032,
+		[RACE_DRAGON] = 1033,
+		[RACE_BEAST] = 1034,
+		[RACE_BEASTWARRIOR] = 1035,
+		[RACE_DINOSAUR] = 1036,
+		[RACE_FISH] = 1037,
+		[RACE_SEASERPENT] = 1038,
+		[RACE_REPTILE] = 1039,
+		[RACE_PSYCHIC] = 1040,
+		[RACE_DIVINE] = 1041,
+		[RACE_CREATORGOD] = 1042,
+		[RACE_WYRM] = 1043,
+		[RACE_CYBERSE] = 1044
+	}
+	local res={}
+	local ct=0
+	for _,att in Auxiliary.BitSplit(v) do
+		if t[att] then
+			table.insert(res,t[att])
+			ct=ct+1
+		end
+	end
+	return pairs(res)
+end
+
 --Returns the zones, on the specified player's field, pointed by the specified number of Link markers. Includes Extra Monster Zones.
 function Duel.GetZoneWithLinkedCount(count,tp)
 	local g = Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_MZONE,LOCATION_MZONE,nil,TYPE_LINK)
@@ -1316,7 +1651,7 @@ function Duel.GetZoneWithLinkedCount(count,tp)
 end
 --Checks whether a card (c) has an effect that mentions a certain type of counter
 --This includes adding, removing, gaining ATK/DEF per counter, etc.
-function Auxiliary.HasCounterListed(c,counter_type)
+function Card.HasCounterListed(c,counter_type)
 	if c.counter_list then
 		for _,ccounter in ipairs(c.counter_list) do
 			if counter_type==ccounter then return true end
@@ -1330,7 +1665,7 @@ function Auxiliary.HasCounterListed(c,counter_type)
 	return false
 end
 --Checks whether a card (c) has an effect that places a certain type of counter
-function Auxiliary.CanPlaceCounter(c,counter_type)
+function Card.CanPlaceCounter(c,counter_type)
 	if not c.counter_place_list then return false end
 	for _,ccounter in ipairs(c.counter_place_list) do
 		if counter_type==ccounter then return true end
@@ -1438,7 +1773,7 @@ function Auxiliary.PropertyTableFilter(f,...)
 		return table.unpack(cachetab[c])
 	end
 end
-function Auxiliary.AskEveryone(stringid)
+function Duel.AskEveryone(stringid)
 	local count0 = Duel.GetPlayersCount(0)
 	local count1 = Duel.GetPlayersCount(1)
 	--check if people want to duel
@@ -1463,7 +1798,7 @@ function Auxiliary.AskEveryone(stringid)
 	return not stop
 end
 
-function Auxiliary.AskAny(stringid)
+function Duel.AskAny(stringid)
 	local count0 = Duel.GetPlayersCount(0)
 	local count1 = Duel.GetPlayersCount(1)
 	--check if people want to duel
@@ -1572,10 +1907,8 @@ end
 function Auxiliary.thoeSend(card)
 	return Duel.SendtoGrave(card,REASON_EFFECT)
 end
---Helper functions to use with cards that normal summon or set a monster
-function Card.CanSummonOrSet(...)
-	return Card.IsSummonable(...) or Card.IsMSetable(...)
-end
+
+--Helper function to use with cards that normal summon or set a monster
 function Duel.SummonOrSet(tp,...)
 	local s1=Card.IsSummonable(...)
 	local s2=Card.IsMSetable(...)
@@ -1646,7 +1979,7 @@ end
 function Auxiliary.HarmonizingMagFilter(c,e,f)
 	return f and not f(e,c)
 end
-function Auxiliary.PlayFieldSpell(c,e,tp,eg,ep,ev,re,r,rp,target_p)
+function Duel.PlayFieldSpell(c,e,tp,eg,ep,ev,re,r,rp,target_p)
 	if not target_p then target_p=tp end
 	if c then
 		local fc=Duel.GetFieldCard(target_p,LOCATION_SZONE,5)
@@ -1678,16 +2011,31 @@ function Auxiliary.PlayFieldSpell(c,e,tp,eg,ep,ev,re,r,rp,target_p)
 	end
 	return false
 end
+
 function Duel.IsMainPhase()
 	local phase=Duel.GetCurrentPhase()
 	return phase==PHASE_MAIN1 or phase==PHASE_MAIN2
 end
+
 function Duel.IsBattlePhase()
 	local phase=Duel.GetCurrentPhase()
 	return phase>=PHASE_BATTLE_START and phase<=PHASE_BATTLE
 end
+
 function Duel.IsTurnPlayer(player)
 	return Duel.GetTurnPlayer()==player
+end
+
+function Duel.GoatConfirm(tp,loc)
+	local dg,hg=Duel.GetFieldGroup(tp,loc&(LOCATION_HAND|LOCATION_DECK),0):Split(Card.IsLocation,nil,LOCATION_DECK)
+	Duel.ConfirmCards(tp,dg)
+	Duel.ConfirmCards(1-tp,hg)
+	if #hg>0 then
+		Duel.ShuffleHand(tp)
+	end
+	if #dg>0 then
+		Duel.ShuffleDeck(tp)
+	end
 end
 
 function Auxiliary.ChangeBattleDamage(player,value)
@@ -1707,32 +2055,11 @@ function Auxiliary.ChangeBattleDamage(player,value)
 				end
 		end
 end
-
-function Card.GetScale(c)
-	if not c:IsType(TYPE_PENDULUM) then return 0 end
-	local sc=0
-	if c:IsLocation(LOCATION_PZONE) then
-		local seq=c:GetSequence()
-		if seq==0 or seq==6 then sc=c:GetLeftScale() else sc=c:GetRightScale() end
-	else
-		sc=c:GetLeftScale()
-	end
-	return sc
-end
-function Card.IsOddScale(c)
-	if not c:IsType(TYPE_PENDULUM) then return false end
-	return c:GetScale() % 2 ~= 0
-end
-function Card.IsEvenScale(c)
-	if not c:IsType(TYPE_PENDULUM) then return false end
-	return c:GetScale() % 2 == 0
-end
-
 --Helper function to choose 1 among possible effects
 --In input it takes tables of the form of {condition,stringid}
 --and makes the player choose among the strings whose conditions are met
 --it returns the index of the choosen element starting from 1, nil if none was selected
-function Auxiliary.SelectEffect(tp,...)
+function Duel.SelectEffect(tp,...)
 	local eff,sel={},{}
 	for i,val in ipairs({...}) do
 		if val[1] then
@@ -1744,7 +2071,7 @@ function Auxiliary.SelectEffect(tp,...)
 	return sel[Duel.SelectOption(tp,table.unpack(eff))+1]
 end
 
-function Auxiliary.CheckPendulumZones(player)
+function Duel.CheckPendulumZones(player)
 	return Duel.CheckLocation(player,LOCATION_PZONE,0) or Duel.CheckLocation(player,LOCATION_PZONE,1)
 end
 
@@ -1886,4 +2213,5 @@ Duel.LoadScript("proc_workaround.lua")
 Duel.LoadScript("proc_normal.lua")
 Duel.LoadScript("proc_skill.lua")
 Duel.LoadScript("proc_maximum.lua")
+Duel.LoadScript("deprecated_functions.lua")
 pcall(dofile,"init.lua")

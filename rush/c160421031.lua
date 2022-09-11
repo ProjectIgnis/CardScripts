@@ -14,14 +14,14 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,tp)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsPreviousLocation(LOCATION_SZONE) and c:IsPreviousControler(tp)
+	return c:IsSpellTrap() and c:IsPreviousLocation(LOCATION_SZONE) and c:IsPreviousControler(tp)
 		and (c:GetReason()&(REASON_EFFECT+REASON_DESTROY))==(REASON_EFFECT+REASON_DESTROY)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and eg:IsExists(s.filter,1,nil,tp)
 end
 function s.desfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsType(TYPE_EFFECT) and c:IsAttackAbove(2300) and c:IsFaceup()
+	return c:IsMonster() and c:IsType(TYPE_EFFECT) and c:IsAttackAbove(2300) and c:IsFaceup()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and s.desfilter(chkc) and chkc~=e:GetHandler() end

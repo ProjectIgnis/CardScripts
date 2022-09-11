@@ -40,10 +40,10 @@ function s.mfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x71) and c:IsRace(RACE_FAIRY)
 end
 function s.filter1(c)
-	return c:IsSetCard(0x71) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x71) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.filter2(c,e,tp)
-	return c:IsSetCard(0x71) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x71) and c:IsMonster()
 		and (c:IsAbleToHand() or c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK))
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)

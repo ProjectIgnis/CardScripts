@@ -51,7 +51,7 @@ function s.atkval(e,c)
 	return c:GetLinkedGroup():FilterCount(Card.IsMonster,nil)*600
 end
 function s.damcfilter(c)
-	return c:IsType(TYPE_TRAP) and not c:IsPublic()
+	return c:IsTrap() and not c:IsPublic()
 end
 function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return ep==tp and eg:IsExists(s.damcfilter,1,nil) end

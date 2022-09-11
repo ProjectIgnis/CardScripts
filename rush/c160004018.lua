@@ -25,10 +25,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,2)
 end
 function s.cfilter(c)
-	return c:IsLocation(LOCATION_GRAVE) and c:GetAttack()==0 and c:IsType(TYPE_MONSTER)
+	return c:IsLocation(LOCATION_GRAVE) and c:GetAttack()==0 and c:IsMonster()
 end
 function s.spfilter(c,e,tp)
-	return c:GetAttack()==0 and c:IsType(TYPE_MONSTER) and c:IsType(TYPE_NORMAL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:GetAttack()==0 and c:IsMonster() and c:IsType(TYPE_NORMAL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Effect

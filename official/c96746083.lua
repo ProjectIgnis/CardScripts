@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.desfilter(c)
-	return c:IsType(TYPE_MONSTER) and (c:IsLocation(LOCATION_HAND) or c:IsFaceup())
+	return c:IsMonster() and (c:IsLocation(LOCATION_HAND) or c:IsFaceup())
 end
 function s.desfilter2(c)
 	return c:IsFaceup() and c:GetSequence()<5
@@ -55,7 +55,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_MZONE+LOCATION_GRAVE)
 end
 function s.rmfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemove(tp)
+	return c:IsMonster() and c:IsAbleToRemove(tp)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

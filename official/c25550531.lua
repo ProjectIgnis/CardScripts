@@ -34,7 +34,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x18d) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSetCard(0x18d) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
@@ -60,7 +60,7 @@ function s.spcfilter(c,e,tp,mc)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,mc,c)
 end
 function s.spfilter(c,e,tp,mc,sc)
-	return c:IsType(TYPE_XYZ,c,SUMMON_TYPE_XYZ,tp) and aux.IsCodeListed(c,sc:GetCode()) and mc:IsCanBeXyzMaterial(c,tp)
+	return c:IsType(TYPE_XYZ,c,SUMMON_TYPE_XYZ,tp) and c:IsCodeListed(sc:GetCode()) and mc:IsCanBeXyzMaterial(c,tp)
 		and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

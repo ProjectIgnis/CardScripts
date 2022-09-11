@@ -43,7 +43,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	while Duel.Draw(tp,1,REASON_EFFECT)~=0 do
 		local gc=Duel.GetOperatedGroup():GetFirst()
 		Duel.ConfirmCards(tp,gc)
-		if gc and gc:IsType(TYPE_MONSTER) then		
+		if gc and gc:IsMonster() then		
 			if Duel.SendtoGrave(gc,REASON_EFFECT)~=0 then	
 				Duel.Damage(1-tp,tc:GetAttack(),REASON_EFFECT)
 				if (Duel.GetLP(1-tp)<=0 and not Duel.IsPlayerAffectedByEffect(1-tp,EFFECT_CANNOT_LOSE_LP)) 

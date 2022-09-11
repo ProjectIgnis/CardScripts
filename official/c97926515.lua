@@ -16,7 +16,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetLP(tp)<Duel.GetLP(1-tp)
 end
 function s.thfilter(c)
-	return c:IsRace(RACE_BEAST) and c:GetAttack()==300 and c:GetDefense()==100 and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsRace(RACE_BEAST) and c:GetAttack()==300 and c:GetDefense()==100 and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,3,nil) end

@@ -40,7 +40,7 @@ function s.filter1(c,e,tp)
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_HAND+LOCATION_MZONE,0,1,c,e)
 end
 function s.filter2(c,e)
-	return c:IsSetCard(0x58) and c:IsType(TYPE_MONSTER) and (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and not c:IsImmuneToEffect(e)
+	return c:IsSetCard(0x58) and c:IsMonster() and (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and not c:IsImmuneToEffect(e)
 end
 function s.mttg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter1(chkc,e,tp) end

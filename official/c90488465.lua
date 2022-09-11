@@ -77,7 +77,7 @@ function s.check(sg,e,tp,mg)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsType,TYPE_MONSTER),tp,LOCATION_REMOVED,LOCATION_REMOVED,nil)
+	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsMonster),tp,LOCATION_REMOVED,LOCATION_REMOVED,nil)
 	if chk==0 then return aux.SelectUnselectGroup(g,e,tp,3,3,s.check,0) end
 	local sg=aux.SelectUnselectGroup(g,e,tp,3,3,s.check,1,tp,HINTMSG_TARGET)
 	Duel.SetTargetCard(sg)

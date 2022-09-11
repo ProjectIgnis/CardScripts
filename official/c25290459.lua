@@ -18,7 +18,7 @@ function s.costfilter(c,e,tp)
 	return c.listed_names and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,c,e,tp)
 end
 function s.spfilter(c,class,e,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,true,true)
+	return c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,true,true)
 		and class.listed_names and c:IsCode(table.unpack(class.listed_names))
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

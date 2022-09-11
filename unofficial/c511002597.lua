@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.tgd)
 	e2:SetOperation(s.opd)
 	c:RegisterEffect(e2)
-	aux.AddEREquipLimit(c,s.cond,s.eqval,aux.EquipByEffectAndLimitRegister,e2)
+	aux.AddEREquipLimit(c,s.cond,s.eqval,Card.EquipByEffectAndLimitRegister,e2)
 end
 function s.eqval(ec,c,tp)
 	return ec:IsControler(1-tp) and ec:IsAttackPos()
@@ -67,7 +67,7 @@ function s.opd(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsAttackPos() then
-		if c:IsFaceup() and c:IsRelateToEffect(e) then aux.EquipByEffectAndLimitRegister(c,e,tp,tc)
+		if c:IsFaceup() and c:IsRelateToEffect(e) then c:EquipByEffectAndLimitRegister(e,tp,tc)
 		else Duel.SendtoGrave(tc,REASON_EFFECT) end
 	end
 end

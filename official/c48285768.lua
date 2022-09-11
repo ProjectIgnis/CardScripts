@@ -40,7 +40,7 @@ s.listed_series={0x158}
 
 	--Check for a "Sprigguns" monster
 function s.tgfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x158) and c:IsAbleToGrave()
+	return c:IsMonster() and c:IsSetCard(0x158) and c:IsAbleToGrave()
 end
 	--Activation legality
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -65,7 +65,7 @@ function s.bantg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 	--Check for fusion monster that lists "Fallen of Albaz"
 function s.edfilter(c)
-	return c:IsType(TYPE_FUSION) and aux.IsMaterialListCode(c,CARD_ALBAZ)
+	return c:IsType(TYPE_FUSION) and c:IsMaterialListCode(CARD_ALBAZ)
 end
 	--Banish itself temporarily
 function s.banop(e,tp,eg,ep,ev,re,r,rp)

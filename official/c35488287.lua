@@ -38,7 +38,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x79) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(id)
+	return c:IsSetCard(0x79) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(id)
 end
 function s.splimit(e,c,tp,sumtp,sumpos)
 	return not c:IsSetCard(0x79)
@@ -71,7 +71,7 @@ function s.repfilter(c,tp)
 		and c:GetReasonPlayer()~=tp
 end
 function s.tgfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x7c) and c:IsType(TYPE_SPELL+TYPE_TRAP) and not c:IsStatus(STATUS_DESTROY_CONFIRMED)
+	return c:IsFaceup() and c:IsSetCard(0x7c) and c:IsSpellTrap() and not c:IsStatus(STATUS_DESTROY_CONFIRMED)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

@@ -53,7 +53,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	end
 end
 function s.atkcfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xfe) and c:GetBaseAttack()>0
+	return c:IsMonster() and c:IsSetCard(0xfe) and c:GetBaseAttack()>0
 		and c:IsAbleToRemoveAsCost() and (aux.SpElimFilter(c,true,true) or c:IsLocation(LOCATION_HAND))
 		and Duel.IsExistingTarget(s.atkfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c)
 end

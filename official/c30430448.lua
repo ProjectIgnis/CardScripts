@@ -9,7 +9,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x180}
 function s.negfilter(c)
-	return c:IsType(TYPE_EFFECT) and aux.disfilter1(c)
+	return c:IsType(TYPE_EFFECT) and c:IsNegatableMonster()
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.negfilter(chkc) end

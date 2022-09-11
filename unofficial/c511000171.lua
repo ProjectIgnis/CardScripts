@@ -15,11 +15,11 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_BECOME_QUICK)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(0x3f,0x3f)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_SPELL))
+	e2:SetTarget(aux.TargetBoolFunction(Card.Spell))
 	c:RegisterEffect(e2)
 end
 function s.filter(c)
-	return c:IsType(TYPE_SPELL) and c:IsAbleToHand()
+	return c:IsSpell() and c:IsAbleToHand()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

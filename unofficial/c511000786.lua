@@ -22,7 +22,7 @@ function s.filter(c,e,tp,eg,ep,ev,re,r,rp,chain)
 	if not c:IsType(TYPE_FIELD) and Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return false end
 	local te=c:GetActivateEffect()
 	local pre={Duel.GetPlayerEffect(tp,EFFECT_CANNOT_ACTIVATE)}
-	if not c:IsType(TYPE_TRAP) or not te or c:IsHasEffect(EFFECT_CANNOT_TRIGGER) then return false end
+	if not c:IsTrap() or not te or c:IsHasEffect(EFFECT_CANNOT_TRIGGER) then return false end
 	if pre[1] then
 		for i,eff in ipairs(pre) do
 			local prev=eff:GetValue()

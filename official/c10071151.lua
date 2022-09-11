@@ -34,7 +34,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
 end
 function s.cfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x38) and c:IsAbleToRemoveAsCost()
+	return c:IsMonster() and c:IsSetCard(0x38) and c:IsAbleToRemoveAsCost()
 		and (c:IsLocation(LOCATION_HAND) or aux.SpElimFilter(c,true))
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -44,7 +44,7 @@ function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.desfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsFaceup() and c:IsSpellTrap()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and s.desfilter(chkc) end

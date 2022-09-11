@@ -80,12 +80,12 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for "Crystal Beast" monster to special summon
 function s.ssfilter(c,e,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsLevelBelow(4) and c:IsSetCard(0x1034) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsMonster() and c:IsLevelBelow(4) and c:IsSetCard(0x1034) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,c)
 end
 	--Check for "Ultimate Crystal" monster to add to hand
 function s.thfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x2034) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(0x2034) and c:IsAbleToHand()
 end
 	--Activation legality
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

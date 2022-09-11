@@ -26,7 +26,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CARDTYPE)
 	local op=Duel.SelectOption(tp,71,72)
 	Duel.ConfirmCards(tp,tc)
-	if (op==0 and tc:IsType(TYPE_SPELL)) or (op==1 and tc:IsType(TYPE_TRAP)) then
+	if (op==0 and tc:IsSpell()) or (op==1 and tc:IsTrap()) then
 		if Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0 then
 			Duel.Draw(tp,2,REASON_EFFECT)
 		end

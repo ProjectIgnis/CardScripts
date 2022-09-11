@@ -36,7 +36,7 @@ function s.matfilter(c,fc,sub,sub2,mg,sg,tp,contact,sumtype)
 	return true
 end
 function s.filteraux(c)
-	return c:IsAbleToRemoveAsCost() and c:IsType(TYPE_MONSTER)
+	return c:IsAbleToRemoveAsCost() and c:IsMonster()
 end
 function s.contactfil(tp)
 	return Duel.GetMatchingGroup(s.filteraux,tp,LOCATION_ONFIELD,0,nil)

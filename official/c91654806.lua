@@ -36,7 +36,7 @@ end
 s.listed_names={id,CARD_JINZO}
 	--Check for a monster that is owned by your opponent
 function s.cfilter(c,e)
-	return c:IsType(TYPE_MONSTER) and c:GetControler()~=c:GetOwner() and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and c:GetControler()~=c:GetOwner() and c:IsAbleToGraveAsCost()
 end
 	--Send 1 monster you control, owned by your opponent, to GY
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -84,7 +84,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	if g and #g>0 then
 		Duel.ConfirmCards(tp,g)
 		local opt=e:GetLabel()
-		if (opt==0 and tc:IsType(TYPE_MONSTER)) or (opt==1 and tc:IsType(TYPE_SPELL)) or (opt==2 and tc:IsType(TYPE_TRAP)) then
+		if (opt==0 and tc:IsMonster()) or (opt==1 and tc:IsSpell()) or (opt==2 and tc:IsTrap()) then
 			if c:IsRelateToEffect(e) and Duel.SendtoGrave(c,REASON_EFFECT)~=0 and c:IsLocation(LOCATION_GRAVE) then
 				Duel.Draw(tp,1,REASON_EFFECT)
 			end

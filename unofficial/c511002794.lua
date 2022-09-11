@@ -110,7 +110,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp,val,r,rc)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.negop2(e,tp,eg,ep,ev,re,r,rp,val,r,rc)
-	local g=Duel.GetMatchingGroup(aux.disfilter1,tp,0,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(Card.IsNegatableMonster,tp,0,LOCATION_MZONE,nil)
 	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(28265983,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 		local sg=g:Select(tp,1,1,nil)

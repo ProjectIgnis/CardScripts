@@ -65,11 +65,11 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for 1 "Bujin" monster to add from GY
 function s.thfilter(c,cd)
-	return c:IsSetCard(0x88) and c:IsType(TYPE_MONSTER) and not c:IsCode(cd) and c:IsAbleToHand()
+	return c:IsSetCard(0x88) and c:IsMonster() and not c:IsCode(cd) and c:IsAbleToHand()
 end
 	--Check for 1 "Bujin" monster to send to GY as cost
 function s.cfilter1(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost() and c:IsSetCard(0x88)
+	return c:IsMonster() and c:IsAbleToGraveAsCost() and c:IsSetCard(0x88)
 		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,nil,c:GetCode())
 end
 	--Send 1 "Bujin" monster from hand to GY as cost
@@ -96,11 +96,11 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for 1 "Bujin" monster to send from deck
 function s.tgfilter(c,cd)
-	return c:IsSetCard(0x88) and c:IsType(TYPE_MONSTER) and not c:IsCode(cd) and c:IsAbleToGrave()
+	return c:IsSetCard(0x88) and c:IsMonster() and not c:IsCode(cd) and c:IsAbleToGrave()
 end
 	--Check for 1 "Bujin" monster to banish as cost
 function s.cfilter2(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost() and c:IsSetCard(0x88)
+	return c:IsMonster() and c:IsAbleToRemoveAsCost() and c:IsSetCard(0x88)
 		and Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil,c:GetCode())
 end
 	--Banish 1 "Bujin" monster from GY as cost

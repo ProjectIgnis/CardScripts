@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.costfilter(c)
-	return c:IsRace(RACE_WINGEDBEAST) and c:IsType(TYPE_MONSTER) and c:IsDiscardable()
+	return c:IsRace(RACE_WINGEDBEAST) and c:IsMonster() and c:IsDiscardable()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
@@ -44,7 +44,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoHand(sg,nil,REASON_EFFECT)
 end
 function s.lvfilter(c)
-	return c:IsRace(RACE_WINGEDBEAST) and c:IsType(TYPE_MONSTER) and c:IsLevelAbove(2) and not c:IsPublic()
+	return c:IsRace(RACE_WINGEDBEAST) and c:IsMonster() and c:IsLevelAbove(2) and not c:IsPublic()
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.lvfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end

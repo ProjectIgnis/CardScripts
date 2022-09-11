@@ -34,10 +34,10 @@ function s.cfilter(c,tp)
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,c)
 end
 function s.filter1(c,cd)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xf) and not c:IsCode(cd) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(0xf) and not c:IsCode(cd) and c:IsAbleToHand()
 end
 function s.filter2(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x111) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(0x111) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -74,7 +74,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tdfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and c:IsSetCard(0xf) and c:IsAbleToDeck()
+	return c:IsFaceup() and c:IsMonster() and c:IsSetCard(0xf) and c:IsAbleToDeck()
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and s.tdfilter(chkc) end

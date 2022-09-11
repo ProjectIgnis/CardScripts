@@ -30,7 +30,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return false
 end
 function s.afilter(c)
-	return c:IsSetCard(0x95) and c:IsType(TYPE_SPELL) and c:IsAbleToHand()
+	return c:IsSetCard(0x95) and c:IsSpell() and c:IsAbleToHand()
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local eq=e:GetHandler():GetEquipTarget()

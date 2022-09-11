@@ -42,7 +42,7 @@ end
 function s.equipop(c,e,tp,tc)
 	local atk=tc:GetTextAttack()
 	if atk<0 then atk=0 end
-	if not aux.EquipByEffectAndLimitRegister(c,e,tp,tc) then return end
+	if not c:EquipByEffectAndLimitRegister(e,tp,tc) then return end
 	if atk>0 then
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_EQUIP)

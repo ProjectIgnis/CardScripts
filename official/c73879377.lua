@@ -27,7 +27,7 @@ s.LVset=0x111
 function s.cfilter(c,tp)
 	local atk=c:GetAttack()
 	if atk<0 then atk=0 end
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and c:IsAbleToGraveAsCost()
 		and Duel.IsExistingMatchingCard(s.dfilter,tp,0,LOCATION_MZONE,1,nil,atk)
 end
 function s.dfilter(c,atk)

@@ -39,8 +39,8 @@ function s.filter(c)
 	return c:IsType(TYPE_NORMAL) and c:IsRace(RACE_FIEND) and c:IsDiscardable()
 end
 function s.cfilter(c)
-	return c:IsType(TYPE_NORMAL) and c:IsType(TYPE_MONSTER) and c:IsRace(RACE_FIEND)
+	return c:IsType(TYPE_NORMAL) and c:IsMonster() and c:IsRace(RACE_FIEND)
 end
 function s.thfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsAbleToHand()
 end

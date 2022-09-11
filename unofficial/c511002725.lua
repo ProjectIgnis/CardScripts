@@ -19,10 +19,10 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return (s.cfilter(Duel.GetFieldCard(tp,LOCATION_SZONE,5)) or s.cfilter(Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)))
 end
 function s.filter1(c)
-	return c:IsEarthbound() and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsEarthbound() and c:IsMonster() and c:IsAbleToHand()
 end
 function s.filter2(c)
-	return c:IsType(TYPE_SPELL) and c:IsAbleToHand()
+	return c:IsSpell() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_GRAVE,0,1,nil) 

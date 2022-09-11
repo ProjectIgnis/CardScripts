@@ -80,7 +80,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp,chk)
 	and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,nil)
 end
 function s.filter(c)
-	return c:IsType(TYPE_SPELL) and c:IsAbleToHand()
+	return c:IsSpell() and c:IsAbleToHand()
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,tp,id)

@@ -18,7 +18,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ph==PHASE_MAIN1 or (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE) or ph==PHASE_MAIN2
 end
 function s.thfilter(c)
-	return c:IsAttackAbove(2400) and c:GetDefense()==1000 and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsAttackAbove(2400) and c:GetDefense()==1000 and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end

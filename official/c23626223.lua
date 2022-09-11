@@ -48,7 +48,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummonComplete()
 end
 function s.tgfilter(c)
-	return c:IsFaceup() and (c:GetOriginalType()&TYPE_TRAP)~=0 and c:IsType(TYPE_MONSTER)
+	return c:IsFaceup() and (c:GetOriginalType()&TYPE_TRAP)~=0 and c:IsMonster()
 end
 function s.tgcon(e)
 	return Duel.IsExistingMatchingCard(s.tgfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())

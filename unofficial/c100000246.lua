@@ -22,7 +22,7 @@ function s.cfilter(c,e,tp)
 	return #g>2 and aux.SelectUnselectGroup(g,e,tp,3,3,aux.ChkfMMZ(1-ct),0)
 end
 function s.costfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c)
+	return c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1 and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil,e,tp) end

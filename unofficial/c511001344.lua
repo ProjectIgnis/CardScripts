@@ -30,7 +30,7 @@ function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	local d2=false
 	local tc=eg:GetFirst()
 	while tc do
-		if tc:IsPreviousLocation(LOCATION_MZONE) and tc:IsType(TYPE_MONSTER) and tc:IsReason(REASON_DESTROY) then
+		if tc:IsPreviousLocation(LOCATION_MZONE) and tc:IsMonster() and tc:IsReason(REASON_DESTROY) then
 			if tc:IsPreviousControler(0) then d1=true
 			else d2=true end
 		end

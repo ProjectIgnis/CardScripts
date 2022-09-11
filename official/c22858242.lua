@@ -37,7 +37,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:GetFirst():IsControler(1-tp)
 end
 function s.cfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,nil) end

@@ -21,7 +21,7 @@ function s.indes(e,c)
 	return c:GetAttack()>=2000
 end
 function s.filter(c)
-	return c:IsSetCard(0x2a) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x2a) and c:IsMonster()
 end
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(s.filter,c:GetControler(),LOCATION_GRAVE,0,nil)*200

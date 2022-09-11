@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.sefilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_SPELL) and not c:IsDisabled()
+	return c:IsFaceup() and c:IsSpell() and not c:IsDisabled()
 end
 function s.opfilter(c)
 	return c:IsFaceup() and not c:IsDisabled()

@@ -34,7 +34,7 @@ end
 s.listed_series={0x7b}
 
 function s.filter(c)
-	return c:IsSetCard(0x7b) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x7b) and c:IsMonster()
 end
 function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -20,7 +20,7 @@ function s.initial_effect(c)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and rc:IsType(TYPE_SPELL) then
+	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and rc:IsSpell() then
 		rc:RegisterFlagEffect(id,RESET_PHASE+PHASE_END,0,0)
 	end
 end
@@ -35,7 +35,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,1000)
 end
 function s.filter(c)
-	return c:IsType(TYPE_SPELL) and c:GetFlagEffect(id)>0
+	return c:IsSpell() and c:GetFlagEffect(id)>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetFieldGroupCount(tp,LOCATION_GRAVE,0)-1

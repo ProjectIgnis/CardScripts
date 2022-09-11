@@ -20,9 +20,13 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
 	if d and a:GetControler()~=d:GetControler() then
-		if a:IsControler(tp) and a:IsFaceup() and a:IsRace(RACE_CYBERSE) and aux.disfilter1(d) then e:SetLabelObject(d)
-		elseif d:IsFaceup() and d:IsRace(RACE_CYBERSE) and aux.disfilter1(a) then e:SetLabelObject(a)
-		else return false end
+		if a:IsControler(tp) and a:IsFaceup() and a:IsRace(RACE_CYBERSE) and d:IsNegatableMonster() then
+			e:SetLabelObject(d)
+		elseif d:IsFaceup() and d:IsRace(RACE_CYBERSE) and a:IsNegatableMonster() then
+			e:SetLabelObject(a)
+		else
+			return false
+		end
 		return true
 	else return false end
 end
@@ -33,7 +37,7 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and aux.disfilter1(tc) and tc:IsControler(1-tp) then
+	if tc:IsRelateToEffect(e) and tc:IsNegatableMonster() and tc:IsControler(1-tp) then
 		local c=e:GetHandler()
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(c)

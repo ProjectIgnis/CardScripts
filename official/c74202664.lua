@@ -25,7 +25,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)==0 then return end
 	Duel.ConfirmDecktop(tp,1)
 	local tc=Duel.GetDecktopGroup(tp,1):GetFirst()
-	if tc:IsType(TYPE_MONSTER) and (tc:IsLevel(1) or tc:IsLevel(8)) then
+	if tc:IsMonster() and (tc:IsLevel(1) or tc:IsLevel(8)) then
 		aux.ToHandOrElse(tc,tp,
 							function(c) return tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end,
 							function(c) Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP) end,

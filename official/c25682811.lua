@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.eqtg)
 	e1:SetOperation(s.eqop)
 	c:RegisterEffect(e1)
-	aux.AddEREquipLimit(c,nil,s.eqval,aux.EquipByEffectAndLimitRegister,e1)
+	aux.AddEREquipLimit(c,nil,s.eqval,Card.EquipByEffectAndLimitRegister,e1)
 	--increase ATK
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
@@ -54,7 +54,7 @@ function s.equipop(c,e,tp,tc,chk)
 	e1:SetProperty(EFFECT_FLAG_OWNER_RELATE)
 	e1:SetCode(EFFECT_EQUIP_LIMIT)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-	e1:SetValue(aux.EquipByEffectLimit)
+	e1:SetValue(Card.EquipByEffectLimit)
 	e1:SetLabelObject(e:GetLabelObject())
 	tc:RegisterEffect(e1)
 end
@@ -64,7 +64,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsFacedown() or not c:IsRelateToEffect(e) then return end
 	for tc in aux.Next(sg) do
-		aux.EquipByEffectAndLimitRegister(c,e,tp,tc)
+		c:EquipByEffectAndLimitRegister(e,tp,tc)
 	end
 end
 function s.atkval(e,c)

@@ -45,7 +45,7 @@ end
 function s.equipop(c,e,tp,tc)
 	local atk=tc:GetTextAttack()
 	if tc:IsFacedown() or atk<0 then atk=0 end
-	if not aux.EquipByEffectAndLimitRegister(c,e,tp,tc,id,true) then return end
+	if not c:EquipByEffectAndLimitRegister(e,tp,tc,id,true) then return end
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_EQUIP)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -57,7 +57,7 @@ end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsType(TYPE_MONSTER) then 
+	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsMonster() then 
 		s.equipop(c,e,tp,tc)
 	end
 end

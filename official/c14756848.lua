@@ -31,14 +31,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x9a}
-function s.filter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
-end
 function s.hspcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil)
+		and not Duel.IsExistingMatchingCard(Card.IsSpellTrap,tp,LOCATION_GRAVE,0,1,nil)
 end
 function s.hspcon2(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1
@@ -99,7 +96,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.HintSelection(g)
 		if Duel.Destroy(g,REASON_EFFECT)~=0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 			and not tc:IsLocation(LOCATION_HAND+LOCATION_DECK)
-			and tc:IsType(TYPE_SPELL+TYPE_TRAP) and tc:IsSSetable()
+			and tc:IsSpellTrap() and tc:IsSSetable()
 			and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
 			Duel.BreakEffect()
 			Duel.SSet(tp,tc)
@@ -111,7 +108,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		if not tc then return end
 		Duel.HintSelection(g)
 		if Duel.Destroy(g,REASON_EFFECT)~=0
-			and (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1))
+			and Duel.CheckPendulumZones(tp)
 			and not tc:IsLocation(LOCATION_HAND+LOCATION_DECK) and not tc:IsForbidden()
 			and Duel.SelectYesNo(tp,aux.Stringid(id,4)) then
 			Duel.BreakEffect()

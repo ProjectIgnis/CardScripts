@@ -44,12 +44,12 @@ function s.initial_effect(c)
 	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 function s.distg(e,c)
-	if not c:IsType(TYPE_TRAP) or c:GetCardTargetCount()==0 then return false end
+	if not c:IsTrap() or c:GetCardTargetCount()==0 then return false end
 	return c:GetCardTarget():IsContains(e:GetHandler())
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	if not rc:IsType(TYPE_TRAP) then return end
+	if not rc:IsTrap() then return end
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	if g and g:IsContains(e:GetHandler()) then
@@ -79,7 +79,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end

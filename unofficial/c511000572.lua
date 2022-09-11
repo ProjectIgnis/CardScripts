@@ -58,7 +58,7 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsLocation(0x400)
 end
 function s.distg(e,c)
-	return c:IsType(TYPE_TRAP)
+	return c:IsTrap()
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local tl=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
@@ -75,7 +75,8 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=ep and re:IsActiveType(TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev) and e:GetHandler():IsDeckMaster()
+	return tp~=ep and re:IsActiveType(TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
+		and Duel.IsChainNegatable(ev) and e:GetHandler():IsDeckMaster()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -85,15 +86,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		local te=Duel.GetChainInfo(i,CHAININFO_TRIGGERING_EFFECT)
 		local tc=te:GetHandler()
 		ng:AddCard(tc)
-		if tc:IsType(TYPE_TRAP) and tc:IsRelateToEffect(te) then
+		if tc:IsTrap() and tc:IsRelateToEffect(te) then
 			dg:AddCard(tc)
 		end
 	end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,0,0)
-end
-function s.distg2(c)
-	return c:IsType(TYPE_TRAP)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local dg=Group.CreateGroup()
@@ -105,10 +103,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			dg:AddCard(tc)
 		end
 	end
-	local g=Duel.GetMatchingGroup(s.distg2,tp,0,LOCATION_ONFIELD,nil)
-	local tc=g:GetFirst()
+	local g=Duel.GetMatchingGroup(Card.IsTrap,tp,0,LOCATION_ONFIELD,nil)
 	local c=e:GetHandler()
-	while tc do
+	for tc in g:Iter() do
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
@@ -119,7 +116,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e2)
-		tc=g:GetNext()
 	end
 	Duel.Destroy(g,REASON_EFFECT)
 end

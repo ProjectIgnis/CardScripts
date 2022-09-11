@@ -41,7 +41,7 @@ function s.filter(c,e,tp,att)
 		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function s.cfilter(c)
-	return c:IsType(TYPE_MONSTER) and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
+	return c:IsMonster() and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local att=0
@@ -72,7 +72,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.equipop(c,e,tp,tc)
-	if not aux.EquipByEffectAndLimitRegister(c,e,tp,tc,nil,true) then return end
+	if not c:EquipByEffectAndLimitRegister(e,tp,tc,nil,true) then return end
 	--Gains 500 ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_EQUIP)

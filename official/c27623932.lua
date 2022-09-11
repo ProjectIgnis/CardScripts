@@ -23,7 +23,7 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,TOKEN_BRAVE),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.tgfilter(c,tp)
-	return c:IsFaceup() and c:GetEquipGroup():IsExists(aux.IsCodeListed,1,nil,TOKEN_BRAVE)
+	return c:IsFaceup() and c:GetEquipGroup():IsExists(Card.IsCodeListed,1,nil,TOKEN_BRAVE)
 		and Duel.IsExistingMatchingCard(s.desfilter,tp,0,LOCATION_MZONE,1,nil,c:GetAttack())
 end
 function s.desfilter(c,atk)
@@ -38,7 +38,7 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,1-tp,LOCATION_MZONE)
 end
 function s.eqfilter(c,tp)
-	return c:IsType(TYPE_EQUIP) and c:CheckUniqueOnField(tp) and aux.IsCodeListed(c,TOKEN_BRAVE)
+	return c:IsType(TYPE_EQUIP) and c:CheckUniqueOnField(tp) and c:IsCodeListed(TOKEN_BRAVE)
 		and not c:IsForbidden() and Duel.IsExistingMatchingCard(s.eqfilter2,tp,LOCATION_MZONE,0,1,nil,c)
 end
 function s.eqfilter2(c,tc)

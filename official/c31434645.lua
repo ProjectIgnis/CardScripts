@@ -49,7 +49,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,800)
 end
 function s.filter(c)
-	return (c:IsSetCard(0x144) and c:IsType(TYPE_SPELL+TYPE_TRAP)) or (c:IsSetCard(0x142) and c:IsType(TYPE_MONSTER))
+	return (c:IsSetCard(0x144) and c:IsSpellTrap()) or (c:IsSetCard(0x142) and c:IsMonster())
 end
 function s.thfilter(c)
 	return s.filter(c) and c:IsAbleToHand()

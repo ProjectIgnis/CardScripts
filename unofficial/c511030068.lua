@@ -47,7 +47,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x102}
 function s.actfilter(c)
-	return c:IsSetCard(0x102) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
+	return c:IsSetCard(0x102) and c:IsMonster() and c:IsAbleToGrave()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()

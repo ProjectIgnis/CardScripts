@@ -56,7 +56,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(tp) or bc:IsControler(tp)
 end
 function s.rmfilter(c)
-	return c:IsType(TYPE_SPELL) and c:IsAbleToRemove()
+	return c:IsSpell() and c:IsAbleToRemove()
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -128,7 +128,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter2(c)
-	return c:IsFaceup() and c:IsType(TYPE_SPELL) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSpell() and c:IsAbleToHand()
 end
 function s.atkop2(e,tp,eg,ep,ev,re,r,rp)
 	local bc=Duel.GetAttackTarget()

@@ -35,7 +35,7 @@ function s.ntcon(e,c,minc,zone)
 		and (Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0 or not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil))
 end
 function s.tgfilter(c)
-	return c:IsDiscardable() and c:IsType(TYPE_MONSTER) and (c:IsRace(RACE_PSYCHIC) or c:IsRace(RACE_WYRM))
+	return c:IsDiscardable() and c:IsMonster() and (c:IsRace(RACE_PSYCHIC) or c:IsRace(RACE_WYRM))
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_HAND,0,1,nil) end

@@ -33,7 +33,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return not c:IsReason(REASON_BATTLE) and rp==1-tp and c:IsPreviousControler(tp)
 end
 function s.filter(c)
-	return c:IsSetCard(0x3d) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x3d) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc) end

@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	aux.DoubleSnareValidity(c,LOCATION_SZONE)
 end
 function s.distarget(e,c)
-	return c~=e:GetHandler() and c:IsType(TYPE_TRAP)
+	return c~=e:GetHandler() and c:IsTrap()
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local tl=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)

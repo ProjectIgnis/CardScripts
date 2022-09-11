@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c,tp)
-	return c:GetControler()==tp and c:IsType(TYPE_MONSTER) and c:IsLocation(LOCATION_MZONE) 
+	return c:GetControler()==tp and c:IsMonster() and c:IsLocation(LOCATION_MZONE) 
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
@@ -24,7 +24,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return ex and tg~=nil and tc+tg:FilterCount(s.cfilter,nil,tp)-#tg==1
 end
 function s.filter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAttackPos()
+	return c:IsMonster() and c:IsAttackPos()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil) end

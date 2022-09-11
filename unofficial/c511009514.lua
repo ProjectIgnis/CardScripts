@@ -66,7 +66,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.cfilter(c,e,tp)
-	return c:IsOnField() and c:IsType(TYPE_MONSTER) and c:IsControler(tp) and (not e or c:IsRelateToEffect(e)) 
+	return c:IsOnField() and c:IsMonster() and c:IsControler(tp) and (not e or c:IsRelateToEffect(e)) 
 		and c:IsRed()
 end
 function s.condition2(e,tp,eg,ep,ev,re,r,rp)

@@ -88,7 +88,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,1000)
 end
 function s.filter(c)
-	return aux.nzatk(c) and c:IsLinkMonster() and c:IsSetCard(0x119)
+	return c:HasNonZeroAttack() and c:IsLinkMonster() and c:IsSetCard(0x119)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -100,7 +100,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and aux.nzatk(tc) and tc and tc:IsRelateToEffect(e) then
+	if c:IsRelateToEffect(e) and tc:HasNonZeroAttack() and tc and tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)

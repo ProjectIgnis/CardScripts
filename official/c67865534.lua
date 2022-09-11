@@ -80,7 +80,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		tc:RegisterEffect(e2)
-		if (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1))
+		if Duel.CheckPendulumZones(tp)
 			and c:IsRelateToEffect(e) and c:IsFaceup()
 			and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
 			Duel.MoveToField(c,tp,tp,LOCATION_PZONE,POS_FACEUP,true)
@@ -91,7 +91,7 @@ function s.xyzcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_PENDULUM)
 end
 function s.xyzfilter(c)
-	return c:IsType(TYPE_PENDULUM) and c:IsType(TYPE_MONSTER)
+	return c:IsType(TYPE_PENDULUM) and c:IsMonster()
 end
 function s.xyztg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.xyzfilter(chkc) end

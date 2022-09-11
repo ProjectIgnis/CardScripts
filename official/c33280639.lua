@@ -28,7 +28,7 @@ function s.cfilter1(c)
 	return c:IsSetCard(0xd6) and not c:IsCode(id) and c:IsAbleToGraveAsCost()
 end
 function s.cfilter2(c)
-	return c:IsSetCard(0xd7) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(0xd7) and c:IsMonster() and c:IsAbleToGraveAsCost()
 end
 function s.rescon(sg,e,tp,mg)
 	return sg:IsExists(s.cfilter1,1,nil) and sg:IsExists(s.cfilter2,1,nil)

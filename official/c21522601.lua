@@ -37,7 +37,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return bc:IsFaceup() and bc:IsRace(RACE_SPELLCASTER) and Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL
 end
 function s.rvfilt(c)
-	return c:IsType(TYPE_SPELL) and not c:IsPublic()
+	return c:IsSpell() and not c:IsPublic()
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.rvfilt,tp,LOCATION_HAND,0,1,nil) end
@@ -63,13 +63,13 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.disfilter(c)
-	return c:IsType(TYPE_SPELL) and c:IsDiscardable()
+	return c:IsSpell() and c:IsDiscardable()
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.disfilter1,tp,0,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsNegatableMonster,tp,0,LOCATION_MZONE,1,nil) end
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(aux.disfilter1,tp,0,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(Card.IsNegatableMonster,tp,0,LOCATION_MZONE,nil)
 	local c=e:GetHandler()
 	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(c)

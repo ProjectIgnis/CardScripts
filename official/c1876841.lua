@@ -64,7 +64,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 function s.thdfilter(c)
-	return c:IsSetCard(0x26) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSetCard(0x26) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.target_a(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thdfilter,tp,LOCATION_DECK,0,1,nil) end

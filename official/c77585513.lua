@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTargetRange(0xa,0xa)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_TRAP))
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsTrap))
 	c:RegisterEffect(e1)
 	--cannot activate
 	local e2=Effect.CreateEffect(c)
@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_DISABLE)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(LOCATION_SZONE,LOCATION_SZONE)
-	e3:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_TRAP))
+	e3:SetTarget(aux.TargetBoolFunction(Card.IsTrap))
 	c:RegisterEffect(e3)
 	--disable effect
 	local e4=Effect.CreateEffect(c)
@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	e5:SetCode(EFFECT_DISABLE_TRAPMONSTER)
 	e5:SetRange(LOCATION_MZONE)
 	e5:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e5:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_TRAP))
+	e5:SetTarget(aux.TargetBoolFunction(Card.IsTrap))
 	c:RegisterEffect(e5)
 	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
@@ -52,5 +52,5 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.aclimit(e,re,tp)
-	return re:GetHandler():IsType(TYPE_TRAP)
+	return re:GetHandler():IsTrap()
 end

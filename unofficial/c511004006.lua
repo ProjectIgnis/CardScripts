@@ -51,7 +51,7 @@ function s.initial_effect(c)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	for tc in aux.Next(eg) do
-		if tc:IsType(TYPE_MONSTER) and tc:IsPreviousLocation(LOCATION_MZONE) and tc:IsPreviousPosition(POS_ATTACK) then
+		if tc:IsMonster() and tc:IsPreviousLocation(LOCATION_MZONE) and tc:IsPreviousPosition(POS_ATTACK) then
 			tc:RegisterFlagEffect(id+1,RESET_PHASE+PHASE_END,0,5)
 		end
 	end

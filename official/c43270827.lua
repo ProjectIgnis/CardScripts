@@ -25,7 +25,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b2=rc:IsAbleToRemove() and rc:IsRelateToEffect(re) and not rc:IsLocation(LOCATION_REMOVED)
 	local b3=b1 and b2 and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,CARD_ARGYRO_SYSTEM)
 	if chk==0 then return b1 or b2 or b3 end
-	local op=aux.SelectEffect(tp,
+	local op=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,0)},
 		{b2,aux.Stringid(id,1)},
 		{b3,aux.Stringid(id,2)})

@@ -30,7 +30,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if ct then
 		--If it was a monster, return cyberse from gy to hand
 		local ct2=Duel.GetMatchingGroupCountRush(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
-		if ct:IsType(TYPE_MONSTER) and ct:IsRace(RACE_CYBERSE) and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,nil) and ct2>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+		if ct:IsMonster() and ct:IsRace(RACE_CYBERSE) and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,nil) and ct2>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 			local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_GRAVE,0,1,ct2,nil)
 			if #g>0 then

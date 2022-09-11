@@ -98,7 +98,7 @@ function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and e:GetHandler():IsPreviousControler(tp)
 end
 function s.rmfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemove()
+	return c:IsMonster() and c:IsAbleToRemove()
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.rmfilter,tp,0,LOCATION_GRAVE,1,nil) end

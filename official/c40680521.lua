@@ -45,7 +45,7 @@ function s.spmvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local sp=s.sptg(e,tp,eg,ep,ev,re,r,rp,0)
 	local mv=s.mvtg(e,tp,eg,ep,ev,re,r,rp,0)
 	if chk==0 then return sp or mv end
-	local op=aux.SelectEffect(tp,
+	local op=Duel.SelectEffect(tp,
 		{sp,aux.Stringid(id,3)},
 		{mv,aux.Stringid(id,4)})
 	if op==1 then
@@ -123,10 +123,10 @@ function s.pencon(e,tp,eg,ep,ev,re,r,rp)
 		and c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp
 end
 function s.pentg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1) end
+	if chk==0 then return Duel.CheckPendulumZones(tp)end
 end
 function s.penop(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.CheckLocation(tp,LOCATION_PZONE,0) and not Duel.CheckLocation(tp,LOCATION_PZONE,1) then return end
+	if not Duel.CheckPendulumZones(tp) then return end
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
 		Duel.MoveToField(c,tp,tp,LOCATION_PZONE,POS_FACEUP,true)

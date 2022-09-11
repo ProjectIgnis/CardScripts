@@ -48,5 +48,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tgtg(e,c)
-	return c:IsFaceup() and c:IsType(TYPE_SPELL+TYPE_TRAP) and (c:IsSetCard(0x1157) or c:IsSetCard(0x2157))
+	return c:IsFaceup() and c:IsSpellTrap() and (c:IsSetCard(0x1157) or c:IsSetCard(0x2157))
 end

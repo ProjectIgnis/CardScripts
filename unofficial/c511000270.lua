@@ -17,7 +17,7 @@ function s.thfilter(c,tp,eg,ep,ev,re,r,rp)
 	local condition=te:GetCondition()
 	local cost=te:GetCost()
 	local target=te:GetTarget()
-	return c:IsCode(id+1) and c:IsType(TYPE_SPELL) and (not condition or condition(te,1-tp,eg,ep,ev,re,r,rp)) and (not cost or cost(te,1-tp,eg,ep,ev,re,r,rp,0))
+	return c:IsCode(id+1) and c:IsSpell() and (not condition or condition(te,1-tp,eg,ep,ev,re,r,rp)) and (not cost or cost(te,1-tp,eg,ep,ev,re,r,rp,0))
 		and (not target or target(te,1-tp,eg,ep,ev,re,r,rp,0)) 
 		and Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil,te)
 end

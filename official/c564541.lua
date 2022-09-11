@@ -26,7 +26,7 @@ function s.dccon(e,c)
 	return c:IsRace(RACE_DRAGON)
 end
 function s.cfilter(c)
-	return c:IsType(TYPE_MONSTER) and not c:IsRace(RACE_DRAGON)
+	return c:IsMonster() and not c:IsRace(RACE_DRAGON)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer() and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0

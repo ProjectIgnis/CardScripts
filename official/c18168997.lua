@@ -37,7 +37,7 @@ function s.cpcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 	--Check for "Darklord" spell/trap
 function s.cpfilter(c)
-	return c:IsSetCard(0xef) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToDeck() and c:CheckActivateEffect(false,true,false)~=nil
+	return c:IsSetCard(0xef) and c:IsSpellTrap() and c:IsAbleToDeck() and c:CheckActivateEffect(false,true,false)~=nil
 end
 	--Activation legality
 function s.cptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

@@ -97,7 +97,7 @@ function s.regop2(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.setfilter(c)
-	return c:IsSetCard(0x115) and c:IsType(TYPE_SPELL) and c:IsSSetable()
+	return c:IsSetCard(0x115) and c:IsSpell() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=e:GetHandler():GetFlagEffectLabel(id)

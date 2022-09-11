@@ -37,7 +37,7 @@ function s.retcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsReason(REASON_DESTROY) and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.filter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.rettg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local prec=e:GetHandler():GetPreviousControler()

@@ -69,7 +69,7 @@ function s.matfilter1(c,syncard)
 end
 function s.matfilter2(c,syncard)
 	local code=syncard:GetOriginalCode()
-	return c:IsType(TYPE_MONSTER) and not c:IsType(TYPE_TUNER) and c:IsCanBeSynchroMaterial(syncard) and c:IsAbleToRemove()
+	return c:IsMonster() and not c:IsType(TYPE_TUNER) and c:IsCanBeSynchroMaterial(syncard) and c:IsAbleToRemove()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()

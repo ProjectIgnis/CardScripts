@@ -62,7 +62,7 @@ function s.vartg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 	--Check for a non ? ATK monster to compare
 function s.thfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and c:GetTextAttack()>=0
+	return c:IsMonster() and c:IsAbleToHand() and c:GetTextAttack()>=0
 end
 	--Special summon 1 monster from opponent's GY, or opponent adds 1 monster from deck
 function s.varop(e,tp,eg,ep,ev,re,r,rp)

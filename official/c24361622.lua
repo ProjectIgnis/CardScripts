@@ -36,7 +36,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSequence()>4 and Duel.GetTurnPlayer()==1-tp
 end
 function s.thcfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsReleasable()
+	return c:IsMonster() and c:IsReleasable()
 		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsAbleToHand),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)

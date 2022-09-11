@@ -29,7 +29,7 @@ end
 s.listed_series={0xfc}
 s.listed_names={id}
 function s.spcfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xfc) and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and c:IsSetCard(0xfc) and c:IsAbleToGraveAsCost()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

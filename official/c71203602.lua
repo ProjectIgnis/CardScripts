@@ -23,7 +23,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetOperatedGroup():GetFirst()
 	Duel.ConfirmCards(1-tp,tc)
 	Duel.ShuffleHand(tp)
-	if tc:IsSetCard(0x3a) and tc:IsType(TYPE_MONSTER) then
+	if tc:IsSetCard(0x3a) and tc:IsMonster() then
 		Duel.BreakEffect()
 		local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
 		if #g>0 then

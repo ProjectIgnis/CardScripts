@@ -55,14 +55,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local dam=Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,nil,TYPE_MONSTER)*200
 	local tc1=g1:GetFirst()
 	while tc1 do
-		if tc1:IsType(TYPE_MONSTER) then
+		if tc1:IsMonster() then
 			lv1=lv1+tc1:GetLevel()
 		end
 		tc1=g1:GetNext()
 	end
 	local tc2=g2:GetFirst()
 	while tc2 do
-		if tc2:IsType(TYPE_MONSTER) then
+		if tc2:IsMonster() then
 			lv2=lv2+tc2:GetLevel()
 		end
 		tc2=g2:GetNext()

@@ -152,7 +152,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.disfilter(c,g)
-	return (not g or not g:IsContains(c)) and aux.disfilter1(c)
+	return (not g or not g:IsContains(c)) and c:IsNegatableMonster()
 end
 function s.distg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
@@ -161,7 +161,7 @@ function s.distg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	else
 		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	end
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and aux.disfilter1(chkc) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsNegatableMonster() end
 	if chk==0 then 
 		local g=c:GetCardTarget()
 		if c:IsHasEffect(511009518) then
@@ -176,7 +176,7 @@ function s.distg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-		g=Duel.SelectTarget(tp,aux.disfilter1,tp,0,LOCATION_MZONE,1,1,nil)
+		g=Duel.SelectTarget(tp,Card.IsNegatableMonster,tp,0,LOCATION_MZONE,1,1,nil)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)
 end
@@ -204,15 +204,14 @@ function s.repfilter(c,tp)
 		and not c:IsReason(REASON_REPLACE)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1)) 
-		and eg:IsExists(s.repfilter,1,nil,tp) end
+	if chk==0 then return Duel.CheckPendulumZones(tp) and eg:IsExists(s.repfilter,1,nil,tp) end
 	return Duel.SelectYesNo(tp,aux.Stringid(45974017,0))
 end
 function s.repval(e,c)
 	return s.repfilter(c,e:GetHandlerPlayer())
 end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.CheckLocation(tp,LOCATION_PZONE,0) and not Duel.CheckLocation(tp,LOCATION_PZONE,1) then return false end
+	if not Duel.CheckPendulumZones(tp) then return false end
 	Duel.MoveToField(e:GetHandler(),tp,tp,LOCATION_PZONE,POS_FACEUP,true)
 end
 function s.valcheck(e,c)

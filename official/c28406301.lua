@@ -55,7 +55,7 @@ end
 s.listed_names={id}
 s.listed_series={0xae,0xaf}
 function s.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xae) and c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsFaceup() and c:IsSetCard(0xae) and c:IsSpellTrap()
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsFaceup() and chkc:IsRace(RACE_FIEND) end

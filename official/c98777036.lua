@@ -73,7 +73,7 @@ function s.ctffilter(c,lv)
 	return c:IsControlerCanBeChanged() and c:IsFaceup() and c:GetLevel()==lv
 end
 function s.ctfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and c:IsAbleToGraveAsCost()
 		and Duel.IsExistingTarget(s.ctffilter,tp,0,LOCATION_MZONE,1,nil,c:GetLevel())
 end
 function s.ctcos(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -97,7 +97,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.lvtar(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and chkc:IsType(TYPE_MONSTER) end
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and chkc:IsMonster() end
 	if chk==0 then return Duel.IsExistingTarget(Card.HasLevel,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,Card.HasLevel,tp,LOCATION_GRAVE,0,1,1,nil)

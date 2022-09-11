@@ -25,7 +25,7 @@ end
 s.listed_series={0x127}
 -- Infinitrack monster
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x127) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x127) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp) -- Add to hand
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -47,7 +47,7 @@ function s.opttarget(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(s.optfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local tc=Duel.SelectTarget(tp,s.optfilter,tp,LOCATION_MZONE,0,1,1,nil)
-	local op=aux.SelectEffect(tp,
+	local op=Duel.SelectEffect(tp,
 		{tc:GetFirst():IsCanChangePosition(),aux.Stringid(id,1)},
 		{true,aux.Stringid(id,2)})
 	e:SetLabel(op)

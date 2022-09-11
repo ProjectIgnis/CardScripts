@@ -14,7 +14,7 @@ end
 function s.filter(c,e,tp,eg,ep,ev,re,r,rp,tid)
 	local te=c:CheckActivateEffect(false,false,false)
 	if c:GetTurnID()~=tid-1 or not c:IsPreviousPosition(POS_FACEUP) then return false end
-	if c:IsType(TYPE_SPELL) and te then
+	if c:IsSpell() and te then
 		if c:IsSetCard(0x95) then
 			local tg=te:GetTarget()
 			return not tg or tg(e,tp,eg,ep,ev,re,r,rp,0)

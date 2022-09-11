@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c)
-	return c:IsAbleToDeck() and c:IsType(TYPE_MONSTER)
+	return c:IsAbleToDeck() and c:IsMonster()
 end
 function s.cfilter(c,tp)
 	return c:IsSummonPlayer(1-tp) and c:IsPreviousLocation(LOCATION_HAND)

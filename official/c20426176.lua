@@ -44,7 +44,7 @@ function s.costg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsFaceup() and chkc:IsDifferentAttribute(e:GetLabel()) end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
 	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsCanBeEffectTarget,e),tp,0,LOCATION_MZONE,nil)
-	local att=aux.AnnounceAnotherAttribute(g,tp)
+	local att=Duel.AnnounceAnotherAttribute(g,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local sel=g:FilterSelect(tp,Card.IsDifferentAttribute,1,1,nil,att)
 	Duel.SetTargetCard(sel)
@@ -53,7 +53,7 @@ function s.costg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_GRAVE)
 end
 function s.filter(c,e,tp,ft)
-	return c:IsSetCard(0x13f) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x13f) and c:IsMonster()
 		and (c:IsAbleToDeck() or (ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
 end
 function s.cosop(e,tp,eg,ep,ev,re,r,rp)

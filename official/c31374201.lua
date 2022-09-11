@@ -41,7 +41,7 @@ function s.filter(c,e,tp,att)
 		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function s.cfilter(c)
-	return c:IsType(TYPE_MONSTER) and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
+	return c:IsMonster() and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local att=0

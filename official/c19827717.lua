@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.costfilter(c)
-	return c:IsDiscardable() and c:IsAbleToGraveAsCost() and c:IsType(TYPE_MONSTER)
+	return c:IsDiscardable() and c:IsAbleToGraveAsCost() and c:IsMonster()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end
@@ -28,7 +28,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.filter(c)
-	return c:IsAbleToHand() and c:IsType(TYPE_MONSTER) and c:GetTurnID()==Duel.GetTurnCount() and c:IsReason(REASON_BATTLE)
+	return c:IsAbleToHand() and c:IsMonster() and c:GetTurnID()==Duel.GetTurnCount() and c:IsReason(REASON_BATTLE)
 end
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil)

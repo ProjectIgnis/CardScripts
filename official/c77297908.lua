@@ -33,11 +33,11 @@ function s.cfilter(c)
 	return c:IsSetCard(0x10ec) and c:IsType(TYPE_PENDULUM) and not c:IsPublic()
 end
 function s.cfilter2(c,tp)
-	return c:IsSetCard(0x20ec) and c:IsType(TYPE_SPELL) and not c:IsPublic()
+	return c:IsSetCard(0x20ec) and c:IsSpell() and not c:IsPublic()
 		and Duel.IsExistingMatchingCard(s.cfilter3,tp,LOCATION_DECK,0,1,nil,c:GetCode())
 end
 function s.cfilter3(c,code)
-	return c:IsSetCard(0x20ec) and c:IsType(TYPE_SPELL) and not c:IsCode(code) and c:IsAbleToHand()
+	return c:IsSetCard(0x20ec) and c:IsSpell() and not c:IsCode(code) and c:IsAbleToHand()
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil)
@@ -76,7 +76,7 @@ function s.confilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x10ec) and c:IsSummonType(SUMMON_TYPE_PENDULUM)
 end
 function s.desfilter(c)
-	return c:IsFacedown() and c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsFacedown() and c:IsSpellTrap()
 end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)

@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end 
 s.listed_names={CARD_UNIFORM_39}
 function s.tdfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsAttribute(ATTRIBUTE_FIRE)	and c:IsAbleToDeckOrExtraAsCost()
+	return c:IsMonster() and c:IsAttribute(ATTRIBUTE_FIRE)	and c:IsAbleToDeckOrExtraAsCost()
 end
 function s.spfilter(c,e,tp)
 	return c:IsCode(CARD_UNIFORM_39) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

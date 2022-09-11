@@ -52,7 +52,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.tgfilter(c,e,tp)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP) and c:IsControler(tp)
-		and c:IsReason(REASON_DESTROY) and c:IsSetCard(0x58) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and c:IsCanBeEffectTarget(e)
+		and c:IsReason(REASON_DESTROY) and c:IsSetCard(0x58) and c:IsMonster() and c:IsAbleToHand() and c:IsCanBeEffectTarget(e)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.tgfilter,1,nil,e,tp)

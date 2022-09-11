@@ -32,7 +32,7 @@ function s.spfilter(c,e,tp)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstMatchingCard(s.filter,tp,LOCATION_DECK,0,nil,tp)
-	if aux.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp) then
+	if Duel.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp) then
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 		local sg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE,0,nil,e,tp)
 		if #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then

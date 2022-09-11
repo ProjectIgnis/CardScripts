@@ -65,7 +65,7 @@ s.rum_xyzsummon=function(c)
 end
 --target check is in RUM magic cards
 function s.splimit(e,se,sp,st)
-	return se:GetHandler():IsSetCard(0x95) and se:GetHandler():IsType(TYPE_SPELL)
+	return se:GetHandler():IsSetCard(0x95) and se:GetHandler():IsSpell()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end

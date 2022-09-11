@@ -13,7 +13,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x504e}
 function s.filter(c,cat)
-	return c:IsSetCard(cat) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(cat) and c:IsMonster()
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x504e) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

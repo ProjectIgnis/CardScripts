@@ -70,7 +70,7 @@ function s.filter(c,tid)
 	return c:IsFaceup() and c:IsSetCard(0x19)
 end
 function s.ovfilter(c)
-	return c:IsSetCard(0x19) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x19) and c:IsMonster()
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_ONFIELD,0,nil)

@@ -19,13 +19,13 @@ function s.typecast(c)
 	return (c:GetType()&TYPE_FUSION+TYPE_RITUAL+TYPE_SYNCHRO+TYPE_XYZ)
 end
 function s.filter1(c,e)
-	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and c:IsCanBeEffectTarget(e)
+	return c:IsFaceup() and c:IsMonster() and c:IsAbleToHand() and c:IsCanBeEffectTarget(e)
 end
 function s.filter2(c,e)
-	return c:IsType(TYPE_TRAP) and c:IsAbleToHand() and c:IsCanBeEffectTarget(e)
+	return c:IsTrap() and c:IsAbleToHand() and c:IsCanBeEffectTarget(e)
 end
 function s.filter3(c,e)
-	return c:IsType(TYPE_SPELL) and c:GetCode()~=id and c:IsAbleToHand() and c:IsCanBeEffectTarget(e)
+	return c:IsSpell() and c:GetCode()~=id and c:IsAbleToHand() and c:IsCanBeEffectTarget(e)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

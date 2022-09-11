@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	aux.AddEREquipLimit(c,s.eqcon,function(ec,_,tp) return ec:IsControler(1-tp) end,s.equipop,e2)
 end
 function s.gfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
+	return c:IsMonster() and c:IsAbleToRemoveAsCost()
 end
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -92,7 +92,7 @@ function s.equipop(c,e,tp,tc)
 	local def=tc:GetTextDefense()
 	if atk<0 then atk=0 end
 	if def<0 then def=0 end
-	if not aux.EquipByEffectAndLimitRegister(c,e,tp,tc,id) then return end
+	if not c:EquipByEffectAndLimitRegister(e,tp,tc,id) then return end
 	if atk>0 then
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_EQUIP)

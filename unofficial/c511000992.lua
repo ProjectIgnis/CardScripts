@@ -58,7 +58,7 @@ function s.sumlimit(e,c,sump,sumtype,sumpos,targetp)
 	return c:IsLocation(LOCATION_HAND) and c:GetControler()==Duel.GetTurnPlayer()
 end
 function s.cfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsDiscardable()
+	return c:IsMonster() and c:IsDiscardable()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetLabelObject():GetLabel()~=1 

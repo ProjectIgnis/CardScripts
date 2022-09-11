@@ -15,10 +15,10 @@ function s.filter(c)
 	return c:IsFacedown() and c:IsDestructable()
 end
 function s.costfilter1(c)
-	return c:IsType(TYPE_SPELL) and not c:IsPublic()
+	return c:IsSpell() and not c:IsPublic()
 end
 function s.costfilter2(c)
-	return c:IsType(TYPE_TRAP) and not c:IsPublic()
+	return c:IsTrap() and not c:IsPublic()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_SZONE) and chkc:IsControler(1-tp) and s.filter(chkc) end
@@ -27,14 +27,14 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_SZONE,1,1,nil)
 end
 function s.dfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsFaceup() and c:IsLevelBelow(2) and c:IsRace(RACE_SPELLCASTER)
+	return c:IsMonster() and c:IsFaceup() and c:IsLevelBelow(2) and c:IsRace(RACE_SPELLCASTER)
 		and not c:IsHasEffect(EFFECT_CANNOT_ATTACK)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and tc:IsFacedown() then
 		Duel.ConfirmCards(tp,tc)
-		if tc:IsType(TYPE_SPELL) then 
+		if tc:IsSpell() then 
 			if Duel.IsExistingMatchingCard(s.costfilter1,tp,LOCATION_HAND,0,1,nil) then
 				local g=Duel.SelectMatchingCard(tp,s.costfilter1,tp,LOCATION_HAND,0,1,1,nil)
 				Duel.ConfirmCards(1-tp,g)
@@ -53,7 +53,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				end
 			end
 		end
-		if tc:IsType(TYPE_TRAP) then
+		if tc:IsTrap() then
 			if Duel.IsExistingMatchingCard(s.costfilter2,tp,LOCATION_HAND,0,1,nil) then
 				local g=Duel.SelectMatchingCard(tp,s.costfilter2,tp,LOCATION_HAND,0,1,1,nil)
 				Duel.ConfirmCards(1-tp,g)
@@ -75,6 +75,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.attg(e,c,tp,eg,ep,ev,re,r,rp)
-	return c:IsType(TYPE_MONSTER) and c:IsFaceup() and c:IsLevelBelow(2) and c:IsRace(RACE_SPELLCASTER)
+	return c:IsMonster() and c:IsFaceup() and c:IsLevelBelow(2) and c:IsRace(RACE_SPELLCASTER)
 		and not c:IsHasEffect(EFFECT_CANNOT_ATTACK) and not not Duel.IsExistingMatchingCard(c511000060.filter,e:GetHandlerPlayer(),0,LOCATION_MZONE,1,nil,e:GetHandler():GetAttack())
 end

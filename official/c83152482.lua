@@ -37,7 +37,7 @@ function s.filter(c,tp)
 	return c:IsFaceup() and Duel.IsExistingMatchingCard(s.eqfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil,tp,c)
 end
 function s.eqfilter(c,tp,oc)
-	return (c:IsOriginalRace(oc:GetOriginalRace()) or c:IsOriginalAttribute(oc:GetOriginalAttribute())) and c:CheckUniqueOnField(tp) and c:IsType(TYPE_MONSTER) and not c:IsForbidden()
+	return (c:IsOriginalRace(oc:GetOriginalRace()) or c:IsOriginalAttribute(oc:GetOriginalAttribute())) and c:CheckUniqueOnField(tp) and c:IsMonster() and not c:IsForbidden()
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
@@ -69,7 +69,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.equipop(c,e,tp,tc)
-	if not aux.EquipByEffectAndLimitRegister(c,e,tp,tc,nil,true) then return false end
+	if not c:EquipByEffectAndLimitRegister(e,tp,tc,nil,true) then return false end
 	--atkup
 	local e1=Effect.CreateEffect(tc)
 	e1:SetType(EFFECT_TYPE_EQUIP)

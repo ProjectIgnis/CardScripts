@@ -1,3 +1,4 @@
+--不屈のチャレンジ
 --Dauntless Challenge
 --Scripted by Snrk
 local s,id=GetID()
@@ -43,13 +44,12 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 end
 --destroy spell
 function s.sfilter(c)
-	return c:IsFacedown() or c:IsType(TYPE_SPELL)
+	return c:IsFacedown() or c:IsSpell()
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local at=Duel.GetAttackTarget()
-	if a:IsControler(tp) and at:IsControler(1-tp) and a:IsOnField() and at and a:IsRelateToBattle() and not at:IsRelateToBattle() then return true end
-	return false
+	return a and at and a:IsControler(tp) and a:IsRelateToBattle() and at:IsControler(1-tp) and not at:IsRelateToBattle()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_SZONE) and s.sfilter(chkc) end
@@ -57,9 +57,12 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local target=Duel.SelectMatchingCard(tp,s.sfilter,tp,0,LOCATION_SZONE,1,1,nil)
-	if not g then return end
-	local g=target:GetFirst()
-	if g:IsFacedown() then Duel.ConfirmCards(tp,g) end
-	if g:IsType(TYPE_SPELL) then Duel.Destroy(g,REASON_EFFECT) end
+	local tc=Duel.SelectMatchingCard(tp,s.sfilter,tp,0,LOCATION_SZONE,1,1,nil):GetFirst()
+	if not tc then return end
+	if tc:IsFacedown() then
+		Duel.ConfirmCards(tp,tc)
+	end
+	if tc:IsSpell() then
+		Duel.Destroy(tc,REASON_EFFECT)
+	end
 end

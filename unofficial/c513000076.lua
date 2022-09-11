@@ -62,7 +62,7 @@ function s.descon2(e)
 	return not Duel.IsEnvironment(27564031)
 end
 function s.repfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x23) and c:IsAbleToRemoveAsCost()
+	return c:IsMonster() and c:IsSetCard(0x23) and c:IsAbleToRemoveAsCost()
 end
 function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

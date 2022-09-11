@@ -174,7 +174,7 @@ function s.setfilter(c,e,tp)
 		and (c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE) or c:IsSSetable(true))
 end
 function s.nffilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and not c:IsType(TYPE_FIELD)
+	return c:IsSpellTrap() and not c:IsType(TYPE_FIELD)
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tg=eg:Filter(Card.IsLocation,nil,LOCATION_HAND)
@@ -192,7 +192,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	if tg:FilterCount(s.setfilter,nil,e,tp)~=#tg or Duel.GetMZoneCount(tp)<tg:FilterCount(Card.IsType,nil,TYPE_MONSTER)
 		or Duel.GetLocationCount(tp,LOCATION_SZONE)<tg:FilterCount(s.nffilter,nil) then return end
 	for tc in aux.Next(tg) do
-		if tc:IsType(TYPE_MONSTER) then
+		if tc:IsMonster() then
 			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)
 			Duel.ConfirmCards(1-tp,tc)
 		else

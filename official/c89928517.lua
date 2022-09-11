@@ -29,7 +29,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc2=hg2:Select(1-tp,1,1,nil):GetFirst()
 	Duel.ConfirmCards(1-tp,tc1)
 	Duel.ConfirmCards(tp,tc2)
-	if tc1:IsType(TYPE_MONSTER) and tc2:IsType(TYPE_MONSTER) then
+	if tc1:IsMonster() and tc2:IsMonster() then
 		local ask1=Duel.SelectYesNo(tp,aux.Stringid(id,1))
 		local ask2=Duel.SelectYesNo(1-tp,aux.Stringid(id,1))
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and tc1:IsCanBeSpecialSummoned(e,0,tp,false,false) and ask1 then
@@ -39,11 +39,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SpecialSummonStep(tc2,0,1-tp,1-tp,false,false,POS_FACEUP)
 		end
 		Duel.SpecialSummonComplete()
-	elseif tc1:IsType(TYPE_SPELL) and tc2:IsType(TYPE_SPELL)
+	elseif tc1:IsSpell() and tc2:IsSpell()
 		and Duel.IsPlayerCanDraw(tp,2) and Duel.IsPlayerCanDraw(1-tp,2) then
 		Duel.Draw(tp,2,REASON_EFFECT)
 		Duel.Draw(1-tp,2,REASON_EFFECT)
-	elseif tc1:IsType(TYPE_TRAP) and tc2:IsType(TYPE_TRAP)
+	elseif tc1:IsTrap() and tc2:IsTrap()
 		and Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,LOCATION_DECK,0,2,nil)
 		and Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,0,LOCATION_DECK,2,nil) then
 		for p=0,1 do

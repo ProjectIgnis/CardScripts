@@ -40,7 +40,7 @@ end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local bc=eg:GetFirst():GetBattleTarget()
 	e:SetLabelObject(bc)
-	if chk==0 then return bc:IsType(TYPE_MONSTER) and not bc:IsType(TYPE_TOKEN)
+	if chk==0 then return bc:IsMonster() and not bc:IsType(TYPE_TOKEN)
 		and bc:IsAbleToRemove() and not bc:IsLocation(LOCATION_REMOVED) and bc:IsPublic()
 		and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,bc) end
 	Duel.SetTargetCard(bc)
@@ -50,7 +50,7 @@ end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local bc=e:GetLabelObject()
 	if bc:IsAbleToRemove() and not bc:IsLocation(LOCATION_REMOVED) and bc:IsPublic()
-		and bc:IsType(TYPE_MONSTER) and not bc:IsType(TYPE_TOKEN) and bc:IsRelateToEffect(e) then
+		and bc:IsMonster() and not bc:IsType(TYPE_TOKEN) and bc:IsRelateToEffect(e) then
 		local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,bc)
 		if #g==0 then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)

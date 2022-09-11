@@ -38,7 +38,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,c:GetLocation())
 end
 function s.tgfilter(c)
-	return c:IsSetCard(0x151) and c:IsType(TYPE_MONSTER) and c:IsFaceup()
+	return c:IsSetCard(0x151) and c:IsMonster() and c:IsFaceup()
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

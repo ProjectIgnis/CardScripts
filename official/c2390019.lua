@@ -30,7 +30,7 @@ function s.ffilter(c,e,tp,rg,ft)
 		and aux.SelectUnselectGroup(rg,e,tp,nil,1,s.rescon1(g,ft),0)
 end
 function s.cfilter(c)
-	return c:IsSetCard(0xf) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost() and (c:IsLocation(LOCATION_HAND) or aux.SpElimFilter(c,true,true))
+	return c:IsSetCard(0xf) and c:IsMonster() and c:IsAbleToRemoveAsCost() and (c:IsLocation(LOCATION_HAND) or aux.SpElimFilter(c,true,true))
 end
 function s.spfilter(c,e,tp,...)
 	return c:IsCode(...) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -80,7 +80,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 end
 function s.tdfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and c:IsSetCard(0xf) and c:IsAbleToDeck()
+	return c:IsFaceup() and c:IsMonster() and c:IsSetCard(0xf) and c:IsAbleToDeck()
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and s.tdfilter(chkc) end

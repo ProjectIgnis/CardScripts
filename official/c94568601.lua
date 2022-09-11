@@ -45,7 +45,7 @@ function s.initial_effect(c)
 	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 function s.distg(e,c)
-	if not c:IsType(TYPE_TRAP) or c:GetCardTargetCount()==0 then return false end
+	if not c:IsTrap() or c:GetCardTargetCount()==0 then return false end
 	return c:GetCardTarget():IsContains(e:GetHandler())
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)

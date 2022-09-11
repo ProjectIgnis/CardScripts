@@ -27,7 +27,7 @@ end
 function s.thfilter(c,total)
 	if not (c:GetTextAttack()>=0 and c:GetTextDefense()>=0) then return false end
 	local ctotal=s.statsum(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and ctotal==total
+	return c:IsMonster() and c:IsAbleToHand() and ctotal==total
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil,tp) end

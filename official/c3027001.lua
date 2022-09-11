@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c,tp)
-	return c:IsType(TYPE_TRAP) and c:IsControler(tp)
+	return c:IsTrap() and c:IsControler(tp)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if rp==tp then return false end

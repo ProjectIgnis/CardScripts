@@ -73,7 +73,7 @@ function s.eqval(ec,c,tp)
 	return ec:IsControler(tp) and ec:IsAttribute(ATTRIBUTE_FIRE) and ec:IsRace(RACE_WARRIOR)
 end
 function s.equipop(c,e,tp,tc)
-	if not aux.EquipByEffectAndLimitRegister(c,e,tp,tc,nil,true) then return end
+	if not c:EquipByEffectAndLimitRegister(e,tp,tc,nil,true) then return end
 	--Increase ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_EQUIP)

@@ -50,7 +50,7 @@ function s.cfilter(c,type)
 	return c:IsFaceup() and c:IsType(type)
 end
 function s.drcfilter(c,tp)
-	return c:IsPreviousLocation(LOCATION_HAND+LOCATION_MZONE) and c:IsType(TYPE_MONSTER) and c:IsReason(REASON_EFFECT) and c:IsPreviousControler(tp)
+	return c:IsPreviousLocation(LOCATION_HAND+LOCATION_MZONE) and c:IsMonster() and c:IsReason(REASON_EFFECT) and c:IsPreviousControler(tp)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.drcfilter,1,nil,tp)

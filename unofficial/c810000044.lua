@@ -17,7 +17,7 @@ function s.filter(c,tp)
 	return Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK,0,1,nil,c:GetCode())
 end
 function s.filter2(c,code)
-	return c:IsType(TYPE_MONSTER) and c:IsCode(code) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsCode(code) and c:IsAbleToHand()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)

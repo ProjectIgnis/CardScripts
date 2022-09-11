@@ -36,7 +36,7 @@ end
 s.listed_series={0x135,0x136}
 	--Check for "@Ignister" monster
 function s.thfilter(c)
-	return c:IsSetCard(0x135) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x135) and c:IsMonster() and c:IsAbleToHand()
 end
 	--Activation legality
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -60,7 +60,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for "A.I." spell/trap
 function s.thfilter2(c)
-	return c:IsSetCard(0x136) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSetCard(0x136) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 	--Activation legality
 function s.thtg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

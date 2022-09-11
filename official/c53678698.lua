@@ -58,7 +58,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)>0
 end
 function s.filter(c)
-	return c:IsSetCard(0x88) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSetCard(0x88) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
@@ -74,7 +74,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.rfilter(c,tp)
 	return c:IsControler(tp) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_HAND)
-		and c:IsSetCard(0x88) and c:IsType(TYPE_MONSTER)
+		and c:IsSetCard(0x88) and c:IsMonster()
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.rfilter,1,nil,tp)

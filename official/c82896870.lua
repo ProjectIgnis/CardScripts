@@ -33,7 +33,7 @@ function s.setfilter(c)
 	return c:IsCode(70245411) and c:IsSSetable()
 end
 function s.gyfilter(c)
-	return c:IsType(TYPE_MONSTER) and (c:IsCode(30068120) or c:IsSetCard(0xa9)) and c:IsAbleToGrave()
+	return c:IsMonster() and (c:IsCode(30068120) or c:IsSetCard(0xa9)) and c:IsAbleToGrave()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.setfilter(chkc) end
@@ -56,7 +56,7 @@ function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE) and r==REASON_FUSION
 end
 function s.tdfilter(c)
-	return c:IsSetCard(0x46) and c:IsType(TYPE_SPELL) and (c:IsFaceup() or not c:IsLocation(LOCATION_REMOVED)) and c:IsAbleToDeck()
+	return c:IsSetCard(0x46) and c:IsSpell() and (c:IsFaceup() or not c:IsLocation(LOCATION_REMOVED)) and c:IsAbleToDeck()
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_REMOVED+LOCATION_GRAVE,0,1,nil) end

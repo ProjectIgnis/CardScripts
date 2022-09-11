@@ -62,7 +62,7 @@ function s.thfilter1(c)
 	return c:IsFaceup() and c:IsSetCard(0x36) and c:IsAbleToHand()
 end
 function s.thfilter2(c)
-	return c:IsAbleToHand() and (c:IsType(TYPE_SPELL) or c:IsType(TYPE_TRAP))
+	return c:IsAbleToHand() and (c:IsSpell() or c:IsTrap())
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

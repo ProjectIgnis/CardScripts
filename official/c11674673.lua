@@ -35,14 +35,14 @@ function s.initial_effect(c)
 end
 s.listed_names={34767865}
 function s.cfilter(c,tp)
-	return c:IsType(TYPE_SPELL) and c:IsAbleToRemoveAsCost()
+	return c:IsSpell() and c:IsAbleToRemoveAsCost()
 end
 function s.thfilter(c,tp)
 	return c:IsCode(34767865) and c:IsAbleToHand()
 		and Duel.IsExistingMatchingCard(s.thfilter2,tp,LOCATION_DECK,0,1,c)
 end
 function s.thfilter2(c)
-	return c:IsType(TYPE_RITUAL) and c:IsType(TYPE_MONSTER) and c:IsRace(RACE_CYBERSE) and c:IsAbleToHand()
+	return c:IsType(TYPE_RITUAL) and c:IsMonster() and c:IsRace(RACE_CYBERSE) and c:IsAbleToHand()
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,nil,tp) end

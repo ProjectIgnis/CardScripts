@@ -22,7 +22,7 @@ function s.exfilter(c)
 	return c:IsLocation(LOCATION_EXTRA) and c:IsFacedown()
 end
 function s.stfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsOnField()
+	return c:IsSpellTrap() and c:IsOnField()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)

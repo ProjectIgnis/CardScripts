@@ -79,7 +79,7 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==1-tp
 end
 function s.disfilter(c)
-	return aux.disfilter1(c) and c:IsSummonType(SUMMON_TYPE_PENDULUM)
+	return c:IsNegatableMonster() and c:IsSummonType(SUMMON_TYPE_PENDULUM)
 end
 	--Activation legality
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

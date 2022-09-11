@@ -48,7 +48,7 @@ function s.initial_effect(c)
 end
 s.counter_place_list={0x13}
 function s.ctfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and not c:IsPreviousLocation(0x80+LOCATION_SZONE) and not c:IsType(TYPE_TOKEN)
+	return c:IsFaceup() and c:IsMonster() and not c:IsPreviousLocation(0x80+LOCATION_SZONE) and not c:IsType(TYPE_TOKEN)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=eg:FilterCount(s.ctfilter,nil)

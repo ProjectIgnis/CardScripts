@@ -27,7 +27,7 @@ end
 s.listed_series={0x3d}
 s.listed_names={id}
 function s.cfilter(c)
-	return c:IsSetCard(0x3d) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost() and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) 
+	return c:IsSetCard(0x3d) and c:IsMonster() and c:IsAbleToRemoveAsCost() and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) 
 		and aux.SpElimFilter(c,true,true)
 end
 function s.spfilter(c,e,tp)

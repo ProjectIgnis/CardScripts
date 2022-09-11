@@ -16,11 +16,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.cfilter1(c)
-	return c:IsType(TYPE_TRAP) and c:IsType(TYPE_CONTINUOUS) and c:IsFacedown() and not c:IsHasEffect(id) 
+	return c:IsTrap() and c:IsType(TYPE_CONTINUOUS) and c:IsFacedown() and not c:IsHasEffect(id) 
 		and c:CheckActivateEffect(true,true,false)~=nil
 end
 function s.cfilter(c)
-	return c:IsType(TYPE_TRAP) and c:IsType(TYPE_CONTINUOUS) and c:IsFacedown() and c:CheckActivateEffect(true,true,false)~=nil
+	return c:IsTrap() and c:IsType(TYPE_CONTINUOUS) and c:IsFacedown() and c:CheckActivateEffect(true,true,false)~=nil
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)

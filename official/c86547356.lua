@@ -34,7 +34,7 @@ function s.cfilter(c,e,tp,ft)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp,c:GetLevel(),c:GetCode())
 end
 function s.spfilter(c,e,tp,lvl,code)
-	return c:IsSetCard(0xb) and c:IsType(TYPE_MONSTER) and c:IsLevel(lvl)
+	return c:IsSetCard(0xb) and c:IsMonster() and c:IsLevel(lvl)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(code) 
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -75,7 +75,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummonComplete()
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xb) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0xb) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.thfilter(chkc) end

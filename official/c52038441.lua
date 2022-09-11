@@ -21,7 +21,7 @@ function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
 function s.negfilter(c,p,eg)
-	return c:IsSummonPlayer(p) and eg:IsContains(c) and (aux.nzatk(c) or aux.disfilter1(c))
+	return c:IsSummonPlayer(p) and eg:IsContains(c) and (c:HasNonZeroAttack() or c:IsNegatableMonster())
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.negfilter(chkc,1-tp,eg) end
@@ -33,9 +33,9 @@ end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
-		if aux.disfilter1(tc) then
-		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
+	if tc:IsRelateToEffect(e) then
+		if tc:IsNegatableMonster() then
+			Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_DISABLE)

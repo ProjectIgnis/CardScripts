@@ -44,7 +44,7 @@ function s.spfilter(c)
 	return c:IsFaceup() and c:GetType()==TYPE_SPELL+TYPE_CONTINUOUS and c:IsAbleToGraveAsCost()
 end
 function s.exfilter(c)
-	return s.spfilter(c) or (c:IsFacedown() and c:IsType(TYPE_SPELL) and c:IsAbleToGraveAsCost())
+	return s.spfilter(c) or (c:IsFacedown() and c:IsSpell() and c:IsAbleToGraveAsCost())
 end
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -85,7 +85,7 @@ end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
-	return c:IsRelateToBattle() and bc:IsLocation(LOCATION_GRAVE) and bc:IsReason(REASON_BATTLE) and bc:IsType(TYPE_MONSTER)
+	return c:IsRelateToBattle() and bc:IsLocation(LOCATION_GRAVE) and bc:IsReason(REASON_BATTLE) and bc:IsMonster()
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

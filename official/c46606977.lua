@@ -27,7 +27,7 @@ end
 s.listed_series={0x13d}
 s.listed_names={id}
 function s.tdfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsFaceup() and c:IsAbleToDeck() and not c:IsCode(id)
+	return c:IsMonster() and c:IsFaceup() and c:IsAbleToDeck() and not c:IsCode(id)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
@@ -47,7 +47,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x13d) and c:IsType(TYPE_MONSTER) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(0x13d) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.thfilter(chkc) end

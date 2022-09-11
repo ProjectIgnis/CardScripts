@@ -35,7 +35,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0xe3),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.spfilter(c,e,tp,tid)
-	return c:IsReason(REASON_DESTROY) and c:IsType(TYPE_MONSTER) and c:GetTurnID()==tid
+	return c:IsReason(REASON_DESTROY) and c:IsMonster() and c:GetTurnID()==tid
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,1-tp)
 		and Duel.IsCanAddCounter(tp,0x1038,1,c)
 end

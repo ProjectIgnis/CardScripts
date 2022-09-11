@@ -30,7 +30,7 @@ end
 s.listed_names={62265044}
 s.listed_series={0x29}
 function s.spcfilter(c)
-	return c:IsFaceup() and ((c:IsType(TYPE_MONSTER) and c:IsSetCard(0x29)) or c:IsCode(62265044))
+	return c:IsFaceup() and ((c:IsMonster() and c:IsSetCard(0x29)) or c:IsCode(62265044))
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.spcfilter,tp,LOCATION_ONFIELD,0,1,nil)
@@ -52,7 +52,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.descfilter,tp,LOCATION_SZONE,0,1,nil)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() and chkc:IsType(TYPE_SPELL+TYPE_TRAP)  end
+	if chkc then return chkc:IsOnField() and chkc:IsSpellTrap()  end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsType,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil,TYPE_SPELL+TYPE_TRAP) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,Card.IsType,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil,TYPE_SPELL+TYPE_TRAP)

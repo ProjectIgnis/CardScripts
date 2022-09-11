@@ -44,12 +44,12 @@ end
 --Check for monster from hand or field to send to GY
 function s.tgfilter1(c,tp)
 	local code = c:GetCode()
-	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave() 
+	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsMonster() and c:IsAbleToGrave() 
 	and Duel.IsExistingMatchingCard(s.thfilter1,tp,LOCATION_DECK,0,1,nil,c,code)
 end
 --Check for flip monster
 function s.thfilter1(c,tc,code)
-	return c:IsType(TYPE_MONSTER) and c:IsType(TYPE_FLIP) and c:IsAbleToHand() and not c:IsCode(code)
+	return c:IsMonster() and c:IsType(TYPE_FLIP) and c:IsAbleToHand() and not c:IsCode(code)
 	and c:GetOriginalAttribute()==tc:GetOriginalAttribute()
 end
 --Activation legality
@@ -90,7 +90,7 @@ function s.tgfilter2(c,tp)
 end
 --Check for monster with same attribute but lower level
 function s.thfilter2(c,tc)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsAbleToHand()
 		and c:GetOriginalLevel()<tc:GetOriginalLevel() and c:GetOriginalAttribute()==tc:GetOriginalAttribute()
 end
 --Activation legality

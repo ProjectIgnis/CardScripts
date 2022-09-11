@@ -101,7 +101,7 @@ function s.fthcon(e,tp,eg,ep,ev,re,r,rp)
 	return re and re:GetHandler():IsSetCard(0xc7) or e:GetHandler():IsSummonType(SUMMON_TYPE_PENDULUM)
 end
 function s.fthfilter(c)
-	return c:IsType(TYPE_FIELD) and c:IsType(TYPE_SPELL) and c:IsAbleToHand()
+	return c:IsType(TYPE_FIELD) and c:IsSpell() and c:IsAbleToHand()
 end
 function s.fthtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.fthfilter,tp,LOCATION_DECK,0,1,nil) end

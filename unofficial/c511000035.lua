@@ -40,7 +40,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0 and Duel.SelectEffectYesNo(1-tp,c) then
 		Duel.ConfirmDecktop(tp,1)
 		local tc=Duel.GetDecktopGroup(tp,1):GetFirst()
-		if tc:IsType(TYPE_MONSTER) then
+		if tc:IsMonster() then
 			Duel.Damage(tp,2000,REASON_EFFECT)
 		else
 			Duel.Damage(1-tp,2000,REASON_EFFECT)

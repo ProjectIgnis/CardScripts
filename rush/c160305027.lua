@@ -28,7 +28,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,1,0,0)
 end
 function s.tdfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
+	return c:IsMonster() and c:IsAbleToDeck()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement

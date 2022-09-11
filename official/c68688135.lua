@@ -27,14 +27,14 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 	if re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) then
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
-		if re:GetHandler():IsType(TYPE_MONSTER) then
+		if re:GetHandler():IsMonster() then
 			Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,re:GetHandler():GetBaseAttack())
 		end
 	end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re)
-		and Duel.Destroy(eg,REASON_EFFECT)~=0 and re:GetHandler():IsType(TYPE_MONSTER) and re:GetHandler():GetBaseAttack()>0 then
+		and Duel.Destroy(eg,REASON_EFFECT)~=0 and re:GetHandler():IsMonster() and re:GetHandler():GetBaseAttack()>0 then
 		Duel.BreakEffect()
 		Duel.Recover(tp,re:GetHandler():GetBaseAttack(),REASON_EFFECT)
 	end

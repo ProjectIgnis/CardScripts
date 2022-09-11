@@ -61,7 +61,7 @@ function s.lizfilter(e,c)
 	return not c:IsOriginalType(TYPE_SYNCHRO)
 end
 function s.filter(c)
-	return c:IsSetCard(0x2016) and c:IsType(TYPE_MONSTER) and c:IsLevelAbove(1) and c:IsAbleToHand()
+	return c:IsSetCard(0x2016) and c:IsMonster() and c:IsLevelAbove(1) and c:IsAbleToHand()
 end
 function s.rescon(lv)
 	return function(sg,e,tp,mg)

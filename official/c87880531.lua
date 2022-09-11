@@ -73,5 +73,5 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	bc:RegisterEffect(e1)
 end
 function s.con(e)
-	return e:GetHandler():IsType(TYPE_MONSTER)
+	return e:GetHandler():IsMonster()
 end

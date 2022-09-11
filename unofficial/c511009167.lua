@@ -21,7 +21,7 @@ function s.filter(c)
 	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsFaceup()
 end
 function s.eqfilter(c)
-	return c:IsSetCard(0x9f) and c:IsAttackBelow(1000) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x9f) and c:IsAttackBelow(1000) and c:IsMonster()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end

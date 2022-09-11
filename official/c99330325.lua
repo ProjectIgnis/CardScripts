@@ -28,20 +28,20 @@ end
 s.listed_series={0xd3}
 
 function s.chkfilter1(c,e,tp)
-	return c:IsSetCard(0xd3) and c:IsType(TYPE_MONSTER) and 
+	return c:IsSetCard(0xd3) and c:IsMonster() and 
 		not c:IsHasEffect(EFFECT_REVIVE_LIMIT) and Duel.IsPlayerCanSpecialSummon(tp,0,POS_FACEUP,tp,c)
 		and Duel.IsExistingMatchingCard(s.chkfilter2,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetCode())
 end
 function s.chkfilter2(c,e,tp,cd)
-	return c:IsSetCard(0xd3) and c:IsType(TYPE_MONSTER) and not c:IsCode(cd)
+	return c:IsSetCard(0xd3) and c:IsMonster() and not c:IsCode(cd)
 		and not c:IsHasEffect(EFFECT_REVIVE_LIMIT) and Duel.IsPlayerCanSpecialSummon(tp,0,POS_FACEUP,1-tp,c)
 end
 function s.filter1(c,e,tp)
-	return c:IsSetCard(0xd3) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xd3) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetCode())
 end
 function s.filter2(c,e,tp,cd)
-	return c:IsSetCard(0xd3) and c:IsType(TYPE_MONSTER) and not c:IsCode(cd)
+	return c:IsSetCard(0xd3) and c:IsMonster() and not c:IsCode(cd)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK,1-tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -90,7 +90,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xd3) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0xd3) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

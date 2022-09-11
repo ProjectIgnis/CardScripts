@@ -18,7 +18,7 @@ end
 s.listed_series={0xbb}
 s.listed_names={id}
 function s.filter(c)
-	return c:IsSetCard(0xbb) and c:IsType(TYPE_MONSTER) and not c:IsCode(id) and c:IsAbleToGrave()
+	return c:IsSetCard(0xbb) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToGrave()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

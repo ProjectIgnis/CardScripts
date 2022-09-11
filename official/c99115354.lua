@@ -47,7 +47,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and c:IsReason(REASON_DESTROY)
 end
 function s.thfilter(c,e)
-	return c:IsType(TYPE_MONSTER) and c:IsCanBeEffectTarget(e) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsCanBeEffectTarget(e) and c:IsAbleToHand()
 end
 function s.thcheck(sg,e,tp,mg)
 	return sg:GetClassCount(Card.GetAttribute)==1

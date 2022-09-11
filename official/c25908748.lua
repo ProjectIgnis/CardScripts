@@ -43,10 +43,10 @@ function s.splimit(e,c)
 	return c:IsLocation(LOCATION_EXTRA) and not c:IsRace(RACES_BEAST_BWARRIOR_WINGB)
 end
 function s.thfilter(c,typ)
-	return c:IsSetCard(0x14f) and c:IsType(TYPE_MONSTER) and c:GetOriginalRace()~=typ and c:IsAbleToHand()
+	return c:IsSetCard(0x14f) and c:IsMonster() and c:GetOriginalRace()~=typ and c:IsAbleToHand()
 end
 function s.cstfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and c:IsAbleToGraveAsCost()
 		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,c:GetOriginalRace())
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)

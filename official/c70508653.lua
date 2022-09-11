@@ -24,7 +24,7 @@ function s.thcond(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)>0
 end
 function s.eqpfilter(c)
-	return c:IsType(TYPE_SPELL) and c:IsType(TYPE_EQUIP) and c:IsAbleToHand()
+	return c:IsSpell() and c:IsType(TYPE_EQUIP) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rvg=Duel.GetMatchingGroup(s.eqpfilter,tp,LOCATION_DECK,0,nil)

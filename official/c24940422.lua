@@ -29,7 +29,7 @@ function s.initial_effect(c)
 end
 s.listed_names={id}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,0,1,nil,TYPE_SPELL+TYPE_TRAP)
+	return not Duel.IsExistingMatchingCard(Card.IsSpellTrap,tp,LOCATION_GRAVE,0,1,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,2) end
@@ -54,7 +54,7 @@ function s.aclimit(e,re,tp)
 	return not re:GetHandler():IsCode(id) and re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
 end
 function s.tdfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
+	return c:IsMonster() and c:IsAbleToDeck()
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1)
@@ -76,4 +76,3 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Draw(p,1,REASON_EFFECT)
 	end
 end
-

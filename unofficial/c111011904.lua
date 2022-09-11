@@ -37,7 +37,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.thfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
@@ -59,7 +59,7 @@ function s.filter(c,e,tp,eg,ep,ev,re,r,rp,chain)
 	if not c:IsType(TYPE_FIELD) and Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return false end
 	local te=c:GetActivateEffect()
 	local pre={Duel.GetPlayerEffect(tp,EFFECT_CANNOT_ACTIVATE)}
-	if not c:IsType(TYPE_SPELL+TYPE_TRAP) or not te or c:IsHasEffect(EFFECT_CANNOT_TRIGGER) then return false end
+	if not c:IsSpellTrap() or not te or c:IsHasEffect(EFFECT_CANNOT_TRIGGER) then return false end
 	if pre[1] then
 		for i,eff in ipairs(pre) do
 			local prev=eff:GetValue()

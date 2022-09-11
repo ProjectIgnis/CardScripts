@@ -52,7 +52,7 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)
 end
 function s.disfilter(c,tp)
-	return (c:IsRace(RACE_SPELLCASTER) or (c:IsSetCard(0x134) and c:IsType(TYPE_MONSTER))) and (c:IsControler(tp) or c:IsFaceup())
+	return (c:IsRace(RACE_SPELLCASTER) or (c:IsSetCard(0x134) and c:IsMonster())) and (c:IsControler(tp) or c:IsFaceup())
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.disfilter,2,false,nil,nil,tp) end

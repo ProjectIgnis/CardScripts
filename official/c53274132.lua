@@ -34,7 +34,7 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
 	return c:IsRelateToBattle() and c:IsFaceup() and bc:IsLocation(LOCATION_GRAVE)
-		and bc:IsReason(REASON_BATTLE) and bc:IsType(TYPE_MONSTER)
+		and bc:IsReason(REASON_BATTLE) and bc:IsMonster()
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

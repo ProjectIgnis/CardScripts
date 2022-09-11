@@ -22,7 +22,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_DISABLE,nil,0,1-tp,LOCATION_ONFIELD)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_TRAP) and c:IsType(TYPE_CONTINUOUS)
+	return c:IsFaceup() and c:IsTrap() and c:IsType(TYPE_CONTINUOUS)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -34,7 +34,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	c:AddMonsterAttributeComplete()
 	if Duel.SpecialSummonComplete()==0 then return end
 	local ct=Duel.GetMatchingGroupCount(s.filter,tp,LOCATION_ONFIELD,0,c)
-	local cg=Duel.GetMatchingGroup(aux.disfilter3,tp,0,LOCATION_ONFIELD,nil)
+	local cg=Duel.GetMatchingGroup(Card.IsNegatable,tp,0,LOCATION_ONFIELD,nil)
 	if ct>0 and #cg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 		local sg=cg:Select(tp,1,ct,nil)

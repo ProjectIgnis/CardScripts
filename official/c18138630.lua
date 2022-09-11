@@ -62,7 +62,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Draw(tp,1,REASON_EFFECT)==0 then return end
 	local tc=Duel.GetOperatedGroup():GetFirst()
 	Duel.ConfirmCards(1-tp,tc)
-	if tc:IsSetCard(0xc3) and tc:IsType(TYPE_MONSTER) then
+	if tc:IsSetCard(0xc3) and tc:IsMonster() then
 		if Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 			local tg=dg:Select(tp,1,1,nil)

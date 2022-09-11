@@ -60,7 +60,7 @@ function s.spcop(e,tp,eg,ep,ev,re,r,rp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,1),nil)
 end
 function s.tdfilter(c)
-	return (c:IsFaceup() or not c:IsLocation(LOCATION_REMOVED)) and (c:IsLocation(LOCATION_MZONE) or c:IsType(TYPE_MONSTER))
+	return (c:IsFaceup() or not c:IsLocation(LOCATION_REMOVED)) and (c:IsLocation(LOCATION_MZONE) or c:IsMonster())
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -17,5 +17,5 @@ function s.con(e)
 	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
 end
 function s.aclimit(e,re,tp)
-	return re:GetHandler():IsType(TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
+	return re:GetHandler():IsTrap() and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end

@@ -36,12 +36,9 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	e:SetLabel(ct)
 	return ct==2 or ct==3
 end
-function s.filter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
-end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_ONFIELD,1,nil) end
-	local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_ONFIELD,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsSpellTrap,tp,0,LOCATION_ONFIELD,1,nil) end
+	local g=Duel.GetMatchingGroup(Card.IsSpellTrap,tp,0,LOCATION_ONFIELD,nil)
 	if e:GetLabel()==2 then
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 	else Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0) end

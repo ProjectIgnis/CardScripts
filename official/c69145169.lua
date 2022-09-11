@@ -29,7 +29,7 @@ function s.filter(c,e)
 	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsAbleToGrave() and (not e or c:IsCanBeEffectTarget(e))
 end
 function s.cfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsType(TYPE_EFFECT)
+	return c:IsMonster() and c:IsType(TYPE_EFFECT)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local dg=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil,e)

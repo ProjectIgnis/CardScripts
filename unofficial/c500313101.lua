@@ -34,7 +34,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_SZONE) and e:GetHandler():IsPreviousPosition(POS_FACEUP)
 end
 function s.thfilter(c)
-	return c:IsType(TYPE_SPELL) and c:IsAbleToHand() and c:GetFlagEffect(id)~=0
+	return c:IsSpell() and c:IsAbleToHand() and c:GetFlagEffect(id)~=0
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -47,7 +47,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoHand(sg,nil,REASON_EFFECT)
 end
 function s.filter(c)
-	return c:IsLevelBelow(4) and c:IsType(TYPE_MONSTER)
+	return c:IsLevelBelow(4) and c:IsMonster()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,e:GetHandler()) end

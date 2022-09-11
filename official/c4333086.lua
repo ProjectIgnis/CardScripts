@@ -17,7 +17,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0xd9}
 function s.filter(c)
-	return c:IsSetCard(0xd9) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemove()
+	return c:IsSetCard(0xd9) and c:IsMonster() and c:IsAbleToRemove()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)

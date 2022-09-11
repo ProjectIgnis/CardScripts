@@ -40,7 +40,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.cfilter(c)
-	return c:IsType(TYPE_TRAP) and c:IsAbleToRemoveAsCost()
+	return c:IsTrap() and c:IsAbleToRemoveAsCost()
 end
 function s.bdcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -61,7 +61,7 @@ function s.bdop(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e1)
 end
 function s.bgfilter(c)
-	return c:IsType(TYPE_TRAP) and c:IsAbleToRemove()
+	return c:IsTrap() and c:IsAbleToRemove()
 end
 function s.bgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and s.bgfilter(chkc) end

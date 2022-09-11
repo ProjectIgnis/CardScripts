@@ -16,7 +16,7 @@ function s.filter1(c)
 	return c:IsCode(CARD_POLYMERIZATION) and c:IsAbleToHand()
 end
 function s.filter2(c)
-	return (c:GetReason()&0x40008)==0x40008 and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return (c:GetReason()&0x40008)==0x40008 and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

@@ -24,7 +24,7 @@ end
 s.listed_series={0x124}
 s.listed_names={95658967}
 function s.thfilter(c)
-	return ((c:IsSetCard(0x124) and c:IsType(TYPE_SPELL)) or c:IsCode(95658967)) and c:IsAbleToHand()
+	return ((c:IsSetCard(0x124) and c:IsSpell()) or c:IsCode(95658967)) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

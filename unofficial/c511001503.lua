@@ -31,7 +31,7 @@ function s.chainop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.chainlm(e,rp,tp)
-	return rp==tp or not e:GetHandler():IsType(TYPE_SPELL+TYPE_TRAP)
+	return rp==tp or not e:GetHandler():IsSpellTrap()
 end
 function s.filter(c,tp)
 	return c:IsControler(tp) and (c:GetSummonType()&SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION

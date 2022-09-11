@@ -17,11 +17,11 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp)
 end
 function s.filter1(c,e,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and Duel.IsPlayerCanSpecialSummonMonster(tp,c:GetCode(),nil,0x11,0,0,1,RACE_SPELLCASTER,ATTRIBUTE_LIGHT,POS_FACEDOWN_ATTACK)
+	return c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and Duel.IsPlayerCanSpecialSummonMonster(tp,c:GetCode(),nil,0x11,0,0,1,RACE_SPELLCASTER,ATTRIBUTE_LIGHT,POS_FACEDOWN_ATTACK)
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_HAND,0,1,c,e,tp)
 end
 function s.filter2(c,e,tp)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) 
+	return c:IsSpellTrap() and c:IsCanBeSpecialSummoned(e,0,tp,true,false) 
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,c:GetCode(),nil,0x11,0,0,1,RACE_SPELLCASTER,ATTRIBUTE_LIGHT,POS_FACEDOWN_ATTACK)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

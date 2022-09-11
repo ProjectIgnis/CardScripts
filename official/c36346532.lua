@@ -47,7 +47,7 @@ function s.gyfilter(c,tp)
 	return Duel.GetLocationCount(tp,LOCATION_SZONE)>zc
 end
 function s.setfilter(c,i)
-	return c:IsSetCard(0xd4) and c:IsType(TYPE_TRAP) and c:IsSSetable(i)
+	return c:IsSetCard(0xd4) and c:IsTrap() and c:IsSSetable(i)
 end
 function s.gytg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_SZONE) and s.gyfilter(chkc,tp) end

@@ -26,10 +26,10 @@ function s.initial_effect(c)
 end
 s.listed_series={0x79,0x7c}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:GetHandler():IsSetCard(0x79) and re:GetHandler():IsType(TYPE_MONSTER)
+	return re:GetHandler():IsSetCard(0x79) and re:GetHandler():IsMonster()
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x79) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x79) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -44,12 +44,12 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x7c) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and c:IsSetCard(0x7c) and c:IsSpellTrap() and c:IsAbleToGraveAsCost()
 		and ((c:GetSequence()<5 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,true))
 		or (c:GetSequence()>4 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil)))
 end
 function s.filter(c,ignore)
-	return c:IsSetCard(0x7c) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable(ignore)
+	return c:IsSetCard(0x7c) and c:IsSpellTrap() and c:IsSSetable(ignore)
 end
 function s.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local nc=Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil,tp) and Duel.GetLocationCount(tp,LOCATION_SZONE)>-1

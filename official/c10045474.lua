@@ -20,11 +20,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and aux.disfilter1(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(aux.disfilter1,tp,0,LOCATION_MZONE,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsNegatableMonster() end
+	if chk==0 then return Duel.IsExistingTarget(Card.IsNegatableMonster,tp,0,LOCATION_MZONE,1,nil) end
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_NEGATE)
-	local g=Duel.SelectTarget(tp,aux.disfilter1,tp,0,LOCATION_MZONE,1,1,nil)
+	local g=Duel.SelectTarget(tp,Card.IsNegatableMonster,tp,0,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)
 	local pos=e:IsHasType(EFFECT_TYPE_ACTIVATE) and not c:IsStatus(STATUS_ACT_FROM_HAND) and c:IsPreviousPosition(POS_FACEDOWN) and POS_FACEDOWN or 0
 	Duel.SetTargetParam(pos)
@@ -74,7 +74,7 @@ end
 function s.distg(e,c)
 	local seq=e:GetLabel()
 	if c:IsControler(1-e:GetHandlerPlayer()) then seq=4-seq end
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and seq==c:GetSequence() and c:GetFlagEffect(id)==0
+	return c:IsSpellTrap() and seq==c:GetSequence() and c:GetFlagEffect(id)==0
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local cseq=e:GetLabel()

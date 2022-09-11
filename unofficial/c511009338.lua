@@ -23,7 +23,7 @@ end
 function s.acfilter(c,e,tp,eg,ep,ev,re,r,rp,chain)
 	local te=c:GetActivateEffect()
 	if not te then return false end
-	if not c:IsType(TYPE_SPELL) or not c:IsSSetable(true) then return false end
+	if not c:IsSpell() or not c:IsSSetable(true) then return false end
 	if not c:IsType(TYPE_FIELD) and Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return false end
 	if c:IsHasEffect(EFFECT_CANNOT_TRIGGER) then return false end
 	local pre={Duel.GetPlayerEffect(tp,EFFECT_CANNOT_ACTIVATE)}

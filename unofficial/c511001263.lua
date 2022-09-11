@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x512}
 function s.filter(c,tp)
-	return not c:IsPreviousControler(tp) and c:IsType(TYPE_MONSTER)
+	return not c:IsPreviousControler(tp) and c:IsMonster()
 end
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x512)

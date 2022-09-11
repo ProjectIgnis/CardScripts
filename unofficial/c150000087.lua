@@ -33,7 +33,7 @@ function s.initial_effect(c)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	for ec in aux.Next(eg) do
-		if ec:IsType(TYPE_MONSTER) then
+		if ec:IsMonster() then
 			Duel.RegisterFlagEffect(0,id,RESET_PHASE+PHASE_END,0,1)
 		end
 	end

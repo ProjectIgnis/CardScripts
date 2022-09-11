@@ -50,7 +50,7 @@ function s.gyop(e,tp,eg,ep,ev,re,r,rp)
 	local g1=Duel.GetFieldGroup(tp,LOCATION_EXTRA,0)
 	local g2=Duel.GetFieldGroup(tp,0,LOCATION_EXTRA)
 	if not e:GetHandler():IsRelateToEffect(e) or #g1+#g2==0 then return end
-	local op=aux.SelectEffect(tp,
+	local op=Duel.SelectEffect(tp,
 		{#g1>0,aux.Stringid(id,2)},
 		{#g2>0,aux.Stringid(id,3)})
 	local g=(op==1) and g1 or g2

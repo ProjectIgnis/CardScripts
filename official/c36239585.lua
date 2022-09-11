@@ -52,9 +52,9 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.setfilter(c,e,tp)
 	if not c:IsSetCard(0x8d) then return end
-	if c:IsType(TYPE_MONSTER) then
+	if c:IsMonster() then
 		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
-	elseif c:IsType(TYPE_SPELL+TYPE_TRAP) then
+	elseif c:IsSpellTrap() then
 		return (c:IsType(TYPE_FIELD) or Duel.GetLocationCount(tp,LOCATION_SZONE)>0) and c:IsSSetable()
 	end
 	return false
@@ -64,9 +64,9 @@ function s.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(s.setfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 	local tc=Duel.SelectTarget(tp,s.setfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp):GetFirst()
-	if tc:IsType(TYPE_MONSTER) then
+	if tc:IsMonster() then
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,tp,LOCATION_GRAVE)
-	elseif tc:IsType(TYPE_SPELL+TYPE_TRAP) then
+	elseif tc:IsSpellTrap() then
 		Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,1,tp,LOCATION_GRAVE)
 	end
 end
@@ -74,11 +74,11 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc or not tc:IsRelateToEffect(e) then return end
 	local andifyoudo=false
-	if tc:IsType(TYPE_MONSTER) then
+	if tc:IsMonster() then
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)>0 then
 			andifyoudo=true
 		end
-	elseif tc:IsType(TYPE_SPELL+TYPE_TRAP) then
+	elseif tc:IsSpellTrap() then
 		if tc:IsType(TYPE_FIELD) then
 			local fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
 			if fc then

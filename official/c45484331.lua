@@ -32,7 +32,7 @@ end
 s.listed_names={CARD_ALBAZ}
 s.listed_series={0x160}
 function s.spconfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_FUSION) and aux.IsMaterialListCode(c,CARD_ALBAZ)
+	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:IsMaterialListCode(CARD_ALBAZ)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.spconfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil)
@@ -50,7 +50,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x160) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSetCard(0x160) and c:IsSpellTrap() and c:IsAbleToHand()
 		and (c:IsFaceup() or c:IsLocation(LOCATION_DECK))
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -40,7 +40,7 @@ s.LVnum=5
 s.LVset=0x111
 
 function s.cfilter(c,e,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost() and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,c,e,tp,e:GetLabel())
+	return c:IsMonster() and c:IsAbleToGraveAsCost() and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,c,e,tp,e:GetLabel())
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	return true
@@ -86,7 +86,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 		and re:GetHandler():IsRace(RACE_DRAGON)
 end
 function s.thfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_DRAGON) and c:IsAttribute(ATTRIBUTE_WIND)
+	return c:IsMonster() and c:IsRace(RACE_DRAGON) and c:IsAttribute(ATTRIBUTE_WIND)
 		and c:IsLevelAbove(5) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

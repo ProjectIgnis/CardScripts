@@ -30,7 +30,7 @@ end
 s.listed_series={0x119}
 	--Defining what to check
 function s.cfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x119)
+	return c:IsMonster() and c:IsSetCard(0x119)
 end
 	--Check for 3+ "Salamangreat" monsters in your GY
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -68,7 +68,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetTargetCards(e)
 	if #tg>0 and Duel.SendtoDeck(tg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 then
 		local ct=#(Duel.GetOperatedGroup())
-		local cg=Duel.GetMatchingGroup(aux.disfilter3,tp,0,LOCATION_ONFIELD,nil)
+		local cg=Duel.GetMatchingGroup(Card.IsNegatable,tp,0,LOCATION_ONFIELD,nil)
 		if ct>0 and #cg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 			local sg=cg:Select(tp,1,ct,nil)

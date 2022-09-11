@@ -37,7 +37,7 @@ s.listed_series={0x119}
 s.listed_names={id}
 	--If a "Salamangreat" monster, besides itself, is sent to GY
 function s.cfilter(c,tp)
-	return c:IsSetCard(0x119) and c:IsType(TYPE_MONSTER) and not c:IsCode(id) and c:IsControler(tp)
+	return c:IsSetCard(0x119) and c:IsMonster() and not c:IsCode(id) and c:IsControler(tp)
 end
 	--If it ever happened
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

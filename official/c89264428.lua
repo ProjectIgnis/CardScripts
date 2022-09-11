@@ -53,7 +53,7 @@ function s.repcon(e)
 end
 function s.repval(base,e,tp,eg,ep,ev,re,r,rp,chk,extracon)
 	local c=e:GetHandler()
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x165) and
+	return c:IsMonster() and c:IsSetCard(0x165) and
 		(not extracon or Duel.IsExistingMatchingCard(s.repcfilter,e:GetHandlerPlayer(),LOCATION_GRAVE,0,1,nil,extracon,base,{e,tp,eg,ep,ev,re,r,rp,chk}))
 end
 function s.repop(base,e,tp,eg,ep,ev,re,r,rp)

@@ -37,7 +37,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x24}
 function s.chop(e,tp,eg,ep,ev,re,r,rp)
-	if re:IsHasType(EFFECT_TYPE_ACTIVATE) or re:GetHandler():IsType(TYPE_MONSTER) then
+	if re:IsHasType(EFFECT_TYPE_ACTIVATE) or re:GetHandler():IsMonster() then
 		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_CHAIN,0,1)
 	end
 end
@@ -62,7 +62,7 @@ function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return (c:GetReason()&0x41)==0x41 and re:GetOwner():IsSetCard(0x24)
 end
 function s.filter(c)
-	return c:IsSetCard(0x24) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
+	return c:IsSetCard(0x24) and c:IsMonster() and c:IsAbleToGrave()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

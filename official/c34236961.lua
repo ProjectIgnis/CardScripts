@@ -28,8 +28,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ConfirmCards(tp,g2)
 	local atpsl=g1:GetFirst()
 	local ntpsl=g2:GetFirst()
-	local atplv=atpsl:IsType(TYPE_MONSTER) and atpsl:GetLevel() or 0
-	local ntplv=ntpsl:IsType(TYPE_MONSTER) and ntpsl:GetLevel() or 0
+	local atplv=atpsl:IsMonster() and atpsl:GetLevel() or 0
+	local ntplv=ntpsl:IsMonster() and ntpsl:GetLevel() or 0
 	if atplv==ntplv then
 		Duel.ShuffleHand(tp)
 		Duel.ShuffleHand(1-tp)

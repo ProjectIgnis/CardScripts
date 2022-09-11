@@ -59,7 +59,7 @@ function s.eqlimit(e,c)
 	return c==e:GetLabelObject()
 end
 function s.desfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_SPELL)
+	return c:IsFaceup() and c:IsSpell()
 end 
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_ONFIELD) and s.desfilter(chkc) end

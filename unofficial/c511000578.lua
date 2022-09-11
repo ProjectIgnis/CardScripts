@@ -38,7 +38,7 @@ function s.filter(c)
 	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsRace(RACE_WARRIOR)
 end
 function s.rmfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemove() and aux.SpElimFilter(c)
+	return c:IsMonster() and c:IsAbleToRemove() and aux.SpElimFilter(c)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE+LOCATION_GRAVE) and chkc:IsControler(1-tp) and s.rmfilter(chkc) end
@@ -58,7 +58,7 @@ function s.descon(e)
 	return e:GetHandler():GetFlagEffect(id)>=3 and not e:GetHandler():IsRelateToEffect(e:GetLabelObject())
 end
 function s.tgfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
+	return c:IsMonster() and c:IsAbleToGrave()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

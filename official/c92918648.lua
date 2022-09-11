@@ -22,7 +22,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x106e) and c:IsType(TYPE_SPELL)
+	return c:IsSetCard(0x106e) and c:IsSpell()
 end
 function s.filter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP)

@@ -30,7 +30,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x55,0x7b}
 function s.costfilter(c)
-	return c:IsSetCard(0x55) and c:IsType(TYPE_MONSTER) and not c:IsPublic()
+	return c:IsSetCard(0x55) and c:IsMonster() and not c:IsPublic()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end
@@ -59,7 +59,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x7b) and c:IsType(TYPE_MONSTER) and (c:GetAttack()>0 or c:GetDefense()>0) and not c:IsLinkMonster()
+	return c:IsFaceup() and c:IsSetCard(0x7b) and c:IsMonster() and (c:GetAttack()>0 or c:GetDefense()>0) and not c:IsLinkMonster()
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.atkfilter(chkc) end

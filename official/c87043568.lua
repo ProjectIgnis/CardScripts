@@ -64,7 +64,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 		and ph==PHASE_DAMAGE and not Duel.IsDamageCalculated()
 end
 function s.cfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAttackBelow(1000) and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and c:IsAttackBelow(1000) and c:IsAbleToGraveAsCost()
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end

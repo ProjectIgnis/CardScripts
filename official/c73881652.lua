@@ -28,7 +28,7 @@ function s.tgfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(0xf1)
 end
 function s.matfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xf1)
+	return c:IsMonster() and c:IsSetCard(0xf1)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.tgfilter(chkc) end

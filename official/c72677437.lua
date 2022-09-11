@@ -37,7 +37,7 @@ function s.initial_effect(c)
 end
 s.listed_names={54306223}
 function s.splimit(e,se,sp,st)
-	return not se:GetHandler():IsType(TYPE_MONSTER)
+	return not se:GetHandler():IsMonster()
 end
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsRace,c:GetControler(),LOCATION_GRAVE,0,nil,RACE_REPTILE)*500

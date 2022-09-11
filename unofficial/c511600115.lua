@@ -43,7 +43,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c)
-	return c:IsSetCard(0x9f) and c:IsType(TYPE_MONSTER) and c:IsLevelBelow(2147483647)
+	return c:IsSetCard(0x9f) and c:IsMonster() and c:IsLevelBelow(2147483647)
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil) end

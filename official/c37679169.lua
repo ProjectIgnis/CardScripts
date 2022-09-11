@@ -26,7 +26,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0xd2}
 function s.cfilter(c)
-	return c:IsSetCard(0xd2) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(0xd2) and c:IsMonster() and c:IsAbleToGraveAsCost()
 end
 function s.adcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_DECK,0,1,nil) end

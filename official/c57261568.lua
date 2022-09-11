@@ -64,7 +64,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Draw(p,d,REASON_EFFECT)~=0 then
 		local tc=Duel.GetOperatedGroup():GetFirst()
 		Duel.ConfirmCards(1-tp,tc)
-		if tc:IsType(TYPE_MONSTER) and tc:IsSetCard(0xe6) then
+		if tc:IsMonster() and tc:IsSetCard(0xe6) then
 			local ct=math.min(Duel.GetFieldGroupCount(1-tp,LOCATION_DECK,0),3)
 			if ct==0 then return end
 			Duel.BreakEffect()

@@ -116,7 +116,7 @@ function s.sumlimit(e,c,sump,sumtype,sumpos,targetp)
 end
 function s.thfilter(c)
 	return c:IsAbleToHand() and (c:IsCode(CARD_UMI)
-		or ((c:IsSetCard(0x179) or c:IsSetCard(0x17a)) and c:IsType(TYPE_SPELL+TYPE_TRAP)))
+		or ((c:IsSetCard(0x179) or c:IsSetCard(0x17a)) and c:IsSpellTrap()))
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

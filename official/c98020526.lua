@@ -24,7 +24,7 @@ end
 s.listed_names={id,CARD_STARDUST_DRAGON}
 function s.lffilter(c,tp,re)
 	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp) and (c:IsReason(REASON_EFFECT) or (c:IsReason(REASON_COST) and re and re:IsActivated()))
-		and (c:IsCode(CARD_STARDUST_DRAGON) or (aux.IsCodeListed(c,CARD_STARDUST_DRAGON) and c:IsType(TYPE_SYNCHRO)))
+		and (c:IsCode(CARD_STARDUST_DRAGON) or (c:IsCodeListed(CARD_STARDUST_DRAGON) and c:IsType(TYPE_SYNCHRO)))
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return rp==tp and eg:IsExists(s.lffilter,1,nil,tp,re)
@@ -51,7 +51,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local b2=Duel.IsExistingMatchingCard(s.rmfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,nil) and Duel.GetFlagEffect(tp,id+1)==0
 	local b3=Duel.GetFlagEffect(tp,id+2)==0
 	if not (b1 or b2 or b3) then return end
-	local op=aux.SelectEffect(tp,
+	local op=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,1)},
 		{b2,aux.Stringid(id,2)},
 		{b3,aux.Stringid(id,3)})

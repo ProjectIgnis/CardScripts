@@ -21,13 +21,13 @@ function s.cost(e,tp,ep,eg,ev,re,r,rp,chk)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.filter(c,e)
-	return aux.nzatk(c) and (not e or not c:IsImmuneToEffect(e))
+	return c:HasNonZeroAttack() and (not e or not c:IsImmuneToEffect(e))
 end
 function s.atkfilter(c)
-	return c:IsSetCard(0xba) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0xba) and c:IsMonster()
 end
 function s.target(e,tp,ep,eg,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.nzatk,tp,0,LOCATION_MZONE,1,nil) 
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.HasNonZeroAttack,tp,0,LOCATION_MZONE,1,nil) 
 		and Duel.IsExistingMatchingCard(s.atkfilter,tp,LOCATION_GRAVE,0,1,nil) end
 end
 function s.operation(e,tp,ep,eg,ev,re,r,rp)

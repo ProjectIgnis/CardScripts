@@ -35,7 +35,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e3,tp)
 end
 function s.distarget(e,c)
-	return c~=e:GetHandler() and c:IsType(TYPE_TRAP)
+	return c~=e:GetHandler() and c:IsTrap()
 end
 function s.disoperation(e,tp,eg,ep,ev,re,r,rp)
 	local tl=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)

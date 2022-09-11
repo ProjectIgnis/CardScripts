@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.costfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:GetAttack()==0 and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and c:GetAttack()==0 and c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end
@@ -25,10 +25,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,2)
 end
 function s.cfilter(c)
-	return c:IsLocation(LOCATION_GRAVE) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsLevelBelow(8) and c:IsType(TYPE_MONSTER)
+	return c:IsLocation(LOCATION_GRAVE) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsLevelBelow(8) and c:IsMonster()
 end
 function s.thfilter(c)
-	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsLevelBelow(8) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsLevelBelow(8) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement

@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.filter1(c,e)
-	return c:IsType(TYPE_MONSTER) and c:IsCanBeFusionMaterial() and c:IsAbleToGrave() and not c:IsImmuneToEffect(e)
+	return c:IsMonster() and c:IsCanBeFusionMaterial() and c:IsAbleToGrave() and not c:IsImmuneToEffect(e)
 end
 function s.filter2(c,m)
 	return c:IsType(TYPE_FUSION) and c:CheckFusionMaterial(m) and not c:IsForbidden()

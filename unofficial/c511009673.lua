@@ -34,7 +34,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and tc:IsFacedown() then
 		Duel.ConfirmCards(tp,tc)
-		if tc:IsType(TYPE_TRAP) and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)>0 then
+		if tc:IsTrap() and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)>0 then
 			Duel.BreakEffect()
 			local g=Duel.GetMatchingGroup(Card.IsCode,tp,0,LOCATION_DECK+LOCATION_HAND,nil,tc:GetCode())
 			Duel.Remove(g,POS_FACEUP,REASON_EFFECT)

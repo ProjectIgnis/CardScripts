@@ -42,7 +42,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	c:SetTurnCounter(0)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_TRAP)
+	return c:IsFaceup() and c:IsTrap()
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer() and Duel.IsExistingMatchingCard(s.cfilter,tp,0,LOCATION_ONFIELD,1,nil)

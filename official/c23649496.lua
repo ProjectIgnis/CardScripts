@@ -74,7 +74,7 @@ function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsCode(e:GetLabel())
 end
 function s.tgfilter(c)
-	return c:IsSetCard(0x76) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
+	return c:IsSetCard(0x76) and c:IsMonster() and c:IsAbleToGrave()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,2,nil) end

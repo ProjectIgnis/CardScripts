@@ -28,12 +28,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local val=0
 	if e:GetLabel()==0 then
 		eff=EFFECT_CHANGE_RACE
-		val=aux.AnnounceAnotherRace(lg,tp)
+		val=Duel.AnnounceAnotherRace(lg,tp)
 	else
 		eff=EFFECT_CHANGE_ATTRIBUTE
-		val=aux.AnnounceAnotherAttribute(lg,tp)
+		val=Duel.AnnounceAnotherAttribute(lg,tp)
 	end
-	for tc in aux.Next(lg) do
+	for tc in lg:Iter() do
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(eff)

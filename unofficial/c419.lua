@@ -314,7 +314,7 @@ if not GenerateEffect then
 	
 	Cardian={}
 	function Cardian.check(c,tp,eg,ep,ev,re,r,rp)
-		if c:IsSetCard(0xe6) and c:IsType(TYPE_MONSTER) then
+		if c:IsSetCard(0xe6) and c:IsMonster() then
 			local eff={c:GetCardEffect(511001692)}
 			for _,te2 in ipairs(eff) do
 				local te=te2:GetLabelObject()

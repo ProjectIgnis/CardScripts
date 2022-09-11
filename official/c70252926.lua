@@ -47,7 +47,7 @@ function s.lvcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp and e:GetHandler():IsLevelAbove(1) and e:GetHandler():IsLevelBelow(11)
 end
 function s.filter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsFaceup() and c:IsAbleToRemove()
+	return c:IsMonster() and c:IsFaceup() and c:IsAbleToRemove()
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

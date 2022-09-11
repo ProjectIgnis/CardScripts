@@ -69,6 +69,6 @@ function s.disop2(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.distg2(e,c)
-	return c:GetCardTargetCount()>0 and c:IsType(TYPE_SPELL)
+	return c:GetCardTargetCount()>0 and c:IsSpell()
 		and c:GetCardTarget():IsContains(e:GetHandler())
 end

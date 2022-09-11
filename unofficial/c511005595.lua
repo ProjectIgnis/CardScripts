@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c)
-	return c:IsFacedown() and c:IsType(TYPE_MONSTER)
+	return c:IsFacedown() and c:IsMonster()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,1-tp,LOCATION_MZONE,0,1,nil)

@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_DECK,0,nil,TYPE_SPELL+TYPE_TRAP)
+	local g=Duel.GetMatchingGroup(Card.IsSpellTrap,tp,LOCATION_DECK,0,nil)
 	local dcount=Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)
 	if dcount==0 then return end
 	if #g==0 then
@@ -18,9 +18,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		return
 	end
 	local seq=-1
-	local tc=g:GetFirst()
 	local spcard=nil
-	for tc in aux.Next(g) do
+	for tc in g:Iter() do
 		if tc:GetSequence()>seq then 
 			seq=tc:GetSequence()
 			spcard=tc
@@ -33,5 +32,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.DiscardDeck(tp,dcount-seq-1,REASON_EFFECT+REASON_REVEAL)
 		Duel.ConfirmCards(1-tp,spcard)
 		Duel.ShuffleHand(tp)
-	else Duel.DiscardDeck(tp,dcount-seq,REASON_EFFECT+REASON_REVEAL) end
+	else
+		Duel.DiscardDeck(tp,dcount-seq,REASON_EFFECT+REASON_REVEAL)
+	end
 end

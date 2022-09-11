@@ -33,7 +33,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 	if tc1 and tc2 then
 		Duel.ConfirmCards(1-tp,tc1)
 		Duel.ConfirmCards(tp,tc2)
-		if tc1:IsType(TYPE_MONSTER) and tc2:IsType(TYPE_MONSTER) then
+		if tc1:IsMonster() and tc2:IsMonster() then
 			Duel.BreakEffect()
 			if tc1:GetLevel()<tc2:GetLevel() then
 				Duel.Damage(tp,800,REASON_EFFECT)

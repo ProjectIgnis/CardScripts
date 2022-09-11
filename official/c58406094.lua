@@ -37,7 +37,7 @@ function s.ldlv7filter(c)
 	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_DRAGON) and c:IsLevel(7)
 end
 function s.extg(e,c)
-	return (c:IsSetCard(0x15b) and c:IsType(TYPE_MONSTER)) or s.ldlv7filter(c)
+	return (c:IsSetCard(0x15b) and c:IsMonster()) or s.ldlv7filter(c)
 end
 function s.filter(c,tp)
 	return c:IsControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and s.ldlv7filter(c)

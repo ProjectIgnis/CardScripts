@@ -1,4 +1,5 @@
---RR Target Flag
+--ＲＲ－ターゲット・フラッグ
+--Raidraptor - Target Flag
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddPersistentProcedure(c,1,nil,CATEGORY_DRAW,nil,TIMING_STANDBY_PHASE,TIMINGS_CHECK_MONSTER,nil,nil,s.target,s.operation,true)
@@ -10,17 +11,17 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and tc and tc:IsRelateToEffect(e) then
+	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) then
 		local td=Duel.GetDecktopGroup(tp,1):GetFirst()
 		if td then
 			Duel.Draw(tp,1,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,td)
 			local desc
 			local label
-			if td:IsType(TYPE_MONSTER) then
+			if td:IsMonster() then
 				label=TYPE_MONSTER
 				desc=70
-			elseif td:IsType(TYPE_SPELL) then
+			elseif td:IsSpell() then
 				label=TYPE_SPELL
 				desc=71
 			else

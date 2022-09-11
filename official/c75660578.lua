@@ -20,7 +20,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x134}
 function s.cfilter(c,e,tp,ft)
-	return (c:IsRace(RACE_ZOMBIE) or (c:IsSetCard(0x134) and c:IsType(TYPE_MONSTER)))
+	return (c:IsRace(RACE_ZOMBIE) or (c:IsSetCard(0x134) and c:IsMonster()))
 		and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5)) and (c:IsControler(tp) or c:IsFaceup())
 			and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,c:GetCode())
 end

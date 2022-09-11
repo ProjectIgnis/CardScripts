@@ -17,7 +17,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x577}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x577) and c:IsAbleToRemove() and c:IsType(TYPE_MONSTER) and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetCode())
+	return c:IsSetCard(0x577) and c:IsAbleToRemove() and c:IsMonster() and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetCode())
 end
 function s.thfilter(c,e,tp,code)
 	return c:IsCode(code) and c:IsAbleToHand()

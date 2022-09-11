@@ -90,11 +90,11 @@ function s.drop1(e,tp,eg,ep,ev,re,r,rp,c,og)
 	if tc then
 		Duel.ConfirmCards(1-tp,tc)
 		local tpe=0
-		if tc:IsType(TYPE_MONSTER) then
+		if tc:IsMonster() then
 			tpe=TYPE_MONSTER
-		elseif tc:IsType(TYPE_SPELL) then
+		elseif tc:IsSpell() then
 			tpe=TYPE_SPELL
-		elseif tc:IsType(TYPE_TRAP) then
+		elseif tc:IsTrap() then
 			tpe=TYPE_TRAP
 		else
 			return
@@ -137,11 +137,11 @@ function s.drop2(e,tp,eg,ep,ev,re,r,rp)
 	if tc then
 		Duel.ConfirmCards(1-tp,tc)
 		local tpe=0
-		if tc:IsType(TYPE_MONSTER) then
+		if tc:IsMonster() then
 			tpe=TYPE_MONSTER
-		elseif tc:IsType(TYPE_SPELL) then
+		elseif tc:IsSpell() then
 			tpe=TYPE_SPELL
-		elseif tc:IsType(TYPE_TRAP) then
+		elseif tc:IsTrap() then
 			tpe=TYPE_TRAP
 		else
 			return

@@ -84,12 +84,12 @@ function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x107e) and c:IsOriginalType(TYPE_MONSTER)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return aux.disfilter3(chkc) and chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_ONFIELD) end
+	if chkc then return chkc:IsNegatable() and chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_ONFIELD) end
 	if chk==0 then return e:GetHandler():GetEquipGroup():IsExists(s.cfilter,1,nil)
-		and Duel.IsExistingTarget(aux.disfilter3,tp,0,LOCATION_ONFIELD,1,nil) end
+		and Duel.IsExistingTarget(Card.IsNegatable,tp,0,LOCATION_ONFIELD,1,nil) end
 	local ct=e:GetHandler():GetEquipGroup():FilterCount(s.cfilter,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local g=Duel.SelectTarget(tp,aux.disfilter3,tp,0,LOCATION_ONFIELD,1,ct,nil)
+	local g=Duel.SelectTarget(tp,Card.IsNegatable,tp,0,LOCATION_ONFIELD,1,ct,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)

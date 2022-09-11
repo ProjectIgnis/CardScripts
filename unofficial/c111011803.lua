@@ -30,7 +30,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	if tc:IsRelateToEffect(e) then
 		Duel.SSet(tp,tc)
-		if tc:IsType(TYPE_TRAP) then
+		if tc:IsTrap() then
 			tc:SetStatus(STATUS_SET_TURN,false)
 		end
 	end

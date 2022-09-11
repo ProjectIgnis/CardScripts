@@ -35,7 +35,7 @@ function s.initial_effect(c)
 end
 s.af="a"
 function s.tdfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x71) and c:IsAbleToDeck()
+	return c:IsMonster() and c:IsSetCard(0x71) and c:IsAbleToDeck()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -50,7 +50,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.repfilter(c,tp)
-	return c:IsControler(tp) and c:IsLocation(LOCATION_GRAVE) and c:GetDestination()==LOCATION_DECK and c:IsType(TYPE_MONSTER)
+	return c:IsControler(tp) and c:IsLocation(LOCATION_GRAVE) and c:GetDestination()==LOCATION_DECK and c:IsMonster()
 		and c:IsAbleToHand()
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)

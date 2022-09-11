@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:GetOwner():IsType(TYPE_TRAP)
+	return rp~=tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:GetOwner():IsTrap()
 		and not e:GetHandler():IsStatus(STATUS_CHAINING)
 end
 function s.filter(c,e,tp)

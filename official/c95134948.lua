@@ -110,7 +110,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local at=Duel.GetAttacker()
-	if chk==0 then return at:IsOnField() and aux.nzatk(at) end
+	if chk==0 then return at:IsOnField() and at:HasNonZeroAttack() end
 	Duel.SetTargetCard(at)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)

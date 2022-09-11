@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsType(TYPE_NORMAL) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsDefense(500)
+	return c:IsMonster() and c:IsType(TYPE_NORMAL) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsDefense(500)
 end
 function s.actcond(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,nil)
@@ -37,5 +37,5 @@ function s.indtg(e,c)
 	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsLevel(9) and c:IsFaceup()
 end
 function s.indesval(e,re)
-	return re:GetHandler():IsType(TYPE_TRAP)
+	return re:GetHandler():IsTrap()
 end

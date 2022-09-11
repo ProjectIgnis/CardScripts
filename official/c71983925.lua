@@ -51,7 +51,7 @@ function s.descon(e)
 	return not Duel.IsExistingMatchingCard(s.filter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.distg(e,c)
-	return c:IsType(TYPE_SPELL)
+	return c:IsSpell()
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local tl=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)

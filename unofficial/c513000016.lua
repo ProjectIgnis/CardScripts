@@ -58,7 +58,7 @@ function s.initial_effect(c)
 	end)
 end
 function s.cfilter(c)
-	return c:IsAbleToRemoveAsCost() and c:IsType(TYPE_MONSTER)
+	return c:IsAbleToRemoveAsCost() and c:IsMonster()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil) 

@@ -35,7 +35,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x38}
 function s.cfilter(c)
-	return c:IsSetCard(0x38) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x38) and c:IsMonster()
 end
 function s.thfilter(c,lv)
 	return c:IsLevelBelow(lv) and c:IsRace(RACE_DRAGON) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsAbleToHand()

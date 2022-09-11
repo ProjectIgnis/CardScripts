@@ -24,7 +24,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 		and d:IsLinkMonster() and d:GetLink()>a:GetLink()
 end
 function s.cfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToRemoveAsCost()
+	return c:IsSpellTrap() and c:IsAbleToRemoveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE+LOCATION_ONFIELD,0,2,e:GetLabelObject()) end

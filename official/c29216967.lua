@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x1083}
 function s.tgfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x1083) and c:IsAbleToGrave()
+	return c:IsMonster() and c:IsSetCard(0x1083) and c:IsAbleToGrave()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end

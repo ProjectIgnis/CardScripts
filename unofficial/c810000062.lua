@@ -23,5 +23,5 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3,tp)
 end
 function s.filter(e,c)
-	return c:IsType(TYPE_MONSTER)
+	return c:IsMonster()
 end

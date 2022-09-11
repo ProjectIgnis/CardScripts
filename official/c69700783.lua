@@ -20,7 +20,7 @@ function s.tgfilter1(c,tp)
 		and Duel.IsExistingMatchingCard(s.tgfilter2,tp,LOCATION_DECK,0,1,nil,lv)
 end
 function s.tgfilter2(c,lv)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x8e) and not c:IsLevel(lv) and c:IsAbleToGrave()
+	return c:IsMonster() and c:IsSetCard(0x8e) and not c:IsLevel(lv) and c:IsAbleToGrave()
 end
 function s.spfilter1(c,tp)
 	return c:IsAbleToGrave() and Duel.GetMZoneCount(tp,c)>0

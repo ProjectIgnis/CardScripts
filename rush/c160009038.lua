@@ -22,7 +22,7 @@ function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) end
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_FIELD) and c:IsType(TYPE_SPELL)
+	return c:IsFaceup() and c:IsType(TYPE_FIELD) and c:IsSpell()
 end
 function s.thfilter(c,e,tp)
 	return c:IsCode(160004042,160203030) and c:IsAbleToHand()

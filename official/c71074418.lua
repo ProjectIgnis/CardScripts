@@ -43,7 +43,7 @@ function s.thcon2(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and eg:IsExists(s.tgfilter,1,nil,tp)
 end
 function s.filter(c,tp)
-	return c:IsAbleToHand() and (c:IsControler(1-tp) or (c:IsType(TYPE_SPELL) and c:IsSetCard(0x128)))
+	return c:IsAbleToHand() and (c:IsControler(1-tp) or (c:IsSpell() and c:IsSetCard(0x128)))
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_ONFIELD+LOCATION_GRAVE) and s.filter(chkc,tp) end

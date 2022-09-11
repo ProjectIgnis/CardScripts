@@ -51,7 +51,7 @@ function s.repfilter(c,tp)
 		and not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
 end
 function s.rmfilter(c)
-	return c:IsSetCard(0xd9) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemove() and aux.SpElimFilter(c,true)
+	return c:IsSetCard(0xd9) and c:IsMonster() and c:IsAbleToRemove() and aux.SpElimFilter(c,true)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(s.repfilter,1,nil,tp)

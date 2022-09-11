@@ -27,7 +27,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x119}
 function s.filter(c,e)
-	return c:IsSetCard(0x119) and c:IsType(TYPE_MONSTER) 
+	return c:IsSetCard(0x119) and c:IsMonster() 
 		and c:IsCanBeEffectTarget(e) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -50,7 +50,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 		and (e:GetHandler():GetPreviousPosition()&POS_FACEDOWN)~=0
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x119) and c:IsType(TYPE_SPELL+TYPE_TRAP) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(0x119) and c:IsSpellTrap() and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

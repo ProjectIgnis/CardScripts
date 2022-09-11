@@ -74,7 +74,7 @@ function s.btcon(e,tp,eg,ep,ev,re,r,rp)
 		and (Duel.GetAttacker()==e:GetHandler() or Duel.GetAttackTarget()==e:GetHandler())
 end
 function s.btcfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:GetLevel()==1 and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsMonster() and c:GetLevel()==1 and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.btcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.btcfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil)

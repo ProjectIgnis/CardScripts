@@ -34,7 +34,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.cffilter(c)
-	return c:IsLocation(LOCATION_HAND) or (c:IsFacedown() and c:IsType(TYPE_SPELL+TYPE_TRAP))
+	return c:IsLocation(LOCATION_HAND) or (c:IsFacedown() and c:IsSpellTrap())
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ty=e:GetLabel()

@@ -77,7 +77,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp and Duel.GetAttacker()==e:GetHandler()
 end
 function s.atkfilter(c,code1,code2)
-	return (c:IsCode(code1) or c:IsCode(code2)) and c:IsType(TYPE_MONSTER)
+	return (c:IsCode(code1) or c:IsCode(code2)) and c:IsMonster()
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetFlagEffect(id)==0

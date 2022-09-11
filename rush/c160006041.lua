@@ -47,5 +47,5 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tdfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
+	return c:IsMonster() and c:IsAbleToDeck()
 end

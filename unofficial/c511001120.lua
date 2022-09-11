@@ -23,7 +23,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ConfirmCards(tp,tc)
 	Duel.ShuffleHand(1-tp)
 	local atk=tc:GetTextAttack()
-	if not tc:IsType(TYPE_MONSTER) or atk<0 then return end
+	if not tc:IsMonster() or atk<0 then return end
 	if (op==0 and atk>2000) or (op==1 and atk<2000) then
 		Duel.SendtoHand(tc,tp,REASON_EFFECT)
 	end

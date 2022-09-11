@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	end)
 end
 function s.filter(c,tp)
-	return c:IsType(TYPE_LINK) and c:IsType(TYPE_SPELL) and c:GetActivateEffect() and c:GetActivateEffect():IsActivatable(tp,true,true)
+	return c:IsType(TYPE_LINK) and c:IsSpell() and c:GetActivateEffect() and c:GetActivateEffect():IsActivatable(tp,true,true)
 end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--condition
@@ -32,7 +32,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,tp):GetFirst()
 	if tc then
 		if tc:IsType(TYPE_FIELD) then
-			aux.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
+			Duel.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
 		else
 			local zone=0xff
 			local te=tc:GetActivateEffect()

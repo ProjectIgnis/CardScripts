@@ -53,7 +53,7 @@ function s.efindes(e,re,rp)
 	return re:GetHandler():IsAttribute(c:GetAttribute()) and re:IsActivated() and rp==1-c:GetControler()
 end
 function s.mttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(1-tp) and chkc:IsType(TYPE_MONSTER) end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(1-tp) and chkc:IsMonster() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsType,tp,0,LOCATION_GRAVE,1,nil,TYPE_MONSTER)
 		and e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_EFFECT) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)

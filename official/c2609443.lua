@@ -40,7 +40,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.gyfilter(c)
-	return (c:IsSetCard(0x70) or c:IsType(TYPE_XYZ)) and c:IsType(TYPE_MONSTER)
+	return (c:IsSetCard(0x70) or c:IsType(TYPE_XYZ)) and c:IsMonster()
 		and c:GetAttack()>0 and not c:IsForbidden()
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

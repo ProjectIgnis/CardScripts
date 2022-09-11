@@ -53,7 +53,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.thfilter(c)
-	return aux.IsCodeListed(c,CARD_HARPIE_LADY_SISTERS) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsCodeListed(CARD_HARPIE_LADY_SISTERS) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,nil)

@@ -100,13 +100,13 @@ function s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	else
 		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	end
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and aux.disfilter1(chkc) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsNegatableMonster() end
 	if chk==0 then
 		if c:IsHasEffect(511009518) then
 			local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
-			return g:FilterCount(aux.disfilter1,nil)==#g
+			return g:FilterCount(Card.IsNegatableMonster,nil)==#g
 		else
-			return Duel.IsExistingTarget(aux.disfilter1,tp,0,LOCATION_MZONE,1,nil)
+			return Duel.IsExistingTarget(Card.IsNegatableMonster,tp,0,LOCATION_MZONE,1,nil)
 		end
 	end
 	local g
@@ -114,7 +114,7 @@ function s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)	
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-		g=Duel.SelectTarget(tp,aux.disfilter1,tp,0,LOCATION_MZONE,1,1,nil)
+		g=Duel.SelectTarget(tp,Card.IsNegatableMonster,tp,0,LOCATION_MZONE,1,1,nil)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,#g,0,0)
 end
@@ -124,7 +124,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Group.CreateGroup()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
 		if c:IsHasEffect(511009518) then
-			g=Duel.GetMatchingGroup(aux.disfilter1,tp,0,LOCATION_MZONE,nil)
+			g=Duel.GetMatchingGroup(Card.IsNegatableMonster,tp,0,LOCATION_MZONE,nil)
 		elseif tg and tg:IsRelateToEffect(e) and tg:IsFaceup() and not tg:IsDisabled() then
 			g:AddCard(tg)
 		end

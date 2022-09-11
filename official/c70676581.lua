@@ -43,7 +43,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function s.distg(e,c)
-	if c:GetCardTargetCount()==0 or not c:IsType(TYPE_SPELL) then return false end
+	if c:GetCardTargetCount()==0 or not c:IsSpell() then return false end
 	return c:GetCardTarget():IsExists(s.disfilter,1,nil,e:GetHandlerPlayer())
 end
 function s.disfilter(c,tp)

@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c)
-	return c:IsType(TYPE_MONSTER) and c:GetTextAttack()>=0 and c:IsAbleToHand() and c:IsAbleToGrave()
+	return c:IsMonster() and c:GetTextAttack()>=0 and c:IsAbleToHand() and c:IsAbleToGrave()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,3,nil) end

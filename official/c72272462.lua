@@ -67,7 +67,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and c:IsReason(REASON_EFFECT) and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp)
 end
 function s.thfilter(c,e,tp,ft)
-	return ((c:IsSetCard(0x166) and c:IsType(TYPE_MONSTER)) or c:IsCode(CARD_ALBAZ))
+	return ((c:IsSetCard(0x166) and c:IsMonster()) or c:IsCode(CARD_ALBAZ))
 		and (c:IsAbleToHand() or (c:IsCanBeSpecialSummoned(e,0,tp,false,false) and ft>0))
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

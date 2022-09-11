@@ -80,7 +80,7 @@ function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 	--Registered as equipped with own effect
 function s.equipop(c,e,tp,tc)
-	if not aux.EquipByEffectAndLimitRegister(c,e,tp,tc,id) then return end
+	if not c:EquipByEffectAndLimitRegister(e,tp,tc,id) then return end
 end
 	--Equip a monster in EMZ to this card, max 1
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)

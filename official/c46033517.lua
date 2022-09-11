@@ -50,7 +50,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x36}
 function s.spfilter(c)
-	return c:HasLevel() and c:IsType(TYPE_MONSTER) and c:IsRace(RACE_MACHINE) and c:IsAbleToRemoveAsCost()
+	return c:HasLevel() and c:IsMonster() and c:IsRace(RACE_MACHINE) and c:IsAbleToRemoveAsCost()
 end
 function s.spcon(e,c)
 	if c==nil then return true end

@@ -21,7 +21,7 @@ end
 s.listed_series={0x33}
 function s.filter(c,val)
 	local atk=c:GetAttack()
-	return c:IsAttackAbove(0) and atk<val and c:IsSetCard(0x33) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsAttackAbove(0) and atk<val and c:IsSetCard(0x33) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=eg:GetFirst()

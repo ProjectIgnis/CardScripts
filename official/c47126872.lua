@@ -49,7 +49,7 @@ function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local tc=e:GetLabelObject():GetLabelObject()
 	Duel.SetTargetCard(tc)
-	if tc:IsType(TYPE_MONSTER) then
+	if tc:IsMonster() then
 		e:SetCategory(CATEGORY_SPECIAL_SUMMON)
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,tc,1,0,0)
 	else
@@ -59,7 +59,7 @@ end
 function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) then return end
-	if tc:IsType(TYPE_MONSTER) then
+	if tc:IsMonster() then
 		Duel.SpecialSummon(tc,0,tp,1-tp,false,false,POS_FACEDOWN_DEFENSE)
 	else
 		Duel.SSet(tp,tc,1-tp)

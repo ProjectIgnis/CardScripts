@@ -18,7 +18,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x35) and c:IsType(TYPE_MONSTER) and not c:IsType(TYPE_TUNER)
+	return c:IsFaceup() and c:IsSetCard(0x35) and c:IsMonster() and not c:IsType(TYPE_TUNER)
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end

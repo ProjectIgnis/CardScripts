@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x11e}
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x11e) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsPublic()
+	return c:IsSetCard(0x11e) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsPublic()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rvg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_DECK,0,nil,e,tp)

@@ -30,7 +30,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_GAIA_CHAMPION}
 function s.thfilter(c)
-	return aux.IsCodeListed(c,CARD_GAIA_CHAMPION) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsCodeListed(CARD_GAIA_CHAMPION) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -48,7 +48,7 @@ function s.discfilter(c,tp)
 	return c:IsFaceup() and c:IsCode(CARD_GAIA_CHAMPION) and Duel.IsExistingMatchingCard(s.disfilter,tp,0,LOCATION_MZONE,1,nil,c:GetAttack())
 end
 function s.disfilter(c,atk)
-	return c:IsFaceup() and c:IsAttackBelow(atk) and aux.disfilter1(c)
+	return c:IsFaceup() and c:IsAttackBelow(atk) and c:IsNegatableMonster()
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.discfilter(chkc,tp) end

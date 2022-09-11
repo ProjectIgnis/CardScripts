@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.eqtg)
 	e2:SetOperation(s.eqop)
 	c:RegisterEffect(e2)
-	aux.AddEREquipLimit(c,nil,s.eqval,aux.EquipByEffectAndLimitRegister,e2)
+	aux.AddEREquipLimit(c,nil,s.eqval,Card.EquipByEffectAndLimitRegister,e2)
 end
 s.listed_series={0x29}
 function s.eqval(ec,c,tp)
@@ -49,6 +49,6 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
-		aux.EquipByEffectAndLimitRegister(c,e,tp,tc)
+		c:EquipByEffectAndLimitRegister(e,tp,tc)
 	end
 end

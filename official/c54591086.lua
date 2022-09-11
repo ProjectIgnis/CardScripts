@@ -30,7 +30,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(rg,REASON_COST)
 end
 function s.filter(c)
-	return c:IsType(TYPE_SPELL) and c:IsAbleToGrave()
+	return c:IsSpell() and c:IsAbleToGrave()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ct=e:GetLabel()

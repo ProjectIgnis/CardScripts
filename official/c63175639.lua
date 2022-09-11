@@ -26,7 +26,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x106e}
 function s.filter(c)
-	return c:IsSetCard(0x106e) and c:IsType(TYPE_SPELL) and c:IsAbleToGrave()
+	return c:IsSetCard(0x106e) and c:IsSpell() and c:IsAbleToGrave()
 end
 function s.sgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
@@ -41,7 +41,7 @@ function s.sgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x106e) and c:IsType(TYPE_SPELL)
+	return c:IsSetCard(0x106e) and c:IsSpell()
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():GetFlagEffect(id)==0 then return false end

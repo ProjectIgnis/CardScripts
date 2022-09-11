@@ -19,7 +19,7 @@ function s.ctfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x8)
 end
 function s.schfilter(c)
-	return c:IsSetCard(0x8) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x8) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.desfilter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP)

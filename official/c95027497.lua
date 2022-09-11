@@ -27,7 +27,7 @@ function s.filter1(c)
 	return c:IsSetCard(0x61) and c:IsAbleToHand()
 end
 function s.filter2(c)
-	return c:IsSetCard(0x2b) and c:GetCode()~=id and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x2b) and c:GetCode()~=id and c:IsMonster() and c:IsAbleToHand()
 end
 function s.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_DECK,0,1,nil) end

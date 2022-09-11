@@ -25,7 +25,7 @@ end
 s.listed_series={0x17e}
 s.listed_names={id}
 function s.filter(c)
-	return c:IsType(TYPE_FIELD) and c:IsType(TYPE_SPELL) and c:IsSetCard(0x17e) and not c:IsCode(id)
+	return c:IsType(TYPE_FIELD) and c:IsSpell() and c:IsSetCard(0x17e) and not c:IsCode(id)
 		and not c:IsForbidden()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

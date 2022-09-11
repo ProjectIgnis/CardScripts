@@ -35,7 +35,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) or tc:IsFaceup() then return end
 	Duel.ConfirmCards(tp,tc)
-	if tc:IsType(TYPE_TRAP) and Duel.Destroy(tc,REASON_EFFECT)~=0 then
+	if tc:IsTrap() and Duel.Destroy(tc,REASON_EFFECT)~=0 then
 		if c:IsFaceup() and c:IsRelateToEffect(e) then
 			Duel.RaiseSingleEvent(c,EVENT_CUSTOM+id,e,0,tp,tp,0)
 		end

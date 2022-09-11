@@ -56,7 +56,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tgfilter(c,tc)
-	return c:IsType(TYPE_EQUIP) and c:IsType(TYPE_SPELL) and c:IsAbleToGraveAsCost() and c:GetEquipTarget()==tc
+	return c:IsType(TYPE_EQUIP) and c:IsSpell() and c:IsAbleToGraveAsCost() and c:GetEquipTarget()==tc
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -66,7 +66,7 @@ function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.disfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and (aux.disfilter1(c) or c:IsCanChangePosition())
+	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and (c:IsNegatableMonster() or c:IsCanChangePosition())
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.disfilter(chkc) end
@@ -78,8 +78,8 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) then return end
 	local b1=tc:IsCanChangePosition()
-	local b2=aux.disfilter1(tc)
-	local op=aux.SelectEffect(tp,
+	local b2=tc:IsNegatableMonster()
+	local op=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,2)},
 		{b2,aux.Stringid(id,3)})
 	if op==1 then

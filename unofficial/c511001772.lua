@@ -45,7 +45,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if a:IsControler(1-tp) then a,d=d,a end
 		local aatk=a:GetAttack()
 		local datk=d:GetAttack()	
-		if tc:IsType(TYPE_MONSTER) then
+		if tc:IsMonster() then
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_SET_ATTACK_FINAL)

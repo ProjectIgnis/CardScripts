@@ -30,7 +30,7 @@ function s.zones(e,tp,eg,ep,ev,re,r,rp)
 	return zone
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local b1=Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1)
+	local b1=Duel.CheckPendulumZones(tp)
 	local b2=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 	if chk==0 then return (b1 or b2)
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp,b1,0xc7)
@@ -38,7 +38,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,0,tp,LOCATION_DECK)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local b1=Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1)
+	local b1=Duel.CheckPendulumZones(tp)
 	local b2=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 	if not b1 and not b2 then return end
 	local g1=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK,0,nil,e,tp,b1,0xc7)

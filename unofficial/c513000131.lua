@@ -43,5 +43,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.disable(e,c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c~=e:GetHandler()
+	return c:IsSpellTrap() and c~=e:GetHandler()
 end

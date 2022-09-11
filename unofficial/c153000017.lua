@@ -86,13 +86,13 @@ function s.dmop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e8,tp)
 end
 function s.repRuleTg(e,c)
-	if c:IsType(TYPE_MONSTER) and c:IsReason(REASON_RULE) then
+	if c:IsMonster() and c:IsReason(REASON_RULE) then
 		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD&~(RESET_TODECK|RESET_LEAVE),0,1)
 		return true
 	else return false end
 end
 function s.rdfilter(c)
-	return c:GetFlagEffect(id)>0 and c:IsType(TYPE_MONSTER) and c:IsReason(REASON_RULE)
+	return c:GetFlagEffect(id)>0 and c:IsMonster() and c:IsReason(REASON_RULE)
 end
 function s.repRuleOp(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.rdfilter,nil)
@@ -117,7 +117,7 @@ function s.repcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsDeckMaster(tp,id)
 end
 function s.repfilter(c)
-	return c:GetDestination()&LOCATION_GRAVE==LOCATION_GRAVE and c:IsType(TYPE_MONSTER)
+	return c:GetDestination()&LOCATION_GRAVE==LOCATION_GRAVE and c:IsMonster()
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(s.repfilter,1,nil) end

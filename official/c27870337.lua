@@ -54,11 +54,11 @@ function s.filter(c)
 	return c:IsSetCard(0x164) and c:IsType(TYPE_PENDULUM) and not c:IsForbidden() 
 end
 function s.dtoptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1))
+	if chk==0 then return Duel.CheckPendulumZones(tp)
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
 end
 function s.dtopop(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.CheckLocation(tp,LOCATION_PZONE,0) and not Duel.CheckLocation(tp,LOCATION_PZONE,1) then return end
+	if not Duel.CheckPendulumZones(tp) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil)
 	if #g>0 then
@@ -76,7 +76,7 @@ function s.htoetg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.move_to_pendulum_zone(c,tp,e)
-	if not c or not (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1)) then return end
+	if not c or not Duel.CheckPendulumZones(tp) then return end
 	Duel.MoveToField(c,tp,tp,LOCATION_PZONE,POS_FACEUP,true)
 end
 function s.htoeop(e,tp,eg,ep,ev,re,r,rp)

@@ -49,7 +49,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Draw(tp,1,REASON_EFFECT)==0 then return end
 	local tc=Duel.GetOperatedGroup():GetFirst()
 	Duel.ConfirmCards(1-tp,tc)
-	if tc:IsSetCard(0xa9) and tc:IsType(TYPE_MONSTER) then
+	if tc:IsSetCard(0xa9) and tc:IsMonster() then
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 		local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND,0,nil,e,tp)
 		if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
@@ -65,7 +65,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ShuffleHand(tp)
 end
 function s.filter(c)
-	return (c:IsCode(30068120) or (c:IsSetCard(0xa9) and c:IsType(TYPE_MONSTER))) and c:IsAbleToHand()
+	return (c:IsCode(30068120) or (c:IsSetCard(0xa9) and c:IsMonster())) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

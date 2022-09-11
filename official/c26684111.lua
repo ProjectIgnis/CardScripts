@@ -30,7 +30,7 @@ function s.acfilter(c,tp)
 		and c:GetActivateEffect():IsActivatable(tp,true,true)
 end
 function s.thfilter(c)
-	return c:IsMonster() and aux.IsCodeListed(c,CARD_SANCTUARY_SKY) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsCodeListed(CARD_SANCTUARY_SKY) and c:IsAbleToHand()
 end
 function s.acthtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -58,7 +58,7 @@ function s.acthop(e,tp,eg,ep,ev,re,r,rp)
 	if op==0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 		local tc=Duel.SelectMatchingCard(tp,s.acfilter,tp,LOCATION_DECK,0,1,1,nil,tp):GetFirst()
-		if tc then gainlp=aux.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp) end
+		if tc then gainlp=Duel.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp) end
 	elseif op==1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)
@@ -77,7 +77,7 @@ function s.acthop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.repfilter(c,tp)
-	return c:IsFaceup() and c:IsControler(tp) and c:IsReason(REASON_BATTLE) and aux.IsCodeListed(c,CARD_SANCTUARY_SKY)
+	return c:IsFaceup() and c:IsControler(tp) and c:IsReason(REASON_BATTLE) and c:IsCodeListed(CARD_SANCTUARY_SKY)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemove() and eg:IsExists(s.repfilter,1,nil,tp) end

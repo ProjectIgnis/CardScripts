@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c)
-	return c:IsType(TYPE_SPELL) and c:IsAbleToGraveAsCost()
+	return c:IsSpell() and c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
@@ -32,7 +32,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(p,d,REASON_EFFECT)
 	if h then
 		Duel.ConfirmCards(1-p,h)
-		if h:IsType(TYPE_MONSTER) then
+		if h:IsMonster() then
 			Duel.Damage(tp,h:GetTextAttack(),REASON_EFFECT)
 		end
 		Duel.ShuffleHand(p)

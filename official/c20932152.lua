@@ -26,10 +26,10 @@ function s.initial_effect(c)
 end
 function s.synlimit(e,c)
 	if not c then return false end
-	return not aux.IsMaterialListSetCard(c,0x1017)
+	return not c:IsMaterialListSetCard(0x1017)
 end
 function s.spfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and c:IsAbleToGraveAsCost()
 end
 function s.spcon(e,c)
 	if c==nil then return true end

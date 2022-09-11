@@ -71,7 +71,7 @@ function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x101b) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 end
 function s.svfilter(c,tp)
-	return c:IsType(TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsTrap() and c:IsAbleToHand()
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) and Duel.CheckReleaseGroupCost(tp,aux.TRUE,1,false,nil,nil)

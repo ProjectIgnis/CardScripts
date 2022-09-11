@@ -19,7 +19,7 @@ function s.costfilter(c)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE,0,1,nil) 
-		and Duel.IsExistingMatchingCard(aux.nzatk,tp,0,LOCATION_MZONE,1,nil) end
+		and Duel.IsExistingMatchingCard(Card.HasNonZeroAttack,tp,0,LOCATION_MZONE,1,nil) end
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -28,7 +28,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.SendtoGrave(g,REASON_COST)
 	if ct>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-		local dg=Duel.SelectMatchingCard(tp,aux.nzatk,tp,0,LOCATION_MZONE,1,1,nil)
+		local dg=Duel.SelectMatchingCard(tp,Card.HasNonZeroAttack,tp,0,LOCATION_MZONE,1,1,nil)
 		if #dg>0 then
 			Duel.HintSelection(dg)
 			local e1=Effect.CreateEffect(c)

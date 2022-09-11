@@ -30,7 +30,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x71}
 function s.desrepfilter(c)
-	return c:IsSetCard(0x71) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck() and aux.nvfilter(c)
+	return c:IsSetCard(0x71) and c:IsMonster() and c:IsAbleToDeck() and aux.nvfilter(c)
 end
 function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsReason(REASON_RULE)
@@ -43,11 +43,11 @@ function s.desrepop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT+REASON_REPLACE)
 end
 function s.linkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x71) and c:IsType(TYPE_MONSTER)
+	return c:IsFaceup() and c:IsSetCard(0x71) and c:IsMonster()
 end
 function s.indescon(e,c)
 	return e:GetHandler():GetLinkedGroup():IsExists(s.linkfilter,1,nil)
 end
 function s.indestg(e,c)
-	return c:IsFaceup() and c:IsSetCard(0x71) and c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsFaceup() and c:IsSetCard(0x71) and c:IsSpellTrap()
 end

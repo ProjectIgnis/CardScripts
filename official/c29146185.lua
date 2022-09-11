@@ -29,7 +29,7 @@ s.listed_series={0x106e}
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
 	local rc=re:GetHandler()
-	return rc:IsRace(RACE_SPELLCASTER) or (rc:IsSetCard(0x106e) and rc:IsType(TYPE_SPELL))
+	return rc:IsRace(RACE_SPELLCASTER) or (rc:IsSetCard(0x106e) and rc:IsSpell())
 end
 function s.retcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetActivityCount(tp,ACTIVITY_SPSUMMON)==1 end
@@ -43,7 +43,7 @@ function s.retcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.filter(c)
-	return c:IsSetCard(0x106e) and c:IsType(TYPE_SPELL) and c:IsAbleToHand()
+	return c:IsSetCard(0x106e) and c:IsSpell() and c:IsAbleToHand()
 end
 function s.rettg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -63,7 +63,7 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cffilter(c)
-	return c:IsSetCard(0x106e) and c:IsType(TYPE_SPELL) and not c:IsPublic()
+	return c:IsSetCard(0x106e) and c:IsSpell() and not c:IsPublic()
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.cffilter,tp,LOCATION_HAND,0,nil)

@@ -64,7 +64,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x9e}
 function s.confilter(c)
-	return c:IsSetCard(0x9e) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x9e) and c:IsMonster()
 end
 function s.effcon(e)
 	local g=Duel.GetMatchingGroup(s.confilter,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil)

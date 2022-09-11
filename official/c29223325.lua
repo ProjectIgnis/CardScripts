@@ -24,13 +24,13 @@ function s.initial_effect(c)
 end
 s.listed_series={0x97}
 function s.filter(c)
-	return c:IsSetCard(0x97) and c:IsType(TYPE_MONSTER) and c:IsSSetable(true)
+	return c:IsSetCard(0x97) and c:IsMonster() and c:IsSSetable(true)
 end
 function s.desfilter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP)
 end
 function s.desfilter2(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:GetSequence()<5
+	return c:IsSpellTrap() and c:GetSequence()<5
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and s.desfilter(chkc) and chkc~=e:GetHandler() end

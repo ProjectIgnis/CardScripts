@@ -35,7 +35,7 @@ end
 s.listed_names={id}
 s.listed_series={0x11f}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x11f) and c:IsType(TYPE_MONSTER) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(0x11f) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp)
@@ -68,7 +68,7 @@ function s.spr(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c,e,tp)
-	return c:IsSetCard(0x11f) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSetCard(0x11f) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.thcon2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

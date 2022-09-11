@@ -18,7 +18,7 @@ function s.filter(c,tp)
 		and Duel.IsExistingMatchingCard(s.rmfilter,tp,LOCATION_GRAVE,0,1,nil,c:GetLink())
 end
 function s.rmfilter(c,link)
-	return c:IsType(TYPE_MONSTER) and c:IsLink(link) and c:IsAbleToRemove()
+	return c:IsMonster() and c:IsLink(link) and c:IsAbleToRemove()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc,tp) end

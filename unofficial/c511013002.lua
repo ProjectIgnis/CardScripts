@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.spfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_TRAP) and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and c:IsTrap() and c:IsAbleToGraveAsCost()
 end
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -61,7 +61,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	 and (c:GetPreviousLocation()&LOCATION_ONFIELD)~=0
 end
 function s.filter2(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsDestructable()
+	return c:IsSpellTrap() and c:IsDestructable()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_SZONE) and s.filter2(chkc) and chkc~=e:GetHandler() end

@@ -20,7 +20,7 @@ function s.condition(e,tp)
 	return Duel.GetAttacker():IsControler(tp) and Duel.GetAttacker():IsRace(RACE_CYBERSE)
 end
 function s.cfilter(c)
-	return c:IsDiscardable() and c:IsType(TYPE_MONSTER)
+	return c:IsDiscardable() and c:IsMonster()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end

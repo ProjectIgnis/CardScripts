@@ -36,7 +36,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.cfilter(c,tp)
-	return c:GetPreviousControler()==tp and (c:IsPreviousLocation(LOCATION_HAND) and c:IsType(TYPE_MONSTER)
+	return c:GetPreviousControler()==tp and (c:IsPreviousLocation(LOCATION_HAND) and c:IsMonster()
 		or c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousTypeOnField()&TYPE_MONSTER==TYPE_MONSTER)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

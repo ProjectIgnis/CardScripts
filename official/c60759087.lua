@@ -57,7 +57,7 @@ function s.contop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter3(c)
-	return c:IsFacedown() and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToDeck()
+	return c:IsFacedown() and c:IsSpellTrap() and c:IsAbleToDeck()
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and s.filter3(chkc) and chkc:IsControler(1-tp) end

@@ -66,7 +66,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.filter(c,p)
-	return c:IsControler(p) and aux.nzatk(c)
+	return c:IsControler(p) and c:HasNonZeroAttack()
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp,chk)
 	return eg:IsExists(s.filter,1,nil,1-tp)

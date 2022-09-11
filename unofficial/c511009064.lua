@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c)
-	return c:IsSetCard(0x9a) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(0x9a) and c:IsMonster() and c:IsAbleToGraveAsCost()
 end
 function s.hspcon(e,c)
 	if c==nil then return true end

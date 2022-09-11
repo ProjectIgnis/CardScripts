@@ -35,7 +35,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return #eg==1 and eg:IsContains(e:GetHandler()) and r&REASON_EFFECT>0 and re and re:IsActiveType(TYPE_LINK) and re:GetHandler():IsSetCard(0x42)
 end
 function s.matfilter(c)
-	return c:IsSetCard(0x42) and c:IsType(TYPE_MONSTER) and (c:IsFaceup() or c:IsLocation(LOCATION_DECK)) and c:IsLevelAbove(1)
+	return c:IsSetCard(0x42) and c:IsMonster() and (c:IsFaceup() or c:IsLocation(LOCATION_DECK)) and c:IsLevelAbove(1)
 end
 function s.spcheck(sg,e,tp,mg)
 	return #sg==3 and sg:FilterCount(Card.IsLocation,nil,LOCATION_DECK)==2 and sg:GetSum(Card.GetLevel)==10 

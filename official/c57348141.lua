@@ -36,7 +36,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_MZONE,0,1,nil,tp)
 end
 function s.cfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x38) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsMonster() and c:IsSetCard(0x38) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.rescon(sg,e,tp,mg)
 	sg:AddCard(e:GetHandler())

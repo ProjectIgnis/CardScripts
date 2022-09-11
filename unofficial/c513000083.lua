@@ -47,7 +47,7 @@ function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x107f) and c:IsSetCard(0x1048) and no and no==39
 end
 function s.desfilter(c)
-	return c:IsDestructable() and c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsDestructable() and c:IsSpellTrap()
 end
 function s.eqcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end

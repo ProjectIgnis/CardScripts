@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.rmfilter(c,e)
-	return c:IsType(TYPE_MONSTER) and c:IsType(TYPE_FULL) and c:IsAbleToRemove() and c:IsCanBeEffectTarget(e)
+	return c:IsMonster() and c:IsType(TYPE_FULL) and c:IsAbleToRemove() and c:IsCanBeEffectTarget(e)
 end
 function s.spcheck(sg,e,tp,mg)
 	if #sg<4 then return false end

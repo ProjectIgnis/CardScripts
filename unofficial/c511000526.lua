@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.banfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemove() and aux.SpElimFilter(c,true) 
+	return c:IsMonster() and c:IsAbleToRemove() and aux.SpElimFilter(c,true) 
 		and Duel.IsExistingTarget(s.desfilter,0,LOCATION_MZONE,LOCATION_MZONE,1,c,c:GetLevel(),c:GetRace())
 end
 function s.desfilter(c,lv,race)

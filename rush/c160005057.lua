@@ -27,7 +27,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return tg:IsControler(tp) and tg:IsOnField() end
 end
 function s.tdfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_PLANT) and c:IsAbleToDeckOrExtraAsCost()
+	return c:IsMonster() and c:IsRace(RACE_PLANT) and c:IsAbleToDeckOrExtraAsCost()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement

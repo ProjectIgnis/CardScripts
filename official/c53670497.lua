@@ -34,10 +34,10 @@ function s.initial_effect(c)
 end
 s.listed_series={0x69}
 function s.filter1(c)
-	return c:IsSetCard(0x69) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
+	return c:IsSetCard(0x69) and c:IsMonster() and c:IsAbleToGrave()
 end
 function s.filter2(c)
-	return c:IsFaceup() and c:IsSetCard(0x69) and c:IsType(TYPE_MONSTER)
+	return c:IsFaceup() and c:IsSetCard(0x69) and c:IsMonster()
 end
 function s.target1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

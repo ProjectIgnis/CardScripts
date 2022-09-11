@@ -105,7 +105,7 @@ function s.copycost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return a or b end
 	Duel.Hint(HINT_CARD,0,tc:GetOriginalCode())
 	Duel.SetTargetCard(tc)
-	local op=aux.SelectEffect(tp,{a,aux.Stringid(81330115,0)},{b,aux.Stringid(21454943,1)})
+	local op=Duel.SelectEffect(tp,{a,aux.Stringid(81330115,0)},{b,aux.Stringid(21454943,1)})
 	if op==0 then
 		Duel.SendtoGrave(tc,REASON_COST) 
 	else

@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.spfilter(c,e,tp,lv)
-	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_AQUA+RACE_FISH+RACE_SEASERPENT)
+	return c:IsMonster() and c:IsRace(RACE_AQUA+RACE_FISH+RACE_SEASERPENT)
 		and c:HasLevel() and c:IsLevelBelow(lv) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

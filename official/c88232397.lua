@@ -48,7 +48,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local b2=Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil)
-	local op=aux.SelectEffect(tp,
+	local op=Duel.SelectEffect(tp,
 		{true,aux.Stringid(id,1)},
 		{b2,aux.Stringid(id,2)})
 	e:SetLabel(op)

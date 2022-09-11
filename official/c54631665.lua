@@ -42,7 +42,7 @@ function s.tgtg(e,c)
 	return c:IsSetCard(0xee) and c~=e:GetHandler()
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xee) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0xee) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -61,7 +61,7 @@ function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 end
 function s.cfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToDeckAsCost()
+	return c:IsMonster() and c:IsAbleToDeckAsCost()
 end
 function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

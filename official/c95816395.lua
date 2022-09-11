@@ -29,7 +29,7 @@ function s.cfilter(c,lv)
 	return c:GetLevel()==lv
 end
 function s.filter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsAbleToHand()
 		and not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,c:GetLevel())
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

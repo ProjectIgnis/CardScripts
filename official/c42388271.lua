@@ -83,7 +83,7 @@ function s.dkcon(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for a monster
 function s.dkfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
+	return c:IsMonster() and c:IsAbleToGrave()
 end
 	--Activation legality
 function s.dktg(e,tp,eg,ep,ev,re,r,rp,chk)

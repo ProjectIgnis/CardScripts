@@ -58,7 +58,7 @@ function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 		and e:GetHandler():GetReasonCard():IsSetCard(0x79)
 end
 function s.filter(c)
-	return c:IsSetCard(0x7c) and c:IsType(TYPE_SPELL) and c:IsSSetable()
+	return c:IsSetCard(0x7c) and c:IsSpell() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

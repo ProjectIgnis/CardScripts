@@ -38,7 +38,7 @@ end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_HAND+LOCATION_MZONE) and not chkc:IsControler(tp) end
 	local rc=re:GetHandler()
-	if chk==0 then return rc:IsType(TYPE_MONSTER) and rc:IsControler(1-tp) end
+	if chk==0 then return rc:IsMonster() and rc:IsControler(1-tp) end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,rc,1,0,LOCATION_MZONE)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,1000)
 end

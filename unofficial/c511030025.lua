@@ -33,7 +33,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x578}
 function s.thfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x578) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(0x578) and c:IsAbleToHand()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

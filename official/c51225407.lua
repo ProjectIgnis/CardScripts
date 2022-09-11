@@ -45,7 +45,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x121}
 function s.atkfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x121)
+	return c:IsMonster() and c:IsSetCard(0x121)
 end
 function s.atkval(e,c)
 	local g=Duel.GetMatchingGroup(s.atkfilter,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil)

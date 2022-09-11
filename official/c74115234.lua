@@ -30,7 +30,7 @@ function s.recon(e,tp,eg,ep,ev,re,r,rp)
 	local bc=ec:GetBattleTarget()
 	e:SetLabelObject(bc)
 	return e:GetHandler():GetEquipTarget()==eg:GetFirst() and ec:IsControler(tp)
-		and bc:IsLocation(LOCATION_GRAVE) and bc:IsType(TYPE_MONSTER) and bc:IsReason(REASON_BATTLE) 
+		and bc:IsLocation(LOCATION_GRAVE) and bc:IsMonster() and bc:IsReason(REASON_BATTLE) 
 end
 function s.retg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

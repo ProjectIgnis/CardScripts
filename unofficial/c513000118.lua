@@ -70,7 +70,7 @@ function s.initial_effect(c)
 			if not smp then smp=tp end
 			if not zone then zone=0xff end
 			if Duel.IsPlayerAffectedByEffect(tp,id) then
-				return c:IsType(TYPE_MONSTER) and f(c,e,tpe,tp,true,conr,sump,smp,zone)
+				return c:IsMonster() and f(c,e,tpe,tp,true,conr,sump,smp,zone)
 			end
 			return f(c,e,tpe,tp,con,conr,sump,smp,zone)
 		end
@@ -144,7 +144,7 @@ function s.ttop2(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Release(g,REASON_SUMMON+REASON_MATERIAL)
 end
 function s.filter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemove()
+	return c:IsMonster() and c:IsAbleToRemove()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

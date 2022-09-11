@@ -52,7 +52,7 @@ function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 		and (tc==e:GetHandler() or tc:IsSetCard(0x12b) and tc:IsType(TYPE_LINK) and e:GetHandler():GetLinkedGroup():IsContains(tc))
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x12b) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(0x12b) and c:IsMonster() and c:IsAbleToGraveAsCost()
 end
 function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end

@@ -39,7 +39,7 @@ s.listed_series={0x168}
 s.listed_names={CARD_SUSHIP_SHARI}
 
 function s.cfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x168) and c:IsSummonPlayer(tp)
+	return c:IsMonster() and c:IsSetCard(0x168) and c:IsSummonPlayer(tp)
 end
 function s.dtcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

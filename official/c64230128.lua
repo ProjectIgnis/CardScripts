@@ -71,7 +71,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFlagEffect(tp,id)>0
 end
 function s.thfilter(c)
-	return aux.IsCodeListed(c,TOKEN_BRAVE) and c:IsType(TYPE_SPELL)
+	return c:IsCodeListed(TOKEN_BRAVE) and c:IsSpell()
 		and c:IsType(TYPE_FIELD) and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

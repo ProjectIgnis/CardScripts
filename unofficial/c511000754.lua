@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.dfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsDestructable() and Duel.IsExistingMatchingCard(Card.IsDestructable,0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
+	return c:IsSpellTrap() and c:IsDestructable() and Duel.IsExistingMatchingCard(Card.IsDestructable,0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.dfilter,tp,LOCATION_ONFIELD,0,1,e:GetHandler()) end

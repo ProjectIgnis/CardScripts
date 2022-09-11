@@ -43,5 +43,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.distarget(e,c)
-	return c~=e:GetHandler() and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:GetFlagEffect(id)>0
+	return c~=e:GetHandler() and c:IsSpellTrap() and c:GetFlagEffect(id)>0
 end

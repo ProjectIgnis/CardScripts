@@ -24,17 +24,14 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-function s.sfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
-end
 function s.sumcon(e)
-	return Duel.IsExistingMatchingCard(s.sfilter,e:GetHandlerPlayer(),LOCATION_GRAVE,0,1,nil)
+	return Duel.IsExistingMatchingCard(Card.IsSpellTrap,e:GetHandlerPlayer(),LOCATION_GRAVE,0,1,nil)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp and not s.sumcon(e)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if Duel.IsExistingMatchingCard(s.sfilter,tp,LOCATION_GRAVE,0,1,nil) then return false end
+	if Duel.IsExistingMatchingCard(Card.IsSpellTrap,tp,LOCATION_GRAVE,0,1,nil) then return false end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)

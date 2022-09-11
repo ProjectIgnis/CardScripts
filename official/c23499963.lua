@@ -23,10 +23,10 @@ function s.fcfilter(c)
 	return c:IsCode(60884672) and c:IsAbleToHand()
 end
 function s.tgfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x158) and c:IsAbleToGrave()
+	return c:IsMonster() and c:IsSetCard(0x158) and c:IsAbleToGrave()
 end
 function s.mcfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x158) and c:IsAbleToHand() 
+	return c:IsMonster() and c:IsSetCard(0x158) and c:IsAbleToHand() 
 		and Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -56,7 +56,7 @@ function s.eqcon(e)
 	return Duel.GetAttacker():IsSetCard(0x3b)
 end
 function s.eqfilter(c,tp)
-	return c:IsRace(RACE_WARRIOR) and c:CheckUniqueOnField(tp) and c:IsType(TYPE_MONSTER) and not c:IsForbidden()
+	return c:IsRace(RACE_WARRIOR) and c:CheckUniqueOnField(tp) and c:IsMonster() and not c:IsForbidden()
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.eqfilter(chkc,tp) end

@@ -68,7 +68,7 @@ function s.ffilter(c,code)
 	return c:IsFaceup() and c:IsCode(code)
 end
 function s.thfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.op2(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsExistingMatchingCard(s.ffilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil,CARD_DREAM_MIRROR_JOY)

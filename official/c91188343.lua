@@ -15,10 +15,10 @@ end
 s.listed_series={0x44}
 s.listed_names={55794644,CARD_SANCTUARY_SKY}
 function s.filter1(c)
-	return c:IsSetCard(0x44) and c:GetCode()~=id and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x44) and c:GetCode()~=id and c:IsMonster() and c:IsAbleToHand()
 end
 function s.filter2(c)
-	return ((c:IsSetCard(0x44) and c:GetCode()~=id and c:IsType(TYPE_MONSTER)) or c:IsCode(55794644)) and c:IsAbleToHand()
+	return ((c:IsSetCard(0x44) and c:GetCode()~=id and c:IsMonster()) or c:IsCode(55794644)) and c:IsAbleToHand()
 end
 function s.envfilter(c)
 	return c:IsFaceup() and c:IsCode(CARD_SANCTUARY_SKY)

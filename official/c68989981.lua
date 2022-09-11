@@ -25,7 +25,7 @@ function s.initial_effect(c)
 end
 s.listed_names={id}
 function s.tgfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_ZOMBIE) and c:IsAbleToGrave()
+	return c:IsMonster() and c:IsRace(RACE_ZOMBIE) and c:IsAbleToGrave()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end

@@ -31,7 +31,7 @@ end
 s.listed_series={0x122}
 s.listed_names={92182447}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return re and re:GetHandler():IsType(TYPE_SPELL) and e:GetHandler():IsPreviousLocation(LOCATION_HAND)
+	return re and re:GetHandler():IsSpell() and e:GetHandler():IsPreviousLocation(LOCATION_HAND)
 end
 function s.thfilter(c)
 	return c:IsCode(92182447) and c:IsAbleToHand()
@@ -56,7 +56,7 @@ function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.rmfilter(c)
-	return c:IsAbleToRemove() and c:IsType(TYPE_MONSTER)
+	return c:IsAbleToRemove() and c:IsMonster()
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.rmfilter,tp,0,LOCATION_GRAVE,1,nil) end

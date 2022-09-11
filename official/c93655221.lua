@@ -20,7 +20,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)
 end
 function s.filter(c)
-	return c:IsOnField() and c:IsType(TYPE_MONSTER)
+	return c:IsOnField() and c:IsMonster()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsChainNegatable(ev) then return false end
@@ -28,7 +28,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ex and tg~=nil and tc+tg:FilterCount(s.filter,nil)-#tg>0
 end
 function s.cfilter(c,sf)
-	return c:IsLinkMonster() and c:IsFaceup() and (sf or aux.disfilter1(c))
+	return c:IsLinkMonster() and c:IsFaceup() and (sf or c:IsNegatableMonster())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(s.cfilter,tp,0,LOCATION_MZONE,1,nil,false)

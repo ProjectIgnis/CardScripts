@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.costfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToGraveAsCost()
+	return c:IsSpellTrap() and c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end
@@ -24,7 +24,7 @@ function s.oppfilter(c)
 	return c:IsFaceup() and c:IsAttackPos() and c:IsLevelBelow(8)
 end
 function s.tdfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_PYRO) and c:IsAbleToDeck() and c:HasLevel()
+	return c:IsMonster() and c:IsRace(RACE_PYRO) and c:IsAbleToDeck() and c:HasLevel()
 end
 function s.rescon(lvl)
 	return function(sg,e,tp,mg)

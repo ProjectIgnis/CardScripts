@@ -23,7 +23,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_VIJAM}
 function s.filter1(c)
-	return c:IsType(TYPE_MONSTER) and c:IsFaceup() and c:IsSetCard(0xe3)
+	return c:IsMonster() and c:IsFaceup() and c:IsSetCard(0xe3)
 end
 function s.filter2(c)
 	return c:IsCode(CARD_VIJAM)
@@ -41,10 +41,10 @@ function s.operation(e,tp,eg,ev,ep,re,r,rp)
 	Duel.Overlay(tc,mg)
 end
 function s.filter3(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsCubicSeed()
+	return c:IsMonster() and c:IsCubicSeed()
 end
 function s.condition0(e,tp,eg,ev,ep,re,r,rp)
-	return eg:IsExists(s.filter3,1,nil,tp) and re:GetHandler():IsType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0xe3) and Duel.GetTurnPlayer()~=tp
+	return eg:IsExists(s.filter3,1,nil,tp) and re:GetHandler():IsMonster() and re:GetHandler():IsSetCard(0xe3) and Duel.GetTurnPlayer()~=tp
 end
 function s.cost0(e,tp,eg,ev,ep,re,r,rp,chk)
 	local c=e:GetHandler()

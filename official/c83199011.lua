@@ -38,7 +38,7 @@ s.listed_names={id}
 
 	--Check for "Sprigguns" monster or "Fallen of Albaz"
 function s.filter(c,e,tp)
-	return ((c:IsType(TYPE_MONSTER) and c:IsSetCard(0x158)) or c:IsCode(CARD_ALBAZ)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return ((c:IsMonster() and c:IsSetCard(0x158)) or c:IsCode(CARD_ALBAZ)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -58,7 +58,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for fusion monster that lists "Fallen of Albaz"
 function s.matfilter(c)
-	return c:IsType(TYPE_FUSION) and aux.IsMaterialListCode(c,CARD_ALBAZ)
+	return c:IsType(TYPE_FUSION) and c:IsMaterialListCode(CARD_ALBAZ)
 end
 	--Check for "Sprigguns" Xyz monster
 function s.xyzfilter(c)

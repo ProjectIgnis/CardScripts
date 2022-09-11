@@ -65,7 +65,7 @@ function s.filter(c,e,tp)
 		and Duel.IsExistingMatchingCard(s.eqfilter,tp,LOCATION_DECK,0,1,nil)
 end
 function s.eqfilter(c)
-	return c:IsSetCard(0x15f) and c:IsType(TYPE_TRAP)
+	return c:IsSetCard(0x15f) and c:IsTrap()
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return eg:IsContains(chkc) and s.filter(chkc,e,tp) end
@@ -95,7 +95,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.descfilter(c)
-	return c:IsSetCard(0x15f) and c:IsType(TYPE_TRAP) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(0x15f) and c:IsTrap() and c:IsAbleToRemoveAsCost()
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.descfilter,tp,LOCATION_GRAVE,0,1,nil) end

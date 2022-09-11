@@ -32,7 +32,7 @@ end
 s.listed_names={CARD_SANCTUARY_SKY}
 s.listed_series={0x44}
 function s.cpfilter(c)
-	return c:IsType(TYPE_MONSTER) and (c:IsSetCard(0x44) or aux.IsCodeListed(c,CARD_SANCTUARY_SKY)) and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and (c:IsSetCard(0x44) or c:IsCodeListed(CARD_SANCTUARY_SKY)) and c:IsAbleToGraveAsCost()
 end
 function s.cpcost(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cpfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_EXTRA,0,1,e:GetHandler()) end
@@ -60,7 +60,7 @@ function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp
 end
 function s.cfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_FAIRY) and c:IsAbleToRemoveAsCost()
+	return c:IsMonster() and c:IsRace(RACE_FAIRY) and c:IsAbleToRemoveAsCost()
 		and (c:IsLocation(LOCATION_HAND) or aux.SpElimFilter(c,true))
 		and Duel.IsExistingTarget(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
 end

@@ -29,7 +29,7 @@ function s.initial_effect(c)
 end
 s.xyz_number=82
 function s.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_SPELL)
+	return c:IsFaceup() and c:IsSpell()
 end
 function s.atkcon(e)
 	return Duel.IsExistingMatchingCard(s.filter,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil)

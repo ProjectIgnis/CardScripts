@@ -31,7 +31,7 @@ function s.target(oppo)
 		if chkc then return chkc:IsLocation(LOCATION_MZONE) and (oppo==0 or chkc:IsControler(tp)) and s.filter(chkc) and chkc:IsDifferentRace(e:GetLabel()) end
 		if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,oppo,1,nil) end
 		local g=Duel.GetMatchingGroup(aux.AND(s.filter,Card.IsCanBeEffectTarget),tp,LOCATION_MZONE,oppo,nil,e)
-		local rc=aux.AnnounceAnotherRace(g,tp)
+		local rc=Duel.AnnounceAnotherRace(g,tp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 		local sel=g:FilterSelect(tp,Card.IsDifferentRace,1,1,nil,rc)
 		Duel.SetTargetCard(sel)

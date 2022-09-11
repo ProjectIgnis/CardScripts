@@ -13,7 +13,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x2e}
 function s.thfilter(c)
-	return c:IsSetCard(0x2e) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x2e) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.nsfilter(c)
 	return c:IsSetCard(0x2e) and c:IsSummonable(true,nil)

@@ -43,7 +43,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x11a}
 function s.rfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x11a) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(0x11a) and c:IsAbleToHand()
 end
 function s.rthtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.rfilter(chkc) end

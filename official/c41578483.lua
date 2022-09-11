@@ -62,7 +62,7 @@ function s.eqval(ec,c,tp)
 	return ec:IsControler(1-tp) and ec:IsType(TYPE_EFFECT)
 end
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp,chk)
-	return ep~=tp and re:IsActiveType(TYPE_MONSTER)
+	return ep==1-tp and re:IsActiveType(TYPE_MONSTER)
 end
 function s.eqfilter(c)
 	return (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE)) and c:IsType(TYPE_EFFECT) and c:IsAbleToChangeControler()
@@ -77,12 +77,12 @@ function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,1,0,0)
 end
 function s.equipop(c,e,tp,tc)
-	aux.EquipByEffectAndLimitRegister(c,e,tp,tc,id)
+	c:EquipByEffectAndLimitRegister(e,tp,tc,id)
 end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsType(TYPE_MONSTER) and tc:IsControler(1-tp) then
+	if tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsMonster() and tc:IsControler(1-tp) then
 		s.equipop(c,e,tp,tc)
 	end
 end
@@ -97,8 +97,7 @@ end
 function s.atkval(e,c)
 	local atk=0
 	local g=c:GetEquipGroup()
-	local tc=g:GetFirst()
-	for tc in aux.Next(g) do
+	for tc in g:Iter() do
 		if tc:GetFlagEffect(id)~=0 and tc:IsFaceup() and tc:GetAttack()>=0 then
 			atk=atk+tc:GetAttack()
 		end
@@ -108,26 +107,25 @@ end
 function s.defval(e,c)
 	local atk=0
 	local g=c:GetEquipGroup()
-	local tc=g:GetFirst()
-	for tc in aux.Next(g) do
+	for tc in g:Iter() do
 		if tc:GetFlagEffect(id)~=0 and tc:IsFaceup() and tc:GetDefense()>=0 then
 			atk=atk+tc:GetDefense()
 		end
 	end
 	return atk
 end
-function s.disfilter(c)
+function s.disablefilter1(c)
 	return c:IsFaceup() and c:GetFlagEffect(id)~=0
 end
 function s.distg(e,c)
-	local g=e:GetHandler():GetEquipGroup():Filter(s.disfilter,nil)
-	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and g:IsExists(Card.IsCode,1,nil,c:GetCode())
+	local g=e:GetHandler():GetEquipGroup():Filter(s.disablefilter1,nil)
+	return c:IsFaceup() and c:IsMonster() and g:IsExists(Card.IsCode,1,nil,c:GetCode())
 end
-function s.disfilter2(c,typ)
+function s.disablefilter2(c,typ)
 	return c:GetOriginalType()&typ==typ
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	local g=e:GetHandler():GetEquipGroup():Filter(aux.AND(s.disfilter,s.disfilter2),nil,(TYPE_MONSTER|TYPE_EFFECT))
+	local g=e:GetHandler():GetEquipGroup():Filter(aux.AND(s.disablefilter1,s.disablefilter2),nil,(TYPE_MONSTER|TYPE_EFFECT))
 	return re:IsActiveType(TYPE_MONSTER) and g:IsExists(Card.IsCode,1,nil,re:GetHandler():GetCode())
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)

@@ -51,7 +51,7 @@ function s.lpop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Recover(tp,500,REASON_EFFECT)
 end
 function s.drfilter(c)
-	return c:IsSetCard(0xe2) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0xe2) and c:IsMonster()
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(s.drfilter,1,nil) 
@@ -68,7 +68,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xe2) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0xe2) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

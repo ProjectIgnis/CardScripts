@@ -34,7 +34,7 @@ function s.atkcon(e)
 		and Duel.GetAttacker()==e:GetHandler() and Duel.GetAttackTarget()~=nil
 end
 function s.costfilter(c)
-	return c:IsType(TYPE_SPELL) and not c:IsPublic()
+	return c:IsSpell() and not c:IsPublic()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end

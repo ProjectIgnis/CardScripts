@@ -58,7 +58,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,e,tp)
-	return c:IsOnField() and c:IsType(TYPE_MONSTER) and c:IsControler(tp) and (not e or c:IsRelateToEffect(e)) 
+	return c:IsOnField() and c:IsMonster() and c:IsControler(tp) and (not e or c:IsRelateToEffect(e)) 
 		and c:IsSetCard(0xad)
 end
 function s.condition2(e,tp,eg,ep,ev,re,r,rp)

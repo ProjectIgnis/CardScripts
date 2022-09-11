@@ -16,7 +16,7 @@ end
 s.listed_series={0x2c}
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsRelateToBattle() and c:GetBattleTarget():IsType(TYPE_MONSTER)
+	return c:IsRelateToBattle() and c:GetBattleTarget():IsMonster()
 		and Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_GRAVE,0,3,nil,0x2c)
 end
 function s.rmfilter(c)

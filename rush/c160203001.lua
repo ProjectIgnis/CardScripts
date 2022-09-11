@@ -20,10 +20,10 @@ function s.maxCon(e)
 	return e:GetHandler():IsMaximumModeCenter()
 end
 function s.cfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToDeckOrExtraAsCost() and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,c)
+	return c:IsMonster() and c:IsAbleToDeckOrExtraAsCost() and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,c)
 end
 function s.filter(c)
-	return c:IsType(TYPE_MONSTER) and c:HasLevel() and c:IsLevelAbove(0)
+	return c:IsMonster() and c:HasLevel() and c:IsLevelAbove(0)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,nil,tp) end

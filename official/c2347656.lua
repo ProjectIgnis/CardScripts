@@ -88,7 +88,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local b1=#g1>0
 	local b2=#g2>0
 	if not (b1 or b2) then return end
-	local op=aux.SelectEffect(tp,
+	local op=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,2)},
 		{b2,aux.Stringid(id,3)})
 	local sg=Group.CreateGroup()

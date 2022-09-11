@@ -28,7 +28,7 @@ s.listed_series={0x159}
 
 	--Check for level 4 or lower "Myutant" monster
 function s.thfilter(c,e,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x159) and c:IsLevelBelow(4)
+	return c:IsMonster() and c:IsSetCard(0x159) and c:IsLevelBelow(4)
 		and (c:IsAbleToHand() or (c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
 end
 	--Activation legality

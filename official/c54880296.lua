@@ -15,14 +15,14 @@ function s.initial_effect(c)
 end
 s.listed_series={0xb3}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0xb3) and (c:IsType(TYPE_MONSTER) or c:IsType(TYPE_PENDULUM))
+	return c:IsFaceup() and c:IsSetCard(0xb3) and (c:IsMonster() or c:IsType(TYPE_PENDULUM))
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_ONFIELD,0,nil)
 	return g:GetClassCount(Card.GetCode)>=3
 end
 function s.thfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xb3) and (c:IsType(TYPE_MONSTER) or c:IsType(TYPE_PENDULUM)) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(0xb3) and (c:IsMonster() or c:IsType(TYPE_PENDULUM)) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_ONFIELD,0,1,nil) end

@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c,tp)
-	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsShark() and c:IsType(TYPE_MONSTER) 
+	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsShark() and c:IsMonster() 
 		and c:IsControler(tp) and c:IsPreviousControler(tp)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

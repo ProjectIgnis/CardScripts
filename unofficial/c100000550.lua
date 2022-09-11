@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 function s.cfilter(c,tp)
 	return c:IsLocation(LOCATION_GRAVE) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
-		and c:IsType(TYPE_MONSTER)
+		and c:IsMonster()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

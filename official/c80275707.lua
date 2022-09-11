@@ -54,7 +54,7 @@ function s.cfilter(c)
 	return c:IsRace(RACE_WINGEDBEAST)
 end
 function s.retfilter(c,e)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsFaceup() and c:IsAbleToHand() and c:IsCanBeEffectTarget(e)
+	return c:IsSpellTrap() and c:IsFaceup() and c:IsAbleToHand() and c:IsCanBeEffectTarget(e)
 end
 function s.retcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local dg=Duel.GetMatchingGroup(s.retfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,e)

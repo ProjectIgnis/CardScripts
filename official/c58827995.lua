@@ -26,7 +26,7 @@ function s.rescon(sg,e,tp,mg)
 	return sg:GetSum(Card.GetLevel)>=4
 end
 function s.costfilter(c)
-	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:GetOriginalLevel()>0 and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
+	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:GetOriginalLevel()>0 and c:IsMonster() and c:IsAbleToRemoveAsCost()
 end
 	--Banish monsters whose total levels equal 4 as cost
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)

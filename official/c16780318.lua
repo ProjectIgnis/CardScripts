@@ -60,7 +60,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			if Duel.Draw(tp,1,REASON_EFFECT)==0 then return end
 			local tc=Duel.GetOperatedGroup():GetFirst()
 			Duel.ConfirmCards(1-tp,tc)
-			if tc:IsType(TYPE_MONSTER) and tc:IsSetCard(0xe6) then
+			if tc:IsMonster() and tc:IsSetCard(0xe6) then
 				if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 					Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEUP)
 				end
@@ -77,13 +77,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for spell/trap card
 function s.addfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSpellTrap() and c:IsAbleToHand()
 end
 	--If sent to GY by "Flower Cardian" monster effect
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
 	local rc=re:GetHandler()
-	return e:GetHandler():IsReason(REASON_EFFECT) and rc:IsSetCard(0xe6) and rc:IsType(TYPE_MONSTER)
+	return e:GetHandler():IsReason(REASON_EFFECT) and rc:IsSetCard(0xe6) and rc:IsMonster()
 end
 	--Add 1 spell/trap card from GY to hand
 function s.thop(e,tp,eg,ep,ev,re,r,rp)

@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end 
 function s.cfilter(c,tp)
-	return c:IsSetCard(0x12b) and c:IsType(TYPE_TRAP)
+	return c:IsSetCard(0x12b) and c:IsTrap()
 		and c:IsAbleToRemoveAsCost() and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,c:GetCode())
 end
 s.listed_series={0x12b}
@@ -47,7 +47,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(g:GetFirst():GetCode())
 end
 function s.thfilter(c,code)
-	return c:IsSetCard(0x12b) and c:IsType(TYPE_TRAP) and c:IsAbleToHand() and not c:IsCode(code)
+	return c:IsSetCard(0x12b) and c:IsTrap() and c:IsAbleToHand() and not c:IsCode(code)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,e:GetLabel()) end

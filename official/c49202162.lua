@@ -25,7 +25,7 @@ function s.lcheck(g,lc,sumtype,tp)
 	return g:CheckDifferentProperty(Card.GetCode,lc,sumtype,tp)
 end
 function s.filter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsLevelAbove(7)
+	return c:IsMonster() and c:IsLevelAbove(7)
 end
 function s.matcheck(e,c)
 	local g=c:GetMaterial()
@@ -53,7 +53,7 @@ end
 function s.dtarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local b3=Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
-	local op=aux.SelectEffect(tp,
+	local op=Duel.SelectEffect(tp,
 		{true,aux.Stringid(id,1)},
 		{true,aux.Stringid(id,2)},
 		{b3,aux.Stringid(id,3)})

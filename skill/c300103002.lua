@@ -51,7 +51,7 @@ function s.atktg(e,c)
 	return c:IsType(TYPE_NORMAL) and c:IsRace(RACE_MACHINE)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and not c:IsRace(RACE_MACHINE)
+	return c:IsFaceup() and c:IsMonster() and not c:IsRace(RACE_MACHINE)
 end
 function s.con2(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,nil)

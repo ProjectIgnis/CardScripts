@@ -59,7 +59,7 @@ function s.matop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for "Spriggun" monster or "Vast Desert – Gold Golgonda"
 function s.thfilter(c)
-	return ((c:IsType(TYPE_MONSTER) and c:IsSetCard(0x158)) or c:IsCode(60884672)) and not c:IsCode(id) and c:IsAbleToHand()
+	return ((c:IsMonster() and c:IsSetCard(0x158)) or c:IsCode(60884672)) and not c:IsCode(id) and c:IsAbleToHand()
 end
 	--Activation legality
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

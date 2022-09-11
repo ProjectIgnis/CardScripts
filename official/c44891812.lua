@@ -38,7 +38,7 @@ function s.defcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(c,REASON_COST+REASON_DISCARD)
 end
 function s.deffilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x9a) and aux.nzdef(c)
+	return c:IsFaceup() and c:IsSetCard(0x9a) and c:HasNonZeroDefense()
 end
 function s.deftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local a=Duel.GetAttacker()

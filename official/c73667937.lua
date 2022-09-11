@@ -41,7 +41,7 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
 function s.damfil(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xf0) and c:IsAttackAbove(1)
+	return c:IsMonster() and c:IsSetCard(0xf0) and c:IsAttackAbove(1)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.damfil(chkc) end

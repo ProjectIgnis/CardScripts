@@ -27,7 +27,7 @@ end
 s.listed_series={0x51}
 
 function s.eqfilter(c)
-	return c:IsRace(RACE_MACHINE) and c:IsSetCard(0x51) and c:IsFaceup() and c:IsType(TYPE_MONSTER)
+	return c:IsRace(RACE_MACHINE) and c:IsSetCard(0x51) and c:IsFaceup() and c:IsMonster()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.GetMatchingGroup(s.eqfilter,tp,LOCATION_GRAVE+LOCATION_MZONE,0,nil)

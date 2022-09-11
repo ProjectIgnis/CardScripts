@@ -98,7 +98,7 @@ function s.acotcoperation(e,tp,eg,ep,ev,re,r,rp)
 	c:AddCounter(0x200,1)
 end
 function s.iatarget(e,c)
-	return c:IsType(TYPE_MONSTER) and c:IsType(TYPE_PENDULUM)
+	return c:IsMonster() and c:IsType(TYPE_PENDULUM)
 end
 function s.iavalue(e,c)
 	local oc=e:GetHandler()

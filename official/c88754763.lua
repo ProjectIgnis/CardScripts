@@ -41,7 +41,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 	if ct==0 then return end
 	local dc=Duel.GetOperatedGroup():GetFirst()
 	Duel.ConfirmCards(1-tp,dc)
-	if dc:IsType(TYPE_MONSTER) then
+	if dc:IsMonster() then
 		Duel.Damage(1-tp,800,REASON_EFFECT)
 	end
 	Duel.ShuffleHand(tp)

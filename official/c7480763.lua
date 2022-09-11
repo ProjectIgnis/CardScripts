@@ -41,7 +41,7 @@ function s.matfilter(g,lc,sumtype,tp)
 end
 	--"Artifact" monster that can be set as a spell
 function s.setfilter(c)
-	return c:IsSetCard(0x97) and c:IsType(TYPE_MONSTER) and c:IsSSetable(true)
+	return c:IsSetCard(0x97) and c:IsMonster() and c:IsSSetable(true)
 end
 	--If the card/effect (other than this card) was activated on the field
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)

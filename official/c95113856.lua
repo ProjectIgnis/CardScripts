@@ -29,7 +29,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b2=s.bansc(tp,LOCATION_HAND)
 	local b3=(Duel.IsPlayerAffectedByEffect(1-tp,69832741) and s.bansc(tp,LOCATION_MZONE)) or s.bansc(tp,LOCATION_GRAVE)
 	local b4=s.bansc(tp,LOCATION_DECK)
-	local op=aux.SelectEffect(tp,
+	local op=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,1)},
 		{b2,aux.Stringid(id,2)},
 		{b3,aux.Stringid(id,3)},

@@ -61,7 +61,7 @@ function s.rmvop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c,lv)
-	return c:IsLevelBelow(lv) and c:IsAbleToHand() and c:IsRace(RACES_BEAST_BWARRIOR_WINGB) and c:IsType(TYPE_MONSTER)
+	return c:IsLevelBelow(lv) and c:IsAbleToHand() and c:IsRace(RACES_BEAST_BWARRIOR_WINGB) and c:IsMonster()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rgc=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsRace,RACES_BEAST_BWARRIOR_WINGB),tp,LOCATION_REMOVED,0,nil)

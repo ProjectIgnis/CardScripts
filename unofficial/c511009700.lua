@@ -51,7 +51,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL
 end
 function s.atkfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_MONSTER)
+	return c:IsFaceup() and c:IsMonster()
 end
 function s.atkval(e,c)
 	return c:GetLinkedGroup():Filter(s.atkfilter,nil):GetSum(Card.GetAttack)

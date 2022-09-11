@@ -22,7 +22,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x48}
 function s.cfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:GetRank()>=8 and c:IsSetCard(0x48)
+	return c:IsMonster() and c:GetRank()>=8 and c:IsSetCard(0x48)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil)

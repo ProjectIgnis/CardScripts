@@ -67,7 +67,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.equipop(c,e,tp,tc)
-	if aux.EquipByEffectAndLimitRegister(c,e,tp,tc,id,true) then
+	if c:EquipByEffectAndLimitRegister(e,tp,tc,id,true) then
 		--Increase ATK
 		local e1=Effect.CreateEffect(tc)
 		e1:SetType(EFFECT_TYPE_EQUIP)

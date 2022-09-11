@@ -58,7 +58,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	s.cost(e,tp,eg,ep,ev,re,r,rp,1)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x12b) and c:IsType(TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSetCard(0x12b) and c:IsTrap() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

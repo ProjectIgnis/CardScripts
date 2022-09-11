@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	end)
 end
 function s.valcheck(e,c)
-	if c:GetMaterialCount()==1 and c:GetMaterial():GetFirst():IsType(TYPE_MONSTER) then
+	if c:GetMaterialCount()==1 and c:GetMaterial():GetFirst():IsMonster() then
 		c:RegisterFlagEffect(id,0,0,0)
 	end
 end

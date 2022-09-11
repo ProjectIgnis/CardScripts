@@ -29,7 +29,7 @@ end
 s.listed_series={0x1f}
 s.listed_names={CARD_NEOS}
 function s.cfilter(c)
-	return c:IsSetCard(0x1f) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsSetCard(0x1f) and c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x1f) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -78,7 +78,7 @@ function s.lizfilter(e,c)
 	return not c:IsOriginalType(TYPE_FUSION)
 end
 function s.spcfilter(c,tp)
-	return c:IsPreviousPosition(POS_FACEUP) and c:IsType(TYPE_FUSION) and aux.IsMaterialListCode(c,CARD_NEOS)
+	return c:IsPreviousPosition(POS_FACEUP) and c:IsType(TYPE_FUSION) and c:IsMaterialListCode(CARD_NEOS)
 		and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

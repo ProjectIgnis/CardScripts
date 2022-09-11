@@ -21,7 +21,7 @@ function s.repfilter(c,tp)
 		and c:IsReason(REASON_BATTLE+REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
 end
 function s.desfilter(c,e,tp)
-	return c:IsControler(tp) and c:IsType(TYPE_MONSTER) and c:IsDestructable(e)
+	return c:IsControler(tp) and c:IsMonster() and c:IsDestructable(e)
 		and not c:IsStatus(STATUS_DESTROY_CONFIRMED+STATUS_BATTLE_DESTROYED)
 end
 function s.cfilter(c)

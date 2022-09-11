@@ -62,7 +62,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 --check for attack pos monster
 function s.atkfilter(c)
-	return c:IsType(TYPE_MONSTER) and (c:IsType(TYPE_NORMAL) or c:IsSetCard(0x167))
+	return c:IsMonster() and (c:IsType(TYPE_NORMAL) or c:IsSetCard(0x167))
 end
 function s.posfilter(c,tp)
 	if c:IsFaceup() and c:IsAttackPos() and c:IsCanChangePosition() then

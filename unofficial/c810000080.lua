@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.filter(c,e,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsFaceup()
+	return c:IsMonster() and c:IsFaceup()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then return chkc:GetLocation()==LOCATION_MZONE and chkc:GetControler()==1-tp end

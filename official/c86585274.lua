@@ -26,7 +26,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x106e}
 function s.cffilter(c)
-	return c:IsSetCard(0x106e) and c:IsType(TYPE_SPELL) and not c:IsPublic()
+	return c:IsSetCard(0x106e) and c:IsSpell() and not c:IsPublic()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cffilter,tp,LOCATION_HAND,0,3,nil) end
@@ -46,7 +46,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x106e) and c:IsType(TYPE_SPELL) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(0x106e) and c:IsSpell() and c:IsAbleToRemoveAsCost()
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil) end

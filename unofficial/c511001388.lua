@@ -53,9 +53,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 end
 function s.cfilter(c,tp)
 	local tpe=0
-	if c:IsType(TYPE_MONSTER) then tpe=tpe|TYPE_MONSTER end
-	if c:IsType(TYPE_SPELL) then tpe=tpe|TYPE_SPELL end
-	if c:IsType(TYPE_TRAP) then tpe=tpe|TYPE_TRAP end
+	if c:IsMonster() then tpe=tpe|TYPE_MONSTER end
+	if c:IsSpell() then tpe=tpe|TYPE_SPELL end
+	if c:IsTrap() then tpe=tpe|TYPE_TRAP end
 	return c:IsAbleToGraveAsCost() and Duel.IsExistingTarget(s.banfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil,tpe)
 end
 function s.banfilter(c,tpe)
@@ -67,9 +67,9 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,1,1,nil,tp):GetFirst()
 	Duel.SendtoGrave(tc,REASON_COST)
 	local tpe=0
-	if tc:IsType(TYPE_MONSTER) then tpe=tpe|TYPE_MONSTER end
-	if tc:IsType(TYPE_SPELL) then tpe=tpe|TYPE_SPELL end
-	if tc:IsType(TYPE_TRAP) then tpe=tpe|TYPE_TRAP end
+	if tc:IsMonster() then tpe=tpe|TYPE_MONSTER end
+	if tc:IsSpell() then tpe=tpe|TYPE_SPELL end
+	if tc:IsTrap() then tpe=tpe|TYPE_TRAP end
 	e:SetLabel(tpe)
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

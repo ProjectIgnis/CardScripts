@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 function s.filter(c,tp)
 	return c:IsReason(REASON_DESTROY) and c:IsPreviousLocation(LOCATION_MZONE) and 
-		c:IsPreviousControler(tp) and c:IsType(TYPE_MONSTER)
+		c:IsPreviousControler(tp) and c:IsMonster()
 end
 function s.reccon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.filter,1,nil,tp)

@@ -44,5 +44,5 @@ function s.actcon(e)
 	return ph>PHASE_MAIN1 and ph<PHASE_MAIN2
 end
 function s.aclimit(e,re,tp)
-	return re:GetHandler():IsType(TYPE_MONSTER) and re:GetHandler():IsLocation(LOCATION_HAND+LOCATION_GRAVE)
+	return re:GetHandler():IsMonster() and re:GetHandler():IsLocation(LOCATION_HAND+LOCATION_GRAVE)
 end

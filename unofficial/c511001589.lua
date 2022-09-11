@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c)
-	return c:IsType(TYPE_TRAP) and c:IsFaceup() and c:IsAbleToGraveAsCost()
+	return c:IsTrap() and c:IsFaceup() and c:IsAbleToGraveAsCost()
 end
 function s.cbcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil) end

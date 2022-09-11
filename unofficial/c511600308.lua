@@ -54,7 +54,7 @@ function s.cfilter(c)
 	return c:IsSetCard(0x136) and c:IsAbleToRemoveAsCost()
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x136) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand() and not c:IsCode(id)
+	return c:IsSetCard(0x136) and c:IsSpellTrap() and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

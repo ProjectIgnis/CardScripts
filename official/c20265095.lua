@@ -35,14 +35,14 @@ s.listed_series={0x7c,0x79}
 
 	--If this card is pointing to "Fire Fist"
 function s.lkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x79) and c:IsType(TYPE_MONSTER)
+	return c:IsFaceup() and c:IsSetCard(0x79) and c:IsMonster()
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetLinkedGroup():IsExists(s.lkfilter,1,nil)
 end
 	--Check for "Fire Formation" S/T for cost
 function s.ctfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x7c) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and c:IsSetCard(0x7c) and c:IsSpellTrap() and c:IsAbleToGraveAsCost()
 end
 	--Activation legality
 function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

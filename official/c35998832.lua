@@ -38,7 +38,7 @@ function s.drcon2(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonLocation(LOCATION_GRAVE)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x163) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and not c:IsCode(id)
+	return c:IsSetCard(0x163) and c:IsMonster() and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(1-tp,1)

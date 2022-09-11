@@ -28,7 +28,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x577}
 function s.filter(c,e,tp)
-	return c:IsPreviousControler(tp) and (c:IsType(TYPE_SPELL) or c:IsType(TYPE_TRAP))
+	return c:IsPreviousControler(tp) and (c:IsSpell() or c:IsTrap())
 end
 function s.exfilter(c)
 	return c:IsLinkMonster() and c:IsSetCard(0x577) and c:IsAbleToExtra()

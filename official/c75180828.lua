@@ -55,7 +55,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1
 end
 function s.descount(c)
-	return c:IsSetCard(0x74) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x74) and c:IsMonster()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsOnField() end

@@ -35,7 +35,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_SZONE,1,1,nil)
 	Duel.ConfirmCards(tp,g)
-	if g:GetFirst():IsType(TYPE_TRAP) then
+	if g:GetFirst():IsTrap() then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		local g2=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 		if Duel.SendtoDeck(g2,nil,1,REASON_COST)>0 then

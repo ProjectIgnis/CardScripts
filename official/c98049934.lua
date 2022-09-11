@@ -42,7 +42,7 @@ function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:IsHasType(EFFECT_TYPE_QUICK_O)==e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,29599813)
 end
 function s.negfilter(c)
-	return aux.disfilter1(c) and c:IsType(TYPE_EFFECT)
+	return c:IsNegatableMonster() and c:IsType(TYPE_EFFECT)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.negfilter(chkc) end

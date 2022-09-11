@@ -32,7 +32,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c,p)
-	if not c:IsType(TYPE_SPELL) then return false end
+	if not c:IsSpell() then return false end
 	local te=c:CheckActivateEffect(false,false,false)
 	return te and te:IsActivatable(p,true)
 end

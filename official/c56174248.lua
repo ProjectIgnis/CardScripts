@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x106e}
 function s.rfilter(c)
-	return c:IsSetCard(0x106e) and c:IsType(TYPE_SPELL) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(0x106e) and c:IsSpell() and c:IsAbleToRemoveAsCost()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.rfilter,tp,LOCATION_GRAVE,0,3,nil) end

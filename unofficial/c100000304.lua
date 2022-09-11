@@ -25,7 +25,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,0,1,0,0)
 end
 function s.filter(c,tp)
-	return (c:IsControler(1-tp) and c:IsControlerCanBeChanged()) or not c:IsType(TYPE_MONSTER)
+	return (c:IsControler(1-tp) and c:IsControlerCanBeChanged()) or not c:IsMonster()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local ac=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
@@ -34,7 +34,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(tp,g)
 		local tc=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_ONFIELD,1,1,nil,tp):GetFirst()
 		if tc and tc:IsLocation(LOCATION_ONFIELD) then
-			if tc:IsType(TYPE_MONSTER) then
+			if tc:IsMonster() then
 				Duel.GetControl(tc,tp)
 			else
 				local loc=LOCATION_SZONE

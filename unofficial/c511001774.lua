@@ -40,7 +40,7 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 			local op=Duel.SelectOption(p,70,71,72)
 			Duel.ConfirmCards(p,hc)
 			Duel.ShuffleHand(1-p)
-			if (op~=0 and hc:IsType(TYPE_MONSTER)) or (op~=1 and hc:IsType(TYPE_SPELL)) or (op~=2 and hc:IsType(TYPE_TRAP)) then
+			if (op~=0 and hc:IsMonster()) or (op~=1 and hc:IsSpell()) or (op~=2 and hc:IsTrap()) then
 				Duel.Destroy(tc,REASON_EFFECT)
 			end
 		end

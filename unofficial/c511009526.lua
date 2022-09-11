@@ -80,7 +80,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e3,tp)
 end
 function s.distg(e,c)
-	return c~=e:GetHandler() and c:IsType(TYPE_SPELL)
+	return c~=e:GetHandler() and c:IsSpell()
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	if ep==tp then return end

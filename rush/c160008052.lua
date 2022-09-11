@@ -13,11 +13,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.costfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_REPTILE) and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and c:IsRace(RACE_REPTILE) and c:IsAbleToGraveAsCost()
 	and Duel.IsExistingMatchingCard(s.costfilter2,tp,LOCATION_HAND,0,1,c,tp,c:GetLevel())
 end
 function s.costfilter2(c,tp,lv)
-	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_REPTILE) and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and c:IsRace(RACE_REPTILE) and c:IsAbleToGraveAsCost()
 	and Duel.IsExistingMatchingCard(s.desfilter,tp,0,LOCATION_MZONE,1,nil,(lv+c:GetLevel()))
 end
 function s.desfilter(c,lvl)
@@ -30,7 +30,7 @@ function s.desfilter(c,lv)
 	return c:IsFaceup() and c:IsLevelBelow(lv) 
 end
 function s.tgfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_REPTILE) and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and c:IsRace(RACE_REPTILE) and c:IsAbleToGraveAsCost()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement

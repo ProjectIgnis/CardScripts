@@ -23,7 +23,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.cfilter2(c)
-	return c:IsSetCard(0x2f) and c:IsType(TYPE_MONSTER) and not c:IsPublic()
+	return c:IsSetCard(0x2f) and c:IsMonster() and not c:IsPublic()
 end
 function s.filter(c)
 	return c:IsFacedown() and c:IsAbleToHand()

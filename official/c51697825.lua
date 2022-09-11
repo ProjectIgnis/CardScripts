@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.thfilter(c)
-	return c:IsLevel(1) and c:IsType(TYPE_MONSTER)
+	return c:IsLevel(1) and c:IsMonster()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rvg=Duel.GetMatchingGroup(aux.AND(s.thfilter,Card.IsAbleToHand),tp,LOCATION_DECK,0,nil)

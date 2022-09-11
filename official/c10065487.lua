@@ -50,7 +50,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spfilter(c,e)
 	local tp=c:GetControler()
-	return c:IsType(TYPE_FUSION) and aux.IsMaterialListCode(c,CARD_ALBAZ) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
+	return c:IsType(TYPE_FUSION) and c:IsMaterialListCode(CARD_ALBAZ) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

@@ -27,7 +27,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x16d}
 function s.thfilter(c,sync)
-	return (c:IsSetCard(0x16d) or (sync and c:IsRace(RACE_WYRM))) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return (c:IsSetCard(0x16d) or (sync and c:IsRace(RACE_WYRM))) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local sync=Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_SYNCHRO),tp,LOCATION_MZONE,0,1,nil)

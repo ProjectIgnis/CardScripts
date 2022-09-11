@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c)
-	return c:IsYomi() and c:IsType(TYPE_MONSTER)
+	return c:IsYomi() and c:IsMonster()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetMatchingGroupCount(s.cfilter,tp,LOCATION_GRAVE,0,nil)==2

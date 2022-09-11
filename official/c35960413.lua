@@ -57,7 +57,7 @@ function s.filter1(c,tp)
 		and Duel.IsExistingTarget(s.lvfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c,c:GetLevel()) 
 end
 function s.lvfilter(c,lv)
-	return c:IsType(TYPE_MONSTER) and c:IsFaceup() and c:HasLevel() and c:GetLevel()~=lv
+	return c:IsMonster() and c:IsFaceup() and c:HasLevel() and c:GetLevel()~=lv
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

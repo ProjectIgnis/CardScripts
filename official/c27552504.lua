@@ -30,7 +30,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0xb1,0xd5}
 function s.cfilter(c)
-	return c:IsSetCard(0xb1) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(0xb1) and c:IsMonster() and c:IsAbleToGraveAsCost()
 end
 function s.ovfilter(c,tp,lc)
 	return c:IsFaceup() and c:IsSetCard(0xd5,lc,SUMMON_TYPE_XYZ,tp)

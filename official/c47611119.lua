@@ -30,7 +30,7 @@ function s.splimit(e,se,sp,st)
 	return not e:GetHandler():IsLocation(LOCATION_EXTRA) or (st&SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
 end
 function s.filter(c)
-	return c:IsSetCard(0x1047) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
+	return c:IsSetCard(0x1047) and c:IsMonster() and c:IsAbleToGrave()
 end
 function s.ctfilter(c)
 	return c:IsSummonType(SUMMON_TYPE_SPECIAL)

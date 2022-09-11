@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 function s.cfilter(c)
 	return c:IsPreviousPosition(POS_DEFENSE) and c:IsLocation(LOCATION_GRAVE)
-		and c:IsReason(REASON_BATTLE) and c:IsType(TYPE_MONSTER)
+		and c:IsReason(REASON_BATTLE) and c:IsMonster()
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil)

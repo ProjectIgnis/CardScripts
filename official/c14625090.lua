@@ -42,7 +42,7 @@ end
 s.listed_names={id}
 s.listed_series={0x133}
 function s.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x133) and c:IsType(TYPE_MONSTER)
+	return c:IsFaceup() and c:IsSetCard(0x133) and c:IsMonster()
 end
 function s.atkval(e,c)
 	local ct=Duel.GetMatchingGroupCount(s.atkfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,nil)

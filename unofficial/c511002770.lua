@@ -27,7 +27,7 @@ function s.filter(c,e,tp,eg,ep,ev,re,r,rp)
 	if not te then return end
 	local cost=te:GetCost()
 	local target=te:GetTarget()
-	return c:IsType(TYPE_TRAP) and (not cost or cost(te,tp,eg,ep,ev,re,r,rp,0) or not cost(te,tp,eg,ep,ev,re,r,rp,0)) 
+	return c:IsTrap() and (not cost or cost(te,tp,eg,ep,ev,re,r,rp,0) or not cost(te,tp,eg,ep,ev,re,r,rp,0)) 
 		and (not target or target(te,tp,eg,ep,ev,re,r,rp,0))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

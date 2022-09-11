@@ -51,7 +51,7 @@ function s.efilter(e,re,rp)
 	return e:GetHandlerPlayer()==1-rp
 end
 function s.tgfilter(c,tp)
-	return c:IsControler(tp) and c:IsFaceup() and c:IsRace(RACE_MACHINE) and c:IsType(TYPE_MONSTER)
+	return c:IsControler(tp) and c:IsFaceup() and c:IsRace(RACE_MACHINE) and c:IsMonster()
 end
 function s.condition2(e,tp,eg,ep,ev,re,r,rp)
 	if not s.condition1(e,tp) or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end

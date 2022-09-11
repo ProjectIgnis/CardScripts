@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c,e,tp,eg,ep,ev,re,r,rp,chain)
-	if not c:IsType(TYPE_MONSTER) and (c:IsHasEffect(511001283) or c:IsHasEffect(511001408)) then return false end
+	if not c:IsMonster() and (c:IsHasEffect(511001283) or c:IsHasEffect(511001408)) then return false end
 	return s.filter(c,e,tp,eg,ep,ev,re,r,rp)
 end
 function s.filter(c,e,tp,eg,ep,ev,re,r,rp,chain)
@@ -25,7 +25,7 @@ function s.filter(c,e,tp,eg,ep,ev,re,r,rp,chain)
 	if not c:IsReason(REASON_BATTLE) and not c:IsReason(REASON_RULE) 
 		and (not ref or ref:GetHandler():GetOwner()==tp) then return false end
 	if not c:IsPreviousLocation(LOCATION_ONFIELD) then return false end
-	if c:IsType(TYPE_MONSTER) then
+	if c:IsMonster() then
 		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 	else
 		local te=c:GetActivateEffect()
@@ -62,7 +62,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if not tc or not tc:IsRelateToEffect(e) or not c:IsRelateToEffect(e) then return end
-	if tc:IsType(TYPE_MONSTER) then
+	if tc:IsMonster() then
 		c:AddMonsterAttribute(tc:GetType())
 		Duel.MoveToField(c,tp,tp,LOCATION_MZONE,POS_FACEUP,true)
 		c:SetStatus(STATUS_PROC_COMPLETE,true)

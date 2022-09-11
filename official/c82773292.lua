@@ -21,11 +21,11 @@ end
 s.listed_names={id}
 s.listed_series={0xef}
 function s.filter1(c,e,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xef) and c:HasLevel() and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) and not c:IsCode(id)
+	return c:IsMonster() and c:IsSetCard(0xef) and c:HasLevel() and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) and not c:IsCode(id)
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK,0,1,c,c:GetLevel())
 end
 function s.filter2(c,lv)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xef) and c:HasLevel() and c:IsAbleToHand() and not c:IsCode(id) and not c:IsLevel(lv) 
+	return c:IsMonster() and c:IsSetCard(0xef) and c:HasLevel() and c:IsAbleToHand() and not c:IsCode(id) and not c:IsLevel(lv) 
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD)>0

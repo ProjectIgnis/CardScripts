@@ -19,7 +19,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.cfilter(c,tp)
 	local lv=c:GetLevel()
-	return lv>0 and c:IsSetCard(0x2016) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost() 
+	return lv>0 and c:IsSetCard(0x2016) and c:IsMonster() and c:IsAbleToRemoveAsCost() 
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,lv)
 end
 function s.filter(c,lv)

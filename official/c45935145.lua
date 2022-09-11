@@ -40,7 +40,7 @@ function s.spfilter(c,e,tp)
 	return c:IsMonster() and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP|POS_FACEDOWN_DEFENSE)
 end
 function s.setfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable()
+	return c:IsSpellTrap() and c:IsSSetable()
 end
 function s.eftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -51,7 +51,7 @@ function s.eftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=Duel.SelectTarget(tp,s.tgfilter,tp,0,LOCATION_GRAVE,1,1,nil,e,tp,detach_1,detach_2):GetFirst()
 	local b1=detach_1 and tc:IsAbleToDeck()
 	local b2=detach_2 and (s.spfilter(tc,e,tp) or s.setfilter(tc))
-	local op=aux.SelectEffect(tp,
+	local op=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,1)},
 		{b2,aux.Stringid(id,2)})
 	e:SetLabel(op)

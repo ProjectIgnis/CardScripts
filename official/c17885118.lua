@@ -33,7 +33,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		if not lc or not rc then return false end
 		local diff=math.abs(lc:GetScale()-rc:GetScale())
 		if diff==0 then
-			return Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,2,e:GetHandler(),TYPE_SPELL+TYPE_TRAP)
+			return Duel.IsExistingMatchingCard(Card.IsSpellTrap,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,2,e:GetHandler())
 		elseif diff<=3 then
 			return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,false)
 		elseif diff<=6 then
@@ -44,7 +44,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	local diff=math.abs(lc:GetScale()-rc:GetScale())
 	if diff==0 then
-		local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler(),TYPE_SPELL+TYPE_TRAP)
+		local g=Duel.GetMatchingGroup(Card.IsSpellTrap,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler())
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,2,PLAYER_ALL,LOCATION_ONFIELD)
 	elseif diff<=6 then
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
@@ -64,7 +64,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_OPSELECTED,tp,aux.Stringid(id,1))
 		Duel.Hint(HINT_OPSELECTED,1-tp,aux.Stringid(id,1))
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-		local g=Duel.SelectMatchingCard(tp,Card.IsType,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,2,2,e:GetHandler(),TYPE_SPELL+TYPE_TRAP)
+		local g=Duel.SelectMatchingCard(tp,Card.IsSpellTrap,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,2,2,e:GetHandler())
 		if #g>0 then
 			Duel.HintSelection(g,true)
 			Duel.Destroy(g,REASON_EFFECT)

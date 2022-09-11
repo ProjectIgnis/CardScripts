@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 
-function s.cf(c,p) return c:IsControler(p) and c:IsType(TYPE_MONSTER) and c:IsOnField() end
+function s.cf(c,p) return c:IsControler(p) and c:IsMonster() and c:IsOnField() end
 
 function s.cd(e,tp,eg,ep,ev)
 	local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DESTROY)

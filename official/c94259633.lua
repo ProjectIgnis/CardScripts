@@ -51,13 +51,13 @@ function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,g,1,0,0)
 end
 function s.equipop(c,e,tp,tc)
-	aux.EquipByEffectAndLimitRegister(c,e,tp,tc,id)  
+	c:EquipByEffectAndLimitRegister(e,tp,tc,id)  
 end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFacedown() then return end 
-	if tc and tc:IsRelateToEffect(e) and tc:IsType(TYPE_MONSTER) and s.eqcon(e,tp,eg,ep,ev,re,r,rp) then
+	if tc and tc:IsRelateToEffect(e) and tc:IsMonster() and s.eqcon(e,tp,eg,ep,ev,re,r,rp) then
 		s.equipop(c,e,tp,tc)
 	end
 end

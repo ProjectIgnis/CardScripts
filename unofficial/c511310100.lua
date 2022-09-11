@@ -66,10 +66,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ShuffleSetCard(setg)
 	end
 end
-s.setfilter=aux.FilterFaceupFunction(Card.IsType,TYPE_TRAP)
 function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local g=Duel.GetMatchingGroup(s.setfilter,tp,LOCATION_ONFIELD,0,nil)
+	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsTrap),tp,LOCATION_ONFIELD,0,nil)
 	if #g>0 then
 		Duel.ChangePosition(g,POS_FACEDOWN)
 		Duel.RaiseEvent(g,EVENT_SSET,e,REASON_EFFECT,tp,tp,0)
@@ -78,7 +77,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,tp)
-	return c:GetPreviousControler()==tp and c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:GetPreviousControler()==tp and c:IsSpellTrap()
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp) and re and re:GetHandler()~=e:GetHandler()

@@ -44,11 +44,11 @@ function s.eqfilter(c,ec)
 	return c:GetEquipGroup():IsContains(ec)
 end
 function s.setfilter(c,ec)
-	return c:IsType(TYPE_TRAP) and c:IsSetCard(0x15f) and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
+	return c:IsTrap() and c:IsSetCard(0x15f) and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
 		and not c:IsCode(ec:GetCode()) and c:IsSSetable(true)
 end
 function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsType(TYPE_TRAP) and c:IsSetCard(0x15f)
+	return c:IsFaceup() and c:IsTrap() and c:IsSetCard(0x15f)
 		and Duel.IsExistingMatchingCard(s.eqfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,c)
 		and Duel.IsExistingTarget(s.setfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil,c)
 end

@@ -44,7 +44,7 @@ function s.initial_effect(c)
 end
 	--Check for equip spell to banish
 function s.spfilter(c,tp)
-	return c:IsAbleToRemoveAsCost() and c:IsType(TYPE_EQUIP) and c:IsType(TYPE_SPELL) and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
+	return c:IsAbleToRemoveAsCost() and c:IsType(TYPE_EQUIP) and c:IsSpell() and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
 end
 	--Cost of banishing from field/GY
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -82,7 +82,7 @@ function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,0,0)
 end
 function s.equipop(c,e,tp,tc)
-	if not aux.EquipByEffectAndLimitRegister(c,e,tp,tc,id) then return end
+	if not c:EquipByEffectAndLimitRegister(e,tp,tc,id) then return end
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
 	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_OWNER_RELATE)

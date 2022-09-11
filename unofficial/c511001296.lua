@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local ec=eg:GetFirst()
-	return #eg==1 and ec:IsPreviousLocation(LOCATION_ONFIELD) and ec:GetAttack()>0 and ec:IsType(TYPE_MONSTER)
+	return #eg==1 and ec:IsPreviousLocation(LOCATION_ONFIELD) and ec:GetAttack()>0 and ec:IsMonster()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ec=eg:GetFirst()

@@ -13,11 +13,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.tgfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToGrave() and c:HasLevel()
+	return c:IsMonster() and c:IsAbleToGrave() and c:HasLevel()
 		and Duel.IsExistingMatchingCard(s.atkfilter,tp,0,LOCATION_MZONE,1,nil,c:GetAttribute())
 end
 function s.atkfilter(c,att)
-	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and c:IsAttribute(att) and (c:IsAttackAbove(0) or c:IsDefenseAbove(0))
+	return c:IsFaceup() and c:IsMonster() and c:IsAttribute(att) and (c:IsAttackAbove(0) or c:IsDefenseAbove(0))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_HAND,0,1,nil,tp) end

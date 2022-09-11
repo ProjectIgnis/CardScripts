@@ -46,7 +46,7 @@ function s.cfop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	local tc=cg:GetFirst()
 	while tc do
-		if tc:IsType(TYPE_SPELL) then
+		if tc:IsSpell() then
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_FIELD)
 			e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)

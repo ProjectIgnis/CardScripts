@@ -46,7 +46,7 @@ end
 s.counter_place_list={0x16}
 s.listed_series={0x9d}
 function s.cfilter(c)
-	return c:IsSetCard(0x9d) and c:IsType(TYPE_MONSTER) and c:IsReason(REASON_EFFECT)
+	return c:IsSetCard(0x9d) and c:IsMonster() and c:IsReason(REASON_EFFECT)
 end
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil)
@@ -65,7 +65,7 @@ function s.chcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetCounter(0x16)>=3
 end
 function s.chfilter(c,e,tp)
-	return c:IsType(TYPE_MONSTER) and (c:IsFaceup() or c:IsControler(tp)) and c:IsCanBeFusionMaterial() and not c:IsImmuneToEffect(e)
+	return c:IsMonster() and (c:IsFaceup() or c:IsControler(tp)) and c:IsCanBeFusionMaterial() and not c:IsImmuneToEffect(e)
 end
 function s.chtg(e,te,tp,value)
 	if value&SUMMON_TYPE_FUSION==0 then return Group.CreateGroup() end

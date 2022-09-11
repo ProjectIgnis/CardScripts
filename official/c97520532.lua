@@ -22,7 +22,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
 function s.filter(c)
-	return c:IsSetCard(0x1083) and c:IsType(TYPE_MONSTER) and (c:IsAbleToHand() or c:IsAbleToGrave())
+	return c:IsSetCard(0x1083) and c:IsMonster() and (c:IsAbleToHand() or c:IsAbleToGrave())
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x1083) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

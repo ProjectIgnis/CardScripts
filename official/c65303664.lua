@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c,tp)
-	return c:IsLocation(LOCATION_GRAVE) and c:IsType(TYPE_MONSTER) and c:IsRace(RACE_BEAST) and c:IsReason(REASON_BATTLE)
+	return c:IsLocation(LOCATION_GRAVE) and c:IsMonster() and c:IsRace(RACE_BEAST) and c:IsReason(REASON_BATTLE)
 		and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp)
 		and (c:GetPreviousRaceOnField()&RACE_BEAST)~=0
 end

@@ -49,7 +49,7 @@ function s.spfilter(c,e,tp,mc)
 end
 function s.xyzfilter(c,e,tp,mc1,mc2)
 	local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(mc1,mc2),tp,nil,nil,REASON_XYZ)
-	return (#pg<=0 or (#pg==2 and pg:IsContains(mc1) and pg:IsContains(mc2))) and c:IsType(TYPE_XYZ,c,SUMMON_TYPE_XYZ,tp) and aux.IsCodeListed(c,mc2:GetCode())
+	return (#pg<=0 or (#pg==2 and pg:IsContains(mc1) and pg:IsContains(mc2))) and c:IsType(TYPE_XYZ,c,SUMMON_TYPE_XYZ,tp) and c:IsCodeListed(mc2:GetCode())
 		and mc1:IsCanBeXyzMaterial(c,tp) and mc2:IsCanBeXyzMaterial(c,tp) and Duel.GetLocationCountFromEx(tp,tp,Group.FromCards(mc1,mc2),c)>0
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end

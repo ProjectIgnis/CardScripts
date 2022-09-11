@@ -64,7 +64,7 @@ function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,g,1,0,0)
 end
 function s.equipop(c,e,tp,tc)
-	if not aux.EquipByEffectAndLimitRegister(c,e,tp,tc,id) then return end
+	if not c:EquipByEffectAndLimitRegister(e,tp,tc,id) then return end
 	--substitute
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
@@ -77,7 +77,7 @@ end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsType(TYPE_MONSTER) and tc:IsControler(1-tp)  and s.eqcon(e,tp,eg,ep,ev,re,r,rp) then
+	if tc and tc:IsRelateToEffect(e) and tc:IsMonster() and tc:IsControler(1-tp)  and s.eqcon(e,tp,eg,ep,ev,re,r,rp) then
 		s.equipop(c,e,tp,tc)
 	end
 end

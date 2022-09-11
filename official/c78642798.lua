@@ -96,7 +96,7 @@ function s.equipop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Equipped monster gains ATK equal to the monster equip
 function s.eqop(c,e,tp,tc,atk)
-	if not aux.EquipByEffectAndLimitRegister(c,e,tp,tc,nil,false) then return end
+	if not c:EquipByEffectAndLimitRegister(e,tp,tc,nil,false) then return end
 	--ATK gain
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_EQUIP)

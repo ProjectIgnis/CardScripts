@@ -34,7 +34,7 @@ end
 s.listed_names={id}
 s.listed_series={0x175}
 function s.setfilter(c)
-	return c:IsSetCard(0x175) and c:IsType(TYPE_TRAP) and c:IsSSetable()
+	return c:IsSetCard(0x175) and c:IsTrap() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -59,7 +59,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return (r&REASON_EFFECT+REASON_BATTLE)~=0
 end
 function s.spcostfilter(c)
-	return c:IsType(TYPE_TRAP) and c:IsAbleToRemoveAsCost()
+	return c:IsTrap() and c:IsAbleToRemoveAsCost()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spcostfilter,tp,LOCATION_GRAVE,0,1,nil) end

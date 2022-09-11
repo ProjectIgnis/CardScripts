@@ -1,5 +1,5 @@
 --トラックロイド
--- c61538782.lu
+--Truckroid
 local s,id=GetID()
 function s.initial_effect(c)
 	--equip
@@ -12,12 +12,12 @@ function s.initial_effect(c)
 	e1:SetTarget(s.eqtg)
 	e1:SetOperation(s.eqop)
 	c:RegisterEffect(e1)
-	aux.AddEREquipLimit(c,nil,aux.FilterBoolFunction(Card.IsType,TYPE_MONSTER),s.equipop,e1)
+	aux.AddEREquipLimit(c,nil,aux.FilterBoolFunction(Card.IsMonster),s.equipop,e1)
 end
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=c:GetBattleTarget()
-	return c:IsRelateToBattle() and c:IsFaceup() and tc:IsLocation(LOCATION_GRAVE) and tc:IsType(TYPE_MONSTER) and tc:IsReason(REASON_BATTLE) 
+	return c:IsRelateToBattle() and c:IsFaceup() and tc:IsLocation(LOCATION_GRAVE) and tc:IsMonster() and tc:IsReason(REASON_BATTLE) 
 		and not tc:IsForbidden()
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -28,7 +28,7 @@ function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.equipop(c,e,tp,tc)
 	local atk=tc:GetTextAttack()
-	if not aux.EquipByEffectAndLimitRegister(c,e,tp,tc) then return end
+	if not c:EquipByEffectAndLimitRegister(e,tp,tc) then return end
 	if atk<0 then atk=0 end
 	if atk>0 then
 		local e2=Effect.CreateEffect(c)

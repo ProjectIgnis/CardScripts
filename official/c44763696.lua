@@ -56,7 +56,7 @@ function s.thcd(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.condfilter,1,nil,tp)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x23) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x23) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

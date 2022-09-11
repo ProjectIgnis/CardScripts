@@ -44,7 +44,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0xbb,0xc5}
 function s.spfilter(c)
-	return c:IsSetCard(0xbb) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost() 
+	return c:IsSetCard(0xbb) and c:IsMonster() and c:IsAbleToRemoveAsCost() 
 		and (c:IsLocation(LOCATION_HAND) or aux.SpElimFilter(c,true,true))
 end
 function s.spcon(e,c)
@@ -104,7 +104,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 function s.desfilter(c)
-	return (c:IsFacedown() or not c:IsSetCard(0xc5)) and c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return (c:IsFacedown() or not c:IsSetCard(0xc5)) and c:IsSpellTrap()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end

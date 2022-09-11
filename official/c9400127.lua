@@ -41,7 +41,7 @@ function s.tgfilter(c,e,tp)
 	return c:IsFaceup() and Duel.IsExistingTarget(s.spfilter,tp,0,LOCATION_GRAVE,1,nil,e,tp,c:GetAttack())
 end
 function s.spfilter(c,e,tp,atk)
-	return c:IsType(TYPE_MONSTER) and c:GetAttack()>=atk and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,1-tp)
+	return c:IsMonster() and c:GetAttack()>=atk and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,1-tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

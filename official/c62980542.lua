@@ -18,7 +18,7 @@ function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,3)
 end
 function s.filter(c)
-	return c:IsLocation(LOCATION_GRAVE) and c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsLocation(LOCATION_GRAVE) and c:IsSpellTrap()
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local p,val=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)

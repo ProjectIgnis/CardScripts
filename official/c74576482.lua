@@ -32,7 +32,7 @@ function s.cfilter1(c)
 	return c:IsCode(36623431) and c:IsAbleToGraveAsCost()
 end
 function s.cfilter2(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAttribute(ATTRIBUTE_WATER) and not c:IsPublic()
+	return c:IsMonster() and c:IsAttribute(ATTRIBUTE_WATER) and not c:IsPublic()
 end
 function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -71,7 +71,7 @@ function s.tdcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.filter(c)
-	return c:IsType(TYPE_SPELL) and c:IsAbleToDeck()
+	return c:IsSpell() and c:IsAbleToDeck()
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end

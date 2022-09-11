@@ -42,7 +42,7 @@ function s.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
 		and c:IsLocation(LOCATION_GRAVE+LOCATION_HAND) and c:IsMonster()
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x9d) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSetCard(0x9d) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end

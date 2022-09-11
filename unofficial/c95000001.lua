@@ -26,7 +26,7 @@ function s.initial_effect(c)
 end
 s.mark=0
 function s.spfilter(c,e,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.filter(c,ft)
 	return c:IsControlerCanBeChanged() and (ft>0 or c:GetSequence()<5)

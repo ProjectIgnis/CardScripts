@@ -32,7 +32,7 @@ end
 s.listed_series={0x119}
 	--Check for "Salamangreat" monster
 function s.costfilter(c)
-	return c:IsSetCard(0x119) and c:IsType(TYPE_MONSTER) and (c:IsFaceup() or not c:IsLocation(LOCATION_MZONE)) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(0x119) and c:IsMonster() and (c:IsFaceup() or not c:IsLocation(LOCATION_MZONE)) and c:IsAbleToGraveAsCost()
 end
 	--Defining cost
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

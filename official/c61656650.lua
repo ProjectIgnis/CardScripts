@@ -18,7 +18,7 @@ function s.efcon(e,tp,eg,ep,ev,re,r,rp)
 	if not g or #g~=1 then return false end
 	local tc=g:GetFirst()
 	local ex,dg=Duel.GetOperationInfo(0,CATEGORY_DESTROY)
-	return tc:IsControler(tp) and dg and #dg==1 and dg:GetFirst()==tc and tc:IsType(TYPE_MONSTER)
+	return tc:IsControler(tp) and dg and #dg==1 and dg:GetFirst()==tc and tc:IsMonster()
 end
 function s.filter(c,ct)
 	return Duel.CheckChainTarget(ct,c)

@@ -39,7 +39,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 		local sg=g:Select(tp,1,ct,nil)
 		local sc=sg:GetFirst()
-		for sc in aux.Next(sg) do
+		for sc in sg:Iter() do
 			Duel.MoveToField(sc,tp,tp,LOCATION_PZONE,POS_FACEUP,true)
 		end
 		local e1=Effect.CreateEffect(c)

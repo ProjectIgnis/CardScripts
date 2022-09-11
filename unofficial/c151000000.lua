@@ -8,11 +8,11 @@ if not ActionDuel then
 	end
 
 	function Card.IsActionSpell(c)
-		return c:IsType(TYPE_ACTION) and c:IsType(TYPE_SPELL) and not c.af
+		return c:IsType(TYPE_ACTION) and c:IsSpell() and not c.af
 	end
 
 	function Card.IsActionTrap(c)
-		return c:IsType(TYPE_ACTION) and c:IsType(TYPE_TRAP) and not c.af
+		return c:IsType(TYPE_ACTION) and c:IsTrap() and not c.af
 	end
 
 	function Card.IsActionField(c)
@@ -241,7 +241,7 @@ if not ActionDuel then
 		else ActionDuel.chktrap(token,tokenp,e) end
 	end
 	function ActionDuel.chktrap(tc,tp,e)
-		if tc and tc:IsType(TYPE_TRAP) and tc:CheckActivateEffect(false,false,false)
+		if tc and tc:IsTrap() and tc:CheckActivateEffect(false,false,false)
 			and Duel.GetLocationCount(tp,LOCATION_SZONE) then
 			Duel.ConfirmCards(1-tp,tc)
 			local tpe=tc:GetType()

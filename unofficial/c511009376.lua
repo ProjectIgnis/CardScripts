@@ -85,7 +85,7 @@ function s.indop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsOnField()
+	return c:IsMonster() and c:IsOnField()
 end
 function s.prcon(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then return false end

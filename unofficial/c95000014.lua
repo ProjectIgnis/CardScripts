@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	e6:SetOperation(s.eqop)
 	c:RegisterEffect(e6)
 	aux.AddEREquipLimit(c,nil,function(ec,_,tp) return ec:GetOriginalType()&TYPE_MONSTER>0 end,s.equipop,e6)
-	--aux.AddEREquipLimit(c,nil,aux.FilterBoolFunction(Card.IsType,TYPE_MONSTER),s.equipop,e6)
+	--aux.AddEREquipLimit(c,nil,aux.FilterBoolFunction(Card.IsMonster),s.equipop,e6)
 	--battle indestructable
 	local e7=Effect.CreateEffect(c)
 	e7:SetType(EFFECT_TYPE_SINGLE)
@@ -50,7 +50,7 @@ function s.initial_effect(c)
 end
 s.mark=1
 function s.eqfilter(c,tp)
-	return (c:IsAbleToChangeControler() or c:IsControler(tp)) and c:IsType(TYPE_MONSTER)
+	return (c:IsAbleToChangeControler() or c:IsControler(tp)) and c:IsMonster()
 end
 function s.equipop(c,e,tp,tc)
 	local atk=tc:GetTextAttack()
@@ -61,7 +61,7 @@ function s.equipop(c,e,tp,tc)
 	end
 	if tc:IsFacedown() or atk<0 then atk=0 end
 	if tc:IsFacedown() or def<0 then def=0 end
-	if not aux.EquipByEffectAndLimitRegister(c,e,tp,tc) then return end
+	if not c:EquipByEffectAndLimitRegister(e,tp,tc) then return end
 	if atk>0 then
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_EQUIP)
@@ -92,7 +92,7 @@ end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsType(TYPE_MONSTER) then
+	if tc and tc:IsRelateToEffect(e) and tc:IsMonster() then
 		if c:IsFaceup() and c:IsRelateToEffect(e) then
 			s.equipop(c,e,tp,tc)
 		else Duel.SendtoGrave(tc,REASON_EFFECT) end

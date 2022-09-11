@@ -20,18 +20,18 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 end
 function s.costfilter1(c,tp)
-	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
+	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsMonster() and c:IsAbleToRemoveAsCost()
 		and Duel.IsExistingMatchingCard(s.costfilter2,tp,LOCATION_HAND+LOCATION_MZONE,0,1,c,c,tp)
 end
 function s.costfilter2(c,tc,tp)
-	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
+	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsMonster() and c:IsAbleToRemoveAsCost()
 		and c:GetOriginalRace()==tc:GetOriginalRace() and c:GetOriginalAttribute()==tc:GetOriginalAttribute() and c:GetOriginalCode()~=tc:GetOriginalCode()
 		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,c,tc)
 end
 function s.thfilter(c,tc1,tc2)
 	return c:GetOriginalRace()==tc1:GetOriginalRace() and c:GetOriginalAttribute()==tc1:GetOriginalAttribute()
 		and c:GetOriginalCode()~=tc1:GetOriginalCode() and c:GetOriginalCode()~=tc2:GetOriginalCode()
-		and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+		and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

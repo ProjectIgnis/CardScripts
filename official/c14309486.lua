@@ -38,7 +38,7 @@ function s.cfilter1(c)
 	return c:IsCode(36623431) and c:IsAbleToGraveAsCost()
 end
 function s.cfilter2(c)
-	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_ROCK) and not c:IsPublic()
+	return c:IsMonster() and c:IsRace(RACE_ROCK) and not c:IsPublic()
 end
 function s.mtop(e,tp)
 	local c=e:GetHandler()

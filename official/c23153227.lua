@@ -28,7 +28,7 @@ end
 s.listed_names={id}
 s.listed_series={0x177,0x1178,0x95}
 function s.filter(c,dct) 
-	return ((((c:IsSetCard(0x177) and not c:IsCode(id)) or c:IsSetCard(0x1178)) and c:IsType(TYPE_SPELL+TYPE_TRAP))
+	return ((((c:IsSetCard(0x177) and not c:IsCode(id)) or c:IsSetCard(0x1178)) and c:IsSpellTrap())
 		or (c:IsSetCard(0x95) and c:GetType()==TYPE_QUICKPLAY+TYPE_SPELL))
 		and (c:IsAbleToHand() or dct>1)
 end
@@ -58,7 +58,7 @@ function s.copycost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function s.copyfilter(c)
-	return c:IsAbleToGraveAsCost() and c:IsSetCard(0x95) and c:IsType(TYPE_SPELL)
+	return c:IsAbleToGraveAsCost() and c:IsSetCard(0x95) and c:IsSpell()
 		and c:CheckActivateEffect(true,true,false)~=nil 
 end
 function s.copytg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

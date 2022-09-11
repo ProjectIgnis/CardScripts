@@ -28,7 +28,7 @@ end
 s.listed_names={CARD_DARK_MAGICIAN,CARD_DARK_MAGICIAN_GIRL,id}
 s.listed_series={0x13a}
 function s.filter(c,deckCount)
-	return not c:IsCode(id) and (c:IsCode(CARD_DARK_MAGICIAN) or aux.IsCodeListed(c,CARD_DARK_MAGICIAN,CARD_DARK_MAGICIAN_GIRL))
+	return not c:IsCode(id) and (c:IsCode(CARD_DARK_MAGICIAN) or c:IsCodeListed(CARD_DARK_MAGICIAN,CARD_DARK_MAGICIAN_GIRL))
 		and (c:IsLocation(LOCATION_DECK) and deckCount>1 or not c:IsLocation(LOCATION_DECK) and c:IsAbleToDeck())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -54,7 +54,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.drfilter(c)
 	return (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
-		and ((c:IsSetCard(0x13a) and c:IsType(TYPE_MONSTER)) or c:IsCode(CARD_DARK_MAGICIAN,CARD_DARK_MAGICIAN_GIRL))
+		and ((c:IsSetCard(0x13a) and c:IsMonster()) or c:IsCode(CARD_DARK_MAGICIAN,CARD_DARK_MAGICIAN_GIRL))
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetMatchingGroup(s.drfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,nil):GetClassCount(Card.GetCode)

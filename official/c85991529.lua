@@ -59,7 +59,7 @@ function s.rescon(sg,e,tp,mg)
 	return (sg:CheckWithSumGreater(Card.GetLevel,10))
 end
 function s.spfilter(c)
-	return c:IsSetCard(0xd2) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(0xd2) and c:IsMonster() and c:IsAbleToRemoveAsCost()
 end
 function s.spcon(e,c)
 	if c==nil then return true end

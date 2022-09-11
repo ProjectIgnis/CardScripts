@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.eqtg)
 	e1:SetOperation(s.eqop)
 	c:RegisterEffect(e1)
-	aux.AddEREquipLimit(c,nil,function(ec,c,tp) return ec:IsFaceup() end,aux.EquipByEffectAndLimitRegister,e1)
+	aux.AddEREquipLimit(c,nil,function(ec,c,tp) return ec:IsFaceup() end,Card.EquipByEffectAndLimitRegister,e1)
 	-- Destroy
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
@@ -40,7 +40,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and tc:IsFaceup() and tc:IsMonster() then
-		aux.EquipByEffectAndLimitRegister(e:GetHandler(),e,tp,tc)
+		e:GetHandler():EquipByEffectAndLimitRegister(e,tp,tc)
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
 	end
 end

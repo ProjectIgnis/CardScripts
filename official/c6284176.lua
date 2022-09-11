@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.spconfilter(c)
-	return c:IsType(TYPE_MONSTER) or c:GetPreviousTypeOnField()&TYPE_MONSTER==TYPE_MONSTER
+	return c:IsMonster() or c:GetPreviousTypeOnField()&TYPE_MONSTER==TYPE_MONSTER
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.spconfilter,1,nil)

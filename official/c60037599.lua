@@ -40,7 +40,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x151) and c:IsType(TYPE_MONSTER) and c:IsAttack(2000)
+	return c:IsSetCard(0x151) and c:IsMonster() and c:IsAttack(2000)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(id)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)

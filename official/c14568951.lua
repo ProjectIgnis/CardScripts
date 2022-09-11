@@ -21,7 +21,7 @@ end
 s.listed_series={0x2b,0x61}
 
 function s.cfilter1(c)
-	return c:IsSetCard(0x2b) and c:IsType(TYPE_MONSTER) and c:IsDiscardable()
+	return c:IsSetCard(0x2b) and c:IsMonster() and c:IsDiscardable()
 end
 function s.cfilter2(c)
 	return c:IsSetCard(0x61) and c:IsDiscardable()

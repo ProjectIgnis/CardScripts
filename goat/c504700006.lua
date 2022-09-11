@@ -38,7 +38,7 @@ s.listed_names={74388798}
 s.LVnum=3
 s.LVset=0xe7
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
-	if not re:GetHandler():IsType(TYPE_SPELL) or rp==tp then return end
+	if not re:GetHandler():IsSpell() or rp==tp then return end
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	if g and g:IsContains(e:GetHandler()) then 

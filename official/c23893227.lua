@@ -34,7 +34,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x93,0x94,0x1093}
 function s.filter(c)
-	return (c:IsSetCard(0x93) or c:IsSetCard(0x94)) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return (c:IsSetCard(0x93) or c:IsSetCard(0x94)) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

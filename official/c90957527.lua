@@ -32,7 +32,7 @@ s.listed_series={0x19}
 s.listed_names={79580323}
 s.material_setcode=0x19
 function s.contactfil(tp)
-	return Duel.GetMatchingGroup(function(c) return c:IsType(TYPE_MONSTER) and c:IsAbleToDeckOrExtraAsCost() end,tp,LOCATION_ONFIELD,0,nil)
+	return Duel.GetMatchingGroup(function(c) return c:IsMonster() and c:IsAbleToDeckOrExtraAsCost() end,tp,LOCATION_ONFIELD,0,nil)
 end
 function s.contactop(g,tp)
 	Duel.ConfirmCards(1-tp,g)
@@ -47,10 +47,10 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
 	if c==a then
 		e:SetLabel(d:GetDefense())
-		return c:IsRelateToBattle() and d:GetLocation()==LOCATION_GRAVE and d:IsType(TYPE_MONSTER)
+		return c:IsRelateToBattle() and d:GetLocation()==LOCATION_GRAVE and d:IsMonster()
 	else
 		e:SetLabel(a:GetDefense())
-		return c:IsRelateToBattle() and a:GetLocation()==LOCATION_GRAVE and a:IsType(TYPE_MONSTER)
+		return c:IsRelateToBattle() and a:GetLocation()==LOCATION_GRAVE and a:IsMonster()
 	end
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)

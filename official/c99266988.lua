@@ -29,11 +29,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.tgfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsAttribute(ATTRIBUTE_DARK+ATTRIBUTE_LIGHT) and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and c:IsAttribute(ATTRIBUTE_DARK+ATTRIBUTE_LIGHT) and c:IsAbleToGraveAsCost()
 		and Duel.IsExistingMatchingCard(s.thfilter1,tp,LOCATION_DECK,0,1,nil,c:GetAttribute())
 end
 function s.thfilter1(c,att)
-	return c:IsAbleToHand() and c:IsType(TYPE_MONSTER) and c:IsAttribute(ATTRIBUTE_DARK+ATTRIBUTE_LIGHT)
+	return c:IsAbleToHand() and c:IsMonster() and c:IsAttribute(ATTRIBUTE_DARK+ATTRIBUTE_LIGHT)
 		and c:IsLevelAbove(4) and c:IsLevelBelow(8) and not c:IsSummonableCard() and not c:IsAttribute(att)
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)

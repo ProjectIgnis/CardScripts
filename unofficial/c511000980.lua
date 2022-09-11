@@ -19,11 +19,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.tgfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
+	return c:IsMonster() and c:IsAbleToGrave()
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,2,c,c:GetCode())
 end
 function s.filter(c,code)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToGrave() and c:IsCode(code)
+	return c:IsMonster() and c:IsAbleToGrave() and c:IsCode(code)
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -49,5 +49,5 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.aclimit(e,re,tp)
-	return re:GetHandler():IsType(TYPE_SPELL) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
+	return re:GetHandler():IsSpell() and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end

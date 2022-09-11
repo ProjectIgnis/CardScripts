@@ -25,9 +25,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CARDTYPE)
 	local res=Duel.SelectOption(tp,70,71,72)
 	Duel.ConfirmDecktop(tp,1)
-	if (res==0 and tc:IsType(TYPE_MONSTER))
-		or (res==1 and tc:IsType(TYPE_SPELL))
-		or (res==2 and tc:IsType(TYPE_TRAP)) then
+	if (res==0 and tc:IsMonster())
+		or (res==1 and tc:IsSpell())
+		or (res==2 and tc:IsTrap()) then
 		local lp1=Duel.GetLP(tp)
 		local lp2=Duel.GetLP(1-tp)
 		Duel.SetLP(tp,lp2)

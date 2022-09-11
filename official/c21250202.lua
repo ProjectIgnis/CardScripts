@@ -85,7 +85,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.disfilter(c)
-	return aux.disfilter1(c) and c:IsSummonLocation(LOCATION_EXTRA)
+	return c:IsNegatableMonster() and c:IsSummonLocation(LOCATION_EXTRA)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.disfilter(chkc) end

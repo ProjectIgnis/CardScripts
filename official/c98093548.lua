@@ -35,7 +35,7 @@ s.listed_names={id}
 s.listed_series={0x7c,0x79}
 
 function s.cfilter(c)
-	return c:IsFaceup() and (c:IsType(TYPE_SPELL) or c:IsType(TYPE_TRAP)) and c:IsSetCard(0x7c) and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and (c:IsSpell() or c:IsTrap()) and c:IsSetCard(0x7c) and c:IsAbleToGraveAsCost()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local nc=Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_SZONE,0,1,nil)
@@ -65,10 +65,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.shfilter(c)
-	return c:IsAbleToDeck() and c:IsSetCard(0x7c) and (c:IsType(TYPE_SPELL) or c:IsType(TYPE_TRAP))
+	return c:IsAbleToDeck() and c:IsSetCard(0x7c) and (c:IsSpell() or c:IsTrap())
 end
 function s.addfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x79) and c:IsAbleToHand() and c:IsLevelAbove(5)
+	return c:IsMonster() and c:IsSetCard(0x79) and c:IsAbleToHand() and c:IsLevelAbove(5)
 end
 function s.addtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.shfilter(chkc) end

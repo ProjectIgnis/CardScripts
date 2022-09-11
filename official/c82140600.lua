@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x107a,0xa7,0xa8}
 function s.filter(c,e)
-	return c:IsSetCard(0x107a) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemove() and c:IsCanBeEffectTarget(e) and aux.SpElimFilter(c,true)
+	return c:IsSetCard(0x107a) and c:IsMonster() and c:IsAbleToRemove() and c:IsCanBeEffectTarget(e) and aux.SpElimFilter(c,true)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

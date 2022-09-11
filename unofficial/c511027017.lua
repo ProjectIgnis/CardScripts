@@ -91,7 +91,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(tc,REASON_EFFECT)
 end
 function s.cfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x102) and c:IsAbleToRemoveAsCost()
+	return c:IsMonster() and c:IsSetCard(0x102) and c:IsAbleToRemoveAsCost()
 end
 function s.gycost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost()

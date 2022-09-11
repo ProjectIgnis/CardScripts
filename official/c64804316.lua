@@ -58,7 +58,7 @@ function s.gytg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_POSITION,nil,1,1-tp,LOCATION_MZONE)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x8d) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSetCard(0x8d) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.posfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsCanTurnSet()
@@ -73,7 +73,7 @@ function s.gyop(e,tp,eg,ep,ev,re,r,rp)
 	local b2=#g2>0
 	if not (b1 or b2) then return end
 	if not Duel.SelectYesNo(tp,aux.Stringid(id,2)) then return end
-	local op=aux.SelectEffect(tp,
+	local op=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,3)},
 		{b2,aux.Stringid(id,4)})
 	if op==0 then return end

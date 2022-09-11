@@ -49,7 +49,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.setfilter(c)
-	return (c:IsCode(CARD_POLYMERIZATION) or (c:IsSetCard(0x4) and c:IsType(TYPE_SPELL+TYPE_TRAP))) and c:IsSSetable()
+	return (c:IsCode(CARD_POLYMERIZATION) or (c:IsSetCard(0x4) and c:IsSpellTrap())) and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK,0,1,nil) end

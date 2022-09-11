@@ -70,7 +70,7 @@ function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 	--Check for "Fossil Fusion" or a card that specifically lists "Fossil Fusion"
 function s.rmfilter(c)
-	return c:IsFaceup() and (c:IsCode(CARD_FOSSIL_FUSION) or aux.IsCodeListed(c,CARD_FOSSIL_FUSION))
+	return c:IsFaceup() and (c:IsCode(CARD_FOSSIL_FUSION) or c:IsCodeListed(CARD_FOSSIL_FUSION))
 end
 	--Inflict 500 damage
 function s.damop(e,tp,eg,ep,ev,re,r,rp)

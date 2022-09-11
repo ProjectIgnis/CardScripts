@@ -38,7 +38,7 @@ function s.stage2(mat,e,tp,eg,ep,ev,re,r,rp,tc)
 	local g1=Duel.GetFieldGroup(tp,LOCATION_EXTRA,0)
 	local g2=Duel.GetFieldGroup(tp,0,LOCATION_EXTRA)
 	if (#g1<1 and #g2<1) or not Duel.SelectYesNo(tp,aux.Stringid(id,0)) then return end
-	local op=aux.SelectEffect(tp,
+	local op=Duel.SelectEffect(tp,
 		{#g1>0,aux.Stringid(id,1)},
 		{#g2>0,aux.Stringid(id,2)})
 	local g=(op==1) and g1 or g2

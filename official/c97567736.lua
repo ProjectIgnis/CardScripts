@@ -27,7 +27,7 @@ end
 s.listed_series={0xc3}
 s.listed_names={id}
 function s.cfilter(c)
-	return c:IsSetCard(0xc3) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(0xc3) and c:IsMonster() and c:IsAbleToGraveAsCost()
 end
 function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
@@ -44,7 +44,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(p,d,REASON_EFFECT)
 end
 function s.tgfilter(c)
-	return c:IsSetCard(0xc3) and not c:IsCode(id) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(0xc3) and not c:IsCode(id) and c:IsMonster() and c:IsAbleToGraveAsCost()
 end
 function s.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end

@@ -52,7 +52,7 @@ s.listed_series={0x154e}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	while tc do
-		if tc:IsFaceup() and tc:IsType(TYPE_MONSTER) then
+		if tc:IsFaceup() and tc:IsMonster() then
 			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
 		end
 		tc=eg:GetNext()

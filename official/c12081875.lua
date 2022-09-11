@@ -31,7 +31,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
 function s.filter(c,e,tp)
-	if not (c:IsSetCard(0x11c) and c:IsType(TYPE_MONSTER)
+	if not (c:IsSetCard(0x11c) and c:IsMonster()
 		and (c:IsFaceup() or not c:IsLocation(LOCATION_REMOVED))
 		and c:IsHasEffect(id) and c:IsCanBeEffectTarget(e) and c:IsAbleToDeck()) then 
 		return false

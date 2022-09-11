@@ -48,7 +48,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp and Duel.IsMainPhase()
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x156e) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x156e) and c:IsMonster()
 		and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and c:GetCode()~=95000042
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

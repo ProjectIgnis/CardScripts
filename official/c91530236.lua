@@ -22,12 +22,12 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.filter2(c,e,tp,mft,sft,code)
 	return  not c:IsCode(code) and 
-		((mft>0 and c:IsType(TYPE_MONSTER) and (c:IsSetCard(0xbf) or c:IsSetCard(0x10c0)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE))
-		or (sft>0 and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0xc0) and c:IsSSetable()))
+		((mft>0 and c:IsMonster() and (c:IsSetCard(0xbf) or c:IsSetCard(0x10c0)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE))
+		or (sft>0 and c:IsSpellTrap() and c:IsSetCard(0xc0) and c:IsSSetable()))
 end
 function s.filter(c,e,tp,mft,sft)
 	return  c:IsAbleToHand() and
-	((c:IsType(TYPE_MONSTER) and (c:IsSetCard(0xbf) or c:IsSetCard(0x10c0))) or (c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0xc0)))
+	((c:IsMonster() and (c:IsSetCard(0xbf) or c:IsSetCard(0x10c0))) or (c:IsSpellTrap() and c:IsSetCard(0xc0)))
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK,0,1,c,e,tp,mft,sft,c:GetCode())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -47,7 +47,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if c1 and c2 then
 		Duel.SendtoHand(c1,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,c1)
-		if c2:GetFirst():IsType(TYPE_MONSTER) then
+		if c2:GetFirst():IsMonster() then
 			Duel.SpecialSummon(c2,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)
 			Duel.ConfirmCards(1-tp,c2)
 		else

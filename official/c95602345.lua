@@ -28,7 +28,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.spfilter1(c,e,tp)
-	return ((c:IsType(TYPE_NORMAL) and c:IsAttribute(ATTRIBUTE_WATER)) or aux.IsCodeListed(c,CARD_UMI))
+	return ((c:IsType(TYPE_NORMAL) and c:IsAttribute(ATTRIBUTE_WATER)) or c:IsCodeListed(CARD_UMI))
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

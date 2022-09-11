@@ -27,7 +27,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	if Duel.Draw(tp,1,REASON_EFFECT)>0 then
 		Duel.SendtoGrave(tc,REASON_EFFECT)
-		if tc:IsType(TYPE_MONSTER) then
+		if tc:IsMonster() then
 			Duel.Damage(1-tp,tc:GetLevel()*200,REASON_EFFECT)
 		else
 			Duel.Damage(tp,500,REASON_EFFECT)

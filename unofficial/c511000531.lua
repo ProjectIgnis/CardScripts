@@ -29,5 +29,5 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.rmtarget(e,c)
 	local race=e:GetLabel()
-	return c:IsRace(race) and not c:IsLocation(0x80) and not c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsRace(race) and not c:IsLocation(0x80) and not c:IsSpellTrap()
 end

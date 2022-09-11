@@ -1,4 +1,5 @@
 --闇魔界の契約書
+--Dark Contract with the Yamimakai
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -37,7 +38,7 @@ function s.pctg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local b1=Duel.IsExistingTarget(s.pcfilter,tp,LOCATION_GRAVE,0,1,nil)
 	local b2=Duel.IsExistingMatchingCard(s.pcfilter,tp,LOCATION_EXTRA,0,1,nil)
 	if chk==0 then
-		if not Duel.CheckLocation(tp,LOCATION_PZONE,0) and not Duel.CheckLocation(tp,LOCATION_PZONE,1) then return false end
+		if not Duel.CheckPendulumZones(tp) then return false end
 		return b1 or b2
 	end
 	local op=0
@@ -55,11 +56,10 @@ function s.pctg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	end
 end
 function s.pcop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
-	if not Duel.CheckLocation(tp,LOCATION_PZONE,0) and not Duel.CheckLocation(tp,LOCATION_PZONE,1) then return false end
+	if not Duel.CheckPendulumZones(tp) then return false end
 	if e:GetLabel()==0 then
 		local tc=Duel.GetFirstTarget()
-		if tc and tc:IsRelateToEffect(e) then
+		if tc:IsRelateToEffect(e) then
 			Duel.MoveToField(tc,tp,tp,LOCATION_PZONE,POS_FACEUP,true)
 		end
 	else
@@ -80,7 +80,6 @@ function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,0,0,tp,1000)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Damage(p,d,REASON_EFFECT)
 end

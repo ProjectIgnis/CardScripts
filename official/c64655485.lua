@@ -38,13 +38,13 @@ function s.ffilter(c,fc,sumtype,tp)
 	return c:IsType(TYPE_EFFECT,fc,sumtype,tp) and c:IsLevelBelow(4)
 end
 function s.atkfilter(c)
-	return c:IsFaceup() and (c:IsSetCard(0x1f) or c:IsSetCard(0x8)) and c:IsType(TYPE_MONSTER)
+	return c:IsFaceup() and (c:IsSetCard(0x1f) or c:IsSetCard(0x8)) and c:IsMonster()
 end
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(s.atkfilter,c:GetControler(),LOCATION_GRAVE,0,nil)*100
 end
 function s.thfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and aux.IsCodeListed(c,CARD_NEOS) and c:IsAbleToHand()
+	return c:IsSpellTrap() and c:IsCodeListed(CARD_NEOS) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

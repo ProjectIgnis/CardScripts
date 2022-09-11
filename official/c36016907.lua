@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.hspcfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_ZOMBIE) and c:IsDiscardable()
+	return c:IsMonster() and c:IsRace(RACE_ZOMBIE) and c:IsDiscardable()
 end
 function s.hspcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.hspcfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end

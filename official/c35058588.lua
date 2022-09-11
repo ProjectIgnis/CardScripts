@@ -62,7 +62,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c)
-	return c:IsSetCard(0xe3) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(0xe3) and c:IsMonster() and c:IsAbleToRemoveAsCost()
 end
 function s.tgfilter(c,e)
 	return c:IsFaceup() and c:IsCanBeEffectTarget(e)

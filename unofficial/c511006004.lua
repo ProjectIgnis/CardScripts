@@ -27,7 +27,7 @@ function s.lvfilter(c,se)
 	return c:GetLevel()>6 and c:IsSummonable(false,se)
 end
 function s.discardfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and c:IsAbleToGraveAsCost()
 end
 function s.filter(c,se,tp)
 	return s.lvfilter(c,se) and Duel.IsExistingMatchingCard(s.discardfilter,tp,LOCATION_HAND,0,2,c) 

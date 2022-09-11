@@ -47,20 +47,19 @@ function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetAttacker()
 	return tg and tg:IsControler(tp)
 end
-s.tgfilter=aux.FilterFaceupFunction(Card.IsType,TYPE_MONSTER)
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_REMOVED,LOCATION_REMOVED,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsMonster),tp,LOCATION_REMOVED,LOCATION_REMOVED,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,PLAYER_ALL,LOCATION_REMOVED)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_REMOVED,LOCATION_REMOVED,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,aux.FilterFaceupFunction(Card.IsMonster),tp,LOCATION_REMOVED,LOCATION_REMOVED,1,1,nil)
 	if #g>0 then
 		Duel.SendtoGrave(g,REASON_EFFECT+REASON_RETURN)
 	end
 end
 function s.rmfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true,false)
+	return c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true,false)
 end
 function s.rescon(sg,e,tp,mg)
 	return sg:GetClassCount(Card.GetOriginalRace)==#sg and sg:GetClassCount(Card.GetOriginalAttribute)==#sg

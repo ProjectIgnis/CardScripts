@@ -39,7 +39,7 @@ function s.efilter(e,te)
 	return c:GetType()==TYPE_TRAP and (c:IsSetCard(0x4c) or c:IsSetCard(0x89))
 end
 function s.filter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x108a) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(0x108a) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

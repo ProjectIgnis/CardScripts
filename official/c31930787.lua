@@ -55,7 +55,7 @@ function s.eqval(ec,c,tp)
 	return ec:IsControler(1-tp) and ec:IsType(TYPE_SYNCHRO)
 end
 function s.filter(c,tp)
-	return c:IsType(TYPE_MONSTER) and (c:GetReason()&0x41)==0x41 and c:IsPreviousControler(tp)
+	return c:IsMonster() and (c:GetReason()&0x41)==0x41 and c:IsPreviousControler(tp)
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -90,7 +90,7 @@ end
 function s.equipop(c,e,tp,tc)
 	local atk=tc:GetTextAttack()
 	if atk<0 then atk=0 end
-	if not aux.EquipByEffectAndLimitRegister(c,e,tp,tc) then return end
+	if not c:EquipByEffectAndLimitRegister(e,tp,tc) then return end
 	if atk>0 then
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_EQUIP)
@@ -104,7 +104,7 @@ end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsType(TYPE_MONSTER) then
+	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsMonster() then
 		s.equipop(c,e,tp,tc)
 	end
 end

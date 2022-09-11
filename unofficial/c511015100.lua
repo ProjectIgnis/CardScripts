@@ -87,7 +87,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.discfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x99) and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and c:IsSetCard(0x99) and c:IsAbleToGraveAsCost()
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.discfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil) end
@@ -96,10 +96,10 @@ function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:GetControler()~=tp and aux.disfilter1(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(aux.disfilter1,tp,0,LOCATION_MZONE,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:GetControler()~=tp and chkc:IsNegatableMonster() end
+	if chk==0 then return Duel.IsExistingTarget(Card.IsNegatableMonster,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g=Duel.SelectTarget(tp,aux.disfilter1,tp,0,LOCATION_MZONE,1,1,nil)
+	local g=Duel.SelectTarget(tp,Card.IsNegatableMonster,tp,0,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
@@ -130,7 +130,7 @@ function s.dmcon(e,tp,eg,ep,ev,re,r,rp)
 	return (a:IsControler(tp) or (d and d:IsControler(tp))) and Duel.GetFlagEffect(tp,id)==0
 end
 function s.dmfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToHandAsCost() and c:IsSetCard(0x99)
+	return c:IsMonster() and c:IsAbleToHandAsCost() and c:IsSetCard(0x99)
 end
 function s.dmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.dmfilter,tp,LOCATION_MZONE,0,1,e:GetLabelObject()) end
@@ -170,7 +170,7 @@ function s.dm2con(e,tp,eg,ep,ev,re,r,rp)
 	return (a:IsControler(tp) or (d and d:IsControler(tp))) and Duel.GetFlagEffect(tp,id+1)==0
 end
 function s.dm2filter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost() and c:IsSetCard(0x99)
+	return c:IsMonster() and c:IsAbleToGraveAsCost() and c:IsSetCard(0x99)
 end
 function s.dm2cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.dm2filter,tp,LOCATION_HAND,0,2,nil) end

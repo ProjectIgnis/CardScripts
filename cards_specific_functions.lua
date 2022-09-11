@@ -123,7 +123,7 @@ end
 function Auxiliary.SpElimFilter(c,mustbefaceup,includemzone)
 	--includemzone - contains MZONE in original requirement
 	--NOTE: Should only check LOCATION_MZONE+LOCATION_GRAVE
-	if c:IsType(TYPE_MONSTER) then
+	if c:IsMonster() then
 		if mustbefaceup and c:IsLocation(LOCATION_MZONE) and c:IsFacedown() then return false end
 		if includemzone then return c:IsLocation(LOCATION_MZONE) or not Duel.IsPlayerAffectedByEffect(c:GetControler(),69832741) end
 		if Duel.IsPlayerAffectedByEffect(c:GetControler(),69832741) then
@@ -357,7 +357,7 @@ end
 --Discard cost for Witchcrafter monsters, supports the replacements from the Continuous Spells
 local Witchcrafter={}
 function Witchcrafter.DiscardSpell(c)
-	return c:IsDiscardable() and c:IsType(TYPE_SPELL)
+	return c:IsDiscardable() and c:IsSpell()
 end
 function Witchcrafter.DiscardCost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Witchcrafter.DiscardSpell,tp,LOCATION_HAND,0,1,nil) end
@@ -376,7 +376,7 @@ function Witchcrafter.repcon(e)
 end
 function Witchcrafter.repval(base,e,tp,eg,ep,ev,re,r,rp,chk,extracon)
 	local c=e:GetHandler()
-	return c:IsControler(tp) and c:IsType(TYPE_MONSTER) and c:IsSetCard(0x128)
+	return c:IsControler(tp) and c:IsMonster() and c:IsSetCard(0x128)
 end
 function Witchcrafter.repop(id)
 	return function(base,e,tp,eg,ep,ev,re,r,rp)
@@ -730,7 +730,7 @@ function Auxiliary.AttractionEquipCon(self)
 	end
 end
 function AA.eqsfilter(c,tp)
-	return c:IsSetCard(0x15f) and c:IsType(TYPE_TRAP) and c:GetEquipTarget() and
+	return c:IsSetCard(0x15f) and c:IsTrap() and c:GetEquipTarget() and
 		   Duel.IsExistingMatchingCard(AA.eqmfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c:GetEquipTarget(),tp)
 end
 function AA.eqmfilter(c,tp)
@@ -924,7 +924,7 @@ end
 
 Drytron={}
 function Drytron.TributeCostFilter(c,tp)
-	return ((c:IsSetCard(0x151) and c:IsType(TYPE_MONSTER)) or c:IsRitualMonster()) and (c:IsControler(tp) or c:IsFaceup())
+	return ((c:IsSetCard(0x151) and c:IsMonster()) or c:IsRitualMonster()) and (c:IsControler(tp) or c:IsFaceup())
 		and (c:IsInMainMZone(tp) or Duel.GetLocationCount(tp,LOCATION_MZONE)>0)
 end
 function Drytron.TributeBaseCost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -1034,7 +1034,7 @@ Effect.CreateMysteruneQPEffect = (function()
 			local b1=rmtg(e,tp,eg,ep,ev,re,r,rp,0,uniquetg,rmcount)
 			local b2=sptg(e,tp,eg,ep,ev,re,r,rp,0)
 			if chk==0 then return b1 or b2 end
-			local sel=aux.SelectEffect(tp,
+			local sel=Duel.SelectEffect(tp,
 				{b1,aux.Stringid(id,0)},
 				{b2,aux.Stringid(id,1)})
 			if sel==1 then

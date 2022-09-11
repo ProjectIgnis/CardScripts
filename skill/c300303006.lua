@@ -42,7 +42,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.cfilter(c,tp)
-	return c:IsPreviousLocation(LOCATION_SZONE) and c:IsPreviousControler(tp) and c:IsType(TYPE_MONSTER)
+	return c:IsPreviousLocation(LOCATION_SZONE) and c:IsPreviousControler(tp) and c:IsMonster()
 end
 function s.stfilter(c)
 	return c:IsType(TYPE_TRAP+TYPE_SPELL) and c:IsSSetable()

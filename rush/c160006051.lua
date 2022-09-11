@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_MONSTER))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsMonster))
 	e2:SetValue(-200)
 	c:RegisterEffect(e2)
 	--DEF increase

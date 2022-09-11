@@ -40,7 +40,7 @@ function s.hspval(e,c)
 	return 0,zone
 end
 function s.costfilter(c)
-	return c:IsSetCard(0x10c) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(0x10c) and c:IsMonster() and c:IsAbleToRemoveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_GRAVE,0,1,nil) end
@@ -49,7 +49,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.filter(c,g)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and g:IsContains(c)
+	return c:IsSpellTrap() and g:IsContains(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local cg=e:GetHandler():GetColumnGroup()

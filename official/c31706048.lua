@@ -23,7 +23,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.filter(c)
-	return (c:IsType(TYPE_MONSTER) and c:IsSetCard(0x104)) or c:IsSetCard(0xfe)
+	return (c:IsMonster() and c:IsSetCard(0x104)) or c:IsSetCard(0xfe)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsPlayerCanDiscardDeck(tp,5) then return end

@@ -66,7 +66,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable()
+	return c:IsSpellTrap() and c:IsSSetable()
 end
 function s.dmcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttackTarget() and (Duel.GetAttackTarget():IsControler(tp) or Duel.GetAttacker():IsControler(tp))

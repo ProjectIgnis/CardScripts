@@ -96,7 +96,7 @@ function s.splimit(e,c)
 	return not c:IsSetCard(0x4b)
 end
 function s.tgfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x4b) and c:IsType(TYPE_MONSTER)
+	return c:IsFaceup() and c:IsSetCard(0x4b) and c:IsMonster()
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetLinkedGroup():IsExists(s.tgfilter,1,nil)

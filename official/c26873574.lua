@@ -77,7 +77,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 function s.fspfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_SPELL) and c:IsType(TYPE_FIELD)
+	return c:IsFaceup() and c:IsSpell() and c:IsType(TYPE_FIELD)
 end
 function s.tgcond(e,c)
 	return Duel.IsExistingMatchingCard(s.fspfilter,0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)

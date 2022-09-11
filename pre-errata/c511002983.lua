@@ -28,7 +28,7 @@ function s.rccost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,300)
 end
 function s.filter(c)
-	return c:IsAbleToDeck() and not c:IsType(TYPE_MONSTER)
+	return c:IsAbleToDeck() and not c:IsMonster()
 end
 function s.rctg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc) end

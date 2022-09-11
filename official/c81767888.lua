@@ -33,7 +33,7 @@ end
 s.listed_names={CARD_ALBAZ,id+1}
 s.listed_series={0x160}
 function s.cfilter(c)
-	return c:IsSetCard(0x160) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(0x160) and c:IsSpellTrap() and c:IsAbleToRemoveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)
@@ -70,7 +70,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummonComplete()
 end
 function s.thfilter(c)
-	return c:IsFaceup() and (c:IsCode(CARD_ALBAZ) or (c:IsMonster() and aux.IsCodeListed(c,CARD_ALBAZ)))
+	return c:IsFaceup() and (c:IsCode(CARD_ALBAZ) or (c:IsMonster() and c:IsCodeListed(CARD_ALBAZ)))
 		and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

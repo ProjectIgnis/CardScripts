@@ -72,6 +72,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) and Duel.SendtoGrave(tc,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_GRAVE) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 		local fc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,tp,tc:GetCode()):GetFirst()
-		aux.PlayFieldSpell(fc,e,tp,eg,ep,ev,re,r,rp)
+		Duel.PlayFieldSpell(fc,e,tp,eg,ep,ev,re,r,rp)
 	end
 end

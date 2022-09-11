@@ -42,7 +42,7 @@ function s.matfilter(c,lc,sumtype,tp)
 	return c:IsSetCard(0x578,lc,sumtype,tp) and c:IsLevelBelow(4)
 end
 function s.tgfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x578) and c:IsType(TYPE_MONSTER)
+	return c:IsFaceup() and c:IsSetCard(0x578) and c:IsMonster()
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.tgfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())

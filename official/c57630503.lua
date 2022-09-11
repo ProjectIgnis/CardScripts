@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsDiscardable() and not c:IsCode(id)
+	return c:IsMonster() and c:IsDiscardable() and not c:IsCode(id)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -60,7 +60,7 @@ function s.thcond(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_HAND) and (r&REASON_DISCARD)~=0
 end
 function s.thfilter(c)
-    return c:IsSetCard(0x35) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+    return c:IsSetCard(0x35) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return true end

@@ -12,7 +12,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x1e}
 function s.spfilter(c,g,e,tp)
-	return g:IsExists(aux.IsCodeListed,1,nil,c:GetCode()) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return g:IsExists(Card.IsCodeListed,1,nil,c:GetCode()) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.cfilter(c)
 	return c:GetSequence()<5

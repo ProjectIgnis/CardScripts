@@ -73,7 +73,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rfilter(c,tp)
-	return c:IsControler(tp) and c:IsType(TYPE_MONSTER) and not c:IsReason(REASON_RETURN)
+	return c:IsControler(tp) and c:IsMonster() and not c:IsReason(REASON_RETURN)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.rfilter,1,nil,tp)

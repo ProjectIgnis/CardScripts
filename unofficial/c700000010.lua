@@ -33,7 +33,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return at:IsControler(tp) and at:IsSetCard(0x99)
 end
 function s.atkfil(c)
-	return aux.nzatk(c) and c:IsAttackPos() and c:IsSetCard(0x9f)
+	return c:HasNonZeroAttack() and c:IsAttackPos() and c:IsSetCard(0x9f)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetAttacker():IsCanBeEffectTarget(e) and Duel.IsExistingMatchingCard(s.atkfil,tp,LOCATION_MZONE,0,1,nil) end

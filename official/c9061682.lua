@@ -70,7 +70,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check if a monster(s) was sent from opponent's hand
 function s.cfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:GetPreviousControler()==1-tp and c:IsPreviousLocation(LOCATION_HAND)
+	return c:IsMonster() and c:GetPreviousControler()==1-tp and c:IsPreviousLocation(LOCATION_HAND)
 end
 	--If it ever happened
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

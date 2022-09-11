@@ -17,7 +17,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)
 end
 function s.filter(c)
-	return ((c:IsSetCard(0xaf) and c:IsType(TYPE_MONSTER)) or c:IsSetCard(0xae)) and c:IsAbleToHand()
+	return ((c:IsSetCard(0xaf) and c:IsMonster()) or c:IsSetCard(0xae)) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc) end

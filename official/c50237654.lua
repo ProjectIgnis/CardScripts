@@ -51,7 +51,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			if tc:IsType(TYPE_QUICKPLAY) then
 				e1:SetCode(EFFECT_QP_ACT_IN_SET_TURN)
-			elseif  tc:IsType(TYPE_TRAP) then
+			elseif  tc:IsTrap() then
 				e1:SetCode(EFFECT_TRAP_ACT_IN_SET_TURN)
 			end
 			e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE)

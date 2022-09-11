@@ -19,8 +19,8 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
 	if chk==0 then return s.count_free_pendulum_zones(tp) > 0
-						and (Duel.GetLocationCount(tp,LOCATION_SZONE) > 1 or e:GetHandler():IsLocation(LOCATION_SZONE))
-						and Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil) end
+		and (Duel.GetLocationCount(tp,LOCATION_SZONE) > 1 or e:GetHandler():IsLocation(LOCATION_SZONE))
+		and Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
 	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,s.count_free_pendulum_zones(tp),nil)
 end
@@ -35,7 +35,7 @@ function s.count_free_pendulum_zones(tp)
 	return count
 end
 function s.move_to_pendulum_zone(c,tp,e)
-	if not c or not (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1))
+	if not c or not Duel.CheckPendulumZones(tp)
 		or not c:IsRelateToEffect(e) or not (c:IsControler(tp) and s.filter(c)) then return end
 	Duel.MoveToField(c,tp,tp,LOCATION_PZONE,POS_FACEUP,true)
 end

@@ -25,7 +25,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(sg,REASON_COST)
 end
 function s.rmfilter(c)
-	return c:IsSetCard(0xa1) and c:IsType(TYPE_SPELL) and c:IsAbleToRemove()
+	return c:IsSetCard(0xa1) and c:IsSpell() and c:IsAbleToRemove()
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0xa0) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,true,true)

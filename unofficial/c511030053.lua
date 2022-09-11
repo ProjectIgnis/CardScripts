@@ -44,7 +44,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,ct,0,0x114a)
 end
 function s.ctfilter(c)
-	return c:IsSetCard(0x57b) and c:IsType(TYPE_MONSTER) and c:IsFaceup()
+	return c:IsSetCard(0x57b) and c:IsMonster() and c:IsFaceup()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

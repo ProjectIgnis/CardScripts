@@ -18,7 +18,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x15f,0x15e}
 function s.eqfilter(c)
-	return c:IsSetCard(0x15f) and c:IsType(TYPE_TRAP)
+	return c:IsSetCard(0x15f) and c:IsTrap()
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

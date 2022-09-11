@@ -17,7 +17,7 @@ function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
 	if not c:IsRelateToBattle() or c:IsFacedown() then return false end
-	return bc:IsLocation(LOCATION_GRAVE) and bc:IsType(TYPE_MONSTER) and bc:IsControler(1-tp) and bc:IsPreviousPosition(POS_FACEUP_ATTACK)
+	return bc:IsLocation(LOCATION_GRAVE) and bc:IsMonster() and bc:IsControler(1-tp) and bc:IsPreviousPosition(POS_FACEUP_ATTACK)
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local bc=e:GetHandler():GetBattleTarget()

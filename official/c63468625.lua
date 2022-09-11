@@ -52,7 +52,7 @@ function s.eqval(ec,c,tp)
 	return ec:IsType(TYPE_SYNCHRO) and ec:IsControler(1-tp)
 end
 function s.spfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x13) and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and c:IsSetCard(0x13) and c:IsAbleToGraveAsCost()
 end
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -92,7 +92,7 @@ end
 function s.equipop(c,e,tp,tc)
 	local atk=tc:GetTextAttack()
 	if atk<0 then atk=0 end
-	if not aux.EquipByEffectAndLimitRegister(c,e,tp,tc,id) then return end
+	if not c:EquipByEffectAndLimitRegister(e,tp,tc,id) then return end
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
@@ -103,7 +103,7 @@ end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsType(TYPE_MONSTER) then
+	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsMonster() then
 		s.equipop(c,e,tp,tc)
 	end
 end

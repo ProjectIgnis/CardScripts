@@ -57,7 +57,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,tp):GetFirst()
-	aux.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
+	Duel.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
 	for chc in aux.Next(sg) do
 		local te=chc:GetActivateEffect()
 		if te and te:IsActivatable(tp,true,true) then

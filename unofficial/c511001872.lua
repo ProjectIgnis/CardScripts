@@ -126,7 +126,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	else return false end
 end
 function s.cfilter(c,e,tp)
-	return c:IsOnField() and c:IsType(TYPE_MONSTER) and c:IsControler(tp) and (not e or c:IsRelateToEffect(e))
+	return c:IsOnField() and c:IsMonster() and c:IsControler(tp) and (not e or c:IsRelateToEffect(e))
 end
 function s.condition2(e,tp,eg,ep,ev,re,r,rp)
 	local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DESTROY)

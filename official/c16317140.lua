@@ -51,7 +51,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return true
 end
 function s.atkcfilter(c)
-	return c:IsType(TYPE_TRAP) and c:IsAbleToGraveAsCost()
+	return c:IsTrap() and c:IsAbleToGraveAsCost()
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.atkcfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,e:GetHandler()) end
@@ -69,7 +69,7 @@ end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsRelateToBattle() then
-		local atk=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsType,TYPE_TRAP),tp,LOCATION_GRAVE+LOCATION_ONFIELD,LOCATION_GRAVE+LOCATION_ONFIELD,nil)*1000
+		local atk=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsTrap),tp,LOCATION_GRAVE+LOCATION_ONFIELD,LOCATION_GRAVE+LOCATION_ONFIELD,nil)*1000
 		--Change ATK/DEF
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

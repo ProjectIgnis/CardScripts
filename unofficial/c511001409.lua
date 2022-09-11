@@ -20,7 +20,7 @@ function s.cfilter(c,atk)
 	return c:IsSetCard(0x10af) and c:GetAttack()>atk
 end
 function s.costfilter(c,tp)
-	return not Duel.IsPlayerAffectedByEffect(c:GetControler(),69832741) and c:IsType(TYPE_MONSTER) and c:IsSetCard(0x10af) and c:IsAbleToRemoveAsCost() 
+	return not Duel.IsPlayerAffectedByEffect(c:GetControler(),69832741) and c:IsMonster() and c:IsSetCard(0x10af) and c:IsAbleToRemoveAsCost() 
 		and not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,nil,c:GetAttack())
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

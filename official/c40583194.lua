@@ -45,5 +45,5 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.etarget(e,re,c)
-	return c:IsType(TYPE_MONSTER) and (c:IsFaceup() or c:IsLocation(LOCATION_MZONE))
+	return c:IsMonster() and (c:IsFaceup() or c:IsLocation(LOCATION_MZONE))
 end

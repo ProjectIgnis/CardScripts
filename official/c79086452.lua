@@ -23,7 +23,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x1083}
 function s.spfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x1083) and c:IsDiscardable()
+	return c:IsMonster() and c:IsSetCard(0x1083) and c:IsDiscardable()
 end
 function s.spcon1(e,c)
 	if c==nil then return true end

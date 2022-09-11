@@ -71,7 +71,7 @@ function s.eqlimit(e,c)
 	return c:GetControler()==e:GetOwnerPlayer() and c:IsType(TYPE_XYZ)
 end
 function s.mfilter(c)
-	return c:IsSetCard(0x88) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x88) and c:IsMonster()
 end
 function s.mattg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.mfilter,tp,LOCATION_HAND,0,1,nil) end

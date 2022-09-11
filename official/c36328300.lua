@@ -72,7 +72,7 @@ function s.plcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.plcfilter,1,nil,tp)
 end
 function s.plfilter(c)
-	return c:IsSetCard(0x1034) and c:IsType(TYPE_MONSTER) and not c:IsForbidden()
+	return c:IsSetCard(0x1034) and c:IsMonster() and not c:IsForbidden()
 end
 function s.pltg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0

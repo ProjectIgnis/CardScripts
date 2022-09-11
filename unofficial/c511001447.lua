@@ -41,7 +41,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if tc1 and tc2 then
 		local g=Group.FromCards(tc1,tc2)
 		Duel.ConfirmCards(1-tp,g)
-		if tc1:IsType(TYPE_MONSTER) and tc2:IsType(TYPE_MONSTER) and tc1:GetLevel()==tc2:GetLevel() then
+		if tc1:IsMonster() and tc2:IsMonster() and tc1:GetLevel()==tc2:GetLevel() then
 			local xyzg=Duel.GetMatchingGroup(s.xyzfilter,tp,LOCATION_EXTRA,0,nil,g)
 			if #xyzg>0 then
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

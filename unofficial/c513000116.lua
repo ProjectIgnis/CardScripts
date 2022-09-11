@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.spfilter(c,e,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -33,7 +33,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ShuffleHand(tp)
 	local rg=sg1:Select(1-tp,1,1,nil)
 	local tc=rg:GetFirst()
-	if tc:IsType(TYPE_MONSTER) and tc:IsCanBeSpecialSummoned(e,0,tp,true,false) then
+	if tc:IsMonster() and tc:IsCanBeSpecialSummoned(e,0,tp,true,false) then
 		Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEUP)
 		Duel.SendtoGrave(sg2,REASON_EFFECT)
 	else

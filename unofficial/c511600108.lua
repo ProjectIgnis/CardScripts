@@ -16,7 +16,7 @@ function s.filter(c,e,tp,eg,ep,ev,re,r,rp,b)
 	if c:IsCode(alias) then return false end
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
 	local te=c:CheckActivateEffect(false,false,false)
-	if ((b and ft>1) or (not b and ft>0)) and c:IsType(TYPE_SPELL)
+	if ((b and ft>1) or (not b and ft>0)) and c:IsSpell()
 		and not c:IsType(TYPE_FIELD) and te then
 		if c:IsSetCard(0x95) then
 			local tg=te:GetTarget()

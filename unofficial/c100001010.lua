@@ -37,7 +37,7 @@ function s.efilter(e,te)
 	return te:IsActiveType(TYPE_TRAP)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_TRAP)
+	return c:IsFaceup() and c:IsTrap()
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)

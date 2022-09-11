@@ -51,7 +51,7 @@ function s.poscon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.posfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:GetSequence()<=4 and not c:IsPosition(POS_FACEUP_DEFENSE)
+	return c:IsMonster() and c:GetSequence()<=4 and not c:IsPosition(POS_FACEUP_DEFENSE)
 end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.posfilter(chkc) end

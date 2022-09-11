@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsType(TYPE_NORMAL+TYPE_EFFECT) and c:HasLevel() and c:IsAbleToHand()
+	return c:IsMonster() and c:IsType(TYPE_NORMAL+TYPE_EFFECT) and c:HasLevel() and c:IsAbleToHand()
 end
 function s.check(sg,e,tp)
 	return sg:GetClassCount(Card.GetRace)==1 and sg:GetClassCount(Card.GetAttribute)==1

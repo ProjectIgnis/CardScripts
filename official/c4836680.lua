@@ -98,7 +98,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local b1=not tc:IsForbidden()
 	local b2=tc:IsAbleToGrave()
 	if not (b1 or b2) then return end
-	local op=aux.SelectEffect(tp,
+	local op=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,4)},
 		{b2,aux.Stringid(id,5)})
 	if op==1 then

@@ -37,7 +37,7 @@ end
 s.listed_names={id}
 s.listed_series={0x13d}
 function s.tdfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsFaceup() and c:IsAbleToDeck() and not c:IsCode(id)
+	return c:IsMonster() and c:IsFaceup() and c:IsAbleToDeck() and not c:IsCode(id)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()

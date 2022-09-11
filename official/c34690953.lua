@@ -37,7 +37,7 @@ end
 s.listed_names={TOKEN_BRAVE}
 local token_stats={TOKEN_BRAVE,0,TYPES_TOKEN,2000,2000,4,RACE_FAIRY,ATTRIBUTE_EARTH}
 function s.counterfilter(c)
-	return c:IsCode(TOKEN_BRAVE) or (aux.IsCodeListed(c,TOKEN_BRAVE) and c:IsMonster())
+	return c:IsCode(TOKEN_BRAVE) or (c:IsCodeListed(TOKEN_BRAVE) and c:IsMonster())
 end
 function s.tkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0 end
@@ -53,7 +53,7 @@ function s.tkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.splimit(e,c)
-	return not (c:IsCode(TOKEN_BRAVE) or (aux.IsCodeListed(c,TOKEN_BRAVE) and c:IsMonster()))
+	return not (c:IsCode(TOKEN_BRAVE) or (c:IsCodeListed(TOKEN_BRAVE) and c:IsMonster()))
 end
 function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local nm,arch,typ,atk,def,lvl,rc,attr=table.unpack(token_stats)
@@ -69,7 +69,7 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 	local b1=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,nm,arch,typ,atk,def,lvl,rc,attr)
 	local b2=Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,nm,arch,typ,atk,def,lvl,rc,attr,POS_FACEUP,1-tp)
 	if not (b1 or b2) then return end
-	local op=aux.SelectEffect(tp,
+	local op=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,3)},
 		{b2,aux.Stringid(id,4)})
 	local player=op==1 and tp or 1-tp
@@ -102,7 +102,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local b1=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,nm,arch,typ,atk,def,lvl,rc,attr)
 	local b2=Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,nm,arch,typ,atk,def,lvl,rc,attr,POS_FACEUP,1-tp)
 	if not (b1 or b2) then return end
-	local op=aux.SelectEffect(tp,
+	local op=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,3)},
 		{b2,aux.Stringid(id,4)})
 	local player=op==1 and tp or 1-tp

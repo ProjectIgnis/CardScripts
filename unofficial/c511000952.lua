@@ -23,7 +23,7 @@ function s.filter(c,e,tp,chk,chain)
 	if not te and chk==1 then
 		te=c:GetActivateEffect()
 	end
-	if te==nil or not c:IsType(TYPE_TRAP) or not c:IsAbleToRemoveAsCost() then return false end
+	if te==nil or not c:IsTrap() or not c:IsAbleToRemoveAsCost() then return false end
 	local target=te:GetTarget()
 	if te:GetCode()==EVENT_CHAINING and chk==1 then
 		if chain<=0 then return false end

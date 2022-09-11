@@ -18,10 +18,10 @@ end
 s.listed_series={0x79,0x7c}
 
 function s.filter1(c)
-	return c:IsFaceup() and c:IsSetCard(0x79) and c:IsType(TYPE_MONSTER)
+	return c:IsFaceup() and c:IsSetCard(0x79) and c:IsMonster()
 end
 function s.filter2(c)
-	return c:IsFaceup() and c:IsSetCard(0x7c) and (c:IsType(TYPE_SPELL) or c:IsType(TYPE_TRAP))
+	return c:IsFaceup() and c:IsSetCard(0x7c) and (c:IsSpell() or c:IsTrap())
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)

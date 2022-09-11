@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	end)
 end
 function s.chkfilter(c,tp,re)
-	return c:IsType(TYPE_MONSTER) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
+	return c:IsMonster() and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
 		and (c:GetReason()&0x41)==0x41 and re:GetOwner():IsSetCard(0x1512)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)

@@ -84,7 +84,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return a and a:IsSetCard(0x16) and Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL
 end
 function s.atkfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x16) and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and c:IsSetCard(0x16) and c:IsAbleToGraveAsCost()
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.atkfilter,tp,LOCATION_DECK,0,1,nil)

@@ -61,7 +61,7 @@ function s.effcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetLabel()>0
 end
 function s.sfilter(c)
-	return c:IsSetCard(0x106e) and c:GetCode()~=id and c:IsType(TYPE_SPELL) and c:IsAbleToHand()
+	return c:IsSetCard(0x106e) and c:GetCode()~=id and c:IsSpell() and c:IsAbleToHand()
 end
 function s.spfilter(c,lv,e,tp)
 	return c:IsLevelBelow(lv) and c:IsRace(RACE_SPELLCASTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

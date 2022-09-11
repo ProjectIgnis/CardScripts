@@ -65,7 +65,7 @@ function s.atchop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,ft,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_MACHINE) and c:IsLinkMonster() and c:IsControler(tp)
+	return c:IsMonster() and c:IsRace(RACE_MACHINE) and c:IsLinkMonster() and c:IsControler(tp)
 		and (ft>0 or c:GetSequence()<5)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -23,7 +23,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local resets=RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END
-	local g=Duel.GetMatchingGroup(aux.disfilter1,tp,0,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(Card.IsNegatableMonster,tp,0,LOCATION_MZONE,nil)
 	for tc in g:Iter() do
 		--Negate its effects
 		local e1=Effect.CreateEffect(c)

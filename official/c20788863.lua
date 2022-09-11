@@ -33,14 +33,14 @@ function s.initial_effect(c)
 end
 s.listed_series={0x119}
 function s.cfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x119) and c:IsDiscardable()
+	return c:IsMonster() and c:IsSetCard(0x119) and c:IsDiscardable()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST+REASON_DISCARD,nil)
 end
 function s.gyfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x119) and c:IsAbleToGrave()
+	return c:IsMonster() and c:IsSetCard(0x119) and c:IsAbleToGrave()
 end
 function s.drtg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1)

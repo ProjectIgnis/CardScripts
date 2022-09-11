@@ -49,7 +49,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0xc9}
 function s.tgfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_PLANT) and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and c:IsRace(RACE_PLANT) and c:IsAbleToGraveAsCost()
 		and (c:IsFaceup() or c:IsLocation(LOCATION_HAND))
 end
 function s.rccost(e,tp,eg,ep,ev,re,r,rp,chk)

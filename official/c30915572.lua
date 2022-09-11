@@ -27,7 +27,7 @@ function s.spoperation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	if tc then
 		Duel.BreakEffect()
-		if tc:IsType(TYPE_MONSTER) then
+		if tc:IsMonster() then
 			Duel.Damage(1-tp,tc:GetLevel()*200,REASON_EFFECT)
 			if not c:IsRelateToEffect(e) then return end
 			Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)

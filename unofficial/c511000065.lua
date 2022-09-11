@@ -23,7 +23,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	while ct<3 and Duel.IsPlayerCanDiscardDeck(tp,1) and (ct==0 or Duel.SelectYesNo(tp,aux.Stringid(id,0))) do
 		local tc=Duel.GetDecktopGroup(tp,1):GetFirst()
 		Duel.DiscardDeck(tp,1,REASON_EFFECT)
-		if tc:IsType(TYPE_MONSTER) then
+		if tc:IsMonster() then
 			local ca=tc:GetAttack()
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)

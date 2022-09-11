@@ -22,7 +22,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x1083}
 function s.cfilter(c,tp)
-	return c:IsSetCard(0x1083) and c:IsAbleToRemoveAsCost() and c:IsType(TYPE_MONSTER) and aux.SpElimFilter(c,true) 
+	return c:IsSetCard(0x1083) and c:IsAbleToRemoveAsCost() and c:IsMonster() and aux.SpElimFilter(c,true) 
 		and (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 or (c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5))
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

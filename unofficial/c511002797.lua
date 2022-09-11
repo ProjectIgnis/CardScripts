@@ -13,7 +13,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>0 and Duel.GetLocationCount(1-tp,LOCATION_SZONE)>0 end
 end
 function s.filter(c)
-	return c:IsType(TYPE_SPELL) and c:IsSSetable()
+	return c:IsSpell() and c:IsSSetable()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_HAND,nil)

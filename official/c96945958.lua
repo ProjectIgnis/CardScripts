@@ -53,7 +53,7 @@ function s.aclimit(e,re,tp)
 	return re:IsActiveType(TYPE_MONSTER) and not rc:IsAttribute(ATTRIBUTE_WIND)
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x2016) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(0x2016) and c:IsMonster() and c:IsAbleToRemoveAsCost()
 end
 function s.adcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

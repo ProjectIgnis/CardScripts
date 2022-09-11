@@ -24,7 +24,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x29}
 function s.thfilter(c,e)
-	return c:IsSetCard(0x29) and c:IsType(TYPE_MONSTER) and c:IsLevelBelow(4)
+	return c:IsSetCard(0x29) and c:IsMonster() and c:IsLevelBelow(4)
 		and c:IsAbleToHand() and c:IsCanBeEffectTarget(e) 
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

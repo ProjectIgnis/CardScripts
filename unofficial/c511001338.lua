@@ -60,7 +60,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.mtfilter(c)
-	return c:IsSetCard(0x48) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x48) and c:IsMonster()
 end
 function s.mttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.mtfilter,tp,0,LOCATION_GRAVE,1,nil) end
@@ -91,7 +91,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
 		local atk=tc:GetAttack()
-		if tc:IsFacedown() or not tc:IsType(TYPE_MONSTER) then
+		if tc:IsFacedown() or not tc:IsMonster() then
 			atk=0
 		end
 		if Duel.Destroy(tc,REASON_EFFECT)>0 and atk>0 then

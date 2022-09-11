@@ -88,5 +88,5 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.condition(e,c)
-	return c:IsType(TYPE_MONSTER)
+	return c:IsMonster()
 end

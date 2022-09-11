@@ -34,7 +34,7 @@ end
 s.listed_series={0x10f2}
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local tg=Duel.GetMatchingGroup(aux.nzatk,tp,LOCATION_MZONE,LOCATION_MZONE,c)
+	local tg=Duel.GetMatchingGroup(Card.HasNonZeroAttack,tp,LOCATION_MZONE,LOCATION_MZONE,c)
 	if #tg>0 and Duel.SelectEffectYesNo(tp,c) then
 		Duel.Hint(HINT_CARD,0,id)
 		local atk=#tg*100

@@ -122,7 +122,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 	local sg=Group.CreateGroup()
 	local dc=dg:GetFirst()
 	while dc do
-		if dc:IsType(TYPE_MONSTER) and dc:GetLevel()<=4 then
+		if dc:IsMonster() and dc:GetLevel()<=4 then
 			local matk=dc:GetAttack()
 			if matk<0 then matk=0 end
 			atk=atk+matk

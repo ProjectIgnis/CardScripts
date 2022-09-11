@@ -28,11 +28,11 @@ function s.initial_effect(c)
 end
 s.listed_series={0x7c,0x79}
 function s.thfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x7c) and c:IsAbleToHand()
+	return c:IsSpellTrap() and c:IsSetCard(0x7c) and c:IsAbleToHand()
 		and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
 end
 function s.gyfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x79) and c:IsAbleToGrave()
+	return c:IsMonster() and c:IsSetCard(0x79) and c:IsAbleToGrave()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_ONFIELD+LOCATION_GRAVE) and s.thfilter(chkc) end

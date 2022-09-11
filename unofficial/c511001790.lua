@@ -20,7 +20,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return bc:IsStatus(STATUS_BATTLE_DESTROYED) and bc:GetBattleTarget():IsStatus(STATUS_OPPO_BATTLE)
 end
 function s.filter(c,e)
-	return c:IsDestructable() and c:IsType(TYPE_SPELL+TYPE_TRAP) and (not e or c:IsCanBeEffectTarget(e))
+	return c:IsDestructable() and c:IsSpellTrap() and (not e or c:IsCanBeEffectTarget(e))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and s.filter(chkc) and chkc~=e:GetHandler() end

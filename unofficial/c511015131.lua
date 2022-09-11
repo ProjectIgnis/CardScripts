@@ -38,7 +38,7 @@ s_g=Group.CreateGroup()
 function s.gchk(e,tp,eg,ev,ep,re,r,rp)
 	local c=eg:GetFirst()
 	while c do
-		if c:IsPreviousControler(tp) and c:IsType(TYPE_MONSTER) and c:IsSetCard(0x25c) then
+		if c:IsPreviousControler(tp) and c:IsMonster() and c:IsSetCard(0x25c) then
 			s_g:AddCard(c) 
 		end
 		c=eg:GetNext()
@@ -50,7 +50,7 @@ function s.gclear(e,tp,eg,ev,ep,re,r,rp)
 	end
 end
 function s.sfilter(c,e,tp,g)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x15c) and 
+	return c:IsMonster() and c:IsSetCard(0x15c) and 
 		g:IsExists(function (c,lv) return c:GetLevel()==lv end,1,nil,c:GetLevel()-2) and
 		c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SPECIAL,tp,false,false)
 end

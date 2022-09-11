@@ -57,7 +57,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	if tc then
 		Duel.ConfirmCards(1-tp,tc)
 		Duel.BreakEffect()
-		if tc:IsType(TYPE_MONSTER) then
+		if tc:IsMonster() then
 			Duel.NegateAttack()
 			Duel.ShuffleHand(tp)
 			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,0)

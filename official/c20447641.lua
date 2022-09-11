@@ -42,5 +42,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummonComplete()
 end
 function s.indtg(e,c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0xaa)
+	return c:IsSpellTrap() and c:IsSetCard(0xaa)
 end

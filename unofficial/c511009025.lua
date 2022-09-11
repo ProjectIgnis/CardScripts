@@ -81,7 +81,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.disfilter(c)
-	return c:IsFaceup() and c:IsLevelAbove(5) and aux.disfilter1(c)
+	return c:IsFaceup() and c:IsLevelAbove(5) and c:IsNegatableMonster()
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.disfilter(chkc) end

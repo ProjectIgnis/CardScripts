@@ -19,8 +19,8 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if phase~=PHASE_DAMAGE or Duel.IsDamageCalculated() then return false end
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
-	return (d~=nil and a:GetControler()==tp and a:IsType(TYPE_MONSTER) and a:IsRelateToBattle())
-		or (d~=nil and d:GetControler()==tp and d:IsFaceup() and d:IsType(TYPE_MONSTER) and d:IsRelateToBattle())
+	return (d~=nil and a:GetControler()==tp and a:IsMonster() and a:IsRelateToBattle())
+		or (d~=nil and d:GetControler()==tp and d:IsFaceup() and d:IsMonster() and d:IsRelateToBattle())
 end
 
 function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)

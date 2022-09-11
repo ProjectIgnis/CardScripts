@@ -15,7 +15,7 @@ end
 s.listed_series={0x9f}
 
 function s.cfilter(c)
-return c:IsOnField() and c:IsType(TYPE_MONSTER) and c:IsSetCard(0x9f) 
+return c:IsOnField() and c:IsMonster() and c:IsSetCard(0x9f) 
 end
 
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

@@ -27,7 +27,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local op=Duel.SelectOption(tp,70,71,72)
 	Duel.ConfirmCards(tp,tc)
 	Duel.ShuffleHand(1-tp)
-	if (op==0 and tc:IsType(TYPE_MONSTER)) or (op==1 and tc:IsType(TYPE_SPELL)) or (op==2 and tc:IsType(TYPE_TRAP)) then
+	if (op==0 and tc:IsMonster()) or (op==1 and tc:IsSpell()) or (op==2 and tc:IsTrap()) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)

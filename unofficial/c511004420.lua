@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(0,LOCATION_MZONE)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_MONSTER))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsMonster))
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
 	--damage process

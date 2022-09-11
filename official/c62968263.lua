@@ -74,7 +74,7 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	local spchk=ft>0 and tc:IsCanBeSpecialSummoned(e,0,tp,false,false)
 	local attchk=Duel.IsExistingMatchingCard(s.attfilter,tp,LOCATION_MZONE,0,1,nil,e)
 	if not (spchk or attchk) then return end
-	local op=aux.SelectEffect(tp,
+	local op=Duel.SelectEffect(tp,
 		{spchk,aux.Stringid(id,3)},
 		{attchk,aux.Stringid(id,4)})
 	local success_chk=nil

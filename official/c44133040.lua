@@ -61,7 +61,7 @@ function s.atkupop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x129) and c:IsAbleToRemoveAsCost() and not c:IsCode(id)
+	return c:IsSpellTrap() and c:IsSetCard(0x129) and c:IsAbleToRemoveAsCost() and not c:IsCode(id)
 end
 function s.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,1000) and Duel.IsExistingMatchingCard(s.rfilter,tp,LOCATION_GRAVE,0,1,nil) end

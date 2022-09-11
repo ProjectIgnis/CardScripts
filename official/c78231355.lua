@@ -17,7 +17,7 @@ function s.filter(c,e,tp)
 	return c:IsSetCard(0x133) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.gyfilter(c,tc)
-	return c:IsSetCard(0x133) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
+	return c:IsSetCard(0x133) and c:IsMonster() and c:IsAbleToGrave()
 		and c:IsAttribute(tc:GetAttribute())
 		and not c:IsLevel(tc:GetLevel())
 end

@@ -30,10 +30,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.indfilter1(c,tp)
-	return c:IsType(TYPE_MONSTER) and Duel.IsExistingMatchingCard(s.indfilter2,tp,LOCATION_GRAVE,0,1,c,c)
+	return c:IsMonster() and Duel.IsExistingMatchingCard(s.indfilter2,tp,LOCATION_GRAVE,0,1,c,c)
 end
 function s.indfilter2(c,tc)
-	return c:IsType(TYPE_MONSTER) and c:GetOriginalAttribute()==tc:GetOriginalAttribute()
+	return c:IsMonster() and c:GetOriginalAttribute()==tc:GetOriginalAttribute()
 		and c:GetOriginalRace()==tc:GetOriginalRace()
 		and not c:IsCode(tc:GetCode())
 end
@@ -41,7 +41,7 @@ function s.indcon(e)
 	return Duel.IsExistingMatchingCard(s.indfilter1,e:GetHandlerPlayer(),LOCATION_GRAVE,0,1,nil,e:GetHandlerPlayer())
 end
 function s.gycfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.gycheck(sg,e,tp)
 	return sg:GetClassCount(Card.GetOriginalAttribute)==1 

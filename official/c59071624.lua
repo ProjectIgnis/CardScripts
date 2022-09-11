@@ -92,8 +92,7 @@ function s.sscost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 	--Check for opponent's monster that sent there by your effect
 function s.cfilter(c,tp)
-	return c:IsType(TYPE_MONSTER)
-		and c:GetPreviousControler()==1-tp and c:IsPreviousLocation(LOCATION_MZONE) 
+	return c:IsMonster() and c:GetPreviousControler()==1-tp and c:IsPreviousLocation(LOCATION_MZONE) 
 		and c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==tp
 end
 	--Check for opponent's sent monster in GY/banished
@@ -122,4 +121,3 @@ function s.ssop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-

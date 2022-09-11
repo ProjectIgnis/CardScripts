@@ -25,7 +25,7 @@ function s.initial_effect(c)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and rc:IsType(TYPE_SPELL) and Duel.GetTurnPlayer()==rc:GetControler() then
+	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and rc:IsSpell() and Duel.GetTurnPlayer()==rc:GetControler() then
 		rc:RegisterFlagEffect(id,RESET_PHASE+PHASE_END+RESET_SELF_TURN,0,2)
 		rc:RegisterFlagEffect(id+1,RESET_PHASE+PHASE_END+RESET_SELF_TURN,0,1)
 	end
@@ -35,7 +35,7 @@ function s.filter(c,e,tp)
 	if e:GetHandler():IsLocation(LOCATION_HAND) then
 		ft=ft-1
 	end
-	return c:GetFlagEffect(id)>0 and c:GetFlagEffect(id+1)==0 and c:IsType(TYPE_SPELL) and (ft>0 or c:IsType(TYPE_FIELD)) 
+	return c:GetFlagEffect(id)>0 and c:GetFlagEffect(id+1)==0 and c:IsSpell() and (ft>0 or c:IsType(TYPE_FIELD)) 
 		and c:CheckActivateEffect(false,false,false)~=nil
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

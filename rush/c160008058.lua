@@ -17,7 +17,7 @@ function s.filter(c,tp)
 	return c:IsFaceup() and (c:IsCode(CARD_SUMMONED_SKULL) or c:IsRace(RACE_THUNDER)) and Duel.IsExistingMatchingCard(s.desfilter,tp,0,LOCATION_MZONE,1,nil,c:GetAttack()) 
 end
 function s.desfilter(c,atk)
-	return c:IsType(TYPE_MONSTER) and c:IsFaceup() and c:IsDefenseBelow(atk)
+	return c:IsMonster() and c:IsFaceup() and c:IsDefenseBelow(atk)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.filter,tp),tp,LOCATION_MZONE,0,1,nil) end

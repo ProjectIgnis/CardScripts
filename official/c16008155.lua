@@ -46,7 +46,7 @@ function s.sdcon(e)
 end
 function s.desop1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if re:GetHandler():IsType(TYPE_SPELL+TYPE_TRAP) and c:IsLocation(LOCATION_MZONE) and c:IsFaceup() then
+	if re:GetHandler():IsSpellTrap() and c:IsLocation(LOCATION_MZONE) and c:IsFaceup() then
 		e:SetLabelObject(re)
 		e:SetLabel(0)
 	end

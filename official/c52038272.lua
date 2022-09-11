@@ -53,7 +53,7 @@ end
 s.listed_series={0xbb}
 
 function s.spfilter(c)
-	return c:IsSetCard(0xbb) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost() 
+	return c:IsSetCard(0xbb) and c:IsMonster() and c:IsAbleToRemoveAsCost() 
 		and (c:IsLocation(LOCATION_HAND) or aux.SpElimFilter(c,true,true))
 end
 function s.spcon(e,c)

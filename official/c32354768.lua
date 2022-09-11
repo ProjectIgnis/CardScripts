@@ -59,7 +59,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0xc4}
 function s.mtfilter(c)
-	return c:IsSetCard(0xc4) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0xc4) and c:IsMonster()
 end
 function s.valcheck(e,c)
 	if c:GetMaterial():IsExists(s.mtfilter,1,nil) then
@@ -67,7 +67,7 @@ function s.valcheck(e,c)
 	end
 end
 function s.filter(c)
-	return c:IsSetCard(0xc4) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0xc4) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

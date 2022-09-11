@@ -36,7 +36,7 @@ s.listed_series={0x11b,0xfe}
 s.listed_names={id}
 
 function s.cfilter(c,tp)
-	return c:IsAbleToRemoveAsCost() and c:IsType(TYPE_MONSTER) and aux.SpElimFilter(c,false,true)
+	return c:IsAbleToRemoveAsCost() and c:IsMonster() and aux.SpElimFilter(c,false,true)
 		and Duel.IsExistingTarget(s.filter,tp,LOCATION_ONFIELD,0,1,c)
 end
 function s.filter(c)

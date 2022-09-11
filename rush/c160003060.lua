@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,tp)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsPreviousLocation(LOCATION_SZONE) and c:IsPreviousControler(tp)
+	return c:IsSpellTrap() and c:IsPreviousLocation(LOCATION_SZONE) and c:IsPreviousControler(tp)
 		and (c:GetReason()&(REASON_EFFECT+REASON_DESTROY))==(REASON_EFFECT+REASON_DESTROY)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

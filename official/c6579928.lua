@@ -26,7 +26,7 @@ function s.filter(c,att)
 	return c:IsFaceup() and c:IsAttribute(att)
 end
 function s.thfilter(c,tp)
-	return c:IsSetCard(0x3d) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x3d) and c:IsMonster() and c:IsAbleToHand()
 		and not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil,c:GetAttribute())
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -18,7 +18,7 @@ end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local eqc=e:GetHandler():GetEquipTarget()
 	local des=eg:GetFirst()
-	return des:IsLocation(LOCATION_GRAVE) and des:GetReasonCard()==eqc and des:IsType(TYPE_MONSTER)
+	return des:IsLocation(LOCATION_GRAVE) and des:GetReasonCard()==eqc and des:IsMonster()
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

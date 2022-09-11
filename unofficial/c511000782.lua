@@ -50,7 +50,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.DisableShuffleCheck()
 		Duel.ConfirmDecktop(1-tp,1)
 		local rc=Duel.GetDecktopGroup(1-tp,1):GetFirst()
-		if rc and rc:IsType(TYPE_MONSTER) then
+		if rc and rc:IsMonster() then
 			if rc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK,1-tp) and Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0 
 				and Duel.SpecialSummon(rc,0,tp,1-tp,false,false,POS_FACEUP_ATTACK)>0 then
 				local fid=c:GetFieldID()

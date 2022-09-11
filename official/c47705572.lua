@@ -35,7 +35,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0xdf}
 function s.splimit(e,c,sump,sumtype,sumpos,targetp)
-	return not (c:IsSetCard(0xdf) and c:IsType(TYPE_MONSTER)) and (sumtype&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
+	return not (c:IsSetCard(0xdf) and c:IsMonster()) and (sumtype&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
 function s.fextra(e,tp,mg)
 	if not Duel.IsPlayerAffectedByEffect(tp,69832741) then
@@ -48,5 +48,5 @@ function s.extratarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,0,tp,LOCATION_MZONE+LOCATION_GRAVE)
 end
 function s.ptg(e,c)
-	return c:IsSetCard(0xdf) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0xdf) and c:IsMonster()
 end

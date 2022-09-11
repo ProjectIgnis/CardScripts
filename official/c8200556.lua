@@ -32,7 +32,7 @@ end
 s.listed_series={0x159}
 s.listed_names={CARD_MYUTANT_BEAST,CARD_MYUTANT_MIST,CARD_MYUTANT_ARSENAL}
 function s.thfilter(c)
-	return c:IsSetCard(0x159) and (c:IsType(TYPE_SPELL) or c:IsType(TYPE_TRAP)) and c:IsAbleToHand()
+	return c:IsSetCard(0x159) and (c:IsSpell() or c:IsTrap()) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

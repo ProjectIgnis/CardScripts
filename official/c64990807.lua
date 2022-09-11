@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x2f}
 function s.cfilter(c)
-	return c:IsSetCard(0x2f) and c:IsType(TYPE_MONSTER) and not c:IsPublic()
+	return c:IsSetCard(0x2f) and c:IsMonster() and not c:IsPublic()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_HAND,0,nil)

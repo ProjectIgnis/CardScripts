@@ -59,8 +59,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	if not (c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()) then return false end
-	return not c:IsCode(id) and (aux.IsCodeListed(c,76263644) or aux.IsArchetypeCodeListed(c,0xc008))
+	if not (c:IsSpellTrap() and c:IsAbleToHand()) then return false end
+	return not c:IsCode(id) and (c:IsCodeListed(76263644) or c:IsArchetypeCodeListed(0xc008))
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

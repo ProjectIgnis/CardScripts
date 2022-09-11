@@ -76,7 +76,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetLabelObject():GetLabel()~=Duel.GetTurnCount() and tp==Duel.GetTurnPlayer() and c:GetFlagEffect(id)>0
 end
 function s.desfilter(c)
-	return c:IsSetCard(0x11f) and c:IsType(TYPE_MONSTER) and not c:IsCode(id)
+	return c:IsSetCard(0x11f) and c:IsMonster() and not c:IsCode(id)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

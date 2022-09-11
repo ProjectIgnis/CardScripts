@@ -54,7 +54,7 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c)
-	return c:IsType(TYPE_SPELL) and c:IsAbleToRemoveAsCost()
+	return c:IsSpell() and c:IsAbleToRemoveAsCost()
 end
 	--Banish itself from GY and 1 spell from hand as cost
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)

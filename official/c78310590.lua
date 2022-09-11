@@ -86,7 +86,7 @@ function s.splimit(e,c)
 	return not (c:IsSetCard(0x10ec) and c:IsType(TYPE_PENDULUM))
 end
 function s.valfilter(c)
-	return c:IsSetCard(0x20ec) and c:IsType(TYPE_SPELL)
+	return c:IsSetCard(0x20ec) and c:IsSpell()
 end
 function s.val(e,c)
 	return Duel.GetMatchingGroupCount(s.valfilter,c:GetControler(),LOCATION_GRAVE,0,nil)*100

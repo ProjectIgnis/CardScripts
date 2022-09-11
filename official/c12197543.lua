@@ -34,7 +34,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local b1=rg:FilterCount(Card.IsDiscardable,nil,REASON_EFFECT)==#rg
 	local b2=#g>0
 	if not (b1 or b2) then return Duel.ShuffleHand(1-tp) end
-	local op=aux.SelectEffect(tp,
+	local op=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,1)},
 		{b2,aux.Stringid(id,2)})
 	if op==1 then

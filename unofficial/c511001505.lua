@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 function s.cfilter(c,tp)
 	return (c:GetPreviousLocation() == LOCATION_ONFIELD and c:GetPreviousTypeOnField()&TYPE_MONSTER ~= 0) 
-	or (c:GetPreviousLocation()~=LOCATION_ONFIELD and c:IsType(TYPE_MONSTER))
+	or (c:GetPreviousLocation()~=LOCATION_ONFIELD and c:IsMonster())
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

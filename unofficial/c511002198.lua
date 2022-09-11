@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.costfilter(c,e,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost() 
+	return c:IsMonster() and c:IsAbleToGraveAsCost() 
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,c,e,tp)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)

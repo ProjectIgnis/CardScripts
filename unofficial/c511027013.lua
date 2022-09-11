@@ -43,7 +43,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,800)
 end
 function s.tgfilter(c,e,tp)
-	if not (c:IsFaceup() and c:IsType(TYPE_SPELL)) then return false end
+	if not (c:IsFaceup() and c:IsSpell()) then return false end
 	local loc=c:GetLocation()
 	if c:IsType(TYPE_FIELD) then
 		return true
@@ -58,7 +58,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
 	if e:GetHandler():IsLocation(LOCATION_HAND) then ft=ft-1 end
-	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and chkc:IsType(TYPE_SPELL) and chkc:IsFaceup() end
+	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and chkc:IsSpell() and chkc:IsFaceup() end
 	if chk==0 then return Duel.IsExistingTarget(s.tgfilter,tp,0,LOCATION_ONFIELD,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local g=Duel.SelectTarget(tp,s.tgfilter,tp,0,LOCATION_ONFIELD,1,1,nil,e,tp)
@@ -108,7 +108,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x1157) and c:IsType(TYPE_MONSTER) and c:IsFaceup()
+	return c:IsSetCard(0x1157) and c:IsMonster() and c:IsFaceup()
 end
 function s.tgocon(e)
 	return Duel.IsExistingMatchingCard(s.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)

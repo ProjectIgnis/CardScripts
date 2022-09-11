@@ -48,7 +48,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x109}
 function s.tffilter(c,tp)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x109) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
+	return c:IsSpellTrap() and c:IsSetCard(0x109) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
 		and not c:IsType(TYPE_FIELD)
 end
 function s.tftg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -64,7 +64,7 @@ function s.tfop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.immtg(e,c)
-	return c:IsSetCard(0x109) and c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSetCard(0x109) and c:IsSpellTrap()
 end
 function s.spreg(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return end

@@ -60,12 +60,12 @@ if not BoosterDraft then
 	end
 	local c_getrace=Card.GetRace
 	Card.GetRace=function(c)
-		if c:IsType(TYPE_MONSTER) then return 0xffffff end
+		if c:IsMonster() then return 0xffffff end
 		return c_getrace(c)
 	end
 	local c_getorigrace=Card.GetOriginalRace
 	Card.GetOriginalRace=function(c)
-		if c:IsType(TYPE_MONSTER) then return 0xffffff end
+		if c:IsMonster() then return 0xffffff end
 		return c_getorigrace(c)
 	end
 	local c_getprevraceonfield=Card.GetPreviousRaceOnField
@@ -75,7 +75,7 @@ if not BoosterDraft then
 	end
 	local c_israce=Card.IsRace
 	Card.IsRace=function(c,r)
-		if c:IsType(TYPE_MONSTER) then return true end
+		if c:IsMonster() then return true end
 		return c_israce(c,r)
 	end
 

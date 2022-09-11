@@ -36,7 +36,7 @@ s.listed_series={0x114}
 function s.spfilter1(c,e,tp)
 	local lv=c:GetLevel()
 	return (c:IsReason(REASON_BATTLE) or (rp~=tp and c:IsReason(REASON_EFFECT)))
-		and c:IsPreviousSetCard(0x114) and c:IsType(TYPE_MONSTER)
+		and c:IsPreviousSetCard(0x114) and c:IsMonster()
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
 		and c:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and c:IsCanBeEffectTarget(e)
 		and lv>0 and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_DECK,0,1,nil,e,tp,lv)

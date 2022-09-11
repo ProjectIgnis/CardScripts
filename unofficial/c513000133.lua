@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.filter(c,e,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsAnti() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsMonster() and c:IsAnti() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_DECK) and s.filter(chkc) end
@@ -67,7 +67,7 @@ function s.dcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(tov,REASON_COST)
 end
 function s.dfilter(c)
-	return (c:GetAttack()~=c:GetBaseAttack() and c:GetDefense()~=c:GetBaseDefense()) or aux.disfilter1(c)
+	return (c:GetAttack()~=c:GetBaseAttack() and c:GetDefense()~=c:GetBaseDefense()) or c:IsNegatableMonster()
 end
 function s.dtarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)

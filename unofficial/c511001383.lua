@@ -28,7 +28,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CARDTYPE)
 		local op=Duel.SelectOption(tp,71,72)
 		if Duel.Destroy(tc,REASON_EFFECT)>0 then
-			if (op==0 and tc:IsType(TYPE_SPELL)) or (op==1 and tc:IsType(TYPE_TRAP)) then
+			if (op==0 and tc:IsSpell()) or (op==1 and tc:IsTrap()) then
 				Duel.Draw(tp,1,REASON_EFFECT)
 			else
 				Duel.Draw(1-tp,1,REASON_EFFECT)

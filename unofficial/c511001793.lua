@@ -35,7 +35,7 @@ function s.filter(c,e,tp)
 		end
 	end
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
-	return c:IsType(TYPE_SPELL) and c:CheckActivateEffect(false,false,false)~=nil and (ft>0 or c:IsType(TYPE_FIELD))
+	return c:IsSpell() and c:CheckActivateEffect(false,false,false)~=nil and (ft>0 or c:IsType(TYPE_FIELD))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end

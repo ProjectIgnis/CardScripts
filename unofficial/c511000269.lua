@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,e,tp,tid)
-	return c:IsReason(REASON_DESTROY) and c:GetTurnID()==tid and c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsReason(REASON_DESTROY) and c:GetTurnID()==tid and c:IsSpellTrap()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tid=Duel.GetTurnCount()

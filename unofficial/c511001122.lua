@@ -29,11 +29,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.cfilter(c,e,tp,eg,ep,ev,re,r,rp,chain)
-	if not c:IsType(TYPE_MONSTER) and c:GetActivateEffect() and (c:IsHasEffect(511001283) or c:IsHasEffect(511001408)) then return false end
+	if not c:IsMonster() and c:GetActivateEffect() and (c:IsHasEffect(511001283) or c:IsHasEffect(511001408)) then return false end
 	return s.filter(c,e,tp,eg,ep,ev,re,r,rp,chain)
 end
 function s.filter(c,e,tp,eg,ep,ev,re,r,rp,chain)
-	if c:IsType(TYPE_MONSTER) then
+	if c:IsMonster() then
 		if c:IsCanBeSpecialSummoned(e,0,tp,false,false) then
 			return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		else
@@ -88,7 +88,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc or not tc:IsRelateToEffect(e) then return end
 	local tpe=tc:GetType()
-	if tc:IsType(TYPE_MONSTER) then
+	if tc:IsMonster() then
 		if tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
 			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 		else

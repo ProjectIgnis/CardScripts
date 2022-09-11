@@ -34,14 +34,14 @@ s.listed_names={93754402,id}
 s.listed_series={0x7c,0x79}
 
 function s.setcfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsDiscardable()
+	return c:IsMonster() and c:IsDiscardable()
 end
 function s.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.setcfilter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.DiscardHand(tp,s.setcfilter,1,1,REASON_COST+REASON_DISCARD)
 end
 function s.setfilter(c)
-	return c:IsSetCard(0x7c) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable()
+	return c:IsSetCard(0x7c) and c:IsSpellTrap() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) end

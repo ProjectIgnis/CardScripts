@@ -21,14 +21,14 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for card in hand to send to GY
 function s.tdcfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToDeckOrExtraAsCost()
+	return c:IsMonster() and c:IsAbleToDeckOrExtraAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tdcfilter,tp,LOCATION_GRAVE,0,3,nil) end
 end
 	--Check for a monster that can be returned to deck
 function s.tdfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
+	return c:IsMonster() and c:IsAbleToDeck()
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

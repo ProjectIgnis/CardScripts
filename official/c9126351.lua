@@ -41,7 +41,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x12}
 function s.spfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAttribute(ATTRIBUTE_WATER) and c:IsDiscardable()
+	return c:IsMonster() and c:IsAttribute(ATTRIBUTE_WATER) and c:IsDiscardable()
 end
 function s.spcon(e,c)
 	if c==nil then return true end

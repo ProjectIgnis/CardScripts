@@ -43,7 +43,7 @@ function s.actcon(e)
 	return Duel.IsBattlePhase() and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_GAIA_CHAMPION),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.cfilter1(c)
-	return c:IsSetCard(0xbd) and c:IsType(TYPE_MONSTER) and not c:IsPublic()
+	return c:IsSetCard(0xbd) and c:IsMonster() and not c:IsPublic()
 end
 function s.thcost1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter1,tp,LOCATION_HAND,0,1,nil) end
@@ -78,7 +78,7 @@ function s.thcost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.ShuffleHand(tp)
 end
 function s.thfilter2(c)
-	return c:IsSetCard(0xbd) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0xbd) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter2,tp,LOCATION_DECK,0,1,nil) end

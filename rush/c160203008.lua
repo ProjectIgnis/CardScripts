@@ -20,7 +20,7 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetLP(tp)<Duel.GetLP(1-tp)
 end
 function s.costfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_DINOSAUR) and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and c:IsRace(RACE_DINOSAUR) and c:IsAbleToGraveAsCost()
 end
 function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToDeckOrExtraAsCost,tp,LOCATION_HAND,0,1,nil) end
@@ -29,7 +29,7 @@ function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,2) and Duel.IsPlayerCanDiscardDeck(1-tp,2) end
 end
 function s.filter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsLocation(LOCATION_GRAVE)
+	return c:IsMonster() and c:IsLocation(LOCATION_GRAVE)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

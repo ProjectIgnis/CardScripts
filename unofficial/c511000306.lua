@@ -183,5 +183,5 @@ function s.windcon2(e)
 	return (s[1-e:GetHandlerPlayer()]&ATTRIBUTE_WIND)~=0
 end
 function s.actlimit(e,te,tp)
-	return te:IsHasType(EFFECT_TYPE_ACTIVATE) and te:GetHandler():IsType(TYPE_SPELL)
+	return te:IsHasType(EFFECT_TYPE_ACTIVATE) and te:GetHandler():IsSpell()
 end

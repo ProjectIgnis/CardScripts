@@ -67,7 +67,7 @@ function s.spmvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local sp=s.sptg(e,tp,eg,ep,ev,re,r,rp,0)
 	local mv=s.mvtg(e,tp,eg,ep,ev,re,r,rp,0)
 	if chk==0 then return sp or mv end
-	local op=aux.SelectEffect(tp,
+	local op=Duel.SelectEffect(tp,
 		{sp,aux.Stringid(id,2)},
 		{mv,aux.Stringid(id,3)})
 	if op==1 then

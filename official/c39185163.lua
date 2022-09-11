@@ -37,7 +37,7 @@ function s.disrmcon(e,tp,eg,ep,ev,re,r,rp)
 	return race&RACE_ZOMBIE>0 and code1~=id and code2~=id
 end
 function s.filter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemove()
+	return c:IsMonster() and c:IsAbleToRemove()
 end
 function s.disrmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.IsChainDisablable(ev) and Duel.GetFlagEffect(tp,id)==0

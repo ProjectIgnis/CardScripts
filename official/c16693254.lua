@@ -13,7 +13,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x3a}
 function s.filter(c)
-	return c:IsSetCard(0x3a) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x3a) and c:IsMonster()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

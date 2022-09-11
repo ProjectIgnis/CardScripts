@@ -26,7 +26,7 @@ function s.initial_effect(c)
 end
 s.listed_names={TOKEN_BRAVE}
 function s.atkfilter(c)
-	return c:IsFaceup() and aux.IsCodeListed(c,TOKEN_BRAVE)
+	return c:IsFaceup() and c:IsCodeListed(TOKEN_BRAVE)
 end
 function s.atkval(e,c)
 	return Duel.GetMatchingGroup(s.atkfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,nil):GetClassCount(Card.GetCode)*500

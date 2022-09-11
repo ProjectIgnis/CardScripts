@@ -56,7 +56,7 @@ function s.matop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for "Spriggun" monster, except "Sprigguns Banger"
 function s.cfilter(c)
-	return (c:IsType(TYPE_MONSTER) and c:IsSetCard(0x158) and not c:IsCode(id))  and c:IsAbleToRemoveAsCost()
+	return (c:IsMonster() and c:IsSetCard(0x158) and not c:IsCode(id))  and c:IsAbleToRemoveAsCost()
 end
 	--Banish itself and 1 "Sprigguns" monster from GY as cost
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)

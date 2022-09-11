@@ -43,7 +43,7 @@ function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return aux.exccon(e) and Duel.GetTurnPlayer()==tp
 end
 function s.negfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_TRAP) and not c:IsDisabled()
+	return c:IsFaceup() and c:IsTrap() and not c:IsDisabled()
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and s.negfilter(chkc) end

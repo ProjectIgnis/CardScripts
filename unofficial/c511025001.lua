@@ -30,7 +30,7 @@ function s.actcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,1000)
 end
 function s.actfilter(c,tp)
-	return c:IsType(TYPE_TRAP) and c:GetActivateEffect():IsActivatable(1-tp)
+	return c:IsTrap() and c:GetActivateEffect():IsActivatable(1-tp)
 end
 function s.acttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(1-tp,LOCATION_SZONE)>0

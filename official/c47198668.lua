@@ -60,7 +60,7 @@ function s.atkop1(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter2(c,e,tp)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsType(TYPE_MONSTER)
+	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsMonster()
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
 		and c:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and c:IsCanBeEffectTarget(e)
 end

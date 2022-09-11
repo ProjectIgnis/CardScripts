@@ -24,9 +24,6 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(1-tp,7) end
 end
-function s.filter(c)
-	return c:IsType(TYPE_MONSTER)
-end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--requirement
 	if not Duel.IsPlayerCanDiscardDeck(1-tp,7) or Duel.DiscardDeck(tp,1,REASON_COST)<1 then return end
@@ -34,13 +31,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.ConfirmDecktop(1-tp,7)
 	local g=Duel.GetDecktopGroup(1-tp,7)
-	local sg=g:Filter(s.filter,nil)
+	local sg=g:Filter(Card.IsMonster,nil)
 	local val=0
 	if #sg>0 then
 		val=#sg*(-500)
 	end
 	Duel.SortDecktop(1-tp,1-tp,7)
-	local g2=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(s.filter2),tp,0,LOCATION_MZONE,nil)
+	local g2=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(Card.IsFaceup),tp,0,LOCATION_MZONE,nil)
 	if #g2==0 then return end
 	if Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		for tc in g2:Iter() do
@@ -53,7 +50,4 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			tc:RegisterEffectRush(e2)
 		end
 	end
-end
-function s.filter2(c)
-	return c:IsFaceup()
 end

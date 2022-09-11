@@ -36,7 +36,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0xaf,0xae}
 function s.desfilter1(c,e)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsCanBeEffectTarget(e)
+	return c:IsSpellTrap() and c:IsCanBeEffectTarget(e)
 end
 function s.desfilter2(c,e,tp)
 	return c:IsFaceup() and (c:IsSetCard(0xaf) or c:IsSetCard(0xae)) and c:IsControler(tp)

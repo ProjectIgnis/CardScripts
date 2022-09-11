@@ -50,10 +50,10 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateAttack()
 end
 function s.tdfilter(c)
-	return c:IsType(TYPE_SPELL) and c:IsAbleToDeck()
+	return c:IsSpell() and c:IsAbleToDeck()
 end
 function s.thfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x578) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(0x578) and c:IsAbleToHand()
 end
 function s.thdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

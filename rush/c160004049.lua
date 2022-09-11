@@ -16,7 +16,7 @@ function s.hdfilter(c,e,tp)
 	return (c:IsRace(RACE_FISH) or c:IsRace(RACE_SEASERPENT)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.gyfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
+	return c:IsMonster() and c:IsAbleToDeck()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

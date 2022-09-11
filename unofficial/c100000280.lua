@@ -31,7 +31,7 @@ end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local des=eg:GetFirst()
 	local rc=des:GetReasonCard()
-	return des:IsType(TYPE_MONSTER) and rc:IsRelateToBattle() and rc:IsLevelAbove(10)
+	return des:IsMonster() and rc:IsRelateToBattle() and rc:IsLevelAbove(10)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

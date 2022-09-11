@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x2b}
 function s.costfilter(c)
-	return c:IsType(TYPE_TRAP) and c:IsAbleToGraveAsCost()
+	return c:IsTrap() and c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end

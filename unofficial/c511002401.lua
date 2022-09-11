@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x1f}
 function s.filter(c)
-	return c:IsSetCard(0x1f) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x1f) and c:IsMonster()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)

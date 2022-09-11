@@ -22,7 +22,7 @@ function s.filter(c,e,tp)
 		and Duel.IsExistingMatchingCard(s.atfilter,tp,LOCATION_GRAVE,0,ct,c)
 end
 function s.atfilter(c)
-	return c:IsSetCard(0x48) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x48) and c:IsMonster()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

@@ -40,7 +40,7 @@ function s.releasefilter(c)
 end
 	--Check for "Starry Knight" spell/trap
 function s.setfilter(c)
-	return c:IsSetCard(0x15b) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable()
+	return c:IsSetCard(0x15b) and c:IsSpellTrap() and c:IsSSetable()
 end
 	--Activation legality
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

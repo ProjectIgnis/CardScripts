@@ -57,7 +57,7 @@ function s.aclimit(e,re,tp)
 	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():GetFlagEffect(511004399)==0
 end
 function s.disable(e,c)
-	return c:IsType(TYPE_MONSTER) and c:GetFlagEffect(511004399)==0
+	return c:IsMonster() and c:GetFlagEffect(511004399)==0
 end
 --[[
 	"vanilla mode" reference

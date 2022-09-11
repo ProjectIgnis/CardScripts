@@ -20,7 +20,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x158),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.bonusfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_FUSION) and aux.IsMaterialListCode(c,CARD_ALBAZ)
+	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:IsMaterialListCode(CARD_ALBAZ)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return true end

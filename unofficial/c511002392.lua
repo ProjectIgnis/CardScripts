@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c)
-	return c:IsOnField() and c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsOnField() and c:IsSpellTrap()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DESTROY)
@@ -23,7 +23,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ex and tc+#g-#tg==1
 end
 function s.filter(c,card)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsDestructable() and c~=card
+	return c:IsSpellTrap() and c:IsDestructable() and c~=card
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DESTROY)

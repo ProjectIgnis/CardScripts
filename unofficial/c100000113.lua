@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c,tp)
-	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsSetCard(0x3b) and c:IsType(TYPE_MONSTER)
+	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsSetCard(0x3b) and c:IsMonster()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.cfilter,nil,tp)

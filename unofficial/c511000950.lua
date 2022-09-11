@@ -13,7 +13,7 @@ function s.initial_effect(c)
 end
 function s.cfilter(c,tp)
 	return c:IsReason(REASON_DESTROY) and c:IsPreviousControler(tp) and c:GetReasonPlayer()==1-tp 
-		and c:IsType(TYPE_SPELL) and (c:GetPreviousPosition()&POS_FACEUP)~=0
+		and c:IsSpell() and (c:GetPreviousPosition()&POS_FACEUP)~=0
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

@@ -18,7 +18,7 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return tc and tc:GetCounter(0x91)>3
 end
 function s.costfilter(c)
-	return c:IsSetCard(0x38) and c:IsType(TYPE_MONSTER) and c:IsDiscardable()
+	return c:IsSetCard(0x38) and c:IsMonster() and c:IsDiscardable()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end

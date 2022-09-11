@@ -33,8 +33,8 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.filter(c)
-	return (((c:IsSetCard(0x1034) or c:IsSetCard(0x2034)) and c:IsType(TYPE_MONSTER))
-		or (c:IsSetCard(0x34) and c:IsType(TYPE_SPELL+TYPE_TRAP))) and c:IsAbleToHand()
+	return (((c:IsSetCard(0x1034) or c:IsSetCard(0x2034)) and c:IsMonster())
+		or (c:IsSetCard(0x34) and c:IsSpellTrap())) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

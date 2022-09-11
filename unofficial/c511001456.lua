@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and re and re:GetHandler():IsType(TYPE_SPELL+TYPE_TRAP)
+	return ep~=tp and re and re:GetHandler():IsSpellTrap()
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

@@ -60,7 +60,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.hspcostfilter(c)
-	return c:IsType(TYPE_TRAP) and c:IsAbleToRemoveAsCost()
+	return c:IsTrap() and c:IsAbleToRemoveAsCost()
 end
 function s.hspcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.hspcostfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil) end

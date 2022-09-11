@@ -67,7 +67,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetTargetCard(e:GetLabelObject())
 end
 function s.filter(c,tp)
-	return c:IsOnField() and c:IsType(TYPE_MONSTER) and c:IsRelateToBattle()
+	return c:IsOnField() and c:IsMonster() and c:IsRelateToBattle()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -97,7 +97,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,Duel.GetBattleDamage(p)/2)
 end
 function s.repfilter(c,fid)
-	return c:IsLocation(LOCATION_ONFIELD) and c:IsType(TYPE_MONSTER)
+	return c:IsLocation(LOCATION_ONFIELD) and c:IsMonster()
 		and c:IsReason(REASON_BATTLE) and c:IsRelateToBattle() and c:GetFieldID()==fid
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -40,7 +40,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.disfilter1(c)
-	return c:IsType(TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ) and aux.disfilter1(c)
+	return c:IsType(TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ) and c:IsNegatableMonster()
 end
 function s.distg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and s.disfilter1(chkc) end
@@ -53,7 +53,7 @@ end
 function s.disop1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and tc and ((tc:IsFaceup() and not tc:IsDisabled()) or tc:IsType(TYPE_TRAPMONSTER)) and tc:IsRelateToEffect(e) then
+	if c:IsRelateToEffect(e) and ((tc:IsFaceup() and not tc:IsDisabled()) or tc:IsType(TYPE_TRAPMONSTER)) and tc:IsRelateToEffect(e) then
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -80,13 +80,13 @@ function s.disop1(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(c,REASON_EFFECT)
 	end
 end
-function s.disfilter2(c,e,tp)
+function s.disablefilter2(c,e,tp)
 	return c:IsType(TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ) and (c:GetSummonPlayer()==1-tp) and c:IsCanBeEffectTarget(e)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	local tg=eg:Filter(s.disfilter2,nil,e,tp)
+	local tg=eg:Filter(s.disablefilter2,nil,e,tp)
 	if #tg>0 then
-		for tc in aux.Next(tg) do
+		for tc in tg:Iter() do
 			tc:RegisterFlagEffect(id,RESET_CHAIN,0,1)
 		end
 		local g=e:GetLabelObject():GetLabelObject()
@@ -101,8 +101,8 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.distg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local g=e:GetLabelObject():Filter(s.disfilter2,nil,e,tp)
-	if chkc then return g:IsContains(chkc) and s.disfilter2(chkc,e,tp) end
+	local g=e:GetLabelObject():Filter(s.disablefilter2,nil,e,tp)
+	if chkc then return g:IsContains(chkc) and s.disablefilter2(chkc,e,tp) end
 	if chk==0 then return #g>0 end
 	local tc=nil
 	if #g==1 then
@@ -117,7 +117,7 @@ end
 function s.disop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		--Negate their effects
 		local e0=Effect.CreateEffect(c)
 		e0:SetType(EFFECT_TYPE_SINGLE)

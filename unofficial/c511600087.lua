@@ -26,7 +26,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetOperation(s.op)
 	Duel.RegisterEffect(e1,tp)
 	local at=Duel.GetAttacker()
-	if aux.nzdef(at) then
+	if at:HasNonZeroDefense() then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -36,11 +36,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetAttackTarget()==nil and aux.nzdef(Duel.GetAttacker())
+	return Duel.GetAttackTarget()==nil and Duel.GetAttacker():HasNonZeroDefense()
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
-	if at and aux.nzdef(at) and at:IsLocation(LOCATION_MZONE) then
+	if at and at:HasNonZeroDefense() and at:IsLocation(LOCATION_MZONE) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)

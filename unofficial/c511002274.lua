@@ -23,7 +23,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,#eg,0,0)
 end
 function s.cfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_YOKAI) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsMonster() and c:IsRace(RACE_YOKAI) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.filter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsCode(68722455)

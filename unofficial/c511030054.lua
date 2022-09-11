@@ -37,7 +37,7 @@ end
 s.listed_series={0x14a}
 s.listed_names={3875465}
 function s.thfilter(c)
-	return c:IsType(TYPE_SPELL) and c:IsSetCard(0x14a) and c:IsAbleToHand() and not c:IsCode(3875465)
+	return c:IsSpell() and c:IsSetCard(0x14a) and c:IsAbleToHand() and not c:IsCode(3875465)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -56,7 +56,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.confilter,1,nil,tp)
 end
 function s.thfilter2(c)
-	return c:IsSetCard(0x14a) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x14a) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.thfilter2(chkc) end

@@ -40,7 +40,7 @@ end
 s.listed_series={0x2e}
 s.listed_names={CARD_NECROVALLEY}
 function s.filter(c)
-	return c:IsSetCard(0x2e) and c:IsType(TYPE_MONSTER)
+	return c:IsSetCard(0x2e) and c:IsMonster()
 end
 function s.defval(e,c)
 	return Duel.GetMatchingGroupCount(s.filter,c:GetControler(),LOCATION_GRAVE,0,nil)*200

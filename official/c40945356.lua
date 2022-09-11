@@ -31,14 +31,14 @@ function s.initial_effect(c)
 end
 s.listed_series={0x2b,0x61}
 function s.cfilter(c)
-	return c:IsSetCard(0x2b) and c:IsType(TYPE_MONSTER) and c:IsDiscardable()
+	return c:IsSetCard(0x2b) and c:IsMonster() and c:IsDiscardable()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST+REASON_DISCARD)
 end
 function s.indfilter(c)
-	return c:IsFaceup() and (c:IsSetCard(0x61) or (c:IsSetCard(0x2b) and c:IsType(TYPE_MONSTER)))
+	return c:IsFaceup() and (c:IsSetCard(0x61) or (c:IsSetCard(0x2b) and c:IsMonster()))
 end
 function s.target1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.indfilter,tp,LOCATION_ONFIELD,0,1,nil) end
@@ -62,7 +62,7 @@ function s.operation1(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e2,tp)
 end
 function s.indtg(e,c)
-	return c:IsSetCard(0x61) or (c:IsSetCard(0x2b) and c:IsType(TYPE_MONSTER))
+	return c:IsSetCard(0x61) or (c:IsSetCard(0x2b) and c:IsMonster())
 end
 function s.condition2(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()

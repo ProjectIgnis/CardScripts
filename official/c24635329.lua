@@ -56,7 +56,7 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for "Shaddoll" monster
 function s.disfilter(c)
-	return c:IsSetCard(0x9d) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
+	return c:IsSetCard(0x9d) and c:IsMonster() and c:IsAbleToGrave()
 end
 	--Activation legality
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -22,7 +22,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x15e,0x15f}
 function s.atkfilter(c)
-	return c:IsType(TYPE_TRAP) and c:IsSetCard(0x15f) and c:GetEquipTarget()
+	return c:IsTrap() and c:IsSetCard(0x15f) and c:GetEquipTarget()
 end
 function s.atkval(e,c)
 	local et=e:GetHandler():GetEquipTarget()

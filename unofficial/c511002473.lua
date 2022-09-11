@@ -30,7 +30,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(p,d,REASON_EFFECT)
 	Duel.ConfirmCards(1-p,tc)
 	Duel.ShuffleHand(p)
-	if not tc:IsType(TYPE_TRAP) then return end
+	if not tc:IsTrap() then return end
 	Duel.NegateAttack()
 	local te=tc:GetActivateEffect()
 	if not te then return end

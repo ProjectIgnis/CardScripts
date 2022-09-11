@@ -55,7 +55,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.stfilter(c,tid)
-	return c:GetTurnID()==tid and (c:GetReason()&REASON_DESTROY)~=0 and c:IsType(TYPE_TRAP) and c:IsSSetable()
+	return c:GetTurnID()==tid and (c:GetReason()&REASON_DESTROY)~=0 and c:IsTrap() and c:IsSSetable()
 end
 function s.sttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tid=Duel.GetTurnCount()

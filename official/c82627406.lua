@@ -44,7 +44,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x20a2),tp,LOCATION_MZONE,0,1,nil) end
 end
 function s.ctfilter(c)
-	return (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and c:IsType(TYPE_MONSTER) and c:IsSetCard(0x20a2)
+	return (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and c:IsMonster() and c:IsSetCard(0x20a2)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x20a2),tp,LOCATION_MZONE,0,nil)

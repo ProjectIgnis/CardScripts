@@ -52,7 +52,7 @@ function s.lvfilter(c,tp)
 	return lv>0 and c:IsFaceup() and c:IsSetCard(0xea) and Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil,lv)
 end
 function s.tgfilter(c,lv)
-	return c:IsSetCard(0xea) and c:GetLevel()~=lv and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
+	return c:IsSetCard(0xea) and c:GetLevel()~=lv and c:IsMonster() and c:IsAbleToGrave()
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.lvfilter(chkc,tp) end

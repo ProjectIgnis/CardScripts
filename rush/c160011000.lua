@@ -2,7 +2,6 @@
 --Darklord Zerato (Rush)
 local s,id=GetID()
 function s.initial_effect(c)
-	Card.Alias(c,40921744)
 	--Summon with 1 tribute
 	local e1=aux.AddNormalSummonProcedure(c,true,true,1,1,SUMMON_TYPE_TRIBUTE,aux.Stringid(id,0),s.otfilter)
 	--Destroy all monsters your opponent controls

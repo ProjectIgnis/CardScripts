@@ -1,9 +1,7 @@
 --地砕き
 --Smashing Ground (Rush)
 local s,id=GetID()
-function s.initial_effect(c)
-	Card.Alias(c,97169186)
-	--Activate
+function s.initial_effect(c)	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)

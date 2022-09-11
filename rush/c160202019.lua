@@ -2,7 +2,6 @@
 --Trap Hole (Rush)
 local s,id=GetID()
 function s.initial_effect(c)
-	Card.Alias(c,4206964)
 	--Activate(summon)
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DESTROY)
@@ -14,7 +13,7 @@ function s.initial_effect(c)
 end
 function s.filter(c,tp,ep)
 	return c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsAttackAbove(1000)
-		and ep~=tp and c:IsAbleToRemove()
+		and ep==1-tp and c:IsAbleToRemove()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=eg:GetFirst()

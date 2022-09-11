@@ -3,7 +3,6 @@
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	Card.Alias(c,18318842)
 	--Return 1 card on the field to the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND)

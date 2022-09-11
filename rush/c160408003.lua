@@ -1,10 +1,8 @@
 --死者転生
 --Monster Reincarnation (Rush)
-
 local s,id=GetID()
 function s.initial_effect(c)
-	Card.Alias(c,74848038)
-	--add 1 monster from the grave to the hand
+	--Add 1 monster from the grave to the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCategory(CATEGORY_TOHAND)
@@ -27,7 +25,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,1,e:GetHandler())
+	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,1,nil)
 	--Effect
 	if Duel.SendtoGrave(g,REASON_COST)~=0 then
 		--Effect

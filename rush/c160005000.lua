@@ -2,7 +2,6 @@
 --Buster Blader (Rush)
 local s,id=GetID()
 function s.initial_effect(c)
-	Card.Alias(c,78193831)
 	--Increase ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

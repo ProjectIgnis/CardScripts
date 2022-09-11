@@ -1,8 +1,7 @@
 --炸裂装甲
---Sakuretsu Armor
+--Sakuretsu Armor (Rush)
 local s,id=GetID()
 function s.initial_effect(c)
-	Card.Alias(c,56120475)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DESTROY)

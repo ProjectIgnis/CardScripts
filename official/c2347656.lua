@@ -1,5 +1,5 @@
 --白銀の城のラビュリンス
---Labrynth of the Silver Castle
+--Lovely Labrynth of the Silver Castle
 --Scripted by The Razgriz
 local s,id=GetID()
 function s.initial_effect(c)
@@ -36,7 +36,7 @@ function s.initial_effect(c)
 end
 function s.chainop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	if rp==tp and rc:GetType()==TYPE_TRAP then
+	if rp==tp and rc:GetType()==TYPE_TRAP and re:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		Duel.SetChainLimit(s.chainlm)
 	end
 end

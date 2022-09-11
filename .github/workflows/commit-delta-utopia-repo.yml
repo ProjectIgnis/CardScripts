@@ -6,13 +6,7 @@ on:
 jobs:
   commit:
     runs-on: ubuntu-latest
-    if: >-
-      !(
-        contains(github.event.head_commit.message, '[ci skip]') ||
-        contains(github.event.head_commit.message, '[skip ci]') ||
-        contains(github.event.head_commit.message, '[actions skip]') ||
-        contains(github.event.head_commit.message, '[skip actions]')
-      )
+    if: false
     env:
       REMOTE: ProjectIgnis/DeltaUtopia.git
       REPO_NAME: DeltaUtopia

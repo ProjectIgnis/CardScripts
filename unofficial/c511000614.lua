@@ -52,7 +52,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.disop)
 	c:RegisterEffect(e5)
 end
-s.listed_names={100000270}
+s.listed_names={6186304}
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.CheckReleaseGroup(c:GetControler(),aux.TRUE,3,false,3,true,c,c:GetControler(),nil,false,nil)
@@ -122,7 +122,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.econ(e)
 	local g=Duel.GetDecktopGroup(e:GetHandlerPlayer(),1)
-	return #g>0 and g:GetFirst():IsCode(100000270) and g:GetFirst():IsFaceup()
+	return #g>0 and g:GetFirst():IsCode(6186304) and g:GetFirst():IsFaceup()
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -148,7 +148,7 @@ end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local dc=Duel.GetDecktopGroup(tp,1):GetFirst()
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	return dc and dc:IsCode(100000270) and dc:IsFaceup()
+	return dc and dc:IsCode(6186304) and dc:IsFaceup()
 		and re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and rp~=tp
 		and re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) and g and g:IsExists(s.dfilter,1,nil,tp)
 end

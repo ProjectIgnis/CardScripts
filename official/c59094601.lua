@@ -1,4 +1,4 @@
---
+--蘇りし天空神
 --The Revived Sky God
 --Scripted by Larry126
 local s,id=GetID()

@@ -3,13 +3,13 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Special summon limitat
+	--Special Summon limit
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e1)
-	--Add Light attribute
+	--Also treated as a LIGHT monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetValue(ATTRIBUTE_LIGHT)
 	c:RegisterEffect(e2)
-	--Special summon procedure
+	--Special Summon procedure
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetType(EFFECT_TYPE_FIELD)
@@ -27,18 +27,20 @@ function s.initial_effect(c)
 	e3:SetCondition(s.spcon)
 	e3:SetOperation(s.spop)
 	e3:SetLabel(ATTRIBUTE_LIGHT)
+	e3:SetValue(1)
 	c:RegisterEffect(e3)
 	local e4=e3:Clone()
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetLabel(ATTRIBUTE_DARK)
 	c:RegisterEffect(e4)
-	--Banish a remove
+	--Banish a monster and 1 random card from the opponent's hand
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,2))
 	e5:SetCategory(CATEGORY_REMOVE)
 	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e5:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e5:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e5:SetCondition(function(e) return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1 end)
 	e5:SetCost(s.rmcost)
 	e5:SetTarget(s.rmtg)
 	e5:SetOperation(s.rmop)

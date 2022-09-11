@@ -2,7 +2,6 @@
 --Card Destruction (Rush)
 local s,id=GetID()
 function s.initial_effect(c)
-	Card.Alias(c,72892473)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_HANDES+CATEGORY_DRAW)

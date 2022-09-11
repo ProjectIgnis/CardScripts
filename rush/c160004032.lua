@@ -1,4 +1,5 @@
--- Shield Boring Kong
+--シールド・ボーリング・コング
+--Shield Boring Kong
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
@@ -14,18 +15,14 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsStatus(STATUS_SUMMON_TURN+STATUS_SPSUMMON_TURN)
 end
-function s.filter2(c)
-	return c:IsFacedown()
-end
 	--Activation legality
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local dg=Duel.GetMatchingGroup(s.filter2,tp,0,LOCATION_MZONE,nil)
-	if chkc then return chkc:IsOnField() and chkc~=e:GetHandler() end
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	local dg=Duel.GetMatchingGroup(Card.IsFacedown,tp,0,LOCATION_MZONE,nil)
 	if chk==0 then return #dg>0 end
 end
 	--Destroy 1 spell/trap your opponent controls
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local dg=Duel.GetMatchingGroup(s.filter2,tp,0,LOCATION_MZONE,nil)
+	local dg=Duel.GetMatchingGroup(Card.IsFacedown,tp,0,LOCATION_MZONE,nil)
 	if #dg>0 then
 		local sg=dg:Select(tp,1,1,nil)
 		Duel.HintSelection(sg)

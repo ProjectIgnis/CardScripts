@@ -2,7 +2,6 @@
 --Dark Factory of Mass Production (Rush)
 local s,id=GetID()
 function s.initial_effect(c)
-	Card.Alias(c,90928333)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND)
@@ -13,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.thfilter(c)
-	return c:IsType(TYPE_NORMAL) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsType(TYPE_NORMAL) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,2,nil) end

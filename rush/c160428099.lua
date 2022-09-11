@@ -2,7 +2,6 @@
 --Recurring Nightmare (Rush)
 local s,id=GetID()
 function s.initial_effect(c)
-	Card.Alias(c,81191584)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND)

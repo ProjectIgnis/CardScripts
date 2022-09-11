@@ -2,7 +2,6 @@
 --Pitch-Black Warwolf (Rush)
 local s,id=GetID()
 function s.initial_effect(c)
-	Card.Alias(c,88975532)
 	--Opponent cannot activate Trap Cards during the Battle Phase
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)

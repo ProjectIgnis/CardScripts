@@ -2,7 +2,6 @@
 --Graceful Charity (Rush)
 local s,id=GetID()
 function s.initial_effect(c)
-	Card.Alias(c,79571449)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DRAW+CATEGORY_HANDES)

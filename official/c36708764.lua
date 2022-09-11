@@ -47,7 +47,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local at=Duel.GetAttacker()
 		local g=Duel.GetMatchingGroup(nil,tp,0,LOCATION_MZONE,at)
 		if #g>0 then
-			Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_APPLYTO)
 			local tc=g:Select(tp,1,1,nil):GetFirst()
 			local at=Duel.GetAttacker()
 			if at:CanAttack() and not at:IsImmuneToEffect(e) and not tc:IsImmuneToEffect(e) then

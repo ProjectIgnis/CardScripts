@@ -19,7 +19,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsCanChangePosition() end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(Card.IsType,tp,0,LOCATION_GRAVE,nil,TYPE_SPELL+TYPE_TRAP)
+	local g=Duel.GetMatchingGroup(Card.IsSpellTrap,tp,0,LOCATION_GRAVE,nil)
 	if chk==0 then return #g>0 end
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetTargetParam(#g*100)
@@ -32,7 +32,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		--Effect
 		local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 		Duel.Damage(p,d,REASON_EFFECT)
-		if Duel.GetMatchingGroupCount(Card.IsType,tp,0,LOCATION_GRAVE,nil,TYPE_SPELL)>=10 then
+		if Duel.GetMatchingGroupCount(Card.IsSpell,tp,0,LOCATION_GRAVE,nil)>=10 then
 			Duel.BreakEffect()
 			Duel.Damage(1-tp,1200,REASON_EFFECT)
 		end

@@ -52,7 +52,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local sg=g:Select(tp,1,2,nil)
 			if Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)~=0 then
-				local dg=Duel.GetMatchingGroup(Card.IsType,tp,0,LOCATION_ONFIELD,nil,TYPE_SPELL+TYPE_TRAP)
+				local dg=Duel.GetMatchingGroup(Card.IsSpellTrap,tp,0,LOCATION_ONFIELD,nil)
 				if #dg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 					local sg=dg:Select(tp,1,1,nil)

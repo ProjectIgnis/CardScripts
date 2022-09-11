@@ -1,9 +1,7 @@
 -- 強欲な壺
 -- Pot of Greed (Rush)
-
 local s,id=GetID()
 function s.initial_effect(c)
-	Card.Alias(c,55144522)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DRAW)

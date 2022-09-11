@@ -14,7 +14,7 @@ end
 function s.filter(c)
 	return c:IsFaceup() and not c:IsHasEffect(EFFECT_CANNOT_ATTACK)
 end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

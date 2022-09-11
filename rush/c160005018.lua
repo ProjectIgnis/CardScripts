@@ -1,4 +1,4 @@
--- アンドール
+--アンドール
 --Andoll
 local s,id=GetID()
 function s.initial_effect(c)
@@ -24,9 +24,7 @@ function s.ssfilter(c)
 	return (c:IsCode(160201038) or c:IsCode(160201039)) and c:IsSSetable()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.ssfilter(chkc) end
 	if chk==0 then return Duel.IsExistingMatchingCard(s.ssfilter,tp,LOCATION_GRAVE,0,1,nil) end
-	
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end

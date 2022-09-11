@@ -1,4 +1,4 @@
--- 美☆魔女狩り
+--美☆魔女狩り
 --Last Day of the Pretty☆Witch
 
 local s,id=GetID()
@@ -28,7 +28,6 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local dg=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(s.desfilter),tp,0,LOCATION_MZONE,e:GetHandler())
-	if chkc then return chkc:IsOnField() and s.filter(chkc) and chkc~=e:GetHandler() end
 	if chk==0 then return #dg>0 end
 end
 function s.desfilter(c)

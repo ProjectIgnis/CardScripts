@@ -25,9 +25,8 @@ function s.filter(c)
 	return c:IsMonster() and c:IsFaceup() and not c:IsMaximumModeSide()
 end
 	--Activation legality
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local dg=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil)
-	if chkc then return chkc:IsOnField() and s.filter(chkc) end
 	if chk==0 then return #dg>0 end
 end
 	--Destroy 1 monster your opponent controls

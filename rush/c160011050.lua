@@ -22,7 +22,7 @@ function s.eqfilter(c)
 	return c:IsFaceup() and c:IsCode(160301001) and not c:IsMaximumModeSide()
 end
 function s.value(e,c)
-	return Duel.GetMatchingGroup(Card.IsType,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil,TYPE_MONSTER):GetClassCount(Card.GetAttribute)*400
+	return Duel.GetMatchingGroup(Card.IsMonster,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil):GetClassCount(Card.GetAttribute)*400
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,160011050),tp,LOCATION_ONFIELD,0,1,nil)

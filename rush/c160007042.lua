@@ -37,5 +37,5 @@ function s.indtg(e,c)
 	return c:IsRace(RACE_MACHINE) and c:IsLevel(10) and c:IsFaceup()
 end
 function s.indesval(e,re)
-	return re:GetHandler():IsType(TYPE_TRAP+TYPE_SPELL)
+	return re:GetHandler():IsSpellTrap()
 end

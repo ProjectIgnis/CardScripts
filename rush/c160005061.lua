@@ -13,7 +13,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
-	return Duel.GetMatchingGroupCountRush(Card.IsType,tp,LOCATION_MZONE,0,nil,TYPE_MONSTER)==1
+	return Duel.GetMatchingGroupCountRush(Card.IsMonster,tp,LOCATION_MZONE,0,nil)==1
 		and at:IsControler(1-tp) and at:IsLevelBelow(8)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

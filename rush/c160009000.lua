@@ -3,7 +3,6 @@
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
-	c:Alias(81480460)
 	--Destroy
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_COIN)

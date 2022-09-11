@@ -1,8 +1,7 @@
 --右手に盾を左手に剣を
---Shield & Sword
+--Shield & Sword (Rush)
 local s,id=GetID()
 function s.initial_effect(c)
-	Card.Alias(c,52097679)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)

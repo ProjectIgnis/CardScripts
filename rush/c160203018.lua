@@ -2,7 +2,6 @@
 -- Upstart Goblin (Rush)
 local s,id=GetID()
 function s.initial_effect(c)
-	Card.Alias(c,CARD_UPSTART_GOBLIN)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DRAW+CATEGORY_RECOVER)

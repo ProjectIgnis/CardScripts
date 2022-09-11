@@ -15,9 +15,8 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_SPELLCASTER),tp,LOCATION_GRAVE,0,1,nil)
 end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tg=Duel.GetAttacker()
-	if chkc then return chkc==tg end
 	if chk==0 then return tg:IsControler(1-tp) and tg:IsOnField() end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

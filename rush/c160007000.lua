@@ -2,7 +2,6 @@
 --Levia-Dragon - Daedalus
 local s,id=GetID()
 function s.initial_effect(c)
-	Card.Alias(c,37721209)
 	--Destroy all cards on the field
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -22,7 +21,6 @@ function s.cfilter(c,e,tp)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil,e,tp) end
-	
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(aux.TRUE),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,e:GetHandler()) end

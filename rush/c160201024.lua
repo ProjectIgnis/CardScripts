@@ -1,6 +1,5 @@
 --キングス・リワード
 --King's Reward
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Destroy 1 of opponent's level 6 or lower monsters
@@ -20,12 +19,10 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil) end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chkc then return chkc:IsOnField() and s.filter(chkc) and chkc~=e:GetHandler() end
 	if chk==0 then return Duel.GetMatchingGroupCount(aux.FilterMaximumSideFunctionEx(s.desfilter),tp,0,LOCATION_MZONE,e:GetHandler())>0 end
 end
-
 function s.desfilter(c)
-	return c:IsFaceup() and c:IsLevelBelow(6) 
+	return c:IsFaceup() and c:IsLevelBelow(6)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement

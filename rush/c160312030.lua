@@ -5,7 +5,6 @@ function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DESTROY)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e1:SetCondition(s.condition)
@@ -27,6 +26,7 @@ function s.desfilter(c)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,3,3,nil)
 	if #g==0 then return end
 	Duel.HintSelection(g,true)

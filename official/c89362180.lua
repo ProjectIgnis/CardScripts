@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCondition(Gemini.IsHandlerEnabled)
+	e1:SetCondition(Gemini.EffectStatusCondition)
 	e1:SetValue(ATTRIBUTE_EARTH)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	if not Gemini.IsHandlerEnabled(e) then return false end
+	if not Gemini.EffectStatusCondition(e) then return false end
 	local c=e:GetHandler()
 	if not c:IsRelateToBattle() or c:IsFacedown() then return false end
 	local bc=c:GetBattleTarget()

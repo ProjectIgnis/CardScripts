@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
-	if not Gemini.IsHandlerEnabled(e) then return false end
+	if not Gemini.EffectStatusCondition(e) then return false end
 	local c=e:GetHandler()
 	if not c:IsRelateToBattle() or c:IsFacedown() then return false end
 	local bc=c:GetBattleTarget()

@@ -1,5 +1,8 @@
 Gemini={}
 
+Card.IsGeminiStatus=Card.IsGeminiState
+Card.EnableGeminiStats=Card.EnableGeminiState
+
 function Gemini.AddProcedure(c)
 	--Can be Normal Summoned again
 	local e1=Effect.CreateEffect(c)

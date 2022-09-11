@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Gemini.IsHandlerEnabled(e) and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
+	return Gemini.EffectStatusCondition(e) and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
 		and rp==1-tp and re:IsActiveType(TYPE_SPELL) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function s.filter(c,e,tp)
@@ -53,7 +53,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	if not (Gemini.IsHandlerEnabled(e) and re:IsHasProperty(EFFECT_FLAG_CARD_TARGET)
+	if not (Gemini.EffectStatusCondition(e) and re:IsHasProperty(EFFECT_FLAG_CARD_TARGET)
 		and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)) then return false end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	return g and g:IsExists(Card.IsLocation,1,nil,LOCATION_MZONE)

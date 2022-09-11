@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_BECOME_QUICK)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(0x3f,0x3f)
-	e2:SetTarget(aux.TargetBoolFunction(Card.Spell))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSpell))
 	c:RegisterEffect(e2)
 end
 function s.filter(c)

@@ -45,38 +45,32 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e2)
 	end
 end
-function s.repfilter(c,tp)
-	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsType(TYPE_GEMINI) 
-		and not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_EFFECT) and c:GetFlagEffect(id)==0
-end
 function s.desfilter(c,e,tp)
 	return c:IsControler(tp) and c:IsLocation(LOCATION_ONFIELD)
 		and c:IsDestructable(e) and not c:IsStatus(STATUS_DESTROY_CONFIRMED+STATUS_BATTLE_DESTROYED)
 end
+function s.repfilter(c,tp)
+	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
+		and c:IsType(TYPE_GEMINI) and c:IsReason(REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
+end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=eg:Filter(s.repfilter,nil,tp)
-	if chk==0 then return #g>0 and Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_ONFIELD,0,1,nil,e,tp) end
-	if not Duel.SelectEffectYesNo(tp,e:GetHandler(),96) then return false end
-	if #g==1 then
-		e:SetLabelObject(g:GetFirst())
-	else
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESREPLACE)
-		local cg=g:Select(tp,1,1,nil)
-		e:SetLabelObject(cg:GetFirst())
-	end
+	local c=e:GetHandler()
+	local exg=eg+c
+	if chk==0 then return eg:IsExists(s.repfilter,1,nil,tp)
+		and Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_ONFIELD,0,1,exg,e,tp) end
+	if not Duel.SelectEffectYesNo(tp,c,96) then return false end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESREPLACE)
-	local tc=Duel.SelectMatchingCard(tp,s.desfilter,tp,LOCATION_ONFIELD,0,1,1,nil,e,tp):GetFirst()
-	Duel.SetTargetCard(tc)
-	tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_CHAIN,0,1)
+	local tc=Duel.SelectMatchingCard(tp,s.desfilter,tp,LOCATION_ONFIELD,0,1,1,exg,e,tp):GetFirst()
+	e:SetLabelObject(tc)
 	tc:SetStatus(STATUS_DESTROY_CONFIRMED,true)
 	return true
 end
 function s.repval(e,c)
-	return c==e:GetLabelObject()
+	return s.repfilter(c,e:GetHandlerPlayer())
 end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,1-tp,id)
-	local tc=Duel.GetFirstTarget()
+	local tc=e:GetLabelObject()
 	tc:SetStatus(STATUS_DESTROY_CONFIRMED,false)
 	Duel.Destroy(tc,REASON_EFFECT+REASON_REPLACE)
 end

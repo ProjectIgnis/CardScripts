@@ -43,6 +43,6 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(nil,tp,0,LOCATION_MZONE,nil)
 	if #g>0 then
-		Duel.Destroy(sg,REASON_EFFECT)
+		Duel.Destroy(g,REASON_EFFECT)
 	end
 end

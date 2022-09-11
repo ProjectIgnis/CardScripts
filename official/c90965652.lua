@@ -1,4 +1,4 @@
--- 二量合成
+-- -- 二量合成
 -- Dimer Synthesis
 -- scripted by Hatter
 local s,id=GetID()
@@ -51,14 +51,14 @@ function s.threscon(sg)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local op=e:GetLabel()
-	if op==0 then
+	if op==1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g1=Duel.SelectMatchingCard(tp,s.codefilter,tp,LOCATION_DECK,0,1,1,nil,65959844)
 		if #g1>0 then
 			Duel.SendtoHand(g1,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,g1)
 		end
-	elseif op==1 then
+	elseif op==2 then
 		local g1=Duel.GetMatchingGroup(s.codefilter,tp,LOCATION_DECK,0,nil,25669282)
 		local g2=Duel.GetMatchingGroup(s.chemfilter,tp,LOCATION_DECK,0,nil)
 		if #g1==0 or #g2==0 then return end

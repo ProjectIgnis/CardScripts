@@ -1,7 +1,7 @@
 Gemini={}
 
 Card.IsGeminiStatus=Card.IsGeminiState
-Card.EnableGeminiStats=Card.EnableGeminiState
+Card.EnableGeminiStatus=Card.EnableGeminiState
 
 function Gemini.AddProcedure(c)
 	--Can be Normal Summoned again

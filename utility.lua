@@ -849,7 +849,7 @@ function Card.RegisterEffect(c,e,forced,...)
 	return reg_e
 end
 
-function Auxiliary.IsMaterialListCode(c,...)
+function Card.IsMaterialListCode(c,...)
 	if not c.material then return false end
 	local codes={...}
 	for _,code in ipairs(codes) do
@@ -862,7 +862,7 @@ end
 local function MatchSetcode(set_code,to_match)
 	return (set_code&0xfff)==(to_match&0xfff) and (set_code&to_match)==set_code;
 end
-function Auxiliary.IsMaterialListSetCard(c,...)
+function Card.IsMaterialListSetCard(c,...)
 	if not c.material_setcode then return false end
 	local setcodes={...}
 	for _,setcode in ipairs(setcodes) do
@@ -877,7 +877,7 @@ function Auxiliary.IsMaterialListSetCard(c,...)
 	return false
 end
 --Returns true if the Card "c" specifically lists any of the card IDs in "..."
-function Auxiliary.IsCodeListed(c,...)
+function Card.IsCodeListed(c,...)
 	if c.listed_names then
 		local codes={...}
 		for _,wanted in ipairs(codes) do
@@ -896,7 +896,7 @@ function Auxiliary.IsCodeListed(c,...)
 	return false
 end
 --Returns true if the Card "c" specifically lists the name of a card that is part of an archetype in "..."
-function Auxiliary.IsArchetypeCodeListed(c,...)
+function Card.IsArchetypeCodeListed(c,...)
 	if not c.listed_names then return false end
 	local setcodes={...}
 	for _,cardcode in ipairs(c.listed_names) do
@@ -912,7 +912,7 @@ function Auxiliary.IsArchetypeCodeListed(c,...)
 	return false
 end
 --Returns true if the Card "c" specifically lists any of the card types in "..."
-function Auxiliary.IsCardTypeListed(c,...)
+function Card.IsCardTypeListed(c,...)
 	if not c.listed_card_types then return false end
 	local card_types={...}
 	for _,typ in ipairs(card_types) do
@@ -923,7 +923,7 @@ function Auxiliary.IsCardTypeListed(c,...)
 	return false
 end
 --Returns true if the Card "c" lists any of the setcodes passed in "..."
-function Auxiliary.HasListedSetCode(c,...)
+function Card.HasListedSetCode(c,...)
 	if not c.listed_series then return false end
 	local listed_archetypes={...}
 	for _,wanted in ipairs(listed_archetypes) do
@@ -1158,7 +1158,7 @@ function Auxiliary.dxmcostgen(min,max,op)
 	end
 end
 
-function Auxiliary.EquipByEffectLimit(e,c)
+function Card.EquipByEffectLimit(e,c)
 	if e:GetOwner()~=c then return false end
 	local eff={c:GetCardEffect(89785779+EFFECT_EQUIP_LIMIT)}
 	for _,te in ipairs(eff) do
@@ -1167,7 +1167,7 @@ function Auxiliary.EquipByEffectLimit(e,c)
 	return false
 end
 --register for "Equip to this card by its effect"
-function Auxiliary.EquipByEffectAndLimitRegister(c,e,tp,tc,code,mustbefaceup)
+function Card.EquipByEffectAndLimitRegister(c,e,tp,tc,code,mustbefaceup)
 	local up=false or mustbefaceup
 	if not Duel.Equip(tp,tc,c,up) then return false end
 	--Add Equip limit
@@ -1650,7 +1650,7 @@ function Duel.GetZoneWithLinkedCount(count,tp)
 end
 --Checks whether a card (c) has an effect that mentions a certain type of counter
 --This includes adding, removing, gaining ATK/DEF per counter, etc.
-function Auxiliary.HasCounterListed(c,counter_type)
+function Card.HasCounterListed(c,counter_type)
 	if c.counter_list then
 		for _,ccounter in ipairs(c.counter_list) do
 			if counter_type==ccounter then return true end
@@ -1664,7 +1664,7 @@ function Auxiliary.HasCounterListed(c,counter_type)
 	return false
 end
 --Checks whether a card (c) has an effect that places a certain type of counter
-function Auxiliary.CanPlaceCounter(c,counter_type)
+function Card.CanPlaceCounter(c,counter_type)
 	if not c.counter_place_list then return false end
 	for _,ccounter in ipairs(c.counter_place_list) do
 		if counter_type==ccounter then return true end

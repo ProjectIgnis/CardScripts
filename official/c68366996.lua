@@ -2,7 +2,7 @@
 --Gemini Soldier
 local s,id=GetID()
 function s.initial_effect(c)
-	Gemini.RegisterAbility(c)
+	Gemini.AddProcedure(c)
 	--Cannot be destroyed by battle once
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

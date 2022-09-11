@@ -2,7 +2,7 @@
 --Elemental HERO Neos Alius
 local s,id=GetID()
 function s.initial_effect(c)
-	Gemini.RegisterAbility(c)
+	Gemini.AddProcedure(c)
 	--Becomes "Elemental HERO Neos" while on the field
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

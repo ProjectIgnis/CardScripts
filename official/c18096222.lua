@@ -77,7 +77,7 @@ function s.dacon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_DESTROY) and ec~=nil
 end
 function s.dafilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_GEMINI) and not c:IsGeminiState()
+	return c:IsFaceup() and c:IsType(TYPE_GEMINI) and not c:IsGeminiStatus()
 end
 function s.datg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.dafilter(chkc) end
@@ -88,7 +88,7 @@ end
 function s.daop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and s.dafilter(tc) then
-		tc:EnableGeminiState()
+		tc:EnableGeminiStatus()
 		tc:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,64)
 	end
 end

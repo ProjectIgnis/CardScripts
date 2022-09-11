@@ -2,7 +2,7 @@
 --Knight Day Grepher
 local s,id=GetID()
 function s.initial_effect(c)
-	Gemini.RegisterAbility(c)
+	Gemini.AddProcedure(c)
 	--Add 1 Equip Spell to the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsGeminiState() and Duel.IsTurnPlayer(tp)
+	return e:GetHandler():IsGeminiStatus() and Duel.IsTurnPlayer(tp)
 end
 function s.filter(c)
 	return c:IsType(TYPE_EQUIP) and c:IsAbleToHand()

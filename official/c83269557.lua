@@ -2,7 +2,7 @@
 --Dark Valkyria
 local s,id=GetID()
 function s.initial_effect(c)
-	Gemini.RegisterAbility(c)
+	Gemini.AddProcedure(c)
 	c:EnableCounterPermit(COUNTER_SPELL,LOCATION_MZONE,Gemini.IsHandlerEnabled)
 	--Gain 300 ATK for each Spell Counter
 	local e1=Effect.CreateEffect(c)

@@ -2,7 +2,7 @@
 --Phoenix Gearfried
 local s,id=GetID()
 function s.initial_effect(c)
-	Gemini.RegisterAbility(c)
+	Gemini.AddProcedure(c)
 	--Special Summon 1 Gemini monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

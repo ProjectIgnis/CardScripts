@@ -2,7 +2,7 @@
 --Red-Eyes Black Flare Dragon
 local s,id=GetID()
 function s.initial_effect(c)
-	Gemini.RegisterAbility(c)
+	Gemini.AddProcedure(c)
 	--Inflict damage equal to ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return Gemini.IsHandlerEnabled(e) and e:GetHandler():GetBattledGroupCount()>0
+	return Gemini.EffectStatusCondition(e) and e:GetHandler():GetBattledGroupCount()>0
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

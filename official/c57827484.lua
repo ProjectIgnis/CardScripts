@@ -2,7 +2,7 @@
 --Shadow Delver
 local s,id=GetID()
 function s.initial_effect(c)
-	Gemini.RegisterAbility(c)
+	Gemini.AddProcedure(c)
 	--1 Level 4 or lower DARK monster can attack directly
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Gemini.IsHandlerEnabled(e) and Duel.GetCurrentPhase()==PHASE_MAIN1
+	return Gemini.EffectStatusCondition(e) and Duel.GetCurrentPhase()==PHASE_MAIN1
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsLevelBelow(4) and c:IsAttribute(ATTRIBUTE_DARK) and not c:IsHasEffect(EFFECT_DIRECT_ATTACK)

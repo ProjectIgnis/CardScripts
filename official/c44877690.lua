@@ -4,6 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	local sme,soe=Spirit.AddProcedure(c,EVENT_SUMMON_SUCCESS,EVENT_FLIP)
 	--Mandatory return
+	sme:SetDescription(aux.Stringid(id,0))
 	sme:SetCondition(aux.OR(s.icecon,Spirit.MandatoryReturnCondition))
 	sme:SetTarget(s.mrettg)
 	sme:SetOperation(s.mretop)

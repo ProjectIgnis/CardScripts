@@ -2,7 +2,7 @@
 --Heavy Knight of the Flame
 local s,id=GetID()
 function s.initial_effect(c)
-	Gemini.RegisterAbility(c)
+	Gemini.AddProcedure(c)
 	--Banish attacked monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not Gemini.IsHandlerEnabled(e) or Duel.GetAttacker()~=e:GetHandler() then return false end
+	if not Gemini.EffectStatusCondition(e) or Duel.GetAttacker()~=e:GetHandler() then return false end
 	local bc=c:GetBattleTarget()
 	return bc and bc:IsSummonType(SUMMON_TYPE_SPECIAL) and bc:IsAbleToRemove()
 end

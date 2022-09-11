@@ -13,7 +13,7 @@ function s.initial_effect(c)
 end
 s.listed_card_types={TYPE_GEMINI}
 function s.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_GEMINI) and not c:IsGeminiState()
+	return c:IsFaceup() and c:IsType(TYPE_GEMINI) and not c:IsGeminiStatus()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)
@@ -27,7 +27,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e):Filter(s.filter2,tp,LOCATION_MZONE,0,nil,e)
 	if #g==0 then return end
 	for tc in g:Iter() do
-		tc:EnableGeminiState()
+		tc:EnableGeminiStatus()
 	end
 	aux.DelayedOperation(g,PHASE_END,id,e,tp,function(ag) Duel.ChangePosition(ag,POS_FACEDOWN_DEFENSE) end)
 end

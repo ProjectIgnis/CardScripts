@@ -20,15 +20,14 @@ function s.initial_effect(c)
 	end)
 end
 s.listed_card_types={TYPE_GEMINI}
+function s.gmreg(c)
+	if c and c:IsGeminiStatus() and c:IsStatus(STATUS_BATTLE_DESTROYED) then
+		c:RegisterFlagEffect(id,RESET_PHASE+PHASE_DAMAGE,0,1)
+	end
+end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	local a=Duel.GetAttacker()
-	local t=Duel.GetAttackTarget()
-	if a and a:IsGeminiState() and a:IsStatus(STATUS_BATTLE_DESTROYED) then
-		a:RegisterFlagEffect(id,RESET_PHASE+PHASE_DAMAGE,0,1)
-	end
-	if t and t:IsGeminiState() and t:IsStatus(STATUS_BATTLE_DESTROYED) then
-		t:RegisterFlagEffect(id,RESET_PHASE+PHASE_DAMAGE,0,1)
-	end
+	s.gmreg(Duel.GetAttacker())
+	s.gmreg(Duel.GetAttackTarget())
 end
 function s.filter(c)
 	return c:GetFlagEffect(id)~=0
@@ -37,11 +36,13 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.filter,1,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_MZONE,1,nil) end
-	local sg=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_MZONE,nil)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,sg,#sg,0,0)
+	local g=Duel.GetMatchingGroup(nil,tp,0,LOCATION_MZONE,nil)
+	if chk==0 then return #g>0 end
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local sg=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_MZONE,nil)
-	Duel.Destroy(sg,REASON_EFFECT)
+	local g=Duel.GetMatchingGroup(nil,tp,0,LOCATION_MZONE,nil)
+	if #g>0 then
+		Duel.Destroy(g,REASON_EFFECT)
+	end
 end

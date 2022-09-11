@@ -1,15 +1,16 @@
 --インフィニティ・ダーク
+--Infinity Dark
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.EnableGeminiAttribute(c)
-	--pos
+	Gemini.AddProcedure(c)
+	--Change battle position of 1 face-up monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_POSITION)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
-	e1:SetCondition(aux.IsGeminiState)
+	e1:SetCondition(Gemini.EffectStatusCondition)
 	e1:SetTarget(s.postg)
 	e1:SetOperation(s.posop)
 	c:RegisterEffect(e1)

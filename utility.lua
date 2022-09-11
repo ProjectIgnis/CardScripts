@@ -13,14 +13,6 @@ if not c946 then
 	c946.initial_effect=function()end
 end
 
-function deprecated_alias(funcname)
-	return function(...)
-		Debug.PrintStacktrace()
-		Debug.Message("deprecated, use ".. funcname.. " instead")
-		return load('return '..funcname..'(...)')(...)
-	end
-end
-
 local function cost_replace_getvalideffs(replacecode,extracon,e,tp,eg,ep,ev,re,r,rp,chk)
 	local t={}
 	for _,eff in ipairs({Duel.GetPlayerEffect(tp,replacecode)}) do
@@ -1273,9 +1265,7 @@ function Auxiliary.ResetEffects(g,eff)
 		end
 	end
 end
-function Auxiliary.CallToken(code)
-	error("This function is deleted, use Duel.LoadCardScript or Duel.LoadScript instead.",2)
-end
+
 --utility entry for SelectUnselect loops
 --returns bool if chk==0, returns Group if chk==1
 function Auxiliary.SelectUnselectLoop(c,sg,mg,e,tp,minc,maxc,rescon)
@@ -1928,21 +1918,20 @@ Function to simplify registering EFFECT_FLAG_CLIENT_HINT to players
 -reset: additional resets, other than RESET_PHASE+PHASE_END
 ]]
 function Auxiliary.RegisterClientHint(card,property,tp,player1,player2,str,reset,ct)
-	if card then
-	if not property then property=0 end
-	if not reset then reset=0 end
-		local eff=Effect.CreateEffect(card)
-		eff:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT|property)
-		eff:SetTargetRange(player1,player2)
-		if str then
-			eff:SetDescription(str)
-		else
-			eff:SetDescription(aux.Stringid(card:GetOriginalCode(),1))
-		end
-		if ct==nil then ct=1 end
-		eff:SetReset(RESET_PHASE+PHASE_END|reset,ct)
-		Duel.RegisterEffect(eff,tp)
+	if not card then return end
+	property=property or 0
+	reset=reset or 0
+	local eff=Effect.CreateEffect(card)
+	eff:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT|property)
+	eff:SetTargetRange(player1,player2)
+	if str then
+		eff:SetDescription(str)
+	else
+		eff:SetDescription(aux.Stringid(card:GetOriginalCode(),1))
 	end
+	eff:SetReset(RESET_PHASE+PHASE_END|reset,ct or 1)
+	Duel.RegisterEffect(eff,tp)
+	return eff
 end
 function Auxiliary.FieldSummonProcTg(fun1,fun2)
 	return function(e,tp,eg,ep,ev,re,r,rp,chk,c,...)
@@ -2214,5 +2203,7 @@ Duel.LoadScript("proc_workaround.lua")
 Duel.LoadScript("proc_normal.lua")
 Duel.LoadScript("proc_skill.lua")
 Duel.LoadScript("proc_maximum.lua")
+Duel.LoadScript("proc_gemini.lua")
+Duel.LoadScript("proc_spirit.lua")
 Duel.LoadScript("deprecated_functions.lua")
 pcall(dofile,"init.lua")

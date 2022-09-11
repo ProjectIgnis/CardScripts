@@ -13,7 +13,7 @@ function s.initial_effect(c)
 end
 s.listed_card_types={TYPE_GEMINI}
 function s.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_GEMINI) and not c:IsGeminiState()
+	return c:IsFaceup() and c:IsType(TYPE_GEMINI) and not c:IsGeminiStatus()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end
@@ -24,7 +24,8 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and s.filter(tc) then
-		tc:EnableGeminiState()
+		tc:EnableGeminiStatus()
+		--Return to the hand in the End Phase
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)

@@ -1,8 +1,9 @@
 --ジェムナイト・サニクス
+--Gem-Knight Sardonyx
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.EnableGeminiAttribute(c)
-	--search
+	Gemini.AddProcedure(c)
+	--Search 1 "Gem-Knight" card
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -16,7 +17,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x1047}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	if not aux.IsGeminiState(e) then return false end
+	if not Gemini.EffectStatusCondition(e) then return false end
 	local tc=eg:GetFirst()
 	return #eg==1 and tc:GetReasonCard()==e:GetHandler()
 		and tc:IsLocation(LOCATION_GRAVE) and tc:IsReason(REASON_BATTLE) 

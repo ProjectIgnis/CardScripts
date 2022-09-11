@@ -2,16 +2,16 @@
 --Crusader of Endymion
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.EnableGeminiAttribute(c)
-	--add counter
+	Gemini.AddProcedure(c)
+	--Place 1 Spell Counter
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_COUNTER)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetCountLimit(1)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCondition(aux.IsGeminiState)
+	e1:SetCountLimit(1)
+	e1:SetCondition(Gemini.EffectStatusCondition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
@@ -25,16 +25,16 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsCanAddCounter(COUNTER_SPELL,1) then
-		tc:AddCounter(COUNTER_SPELL,1)
+	if tc and tc:IsRelateToEffect(e) and tc:IsCanAddCounter(COUNTER_SPELL,1) and tc:AddCounter(COUNTER_SPELL,1) then
+		local c=e:GetHandler()
 		if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
+		--Gain 600 ATK
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
 		e1:SetValue(600)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end

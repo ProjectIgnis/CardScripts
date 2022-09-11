@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--decrease tribute
+	--1 Level 5 or higher Gemini monster can be Normal Summoned without tribute
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_FIELD)
@@ -18,16 +18,16 @@ function s.initial_effect(c)
 	e2:SetCondition(s.ntcon)
 	e2:SetTarget(aux.FieldSummonProcTg(s.nttg))
 	c:RegisterEffect(e2)
-	--extra summon
+	--Can Normal Summon 1 additional Gemini monster
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetDescription(aux.Stringid(id,1))
+	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
 	e3:SetRange(LOCATION_FZONE)
-	e3:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
+	e3:SetTargetRange(LOCATION_HAND|LOCATION_MZONE,0)
 	e3:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_GEMINI))
 	c:RegisterEffect(e3)
-	--destroy
+	--Destroy 1 opponent card
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,2))
 	e4:SetCategory(CATEGORY_REMOVE+CATEGORY_DESTROY)
@@ -48,44 +48,28 @@ function s.nttg(e,c)
 	return c:IsLevelAbove(5) and c:IsType(TYPE_GEMINI)
 end
 function s.rmfilter(c)
-	return c:IsGeminiState() and c:IsAbleToRemove()
+	return c:IsGeminiStatus() and c:IsAbleToRemove()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) end
 	if chk==0 then return Duel.IsExistingMatchingCard(s.rmfilter,tp,LOCATION_MZONE,0,1,nil)
-		and Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) end
+		and Duel.IsExistingTarget(nil,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,1,nil)
+	local g=Duel.SelectTarget(tp,nil,tp,0,LOCATION_ONFIELD,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_MZONE)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.rmfilter,tp,LOCATION_MZONE,0,1,1,nil)
-	local rc=g:GetFirst()
-	if rc and Duel.Remove(rc,0,REASON_EFFECT+REASON_TEMPORARY)~=0 and rc:IsLocation(LOCATION_REMOVED) then
+	local rc=Duel.SelectMatchingCard(tp,s.rmfilter,tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
+	if not rc then return end
+	local reset=RESET_PHASE+PHASE_END+RESET_OPPO_TURN
+	if aux.RemoveUntil(rc,nil,REASON_EFFECT,PHASE_END,id,e,tp,aux.DefaultFieldReturnOp,s.retcon,reset) then
 		local tc=Duel.GetFirstTarget()
-		if tc:IsRelateToEffect(e) then
-			Duel.Destroy(tc,REASON_EFFECT)
-		end
-		rc:RegisterFlagEffect(id,RESET_PHASE+PHASE_END+RESET_OPPO_TURN,0,1)
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_PHASE+PHASE_END)
-		e1:SetCountLimit(1)
-		e1:SetLabelObject(rc)
-		e1:SetCondition(s.retcon)
-		e1:SetOperation(s.retop)
-		e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
-		Duel.RegisterEffect(e1,tp)
+		if not tc:IsRelateToEffect(e) then return end
+		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==1-tp and e:GetLabelObject():GetFlagEffect(id)~=0
-end
-function s.retop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetLabelObject()
-	Duel.ReturnToField(tc)
+	return Duel.IsTurnPlayer(1-tp)
 end

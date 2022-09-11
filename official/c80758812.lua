@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
 	c:RegisterEffect(e1)
-	--Special summon 1 gemini monster from deck
+	--Special Summon 1 Gemini monster from the Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -19,13 +19,13 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1,id)
-	e2:SetCondition(function()return Duel.IsMainPhase()end)
+	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
+	e2:SetCondition(function() return Duel.IsMainPhase() end)
 	e2:SetCost(s.discost)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
-	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
 	c:RegisterEffect(e2)
-	--Special summon 1 FIRE warrior monster from hand or deck
+	--Special Summon 1 FIRE Warrior monster from hand or Deck
 	local e3=e2:Clone()
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DESTROY+CATEGORY_RELEASE)
@@ -41,7 +41,7 @@ function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_DISCARD+REASON_COST,nil)
 end
-	--Check for a gemini monster
+	--Check for a Gemini monster
 function s.spfilter(c,e,tp)
 	return c:IsType(TYPE_GEMINI) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 end
@@ -51,19 +51,16 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
-	--Special summon 1 gemini monster from deck, it gains its effects
+	--Special Summon 1 Gemini monster from the Deck, it gains its effects
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
-	if #g>0 then
-		local tc=g:GetFirst()
-		if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
-			tc:EnableGeminiState()
-		end
-		Duel.SpecialSummonComplete()
+	local tc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp):GetFirst()
+	if not tc then return end
+	if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
+		tc:EnableGeminiStatus()
 	end
+	Duel.SpecialSummonComplete()
 end
 	--"Cost"
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -71,22 +68,23 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	return true
 end
 function s.costfilter(c,e,tp)
-	return c:IsDiscardable() and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_HAND+LOCATION_DECK,0,1,c,e,tp)
+	return c:IsDiscardable() and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_HAND|LOCATION_DECK,0,1,c,e,tp)
 end
-	--Check for a FIRE warrior monster
+	--Check for a FIRE Warrior monster
 function s.spfilter2(c,e,tp)
-	return c:IsRace(RACE_WARRIOR) and c:IsMonster() and c:IsAttribute(ATTRIBUTE_FIRE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsRace(RACE_WARRIOR) and c:IsMonster() and c:IsAttribute(ATTRIBUTE_FIRE)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 	--Activation legality
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then 
 		if e:GetLabel()~=0 then
 			e:SetLabel(0)
-			--If you only have 1 FIRE warrior monster and it's in your hand, don't discard it
+			--If you only have 1 FIRE Warrior monster and it's in your hand, don't discard it
 			return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil,e,tp)
 				and Duel.IsExistingMatchingCard(s.releasefil,tp,LOCATION_MZONE,0,1,nil)
 		else
-			return Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp)
+			return Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_HAND|LOCATION_DECK,0,1,nil,e,tp)
 				and Duel.IsExistingMatchingCard(s.releasefil,tp,LOCATION_MZONE,0,1,nil)
 		end
 	end
@@ -96,32 +94,29 @@ function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 		local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 		Duel.SendtoGrave(g,REASON_COST+REASON_DISCARD)
 	end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_DECK)
 end
-	--Check for a gemini monster to tribute
+	--Check for a Gemini monster to tribute
 function s.releasefil(c)
 	return c:IsType(TYPE_GEMINI) and c:IsReleasableByEffect()
 end
-	--Tribute 1 gemini monster, special summon a FIRE warrior, destroy a card if the tributed was in gemini state
+	--Tribute 1 Gemini monster, Special Summon a FIRE Warrior, destroy a card if the tributed was an effect monster
 function s.spop2(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
-	if not Duel.IsExistingMatchingCard(s.releasefil,tp,LOCATION_MZONE,0,1,nil) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g=Duel.SelectMatchingCard(tp,s.releasefil,tp,LOCATION_MZONE,0,1,1,nil)
-	local tc=g:GetFirst()
-	local gemini_chk=tc:IsFaceup() and tc:IsGeminiState()
-	if #g>0 and Duel.Release(g,REASON_EFFECT)>0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local sg=Duel.SelectMatchingCard(tp,s.spfilter2,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp)
-		if #sg>0 and Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)>0 and gemini_chk then
-			local dg1=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
-			if #dg1>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
-				Duel.BreakEffect()
-				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-				local dg2=dg1:Select(tp,1,1,nil)
-				Duel.HintSelection(dg2,true)
-				Duel.Destroy(dg2,REASON_EFFECT)
-			end
-		end
+	local tc=Duel.SelectMatchingCard(tp,s.releasefil,tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
+	if not tc then return end
+	local gemini_chk=tc:IsFaceup() and tc:IsGeminiStatus()
+	if Duel.Release(tc,REASON_EFFECT)==0 then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local sg=Duel.SelectMatchingCard(tp,s.spfilter2,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp)
+	if #sg==0 or Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)==0 or not gemini_chk then return end
+	local dg1=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
+	if #dg1==0 or not Duel.SelectYesNo(tp,aux.Stringid(id,2)) then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+	local dg2=dg1:Select(tp,1,1,nil)
+	if #dg2>0 then
+		Duel.HintSelection(dg2,true)
+		Duel.BreakEffect()
+		Duel.Destroy(dg2,REASON_EFFECT)
 	end
 end

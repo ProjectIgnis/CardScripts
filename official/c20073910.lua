@@ -2,36 +2,33 @@
 --Amaterasu
 local s,id=GetID()
 function s.initial_effect(c)
-	--spirit
-	aux.EnableSpiritReturn(c,EVENT_FLIP)
-	--summon limit
+	Spirit.AddProcedure(c,EVENT_FLIP)
+	--Cannot be Normal or Special Summoned
 	local e1=Effect.CreateEffect(c)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_CANNOT_SUMMON)
 	c:RegisterEffect(e1)
-	--special summon condition
-	local e2=Effect.CreateEffect(c)
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e2:SetType(EFFECT_TYPE_SINGLE)
+	local e2=e1:Clone()
 	e2:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e2:SetValue(aux.FALSE)
 	c:RegisterEffect(e2)
-	--trigger when targeted
+	--Change this card to face-up defense position
 	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_DRAW)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
-	e3:SetCode(EVENT_CHAINING)
 	e3:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
+	e3:SetCode(EVENT_CHAINING)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCondition(s.condition)
 	e3:SetCost(s.cost)
 	e3:SetTarget(s.target)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
-	--trigger when flipped
+	--Banish all other cards on the field
 	local e4=Effect.CreateEffect(c)
-	e4:SetCategory(CATEGORY_TOHAND)
+	e4:SetDescription(aux.Stringid(id,1))
+	e4:SetCategory(CATEGORY_REMOVE)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e4:SetCode(EVENT_FLIP)
 	e4:SetTarget(s.thtg)
@@ -39,9 +36,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	if rp==tp or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
+	local c=e:GetHandler()
+	if rp==tp or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) or c:IsFaceup() then return false end
 	local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	return tg and tg:IsContains(e:GetHandler()) and e:GetHandler():IsFacedown()
+	return tg and tg:IsContains(c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

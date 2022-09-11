@@ -1,23 +1,24 @@
 --業火の重騎士
+--Heavy Knight of the Flame
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.EnableGeminiAttribute(c)
-	--remove
-	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(id,0))
-	e4:SetCategory(CATEGORY_REMOVE)
-	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e4:SetCode(EVENT_BATTLE_START)
-	e4:SetCondition(s.descon)
-	e4:SetTarget(s.destg)
-	e4:SetOperation(s.desop)
-	c:RegisterEffect(e4)
+	Gemini.AddProcedure(c)
+	--Banish attacked monster
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_REMOVE)
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e1:SetCode(EVENT_BATTLE_START)
+	e1:SetCondition(s.descon)
+	e1:SetTarget(s.destg)
+	e1:SetOperation(s.desop)
+	c:RegisterEffect(e1)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
+	if not Gemini.EffectStatusCondition(e) or Duel.GetAttacker()~=e:GetHandler() then return false end
 	local bc=c:GetBattleTarget()
-	return c:IsGeminiState() and Duel.GetAttacker()==c
-		and bc and bc:IsSummonType(SUMMON_TYPE_SPECIAL) and bc:IsAbleToRemove()
+	return bc and bc:IsSummonType(SUMMON_TYPE_SPECIAL) and bc:IsAbleToRemove()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

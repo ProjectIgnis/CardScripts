@@ -1,22 +1,21 @@
 --霊魂鳥－伝鳩
+--Shinobird Pigeon
 local s,id=GetID()
 function s.initial_effect(c)
-	--spirit return
-	aux.EnableSpiritReturn(c,EVENT_SUMMON_SUCCESS,EVENT_FLIP)
-	--cannot special summon
+	Spirit.AddProcedure(c,EVENT_SUMMON_SUCCESS,EVENT_FLIP)
+	--Cannot be Special Summoned
 	local e1=Effect.CreateEffect(c)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e1:SetValue(aux.FALSE)
 	c:RegisterEffect(e1)
-	--to hand
+	--Return 1 Spirit monster to the hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetRange(LOCATION_MZONE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)

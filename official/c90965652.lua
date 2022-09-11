@@ -1,4 +1,4 @@
--- -- 二量合成
+-- 二量合成
 -- Dimer Synthesis
 -- scripted by Hatter
 local s,id=GetID()
@@ -70,7 +70,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atkrescon(sg,e,tp,mg)
-	return sg:IsExists(Gemini.IsEnabledCard,1,nil) and sg:IsExists(Card.IsAttackAbove,1,nil,1)
+	return sg:IsExists(Card.IsGeminiState,1,nil) and sg:IsExists(Card.IsAttackAbove,1,nil,1)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

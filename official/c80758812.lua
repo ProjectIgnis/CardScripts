@@ -58,7 +58,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp):GetFirst()
 	if not tc then return end
 	if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
-		Gemini.EnableCard(tc)
+		tc:EnableGeminiState()
 	end
 	Duel.SpecialSummonComplete()
 end
@@ -105,7 +105,7 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 	local tc=Duel.SelectMatchingCard(tp,s.releasefil,tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
 	if not tc then return end
-	local gemini_chk=tc:IsFaceup() and Gemini.IsEnabledCard(tc)
+	local gemini_chk=tc:IsFaceup() and tc:IsGeminiState()
 	if Duel.Release(tc,REASON_EFFECT)==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg=Duel.SelectMatchingCard(tp,s.spfilter2,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp)

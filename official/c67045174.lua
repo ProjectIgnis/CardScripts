@@ -21,7 +21,7 @@ function s.initial_effect(c)
 end
 s.listed_card_types={TYPE_GEMINI}
 function s.gmreg(c)
-	if c and Gemini.IsEnabledCard(c) and c:IsStatus(STATUS_BATTLE_DESTROYED) then
+	if c and c:IsGeminiState() and c:IsStatus(STATUS_BATTLE_DESTROYED) then
 		c:RegisterFlagEffect(id,RESET_PHASE+PHASE_DAMAGE,0,1)
 	end
 end

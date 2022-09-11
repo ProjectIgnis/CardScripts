@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Gemini.IsEnabledCard(e:GetHandler()) and Duel.IsTurnPlayer(tp)
+	return e:GetHandler():IsGeminiState() and Duel.IsTurnPlayer(tp)
 end
 function s.filter(c)
 	return c:IsType(TYPE_EQUIP) and c:IsAbleToHand()

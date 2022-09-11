@@ -48,7 +48,7 @@ function s.nttg(e,c)
 	return c:IsLevelAbove(5) and c:IsType(TYPE_GEMINI)
 end
 function s.rmfilter(c)
-	return Gemini.IsEnabledCard(c) and c:IsAbleToRemove()
+	return c:IsGeminiState() and c:IsAbleToRemove()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) end

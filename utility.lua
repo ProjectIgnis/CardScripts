@@ -1273,9 +1273,7 @@ function Auxiliary.ResetEffects(g,eff)
 		end
 	end
 end
-function Auxiliary.CallToken(code)
-	error("This function is deleted, use Duel.LoadCardScript or Duel.LoadScript instead.",2)
-end
+
 --utility entry for SelectUnselect loops
 --returns bool if chk==0, returns Group if chk==1
 function Auxiliary.SelectUnselectLoop(c,sg,mg,e,tp,minc,maxc,rescon)

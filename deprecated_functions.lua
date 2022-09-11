@@ -1,3 +1,11 @@
+local function deprecated_alias(funcname)
+	return function(...)
+		Debug.PrintStacktrace()
+		Debug.Message("deprecated, use " .. funcname .. " instead")
+		return load('return ' .. funcname .. '(...)')(...)
+	end
+end
+
 --Functions deprecated since version 40.0:
 Auxiliary.AskAny                        = deprecated_alias("Duel.AskAny")
 Auxiliary.AskEveryone                   = deprecated_alias("Duel.AskEveryone")
@@ -29,10 +37,10 @@ Auxiliary.EnableSpiritReturn            = deprecated_alias("Spirit.AddProcedure"
 Auxiliary.SpiritReturnReg               = deprecated_alias("Spirit.SummonRegister")
 Auxiliary.SpiritReturnOperation         = deprecated_alias("Spirit.ReturnOperation")
 
---Deleted functions
 local function deleted_function(message)
 	return function() error("This function is deleted. " .. message,2) end
 end
+--Deleted functions
 Auxiliary.CallToken             = deleted_function("Use Duel.LoadCardScript or Duel.LoadScript instead.")
 Auxiliary.SpiritReturnCondition = deleted_function("Check Spirit.MandatoryReturnCondition and Spirit.OptionalReturnCondition for more details.")
 Auxiliary.SpiritReturnTarget    = deleted_function("Check Spirit.MandatoryReturnTarget and Spirit.OptionalReturnTarget for more details.")

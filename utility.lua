@@ -15,6 +15,7 @@ end
 
 function deprecated_alias(funcname)
 	return function(...)
+		Debug.PrintStacktrace()
 		Debug.Message("deprecated, use ".. funcname.. " instead")
 		return load('return '..funcname..'(...)')(...)
 	end

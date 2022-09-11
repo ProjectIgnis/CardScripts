@@ -1,6 +1,5 @@
 --拡がるささやき
 --Echoing Whispers
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Shuffle up to 5 monsters from any GY to the deck
@@ -23,8 +22,7 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
 end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and s.rmfilter(chkc) end
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

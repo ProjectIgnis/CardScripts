@@ -15,17 +15,13 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_DRAGON),tp,LOCATION_MZONE,0,1,nil)
 end
-function s.filter2(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
-end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local dg=Duel.GetMatchingGroup(s.filter2,tp,0,LOCATION_ONFIELD,nil)
-	if chkc then return chkc:IsOnField() and s.filter2(chkc) and chkc~=e:GetHandler() end
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	local dg=Duel.GetMatchingGroup(Card.IsSpellTrap,tp,0,LOCATION_ONFIELD,nil)
 	if chk==0 then return #dg>0 end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--effect
-	local dg=Duel.GetMatchingGroup(s.filter2,tp,0,LOCATION_ONFIELD,nil)
+	local dg=Duel.GetMatchingGroup(Card.IsSpellTrap,tp,0,LOCATION_ONFIELD,nil)
 	if #dg>0 then
 		local sg=dg:Select(tp,1,1,nil)
 		Duel.HintSelection(sg)

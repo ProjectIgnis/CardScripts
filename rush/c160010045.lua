@@ -17,7 +17,7 @@ function s.desrescon(sg,e,tp,mg)
 	local a,b=sg:GetFirst(),sg:GetNext()
 	return b and a:IsLevel(b:GetLevel()) and not a:IsControler(b:GetControler())
 end
-function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local g=Duel.GetMatchingGroupRush(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 		return aux.SelectUnselectGroup(g,e,tp,2,2,s.desrescon,0)

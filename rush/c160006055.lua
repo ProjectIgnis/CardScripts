@@ -21,27 +21,23 @@ end
 function s.filter2(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP)
 end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local dg=Duel.GetMatchingGroup(s.filter2,tp,0,LOCATION_ONFIELD,nil)
-	if chkc then return chkc:IsOnField() and s.filter2(chkc) and chkc~=e:GetHandler() end
 	if chk==0 then return #dg>0 end
 end
 function s.tdfilter(c)
 	return c:IsAbleToDeck() and c:IsType(TYPE_FIELD)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	--requirement
-	
-	--effect
+	--Effect
 	local dg=Duel.GetMatchingGroup(s.filter2,tp,0,LOCATION_ONFIELD,nil)
-	if #dg>0 then
-		local sg=dg:Select(tp,1,1,nil)
-		Duel.HintSelection(sg)
-		if Duel.Destroy(sg,REASON_EFFECT)>0 and Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_GRAVE,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,0))
-		then
-			local tg=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil)
-			Duel.SendtoDeck(tg,nil,0,REASON_EFFECT)
-			Duel.ShuffleDeck(tp)
-		end
+	if #dg==0 then return end
+	local sg=dg:Select(tp,1,1,nil)
+	Duel.HintSelection(sg)
+	if Duel.Destroy(sg,REASON_EFFECT)>0 and Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_GRAVE,0,1,nil)
+		and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+		local tg=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+		Duel.SendtoDeck(tg,nil,0,REASON_EFFECT)
+		Duel.ShuffleDeck(tp)
 	end
 end

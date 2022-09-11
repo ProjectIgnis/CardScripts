@@ -22,28 +22,25 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local dg=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(s.desfilter),tp,0,LOCATION_MZONE,e:GetHandler())
-	if chkc then return chkc:IsOnField() and s.filter(chkc) and chkc~=e:GetHandler() end
 	if chk==0 then return #dg>0 end
 end
 function s.desfilter(c)
 	return c:IsFaceup() and c:IsLevelBelow(7) 
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	--Requirement
 	--Effect
 	local dg=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(s.desfilter),tp,0,LOCATION_MZONE,e:GetHandler())
-	if #dg>0 then
-		local sg=dg:Select(tp,1,1,nil)
-		sg=sg:AddMaximumCheck()
-		Duel.HintSelection(sg)
-		if Duel.Destroy(sg,REASON_EFFECT)>0 then
-			if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
-			and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
-				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-				local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
-				if #g>0 then
-					Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
-				end
+	if #dg==0 then return end
+	local sg=dg:Select(tp,1,1,nil)
+	sg=sg:AddMaximumCheck()
+	Duel.HintSelection(sg)
+	if Duel.Destroy(sg,REASON_EFFECT)>0 then
+		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
+		and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+			local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
+			if #g>0 then
+				Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 			end
 		end
 	end

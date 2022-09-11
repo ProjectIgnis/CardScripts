@@ -1,6 +1,5 @@
 --サイレント・ラーニング 
 --Silent Learning
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Reveal 1 set card in opponent's S/T zones
@@ -22,7 +21,6 @@ function s.filter(c)
 	return c:IsFacedown() and c:GetSequence()<5
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chkc then return chkc:IsLocation(LOCATION_SZONE) and s.filter(chkc) and chkc~=e:GetHandler() end
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_SZONE,1,e:GetHandler()) and Duel.IsPlayerCanDraw(tp,1) end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(1)

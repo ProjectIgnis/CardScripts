@@ -27,7 +27,6 @@ function s.desfilter(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local dg=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_MZONE,e:GetHandler())
-	if chkc then return chkc:IsOnField() and s.filter(chkc) and chkc~=e:GetHandler() end
 	if chk==0 then return e:GetHandler():IsMaximumMode() and #dg>0 end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)

@@ -1,6 +1,5 @@
 --ルミナス・シャーマン
 --Luminous Shaman
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Let a level 4 or lower spellcaster attack directly
@@ -22,16 +21,15 @@ function s.filter(c)
 	return c:IsFaceup() and c:IsLevelBelow(4) and c:IsRace(RACE_SPELLCASTER) and c:CanAttack()
 end
 	--Activation legality
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,e:GetHandler()) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 end
 	--Send this card to the GY to let a level 4 or lower spellcaster attack directly
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 	--Effect
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,0,1,1,e:GetHandler()):GetFirst()
 	Duel.HintSelection(Group.FromCards(tc))
 	if tc and tc:IsFaceup() then

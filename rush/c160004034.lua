@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp)
-	return not Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_ONFIELD,0,1,e:GetHandler(),TYPE_MONSTER)
+	return not Duel.IsExistingMatchingCard(Card.IsMonster,tp,LOCATION_ONFIELD,0,1,e:GetHandler())
 end
 function s.tdfilter(c,tp)
 	return c:IsMonster() and c:IsRace(RACE_PYRO) and c:IsAbleToDeckOrExtraAsCost()

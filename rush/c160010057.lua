@@ -24,7 +24,7 @@ function s.filter(c)
 	return c:IsFaceup() and c:IsLevelBelow(8) and c:GetAttack()>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ct=Duel.GetMatchingGroupCount(Card.IsType,tp,0,LOCATION_GRAVE,nil,TYPE_SPELL+TYPE_TRAP)
+	local ct=Duel.GetMatchingGroupCount(Card.IsSpellTrap,tp,0,LOCATION_GRAVE,nil)
 	if chk==0 then return ct>0 and Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,e:GetHandler(),1,tp,ct*(-300))
 	Duel.SetPossibleOperationInfo(0,CATEGORY_DESTROY,nil,1,1-tp,LOCATION_ONFIELD)
@@ -41,23 +41,22 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil)
-	if #g>0 then
-		Duel.HintSelection(g)
-		local ct=Duel.GetMatchingGroupCount(Card.IsType,c:GetControler(),0,LOCATION_GRAVE,nil,TYPE_SPELL+TYPE_TRAP)
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetValue(ct*(-300))
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		g:GetFirst():RegisterEffectRush(e1)
-		if Duel.GetMatchingGroupCount(Card.IsType,c:GetControler(),0,LOCATION_GRAVE,nil,TYPE_SPELL)>4
-			and Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.desfilter),tp,0,LOCATION_MZONE,1,nil) 
-			and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-			local tg=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.desfilter),tp,0,LOCATION_MZONE,1,1,nil)
-			if #tg>0 then 
-				tg=tg:AddMaximumCheck()
-				Duel.Destroy(tg,REASON_EFFECT) 
-			end
+	if #g==0 then return end
+	Duel.HintSelection(g,true)
+	local ct=Duel.GetMatchingGroupCount(Card.IsSpellTrap,c:GetControler(),0,LOCATION_GRAVE,nil)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_UPDATE_ATTACK)
+	e1:SetValue(ct*(-300))
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	g:GetFirst():RegisterEffectRush(e1)
+	if Duel.GetMatchingGroupCount(Card.IsSpell,c:GetControler(),0,LOCATION_GRAVE,nil)>4
+		and Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.desfilter),tp,0,LOCATION_MZONE,1,nil) 
+		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+		local tg=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.desfilter),tp,0,LOCATION_MZONE,1,1,nil)
+		if #tg>0 then 
+			tg=tg:AddMaximumCheck()
+			Duel.Destroy(tg,REASON_EFFECT) 
 		end
 	end
 end

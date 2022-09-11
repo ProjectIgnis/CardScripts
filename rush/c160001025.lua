@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 s.listed_names={160001024}
 function s.condition(e,tp)
-	return not Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_ONFIELD,0,1,e:GetHandler(),TYPE_MONSTER)
+	return not Duel.IsExistingMatchingCard(Card.IsMonster,tp,LOCATION_ONFIELD,0,1,e:GetHandler())
 end
 function s.spfilter(c,e,tp)
 	return c:IsCode(160001024) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

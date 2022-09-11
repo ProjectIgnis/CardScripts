@@ -26,7 +26,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	-- Effect
 	if Duel.DiscardDeck(1-tp,1,REASON_EFFECT)<1 then return end
 	local dc=Duel.GetOperatedGroup():GetFirst()
-	if dc:IsLocation(LOCATION_GRAVE) and dc:IsType(TYPE_SPELL+TYPE_TRAP)
+	if dc:IsLocation(LOCATION_GRAVE) and dc:IsSpellTrap()
 		and Duel.IsPlayerCanDraw(tp,1) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end

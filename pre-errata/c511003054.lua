@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(LOCATION_ONFIELD,0)
 	e3:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
-	e3:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_SPELL+TYPE_TRAP))
+	e3:SetTarget(aux.TargetBoolFunction(Card.IsSpellTrap))
 	c:RegisterEffect(e3)
 	--inactivatable
 	local e4=Effect.CreateEffect(c)

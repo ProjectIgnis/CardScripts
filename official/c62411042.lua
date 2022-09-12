@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(LOCATION_ONFIELD,0)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_SPELL+TYPE_TRAP))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSpellTrap))
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
 end

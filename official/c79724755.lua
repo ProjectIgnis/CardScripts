@@ -70,7 +70,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 	end
 end
-local atkcfilter=aux.FaceupFilter(Card.IsType,TYPE_MONSTER)
+local atkcfilter=aux.FaceupFilter(Card.IsMonster)
 local atkfilter=aux.FaceupFilter(Card.IsAttribute,ATTRIBUTE_WATER)
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(atkfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)

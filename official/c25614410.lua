@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c)
-	return c:IsMaterialListSetCard(0x8) and c:IsType(TYPE_FUSION) and c:IsAbleToExtraAsCost()
+	return c:HasListedArchetypeAsMaterial(0x8) and c:IsType(TYPE_FUSION) and c:IsAbleToExtraAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,2,nil) end

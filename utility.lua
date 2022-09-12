@@ -855,7 +855,7 @@ end
 local function MatchSetcode(set_code,to_match)
 	return (set_code&0xfff)==(to_match&0xfff) and (set_code&to_match)==set_code;
 end
-function Card.IsMaterialListSetCard(c,...)
+function Card.HasListedArchetypeAsMaterial(c,...)
 	if not c.material_setcode then return false end
 	local setcodes={...}
 	for _,setcode in ipairs(setcodes) do

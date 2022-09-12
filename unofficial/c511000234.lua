@@ -79,7 +79,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 function s.atkdefval(e,c)
-	return Duel.GetMatchingGroupCount(Card.IsType,c:GetControler(),LOCATION_GRAVE,0,nil,TYPE_TRAP)*1000
+	return Duel.GetMatchingGroupCount(Card.IsTrap,c:GetControler(),LOCATION_GRAVE,0,nil)*1000
 end
 function s.trapdesfilter(c)
 	return c:IsFacedown() and c:IsDestructable()

@@ -31,7 +31,7 @@ function s.accost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,500)
 end
 function s.accon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsDefensePos() and not Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,0,1,nil,TYPE_SPELL)
+	return e:GetHandler():IsDefensePos() and not Duel.IsExistingMatchingCard(Card.IsSpell,tp,LOCATION_GRAVE,0,1,nil)
 end
 function s.acfilter(c,e,tp)
 	local te=c:GetActivateEffect()

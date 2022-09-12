@@ -14,13 +14,13 @@ function s.filter(c)
 	return (c:GetLevel()==7 or c:GetLevel()==8) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_HAND,0,1,e:GetHandler(),TYPE_SPELL)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsSpell,tp,LOCATION_HAND,0,1,e:GetHandler())
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))
-	local ag=Duel.SelectMatchingCard(tp,Card.IsType,tp,LOCATION_HAND,0,1,1,nil,TYPE_SPELL)
+	local ag=Duel.SelectMatchingCard(tp,Card.IsSpell,tp,LOCATION_HAND,0,1,1,nil)
 	if #ag>0 then
 		Duel.SendtoHand(ag,1-tp,REASON_EFFECT)
 		Duel.ConfirmCards(tp,ag)

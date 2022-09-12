@@ -32,7 +32,7 @@ end
 s.listed_names={CARD_ALBAZ}
 s.listed_series={0x160}
 function s.spconfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:HasListedCodeAsMaterial(CARD_ALBAZ)
+	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:ListsCodeAsMaterial(CARD_ALBAZ)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.spconfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil)

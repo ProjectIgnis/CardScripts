@@ -66,7 +66,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.tdtg(e,c)
 	return c:IsFaceup() and ((c:IsCode(CARD_STARDUST_DRAGON) and (c:IsType(TYPE_EXTRA) or c:IsLocation(LOCATION_SZONE)))
-		or (c:IsType(TYPE_SYNCHRO) and c:HasListedCode(CARD_STARDUST_DRAGON)))
+		or (c:IsType(TYPE_SYNCHRO) and c:ListsCode(CARD_STARDUST_DRAGON)))
 end
 function s.applycon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(aux.FaceupFilter(Card.IsType,TYPE_SYNCHRO),1,nil)

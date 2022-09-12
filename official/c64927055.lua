@@ -32,7 +32,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 end
 function s.thfilter2(c)
-	return c:IsFaceup() and (c:IsCode(CARD_SANCTUARY_SKY) or c:HasListedCode(CARD_SANCTUARY_SKY)) and c:IsAbleToHand()
+	return c:IsFaceup() and (c:IsCode(CARD_SANCTUARY_SKY) or c:ListsCode(CARD_SANCTUARY_SKY)) and c:IsAbleToHand()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

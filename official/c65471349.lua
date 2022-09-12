@@ -28,7 +28,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_JINZO}
 function s.thfilter(c)
-	return ((c:HasListedCode(CARD_JINZO) and c:IsSpellTrap()) or c:IsCode(CARD_JINZO)) and c:IsAbleToHand()
+	return ((c:ListsCode(CARD_JINZO) and c:IsSpellTrap()) or c:IsCode(CARD_JINZO)) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

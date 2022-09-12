@@ -39,7 +39,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.DiscardHand(tp,s.spcostfilter,1,1,REASON_COST+REASON_DISCARD,c)
 end
 function s.thfilter(c)
-	return (c:IsCode(CARD_EXCHANGE_SPIRIT) or c:HasListedCode(CARD_EXCHANGE_SPIRIT)) and c:IsAbleToHand()
+	return (c:IsCode(CARD_EXCHANGE_SPIRIT) or c:ListsCode(CARD_EXCHANGE_SPIRIT)) and c:IsAbleToHand()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

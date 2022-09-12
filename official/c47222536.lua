@@ -34,7 +34,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.filter(c)
-	return ((c:HasListedCode(CARD_DARK_MAGICIAN) and c:IsSpellTrap()) or c:IsCode(CARD_DARK_MAGICIAN)) and c:IsAbleToHand()
+	return ((c:ListsCode(CARD_DARK_MAGICIAN) and c:IsSpellTrap()) or c:IsCode(CARD_DARK_MAGICIAN)) and c:IsAbleToHand()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

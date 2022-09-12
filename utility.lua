@@ -842,7 +842,7 @@ function Card.RegisterEffect(c,e,forced,...)
 	return reg_e
 end
 
-function Card.HasListedCodeAsMaterial(c,...)
+function Card.ListsCodeAsMaterial(c,...)
 	if not c.material then return false end
 	local codes={...}
 	for _,code in ipairs(codes) do
@@ -855,7 +855,7 @@ end
 local function MatchSetcode(set_code,to_match)
 	return (set_code&0xfff)==(to_match&0xfff) and (set_code&to_match)==set_code;
 end
-function Card.HasListedArchetypeAsMaterial(c,...)
+function Card.ListsArchetypeAsMaterial(c,...)
 	if not c.material_setcode then return false end
 	local setcodes={...}
 	for _,setcode in ipairs(setcodes) do
@@ -870,7 +870,7 @@ function Card.HasListedArchetypeAsMaterial(c,...)
 	return false
 end
 --Returns true if the Card "c" specifically lists any of the card IDs in "..."
-function Card.HasListedCode(c,...)
+function Card.ListsCode(c,...)
 	if c.listed_names then
 		local codes={...}
 		for _,wanted in ipairs(codes) do
@@ -889,7 +889,7 @@ function Card.HasListedCode(c,...)
 	return false
 end
 --Returns true if the Card "c" specifically lists the name of a card that is part of an archetype in "..."
-function Card.HasListedCodeWithArchetype(c,...)
+function Card.ListsCodeWithArchetype(c,...)
 	if not c.listed_names then return false end
 	local setcodes={...}
 	for _,cardcode in ipairs(c.listed_names) do
@@ -905,7 +905,7 @@ function Card.HasListedCodeWithArchetype(c,...)
 	return false
 end
 --Returns true if the Card "c" specifically lists any of the card types in "..."
-function Card.HasListedCardType(c,...)
+function Card.ListsCardType(c,...)
 	if not c.listed_card_types then return false end
 	local card_types={...}
 	for _,typ in ipairs(card_types) do
@@ -916,7 +916,7 @@ function Card.HasListedCardType(c,...)
 	return false
 end
 --Returns true if the Card "c" lists any of the setcodes passed in "..."
-function Card.HasListedArchetype(c,...)
+function Card.ListsArchetype(c,...)
 	if not c.listed_series then return false end
 	local listed_archetypes={...}
 	for _,wanted in ipairs(listed_archetypes) do

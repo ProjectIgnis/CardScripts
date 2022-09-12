@@ -35,7 +35,7 @@ s.listed_names={id,CARD_BLACK_ROSE_DRAGON}
 s.listed_series={0x1123}
 --Search
 function s.thfilter(c)
-	return c:IsAbleToHand() and not c:IsCode(id) and c:HasListedCode(CARD_BLACK_ROSE_DRAGON)
+	return c:IsAbleToHand() and not c:IsCode(id) and c:ListsCode(CARD_BLACK_ROSE_DRAGON)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

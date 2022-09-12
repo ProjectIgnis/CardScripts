@@ -40,7 +40,7 @@ function s.ghcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
 function s.tgfilter(c)
-	return (c:IsCode(CARD_SANCTUARY_SKY) or c:HasListedCode(CARD_SANCTUARY_SKY)) and c:IsAbleToGrave()
+	return (c:IsCode(CARD_SANCTUARY_SKY) or c:ListsCode(CARD_SANCTUARY_SKY)) and c:IsAbleToGrave()
 end
 function s.thfilter(c)
 	return c:IsCode(91188343) and c:IsAbleToHand()

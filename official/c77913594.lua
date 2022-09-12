@@ -30,7 +30,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.listfilter(c,sc)
-	return c:IsSetCard(0x174) and c:IsFaceup() and c:IsMonster() and sc:HasListedCode(c:GetCode())
+	return c:IsSetCard(0x174) and c:IsFaceup() and c:IsMonster() and sc:ListsCode(c:GetCode())
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)

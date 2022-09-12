@@ -34,7 +34,7 @@ function s.initial_effect(c)
 end
 s.listed_card={91998119}
 function s.xyzfilter(c)
-	return c:IsFaceup() and (c:IsCode(91998119) or (c:IsType(TYPE_FUSION) and c:HasListedCodeAsMaterial(91998119)))
+	return c:IsFaceup() and (c:IsCode(91998119) or (c:IsType(TYPE_FUSION) and c:ListsCodeAsMaterial(91998119)))
 end
 function s.xyzcon(tp)
 	return Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_MZONE,0,1,nil)

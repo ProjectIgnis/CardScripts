@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
-	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.HasListedCodeAsMaterial,78193831),nil,s.fextra)
+	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.ListsCodeAsMaterial,78193831),nil,s.fextra)
 	e1:SetCountLimit(1,id)
 	c:RegisterEffect(e1)
 	--tohand

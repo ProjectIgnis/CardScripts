@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
-	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.HasListedArchetypeAsMaterial,0xc008),Fusion.InHandMat,s.fextra,nil,nil,s.stage2,nil,nil,nil,nil,nil,nil,nil,s.extratg)
+	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.ListsArchetypeAsMaterial,0xc008),Fusion.InHandMat,s.fextra,nil,nil,s.stage2,nil,nil,nil,nil,nil,nil,nil,s.extratg)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	c:RegisterEffect(e1)
 end

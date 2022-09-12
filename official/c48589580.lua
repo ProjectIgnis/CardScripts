@@ -38,7 +38,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.thfilter(c,chk)
 	if not c:IsAbleToHand() then return false end
-	return c:IsCode(CARD_SANCTUARY_SKY) or c:HasListedCode(CARD_SANCTUARY_SKY) or (chk and c:IsRace(RACE_FAIRY))
+	return c:IsCode(CARD_SANCTUARY_SKY) or c:ListsCode(CARD_SANCTUARY_SKY) or (chk and c:IsRace(RACE_FAIRY))
 end
 function s.sanfilter(c)
 	return c:IsFaceup() and c:IsCode(CARD_SANCTUARY_SKY)

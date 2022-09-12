@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
-	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.HasListedArchetypeAsMaterial,0x3b),nil,s.fextra,nil,nil,s.stage2,nil,nil,nil,nil,nil,nil,nil,s.extratg)
+	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.ListsArchetypeAsMaterial,0x3b),nil,s.fextra,nil,nil,s.stage2,nil,nil,nil,nil,nil,nil,nil,s.extratg)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCost(s.cost)
 	c:RegisterEffect(e1)
@@ -60,7 +60,7 @@ function s.ffilter(c,fc,sumtype,tp)
 			res=res or (c:IsSummonCode(nil,SUMMON_TYPE_FUSION,PLAYER_NONE,code) and c:IsSetCard(0x3b,fc,sumtype,tp))
 		end
 	elseif set then
-		res=res or (c:IsSetCard(0x3b,fc,sumtype,tp) and fc:HasListedArchetypeAsMaterial(0x3b))
+		res=res or (c:IsSetCard(0x3b,fc,sumtype,tp) and fc:ListsArchetypeAsMaterial(0x3b))
 	else
 		return false
 	end

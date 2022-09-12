@@ -46,7 +46,7 @@ function s.initial_effect(c)
 end
 s.listed_names={TOKEN_BRAVE}
 function s.mthfilter(c)
-	return c:IsMonster() and c:HasListedCode(TOKEN_BRAVE) and c:IsAbleToHand()
+	return c:IsMonster() and c:ListsCode(TOKEN_BRAVE) and c:IsAbleToHand()
 end
 function s.mthtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.mthfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -72,7 +72,7 @@ function s.eqfilter(c,tp)
 		and Duel.IsExistingTarget(s.bravefilter,tp,LOCATION_MZONE,0,1,nil,c)
 end
 function s.sthfilter(c,tp)
-	return c:IsType(TYPE_EQUIP) and c:HasListedCode(TOKEN_BRAVE)
+	return c:IsType(TYPE_EQUIP) and c:ListsCode(TOKEN_BRAVE)
 		and (c:IsAbleToHand() or s.eqfilter(c,tp))
 end
 function s.sthtg(e,tp,eg,ep,ev,re,r,rp,chk)

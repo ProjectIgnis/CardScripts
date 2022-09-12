@@ -30,7 +30,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_ALBAZ,id}
 function s.negconfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:HasListedCodeAsMaterial(CARD_ALBAZ)
+	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:ListsCodeAsMaterial(CARD_ALBAZ)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and re:IsActiveType(TYPE_MONSTER)
@@ -49,7 +49,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateEffect(ev)
 end
 function s.thfilter(c)
-	return (c:IsCode(CARD_ALBAZ) or (c:IsMonster() and c:HasListedCode(CARD_ALBAZ)))
+	return (c:IsCode(CARD_ALBAZ) or (c:IsMonster() and c:ListsCode(CARD_ALBAZ)))
 		and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

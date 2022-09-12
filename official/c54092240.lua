@@ -29,7 +29,7 @@ function s.initial_effect(c)
 end
 s.listed_names={TOKEN_BRAVE}
 function s.counterfilter(c)
-	return c:IsCode(TOKEN_BRAVE) or (c:HasListedCode(TOKEN_BRAVE) and c:IsMonster())
+	return c:IsCode(TOKEN_BRAVE) or (c:ListsCode(TOKEN_BRAVE) and c:IsMonster())
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,TOKEN_BRAVE),tp,LOCATION_ONFIELD,0,1,nil)
@@ -47,7 +47,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c)
-	return not c:IsPublic() and c:HasListedCode(TOKEN_BRAVE)
+	return not c:IsPublic() and c:ListsCode(TOKEN_BRAVE)
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0
@@ -68,10 +68,10 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.splimit(e,c)
-	return not (c:IsCode(TOKEN_BRAVE) or (c:HasListedCode(TOKEN_BRAVE) and c:IsMonster()))
+	return not (c:IsCode(TOKEN_BRAVE) or (c:ListsCode(TOKEN_BRAVE) and c:IsMonster()))
 end
 function s.thfilter(c)
-	return c:IsSpell() and c:GetType()~=TYPE_SPELL and c:HasListedCode(TOKEN_BRAVE) and c:IsAbleToHand()
+	return c:IsSpell() and c:GetType()~=TYPE_SPELL and c:ListsCode(TOKEN_BRAVE) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

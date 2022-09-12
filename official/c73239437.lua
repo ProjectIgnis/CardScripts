@@ -17,7 +17,7 @@ end
 s.listed_series={0x8}
 s.listed_names={CARD_NEOS }
 function s.spcfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:HasListedCodeAsMaterial(CARD_NEOS)
+	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:ListsCodeAsMaterial(CARD_NEOS)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.spcfilter,tp,LOCATION_MZONE,0,1,nil)

@@ -26,7 +26,7 @@ function s.initial_effect(c)
 end
 function s.synlimit(e,c)
 	if not c then return false end
-	return not c:HasListedArchetypeAsMaterial(0x1017)
+	return not c:ListsArchetypeAsMaterial(0x1017)
 end
 function s.spfilter(c)
 	return c:IsMonster() and c:IsAbleToGraveAsCost()

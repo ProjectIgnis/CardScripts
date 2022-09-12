@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.thfilter(c)
-	return c:IsSpellTrap() and c:IsCardTypeListed(TYPE_GEMINI) and c:IsAbleToHand()
+	return c:IsSpellTrap() and c:HasListedCardType(TYPE_GEMINI) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

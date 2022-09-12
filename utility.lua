@@ -905,7 +905,7 @@ function Card.IsArchetypeCodeListed(c,...)
 	return false
 end
 --Returns true if the Card "c" specifically lists any of the card types in "..."
-function Card.IsCardTypeListed(c,...)
+function Card.HasListedCardType(c,...)
 	if not c.listed_card_types then return false end
 	local card_types={...}
 	for _,typ in ipairs(card_types) do

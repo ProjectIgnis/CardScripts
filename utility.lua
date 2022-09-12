@@ -1641,7 +1641,7 @@ function Duel.GetZoneWithLinkedCount(count,tp)
 end
 --Checks whether a card (c) has an effect that mentions a certain type of counter
 --This includes adding, removing, gaining ATK/DEF per counter, etc.
-function Card.HasCounterListed(c,counter_type)
+function Card.ListsCounter(c,counter_type)
 	if c.counter_list then
 		for _,ccounter in ipairs(c.counter_list) do
 			if counter_type==ccounter then return true end
@@ -1655,7 +1655,7 @@ function Card.HasCounterListed(c,counter_type)
 	return false
 end
 --Checks whether a card (c) has an effect that places a certain type of counter
-function Card.CanPlaceCounter(c,counter_type)
+function Card.ListsCounter(c,counter_type)
 	if not c.counter_place_list then return false end
 	for _,ccounter in ipairs(c.counter_place_list) do
 		if counter_type==ccounter then return true end

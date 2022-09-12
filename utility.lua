@@ -870,7 +870,7 @@ function Card.IsMaterialListSetCard(c,...)
 	return false
 end
 --Returns true if the Card "c" specifically lists any of the card IDs in "..."
-function Card.IsCodeListed(c,...)
+function Card.HasListedCode(c,...)
 	if c.listed_names then
 		local codes={...}
 		for _,wanted in ipairs(codes) do

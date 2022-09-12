@@ -28,7 +28,7 @@ end
 s.listed_series={0x64}
 s.listed_names={CARD_HARPIE_LADY,CARD_HARPIE_LADY_SISTERS}
 function s.thfilter(c)
-	return c:IsCodeListed(CARD_HARPIE_LADY_SISTERS) and c:IsSpellTrap() and c:IsAbleToHand()
+	return c:HasListedCode(CARD_HARPIE_LADY_SISTERS) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x64) and c:IsLevelAbove(5)

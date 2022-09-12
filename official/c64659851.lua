@@ -22,7 +22,7 @@ function s.spfilter(c,e,tp)
 	return c:IsCode(CARD_JINZO) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.thfilter(c)
-	return (c:IsCode(CARD_JINZO) or (c:IsMonster() and c:IsCodeListed(CARD_JINZO))) and c:IsAbleToHand()
+	return (c:IsCode(CARD_JINZO) or (c:IsMonster() and c:HasListedCode(CARD_JINZO))) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp,Duel.GetLocationCount(tp,LOCATION_MZONE)) end

@@ -16,7 +16,7 @@ function s.cfilter(c,e,tp)
 	return c:IsFaceup() and c:IsSetCard(0x1e) and Duel.IsExistingMatchingCard(s.spfilter,tp,0x13,0,1,nil,c,e,tp)
 end
 function s.spfilter(c,tc,e,tp)
-	return tc:IsCodeListed(c:GetCode()) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return tc:HasListedCode(c:GetCode()) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)

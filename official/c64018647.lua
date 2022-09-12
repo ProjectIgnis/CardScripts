@@ -29,7 +29,7 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,0,tp,LOCATION_HAND+LOCATION_GRAVE)
 end
 function s.eqfilter(c,tp)
-	return c:IsType(TYPE_EQUIP) and c:CheckUniqueOnField(tp) and c:IsCodeListed(TOKEN_BRAVE)
+	return c:IsType(TYPE_EQUIP) and c:CheckUniqueOnField(tp) and c:HasListedCode(TOKEN_BRAVE)
 		and not c:IsForbidden() and Duel.IsExistingMatchingCard(s.eqfilter2,tp,LOCATION_MZONE,0,1,nil,c)
 end
 function s.eqfilter2(c,tc)

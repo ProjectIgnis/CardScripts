@@ -58,7 +58,7 @@ function s.filter(c,e,tp)
 	return c:IsFaceup() and c:IsSummonPlayer(tp) and g:IsExists(s.filter2,1,nil,c,e,tp)
 end
 function s.filter2(c,eqc,e,tp)
-	return c:GetFlagEffect(id)~=0 and c:IsCodeListed(eqc:GetCode()) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:GetFlagEffect(id)~=0 and c:HasListedCode(eqc:GetCode()) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and eg:IsExists(s.filter,1,nil,e,tp) end

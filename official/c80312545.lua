@@ -38,7 +38,7 @@ function s.initial_effect(c)
 end
 s.listed_names={69890967,6007213,32491822}
 function s.filter(c)
-	return (c:IsCode(69890967,6007213,32491822) or (c:IsCodeListed(69890967,6007213,32491822) and c:IsMonster()))
+	return (c:IsCode(69890967,6007213,32491822) or (c:HasListedCode(69890967,6007213,32491822) and c:IsMonster()))
 		and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

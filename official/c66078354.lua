@@ -42,10 +42,10 @@ end
 s.listed_names={TOKEN_BRAVE}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local attacker,target=Duel.GetBattleMonster(tp)
-	if attacker and attacker:IsCodeListed(TOKEN_BRAVE) then
+	if attacker and attacker:HasListedCode(TOKEN_BRAVE) then
 		Duel.RegisterFlagEffect(attacker:GetControler(),id,RESET_PHASE+PHASE_BATTLE,0,1)
 	end
-	if target and target:IsCodeListed(TOKEN_BRAVE) then
+	if target and target:HasListedCode(TOKEN_BRAVE) then
 		Duel.RegisterFlagEffect(target:GetControler(),id,RESET_PHASE+PHASE_BATTLE,0,1)
 	end
 end
@@ -67,7 +67,7 @@ function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFlagEffect(tp,id)>0
 end
 function s.setfilter(c)
-	return c:IsTrap() and c:IsCodeListed(TOKEN_BRAVE) and c:IsSSetable()
+	return c:IsTrap() and c:HasListedCode(TOKEN_BRAVE) and c:IsSSetable()
 		and not c:IsForbidden()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -49,7 +49,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateEffect(ev)
 end
 function s.thfilter(c)
-	return (c:IsCode(CARD_ALBAZ) or (c:IsMonster() and c:IsCodeListed(CARD_ALBAZ)))
+	return (c:IsCode(CARD_ALBAZ) or (c:IsMonster() and c:HasListedCode(CARD_ALBAZ)))
 		and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

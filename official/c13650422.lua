@@ -28,7 +28,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(c,REASON_COST+REASON_DISCARD)
 end
 function s.thfilter(c)
-	return c:IsAbleToHand() and not c:IsCode(id) and (c:IsCode(CARD_DARK_FUSION) or c:IsCodeListed(CARD_DARK_FUSION))
+	return c:IsAbleToHand() and not c:IsCode(id) and (c:IsCode(CARD_DARK_FUSION) or c:HasListedCode(CARD_DARK_FUSION))
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

@@ -51,7 +51,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEDOWN)
 end
 function s.spfilter(c,e,tp)
-	return (c:IsCode(CARD_BLACK_ROSE_DRAGON) or c:IsCodeListed(CARD_BLACK_ROSE_DRAGON))
+	return (c:IsCode(CARD_BLACK_ROSE_DRAGON) or c:HasListedCode(CARD_BLACK_ROSE_DRAGON))
 		and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

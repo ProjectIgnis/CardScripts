@@ -55,7 +55,7 @@ function s.repop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for "Skull Servant" or a monster that lists "Skull Servant"
 function s.thfilter(c)
-	return not c:IsOriginalCode(id) and (c:IsCode(CARD_SKULL_SERVANT) or (c:IsMonster() and c:IsCodeListed(CARD_SKULL_SERVANT))) and c:IsAbleToHand()
+	return not c:IsOriginalCode(id) and (c:IsCode(CARD_SKULL_SERVANT) or (c:IsMonster() and c:HasListedCode(CARD_SKULL_SERVANT))) and c:IsAbleToHand()
 end
 	--Activation legality
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

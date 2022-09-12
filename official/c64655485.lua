@@ -44,7 +44,7 @@ function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(s.atkfilter,c:GetControler(),LOCATION_GRAVE,0,nil)*100
 end
 function s.thfilter(c)
-	return c:IsSpellTrap() and c:IsCodeListed(CARD_NEOS) and c:IsAbleToHand()
+	return c:IsSpellTrap() and c:HasListedCode(CARD_NEOS) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

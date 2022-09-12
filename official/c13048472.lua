@@ -20,7 +20,7 @@ function s.filter2(c,mc)
 	return c:IsRitualMonster() and c:IsAbleToHand() and s.isfit(c,mc)
 end
 function s.isfit(c,mc)
-	return (mc.fit_monster and c:IsCode(table.unpack(mc.fit_monster))) or mc:IsCodeListed(c:GetCode())
+	return (mc.fit_monster and c:IsCode(table.unpack(mc.fit_monster))) or mc:HasListedCode(c:GetCode())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,tp) end

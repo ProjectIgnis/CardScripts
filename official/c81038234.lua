@@ -56,7 +56,7 @@ function s.filter(c,tp)
 end
 	--Check for 1 monster that specifically lists "Dream Mirror of Joy"/"Dream Mirror of Terror"
 function s.spfilter(c,e,tp,code)
-	return c:IsCodeListed(code) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:HasListedCode(code) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

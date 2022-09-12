@@ -889,7 +889,7 @@ function Card.HasListedCode(c,...)
 	return false
 end
 --Returns true if the Card "c" specifically lists the name of a card that is part of an archetype in "..."
-function Card.IsArchetypeCodeListed(c,...)
+function Card.HasListedCodeWithArchetype(c,...)
 	if not c.listed_names then return false end
 	local setcodes={...}
 	for _,cardcode in ipairs(c.listed_names) do

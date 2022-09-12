@@ -76,8 +76,8 @@ function s.lpcon(e,tp,eg,ep,ev,re,r,rp,chk)
 	return e:GetHandler():IsDeckMaster()
 end
 function s.lpcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,TYPE_MONSTER) end
-	local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_GRAVE,LOCATION_GRAVE,nil,TYPE_MONSTER)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsMonster,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil) end
+	local g=Duel.GetMatchingGroup(Card.IsMonster,tp,LOCATION_GRAVE,LOCATION_GRAVE,nil)
 	local ct=Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 	e:SetLabel(ct)
 end

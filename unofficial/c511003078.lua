@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return eg:IsExists(Card.IsType,1,nil,TYPE_MONSTER) end
+	if chk==0 then return eg:IsExists(Card.IsMonster,1,nil) end
 	local g=eg:Filter(Card.IsMonster,nil)
 	local sum=g:GetSum(Card.GetAttack)
 	Duel.SetTargetPlayer(tp)

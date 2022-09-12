@@ -39,13 +39,13 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsDeckMaster()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ct=Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_MONSTER)
+	local ct=Duel.GetMatchingGroupCount(Card.IsMonster,tp,LOCATION_GRAVE,0,nil)
 	local dc=Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)
 	if chk==0 then return dc>=ct and ct>0 end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	local ct=Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_MONSTER)
+	local ct=Duel.GetMatchingGroupCount(Card.IsMonster,tp,LOCATION_GRAVE,0,nil)
 	Duel.ConfirmDecktop(tp,ct)
 	local g=Duel.GetDecktopGroup(tp,ct)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)

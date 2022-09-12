@@ -7,7 +7,7 @@ function s.initial_effect(c)
 end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--condition
-	return Duel.IsPlayerCanDiscardDeck(tp,1) and Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_DECK,0,1,nil,TYPE_MONSTER)
+	return Duel.IsPlayerCanDiscardDeck(tp,1) and Duel.IsExistingMatchingCard(Card.IsMonster,tp,LOCATION_DECK,0,1,nil)
 		and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
@@ -21,11 +21,11 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	if aux.CheckSkillNegation(e,tp) then return end
 	--LP regen/deck excavation
 	if not Duel.IsPlayerCanDiscardDeck(tp,1) then return end
-	local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_DECK,0,nil,TYPE_MONSTER)
+	local g=Duel.GetMatchingGroup(Card.IsMonster,tp,LOCATION_DECK,0,nil)
 	local dcount=Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)
 	local seq=-1
 	local spcard=nil
-	for tc in aux.Next(g) do
+	for tc in g:Iter() do
 		if tc:GetSequence()>seq then
 			seq=tc:GetSequence()
 			spcard=tc

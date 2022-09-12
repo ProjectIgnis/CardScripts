@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.atkcond(e,c)
-	return not Duel.IsExistingMatchingCard(Card.IsType,1-e:GetHandlerPlayer(),LOCATION_GRAVE,0,1,nil,TYPE_MONSTER)
+	return not Duel.IsExistingMatchingCard(Card.IsMonster,1-e:GetHandlerPlayer(),LOCATION_GRAVE,0,1,nil)
 end
 function s.tdfilter(c)
 	return c:IsMonster() and c:IsAbleToDeck()

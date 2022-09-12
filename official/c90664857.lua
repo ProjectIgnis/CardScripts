@@ -59,7 +59,7 @@ function s.rescon(sg,e,tp,mg)
 	return sg:GetClassCount(Card.GetOriginalRace)==1 and sg:GetClassCount(Card.GetOriginalAttribute)==1
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_MONSTER)
+	local g=Duel.GetMatchingGroup(Card.IsMonster,tp,LOCATION_GRAVE,0,nil)
 	return aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)

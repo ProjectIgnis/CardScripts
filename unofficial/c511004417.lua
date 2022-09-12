@@ -30,11 +30,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g2=Group.CreateGroup()
 	local lose1=false
 	local lose2=false
-	while not (g1:IsExists(Card.IsType,1,nil,TYPE_MONSTER) or lose1) 
-		or not (g2:IsExists(Card.IsType,1,nil,TYPE_MONSTER) or lose2) do
+	while not (g1:IsExists(Card.IsMonster,1,nil) or lose1) 
+		or not (g2:IsExists(Card.IsMonster,1,nil) or lose2) do
 		local s1=Duel.GetDecktopGroup(tp,2)
 		local s2=Duel.GetDecktopGroup(1-tp,2)
-		if not (g1:IsExists(Card.IsType,1,nil,TYPE_MONSTER) or lose1) then
+		if not (g1:IsExists(Card.IsMonster,1,nil) or lose1) then
 			g1:Merge(s1)
 			if #s1<=1 then lose1=true end
 			Duel.Draw(tp,2,REASON_EFFECT)
@@ -52,7 +52,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoGrave(g2,REASON_EFFECT)
 	local lv1=0
 	local lv2=0
-	local dam=Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,nil,TYPE_MONSTER)*200
+	local dam=Duel.GetMatchingGroupCount(Card.IsMonster,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,nil)*200
 	local tc1=g1:GetFirst()
 	while tc1 do
 		if tc1:IsMonster() then

@@ -40,7 +40,7 @@ function s.val(e,c)
 	return c:GetAttack()*2
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(Card.IsType,1,nil,TYPE_MONSTER) and e:GetHandler():IsStatus(STATUS_ACTIVATED)
+	return eg:IsExists(Card.IsMonster,1,nil) and e:GetHandler():IsStatus(STATUS_ACTIVATED)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

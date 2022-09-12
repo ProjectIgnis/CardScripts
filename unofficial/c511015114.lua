@@ -40,7 +40,7 @@ s.listed_series={0x54,0x48}
 function s.ntcon(e,c,minc)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return minc==0 and c:GetLevel()>4 and Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,0,2,nil,TYPE_MONSTER)
+	return minc==0 and c:GetLevel()>4 and Duel.IsExistingMatchingCard(Card.IsMonster,tp,LOCATION_GRAVE,0,2,nil)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 end
 function s.spfilter(c,e,tp)

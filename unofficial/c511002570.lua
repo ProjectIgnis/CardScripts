@@ -19,7 +19,7 @@ function s.revfilter(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
-	if chk==0 then return (g:IsExists(s.revfilter,1,nil) or g:IsExists(Card.IsType,1,nil,TYPE_MONSTER)) 
+	if chk==0 then return (g:IsExists(s.revfilter,1,nil) or g:IsExists(Card.IsMonster,1,nil)) 
 		and Duel.IsPlayerCanDraw(tp,1) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

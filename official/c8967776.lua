@@ -31,7 +31,7 @@ end
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0 and
-		Duel.IsExistingMatchingCard(Card.IsType,c:GetControler(),LOCATION_GRAVE,0,10,nil,TYPE_MONSTER)
+		Duel.IsExistingMatchingCard(Card.IsMonster,c:GetControler(),LOCATION_GRAVE,0,10,nil)
 end
 function s.filter(c,e,tp)
 	return c:IsRace(RACE_FAIRY) and c:GetLevel()>=8

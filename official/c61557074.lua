@@ -46,7 +46,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x400d}
 function s.atkval(e,c)
-	local g=Duel.GetMatchingGroup(Card.IsType,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil,TYPE_MONSTER)
+	local g=Duel.GetMatchingGroup(Card.IsMonster,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil)
 	return g:GetClassCount(Card.GetAttribute)*200
 end
 function s.thfilter(c)

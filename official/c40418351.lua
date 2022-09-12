@@ -58,5 +58,5 @@ function s.repval(e,re,r,rp)
 	return (r&REASON_BATTLE)~=0
 end
 function s.atkval(e,c)
-	return Duel.GetMatchingGroupCount(Card.IsType,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil,TYPE_MONSTER)*100
+	return Duel.GetMatchingGroupCount(Card.IsMonster,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil)*100
 end

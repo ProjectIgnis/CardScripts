@@ -28,7 +28,7 @@ function s.condition(e)
 	return false
 end
 function s.filter(c,e,tp,ft)
-	local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_HAND,0,c,TYPE_MONSTER)
+	local g=Duel.GetMatchingGroup(Card.IsMonster,tp,LOCATION_HAND,0,c)
 	local tg=g:GetMaxGroup(Card.GetAttack)
 	return c:IsAbleToHand() and (ft>0 or c:GetSequence()<5) and tg 
 		and tg:IsExists(Card.IsCanBeSpecialSummoned,1,nil,e,0,tp,false,false,c:GetPosition(),tp)
@@ -46,7 +46,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if tc and tc:IsRelateToEffect(e) then
 		local pos=tc:GetPosition()
 		if Duel.SendtoHand(tc,nil,REASON_EFFECT)>0 then
-			local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_HAND,0,tc,TYPE_MONSTER)
+			local g=Duel.GetMatchingGroup(Card.IsMonster,tp,LOCATION_HAND,0,tc)
 			local tg=g:GetMaxGroup(Card.GetAttack)
 			if not tg then return false end
 			if #tg>1 then

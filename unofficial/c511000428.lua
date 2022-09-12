@@ -37,7 +37,7 @@ function s.con(e)
 	return e:GetHandler():GetFlagEffect(id+p)~=0
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(Card.IsType,1,nil,TYPE_MONSTER)
+	return eg:IsExists(Card.IsMonster,1,nil)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterFlagEffect(id+rp,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)

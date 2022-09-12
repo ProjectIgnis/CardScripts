@@ -47,7 +47,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={0x13f}
-
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not eg then return end
@@ -98,7 +97,7 @@ function s.handop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.BreakEffect()
 			Duel.ConfirmCards(1-p,g)
 			Duel.Hint(HINT_SELECTMSG,p,HINTMSG_DISCARD)
-			local sg=g:FilterSelect(1-p,Card.IsType,1,1,nil,TYPE_MONSTER)
+			local sg=g:FilterSelect(1-p,Card.IsMonster,1,1,nil)
 			Duel.SendtoGrave(sg,REASON_EFFECT+REASON_DISCARD)
 			Duel.ShuffleHand(p)
 		end
@@ -114,7 +113,7 @@ function s.extdop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		Duel.ConfirmCards(tp,g)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local sg=g:FilterSelect(tp,Card.IsType,1,1,nil,TYPE_MONSTER)
+		local sg=g:FilterSelect(tp,Card.IsMonster,1,1,nil)
 		Duel.SendtoGrave(sg,REASON_EFFECT)
 		Duel.ShuffleExtra(1-tp)
 	end

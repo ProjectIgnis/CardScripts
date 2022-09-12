@@ -34,7 +34,7 @@ end
 s.listed_names={id,CARD_ALBAZ}
 s.miracle_synchro_fusion=true
 function s.cfilter(c)
-	return c:IsType(TYPE_FUSION) and c:IsAbleToGraveAsCost() and c:IsMaterialListCode(CARD_ALBAZ)
+	return c:IsType(TYPE_FUSION) and c:IsAbleToGraveAsCost() and c:HasListedCodeAsMaterial(CARD_ALBAZ)
 end
 function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_EXTRA,0,1,nil) end

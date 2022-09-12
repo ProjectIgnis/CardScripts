@@ -30,7 +30,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_ALBAZ,id}
 function s.negconfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:IsMaterialListCode(CARD_ALBAZ)
+	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:HasListedCodeAsMaterial(CARD_ALBAZ)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and re:IsActiveType(TYPE_MONSTER)

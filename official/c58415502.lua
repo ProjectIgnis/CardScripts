@@ -19,7 +19,7 @@ function s.tgfilter(c)
 	return c:IsCode(CARD_JACK_KNIGHT,CARD_QUEEN_KNIGHT,CARD_KING_KNIGHT)
 		and (c:IsFaceup() or c:IsLocation(LOCATION_HAND)) and c:IsAbleToGrave()
 end
-s.listfilter=aux.OR(Card.HasListedCode,Card.IsMaterialListCode)
+s.listfilter=aux.OR(Card.HasListedCode,Card.HasListedCodeAsMaterial)
 function s.spfilter(c,e,tp)
 	if not (s.listfilter(c,CARD_JACK_KNIGHT) and s.listfilter(c,CARD_QUEEN_KNIGHT) and s.listfilter(c,CARD_KING_KNIGHT)) then return end
 	local code_chk=c:IsCode(11020863) and e:GetHandler():IsCode(id)

@@ -27,7 +27,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tp==1-Duel.GetTurnPlayer()
 end
 function s.cfilter(c)
-	return c:IsFaceup() and (c:IsCode(CARD_CYBER_DRAGON) or (c:IsType(TYPE_FUSION) and c:IsMaterialListCode(CARD_CYBER_DRAGON))) and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and (c:IsCode(CARD_CYBER_DRAGON) or (c:IsType(TYPE_FUSION) and c:HasListedCodeAsMaterial(CARD_CYBER_DRAGON))) and c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil) end

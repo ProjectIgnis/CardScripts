@@ -22,7 +22,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_NEOS}
 function s.eqfilter(c)
-	return c:IsType(TYPE_FUSION) and c:IsMaterialListCode(CARD_NEOS)
+	return c:IsType(TYPE_FUSION) and c:HasListedCodeAsMaterial(CARD_NEOS)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetPreviousEquipTarget()

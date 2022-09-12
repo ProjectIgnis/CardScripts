@@ -10,7 +10,7 @@ end
 s.listed_series={0x3008}
 s.listed_names={CARD_NEOS}
 function s.spfilter(c)
-	return c:IsSetCard(0x3008) and c:IsMaterialListCode(CARD_NEOS)
+	return c:IsSetCard(0x3008) and c:HasListedCodeAsMaterial(CARD_NEOS)
 end
 function s.fextra(e,tp,mg)
 	return Duel.GetMatchingGroup(aux.NecroValleyFilter(Fusion.IsMonsterFilter(Card.IsAbleToDeck)),tp,LOCATION_GRAVE,0,nil)

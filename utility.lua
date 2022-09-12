@@ -842,7 +842,7 @@ function Card.RegisterEffect(c,e,forced,...)
 	return reg_e
 end
 
-function Card.IsMaterialListCode(c,...)
+function Card.HasListedCodeAsMaterial(c,...)
 	if not c.material then return false end
 	local codes={...}
 	for _,code in ipairs(codes) do

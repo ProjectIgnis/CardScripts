@@ -44,7 +44,7 @@ function s.repfilter(c,tp)
 	return c:IsLocation(LOCATION_ONFIELD) and c:IsControler(tp) and c:IsReason(REASON_BATTLE+REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
 end
 function s.tgfilter(c)
-	return c:IsType(TYPE_FUSION) and c:IsMaterialListCode(CARD_ALBAZ) and c:IsAbleToGrave()
+	return c:IsType(TYPE_FUSION) and c:HasListedCodeAsMaterial(CARD_ALBAZ) and c:IsAbleToGrave()
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(s.repfilter,1,nil,tp)

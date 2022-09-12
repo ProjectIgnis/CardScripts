@@ -54,7 +54,7 @@ function s.spfilter(c,tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.spfilter,1,nil,tp) and e:GetHandler():IsXyzSummonable()
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,13331639),tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,13331639),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -156,7 +156,7 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 		local sg=g:Select(tp,2,2,nil)
 		Duel.HintSelection(sg)
 		if Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)==0 then return end
-		local ag=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsType,TYPE_XYZ),tp,0,LOCATION_MZONE,nil)
+		local ag=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsType,TYPE_XYZ),tp,0,LOCATION_MZONE,nil)
 		for tc in aux.Next(ag) do
 			local e2=Effect.CreateEffect(e:GetHandler())
 			e2:SetType(EFFECT_TYPE_SINGLE)

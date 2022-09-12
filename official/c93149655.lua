@@ -61,12 +61,12 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.GetAttacker()==e:GetHandler()
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ct=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0x99),tp,LOCATION_PZONE,0,nil)
+	local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0x99),tp,LOCATION_PZONE,0,nil)
 	if chk==0 then return ct>0 end
 	Duel.SetTargetParam(ct*1200)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,ct*1200)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	local ct=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0x99),tp,LOCATION_PZONE,0,nil)
+	local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0x99),tp,LOCATION_PZONE,0,nil)
 	Duel.Damage(1-tp,ct*1200,REASON_EFFECT)
 end

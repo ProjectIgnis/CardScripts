@@ -24,7 +24,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	e:SetLabel(0)
 	local dhg=Duel.GetMatchingGroup(s.tgfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,e)
 	local b1=dhg:FilterCount(Card.IsAbleToDeck,nil)>0
-	local b2=Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_WARRIOR),tp,LOCATION_MZONE,0,1,nil) and aux.SelectUnselectGroup(dhg,e,tp,2,2,s.rescon,0)
+	local b2=Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_WARRIOR),tp,LOCATION_MZONE,0,1,nil) and aux.SelectUnselectGroup(dhg,e,tp,2,2,s.rescon,0)
 	if not (b1 or b2) then return end
 	local op=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,1)},
@@ -60,7 +60,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 		tg=tg-dc
 		if Duel.SendtoDeck(dc,nil,SEQ_DECKTOP,REASON_EFFECT)>0 and dc:IsLocation(LOCATION_DECK) and #tg>0
-			and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_WARRIOR),tp,LOCATION_MZONE,0,1,nil) then
+			and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_WARRIOR),tp,LOCATION_MZONE,0,1,nil) then
 			Duel.BreakEffect()
 			Duel.SendtoHand(tg,nil,REASON_EFFECT)
 		end

@@ -77,7 +77,7 @@ function s.indesfil(c)
 	return c:IsFaceup() and c:IsSetCard(0x51) and c:IsOriginalType(TYPE_MONSTER) and c:IsType(TYPE_EQUIP)
 end
 function s.incon(e)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x51),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x51),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 		or Duel.IsExistingMatchingCard(s.indesfil,e:GetHandlerPlayer(),LOCATION_SZONE,0,1,nil)
 end
 function s.rdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

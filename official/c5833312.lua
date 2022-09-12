@@ -49,7 +49,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.typecheck(types)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,types),0,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,types),0,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return s.typecheck(RACE_WARRIOR|RACE_BEAST|RACE_PYRO) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_TRAP) and rp==tp

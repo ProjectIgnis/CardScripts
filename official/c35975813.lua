@@ -39,7 +39,7 @@ end
 s.listed_series={0x45}
 s.roll_dice=true
 function s.excon(e)
-	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x45),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
+	return not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x45),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp

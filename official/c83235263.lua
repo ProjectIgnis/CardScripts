@@ -11,5 +11,5 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.atkval(e,c)
-	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsRace,RACE_DINOSAUR),c:GetControler(),LOCATION_REMOVED,0,nil)*1000
+	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsRace,RACE_DINOSAUR),c:GetControler(),LOCATION_REMOVED,0,nil)*1000
 end

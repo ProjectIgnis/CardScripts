@@ -49,11 +49,11 @@ function s.filter(c)
 	return c:IsFaceup() and c:GetAttack()>0
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and aux.FilterFaceupFunction(chkc:HasNonZeroAttack()) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and aux.FaceupFilter(chkc:HasNonZeroAttack()) end
 	if chk==0 then return e:GetHandler():GetFlagEffect(id)==0 and
-		Duel.IsExistingTarget(aux.FilterFaceupFunction(Card.HasNonZeroAttack),tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler()) end
+		Duel.IsExistingTarget(aux.FaceupFilter(Card.HasNonZeroAttack),tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local g=Duel.SelectTarget(tp,aux.FilterFaceupFunction(Card.HasNonZeroAttack),tp,LOCATION_MZONE,LOCATION_MZONE,1,1,e:GetHandler())
+	local g=Duel.SelectTarget(tp,aux.FaceupFilter(Card.HasNonZeroAttack),tp,LOCATION_MZONE,LOCATION_MZONE,1,1,e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)
 	e:GetHandler():RegisterFlagEffect(id,RESET_CHAIN,0,1)
 end

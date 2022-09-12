@@ -32,10 +32,10 @@ end
 s.listed_names={66073051,94585852}
 function s.spcon(e,c)
 	if c==nil then return Duel.IsEnvironment(94585852) end
-	return Duel.CheckReleaseGroup(c:GetControler(),aux.FilterFaceupFunction(Card.IsCode,66073051),1,false,1,true,c,c:GetControler(),nil,false,nil)
+	return Duel.CheckReleaseGroup(c:GetControler(),aux.FaceupFilter(Card.IsCode,66073051),1,false,1,true,c,c:GetControler(),nil,false,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.SelectReleaseGroup(tp,aux.FilterFaceupFunction(Card.IsCode,66073051),1,1,false,true,true,c,nil,nil,false,nil)
+	local g=Duel.SelectReleaseGroup(tp,aux.FaceupFilter(Card.IsCode,66073051),1,1,false,true,true,c,nil,nil,false,nil)
 	if g then
 		g:KeepAlive()
 		e:SetLabelObject(g)

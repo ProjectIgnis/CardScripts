@@ -86,7 +86,7 @@ function s.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.GetLocationCountFromEx(tp)>0
 		and Duel.GetUsableMZoneCount(tp)>1 
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(s.spfilter,e,tp),tp,LOCATION_EXTRA,0,1,nil,e,tp)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(s.spfilter,e,tp),tp,LOCATION_EXTRA,0,1,nil,e,tp)
 		and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,0,0)
 end
@@ -99,7 +99,7 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 		or Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then
 		return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,aux.FilterFaceupFunction(s.spfilter,e,tp),tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,aux.FaceupFilter(s.spfilter,e,tp),tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
 	if #g>0 then
 		g:AddCard(c)
 		if Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)==2 then

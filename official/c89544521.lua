@@ -40,7 +40,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0xab}
 function s.val(e,c)
-	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0xab),c:GetControler(),LOCATION_ONFIELD,LOCATION_ONFIELD,nil)*500
+	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0xab),c:GetControler(),LOCATION_ONFIELD,LOCATION_ONFIELD,nil)*500
 end
 function s.desfilter1(c)
 	return c:IsFaceup() and c:IsSetCard(0xab)

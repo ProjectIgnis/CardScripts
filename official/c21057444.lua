@@ -54,12 +54,12 @@ function s.mlcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsLocation(LOCATION_GRAVE) and r==REASON_LINK and c:GetReasonCard():IsAttribute(ATTRIBUTE_WATER)
 end
 function s.mltg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ct=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0x12b),tp,LOCATION_MZONE,0,nil)
+	local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0x12b),tp,LOCATION_MZONE,0,nil)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,ct) end
 	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,ct)
 end
 function s.mlop(e,tp,eg,ep,ev,re,r,rp)
-	local ct=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0x12b),tp,LOCATION_MZONE,0,nil)
+	local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0x12b),tp,LOCATION_MZONE,0,nil)
 	if ct<1 or Duel.DiscardDeck(tp,ct,REASON_EFFECT)<1 then return end
 	local dc=Duel.GetOperatedGroup():Match(Card.IsSetCard,nil,0x12b):Match(Card.IsLocation,nil,LOCATION_GRAVE):GetCount()
 	if dc>0 then

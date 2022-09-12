@@ -75,7 +75,7 @@ end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	if not (re:IsActivated() and rc and rc:IsType(TYPE_XYZ) and rc:IsSetCard(0x7f) and rc:IsRankAbove(10)) then return end
-	local tg=eg:Filter(aux.FilterFaceupFunction(Card.IsType,TYPE_XYZ),nil,e,tp)
+	local tg=eg:Filter(aux.FaceupFilter(Card.IsType,TYPE_XYZ),nil,e,tp)
 	if #tg>0 then
 		for tc in aux.Next(tg) do
 			tc:RegisterFlagEffect(id,RESET_CHAIN,0,1)

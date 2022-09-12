@@ -20,7 +20,7 @@ end
 s.listed_names={TOKEN_BRAVE}
 --Destroy + Equip
 function s.con(e,tp,eg,ep,ev,re,r,rp) 
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,TOKEN_BRAVE),tp,LOCATION_ONFIELD,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,TOKEN_BRAVE),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.tgfilter(c,tp)
 	return c:IsFaceup() and c:GetEquipGroup():IsExists(Card.HasListedCode,1,nil,TOKEN_BRAVE)

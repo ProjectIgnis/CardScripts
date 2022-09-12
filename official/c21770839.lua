@@ -100,12 +100,12 @@ end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local d=c:GetBattleTarget()
-	local gc=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsType,TYPE_PENDULUM),tp,LOCATION_EXTRA,0,nil)
+	local gc=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsType,TYPE_PENDULUM),tp,LOCATION_EXTRA,0,nil)
 	return c==Duel.GetAttacker() and d and d:IsFaceup() and not d:IsControler(tp) and gc>0
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttacker():GetBattleTarget()
-	local gc=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsType,TYPE_PENDULUM),tp,LOCATION_EXTRA,0,nil)
+	local gc=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsType,TYPE_PENDULUM),tp,LOCATION_EXTRA,0,nil)
 	if d:IsRelateToBattle() and d:IsFaceup() then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

@@ -24,13 +24,13 @@ function s.initial_effect(c)
 end
 s.listed_series={0x114}
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x114),tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0x114),tp,LOCATION_MZONE,0,nil)
 	if chk==0 then return #g~=0
 		and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_GRAVE,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_GRAVE)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
-	local cg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x114),tp,LOCATION_MZONE,0,nil)
+	local cg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0x114),tp,LOCATION_MZONE,0,nil)
 	local ct=cg:GetClassCount(Card.GetCode)
 	if ct==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)

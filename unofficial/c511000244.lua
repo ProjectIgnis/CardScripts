@@ -75,7 +75,7 @@ function s.retfilter(c)
 		and not (c:GetReasonEffect():GetHandler():IsCode(13893596) or Duel.GetChainInfo(0,CHAININFO_TRIGGERING_CODE)==13893596)
 end
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,13893596),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,13893596),tp,LOCATION_MZONE,0,1,nil)
 		and eg:IsExists(aux.NecroValleyFilter(s.retfilter),1,nil)
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)

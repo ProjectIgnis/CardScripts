@@ -127,7 +127,7 @@ function s.cyberse(c)
 end
 ------------------------------------
 function s.sumlimit(e,c,tp,sumtp,sumpos)
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsLinkMonster),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsLinkMonster),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if #g<=0 then return false end
 	local mg,lk=g:GetMaxGroup(Card.GetLink)
 	return (sumtp&SUMMON_TYPE_LINK)==SUMMON_TYPE_LINK and lk and lk>c:GetLink()

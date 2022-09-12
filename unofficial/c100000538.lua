@@ -23,7 +23,7 @@ function s.con(e)
 	return e:GetHandler():IsPosition(POS_FACEUP_ATTACK)
 end
 function s.val(e,c)
-	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsRace,RACE_DRAGON+RACE_WARRIOR),0,LOCATION_MZONE,LOCATION_MZONE,nil)*300
+	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsRace,RACE_DRAGON+RACE_WARRIOR),0,LOCATION_MZONE,LOCATION_MZONE,nil)*300
 end
 function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

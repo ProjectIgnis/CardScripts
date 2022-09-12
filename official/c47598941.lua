@@ -68,5 +68,5 @@ function s.atktg(e,c)
 	return not c:IsSetCard(0xe0)
 end
 function s.atkval(e,c)
-	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0xe0),0,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)*-100
+	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0xe0),0,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)*-100
 end

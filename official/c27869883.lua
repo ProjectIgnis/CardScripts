@@ -14,8 +14,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,aux.FilterFaceupFunction(Card.IsAttribute,ATTRIBUTE_DARK),1,false,nil,nil) end
-	local g=Duel.SelectReleaseGroupCost(tp,aux.FilterFaceupFunction(Card.IsAttribute,ATTRIBUTE_DARK),1,1,false,nil,nil)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,aux.FaceupFilter(Card.IsAttribute,ATTRIBUTE_DARK),1,false,nil,nil) end
+	local g=Duel.SelectReleaseGroupCost(tp,aux.FaceupFilter(Card.IsAttribute,ATTRIBUTE_DARK),1,1,false,nil,nil)
 	Duel.Release(g,REASON_COST)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)

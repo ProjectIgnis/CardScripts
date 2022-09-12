@@ -82,13 +82,13 @@ function s.gycon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousLocation(LOCATION_SZONE)
 end
 function s.gytg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(aux.NOT(Card.IsRace),RACE_REPTILE),tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(aux.NOT(Card.IsRace),RACE_REPTILE),tp,LOCATION_MZONE,0,nil)
 	if chk==0 then return true end
 	if #g>0 then
 		Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,#g,0,0)
 	end
 end
 function s.gyop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(aux.NOT(Card.IsRace),RACE_REPTILE),tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(aux.NOT(Card.IsRace),RACE_REPTILE),tp,LOCATION_MZONE,0,nil)
 	Duel.SendtoGrave(g,REASON_EFFECT)
 end

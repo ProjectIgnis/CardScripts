@@ -43,7 +43,7 @@ function s.filter(c)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and re:IsActiveType(TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
-	 and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x84),tp,LOCATION_MZONE,0,1,nil) 
+	 and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x84),tp,LOCATION_MZONE,0,1,nil) 
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToHand() end

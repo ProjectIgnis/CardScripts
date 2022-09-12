@@ -23,5 +23,5 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.value(e,c)
-	return 100*Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsRace,RACE_ZOMBIE),e:GetHandlerPlayer(),LOCATION_MZONE,LOCATION_MZONE,nil)
+	return 100*Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsRace,RACE_ZOMBIE),e:GetHandlerPlayer(),LOCATION_MZONE,LOCATION_MZONE,nil)
 end

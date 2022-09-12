@@ -94,7 +94,7 @@ function s.tg(e,c)
 	return e:GetHandlerPlayer()
 end
 function s.sccon(e)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_EVIL_EYE_SELENE),e:GetHandlerPlayer(),LOCATION_SZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_EVIL_EYE_SELENE),e:GetHandlerPlayer(),LOCATION_SZONE,0,1,nil)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

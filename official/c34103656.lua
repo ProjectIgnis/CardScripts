@@ -37,7 +37,7 @@ function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil) end
 end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
-	local lv=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsAttribute,ATTRIBUTE_WATER),tp,LOCATION_MZONE,0,nil)
+	local lv=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsAttribute,ATTRIBUTE_WATER),tp,LOCATION_MZONE,0,nil)
 	if lv==0 then return end
 	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
 	local _,fid=g:GetMaxGroup(Card.GetFieldID)

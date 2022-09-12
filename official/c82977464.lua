@@ -62,9 +62,9 @@ end
 function s.seqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-							and Duel.IsExistingTarget(aux.FilterFaceupFunction(Card.IsSetCard,0x15a),tp,LOCATION_MZONE,0,1,nil) end
+							and Duel.IsExistingTarget(aux.FaceupFilter(Card.IsSetCard,0x15a),tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
-	Duel.SelectTarget(tp,aux.FilterFaceupFunction(Card.IsSetCard,0x15a),tp,LOCATION_MZONE,0,1,1,nil)
+	Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsSetCard,0x15a),tp,LOCATION_MZONE,0,1,1,nil)
 end
 function s.seqop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

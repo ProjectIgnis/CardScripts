@@ -26,7 +26,7 @@ end
 function s.lcheck(g,lc,sumtype,tp)
 	return g:IsExists(Card.IsType,1,nil,TYPE_LINK,lc,sumtype,tp)
 end
-s.desfilter=aux.FilterFaceupFunction(Card.IsType,TYPE_EFFECT)
+s.desfilter=aux.FaceupFilter(Card.IsType,TYPE_EFFECT)
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_MZONE,0,1,e:GetHandler())
 end

@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
 end
-s.cfilter=aux.FilterFaceupFunction(Card.IsSummonLocation,LOCATION_EXTRA)
+s.cfilter=aux.FaceupFilter(Card.IsSummonLocation,LOCATION_EXTRA)
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end

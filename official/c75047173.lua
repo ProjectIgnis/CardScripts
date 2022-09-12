@@ -16,7 +16,7 @@ function s.spfilter(c)
 end
 function s.fextra(e,tp,mg)
 	return Duel.GetMatchingGroup(aux.NecroValleyFilter(Fusion.IsMonsterFilter(Card.IsAbleToDeck)),tp,LOCATION_GRAVE,0,nil)+
-		Duel.GetMatchingGroup(aux.FilterFaceupFunction(Fusion.IsMonsterFilter(Card.IsAbleToDeck)),tp,LOCATION_REMOVED,0,nil)
+		Duel.GetMatchingGroup(aux.FaceupFilter(Fusion.IsMonsterFilter(Card.IsAbleToDeck)),tp,LOCATION_REMOVED,0,nil)
 end
 function s.extraop(e,tc,tp,sg)
 	local rg=sg:Filter(Card.IsFacedown,nil)

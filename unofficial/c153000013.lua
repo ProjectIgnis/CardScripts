@@ -59,12 +59,12 @@ function s.filter(c)
 	return c:IsTrap() and c:IsDisabled()
 end
 function s.dmcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(s.filter),tp,0,LOCATION_ONFIELD,1,nil) and Duel.IsDeckMaster(tp,id)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(s.filter),tp,0,LOCATION_ONFIELD,1,nil) and Duel.IsDeckMaster(tp,id)
 end
 function s.dmop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,tp,id)
 	Duel.Hint(HINT_CARD,1-tp,id)
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(s.filter),tp,0,LOCATION_ONFIELD,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(s.filter),tp,0,LOCATION_ONFIELD,nil)
 	Duel.Destroy(g,REASON_EFFECT)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

@@ -97,7 +97,7 @@ function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateActivation(ev) then
-		local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x101),tp,LOCATION_MZONE,0,nil)
+		local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0x101),tp,LOCATION_MZONE,0,nil)
 		for tc in aux.Next(g) do
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)

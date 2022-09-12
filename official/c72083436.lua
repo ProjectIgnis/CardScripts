@@ -19,7 +19,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,0,1,nil,TYPE_UNION) and Duel.IsAbleToEnterBP()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local f=aux.FilterFaceupFunction(Card.IsSetCard,0x122)
+	local f=aux.FaceupFilter(Card.IsSetCard,0x122)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and f(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(f,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)

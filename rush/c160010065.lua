@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp,chk)
-	return eg:IsExists(aux.FilterFaceupFunction(Card.IsSummonPlayer,1-tp),1,nil)
+	return eg:IsExists(aux.FaceupFilter(Card.IsSummonPlayer,1-tp),1,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,2) end

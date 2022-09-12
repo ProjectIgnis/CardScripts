@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	-- Activate by targeting 1 monster
-	aux.AddPersistentProcedure(c,PLAYER_ALL,aux.FilterFaceupFunction(Card.IsType,TYPE_EFFECT))
+	aux.AddPersistentProcedure(c,PLAYER_ALL,aux.FaceupFilter(Card.IsType,TYPE_EFFECT))
 	-- Cannot be destroyed by battle the first two times
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)

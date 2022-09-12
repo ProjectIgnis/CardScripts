@@ -20,7 +20,7 @@ function s.initial_effect(c)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,a:GetCode()),tp,LOCATION_MZONE,LOCATION_MZONE,1,a)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,a:GetCode()),tp,LOCATION_MZONE,LOCATION_MZONE,1,a)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

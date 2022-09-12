@@ -1675,7 +1675,7 @@ end
 Auxiliary.dncheck=Auxiliary.dpcheck(Card.GetCode)
 
 --Shortcut for functions that also check whether a card is face-up
-function Auxiliary.FilterFaceupFunction(f,...)
+function Auxiliary.FaceupFilter(f,...)
 	local params={...}
 	return 	function(target)
 				return target:IsFaceup() and f(target,table.unpack(params))

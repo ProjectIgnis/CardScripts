@@ -31,7 +31,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x107}
 function s.indcon(e)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x107),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x107),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.indval(e,re,tp)
 	return tp~=e:GetHandlerPlayer()

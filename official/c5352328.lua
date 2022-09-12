@@ -31,7 +31,7 @@ end
 s.listed_names={79858629}
 s.listed_series={0x174}
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x174),tp,LOCATION_MZONE,0,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x174),tp,LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
@@ -42,7 +42,7 @@ end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	if Duel.Draw(p,d,REASON_EFFECT)==d 
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,79858629),tp,LOCATION_ONFIELD,0,1,nil) then
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,79858629),tp,LOCATION_ONFIELD,0,1,nil) then
 		Duel.BreakEffect()
 		Duel.Recover(tp,800,REASON_EFFECT)
 	end

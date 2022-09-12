@@ -42,7 +42,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local f=aux.FilterFaceupFunction(Card.IsAbleToHand)
+	local f=aux.FaceupFilter(Card.IsAbleToHand)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and f(chkc) end
 	local c=e:GetHandler()
 	if chk==0 then return c:IsSSetable()

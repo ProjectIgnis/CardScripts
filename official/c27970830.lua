@@ -54,7 +54,7 @@ end
 s.listed_series={0x3d,0x20}
 s.counter_place_list={0x3}
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
-	if eg:IsExists(aux.FilterFaceupFunction(Card.IsSetCard,0x3d),1,nil) then
+	if eg:IsExists(aux.FaceupFilter(Card.IsSetCard,0x3d),1,nil) then
 		e:GetHandler():AddCounter(0x3,2)
 	end
 end

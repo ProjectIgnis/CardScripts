@@ -44,10 +44,10 @@ function s.spcon(e,c)
 	if c==nil then return Duel.GetCurrentPhase()==PHASE_MAIN2 end
 	local tp=c:GetControler()
 	return Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x4b),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x4b),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function s.descon(e)
-	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x4b),0,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+	return not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x4b),0,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function s.poscon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp

@@ -21,7 +21,7 @@ end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetOwner()
 	local op=1
-	if Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_WARRIOR),tp,LOCATION_MZONE,LOCATION_MZONE,1,c) then
+	if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_WARRIOR),tp,LOCATION_MZONE,LOCATION_MZONE,1,c) then
 		op=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))
 	end
 	if op==0 then
@@ -39,7 +39,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		local res=Duel.AnnounceNumber(tp,table.unpack(multiples))*100
 		c:Attack(atk-res)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-		local tc=Duel.SelectMatchingCard(tp,aux.FilterFaceupFunction(Card.IsRace,RACE_WARRIOR),tp,LOCATION_MZONE,LOCATION_MZONE,1,1,c):GetFirst()
+		local tc=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsRace,RACE_WARRIOR),tp,LOCATION_MZONE,LOCATION_MZONE,1,1,c):GetFirst()
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)

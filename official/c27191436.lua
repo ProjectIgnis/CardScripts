@@ -14,7 +14,7 @@ end
 s.listed_series={0x3008}
 s.listed_names={58932615}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,58932615),tp,LOCATION_ONFIELD,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,58932615),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x3008) and not c:IsCode(58932615) and c:IsAbleToHand()

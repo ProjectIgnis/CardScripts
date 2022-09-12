@@ -51,7 +51,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return ct>0 and not e:GetHandler():IsLocation(LOCATION_DECK)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsRace,RACE_FISH+RACE_SEASERPENT),tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsRace,RACE_FISH+RACE_SEASERPENT),tp,LOCATION_MZONE,0,nil)
 	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

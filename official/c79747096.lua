@@ -68,9 +68,9 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local atk=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsType,TYPE_XYZ),tp,LOCATION_REMOVED,LOCATION_REMOVED,c):GetSum(Card.GetAttack)
+	local atk=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsType,TYPE_XYZ),tp,LOCATION_REMOVED,LOCATION_REMOVED,c):GetSum(Card.GetAttack)
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_NUMERON_NETWORK),tp,LOCATION_ONFIELD,0,1,nil) and atk>0 then
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_NUMERON_NETWORK),tp,LOCATION_ONFIELD,0,1,nil) and atk>0 then
 		Duel.BreakEffect()
 		Duel.Damage(1-tp,atk,REASON_EFFECT)
 	end

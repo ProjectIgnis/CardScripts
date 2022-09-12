@@ -26,7 +26,7 @@ function s.initial_effect(c)
 end
 function s.atklm(e)
 	local c=e:GetHandler()
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_PYRO),c:GetControler(),LOCATION_MZONE,0,1,c)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_PYRO),c:GetControler(),LOCATION_MZONE,0,1,c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer()

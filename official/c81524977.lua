@@ -38,7 +38,7 @@ function s.initial_effect(c)
 end
 s.counter_place_list={0x20}
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(aux.FilterFaceupFunction(Card.IsRace,RACE_PLANT),1,nil)
+	return eg:IsExists(aux.FaceupFilter(Card.IsRace,RACE_PLANT),1,nil)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(0x20,1)

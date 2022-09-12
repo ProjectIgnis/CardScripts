@@ -56,7 +56,7 @@ function s.relop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==1-tp and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(aux.NOT(Card.IsRace),RACE_PLANT),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.GetTurnPlayer()==1-tp and Duel.IsExistingMatchingCard(aux.FaceupFilter(aux.NOT(Card.IsRace),RACE_PLANT),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

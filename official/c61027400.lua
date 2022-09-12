@@ -30,7 +30,7 @@ s.listed_names={CARD_SUSHIP_SHARI}
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_SUSHIP_SHARI),c:GetControler(),LOCATION_ONFIELD,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_SUSHIP_SHARI),c:GetControler(),LOCATION_ONFIELD,0,1,nil)
 end
 function s.exctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>2 end

@@ -28,7 +28,7 @@ s.listed_series={0x122}
 s.listed_names={id}
 function s.atkval(e,c)
 	local tp=e:GetHandlerPlayer()
-	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsMonster),tp,0,LOCATION_REMOVED,nil)*200
+	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsMonster),tp,0,LOCATION_REMOVED,nil)*200
 end
 function s.gycfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x122) and not c:IsCode(id)

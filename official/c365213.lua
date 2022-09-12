@@ -69,7 +69,7 @@ function s.tdtg(e,c)
 		or (c:IsType(TYPE_SYNCHRO) and c:HasListedCode(CARD_STARDUST_DRAGON)))
 end
 function s.applycon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(aux.FilterFaceupFunction(Card.IsType,TYPE_SYNCHRO),1,nil)
+	return eg:IsExists(aux.FaceupFilter(Card.IsType,TYPE_SYNCHRO),1,nil)
 end
 function s.applytg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local draw=s.drtg(e,tp,eg,ep,ev,re,r,rp,0)

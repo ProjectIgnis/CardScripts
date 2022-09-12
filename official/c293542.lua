@@ -24,7 +24,7 @@ end
 s.listed_series={0x27}
 s.listed_names={id}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(aux.FilterFaceupFunction(Card.IsLevelBelow,4),1,nil)
+	return eg:IsExists(aux.FaceupFilter(Card.IsLevelBelow,4),1,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

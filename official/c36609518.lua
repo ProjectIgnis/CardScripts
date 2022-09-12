@@ -35,7 +35,7 @@ s.listed_series={0x153,0x154}
 function s.lcheck(g,lc,sumtype,tp)
 	return g:IsExists(Card.IsSetCard,1,nil,0x154,lc,sumtype,tp)
 end
-s.cfilter=aux.FilterFaceupFunction(Card.IsSetCard,0x153)
+s.cfilter=aux.FaceupFilter(Card.IsSetCard,0x153)
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() end
 	if chk==0 then return Duel.IsExistingTarget(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)

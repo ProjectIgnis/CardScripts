@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.damop)
 	c:RegisterEffect(e3)
 end
-local spfil=aux.FilterFaceupFunction(Card.IsSummonLocation,LOCATION_EXTRA)
+local spfil=aux.FaceupFilter(Card.IsSummonLocation,LOCATION_EXTRA)
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(spfil,tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingMatchingCard(spfil,tp,0,LOCATION_MZONE,1,nil)

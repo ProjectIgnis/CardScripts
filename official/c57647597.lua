@@ -29,7 +29,7 @@ function s.initial_effect(c)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local fc=Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)
-	return fc>0 and Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsRace,RACE_REPTILE),tp,LOCATION_MZONE,0,nil)==fc
+	return fc>0 and Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsRace,RACE_REPTILE),tp,LOCATION_MZONE,0,nil)==fc
 end
 function s.tgfilter(c)
 	return c:HasNonZeroAttack() and c:GetBaseAttack()>0
@@ -70,7 +70,7 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SelectTarget(tp,Card.HasNonZeroAttack,tp,LOCATION_MZONE,LOCATION_MZONE,1,2,nil)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(aux.FilterFaceupFunction(Card.IsRelateToEffect,e),nil)
+	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(aux.FaceupFilter(Card.IsRelateToEffect,e),nil)
 	if #g==0 then return end
 	g:ForEach(s.zaop,e:GetHandler())
 end

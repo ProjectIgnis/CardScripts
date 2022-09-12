@@ -68,7 +68,7 @@ end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
-		local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsDefensePos),tp,0,LOCATION_MZONE,nil)
+		local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsDefensePos),tp,0,LOCATION_MZONE,nil)
 		local def=g:GetSum(Card.GetDefense)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

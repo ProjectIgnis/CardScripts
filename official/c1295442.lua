@@ -38,14 +38,14 @@ function s.initial_effect(c)
 end
 s.listed_series={0x16e}
 function s.atkval(e)
-	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsMonster),e:GetHandlerPlayer(),LOCATION_REMOVED,LOCATION_REMOVED,nil)*400
+	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsMonster),e:GetHandlerPlayer(),LOCATION_REMOVED,LOCATION_REMOVED,nil)*400
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsFaceup() and chkc:IsSetCard(0x16e) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingTarget(aux.FilterFaceupFunction(Card.IsSetCard,0x16e),tp,LOCATION_MZONE,0,1,nil) end
+		and Duel.IsExistingTarget(aux.FaceupFilter(Card.IsSetCard,0x16e),tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	Duel.SelectTarget(tp,aux.FilterFaceupFunction(Card.IsSetCard,0x16e),tp,LOCATION_MZONE,0,1,1,nil)
+	Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsSetCard,0x16e),tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,0,0)
 end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)

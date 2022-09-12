@@ -67,7 +67,7 @@ end
 	--Opponent draws during draw phase
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==1-tp and (r&REASON_RULE)~=0
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_JINZO),tp,LOCATION_ONFIELD,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_JINZO),tp,LOCATION_ONFIELD,0,1,nil)
 end
 	--Activation legality
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)

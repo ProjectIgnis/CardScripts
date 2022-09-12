@@ -53,7 +53,7 @@ function s.atkval(e,c)
 	end
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x133),tp,LOCATION_MZONE,0,2,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x133),tp,LOCATION_MZONE,0,2,nil)
 end
 function s.thfilter(c)
 	return c:IsSetCard(0x133) and c:IsAbleToHand() and not c:IsCode(id)

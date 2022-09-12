@@ -16,5 +16,5 @@ function s.initial_effect(c)
 end
 function s.con(e)
 	local c=e:GetHandler()
-	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_INSECT),c:GetControler(),LOCATION_MZONE,0,1,c)
+	return not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_INSECT),c:GetControler(),LOCATION_MZONE,0,1,c)
 end

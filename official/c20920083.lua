@@ -40,7 +40,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.con(e)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsPosition,POS_FACEUP_DEFENSE),e:GetHandlerPlayer(),LOCATION_MZONE,0,2,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsPosition,POS_FACEUP_DEFENSE),e:GetHandlerPlayer(),LOCATION_MZONE,0,2,nil)
 end
 function s.tg(e,c)
 	return c:IsDefensePos()

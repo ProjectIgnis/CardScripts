@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.filter=aux.FilterFaceupFunction(Card.IsType,TYPE_XYZ)
+s.filter=aux.FaceupFilter(Card.IsType,TYPE_XYZ)
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()<=PHASE_BATTLE and Duel.GetOverlayCount(tp,1,0)>0
 		and Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil)

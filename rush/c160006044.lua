@@ -47,7 +47,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetValue(-600)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffectRush(e2)
-		if Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,48766543),tp,LOCATION_MZONE,0,1,nil)
+		if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,48766543),tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)

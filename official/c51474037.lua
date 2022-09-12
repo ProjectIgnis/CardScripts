@@ -30,7 +30,7 @@ function s.mfilter3(c,chk1,chk2)
 end
 function s.btg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	local g1,g2=Duel.GetMatchingGroup(aux.FilterFaceupFunction(s.mfilter,e,tp),tp,LOCATION_MZONE,LOCATION_MZONE,nil):Split(Card.IsControler,nil,tp)
+	local g1,g2=Duel.GetMatchingGroup(aux.FaceupFilter(s.mfilter,e,tp),tp,LOCATION_MZONE,LOCATION_MZONE,nil):Split(Card.IsControler,nil,tp)
 	if chk==0 and (#g1==0 or #g2==0) then return false end
 	local check1=g1:IsExists(Card.IsCanChangePosition,1,nil) and g2:IsExists(Card.IsCanChangePosition,1,nil)
 	local check2=g1:IsExists(Card.IsDestructable,1,nil) and g2:IsExists(Card.IsAttackAbove,1,nil,1)

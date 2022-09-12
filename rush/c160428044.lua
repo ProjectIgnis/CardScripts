@@ -45,7 +45,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			else   --otherwise, directly destroy it
 				if Duel.Destroy(tc,REASON_EFFECT)>0 then res=tc:GetFirst():GetTextAttack() end
 			end
-			if res and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_OMEGAPSYCHIC),tp,LOCATION_MZONE,0,1,nil) then
+			if res and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_OMEGAPSYCHIC),tp,LOCATION_MZONE,0,1,nil) then
 				Duel.Damage(1-tp,res,REASON_EFFECT)
 			end
 		end

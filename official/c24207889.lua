@@ -38,7 +38,7 @@ s[1]={}
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp)
 	local tp=sump
 	if targetp then tp=targetp end
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,c:GetRace()),tp,LOCATION_MZONE,0,1,c)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,c:GetRace()),tp,LOCATION_MZONE,0,1,c)
 end
 function s.fidfilter(c,fid)
 	return c:GetFieldID()~=fid

@@ -21,7 +21,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x27}
 function s.dircon(e)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x27),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x27),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp,chk)
 	return ep~=tp and Duel.GetAttackTarget()==nil

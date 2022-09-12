@@ -56,7 +56,7 @@ function s.crop(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e3,tp)
 end
-s.cfilter=aux.FilterFaceupFunction(Card.IsSetCard,0xb3)
+s.cfilter=aux.FaceupFilter(Card.IsSetCard,0xb3)
 function s.cedop(e,tp,eg,ep,ev,re,r,rp)
 	if eg and eg:IsExists(s.cfilter,1,nil) then
 		Duel.SetChainLimitTillChainEnd(s.chlimit)

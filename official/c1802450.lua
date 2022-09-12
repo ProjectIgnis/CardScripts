@@ -27,8 +27,8 @@ function s.rmfilter(c,e)
 end
 function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local dg=Duel.GetMatchingGroup(s.rmfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,nil,e)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,aux.FilterFaceupFunction(Card.IsAttribute,ATTRIBUTE_EARTH),1,false,aux.ReleaseCheckTarget,nil,dg) end
-	local cg=Duel.SelectReleaseGroupCost(tp,aux.FilterFaceupFunction(Card.IsAttribute,ATTRIBUTE_EARTH),1,1,false,aux.ReleaseCheckTarget,nil,dg)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,aux.FaceupFilter(Card.IsAttribute,ATTRIBUTE_EARTH),1,false,aux.ReleaseCheckTarget,nil,dg) end
+	local cg=Duel.SelectReleaseGroupCost(tp,aux.FaceupFilter(Card.IsAttribute,ATTRIBUTE_EARTH),1,1,false,aux.ReleaseCheckTarget,nil,dg)
 	Duel.Release(cg,REASON_COST)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

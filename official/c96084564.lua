@@ -43,9 +43,9 @@ function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return c~=chkc and chkc:IsLocation(LOCATION_MZONE)
 		and chkc:IsControler(tp) and chkc:IsFaceup() and chkc:IsSetCard(0x1115) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingTarget(aux.FilterFaceupFunction(Card.IsSetCard,0x1115),tp,LOCATION_MZONE,0,1,c) end
+		and Duel.IsExistingTarget(aux.FaceupFilter(Card.IsSetCard,0x1115),tp,LOCATION_MZONE,0,1,c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	Duel.SelectTarget(tp,aux.FilterFaceupFunction(Card.IsSetCard,0x1115),tp,LOCATION_MZONE,0,1,1,c)
+	Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsSetCard,0x1115),tp,LOCATION_MZONE,0,1,1,c)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,c,1,0,0)
 end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)

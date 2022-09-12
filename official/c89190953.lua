@@ -30,7 +30,7 @@ end
 function s.extratg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	if e:IsHasType(EFFECT_TYPE_ACTIVATE) and e:GetHandler()==e:GetOwner()
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,6007213,32491822,69890967),tp,LOCATION_MZONE,0,1,nil) then
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,6007213,32491822,69890967),tp,LOCATION_MZONE,0,1,nil) then
 		Duel.SetChainLimit(s.chlimit)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,0,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE)

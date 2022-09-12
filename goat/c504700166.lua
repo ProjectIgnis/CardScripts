@@ -22,5 +22,5 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.target(e,c)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,c:GetCode()),0,LOCATION_MZONE,LOCATION_MZONE,1,c)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,c:GetCode()),0,LOCATION_MZONE,LOCATION_MZONE,1,c)
 end

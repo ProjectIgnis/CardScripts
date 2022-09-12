@@ -53,12 +53,12 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp) 
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0xa4),tp,LOCATION_MZONE,0,1,e:GetHandler()) 
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsAttackAbove,1),tp,LOCATION_MZONE,0,1,e:GetHandler())
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0xa4),tp,LOCATION_MZONE,0,1,e:GetHandler()) 
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsAttackAbove,1),tp,LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsAttackAbove,1),tp,LOCATION_MZONE,0,c)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsAttackAbove,1),tp,LOCATION_MZONE,0,c)
 	if #g>0 then
 		local flag=0
 		for tc in aux.Next(g) do

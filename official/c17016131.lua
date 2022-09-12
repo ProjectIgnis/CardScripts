@@ -75,7 +75,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsStatus(STATUS_EFFECT_ENABLED)
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x13f),tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x13f),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.handcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

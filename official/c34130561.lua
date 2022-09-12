@@ -30,7 +30,7 @@ function s.ntcon(e,c,minc)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	return minc==0 and c:GetLevel()>4 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and (Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0 or Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsAttackAbove,2300),tp,0,LOCATION_MZONE,1,nil))
+		and (Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0 or Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsAttackAbove,2300),tp,0,LOCATION_MZONE,1,nil))
 end
 function s.spfilter(c,e,tp)
 	return c:IsRace(RACE_DRAGON) and c:GetLevel()==5 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)

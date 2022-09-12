@@ -52,10 +52,10 @@ function s.initial_effect(c)
 end
 s.listed_names={2468169}
 function s.actcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,2468169),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,2468169),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.descon(e)
-	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,2468169),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
+	return not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,2468169),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local tl=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)

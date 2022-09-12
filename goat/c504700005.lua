@@ -38,7 +38,7 @@ function s.cfilter(c,tp)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)==0 and eg:IsExists(s.cfilter,1,nil,tp)
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,27288416),tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,27288416),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.cfilter2(c,tp)
 	return c and c:IsLocation(LOCATION_MZONE) and c:IsPosition(POS_FACEUP)
@@ -46,7 +46,7 @@ function s.cfilter2(c,tp)
 end
 function s.regcon2(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)==0 and (s.cfilter2(Duel.GetAttacker(),tp) or s.cfilter2(Duel.GetAttackTarget(),tp))
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,27288416),tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,27288416),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)

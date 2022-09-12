@@ -40,7 +40,7 @@ s.listed_names={CARD_GAIA_CHAMPION}
 s.listed_series={0xbd}
 function s.actcon(e)
 	local tp=e:GetHandlerPlayer()
-	return Duel.IsBattlePhase() and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_GAIA_CHAMPION),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsBattlePhase() and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_GAIA_CHAMPION),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.cfilter1(c)
 	return c:IsSetCard(0xbd) and c:IsMonster() and not c:IsPublic()

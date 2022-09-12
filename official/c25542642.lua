@@ -3,7 +3,7 @@
 
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddPersistentProcedure(c,nil,aux.FilterFaceupFunction(Card.IsType,TYPE_EFFECT),CATEGORY_DISABLE,nil,nil,0x1c0,nil,nil,s.target)
+	aux.AddPersistentProcedure(c,nil,aux.FaceupFilter(Card.IsType,TYPE_EFFECT),CATEGORY_DISABLE,nil,nil,0x1c0,nil,nil,s.target)
 	--Targeted monster has its effects negated, also cannot attack
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)

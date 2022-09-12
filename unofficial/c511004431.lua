@@ -13,7 +13,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x526}
 function s.condition(e,tp,eg,ev,ep,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x526),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x526),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.target(e,tp,eg,ev,ep,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,2) end

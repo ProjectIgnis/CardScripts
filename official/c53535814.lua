@@ -55,7 +55,7 @@ end
 	--If you control another "Ice Barrier" monster
 function s.dmgcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not (ep==1-tp and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x2f),tp,LOCATION_MZONE,0,1,c)) then return false end
+	if not (ep==1-tp and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x2f),tp,LOCATION_MZONE,0,1,c)) then return false end
 	return c:GetFlagEffect(Duel.GetCurrentChain())>0
 end
 	--Opponent loses 500 LP each time they pay LP
@@ -89,7 +89,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--If you control an "Ice Barrier" monster
 function s.poscon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x2f),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x2f),tp,LOCATION_MZONE,0,1,nil)
 end
 	--Check for an attack position monster
 function s.posfilter(c)

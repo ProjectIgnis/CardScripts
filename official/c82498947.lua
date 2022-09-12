@@ -13,7 +13,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x2f}
 function s.con(e)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x2f),e:GetHandler():GetControler(),LOCATION_MZONE,0,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x2f),e:GetHandler():GetControler(),LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.tg(e,c)
 	return c:GetAttack()>=e:GetHandler():GetDefense()

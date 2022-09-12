@@ -71,7 +71,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	local f1=aux.FilterFaceupFunction(Card.IsSetCard,0x17b)
+	local f1=aux.FaceupFilter(Card.IsSetCard,0x17b)
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
 	if e:GetHandler():IsLocation(LOCATION_HAND) then ft=ft-1 end
 	if chk==0 then return ft>0 and Duel.IsExistingTarget(f1,tp,LOCATION_MZONE,0,1,nil)

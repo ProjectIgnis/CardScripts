@@ -25,5 +25,5 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.actcond(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetMatchingGroupCountRush(aux.FilterFaceupFunction(Card.IsRace,RACE_AQUA),e:GetHandlerPlayer(),LOCATION_MZONE,0,nil)>=2
+	return Duel.GetMatchingGroupCountRush(aux.FaceupFilter(Card.IsRace,RACE_AQUA),e:GetHandlerPlayer(),LOCATION_MZONE,0,nil)>=2
 end

@@ -31,7 +31,7 @@ function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,96163807),tp,LOCATION_ONFIELD,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,96163807),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:HasLevel() and c:IsRace(RACE_ZOMBIE)

@@ -19,8 +19,8 @@ end
 function s.ntcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c==nil then return true end
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x3013),tp,LOCATION_MZONE,0,1,nil)
-		and (Duel.GetFieldGroupCount(c:GetControler(),LOCATION_HAND,0)==1 and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x3013),tp,LOCATION_HAND,0,1,nil))
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x3013),tp,LOCATION_MZONE,0,1,nil)
+		and (Duel.GetFieldGroupCount(c:GetControler(),LOCATION_HAND,0)==1 and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x3013),tp,LOCATION_HAND,0,1,nil))
 	or Duel.GetFieldGroupCount(c:GetControler(),LOCATION_HAND,0)==0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -22,7 +22,7 @@ function s.initial_effect(c)
 end
 function s.cfilter(c)
 	return c:IsFaceup() and c:HasLevel() 
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsLevel,c:GetLevel()),0,LOCATION_MZONE,LOCATION_MZONE,1,c)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsLevel,c:GetLevel()),0,LOCATION_MZONE,LOCATION_MZONE,1,c)
 end
 function s.spcon(e,c)
 	if c==nil then return true end

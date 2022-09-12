@@ -51,7 +51,7 @@ end
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0 and Duel.CheckLPCost(c:GetControler(),500)
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,53569894),0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,53569894),0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.PayLPCost(tp,500)

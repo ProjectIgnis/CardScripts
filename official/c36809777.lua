@@ -21,7 +21,7 @@ function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		for p=0,1 do
 			for _,t in ipairs(s.types) do
-				if Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,t),p,LOCATION_MZONE,0,2,nil) then
+				if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,t),p,LOCATION_MZONE,0,2,nil) then
 					return true
 				end
 			end
@@ -41,7 +41,7 @@ end
 function s.typecount(p)
 	local ct=0
 	for _,t in ipairs(s.types) do
-		if Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,t),p,LOCATION_MZONE,0,1,nil) then
+		if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,t),p,LOCATION_MZONE,0,1,nil) then
 			ct=ct+1
 		end
 	end

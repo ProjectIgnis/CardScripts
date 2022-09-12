@@ -34,7 +34,7 @@ function s.rmfilter(c)
 	return c:IsCode(89264428,58793369) and c:IsAbleToRemove()
 end
 function s.excheck(tp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,27693363,97148796),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,27693363,97148796),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 end
 function s.spfilter(c,e,tp,sg)
 	return c:IsCode(33250142) and Duel.GetLocationCountFromEx(tp,tp,sg,c)>0 

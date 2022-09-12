@@ -31,7 +31,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsType(TYPE_NORMAL) and tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.BreakEffect()
 		if Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)==0 then return end
-		local dg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsAttackAbove,tc:GetAttack()),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+		local dg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsAttackAbove,tc:GetAttack()),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 		if #dg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 			local dc=dg:Select(tp,1,1,nil)

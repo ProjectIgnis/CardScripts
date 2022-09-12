@@ -14,10 +14,10 @@ function s.initial_effect(c)
 end
 s.listed_series={0x54}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x54),tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x54),tp,LOCATION_MZONE,0,1,nil) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local sg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x54),tp,LOCATION_MZONE,0,nil)
+	local sg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0x54),tp,LOCATION_MZONE,0,nil)
 	local atk=#sg*500
 	local c=e:GetHandler()
 	local tc=sg:GetFirst()

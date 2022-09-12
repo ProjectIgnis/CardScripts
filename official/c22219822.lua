@@ -61,7 +61,7 @@ function s.desfilter(c,g)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tg=Group.CreateGroup()
-	local lg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsLinkMonster),tp,0,LOCATION_MZONE,nil)
+	local lg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsLinkMonster),tp,0,LOCATION_MZONE,nil)
 	for tc in aux.Next(lg) do
 		tg:Merge(tc:GetLinkedGroup())
 	end

@@ -62,7 +62,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	rg:DeleteGroup()
 end
 function s.atkval(e,c)
-	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsRace,RACE_INSECT),c:GetControler(),LOCATION_MZONE,0,c)*200
+	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsRace,RACE_INSECT),c:GetControler(),LOCATION_MZONE,0,c)*200
 end
 function s.adfilter(c)
 	return c:IsSetCard(0x172) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()

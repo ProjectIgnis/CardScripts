@@ -19,9 +19,9 @@ function s.initial_effect(c)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp)
 	if c:HasLevel() then
-		return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsLevel,c:GetLevel()),sump,LOCATION_MZONE,0,1,nil)
+		return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsLevel,c:GetLevel()),sump,LOCATION_MZONE,0,1,nil)
 	elseif c:IsRankAbove(0) then
-		return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRank,c:GetRank()),sump,LOCATION_MZONE,0,1,nil)
+		return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRank,c:GetRank()),sump,LOCATION_MZONE,0,1,nil)
 	end
 	return false
 end

@@ -33,7 +33,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)>0 then
 		--Effect
 		local gg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)
-		local ct=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsType,TYPE_NORMAL),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+		local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsType,TYPE_NORMAL),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 		local c=e:GetHandler()
 		for tc in gg:Iter() do
 			--Increase ATK

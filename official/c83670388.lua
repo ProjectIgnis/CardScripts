@@ -35,9 +35,9 @@ end
 s.listed_names={7142724}
 s.listed_series={0x16e}
 function s.accon(e)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x16e),0,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x16e),0,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 		and (Duel.IsEnvironment(7142724)
-		or Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,7142724),0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil))
+		or Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,7142724),0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil))
 end
 function s.aclim(e,re,tp)
 	local rc=re:GetHandler()

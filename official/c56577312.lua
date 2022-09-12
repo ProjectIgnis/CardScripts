@@ -29,7 +29,7 @@ s.listed_series={0xe}
 function s.thfilter(c)
 	return c:IsSetCard(0xe) and c:IsAbleToHand() and not c:IsCode(id)
 end
-s.cfilter=aux.FilterFaceupFunction(Card.IsRace,RACE_THUNDER)
+s.cfilter=aux.FaceupFilter(Card.IsRace,RACE_THUNDER)
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil)
 	local ct=g:GetClassCount(Card.GetCode)

@@ -61,7 +61,7 @@ end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetEquipTarget()
 end
-s.desfilter=aux.FilterFaceupFunction(Card.IsSetCard,0x152)
+s.desfilter=aux.FaceupFilter(Card.IsSetCard,0x152)
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	if chk==0 then return Duel.IsExistingTarget(s.desfilter,tp,LOCATION_SZONE,0,1,nil)

@@ -16,7 +16,7 @@ end
 s.listed_names={id}
 s.listed_series={0x106e}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_SPELLCASTER),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_SPELLCASTER),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.cffilter(c)
 	return c:IsSetCard(0x106e) and not c:IsPublic()

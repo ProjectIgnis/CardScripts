@@ -22,7 +22,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x2a}
 function s.atcon(e)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x2a),e:GetOwnerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x2a),e:GetOwnerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.reftg(e,c)
 	return c~=e:GetHandler() and c:IsFaceup() and c:IsSetCard(0x2a)

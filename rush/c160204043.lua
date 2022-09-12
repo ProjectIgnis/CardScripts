@@ -38,7 +38,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetValue(-300)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			g:GetFirst():RegisterEffectRush(e1)
-			if Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_FUSION),tp,LOCATION_GRAVE,0,1,nil)
+			if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_FUSION),tp,LOCATION_GRAVE,0,1,nil)
 			and Duel.IsExistingMatchingCard(Card.IsSpellTrap,tp,0,LOCATION_ONFIELD,1,nil)
 			and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)

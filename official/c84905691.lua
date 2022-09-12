@@ -17,8 +17,8 @@ end
 s.listed_series={0x2a}
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,aux.FilterFaceupFunction(Card.IsSetCard,0x2a),1,false,nil,c) end
-	local g=Duel.SelectReleaseGroupCost(tp,aux.FilterFaceupFunction(Card.IsSetCard,0x2a),1,1,false,nil,c)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,aux.FaceupFilter(Card.IsSetCard,0x2a),1,false,nil,c) end
+	local g=Duel.SelectReleaseGroupCost(tp,aux.FaceupFilter(Card.IsSetCard,0x2a),1,1,false,nil,c)
 	Duel.Release(g,REASON_COST)
 end
 function s.desfilter(c,e,tp)

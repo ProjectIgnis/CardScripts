@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x17c}
-s.sclawfilter=aux.FilterFaceupFunction(Card.IsSetCard,0x17c)
+s.sclawfilter=aux.FaceupFilter(Card.IsSetCard,0x17c)
 function s.hspval(e,c)
 	local zone=0
 	local left_right=0

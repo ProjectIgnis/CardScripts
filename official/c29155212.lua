@@ -24,14 +24,14 @@ function s.initial_effect(c)
 end
 s.listed_names={62121}
 function s.adval(e,c)
-	if Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,62121),0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) then
+	if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,62121),0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) then
 		return 100+c:GetFlagEffect(id)*100
 	else
 		return c:GetFlagEffect(id)*100
 	end
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and e:GetHandler():GetFlagEffect(id)<=4 and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,62121),0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
+	return Duel.GetTurnPlayer()==tp and e:GetHandler():GetFlagEffect(id)<=4 and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,62121),0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

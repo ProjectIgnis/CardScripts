@@ -67,7 +67,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local og=Duel.GetOperatedGroup()
 	if #og==0 then return end
 	if og:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then Duel.ShuffleDeck(tp) end
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsLinked),tp,0,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsLinked),tp,0,LOCATION_MZONE,nil)
 	if #g>0 then
 		Duel.BreakEffect()
 		for tc in aux.Next(g) do

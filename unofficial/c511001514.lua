@@ -23,11 +23,11 @@ function s.initial_effect(c)
 end
 function s.spcon(e,c)
 	if c==nil then return true end
-	return Duel.CheckReleaseGroup(c:GetControler(),aux.FilterFaceupFunction(Card.IsType,TYPE_XYZ),1,false,1,true,c,c:GetControler(),nil,false,nil)
+	return Duel.CheckReleaseGroup(c:GetControler(),aux.FaceupFilter(Card.IsType,TYPE_XYZ),1,false,1,true,c,c:GetControler(),nil,false,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local g=Duel.SelectReleaseGroup(tp,aux.FilterFaceupFunction(Card.IsType,TYPE_XYZ),1,1,false,true,true,c,nil,nil,false,nil)
+	local g=Duel.SelectReleaseGroup(tp,aux.FaceupFilter(Card.IsType,TYPE_XYZ),1,1,false,true,true,c,nil,nil,false,nil)
 	if g then
 		g:KeepAlive()
 		e:SetLabelObject(g)

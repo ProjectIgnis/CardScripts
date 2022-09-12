@@ -28,10 +28,10 @@ function s.initial_effect(c)
 end
 s.listed_series={0x166}
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.HasLevel),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.HasLevel),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
-	local tg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.HasLevel),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local tg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.HasLevel),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if #tg>0 then
 		local c=e:GetHandler()
 		for sc in aux.Next(tg) do

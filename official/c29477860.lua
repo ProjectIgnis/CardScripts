@@ -36,7 +36,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_GAIA_CHAMPION}
 function s.actcon(e)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_GAIA_CHAMPION),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_GAIA_CHAMPION),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.atktg(e,c)
 	return c:IsFaceup() and c:GetCode()~=CARD_GAIA_CHAMPION

@@ -71,7 +71,7 @@ function s.copyop(e,tp,eg,ep,ev,re,r,rp)
 	for _,eff in ipairs({c:GetCardEffect(511002571)}) do
 		map[eff:GetLabel()]=true
 	end
-	for tc in Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsType,TYPE_XYZ),tp,LOCATION_MZONE,0,e:GetHandler()):Iter() do
+	for tc in Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsType,TYPE_XYZ),tp,LOCATION_MZONE,0,e:GetHandler()):Iter() do
 		local code=tc:GetOriginalCode()
 		if not map[code] then
 			for _,te in ipairs({tc:GetCardEffect(511002571)}) do

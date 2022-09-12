@@ -18,17 +18,17 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if ft<0 then return false end
 		if ft==0 then
-			return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsAbleToHandAsCost),tp,LOCATION_MZONE,0,1,nil)
+			return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsAbleToHandAsCost),tp,LOCATION_MZONE,0,1,nil)
 		else
-			return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsAbleToHandAsCost),tp,LOCATION_ONFIELD,0,1,nil)
+			return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsAbleToHandAsCost),tp,LOCATION_ONFIELD,0,1,nil)
 		end
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	if ft==0 then
-		local g=Duel.SelectMatchingCard(tp,aux.FilterFaceupFunction(Card.IsAbleToHandAsCost),tp,LOCATION_MZONE,0,1,1,nil)
+		local g=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsAbleToHandAsCost),tp,LOCATION_MZONE,0,1,1,nil)
 		Duel.SendtoHand(g,nil,REASON_COST)
 	else
-		local g=Duel.SelectMatchingCard(tp,aux.FilterFaceupFunction(Card.IsAbleToHandAsCost),tp,LOCATION_ONFIELD,0,1,1,nil)
+		local g=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsAbleToHandAsCost),tp,LOCATION_ONFIELD,0,1,1,nil)
 		Duel.SendtoHand(g,nil,REASON_COST)
 	end
 end

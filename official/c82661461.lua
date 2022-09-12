@@ -47,13 +47,13 @@ s.listed_names={id}
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tg=Duel.GetAttacker()
 	if chk==0 then return tg:IsOnField()
-		and Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsType,TYPE_PENDULUM),tp,LOCATION_EXTRA,0,nil)>0 end
+		and Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsType,TYPE_PENDULUM),tp,LOCATION_EXTRA,0,nil)>0 end
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	local at=Duel.GetAttacker()
-	local pc=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsType,TYPE_PENDULUM),tp,LOCATION_EXTRA,0,nil)
+	local pc=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsType,TYPE_PENDULUM),tp,LOCATION_EXTRA,0,nil)
 	if pc>0 and at and at:IsRelateToBattle() and at:IsFaceup() then
 		-- Decrease ATK
 		local e1=Effect.CreateEffect(c)

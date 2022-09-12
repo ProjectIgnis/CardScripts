@@ -45,7 +45,7 @@ function s.spcheck(sg,tp,exg,dg)
 end
 function s.tgfilter(c,e,tp)
 	if not c:IsCanBeEffectTarget(e) then return false end
-	local visas=Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_VISAS_STARFROST),tp,LOCATION_ONFIELD,0,1,nil)
+	local visas=Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_VISAS_STARFROST),tp,LOCATION_ONFIELD,0,1,nil)
 	return not visas or c:IsAbleToRemove()
 end
 function s.cfilter(c)
@@ -75,11 +75,11 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetTargetCards(e)
 	if #tg==0 then return end
-	local loc=Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_VISAS_STARFROST),tp,LOCATION_ONFIELD,0,1,nil) and LOCATION_REMOVED or LOCATION_GRAVE
+	local loc=Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_VISAS_STARFROST),tp,LOCATION_ONFIELD,0,1,nil) and LOCATION_REMOVED or LOCATION_GRAVE
 	Duel.Destroy(tg,REASON_EFFECT,loc)
 end
 function s.gycond(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsLinkAbove,3),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsLinkAbove,3),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function s.gytg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.GetFlagEffect(0,id)==0 end

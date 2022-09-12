@@ -41,7 +41,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local sel
-	if Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,73206827),tp,LOCATION_FZONE,0,1,nil) then
+	if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,73206827),tp,LOCATION_FZONE,0,1,nil) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_COIN)
 		sel=1-Duel.SelectOption(tp,true,SELECT_HEADS,SELECT_TAILS)
 	else

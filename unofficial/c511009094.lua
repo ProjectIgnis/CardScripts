@@ -25,7 +25,7 @@ s.listed_series={0xc008}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp)
 end
-s.filter=aux.FilterFaceupFunction(Card.IsSetCard,0xc008)
+s.filter=aux.FaceupFilter(Card.IsSetCard,0xc008)
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil) end

@@ -31,7 +31,7 @@ end
 s.listed_series={0x122}
 function s.atkcon(e,c)
 	local tp=e:GetHandlerPlayer()
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x122),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x122),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.filter(c,e,tp)
 	return c:IsLevelAbove(5) and c:IsSetCard(0x122) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

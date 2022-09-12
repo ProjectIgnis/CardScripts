@@ -34,7 +34,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tp~=ep and Duel.GetCurrentChain()==0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x102),tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0x102),tp,LOCATION_MZONE,0,nil)
 	g:AddCard(e:GetHandler())
 	if chk==0 then return #g>0 end
 	g:Merge(eg)
@@ -44,7 +44,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.NegateSummon(eg)
 	Duel.Destroy(eg,REASON_EFFECT)
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x102),tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0x102),tp,LOCATION_MZONE,0,nil)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then g:AddCard(c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)

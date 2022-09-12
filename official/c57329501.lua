@@ -26,7 +26,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spgfilter(chkc,e,tp) end
 	local b1=Duel.IsExistingTarget(s.spgfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
-	local b2=Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,91027843),tp,LOCATION_FZONE,0,1,nil)
+	local b2=Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,91027843),tp,LOCATION_FZONE,0,1,nil)
 		and Duel.IsExistingMatchingCard(s.spdfilter,tp,LOCATION_DECK,0,1,nil,e,tp)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and (b1 or b2) end
 	local op=Duel.SelectEffect(tp,

@@ -34,8 +34,8 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and Duel.IsExistingTarget(aux.FilterFaceupFunction(Card.IsSetCard,0x14a),tp,LOCATION_MZONE,0,1,nil,c) end
-	Duel.SelectTarget(tp,aux.FilterFaceupFunction(Card.IsSetCard,0x14a),tp,LOCATION_MZONE,0,1,1,nil,c)
+		and Duel.IsExistingTarget(aux.FaceupFilter(Card.IsSetCard,0x14a),tp,LOCATION_MZONE,0,1,nil,c) end
+	Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsSetCard,0x14a),tp,LOCATION_MZONE,0,1,1,nil,c)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,LOCATION_HAND)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)

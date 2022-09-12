@@ -34,7 +34,7 @@ s.listed_series={0x159}
 s.listed_names={34572613}
 function s.hspcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsTurnPlayer(1-tp) and Duel.IsMainPhase() and (Duel.IsEnvironment(34572613)
-		or Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,34572613),tp,LOCATION_FZONE,0,1,nil))
+		or Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,34572613),tp,LOCATION_FZONE,0,1,nil))
 end
 function s.hsptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

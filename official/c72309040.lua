@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.value(e,c)
-	return 500*Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsMonster),0,LOCATION_REMOVED,LOCATION_REMOVED,nil)
+	return 500*Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsMonster),0,LOCATION_REMOVED,LOCATION_REMOVED,nil)
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) and Duel.IsTurnPlayer(1-tp)

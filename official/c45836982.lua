@@ -38,7 +38,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x21}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_SYNCHRO),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,TYPE_SYNCHRO),tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,0,1,nil,TYPE_SYNCHRO)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -68,7 +68,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.lpcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(aux.FilterFaceupFunction(Card.IsSetCard,0x21),1,nil) and Duel.GetLP(1-tp)~=3000
+	return eg:IsExists(aux.FaceupFilter(Card.IsSetCard,0x21),1,nil) and Duel.GetLP(1-tp)~=3000
 end
 function s.lpop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SetLP(1-tp,3000)

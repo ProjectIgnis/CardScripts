@@ -33,7 +33,7 @@ end
 function s.adjustop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local turnp=Duel.GetTurnPlayer()
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsLevelAbove,1),turnp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsLevelAbove,1),turnp,LOCATION_MZONE,0,nil)
 	if #g<2 then return end
 	if s.checklv(g) then return end
 	Duel.Hint(HINT_SELECTMSG,turnp,aux.Stringid(id,1))

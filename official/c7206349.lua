@@ -45,7 +45,7 @@ end
 s.listed_names={63708033,55125728}
 s.listed_series={0x183}
 function s.atkcon(e)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsAttribute,ATTRIBUTE_EARTH),e:GetHandlerPlayer(),LOCATION_MZONE,0,5,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsAttribute,ATTRIBUTE_EARTH),e:GetHandlerPlayer(),LOCATION_MZONE,0,5,nil)
 end
 function s.spcostfilter(c)
 	return c:IsCode(63708033) and c:IsAbleToRemoveAsCost()

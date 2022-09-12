@@ -13,7 +13,7 @@ function s.initial_effect(c)
 end
 s.listed_names={511002672}
 function s.val(e,c)
-	if Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,511002672),0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) then
+	if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,511002672),0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) then
 		return 1000
 	end
 	return 0

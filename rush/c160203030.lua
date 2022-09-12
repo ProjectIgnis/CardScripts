@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.actcond(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetMatchingGroupCountRush(aux.FilterFaceupFunction(Card.IsLevelAbove,7),e:GetHandlerPlayer(),0,LOCATION_MZONE,nil)>0
+	return Duel.GetMatchingGroupCountRush(aux.FaceupFilter(Card.IsLevelAbove,7),e:GetHandlerPlayer(),0,LOCATION_MZONE,nil)>0
 end
 function s.summonproc(c,ns,opt,min,max,val,desc,f,sumop)
 	val = val or SUMMON_TYPE_TRIBUTE

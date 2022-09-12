@@ -25,20 +25,20 @@ end
 s.listed_series={0x20f8}
 s.listed_names={13331639}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,13331639),tp,LOCATION_ONFIELD,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,13331639),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.spfilter(c,e,tp)
 	if not (c:IsSetCard(0x20f8) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)) then return false end
 	if c:IsLocation(LOCATION_EXTRA) then
-		local g=Duel.GetMatchingGroup(aux.NOT(aux.FilterFaceupFunction(Card.IsCode,13331639)),tp,LOCATION_MZONE,0,nil)
+		local g=Duel.GetMatchingGroup(aux.NOT(aux.FaceupFilter(Card.IsCode,13331639)),tp,LOCATION_MZONE,0,nil)
 		return Duel.GetLocationCountFromEx(tp,tp,g,c)>0
 	else
 		return Duel.GetMZoneCount(tp,g)>0
 	end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(aux.NOT(aux.FilterFaceupFunction(Card.IsCode,13331639)),tp,LOCATION_MZONE,0,nil)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.NOT(aux.FilterFaceupFunction(Card.IsCode,13331639)),tp,LOCATION_MZONE,0,1,nil)
+	local g=Duel.GetMatchingGroup(aux.NOT(aux.FaceupFilter(Card.IsCode,13331639)),tp,LOCATION_MZONE,0,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.NOT(aux.FaceupFilter(Card.IsCode,13331639)),tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE+LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE+LOCATION_EXTRA)
@@ -62,7 +62,7 @@ function s.rescon(ft1,ft2,ft3,ft4,ft)
 			end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local dg=Duel.GetMatchingGroup(aux.NOT(aux.FilterFaceupFunction(Card.IsCode,13331639)),tp,LOCATION_MZONE,0,nil)
+	local dg=Duel.GetMatchingGroup(aux.NOT(aux.FaceupFilter(Card.IsCode,13331639)),tp,LOCATION_MZONE,0,nil)
 	if Duel.Destroy(dg,REASON_EFFECT)==0 then return end
 	local ft1=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local ft2=Duel.GetLocationCountFromEx(tp)

@@ -23,7 +23,7 @@ function s.spfilter(c,e,tp,id)
 	return c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x1e),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0x1e),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if chk==0 then 
 		if not (#g>0 and g:FilterCount(Card.IsAbleToGrave,nil)==#g) then return false end
 		local tok=e:GetLabelObject()
@@ -44,7 +44,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x1e),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0x1e),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if Duel.SendtoGrave(g,REASON_EFFECT)>0 then
 		local sg=g:Filter(Card.IsLocation,nil,LOCATION_GRAVE)
 		if #sg==0 then return end

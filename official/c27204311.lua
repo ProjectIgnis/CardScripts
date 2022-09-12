@@ -39,7 +39,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsReleasableByEffect),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsReleasableByEffect),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if chk==0 then
 		return #g>0 and Duel.GetMZoneCount(tp,g,tp)>0 and Duel.GetMZoneCount(1-tp,g,tp)>0
 			and Duel.IsPlayerCanSpecialSummonCount(tp,2)
@@ -58,7 +58,7 @@ function s.operationvaluedef(c)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsReleasable),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsReleasable),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if Duel.Release(g,REASON_EFFECT)==0 then return end
 	if not c:IsRelateToEffect(e) then return end
 	local og=Duel.GetOperatedGroup()

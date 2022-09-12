@@ -33,7 +33,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x141}
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x141),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x141),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.setfilter(c)
 	return c:IsSetCard(0x141) and c:IsSpellTrap() and not c:IsType(TYPE_FIELD) and c:IsSSetable()

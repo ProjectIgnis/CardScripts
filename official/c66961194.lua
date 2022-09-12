@@ -85,5 +85,5 @@ end
 --battle target selection
 function s.condition(e)
 	local tp=e:GetHandlerPlayer()
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0xdd),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0xdd),tp,LOCATION_MZONE,0,1,nil)
 end

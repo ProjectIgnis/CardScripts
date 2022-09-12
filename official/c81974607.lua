@@ -25,7 +25,7 @@ s.listed_series={0xe5}
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0 and
-		Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0xe5),c:GetControler(),LOCATION_MZONE,0,1,nil)
+		Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0xe5),c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function s.lvcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end

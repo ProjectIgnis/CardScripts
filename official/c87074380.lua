@@ -43,21 +43,21 @@ function s.splimit(e,se,sp,st)
 end
 function s.tgfilter(c,tp)
 	return c:IsFaceup() and c:IsRace(RACE_MACHINE)
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsAttackBelow,c:GetAttack()),tp,0,LOCATION_MZONE,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsAttackBelow,c:GetAttack()),tp,0,LOCATION_MZONE,1,nil)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.tgfilter(chkc,tp) end
 	if chk==0 then return Duel.IsExistingTarget(s.tgfilter,tp,LOCATION_MZONE,0,1,nil,tp) end
 	local tc=Duel.SelectTarget(tp,s.tgfilter,tp,LOCATION_MZONE,0,1,1,nil,tp):GetFirst()
-	local dg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsAttackBelow,tc:GetAttack()),tp,0,LOCATION_MZONE,nil)
+	local dg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsAttackBelow,tc:GetAttack()),tp,0,LOCATION_MZONE,nil)
 	dg:AddCard(tc)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,dg,#dg,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) or not s.tgfilter(tc,tp) then return end
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsAttackBelow,tc:GetAttack()),tp,0,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsAttackBelow,tc:GetAttack()),tp,0,LOCATION_MZONE,nil)
 	if #g>0 then
 		g:AddCard(tc)
 		Duel.Destroy(g,REASON_EFFECT)

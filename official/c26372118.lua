@@ -21,7 +21,7 @@ function s.thfilter(c)
 	return c:IsSetCard(0x18c) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.hydrant_chk(tp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_R_ACE_HYDRANT),tp,LOCATION_ONFIELD,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_R_ACE_HYDRANT),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local loc=LOCATION_GRAVE

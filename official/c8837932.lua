@@ -32,7 +32,7 @@ end
 s.counter_place_list={0x1038}
 s.listed_series={0xe3}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0xe3),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0xe3),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.spfilter(c,e,tp,tid)
 	return c:IsReason(REASON_DESTROY) and c:IsMonster() and c:GetTurnID()==tid

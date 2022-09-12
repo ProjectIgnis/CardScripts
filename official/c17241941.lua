@@ -66,11 +66,11 @@ end
 function s.pentg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	if chk==0 then return Duel.IsExistingTarget(s.penfilter,tp,LOCATION_MZONE,0,1,nil)
-		and Duel.IsExistingTarget(aux.FilterFaceupFunction(Card.IsCanChangePosition),tp,0,LOCATION_MZONE,1,nil) end
+		and Duel.IsExistingTarget(aux.FaceupFilter(Card.IsCanChangePosition),tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
 	local g1=Duel.SelectTarget(tp,s.penfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
-	local g2=Duel.SelectTarget(tp,aux.FilterFaceupFunction(Card.IsCanChangePosition),tp,0,LOCATION_MZONE,1,1,nil)
+	local g2=Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsCanChangePosition),tp,0,LOCATION_MZONE,1,1,nil)
 	g1:Merge(g2)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,g1,2,0,0)
 end

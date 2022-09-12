@@ -61,7 +61,7 @@ function s.repval(e,c)
 	return s.repfilter(c,e:GetHandlerPlayer())
 end
 function s.spcond(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_ALBAZ),tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_ALBAZ),tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x158) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

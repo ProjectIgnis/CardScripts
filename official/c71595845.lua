@@ -62,7 +62,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for "Princess Cologne"
 function s.atcon(e)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,75574498),e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,75574498),e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil)
 end
 	--Check if the monster has 0 ATK or DEF
 function s.atlimit(e,c)

@@ -31,7 +31,7 @@ function s.value(e,c)
 			return 100*ec:GetLevel()
 		end
 	else
-		local ct=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0x146),e:GetHandler():GetControler(),LOCATION_MZONE,0,nil)
+		local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0x146),e:GetHandler():GetControler(),LOCATION_MZONE,0,nil)
 		return -200*ct
 	end
 end

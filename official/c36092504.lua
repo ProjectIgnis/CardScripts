@@ -33,7 +33,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local bl=g:IsExists(Card.IsType,1,nil,TYPE_LINK) and rg:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE)
 	if chk==0 then return bf or bs or bx or bl end
 	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_EXTRA)
-	if Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsAttackAbove,3000),tp,LOCATION_MZONE,0,1,nil) then
+	if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsAttackAbove,3000),tp,LOCATION_MZONE,0,1,nil) then
 		Duel.SetChainLimit(s.chlimit)
 	end
 end

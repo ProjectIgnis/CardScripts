@@ -27,8 +27,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={511310100,511310105}
-s.darkfilter=aux.FilterFaceupFunction(Card.IsCode,511310100)
-s.inffilter=aux.FilterFaceupFunction(Card.IsCode,511310105)
+s.darkfilter=aux.FaceupFilter(Card.IsCode,511310100)
+s.inffilter=aux.FaceupFilter(Card.IsCode,511310105)
 function s.actcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.darkfilter,tp,LOCATION_ONFIELD,0,1,nil)
 		and not Duel.IsExistingMatchingCard(s.inffilter,tp,LOCATION_ONFIELD,0,1,nil)

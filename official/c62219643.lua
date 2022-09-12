@@ -56,9 +56,9 @@ function s.splimit(e,c,tp)
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and chkc:IsFaceup() and chkc:IsRace(RACE_ZOMBIE) end
-	if chk==0 then return Duel.IsExistingTarget(aux.FilterFaceupFunction(Card.IsRace,RACE_ZOMBIE),tp,LOCATION_REMOVED,0,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(aux.FaceupFilter(Card.IsRace,RACE_ZOMBIE),tp,LOCATION_REMOVED,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g = Duel.SelectTarget(tp,aux.FilterFaceupFunction(Card.IsRace,RACE_ZOMBIE),tp,LOCATION_REMOVED,0,1,1,nil)
+	local g = Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsRace,RACE_ZOMBIE),tp,LOCATION_REMOVED,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,1,0,0)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)

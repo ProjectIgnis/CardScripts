@@ -25,7 +25,7 @@ end
 function s.ntcon(e,c,minc)
 	if c==nil then return true end
 	return minc==0 and c:GetLevel()>4 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_SEASERPENT),c:GetControler(),LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_SEASERPENT),c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function s.cfilter(c)
 	return c:IsAttribute(ATTRIBUTE_WATER)

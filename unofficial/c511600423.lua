@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x562}
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsInfinity),tp,LOCATION_MZONE,0,1,nil) and ep==tp
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsInfinity),tp,LOCATION_MZONE,0,1,nil) and ep==tp
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_MZONE,1,nil) end

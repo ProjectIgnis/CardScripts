@@ -78,10 +78,10 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.dmtg(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x13),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x13),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.dmop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)
-	local value=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0x13),tp,LOCATION_MZONE,0,1,nil)
+	local value=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0x13),tp,LOCATION_MZONE,0,1,nil)
 	Duel.Damage(1-tp,value*100,REASON_EFFECT)
 end

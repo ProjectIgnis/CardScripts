@@ -39,7 +39,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		aux.ToHandOrElse(tc,tp)
 		local fg=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
 		local hg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND,0,nil,e,tp)
-		if #fg>0 and fg:FilterCount(aux.FilterFaceupFunction(Card.IsSetCard,0x1083),1,nil)==#fg 
+		if #fg>0 and fg:FilterCount(aux.FaceupFilter(Card.IsSetCard,0x1083),1,nil)==#fg 
 			and #hg>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

@@ -16,13 +16,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then	return e:GetHandler():GetLinkedGroup():FilterCount(aux.FilterFaceupFunction(Card.IsLocation,LOCATION_MZONE),nil)>0 end
+	if chk==0 then	return e:GetHandler():GetLinkedGroup():FilterCount(aux.FaceupFilter(Card.IsLocation,LOCATION_MZONE),nil)>0 end
 	e:SetLabel(Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2)))
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	local lg=c:GetLinkedGroup():Filter(aux.FilterFaceupFunction(Card.IsLocation,LOCATION_MZONE),nil)
+	local lg=c:GetLinkedGroup():Filter(aux.FaceupFilter(Card.IsLocation,LOCATION_MZONE),nil)
 	if #lg==0 then return end
 	local eff=0
 	local val=0

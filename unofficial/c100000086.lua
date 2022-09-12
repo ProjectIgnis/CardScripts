@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.filter=aux.FilterFaceupFunction(Card.IsType,TYPE_SYNCHRO)
+s.filter=aux.FaceupFilter(Card.IsType,TYPE_SYNCHRO)
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0

@@ -53,7 +53,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(tp,cg)
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		if ft<=0 then return end
-		local ct=cg:FilterCount(Card.IsType,nil,TYPE_TRAP)
+		local ct=cg:FilterCount(Card.IsTrap,nil)
 		if ct>ft then ct=ft end
 		local sg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND,0,nil,e,tp)
 		if ct>0 and #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then

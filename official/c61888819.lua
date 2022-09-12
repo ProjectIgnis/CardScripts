@@ -52,7 +52,7 @@ function s.fmval(e,c,fp,rp,r)
 	return e:GetHandler():GetLinkedZone(rp)|0x600060
 end
 function s.indcon(e)
-	return #(e:GetHandler():GetLinkedGroup():Filter(Card.IsType,nil,TYPE_MONSTER))>0
+	return #(e:GetHandler():GetLinkedGroup():Filter(Card.IsMonster,nil))>0
 end
 function s.cfilter(c)
 	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE)

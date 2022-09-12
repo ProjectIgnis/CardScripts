@@ -43,6 +43,6 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tgcon(e)
-	return #(e:GetHandler():GetLinkedGroup():Filter(Card.IsType,nil,TYPE_MONSTER))>0
+	return #(e:GetHandler():GetLinkedGroup():Filter(Card.IsMonster,nil))>0
 end
 

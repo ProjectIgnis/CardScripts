@@ -66,7 +66,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetDecktopGroup(p,d)
 	if Duel.Draw(p,d,REASON_EFFECT)==2 then
 		Duel.ConfirmCards(1-p,g)
-		local sg=g:Filter(Card.IsType,nil,TYPE_MONSTER)
+		local sg=g:Filter(Card.IsMonster,nil)
 		if #sg>0 then
 			if #sg>1 then
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)

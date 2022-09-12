@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	end)
 end
 function s.chkop(e,tp,eg,ev,ep,re,r,rp)
-	s.dt=s.dt+eg:FilterCount(Card.IsType,nil,TYPE_MONSTER)
+	s.dt=s.dt+eg:FilterCount(Card.IsMonster,nil)
 end
 function s.clearop()
 	s.dt=0

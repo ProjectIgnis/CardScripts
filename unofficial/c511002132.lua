@@ -49,7 +49,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	local ct=eg:FilterCount(Card.IsType,nil,TYPE_MONSTER)
+	local ct=eg:FilterCount(Card.IsMonster,nil)
 	s[0]=s[0]+ct
 end
 function s.clear(e,tp,eg,ep,ev,re,r,rp)

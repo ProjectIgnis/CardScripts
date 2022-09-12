@@ -72,7 +72,7 @@ end
 function s.actg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local c=e:GetHandler()
-		local lg=c:GetMutualLinkedGroup():Filter(Card.IsType,nil,TYPE_MONSTER)
+		local lg=c:GetMutualLinkedGroup():Filter(Card.IsMonster,nil)
 		local ct=lg:GetSum(Card.GetLink)
 		if ct<=0 or not Duel.IsPlayerCanDiscardDeck(tp,ct) then return false end
 		local g=Duel.GetDecktopGroup(tp,ct)

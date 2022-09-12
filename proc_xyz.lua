@@ -344,7 +344,7 @@ function Xyz.MatNumChkF(tg)
 		for _,te in ipairs({chkc:GetCardEffect(91110378)}) do
 			local rct=te:GetValue()&0xffff
 			local comp=te:GetValue()>>16
-			if not Xyz.MatNumChk(tg:FilterCount(Card.IsType,nil,TYPE_MONSTER),rct,comp) then return false end
+			if not Xyz.MatNumChk(tg:FilterCount(Card.IsMonster,nil),rct,comp) then return false end
 		end
 	end
 	return true
@@ -363,7 +363,7 @@ function Xyz.MatNumChkF2(tg,lv,xyz)
 		for _,te in ipairs({chkc:GetCardEffect(86466163)}) do
 			local rct=te:GetValue()&0xffff
 			local comp=te:GetValue()>>16
-			if not Xyz.MatNumChk(tg:FilterCount(Card.IsType,nil,TYPE_MONSTER),rct,comp) then
+			if not Xyz.MatNumChk(tg:FilterCount(Card.IsMonster,nil),rct,comp) then
 				local con=te:GetLabelObject():GetCondition()
 				if not con then con=aux.TRUE end
 				if not rev[te] then

@@ -54,7 +54,7 @@ end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local g=eg:Filter(s.cfilter,nil,e)
-	local sg=g:Filter(Card.IsType,nil,TYPE_MONSTER)
+	local sg=g:Filter(Card.IsMonster,nil)
 	if #g>0 then
 		Duel.ConfirmCards(1-Duel.GetTurnPlayer(),g)
 		Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)

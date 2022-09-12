@@ -84,7 +84,7 @@ function s.ssop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)~=0 and #dg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 		Duel.BreakEffect()
 		Duel.ConfirmCards(tp,dg)
-		local sg=dg:Filter(Card.IsType,nil,TYPE_TRAP)
+		local sg=dg:Filter(Card.IsTrap,nil)
 		Duel.Destroy(sg,REASON_EFFECT)
 	end
 end

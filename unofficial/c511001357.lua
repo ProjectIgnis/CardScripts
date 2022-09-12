@@ -24,7 +24,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		return g:IsExists(Card.IsAbleToRemove,5,nil) end
 	Duel.DisableShuffleCheck()
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
-	local ct=g:FilterCount(Card.IsType,nil,TYPE_MONSTER)
+	local ct=g:FilterCount(Card.IsMonster,nil)
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetTargetParam(ct*300)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,e:GetLabel()*300)

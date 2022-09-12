@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_SET_BASE_ATTACK)
-	e3:SetValue(function (e) return 800*e:GetHandler():GetOverlayGroup():FilterCount(Card.IsType,nil,TYPE_MONSTER) end)
+	e3:SetValue(function (e) return 800*e:GetHandler():GetOverlayGroup():FilterCount(Card.IsMonster,nil) end)
 	c:RegisterEffect(e3)
 	--Add to hand when destroying a monster by battle
 	local e4=Effect.CreateEffect(c)

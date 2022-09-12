@@ -26,7 +26,7 @@ function s.recop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=math.floor(ev/400)
 	Duel.DiscardDeck(tp,ct,REASON_EFFECT)
 	local g=Duel.GetOperatedGroup()
-	local ct=g:FilterCount(Card.IsType,nil,TYPE_MONSTER)
+	local ct=g:FilterCount(Card.IsMonster,nil)
 	if ct==0 then return end
 	local c=e:GetHandler()
 	if c:IsFaceup() and c:IsRelateToEffect(e) then

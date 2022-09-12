@@ -24,9 +24,9 @@ function s.initial_effect(c)
 end
 	--Maximum of 1 for each card type
 function s.rescon(sg,e,tp,mg)
-	return sg:FilterCount(Card.IsType,nil,TYPE_MONSTER)<=1
-		and sg:FilterCount(Card.IsType,nil,TYPE_SPELL)<=1
-		and sg:FilterCount(Card.IsType,nil,TYPE_TRAP)<=1
+	return sg:FilterCount(Card.IsMonster,nil)<=1
+		and sg:FilterCount(Card.IsSpell,nil)<=1
+		and sg:FilterCount(Card.IsTrap,nil)<=1
 end
 	--Activation legality
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)

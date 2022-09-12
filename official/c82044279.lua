@@ -65,7 +65,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 		and eg:IsExists(Card.IsType,1,nil,TYPE_MONSTER)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
-	local g=eg:Filter(Card.IsType,nil,TYPE_MONSTER)
+	local g=eg:Filter(Card.IsMonster,nil)
 	local c=e:GetHandler()
 	local atk=0
 	local tc=g:GetFirst()

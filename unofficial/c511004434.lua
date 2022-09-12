@@ -89,7 +89,7 @@ function s.damop(e,tp,eg,ev,ep,re,r,rp)
 	Duel.Damage(p,d,REASON_EFFECT)
 end
 function s.atkval(e)
-	return e:GetHandler():GetBaseAttack()+e:GetHandler():GetOverlayGroup():FilterCount(Card.IsType,nil,TYPE_MONSTER)*800
+	return e:GetHandler():GetBaseAttack()+e:GetHandler():GetOverlayGroup():FilterCount(Card.IsMonster,nil)*800
 end
 function s.spfilter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false)

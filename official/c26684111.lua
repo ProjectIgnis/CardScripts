@@ -58,7 +58,7 @@ function s.acthop(e,tp,eg,ep,ev,re,r,rp)
 	if op==0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 		local tc=Duel.SelectMatchingCard(tp,s.acfilter,tp,LOCATION_DECK,0,1,1,nil,tp):GetFirst()
-		if tc then gainlp=Duel.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp) end
+		if tc then gainlp=Duel.ActivateFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp) end
 	elseif op==1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)

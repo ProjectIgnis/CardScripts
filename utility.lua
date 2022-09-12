@@ -1969,7 +1969,7 @@ end
 function Auxiliary.HarmonizingMagFilter(c,e,f)
 	return f and not f(e,c)
 end
-function Duel.PlayFieldSpell(c,e,tp,eg,ep,ev,re,r,rp,target_p)
+function Duel.ActivateFieldSpell(c,e,tp,eg,ep,ev,re,r,rp,target_p)
 	if not target_p then target_p=tp end
 	if c then
 		local fc=Duel.GetFieldCard(target_p,LOCATION_SZONE,5)

@@ -26,7 +26,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,tp):GetFirst()
 	local fc=Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)
 	local canadd = fc and fc:IsFaceup() and Duel.IsPlayerCanDraw(1-tp,1)
-	Duel.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
+	Duel.ActivateFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
 	if canadd and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.Draw(1-tp,1,REASON_EFFECT)
 	end

@@ -6,12 +6,11 @@ on:
 jobs:
   commit:
     runs-on: ubuntu-latest
-    if: false
     env:
-      REMOTE: ProjectIgnis/DeltaUtopia.git
-      REPO_NAME: DeltaUtopia
-      DESTINATION: DeltaUtopia/script
-      BASE_SHA: 20201222
+      REMOTE: ProjectIgnis/DeltaPuppetOfStrings.git
+      REPO_NAME: DeltaPuppetOfStrings
+      DESTINATION: DeltaPuppetOfStrings/script
+      BASE_SHA: 20220912
     steps:
     - uses: actions/checkout@v1
     - name: Clone destination repository

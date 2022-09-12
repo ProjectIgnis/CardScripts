@@ -916,7 +916,7 @@ function Card.HasListedCardType(c,...)
 	return false
 end
 --Returns true if the Card "c" lists any of the setcodes passed in "..."
-function Card.HasListedSetCode(c,...)
+function Card.HasListedArchetype(c,...)
 	if not c.listed_series then return false end
 	local listed_archetypes={...}
 	for _,wanted in ipairs(listed_archetypes) do

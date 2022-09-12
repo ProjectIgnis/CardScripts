@@ -21,7 +21,8 @@ jobs:
     - name: Copy new or changed files
       id: copy
       run: |
-        ADDED=$(git diff --name-only --no-renames --diff-filter=d $BASE_SHA | grep -vP "(^|/)\..*" | grep -P "\.lua$")
+        c1grep() { grep "$@" || test $? = 1; }
+        ADDED=$(git diff --name-only --no-renames --diff-filter=d $BASE_SHA | c1grep -vP "(^|/)\..*" | c1grep -P "\.lua$")
         if [[ "$ADDED" ]]; then
           rsync -avR $ADDED $HOME/$DESTINATION
         fi

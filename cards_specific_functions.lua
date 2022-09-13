@@ -1,19 +1,51 @@
---filter for the immune effect of qli monsters
-function Auxiliary.qlifilter(e,te)
-	if te:IsActiveType(TYPE_MONSTER) and te:IsActivated() then
-		local lv=e:GetHandler():GetLevel()
-		local ec=te:GetOwner()
-		if ec:IsType(TYPE_LINK) then
-			return false
-		elseif ec:IsType(TYPE_XYZ) then
-			return ec:GetOriginalRank()<lv
-		else
-			return ec:GetOriginalLevel()<lv
-		end
+Qli={}
+local function qli_change_stats(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	--Level becomes 4
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e1:SetCode(EFFECT_CHANGE_LEVEL)
+	e1:SetRange(LOCATION_MZONE)
+	local reset=(RESET_EVENT|RESETS_STANDARD_DISABLE)&~RESET_TOFIELD
+	if e:GetCode()==EFFECT_SPSUMMON_COST then
+		reset=reset&~RESET_LEAVE
 	else
-		return false
+		e1:SetCondition(function(e) return e:GetHandler():GetMaterialCount()==0 end)
 	end
+	e1:SetValue(4)
+	e1:SetReset(reset)
+	c:RegisterEffect(e1)
+	--ATK becomes 1800
+	local e2=e1:Clone()
+	e2:SetCode(EFFECT_SET_BASE_ATTACK)
+	e2:SetValue(1800)
+	c:RegisterEffect(e2)
 end
+function Qli.AddStatChangeEffects(c)
+	--On Normal Summon without tribute
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_SUMMON_COST)
+	e1:SetOperation(qli_change_stats)
+	c:RegisterEffect(e1)
+	--On Special Summon
+	local e2=e1:Clone()
+	e2:SetCode(EFFECT_SPSUMMON_COST)
+	c:RegisterEffect(e2)
+	return e1,e2
+end
+function Qli.ImmunityValue(e,te)
+	if not te:IsActiveType(TYPE_MONSTER) or not te:IsActivated() then return false end
+	local ec=te:GetOwner()
+	if ec:IsType(TYPE_LINK) then return false end
+	local lv=e:GetHandler():GetLevel()
+	if ec:IsType(TYPE_XYZ) then return ec:GetOriginalRank()<lv end
+	return ec:GetOriginalLevel()<lv
+end
+
+
+
 --filter for necro_valley test
 function Auxiliary.nvfilter(c)
 	return not c:IsHasEffect(EFFECT_NECRO_VALLEY)

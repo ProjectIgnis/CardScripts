@@ -36,7 +36,7 @@ Auxiliary.EnableGeminiAttribute         = deprecated_alias("Gemini.AddProcedure"
 Auxiliary.EnableSpiritReturn            = deprecated_alias("Spirit.AddProcedure")
 Auxiliary.SpiritReturnReg               = deprecated_alias("Spirit.SummonRegister")
 Auxiliary.SpiritReturnOperation         = deprecated_alias("Spirit.ReturnOperation")
-Auxiliary.FilterFaceupFunction          = deprecated_alias("Auxiliary.FilterFaceup")
+Auxiliary.FilterFaceupFunction          = deprecated_alias("Auxiliary.FaceupFilter")
 
 local function deleted_function(message)
 	return function() error("This function is deleted. " .. message,2) end

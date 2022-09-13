@@ -48,13 +48,13 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
-s.listed_series={0xcf}
+s.listed_series={SET_CHAOS}
 s.listed_names={id}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and e:GetHandler():IsPreviousControler(tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xcf) and c:IsType(TYPE_SYNCHRO) and not c:IsCode(id)
+	return c:IsSetCard(SET_CHAOS) and c:IsType(TYPE_SYNCHRO) and not c:IsCode(id)
 		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

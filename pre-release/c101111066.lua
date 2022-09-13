@@ -23,23 +23,23 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x3a}
+s.listed_series={SET_GISHKI}
 function s.spfilter(c,e,tp)
-	return c:IsRitualMonster() and c:IsSetCard(0x3a) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true)
+	return c:IsRitualMonster() and c:IsSetCard(SET_GISHKI) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true)
 		and Duel.IsExistingMatchingCard(s.cfilter,tp,0,LOCATION_MZONE,1,nil,c)
 end
 function s.cfilter(c,sc)
 	return c:IsFaceup() and c:IsCanBeRitualMaterial(sc)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local rparams={filter=aux.FilterBoolFunction(Card.IsSetCard,0x3a),lvtype=RITPROC_EQUAL,stage2=s.stage2}
+	local rparams={filter=aux.FilterBoolFunction(Card.IsSetCard,SET_GISHKI),lvtype=RITPROC_EQUAL,stage2=s.stage2}
 	local rittg=Ritual.Target(rparams)
 	if chk==0 then return (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp))
 		or rittg(e,tp,eg,ep,ev,re,r,rp,chk) end
 	rittg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local rparams={filter=aux.FilterBoolFunction(Card.IsSetCard,0x3a),lvtype=RITPROC_EQUAL,stage2=s.stage2}
+	local rparams={filter=aux.FilterBoolFunction(Card.IsSetCard,SET_GISHKI),lvtype=RITPROC_EQUAL,stage2=s.stage2}
 	local rittg,ritop=Ritual.Target(rparams),Ritual.Operation(rparams)
 	local b1=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp)
 	local b2=rittg(e,tp,eg,ep,ev,re,r,rp,0)
@@ -70,7 +70,7 @@ function s.stage2(mg,e,tp,eg,ep,ev,re,r,rp,sc)
 	Duel.SetLP(tp,Duel.GetLP(tp)-sc:GetBaseAttack())
 end
 function s.tdfilter(c)
-	return c:IsSetCard(0x3a) and c:IsMonster() and c:IsAbleToDeck()
+	return c:IsSetCard(SET_GISHKI) and c:IsMonster() and c:IsAbleToDeck()
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.tdfilter(chkc) end

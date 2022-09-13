@@ -51,9 +51,9 @@ function s.initial_effect(c)
 	e4:SetOperation(s.regop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x55,0x7b}
+s.listed_series={SET_PHOTON,SET_GALAXY}
 function s.filter(c)
-	return (c:IsSetCard(0x55) or c:IsSetCard(0x7b)) and (c:IsAbleToHand() or c:IsAbleToGrave())
+	return (c:IsSetCard(SET_PHOTON) or c:IsSetCard(SET_GALAXY)) and (c:IsAbleToHand() or c:IsAbleToGrave())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

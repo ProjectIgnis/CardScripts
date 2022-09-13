@@ -25,10 +25,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.setop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x3a,SET_AQUAMIRROR}
+s.listed_series={SET_GISHKI,SET_AQUAMIRROR}
 s.listed_names={id}
 function s.thfilter(c)
-	return c:IsSetCard(0x3a) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_GISHKI) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

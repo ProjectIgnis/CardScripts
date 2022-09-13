@@ -30,9 +30,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={id}
-s.listed_series={0x55,0x7b}
+s.listed_series={SET_PHOTON,SET_GALAXY}
 function s.spfilter(c,e,tp)
-	return (c:IsSetCard(0x55) or c:IsSetCard(0x7b)) and not c:IsCode(id)
+	return (c:IsSetCard(SET_PHOTON) or c:IsSetCard(SET_GALAXY)) and not c:IsCode(id)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

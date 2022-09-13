@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.setop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x3a,0x28b}
+s.listed_series={0x3a,SET_AQUAMIRROR}
 s.listed_names={id}
 function s.thfilter(c)
 	return c:IsSetCard(0x3a) and c:IsMonster() and c:IsAbleToHand()
@@ -49,7 +49,7 @@ function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.setfilter(c)
-	return c:IsSpellTrap() and c:IsSetCard(0x28b)  and c:IsSSetable() and not c:IsCode(id)
+	return c:IsSpellTrap() and c:IsSetCard(SET_AQUAMIRROR)  and c:IsSSetable() and not c:IsCode(id)
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,e:GetHandler()) end

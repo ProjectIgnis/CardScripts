@@ -40,7 +40,7 @@ end
 s.listed_series={0x137}
 s.listed_names={}
 function s.atcon(e)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x137),e:GetOwnerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x137),e:GetOwnerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)

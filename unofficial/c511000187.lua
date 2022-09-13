@@ -19,9 +19,9 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then return false end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and Duel.IsExistingTarget(s.eqfilter,tp,LOCATION_GRAVE,0,1,nil)
-        and Duel.IsExistingTarget(aux.FilterFaceupFunction(Card.IsType,TYPE_XYZ),tp,LOCATION_MZONE,0,1,nil) end
+        and Duel.IsExistingTarget(aux.FaceupFilter(Card.IsType,TYPE_XYZ),tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-    	Duel.SelectTarget(tp,aux.FilterFaceupFunction(Card.IsType,TYPE_XYZ),tp,LOCATION_MZONE,0,1,1,nil)
+    	Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsType,TYPE_XYZ),tp,LOCATION_MZONE,0,1,1,nil)
     	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
     	local g=Duel.SelectTarget(tp,s.eqfilter,tp,LOCATION_GRAVE,0,1,1,nil)
    	Duel.SetOperationInfo(0,CATEGORY_EQUIP,g,1,0,0)

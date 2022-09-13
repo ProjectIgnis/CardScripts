@@ -21,7 +21,7 @@ function s.cf(c,p) return c:IsControler(p) and c:IsMonster() and c:IsOnField() e
 
 function s.cd(e,tp,eg,ep,ev)
 	local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DESTROY)
-	local fc=Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_ONFIELD,0,nil,TYPE_MONSTER)
+	local fc=Duel.GetMatchingGroupCount(Card.IsMonster,tp,LOCATION_ONFIELD,0,nil)
 	e:SetLabelObject(tg)
 	return ex and tg~=nil and tg:FilterCount(s.cf,nil,tp)==fc
 end

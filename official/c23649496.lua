@@ -37,7 +37,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	c:RegisterFlagEffect(id,RESET_CHAIN,0,1)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,c:GetCode()),0,LOCATION_MZONE,LOCATION_MZONE,1,c)
+	return c:IsFaceup() and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,c:GetCode()),0,LOCATION_MZONE,LOCATION_MZONE,1,c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
@@ -50,7 +50,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 	local tc=g:GetFirst()
 	if tc then
-		local dg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsCode,tc:GetCode()),tp,LOCATION_MZONE,LOCATION_MZONE,tc)
+		local dg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsCode,tc:GetCode()),tp,LOCATION_MZONE,LOCATION_MZONE,tc)
 		Duel.Destroy(dg,REASON_EFFECT)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD)

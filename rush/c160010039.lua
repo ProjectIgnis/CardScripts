@@ -25,7 +25,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_GRAVE,0,3,nil) end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsFaceup),tp,0,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsFaceup),tp,0,LOCATION_MZONE,1,nil) end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement

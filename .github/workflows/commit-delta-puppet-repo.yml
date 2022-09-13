@@ -6,12 +6,11 @@ on:
 jobs:
   commit:
     runs-on: ubuntu-latest
-    if: false
     env:
-      REMOTE: ProjectIgnis/DeltaUtopia.git
-      REPO_NAME: DeltaUtopia
-      DESTINATION: DeltaUtopia/script
-      BASE_SHA: 20201222
+      REMOTE: ProjectIgnis/DeltaPuppetOfStrings.git
+      REPO_NAME: DeltaPuppetOfStrings
+      DESTINATION: DeltaPuppetOfStrings/script
+      BASE_SHA: 20220912
     steps:
     - uses: actions/checkout@v1
     - name: Clone destination repository
@@ -22,7 +21,8 @@ jobs:
     - name: Copy new or changed files
       id: copy
       run: |
-        ADDED=$(git diff --name-only --no-renames --diff-filter=d $BASE_SHA | grep -vP "(^|/)\..*" | grep -P "\.lua$")
+        c1grep() { grep "$@" || test $? = 1; }
+        ADDED=$(git diff --name-only --no-renames --diff-filter=d $BASE_SHA | c1grep -vP "(^|/)\..*" | c1grep -P "\.lua$")
         if [[ "$ADDED" ]]; then
           rsync -avR $ADDED $HOME/$DESTINATION
         fi

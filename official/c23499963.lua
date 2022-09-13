@@ -31,14 +31,14 @@ function s.mcfilter(c,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.fcfilter,tp,LOCATION_DECK,0,1,nil)
-			or (Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,60884672),tp,LOCATION_FZONE,0,1,nil) 
+			or (Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,60884672),tp,LOCATION_FZONE,0,1,nil) 
 			and Duel.IsExistingMatchingCard(s.mcfilter,tp,LOCATION_DECK,0,1,nil,tp))
 	end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.IsExistingMatchingCard(s.fcfilter,tp,LOCATION_DECK,0,1,nil)
-	local b=Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,60884672),tp,LOCATION_FZONE,0,1,nil) 
+	local b=Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,60884672),tp,LOCATION_FZONE,0,1,nil) 
 		and Duel.IsExistingMatchingCard(s.mcfilter,tp,LOCATION_DECK,0,1,nil,tp)
 	if not a and not b then return end
 	if (not a and b) or (b and Duel.SelectYesNo(tp,aux.Stringid(id,1))) then

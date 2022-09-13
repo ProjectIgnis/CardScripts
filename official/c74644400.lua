@@ -30,7 +30,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_ASSAULT_MODE}
 function s.thfilter(c)
-	return (c:IsCode(CARD_ASSAULT_MODE) or c:IsCodeListed(CARD_ASSAULT_MODE)) 
+	return (c:IsCode(CARD_ASSAULT_MODE) or c:ListsCode(CARD_ASSAULT_MODE)) 
 		and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -56,7 +56,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.ShuffleHand(tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsCodeListed(CARD_ASSAULT_MODE) and not c:IsCode(id)
+	return c:ListsCode(CARD_ASSAULT_MODE) and not c:IsCode(id)
 		and c:IsLevelAbove(1) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

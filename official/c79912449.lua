@@ -32,7 +32,7 @@ function s.eqlimit(e,c)
 	return e:GetHandler():GetEquipTarget()==c or e:GetHandlerPlayer()~=c:GetControler()
 end
 function s.contcond(e)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x18e),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x18e),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.actcond(e)
 	local ec=e:GetHandler():GetEquipTarget()

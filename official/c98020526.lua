@@ -24,7 +24,7 @@ end
 s.listed_names={id,CARD_STARDUST_DRAGON}
 function s.lffilter(c,tp,re)
 	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp) and (c:IsReason(REASON_EFFECT) or (c:IsReason(REASON_COST) and re and re:IsActivated()))
-		and (c:IsCode(CARD_STARDUST_DRAGON) or (c:IsCodeListed(CARD_STARDUST_DRAGON) and c:IsType(TYPE_SYNCHRO)))
+		and (c:IsCode(CARD_STARDUST_DRAGON) or (c:ListsCode(CARD_STARDUST_DRAGON) and c:IsType(TYPE_SYNCHRO)))
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return rp==tp and eg:IsExists(s.lffilter,1,nil,tp,re)

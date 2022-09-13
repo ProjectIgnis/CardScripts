@@ -42,7 +42,7 @@ function s.spcon(e,c)
 		and Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_FZONE,LOCATION_FZONE,1,nil)
 end
 function s.accon(e)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,7142724),0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,7142724),0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 end
 function s.aclimit(e,re,tp)
 	local rc=re:GetHandler()

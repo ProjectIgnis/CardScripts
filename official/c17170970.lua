@@ -33,7 +33,7 @@ function s.initial_effect(c)
 end
 s.listed_names={id}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_SYNCHRO),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,TYPE_SYNCHRO),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function s.thfilter(c)
 	return c:IsSpell() and c:IsType(TYPE_FIELD) and c:IsAbleToHand()

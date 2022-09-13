@@ -17,7 +17,7 @@ function s.spfilter(c,e,tp)
 	return c:IsCode(87526784) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,50319138),tp,LOCATION_ONFIELD,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,50319138),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -26,7 +26,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	if not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,50319138),tp,LOCATION_ONFIELD,0,1,nil) then return end
+	if not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,50319138),tp,LOCATION_ONFIELD,0,1,nil) then return end
 	local tc=Duel.GetFirstMatchingCard(s.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
 	if tc then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)

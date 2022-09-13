@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsAbleToDeckOrExtraAsCost),tp,LOCATION_FZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsAbleToDeckOrExtraAsCost),tp,LOCATION_FZONE,0,1,nil) end
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -26,7 +26,7 @@ end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	-- Requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local cg=Duel.SelectMatchingCard(tp,aux.FilterFaceupFunction(Card.IsAbleToDeckOrExtraAsCost),tp,LOCATION_FZONE,0,1,1,nil)
+	local cg=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsAbleToDeckOrExtraAsCost),tp,LOCATION_FZONE,0,1,1,nil)
 	if #cg<1 then return end
 	Duel.HintSelection(cg,true)
 	if Duel.SendtoDeck(cg,nil,SEQ_DECKSHUFFLE,REASON_COST)>0 then

@@ -25,7 +25,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(p,0,LOCATION_HAND)
 	if #g>0 then
 		Duel.ConfirmCards(p,g)
-		local tg=g:Filter(Card.IsType,nil,TYPE_MONSTER)
+		local tg=g:Filter(Card.IsMonster,nil)
 		if #tg>0 then
 			Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
 			local sg=tg:Select(p,1,1,nil)

@@ -46,7 +46,7 @@ s.listed_series={0x2e,0x91}
 s.listed_names={CARD_NECROVALLEY}
 
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x2e),e:GetHandlerPlayer(),LOCATION_MZONE,LOCATION_MZONE,1,nil) and Duel.IsEnvironment(CARD_NECROVALLEY)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x2e),e:GetHandlerPlayer(),LOCATION_MZONE,LOCATION_MZONE,1,nil) and Duel.IsEnvironment(CARD_NECROVALLEY)
 end
 function s.accon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsMainPhase() and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,tp)
@@ -59,7 +59,7 @@ function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,tp):GetFirst()
-	Duel.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
+	Duel.ActivateFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
 end
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

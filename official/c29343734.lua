@@ -52,5 +52,5 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 end
 function s.val(e,c)
-	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsAttribute,c:GetAttribute()),c:GetControler(),0,LOCATION_MZONE,nil)*300
+	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsAttribute,c:GetAttribute()),c:GetControler(),0,LOCATION_MZONE,nil)*300
 end

@@ -1,7 +1,7 @@
 --Bee Formation
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddPersistentProcedure(c,0,aux.FilterFaceupFunction(Card.IsSetCard,0x12f),nil,nil,TIMING_STANDBY_PHASE,TIMINGS_CHECK_MONSTER)
+	aux.AddPersistentProcedure(c,0,aux.FaceupFilter(Card.IsSetCard,0x12f),nil,nil,TIMING_STANDBY_PHASE,TIMINGS_CHECK_MONSTER)
 	--Destroy
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)

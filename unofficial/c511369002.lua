@@ -48,7 +48,7 @@ end
 function s.actop(e,tp,eg,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(48934760,0))
 	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.actfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,tp):GetFirst()
-	Duel.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
+	Duel.ActivateFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_FIELD) and c:IsSetCard(0x580) and c:IsAbleToGrave()
@@ -83,7 +83,7 @@ function s.actop2(e,tp,eg,ep,ev,re,r,rp)
 				Duel.SendtoHand(tc,nil,REASON_EFFECT)
 				Duel.ConfirmCards(1-tp,tc)
 			else
-				Duel.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
+				Duel.ActivateFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
 			end
 		end
 	end

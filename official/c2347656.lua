@@ -68,7 +68,7 @@ function s.fgop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.triggercon(e)
 	local tp=e:GetHandlerPlayer()
-	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_FIEND),tp,LOCATION_MZONE,0,1,nil)
+	return not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_FIEND),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.cfilter(c)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsReason(REASON_EFFECT)

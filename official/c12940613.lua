@@ -23,7 +23,7 @@ function s.tdfilter1(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.tdfilter1(chkc) end
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x71),tp,LOCATION_MZONE,0,1,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x71),tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingTarget(s.tdfilter1,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectTarget(tp,s.tdfilter1,tp,LOCATION_GRAVE,0,1,1,nil)
@@ -36,7 +36,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not (tc and tc:IsRelateToEffect(e)) or Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)==0 then return end
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x71),tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0x71),tp,LOCATION_MZONE,0,nil)
 	local ct=0
 	for tc in aux.Next(g) do
 	local preatk=tc:GetAttack()

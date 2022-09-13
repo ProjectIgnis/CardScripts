@@ -59,7 +59,7 @@ function s.relval(e,re,r,rp)
 	return re and re:IsActivated() and (r&REASON_COST)~=0
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	local ec=eg:FilterCount(Card.IsType,nil,TYPE_MONSTER)
+	local ec=eg:FilterCount(Card.IsMonster,nil)
 	if ec>0 then
 		local val=e:GetLabelObject():GetLabel()
 		e:GetLabelObject():SetLabel(val+ec)

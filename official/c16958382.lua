@@ -34,10 +34,10 @@ end
 s.listed_names={27564031}
 s.listed_series={0x23}
 function s.spcon(e,c)
-	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,id),e:GetHandlerPlayer(),LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
+	return not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,id),e:GetHandlerPlayer(),LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 end
 function s.descon(e)
-	return not (Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,27564031),e:GetHandlerPlayer(),LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) or Duel.IsEnvironment(27564031))
+	return not (Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,27564031),e:GetHandlerPlayer(),LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) or Duel.IsEnvironment(27564031))
 end
 function s.costfilter(c)
 	return c:IsSetCard(0x23) and c:IsAbleToGraveAsCost()

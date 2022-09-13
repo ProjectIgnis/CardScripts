@@ -85,7 +85,7 @@ function s.btop(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e1)
 end
 function s.actcon(e)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsOddScale),e:GetHandlerPlayer(),LOCATION_PZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsOddScale),e:GetHandlerPlayer(),LOCATION_PZONE,0,1,nil)
 end
 function s.actlimit(e,re,tp)
 	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP)

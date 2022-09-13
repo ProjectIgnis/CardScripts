@@ -36,12 +36,12 @@ s.listed_series={0x137}
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil)
-		and Duel.IsExistingTarget(aux.FilterFaceupFunction(Card.IsSetCard,0x137),tp,LOCATION_MZONE,0,1,nil) end
+		and Duel.IsExistingTarget(aux.FaceupFilter(Card.IsSetCard,0x137),tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPPO)
 	local g=Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
 	e:SetLabelObject(g:GetFirst())
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELF)
-	Duel.SelectTarget(tp,aux.FilterFaceupFunction(Card.IsSetCard,0x137),tp,LOCATION_MZONE,0,1,1,nil)
+	Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsSetCard,0x137),tp,LOCATION_MZONE,0,1,1,nil)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -70,7 +70,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x137),tp,LOCATION_MZONE,0,nil):GetClassCount(Card.GetAttribute)>1
+	return Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0x137),tp,LOCATION_MZONE,0,nil):GetClassCount(Card.GetAttribute)>1
 end
 function s.filter(c,tp)
 	return c:IsType(TYPE_CONTINUOUS) and c:IsSetCard(0x137) and not c:IsForbidden()

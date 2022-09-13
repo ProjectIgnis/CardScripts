@@ -11,7 +11,7 @@ function s.tkfilter(c)
 end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--condition
-	local fgc=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0xfb),tp,LOCATION_MZONE,0,nil)
+	local fgc=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0xfb),tp,LOCATION_MZONE,0,nil)
 	return fgc>0 and Duel.IsPlayerCanDiscardDeck(tp,fgc) and Duel.IsExistingMatchingCard(s.tkfilter,tp,LOCATION_GRAVE,0,1,nil)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
@@ -24,7 +24,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	--Check if Skill is negated
 	if aux.CheckSkillNegation(e,tp) then return end
 	--Deck Des/Add to hand
-	local fgc=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0xfb),tp,LOCATION_MZONE,0,nil)
+	local fgc=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0xfb),tp,LOCATION_MZONE,0,nil)
 	if fgc>0 and Duel.IsPlayerCanDiscardDeck(tp,fgc) and Duel.DiscardDeck(tp,fgc,REASON_EFFECT)>0
 		and Duel.IsExistingMatchingCard(s.tkfilter,tp,LOCATION_GRAVE,0,1,nil) then
 		Duel.BreakEffect()

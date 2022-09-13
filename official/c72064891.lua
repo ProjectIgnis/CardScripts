@@ -37,7 +37,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
 end
 function s.thfilter(c)
-	return c:IsCodeListed(CARD_GAIA_CHAMPION) and c:IsSpellTrap() and c:IsAbleToHand()
+	return c:ListsCode(CARD_GAIA_CHAMPION) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.thfilter(chkc) end

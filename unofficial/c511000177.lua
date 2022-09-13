@@ -19,7 +19,7 @@ end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 end
-s.spfilter=aux.FilterFaceupFunction(Card.IsRace,RACE_ZOMBIE)
+s.spfilter=aux.FaceupFilter(Card.IsRace,RACE_ZOMBIE)
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetMatchingGroupCount(s.spfilter,tp,LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())
 	if chk==0 then return ct>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>=ct

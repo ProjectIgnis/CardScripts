@@ -34,7 +34,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		Duel.ConfirmCards(tp,g)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local tg=g:FilterSelect(tp,Card.IsType,1,1,nil,TYPE_MONSTER)
+		local tg=g:FilterSelect(tp,Card.IsMonster,1,1,nil)
 		if #tg>0 then
 			Duel.SendtoHand(tg,tp,REASON_EFFECT)
 		end

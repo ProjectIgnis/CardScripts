@@ -59,13 +59,13 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.effcon(e)
-	return Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0xc4),e:GetHandlerPlayer(),LOCATION_EXTRA,0,nil):GetClassCount(Card.GetCode)>=e:GetLabel()
+	return Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0xc4),e:GetHandlerPlayer(),LOCATION_EXTRA,0,nil):GetClassCount(Card.GetCode)>=e:GetLabel()
 end
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsFaceup,0,LOCATION_EXTRA,LOCATION_EXTRA,nil)*100
 end
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0xc4),tp,LOCATION_EXTRA,0,nil):GetClassCount(Card.GetCode)==10
+	return Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0xc4),tp,LOCATION_EXTRA,0,nil):GetClassCount(Card.GetCode)==10
 end
 function s.tdcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

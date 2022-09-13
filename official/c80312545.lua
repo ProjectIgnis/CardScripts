@@ -38,7 +38,7 @@ function s.initial_effect(c)
 end
 s.listed_names={69890967,6007213,32491822}
 function s.filter(c)
-	return (c:IsCode(69890967,6007213,32491822) or (c:IsCodeListed(69890967,6007213,32491822) and c:IsMonster()))
+	return (c:IsCode(69890967,6007213,32491822) or (c:ListsCode(69890967,6007213,32491822) and c:IsMonster()))
 		and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -76,7 +76,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsLevel,10),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsLevel,10),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.thfilter(c)
 	return c:IsSpell() and c:IsType(TYPE_CONTINUOUS) and c:IsAbleToHand()

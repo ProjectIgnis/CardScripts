@@ -28,11 +28,10 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.DiscardDeck(tp,2,REASON_EFFECT)
 	Duel.DiscardDeck(1-tp,2,REASON_EFFECT)
-	if Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,0,3,nil,TYPE_SPELL) 
+	if Duel.IsExistingMatchingCard(Card.IsSpell,tp,LOCATION_GRAVE,0,3,nil)
 		and Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil)
 		Duel.SendtoDeck(g,nil,0,REASON_EFFECT)
 	end
 end
-

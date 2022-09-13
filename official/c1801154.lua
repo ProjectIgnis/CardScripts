@@ -34,7 +34,7 @@ function s.check(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spfilter(c,e,tp,fc)
-	return fc:IsMaterialListCode(c:GetCode()) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return fc:ListsCodeAsMaterial(c:GetCode()) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local fc=eg:GetFirst()

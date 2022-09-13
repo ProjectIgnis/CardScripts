@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_WARRIOR),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_WARRIOR),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetFieldGroupCount(tp,0,LOCATION_SZONE)

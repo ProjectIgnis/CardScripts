@@ -39,29 +39,29 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,TYPE_MONSTER) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsMonster,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.SetTargetPlayer(1-tp)
-	local dam=Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_MZONE,LOCATION_MZONE,nil,TYPE_MONSTER)*1
+	local dam=Duel.GetMatchingGroupCount(Card.IsMonster,tp,LOCATION_MZONE,LOCATION_MZONE,nil)*1
 	Duel.SetTargetParam(dam)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,dam)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
-	local dam=Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_MZONE,LOCATION_MZONE,nil,TYPE_MONSTER)*1
+	local dam=Duel.GetMatchingGroupCount(Card.IsMonster,tp,LOCATION_MZONE,LOCATION_MZONE,nil)*1
 	Duel.DiscardDeck(1-tp,dam,REASON_EFFECT)
 end
 function s.discon2(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 end
 function s.target2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,TYPE_MONSTER) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsMonster,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.SetTargetPlayer(tp)
-	local dis=Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_MZONE,LOCATION_MZONE,nil,TYPE_MONSTER)*1
+	local dis=Duel.GetMatchingGroupCount(Card.IsMonster,tp,LOCATION_MZONE,LOCATION_MZONE,nil)*1
 	Duel.SetTargetParam(dis)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,tp,dis)
 end
 function s.activate2(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
-	local dis=Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_MZONE,LOCATION_MZONE,nil,TYPE_MONSTER)*1
+	local dis=Duel.GetMatchingGroupCount(Card.IsMonster,tp,LOCATION_MZONE,LOCATION_MZONE,nil)*1
 	Duel.DiscardDeck(tp,dis,REASON_EFFECT)
 end

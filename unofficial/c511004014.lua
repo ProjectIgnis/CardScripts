@@ -347,10 +347,10 @@ end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local hg=eg:Filter(Card.IsPreviousLocation,nil,LOCATION_HAND)
 	if #hg>0 then
-		if hg:IsExists(Card.IsType,1,nil,TYPE_SPELL) then
+		if hg:IsExists(Card.IsSpell,1,nil) then
 			Duel.RegisterFlagEffect(rp,TYPE_SPELL,RESET_PHASE+PHASE_END,0,1)
 		end
-		if hg:IsExists(Card.IsType,1,nil,TYPE_TRAP) then
+		if hg:IsExists(Card.IsTrap,1,nil) then
 			Duel.RegisterFlagEffect(rp,TYPE_TRAP,RESET_PHASE+PHASE_END,0,1)
 		end
 	end

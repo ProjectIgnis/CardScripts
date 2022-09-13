@@ -53,7 +53,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(Card.IsNegatableMonster,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x146),tp,LOCATION_MZONE,0,1,e:GetHandler())
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x146),tp,LOCATION_MZONE,0,1,e:GetHandler())
 		and #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
@@ -79,11 +79,11 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Activation legality
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x146),tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x146),tp,LOCATION_MZONE,0,1,nil) end
 end
 	--All "Dogmatika" monsters gain 500 ATK
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x146),tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0x146),tp,LOCATION_MZONE,0,nil)
 	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

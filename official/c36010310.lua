@@ -48,7 +48,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
-		or Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x163),tp,LOCATION_MZONE,0,1,nil)
+		or Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x163),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

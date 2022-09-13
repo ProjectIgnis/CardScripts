@@ -16,7 +16,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsChainDisablable(0) then
 		local sel=1
-		local g=Duel.GetMatchingGroup(Card.IsType,tp,0,LOCATION_HAND,nil,TYPE_SPELL)
+		local g=Duel.GetMatchingGroup(Card.IsSpell,tp,0,LOCATION_HAND,nil)
 		Duel.Hint(HINT_SELECTMSG,1-tp,aux.Stringid(id,0))
 		if #g>0 then
 			sel=Duel.SelectOption(1-tp,1213,1214)

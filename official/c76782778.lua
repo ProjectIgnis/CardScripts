@@ -57,7 +57,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.incon(e)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_FUSION),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,TYPE_FUSION),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.spfilter2(c,e,tp)
 	return c:GetLevel()==2 and c:IsSetCard(0x133) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

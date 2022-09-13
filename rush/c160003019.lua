@@ -17,7 +17,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsLevelAbove,7),tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsLevelAbove,7),tp,LOCATION_MZONE,0,1,nil) end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -25,7 +25,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.DiscardDeck(tp,1,REASON_COST)>0 then
 		--Effect
 		if c:IsRelateToEffect(e) and c:IsFaceup() then
-			local atk=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsLevelAbove,7),tp,LOCATION_MZONE,0,nil)
+			local atk=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsLevelAbove,7),tp,LOCATION_MZONE,0,nil)
 			--Increase ATK
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)

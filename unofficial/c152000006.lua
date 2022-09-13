@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	--skill
 	aux.AddVrainsSkillProcedure(c,s.flipcon,s.flipop)
 end
-s.infilter=aux.FilterFaceupFunction(Card.IsRace,RACE_INSECT)
+s.infilter=aux.FaceupFilter(Card.IsRace,RACE_INSECT)
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--condition
 	return (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()) and Duel.IsExistingMatchingCard(s.infilter,tp,LOCATION_MZONE,0,1,nil)

@@ -27,14 +27,14 @@ end
 s.listed_names={CARD_JINZO}
 
 function s.condition1(e,tp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_JINZO),tp,LOCATION_ONFIELD,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_JINZO),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.target1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_MACHINE),tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_MACHINE),tp,LOCATION_MZONE,0,1,nil) end
 end
 function s.operation1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsRace,RACE_MACHINE),tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsRace,RACE_MACHINE),tp,LOCATION_MZONE,0,nil)
 	for tc in aux.Next(g) do
 		--Cannot be destroyed by opponent's card effects
 		local e1=Effect.CreateEffect(c)

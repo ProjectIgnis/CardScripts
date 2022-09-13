@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsLevelAbove,5),tp,0,LOCATION_MZONE,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsLevelAbove,5),tp,0,LOCATION_MZONE,1,nil)
 end
 function s.damcostfilter(c)
 	return c:IsMonster() and c:IsRace(RACE_CYBERSE) and not c:IsPublic()

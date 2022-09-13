@@ -14,9 +14,9 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(1-tp) and chkc:IsMonster() end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
-		and Duel.IsExistingTarget(Card.IsType,tp,0,LOCATION_GRAVE,1,nil,TYPE_MONSTER)
+		and Duel.IsExistingTarget(Card.IsMonster,tp,0,LOCATION_GRAVE,1,nil)
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,0x11,0,0,4,RACE_SPELLCASTER,ATTRIBUTE_LIGHT) end
-	Duel.SelectTarget(tp,Card.IsType,tp,0,LOCATION_GRAVE,1,1,nil,TYPE_MONSTER)
+	Duel.SelectTarget(tp,Card.IsMonster,tp,0,LOCATION_GRAVE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -35,8 +35,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CHANGE_CODE)
 	e1:SetValue(tc:GetOriginalCode())
 	c:RegisterEffect(e1)
-	local e6=e1:Clone()
-	e6:SetCode(EFFECT_REMOVE_TYPE)
-	e6:SetValue(TYPE_TRAP)
-	c:RegisterEffect(e6)
+	local e2=e1:Clone()
+	e2:SetCode(EFFECT_REMOVE_TYPE)
+	e2:SetValue(TYPE_TRAP)
+	c:RegisterEffect(e2)
 end

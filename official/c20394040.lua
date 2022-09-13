@@ -11,5 +11,5 @@ function s.initial_effect(c)
 end
 s.listed_names={40453765}
 function s.value(e,c)
-	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsCode,40453765),c:GetControler(),LOCATION_MZONE,0,nil)*500
+	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsCode,40453765),c:GetControler(),LOCATION_MZONE,0,nil)*500
 end

@@ -38,12 +38,12 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(e:GetHandler(),REASON_RULE)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	local g=eg:Filter(Card.IsType,nil,TYPE_MONSTER)
+	local g=eg:Filter(Card.IsMonster,nil)
 	local tc=g:GetFirst()
 	return #g==1 and tc:IsReason(REASON_DESTROY) and tc:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=eg:Filter(Card.IsType,nil,TYPE_MONSTER)
+	local g=eg:Filter(Card.IsMonster,nil)
 	local tc=g:GetFirst()
 	if chk==0 then return true end
 	Duel.SetTargetPlayer(tc:GetPreviousControler())

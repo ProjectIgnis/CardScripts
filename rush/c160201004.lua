@@ -25,7 +25,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_GRAVE,0,1,nil) end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_WARRIOR),tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_WARRIOR),tp,LOCATION_MZONE,0,1,nil) end
 end
 function s.filter(c,e)
 	return c:IsRace(RACE_WARRIOR) and not c:IsImmuneToEffect(e)
@@ -34,7 +34,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local td=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	if Duel.SendtoDeck(td,nil,SEQ_DECKSHUFFLE,REASON_COST)~0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-		local g=Duel.SelectMatchingCard(tp,aux.FilterFaceupFunction(s.filter,e),tp,LOCATION_MZONE,0,1,1,nil)
+		local g=Duel.SelectMatchingCard(tp,aux.FaceupFilter(s.filter,e),tp,LOCATION_MZONE,0,1,1,nil)
 		if #g>0 then
 			Duel.HintSelection(g)
 			local tc=g:GetFirst()

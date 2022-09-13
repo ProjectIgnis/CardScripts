@@ -33,7 +33,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.ConfirmCards(1-tp,e:GetHandler())
 end
 function s.thfilter(c)
-	return ((c:IsCodeListed(CARD_DARK_MAGICIAN) and c:IsMonster() and not c:IsType(TYPE_RITUAL)) or c:IsCode(CARD_DARK_MAGICIAN))
+	return ((c:ListsCode(CARD_DARK_MAGICIAN) and c:IsMonster() and not c:IsType(TYPE_RITUAL)) or c:IsCode(CARD_DARK_MAGICIAN))
 		 and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

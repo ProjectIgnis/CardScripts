@@ -31,7 +31,7 @@ end
 s.listed_series={0x14a}
 s.listed_names={id}
 function s.sscon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x14a),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x14a),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.sstg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

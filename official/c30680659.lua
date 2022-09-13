@@ -38,7 +38,7 @@ function s.initial_effect(c)
 end
 s.listed_names={TOKEN_BRAVE,3285551}
 function s.bravecon(e)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,TOKEN_BRAVE),e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,TOKEN_BRAVE),e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -67,7 +67,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.plfilter(c)
-	return c:IsType(TYPE_FIELD) and c:IsCodeListed(TOKEN_BRAVE) and not c:IsForbidden()
+	return c:IsType(TYPE_FIELD) and c:ListsCode(TOKEN_BRAVE) and not c:IsForbidden()
 end
 function s.pltg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.plfilter,tp,LOCATION_DECK,0,1,nil) end

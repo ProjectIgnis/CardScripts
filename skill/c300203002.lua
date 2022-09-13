@@ -18,7 +18,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	
 	Duel.ConfirmDecktop(tp,4)
 	local g=Duel.GetDecktopGroup(tp,4)
-	local ct=g:FilterCount(Card.IsType,nil,TYPE_MONSTER)
+	local ct=g:FilterCount(Card.IsMonster,nil)
 	if ct==1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local sg=g:FilterSelect(tp,Card.IsAbleToHand,1,1,nil)

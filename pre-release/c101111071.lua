@@ -60,7 +60,7 @@ function s.cfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:GetOverlayGroup():IsExists(Card.IsCode,1,nil,CARD_GALAXYEYES_P_DRAGON)
 end
 function s.skiptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_GALAXYEYES_P_DRAGON),tp,LOCATION_ONFIELD,0,1,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_GALAXYEYES_P_DRAGON),tp,LOCATION_ONFIELD,0,1,nil)
 		or Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil) end
 end
 function s.skipop(e,tp,eg,ep,ev,re,r,rp)

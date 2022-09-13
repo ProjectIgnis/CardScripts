@@ -57,7 +57,7 @@ s.listed_names={15259703,CARD_DARK_MAGICIAN,30208479}
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.CheckReleaseGroup(c:GetControler(),aux.TRUE,1,false,1,true,c,c:GetControler(),nil,false,nil)
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,15259703),c:GetControler(),LOCATION_ONFIELD,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,15259703),c:GetControler(),LOCATION_ONFIELD,0,1,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
@@ -85,10 +85,10 @@ function s.sdesop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(e:GetHandler(),REASON_EFFECT)
 end
 function s.dircon(e)
-	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_TOON),e:GetHandlerPlayer(),0,LOCATION_MZONE,1,nil)
+	return not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,TYPE_TOON),e:GetHandlerPlayer(),0,LOCATION_MZONE,1,nil)
 end
 function s.atcon(e)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_TOON),e:GetHandlerPlayer(),0,LOCATION_MZONE,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,TYPE_TOON),e:GetHandlerPlayer(),0,LOCATION_MZONE,1,nil)
 end
 function s.atlimit(e,c)
 	return not c:IsType(TYPE_TOON) or c:IsFacedown()

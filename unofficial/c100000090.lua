@@ -12,9 +12,9 @@ function s.initial_effect(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end
-	if chk==0 then return Duel.IsExistingTarget(aux.FilterFaceupFunction(Card.IsSetCard,0x23),tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(aux.FaceupFilter(Card.IsSetCard,0x23),tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local g=Duel.SelectTarget(tp,aux.FilterFaceupFunction(Card.IsSetCard,0x23),tp,LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsSetCard,0x23),tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,0,g,1,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

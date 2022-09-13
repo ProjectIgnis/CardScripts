@@ -6,13 +6,13 @@ end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--condition
 	return aux.CanActivateSkill(tp)
-	and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsLevelAbove,5),tp,LOCATION_MZONE,0,1,nil)
+	and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsLevelAbove,5),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 	Duel.Hint(HINT_CARD,tp,id)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
-	local atk=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsLevelAbove,5),tp,LOCATION_MZONE,0,nil)*300
+	local atk=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsLevelAbove,5),tp,LOCATION_MZONE,0,nil)*300
 	if #g==0 or atk==0 then return end
 	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(e:GetHandler())

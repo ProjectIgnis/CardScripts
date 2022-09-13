@@ -81,10 +81,10 @@ function s.posfilter(c)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return Duel.IsExistingTarget(aux.FilterFaceupFunction(Card.IsAbleToRemove),tp,0,LOCATION_ONFIELD,1,nil) 
+	if chk==0 then return Duel.IsExistingTarget(aux.FaceupFilter(Card.IsAbleToRemove),tp,0,LOCATION_ONFIELD,1,nil) 
 		and Duel.IsExistingTarget(s.posfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g1=Duel.SelectTarget(tp,aux.FilterFaceupFunction(Card.IsAbleToRemove),tp,0,LOCATION_ONFIELD,1,1,nil)
+	local g1=Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsAbleToRemove),tp,0,LOCATION_ONFIELD,1,1,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
 	local g2=Duel.SelectTarget(tp,s.posfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g1,1,0,0)

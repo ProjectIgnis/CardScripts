@@ -35,7 +35,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #g==0 then return end
 	Duel.HintSelection(g,true)
 	if Duel.ChangePosition(g,POS_FACEUP_DEFENSE)~=#g then return end
-	if not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsDefensePos),tp,LOCATION_MZONE,0,2,nil) then return end
+	if not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsDefensePos),tp,LOCATION_MZONE,0,2,nil) then return end
 	local dg=Duel.GetMatchingGroup(s.posfilter,tp,0,LOCATION_MZONE,nil)
 	if #dg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)

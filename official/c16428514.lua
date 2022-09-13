@@ -50,10 +50,10 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.setcon1(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0xed),tp,LOCATION_ONFIELD,0,1,e:GetHandler())
+	return not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0xed),tp,LOCATION_ONFIELD,0,1,e:GetHandler())
 end
 function s.setcon2(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0xed),tp,LOCATION_ONFIELD,0,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0xed),tp,LOCATION_ONFIELD,0,1,e:GetHandler())
 end
 function s.setfilter(c)
 	return c:IsFaceup() and c:IsCanTurnSet()

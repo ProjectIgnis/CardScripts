@@ -83,7 +83,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local hg=eg:Filter(Card.IsLocation,nil,LOCATION_HAND)
 	if #hg==0 then return end
 	Duel.ConfirmCards(1-ep,hg)
-	local dg=hg:Filter(Card.IsType,nil,TYPE_MONSTER)
+	local dg=hg:Filter(Card.IsMonster,nil)
 	if Duel.Destroy(dg,REASON_EFFECT)~=0 then
 		local og=Duel.GetOperatedGroup():Filter(Card.IsLocation,nil,LOCATION_GRAVE)
 		for oc in aux.Next(og) do

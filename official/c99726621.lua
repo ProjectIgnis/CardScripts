@@ -64,12 +64,12 @@ function s.thfilter(c,lv)
 	return c:IsLevelBelow(lv) and c:IsAbleToHand() and c:IsRace(RACES_BEAST_BWARRIOR_WINGB) and c:IsMonster()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local rgc=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsRace,RACES_BEAST_BWARRIOR_WINGB),tp,LOCATION_REMOVED,0,nil)
+	local rgc=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsRace,RACES_BEAST_BWARRIOR_WINGB),tp,LOCATION_REMOVED,0,nil)
 	if chk==0 then return rgc>0 and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,rgc) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	local rgc=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsRace,RACES_BEAST_BWARRIOR_WINGB),tp,LOCATION_REMOVED,0,nil)
+	local rgc=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsRace,RACES_BEAST_BWARRIOR_WINGB),tp,LOCATION_REMOVED,0,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil,rgc)
 	if #g>0 then

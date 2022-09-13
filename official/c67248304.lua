@@ -18,7 +18,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local fdg=Duel.GetMatchingGroup(Card.IsCanTurnSet,tp,LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())
-	local thg=Duel.GetMatchingGroup(aux.AND(Card.IsAbleToHand,aux.FilterFaceupFunction(Card.IsType,TYPE_SPELL|TYPE_TRAP)),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
+	local thg=Duel.GetMatchingGroup(aux.AND(Card.IsAbleToHand,aux.FaceupFilter(Card.IsType,TYPE_SPELL|TYPE_TRAP)),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,fdg,#fdg,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,thg,#thg,0,0)
 end
@@ -27,7 +27,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsCanTurnSet,tp,LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())
 	if #g==0 then return end
 	if Duel.ChangePosition(g,POS_FACEDOWN_DEFENSE)==0 then return end
-	local g2=Duel.GetMatchingGroup(aux.AND(Card.IsAbleToHand,aux.FilterFaceupFunction(Card.IsType,TYPE_SPELL|TYPE_TRAP)),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
+	local g2=Duel.GetMatchingGroup(aux.AND(Card.IsAbleToHand,aux.FaceupFilter(Card.IsType,TYPE_SPELL|TYPE_TRAP)),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	if #g2==0 then return end
 	Duel.BreakEffect()
 	if Duel.SendtoHand(g2,nil,REASON_EFFECT)==0 then return end

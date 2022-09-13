@@ -31,9 +31,9 @@ function s.postg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and Duel.IsExistingTarget(aux.FilterFaceupFunction(Card.IsCanTurnSet),tp,LOCATION_MZONE,0,1,nil) end
+		and Duel.IsExistingTarget(aux.FaceupFilter(Card.IsCanTurnSet),tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,CATEGORY_POSITION)
-	local g=Duel.SelectTarget(tp,aux.FilterFaceupFunction(Card.IsCanTurnSet),tp,LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsCanTurnSet),tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end

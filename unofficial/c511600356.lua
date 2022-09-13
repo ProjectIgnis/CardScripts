@@ -17,8 +17,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_NORMAL),tp,LOCATION_MZONE,0,1,nil) end
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsType,TYPE_NORMAL),tp,LOCATION_MZONE,0,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,TYPE_NORMAL),tp,LOCATION_MZONE,0,1,nil) end
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsType,TYPE_NORMAL),tp,LOCATION_MZONE,0,nil)
 	local race=Duel.AnnounceAnotherRace(g,tp)
 	local att=Duel.AnnounceAnotherAttribute(g,tp)
 	local param=(race<<8)|att
@@ -29,7 +29,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local param=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
 	local race=param>>8
 	local att=param&0xff
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsType,TYPE_NORMAL),tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsType,TYPE_NORMAL),tp,LOCATION_MZONE,0,nil)
 	for tc in g:Iter() do
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

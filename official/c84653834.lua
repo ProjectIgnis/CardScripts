@@ -18,13 +18,13 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return true
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_PSYCHIC),tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_PSYCHIC),tp,LOCATION_MZONE,0,1,nil) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local sg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsRace,RACE_PSYCHIC),tp,LOCATION_MZONE,0,nil)
+	local sg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsRace,RACE_PSYCHIC),tp,LOCATION_MZONE,0,nil)
 	local c=e:GetHandler()
 	local tc=sg:GetFirst()
-	local atk=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsRace,RACE_PSYCHIC),tp,LOCATION_REMOVED,0,nil)*300
+	local atk=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsRace,RACE_PSYCHIC),tp,LOCATION_REMOVED,0,nil)*300
 	for tc in aux.Next(sg) do
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

@@ -29,7 +29,7 @@ end
 s.listed_names={id}
 
 function s.atkval(e,c)
-	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsRace,RACE_PLANT),c:GetControler(),LOCATION_MZONE,0,e:GetHandler())*400
+	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsRace,RACE_PLANT),c:GetControler(),LOCATION_MZONE,0,e:GetHandler())*400
 end
 function s.filter(c,e,tp)
 	return c:IsRace(RACE_PLANT) and c:GetLevel()>=5

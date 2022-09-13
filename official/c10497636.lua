@@ -119,7 +119,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 		and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x161),tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x161),tp,LOCATION_MZONE,0,1,nil) end
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -134,7 +134,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1,true)
 	end
-	local atkg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x161),tp,LOCATION_MZONE,0,nil)
+	local atkg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0x161),tp,LOCATION_MZONE,0,nil)
 	for tc in aux.Next(atkg) do
 		--Increase ATK
 		local e2=Effect.CreateEffect(c)

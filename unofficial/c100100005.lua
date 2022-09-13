@@ -16,9 +16,9 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return tc and tc:GetCounter(0x91)>1
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingTarget(aux.FilterFaceupFunction(Card.IsRace,RACE_BEAST+RACE_BEASTWARRIOR),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(aux.FaceupFilter(Card.IsRace,RACE_BEAST+RACE_BEASTWARRIOR),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	Duel.SelectTarget(tp,aux.FilterFaceupFunction(Card.IsRace,RACE_BEAST+RACE_BEASTWARRIOR),tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+	Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsRace,RACE_BEAST+RACE_BEASTWARRIOR),tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

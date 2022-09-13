@@ -60,12 +60,12 @@ function s.retcon(e,tp,eg,ev,ep,re,r,rp)
 	return Duel.GetBattleDamage(tp)>0
 end
 function s.rettg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_REMOVED,0,1,nil,TYPE_MONSTER) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsMonster,tp,LOCATION_REMOVED,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,0,0)
 end
 function s.retop(e,tp,eg,ev,ep,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(48976825,0))
-	local g=Duel.SelectMatchingCard(tp,Card.IsType,tp,LOCATION_REMOVED,0,1,1,nil,TYPE_MONSTER)
+	local g=Duel.SelectMatchingCard(tp,Card.IsMonster,tp,LOCATION_REMOVED,0,1,1,nil)
 	if Duel.SendtoGrave(g,REASON_EFFECT)~=0 then
 		Duel.BreakEffect()
 		local e1=Effect.CreateEffect(e:GetHandler())

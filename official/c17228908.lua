@@ -62,7 +62,7 @@ function s.initial_effect(c)
 end
 s.listed_names={17228909}
 function s.tkcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(aux.FilterFaceupFunction(Card.IsRace,RACE_DINOSAUR),1,nil,tp)
+	return eg:IsExists(aux.FaceupFilter(Card.IsRace,RACE_DINOSAUR),1,nil,tp)
 end
 function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0

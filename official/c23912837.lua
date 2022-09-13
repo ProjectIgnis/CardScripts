@@ -60,7 +60,7 @@ function s.poscost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.IsExistingMatchingCard(Card.IsFacedown,tp,LOCATION_MZONE,0,1,nil)
-	local b2=Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCanTurnSet),tp,LOCATION_MZONE,0,1,nil)
+	local b2=Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCanTurnSet),tp,LOCATION_MZONE,0,1,nil)
 	if chk==0 then return b1 or b2 end
 	local op=0
 	if b1 and b2 then
@@ -85,7 +85,7 @@ function s.posop1(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.posop2(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.SelectMatchingCard(tp,aux.FilterFaceupFunction(Card.IsCanTurnSet),tp,LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsCanTurnSet),tp,LOCATION_MZONE,0,1,1,nil)
 	if #g>0 then
 		Duel.HintSelection(g)
 		Duel.ChangePosition(g,POS_FACEDOWN_DEFENSE)

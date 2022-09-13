@@ -62,7 +62,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for "Princess Cologne"
 function s.atcon(e)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,75574498),e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,75574498),e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil)
 end
 	--Check if the monster has 0 ATK or DEF
 function s.atlimit(e,c)
@@ -74,9 +74,9 @@ function s.tgfilter(c)
 end
 	--Activation legality
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil,TYPE_MONSTER)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsMonster,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end
-	local dg=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_HAND+LOCATION_MZONE,0,nil,TYPE_MONSTER)
+	local dg=Duel.GetMatchingGroup(Card.IsMonster,tp,LOCATION_HAND+LOCATION_MZONE,0,nil)
 	if not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil) then
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,dg,1,tp,LOCATION_HAND+LOCATION_MZONE)
 	else
@@ -89,7 +89,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g1=Duel.SelectMatchingCard(tp,Card.IsType,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil,TYPE_MONSTER)
+	local g1=Duel.SelectMatchingCard(tp,Card.IsMonster,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil)
 	if #g1>0 and Duel.Destroy(g1,REASON_EFFECT)~=0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local g2=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_DECK,0,1,1,nil)

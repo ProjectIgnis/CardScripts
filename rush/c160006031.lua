@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 	--If the player controls another beast monster
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_MACHINE),tp,LOCATION_MZONE,0,3,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_MACHINE),tp,LOCATION_MZONE,0,3,nil)
 end
 	--Check if able to send top card of deck to GY as cost
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

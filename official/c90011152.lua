@@ -29,7 +29,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0xf}
 function s.atcon(e)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0xf),e:GetHandler():GetControler(),LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0xf),e:GetHandler():GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function s.costfilter(c)
 	return c:IsSetCard(0xf) and c:IsAbleToGraveAsCost()

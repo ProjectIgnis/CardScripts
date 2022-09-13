@@ -21,7 +21,7 @@ end
 s.listed_materials={160201007,160009009}
 s.listed_names={160009060,160009061}
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_NORMAL),tp,0,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,TYPE_NORMAL),tp,0,LOCATION_MZONE,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,1-tp,LOCATION_MZONE)
 end
 function s.thfilter(c)
@@ -29,7 +29,7 @@ function s.thfilter(c)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local dg=Duel.SelectMatchingCard(tp,aux.FilterFaceupFunction(Card.IsType,TYPE_NORMAL),tp,0,LOCATION_MZONE,1,1,nil)
+	local dg=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsType,TYPE_NORMAL),tp,0,LOCATION_MZONE,1,1,nil)
 	if #dg<1 then return end
 	Duel.HintSelection(dg,true)
 	if Duel.Destroy(dg,REASON_EFFECT)>0

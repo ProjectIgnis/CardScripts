@@ -34,7 +34,7 @@ function s.cfilter(c,atk)
 	return c:GetTextAttack()==atk
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	local g=eg:Filter(Card.IsType,nil,TYPE_MONSTER)
+	local g=eg:Filter(Card.IsMonster,nil)
 	local tc=g:GetFirst()
 	while tc do
 		local sg=Duel.GetMatchingGroup(s.cfilter,tp,0xff,0xff,nil,tc:GetTextAttack())

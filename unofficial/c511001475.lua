@@ -19,7 +19,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 	if #sg<=0 then return end
-	local g=Duel.GetMatchingGroup(Card.IsType,1-tp,LOCATION_DECK,0,nil,TYPE_MONSTER)
+	local g=Duel.GetMatchingGroup(Card.IsMonster,1-tp,LOCATION_DECK,0,nil)
 	local dcount=Duel.GetFieldGroupCount(1-tp,LOCATION_DECK,0)
 	if dcount==0 then return end
 	if #g==0 then

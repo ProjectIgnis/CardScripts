@@ -31,7 +31,7 @@ function s.extratg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOGRAVE,nil,1,PLAYER_EITHER,LOCATION_EXTRA)
 end
 function s.onfield(code)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,code),0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,code),0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 end
 function s.stage2(mat,e,tp,eg,ep,ev,re,r,rp,tc)
 	if not (s.onfield(40352445) and s.onfield(48654323)) then return end

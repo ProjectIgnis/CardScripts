@@ -15,5 +15,5 @@ s.listed_series={0x70}
 function s.hspcon(e,c)
 	if c==nil then return true end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x70),c:GetControler(),LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x70),c:GetControler(),LOCATION_MZONE,0,1,nil)
 end

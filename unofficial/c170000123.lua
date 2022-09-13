@@ -18,9 +18,9 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() and not chkc:IsType(TYPE_MINUS) end
 	if chk==0 then return e:IsHasType(EFFECT_TYPE_ACTIVATE) 
-		and Duel.IsExistingTarget(aux.FilterFaceupFunction(aux.NOT(Card.IsType),TYPE_MINUS),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+		and Duel.IsExistingTarget(aux.FaceupFilter(aux.NOT(Card.IsType),TYPE_MINUS),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	Duel.SelectTarget(tp,aux.FilterFaceupFunction(aux.NOT(Card.IsType),TYPE_MINUS),tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+	Duel.SelectTarget(tp,aux.FaceupFilter(aux.NOT(Card.IsType),TYPE_MINUS),tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -83,7 +83,7 @@ function s.naop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateAttack()
 end
 function s.becon(e)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_PLUS),e:GetHandler():GetEquipTarget():GetControler(),0,LOCATION_MZONE,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,TYPE_PLUS),e:GetHandler():GetEquipTarget():GetControler(),0,LOCATION_MZONE,1,nil)
 end
 function s.atkval(e,c)
 	return c:IsFaceup() and c:IsType(TYPE_PLUS)

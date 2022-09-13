@@ -40,7 +40,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local dg=e:GetHandler():GetCardTarget():Filter(aux.FilterFaceupFunction(Card.IsRace,RACE_ZOMBIE),nil)
+	local dg=e:GetHandler():GetCardTarget():Filter(aux.FaceupFilter(Card.IsRace,RACE_ZOMBIE),nil)
 	if #dg>0 then
 		Duel.Destroy(dg,REASON_EFFECT)
 	end

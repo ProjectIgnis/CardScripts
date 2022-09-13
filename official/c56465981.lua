@@ -30,12 +30,12 @@ function s.thfilter(c,sync)
 	return (c:IsSetCard(0x16d) or (sync and c:IsRace(RACE_WYRM))) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local sync=Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_SYNCHRO),tp,LOCATION_MZONE,0,1,nil)
+	local sync=Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,TYPE_SYNCHRO),tp,LOCATION_MZONE,0,1,nil)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,sync) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local sync=Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_SYNCHRO),tp,LOCATION_MZONE,0,1,nil)
+	local sync=Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,TYPE_SYNCHRO),tp,LOCATION_MZONE,0,1,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil,sync)
 	if #g>0 then

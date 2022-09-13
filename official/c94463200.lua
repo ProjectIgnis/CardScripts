@@ -1,7 +1,7 @@
 --血の刻印
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddPersistentProcedure(c,0,aux.FilterFaceupFunction(Card.IsSetCard,0x45),nil,nil,TIMING_STANDBY_PHASE)
+	aux.AddPersistentProcedure(c,0,aux.FaceupFilter(Card.IsSetCard,0x45),nil,nil,TIMING_STANDBY_PHASE)
 	--lpcost
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

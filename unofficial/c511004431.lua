@@ -13,7 +13,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x526}
 function s.condition(e,tp,eg,ev,ep,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x526),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x526),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.target(e,tp,eg,ev,ep,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,2) end
@@ -44,7 +44,7 @@ function s.operation(e,tp,eg,ev,ep,re,r,rp)
 		e2:SetReset(RESET_PHASE+PHASE_END)
 		e2:SetOperation(s.retop)
 		Duel.RegisterEffect(e2,tp)
-		local tg=sg:Filter(Card.IsType,nil,TYPE_MONSTER)
+		local tg=sg:Filter(Card.IsMonster,nil)
 		local gc=tg:GetFirst()
 		while gc do
 			local e1=Effect.CreateEffect(e:GetHandler())

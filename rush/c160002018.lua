@@ -27,15 +27,15 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsLevelAbove,6),tp,0,LOCATION_MZONE,1,nil) end
-	local sg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsLevelAbove,6),tp,0,LOCATION_MZONE,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsLevelAbove,6),tp,0,LOCATION_MZONE,1,nil) end
+	local sg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsLevelAbove,6),tp,0,LOCATION_MZONE,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,sg,#sg,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	if Duel.SendtoGrave(e:GetHandler(),REASON_COST)>0 then
 		--Effect
-		local sg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsLevelAbove,6),tp,0,LOCATION_MZONE,nil)
+		local sg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsLevelAbove,6),tp,0,LOCATION_MZONE,nil)
 		if #sg>0 then
 			Duel.Destroy(sg,REASON_EFFECT)
 		end

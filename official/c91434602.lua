@@ -67,7 +67,7 @@ function s.hspop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_SANCTUARY_SKY),e:GetHandlerPlayer(),LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,1,nil)
+	if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_SANCTUARY_SKY),e:GetHandlerPlayer(),LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,1,nil)
 		or Duel.IsEnvironment(CARD_SANCTUARY_SKY) then
 		return e:GetHandler():GetFlagEffect(id)<2
 	else return e:GetHandler():GetFlagEffect(id)<1 end

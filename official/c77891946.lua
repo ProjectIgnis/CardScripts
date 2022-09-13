@@ -29,7 +29,7 @@ function s.lfilter1(c,sg)
 	return sg:IsExists(s.lfilter2,1,c,c)
 end
 function s.lfilter2(c,tc)
-	return c:IsCodeListed(tc:GetCode())
+	return c:ListsCode(tc:GetCode())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local mg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_DECK,0,nil,e,tp)

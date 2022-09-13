@@ -32,7 +32,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	--Increase ATK of monsters
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsType,TYPE_RITUAL_FUSION_SYNCHRO_XYZ_LINK),tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsType,TYPE_RITUAL_FUSION_SYNCHRO_XYZ_LINK),tp,LOCATION_MZONE,0,nil)
 	if #g==0 then return end
 	local types={TYPE_RITUAL,TYPE_FUSION,TYPE_SYNCHRO,TYPE_XYZ,TYPE_LINK}
 	for _,typ in ipairs(types) do

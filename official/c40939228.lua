@@ -83,7 +83,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atkfilter(c)
-	return c:IsCode(CARD_STARDUST_DRAGON) or (c:IsType(TYPE_SYNCHRO) and c:IsCodeListed(CARD_STARDUST_DRAGON))
+	return c:IsCode(CARD_STARDUST_DRAGON) or (c:IsType(TYPE_SYNCHRO) and c:ListsCode(CARD_STARDUST_DRAGON))
 end
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(s.atkfilter,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil)

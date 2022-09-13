@@ -52,7 +52,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x11a}
 function s.atkcon1(e)
-	return e:GetHandler():GetFlagEffect(id)~=0 and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x11a),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
+	return e:GetHandler():GetFlagEffect(id)~=0 and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x11a),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.atktg1(e,c)
 	return c:GetFieldID()~=e:GetLabel()

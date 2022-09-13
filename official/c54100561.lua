@@ -52,7 +52,7 @@ function s.teop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.repcon(e)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsOddScale),e:GetHandlerPlayer(),LOCATION_PZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsOddScale),e:GetHandlerPlayer(),LOCATION_PZONE,0,1,nil)
 end
 function s.filter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsType(TYPE_PENDULUM)

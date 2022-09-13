@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp,chk)
-	return eg:IsExists(aux.FilterFaceupFunction(Card.IsRace,RACE_DIVINE),1,nil,tp)
+	return eg:IsExists(aux.FaceupFilter(Card.IsRace,RACE_DIVINE),1,nil,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

@@ -29,7 +29,7 @@ end
 s.listed_series={0x159}
 s.listed_names={CARD_MYUTANT_BEAST,CARD_MYUTANT_MIST,CARD_MYUTANT_ARSENAL}
 function s.hspcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x159),tp,LOCATION_ONFIELD,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x159),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.hsptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

@@ -74,17 +74,17 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.descond(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x9013),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x9013),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsType,TYPE_SYNCHRO),tp,0,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsType,TYPE_SYNCHRO),tp,0,LOCATION_MZONE,nil)
 	if chk==0 then return #g>0 end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,tp,0)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local tc=Duel.SelectMatchingCard(tp,aux.FilterFaceupFunction(Card.IsType,TYPE_SYNCHRO),tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsType,TYPE_SYNCHRO),tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
 	if not tc then return end
 	Duel.HintSelection(tc,true)
 	if Duel.Destroy(tc,REASON_EFFECT)>0 then

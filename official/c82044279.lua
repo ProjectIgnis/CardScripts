@@ -62,10 +62,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return (r&REASON_EFFECT)~=0 and re and re:GetOwner()==e:GetHandler()
-		and eg:IsExists(Card.IsType,1,nil,TYPE_MONSTER)
+		and eg:IsExists(Card.IsMonster,1,nil)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
-	local g=eg:Filter(Card.IsType,nil,TYPE_MONSTER)
+	local g=eg:Filter(Card.IsMonster,nil)
 	local c=e:GetHandler()
 	local atk=0
 	local tc=g:GetFirst()

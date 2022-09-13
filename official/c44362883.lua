@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
-	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsMaterialListCode,CARD_ALBAZ),nil,s.fextra,nil,nil,nil,2,nil,nil,nil,nil,nil,nil,s.extratg)
+	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.ListsCodeAsMaterial,CARD_ALBAZ),nil,s.fextra,nil,nil,nil,2,nil,nil,nil,nil,nil,nil,s.extratg)
 	e1:SetCost(s.cost)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	c:RegisterEffect(e1)

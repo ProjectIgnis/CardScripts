@@ -29,7 +29,7 @@ function s.tg(e,c)
 	return c:IsRace(e:GetLabel())
 end
 function s.adjustop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_MONSTER)
+	local g=Duel.GetMatchingGroup(Card.IsMonster,tp,LOCATION_GRAVE,0,nil)
 	local te=e:GetLabelObject()
 	if #g==0 then te:SetLabel(0)
 	else

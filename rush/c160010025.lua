@@ -18,15 +18,15 @@ function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) end
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsAttribute,ATTRIBUTE_DARK),tp,LOCATION_MZONE,0,1,nil) end
-	local ct=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsAttribute,ATTRIBUTE_DARK),tp,LOCATION_MZONE,0,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsAttribute,ATTRIBUTE_DARK),tp,LOCATION_MZONE,0,1,nil) end
+	local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsAttribute,ATTRIBUTE_DARK),tp,LOCATION_MZONE,0,nil)
 	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,e:GetHandler(),1,tp,ct*300)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	-- Requirement
 	if Duel.DiscardDeck(tp,1,REASON_COST)<1 then return end
 	-- Effect
-	local ct=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsAttribute,ATTRIBUTE_DARK),tp,LOCATION_MZONE,0,nil)
+	local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsAttribute,ATTRIBUTE_DARK),tp,LOCATION_MZONE,0,nil)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() and ct>0 then
 		-- Gain ATK
@@ -36,7 +36,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
 		e1:SetValue(ct*300)
 		c:RegisterEffectRush(e1)
-		if Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsAttribute,ATTRIBUTE_LIGHT),tp,0,LOCATION_MZONE,1,nil) then
+		if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsAttribute,ATTRIBUTE_LIGHT),tp,0,LOCATION_MZONE,1,nil) then
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_UPDATE_ATTACK)

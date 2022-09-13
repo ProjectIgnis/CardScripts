@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x2b}
-s.cfilter=aux.FilterFaceupFunction(Card.IsSetCard,0x2b)
+s.cfilter=aux.FaceupFilter(Card.IsSetCard,0x2b)
 function s.actcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end

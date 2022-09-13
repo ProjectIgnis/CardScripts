@@ -30,7 +30,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x59}
 function s.tgcon(e)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x59),0,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x59),0,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler())
 end
 function s.atlimit(e,c)
 	return c:IsFaceup() and c:IsSetCard(0x59)

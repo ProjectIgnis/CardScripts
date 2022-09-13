@@ -54,16 +54,16 @@ s.listed_names={10992251}
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
-		and	Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,10992251),c:GetControler(),LOCATION_MZONE,0,1,nil)
+		and	Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,10992251),c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function s.splimit(e,se,sp,st,pos,top)
 	if (pos&POS_FACEDOWN)~=0 then return false end
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,10992251),top,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,10992251),top,LOCATION_MZONE,0,1,nil)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))
-	local g=Duel.SelectMatchingCard(tp,aux.FilterFaceupFunction(Card.IsCode,10992251),tp,LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsCode,10992251),tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.HintSelection(g)
 	c:SetCardTarget(g:GetFirst())
 	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD_DISABLE,0,1)

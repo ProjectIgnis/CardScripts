@@ -22,7 +22,7 @@ function s.cfilter(c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local reveal=Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil)
-	local control=Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x2034),tp,LOCATION_MZONE,0,1,nil)
+	local control=Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x2034),tp,LOCATION_MZONE,0,1,nil)
 	if chk==0 then return reveal or control end
 	if reveal and (not control or Duel.SelectYesNo(tp,aux.Stringid(id,0))) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)

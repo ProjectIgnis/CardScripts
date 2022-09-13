@@ -63,7 +63,7 @@ function s.spcond(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x3013) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
-		and not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsAttribute,c:GetAttribute()),tp,LOCATION_MZONE,0,1,nil)
+		and not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsAttribute,c:GetAttribute()),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

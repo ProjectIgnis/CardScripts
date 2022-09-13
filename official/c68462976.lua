@@ -31,8 +31,8 @@ function s.actlimit(e,te,tp)
 	else return e:GetLabel()==2 end
 end
 function s.adjustop(e,tp,eg,ep,ev,re,r,rp)
-	local b1=Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_SPELLCASTER),tp,LOCATION_MZONE,0,1,nil)
-	local b2=Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_SPELLCASTER),tp,0,LOCATION_MZONE,1,nil)
+	local b1=Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_SPELLCASTER),tp,LOCATION_MZONE,0,1,nil)
+	local b2=Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_SPELLCASTER),tp,0,LOCATION_MZONE,1,nil)
 	local te=e:GetLabelObject()
 	if not b1 then te:SetLabel(1)
 	elseif b1 and not b2 then te:SetLabel(2)

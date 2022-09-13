@@ -23,7 +23,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.filter(c)
-	return (c:IsCodeListed(CARD_DARK_MAGICIAN) or c:IsCodeListed(CARD_DARK_MAGICIAN_GIRL))
+	return (c:ListsCode(CARD_DARK_MAGICIAN) or c:ListsCode(CARD_DARK_MAGICIAN_GIRL))
 		and c:IsSpellTrap() and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

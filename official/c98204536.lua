@@ -33,7 +33,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x70,0x48}
 function s.nscon(e,tp,eg,ep,ev,re,r,rp)
-	local ct=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0x70),tp,LOCATION_MZONE,0,nil)
+	local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0x70),tp,LOCATION_MZONE,0,nil)
 	return ct==Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)
 end
 function s.nscost(e,tp,eg,ep,ev,re,r,rp,chk)

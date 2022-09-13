@@ -21,7 +21,7 @@ function s.initial_effect(c)
 end
 s.listed_names={100000540}
 function s.value(e,c)
-	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsRace,RACE_BEAST),e:GetHandlerPlayer(),LOCATION_MZONE,0,nil)*500
+	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsRace,RACE_BEAST),e:GetHandlerPlayer(),LOCATION_MZONE,0,nil)*500
 end
 function s.sfilter(c)
 	return c:IsCode(100000540) and c:IsAbleToHand()

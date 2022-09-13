@@ -43,13 +43,13 @@ function s.nsop(e,tp,eg,ep,ev,re,r,rp)
 	aux.RegisterClientHint(c,nil,tp,1,0,aux.Stringid(id,1))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_SPIRIT),tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,TYPE_SPIRIT),tp,LOCATION_MZONE,0,1,nil) end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(1)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_SPIRIT),tp,LOCATION_MZONE,0,1,nil) then return end
+	if not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,TYPE_SPIRIT),tp,LOCATION_MZONE,0,1,nil) then return end
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Draw(p,d,REASON_EFFECT)
 end

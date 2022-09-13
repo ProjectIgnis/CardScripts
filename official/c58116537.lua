@@ -38,7 +38,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x137}
 function s.nacon(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x137),tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0x137),tp,LOCATION_MZONE,0,nil)
 	return #g>1 and g:GetClassCount(Card.GetAttribute)>1
 end
 function s.natg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -57,7 +57,7 @@ function s.naop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	local att=e:GetLabel()
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsAttribute,att),tp,0,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsAttribute,att),tp,0,LOCATION_MZONE,nil)
 	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -74,12 +74,12 @@ function s.atkcon2(e,tp,eg,ep,ev,re,r,rp)
 	return rp==tp and re:GetHandler():IsSetCard(0x137) and re:GetHandler():IsMonster()
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x137),tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x137),tp,LOCATION_MZONE,0,1,nil) end
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x137),tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0x137),tp,LOCATION_MZONE,0,nil)
 	for tc in aux.Next(g) do
 		tc:UpdateAttack(#g*300,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,c)
 	end

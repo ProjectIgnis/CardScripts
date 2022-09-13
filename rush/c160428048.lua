@@ -34,7 +34,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	if tc:IsRelateToBattle() and Duel.SendtoHand(tc,nil,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_HAND)
-		and	Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,160006013),tp,LOCATION_ONFIELD,0,1,nil)
+		and	Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,160006013),tp,LOCATION_ONFIELD,0,1,nil)
 		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_GRAVE,0,1,1,nil)

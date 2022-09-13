@@ -33,7 +33,7 @@ function s.spfilter(c,e,tp,fg)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_EXTRA,0,1,nil,c,fg)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local fg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsCanBeLinkMaterial),tp,LOCATION_MZONE,0,nil)
+	local fg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsCanBeLinkMaterial),tp,LOCATION_MZONE,0,nil)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp,fg)
 		and Duel.IsPlayerCanSpecialSummonCount(tp,2) end
@@ -42,7 +42,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local fg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsCanBeLinkMaterial),tp,LOCATION_MZONE,0,nil)
+	local fg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsCanBeLinkMaterial),tp,LOCATION_MZONE,0,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp,fg):GetFirst()
 	if not tc or not Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then return false end

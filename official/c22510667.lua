@@ -33,7 +33,7 @@ s.listed_series={0xfc}
 s.listed_names={22510667}
 function s.incon(e)
 	return e:GetHandler():GetLinkedGroupCount()>0 
-	and e:GetHandler():GetLinkedGroup():IsExists(aux.FilterFaceupFunction(Card.IsSetCard,0xfc),1,nil)
+	and e:GetHandler():GetLinkedGroup():IsExists(aux.FaceupFilter(Card.IsSetCard,0xfc),1,nil)
 end
 function s.seqfilter(c,zone)
 	return c:IsFaceup() and c:IsSetCard(0xfc) and not c:IsCode(id)

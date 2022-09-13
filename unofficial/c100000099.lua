@@ -14,9 +14,9 @@ function s.initial_effect(c)
 end
 s.listed_names={80513550}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,100000096),tp,LOCATION_SZONE,0,1,nil)
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,100000097),tp,LOCATION_SZONE,0,1,nil)
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,100000098),tp,LOCATION_SZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,100000096),tp,LOCATION_SZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,100000097),tp,LOCATION_SZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,100000098),tp,LOCATION_SZONE,0,1,nil)
 end
 function s.spfilter(c,e,tp)
 	return c:IsCode(80513550) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)

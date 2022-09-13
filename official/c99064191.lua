@@ -25,7 +25,7 @@ function s.target1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	e:SetLabel(0)
 	local ct=Duel.GetCurrentChain()
-	if ct==1 or not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_XYZ),tp,LOCATION_MZONE,0,1,nil)
+	if ct==1 or not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,TYPE_XYZ),tp,LOCATION_MZONE,0,1,nil)
 		or not Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) then return false end
 	local pe=Duel.GetChainInfo(ct-1,CHAININFO_TRIGGERING_EFFECT)
 	local tc=pe:GetHandler()
@@ -51,7 +51,7 @@ function s.activate1(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.condition2(e,tp,eg,ep,ev,re,r,rp,chk)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_XYZ),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,TYPE_XYZ),tp,LOCATION_MZONE,0,1,nil)
 		and re:IsActiveType(TYPE_EFFECT) and re:GetHandler():IsLevelAbove(5) and Duel.IsChainDisablable(ev)
 end
 function s.cost2(e,tp,eg,ep,ev,re,r,rp,chk)

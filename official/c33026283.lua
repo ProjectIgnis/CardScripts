@@ -69,7 +69,7 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if rp==tp or c:IsStatus(STATUS_BATTLE_DESTROYED) or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local gp=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	return gp and gp:IsContains(c) and Duel.IsChainDisablable(ev) and re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
-		and Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsType,TYPE_FUSION),tp,LOCATION_MZONE,0,nil)>=2
+		and Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsType,TYPE_FUSION),tp,LOCATION_MZONE,0,nil)>=2
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

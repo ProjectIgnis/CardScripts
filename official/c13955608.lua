@@ -38,7 +38,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atkcon(e)
 	local tp=e:GetHandlerPlayer()
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,41172955),tp,LOCATION_ONFIELD,0,1,nil)
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,86445415),tp,LOCATION_ONFIELD,0,1,nil)
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,13839120),tp,LOCATION_ONFIELD,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,41172955),tp,LOCATION_ONFIELD,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,86445415),tp,LOCATION_ONFIELD,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,13839120),tp,LOCATION_ONFIELD,0,1,nil)
 end

@@ -17,9 +17,9 @@ end
 s.listed_names={CARD_GALAXYEYES_P_DRAGON,9024367}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() and chkc:IsCode(9024367) end
-	if chk==0 then return Duel.IsExistingTarget(aux.FilterFaceupFunction(Card.IsCode,9024367),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(aux.FaceupFilter(Card.IsCode,9024367),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	Duel.SelectTarget(tp,aux.FilterFaceupFunction(Card.IsCode,9024367),tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+	Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsCode,9024367),tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

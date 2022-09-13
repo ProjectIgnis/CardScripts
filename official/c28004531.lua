@@ -50,7 +50,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.gthcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsMainPhase() and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x114),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsMainPhase() and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x114),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.gthfilter(c,ft,e,tp)
 	return c:IsSetCard(0x114)

@@ -80,7 +80,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for 1 spell/trap that specifically lists "The Winged Dragon of Ra"
 function s.thfilter(c)
-	return c:IsCodeListed(CARD_RA) and c:IsSpellTrap() and c:IsAbleToHand()
+	return c:ListsCode(CARD_RA) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 	--Activation legality
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

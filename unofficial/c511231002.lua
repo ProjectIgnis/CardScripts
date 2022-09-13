@@ -28,7 +28,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		Duel.ConfirmCards(tp,g)
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(17955766,1))
-		local tg=g:FilterSelect(tp,Card.IsType,1,1,nil,TYPE_MONSTER)
+		local tg=g:FilterSelect(tp,Card.IsMonster,1,1,nil)
 		local tc=tg:GetFirst()
 		if tc then
 			local atk=tc:GetAttack()

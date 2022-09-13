@@ -26,5 +26,5 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_NEOS}
 function s.atktg(e,c)
-	return c:IsCode(CARD_NEOS) or (c:IsType(TYPE_FUSION) and c:IsMaterialListCode(CARD_NEOS))
+	return c:IsCode(CARD_NEOS) or (c:IsType(TYPE_FUSION) and c:ListsCodeAsMaterial(CARD_NEOS))
 end

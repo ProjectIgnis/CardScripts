@@ -12,11 +12,11 @@ end
 s.listed_names={CARD_NEOS}
 s.listed_series={0x8}
 function s.spfilter(c)
-	return c:IsType(TYPE_FUSION) and c:IsMaterialListSetCard(0x8)
+	return c:IsType(TYPE_FUSION) and c:ListsArchetypeAsMaterial(0x8)
 end
 function s.fextra(e,tp,mg)
 	return Duel.GetMatchingGroup(aux.NecroValleyFilter(Fusion.IsMonsterFilter(Card.IsAbleToDeck)),tp,LOCATION_GRAVE,0,nil)+
-		Duel.GetMatchingGroup(aux.FilterFaceupFunction(Fusion.IsMonsterFilter(Card.IsAbleToDeck)),tp,LOCATION_REMOVED,0,nil)
+		Duel.GetMatchingGroup(aux.FaceupFilter(Fusion.IsMonsterFilter(Card.IsAbleToDeck)),tp,LOCATION_REMOVED,0,nil)
 end
 function s.extraop(e,tc,tp,sg)
 	local rg=sg:Filter(Card.IsFacedown,nil)

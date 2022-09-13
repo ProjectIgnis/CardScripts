@@ -28,7 +28,7 @@ end
 s.listed_series={0xfc}
 
 function s.atkval(e,c)
-	return c:GetLinkedGroup():FilterCount(Card.IsType,nil,TYPE_MONSTER)*300
+	return c:GetLinkedGroup():FilterCount(Card.IsMonster,nil)*300
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP()

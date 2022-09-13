@@ -27,7 +27,7 @@ function s.monspfilter(c,e,tp,sc)
 end
 function s.moneqfilter(c,tp,ft,sc)
 	return (ft>0 or (sc and sc:IsLocation(LOCATION_SZONE) and sc:GetSequence()<5)) and not c:IsForbidden()
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x56),tp,LOCATION_MZONE,0,1,sc)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x56),tp,LOCATION_MZONE,0,1,sc)
 end
 function s.eqspfilter(c,tp,ft,sc)
 	return c:IsSetCard(0x56) and c:IsType(TYPE_EQUIP) and c:IsSpell()
@@ -81,7 +81,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)
 		elseif op==2 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-			local ec=Duel.SelectMatchingCard(tp,aux.FilterFaceupFunction(Card.IsSetCard,0x56),tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
+			local ec=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsSetCard,0x56),tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
 			if not ec then return end
 			Duel.HintSelection(ec,true)
 			if not Duel.Equip(tp,sc,ec,true) then return end

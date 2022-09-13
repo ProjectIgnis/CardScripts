@@ -21,14 +21,14 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.desconfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsDefenseAbove,2000),tp,0,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsDefenseAbove,2000),tp,0,LOCATION_MZONE,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,1-tp,LOCATION_MZONE)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,800)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,800)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local dg=Duel.SelectMatchingCard(tp,aux.FilterFaceupFunction(Card.IsDefenseAbove,2000),tp,0,LOCATION_MZONE,1,1,nil)
+	local dg=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsDefenseAbove,2000),tp,0,LOCATION_MZONE,1,1,nil)
 	if #dg>0 then
 		Duel.HintSelection(dg,true)
 		Duel.Destroy(dg,REASON_EFFECT)

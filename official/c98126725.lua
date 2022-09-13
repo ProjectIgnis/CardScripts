@@ -13,7 +13,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x3d}
 function s.atcon(e,tp,eg,ep,ev,re,r,rp,chk)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x3d),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x3d),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.attg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

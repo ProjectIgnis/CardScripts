@@ -35,13 +35,13 @@ function s.destg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local g=Duel.GetMatchingGroup(Card.IsDestructable,tp,0,LOCATION_ONFIELD,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
-	local dam=g:FilterCount(Card.IsType,nil,TYPE_MONSTER)*400
+	local dam=g:FilterCount(Card.IsMonster,nil)*400
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,dam)
 end
 function s.desop2(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsDestructable,tp,0,LOCATION_ONFIELD,nil)
 	if Duel.Destroy(g,REASON_EFFECT)>0 then
-		local dam=g:FilterCount(Card.IsType,nil,TYPE_MONSTER)*500
+		local dam=g:FilterCount(Card.IsMonster,nil)*500
 		Duel.Damage(1-tp,dam,REASON_EFFECT)
 	end
 end

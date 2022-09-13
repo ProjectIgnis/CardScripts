@@ -26,7 +26,7 @@ s.listed_series={0x3d}
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
-		and	Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x3d),c:GetControler(),LOCATION_MZONE,0,1,nil)
+		and	Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x3d),c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

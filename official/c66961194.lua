@@ -59,7 +59,7 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 end
 --special summon 1 BE from gy
 function s.cfilter(c)
-	return (c:IsCode(CARD_BLUEEYES_W_DRAGON) or c:IsCodeListed(CARD_BLUEEYES_W_DRAGON)) and c:IsDiscardable()
+	return (c:IsCode(CARD_BLUEEYES_W_DRAGON) or c:ListsCode(CARD_BLUEEYES_W_DRAGON)) and c:IsDiscardable()
 end
 function s.spcost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
@@ -85,5 +85,5 @@ end
 --battle target selection
 function s.condition(e)
 	local tp=e:GetHandlerPlayer()
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0xdd),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0xdd),tp,LOCATION_MZONE,0,1,nil)
 end

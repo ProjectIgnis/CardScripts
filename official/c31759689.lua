@@ -59,7 +59,7 @@ function s.valfilter(c,rc)
 end
 function s.val(e,c)
 	local lg=Duel.GetMatchingGroup(s.valfilter,0,LOCATION_MZONE,LOCATION_MZONE,c,c)
-	lg:Merge(c:GetLinkedGroup():Filter(Card.IsType,nil,TYPE_MONSTER))
+	lg:Merge(c:GetLinkedGroup():Filter(Card.IsMonster,nil))
 	return #lg*-1000
 end
 function s.poscon(e,tp,eg,ep,ev,re,r,rp)

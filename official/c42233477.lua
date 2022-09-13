@@ -1,7 +1,7 @@
 --バーバリアン・レイジ
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddPersistentProcedure(c,0,aux.FilterFaceupFunction(Card.IsRace,RACE_WARRIOR),CATEGORY_ATKCHANGE,EFFECT_FLAG_DAMAGE_STEP,TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP,s.condition)
+	aux.AddPersistentProcedure(c,0,aux.FaceupFilter(Card.IsRace,RACE_WARRIOR),CATEGORY_ATKCHANGE,EFFECT_FLAG_DAMAGE_STEP,TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP,s.condition)
 	--eff
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)

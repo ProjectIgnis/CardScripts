@@ -103,9 +103,9 @@ function s.rmfilter(c,ty)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_GRAVE,nil,typ)
-	local a=g:IsExists(Card.IsType,1,nil,TYPE_MONSTER)
-	local b=g:IsExists(Card.IsType,1,nil,TYPE_SPELL)
-	local c=g:IsExists(Card.IsType,1,nil,TYPE_TRAP)
+	local a=g:IsExists(Card.IsMonster,1,nil)
+	local b=g:IsExists(Card.IsSpell,1,nil)
+	local c=g:IsExists(Card.IsTrap,1,nil)
 	local op=3
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(53839837,5))
 	if a and b and c then

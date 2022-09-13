@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.atkcon(e)
-	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x54),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
+	return not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x54),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.rfilter(c,tp)
 	local lv=c:GetLevel()
@@ -45,7 +45,7 @@ function s.lvcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x54),tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0x54),tp,LOCATION_MZONE,0,nil)
 	local lv=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
 	local tc=g:GetFirst()
 	for tc in aux.Next(g) do

@@ -72,11 +72,11 @@ function s.splimit(e,c)
 	return not c:IsSetCard(0x10ec)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x10ec),tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x10ec),tp,LOCATION_MZONE,0,1,nil) end
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x10ec),tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0x10ec),tp,LOCATION_MZONE,0,nil)
 	if c:IsFaceup() and c:IsRelateToEffect(e) then
 		local atkval=g:GetClassCount(Card.GetCode)*100
 		local e1=Effect.CreateEffect(c)

@@ -51,7 +51,7 @@ function s.filter(c,st)
 	return c:IsFaceup() and ((c:IsMonster() and c:IsType(TYPE_EFFECT)) or (st and c:IsSpellTrap()))
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local st=Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsEvenScale),tp,LOCATION_PZONE,0,1,nil)
+	local st=Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsEvenScale),tp,LOCATION_PZONE,0,1,nil)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_ONFIELD) and s.filter(chkc,st) end
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,0,LOCATION_ONFIELD,1,nil,st) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
@@ -75,7 +75,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	if tc==e:GetHandler() then tc=Duel.GetAttackTarget() end
 	if not (tc and tc:IsFaceup()) then return false end
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsType,TYPE_PENDULUM),tp,LOCATION_PZONE,0,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsType,TYPE_PENDULUM),tp,LOCATION_PZONE,0,nil)
 	local _,sc=g:GetMinGroup(function(c) return c:GetScale() end)
 	return sc and tc and tc:IsControler(1-tp) and tc:IsAttackAbove(sc*300)
 end

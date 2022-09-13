@@ -17,7 +17,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x12b}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x12b),tp,LOCATION_MZONE,0,2,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x12b),tp,LOCATION_MZONE,0,2,nil)
 end
 function s.spfilter(c,e,tp,sc)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_WATER) and c:IsLinkMonster()

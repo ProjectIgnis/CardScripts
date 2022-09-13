@@ -34,5 +34,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.actcon(e)
-	return not Duel.IsExistingMatchingCard(Card.IsType,e:GetHandlerPlayer(),LOCATION_GRAVE,0,1,nil,TYPE_TRAP)
+	return not Duel.IsExistingMatchingCard(Card.IsTrap,e:GetHandlerPlayer(),LOCATION_GRAVE,0,1,nil)
 end

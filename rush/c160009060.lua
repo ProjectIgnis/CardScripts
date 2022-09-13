@@ -32,10 +32,10 @@ end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetMatchingGroupCount(s.damfilter,tp,LOCATION_GRAVE,0,nil)
 	if ct>0 and Duel.Damage(1-tp,ct*100,REASON_EFFECT)>0
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_NORMAL),tp,0,LOCATION_MZONE,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,TYPE_NORMAL),tp,0,LOCATION_MZONE,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-		local dg=Duel.SelectMatchingCard(tp,aux.FilterFaceupFunction(Card.IsType,TYPE_NORMAL),tp,0,LOCATION_MZONE,1,1,nil)
+		local dg=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsType,TYPE_NORMAL),tp,0,LOCATION_MZONE,1,1,nil)
 		if #dg>0 then
 			Duel.HintSelection(dg,true)
 			Duel.Destroy(dg,REASON_EFFECT)

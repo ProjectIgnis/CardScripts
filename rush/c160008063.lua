@@ -44,7 +44,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			tc:RegisterEffectRush(e1)
 			
-			if Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,56120475),tp,LOCATION_GRAVE,0,1,nil)
+			if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,56120475),tp,LOCATION_GRAVE,0,1,nil)
 			and Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.desfilter),tp,0,LOCATION_MZONE,1,nil)
 			and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 				local g=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(s.desfilter),tp,0,LOCATION_MZONE,nil)

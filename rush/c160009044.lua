@@ -43,8 +43,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(2)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
-		local atkg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsType,TYPE_EFFECT),tp,0,LOCATION_MZONE,nil)
-		if #atkg>0 and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_MEEEG_CHAN),tp,LOCATION_ONFIELD,0,1,nil)
+		local atkg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsType,TYPE_EFFECT),tp,0,LOCATION_MZONE,nil)
+		if #atkg>0 and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_MEEEG_CHAN),tp,LOCATION_ONFIELD,0,1,nil)
 			and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 			for ac in atkg:Iter() do
 				--Decrease ATK

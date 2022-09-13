@@ -32,10 +32,10 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	return true
 end
 function s.rescon(sg,e,tp,mg)
-	return sg:GetClassCount(Card.GetCode)==#sg and Duel.IsExistingTarget(aux.FilterFaceupFunction(Card.IsAbleToHand),tp,0,LOCATION_ONFIELD,#sg,nil)
+	return sg:GetClassCount(Card.GetCode)==#sg and Duel.IsExistingTarget(aux.FaceupFilter(Card.IsAbleToHand),tp,0,LOCATION_ONFIELD,#sg,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(tp) and chkc:IsOnField() and aux.FilterFaceupFunction(Card.IsAbleToHand)(chkc) end
+	if chkc then return chkc:IsControler(tp) and chkc:IsOnField() and aux.FaceupFilter(Card.IsAbleToHand)(chkc) end
 	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_HAND,0,nil)
 	if chk==0 then 
 		return aux.SelectUnselectGroup(g,e,tp,1,2,s.rescon,0)
@@ -44,7 +44,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.ConfirmCards(1-tp,sg)
 	Duel.ShuffleHand(tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-	local rg=Duel.SelectTarget(tp,aux.FilterFaceupFunction(Card.IsAbleToHand),tp,0,LOCATION_ONFIELD,#sg,#sg,nil)
+	local rg=Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsAbleToHand),tp,0,LOCATION_ONFIELD,#sg,#sg,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,rg,#rg,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

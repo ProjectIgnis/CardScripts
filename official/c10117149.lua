@@ -65,7 +65,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atkval(e,c)
-	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0xab),c:GetControler(),LOCATION_EXTRA,0,nil)*500
+	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0xab),c:GetControler(),LOCATION_EXTRA,0,nil)*500
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0xab) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

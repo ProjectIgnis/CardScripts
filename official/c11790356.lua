@@ -41,7 +41,7 @@ end
 s.listed_names={78193831}
 s.listed_series={0xd7,0xd6}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0xd7),tp,LOCATION_MZONE,0,1,nil)
+	return not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0xd7),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.filter(c,e,tp)
 	return c:IsCode(78193831) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

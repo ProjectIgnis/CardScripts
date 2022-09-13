@@ -65,11 +65,11 @@ function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.tdcfilter,1,nil,tp)
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_DECK,0,1,nil,TYPE_SPELL) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsSpell,tp,LOCATION_DECK,0,1,nil) end
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
-	local tc=Duel.SelectMatchingCard(tp,Card.IsType,tp,LOCATION_DECK,0,1,1,nil,TYPE_SPELL):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,Card.IsSpell,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
 	if tc then
 		Duel.ShuffleDeck(tp)
 		Duel.MoveSequence(tc,0)

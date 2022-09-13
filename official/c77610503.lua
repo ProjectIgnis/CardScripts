@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ep==1-tp and Duel.GetCurrentChain(true)==0
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSummonType,SUMMON_TYPE_TRIBUTE),tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSummonType,SUMMON_TYPE_TRIBUTE),tp,LOCATION_MZONE,0,1,nil)
 		and not Duel.IsExistingMatchingCard(Card.IsSummonType,tp,LOCATION_MZONE,0,1,nil,SUMMON_TYPE_SPECIAL)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -61,12 +61,12 @@ function s.quickcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsRace,1,nil,RACE_PLANT)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(aux.FilterFaceupFunction(Card.IsMonster),1,nil)
+	return eg:IsExists(aux.FaceupFilter(Card.IsMonster),1,nil)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
-	local ct=eg:FilterCount(aux.FilterFaceupFunction(Card.IsMonster),nil)
+	local ct=eg:FilterCount(aux.FaceupFilter(Card.IsMonster),nil)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)

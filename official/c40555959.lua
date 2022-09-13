@@ -21,14 +21,14 @@ function s.initial_effect(c)
 end
 s.listed_series={0xb}
 function s.remcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0xb),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0xb),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.remtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_HAND,0,1,nil,tp,POS_FACEDOWN) end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_HAND)
 end
 function s.remop(e,tp,eg,ep,ev,re,r,rp)
-	if not (e:GetHandler():IsRelateToEffect(e) and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0xb),tp,LOCATION_MZONE,0,1,nil)) then return end
+	if not (e:GetHandler():IsRelateToEffect(e) and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0xb),tp,LOCATION_MZONE,0,1,nil)) then return end
 	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_HAND,0,nil,tp,POS_FACEDOWN)
 	if #g>0 then
 		Duel.Remove(g,POS_FACEDOWN,REASON_EFFECT)

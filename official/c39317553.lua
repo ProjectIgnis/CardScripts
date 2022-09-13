@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Xyz summon procedure
-	Xyz.AddProcedure(c,nil,5,2,aux.FilterFaceupFunction(Card.IsRank,4),aux.Stringid(id,0),2,s.altop)
+	Xyz.AddProcedure(c,nil,5,2,aux.FaceupFilter(Card.IsRank,4),aux.Stringid(id,0),2,s.altop)
 	c:EnableReviveLimit()
 	--Cannot be xyz material
 	local e0=Effect.CreateEffect(c)

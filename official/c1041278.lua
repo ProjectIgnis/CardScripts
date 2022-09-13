@@ -24,7 +24,7 @@ end
 function s.spcostfilter(c,tp,b1,b2)
 	local ft=Duel.GetMZoneCount(tp,c)
 	return ft>0 and c:IsType(TYPE_FUSION) and ((b1 and Duel.GetMZoneCount(1-tp,c)>0)
-		or (b2 and ft>1 and c:IsMaterialListCode(CARD_ALBAZ)))
+		or (b2 and ft>1 and c:ListsCodeAsMaterial(CARD_ALBAZ)))
 end
 function s.rescon(ag,g1,g2)
 	return function(sg,e,tp,mg)
@@ -45,7 +45,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local b2=#ag>1
 	if chk==0 then return (b1 or b2) and Duel.CheckReleaseGroupCost(tp,s.spcostfilter,1,false,nil,nil,tp,b1,b2) end
 	local rc=Duel.SelectReleaseGroupCost(tp,s.spcostfilter,1,1,false,nil,nil,tp,b1,b2):GetFirst()
-	local albaz=rc:IsMaterialListCode(CARD_ALBAZ)
+	local albaz=rc:ListsCodeAsMaterial(CARD_ALBAZ)
 	Duel.Release(rc,REASON_COST)
 	local tg=nil
 	local ft1=Duel.GetLocationCount(tp,LOCATION_MZONE)

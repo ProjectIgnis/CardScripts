@@ -37,7 +37,7 @@ function s.lcheck(g,lc,sumtype,tp)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1)
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x154),tp,LOCATION_MZONE,0,1,nil) end
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x154),tp,LOCATION_MZONE,0,1,nil) end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(1)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
@@ -47,7 +47,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsMainPhase() and not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x154),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsMainPhase() and not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x154),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x154) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

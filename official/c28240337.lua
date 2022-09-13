@@ -31,7 +31,7 @@ function s.initial_effect(c)
 end
 function s.atkval(e,c)
 	local LOCATION_GRAVE_MZONE=LOCATION_GRAVE+LOCATION_MZONE
-	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsRace,RACE_ZOMBIE),0,LOCATION_GRAVE_MZONE,LOCATION_GRAVE_MZONE,nil)*100
+	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsRace,RACE_ZOMBIE),0,LOCATION_GRAVE_MZONE,LOCATION_GRAVE_MZONE,nil)*100
 end
 function s.cfilter(c)
 	return c:GetPreviousRaceOnField()&RACE_ZOMBIE>0

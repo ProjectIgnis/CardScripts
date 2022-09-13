@@ -5,7 +5,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Xyz summon procedure
-	Xyz.AddProcedure(c,s.xyzfilter,nil,3,aux.FilterFaceupFunction(Card.IsCode,65305468),aux.Stringid(id,0),nil,nil,false,s.xyzcheck)
+	Xyz.AddProcedure(c,s.xyzfilter,nil,3,aux.FaceupFilter(Card.IsCode,65305468),aux.Stringid(id,0),nil,nil,false,s.xyzcheck)
 	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
 	--Cannot be destroyed by battle or card effect

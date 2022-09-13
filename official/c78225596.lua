@@ -71,7 +71,7 @@ end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetHandler():GetMutualLinkedGroup()
 	if not g then return end
-	local atkct=#g:Filter(Card.IsType,nil,TYPE_MONSTER)
+	local atkct=#g:Filter(Card.IsMonster,nil)
 	local a,b=Duel.GetAttacker(),Duel.GetAttackTarget()
 	if a:IsControler(1-tp) then
 		a,b=b,a

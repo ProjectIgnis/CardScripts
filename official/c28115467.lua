@@ -61,7 +61,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.damcon(e)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsEvenScale),e:GetHandlerPlayer(),LOCATION_PZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsEvenScale),e:GetHandlerPlayer(),LOCATION_PZONE,0,1,nil)
 end
 function s.efilter(e,c)
 	return c:IsSetCard(0x164) and c:IsType(TYPE_PENDULUM)

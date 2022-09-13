@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 s.listed_names={160009006} --Magical Sheep Girl Meeeg-chan
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,160009006),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,160009006),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.cstfilter(c)
 	return c:IsRace(RACE_BEAST) and c:IsType(TYPE_NORMAL) and c:IsAbleToGraveAsCost()
@@ -24,8 +24,8 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cstfilter,tp,LOCATION_HAND,0,2,nil) end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsLevelBelow,8),tp,0,LOCATION_MZONE,1,nil) end
-	local sg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsLevelBelow,8),tp,0,LOCATION_MZONE,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsLevelBelow,8),tp,0,LOCATION_MZONE,1,nil) end
+	local sg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsLevelBelow,8),tp,0,LOCATION_MZONE,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,sg,#sg,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -33,7 +33,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.SelectMatchingCard(tp,s.cstfilter,tp,LOCATION_HAND,0,2,2,nil)
 	if Duel.SendtoGrave(tg,REASON_COST)==2 then
 		--Effect
-		local sg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsLevelBelow,8),tp,0,LOCATION_MZONE,nil)
+		local sg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsLevelBelow,8),tp,0,LOCATION_MZONE,nil)
 		if #sg>0 then
 			Duel.Destroy(sg,REASON_EFFECT)
 		end

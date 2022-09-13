@@ -47,7 +47,7 @@ end
 function s.lktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local el={}
-		local mg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x120),tp,LOCATION_MZONE,0,nil)
+		local mg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0x120),tp,LOCATION_MZONE,0,nil)
 		return Duel.IsExistingMatchingCard(s.lkfilter,tp,LOCATION_EXTRA,0,1,nil,mg)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
@@ -56,7 +56,7 @@ function s.lkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	local el={}
-	local mg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x120),tp,LOCATION_MZONE,0,nil)
+	local mg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0x120),tp,LOCATION_MZONE,0,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local xg=Duel.SelectMatchingCard(tp,s.lkfilter,tp,LOCATION_EXTRA,0,1,1,nil,mg)
 	local tc=xg:GetFirst()

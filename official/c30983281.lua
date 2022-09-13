@@ -96,7 +96,7 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(s.immval)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1,true)
-		local mg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsCanBeSynchroMaterial),tp,LOCATION_MZONE,0,nil)
+		local mg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsCanBeSynchroMaterial),tp,LOCATION_MZONE,0,nil)
 		local eg=Duel.GetMatchingGroup(s.scfilter,tp,LOCATION_EXTRA,0,nil,mg)
 		if #eg>0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

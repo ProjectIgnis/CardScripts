@@ -38,7 +38,7 @@ function s.cfilter(c)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil)
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x6),tp,LOCATION_MZONE,0,1,nil) end
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x6),tp,LOCATION_MZONE,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,tp,1)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
@@ -46,7 +46,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local dg=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,1,1,nil)
 	if #dg>0 and Duel.SendtoGrave(dg,REASON_EFFECT+REASON_DISCARD)>0 then
 		local og=Duel.GetOperatedGroup()
-		local sg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x6),tp,LOCATION_MZONE,0,nil)
+		local sg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0x6),tp,LOCATION_MZONE,0,nil)
 		if #sg==0 then return end
 		local atk=og:GetFirst():GetLevel()*100
 		for tc in sg:Iter() do

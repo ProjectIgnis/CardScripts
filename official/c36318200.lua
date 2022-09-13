@@ -21,7 +21,7 @@ function s.cfilter(c)
 	return c:GetRace()~=RACE_BEAST
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_MONSTER)
+	local g=Duel.GetMatchingGroup(Card.IsMonster,tp,LOCATION_GRAVE,0,nil)
 	return #g>0 and not g:IsExists(s.cfilter,1,nil)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)

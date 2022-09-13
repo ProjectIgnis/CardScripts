@@ -82,7 +82,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp,chk)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		registered=tc:RegisterEffect(e2) and registered
-		local ct=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsType,TYPE_EQUIP),tp,LOCATION_SZONE,0,nil)
+		local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsType,TYPE_EQUIP),tp,LOCATION_SZONE,0,nil)
 		if registered and ct>0 then
 			Duel.AdjustInstantly(tc)
 			local e3=Effect.CreateEffect(c)

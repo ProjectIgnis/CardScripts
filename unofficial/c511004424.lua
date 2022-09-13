@@ -54,7 +54,7 @@ end
 s.listed_series={0xf8}
 function s.atcon(e,tp,eg,ev,ep,re,r,rp)
 	return Duel.GetTurnPlayer()==1-tp and Duel.IsBattlePhase()
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0xf8),tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0xf8),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.filter(c)
 	return c:IsFaceup() and not c:IsHasEffect(EFFECT_CANNOT_ATTACK) and not c:IsHasEffect(EFFECT_CANNOT_ATTACK_ANNOUNCE) 

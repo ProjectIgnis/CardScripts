@@ -33,7 +33,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 	if Duel.DiscardDeck(tp,3,REASON_EFFECT)~=3 then return end
 	local ct=Duel.GetOperatedGroup():FilterCount(s.filter,nil)
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsLevelBelow,8),tp,0,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsLevelBelow,8),tp,0,LOCATION_MZONE,nil)
 	if ct>0 and #g>0 then
 		local c=e:GetHandler()
 		for tc in g:Iter() do

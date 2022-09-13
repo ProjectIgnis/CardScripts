@@ -33,7 +33,7 @@ end
 s.listed_series={0xb3}
 s.counter_place_list={0x33}
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(aux.FilterFaceupFunction(Card.IsSetCard,0xb3),1,nil)
+	return eg:IsExists(aux.FaceupFilter(Card.IsSetCard,0xb3),1,nil)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(0x33,1)

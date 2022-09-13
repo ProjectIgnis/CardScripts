@@ -28,7 +28,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetDecktopGroup(p,d)
 	Duel.Draw(p,d,REASON_EFFECT)
 	Duel.ConfirmCards(1-p,g)
-	g:Match(Card.IsType,nil,TYPE_MONSTER)
+	g:Match(Card.IsMonster,nil)
 	if #g>0 then
 		Duel.SendtoGrave(g,REASON_EFFECT)
 	end

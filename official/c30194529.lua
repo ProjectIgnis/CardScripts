@@ -45,13 +45,13 @@ function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local gc=e:GetHandler():GetLinkedGroup():FilterCount(aux.FilterFaceupFunction(Card.IsSetCard,0xfd),nil)
+	local gc=e:GetHandler():GetLinkedGroup():FilterCount(aux.FaceupFilter(Card.IsSetCard,0xfd),nil)
 	Duel.SetTargetPlayer(tp)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,gc)
 end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
-	local gc=e:GetHandler():GetLinkedGroup():FilterCount(aux.FilterFaceupFunction(Card.IsSetCard,0xfd),nil)
+	local gc=e:GetHandler():GetLinkedGroup():FilterCount(aux.FaceupFilter(Card.IsSetCard,0xfd),nil)
 	if gc>0 then
 		Duel.Draw(p,gc,REASON_EFFECT)
 	end

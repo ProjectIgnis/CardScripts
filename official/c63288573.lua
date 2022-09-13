@@ -29,7 +29,7 @@ function s.matfilter(c,scard,sumtype,tp)
 	return c:IsSetCard(0x1115,scard,sumtype,tp) and not c:IsAttribute(ATTRIBUTE_FIRE,scard,sumtype,tp)
 end
 function s.atkval(e)
-	return Duel.GetMatchingGroupCount(Card.IsType,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil,TYPE_SPELL)*100
+	return Duel.GetMatchingGroupCount(Card.IsSpell,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil)*100
 end
 function s.thfilter(c,tp)
 	return c:IsSetCard(0x115) and c:IsSpell() and c:IsAbleToHand()

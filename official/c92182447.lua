@@ -20,7 +20,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 		return false
 	end
 	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
-	return #g>0 and g:FilterCount(aux.FilterFaceupFunction(Card.IsSetCard,0x122),nil)==#g
+	return #g>0 and g:FilterCount(aux.FaceupFilter(Card.IsSetCard,0x122),nil)==#g
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

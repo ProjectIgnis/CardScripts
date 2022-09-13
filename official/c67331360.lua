@@ -56,7 +56,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tg=Duel.GetMatchingGroup(s.tgfilter,tp,LOCATION_GRAVE,0,nil,e)
 	local rescon=s.resconfunc(Duel.GetMatchingGroup(Card.IsCanBeSpecialSummoned,tp,LOCATION_DECK,0,nil,e,0,tp,false,false))
 	if chk==0 then return ft>0 and aux.SelectUnselectGroup(tg,e,tp,1,1,rescon,0) end
-	if Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,75574498),tp,LOCATION_MZONE,0,1,nil)
+	if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,75574498),tp,LOCATION_MZONE,0,1,nil)
 		and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
 		and aux.SelectUnselectGroup(tg,e,tp,1,2,rescon,0) then
 		ft=math.min(2,ft)
@@ -104,8 +104,8 @@ function s.bpcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.bptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,75574498),tp,LOCATION_MZONE,0,1,nil)
-			and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,44190146),tp,LOCATION_MZONE,0,1,nil)
+		return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,75574498),tp,LOCATION_MZONE,0,1,nil)
+			and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,44190146),tp,LOCATION_MZONE,0,1,nil)
 	end
 end
 function s.colfilter(c,e)
@@ -113,7 +113,7 @@ function s.colfilter(c,e)
 end
 function s.bpop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local mg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsCode,44190146),tp,LOCATION_MZONE,0,nil)
+	local mg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsCode,44190146),tp,LOCATION_MZONE,0,nil)
 	local tg=Duel.GetMatchingGroup(s.colfilter,tp,LOCATION_MZONE,0,nil,e)
 	if #mg>0 and #tg>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)

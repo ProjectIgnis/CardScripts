@@ -53,7 +53,7 @@ function s.wcfilter(c)
 	return c:IsFaceup() and c:GetCounter(0x1002)==0
 end
 function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local b1=Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,9012916),tp,LOCATION_MZONE,0,1,nil) and Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)>0
+	local b1=Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,9012916),tp,LOCATION_MZONE,0,1,nil) and Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)>0
 	local b2=Duel.IsExistingMatchingCard(s.wcfilter,tp,0,LOCATION_MZONE,1,nil)
 	if chk==0 then return b1 or b2 end
 	local op=0
@@ -72,7 +72,7 @@ function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.bwop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local tc=Duel.SelectMatchingCard(tp,aux.FilterFaceupFunction(Card.IsCode,9012916),tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsCode,9012916),tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
 	local ct=Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)
 	if tc and ct>0 then
 		tc:AddCounter(0x10,ct)

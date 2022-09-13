@@ -25,7 +25,7 @@ s.listed_names={CARD_HARPIE_LADY}
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD) and e:GetHandler():CheckUniqueOnField(tp)
 end
-s.eqfilter=aux.FilterFaceupFunction(Card.IsCode,CARD_HARPIE_LADY)
+s.eqfilter=aux.FaceupFilter(Card.IsCode,CARD_HARPIE_LADY)
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.eqfilter(chkc) end
 	if chk==0 then return e:GetHandler():IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and Duel.IsExistingTarget(s.eqfilter,tp,LOCATION_MZONE,0,1,nil) end

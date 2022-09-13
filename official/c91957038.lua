@@ -38,7 +38,7 @@ end
 	--Check for a spellcaster with 1850 ATK with different name to Normal Summon
 function s.nsfilter(c,tp)
 	return c:IsAttack(1850) and c:IsRace(RACE_SPELLCASTER) and c:CanSummonOrSet(true,nil) and not c:IsPublic() and
-	       not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,c:GetCode()),tp,LOCATION_MZONE,0,1,nil)
+	       not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,c:GetCode()),tp,LOCATION_MZONE,0,1,nil)
 end
 	--Reveal a monster that fits filter's requirements as cost
 function s.nscost(e,tp,eg,ep,ev,re,r,rp,chk)

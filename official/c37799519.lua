@@ -73,7 +73,7 @@ function s.lizfilter(e,c)
 	return not c:IsOriginalType(TYPE_SYNCHRO)
 end
 function s.thfilter(c)
-	return c:IsAbleToHand() and c:IsSpellTrap() and c:IsCodeListed(CARD_STARDUST_DRAGON)
+	return c:IsAbleToHand() and c:IsSpellTrap() and c:ListsCode(CARD_STARDUST_DRAGON)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

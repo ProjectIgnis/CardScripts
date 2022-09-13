@@ -30,7 +30,7 @@ end
 s.listed_names={CARD_JINZO}
 s.listed_series={0xbc}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_MACHINE),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_MACHINE),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.costfilter(c)
 	return c:IsCode(CARD_JINZO) and c:IsAbleToGraveAsCost()

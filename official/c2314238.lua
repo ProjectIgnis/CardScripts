@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_DARK_MAGICIAN}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_DARK_MAGICIAN),tp,LOCATION_ONFIELD,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_DARK_MAGICIAN),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.filter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP)

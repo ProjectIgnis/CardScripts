@@ -60,7 +60,7 @@ end
 function s.splimit(e,c)
 	return not c:IsSetCard(0xe6)
 end
-s.cfilter=aux.FilterFaceupFunction(Card.IsSetCard,0xe6)
+s.cfilter=aux.FaceupFilter(Card.IsSetCard,0xe6)
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil) end
 	local g=Duel.SelectReleaseGroupCost(tp,s.cfilter,1,1,false,nil,nil)

@@ -33,7 +33,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp):GetFirst()
 	if not tc then return end
-	if Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_NEOS),tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil) then
+	if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_NEOS),tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil) then
 		Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEUP)
 	elseif Duel.SpecialSummonStep(tc,0,tp,tp,true,false,POS_FACEUP) then
 		local c=e:GetHandler()

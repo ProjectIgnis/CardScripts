@@ -19,7 +19,7 @@ function s.filter(c)
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_PYRO),tp,LOCATION_MZONE,0,1,nil) 
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_PYRO),tp,LOCATION_MZONE,0,1,nil) 
 	and Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil)
 	end
 end
@@ -27,7 +27,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local ct=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsRace,RACE_PYRO),c:GetControler(),LOCATION_MZONE,0,nil)
+	local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsRace,RACE_PYRO),c:GetControler(),LOCATION_MZONE,0,nil)
 	--Effect
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil)
 	if #g>0 then

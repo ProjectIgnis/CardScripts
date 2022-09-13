@@ -37,5 +37,5 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atkcon(e)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_ZOMBIE),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_ZOMBIE),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
 end

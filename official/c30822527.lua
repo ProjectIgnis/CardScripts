@@ -51,7 +51,7 @@ end
 s.listed_names={1861629}
 
 function s.atkval(e,c)
-	return c:GetLinkedGroup():FilterCount(Card.IsType,nil,TYPE_MONSTER)*500
+	return c:GetLinkedGroup():FilterCount(Card.IsMonster,nil)*500
 end
 function s.cfilter(c,tp,zone)
 	local seq=c:GetPreviousSequence()

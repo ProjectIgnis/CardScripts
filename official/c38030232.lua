@@ -38,7 +38,7 @@ function s.initial_effect(c)
 end
 s.listed_names={38030233}
 function s.con(e)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsNonEffectMonster),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsNonEffectMonster),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_EFFECT)

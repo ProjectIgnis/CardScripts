@@ -16,7 +16,7 @@ function s.filter2(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	local b1=Duel.IsExistingTarget(aux.FilterFaceupFunction(Card.IsCanTurnSet),tp,0,LOCATION_MZONE,1,nil)
+	local b1=Duel.IsExistingTarget(aux.FaceupFilter(Card.IsCanTurnSet),tp,0,LOCATION_MZONE,1,nil)
 	local b2=Duel.IsExistingTarget(s.filter2,tp,0,LOCATION_ONFIELD,1,nil)
 	if chk==0 then return b1 or b2 end
 	local op=0
@@ -26,7 +26,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	e:SetLabel(op)
 	if op==0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
-		local g=Duel.SelectTarget(tp,aux.FilterFaceupFunction(Card.IsCanTurnSet),tp,0,LOCATION_MZONE,1,1,nil)
+		local g=Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsCanTurnSet),tp,0,LOCATION_MZONE,1,1,nil)
 		e:SetCategory(CATEGORY_POSITION)
 		Duel.SetOperationInfo(0,CATEGORY_POSITION,g,1,0,0)
 	else

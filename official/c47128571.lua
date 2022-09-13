@@ -21,7 +21,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.filter(c,tp)
-	return c:IsMonster() and c:IsLocation(LOCATION_GRAVE) and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsAttackBelow,c:GetDefense()),tp,0,LOCATION_MZONE,1,nil)
+	return c:IsMonster() and c:IsLocation(LOCATION_GRAVE) and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsAttackBelow,c:GetDefense()),tp,0,LOCATION_MZONE,1,nil)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
@@ -31,7 +31,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if og:IsExists(s.filter,1,nil,tp) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 		local tc=og:FilterSelect(tp,s.filter,1,1,nil,tp):GetFirst()
-		local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsAttackBelow,tc:GetDefense()),tp,0,LOCATION_MZONE,nil)
+		local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsAttackBelow,tc:GetDefense()),tp,0,LOCATION_MZONE,nil)
 		if Duel.Destroy(g,REASON_EFFECT)~=0 then
 			Duel.BreakEffect()
 			local turnp=Duel.GetTurnPlayer()

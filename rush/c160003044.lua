@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 	--Check for a warrior monster
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_WARRIOR),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_WARRIOR),tp,LOCATION_MZONE,0,1,nil)
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -30,9 +30,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ct=g:GetFirst()
 	if ct then
 		--If it was a monster, make 1 warrior monster gain ATK equal to sent monster's level x 300 and take damage equal to that amount
-		if ct:IsMonster() and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_WARRIOR),tp,LOCATION_MZONE,0,1,nil) then
+		if ct:IsMonster() and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_WARRIOR),tp,LOCATION_MZONE,0,1,nil) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
-			local tc=Duel.SelectMatchingCard(tp,aux.FilterFaceupFunction(Card.IsRace,RACE_WARRIOR),tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
+			local tc=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsRace,RACE_WARRIOR),tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
 			Duel.HintSelection(Group.FromCards(tc))
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)

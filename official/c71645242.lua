@@ -73,7 +73,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local g=eg:Filter(aux.FilterFaceupFunction(Card.IsRelateToEffect,e),nil)
+	local g=eg:Filter(aux.FaceupFilter(Card.IsRelateToEffect,e),nil)
 	local change=false
 	for tc in aux.Next(g) do
 		local preatk=tc:GetAttack()
@@ -106,7 +106,7 @@ function s.filter2(c,atk,e,tp)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter2(chkc,e:GetLabel(),e,tp) end
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsRace,RACE_PLANT),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsRace,RACE_PLANT),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	local atk=g:GetSum(Card.GetAttack)
 	if chk==0 then return #g>0
 		and g:FilterCount(s.mzfilter,nil,tp)+Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -121,7 +121,7 @@ end
 function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	local dg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsRace,RACE_PLANT),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local dg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsRace,RACE_PLANT),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	dg:AddCard(c)
 	Duel.Destroy(dg,REASON_EFFECT)
 	local og=Duel.GetOperatedGroup()

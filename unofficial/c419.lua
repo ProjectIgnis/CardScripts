@@ -638,7 +638,7 @@ if not GenerateEffect then
 	function GenerateEffect.attractcon(e)
 		local c=e:GetHandler()
 		return c:IsPlusOrMinus() and c:CanAttack()
-			and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,(~c:GetType())&TYPE_PLUSMINUS),c:GetControler(),0,LOCATION_MZONE,1,nil)
+			and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,(~c:GetType())&TYPE_PLUSMINUS),c:GetControler(),0,LOCATION_MZONE,1,nil)
 	end
 	function GenerateEffect.attract(e,c)
 		return c:IsFaceup() and c:IsType((~e:GetHandler():GetType())&TYPE_PLUSMINUS)

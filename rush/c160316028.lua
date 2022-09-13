@@ -21,7 +21,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_GRAVE,0,1,nil) end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_PYRO),tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_PYRO),tp,LOCATION_MZONE,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,nil,1,tp,500)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_ATKCHANGE,nil,1,1-tp,-500)
 end
@@ -32,7 +32,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 and Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)>0 then
 		--Effect
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-		local sg=Duel.SelectMatchingCard(tp,aux.FilterFaceupFunction(Card.IsRace,RACE_PYRO),tp,LOCATION_MZONE,0,1,1,nil)
+		local sg=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsRace,RACE_PYRO),tp,LOCATION_MZONE,0,1,1,nil)
 		if #sg==0 then return end
 		Duel.HintSelection(sg,true)
 		local tc=sg:GetFirst()

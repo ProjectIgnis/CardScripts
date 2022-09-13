@@ -57,7 +57,7 @@ function s.splimit(e,c,sump,sumtype,sumpos,targetp)
 	return (sumtype&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
 function s.rccon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,13331639),tp,LOCATION_ONFIELD,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,13331639),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.rcfilter(c)
 	return c:IsFaceup() and c:GetAttack()>0

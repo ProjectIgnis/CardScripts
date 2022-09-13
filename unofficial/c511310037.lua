@@ -54,11 +54,11 @@ end
 function s.atkval(e,c)
 	return c:GetEquipGroup():Filter(s.eqfilter,nil,c:GetOriginalCode()):GetSum(Card.GetAttack)
 end
-s.aqfilter=aux.FilterFaceupFunction(Card.IsSetCard,SET_ALLURE_QUEEN)
+s.aqfilter=aux.FaceupFilter(Card.IsSetCard,SET_ALLURE_QUEEN)
 function s.atkcon(e)
 	return Duel.IsExistingMatchingCard(s.aqfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
-s.oaqfilter=aux.FilterFaceupFunction(Card.IsOriginalSetCard,SET_ALLURE_QUEEN)
+s.oaqfilter=aux.FaceupFilter(Card.IsOriginalSetCard,SET_ALLURE_QUEEN)
 function s.eqgroup(tp)
 	local og=Group.CreateGroup()
 	local tg=Duel.GetMatchingGroup(s.oaqfilter,tp,LOCATION_MZONE,0,nil)

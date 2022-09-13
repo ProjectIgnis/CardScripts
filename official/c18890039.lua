@@ -20,7 +20,7 @@ end
 s.listed_series={0x17d}
 function s.thfilter(c,tp)
 	return c:IsMonster() and c:IsSetCard(0x17d) and c:IsAbleToHand()
-		and not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,c:GetCode()),tp,LOCATION_ONFIELD,0,1,nil)
+		and not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,c:GetCode()),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

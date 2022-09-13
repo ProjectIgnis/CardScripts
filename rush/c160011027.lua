@@ -22,7 +22,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_GRAVE,0,2,nil) end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_BEASTWARRIOR),tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_BEASTWARRIOR),tp,LOCATION_MZONE,0,1,nil) end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
@@ -33,7 +33,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SendtoDeck(td,nil,SEQ_DECKSHUFFLE,REASON_COST)~=2 then return end
 	--Effect
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
-	local tc=Duel.SelectMatchingCard(tp,aux.FilterFaceupFunction(Card.IsRace,RACE_BEASTWARRIOR),tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsRace,RACE_BEASTWARRIOR),tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
 	if not tc then return end
 	Duel.HintSelection(tc,true)
 	local c=e:GetHandler()
@@ -45,7 +45,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	tc:RegisterEffectRush(e1)
 	if not (Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_MZONE,0,1,nil) 
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSpell),tp,LOCATION_ONFIELD,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSpell),tp,LOCATION_ONFIELD,0,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,1))) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
 	local tc2=Duel.SelectMatchingCard(tp,Card.IsFaceup,tp,LOCATION_MZONE,0,1,1,nil):GetFirst()

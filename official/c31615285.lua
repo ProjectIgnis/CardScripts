@@ -18,5 +18,5 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.dscon(e)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_PLANT),0,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_PLANT),0,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler())
 end

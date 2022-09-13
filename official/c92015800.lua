@@ -54,10 +54,10 @@ function s.efindes(e,re,rp)
 end
 function s.mttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(1-tp) and chkc:IsMonster() end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsType,tp,0,LOCATION_GRAVE,1,nil,TYPE_MONSTER)
+	if chk==0 then return Duel.IsExistingTarget(Card.IsMonster,tp,0,LOCATION_GRAVE,1,nil)
 		and e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_EFFECT) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g=Duel.SelectTarget(tp,Card.IsType,tp,0,LOCATION_GRAVE,1,1,nil,TYPE_MONSTER)
+	local g=Duel.SelectTarget(tp,Card.IsMonster,tp,0,LOCATION_GRAVE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,1,0,0)
 end
 function s.mtop(e,tp,eg,ep,ev,re,r,rp)

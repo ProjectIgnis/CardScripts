@@ -58,10 +58,10 @@ function s.atcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.attg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() and chkc:IsSetCard(0x137) end
-	if chk==0 then return Duel.IsExistingTarget(aux.FilterFaceupFunction(Card.IsSetCard,0x137),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(aux.FaceupFilter(Card.IsSetCard,0x137),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local tc=Duel.SelectTarget(tp,aux.FilterFaceupFunction(Card.IsSetCard,0x137),tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil):GetFirst()
+	local tc=Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsSetCard,0x137),tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil):GetFirst()
 	if tc:IsControler(1-tp) then
 		e:SetLabel(1)
 	else

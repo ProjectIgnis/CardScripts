@@ -17,13 +17,13 @@ function s.initial_effect(c)
 end
 s.listed_names={160010048}
 function s.atkcond(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetMatchingGroupCountRush(aux.FilterFaceupFunction(Card.IsRace,RACE_AQUA),tp,LOCATION_MZONE,0,nil)>=3
+	return Duel.GetMatchingGroupCountRush(aux.FaceupFilter(Card.IsRace,RACE_AQUA),tp,LOCATION_MZONE,0,nil)>=3
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) end
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsRace,RACE_AQUA),tp,LOCATION_MZONE,0,nil)>0 end
+	if chk==0 then return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsRace,RACE_AQUA),tp,LOCATION_MZONE,0,nil)>0 end
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
 	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,nil,1,tp,0)
 end
@@ -34,7 +34,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	if Duel.DiscardDeck(tp,1,REASON_COST)<1 then return end
 	--effect
-	local g=Duel.GetMatchingGroupRush(aux.FilterFaceupFunction(Card.IsRace,RACE_AQUA),tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroupRush(aux.FaceupFilter(Card.IsRace,RACE_AQUA),tp,LOCATION_MZONE,0,nil)
 	if #g==0 then return end
 	local c=e:GetHandler()
 	for tc in g:Iter() do

@@ -51,7 +51,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) then
 		local g=Group.FromCards(tc)
 		if tc:IsFaceup() then
-			g=g+Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsOriginalRace,tc:GetOriginalRace()),tp,LOCATION_MZONE,LOCATION_MZONE,tc)
+			g=g+Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsOriginalRace,tc:GetOriginalRace()),tp,LOCATION_MZONE,LOCATION_MZONE,tc)
 		end
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 	end

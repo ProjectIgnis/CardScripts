@@ -31,14 +31,14 @@ s.listed_series={0x154,0x155}
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x154),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x154),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.cfilter(c,tp)
 	return c:IsControler(tp) and c:IsPreviousLocation(LOCATION_DECK) and c:IsReason(REASON_EFFECT)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,1-tp) and
-			Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x155),tp,LOCATION_MZONE,0,1,nil)
+			Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x155),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end

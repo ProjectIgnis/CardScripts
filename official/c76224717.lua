@@ -42,7 +42,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsSummonType(SUMMON_TYPE_TRIBUTE) then
 		local mg=tc:GetMaterial()
 		if mg then
-			s[ep]=s[ep]+mg:FilterCount(Card.IsType,nil,TYPE_MONSTER)
+			s[ep]=s[ep]+mg:FilterCount(Card.IsMonster,nil)
 		end
 	end
 end

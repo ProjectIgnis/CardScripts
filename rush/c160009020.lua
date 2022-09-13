@@ -31,7 +31,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 	local g=Duel.SelectMatchingCard(tp,s.setfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	if #g==0 or Duel.SSet(tp,g)==0 then return end
-	if Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_MEEEG_CHAN),tp,LOCATION_ONFIELD,0,1,nil)
+	if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_MEEEG_CHAN),tp,LOCATION_ONFIELD,0,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.BreakEffect()
 		Duel.Recover(tp,600,REASON_EFFECT)

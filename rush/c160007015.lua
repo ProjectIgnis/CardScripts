@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsAttackAbove,2500),tp,0,LOCATION_MZONE,1,nil) and e:GetHandler():IsStatus(STATUS_SUMMON_TURN)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsAttackAbove,2500),tp,0,LOCATION_MZONE,1,nil) and e:GetHandler():IsStatus(STATUS_SUMMON_TURN)
 end
 function s.thfilter(c)
 	return c:IsRace(RACE_WARRIOR) and c:IsLevelAbove(7) and c:IsAbleToHand()

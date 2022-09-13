@@ -18,8 +18,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(aux.FilterFaceupFunction(Card.IsSummonPlayer,1-tp),1,nil)
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_BEAST),tp,LOCATION_MZONE,0,1,nil)
+	return eg:IsExists(aux.FaceupFilter(Card.IsSummonPlayer,1-tp),1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_BEAST),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end

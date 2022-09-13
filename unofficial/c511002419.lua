@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 s.listed_names={17985575}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,17985575),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,17985575),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 end
 function s.costfilter(c)
 	return c:IsMonster() and c:IsDiscardable()
@@ -32,7 +32,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,17985575),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) then return end
+	if not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,17985575),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,2,nil)
 	if #g>0 then

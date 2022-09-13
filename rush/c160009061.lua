@@ -15,12 +15,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.HasLevel),tp,0,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.HasLevel),tp,0,LOCATION_MZONE,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,0)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local tc=Duel.SelectMatchingCard(tp,aux.FilterFaceupFunction(Card.HasLevel),tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.HasLevel),tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
 	if tc then
 		Duel.HintSelection(tc,true)
 		Duel.Damage(1-tp,tc:GetLevel()*100,REASON_EFFECT)

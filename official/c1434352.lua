@@ -12,5 +12,5 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.atkval(e,c)
-	return Duel.GetMatchingGroupCount(Card.IsType,c:GetControler(),LOCATION_GRAVE,0,nil,TYPE_MONSTER)*300
+	return Duel.GetMatchingGroupCount(Card.IsMonster,c:GetControler(),LOCATION_GRAVE,0,nil)*300
 end

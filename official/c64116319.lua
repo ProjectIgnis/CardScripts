@@ -46,11 +46,11 @@ function s.atklimit(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.dircon(e)
 	local tp=e:GetHandlerPlayer()
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,15259703),tp,LOCATION_ONFIELD,0,1,nil)
-		and not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_TOON),tp,0,LOCATION_MZONE,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,15259703),tp,LOCATION_ONFIELD,0,1,nil)
+		and not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,TYPE_TOON),tp,0,LOCATION_MZONE,1,nil)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,15259703),tp,LOCATION_ONFIELD,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,15259703),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
@@ -61,7 +61,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	local g=Duel.GetMatchingGroup(Card.IsType,tp,0,LOCATION_ONFIELD,nil,TYPE_SPELL+TYPE_TRAP)
 	if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 and #g>0
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_TOON),tp,LOCATION_MZONE,0,1,c)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,TYPE_TOON),tp,LOCATION_MZONE,0,1,c)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.BreakEffect()
 		local sg=g:Select(tp,1,1,nil)

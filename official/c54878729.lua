@@ -20,7 +20,7 @@ local BEWD,DM=CARD_BLUEEYES_W_DRAGON,CARD_DARK_MAGICIAN
 s.listed_names={BEWD,DM,id}
 
 function s.codefilter(c,code)
-	return not c:IsCode(id) and (c:IsCode(code) or c:IsCodeListed(code)) and c:IsAbleToGrave()
+	return not c:IsCode(id) and (c:IsCode(code) or c:ListsCode(code)) and c:IsAbleToGrave()
 end
 	--Activation legality
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)

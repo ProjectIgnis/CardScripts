@@ -14,11 +14,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsShark),tp,LOCATION_MZONE,0,1,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsShark),tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsAbleToEnterBP() end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local sg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsShark),tp,LOCATION_MZONE,0,nil)
+	local sg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsShark),tp,LOCATION_MZONE,0,nil)
 	local c=e:GetHandler()
 	local fid=c:GetFieldID()
 	for tc in aux.Next(sg) do

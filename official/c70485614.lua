@@ -44,7 +44,7 @@ function s.repfilter(c,tp)
 	return c:IsLocation(LOCATION_ONFIELD) and c:IsControler(tp) and c:IsReason(REASON_BATTLE+REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
 end
 function s.tgfilter(c)
-	return c:IsType(TYPE_FUSION) and c:IsMaterialListCode(CARD_ALBAZ) and c:IsAbleToGrave()
+	return c:IsType(TYPE_FUSION) and c:ListsCodeAsMaterial(CARD_ALBAZ) and c:IsAbleToGrave()
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(s.repfilter,1,nil,tp)
@@ -61,7 +61,7 @@ function s.repval(e,c)
 	return s.repfilter(c,e:GetHandlerPlayer())
 end
 function s.spcond(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_ALBAZ),tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_ALBAZ),tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x158) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

@@ -35,7 +35,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	if #tg<1 or Duel.SendtoDeck(tg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)<1 then return end
 	local ct=Duel.GetOperatedGroup():FilterCount(Card.IsLocation,nil,LOCATION_DECK)
 	if ct<1 or ct>Duel.GetLocationCount(tp,LOCATION_SZONE)
-		or not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_FIEND),tp,LOCATION_MZONE,0,1,nil) then return end
+		or not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_FIEND),tp,LOCATION_MZONE,0,1,nil) then return end
 	local g=Duel.GetMatchingGroup(s.setfilter,tp,LOCATION_DECK,0,nil)
 	if aux.SelectUnselectGroup(g,e,tp,ct,ct,aux.dncheck,0) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		local sg=aux.SelectUnselectGroup(g,e,tp,ct,ct,aux.dncheck,1,tp,HINTMSG_SET)

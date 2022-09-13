@@ -11,7 +11,7 @@ function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	if not (Duel.CheckLPCost(tp,1000) and not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil,64788463,90876561)) then return false end
 	--condition
 	return aux.CanActivateSkill(tp)
-	and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,25652259),tp,LOCATION_ONFIELD,0,1,nil)
+	and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,25652259),tp,LOCATION_ONFIELD,0,1,nil)
 	and Duel.IsPlayerCanAdditionalSummon(tp)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)

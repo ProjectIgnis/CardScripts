@@ -12,11 +12,11 @@ function s.initial_effect(c)
 end
 s.roll_dice=true
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_HAND,0,1,nil,TYPE_MONSTER) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsMonster,tp,LOCATION_HAND,0,1,nil) end
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
-	local g=Duel.SelectMatchingCard(tp,Card.IsType,tp,LOCATION_HAND,0,1,1,nil,TYPE_MONSTER)
+	local g=Duel.SelectMatchingCard(tp,Card.IsMonster,tp,LOCATION_HAND,0,1,1,nil)
 	if #g>0 then
 		Duel.ConfirmCards(1-tp,g)
 		local ct=Duel.TossDice(tp,1)

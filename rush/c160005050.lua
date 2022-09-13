@@ -26,7 +26,7 @@ function s.filter(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return 
-	(Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_SUMMONED_SKULL),tp,LOCATION_MZONE,0,1,nil)
+	(Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_SUMMONED_SKULL),tp,LOCATION_MZONE,0,1,nil)
 	or
 	Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil))
 end

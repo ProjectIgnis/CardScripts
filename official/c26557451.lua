@@ -20,7 +20,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,30459350) end
 	Duel.SetTargetCard(eg)
-	if eg and eg:IsExists(Card.IsType,1,nil,TYPE_MONSTER) then
+	if eg and eg:IsExists(Card.IsMonster,1,nil) then
 		Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,eg:GetFirst():GetAttack())
 		Duel.SetOperationInfo(0,CATEGORY_REMOVE+CATEGORY_HANDES,nil,0,1-tp,1)
 	end
@@ -29,7 +29,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)
 	if g and #g>0 then
 		Duel.ConfirmCards(tp,g)
-		if g:IsExists(Card.IsType,1,nil,TYPE_MONSTER) then
+		if g:IsExists(Card.IsMonster,1,nil) then
 			Duel.BreakEffect()
 			local atk=0
 			local tc=g:GetFirst()

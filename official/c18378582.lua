@@ -34,7 +34,7 @@ function s.initial_effect(c)
 end
 s.listed_names={66073051,CARD_SANCTUARY_SKY}
 function s.hspcon(e,c)
-	if c==nil then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_SANCTUARY_SKY),0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
+	if c==nil then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_SANCTUARY_SKY),0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 		or Duel.IsEnvironment(CARD_SANCTUARY_SKY) end
 	return Duel.CheckReleaseGroup(c:GetControler(),Card.IsCode,1,false,1,true,c,c:GetControler(),nil,false,nil,66073051)
 end
@@ -54,7 +54,7 @@ function s.hspop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_SANCTUARY_SKY),tp,LOCATION_ONFIELD,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_SANCTUARY_SKY),tp,LOCATION_ONFIELD,0,1,nil)
 		or Duel.IsEnvironment(CARD_SANCTUARY_SKY,tp)
 end
 function s.cfilter(c)
@@ -70,7 +70,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_SANCTUARY_SKY),tp,LOCATION_ONFIELD,0,1,nil)
+	if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_SANCTUARY_SKY),tp,LOCATION_ONFIELD,0,1,nil)
 		or Duel.IsEnvironment(CARD_SANCTUARY_SKY,tp) then
 		local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_MZONE,nil)
 		Duel.Destroy(g,REASON_EFFECT)

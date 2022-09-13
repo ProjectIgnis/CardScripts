@@ -35,7 +35,7 @@ function s.lcheck(g,lc,sumtype,tp)
 	return g:CheckDifferentProperty(Card.GetCode,lc,sumtype,tp)
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetLinkedGroup():IsExists(Card.IsType,1,nil,TYPE_MONSTER)
+	return e:GetHandler():GetLinkedGroup():IsExists(Card.IsMonster,1,nil)
 end
 function s.cfilter(c,tp,zone)
 	local seq=c:GetPreviousSequence()

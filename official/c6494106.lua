@@ -18,7 +18,7 @@ end
 s.listed_series={0x129}
 s.listed_names={CARD_EVIL_EYE_SELENE}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x129),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x129),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.evilcond(c)
 	return c:IsFaceup() and c:IsCode(CARD_EVIL_EYE_SELENE)

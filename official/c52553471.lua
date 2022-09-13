@@ -55,7 +55,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetValue(code2)
 		tc:RegisterEffect(e2)
 	end
-	if Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_NEOS),tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil) then
+	if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_NEOS),tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil) then
 		Duel.SendtoGrave(cc,REASON_EFFECT)
 	elseif cc:IsLocation(LOCATION_HAND) then
 		Duel.SendtoDeck(cc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)

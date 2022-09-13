@@ -72,5 +72,5 @@ function s.atkfilter(c)
 	return c:IsFaceup() and c:IsLevelAbove(4)
 end
 function s.atkval(e,c)
-	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsLevelAbove,4),c:GetControler(),LOCATION_MZONE,0,nil)*500
+	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsLevelAbove,4),c:GetControler(),LOCATION_MZONE,0,nil)*500
 end

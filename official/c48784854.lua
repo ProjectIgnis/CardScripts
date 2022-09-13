@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.typecheck(sc,card_type)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,card_type),0,LOCATION_MZONE,LOCATION_MZONE,1,sc)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,card_type),0,LOCATION_MZONE,LOCATION_MZONE,1,sc)
 end
 function s.drcfilter(c)
 	if c:IsSummonType(SUMMON_TYPE_RITUAL) then

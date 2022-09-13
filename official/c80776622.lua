@@ -80,7 +80,7 @@ function s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsOnField() and chkc:IsNegatable() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsNegatable,tp,0,LOCATION_ONFIELD,1,nil) end
 	local ct=1
-	if Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsOddScale),tp,LOCATION_PZONE,0,1,nil) then
+	if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsOddScale),tp,LOCATION_PZONE,0,1,nil) then
 		ct=2
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_NEGATE)
@@ -121,7 +121,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsType,TYPE_PENDULUM),tp,LOCATION_PZONE,0,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsType,TYPE_PENDULUM),tp,LOCATION_PZONE,0,nil)
 	local _,sc=g:GetMaxGroup(function(c) return c:GetScale() end)
 	return sc and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and re:IsActiveType(TYPE_MONSTER) and rc:IsAttackBelow(sc*300)
 		and rc:IsOnField() and rc:IsDestructable()

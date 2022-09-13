@@ -60,7 +60,7 @@ function s.effectfilter(e,ct)
 	return te:GetHandler():IsRitualSpell()
 end
 function s.lvcond(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x151),tp,LOCATION_MZONE,0,1,nil) 
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x151),tp,LOCATION_MZONE,0,1,nil) 
 end
 function s.lvfilter(c)
 	return c:IsFaceup() and c:HasLevel() and c:IsLevelAbove(2) and c:IsAttackAbove(1000)

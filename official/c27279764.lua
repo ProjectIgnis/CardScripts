@@ -66,7 +66,7 @@ function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,0,LOCATION_MZONE+LOCATION_HAND)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(Card.IsType,1-tp,LOCATION_MZONE+LOCATION_HAND,0,nil,TYPE_MONSTER)
+	local g=Duel.GetMatchingGroup(Card.IsMonster,1-tp,LOCATION_MZONE+LOCATION_HAND,0,nil)
 	if #g>0 then
 		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_TOGRAVE)
 		local sg=g:Select(1-tp,1,1,nil)

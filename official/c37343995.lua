@@ -32,7 +32,7 @@ end
 s.listed_names={16474916}
 s.listed_series={0x174}
 function s.hspcon(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(aux.NOT(aux.FilterFaceupFunction(Card.IsType,TYPE_XYZ)),tp,LOCATION_MZONE,0,1,nil)
+	return not Duel.IsExistingMatchingCard(aux.NOT(aux.FaceupFilter(Card.IsType,TYPE_XYZ)),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.hspcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0 end

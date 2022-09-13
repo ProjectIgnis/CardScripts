@@ -61,11 +61,11 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetFlagEffect(id)>0 and Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsType,TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_PENDULUM),tp,LOCATION_MZONE,0,e:GetHandler())>0
+	return e:GetHandler():GetFlagEffect(id)>0 and Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsType,TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_PENDULUM),tp,LOCATION_MZONE,0,e:GetHandler())>0
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsType,TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_PENDULUM),tp,LOCATION_MZONE,0,c)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsType,TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_PENDULUM),tp,LOCATION_MZONE,0,c)
 	if not c:IsRelateToEffect(e) or #g==0 then return end
 	if g:IsExists(Card.IsType,1,nil,TYPE_FUSION) then
 		--This card can attack directly

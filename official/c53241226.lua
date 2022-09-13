@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local f1=aux.FilterFaceupFunction(Card.IsRace,RACE_WARRIOR)
+	local f1=aux.FaceupFilter(Card.IsRace,RACE_WARRIOR)
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
 	if chkc then return false end
 	if chk==0 then return Duel.IsExistingTarget(f1,tp,LOCATION_MZONE,0,1,nil)

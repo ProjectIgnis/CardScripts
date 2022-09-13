@@ -19,7 +19,7 @@ function s.initial_effect(c)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==1-tp and re:IsActiveType(TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_PLANT),tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_PLANT),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end

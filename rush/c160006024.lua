@@ -17,7 +17,7 @@ function s.initial_effect(c)
 end
 s.listed_names={160006062,160006063}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsLevelAbove,7),tp,0,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsLevelAbove,7),tp,0,LOCATION_MZONE,nil)
 	return #g>0
 end
 function s.costfilter(c)

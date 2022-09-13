@@ -21,12 +21,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return eg and eg:IsExists(aux.FilterFaceupFunction(Card.IsLocation,LOCATION_MZONE),1,nil) end
+	if chk==0 then return eg and eg:IsExists(aux.FaceupFilter(Card.IsLocation,LOCATION_MZONE),1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not eg or #eg<1 then return end
-	local g=eg:Filter(aux.FilterFaceupFunction(Card.IsLocation,LOCATION_MZONE),nil)
+	local g=eg:Filter(aux.FaceupFilter(Card.IsLocation,LOCATION_MZONE),nil)
 	local c=e:GetHandler()
 	for tc in aux.Next(g) do
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)

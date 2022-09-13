@@ -86,7 +86,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsCode,id+1),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,0,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsCode,id+1),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,0,nil)
 	if #g>0 then
 		Duel.Destroy(g,REASON_EFFECT)
 	end

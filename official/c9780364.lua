@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x19}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x19),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x19),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function s.filter(c,e)
 	return c:IsFaceup() and c:IsCanBeEffectTarget(e) and c:IsCanChangePosition()

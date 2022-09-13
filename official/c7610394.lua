@@ -31,7 +31,7 @@ function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 end
-s.eyefilter=aux.FilterFaceupFunction(Card.IsCode,CARD_EVIL_EYE_SELENE)
+s.eyefilter=aux.FaceupFilter(Card.IsCode,CARD_EVIL_EYE_SELENE)
 function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x129,TYPES_TOKEN,400,400,1,RACE_FIEND,ATTRIBUTE_DARK,POS_FACEUP) then

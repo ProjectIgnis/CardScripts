@@ -13,18 +13,15 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.dfilter2(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
-end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsAttribute,ATTRIBUTE_WIND),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsAttribute,ATTRIBUTE_WATER),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsAttribute,ATTRIBUTE_FIRE),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsAttribute,ATTRIBUTE_EARTH),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsAttribute,ATTRIBUTE_WIND),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsAttribute,ATTRIBUTE_WATER),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsAttribute,ATTRIBUTE_FIRE),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsAttribute,ATTRIBUTE_EARTH),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_MZONE,1,nil)
-		or Duel.IsExistingMatchingCard(s.dfilter2,tp,0,LOCATION_ONFIELD,1,nil)
+		or Duel.IsExistingMatchingCard(Card.IsSpellTrap,tp,0,LOCATION_ONFIELD,1,nil)
 		or Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>=2
 		or Duel.IsPlayerCanDraw(tp,2) end
 end
@@ -37,7 +34,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		opval[off-1]=1
 		off=off+1
 	end
-	if Duel.IsExistingMatchingCard(s.dfilter2,tp,0,LOCATION_ONFIELD,1,nil) then
+	if Duel.IsExistingMatchingCard(Card.IsSpellTrap,tp,0,LOCATION_ONFIELD,1,nil) then
 		ops[off]=aux.Stringid(id,1)
 		opval[off-1]=2
 		off=off+1
@@ -58,7 +55,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_MZONE,nil)
 		Duel.Destroy(g,REASON_EFFECT)
 	elseif opval[op]==2 then
-		local g=Duel.GetMatchingGroup(s.dfilter2,tp,0,LOCATION_ONFIELD,nil)
+		local g=Duel.GetMatchingGroup(Card.IsSpellTrap,tp,0,LOCATION_ONFIELD,nil)
 		Duel.Destroy(g,REASON_EFFECT)
 	elseif opval[op]==3 then
 		local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND):RandomSelect(1-tp,2)

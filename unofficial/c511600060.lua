@@ -99,10 +99,10 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsControler(e:GetOwnerPlayer()) and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsLinkMonster),tp,0,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsLinkMonster),tp,0,LOCATION_MZONE,1,nil) end
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
-	local sg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsLinkMonster),tp,0,LOCATION_MZONE,nil)
+	local sg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsLinkMonster),tp,0,LOCATION_MZONE,nil)
 	sg:ForEach(function(tc)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

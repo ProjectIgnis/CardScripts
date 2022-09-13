@@ -24,7 +24,7 @@ function s.eqfilter(c)
 end
 function s.value(e,c)
 	local tp=e:GetHandlerPlayer()
-	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsType,TYPE_NORMAL),tp,LOCATION_MZONE,0,nil)*300
+	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsType,TYPE_NORMAL),tp,LOCATION_MZONE,0,nil)*300
 end
 function s.filter(c)
 	return (c:IsLevel(7) or c:IsLevel(8)) and c:IsFaceup()

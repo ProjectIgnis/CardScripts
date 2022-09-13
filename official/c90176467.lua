@@ -69,7 +69,7 @@ function s.spfilter(c,e,tp,tc)
 end
 function s.thfilter2(c,tc)
 	return c:IsCode(CARD_DREAM_MIRROR_JOY,CARD_DREAM_MIRROR_TERROR) and c:IsAbleToHand()
-		and tc:IsCodeListed(c:GetCode())
+		and tc:ListsCode(c:GetCode())
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

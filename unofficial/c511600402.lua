@@ -14,5 +14,5 @@ function s.initial_effect(c)
 end
 s.listed_series={0x562}
 function s.sdcon(e)
-	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsInfinity),0,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+	return not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsInfinity),0,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end

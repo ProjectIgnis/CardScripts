@@ -69,7 +69,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		end
 		Duel.SpecialSummonComplete()
 		--If opponent controls a monster from the extra deck, synchro summon
-		local mg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x29),tp,LOCATION_MZONE,0,nil)
+		local mg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0x29),tp,LOCATION_MZONE,0,nil)
 		local eg=Duel.GetMatchingGroup(s.scfilter,tp,LOCATION_EXTRA,0,nil,mg)
 		if #mg>0 and #eg>0 and Duel.IsExistingMatchingCard(Card.IsSummonLocation,tp,0,LOCATION_MZONE,1,nil,LOCATION_EXTRA) 
 			and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then

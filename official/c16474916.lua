@@ -31,7 +31,7 @@ end
 s.listed_names={43863925}
 s.listed_series={0x174}
 function s.hspcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x174),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x174),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.hsptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -42,7 +42,7 @@ function s.hspop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,43863925),tp,LOCATION_ONFIELD,0,1,nil) then
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,43863925),tp,LOCATION_ONFIELD,0,1,nil) then
 		Duel.BreakEffect()
 		Duel.Recover(tp,800,REASON_EFFECT)
 	end

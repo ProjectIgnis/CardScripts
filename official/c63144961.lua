@@ -22,7 +22,7 @@ function s.tgfilter(c,tp)
 	local eq=Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 	local datk=not c:IsHasEffect(EFFECT_DIRECT_ATTACK) and Duel.IsAbleToEnterBP()
 	local dam=Duel.IsAbleToEnterBP()
-	return c:IsFaceup() and c:IsCode(CARD_STARDUST_DRAGON) or (c:IsCodeListed(CARD_STARDUST_DRAGON) and c:IsType(TYPE_SYNCHRO))
+	return c:IsFaceup() and c:IsCode(CARD_STARDUST_DRAGON) or (c:ListsCode(CARD_STARDUST_DRAGON) and c:IsType(TYPE_SYNCHRO))
 		and (eq or datk or dam)
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

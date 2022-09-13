@@ -22,7 +22,7 @@ function s.spfilter(c,e,tp)
 	return (c:IsSetCard(0x18c) or c:IsControler(1-tp)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local hydrant_chk=Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_R_ACE_HYDRANT),tp,LOCATION_ONFIELD,0,1,nil)
+	local hydrant_chk=Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_R_ACE_HYDRANT),tp,LOCATION_ONFIELD,0,1,nil)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and (chkc:IsControler(tp) or hydrant_chk) and s.spfilter(chkc,e,tp) end
 	local loc=hydrant_chk and LOCATION_GRAVE or 0
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

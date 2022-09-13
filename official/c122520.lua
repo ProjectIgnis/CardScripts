@@ -59,7 +59,7 @@ function s.distg(e,c)
 	return c==e:GetHandler():GetBattleTarget()
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x9f),tp,LOCATION_MZONE,0,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x9f),tp,LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local t=Duel.GetAttackTarget()

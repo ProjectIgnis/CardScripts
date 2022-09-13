@@ -29,10 +29,10 @@ end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	Duel.DiscardDeck(tp,4,REASON_EFFECT)
 	if Duel.GetOperatedGroup():FilterCount(s.filter,nil)==4
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsMonster),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) then
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsMonster),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
-		local g=Duel.SelectMatchingCard(tp,aux.FilterFaceupFunction(Card.IsMonster),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
+		local g=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsMonster),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 		Duel.HintSelection(g)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

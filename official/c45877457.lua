@@ -40,7 +40,7 @@ s.listed_names={99426088}
 s.listed_series={0x167}
 --ATK Up
 function s.atkval(e,c)
-	local g=Duel.GetMatchingGroup(Card.IsType,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil,TYPE_MONSTER)
+	local g=Duel.GetMatchingGroup(Card.IsMonster,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil)
 	return g:GetClassCount(Card.GetAttribute)*300
 end
 --Negate
@@ -49,7 +49,7 @@ function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	local mat=c:GetMaterial()
 	if re:IsActiveType(TYPE_MONSTER) and rp==1-tp and not c:IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)
 		and c:IsSummonType(SUMMON_TYPE_RITUAL) and mat:GetClassCount(Card.GetAttribute)>1 then
-		for tc in Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_MONSTER):Iter() do
+		for tc in Duel.GetMatchingGroup(Card.IsMonster,tp,LOCATION_GRAVE,0,nil):Iter() do
 			att=att|tc:GetAttribute()
 		end
 		return rc:GetAttribute()&att>0

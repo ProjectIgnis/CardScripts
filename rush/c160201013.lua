@@ -15,7 +15,7 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if #eg~=1 then return false end
 	local tc=eg:GetFirst()
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsLevelAbove,5),tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsLevelAbove,5),tp,LOCATION_MZONE,0,nil)
 	return tc:IsFaceup() and tc:IsSummonPlayer(1-tp) and #g>1
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

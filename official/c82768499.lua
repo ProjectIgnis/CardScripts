@@ -15,7 +15,7 @@ function s.thfilter(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() end
-	local b1=Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x99),tp,LOCATION_ONFIELD,0,1,nil)
+	local b1=Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x99),tp,LOCATION_ONFIELD,0,1,nil)
 		and Duel.IsExistingTarget(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,e:GetHandler())
 	local b2=Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,nil)
 	if chk==0 then return b1 or b2 end

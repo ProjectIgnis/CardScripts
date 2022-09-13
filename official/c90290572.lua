@@ -34,13 +34,13 @@ end
 s.listed_names={CARD_SANCTUARY_SKY,91188343}
 function s.sanct()
 	return Duel.IsEnvironment(CARD_SANCTUARY_SKY)
-		or Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_SANCTUARY_SKY),0,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,1,nil)
+		or Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_SANCTUARY_SKY),0,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,1,nil)
 end
 function s.ghcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
 function s.tgfilter(c)
-	return (c:IsCode(CARD_SANCTUARY_SKY) or c:IsCodeListed(CARD_SANCTUARY_SKY)) and c:IsAbleToGrave()
+	return (c:IsCode(CARD_SANCTUARY_SKY) or c:ListsCode(CARD_SANCTUARY_SKY)) and c:IsAbleToGrave()
 end
 function s.thfilter(c)
 	return c:IsCode(91188343) and c:IsAbleToHand()

@@ -42,15 +42,15 @@ end
 s.listed_names={TOKEN_BRAVE}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local attacker,target=Duel.GetBattleMonster(tp)
-	if attacker and attacker:IsCodeListed(TOKEN_BRAVE) then
+	if attacker and attacker:ListsCode(TOKEN_BRAVE) then
 		Duel.RegisterFlagEffect(attacker:GetControler(),id,RESET_PHASE+PHASE_BATTLE,0,1)
 	end
-	if target and target:IsCodeListed(TOKEN_BRAVE) then
+	if target and target:ListsCode(TOKEN_BRAVE) then
 		Duel.RegisterFlagEffect(target:GetControler(),id,RESET_PHASE+PHASE_BATTLE,0,1)
 	end
 end
 function s.bravecon(e)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,TOKEN_BRAVE),e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,TOKEN_BRAVE),e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -67,7 +67,7 @@ function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFlagEffect(tp,id)>0
 end
 function s.setfilter(c)
-	return c:IsTrap() and c:IsCodeListed(TOKEN_BRAVE) and c:IsSSetable()
+	return c:IsTrap() and c:ListsCode(TOKEN_BRAVE) and c:IsSSetable()
 		and not c:IsForbidden()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)

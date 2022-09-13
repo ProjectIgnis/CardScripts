@@ -45,14 +45,14 @@ end
 function s.atcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsReleasable()
-		and Duel.IsExistingTarget(aux.FilterFaceupFunction(Card.IsSetCard,0x2a),tp,LOCATION_MZONE,0,1,c) end
+		and Duel.IsExistingTarget(aux.FaceupFilter(Card.IsSetCard,0x2a),tp,LOCATION_MZONE,0,1,c) end
 	Duel.Release(c,REASON_COST)
 end
 function s.attg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() and chkc:IsSetCard(0x2a) end
-	if chk==0 then return Duel.IsExistingTarget(aux.FilterFaceupFunction(Card.IsSetCard,0x2a),tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(aux.FaceupFilter(Card.IsSetCard,0x2a),tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
-	local g=Duel.SelectTarget(tp,aux.FilterFaceupFunction(Card.IsSetCard,0x2a),tp,LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsSetCard,0x2a),tp,LOCATION_MZONE,0,1,1,nil)
 end
 function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

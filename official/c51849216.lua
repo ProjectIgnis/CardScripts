@@ -42,12 +42,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.Remove(eg,POS_FACEUP,REASON_EFFECT)>0 then
 		local og=Duel.GetOperatedGroup()
 		if not og:GetFirst():IsLocation(LOCATION_REMOVED) then return end
-		local ct=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsFaceup),tp,LOCATION_REMOVED,LOCATION_REMOVED,nil)
+		local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsFaceup),tp,LOCATION_REMOVED,LOCATION_REMOVED,nil)
 		if ct>0 and Duel.IsExistingMatchingCard(s.atkfilter,tp,LOCATION_MZONE,0,1,nil)
 			and Duel.SelectEffectYesNo(tp,e:GetHandler()) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
-			local tc=Duel.SelectMatchingCard(tp,aux.FilterFaceupFunction(Card.IsSetCard,0x29),tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
+			local tc=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsSetCard,0x29),tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
 			Duel.HintSelection(Group.FromCards(tc))
 			--Increase ATK
 			local e1=Effect.CreateEffect(e:GetHandler())

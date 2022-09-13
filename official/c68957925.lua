@@ -19,7 +19,7 @@ function s.desfilter(c)
 	return c:IsFaceup() and c:IsAttackBelow(3000)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local lg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsLinkMonster),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local lg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsLinkMonster),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	local ct=lg:GetClassCount(Card.GetOriginalAttribute)
 	if chk==0 then
 		return ct==3 or ct==4
@@ -41,7 +41,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local lg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsLinkMonster),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local lg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsLinkMonster),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if #lg==0 then return end
 	local ct=lg:GetClassCount(Card.GetOriginalAttribute)
 	if ct==1 then

@@ -17,7 +17,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x167}
 function s.fextra(e,tp,mg)
-	if Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_NORMAL),tp,LOCATION_MZONE,0,1,nil) then
+	if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,TYPE_NORMAL),tp,LOCATION_MZONE,0,1,nil) then
 		local sg=Duel.GetMatchingGroup(s.fexfilter,tp,LOCATION_DECK,0,nil)
 		if #sg>0 then
 			return sg,s.fcheck
@@ -39,7 +39,7 @@ function s.rcheck(e,tp,sg,fc)
 	return sg:FilterCount(Card.IsLocation,nil,LOCATION_DECK)<=1
 end
 function s.rextra(e,tp,mg)
-	if Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_NORMAL),tp,LOCATION_MZONE,0,1,nil) then
+	if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,TYPE_NORMAL),tp,LOCATION_MZONE,0,1,nil) then
 		local sg=Duel.GetMatchingGroup(s.fexfilter,tp,LOCATION_DECK,0,nil)
 		if #sg>0 then
 			return sg

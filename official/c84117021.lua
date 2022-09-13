@@ -13,7 +13,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local opt=0
-	if Duel.IsExistingTarget(aux.FilterFaceupFunction(Card.IsRace,RACE_SPELLCASTER),tp,LOCATION_MZONE,0,1,nil) then
+	if Duel.IsExistingTarget(aux.FaceupFilter(Card.IsRace,RACE_SPELLCASTER),tp,LOCATION_MZONE,0,1,nil) then
 		opt=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))
 	end
 	Duel.SetTargetParam(opt)
@@ -22,7 +22,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	else
 		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-		Duel.SelectTarget(tp,aux.FilterFaceupFunction(Card.IsRace,RACE_SPELLCASTER),tp,LOCATION_MZONE,0,1,1,nil)
+		Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsRace,RACE_SPELLCASTER),tp,LOCATION_MZONE,0,1,1,nil)
 	end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -86,7 +86,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RegisterEffect(e2,tp)
 	end
 end
-s.filter=aux.FilterFaceupFunction(Card.IsRace,RACE_SPELLCASTER)
+s.filter=aux.FaceupFilter(Card.IsRace,RACE_SPELLCASTER)
 function s.sumcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.filter,1,nil)
 end

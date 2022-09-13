@@ -66,13 +66,13 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsLevelBelow,7),tp,0,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsLevelBelow,7),tp,0,LOCATION_MZONE,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,#g*1000)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsLevelBelow,7),tp,0,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsLevelBelow,7),tp,0,LOCATION_MZONE,nil)
 	local ct=Duel.Destroy(g,REASON_EFFECT)
 	if Duel.Damage(1-tp,ct*1000,REASON_EFFECT)~=0 then
 		local e1=Effect.CreateEffect(c)

@@ -66,5 +66,5 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoGrave(tc,REASON_EFFECT)
 end
 function s.atkcon(e)
-	return Duel.IsExistingMatchingCard(Card.IsType,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler(),TYPE_MONSTER)
+	return Duel.IsExistingMatchingCard(Card.IsMonster,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
 end

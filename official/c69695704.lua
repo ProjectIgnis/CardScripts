@@ -23,10 +23,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.atkval(e,c)
-	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsRace,RACE_WINGEDBEAST),c:GetControler(),LOCATION_MZONE,0,nil)*100
+	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsRace,RACE_WINGEDBEAST),c:GetControler(),LOCATION_MZONE,0,nil)*100
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_WINGEDBEAST),tp,LOCATION_MZONE,0,3,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_WINGEDBEAST),tp,LOCATION_MZONE,0,3,nil)
 end
 function s.filter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP)
@@ -39,7 +39,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_WINGEDBEAST),tp,LOCATION_MZONE,0,3,nil) then return end
+	if not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_WINGEDBEAST),tp,LOCATION_MZONE,0,3,nil) then return end
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		Duel.Destroy(tc,REASON_EFFECT)

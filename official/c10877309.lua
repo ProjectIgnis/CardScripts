@@ -44,9 +44,9 @@ function s.xfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x126) and c:IsType(TYPE_XYZ)
 end
 function s.xcheck(sg,e,tp)
-	return sg:FilterCount(Card.IsType,nil,TYPE_MONSTER)==1
-		and sg:FilterCount(Card.IsType,nil,TYPE_SPELL)==1
-		and sg:FilterCount(Card.IsType,nil,TYPE_TRAP)==1
+	return sg:FilterCount(Card.IsMonster,nil)==1
+		and sg:FilterCount(Card.IsSpell,nil)==1
+		and sg:FilterCount(Card.IsTrap,nil)==1
 end
 function s.xtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.xfilter(chkc) end

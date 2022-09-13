@@ -64,7 +64,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummonComplete()
 end
 function s.heroiccount(tp)
-	local mct=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0x6f),tp,LOCATION_ONFIELD,0,nil)
+	local mct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0x6f),tp,LOCATION_ONFIELD,0,nil)
 	local oct=Duel.GetOverlayGroup(tp,1,0):FilterCount(Card.IsSetCard,nil,0x6f)
 	return mct+oct
 end

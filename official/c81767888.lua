@@ -70,7 +70,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummonComplete()
 end
 function s.thfilter(c)
-	return c:IsFaceup() and (c:IsCode(CARD_ALBAZ) or (c:IsMonster() and c:IsCodeListed(CARD_ALBAZ)))
+	return c:IsFaceup() and (c:IsCode(CARD_ALBAZ) or (c:IsMonster() and c:ListsCode(CARD_ALBAZ)))
 		and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

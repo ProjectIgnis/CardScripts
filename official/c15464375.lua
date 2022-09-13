@@ -44,7 +44,7 @@ function s.spcon(e,c)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(s.stfilter,tp,LOCATION_SZONE,0,1,nil)
 end
 function s.atkval(e,c)
-	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsType,TYPE_SPELL+TYPE_TRAP),0,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)*600
+	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSpellTrap),0,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)*600
 end
 function s.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.AND(s.stfilter,Card.IsAbleToGraveAsCost),tp,LOCATION_SZONE,0,2,nil) end

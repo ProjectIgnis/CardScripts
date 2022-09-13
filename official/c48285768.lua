@@ -65,7 +65,7 @@ function s.bantg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 	--Check for fusion monster that lists "Fallen of Albaz"
 function s.edfilter(c)
-	return c:IsType(TYPE_FUSION) and c:IsMaterialListCode(CARD_ALBAZ)
+	return c:IsType(TYPE_FUSION) and c:ListsCodeAsMaterial(CARD_ALBAZ)
 end
 	--Banish itself temporarily
 function s.banop(e,tp,eg,ep,ev,re,r,rp)

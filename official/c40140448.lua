@@ -40,7 +40,7 @@ s.listed_names={40140448}
 s.listed_series={0x137}
 --no attack
 function s.atcon(e)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x137),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x137),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
 end
 --search
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)

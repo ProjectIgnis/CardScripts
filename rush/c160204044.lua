@@ -38,7 +38,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		--Effect
 		local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 		if Duel.Draw(p,d,REASON_EFFECT)>0 then
-			local ct=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsLevel,9),tp,LOCATION_MZONE,0,nil)
+			local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsLevel,9),tp,LOCATION_MZONE,0,nil)
 			local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
 			if #g==0 or ct==0 then return end
 			for tc in g:Iter() do

@@ -35,8 +35,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
-		if Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,160316017),tp,LOCATION_MZONE,0,1,nil)
-			and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,160316018),tp,LOCATION_MZONE,0,1,nil) then
+		if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,160316017),tp,LOCATION_MZONE,0,1,nil)
+			and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,160316018),tp,LOCATION_MZONE,0,1,nil) then
 			Duel.BreakEffect()
 			local c=e:GetHandler()
 			local e1=Effect.CreateEffect(c)

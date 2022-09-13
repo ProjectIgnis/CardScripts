@@ -21,7 +21,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
 	if #g>0 then
 		Duel.ConfirmCards(tp,g)
-		local tg=g:Filter(Card.IsType,nil,TYPE_MONSTER)
+		local tg=g:Filter(Card.IsMonster,nil)
 		if #tg>0 and Duel.NegateAttack() then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)

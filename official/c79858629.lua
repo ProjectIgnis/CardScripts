@@ -49,7 +49,7 @@ end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	if Duel.Draw(p,d,REASON_EFFECT)==d 
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,5352328),tp,LOCATION_ONFIELD,0,1,nil) then
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,5352328),tp,LOCATION_ONFIELD,0,1,nil) then
 		Duel.BreakEffect()
 		Duel.Recover(tp,800,REASON_EFFECT)
 	end

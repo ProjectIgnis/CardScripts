@@ -28,7 +28,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 								return te:IsActivatable(tp,true,true)
 							end,
 							function(c)
-								Duel.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
+								Duel.ActivateFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
 							end,
 							aux.Stringid(id,2))
 end

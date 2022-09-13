@@ -35,13 +35,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ct=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsAttribute,ATTRIBUTE_WATER),tp,LOCATION_MZONE,0,nil)
+	local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsAttribute,ATTRIBUTE_WATER),tp,LOCATION_MZONE,0,nil)
 	if chk==0 then return ct>0 and Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)>=ct 
 		and Duel.GetDecktopGroup(1-tp,ct):FilterCount(Card.IsAbleToRemove,nil)==ct end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,ct,1-tp,LOCATION_DECK)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
-	local ct=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsAttribute,ATTRIBUTE_WATER),tp,LOCATION_MZONE,0,nil)
+	local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsAttribute,ATTRIBUTE_WATER),tp,LOCATION_MZONE,0,nil)
 	if ct==0 then return end
 	local g=Duel.GetDecktopGroup(1-tp,ct)
 	if #g==ct then
@@ -70,8 +70,8 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 	end
 end
-local atkcfilter=aux.FilterFaceupFunction(Card.IsType,TYPE_MONSTER)
-local atkfilter=aux.FilterFaceupFunction(Card.IsAttribute,ATTRIBUTE_WATER)
+local atkcfilter=aux.FaceupFilter(Card.IsMonster)
+local atkfilter=aux.FaceupFilter(Card.IsAttribute,ATTRIBUTE_WATER)
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(atkfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 		and Duel.IsExistingMatchingCard(atkcfilter,tp,LOCATION_REMOVED,LOCATION_REMOVED,1,nil) end

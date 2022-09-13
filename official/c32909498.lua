@@ -63,9 +63,9 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsOnField() and chkc:IsFaceup() and chkc:IsAbleToRemove() end
-	if chk==0 then return Duel.IsExistingTarget(aux.FilterFaceupFunction(Card.IsAbleToRemove,{tp,POS_FACEDOWN}),tp,0,LOCATION_ONFIELD,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(aux.FaceupFilter(Card.IsAbleToRemove,{tp,POS_FACEDOWN}),tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectTarget(tp,aux.FilterFaceupFunction(Card.IsAbleToRemove,{tp,POS_FACEDOWN}),tp,0,LOCATION_ONFIELD,1,1,nil)
+	local g=Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsAbleToRemove,{tp,POS_FACEDOWN}),tp,0,LOCATION_ONFIELD,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp,chk)

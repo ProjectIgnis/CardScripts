@@ -41,7 +41,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	local fg=g:Filter(aux.FilterFaceupFunction(Card.IsLevelAbove,1),nil)
+	local fg=g:Filter(aux.FaceupFilter(Card.IsLevelAbove,1),nil)
 	if #fg>0 then
 		g=g-fg:GetMaxGroup(Card.GetLevel)
 	end

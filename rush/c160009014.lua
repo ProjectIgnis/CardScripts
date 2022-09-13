@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
-		and Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsType,TYPE_NORMAL),tp,LOCATION_MZONE,0,nil)==2
+		and Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsType,TYPE_NORMAL),tp,LOCATION_MZONE,0,nil)==2
 end
 function s.filter(c)
 	return c:IsMonster() and c:IsType(TYPE_NORMAL) and c:IsAbleToHand()

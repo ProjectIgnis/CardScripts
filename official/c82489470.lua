@@ -36,7 +36,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
 function s.desfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:IsMaterialListCode(CARD_ALBAZ)
+	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:ListsCodeAsMaterial(CARD_ALBAZ)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -50,7 +50,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(aux.FilterFaceupFunction(Card.IsMonster),1,nil)
+	return eg:IsExists(aux.FaceupFilter(Card.IsMonster),1,nil)
 end
 function s.spfilter(c,e,tp)
 	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_SPELLCASTER) and c:IsDefense(c:GetAttack())

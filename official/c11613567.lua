@@ -24,7 +24,7 @@ s.listed_series={0x33}
 function s.ntcon(e,c,minc)
 	if c==nil then return true end
 	return minc==0 and c:GetLevel()>4 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x33),c:GetControler(),LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x33),c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function s.filter(c)
 	return c:IsCanChangePosition()

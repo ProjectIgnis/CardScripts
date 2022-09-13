@@ -62,7 +62,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x161),tp,LOCATION_MZONE,0,1,nil) end
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x161),tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,s.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
@@ -73,7 +73,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if sc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP) 
 	end
-	local atkg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x161),tp,LOCATION_MZONE,0,nil)
+	local atkg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0x161),tp,LOCATION_MZONE,0,nil)
 	for tc in aux.Next(atkg) do
 		--Increase ATK
 		local e1=Effect.CreateEffect(c)

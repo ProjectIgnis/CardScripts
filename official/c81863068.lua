@@ -23,7 +23,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.BreakEffect()
 	local g=Duel.GetOperatedGroup()
 	Duel.ConfirmCards(1-p,g)
-	local dg=g:Filter(Card.IsType,nil,TYPE_SPELL)
+	local dg=g:Filter(Card.IsSpell,nil)
 	Duel.SendtoGrave(dg,REASON_EFFECT+REASON_DISCARD)
 	Duel.ShuffleHand(p)
 end

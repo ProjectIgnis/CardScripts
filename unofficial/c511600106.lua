@@ -30,7 +30,7 @@ function s.matfilter(c,lc,sumtype,tp)
 	return c:IsLevelAbove(3) and c:IsRace(RACE_CYBERSE,lc,sumtype,tp)
 end
 function s.atkval(e,c)
-	return c:GetLinkedGroup():FilterCount(Card.IsType,nil,TYPE_MONSTER)*300
+	return c:GetLinkedGroup():FilterCount(Card.IsMonster,nil)*300
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)

@@ -62,7 +62,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 		local tc=g:Select(tp,1,1,nil):GetFirst()
-		if Duel.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp) then
+		if Duel.ActivateFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp) then
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_FIELD)
 			e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)

@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.spfilter1(c,tp)
-	return c:IsFaceup() and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsAttribute,c:GetAttribute()),tp,0,LOCATION_MZONE,1,c)
+	return c:IsFaceup() and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsAttribute,c:GetAttribute()),tp,0,LOCATION_MZONE,1,c)
 end
 function s.spcon(e,c)
 	if c==nil then return true end

@@ -34,7 +34,7 @@ end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp,cat)
 	if not Duel.IsChainNegatable(ev) then return false end
 	local ex,tg,tc=Duel.GetOperationInfo(ev,cat)
-	return ex and tg~=nil and tc+tg:FilterCount(Card.IsType,nil,TYPE_SPELL)-#tg>0
+	return ex and tg~=nil and tc+tg:FilterCount(Card.IsSpell,nil)-#tg>0
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

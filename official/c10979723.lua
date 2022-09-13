@@ -21,7 +21,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x4}
 function s.val(e,c)
-	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0x4),c:GetControler(),LOCATION_MZONE,0,nil)*400
+	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0x4),c:GetControler(),LOCATION_MZONE,0,nil)*400
 end
 function s.atlimit(e,c)
 	return c:IsFaceup() and c:IsSetCard(0x4) and c~=e:GetHandler()

@@ -447,7 +447,7 @@ if Duel.IsDuelType(DUEL_INVERTED_QUICK_PRIORITY) then
 	traprush2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	traprush2:SetCode(EVENT_STARTUP)
 	traprush2:SetOperation(function()
-							local g=Duel.GetMatchingGroup(Card.IsType,0,0xffffff,0xffffff,nil,TYPE_TRAP)
+							local g=Duel.GetMatchingGroup(Card.IsTrap,0,0xffffff,0xffffff,nil)
 							for tc in g:Iter() do
 								local effs={tc:GetActivateEffect()}
 								for _,eff in ipairs(effs) do

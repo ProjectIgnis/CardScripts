@@ -34,7 +34,7 @@ function s.rescon(fg)
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local cg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
-	local fg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsLevelBelow,#cg),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local fg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsLevelBelow,#cg),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if chk==0 then return aux.SelectUnselectGroup(cg,e,tp,nil,nil,s.rescon(fg),0) end
 	local rg=aux.SelectUnselectGroup(cg,e,tp,nil,nil,s.rescon(fg),1,tp,HINTMSG_REMOVE,s.rescon(fg))
 	Duel.Remove(rg,POS_FACEUP,REASON_COST)
@@ -46,6 +46,6 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local lv=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
 	if lv==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectMatchingCard(tp,aux.FilterFaceupFunction(Card.IsLevel,lv),tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsLevel,lv),tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 	Duel.Destroy(g,REASON_EFFECT)
 end

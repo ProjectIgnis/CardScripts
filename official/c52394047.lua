@@ -43,7 +43,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x19}
 function s.mustatkcon(e)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x19),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x19),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()

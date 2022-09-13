@@ -511,3 +511,5 @@ SET_KSHATRI_LA                    = 0x18a
 SET_RESCUE_ACE                    = 0x18c
 SET_PURERY                        = 0x18d
 SET_MIKANKO                       = 0x18e
+--Beta archetypes
+SET_AQUAMIRROR                    = 0x28b

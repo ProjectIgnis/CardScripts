@@ -73,7 +73,7 @@ end
 function s.smlop(e,tp,eg,ep,ev,re,r,rp)
 	local b1=Duel.IsPlayerCanDiscardDeck(tp,3)
 	local b2=Duel.IsPlayerCanDiscardDeck(1-tp,3)
-	local op=aux.SelectEffect(tp,
+	local op=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,3)},
 		{b2,aux.Stringid(id,4)})
 	if op then

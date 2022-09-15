@@ -65,6 +65,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		Duel.HintSelection(g,true)
 		Duel.BreakEffect()
-		Duel.Overlay(tc,g)
+		Duel.Overlay(tc,g,true)
 	end
 end

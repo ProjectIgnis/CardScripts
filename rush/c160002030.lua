@@ -1,6 +1,5 @@
 --邪影ダーク・ルーカー
 --Wicked Shadow Dark Lurker
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Destroy 1 Spell/Trap and deal 1000 damage
@@ -18,7 +17,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsSpellTraptp,0,LOCATION_ONFIELD,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsSpellTrap,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,1-tp,LOCATION_SZONE)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,1,1-tp,1000)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,e:GetHandler(),1,tp,0)

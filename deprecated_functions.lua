@@ -1,3 +1,6 @@
+if not load then
+	return
+end
 local function make_deprecated_function_alias(old_funcname,new_funcname)
 	load(old_funcname .. [[= function(...)
 		Debug.PrintStacktrace()

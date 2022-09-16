@@ -24,10 +24,8 @@ function s.filter2(c,e)
 	return s.filter(c) and not c:IsImmuneToEffect(e)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetTargetCards(e):Filter(s.filter2,tp,LOCATION_MZONE,0,nil,e)
+	local g=Duel.GetTargetCards(e):Match(s.filter2,nil,e)
 	if #g==0 then return end
-	for tc in g:Iter() do
-		tc:EnableGeminiStatus()
-	end
+	g:ForEach(Card.EnableGeminiStatus)
 	aux.DelayedOperation(g,PHASE_END,id,e,tp,function(ag) Duel.ChangePosition(ag,POS_FACEDOWN_DEFENSE) end)
 end

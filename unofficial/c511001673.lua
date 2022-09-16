@@ -1,3 +1,4 @@
+--女神の足音
 --Footsteps of the Goddess
 local s,id=GetID()
 function s.initial_effect(c)
@@ -12,7 +13,8 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0 and Duel.IsPlayerCanSpecialSummon(1-tp) 
 		and Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>0 end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,LOCATION_HAND)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,1-tp,LOCATION_HAND)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function s.filter(c,e,tp)
 	return c:IsAttackBelow(1500) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -24,15 +26,15 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(tp,g)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sc=g:FilterSelect(tp,s.filter,1,1,nil,e,1-tp):GetFirst()
-		if sc then
-			Duel.SpecialSummonStep(sc,0,tp,1-tp,false,false,POS_FACEUP_ATTACK)
+		if not sc then return end
+		if Duel.SpecialSummonStep(sc,0,tp,1-tp,false,false,POS_FACEUP_ATTACK) then
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CANNOT_ATTACK)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			sc:RegisterEffect(e1)
 			local sg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_HAND,0,nil,e,tp)
-			if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and #g>0 and Duel.SelectYesNo(tp,aux.Stringid(525110,1)) then
+			if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(525110,1)) then
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 				local sc2=sg:Select(tp,1,1,nil):GetFirst()
 				Duel.BreakEffect()
@@ -43,8 +45,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 				e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 				sc2:RegisterEffect(e2)
 			end
-			Duel.SpecialSummonComplete()
+		Duel.SpecialSummonComplete()
 		end
-		Duel.ShuffleHand(1-tp)
+	Duel.ShuffleHand(1-tp)
 	end
 end

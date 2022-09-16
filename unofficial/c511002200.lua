@@ -1,12 +1,13 @@
 --煉獄龍 オーガ・ドラグーン
+--Void Ogre Dragon (Manga)
 local s,id=GetID()
 function s.initial_effect(c)
-	--synchro summon
-	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
 	c:EnableReviveLimit()
-	--negate
+	--Synchro Summon Procedure
+	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
+	--Negate the activation of Spell/Trap Cards
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(81020646,0))
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
@@ -17,8 +18,9 @@ function s.initial_effect(c)
 	e1:SetTarget(s.distg)
 	e1:SetOperation(s.disop)
 	c:RegisterEffect(e1)
+	--Increase its own ATK by 500
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(29146185,1))
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e2:SetCode(id)
 	e2:SetOperation(s.atkop)
@@ -38,22 +40,13 @@ end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.NegateActivation(ev)
-	if re:GetHandler():IsRelateToEffect(re) then
-		if Duel.Destroy(eg,REASON_EFFECT)>0 then
-			if c:IsFaceup() and c:IsRelateToEffect(e) then
-				Duel.RaiseSingleEvent(c,id,e,r,rp,ep,0)
-			end
-		end
+	if re:GetHandler():IsRelateToEffect(re) and Duel.Destroy(eg,REASON_EFFECT)>0 and c:IsFaceup() and c:IsRelateToEffect(e) then
+		Duel.RaiseSingleEvent(c,id,e,r,rp,ep,0)
 	end
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsFaceup() and c:IsRelateToEffect(e) then
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
-		e1:SetValue(500)
-		c:RegisterEffect(e1)
+		c:UpdateAttack(500,RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
 	end
 end

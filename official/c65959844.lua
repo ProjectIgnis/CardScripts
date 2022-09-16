@@ -70,6 +70,6 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end
-function s.retcon(e,tp,eg,ep,ev,re,r,rp)
+function s.retcon(ag,e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsTurnPlayer(1-tp)
 end

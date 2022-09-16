@@ -40,7 +40,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local f2=Duel.IsExistingMatchingCard(s.codefilter,tp,LOCATION_DECK,0,1,nil,25669282)
 		and Duel.IsExistingMatchingCard(s.chemfilter,tp,LOCATION_DECK,0,1,nil)
 	if chk==0 then return f1 or f2 end
-	local op=aux.SelectEffect(tp,
+	local op=Duel.SelectEffect(tp,
 		{f1,aux.Stringid(id,2)},
 		{f2,aux.Stringid(id,3)})
 	e:SetLabel(op)

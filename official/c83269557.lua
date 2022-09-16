@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(Gemini.EffectStatusCondition)
-	e1:SetValue(function(_,c) return c:GetCounter()*300 end)
+	e1:SetValue(function(_,c) return c:GetCounter(COUNTER_SPELL)*300 end)
 	c:RegisterEffect(e1)
 	--Place 1 Spell Counter
 	local e2=Effect.CreateEffect(c)

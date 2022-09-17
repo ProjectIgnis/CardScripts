@@ -12,7 +12,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x10af}
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	local params = {aux.FilterBoolFunction(Card.IsSetCard,0x10af),aux.FALSE,s.fextra,Fusion.BanishMaterial,Fusion.ForcedHandler,nil,nil,nil,nil,nil,nil,nil,nil,s.extratg}
+	local params={fusfilter=aux.FilterBoolFunction(Card.IsSetCard,0x10af),matfilter=aux.FALSE,extrafil=s.fextra,extraop=Fusion.BanishMaterial,gc=Fusion.ForcedHandler,extratg=s.extratg}
 	local c=e:GetHandler()
 	--Fusion Summon
 	local e1=Effect.CreateEffect(c)
@@ -20,8 +20,8 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_GRAVE)
-	e1:SetTarget(Fusion.SummonEffTG(table.unpack(params)))
-	e1:SetOperation(Fusion.SummonEffOP(table.unpack(params)))
+	e1:SetTarget(Fusion.SummonEffTG(params))
+	e1:SetOperation(Fusion.SummonEffOP(params))
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	c:RegisterEffect(e1)
 end

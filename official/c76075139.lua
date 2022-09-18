@@ -1,5 +1,5 @@
 -- ヴァリアンツＧ－グランデューク
--- Valiants' Genesis - Granduke
+-- Vaylantz Genesis Grand Duke
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -7,36 +7,46 @@ function s.initial_effect(c)
 	c:EnableReviveLimit()
 	-- 2 "Valiants" monsters
 	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x17e),2)
-	-- Alternate summon procedure
+	-- Special Summon limitation
 	local e0=Effect.CreateEffect(c)
-	e0:SetType(EFFECT_TYPE_FIELD)
-	e0:SetProperty(EFFECT_FLAG_UNCOPYABLE)
-	e0:SetCode(EFFECT_SPSUMMON_PROC)
-	e0:SetRange(LOCATION_EXTRA)
-	e0:SetCondition(s.hspcon)
-	e0:SetTarget(s.hsptg)
-	e0:SetOperation(s.hspop)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
+	e0:SetValue(s.splimit)
 	c:RegisterEffect(e0)
-	-- Special Summon self or move 1 "Valiants" monster
+	-- Alternate summon procedure
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetRange(LOCATION_PZONE)
-	e1:SetCountLimit(1,id)
-	e1:SetTarget(s.spmvtg)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
+	e1:SetCode(EFFECT_SPSUMMON_PROC)
+	e1:SetRange(LOCATION_EXTRA)
+	e1:SetCondition(s.hspcon)
+	e1:SetTarget(s.hsptg)
+	e1:SetOperation(s.hspop)
 	c:RegisterEffect(e1)
-	-- Send Monster Card to hand
+	-- Special Summon self or move 1 "Valiants" monster
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,1))
-	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_DAMAGE+CATEGORY_ATKCHANGE)
-	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
-	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e2:SetTarget(s.thtg)
-	e2:SetOperation(s.thop)
+	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetType(EFFECT_TYPE_IGNITION)
+	e2:SetRange(LOCATION_PZONE)
+	e2:SetCountLimit(1,id)
+	e2:SetTarget(s.spmvtg)
 	c:RegisterEffect(e2)
+	-- Send Monster Card to hand
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(id,1))
+	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_DAMAGE+CATEGORY_ATKCHANGE)
+	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e3:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
+	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e3:SetTarget(s.thtg)
+	e3:SetOperation(s.thop)
+	c:RegisterEffect(e3)
 end
 s.listed_series={0x17e}
+function s.splimit(e,se,sp,st)
+	return not e:GetHandler():IsLocation(LOCATION_EXTRA) or aux.fuslimit(e,se,sp,st)
+end
 function s.hspfilter(c,tp,sc)
 	local zone=1<<c:GetSequence()
 	return zone&0x6a==zone and c:IsSetCard(0x17e) and c:IsLevelAbove(5)

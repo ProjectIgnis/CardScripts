@@ -97,7 +97,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local a,b=Duel.GetBattleMonster(tp)
 	local p=e:GetHandler():GetControler()
-	if not b==nil then return end
+	if not b then return end
 	local tc=nil
 	if a:GetControler()==p and s.archfilter(a) and b:IsStatus(STATUS_BATTLE_DESTROYED) then
 		tc=b

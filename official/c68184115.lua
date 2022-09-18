@@ -32,12 +32,12 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x56}
+s.listed_series={SET_INZEKTOR}
 function s.eqval(ec,c,tp)
-	return ec:IsControler(tp) and ec:IsSetCard(0x56)
+	return ec:IsControler(tp) and ec:IsSetCard(SET_INZEKTOR)
 end
 function s.filter(c)
-	return c:IsSetCard(0x56) and c:IsMonster() and not c:IsForbidden()
+	return c:IsSetCard(SET_INZEKTOR) and c:IsMonster() and not c:IsForbidden()
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
@@ -65,7 +65,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,e:GetHandler(),tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x56) and c:GetCode()~=id and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_INZEKTOR) and c:GetCode()~=id and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

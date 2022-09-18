@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	--Xyz Summon
 	Xyz.AddProcedure(c,nil,7,2,nil,nil,99)
 	c:EnableReviveLimit()
-	--special summon
+	--Special Summon 1 "Kshatri-la" monster from the Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--disable zone
+	--Make 1 zone unusable
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.ztg)
 	e2:SetOperation(s.zop)
 	c:RegisterEffect(e2)
-	--destroy replace
+	--Destruction replacment
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -37,9 +37,9 @@ function s.initial_effect(c)
 	e3:SetTarget(s.reptg)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x18a}
+s.listed_series={SET_KSHATRI_LA}
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x18a) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_KSHATRI_LA) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -76,9 +76,10 @@ function s.zop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_DISABLE_FIELD)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetOperation(function(e) return e:GetLabel() end)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	e1:SetLabel(Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM))
 	c:RegisterEffect(e1)
 end

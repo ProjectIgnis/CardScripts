@@ -2,7 +2,7 @@
 --D/D Vice Typhon (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
-	--to grave
+	--Register effect when it is sent to grave
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -10,13 +10,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.regop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x10af}
+s.listed_series={SET_DDD}
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	local params={fusfilter=aux.FilterBoolFunction(Card.IsSetCard,0x10af),matfilter=aux.FALSE,extrafil=s.fextra,extraop=Fusion.BanishMaterial,gc=Fusion.ForcedHandler,extratg=s.extratg}
+	local params={fusfilter=aux.FilterBoolFunction(Card.IsSetCard,SET_DDD),matfilter=aux.FALSE,extrafil=s.fextra,extraop=Fusion.BanishMaterial,gc=Fusion.ForcedHandler,extratg=s.extratg}
 	local c=e:GetHandler()
-	--Fusion Summon
+	--Fusion Summon 1 "D/D/D" monster
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,1))
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_GRAVE)

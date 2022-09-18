@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	Pendulum.AddProcedure(c,false)
 	c:EnableReviveLimit()
 	-- 2 "Valiants" monsters
-	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x17e),2)
+	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_VAYLANTZ),2)
 	-- Special Summon limitation
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
@@ -43,13 +43,13 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x17e}
+s.listed_series={SET_VAYLANTZ}
 function s.splimit(e,se,sp,st)
 	return not e:GetHandler():IsLocation(LOCATION_EXTRA) or aux.fuslimit(e,se,sp,st)
 end
 function s.hspfilter(c,tp,sc)
 	local zone=1<<c:GetSequence()
-	return zone&0x6a==zone and c:IsSetCard(0x17e) and c:IsLevelAbove(5)
+	return zone&0x6a==zone and c:IsSetCard(SET_VAYLANTZ) and c:IsLevelAbove(5)
 		and not c:IsType(TYPE_FUSION) and Duel.GetLocationCountFromEx(tp,tp,c,sc)>0
 end
 function s.hspcon(e,c)

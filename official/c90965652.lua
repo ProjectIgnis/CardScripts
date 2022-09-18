@@ -26,14 +26,14 @@ function s.initial_effect(c)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xeb}
+s.listed_series={SET_CHEMICRITTER}
 s.listed_names={65959844,25669282}
 s.listed_card_types={TYPE_GEMINI}
 function s.codefilter(c,code)
 	return c:IsCode(code) and c:IsAbleToHand()
 end
 function s.chemfilter(c)
-	return c:IsMonster() and c:IsSetCard(0xeb) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(SET_CHEMICRITTER) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local f1=Duel.IsExistingMatchingCard(s.codefilter,tp,LOCATION_DECK,0,1,nil,65959844)

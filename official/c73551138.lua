@@ -32,13 +32,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
-s.listed_series={0x3a}
-function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x3a)
-end
+s.listed_series={SET_GISHKI}
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,c) then return end
+	if not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_GISHKI),tp,LOCATION_MZONE,0,1,c) then return end
 	--Negate face-up traps
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -79,5 +76,5 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(3682106)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-	c:RegisterEffect(e1)
+	e:GetHandler():RegisterEffect(e1)
 end

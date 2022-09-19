@@ -1,4 +1,5 @@
---Super Magitek Deity Magnum Over Road [R]
+--超魔機神マグナム・オーバーロード［Ｒ］
+--Supreme Machine Magnum Overlord [R]
 Duel.LoadCardScript("c160202003.lua")
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,6 +1,5 @@
 --ジャッキー・ジャンパー
 --Jackie Jumper
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon itself from hand
@@ -15,14 +14,14 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 	--Lists "Junk" archetype
-s.listed_series={0x43}
-
+s.listed_series={SET_JUNK}
 function s.spfilter(c)
-	return c:IsSetCard(0x43) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_JUNK) and c:IsAbleToGraveAsCost()
 end
 function s.spcon(e,c)
 	if c==nil then return true end
-	local rg=Duel.GetMatchingGroup(s.spfilter,c:GetControler(),LOCATION_HAND,0,e:GetHandler())
+	local tp=c:GetControler()
+	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND,0,e:GetHandler())
 	return aux.SelectUnselectGroup(rg,e,tp,1,#rg,aux.ChkfMMZ(1),0)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)

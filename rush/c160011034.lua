@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.con(e)
-	return Duel.GetMatchingGroupCount(Card.IsType,e:GetHandlerPlayer(),0,LOCATION_GRAVE,nil,TYPE_MONSTER)>=6
+	return Duel.GetMatchingGroupCount(Card.IsMonster,e:GetHandlerPlayer(),0,LOCATION_GRAVE,nil)>=6
 end
 function s.indval(e,re,rp)
 	local rc=re:GetHandler()

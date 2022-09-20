@@ -1,10 +1,10 @@
---ダイナ・タンク
---Dyna Tank
+--ダイナ・タンク (Anime)
+--Dyna Tank (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,false,true,id+1,aux.FilterBoolFunctionEx(Card.IsRace,RACE_DINOSAUR))
+	Fusion.AddProcMix(c,true,true,39396763,aux.FilterBoolFunctionEx(Card.IsRace,RACE_DINOSAUR))
 	--spsummon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	--atk
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e2:SetCode(id+1)
+	e2:SetCode(511001649)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetOperation(s.atkop)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	--switch
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_QUICK_F)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_QUICK_O)
 	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL+EFFECT_FLAG_CARD_TARGET)
 	e3:SetCode(EVENT_CHAINING)
 	e3:SetRange(LOCATION_MZONE)
@@ -32,9 +32,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.tgop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={id+1}
+s.listed_names={39396763}
 function s.splimit(e,se,sp,st)
-	return se:GetHandler():IsCode(id+1)
+	local code=Duel.GetChainInfo(0,CHAININFO_TRIGGERING_CODE)
+	return se:GetHandler():IsCode(39396763) or code==39396763
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

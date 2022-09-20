@@ -1,8 +1,10 @@
---Morphtronic Impact Return
+--Ｄ・インパクトリターン (Anime)
+--Morphtronic Impact Return (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_TODECK)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -26,12 +28,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	local sg=tg:Filter(Card.IsRelateToEffect,nil,e)
-	Duel.SendtoHand(sg,nil,REASON_EFFECT)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectMatchingCard(tp,s.retfilter,tp,LOCATION_HAND,0,1,1,nil)
-	if #g==0 then return end
-	Duel.ConfirmCards(1-tp,g)
-	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
+	local tg=Duel.GetTargetCards(e)
+	if Duel.SendtoHand(tg,nil,REASON_EFFECT)>0 and tg:FilterCount(Card.IsLocation,nil,LOCATION_HAND)>0 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+		local g=Duel.SelectMatchingCard(tp,s.retfilter,tp,LOCATION_HAND,0,1,1,nil)
+		if #g==0 then return end
+		Duel.ConfirmCards(1-tp,g)
+		Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
+	end
 end

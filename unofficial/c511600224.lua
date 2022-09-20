@@ -1,11 +1,12 @@
 --Ｇゴーレム・ペブルドッグ
 --G Golem Pebble Dog
---scripted by Larry126
-local s,id=GetID()
+--Scripted by Larry126
+local s,id,alias=GetID()
 function s.initial_effect(c)
-	--search
+	alias=c:Alias()
+	--Search
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(135598,0))
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
@@ -19,11 +20,12 @@ function s.initial_effect(c)
 	e2:SetCondition(s.thcon)
 	c:RegisterEffect(e2)
 end
+s.listed_names={alias}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_HAND)
 end
 function s.thfilter(c)
-	return c:IsCode(id) and c:IsAbleToHand()
+	return c:IsCode(alias) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

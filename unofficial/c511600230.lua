@@ -1,5 +1,5 @@
---重力均衡
---Gravity Balance
+--重力均衡 (Anime)
+--Gravity Balance (Anime)
 --scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)

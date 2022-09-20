@@ -1,48 +1,44 @@
---Clockwork Night
+--機械仕掛けの夜－クロック・ワーク・ナイト－ (Anime)
+--Clockwork Night (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(s.target)
+	e1:SetCountLimit(1)
 	c:RegisterEffect(e1)
-	--atkup
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_FIELD)
-	e4:SetCode(EFFECT_UPDATE_ATTACK)
-	e4:SetRange(LOCATION_SZONE)
-	e4:SetTargetRange(LOCATION_MZONE,0)
-	e4:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_MACHINE))
-	e4:SetValue(500)
-	c:RegisterEffect(e4)
+	--All monsters become Machine
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetCode(EFFECT_CHANGE_RACE)
+	e2:SetRange(LOCATION_SZONE)
+	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+	e2:SetTarget(s.tg)
+	e2:SetValue(RACE_MACHINE)
+	c:RegisterEffect(e2)
+	--Change ATK by 500
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_FIELD)
+	e3:SetCode(EFFECT_UPDATE_ATTACK)
+	e3:SetRange(LOCATION_SZONE)
+	e3:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+	e3:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_MACHINE))
+	e3:SetValue(function(e,c) return c:IsControler(e:GetHandlerPlayer()) and 500 or -500 end)
+	c:RegisterEffect(e3)
+	aux.GlobalCheck(s,function()
+		local ge1=Effect.CreateEffect(c)
+		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		ge1:SetCode(EVENT_SUMMON_SUCCESS)
+		ge1:SetOperation(s.chk)
+		Duel.RegisterEffect(ge1,0)
+	end)
 end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return true end
-	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
-	g:KeepAlive()
-	if #g>0 then 
-		for sc in aux.Next(g) do
-			local e1=Effect.CreateEffect(e:GetHandler())
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_CHANGE_RACE)
-			e1:SetValue(RACE_MACHINE)
-			e1:SetTarget(s.tg)
-			e1:SetLabelObject(g)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-			sc:RegisterEffect(e1)
-			local e2=Effect.CreateEffect(e:GetHandler())
-			e2:SetType(EFFECT_TYPE_SINGLE)
-			e2:SetCode(EFFECT_UPDATE_ATTACK)
-			e2:SetTarget(s.tg)
-			e2:SetValue(-500)
-			e2:SetLabelObject(g)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-			sc:RegisterEffect(e2)
-		end
+function s.chk(e,tp,eg,ep,ev,re,r,rp)
+	for tc in eg:Filter(Card.IsDefensePos,nil):Iter() do
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD&~(RESET_TEMP_REMOVE|RESET_TURN_SET),EFFECT_FLAG_CLIENT_HINT,1,nil,aux.Stringid(id,0))
 	end
 end
 function s.tg(e,c)
-	return e:GetLabelObject():IsContains(c)
+	return c:GetFlagEffect(id)==0
 end

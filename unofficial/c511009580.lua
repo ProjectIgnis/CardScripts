@@ -1,11 +1,12 @@
---Performapal Odd-Eyes Priest
+--ＥＭオッドアイズ・プリースト (Anime)
+--Performapal Odd-Eyes Seer (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
-	--pendulum summon
+	--Pendulum Summon
 	Pendulum.AddProcedure(c)
-	--to hand
+	--Add to hand
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(1249315,0))
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -15,20 +16,19 @@ function s.initial_effect(c)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
 	--Special summon
-	--spsummon success
-	local e7=Effect.CreateEffect(c)
-	e7:SetDescription(aux.Stringid(73941492,0))
-	e7:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e7:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e7:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e7:SetCondition(s.spcon)
-	e7:SetTarget(s.sptg)
-	e7:SetOperation(s.spop)
-	c:RegisterEffect(e7)
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e2:SetCondition(s.spcon)
+	e2:SetTarget(s.sptg)
+	e2:SetOperation(s.spop)
+	c:RegisterEffect(e2)
 end
 s.listed_series={0x99}
 function s.thfilter(c)
-	return c:IsMonster() and c:IsType(TYPE_PENDULUM) and c:IsSetCard(0x99) and c:IsAbleToHand()
+	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(0x99) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.thfilter(chkc) end
@@ -49,7 +49,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:GetSummonType()==SUMMON_TYPE_PENDULUM and c:IsPosition(POS_FACEUP_ATTACK)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x99) and c:IsType(TYPE_PENDULUM)
+	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(0x99)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

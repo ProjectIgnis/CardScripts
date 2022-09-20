@@ -147,8 +147,8 @@ if not AnimeArchetype then
 	-- Cicada
 	-- 蝉 
 	-- せみ
-	-- Number 3: Cicada King
-	Card.IsCicada=MakeCheck({0x50f},{4997565})
+	-- Number 3: Cicada King, Oily Cicada, Dream Cicada
+	Card.IsCicada=MakeCheck({0x50f},{4997565,79663524,5068132})
 
 	-- Champion
 	-- 王者
@@ -1101,4 +1101,9 @@ if not AnimeArchetype then
 	-- こせいだい
 	-- Fossil Dragon Skullgios/Fossil Machine Skull Convoy/Fossil Warrior Skull King
 	Card.IsPaleozoic=MakeCheck({0x57e},{21225115,57157964,96897184})
+
+	-- Mosquito
+	-- 軍蚊 (Army Mosquito)
+	-- Ninjitsu Art of Mosquito Marching
+	Card.IsMosquito=MakeCheck({0x536},{94113093})
 end

@@ -47,6 +47,7 @@ function s.thfilter(c,fid)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject()
+	if g:IsDeleted() then return false end
 	if g:Filter(s.thfilter,nil,e:GetLabel()):GetCount()<2 then
 		g:DeleteGroup()
 		return false

@@ -30,15 +30,6 @@ function s.initial_effect(c)
 	e3:SetCondition(s.negcon)
 	e3:SetOperation(s.negop)
 	c:RegisterEffect(e3)
-	local e4=e3:Clone()
-	e4:SetCode(EVENT_ATTACK_ANNOUNCE)
-	c:RegisterEffect(e4)
-	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e5:SetCode(EVENT_BATTLED)
-	e5:SetRange(LOCATION_MZONE)
-	e5:SetOperation(s.operation)
-	c:RegisterEffect(e5)
 end
 s.listed_series={SET_SCARECLAW,SET_KSHATRI_LA}
 function s.archfilter(c)
@@ -67,12 +58,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	local a,b=Duel.GetBattleMonster(tp)
-	if not a and b then return false end
-	if a:IsControler(tp) and s.archfilter(a) then
+	if a and b and s.archfilter(a) then
 		e:SetLabelObject(b)
-		return true
-	elseif a:IsControler(1-tp) and s.archfilter(b) then
-		e:SetLabelObject(a)
 		return true
 	end
 	e:SetLabelObject(nil)
@@ -81,10 +68,8 @@ end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
 	if not tc then return end
-	local property=tc:IsPosition(POS_FACEDOWN) and EFFECT_FLAG_SET_AVAILABLE or 0
 	-- Negate its effects
 	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetProperty(property)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_DISABLE)
 	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
@@ -92,27 +77,5 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_DISABLE_EFFECT)
 	e2:SetValue(RESET_TURN_SET)
-	tc:RegisterEffect(e2)
-end
-function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local a,b=Duel.GetBattleMonster(tp)
-	local p=e:GetHandler():GetControler()
-	if not b then return end
-	local tc=nil
-	if a:GetControler()==p and s.archfilter(a) and b:IsStatus(STATUS_BATTLE_DESTROYED) then
-		tc=b
-	elseif b:GetControler()==p and s.archfilter(b) and b:IsStatus(STATUS_BATTLE_DESTROYED) then
-		tc=a end
-	if not tc then return end
-	-- Negate its effects
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_DISABLE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_EXC_GRAVE+RESET_PHASE+PHASE_END)
-	tc:RegisterEffect(e1)
-	local e2=Effect.CreateEffect(e:GetHandler())
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_DISABLE_EFFECT)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD_EXC_GRAVE+RESET_PHASE+PHASE_END)
 	tc:RegisterEffect(e2)
 end

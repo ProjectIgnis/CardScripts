@@ -27,5 +27,5 @@ function s.con(e)
 end
 function s.indval(e,re,rp)
 	local rc=re:GetHandler()
-	return rc:IsType(TYPE_MONSTER) and rc:IsLevelBelow(8) and aux.indoval(e,re,rp)
+	return rc:IsMonster() and rc:IsLevelBelow(8) and aux.indoval(e,re,rp)
 end

@@ -486,8 +486,7 @@ end
 function Card.IsOriginalCode(c,...)
 	local args={...}
 	if #args==0 then
-		Debug.Message("Card.IsOriginalCode requires at least 2 params")
-		return false
+		error("Card.IsOriginalCode requires at least 2 params",2)
 	end
 	for _,cd in ipairs(args) do
 		if c:GetOriginalCode()==cd then return true end
@@ -498,8 +497,7 @@ end
 function Card.IsOriginalCodeRule(c,...)
 	local args={...}
 	if #args==0 then
-		Debug.Message("Card.IsOriginalCodeRule requires at least 2 params")
-		return false
+		error("Card.IsOriginalCodeRule requires at least 2 params",2)
 	end
 	local c1,c2=c:GetOriginalCodeRule()
 	for _,cd in ipairs(args) do

@@ -509,8 +509,7 @@ if not GenerateEffect then
 				for _,eff in ipairs(effs) do
 					local val=eff:GetValue()
 					if not val then
-						Debug.Message("val in 511010508 cannot be nil")
-						break
+						error("val in 511010508 cannot be nil",2)
 					end
 					if val==1 or (type(val)=='function' and val(eff,e,c)) then return false end
 				end
@@ -529,8 +528,7 @@ if not GenerateEffect then
 				for _,eff in ipairs(effs) do
 					local val=eff:GetValue()
 					if not val then
-						Debug.Message("val in 511010508 cannot be nil")
-						break
+						error("val in 511010508 cannot be nil",2)
 					end
 					if val==1 or (type(val)=='function' and val(eff,e,ec)) then return false end
 				end
@@ -546,8 +544,7 @@ if not GenerateEffect then
 				for _,eff in ipairs(effs) do
 					local val=eff:GetValue()
 					if not val then
-						Debug.Message("val in 511010508 cannot be nil")
-						break
+						error("val in 511010508 cannot be nil",2)
 					end
 					if val==1 or val(eff,e,c) then return false end
 				end
@@ -561,8 +558,7 @@ if not GenerateEffect then
 			for _,eff in ipairs(effs) do
 				local val=eff:GetValue()
 				if not val then
-					Debug.Message("val in 511010508 cannot be nil")
-					break
+					error("val in 511010508 cannot be nil",2)
 				end
 				if val==1 or val(eff,e,c) then return false end
 			end

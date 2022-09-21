@@ -41,6 +41,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if sc and Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)>0 then
 		if sc:IsOriginalCode(511001648) then sc:CompleteProcedure() end
 		local tc=Duel.GetFirstTarget()
-		if tc then Duel.RaiseSingleEvent(sc,id,e,REASON_EFFECT,tp,tp,tc:GetTextAttack()) end
+		if tc then
+			Duel.RaiseSingleEvent(sc,id,e,REASON_EFFECT,tp,tp,tc:GetTextAttack())
+		end
 	end
 end

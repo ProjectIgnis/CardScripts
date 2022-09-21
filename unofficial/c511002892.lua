@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x536}
 function s.rmfilter(c)
-	return c:IsIsMosquito() and c:IsMonster() and c:IsAbleToRemove() and aux.SpElimFilter(c,true)
+	return c:IsMosquito() and c:IsMonster() and c:IsAbleToRemove() and aux.SpElimFilter(c,true)
 end
 function s.filter(c,g)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:GetOverlayCount()==0 and not g:IsContains(c)

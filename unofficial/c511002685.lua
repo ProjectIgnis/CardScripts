@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x536}
 function s.filter(c,e,tp)
-	return c:IsIsMosquito() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsMosquito() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>1 and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) 

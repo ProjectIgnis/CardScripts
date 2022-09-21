@@ -63,6 +63,11 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 	local g=og:Select(tp,1,ct,nil)
 	if #g>0 then
+		for tc in g:Iter() do
+			if tc:IsSpellTrap() and tc:IsLocation(LOCATION_SZONE) then
+				tc:CancelToGrave()
+			end
+		end
 		Duel.HintSelection(g,true)
 		Duel.BreakEffect()
 		Duel.Overlay(tc,g,true)

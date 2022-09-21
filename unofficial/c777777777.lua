@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.GlobalCheck(s,function()
-		--draw
+		--Draw on Special Summoning 5 monsters
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e2:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -16,16 +16,16 @@ function s.initial_effect(c)
 		e3:SetCondition(s.spcon2)
 		e3:SetOperation(s.drop2)
 		Duel.RegisterEffect(e3,0)
-		--
+		--Draw on battling 5 times
 		local e4=e2:Clone()
 		e4:SetCode(EVENT_BATTLED)
 		e4:SetCondition(s.btcon1)
-		c:RegisterEffect(e4,0)
+		Duel.RegisterEffect(e4,0)
 		local e5=e3:Clone()
 		e5:SetCode(EVENT_BATTLED)
 		e5:SetCondition(s.btcon2)
 		Duel.RegisterEffect(e5,0)
-		--
+		--Draw on activating a chain link 5 or higher
 		local e0=Effect.CreateEffect(c)
 		e0:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -41,7 +41,7 @@ function s.initial_effect(c)
 		e7:SetCode(EVENT_CHAIN_SOLVING)
 		e7:SetCondition(s.chcon2)
 		Duel.RegisterEffect(e7,0)
-		--
+		--Draw on tossing a coin 5 or more times
 		local e8=Effect.CreateEffect(c)
 		e8:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e8:SetCode(EVENT_TOSS_COIN)
@@ -54,7 +54,7 @@ function s.initial_effect(c)
 		e9:SetCode(EVENT_TOSS_DICE)
 		e9:SetOperation(s.diceop)
 		Duel.RegisterEffect(e9,0)
-		--
+		--Draw on damage (500 or less)
 		local ea=e2:Clone()
 		ea:SetCode(EVENT_DAMAGE)
 		ea:SetCondition(s.damcon1)
@@ -72,11 +72,13 @@ function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return #eg==5 and eg:IsExists(Card.IsSummonPlayer,1,nil,1-tp) and eg:GetClassCount(Card.GetLevel)==5
 end
 function s.drop1(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_CARD,0,id)
+	Debug.Message("Applying draw effect to player 1")
+	Duel.Hint(HINT_CARD,0,19162134)
 	Duel.Draw(tp,2,REASON_EFFECT)
 end
 function s.drop2(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_CARD,0,id)
+	Debug.Message("Applying draw effect to player 2")
+	Duel.Hint(HINT_CARD,0,19162134)
 	Duel.Draw(1-tp,2,REASON_EFFECT)
 end
 function s.btcon1(e,tp,eg,ep,ev,re,r,rp)

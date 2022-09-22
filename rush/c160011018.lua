@@ -31,8 +31,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.setfilter),tp,LOCATION_GRAVE,0,1,1,nil)
 	if #g==0 or Duel.SSet(tp,g)==0 then return end
 	Duel.DisableShuffleCheck()
-	local g2=Duel.GetMatchingGroup(function(c)return c:GetSequence()<1 end,tp,LOCATION_DECK,0,nil)
-	Duel.SendtoGrave(g2,REASON_EFFECT)
+	Duel.SendtoGrave(Duel.GetDeckbottomGroup(tp,1),REASON_EFFECT)
 	local ct=Duel.GetOperatedGroup():GetFirst()
 	if ct:IsType(TYPE_NORMAL) and ct:IsRace(RACE_PLANT) and ct:IsLevel(5) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE,0,1,nil,e,tp)

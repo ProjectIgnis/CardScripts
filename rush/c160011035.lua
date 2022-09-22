@@ -18,8 +18,7 @@ end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	Duel.DisableShuffleCheck()
-	local g=Duel.GetMatchingGroup(function(c)return c:GetSequence()<1 end,tp,LOCATION_DECK,0,nil)
-	Duel.SendtoGrave(g,REASON_EFFECT)
+	Duel.SendtoGrave(Duel.GetDeckbottomGroup(tp,1),REASON_EFFECT)
 	local ct=Duel.GetOperatedGroup():GetFirst()
 	--Effect
 	local c=e:GetHandler()

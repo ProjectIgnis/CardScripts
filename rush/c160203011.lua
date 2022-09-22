@@ -24,7 +24,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.DiscardDeck(tp,1,REASON_EFFECT)>0 then
 		local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
 		if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
-			Duel.ShuffleHand(tp)
+			Duel.ShuffleHand(1-tp)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 			local tc=g:RandomSelect(tp,1,1,nil)
 			Duel.SendtoDeck(tc,nil,1,REASON_EFFECT)

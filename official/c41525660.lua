@@ -73,7 +73,7 @@ end
 function s.mvop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) then 
-		tc:MoveAdjacent()
+		tc:MoveAdjacent(tp)
 	end
 end
 function s.sspcon(e,tp,eg,ep,ev,re,r,rp)

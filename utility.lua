@@ -169,28 +169,39 @@ function Card.CheckAdjacent(c)
 		or (seq<4 and Duel.CheckLocation(p,LOCATION_MZONE,seq+1))
 end
 
-function Card.SelectAdjacent(c)
-	local tp=c:GetControler()
-	local seq=c:GetSequence()
-	local flag=0
-	if seq>0 and Duel.CheckLocation(tp,LOCATION_MZONE,seq-1) then flag=flag|(0x1<<seq-1) end
-	if seq<4 and Duel.CheckLocation(tp,LOCATION_MZONE,seq+1) then flag=flag|(0x1<<seq+1) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
-	local sel=Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,~flag)
-	Duel.Hint(HINT_ZONE,tp,sel)
-	return math.log(sel,2)
-end
-
-function Card.MoveAdjacent(c)
-	local tp=c:GetControler()
+function Card.SelectAdjacent(c,sel_player)
 	local seq=c:GetSequence()
 	if seq>4 then return end
 	local flag=0
-	if seq>0 and Duel.CheckLocation(tp,LOCATION_MZONE,seq-1) then flag=flag|(0x1<<seq-1) end
-	if seq<4 and Duel.CheckLocation(tp,LOCATION_MZONE,seq+1) then flag=flag|(0x1<<seq+1) end
+	local targ_player=c:GetControler()
+	if seq>0 and Duel.CheckLocation(targ_player,LOCATION_MZONE,seq-1) then flag=flag|(0x1<<seq-1) end
+	if seq<4 and Duel.CheckLocation(targ_player,LOCATION_MZONE,seq+1) then flag=flag|(0x1<<seq+1) end
 	if flag==0 then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
-	Duel.MoveSequence(c,math.log(Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,~flag),2))
+	local sel_player=sel_player==nil and targ_player or sel_player
+	local loc1=targ_player==sel_player and LOCATION_MZONE or 0
+	local loc2=loc1==0 and LOCATION_MZONE or 0
+	local shift=loc2*4
+	Duel.Hint(HINT_SELECTMSG,sel_player,HINTMSG_TOZONE)
+	local zone=(Duel.SelectDisableField(sel_player,1,loc1,loc2,~(flag<<shift)))>>shift
+	Duel.Hint(HINT_ZONE,targ_player,zone)
+	return math.log(zone,2)
+end
+
+function Card.MoveAdjacent(c,sel_player)
+	local seq=c:GetSequence()
+	if seq>4 then return end
+	local flag=0
+	local targ_player=c:GetControler()
+	if seq>0 and Duel.CheckLocation(targ_player,LOCATION_MZONE,seq-1) then flag=flag|(0x1<<seq-1) end
+	if seq<4 and Duel.CheckLocation(targ_player,LOCATION_MZONE,seq+1) then flag=flag|(0x1<<seq+1) end
+	if flag==0 then return end
+	local sel_player=sel_player==nil and targ_player or sel_player
+	local loc1=targ_player==sel_player and LOCATION_MZONE or 0
+	local loc2=loc1==0 and LOCATION_MZONE or 0
+	local shift=loc2*4
+	Duel.Hint(HINT_SELECTMSG,sel_player,HINTMSG_TOZONE)
+	local zone=Duel.SelectDisableField(sel_player,1,loc1,loc2,~(flag<<shift))
+	Duel.MoveSequence(c,math.log(zone>>shift,2))
 end
 
 function Card.IsColumn(c,seq,tp,loc)

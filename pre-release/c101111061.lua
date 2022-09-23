@@ -33,7 +33,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_TEARLAMENTS}
 function s.cfilter(c,tp)
-	return c:IsRace(RACE_AQUA) and c:IsSetCard(SET_TEARLAMENTS) and c:IsControler(tp)
+	return c:IsRace(RACE_AQUA) and c:IsSetCard(SET_TEARLAMENTS) and c:IsControler(tp) and c:IsReason(REASON_EFFECT)
 end
 function s.grcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

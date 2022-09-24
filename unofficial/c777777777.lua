@@ -154,8 +154,8 @@ function s.diceop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.damcon1(e,tp,eg,ep,ev,re,r,rp)
-	return ep==tp and Duel.GetLP(tp)<=500
+	return ep==tp and Duel.GetLP(tp)<=500 and Duel.GetLP(tp)>0
 end
 function s.damcon2(e,tp,eg,ep,ev,re,r,rp)
-	return ep==1-tp and Duel.GetLP(1-tp)<=500
+	return ep==1-tp and Duel.GetLP(1-tp)<=500 and Duel.GetLP(1-tp)>0
 end

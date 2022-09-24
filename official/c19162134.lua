@@ -1,12 +1,13 @@
 --エンタメデュエル
+--Dueltaining
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--draw
+	--Draw 2 cards (Special Summon 5 monsters)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -20,7 +21,7 @@ function s.initial_effect(c)
 	e3:SetCondition(s.spcon2)
 	e3:SetOperation(s.drop2)
 	c:RegisterEffect(e3)
-	--
+	--Draw 2 cards (Battled 5 times)
 	local e4=e2:Clone()
 	e4:SetCode(EVENT_BATTLED)
 	e4:SetCondition(s.btcon1)
@@ -29,7 +30,7 @@ function s.initial_effect(c)
 	e5:SetCode(EVENT_BATTLED)
 	e5:SetCondition(s.btcon2)
 	c:RegisterEffect(e5)
-	--
+	--Draw 2 cards (Chain Link 5 or higher)
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -45,7 +46,7 @@ function s.initial_effect(c)
 	e7:SetCode(EVENT_CHAIN_SOLVING)
 	e7:SetCondition(s.chcon2)
 	c:RegisterEffect(e7)
-	--
+	--Draw 2 cards (Coin/dice tossed 5 times)
 	local e8=Effect.CreateEffect(c)
 	e8:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e8:SetCode(EVENT_TOSS_COIN)
@@ -58,7 +59,7 @@ function s.initial_effect(c)
 	e9:SetCode(EVENT_TOSS_DICE)
 	e9:SetOperation(s.diceop)
 	c:RegisterEffect(e9)
-	--
+	--Draw 2 cards (Damage made LP 500 or lower)
 	local ea=e2:Clone()
 	ea:SetCode(EVENT_DAMAGE)
 	ea:SetCondition(s.damcon1)
@@ -155,8 +156,8 @@ function s.diceop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.damcon1(e,tp,eg,ep,ev,re,r,rp)
-	return ep==tp and Duel.GetLP(tp)<=500
+	return ep==tp and Duel.GetLP(tp)<=500 and Duel.GetLP(tp)>0
 end
 function s.damcon2(e,tp,eg,ep,ev,re,r,rp)
-	return ep==1-tp and Duel.GetLP(1-tp)<=500
+	return ep==1-tp and Duel.GetLP(1-tp)<=500 and Duel.GetLP(1-tp)>0
 end

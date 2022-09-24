@@ -2,7 +2,7 @@
 --Thunder Sea Horse (Manga)
 local s,id=GetID()
 function s.initial_effect(c)
-	--Search
+	--Add 2 cards with the same name to the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)

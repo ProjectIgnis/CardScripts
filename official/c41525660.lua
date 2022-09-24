@@ -1,10 +1,10 @@
 -- ヴァリアンツの忍者－南月
--- Nazuki, Ninja of the Valiants
+-- Nazuki the Vaylantyz Ninja
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	Pendulum.AddProcedure(c)
-	-- Special Summon self
+	-- Special Summon itself from the Pendulum zone
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	-- Move 1 other monster
+	-- Move 1 other monster to an adjacent zone
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.mvtg)
 	e2:SetOperation(s.mvop)
 	c:RegisterEffect(e2)
-	-- Special Summon from Spell/Trap Zone
+	-- Special Summon 1 "Vaylantz" monster from Spell/Trap Zone
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -39,9 +39,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={CARD_VALIANTS_SHINRABANSHO}
-s.listed_series={0x17e}
+s.listed_series={SET_VAYLANTZ}
 function s.spconfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x17e) and c:IsAttribute(ATTRIBUTE_WATER)
+	return c:IsFaceup() and c:IsSetCard(SET_VAYLANTZ) and c:IsAttribute(ATTRIBUTE_WATER)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsEnvironment(CARD_VALIANTS_SHINRABANSHO,PLAYER_ALL,LOCATION_FZONE)
@@ -81,7 +81,7 @@ function s.sspcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsLocation(LOCATION_MZONE) and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function s.sspfilter(c,e,tp)
-	return c:IsSetCard(0x17e) and c:IsOriginalType(TYPE_MONSTER) and c:GetSequence()<5
+	return c:IsSetCard(SET_VAYLANTZ) and c:IsOriginalType(TYPE_MONSTER) and c:GetSequence()<5
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,(1<<c:GetSequence())&0x1f)
 end
 function s.ssptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

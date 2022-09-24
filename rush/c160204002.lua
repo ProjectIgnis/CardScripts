@@ -2,10 +2,10 @@
 --Metallion Vritrastar
 local s,id=GetID()
 function s.initial_effect(c)
-	--fusion material
+	--Fusion Summon
 	c:EnableReviveLimit()
 	Fusion.AddProcMix(c,true,true,CARD_IMAGINARY_ACTOR,160204008)
-	--position
+	--Fhange the position of your opponent's monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_POSITION)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.postg)
 	e1:SetOperation(s.posop)
 	c:RegisterEffect(e1)
-	--Destroy Dragon
+	--Destroy Dragon monsters
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DESTROY)
@@ -36,7 +36,7 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
 	local g=Duel.SelectMatchingCard(tp,Card.IsCanChangePositionRush,tp,0,LOCATION_MZONE,1,1,nil)
 	if #g>0 then
-		Duel.HintSelection(g)
+		Duel.HintSelection(g,true)
 		if g:GetFirst():IsAttackPos() then
 			Duel.ChangePosition(g,POS_FACEDOWN_DEFENSE)
 		elseif g:GetFirst():IsPosition(POS_FACEDOWN_DEFENSE) then

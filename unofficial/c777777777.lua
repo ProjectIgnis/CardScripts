@@ -72,12 +72,10 @@ function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return #eg==5 and eg:IsExists(Card.IsSummonPlayer,1,nil,1-tp) and eg:GetClassCount(Card.GetLevel)==5
 end
 function s.drop1(e,tp,eg,ep,ev,re,r,rp)
-	Debug.Message("Applying draw effect to player 1")
 	Duel.Hint(HINT_CARD,0,19162134)
 	Duel.Draw(tp,2,REASON_EFFECT)
 end
 function s.drop2(e,tp,eg,ep,ev,re,r,rp)
-	Debug.Message("Applying draw effect to player 2")
 	Duel.Hint(HINT_CARD,0,19162134)
 	Duel.Draw(1-tp,2,REASON_EFFECT)
 end

@@ -4,7 +4,7 @@ function s.initial_effect(c)
 	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop)
 end
 function s.cfilter(c)
-	return (c:GetAttack()>0 or c:GetAttack()>0) and c:IsFaceup()
+	return (c:GetAttack()>0 or c:GetAttack()>0) and c:IsFaceup() and c:IsMonster()
 end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--opd check

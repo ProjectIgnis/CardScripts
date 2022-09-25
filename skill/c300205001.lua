@@ -4,7 +4,7 @@ function s.initial_effect(c)
     aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop)
 end
 function s.filter(c)
-    return c:IsSummonableCard() and c:IsControlerCanBeChanged()
+    return c:IsSummonableCard() and c:IsControlerCanBeChanged() and c:IsMonster()
 end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
     --opd check

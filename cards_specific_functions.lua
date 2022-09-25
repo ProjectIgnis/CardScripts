@@ -330,7 +330,7 @@ function Auxiliary.AddLavaProcedure(c,required,position,filter,value,description
 	if not required or required < 1 then
 		required = 1
 	end
-	filter = filter or aux.TRUE
+	filter = filter or Card.IsMonster
 	value = value or 0
 	local e1=Effect.CreateEffect(c)
 	if description then

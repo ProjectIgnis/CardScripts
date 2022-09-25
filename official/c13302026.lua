@@ -55,17 +55,18 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		g=g:Select(tp,1,1,nil)
 	end
 	for tc in g:Iter() do
-		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
-		--Negate its effects
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		tc:RegisterEffect(e1,true)
-		local e2=e1:Clone()
-		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetValue(RESET_TURN_SET)
-		tc:RegisterEffect(e2,true)
+		if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
+			--Negate its effects
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_DISABLE)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			tc:RegisterEffect(e1,true)
+			local e2=e1:Clone()
+			e2:SetCode(EFFECT_DISABLE_EFFECT)
+			e2:SetValue(RESET_TURN_SET)
+			tc:RegisterEffect(e2,true)
+		end
 	end
 	Duel.SpecialSummonComplete()
 end

@@ -1,3 +1,4 @@
+--レイト・ペナルティ
 --Late Penalty
 local s,id=GetID()
 function s.initial_effect(c)
@@ -20,7 +21,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_SPELLCASTER) and c:GetLevel()<=2
+	return c:IsFaceup() and c:IsRace(RACE_SPELLCASTER) and c:IsLevelBelow(2)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp and not Duel.CheckPhaseActivity()

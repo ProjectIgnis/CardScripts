@@ -1,5 +1,5 @@
 --スプライト・エルフ
---Splight Elf
+--Spright Elf
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--Special Summon 1 Level/Rank/Link-2 from your GY
 	local e3=Effect.CreateEffect(c)
-	e3:SetCode(CATEGORY_SPECIAL_SUMMON)
+	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)

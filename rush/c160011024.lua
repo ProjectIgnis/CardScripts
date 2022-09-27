@@ -41,7 +41,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		or #g:Match(Card.IsLocation,nil,LOCATION_GRAVE)<1 then return end
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 	local dam=Duel.Damage(p,#g*200,REASON_EFFECT)
-	local g2=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
+	local g2=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(Card.IsFaceup),tp,0,LOCATION_MZONE,nil)
 	if #g2>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		for tc in g2:Iter() do
 			local e1=Effect.CreateEffect(e:GetHandler())

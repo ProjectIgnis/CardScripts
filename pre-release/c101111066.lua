@@ -26,10 +26,10 @@ end
 s.listed_series={SET_GISHKI}
 function s.spfilter(c,e,tp)
 	return c:IsRitualMonster() and c:IsSetCard(SET_GISHKI) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true)
-		and Duel.IsExistingMatchingCard(s.cfilter,tp,0,LOCATION_MZONE,1,nil,c)
+		and Duel.IsExistingMatchingCard(s.cfilter,tp,0,LOCATION_MZONE,1,nil,e,c)
 end
-function s.cfilter(c,sc)
-	return c:IsFaceup() and c:IsCanBeRitualMaterial(sc)
+function s.cfilter(c,e,sc)
+	return c:IsFaceup() and c:IsCanBeRitualMaterial(sc) and not c:IsImmuneToEffect(e)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rparams={filter=aux.FilterBoolFunction(Card.IsSetCard,SET_GISHKI),lvtype=RITPROC_EQUAL,stage2=s.stage2}
@@ -53,7 +53,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local sc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp):GetFirst()
 		if not sc then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local rg=Duel.SelectMatchingCard(tp,s.cfilter,tp,0,LOCATION_MZONE,1,1,nil,sc)
+		local rg=Duel.SelectMatchingCard(tp,s.cfilter,tp,0,LOCATION_MZONE,1,1,nil,e,sc)
 		if #rg==0 then return end
 		sc:SetMaterial(rg)
 		Duel.ReleaseRitualMaterial(rg)

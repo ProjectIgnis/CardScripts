@@ -1,5 +1,5 @@
 --白銀の城の火吹炉
---Labrynth Stovee
+--Labrynth Stovie Torbie
 --Scripted by Yuno
 local s,id=GetID()
 function s.initial_effect(c)
@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e2:SetProperty(EFFECT_FLAG_DELAY)
+	e2:SetProperty(EFFECT_FLAG_DELAY,EFFECT_FLAG2_CHECK_SIMULTANEOUS)
 	e2:SetCode(EVENT_LEAVE_FIELD)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
@@ -28,10 +28,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x17f}
+s.listed_series={SET_LABRYNTH}
 --Set 1 "Labrynth" Spell/Trap from the hand or deck
 function s.setfilter(c)
-	return c:IsSetCard(0x17f) and c:IsSpellTrap() and c:IsSSetable()
+	return c:IsSetCard(SET_LABRYNTH) and c:IsSpellTrap() and c:IsSSetable()
 end
 function s.setcostfilter(c,tp)
 	return c:IsDiscardable() and Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,c)

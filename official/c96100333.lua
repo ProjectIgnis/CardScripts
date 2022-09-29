@@ -74,9 +74,9 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end
 	local cg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_GRAVE,0,nil)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and aux.SelectUnselectGroup(cg,e,tp,3,3,s.rescon,0) end
+		and aux.SelectUnselectGroup(cg,e,tp,2,2,s.rescon,0) end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
-	local rg=aux.SelectUnselectGroup(cg,e,tp,3,3,s.rescon,1,tp,HINTMSG_REMOVE)
+	local rg=aux.SelectUnselectGroup(cg,e,tp,2,2,s.rescon,1,tp,HINTMSG_REMOVE)
 	Duel.Remove(rg,POS_FACEUP,REASON_COST)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,s.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
@@ -99,9 +99,9 @@ function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local cg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_GRAVE,0,nil)
 	local sg=Duel.GetMatchingGroup(s.tdfilter,tp,LOCATION_GRAVE,0,nil)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1)
-		and aux.SelectUnselectGroup(cg,e,tp,3,3,s.rescon2,0) end
+		and aux.SelectUnselectGroup(cg,e,tp,2,2,s.rescon2,0) end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
-	local rg=aux.SelectUnselectGroup(cg,e,tp,3,3,s.rescon2,1,tp,HINTMSG_REMOVE)
+	local rg=aux.SelectUnselectGroup(cg,e,tp,2,2,s.rescon2,1,tp,HINTMSG_REMOVE)
 	Duel.Remove(rg,POS_FACEUP,REASON_COST)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectTarget(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,3,nil)

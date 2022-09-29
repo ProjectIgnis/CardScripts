@@ -4,8 +4,8 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Fusion/Ritual summon
-	local fparams={fusfilter=aux.FilterBoolFunction(Card.IsSetCard,0x167),extrafil=s.fextra,extratg=s.extratg}
-	local rparams={filter=aux.FilterBoolFunction(Card.IsSetCard,0x167),lvtype=RITPROC_GREATER,extrafil=s.rextra,extraop=s.extraop,forcedselection=s.rcheck,extratg=s.extratg}
+	local fparams={fusfilter=aux.FilterBoolFunction(Card.IsSetCard,SET_MAGIKEY),extrafil=s.fextra,extratg=s.extratg}
+	local rparams={filter=aux.FilterBoolFunction(Card.IsSetCard,SET_MAGIKEY),lvtype=RITPROC_GREATER,extrafil=s.rextra,extraop=s.extraop,forcedselection=s.rcheck,extratg=s.extratg}
 	local fustg,fusop,rittg,ritop=Fusion.SummonEffTG(fparams),Fusion.SummonEffOP(fparams),Ritual.Target(rparams),Ritual.Operation(rparams)
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation(fustg,fusop,rittg,ritop))
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x167}
+s.listed_series={SET_MAGIKEY}
 function s.fextra(e,tp,mg)
 	if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,TYPE_NORMAL),tp,LOCATION_MZONE,0,1,nil) then
 		local sg=Duel.GetMatchingGroup(s.fexfilter,tp,LOCATION_DECK,0,nil)
@@ -60,7 +60,6 @@ function s.target(fustg,rittg)
 end
 function s.operation(fustg,fusop,rittg,ritop)
 	return function(e,tp,eg,ep,ev,re,r,rp)
-		local tc=Duel.GetFirstTarget()
 		local fus=fustg(e,tp,eg,ep,ev,re,r,rp,0)
 		local rit=rittg(e,tp,eg,ep,ev,re,r,rp,0)
 		if fus or rit then

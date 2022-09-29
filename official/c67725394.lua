@@ -37,10 +37,10 @@ function s.initial_effect(c)
 	e3:SetLabelObject(e2)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x1186}
+s.listed_series={SET_DOODLE_BEAST}
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
-	if g:IsExists(Card.IsSetCard,1,nil,0x1186) then
+	if g:IsExists(Card.IsSetCard,1,nil,SET_DOODLE_BEAST) then
 		e:GetLabelObject():SetLabel(1)
 	else
 		e:GetLabelObject():SetLabel(0)
@@ -77,7 +77,8 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		local atk=0
 		if tc:IsFaceup() then atk=tc:GetAttack()/2 end
 		local c=e:GetHandler()
-		if Duel.Destroy(tc,REASON_EFFECT)>0 and c:IsRelateToEffect(e) and c:IsSummonType(SUMMON_TYPE_TRIBUTE) and e:GetLabel()==1 and atk>0 then
+		if Duel.Destroy(tc,REASON_EFFECT)>0 and c:IsRelateToEffect(e) and c:IsSummonType(SUMMON_TYPE_TRIBUTE) and c:IsFaceup()
+			and e:GetLabel()==1 and atk>0 then
 			Duel.BreakEffect()
 			--Increase ATK
 			local e1=Effect.CreateEffect(c)

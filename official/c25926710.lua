@@ -68,12 +68,12 @@ function s.setfilter(c)
 	return c:IsTrap() and c:IsSSetable()
 end
 function s.mlop(e,tp,eg,ep,ev,re,r,rp)
-	local sg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.setfilter),tp,LOCATION_GRAVE,0,nil)
 	if (Duel.DiscardDeck(tp,5,REASON_EFFECT)+Duel.DiscardDeck(1-tp,5,REASON_EFFECT))>0
 		and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,CARD_EXCHANGE_SPIRIT)
-		and #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+		and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(s.setfilter),tp,LOCATION_GRAVE,0,1,nil)
+		and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
-		local g=sg:Select(tp,1,1,nil)
+		local g=Duel.SelectMatchingCard(tp,s.setfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 		if #g>0 then
 			Duel.BreakEffect()
 			Duel.SSet(tp,g)

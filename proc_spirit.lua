@@ -10,7 +10,6 @@ function Spirit.AddProcedure(c,...)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e1:SetCode(EVENT_PHASE+PHASE_END)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCountLimit(1,0,EFFECT_COUNT_CODE_SINGLE)
 	e1:SetCondition(Spirit.MandatoryReturnCondition)
 	e1:SetTarget(Spirit.MandatoryReturnTarget)
 	e1:SetOperation(Spirit.ReturnOperation)
@@ -55,7 +54,9 @@ end
 
 function Spirit.MandatoryReturnTarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,e:GetHandler(),1,0,0)
+	local c=e:GetHandler()
+	c:ResetFlagEffect(FLAG_SPIRIT_RETURN)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,c,1,0,0)
 end
 
 function Spirit.OptionalReturnCondition(e,tp,eg,ep,ev,re,r,rp)
@@ -65,6 +66,7 @@ end
 function Spirit.OptionalReturnTarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToHand() end
+	c:ResetFlagEffect(FLAG_SPIRIT_RETURN)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,c,1,0,0)
 end
 

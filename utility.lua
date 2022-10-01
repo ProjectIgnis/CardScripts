@@ -2118,32 +2118,38 @@ end
 function Auxiliary.DelayedOperation(card_or_group,phase,flag,e,tp,oper,cond,reset,reset_count,hint)
 	local g=(type(card_or_group)=="Group" and card_or_group or Group.FromCards(card_or_group))
 	if #g==0 then return end
-	reset=reset or (RESET_PHASE+phase)
+	reset=reset or (RESET_PHASE|phase)
 	reset_count=reset_count or 1
 	local fid=e:GetFieldID()
-	local flagprop=hint and EFFECT_FLAG_CLIENT_HINT or 0
-	for tc in g:Iter() do
-		tc:RegisterFlagEffect(flag,RESET_EVENT+RESETS_STANDARD+reset,flagprop,reset_count,fid,hint)
-	end
-	g:KeepAlive()
-	local function get_affected_group()
-		return g:Filter(function(c) return c:GetFlagEffectLabel(flag)==fid end,nil)
-	end
+	local function agfilter(c,lbl) return c:GetFlagEffectLabel(flag)==lbl end
+	local function get_affected_group(e) return e:GetLabelObject():Filter(agfilter,nil,e:GetLabel()) end
+
 	--Apply operation
-	local e1=Effect.CreateEffect(e:GetHandler())
+	local c=e:GetHandler()
+	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_PHASE|phase)
-	e1:SetReset(reset,resetcount)
+	e1:SetReset(reset,reset_count)
 	e1:SetCountLimit(1)
-	e1:SetLabelObject(g) --in case something needs access to it after registry (e.g. when overwriting oper and cond) 
-	e1:SetCondition(function(...)
-		local ag=get_affected_group()
-		return #ag>0 and (not cond or cond(ag,...))
+	e1:SetLabel(fid)
+	e1:SetLabelObject(g)
+	e1:SetCondition(function(e,...)
+		local ag=get_affected_group(e)
+		return #ag>0 and (not cond or cond(ag,e,...))
 	end)
-	e1:SetOperation(function(...)
-		if oper then oper(get_affected_group(),...) end
+	e1:SetOperation(function(e,...)
+		if oper then oper(get_affected_group(e),e,...) end
 	end)
 	Duel.RegisterEffect(e1,tp)
+
+	--Flag cards
+	local flagprop=hint and EFFECT_FLAG_CLIENT_HINT or 0
+	local function flagcond() return not e1:IsDeleted() end
+	for tc in g:Iter() do
+		tc:RegisterFlagEffect(flag,RESET_EVENT+RESETS_STANDARD,flagprop,1,fid,hint):SetCondition(flagcond)
+	end
+	g:KeepAlive()
+
 	return e1
 end
 

@@ -2,7 +2,7 @@
 --Suijin (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
-	--place in Szone
+	--Place  itself in the Spell/Trap Zone
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.settg)
 	e1:SetOperation(s.setop)
 	c:RegisterEffect(e1)
-	--negate attack
+	--Negate the attack of an opponent's monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetCountLimit(1)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
-	--atk up
+	--Changet its ATK
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_ATKCHANGE)
@@ -63,7 +63,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.GetMatchingGroup(s.atkfilter,tp,LOCATION_MZONE,0,nil,62340868,25955164)
-	local sg=aux.SelectUnselectGroup(g,e,tp,1,2,aux.dncheck,1)
+	local sg=aux.SelectUnselectGroup(g,e,tp,1,2,aux.dncheck,1,tp,HINTMSG_TARGET)
 	if #sg>0 then
 		local atk=(c:GetAttack()+(sg:GetSum(Card.GetAttack)))/2
 		local e1=Effect.CreateEffect(e:GetHandler())
@@ -72,7 +72,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_PHASE+PHASE_DAMAGE_CAL)
 		e1:SetValue(atk)
 		c:RegisterEffect(e1)
-		for tc in aux.Next(sg) do
+		for tc in sg:Iter() do
 			local e0=Effect.CreateEffect(c)
 			e0:SetType(EFFECT_TYPE_SINGLE)
 			e0:SetCode(EFFECT_CANNOT_ATTACK)

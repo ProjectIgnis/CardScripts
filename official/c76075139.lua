@@ -45,7 +45,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_VAYLANTZ}
 function s.splimit(e,se,sp,st)
-	return not e:GetHandler():IsLocation(LOCATION_EXTRA) or aux.fuslimit(e,se,sp,st)
+	return not e:GetHandler():IsLocation(LOCATION_EXTRA) or aux.fuslimit(e,se,sp,st) or aux.penlimit(e,se,sp,st)
 end
 function s.hspfilter(c,tp,sc)
 	local zone=1<<c:GetSequence()

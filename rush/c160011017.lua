@@ -1,7 +1,7 @@
 --カオス・ソルジャージ －乾燥の使者－
 --Black Luster Soljersey - Envoy of the Drying
 local s,id=GetID()
-function s.initial_effect(c)	
+function s.initial_effect(c)
 	--Shuffle 1 level 8 monster from opponent's field to deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,1))
@@ -36,7 +36,7 @@ end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	--requirement
 	local g=Duel.GetMatchingGroup(s.tdcostfilter,tp,LOCATION_GRAVE,0,nil)
-	local cg=aux.SelectUnselectGroup(g,e,tp,2,2,s.thcostrescon,1,tp,HINTMSG_TODECK)
+	local cg=aux.SelectUnselectGroup(g,e,tp,2,2,s.tdcostrescon,1,tp,HINTMSG_TODECK)
 	if Duel.SendtoDeck(cg,nil,SEQ_DECKSHUFFLE,REASON_COST)>0 then
 		--Effect
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)

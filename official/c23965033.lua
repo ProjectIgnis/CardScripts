@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	--Must first be properly Summoned
 	c:EnableReviveLimit()
 	--Fusion Summon procedure
-	Fusion.AddProcMix(c,true,true,s.matfilter,aux.FilterBoolFunctionEx(Card.IsSetCard,0x4))
+	Fusion.AddProcMix(c,true,true,s.matfilter,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_AMAZONESS))
 	--Special Summon 1 "Amazoness" from your Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(LOCATION_ONFIELD,0)
-	e2:SetTarget(function(e,c) return c~=e:GetHandler() and c:IsFaceup() and c:IsSetCard(0x4) end)
+	e2:SetTarget(function(e,c) return c~=e:GetHandler() and c:IsFaceup() and c:IsSetCard(SET_AMAZONESS) end)
 	e2:SetValue(aux.tgoval)
 	c:RegisterEffect(e2)
 	--Other "Amazoness" cards cannot be destroyed by opponent's card effects
@@ -51,13 +51,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.listed_names={15951532,4591250}
-s.listed_series={0x4}
-s.material_setcode={0x4}
+s.listed_series={SET_AMAZONESS}
+s.material_setcode={SET_AMAZONESS}
 function s.matfilter(c,fc,sumtype,tp)
-	return c:IsType(TYPE_FUSION,fc,sumtype,tp) and c:IsSetCard(0x4,fc,sumtype,tp)
+	return c:IsType(TYPE_FUSION,fc,sumtype,tp) and c:IsSetCard(SET_AMAZONESS,fc,sumtype,tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_AMAZONESS) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

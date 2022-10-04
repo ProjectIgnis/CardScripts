@@ -40,7 +40,7 @@ function s.initial_effect(c)
 	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e4:SetCode(EFFECT_EXTRA_ATTACK)
 	e4:SetRange(LOCATION_MZONE)
-	e4:SetCondition(function(e) return e:GetHandler():GetFlagEffect(id)>0 end)
+	e4:SetCondition(s.atkcon)
 	e4:SetValue(1)
 	c:RegisterEffect(e4)
 	--Checks if "Amazoness Queen" and/or "Amazoness Empress" was used as Fusion Material
@@ -72,9 +72,13 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
+function s.atkcon(e)
+	local c=e:GetHandler()
+	return c:IsSummonType(SUMMON_TYPE_FUSION) and c:GetFlagEffect(id)>0
+end
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
-	if g:IsExists(Card.IsCode,1,nil,15951532,4591250) then
+	if g:IsExists(Card.IsSummonCode,1,nil,c,SUMMON_TYPE_FUSION,c:GetControler(),15951532,4591250) then
 		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD&~(RESET_TOFIELD|RESET_LEAVE|RESET_TEMP_REMOVE),EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,1))
 	end
 end

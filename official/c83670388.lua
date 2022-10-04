@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	-- Cannot activate
+	-- Prevent the activation of monster's effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -33,9 +33,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={7142724}
-s.listed_series={0x16e}
+s.listed_series={SET_ICEJADE}
 function s.accon(e)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x16e),0,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_ICEJADE),0,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 		and (Duel.IsEnvironment(7142724)
 		or Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,7142724),0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil))
 end
@@ -46,14 +46,14 @@ function s.aclim(e,re,tp)
 end
 function s.damcfilter(c,tp,ct)
 	local bc=c:GetBattleTarget()
-	return (c:IsPreviousControler(tp) and c:IsPreviousSetCard(0x16e))
-		or (ct==1 and bc and bc:IsControler(tp) and bc:IsSetCard(0x16e))
+	return (c:IsPreviousControler(tp) and c:IsPreviousSetCard(SET_ICEJADE))
+		or (ct==1 and bc and bc:IsControler(tp) and bc:IsSetCard(SET_ICEJADE))
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.damcfilter,1,nil,tp,#eg)
 end
 function s.damtgfilter(c,e)
-	return c:IsCanBeEffectTarget(e) and c:GetBaseAttack()>0
+	return c:IsCanBeEffectTarget(e) and c:GetBaseAttack()>0 and not c:IsType(TYPE_TOKEN)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return eg:IsContains(chkc) and s.damtgfilter(chkc,e) end

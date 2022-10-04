@@ -5,7 +5,6 @@ function s.initial_effect(c)
 		--place field
 		local e1=Effect.CreateEffect(c)
 		e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetCategory(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_STARTUP)
 		e1:SetTarget(s.target)
@@ -61,7 +60,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,tp):GetFirst()
 	Duel.MoveToField(tc,tp,tp,LOCATION_FZONE,POS_FACEUP,true)
 end
-Debug.Message("Duel Started Using Terradivide")
 --yes this is stupid (changing cards that requires empty field*)
 --control no cards
 if not c10045474 then

@@ -2180,27 +2180,33 @@ function Auxiliary.RemoveUntil(card_or_group,pos,reason,phase,flag,e,tp,oper,con
 	end
 end
 
+local function select_field_return_cards(p,g)
+	if #g==0 then return end
+	local ft=Duel.GetLocationCount(p,LOCATION_MZONE)
+	if ft>0 and #g>ft then
+		Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TOFIELD)
+		local tg=g:Select(p,ft,ft,nil)
+		for tc in tg:Iter() do
+			Duel.ReturnToField(tc)
+		end
+		g:Sub(tg)
+	end
+	for tc in g:Iter() do
+		Duel.ReturnToField(tc)
+	end
+end
+
 --[[
 	An operation function to be used with `aux.RemoveUntil`.
-	Will return the banished cards to the monster zone.
-	Makes the player select cards to return if there are less available zones than returnable cards.
+	Will return the banished cards to the monster zone, starting with the turn player.
+	Makes each player select cards to return if they have fewer available zones than returnable cards.
 --]]
-function Auxiliary.DefaultFieldReturnOp(rg,e,tp)
+function Auxiliary.DefaultFieldReturnOp(rg)
 	if #rg==0 then return end
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE,0)
-	local tg=nil
-	if ft>0 and #rg>ft then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
-		tg=rg:Select(tp,ft,ft,nil)
-	else
-		tg=rg:Clone()
-	end
-	for tc in tg:Iter() do
-		Duel.ReturnToField(tc)
-	end
-	for tc in rg:Sub(tg):Iter() do
-		Duel.ReturnToField(tc)
-	end
+	local turn_p=Duel.GetTurnPlayer()
+	local g0,g1=rg:Split(Card.IsPreviousControler,nil,turn_p)
+	select_field_return_cards(turn_p,g0)
+	select_field_return_cards(1-turn_p,g1)
 end
 
 Duel.LoadScript("cards_specific_functions.lua")

@@ -282,7 +282,7 @@ if not c44790889 then
 	function c44790889.initial_effect(c)
 		--summon with no tribute
 		local e1=Effect.CreateEffect(c)
-		e1:SetDescription(aux.String44790889(44790889,0))
+		e1:SetDescription(aux.Stringid(44790889,0))
 		e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SUMMON_PROC)
@@ -327,7 +327,7 @@ if not c72589042 then
 	function c72589042.initial_effect(c)
 		--Destroy opponent's cards and Special summon from the Deck
 		local e1=Effect.CreateEffect(c)
-		e1:SetDescription(aux.String72589042(72589042,0))
+		e1:SetDescription(aux.Stringid(72589042,0))
 		e1:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 		e1:SetCode(EVENT_ATTACK_ANNOUNCE)
@@ -358,7 +358,7 @@ if not c72589042 then
 	function c72589042.operation(e,tp,eg,ep,ev,re,r,rp)
 		local sg=Duel.GetMatchingGroup(nil,tp,0,LOCATION_ONFIELD,nil)
 		if #sg>0 and Duel.Destroy(sg,REASON_EFFECT)>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-			and Duel.IsExistingMatchingCard(c72589042.filter,tp,LOCATION_DECK,0,1,nil,e,tp) and Duel.SelectYesNo(tp,aux.String72589042(72589042,1)) then
+			and Duel.IsExistingMatchingCard(c72589042.filter,tp,LOCATION_DECK,0,1,nil,e,tp) and Duel.SelectYesNo(tp,aux.Stringid(72589042,1)) then
 			local tc=Duel.SelectMatchingCard(tp,c72589042.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 			Duel.BreakEffect()
 			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
@@ -451,7 +451,7 @@ if not c42338879 then
 	function c84976088.initial_effect(c)
 		--Special summon itself (GY) and 1 level 4 or lower dragon monster (hand)
 		local e1=Effect.CreateEffect(c)
-		e1:SetDescription(aux.String84976088(84976088,0))
+		e1:SetDescription(aux.Stringid(84976088,0))
 		e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 		e1:SetType(EFFECT_TYPE_IGNITION)
 		e1:SetRange(LOCATION_GRAVE)
@@ -525,7 +525,7 @@ if not c4647954 then
 	function c4647954.initial_effect(c)
 		--Special summon itself from hand
 		local e1=Effect.CreateEffect(c)
-		e1:SetDescription(aux.String4647954(4647954,0))
+		e1:SetDescription(aux.Stringid(4647954,0))
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetCode(EFFECT_SPSUMMON_PROC)
 		e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
@@ -534,7 +534,7 @@ if not c4647954 then
 		c:RegisterEffect(e1)
 		--Grant effect to "Utopia "Xyz monster using this card as material
 		local e2=Effect.CreateEffect(c)
-		e2:SetDescription(aux.String4647954(4647954,1))
+		e2:SetDescription(aux.Stringid(4647954,1))
 		e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 		e2:SetCode(EVENT_BE_MATERIAL)
 		e2:SetProperty(EFFECT_FLAG_EVENT_PLAYER)
@@ -562,7 +562,7 @@ if not c4647954 then
 		local c=e:GetHandler()
 		local rc=c:GetReasonCard()
 		local e1=Effect.CreateEffect(rc)
-		e1:SetDescription(aux.String4647954(4647954,2))
+		e1:SetDescription(aux.Stringid(4647954,2))
 		e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 		e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 		e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -652,7 +652,7 @@ if not c58655504 then
 	function c58655504.initial_effect(c)
 		--Limit material
 		local e1=Effect.CreateEffect(c)
-		e1:SetDescription(aux.String58655504(58655504,0))
+		e1:SetDescription(aux.Stringid(58655504,0))
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 		e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 		e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
@@ -692,7 +692,7 @@ if not c58655504 then
 			tc:RegisterEffect(e2)
 			local e3=Effect.CreateEffect(c)
 			e3:SetType(EFFECT_TYPE_SINGLE)
-			e3:SetDescription(aux.String58655504(58655504,1))
+			e3:SetDescription(aux.Stringid(58655504,1))
 			e3:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 			e3:SetCode(EFFECT_CANNOT_BE_MATERIAL)
 			e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
@@ -716,7 +716,7 @@ if not c97007933 then
 		c:RegisterEffect(e1)
 		--damage
 		local e2=Effect.CreateEffect(c)
-		e2:SetDescription(aux.String97007933(97007933,0))
+		e2:SetDescription(aux.Stringid(97007933,0))
 		e2:SetCategory(CATEGORY_DAMAGE)
 		e2:SetType(EFFECT_TYPE_IGNITION)
 		e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -728,7 +728,7 @@ if not c97007933 then
 		c:RegisterEffect(e2)
 		--spsummon
 		local e3=Effect.CreateEffect(c)
-		e3:SetDescription(aux.String97007933(97007933,1))
+		e3:SetDescription(aux.Stringid(97007933,1))
 		e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 		e3:SetType(EFFECT_TYPE_IGNITION)
 		e3:SetRange(LOCATION_GRAVE)
@@ -775,7 +775,7 @@ if not c97007933 then
 		Duel.RegisterEffect(e2,tp)
 		local e3=Effect.CreateEffect(e:GetHandler())
 		e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
-		e3:SetDescription(aux.String97007933(97007933,2))
+		e3:SetDescription(aux.Stringid(97007933,2))
 		e3:SetReset(RESET_PHASE+PHASE_END)
 		e3:SetTargetRange(1,0)
 		Duel.RegisterEffect(e3,tp)
@@ -821,7 +821,7 @@ if not c2295831 then
 	end
 	function c2295831.regop(e,tp,eg,ep,ev,re,r,rp)
 		local c=e:GetHandler()
-		if Duel.SelectYesNo(tp,aux.String2295831(2295831,0)) then
+		if Duel.SelectYesNo(tp,aux.Stringid(2295831,0)) then
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_PUBLIC)
@@ -916,7 +916,7 @@ if not c24212820 then
 		c:RegisterEffect(e1)
 		--Special summon itself from GY as a monster
 		local e2=Effect.CreateEffect(c)
-		e2:SetDescription(aux.String24212820(24212820,0))
+		e2:SetDescription(aux.Stringid(24212820,0))
 		e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 		e2:SetType(EFFECT_TYPE_QUICK_O)
 		e2:SetCode(EVENT_ATTACK_ANNOUNCE)
@@ -1158,8 +1158,8 @@ if not c14532163 then
 		local b2=#g2>0
 		if chk==0 then return b1 or b2 end
 		local op=Duel.SelectEffect(tp,
-			{b1,aux.String14532163(14532163,0)},
-			{b2,aux.String14532163(14532163,1)})
+			{b1,aux.Stringid(14532163,0)},
+			{b2,aux.Stringid(14532163,1)})
 		e:SetLabel(op)
 		local g=(op==1 and g1 or g2)
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
@@ -1182,7 +1182,7 @@ if not c32588805 then
 	function c32588805.initial_effect(c)
 		--set
 		local e1=Effect.CreateEffect(c)
-		e1:SetDescription(aux.String32588805(32588805,0))
+		e1:SetDescription(aux.Stringid(32588805,0))
 		e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 		e1:SetCode(EVENT_SUMMON_SUCCESS)
 		e1:SetCondition(c32588805.setcon)
@@ -1258,7 +1258,7 @@ if not c7304544 then
 		c:RegisterEffect(e1)
 		--Special Summon
 		local e2=Effect.CreateEffect(c)
-		e2:SetDescription(aux.String7304544(7304544,0))
+		e2:SetDescription(aux.Stringid(7304544,0))
 		e2:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_FIELD)
 		e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 		e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
@@ -1299,7 +1299,7 @@ if not c90727556 then
 	function c90727556.initial_effect(c)
 		--Special Summon
 		local e1=Effect.CreateEffect(c)
-		e1:SetDescription(aux.String90727556(90727556,0))
+		e1:SetDescription(aux.Stringid(90727556,0))
 		e1:SetType(EFFECT_TYPE_IGNITION)
 		e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 		e1:SetRange(LOCATION_GRAVE)
@@ -1347,7 +1347,7 @@ if not c90727556 then
 		Duel.RegisterEffect(e1,tp)
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
-		e2:SetDescription(aux.String90727556(90727556,1))
+		e2:SetDescription(aux.Stringid(90727556,1))
 		e2:SetReset(RESET_PHASE+PHASE_END)
 		e2:SetTargetRange(1,0)
 		Duel.RegisterEffect(e2,tp)
@@ -1376,7 +1376,7 @@ if not c12538374 then
 	function c12538374.initial_effect(c)
 		--Special Summon
 		local e1=Effect.CreateEffect(c)
-		e1:SetDescription(aux.String12538374(12538374,0))
+		e1:SetDescription(aux.Stringid(12538374,0))
 		e1:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_FIELD)
 		e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 		e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
@@ -1412,7 +1412,7 @@ if not c5592689 then
 	function c5592689.initial_effect(c)
 		--Special Summon
 		local e1=Effect.CreateEffect(c)
-		e1:SetDescription(aux.String5592689(5592689,0))
+		e1:SetDescription(aux.Stringid(5592689,0))
 		e1:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_FIELD)
 		e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
@@ -1424,7 +1424,7 @@ if not c5592689 then
 		c:RegisterEffect(e1)
 		--damage
 		local e2=Effect.CreateEffect(c)
-		e2:SetDescription(aux.String5592689(5592689,1))
+		e2:SetDescription(aux.Stringid(5592689,1))
 		e2:SetCategory(CATEGORY_DAMAGE)
 		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 		e2:SetRange(LOCATION_MZONE)
@@ -1525,7 +1525,7 @@ if not c17720747 then
 		c:RegisterEffect(e1)
 		--Draw
 		local e2=Effect.CreateEffect(c)
-		e2:SetDescription(aux.String17720747(17720747,0))
+		e2:SetDescription(aux.Stringid(17720747,0))
 		e2:SetCategory(CATEGORY_DRAW)
 		e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 		e2:SetCode(EVENT_SUMMON_SUCCESS)
@@ -1619,7 +1619,7 @@ if not c40844552 then
 	function c40844552.initial_effect(c)
 		--token
 		local e1=Effect.CreateEffect(c)
-		e1:SetDescription(aux.String40844552(40844552,0))
+		e1:SetDescription(aux.Stringid(40844552,0))
 		e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 		e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 		e1:SetCode(EVENT_SUMMON_SUCCESS)
@@ -1770,12 +1770,12 @@ if not c33611061 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 			local g1=g:Select(tp,1,1,nil)
 			g:Remove(Card.IsCode,nil,g1:GetFirst():GetCode())
-			if #g>0 and Duel.SelectYesNo(tp,aux.String33611061(33611061,0)) then
+			if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(33611061,0)) then
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 				local g2=g:Select(tp,1,1,nil)
 				g:Remove(Card.IsCode,nil,g2:GetFirst():GetCode())
 				g1:Merge(g2)
-				if #g>0 and Duel.SelectYesNo(tp,aux.String33611061(33611061,0)) then
+				if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(33611061,0)) then
 					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 					local g3=g:Select(tp,1,1,nil)
 					g1:Merge(g3)
@@ -1801,7 +1801,7 @@ if not c31006879 then
 		c:RegisterEffect(e1)
 		--Place 1 Signal Counter on this card
 		local e2=Effect.CreateEffect(c)
-		e2:SetDescription(aux.String31006879(31006879,1))
+		e2:SetDescription(aux.Stringid(31006879,1))
 		e2:SetCategory(CATEGORY_COUNTER)
 		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 		e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
@@ -1812,7 +1812,7 @@ if not c31006879 then
 		c:RegisterEffect(e2)
 		--Draw 2 then send 1 to the GY ("Speed Spell - Angel Baton")
 		local e3=Effect.CreateEffect(c)
-		e3:SetDescription(aux.String31006879(31006879,2))
+		e3:SetDescription(aux.Stringid(31006879,2))
 		e3:SetCategory(CATEGORY_DRAW+CATEGORY_HANDES)
 		e3:SetType(EFFECT_TYPE_IGNITION)
 		e3:SetRange(LOCATION_SZONE)
@@ -1831,7 +1831,7 @@ if not c31006879 then
 		if not c:IsRelateToEffect(e) then return end
 		local g=Duel.GetMatchingGroup(c31006879.filter,tp,LOCATION_DECK,0,nil)
 		if #g>0 and (Duel.GetMatchingGroupCount(nil,tp,LOCATION_ONFIELD,0,1,c)==1)
-			and Duel.SelectYesNo(tp,aux.String31006879(31006879,0)) then
+			and Duel.SelectYesNo(tp,aux.Stringid(31006879,0)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 			local sg=g:Select(tp,1,1,nil)
 			Duel.SendtoHand(sg,nil,REASON_EFFECT)

@@ -17,11 +17,14 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)
 	if chk==0 then return true end
 end
-function s.cfilter(c)
-	return c:IsType(TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ) and c:IsAbleToExtraAsCost()
+function s.cfilter(c,g,e,tp)
+	if not c:IsType(TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ) or not c:IsAbleToExtraAsCost() then return false end
+	local exg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_EXTRA,0,nil,c,e,tp)
+	g:Merge(exg)
+	return #exg>0
 end
-function s.spfilter(c,e,tp,g)
-	return g:IsExists(s.chkfilter,1,nil,c) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+function s.spfilter(c,sc,e,tp)
+	return s.chkfilter(sc,c) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.chkfilter(sc,c)
 	local tpe=TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ
@@ -44,21 +47,16 @@ function s.rescon2(g)
 end
 function s.chk(c,tp,sg,g,sc,...)
 	local tpe=TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ
-	if not c:IsRace(sc:GetRace()) or not c:IsAttribute(sc:GetAttribute())
-		or c:GetType()&tpe~=sc:GetType()&tpe or Duel.GetLocationCountFromEx(tp,tp,g,tpe)<#sg then return false end
-	local res
-	if ... then
-		g:AddCard(c)
-		res=sg:IsExists(s.chk,1,g,tp,sg,g,...)
-		g:RemoveCard(c)
-	else
-		res=true
-	end
+	if not s.chkfilter(sc,c) or Duel.GetLocationCountFromEx(tp,tp,nil,tpe)<#sg then return false end
+	if not ... return true end
+	g:AddCard(c)
+	local res=sg:IsExists(s.chk,1,g,tp,sg,g,...)
+	g:RemoveCard(c)
 	return res
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_GRAVE,0,nil)
-	local sg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_EXTRA,0,nil,e,tp,g)
+	local sg=Group.CreateGroup()
+	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_GRAVE,0,nil,sg,e,tp)
 	if chk==0 then
 		if e:GetLabel()~=1 then return false end
 		e:SetLabel(0)
@@ -77,7 +75,10 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local cg=Duel.GetTargetCards(e)
 	local ct=#cg
-	local sg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_EXTRA,0,nil,e,tp,cg)
+	local sg=Group.CreateGroup()
+	cg:ForEach(function(tc)
+		sg:Merge(Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_EXTRA,0,nil,tc,e,tp,cg))
+	end)
 	if not aux.SelectUnselectGroup(sg,e,tp,ct,ct,s.rescon2(cg),0) then return end
 	local spg=aux.SelectUnselectGroup(sg,e,tp,ct,ct,s.rescon2(cg),1,tp,HINTMSG_SPSUMMON)
 	Duel.SpecialSummon(spg,0,tp,tp,false,false,POS_FACEUP)

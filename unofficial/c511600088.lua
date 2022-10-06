@@ -48,7 +48,7 @@ end
 function s.chk(c,tp,sg,g,sc,...)
 	local tpe=TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ
 	if not s.chkfilter(sc,c) or Duel.GetLocationCountFromEx(tp,tp,nil,tpe)<#sg then return false end
-	if not ... return true end
+	if not ... then return true end
 	g:AddCard(c)
 	local res=sg:IsExists(s.chk,1,g,tp,sg,g,...)
 	g:RemoveCard(c)

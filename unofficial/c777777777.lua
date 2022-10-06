@@ -1930,3 +1930,264 @@ if not c48605591 then
 		return c:IsType(TYPE_FIELD) and not Duel.GetFieldCard(tp,LOCATION_SZONE,5) and Duel.GetFieldGroupCount(tp,LOCATION_SZONE,0)>2
 	end
 end
+if not c101111047 then
+	c101111047 = {}
+	setmetatable(c101111047, Card)
+	rawset(c101111047,"__index",c101111047)
+	function c101111047.initial_effect(c)
+		c:EnableReviveLimit()
+		c:SetUniqueOnField(1,0,101111047)
+		-- 2+ Level 9 monsters
+		Xyz.AddProcedure(c,nil,9,2,nil,nil,99)
+		-- Decrease ATK/DEF
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetCode(EFFECT_UPDATE_ATTACK)
+		e1:SetRange(LOCATION_MZONE)
+		e1:SetTargetRange(0,LOCATION_MZONE)
+		e1:SetValue(-1000)
+		c:RegisterEffect(e1)
+		local e2=e1:Clone()
+		e2:SetCode(EFFECT_UPDATE_DEFENSE)
+		c:RegisterEffect(e2)
+		-- Special Summon 1 non-Fairy "Generaider" Xyz Monster
+		local e3=Effect.CreateEffect(c)
+		e3:SetDescription(aux.Stringid(101111047,0))
+		e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
+		e3:SetType(EFFECT_TYPE_QUICK_O)
+		e3:SetCode(EVENT_FREE_CHAIN)
+		e3:SetRange(LOCATION_MZONE)
+		e3:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E+TIMING_MAIN_END)
+		e3:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ) end)
+		e3:SetCost(c101111047.spcost)
+		e3:SetTarget(c101111047.sptg)
+		e3:SetOperation(c101111047.spop)
+		c:RegisterEffect(e3)
+	end
+	c101111047.listed_names={101111047}
+	c101111047.listed_series={SET_GENERAIDER}
+	function c101111047.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
+		local c=e:GetHandler()
+		if chk==0 then return c:IsReleasable() end
+		Duel.SetTargetParam(c:GetOverlayCount())
+		Duel.Release(c,REASON_COST)
+	end
+	function c101111047.spfilter(c,e,tp,ec)
+		return c:IsType(TYPE_XYZ) and c:IsSetCard(SET_GENERAIDER) and not c:IsRace(RACE_FAIRY)
+			and Duel.GetLocationCountFromEx(tp,tp,ec,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	end
+	function c101111047.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+		if chk==0 then return Duel.IsExistingMatchingCard(c101111047.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,e:GetHandler()) end
+		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
+	end
+	function c101111047.ovfilter(c,xc,tp,e)
+		return not c:IsLocation(LOCATION_FZONE) and c:IsCanBeXyzMaterial(xc,tp,REASON_EFFECT) and not c:IsImmuneToEffect(e)
+	end
+	function c101111047.spop(e,tp,eg,ep,ev,re,r,rp)
+		local c=e:GetHandler()
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		local tc=Duel.SelectMatchingCard(tp,c101111047.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp):GetFirst()
+		if not tc or Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)==0 then return end
+		local ct=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
+		if ct==0 then return end
+		local og=Duel.GetMatchingGroup(aux.NecroValleyFilter(c101111047.ovfilter),tp,LOCATION_ONFIELD|LOCATION_GRAVE,LOCATION_ONFIELD|LOCATION_GRAVE,tc,tc,tp,e)
+		if #og==0 or not Duel.SelectYesNo(tp,aux.Stringid(101111047,1)) then return end
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
+		local g=og:Select(tp,1,ct,nil)
+		if #g>0 then
+			for tc in g:Iter() do
+				if tc:IsSpellTrap() and tc:IsLocation(LOCATION_SZONE) then
+					tc:CancelToGrave()
+				end
+			end
+			Duel.HintSelection(g,true)
+			Duel.BreakEffect()
+			Duel.Overlay(tc,g,true)
+		end
+	end
+end
+if not c63767246 then
+	c63767246 = {}
+	setmetatable(c63767246, Card)
+	rawset(c63767246,"__index",c63767246)
+	function c63767246.initial_effect(c)
+		--Must be properly summoned before reviving
+		c:EnableReviveLimit()
+		--Xyz Summon procedure
+		Xyz.AddProcedure(c,nil,8,2)
+		--Negate the effect of a Spell Card/effect
+		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(aux.Stringid(63767246,0))
+		e1:SetCategory(CATEGORY_DISABLE)
+		e1:SetType(EFFECT_TYPE_QUICK_O)
+		e1:SetCode(EVENT_CHAINING)
+		e1:SetCountLimit(1)
+		e1:SetRange(LOCATION_MZONE)
+		e1:SetCondition(c63767246.discon)
+		e1:SetTarget(c63767246.distg)
+		e1:SetOperation(c63767246.disop)
+		c:RegisterEffect(e1)
+		--Change attack target to this card
+		local e2=Effect.CreateEffect(c)
+		e2:SetDescription(aux.Stringid(63767246,1))
+		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+		e2:SetCode(EVENT_ATTACK_ANNOUNCE)
+		e2:SetRange(LOCATION_MZONE)
+		e2:SetCondition(c63767246.cbcon)
+		e2:SetCost(c63767246.cbcost)
+		e2:SetOperation(c63767246.cbop)
+		c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
+		--Make 1 of your Xyz monsters gain ATK
+		local e3=Effect.CreateEffect(c)
+		e3:SetDescription(aux.Stringid(63767246,2))
+		e3:SetCategory(CATEGORY_ATKCHANGE)
+		e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+		e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+		e3:SetCode(EVENT_DESTROYED)
+		e3:SetRange(LOCATION_MZONE)
+		e3:SetCondition(c63767246.atkcon)
+		e3:SetTarget(c63767246.atktg)
+		e3:SetOperation(c63767246.atkop)
+		c:RegisterEffect(e3)
+	end
+	c63767246.xyz_number=38
+	function c63767246.discon(e,tp,eg,ep,ev,re,r,rp)
+		local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
+		return (loc&LOCATION_SZONE)~=0
+			and re:IsActiveType(TYPE_SPELL) and Duel.IsChainDisablable(ev) and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
+	end
+	function c63767246.distg(e,tp,eg,ep,ev,re,r,rp,chk)
+		if chk==0 then return e:GetHandler():IsType(TYPE_XYZ) end
+		Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
+	end
+	function c63767246.disop(e,tp,eg,ep,ev,re,r,rp)
+		local c=e:GetHandler()
+		local rc=re:GetHandler()
+		if rc:IsNegatableSpellTrap() and Duel.NegateEffect(ev) and c:IsRelateToEffect(e) and rc:IsRelateToEffect(re)
+			and c:IsType(TYPE_XYZ) and not rc:IsLocation(LOCATION_FZONE) then
+			rc:CancelToGrave()
+			Duel.Overlay(c,rc)
+		end
+	end
+	function c63767246.cbcon(e,tp,eg,ep,ev,re,r,rp)
+		return Duel.GetTurnPlayer()~=tp and Duel.GetAttackTarget()~=e:GetHandler()
+	end
+	function c63767246.cbcost(e,tp,eg,ep,ev,re,r,rp,chk)
+		if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
+		e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
+	end
+	function c63767246.cbop(e,tp,eg,ep,ev,re,r,rp)
+		local c=e:GetHandler()
+		if c:IsRelateToEffect(e) then
+			local at=Duel.GetAttacker()
+			if at:CanAttack() and not at:IsImmuneToEffect(e) then
+				Duel.CalculateDamage(at,c)
+			end
+		end
+	end
+	function c63767246.atkfilter1(c,tp)
+		return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsType(TYPE_XYZ) and c:GetBaseAttack()>0
+			and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
+	end
+	function c63767246.atkcon(e,tp,eg,ep,ev,re,r,rp)
+		return eg:IsExists(c63767246.atkfilter1,1,nil,tp)
+	end
+	function c63767246.atkfilter2(c)
+		return c:IsFaceup() and c:IsType(TYPE_XYZ)
+	end
+	function c63767246.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+		if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c63767246.atkfilter2(chkc) end
+		if chk==0 then return eg:IsExists(c63767246.atkfilter1,1,nil,tp)
+			and Duel.IsExistingTarget(c63767246.atkfilter2,tp,LOCATION_MZONE,0,1,nil) end
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
+		Duel.SelectTarget(tp,c63767246.atkfilter2,tp,LOCATION_MZONE,0,1,1,nil)
+	end
+	function c63767246.atkop(e,tp,eg,ep,ev,re,r,rp)
+		local c=e:GetHandler()
+		local tc=Duel.GetFirstTarget()
+		local g=eg:Filter(c63767246.atkfilter1,nil,tp)
+		if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
+			if #g>=2 then
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+				g=g:Select(tp,1,1,nil)
+			end
+			if #g==1 then
+				local e1=Effect.CreateEffect(c)
+				e1:SetType(EFFECT_TYPE_SINGLE)
+				e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+				e1:SetCode(EFFECT_UPDATE_ATTACK)
+				e1:SetValue(g:GetFirst():GetBaseAttack())
+				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+				tc:RegisterEffect(e1)
+			end
+		end
+		g:DeleteGroup()
+	end
+end
+
+if not c2665273 then
+	c2665273 = {}
+	setmetatable(c2665273, Card)
+	rawset(c2665273,"__index",c2665273)
+	function c2665273.initial_effect(c)
+		c:EnableReviveLimit()
+		c:SetUniqueOnField(1,0,2665273)
+		Xyz.AddProcedure(c,nil,9,2,nil,nil,99)
+		--This card's original ATK/DEF become 1000 x its number of materials
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_SET_BASE_ATTACK)
+		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+		e1:SetRange(LOCATION_MZONE)
+		e1:SetValue(c2665273.atkval)
+		c:RegisterEffect(e1)
+		local e2=e1:Clone()
+		e2:SetCode(EFFECT_SET_BASE_DEFENSE)
+		c:RegisterEffect(e2)
+		--Draws for each player plus attaching to this card
+		local e3=Effect.CreateEffect(c)
+		e3:SetDescription(aux.Stringid(2665273,0))
+		e3:SetCategory(CATEGORY_DRAW)
+		e3:SetType(EFFECT_TYPE_QUICK_O)
+		e3:SetCode(EVENT_FREE_CHAIN)
+		e3:SetRange(LOCATION_MZONE)
+		e3:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
+		e3:SetCountLimit(1,2665273)
+		e3:SetCost(aux.dxmcostgen(1,1,nil))
+		e3:SetTarget(c2665273.target)
+		e3:SetOperation(c2665273.operation)
+		c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
+	end
+	function c2665273.atkval(e,c)
+		return c:GetOverlayCount()*1000
+	end
+	function c2665273.filter(c)
+		return not c:IsType(TYPE_TOKEN) and not c:IsLocation(LOCATION_FZONE)
+	end
+	function c2665273.target(e,tp,eg,ep,ev,re,r,rp,chk)
+		if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and Duel.IsPlayerCanDraw(1-tp,1) end
+		Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,PLAYER_ALL,1)
+	end
+	function c2665273.operation(e,tp,eg,ep,ev,re,r,rp)
+		local c=e:GetHandler()
+		local ps={}
+		local pc=false
+		if Duel.Draw(tp,1,REASON_EFFECT)>0 then
+			table.insert(ps,tp)
+			pc=true
+		end
+		if Duel.Draw(1-tp,1,REASON_EFFECT)>0 then
+			table.insert(ps,1-tp)
+			pc=true
+		end
+		if not (pc and c:IsRelateToEffect(e) and c:IsFaceup()) then return end
+		Duel.BreakEffect()
+		for _,p in pairs(ps) do
+			local tc=Duel.SelectMatchingCard(p,c2665273.filter,p,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,c):GetFirst()
+			if tc then
+				tc:CancelToGrave()
+				Duel.Overlay(c,tc,true)
+			end
+		end
+	end
+end

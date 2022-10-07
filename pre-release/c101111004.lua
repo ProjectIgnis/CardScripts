@@ -77,9 +77,9 @@ function s.rmcfilter(c,g)
 end
 function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local g=e:GetLabelObject():Filter(s.tgfilter,nil,tp,e)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.rmcfilter,1,false,nil,c,g) end
-	local g=Duel.SelectReleaseGroupCost(tp,s.rmcfilter,1,1,false,nil,c,g)
+	local sg=e:GetLabelObject():Filter(s.tgfilter,nil,tp,e)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.rmcfilter,1,false,nil,c,sg) end
+	local g=Duel.SelectReleaseGroupCost(tp,s.rmcfilter,1,1,false,nil,c,sg)
 	Duel.Release(g,REASON_COST)
 end
 function s.tgfilter(c,tp,e)

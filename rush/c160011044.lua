@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--equip
-	aux.AddEquipProcedure(c,0,s.eqfilter)
+	aux.AddEquipProcedure(c,0,s.eqfilter,s.eqlimit)
 	--atk up
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_EQUIP)
@@ -19,4 +19,7 @@ function s.initial_effect(c)
 end
 function s.eqfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_GALAXY) and c:IsAttribute(ATTRIBUTE_DARK) and not c:IsMaximumModeSide()
+end
+function s.eqlimit(e,c)
+    return c:IsFaceup()
 end

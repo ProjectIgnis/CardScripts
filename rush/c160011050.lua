@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--equip
-	aux.AddEquipProcedure(c,0,s.eqfilter,nil,nil,nil,nil,s.condition)
+	aux.AddEquipProcedure(c,0,s.eqfilter,s.eqlimit,nil,nil,nil,s.condition)
 	--Increase ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_EQUIP)
@@ -20,6 +20,9 @@ function s.initial_effect(c)
 end
 function s.eqfilter(c)
 	return c:IsFaceup() and c:IsCode(160301001) and not c:IsMaximumModeSide()
+end
+function s.eqlimit(e,c)
+    return c:IsFaceup()
 end
 function s.value(e,c)
 	return Duel.GetMatchingGroup(Card.IsMonster,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil):GetClassCount(Card.GetAttribute)*400

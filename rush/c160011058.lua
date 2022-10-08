@@ -30,7 +30,8 @@ function s.eqlimit(e,c)
     return c:IsFaceup()
 end
 function s.otfilter(c,tp)
-	return c:IsDoubleTribute(FLAG_DOUBLE_TRIB) and (c:IsControler(tp) or c:IsFaceup())
+	local eg=c:GetEquipGroup()
+	return c:IsDoubleTribute(FLAG_DOUBLE_TRIB) and #eg>0 and eg:IsExists(Card.IsCode,1,nil,id) and (c:IsControler(tp) or c:IsFaceup())
 end
 function s.eftg(e,c)
 	return c:IsLevelAbove(7) and c:IsSummonableCard()

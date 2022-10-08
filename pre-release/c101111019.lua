@@ -129,7 +129,7 @@ function s.extraval(chk,summon_type,e,...)
 		if summon_type~=SUMMON_TYPE_LINK or not (sc and sc:IsSetCard(SET_EVIL_EYE)) then
 			return Group.CreateGroup()
 		else
-			Duel.RegisterFlagEffect(tp,id,0,0,1)
+			Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 			return Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_ONFIELD,0,nil)
 		end
 	elseif chk==2 then

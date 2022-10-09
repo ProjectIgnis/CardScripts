@@ -1,8 +1,9 @@
 --魔界劇団－サッシー・ルーキー
+--Abyss Actor - Sassy Rookie
 local s,id=GetID()
 function s.initial_effect(c)
 	Pendulum.AddProcedure(c)
-	--destroy replace
+	--Destruction replacement
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_DESTROY_REPLACE)
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetValue(s.repval)
 	e1:SetOperation(s.repop)
 	c:RegisterEffect(e1)
-	--indes
+	--Cannot be destroyed once per turn
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -20,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetCountLimit(1)
 	e2:SetValue(s.indct)
 	c:RegisterEffect(e2)
-	--spsummon
+	--Special Summon 1 "Abyss Actor" monster from the Deck
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -31,7 +32,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
-	--destroy
+	--Destroy 1 monster the opponent controls
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,2))
 	e4:SetCategory(CATEGORY_DESTROY)
@@ -43,11 +44,12 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x10ec}
+s.listed_series={SET_ABYSS_ACTOR}
 s.listed_names={id}
 function s.filter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
-		and c:IsSetCard(0x10ec) and not c:IsReason(REASON_REPLACE)
+		and c:IsSetCard(SET_ABYSS_ACTOR) and not c:IsReason(REASON_REPLACE)
+		and (c:IsReason(REASON_BATTLE) or (c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp))
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -69,7 +71,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return (rp==1-tp and c:IsReason(REASON_EFFECT) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)) or c:IsReason(REASON_BATTLE)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x10ec) and c:IsLevelBelow(4) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_ABYSS_ACTOR) and c:IsLevelBelow(4) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

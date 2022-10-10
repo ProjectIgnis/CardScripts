@@ -18,7 +18,7 @@ function s.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter2(chkc,e,tp) end
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>1
 		and Duel.IsExistingTarget(s.spfilter2,tp,LOCATION_MZONE,0,1,nil,e,tp) end
@@ -73,7 +73,7 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local sg=aux.SelectUnselectGroup(g,e,tp,2,2,aux.dncheck,1,tp,HINTMSG_SPSUMMON)
 	if sg and #sg==2 then
 		local fid=c:GetFieldID()
-		for sc in aux.Next(sg) do
+		for sc in sg:Iter() do
 			Duel.SpecialSummonStep(sc,0,tp,tp,false,false,POS_FACEUP)
 			--Cannot attack
 			local e1=Effect.CreateEffect(c)

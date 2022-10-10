@@ -24,9 +24,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id,CARD_BLACK_WINGED_DRAGON}
-s.listed_series={0x33}
+s.listed_series={SET_BLACKWING}
 function s.spconfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x33) and not c:IsCode(id)
+	return c:IsFaceup() and c:IsSetCard(SET_BLACKWING) and not c:IsCode(id)
 end
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -38,7 +38,7 @@ function s.spfilter(c,e,tp,ec)
 		and Duel.GetLocationCountFromEx(tp,tp,ec,c)>0
 end
 function s.tgfilter(c)
-	return c:IsSetCard(0x33) and not c:IsType(TYPE_TUNER) and c:HasLevel() and c:IsAbleToGrave()
+	return c:IsSetCard(SET_BLACKWING) and not c:IsType(TYPE_TUNER) and c:HasLevel() and c:IsAbleToGrave()
 end
 function s.tgrescon(clv)
 	return function(sg)
@@ -63,8 +63,9 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.GetMatchingGroup(s.tgfilter,tp,LOCATION_DECK,0,nil)
 		local rescon=s.tgrescon(c:GetLevel())
 		local mg=aux.SelectUnselectGroup(g,e,tp,1,#g,rescon,1,tp,HINTMSG_TOGRAVE,rescon)
-		if #mg>0 and Duel.SendtoGrave(c+mg,REASON_EFFECT)>0
-			and (c:IsLocation(LOCATION_GRAVE) or mg:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE)) then
+		if #mg>0 and Duel.SendtoGrave(c+mg,REASON_EFFECT)>0 then
+			local og=Duel.GetOperatedGroup()
+			if og:FilterCount(Card.IsLocation,nil,LOCATION_GRAVE)~=#og then return end
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local sg=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
 			if #sg>0 then

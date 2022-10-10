@@ -56,7 +56,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg=g:FilterSelect(tp,s.spfilter,1,1,nil,e,tp,g)
 	if #sg==1 then
-		Duel.SpecialSummon(sg,1,tp,tp,false,false,POS_FACEUP)
+		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 		Duel.SendtoGrave(g:Sub(sg),REASON_EFFECT|REASON_DISCARD)
 	end
 end

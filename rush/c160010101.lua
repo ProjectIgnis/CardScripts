@@ -29,12 +29,16 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	if Duel.DiscardDeck(tp,1,REASON_COST)<1 then return end
+	--Effect
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(s.desfilter),tp,0,LOCATION_MZONE,nil)
 	g=g:AddMaximumCheck()
 	if Duel.Destroy(g,REASON_EFFECT)>0 and c:IsRelateToEffect(e) and c:IsFaceup() then
+		local og=Duel.GetOperatedGroup()
+		local ct=og:GetCount()
+		if og:IsExists(Card.WasMaximumModeSide,1,nil) then ct=1 end
 		Duel.BreakEffect()
-		local ct=Duel.GetOperatedGroup():GetCount()
+		--Increase ATK
 		local e1=Effect.CreateEffect(c)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetType(EFFECT_TYPE_SINGLE)

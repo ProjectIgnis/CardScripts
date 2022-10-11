@@ -1,7 +1,8 @@
 --シャドー・インパルス
+--Shadow Impulse
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Special Summon 1 Synchro monster from the Extra Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,e,tp)
-	return c:IsLocation(LOCATION_GRAVE) and c:IsCanBeEffectTarget(e)
+	return c:IsLocation(LOCATION_GRAVE) and c:IsCanBeEffectTarget(e) and c:IsPreviousLocation(LOCATION_MZONE)
 		and c:IsPreviousControler(tp) and c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
 		and c:IsType(TYPE_SYNCHRO) and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c)
 end

@@ -1,5 +1,5 @@
 --交血鬼－ヴァンパイア・シェリダン
---Al Dhampir – Vampire Sheridan
+--Dhampir Vampire Sheridan
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.lvtg)
 	e1:SetValue(s.lvval)
 	c:RegisterEffect(e1)
-	--to grave
+	--Send 1 card the opponent controls to the GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOGRAVE)
@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.tgtg)
 	e2:SetOperation(s.tgop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
-	--spsummon
+	--Special Summon 1 monster frome the opponent's GY
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -82,7 +82,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
 	local tc=nil
-	local g=eg:Filter(s.spfilter,nil,e,tp)
+	local g=eg:Filter(aux.NecroValleyFilter(s.spfilter),nil,e,tp)
 	if #g==0 then return end
 	if #g==1 then
 		tc=g:GetFirst()

@@ -58,24 +58,25 @@ function s.sumcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousLocation(LOCATION_ONFIELD)
 		and c:GetSummonType()==SUMMON_TYPE_SYNCHRO
 end
-function s.mgfilter(c,e,tp)
+function s.mgfilter(c,e,tp,sync)
 	return c:IsControler(tp) and c:IsLocation(LOCATION_GRAVE)
 		and (c:GetReason()&(REASON_SYNCHRO+REASON_MATERIAL))>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and c:GetReasonCard()==sync
 end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local mg=e:GetHandler():GetMaterial()
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ft>1 and Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
 	if chk==0 then return #mg>0 and ft>=#mg 
-		and mg:FilterCount(s.mgfilter,nil,e,tp)==#mg end
+		and mg:FilterCount(s.mgfilter,nil,e,tp,e:GetHandler())==#mg end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,mg,#mg,tp,0)
 end
 function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 	local mg=e:GetHandler():GetMaterial()
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ft>1 and Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
-	if #mg<=ft and mg:FilterCount(aux.NecroValleyFilter(s.mgfilter),nil,e,tp)==#mg then
+	if #mg<=ft and mg:FilterCount(aux.NecroValleyFilter(s.mgfilter),nil,e,tp,e:GetHandler())==#mg then
 		Duel.SpecialSummon(mg,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

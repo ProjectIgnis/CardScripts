@@ -49,5 +49,5 @@ function s.activate(fustg,fusop)
 	end
 end
 function s.fextra(e,tp,mg)
-	return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsFaceup),tp,0,LOCATION_ONFIELD,nil)
+	return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsFaceup,Card.IsAbleToRemove),tp,0,LOCATION_ONFIELD,nil)
 end

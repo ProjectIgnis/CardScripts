@@ -1,4 +1,5 @@
 --ガトリング・ドラゴン
+--Gatling Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -23,8 +24,7 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if #g==0 then return end
-	local c1,c2,c3=Duel.TossCoin(tp,3)
-	local ct=c1+c2+c3
+	local ct=Duel.CountHeads(Duel.TossCoin(tp,3))
 	if ct==0 then return end
 	if ct>#g then ct=#g end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)

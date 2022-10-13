@@ -1,4 +1,5 @@
---モンスターBOX
+--反撃準備
+--Prepare to Strike Back
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -50,10 +51,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local at=Duel.GetAttackTarget()
 	if a:IsFaceup() and a:IsRelateToEffect(e) and at:IsFaceup() and at:IsRelateToEffect(e) then
-		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_COIN)
-		local coin=Duel.SelectOption(1-tp,60,61)
-		local res=Duel.TossCoin(1-tp,1)
-		if coin~=res then
+		if Duel.CallCoin(tp) then
 			Duel.ChangePosition(at,POS_FACEUP_ATTACK)
 		elseif a:GetAttack()>at:GetDefense() then
 			Duel.Damage(tp,a:GetAttack()-at:GetDefense(),REASON_EFFECT)

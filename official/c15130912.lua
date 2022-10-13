@@ -1,5 +1,5 @@
 -- ヴァリアンツの弓引－西園
--- Saion, Archer of the Valiants
+-- Saion the Vaylantz Archer
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -81,7 +81,8 @@ function s.disatkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not (tc:IsFaceup() and tc:IsRelateToEffect(e)) then return end
 	local c=e:GetHandler()
-	if Duel.TossCoin(tp,1)==1 then
+	local coin=Duel.TossCoin(tp,1)
+	if coin==COIN_HEADS then
 		-- Negate its effects
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -92,7 +93,7 @@ function s.disatkop(e,tp,eg,ep,ev,re,r,rp)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		tc:RegisterEffect(e2)
-	else
+	elseif coin==COIN_TAILS then
 		-- Halve its ATK
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -117,9 +118,10 @@ end
 function s.desthop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) then return end
-	if Duel.TossCoin(tp,1)==1 then
+	local coin=Duel.TossCoin(tp,1)
+	if coin==COIN_HEADS then
 		Duel.Destroy(tc,REASON_EFFECT)
-	else
+	elseif coin==COIN_TAILS then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end

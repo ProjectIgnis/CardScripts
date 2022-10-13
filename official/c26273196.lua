@@ -30,12 +30,11 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
-	local coin=Duel.SelectOption(tp,60,61)
-	local res=Duel.TossCoin(tp,1)
+	local damage_oppo=Duel.CallCoin(tp)
 	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	Duel.Destroy(g,REASON_EFFECT)
 	local dg=Duel.GetOperatedGroup()
 	local sum=dg:Filter(Card.IsPreviousPosition,nil,POS_FACEUP):GetSum(Card.GetBaseAttack)
-	local p=res~=coin and 1-tp or tp
+	local p=damage_oppo and 1-tp or tp
 	Duel.Damage(p,sum/2,REASON_EFFECT)
 end

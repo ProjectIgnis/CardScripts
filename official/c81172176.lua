@@ -23,8 +23,9 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_DECKDES,nil,1,tp,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local coin=Duel.SelectOption(tp,60,61)
-	local res=Duel.TossCoin(tp,1)
-	if coin~=res then Duel.Remove(Duel.GetMatchingGroup(s.rmfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,nil),POS_FACEUP,REASON_EFFECT)
-	else Duel.DiscardDeck(tp,Duel.GetFieldGroupCount(tp,0,LOCATION_GRAVE),REASON_EFFECT) end
+	if Duel.CallCoin(tp) then
+		Duel.Remove(Duel.GetMatchingGroup(s.rmfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,nil),POS_FACEUP,REASON_EFFECT)
+	else
+		Duel.DiscardDeck(tp,Duel.GetFieldGroupCount(tp,0,LOCATION_GRAVE),REASON_EFFECT)
+	end
 end

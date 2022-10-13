@@ -1,4 +1,5 @@
 --リボルバー・ドラゴン
+--Barrel Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
@@ -24,8 +25,8 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
-		local c1,c2,c3=Duel.TossCoin(tp,3)
-		if c1+c2+c3<2 then return end
+		local heads=Duel.CountHeads(Duel.TossCoin(tp,3))
+		if heads<2 then return end
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end

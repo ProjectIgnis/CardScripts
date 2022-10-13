@@ -1,4 +1,5 @@
 --サンド・ギャンブラー
+--Sand Gambler
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
@@ -20,10 +21,10 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c1,c2,c3=Duel.TossCoin(tp,3)
-	if c1+c2+c3==3 then
+	if Duel.CountHeads(c1,c2,c3)==3 then
 		local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_MZONE,nil)
 		Duel.Destroy(g,REASON_EFFECT)
-	elseif c1+c2+c3==0 then
+	elseif Duel.CountTails(c1,c2,c3)==3 then
 		local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,0,nil)
 		Duel.Destroy(g,REASON_EFFECT)
 	end

@@ -52,11 +52,7 @@ end
 function s.coinop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
-	local res=0
-	if c:IsHasEffect(CARD_LIGHT_BARRIER) then
-		res=1-Duel.SelectOption(tp,60,61)
-	else res=Duel.TossCoin(tp,1) end
-	s.arcanareg(c,res)
+	s.arcanareg(c,Arcana.TossCoin(c,tp))
 end
 function s.arcanareg(c,coin)
 	--coin effect
@@ -77,8 +73,8 @@ function s.arcanareg(c,coin)
 	c:RegisterFlagEffect(CARD_REVERSAL_OF_FATE,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,coin,63-coin)
 end
 function s.rdcon1(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)==1
+	return e:GetHandler():GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)==COIN_HEADS
 end
 function s.rdcon2(e,tp,eg,ep,ev,re,r,rp)
-	return  e:GetHandler():GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)==0
+	return e:GetHandler():GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)==COIN_TAILS
 end

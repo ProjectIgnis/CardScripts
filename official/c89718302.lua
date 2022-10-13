@@ -1,4 +1,5 @@
 --暴れ牛鬼
+--Abare Ushioni
 local s,id=GetID()
 function s.initial_effect(c)
 	--coin
@@ -18,10 +19,7 @@ function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_COIN,nil,0,tp,1)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_COIN)
-	local coin=Duel.SelectOption(tp,60,61)
-	local res=Duel.TossCoin(tp,1)
-	if coin~=res then
+	if Duel.CallCoin(tp) then
 		Duel.Damage(1-tp,1000,REASON_EFFECT)
 	else
 		Duel.Damage(tp,1000,REASON_EFFECT)

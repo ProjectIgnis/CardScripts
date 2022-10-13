@@ -21,9 +21,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_COIN,nil,0,tp,1)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local coin=Duel.SelectOption(tp,60,61)
-	local res=Duel.TossCoin(tp,1)
-	if coin~=res then
+	if Duel.CallCoin(tp) then
 		local gc=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
 		Duel.Draw(tp,5-gc,REASON_EFFECT)
 	else 

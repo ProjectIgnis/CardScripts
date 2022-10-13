@@ -1,5 +1,5 @@
 --戦華史略-東南之風
---Ancient Warriors Saga - Southeast Wind
+--Ancient Warriors Saga - East-by-South Winds
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
@@ -64,8 +64,7 @@ function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local coin=Duel.TossCoin(tp,1)
-	if coin==1 then
+	if Duel.TossCoin(tp,1)==COIN_HEADS then
 		Duel.SendtoGrave(e:GetHandler(),REASON_EFFECT)
 	end
 end

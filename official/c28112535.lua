@@ -59,8 +59,7 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
-		local c1,c2,c3=Duel.TossCoin(tp,3)
-		if c1+c2+c3<2 then return end
+		if Duel.CountHeads(Duel.TossCoin(tp,3))<2 then return end
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end

@@ -1,4 +1,5 @@
 --ツインバレル・ドラゴン
+--Twin-Barrel Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
@@ -29,8 +30,7 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
-		local c1,c2=Duel.TossCoin(tp,2)
-		if c1+c2<2 then return end
+		if Duel.CountHeads(Duel.TossCoin(tp,2))<2 then return end
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end

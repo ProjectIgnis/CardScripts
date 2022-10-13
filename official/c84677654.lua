@@ -24,7 +24,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local lv=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
 	local coin1=Duel.TossCoin(tp,1)
 	local coin2=Duel.TossCoin(1-tp,1)
-	if coin1==1 and coin2==1 then
+	if coin1==COIN_HEADS and coin2==COIN_HEADS then
 		local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil)
 		for tc in aux.Next(g) do
 			local e1=Effect.CreateEffect(e:GetHandler())
@@ -34,7 +34,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e1)
 		end
-	elseif coin1==0 and coin2==0 then
+	elseif coin1==COIN_TAILS and coin2==COIN_TAILS then
 		local lp=Duel.GetLP(tp)
 		Duel.SetLP(tp,lp-lv*500)
 	end

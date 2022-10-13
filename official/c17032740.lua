@@ -1,4 +1,5 @@
 --E・HERO カオス・ネオス
+--Elemental HERO Chaos Neos
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -43,11 +44,11 @@ function s.cointg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_COIN,nil,0,tp,3)
 end
 function s.coinop(e,tp,eg,ep,ev,re,r,rp)
-	local c1,c2,c3=Duel.TossCoin(tp,3)
-	if c1+c2+c3==3 then
-		local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_MZONE,nil)
+	local total_heads=Duel.CountHeads(Duel.TossCoin(tp,3))
+	if total_heads==3 then
+		local g=Duel.FieldGroup(tp,0,LOCATION_MZONE)
 		Duel.Destroy(g,REASON_EFFECT)
-	elseif c1+c2+c3==2 then
+	elseif total_heads==2 then
 		local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 		local c=e:GetHandler()
 		local tc=g:GetFirst()
@@ -63,7 +64,7 @@ function s.coinop(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			tc:RegisterEffect(e2)
 		end
-	elseif c1+c2+c3==1 then
+	elseif total_heads==1 then
 		local g=Duel.GetMatchingGroup(Card.IsAbleToHand,tp,LOCATION_MZONE,0,nil)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 	end

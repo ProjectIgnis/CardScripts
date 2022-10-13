@@ -1,4 +1,5 @@
 --一撃必殺侍
+--Sasuke Samurai 4
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
@@ -25,10 +26,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttackTarget()
 	if c==tc then tc=Duel.GetAttacker() end
 	if not tc:IsRelateToBattle() then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_COIN)
-	local coin=Duel.SelectOption(tp,60,61)
-	local res=Duel.TossCoin(tp,1)
-	if coin~=res then
+	if Duel.CallCoin(tp) then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end

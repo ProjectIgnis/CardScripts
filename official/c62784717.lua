@@ -32,21 +32,28 @@ end
 function s.coinop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	local res=Duel.TossCoin(tp,1)
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
-	e1:SetDescription(aux.Stringid(id,1))
-	e1:SetCode(EFFECT_CANNOT_SUMMON)
-	if res==0 then
-		e1:SetReset(RESET_PHASE+PHASE_END,2)
-		e1:SetTargetRange(1,0)
-	else
-		e1:SetReset(RESET_PHASE+PHASE_END)
-		e1:SetTargetRange(0,1)
+	local function register_eff(player)
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+		e1:SetDescription(aux.Stringid(id,1))
+		e1:SetCode(EFFECT_CANNOT_SUMMON)
+		if player==tp then
+			e1:SetReset(RESET_PHASE+PHASE_END,2)
+			e1:SetTargetRange(1,0)
+		else
+			e1:SetReset(RESET_PHASE+PHASE_END)
+			e1:SetTargetRange(0,1)
+		end
+		Duel.RegisterEffect(e1,tp)
+		local e2=e1:Clone()
+		e2:SetCode(EFFECT_CANNOT_FLIP_SUMMON)
+		Duel.RegisterEffect(e2,tp)
 	end
-	Duel.RegisterEffect(e1,tp)
-	local e2=e1:Clone()
-	e2:SetCode(EFFECT_CANNOT_FLIP_SUMMON)
-	Duel.RegisterEffect(e2,tp)
+	local res=Duel.TossCoin(tp,1)
+	if res==COIN_HEADS then
+		register_eff(1-tp)
+	elseif res==COIN_TAILS then
+		register_eff(tp)
+	end
 end

@@ -38,8 +38,11 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	local res=Duel.TossCoin(tp,1)
-	local tg_p=res==1 and tp or 1-tp
-	Duel.SpecialSummon(c,1,tp,tg_p,false,false,POS_FACEUP)
+	if res==COIN_HEADS then
+		Duel.SpecialSummon(c,1,tp,tp,false,false,POS_FACEUP)
+	elseif res==COIN_TAILS then
+		Duel.SpecialSummon(c,1,tp,1-tp,false,false,POS_FACEUP)
+	end
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

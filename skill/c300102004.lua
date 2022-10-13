@@ -34,7 +34,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 		local ge2=ge1:Clone()
 		ge2:SetCode(EFFECT_TOSS_COIN_CHOOSE)
-		ge2:SetOperation(s.repop("coin",Duel.GetCoinResult,Duel.SetCoinResult,function(tp) Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,4)) return 1-Duel.AnnounceCoin(tp) end))
+		ge2:SetOperation(s.repop("coin",Duel.GetCoinResult,Duel.SetCoinResult,function(tp) Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,4)) return Duel.AnnounceCoin(tp) end))
 		Duel.RegisterEffect(ge2,0)
 	end)
 end

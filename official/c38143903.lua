@@ -43,7 +43,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_CONTROLER)
 	local coin=Duel.AnnounceCoin(p)
 	local res=Duel.TossCoin(rp,1)
-	if coin~=res then
+	if coin==res then
 		Duel.SendtoGrave(e:GetHandler(),REASON_EFFECT)
 	else
 		if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then

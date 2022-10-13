@@ -42,8 +42,7 @@ end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local sel
 	if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_LIGHT_BARRIER),tp,LOCATION_FZONE,0,1,nil) then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_COIN)
-		sel=1-Duel.AnnounceCoin(tp)
+		sel=Duel.AnnounceCoin(tp)
 	else
 		sel=Duel.TossCoin(tp,1)
 	end

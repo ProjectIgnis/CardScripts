@@ -52,16 +52,16 @@ function s.arcanareg(c,coin)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_CANNOT_MSET)
 	c:RegisterEffect(e3)
-	c:RegisterFlagEffect(CARD_REVERSAL_OF_FATE,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,coin,63-coin)
+	Arcana.RegisterCoinResult(c,coin)
 end
 function s.dtcon(e)
-	return e:GetHandler():GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)==COIN_HEADS
+	return Arcana.GetCoinResult(e:GetHandler())==COIN_HEADS
 end
 function s.dtval(e,c)
 	return c:IsSetCard(0x5)
 end
 function s.sumcon(e)
-	return e:GetHandler():GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)==COIN_TAILS
+	return Arcana.GetCoinResult(e:GetHandler())==COIN_TAILS
 end
 function s.sumtg(e,c,tp,sumtp)
 	return (sumtp&SUMMON_TYPE_TRIBUTE)==SUMMON_TYPE_TRIBUTE and c:IsSetCard(0x5)

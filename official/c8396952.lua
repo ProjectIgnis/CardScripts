@@ -37,12 +37,12 @@ function s.arcanareg(c,coin)
 	e1:SetOperation(s.speop)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e1)
-	c:RegisterFlagEffect(CARD_REVERSAL_OF_FATE,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,coin,63-coin)
+	Arcana.RegisterCoinResult(c,coin)
 end
 function s.speop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not re:IsActiveType(TYPE_SPELL) or not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
-	local val=c:GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)
+	local val=Arcana.GetCoinResult(c)
 	if val==COIN_HEADS then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

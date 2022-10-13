@@ -97,14 +97,14 @@ function s.arcanareg(c,coin)
 	e4:SetReset(RESET_EVENT+RESET_OVERLAY+RESET_TOFIELD)
 	e4:SetLabelObject(e3)
 	c:RegisterEffect(e4)
-	c:RegisterFlagEffect(CARD_REVERSAL_OF_FATE,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,coin,63-coin)
+	Arcana.RegisterCoinResult(c,coin)
 end
 function s.macon(e)
-	return e:GetHandler():GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)==COIN_HEADS
+	return Arcana.GetCoinResult(e:GetHandler())==COIN_HEADS
 end
 function s.poscon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)==COIN_HEADS and c:GetAttackAnnouncedCount()>=2
+	return Arcana.GetCoinResult(c)==COIN_HEADS and c:GetAttackAnnouncedCount()>=2
 end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -120,7 +120,7 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e1)
 end
 function s.desop1(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetHandler():IsReason(REASON_DESTROY) and e:GetHandler():GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)==COIN_TAILS then
+	if e:GetHandler():IsReason(REASON_DESTROY) and Arcana.GetCoinResult(e:GetHandler())==COIN_TAILS then
 		e:SetLabel(1)
 	else e:SetLabel(0) end
 end

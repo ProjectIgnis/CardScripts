@@ -1129,3 +1129,12 @@ Arcana={}
 function Arcana.TossCoin(c,tp)
 	return c:IsHasEffect(CARD_LIGHT_BARRIER) and Duel.AnnounceCoin(tp) or Duel.TossCoin(tp,1)
 end
+function Arcana.RegisterCoinResult(c,coin)
+	c:RegisterFlagEffect(CARD_REVERSAL_OF_FATE,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,coin,63-coin)
+end
+function Arcana.GetCoinResult(c)
+	c:GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)
+end
+function Arcana.SetCoinResult(c,coin)
+	return c:SetFlagEffectLabel(CARD_REVERSAL_OF_FATE,coin)
+end

@@ -55,10 +55,10 @@ function s.arcanareg(c,coin)
 	e2:SetOperation(s.thop)
 	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e2)
-	c:RegisterFlagEffect(CARD_REVERSAL_OF_FATE,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,coin,63-coin)
+	Arcana.RegisterCoinResult(c,coin)
 end
 function s.skipcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==tp and e:GetHandler():GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)==COIN_HEADS
+	return ep==tp and Arcana.GetCoinResult(e:GetHandler())==COIN_HEADS
 end
 function s.skipcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_MZONE,0,2,nil) end
@@ -79,7 +79,7 @@ function s.skipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and e:GetHandler():GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)==COIN_TAILS
+	return ep~=tp and Arcana.GetCoinResult(e:GetHandler())==COIN_TAILS
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

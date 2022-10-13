@@ -66,11 +66,11 @@ function s.arcanareg(c,coin)
 	e4:SetOperation(s.spcop)
 	c:RegisterEffect(e4)
 	e3:SetLabelObject(e4)
-	c:RegisterFlagEffect(CARD_REVERSAL_OF_FATE,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,coin,63-coin)
+	Arcana.RegisterCoinResult(c,coin)
 	c:RegisterFlagEffect(51116000,0,0,1,coin)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)==1
+	return Arcana.GetCoinResult(e:GetHandler())==1
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=eg:GetFirst()
@@ -88,11 +88,11 @@ end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	--heads
-	if c:GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)==1 and c:GetFlagEffectLabel(51116000)==1 then
+	if Arcana.GetCoinResult(c)==1 and c:GetFlagEffectLabel(51116000)==1 then
 		c:SetFlagEffectLabel(51116000,0)
 	end
 	--tails
-	if c:GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)==0 and c:GetFlagEffectLabel(51116000)==0 then
+	if Arcana.GetCoinResult(c)==0 and c:GetFlagEffectLabel(51116000)==0 then
 		c:SetFlagEffectLabel(51116000,1)
 	end
 end

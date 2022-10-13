@@ -41,13 +41,13 @@ function s.arcanareg(c,coin)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e1)
 	--
-	c:RegisterFlagEffect(CARD_REVERSAL_OF_FATE,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,coin,63-coin)
+	Arcana.RegisterCoinResult(c,coin)
 end
 function s.atktg(e,c)
 	return c:IsSetCard(0x5)
 end
 function s.atkval(e,c)
-	local coin=e:GetHandler():GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)
+	local coin=Arcana.GetCoinResult(e:GetHandler())
 	if coin==COIN_HEADS then
 		return 500
 	elseif coin==COIN_TAILS then

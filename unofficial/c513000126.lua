@@ -46,13 +46,13 @@ function s.arcanareg(c,coin)
 	e1:SetOperation(s.ctop)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e1)
-	c:RegisterFlagEffect(CARD_REVERSAL_OF_FATE,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,coin,63-coin)
+	Arcana.RegisterCoinResult(c,coin)
 	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,coin)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
     	--heads effect
-    	if c:GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)==1 and c:GetFlagEffectLabel(id)==1 then
+    	if Arcana.GetCoinResult(c)==1 and c:GetFlagEffectLabel(id)==1 then
 		c:SetFlagEffectLabel(id,0)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
 		local g=Duel.SelectMatchingCard(tp,Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,1,1,nil)
@@ -63,7 +63,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 	--tails  effect
-	if c:GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)==0 and c:GetFlagEffectLabel(id)==0 then
+	if Arcana.GetCoinResult(c)==0 and c:GetFlagEffectLabel(id)==0 then
 		c:SetFlagEffectLabel(id,1)
 		local g=Duel.GetMatchingGroup(Card.IsControlerCanBeChanged,tp,LOCATION_MZONE,0,c)
 		Duel.GetControl(g,1-tp)

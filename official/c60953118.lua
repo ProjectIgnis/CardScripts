@@ -70,11 +70,11 @@ function s.arcanareg(c,coin)
 	e2:SetTargetRange(0,1)
 	e2:SetCondition(s.rdcon2)
 	c:RegisterEffect(e2)
-	c:RegisterFlagEffect(CARD_REVERSAL_OF_FATE,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,coin,63-coin)
+	Arcana.RegisterCoinResult(c,coin)
 end
 function s.rdcon1(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)==COIN_HEADS
+	return Arcana.GetCoinResult(e:GetHandler())==COIN_HEADS
 end
 function s.rdcon2(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)==COIN_TAILS
+	return Arcana.GetCoinResult(e:GetHandler())==COIN_TAILS
 end

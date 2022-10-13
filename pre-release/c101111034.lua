@@ -3,6 +3,7 @@
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
+	c:EnableReviveLimit()
 	--Fusion Materials
 	Fusion.AddProcMix(c,true,true,CARD_ALBAZ,aux.FilterBoolFunctionEx(Card.IsRace,RACES_BEAST_BWARRIOR_WINGB))
 	--Negate the effect of a Fusion/Synchro/Xyz/Link monster
@@ -34,7 +35,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_ALBAZ}
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_MONSTER) and re:IsActiveType(TYPE_FUSION|TYPE_SYNCHRO|TYPE_XYZ|TYPE_LINK)
+	return re:IsActiveType(TYPE_MONSTER) and re:IsActiveType(TYPE_EXTRA)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

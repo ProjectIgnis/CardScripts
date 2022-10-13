@@ -2083,7 +2083,7 @@ function Duel.CountHeads(result,...)
 end
 
 --Return the number of COIN_TAILS among the passed values
-function Duel.CountHeads(result,...)
+function Duel.CountTails(result,...)
 	if not ... then return (result==COIN_TAILS and 1 or 0) end
 	return (result==COIN_TAILS and 1 or 0) + Duel.CountTails(...)
 end

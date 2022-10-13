@@ -49,13 +49,7 @@ function s.effcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)
-	local ct=0
-	local res={Duel.GetCoinResult()}
-	for i=1,ev do
-		if res[i]==1 then
-			ct=ct+1
-		end
-	end
+	local ct=Duel.CountHeads(Duel.GetCoinResult())
 	if ct>0 then
 		Duel.Damage(1-tp,500,REASON_EFFECT)
 	end
@@ -100,10 +94,10 @@ function s.coincon2(e,tp,eg,ep,ev,re,r,rp)
 	return re==e:GetLabelObject() and Duel.GetCurrentChain()==e:GetLabel()
 end
 function s.coinop2(e,tp,eg,ep,ev,re,r,rp)
-	local res={Duel.GetCoinResult()}
+	local res={}
 	local ct=ev
 	for i=1,ct do
-		res[i]=1
+		table.insert(res,COIN_HEADS)
 	end
 	Duel.SetCoinResult(table.unpack(res))
 end

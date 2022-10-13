@@ -2070,6 +2070,24 @@ function Duel.SelectEffect(tp,...)
 	return sel[Duel.SelectOption(tp,table.unpack(eff))+1]
 end
 
+--Makes the player call a coin and then toss a coin
+--returns true if the player guessed right, false if he didn't
+function Duel.CallCoin(tp)
+	return Duel.AnnounceCoin(tp)==Duel.TossCoin(tp,1)
+end
+
+--Return the number of COIN_HEADS among the passed values
+function Duel.CountHeads(result,...)
+	if not ... then return (result==COIN_HEADS and 1 or 0) end
+	return (result==COIN_HEADS and 1 or 0) + Duel.CountHeads(...)
+end
+
+--Return the number of COIN_TAILS among the passed values
+function Duel.CountHeads(result,...)
+	if not ... then return (result==COIN_TAILS and 1 or 0) end
+	return (result==COIN_TAILS and 1 or 0) + Duel.CountTails(...)
+end
+
 function Duel.CheckPendulumZones(player)
 	return Duel.CheckLocation(player,LOCATION_PZONE,0) or Duel.CheckLocation(player,LOCATION_PZONE,1)
 end

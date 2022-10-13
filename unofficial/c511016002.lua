@@ -84,15 +84,15 @@ function s.arcanareg(c,coin)
 	e2:SetCode(EFFECT_IMMUNE_EFFECT)
 	e2:SetValue(s.unval)
 	c:RegisterEffect(e2)
-	c:RegisterFlagEffect(36690018,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,coin,63-coin)
+	c:RegisterFlagEffect(CARD_REVERSAL_OF_FATE,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,coin,63-coin)
 end
 function s.tgval(e,re,rp)
-	if e:GetHandler():GetFlagEffectLabel(36690018)==1 then
+	if e:GetHandler():GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)==1 then
 		return rp==e:GetHandlerPlayer()
 	else return rp~=e:GetHandlerPlayer() end
 end
 function s.unval(e,te)
-	if e:GetHandler():GetFlagEffectLabel(36690018)==1 then
+	if e:GetHandler():GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)==1 then
 		return te:GetOwnerPlayer()==e:GetHandlerPlayer() and te:GetOwner()~=e:GetHandler()
 	else return te:GetOwnerPlayer()~=e:GetHandlerPlayer() end
 end

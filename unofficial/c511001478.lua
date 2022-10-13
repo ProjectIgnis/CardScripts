@@ -56,17 +56,17 @@ function s.arcanareg(c,coin)
 	e3:SetTarget(s.destg)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
-	c:RegisterFlagEffect(36690018,RESET_EVENT+RESETS_STANDARD_DISABLE,EFFECT_FLAG_CLIENT_HINT,1,coin,63-coin)
+	c:RegisterFlagEffect(CARD_REVERSAL_OF_FATE,RESET_EVENT+RESETS_STANDARD_DISABLE,EFFECT_FLAG_CLIENT_HINT,1,coin,63-coin)
 end
 function s.indcon(e)
-	return e:GetHandler():GetFlagEffectLabel(36690018)==1
+	return e:GetHandler():GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)==1
 end
 function s.atcon(e)
-	return e:GetHandler():GetFlagEffectLabel(36690018)==0
+	return e:GetHandler():GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)==0
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:GetFlagEffectLabel(36690018)==0 and c:IsRelateToBattle() and Duel.GetAttackTarget() and c==Duel.GetAttackTarget()
+	return c:GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)==0 and c:IsRelateToBattle() and Duel.GetAttackTarget() and c==Duel.GetAttackTarget()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

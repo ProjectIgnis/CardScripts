@@ -13,7 +13,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x5}
 function s.filter(c)
-	return c:IsSetCard(0x5) and c:GetFlagEffect(36690018)>0
+	return c:IsSetCard(0x5) and c:GetFlagEffect(CARD_REVERSAL_OF_FATE)>0
 end
 function s.rfilter(c)
 	return c:IsSetCard(0x5) and c:IsMonster() and c:IsAbleToRemove() and aux.SpElimFilter(c,true)
@@ -38,7 +38,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Remove(regc,POS_FACEUP,REASON_EFFECT)
 		local regfun=regc.arcanareg
 		if not regfun then return end
-		local val=tc:GetFlagEffectLabel(36690018)
+		local val=tc:GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)
 		tc:ResetEffect(RESET_DISABLE,RESET_EVENT)
 		regfun(tc,val)
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END,0,1)
@@ -54,10 +54,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.rec_effect(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
-	if not tc or tc:GetFlagEffect(id)==0 or tc:GetFlagEffect(36690018)==0 then return end
+	if not tc or tc:GetFlagEffect(id)==0 or tc:GetFlagEffect(CARD_REVERSAL_OF_FATE)==0 then return end
 	local regfun=tc.arcanareg
 	if not regfun then return end
-	local val=tc:GetFlagEffectLabel(36690018)
+	local val=tc:GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)
 	tc:ResetEffect(RESET_DISABLE,RESET_EVENT)
 	regfun(tc,val)
 end

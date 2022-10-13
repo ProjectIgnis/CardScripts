@@ -73,7 +73,7 @@ function s.arcanareg(c,coin)
 	e3:SetTarget(s.distg)
 	e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e3)
-	c:RegisterFlagEffect(36690018,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,coin,63-coin)
+	c:RegisterFlagEffect(CARD_REVERSAL_OF_FATE,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,coin,63-coin)
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SINGLE_RANGE)
@@ -85,7 +85,7 @@ end
 function s.distg(e,c)
 	local ec=e:GetHandler()
 	if c==ec or c:GetCardTargetCount()==0 then return false end
-	local val=ec:GetFlagEffectLabel(36690018)
+	local val=ec:GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)
 	if val==1 then
 		return c:GetControler()==ec:GetControler() and c:GetCardTarget():IsContains(ec)
 	else return c:GetControler()~=ec:GetControler() and c:GetCardTarget():IsContains(ec) end
@@ -93,7 +93,7 @@ end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler()
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return end
-	local val=ec:GetFlagEffectLabel(36690018)
+	local val=ec:GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)
 	if (val==1 and rp~=ec:GetControler()) or (val==0 and rp==ec:GetControler()) then return end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	if not g or not g:IsContains(ec) then return end

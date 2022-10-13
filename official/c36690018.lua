@@ -13,7 +13,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x5}
 function s.filter(c)
-	return c:IsSetCard(0x5) and c:GetFlagEffect(id)>0
+	return c:IsSetCard(0x5) and c:GetFlagEffect(CARD_REVERSAL_OF_FATE)>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -24,7 +24,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() and s.filter(tc) then
-		local val=tc:GetFlagEffectLabel(id)
-		tc:SetFlagEffectLabel(id,1-val)
+		local val=tc:GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)
+		tc:SetFlagEffectLabel(CARD_REVERSAL_OF_FATE,1-val)
 	end
 end

@@ -68,8 +68,8 @@ function s.coinop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=c:GetFirstCardTarget()
 	if not tc then return end
-	local val=tc:GetFlagEffectLabel(36690018)
+	local val=tc:GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)
 	if val==1 then
-		tc:SetFlagEffectLabel(36690018,1-val)
+		tc:SetFlagEffectLabel(CARD_REVERSAL_OF_FATE,1-val)
 	end
 end

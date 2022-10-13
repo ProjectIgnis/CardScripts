@@ -63,10 +63,10 @@ function s.arcanareg(c,coin)
 	local e4=e3:Clone()
 	e4:SetCode(EVENT_MSET)
 	c:RegisterEffect(e4)
-	c:RegisterFlagEffect(36690018,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,coin,63-coin)
+	c:RegisterFlagEffect(CARD_REVERSAL_OF_FATE,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,coin,63-coin)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and e:GetHandler():GetFlagEffectLabel(36690018)==1
+	return ep~=tp and e:GetHandler():GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)==1
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x5) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -85,7 +85,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and e:GetHandler():GetFlagEffectLabel(36690018)==0
+	return ep~=tp and e:GetHandler():GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)==0
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

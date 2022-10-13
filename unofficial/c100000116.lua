@@ -41,10 +41,10 @@ function s.arcanareg(c,coin)
 	e1:SetOperation(s.desop)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e1)
-	c:RegisterFlagEffect(36690018,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,coin,63-coin)
+	c:RegisterFlagEffect(CARD_REVERSAL_OF_FATE,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,coin,63-coin)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local heads=e:GetHandler():GetFlagEffectLabel(36690018)==1
+	local heads=e:GetHandler():GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)==1
 	if heads then
 		e:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)
 		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -63,7 +63,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		local sg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,sg,#sg,0,0)
 	end
-	Duel.SetTargetParam(e:GetHandler():GetFlagEffectLabel(36690018))
+	Duel.SetTargetParam(e:GetHandler():GetFlagEffectLabel(CARD_REVERSAL_OF_FATE))
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local heads=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)==1

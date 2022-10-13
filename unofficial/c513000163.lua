@@ -56,7 +56,7 @@ function s.arcanareg(c,coin)
 	e1:SetCondition(s.epcon)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e1)
-	c:RegisterFlagEffect(36690018,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,coin,63-coin)
+	c:RegisterFlagEffect(CARD_REVERSAL_OF_FATE,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,coin,63-coin)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer()
@@ -66,7 +66,7 @@ function s.epcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	--self
-	local heads=e:GetHandler():GetFlagEffectLabel(36690018)==1
+	local heads=e:GetHandler():GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)==1
 	if heads then
 		if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) end
 		local c=e:GetHandler()

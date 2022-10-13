@@ -51,12 +51,12 @@ function s.arcanareg(c,coin)
 	e2:SetOperation(s.ctop)
 	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e2)
-	c:RegisterFlagEffect(36690018,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,coin,63-coin)
+	c:RegisterFlagEffect(CARD_REVERSAL_OF_FATE,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,coin,63-coin)
 	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,coin)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:GetFlagEffectLabel(36690018)==1 and c:IsRelateToBattle() and c:IsStatus(STATUS_OPPO_BATTLE)
+	return c:GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)==1 and c:IsRelateToBattle() and c:IsStatus(STATUS_OPPO_BATTLE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetHandler():GetBattleTarget()
@@ -74,11 +74,11 @@ end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	--Heads
-	if c:GetFlagEffectLabel(36690018)==1 and c:GetFlagEffectLabel(id)==1 then
+	if c:GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)==1 and c:GetFlagEffectLabel(id)==1 then
 		c:SetFlagEffectLabel(id,0)
 	end
 	--Tails
-	if c:GetFlagEffectLabel(36690018)==0 and c:GetFlagEffectLabel(id)==0 then
+	if c:GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)==0 and c:GetFlagEffectLabel(id)==0 then
 		c:SetFlagEffectLabel(id,1)
 		Duel.GetControl(c,1-tp,0,0)
 	end

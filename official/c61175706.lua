@@ -44,13 +44,13 @@ function s.arcanareg(c,coin)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e1)
 	--
-	c:RegisterFlagEffect(36690018,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,coin,63-coin)
+	c:RegisterFlagEffect(CARD_REVERSAL_OF_FATE,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,coin,63-coin)
 end
 function s.atktg(e,c)
 	return c:IsSetCard(0x5)
 end
 function s.atkval(e,c)
-	if e:GetHandler():GetFlagEffectLabel(36690018)==1 then
+	if e:GetHandler():GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)==1 then
 		return 500
 	else return -500 end
 end

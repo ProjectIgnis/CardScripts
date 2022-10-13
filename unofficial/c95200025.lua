@@ -22,7 +22,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local check
 	if res==COIN_HEADS then
 		check=true
-	elseif res==COIN_TAILS
+	elseif res==COIN_TAILS then
 		check=false
 	else
 		return

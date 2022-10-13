@@ -27,9 +27,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local res=Duel.TossCoin(tp,1)
 	if not (c:IsRelateToEffect(e) and c:IsFaceup()) then return end
-	if res==0 then
+	if res==COIN_TAILS then
 		Duel.ChangePosition(c,POS_FACEUP_DEFENSE)
-	else
+	elseif res==COIN_HEADS then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)

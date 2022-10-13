@@ -210,7 +210,7 @@ if not ActionDuel then
 				tokenp=rps
 			end
 			if Duel.GetRandomNumber(0,1)==0 then table.insert(hintp,1-tp) end
-		elseif Duel.TossCoin(tp,1)==1 then
+		elseif Duel.TossCoin(tp,1)==COIN_HEADS then
 			tokenp=tp
 		end
 		if Duel.GetRandomNumber(0,1)==0 then table.insert(hintp,tp) end

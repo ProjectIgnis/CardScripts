@@ -26,11 +26,7 @@ end
 function s.coinop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
-	local res=0
-	if c:IsHasEffect(CARD_LIGHT_BARRIER) then
-		res=1-Duel.SelectOption(tp,60,61)
-	else res=Duel.TossCoin(tp,1) end
-	s.arcanareg(c,res)
+	s.arcanareg(c,Arcana.TossCoin(c,tp))
 end
 function s.arcanareg(c,coin)
 	local e1=Effect.CreateEffect(c)
@@ -46,7 +42,7 @@ end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	--heads
-	if Arcana.GetCoinResult(c)==1 and c:GetFlagEffectLabel(id)==1 then
+	if Arcana.GetCoinResult(c)==COIN_HEADS and c:GetFlagEffectLabel(id)==1 then
 		c:SetFlagEffectLabel(id,0)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
 		local g=Duel.SelectMatchingCard(tp,Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,1,1,nil)
@@ -57,7 +53,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 	--tails
-	if Arcana.GetCoinResult(c)==0 and c:GetFlagEffectLabel(id)==0 then
+	if Arcana.GetCoinResult(c)==COIN_TAILS and c:GetFlagEffectLabel(id)==0 then
 		c:SetFlagEffectLabel(id,1)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
 		local g=Duel.SelectMatchingCard(1-tp,Card.IsControlerCanBeChanged,1-tp,0,LOCATION_MZONE,1,1,c)

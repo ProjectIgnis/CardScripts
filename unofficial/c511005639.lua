@@ -63,11 +63,7 @@ end
 function s.coinop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
-	local res=0
-	if c:IsHasEffect(CARD_LIGHT_BARRIER) then
-		res=1-Duel.SelectOption(tp,60,61)
-	else res=Duel.TossCoin(tp,1) end
-	s.arcanareg(c,res)
+	s.arcanareg(c,Arcana.TossCoin(c,tp))
 end
 function s.arcanareg(c,coin)
 	--coin effect
@@ -108,11 +104,11 @@ function s.arcanareg(c,coin)
 	Arcana.RegisterCoinResult(c,coin)
 end
 function s.macon(e)
-	return Arcana.GetCoinResult(e:GetHandler())==1
+	return Arcana.GetCoinResult(e:GetHandler())==COIN_HEADS
 end
 function s.poscon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return Arcana.GetCoinResult(c)==1 and c:GetAttackAnnouncedCount()>=2
+	return Arcana.GetCoinResult(c)==COIN_HEADS and c:GetAttackAnnouncedCount()>=2
 end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -127,7 +123,7 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e1)
 end
 function s.dregop(e,tp,eg,ep,ev,re,r,rp)
-	if Arcana.GetCoinResult(e:GetHandler())==0 then
+	if Arcana.GetCoinResult(e:GetHandler())==COIN_TAILS then
 		e:SetLabel(1)
 	else e:SetLabel(0) end
 end

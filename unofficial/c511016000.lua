@@ -26,11 +26,7 @@ end
 function s.coinop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
-	local res=0
-	if c:IsHasEffect(CARD_LIGHT_BARRIER) then
-		res=1-Duel.SelectOption(tp,60,61)
-	else res=Duel.TossCoin(tp,1) end
-	s.arcanareg(c,res)
+	s.arcanareg(c,Arcana.TossCoin(c,tp))
 end
 function s.arcanareg(c,coin)
 	--coin effect
@@ -70,7 +66,7 @@ function s.arcanareg(c,coin)
 	c:RegisterFlagEffect(51116000,0,0,1,coin)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Arcana.GetCoinResult(e:GetHandler())==1
+	return Arcana.GetCoinResult(e:GetHandler())==COIN_HEADS
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=eg:GetFirst()
@@ -88,17 +84,17 @@ end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	--heads
-	if Arcana.GetCoinResult(c)==1 and c:GetFlagEffectLabel(51116000)==1 then
-		c:SetFlagEffectLabel(51116000,0)
+	if Arcana.GetCoinResult(c)==COIN_HEADS and c:GetFlagEffectLabel(51116000)==COIN_HEADS then
+		c:SetFlagEffectLabel(51116000,COIN_TAILS)
 	end
 	--tails
-	if Arcana.GetCoinResult(c)==0 and c:GetFlagEffectLabel(51116000)==0 then
-		c:SetFlagEffectLabel(51116000,1)
+	if Arcana.GetCoinResult(c)==COIN_TAILS and c:GetFlagEffectLabel(51116000)==COIN_TAILS then
+		c:SetFlagEffectLabel(51116000,COIN_HEADS)
 	end
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:GetFlagEffectLabel(51116000)==1 and e:GetLabelObject():IsActivatable(tp) then
+	if c:GetFlagEffectLabel(51116000)==COIN_HEADS and e:GetLabelObject():IsActivatable(tp) then
 		Duel.RaiseSingleEvent(c,EVENT_CUSTOM+id,e,r,rp,tp,0)
 	else
 		e:GetLabelObject():Reset()

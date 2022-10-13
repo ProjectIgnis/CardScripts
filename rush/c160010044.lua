@@ -30,5 +30,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	 Duel.PayLPCost(tp,600) 
 	 --Effect
 	local res=Duel.TossCoin(tp,1)
-	Duel.Draw(tp,res+1,REASON_EFFECT)
+	if res==COIN_HEADS then
+		Duel.Draw(tp,2,REASON_EFFECT)
+	elseif res==COIN_TAILS then
+		Duel.Draw(tp,1,REASON_EFFECT)
+	end
 end

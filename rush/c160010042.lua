@@ -21,6 +21,10 @@ function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,PLAYER_EITHER,1000)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	local p=math.abs(tp-Duel.TossCoin(tp,1))
-	Duel.Damage(p,1000,REASON_EFFECT)
+	local coin=Duel.TossCoin(tp,1)
+	if coin==COIN_HEADS then
+		Duel.Damage(1-tp,1000,REASON_EFFECT)
+	elseif coin==COIN_TAILS then
+		Duel.Damage(tp,1000,REASON_EFFECT)
+	end
 end

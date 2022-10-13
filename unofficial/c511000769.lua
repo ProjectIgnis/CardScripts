@@ -19,10 +19,9 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local t1,t2,t3=Duel.TossCoin(tp,3)
+	local ct=Duel.CountHeads(Duel.TossCoin(tp,3))
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	local ct=t1+t2+t3
 	if ct>1 then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

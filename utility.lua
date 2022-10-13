@@ -1626,6 +1626,14 @@ function Auxiliary.GetRaceStrings(v)
 	return pairs(res)
 end
 
+function Auxiliary.GetCoinEffectHintString(coin)
+	if coin==COIN_HEADS then
+		return 62
+	elseif coin==COIN_TAILS then
+		return 63
+	end
+end
+
 --Returns the zones, on the specified player's field, pointed by the specified number of Link markers. Includes Extra Monster Zones.
 function Duel.GetZoneWithLinkedCount(count,tp)
 	local g = Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_MZONE,LOCATION_MZONE,nil,TYPE_LINK)

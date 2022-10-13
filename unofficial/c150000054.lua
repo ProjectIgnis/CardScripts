@@ -16,11 +16,9 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_COIN,nil,0,tp,1)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local coin=Duel.SelectOption(tp,60,61)
-	local res=Duel.TossCoin(tp,1)
-	if coin~=res then
-	Duel.Recover(tp,5000,REASON_EFFECT)
+	if Duel.CallCoin(tp) then
+		Duel.Recover(tp,5000,REASON_EFFECT)
 	else
-	Duel.Damage(tp,5000,REASON_EFFECT)
+		Duel.Damage(tp,1000,REASON_EFFECT)
 	end
 end

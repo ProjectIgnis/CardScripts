@@ -29,7 +29,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsFaceup() and c:IsRelateToEffect(e) then
 		local res=Duel.TossCoin(tp,1)
-		if res==1 then
+		if res==COIN_HEADS then
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -37,7 +37,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetValue(1200)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			c:RegisterEffect(e1)
-		else
+		elseif res==COIN_TAILS then
 			Duel.Destroy(c,REASON_EFFECT)
 		end
 	end

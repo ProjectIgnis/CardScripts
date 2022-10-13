@@ -27,7 +27,7 @@ function s.coinop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
 	local res=Duel.TossCoin(tp,1)
-	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD_DISABLE,EFFECT_FLAG_CLIENT_HINT,1,0,63-res)
+	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD_DISABLE,EFFECT_FLAG_CLIENT_HINT,1,0,aux.GetCoinEffectHintString(res))
 	if res==COIN_TAILS then
 		--Cannot attack
 		local e1=Effect.CreateEffect(c)

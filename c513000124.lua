@@ -1,6 +1,7 @@
 --インフェルニティ・ゼロ (Anime)
 --Infernity Zero (Anime)
 --Scripted by Belisk 
+--Fixed by A.JSever :D
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -61,6 +62,14 @@ function s.initial_effect(c)
 	e7:SetCode(EFFECT_SELF_DESTROY)
 	e7:SetCondition(s.descon)
 	c:RegisterEffect(e7)
+	local e8=Effect.CreateEffect(c)
+	e8:SetType(EFFECT_TYPE_FIELD)
+	e8:SetCode(EFFECT_CANNOT_LOSE_LP)
+	e8:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e8:SetRange(LOCATION_MZONE)
+	e8:SetLabelObject(c)
+	e8:SetTargetRange(1,0)
+	c:RegisterEffect(e8)
 	aux.GlobalCheck(s,function()
 		--Check for Raise
 		local ge1=Effect.CreateEffect(c)
@@ -154,21 +163,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c = e:GetHandler()
 	local tp=e:GetHandlerPlayer()
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,true,false,POS_FACEUP)~=0 then
-		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_FIELD)
-		e2:SetCode(EFFECT_CANNOT_LOSE_LP)
-		e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-		e2:SetLabelObject(c)
-		e2:SetCondition(s.lcon)
-		e2:SetTargetRange(1,0)
-		Duel.RegisterEffect(e2,tp)
-	end
-end
-function s.lcon(e,tp,eg,ep,ev,re,r,rp)
-	local c = e:GetLabelObject()
-	local py = e:GetHandlerPlayer()
-	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsControler(py)
+	Duel.SpecialSummon(c,0,tp,tp,true,false,POS_FACEUP)
 end
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp

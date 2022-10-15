@@ -99,7 +99,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		if rp~=ec:GetControler() then return end
 	elseif val==COIN_TAILS then
 		if rp==ec:GetControler() then return end
-	else return	end
+	else return end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	if not g or not g:IsContains(ec) then return end
 	if Duel.NegateEffect(ev) and re:GetHandler():IsRelateToEffect(re) then

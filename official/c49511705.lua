@@ -95,8 +95,7 @@ function s.coincon2(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.coinop2(e,tp,eg,ep,ev,re,r,rp)
 	local res={}
-	local ct=ev
-	for i=1,ct do
+	for i=1,ev do
 		table.insert(res,COIN_HEADS)
 	end
 	Duel.SetCoinResult(table.unpack(res))

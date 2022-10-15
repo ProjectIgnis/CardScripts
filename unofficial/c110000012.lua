@@ -81,13 +81,10 @@ end
 function s.adval(e,c)
 	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_HAND,0)*1000
 end
-function s.filter(c,tp,ep)
-	return ep~=tp and c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsDefenseBelow(2000)
-end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=eg:GetFirst()
-	if chk==0 then return e:GetHandler():IsRelateToEffect(e) and s.filter(tc,tp,ep) end
-	Duel.SetTargetCard(eg)
+	if chk==0 then return e:GetHandler():IsRelateToEffect(e) and not tc:IsSummonPlayer(tp) and tc:IsFaceup() and tc:IsDefenseBelow(2000) end
+	Duel.SetTargetCard(tc)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tc,1,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)

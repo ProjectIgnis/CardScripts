@@ -1,4 +1,4 @@
---Ability Yeil
+--Ability Yell
 --scripted by André and Shad3 and Cybercatman
 local s,id=GetID()
 function s.initial_effect(c)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.op()
-	Duel.RegisterFlagEffect(0,id,0,0,0)
+	Duel.RegisterFlagEffect(0,511004400,0,0,0)
 end
 function s.handcon(tp)
 	return tp~=Duel.GetTurnPlayer()

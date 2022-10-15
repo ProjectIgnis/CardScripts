@@ -53,7 +53,7 @@ function s.initial_effect(c)
 	--destroy
 	local e9=Effect.CreateEffect(c)
 	e9:SetDescription(aux.Stringid(id,1))
-	e9:SetCategory(CATEGORY_DESTROY+CATEGORY_REMOVE)
+	e9:SetCategory(CATEGORY_DESTROY)
 	e9:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_CARD_TARGET)
 	e9:SetCountLimit(1,0,EFFECT_COUNT_CODE_SINGLE)
 	e9:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_SINGLE)

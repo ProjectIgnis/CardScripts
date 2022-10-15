@@ -18,10 +18,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local res=Duel.TossCoin(tp,1)
-	if res==1 then
+	if res==COIN_HEADS then
 		Duel.Draw(tp,1,REASON_EFFECT)
 		Duel.Recover(tp,500,REASON_EFFECT)
-	else
+	elseif res==COIN_TAILS then
 		Duel.Draw(1-tp,1,REASON_EFFECT)
 		Duel.Recover(1-tp,500,REASON_EFFECT)
 	end

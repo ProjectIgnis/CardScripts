@@ -38,9 +38,9 @@ end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local r1,r2,r3=Duel.TossCoin(tp,3)
-	if r1+r2+r3==3 then
+	if Duel.CountHeads(r1,r2,r3)==3 then
 		Duel.Draw(tp,3,REASON_EFFECT)
-	elseif r1+r2+r3==0 then
+	elseif Duel.CountTails(r1,r2,r3)==3 then
 		Duel.Destroy(e:GetHandler(),REASON_EFFECT)
 	end
 end

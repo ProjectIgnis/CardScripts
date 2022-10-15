@@ -19,12 +19,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local op1=Duel.SelectYesNo(tp,aux.Stringid(id,0))
 	local op2=Duel.SelectYesNo(1-tp,aux.Stringid(id,0))
 	--true=wearing, false=not wearing
-	local res=Duel.TossCoin(tp,1)
 	local check
-	if res==1 then
+	if res==COIN_HEADS then
 		check=true
-	else
+	elseif res==COIN_TAILS then
 		check=false
+	else
+		return
 	end
 	if (op1 and check) or (not op1 and not check) then
 		Duel.Recover(tp,800,REASON_EFFECT)

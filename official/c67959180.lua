@@ -1,4 +1,5 @@
 --きまぐれの女神
+--Goddess of Whim
 local s,id=GetID()
 function s.initial_effect(c)
 	--dice
@@ -20,16 +21,14 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
-		local opt=Duel.SelectOption(tp,60,61)
-		local coin=Duel.TossCoin(tp,1)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
-		if opt==coin then
-			e1:SetValue(c:GetAttack()/2)
-		else
+		if Duel.CallCoin(tp) then
 			e1:SetValue(c:GetAttack()*2)
+		else
+			e1:SetValue(c:GetAttack()/2)
 		end
 		c:RegisterEffect(e1)
 	end

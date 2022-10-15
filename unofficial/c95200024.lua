@@ -35,10 +35,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--true=wearing, false=not wearing
 	local res=Duel.TossCoin(tp,1)
 	local check
-	if res==1 then
+	if res==COIN_HEADS then
 		check=true
-	else
+	elseif res==COIN_TAILS then
 		check=false
+	else
+		return
 	end
 	if ct1>0 then
 		if ((op1 and check) or (not op1 and not check)) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then

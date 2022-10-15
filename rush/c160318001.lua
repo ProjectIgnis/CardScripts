@@ -30,8 +30,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,nil,tp,0,LOCATION_ONFIELD,1,1,nil)
 	if #g==0 then return end
 	Duel.HintSelection(g,true)
-	local c1,c2=Duel.TossCoin(tp,2)
-	if c1+c2<2 then return end
+	if Duel.CountHeads(Duel.TossCoin(tp,2))~=2 then return end
 	g=g:AddMaximumCheck()
 	Duel.Destroy(g,REASON_EFFECT)
 end

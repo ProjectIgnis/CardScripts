@@ -1,4 +1,5 @@
 --アルカナフォースⅣ－THE EMPEROR
+--Arcana Force IV - The Emperor
 local s,id=GetID()
 function s.initial_effect(c)
 	--coin
@@ -26,11 +27,7 @@ end
 function s.coinop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
-	local res=0
-	if c:IsHasEffect(CARD_LIGHT_BARRIER) then
-		res=1-Duel.SelectOption(tp,60,61)
-	else res=Duel.TossCoin(tp,1) end
-	s.arcanareg(c,res)
+	s.arcanareg(c,Arcana.TossCoin(c,tp))
 end
 function s.arcanareg(c,coin)
 	--coin effect
@@ -44,13 +41,18 @@ function s.arcanareg(c,coin)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e1)
 	--
-	c:RegisterFlagEffect(CARD_REVERSAL_OF_FATE,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,coin,63-coin)
+	Arcana.RegisterCoinResult(c,coin)
 end
 function s.atktg(e,c)
 	return c:IsSetCard(0x5)
 end
 function s.atkval(e,c)
-	if e:GetHandler():GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)==1 then
+	local coin=Arcana.GetCoinResult(e:GetHandler())
+	if coin==COIN_HEADS then
 		return 500
-	else return -500 end
+	elseif coin==COIN_TAILS then
+		return -500
+	else
+		return 0
+	end
 end

@@ -42,19 +42,18 @@ end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local sel
 	if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_LIGHT_BARRIER),tp,LOCATION_FZONE,0,1,nil) then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_COIN)
-		sel=1-Duel.SelectOption(tp,true,SELECT_HEADS,SELECT_TAILS)
+		sel=Duel.AnnounceCoin(tp)
 	else
 		sel=Duel.TossCoin(tp,1)
 	end
-	if sel==1 then
+	if sel==COIN_HEADS then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 		if #g>0 then
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,g)
 		end
-	else
+	elseif sel==COIN_TAILS then
 		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(1-tp,Card.IsAbleToHand,tp,0,LOCATION_DECK,1,1,nil)
 		if #g>0 then

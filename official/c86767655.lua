@@ -1,4 +1,5 @@
 --Ms.JUDGE
+--Ms. Judge
 local s,id=GetID()
 function s.initial_effect(c)
 	--disable
@@ -23,8 +24,7 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and Duel.IsChainDisablable(ev) and e:GetHandler():GetFlagEffect(1)>0
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
-	local c1,c2=Duel.TossCoin(tp,2)
-	if c1+c2==2 then
+	if Duel.CountHeads(Duel.TossCoin(tp,2))==2 then
 		Duel.NegateEffect(ev)
 	end
 end

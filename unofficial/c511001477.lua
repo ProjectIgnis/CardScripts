@@ -34,9 +34,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local p=g:GetFirst():GetControler()
 	local sum=g:GetSum(Card.GetAttack)
 	local res=Duel.TossCoin(tp,1)
-	if res==1 then
+	if res==COIN_HEADS then
 		Duel.Recover(p,sum,REASON_EFFECT)
-	else
+	elseif res==COIN_TAILS then
 		Duel.Damage(p,sum,REASON_EFFECT)
 	end
 end

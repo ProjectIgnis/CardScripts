@@ -41,13 +41,9 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	local p=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_CONTROLER)
-	local coin=Duel.AnnounceCoin(p)
-	local res=Duel.TossCoin(rp,1)
-	if coin==res then
+	if Duel.CallCoin(p) then
 		Duel.SendtoGrave(e:GetHandler(),REASON_EFFECT)
-	else
-		if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
-			Duel.GetControl(re:GetHandler(),1-p)
-		end
+	elseif Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
+		Duel.GetControl(re:GetHandler(),1-p)
 	end
 end

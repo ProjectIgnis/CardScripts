@@ -1,7 +1,6 @@
 --デスペラード・リボルバー・ドラゴン
 --Desperado Barrel Dragon
 local s,id=GetID()
-
 function s.initial_effect(c)
 	--Special summon itself from hand
 	local e1=Effect.CreateEffect(c)
@@ -83,14 +82,14 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if #g==0 then return end
-	local c1,c2,c3=Duel.TossCoin(tp,3)
-	local ct=c1+c2+c3
+	local heads=Duel.CountHeads(Duel.TossCoin(tp,3))
+	local ct=heads
 	if ct==0 then return end
 	if ct>#g then ct=#g end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local dg=g:Select(tp,1,ct,nil)
 	Duel.HintSelection(dg)
-	if Duel.Destroy(dg,REASON_EFFECT)>0 and c1+c2+c3==3 then
+	if Duel.Destroy(dg,REASON_EFFECT)>0 and heads==3 then
 		Duel.BreakEffect()
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end

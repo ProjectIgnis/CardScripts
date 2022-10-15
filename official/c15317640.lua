@@ -1,4 +1,5 @@
 --巨大戦艦 カバード・コア
+--B.E.S Covered Core
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x1f)
@@ -56,9 +57,7 @@ function s.rcttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_COIN,nil,0,tp,1)
 end
 function s.rctop(e,tp,eg,ep,ev,re,r,rp)
-	local coin=Duel.SelectOption(tp,60,61)
-	local res=Duel.TossCoin(tp,1)
-	if coin==res then
+	if not Duel.CallCoin(tp) then
 		e:GetHandler():RemoveCounter(tp,0x1f,1,REASON_EFFECT)
 	end
 end

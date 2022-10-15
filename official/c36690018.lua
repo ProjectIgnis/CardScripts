@@ -24,7 +24,11 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() and s.filter(tc) then
-		local val=tc:GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)
-		tc:SetFlagEffectLabel(CARD_REVERSAL_OF_FATE,1-val)
+		local val=Arcana.GetCoinResult(tc)
+		if val==COIN_HEADS then
+			Arcana.SetCoinResult(tc,COIN_TAILS)
+		elseif val==COIN_TAILS then
+			Arcana.SetCoinResult(tc,COIN_HEADS)
+		end
 	end
 end

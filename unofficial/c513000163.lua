@@ -27,11 +27,7 @@ end
 function s.coinop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
-	local res=0
-	if c:IsHasEffect(CARD_LIGHT_BARRIER) then
-		res=1-Duel.SelectOption(tp,60,61)
-	else res=Duel.TossCoin(tp,1) end
-	s.arcanareg(c,res)
+	s.arcanareg(c,Arcana.TossCoin(c,tp))
 end
 function s.arcanareg(c,coin)
 	--coin effect
@@ -56,7 +52,7 @@ function s.arcanareg(c,coin)
 	e1:SetCondition(s.epcon)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e1)
-	c:RegisterFlagEffect(CARD_REVERSAL_OF_FATE,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,coin,63-coin)
+	Arcana.RegisterCoinResult(c,coin)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer()
@@ -66,8 +62,8 @@ function s.epcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	--self
-	local heads=e:GetHandler():GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)==1
-	if heads then
+	local coin=Arcana.GetCoinResult(e:GetHandler())
+	if coin==COIN_HEADS then
 		if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) end
 		local c=e:GetHandler()
 		if chk==0 then return true end
@@ -78,7 +74,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 		Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,tp,atk)
 		Duel.RegisterFlagEffect(tp,id,RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END+RESET_SELF_TURN,0,1)
-	else
+	elseif coin==COIN_TAILS then
 	--opponents
 		if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) end
 		local c=e:GetHandler()
@@ -94,9 +90,10 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
-	local atk=tc:GetAttack()
-	if tc and tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)>0 then
+	if not tc then return end
+	if tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)>0 then
+		local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
+		local atk=tc:GetAttack()
 		Duel.Damage(p,atk,REASON_EFFECT)
 	end
 end

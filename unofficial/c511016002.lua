@@ -44,8 +44,7 @@ function s.initial_effect(c)
 			local tct=ct
 			local t={}
 			for i=1,ct do
-				local res=1-Duel.SelectOption(tp,60,61)
-				table.insert(t,res)
+				table.insert(t,Duel.AnnounceCoin(tp))
 			end
 			return table.unpack(t)
 		else
@@ -64,11 +63,7 @@ end
 function s.coinop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
-	local res=0
-	if c:IsHasEffect(CARD_LIGHT_BARRIER) then
-		res=1-Duel.SelectOption(tp,60,61)
-	else res=Duel.TossCoin(tp,1) end
-	s.arcanareg(c,res)
+	s.arcanareg(c,Arcana.TossCoin(c,tp))
 end
 function s.arcanareg(c,coin)
 	--cannot be target
@@ -84,15 +79,25 @@ function s.arcanareg(c,coin)
 	e2:SetCode(EFFECT_IMMUNE_EFFECT)
 	e2:SetValue(s.unval)
 	c:RegisterEffect(e2)
-	c:RegisterFlagEffect(CARD_REVERSAL_OF_FATE,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,coin,63-coin)
+	Arcana.RegisterCoinResult(c,coin)
 end
 function s.tgval(e,re,rp)
-	if e:GetHandler():GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)==1 then
+	local coin=Arcana.GetCoinResult(e:GetHandler())
+	if coin==COIN_HEADS then
 		return rp==e:GetHandlerPlayer()
-	else return rp~=e:GetHandlerPlayer() end
+	elseif coin==COIN_TAILS then
+		return rp~=e:GetHandlerPlayer()
+	else
+		return false
+	end
 end
 function s.unval(e,te)
-	if e:GetHandler():GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)==1 then
+	local coin=Arcana.GetCoinResult(e:GetHandler())
+	if coin==COIN_HEADS then
 		return te:GetOwnerPlayer()==e:GetHandlerPlayer() and te:GetOwner()~=e:GetHandler()
-	else return te:GetOwnerPlayer()~=e:GetHandlerPlayer() end
+	elseif coin==COIN_TAILS then
+		return te:GetOwnerPlayer()~=e:GetHandlerPlayer()
+	else
+		return false
+	end
 end

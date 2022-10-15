@@ -51,10 +51,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if #g<=1 then return end
 	local tc2=g:GetFirst()
 	if tc1==tc2 then tc2=g:GetNext() end
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(34016756,3))
-	local coin=Duel.SelectOption(tp,60,61)
-	local res=Duel.TossCoin(tp,1)
-	if coin~=res then
+	if Duel.CallCoin(tp) then
 		if Duel.Remove(tc2,POS_FACEUP,REASON_EFFECT)>0 then
 			Duel.Damage(1-tp,tc2:GetBaseAttack(),REASON_EFFECT)
 		end

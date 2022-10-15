@@ -1,4 +1,5 @@
 --カップ・オブ・エース
+--Cup of Ace
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -17,6 +18,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local res=Duel.TossCoin(tp,1)
-	if res==1 then Duel.Draw(tp,2,REASON_EFFECT)
-	else Duel.Draw(1-tp,2,REASON_EFFECT) end
+	if res==COIN_HEADS then Duel.Draw(tp,2,REASON_EFFECT)
+	elseif res==COIN_TAILS then Duel.Draw(1-tp,2,REASON_EFFECT)
+	end
 end

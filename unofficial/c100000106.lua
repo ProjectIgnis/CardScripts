@@ -27,11 +27,7 @@ end
 function s.coinop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
-	local res=0
-	if c:IsHasEffect(CARD_LIGHT_BARRIER) then
-		res=1-Duel.SelectOption(tp,60,61)
-	else res=Duel.TossCoin(tp,1) end
-	s.arcanareg(c,res)
+	s.arcanareg(c,Arcana.TossCoin(c,tp))
 end
 function s.arcanareg(c,coin)
 	--coin effect
@@ -44,29 +40,34 @@ function s.arcanareg(c,coin)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.descon)
-	if coin==1 then e1:SetTarget(s.destgh) --head
-	else e1:SetTarget(s.destgt) end --tail
+	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e1)
-	c:RegisterFlagEffect(CARD_REVERSAL_OF_FATE,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,coin,63-coin)
+	Arcana.RegisterCoinResult(c,coin)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer()
 end
-function s.destgh(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end
 	if chk==0 then return true end
 	s.destgr(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.destgt(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	local coin=Arcana.GetCoinResult(e:GetHandler())
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end
 	if chk==0 then return true end
 	s.destgr(e,tp,eg,ep,ev,re,r,rp)
 end
-function s.destgr(e,tp,eg,ep,ev,re,r,rp)
-	local coin=e:GetHandler():GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)
-	local gp=coin==1 and tp or 1-tp
+function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	local coin=Arcana.GetCoinResult(e:GetHandler())
+	if chkc then
+		local gp=coin==COIN_HEADS and tp or 1-tp
+		return chkc:IsControler(p) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup()
+	end
+	if chk==0 then return coin==COIN_HEADS or coin==COIN_TAILS end
+	local gp=coin==COIN_HEADS and tp or 1-tp
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,Card.IsFaceup,gp,LOCATION_MZONE,0,1,1,nil)
 	if #g>0 then

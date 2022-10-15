@@ -19,15 +19,13 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local g=Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 	local res=Duel.TossCoin(tp,1)
-	if res==0 then
+	if res==COIN_HEADS then
 		Duel.SetTargetPlayer(tp)
-	else
-		Duel.SetTargetPlayer(1-tp)
-	end
-	Duel.SetTargetParam(g:GetFirst():GetAttack())
-	if res==0 then
+		Duel.SetTargetParam(g:GetFirst():GetAttack())
 		Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,tp,g:GetFirst():GetAttack())
-	else
+	elseif res==COIN_TAILS then
+		Duel.SetTargetPlayer(1-tp)
+		Duel.SetTargetParam(g:GetFirst():GetAttack())
 		Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,g:GetFirst():GetAttack())
 	end
 end

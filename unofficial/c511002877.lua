@@ -37,10 +37,7 @@ function s.surop2(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.GetFlagEffect(tp,id)==0 then
 		Duel.Hint(HINT_CARD,0,id)
 		Duel.RegisterFlagEffect(tp,id,0,0,0)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_COIN)
-		local coin=Duel.SelectOption(tp,60,61)
-		local res=Duel.TossCoin(tp,1)
-		if coin~=res then
+		if Duel.CallCoin(tp) then
 			Duel.SetLP(tp,0)
 			Duel.Recover(tp,100,REASON_EFFECT)
 		end

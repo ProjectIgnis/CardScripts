@@ -68,8 +68,7 @@ function s.coinop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=c:GetFirstCardTarget()
 	if not tc then return end
-	local val=tc:GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)
-	if val==1 then
-		tc:SetFlagEffectLabel(CARD_REVERSAL_OF_FATE,1-val)
+	if Arcana.GetCoinResult(tc)==COIN_HEADS then
+		Arcana.SetCoinResult(tc,COIN_TAILS)
 	end
 end

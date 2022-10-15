@@ -39,9 +39,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetAttacker()
 	local coin=Duel.TossCoin(tp,1)
-	if coin==1 then
-		if Duel.NegateAttack() then
-			Duel.Damage(1-tp,math.ceil(tc:GetAttack()/2),REASON_EFFECT)
-		end
+	if coin==COIN_HEADS and Duel.NegateAttack() then
+		Duel.Damage(1-tp,math.ceil(tc:GetAttack()/2),REASON_EFFECT)
 	end
 end

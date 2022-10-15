@@ -1,4 +1,5 @@
 --光の結界
+--Light Barrier
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -51,8 +52,7 @@ end
 function s.coinop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	local res=Duel.TossCoin(tp,1)
-	if res==0 then
+	if Duel.TossCoin(tp,1)==COIN_TAILS then
 		c:RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,0,2)
 	end
 end

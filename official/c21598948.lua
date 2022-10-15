@@ -1,4 +1,5 @@
 --モンスターBOX
+--Fairy Box
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -42,10 +43,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local a=Duel.GetAttacker()
 	if not a:IsRelateToEffect(e) then return end
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,4))
-	local coin=Duel.SelectOption(tp,aux.Stringid(id,2),aux.Stringid(id,3))
-	local res=Duel.TossCoin(tp,1)
-	if coin~=res then
+	if Duel.CallCoin(tp,1) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)

@@ -1121,3 +1121,20 @@ end
 function Card.IsRikkaReleasable(c,tp)
 	return c:IsRace(RACE_PLANT) or (c:IsControler(1-tp) and c:IsHasEffect(CARD_RIKKA_ARRIVAL))
 end
+
+
+Arcana={}
+-- checks if the card is affected by the effect of light barrier, in which case it doens't perform the coin toss
+-- but lets the player choose, otherwise it performs a normal coin toss
+function Arcana.TossCoin(c,tp)
+	return c:IsHasEffect(CARD_LIGHT_BARRIER) and Duel.AnnounceCoin(tp) or Duel.TossCoin(tp,1)
+end
+function Arcana.RegisterCoinResult(c,coin)
+	c:RegisterFlagEffect(CARD_REVERSAL_OF_FATE,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,coin,aux.GetCoinEffectHintString(coin))
+end
+function Arcana.GetCoinResult(c)
+	c:GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)
+end
+function Arcana.SetCoinResult(c,coin)
+	return c:SetFlagEffectLabel(CARD_REVERSAL_OF_FATE,coin)
+end

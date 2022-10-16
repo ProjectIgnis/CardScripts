@@ -115,7 +115,7 @@ if not ActionDuel then
 			Duel.Hint(HINT_MESSAGE,0,aux.Stringid(id,6))
 			Duel.Hint(HINT_MESSAGE,1,aux.Stringid(id,6))
 			local coin=Duel.TossCoin(0,1)
-			table.remove(actionFieldToBeUsed,coin==COIN_HEADS and 1 or 0)
+			table.remove(actionFieldToBeUsed,coin==COIN_HEADS and 2 or 1)
 		end
 		Duel.Hint(HINT_CARD,0,actionFieldToBeUsed[1])
 		for p=0,1 do

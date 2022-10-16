@@ -1133,7 +1133,7 @@ function Arcana.RegisterCoinResult(c,coin)
 	c:RegisterFlagEffect(CARD_REVERSAL_OF_FATE,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,coin,aux.GetCoinEffectHintString(coin))
 end
 function Arcana.GetCoinResult(c)
-	c:GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)
+	return c:GetFlagEffectLabel(CARD_REVERSAL_OF_FATE)
 end
 function Arcana.SetCoinResult(c,coin)
 	return c:SetFlagEffectLabel(CARD_REVERSAL_OF_FATE,coin)

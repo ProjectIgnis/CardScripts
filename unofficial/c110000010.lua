@@ -1,5 +1,5 @@
---ラーの翼神竜WCS効果
---The Winged Dragon of Ra (VG)
+--ラーの翼神竜 (TF4)
+--The Winged Dragon of Ra (TF4)
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon with 3 tribute
@@ -31,7 +31,6 @@ function s.initial_effect(c)
 	e6:SetCategory(CATEGORY_TOGRAVE)
 	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e6:SetRange(LOCATION_MZONE)
-	e6:SetProperty(EFFECT_FLAG_REPEAT)
 	e6:SetCountLimit(1)
 	e6:SetCode(EVENT_PHASE+PHASE_END)
 	e6:SetCondition(s.tgcon)
@@ -54,7 +53,7 @@ function s.initial_effect(c)
 	--destroy
 	local e9=Effect.CreateEffect(c)
 	e9:SetDescription(aux.Stringid(id,1))
-	e9:SetCategory(CATEGORY_DESTROY+CATEGORY_REMOVE)
+	e9:SetCategory(CATEGORY_DESTROY)
 	e9:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_CARD_TARGET)
 	e9:SetCountLimit(1,0,EFFECT_COUNT_CODE_SINGLE)
 	e9:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_SINGLE)
@@ -79,7 +78,7 @@ function s.sumsuc(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SetChainLimitTillChainEnd(aux.FALSE)
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	return (e:GetHandler():GetSummonType()&SUMMON_TYPE_SPECIAL)==SUMMON_TYPE_SPECIAL
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL)
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -127,10 +126,10 @@ function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,1000)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsDestructable() and chkc~=e:GetHandler() end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsDestructable,tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler()) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsAbleToRemove() end
+	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToRemove,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,Card.IsDestructable,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,e:GetHandler())
+	local g=Duel.SelectTarget(tp,Card.IsAbleToRemove,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
 end

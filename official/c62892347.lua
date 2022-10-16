@@ -94,7 +94,7 @@ end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler()
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return end
-	local val=eArcana.GetCoinResult(c)
+	local val=Arcana.GetCoinResult(ec)
 	if val==COIN_HEADS then
 		if rp~=ec:GetControler() then return end
 	elseif val==COIN_TAILS then

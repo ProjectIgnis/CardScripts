@@ -2,19 +2,19 @@
 --Arcana Force 0 - The Fool
 local s,id=GetID()
 function s.initial_effect(c)
-	--battle indestructable
+	--Cannot be destroyed by battle
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	--
+	--Cannot be changed to Defense Position
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
 	e2:SetCondition(s.poscon)
 	c:RegisterEffect(e2)
-	--coin
+	--Toss coin and apply effects
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_COIN)
@@ -44,7 +44,7 @@ function s.coinop(e,tp,eg,ep,ev,re,r,rp)
 	s.arcanareg(c,Arcana.TossCoin(c,tp))
 end
 function s.arcanareg(c,coin)
-	--disable
+	--Negate card effecs that target this card
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_DISABLE)
@@ -53,7 +53,6 @@ function s.arcanareg(c,coin)
 	e1:SetTarget(s.distg)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e1)
-	--disable effect
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_CHAIN_SOLVING)

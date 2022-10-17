@@ -28,8 +28,7 @@ function s.initial_effect(c)
 end
 s.toss_coin=true
 s.listed_names={CARD_LIGHT_BARRIER}
-s.listed_series={0x5}
-
+s.listed_series={SET_ARCANA_FORCE}
 function s.thfilter(c)
 	return c.toss_coin and c:IsAbleToHand() and not c:IsCode(id)
 end
@@ -63,7 +62,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.nsfilter(c)
-	return c:IsSetCard(0x5) and c:IsSummonable(true,nil)
+	return c:IsSetCard(SET_ARCANA_FORCE) and c:IsSummonable(true,nil)
 end
 function s.nstg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.nsfilter,tp,LOCATION_HAND,0,1,nil) end

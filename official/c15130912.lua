@@ -40,7 +40,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.toss_coin=true
-s.listed_series={0x17e}
+s.listed_series={SET_VAYLANTZ}
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then
@@ -56,7 +56,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if zone~=0 then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP,zone)
 	end
-	-- Cannot Special Summon, except "Valiants" and from the Extra Deck
+	-- Cannot Special Summon, except "Vaylantz" and from the Extra Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,3))
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -68,7 +68,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.splimit(e,c)
-	return not c:IsSetCard(0x17e) and not c:IsLocation(LOCATION_EXTRA)
+	return not c:IsSetCard(SET_VAYLANTZ) and not c:IsLocation(LOCATION_EXTRA)
 end
 function s.disatktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() and chkc:IsType(TYPE_EFFECT) end

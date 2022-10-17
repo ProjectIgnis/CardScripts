@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
 	Pendulum.AddProcedure(c)
-	--remove
+	--Banish non-monster cards sent to the GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE+EFFECT_FLAG_IGNORE_RANGE+EFFECT_FLAG_IGNORE_IMMUNE)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTargetRange(0xff,0xff)
 	e1:SetValue(LOCATION_REMOVED)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special Summon itself
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--to grave
+	--Send monster to the GY
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
@@ -76,6 +76,7 @@ function s.gytg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.gyop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)
+	g:Match(aux.NOT(Card.IsImmuneToEffect),nil,e)
 	for tc in aux.Next(g) do
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 		--Send to GY

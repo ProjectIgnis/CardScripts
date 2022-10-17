@@ -41,6 +41,8 @@ function s.coinop(e,tp,eg,ep,ev,re,r,rp)
 		if player==tp then
 			e1:SetReset(RESET_PHASE+PHASE_END,2)
 			e1:SetTargetRange(1,0)
+			local cur_turn=Duel.GetTurnCount()
+			e1:SetCondition(function()return Duel.GetTurnCount()~=cur_turn end)
 		else
 			e1:SetReset(RESET_PHASE+PHASE_END)
 			e1:SetTargetRange(0,1)

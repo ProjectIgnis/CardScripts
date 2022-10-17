@@ -21,7 +21,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local op=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,0)},
 		{b2,aux.Stringid(id,1)})
-	if op==0 then
+	if op==1 then
 		e:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 		e:SetProperty(0)
 		e:SetOperation(s.thop)

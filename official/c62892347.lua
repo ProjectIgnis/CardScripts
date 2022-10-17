@@ -82,7 +82,7 @@ end
 function s.distg(e,c)
 	local ec=e:GetHandler()
 	if c==ec or c:GetCardTargetCount()==0 then return false end
-	local val=eArcana.GetCoinResult(c)
+	local val=Arcana.GetCoinResult(ec)
 	if val==COIN_HEADS then
 		return c:GetControler()==ec:GetControler() and c:GetCardTarget():IsContains(ec)
 	elseif val==COIN_TAILS then

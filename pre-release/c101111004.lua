@@ -72,14 +72,11 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-function s.rmcfilter(c,g)
-	return c:IsAttribute(ATTRIBUTE_DARK+ATTRIBUTE_LIGHT) and g:FilterCount(aux.TRUE,c)>0
-end
 function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local sg=e:GetLabelObject():Filter(s.tgfilter,nil,tp,e)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.rmcfilter,1,false,nil,c,sg) end
-	local g=Duel.SelectReleaseGroupCost(tp,s.rmcfilter,1,1,false,nil,c,sg)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,aux.FilterBoolFunction(Card.IsAttribute,ATTRIBUTE_DARK|ATTRIBUTE_LIGHT),1,false,aux.ReleaseCheckTarget,c,sg) end
+	local g=Duel.SelectReleaseGroupCost(tp,aux.FilterBoolFunction(Card.IsAttribute,ATTRIBUTE_DARK|ATTRIBUTE_LIGHT),1,1,false,aux.ReleaseCheckTarget,c,sg)
 	Duel.Release(g,REASON_COST)
 end
 function s.tgfilter(c,tp,e)

@@ -74,8 +74,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsAttribute,1,false,nil,c,ATTRIBUTE_DARK+ATTRIBUTE_LIGHT) end
-	local g=Duel.SelectReleaseGroupCost(tp,Card.IsAttribute,1,1,false,nil,c,ATTRIBUTE_DARK+ATTRIBUTE_LIGHT)
+	local sg=e:GetLabelObject():Filter(s.tgfilter,nil,tp,e)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,aux.FilterBoolFunction(Card.IsAttribute,ATTRIBUTE_DARK|ATTRIBUTE_LIGHT),1,false,aux.ReleaseCheckTarget,c,sg) end
+	local g=Duel.SelectReleaseGroupCost(tp,aux.FilterBoolFunction(Card.IsAttribute,ATTRIBUTE_DARK|ATTRIBUTE_LIGHT),1,1,false,aux.ReleaseCheckTarget,c,sg)
 	Duel.Release(g,REASON_COST)
 end
 function s.tgfilter(c,tp,e)
@@ -83,7 +84,7 @@ function s.tgfilter(c,tp,e)
 		and c:IsAbleToRemove() and c:IsType(TYPE_RITUAL|TYPE_EXTRA)
 		and (not e or c:IsCanBeEffectTarget(e))
 end
-function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=e:GetLabelObject():Filter(s.tgfilter,nil,tp,e)
 	if chkc then return g:IsContains(chkc) and s.tgfilter(chkc,tp,nil) end
 	if chk==0 then return #g>0 end

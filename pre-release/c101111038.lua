@@ -15,6 +15,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
 	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
+	e1:SetTarget(s.immtg)
 	e1:SetOperation(s.immop)
 	c:RegisterEffect(e1)
 	-- Special Summon this card
@@ -36,10 +37,6 @@ function s.rmfilter(c,code)
 end
 function s.immtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local ch=Duel.GetCurrentChain()
-	if ch<=1 then return end
-	local chp,chcode=Duel.GetChainInfo(ch-1,CHAININFO_TRIGGERING_PLAYER,CHAININFO_TRIGGERING_CODE)
-	if chp~=1-tp or not chcode then return end
 	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_ONFIELD|LOCATION_GRAVE)
 end
 function s.immop(e,tp,eg,ep,ev,re,r,rp)

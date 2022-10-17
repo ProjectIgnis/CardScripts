@@ -1127,7 +1127,10 @@ Arcana={}
 -- checks if the card is affected by the effect of light barrier, in which case it doens't perform the coin toss
 -- but lets the player choose, otherwise it performs a normal coin toss
 function Arcana.TossCoin(c,tp)
-	return c:IsHasEffect(CARD_LIGHT_BARRIER) and Duel.AnnounceCoin(tp) or Duel.TossCoin(tp,1)
+	if not c:IsHasEffect(CARD_LIGHT_BARRIER) then return Duel.TossCoin(tp,1) end
+	local op=Duel.SelectOption(tp,aux.GetCoinEffectHintString(COIN_HEADS),aux.GetCoinEffectHintString(COIN_TAILS))
+	if op==0 then return COIN_HEADS end
+	return COIN_TAILS
 end
 function Arcana.RegisterCoinResult(c,coin)
 	c:RegisterFlagEffect(CARD_REVERSAL_OF_FATE,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,coin,aux.GetCoinEffectHintString(coin))

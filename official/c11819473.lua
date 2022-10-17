@@ -41,7 +41,16 @@ end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local sel
 	if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_LIGHT_BARRIER),tp,LOCATION_FZONE,0,1,nil) then
-		sel=Duel.AnnounceCoin(tp)
+		local self=Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil)
+		local oppo=Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,0,LOCATION_DECK,1,nil)
+		local op=Duel.SelectEffect(tp,{self,aux.GetCoinEffectHintString(COIN_HEADS)},{oppo,aux.GetCoinEffectHintString(COIN_TAILS)})
+		if op==1 then
+			sel=COIN_HEADS
+		elseif op==2 then
+			sel=COIN_TAILS
+		else
+			return
+		end
 	else
 		sel=Duel.TossCoin(tp,1)
 	end
@@ -57,7 +66,6 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.SelectMatchingCard(1-tp,Card.IsAbleToHand,tp,0,LOCATION_DECK,1,1,nil)
 		if #g>0 then
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
-			--Duel.ConfirmCards(tp,g)
 		end
 	end
 end

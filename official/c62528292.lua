@@ -78,16 +78,16 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 	aux.RegisterClientHint(c,nil,tp,1,1,aux.Stringid(id,1),nil)
 	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,SET_ANCIENT_WARRIORS),tp,LOCATION_MZONE,0,nil)
-	for tc in g.Iter() do
+	for tc in g:Iter() do
 		--Destroy 1 card the opponent controls
-		local e2=Effect.CreateEffect(c)
+		local e2=Effect.CreateEffect(tc)
 		e2:SetDescription(aux.Stringid(id,2))
 		e2:SetCategory(CATEGORY_DESTROY)
 		e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 		e2:SetCode(EVENT_ATTACK_ANNOUNCE)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e2:SetTarget(s.destg)
 		e2:SetOperation(s.desop)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e2)
 	end
 end

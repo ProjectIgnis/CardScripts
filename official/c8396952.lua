@@ -2,7 +2,7 @@
 --Arcana Force I - The Magician
 local s,id=GetID()
 function s.initial_effect(c)
-	--coin
+	--Toss a coin and apply the appropirate effect
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_COIN)
@@ -40,8 +40,8 @@ function s.arcanareg(c,coin)
 	Arcana.RegisterCoinResult(c,coin)
 end
 function s.speop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	if not re:IsActiveType(TYPE_SPELL) or not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
+	local c=e:GetHandler()
 	local val=Arcana.GetCoinResult(c)
 	if val==COIN_HEADS then
 		local e1=Effect.CreateEffect(c)

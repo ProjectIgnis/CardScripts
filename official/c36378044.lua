@@ -2,12 +2,12 @@
 --Lucky Punch
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--coin
+	--Toss a coin and either draw 3 cards or destroy this card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DRAW+CATEGORY_DESTROY+CATEGORY_COIN)
@@ -16,10 +16,10 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1)
 	e2:SetCondition(s.atkcon)
-	e2:SetTarget(s.atktg2)
+	e2:SetTarget(s.atktg)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
-	--life lost
+	--Lose 6000 LP when it leaves the field
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e3:SetCode(EVENT_DESTROYED)
@@ -29,14 +29,14 @@ function s.initial_effect(c)
 end
 s.toss_coin=true
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer()
+	local at=Duel.GetAttacker()
+	return at and at:IsControler(1-tp)
 end
-function s.atktg2(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_COIN,nil,0,tp,3)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local r1,r2,r3=Duel.TossCoin(tp,3)
 	if Duel.CountHeads(r1,r2,r3)==3 then
 		Duel.Draw(tp,3,REASON_EFFECT)

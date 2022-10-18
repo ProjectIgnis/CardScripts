@@ -2,7 +2,7 @@
 --Arcana Force XIV - Temperance
 local s,id=GetID()
 function s.initial_effect(c)
-	--no damage
+	--Discard to prevent battle damage
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetType(EFFECT_TYPE_QUICK_O)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCost(s.damcost)
 	e1:SetOperation(s.damop)
 	c:RegisterEffect(e1)
-	--Coin toss
+	--Toss a coin and apply the appropriate effect
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_COIN)

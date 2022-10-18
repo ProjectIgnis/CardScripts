@@ -7,28 +7,28 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--coin
+	--Toss a coin during the Standby Phase
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_COIN)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetCountLimit(1)
-	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
-	e2:SetCondition(s.coincon)
+	e2:SetCondition(function(_,tp) return tp==Duel.IsTurnPlayer(tp) end)
 	e2:SetTarget(s.cointg)
 	e2:SetOperation(s.coinop)
 	c:RegisterEffect(e2)
-	--
+	--Apply effect to "Arcana Force" monsters
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(CARD_LIGHT_BARRIER)
 	e3:SetRange(LOCATION_FZONE)
 	e3:SetTargetRange(LOCATION_MZONE,0)
-	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x5))
+	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_ARCANA_FORCE))
 	e3:SetCondition(s.effectcon)
 	c:RegisterEffect(e3)
-	--
+	--Gain LP equal to the ATK of the destroyed monster
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_RECOVER)
@@ -40,11 +40,8 @@ function s.initial_effect(c)
 	e4:SetOperation(s.recop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x5}
+s.listed_series={SET_ARCANA_FORCE}
 s.toss_coin=true
-function s.coincon(e,tp,eg,ep,ev,re,r,rp)
-	return tp==Duel.GetTurnPlayer()
-end
 function s.cointg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_COIN,nil,0,tp,1)

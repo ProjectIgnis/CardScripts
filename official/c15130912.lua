@@ -1,10 +1,10 @@
 -- ヴァリアンツの弓引－西園
--- Saion the Vaylantz Archer
+-- Saion, Archer of the Vaylantz
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	Pendulum.AddProcedure(c)
-	-- Special Summon self
+	-- Special Summon itself from the Pendulum Zone
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)

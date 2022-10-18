@@ -2,7 +2,7 @@
 --Blowback Dragon
 local s,id=GetID()
 function s.initial_effect(c)
-	--destroy
+	--Toss a coin and destroy 1 card
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)

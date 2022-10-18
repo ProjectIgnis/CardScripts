@@ -28,8 +28,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	local ex=Duel.GetOperationInfo(ev,CATEGORY_COIN)
-	return ex
+	return Duel.GetOperationInfo(ev,CATEGORY_COIN)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

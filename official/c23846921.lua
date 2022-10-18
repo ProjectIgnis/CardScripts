@@ -2,7 +2,7 @@
 --Arcana Force XXI - The World
 local s,id=GetID()
 function s.initial_effect(c)
-	--coin
+	--Toss a coin and apply the appropriate effect
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_COIN)

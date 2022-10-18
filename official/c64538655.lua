@@ -1,8 +1,8 @@
 --一撃必殺侍
---Sasuke Samurai 4
+--Sasuke Samurai #4
 local s,id=GetID()
 function s.initial_effect(c)
-	--destroy
+	--Toss a coin and destroy the battling monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_COIN)

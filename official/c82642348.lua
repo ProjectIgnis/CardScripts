@@ -2,7 +2,7 @@
 --Kryuel
 local s,id=GetID()
 function s.initial_effect(c)
-	--destroy
+	--Toss a coin and destroy 1 monster the opponent controls
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_COIN)
@@ -24,7 +24,7 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.CallCoin(tp) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-		local g=Duel.SelectMatchingCard(tp,aux.TRUE,tp,0,LOCATION_MZONE,1,1,nil)
+		local g=Duel.SelectMatchingCard(tp,nil,tp,0,LOCATION_MZONE,1,1,nil)
 		Duel.Destroy(g,REASON_EFFECT)
 	end
 end

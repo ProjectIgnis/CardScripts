@@ -2,12 +2,12 @@
 --Dark Sanctuary
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--update effect
+	--"Spirit Message" handling
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -15,8 +15,9 @@ function s.initial_effect(c)
 	e2:SetCode(id)
 	e2:SetRange(LOCATION_FZONE)
 	c:RegisterEffect(e2)
-	--negate attack
+	--Toss a coin, negate attack and inflict damage
 	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e3:SetCategory(CATEGORY_COIN)
 	e3:SetCode(EVENT_ATTACK_ANNOUNCE)
@@ -29,7 +30,8 @@ end
 s.listed_names={CARD_DESTINY_BOARD}
 s.toss_coin=true
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer()
+	local at=Duel.GetAttacker()
+	return at and at:IsControler(1-tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

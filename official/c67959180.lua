@@ -2,7 +2,7 @@
 --Goddess of Whim
 local s,id=GetID()
 function s.initial_effect(c)
-	--dice
+	--Toss a coin and either double or halve ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_COIN)

@@ -2,7 +2,7 @@
 --Prepare to Strike Back
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.atktg1)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
-	--dice
+	--Toss a coin and apply the appropriate effect
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_COIN)

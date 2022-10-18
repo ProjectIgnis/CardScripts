@@ -1,12 +1,13 @@
 --儀式魔人デモリッシャー
 --Djinn Demolisher of Rituals
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Extra ritual material
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetCode(EFFECT_EXTRA_RITUAL_MATERIAL)
+	e1:SetRange(LOCATION_GRAVE)
 	e1:SetCondition(s.con)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)

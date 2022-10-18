@@ -1,4 +1,5 @@
 --クリボール
+--Sphere Kuriboh
 local s,id=GetID()
 function s.initial_effect(c)
 	--pos
@@ -15,7 +16,9 @@ function s.initial_effect(c)
 	--ritual material
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetCode(EFFECT_EXTRA_RITUAL_MATERIAL)
+	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCondition(s.con)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)

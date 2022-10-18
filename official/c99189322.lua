@@ -11,12 +11,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x5}
+s.listed_series={SET_ARCANA_FORCE}
 function s.filter(c)
-	return c:IsSetCard(0x5) and c:GetFlagEffect(CARD_REVERSAL_OF_FATE)>0
+	return c:IsSetCard(SET_ARCANA_FORCE) and c:GetFlagEffect(CARD_REVERSAL_OF_FATE)>0
 end
 function s.rfilter(c)
-	return c:IsSetCard(0x5) and c:IsMonster() and c:IsAbleToRemove() and aux.SpElimFilter(c,true)
+	return c:IsSetCard(SET_ARCANA_FORCE) and c:IsMonster() and c:IsAbleToRemove() and aux.SpElimFilter(c,true)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

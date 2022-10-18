@@ -1,5 +1,5 @@
 -- ヴァリアンツの弓引－西園
--- Saion, Archer of the Vaylantz
+-- Saion the Vaylantz Archer
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

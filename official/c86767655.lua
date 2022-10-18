@@ -2,7 +2,7 @@
 --Ms. Judge
 local s,id=GetID()
 function s.initial_effect(c)
-	--disable
+	--Toss a coin and negate an effect when it resolves
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)

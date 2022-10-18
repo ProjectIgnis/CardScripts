@@ -1,5 +1,5 @@
 --烙印追放
---Branded Exile
+--Branded Banishment
 --Logical Nonsense
 
 --Substitute ID
@@ -20,11 +20,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 	--Lists "Despia" archetype
-s.listed_series={0x166}
+s.listed_series={SET_DESPIA}
 
 	--Check for "Despia" or level 8+ monster
 function s.spfilter(c,e,tp)
-	return (c:IsSetCard(0x166) or (c:IsLevelAbove(8) and c:IsType(TYPE_FUSION))) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return (c:IsSetCard(SET_DESPIA) or (c:IsLevelAbove(8) and c:IsType(TYPE_FUSION))) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

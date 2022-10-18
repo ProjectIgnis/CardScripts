@@ -2,10 +2,10 @@
 --Gatling Dragon
 local s,id=GetID()
 function s.initial_effect(c)
-	--fusion material
+	--Fusion Summon Procedure
 	c:EnableReviveLimit()
 	Fusion.AddProcMix(c,true,true,81480460,25551951)
-	--destroy
+	--Toss 3 coins and destroy monsters on the field
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_COIN)
@@ -18,11 +18,11 @@ function s.initial_effect(c)
 end
 s.toss_coin=true
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(nil,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_COIN,nil,0,tp,3)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if #g==0 then return end
 	local ct=Duel.CountHeads(Duel.TossCoin(tp,3))
 	if ct==0 then return end

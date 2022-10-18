@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_names={101111011}
+s.listed_names={3806388}
 function s.hspcostfilter(c)
 	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsAbleToRemoveAsCost()
 		and (c:IsLocation(LOCATION_HAND) or aux.SpElimFilter(c,true))
@@ -84,7 +84,7 @@ function s.lizfilter(e,c)
 	return not c:IsOriginalType(TYPE_SYNCHRO) or not c:IsAttribute(ATTRIBUTE_LIGHT|ATTRIBUTE_DARK)
 end
 function s.spfilter(c,e,tp)
-	return c:IsFaceup() and c:IsCode(101111011) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsFaceup() and c:IsCode(3806388) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_REMOVED) and s.spfilter(chkc,e,tp) end

@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
-	e1:SetLabel(101111109,0,TYPES_TOKEN,1000,500,2,RACE_FIEND,ATTRIBUTE_DARK)
+	e1:SetLabel(id+1,0,TYPES_TOKEN,1000,500,2,RACE_FIEND,ATTRIBUTE_DARK)
 	e1:SetCost(s.tkcost)
 	e1:SetTarget(s.tktg)
 	e1:SetOperation(s.tkop)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_REMOVE)
 	e2:SetCountLimit(1,id)
-	e2:SetLabel(101111209,0,TYPES_TOKEN+TYPE_TUNER,500,1000,2,RACE_FAIRY,ATTRIBUTE_LIGHT)
+	e2:SetLabel(id+2,0,TYPES_TOKEN+TYPE_TUNER,500,1000,2,RACE_FAIRY,ATTRIBUTE_LIGHT)
 	e2:SetCondition(function(e) return e:GetHandler():IsPreviousLocation(LOCATION_HAND|LOCATION_GRAVE) end)
 	e2:SetCost(s.tkcost)
 	e2:SetTarget(s.tktg)
@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	-- Count Special Summoned monsters
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.ctfilter)
 end
-s.listed_names={101111109,101111209}
+s.listed_names={id+1,id+2}
 function s.synfilter(c)
 	return c:IsType(TYPE_SYNCHRO) and c:IsAttribute(ATTRIBUTE_LIGHT|ATTRIBUTE_DARK)
 end
@@ -41,7 +41,7 @@ function s.ctfilter(c)
 end
 function s.tkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local blk=(e:GetLabel())==101111109
+	local blk=(e:GetLabel())==id+1
 	if chk==0 then
 		if Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)>0 then return false end
 		return not blk or c:IsReleasable()

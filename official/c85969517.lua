@@ -42,7 +42,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.gthop)
 	c:RegisterEffect(e3)
 end
-local TOKEN_PLUNDER_PATROLL=101111141
+local TOKEN_PLUNDER_PATROLL=id+1
 s.listed_names={TOKEN_PLUNDER_PATROLL}
 s.listed_names={SET_PLUNDER_PATROLL}
 function s.attcheck(tp,att,targ_p)

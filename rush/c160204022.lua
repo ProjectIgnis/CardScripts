@@ -63,7 +63,7 @@ end
 --piercing
 function s.condition2(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP() and Duel.IsExistingMatchingCard(Card.IsMonster,tp,LOCATION_GRAVE,0,1,nil)
-		and not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil)
+		and not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil) and e:GetHandler():CanGetPiercingRush()
 end
 function s.piercingOp(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

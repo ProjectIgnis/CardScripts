@@ -28,7 +28,7 @@ function s.filter(c)
 	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_MACHINE) and c:IsAbleToGraveAsCost()
 end
 function s.cfilter(c)
-	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_MACHINE) and not c:IsHasEffect(EFFECT_CANNOT_ATTACK)
+	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_MACHINE) and c:CanGetPiercingRush()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	-- Requirement

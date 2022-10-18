@@ -21,7 +21,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,nil) end
 end
 function s.filter(c)
-	return c:IsAttribute(ATTRIBUTE_WIND) and not c:IsHasEffect(EFFECT_CANNOT_ATTACK)
+	return c:IsAttribute(ATTRIBUTE_WIND) and c:CanGetPiercingRush()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return 

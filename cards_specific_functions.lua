@@ -1141,3 +1141,8 @@ end
 function Arcana.SetCoinResult(c,coin)
 	return c:SetFlagEffectLabel(CARD_REVERSAL_OF_FATE,coin)
 end
+
+--checks if a monster can get a piercing effect
+function Card.CanGetPiercingRush(c)
+    return not (c:IsHasEffect(EFFECT_CANNOT_ATTACK) or c:IsHasEffect(EFFECT_PIERCE))
+end

@@ -92,15 +92,6 @@ function Auxiliary.CostWithReplace(base,replacecode,extracon,alwaysexecute)
 	end
 end
 
-local function setcodecondition(e)
-	local c=e:GetHandler()
-	local label=e:GetLabel()
-	if label>0 and c:GetOriginalCodeRule()==label then
-		return c:IsCode(c:GetOriginalCodeRule())
-	else
-		return true
-	end
-end
 
 function Card.IsMonster(c)
 	return c:IsType(TYPE_MONSTER)
@@ -174,6 +165,16 @@ function Card.IsNonEffectMonster(c)
 	return c:IsMonster() and not c:IsType(TYPE_EFFECT)
 end
 
+
+local function setcodecondition(e)
+	local c=e:GetHandler()
+	local label=e:GetLabel()
+	if label>0 and c:GetOriginalCodeRule()==label then
+		return c:IsCode(c:GetOriginalCodeRule())
+	else
+		return true
+	end
+end
 
 function Card.AddSetcodesRule(c,code,copyable,...)
 	local prop=0

@@ -115,7 +115,39 @@ function Card.IsTrap(c)
 end
 
 function Card.IsSpellTrap(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsType(TYPE_SPELL|TYPE_TRAP)
+end
+
+function Card.IsNormalSpell(c)
+	return c:GetType()==TYPE_SPELL
+end
+
+function Card.IsQuickPlaySpell(c)
+	return c:IsType(TYPE_QUICKPLAY) and c:IsSpell()
+end
+
+function Card.IsContinuousSpell(c)
+	return c:IsType(TYPE_CONTINUOUS) and c:IsSpell()
+end
+
+function Card.IsEquipSpell(c)
+	return c:IsType(TYPE_EQUIP) and c:IsSpell()
+end
+
+function Card.IsFieldSpell(c)
+	return c:IsType(TYPE_FIELD) and c:IsSpell()
+end
+
+function Card.IsNormalTrap(c)
+	return c:GetType()==TYPE_TRAP
+end
+
+function Card.IsContinuousTrap(c)
+	return c:IsType(TYPE_CONTINUOUS) and c:IsTrap()
+end
+
+function Card.IsCounterTrap(c)
+	return c:IsType(TYPE_COUNTER) and c:IsTrap()
 end
 
 function Card.IsRitualMonster(c)
@@ -545,6 +577,24 @@ function Duel.LoadCardScript(code)
 		self_code=oldcode
 	end
 end
+
+
+function Effect.IsMonsterEffect(e)
+	return e:IsActiveType(TYPE_MONSTER)
+end
+
+function Effect.IsSpellEffect(e)
+	return e:IsActiveType(TYPE_SPELL)
+end
+
+function Effect.IsTrapEffect(e)
+	return e:IsActiveType(TYPE_TRAP)
+end
+
+function Effect.IsSpellTrapEffect(e)
+	return e:IsActiveType(TYPE_SPELL|TYPE_TRAP)
+end
+
 
 bit={}
 function bit.band(a,b)

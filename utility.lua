@@ -423,7 +423,10 @@ function Card.GetScale(c)
 	local sc=0
 	if c:IsLocation(LOCATION_PZONE) then
 		local seq=c:GetSequence()
-		if seq==0 or seq==6 then sc=c:GetLeftScale() else sc=c:GetRightScale() end
+		if seq==0 --mr4+ pzones
+		or seq==1 --three columns field pzones
+		or seq==6 --mr3 pzones
+		then sc=c:GetLeftScale() else sc=c:GetRightScale() end
 	else
 		sc=c:GetLeftScale()
 	end

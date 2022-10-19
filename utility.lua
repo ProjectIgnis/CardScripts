@@ -204,10 +204,6 @@ Card.IsSpell=aux.FilterBoolFunction(Card.IsType,TYPE_SPELL)
 Card.IsTrap=aux.FilterBoolFunction(Card.IsType,TYPE_TRAP)
 Card.IsSpellTrap=aux.FilterBoolFunction(Card.IsType,TYPE_SPELL|TYPE_TRAP)
 
-function Card.IsExactType(c,type)
-	return c:GetType()&type==type
-end
-
 local function make_exact_type_check(type)
 	return aux.FilterBoolFunction(Card.IsExactType,type)
 end
@@ -548,30 +544,6 @@ function Card.IsDifferentRace(c,race)
 	return (_race&race)~=_race
 end
 
-function Card.IsOriginalType(c,val)
-	return c:GetOriginalType() & val > 0
-end
-
-function Card.IsOriginalAttribute(c,val)
-	return c:GetOriginalAttribute() & val > 0
-end
-
-function Card.IsOriginalRace(c,val)
-	return c:GetOriginalRace() & val > 0
-end
-
-function Card.IsSummonPlayer(c,tp)
-	return c:GetSummonPlayer()==tp
-end
-
-function Card.IsPreviousControler(c,tp)
-	return c:GetPreviousControler()==tp
-end
-
-function Card.IsSummonLocation(c,loc)
-	return c:GetSummonLocation() & loc~=0
-end
-
 --Checks whether the card is located at any of the sequences passed as arguments.
 function Card.IsSequence(c,...)
 	local arg={...}
@@ -592,29 +564,6 @@ function Card.HasLevel(c)
 			and not c:IsStatus(STATUS_NO_LEVEL)
 	elseif c:IsOriginalType(TYPE_MONSTER) then
 		return not (c:IsOriginalType(TYPE_XYZ+TYPE_LINK) or c:IsStatus(STATUS_NO_LEVEL))
-	end
-	return false
-end
-
-function Card.IsOriginalCode(c,...)
-	local args={...}
-	if #args==0 then
-		error("Card.IsOriginalCode requires at least 2 params",2)
-	end
-	for _,cd in ipairs(args) do
-		if c:GetOriginalCode()==cd then return true end
-	end
-	return false
-end
-
-function Card.IsOriginalCodeRule(c,...)
-	local args={...}
-	if #args==0 then
-		error("Card.IsOriginalCodeRule requires at least 2 params",2)
-	end
-	local c1,c2=c:GetOriginalCodeRule()
-	for _,cd in ipairs(args) do
-		if c1==cd or c2==cd then return true end
 	end
 	return false
 end

@@ -199,6 +199,10 @@ function Auxiliary.CostWithReplace(base,replacecode,extracon,alwaysexecute)
 end
 
 
+function Card.IsExactType(c,type)
+	return c:GetType()&type==type
+end
+
 function Card.IsMonster(c)
 	return c:IsType(TYPE_MONSTER)
 end

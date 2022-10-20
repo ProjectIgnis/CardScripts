@@ -666,6 +666,44 @@ type=(function()
 	end
 end)()
 
+tostring=(function()
+	local oldf=tostring
+	function prettyPrintCardRaw(c)
+		return '{ "code": ' .. c:GetCode() .. ' }'
+	end
+
+	function prettyPrintCard(c)
+		return 'Card: ' .. prettyPrintCardRaw(c)
+	end
+	
+	local function prettyPrintGroup(g)
+		local len=#g
+		local str='Group: ' .. '{ "size": ' .. len
+		if len>0 then
+			str=str .. ', "cards": [ '
+			local need_comma=false
+			for tc in g:Iter() do
+				if not need_comma then need_comma=true
+				else str=str .. ', ' end
+				str=str .. prettyPrintCardRaw(tc)
+			end
+			str=str .. ' ]'
+		end
+		return str .. ' }'
+	end
+	
+	return function(obj,...)
+		local objtype=type(obj)
+		if objtype=="Group" then
+			return prettyPrintGroup(obj)
+		elseif objtype=="Card" then
+			return prettyPrintCard(obj)
+		else
+			return oldf(obj,...)
+		end
+	end
+end)()
+
 function Auxiliary.Stringid(code,id)
 	return (id&0xfffff)|code<<20
 end

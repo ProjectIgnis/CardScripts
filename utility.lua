@@ -653,16 +653,18 @@ function bit.replace(r,v,field,width)
 	return (r&~(m<<f))|((v&m)<< f)
 end
 
-local _type=type
-function type(o)
-	local tp=_type(o)
-	if tp~="userdata" then return tp
-	elseif o.GetOriginalCode then return "Card"
-	elseif o.KeepAlive then return "Group"
-	elseif o.SetLabelObject then return "Effect"
-	else return "userdata"
+type=(function()
+	local oldf=type
+	return function(o)
+		local tp=oldf(o)
+		if tp~="userdata" then return tp
+		elseif o.GetOriginalCode then return "Card"
+		elseif o.KeepAlive then return "Group"
+		elseif o.SetLabelObject then return "Effect"
+		else return "userdata"
+		end
 	end
-end
+end)()
 
 function Auxiliary.Stringid(code,id)
 	return (id&0xfffff)|code<<20

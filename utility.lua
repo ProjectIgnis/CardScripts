@@ -668,8 +668,46 @@ type=(function()
 	end
 end)()
 
+local locations={
+	[LOCATION_DECK]="LOCATION_DECK",
+	[LOCATION_HAND]="LOCATION_HAND",
+	[LOCATION_MZONE]="LOCATION_MZONE",
+	[LOCATION_SZONE]="LOCATION_SZONE",
+	[LOCATION_GRAVE]="LOCATION_GRAVE",
+	[LOCATION_REMOVED]="LOCATION_REMOVED",
+	[LOCATION_EXTRA]="LOCATION_EXTRA",
+	[LOCATION_FZONE]="LOCATION_FZONE",
+	[LOCATION_PZONE]="LOCATION_PZONE"
+}
+
+local positions={
+	[POS_FACEUP]="POS_FACEUP",
+	[POS_FACEUP_ATTACK]="POS_FACEUP_ATTACK",
+	[POS_FACEUP_DEFENSE]="POS_FACEUP_DEFENSE",
+	[POS_FACEDOWN]="POS_FACEDOWN",
+	[POS_FACEDOWN_ATTACK]="POS_FACEDOWN_ATTACK",
+	[POS_FACEDOWN_DEFENSE]="POS_FACEDOWN_DEFENSE",
+	[POS_ATTACK]="POS_ATTACK",
+	[POS_DEFENSE]="POS_DEFENSE"
+}
+
 local function prettyPrintCardRaw(c)
-	return '{ "code": ' .. c:GetCode() .. ' }'
+	local str='{ "code": ' .. c:GetCode()
+	local location=c:GetLocation()
+	local sequence=c:GetSequence()
+	if c:IsLocation(LOCATION_FZONE) then
+		location=LOCATION_FZONE
+		sequence=0
+	elseif c:IsLocation(LOCATION_PZONE) then
+		location=LOCATION_PZONE
+		if sequence~=6 and sequence>=4 then sequence=1
+		else sequence=0 end
+	end
+	str=str .. ', "controller": ' .. tostring(c:GetControler())
+	str=str .. ', "location": ' .. tostring(locations[location])
+	str=str .. ', "position": ' .. tostring(positions[c:GetPosition()])
+	str=str .. ', "sequence": ' .. tostring(sequence)
+	return str .. ' }'
 end
 
 function Debug.CardToString(c)

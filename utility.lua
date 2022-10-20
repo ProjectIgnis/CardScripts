@@ -698,6 +698,8 @@ tostring=(function()
 			return prettyPrintGroup(obj)
 		elseif objtype=="Card" then
 			return prettyPrintCard(obj)
+		elseif objtype=="Effect" then
+			return "Effect"
 		else
 			return oldf(obj,...)
 		end

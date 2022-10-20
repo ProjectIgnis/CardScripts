@@ -115,6 +115,7 @@ end
 if not c946 then
 	c946 = {}
 	setmetatable(c946, Card)
+	c946.__tostring=Debug.CardToStringWrapper
 	rawset(c946,"__index",c946)
 	c946.initial_effect=function()end
 end
@@ -590,6 +591,7 @@ function Duel.LoadCardScript(code)
 		self_table=_G[card]
 		setmetatable(self_table, Card)
 		rawset(self_table,"__index",self_table)
+		self_table.__tostring=Debug.CardToStringWrapper
 		self_code=tonumber(string.sub(card,2))
 		Duel.LoadScript(code)
 		self_table=oldtable
@@ -666,45 +668,33 @@ type=(function()
 	end
 end)()
 
-tostring=(function()
-	local oldf=tostring
-	function prettyPrintCardRaw(c)
-		return '{ "code": ' .. c:GetCode() .. ' }'
-	end
+local function prettyPrintCardRaw(c)
+	return '{ "code": ' .. c:GetCode() .. ' }'
+end
 
-	function prettyPrintCard(c)
-		return 'Card: ' .. prettyPrintCardRaw(c)
-	end
+function Debug.CardToString(c)
+	return 'Card: ' .. prettyPrintCardRaw(c)
+end
 	
-	local function prettyPrintGroup(g)
-		local len=#g
-		local str='Group: ' .. '{ "size": ' .. len
-		if len>0 then
-			str=str .. ', "cards": [ '
-			local need_comma=false
-			for tc in g:Iter() do
-				if not need_comma then need_comma=true
-				else str=str .. ', ' end
-				str=str .. prettyPrintCardRaw(tc)
-			end
-			str=str .. ' ]'
+local function prettyPrintGroupRaw(g)
+	local len=#g
+	local str='{ "size": ' .. len
+	if len>0 then
+		str=str .. ', "cards": [ '
+		local need_comma=false
+		for tc in g:Iter() do
+			if not need_comma then need_comma=true
+			else str=str .. ', ' end
+			str=str .. prettyPrintCardRaw(tc)
 		end
-		return str .. ' }'
+		str=str .. ' ]'
 	end
-	
-	return function(obj,...)
-		local objtype=type(obj)
-		if objtype=="Group" then
-			return prettyPrintGroup(obj)
-		elseif objtype=="Card" then
-			return prettyPrintCard(obj)
-		elseif objtype=="Effect" then
-			return "Effect"
-		else
-			return oldf(obj,...)
-		end
-	end
-end)()
+	return str .. ' }'
+end
+
+function Group.__tostring(g)
+	return 'Group: ' .. prettyPrintGroupRaw(g)
+end
 
 function Auxiliary.Stringid(code,id)
 	return (id&0xfffff)|code<<20

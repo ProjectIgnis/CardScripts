@@ -109,7 +109,7 @@ local function WrapTableReturn(func)
 	end
 end
 function Ritual.Filter(c,filter,_type,e,tp,m,m2,forcedselection,specificmatfilter,lv,requirementfunc,sumpos)
-	if not c:IsRitualMonster() or (filter and not filter(c)) or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true,sumpos) then return false end
+	if not (c:IsOriginalType(TYPE_RITUAL) and c:IsOriginalType(TYPE_MONSTER)) or (filter and not filter(c)) or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true,sumpos) then return false end
 	local lv=(lv and (type(lv)=="function" and lv(c)) or lv) or c:GetLevel()
 	lv=math.max(1,lv)
 	Ritual.SummoningLevel=lv

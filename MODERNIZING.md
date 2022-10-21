@@ -30,7 +30,7 @@ TODO (combine with top one?)
 
 ## Use the `SET_` constants instead of hardcoded values for archetypes
 
-TODO
+Self explanatory. If the constant doesn't exist, create it. Things to look out for are magic hexadecimal values (_e.g._ `0x26ed`).
 
 ## Add timing hints to quick effects
 
@@ -58,7 +58,15 @@ TODO
 
 ## Use `aux.dxmcostgen` for simple detachment costs
 
-TODO
+Try to not re-write boilerplate code for a card that detaches Xyz Material(s) as cost, instead, use the aforementioned auxiliary function to generate the function for `Effect.SetCost`, if the situation permits it. Read the documentation of the function for more information.
+
+_e.g._:
+```lua
+--"detach 1 Xyz material from this card;"
+e1:SetCost(aux.dxmcostgen(1,1,nil))
+--"detach 2 Xyz materials from this card + Other cost;
+e1:SetCost(aux.AND(aux.dxmcostgen(1,1,nil),s.othercost))
+```
 
 ## Use `aux.selfreleasecost` for cards that tribute only themselves as cost
 

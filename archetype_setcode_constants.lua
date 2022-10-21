@@ -179,6 +179,7 @@ SET_ATLANTEAN                     = 0x77
 SET_NIMBLE                        = 0x78
 SET_FIRE_FIST                     = 0x79
 SET_NOBLE_KNIGHT                  = 0x107a
+SET_INFERNOBLE_KNIGHT             = 0x507a
 SET_NOBLE_ARMS                    = 0x207a
 SET_GALAXY                        = 0x7b
 SET_GALAXY_EYES                   = 0x107b

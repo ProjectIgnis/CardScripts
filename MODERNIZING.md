@@ -34,11 +34,19 @@ Self explanatory. If the constant doesn't exist, create it. Things to look out f
 
 ## Add timing hints to quick effects
 
-TODO
+Even though hints do not have a functional impact, they substantially improve the user experience when used properly in key effects. Cards specially affected by this are quick-effects that can be activated only in certain phases.
 
-## Remove damage step flag from single+trigger effects
+_e.g._:
+```lua
+--for a Quick Effect that destroys monsters on either field, this would prompt the user when a monster is summoned or an attack is declared.
+e2:SetHintTiming(TIMINGS_CHECK_MONSTER+TIMING_BATTLE_START)
+--for a Quick Effect that can be activated only on the Main Phase, this would prompt the user when the opponent is leaving it.
+e2:SetHintTiming(0,TIMING_MAIN_END)
+```
 
-TODO
+## Remove damage step flag  from single+trigger effects
+
+For effects that have its type set as `Effect.SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_*)`(* is either `O` or `F), the correct damage step behavior is already automatically handled in the core, remove the `Effect.SetProperty(EFFECT_FLAG_DAMAGE_STEP)`.
 
 ## Remove `if tc` check from targetting effects unless it's mandatory 
 

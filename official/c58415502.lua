@@ -26,7 +26,11 @@ function s.spfilter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,code_chk,code_chk)
 end
 function s.spchkfilter(c,sg,tp)
-	return (c:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp,sg,c) or Duel.GetMZoneCount(tp,sg))>0
+	if c:IsLocation(LOCATION_EXTRA) then
+		return Duel.GetLocationCountFromEx(tp,tp,sg,c)>0
+	else
+		return Duel.GetMZoneCount(tp,sg)>0
+	end
 end
 function s.tgrescon(summg)
 	return function(sg,e,tp)
@@ -45,7 +49,7 @@ function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_EXTRA+LOCATION_GRAVE)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
-	local summg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_EXTRA+LOCATION_GRAVE,0,nil,e,tp)
+	local summg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND+LOCATION_DECK+LOCATION_EXTRA+LOCATION_GRAVE,0,nil,e,tp)
 	if #summg<1 then return end
 	local g=Duel.GetMatchingGroup(s.tgfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,nil)
 	if #g<3 then return end

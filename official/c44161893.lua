@@ -3,104 +3,97 @@
 --Anime version scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	--Special Summon from your GY and Xyz Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e1:SetRange(LOCATION_GRAVE)
+	e1:SetProperty(EFFECT_FLAG_DELAY,EFFECT_FLAG2_CHECK_SIMULTANEOUS)
 	e1:SetCode(EVENT_LEAVE_FIELD)
+	e1:SetRange(LOCATION_GRAVE)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.spcon)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--effect gain
+	--Grant an effect when used as Xyz Material
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_BE_MATERIAL)
 	e2:SetCondition(s.efcon)
 	e2:SetOperation(s.efop)
 	c:RegisterEffect(e2)
-	aux.GlobalCheck(s,function()
-		local ge1=Effect.CreateEffect(c)
-		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge1:SetCode(EVENT_LEAVE_FIELD)
-		ge1:SetOperation(s.checkop)
-		Duel.RegisterEffect(ge1,0)
-	end)
 end
-s.listed_series={0x119}
-s.listed_names={id}
-function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	for ec in aux.Next(eg) do
-		if ec:GetPreviousTypeOnField()&TYPE_LINK>0
-			and ec:IsPreviousSetCard(0x119) and REASON_EFFECT&ec:GetReason()>0
-			and ec:GetPreviousControler()~=ec:GetReasonEffect():GetHandlerPlayer() then
-			Duel.RegisterFlagEffect(ec:GetPreviousControler(),id,RESET_PHASE+PHASE_END,0,1)
-		end
-	end
-end
-function s.cfilter(c,tp,rp)
-	return c:IsPreviousPosition(POS_FACEUP) and c:IsType(TYPE_LINK)
-		and rp~=tp and c:IsSetCard(0x119) and c:GetPreviousControler()==tp and c:IsReason(REASON_EFFECT)
+s.listed_series={SET_SALAMANGREAT}
+function s.cfilter(c,tp)
+	return c:GetPreviousTypeOnField()&TYPE_LINK>0 and c:IsPreviousSetCard(SET_SALAMANGREAT) and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp)
+		and c:IsPreviousLocation(LOCATION_MZONE) and c:GetReasonPlayer()==1-tp and c:IsReason(REASON_EFFECT)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil,tp,rp) and not eg:IsContains(e:GetHandler())
+	return not eg:IsContains(e:GetHandler()) and eg:IsExists(s.cfilter,1,nil,tp)
 end
-function s.filter(c,e,tp,tc)
-	return c:IsSetCard(0x119) and c:IsLevelBelow(4)
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+function s.spfilter(c,e,tp,tc)
+	return c:IsSetCard(SET_SALAMANGREAT) and c:IsLevel(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_EXTRA,0,1,nil,Group.FromCards(c,tc))
 end
 function s.xyzfilter(c,mg)
-	return c:IsSetCard(0x119) and c:IsType(TYPE_XYZ) and c:IsXyzSummonable(nil,mg,2,2)
+	return c:IsSetCard(SET_SALAMANGREAT) and c:IsType(TYPE_XYZ) and c:IsXyzSummonable(nil,mg,2,2)
 end
-function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return false end
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and Duel.IsPlayerCanSpecialSummonCount(tp,2)
-		and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>1
-		and Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,c,e,tp,c) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_GRAVE)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
+	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and Duel.GetLocationCount(tp,LOCATION_MZONE)>1
+		and Duel.IsPlayerCanSpecialSummonCount(tp,2) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,c,e,tp,c) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,3,tp,LOCATION_GRAVE|LOCATION_EXTRA)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
+	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) or not Duel.IsPlayerCanSpecialSummonCount(tp,2) then return end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<2 then return end
+	local c=e:GetHandler()
+	if not (c:IsRelateToEffect(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,LOCATION_GRAVE,0,1,1,c,e,tp,c)+c
-	if #g~=2 then return end
-	for tc in aux.Next(g) do
-		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+	local sg=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_GRAVE,0,1,1,c,e,tp,c)
+	if #sg==0 then return end
+	sg:AddCard(c)
+	for sc in sg:Iter() do
+		if Duel.SpecialSummonStep(sc,0,tp,tp,false,false,POS_FACEUP) then
+			--Negate their effects
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+			e1:SetCode(EFFECT_DISABLE)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			sc:RegisterEffect(e1)
+			local e2=e1:Clone()
+			e2:SetCode(EFFECT_DISABLE_EFFECT)
+			e2:SetValue(RESET_TURN_SET)
+			sc:RegisterEffect(e2)
+		end
 	end
+	if Duel.SpecialSummonComplete()==0 then return end
 	Duel.BreakEffect()
-	local xyzg=Duel.GetMatchingGroup(s.xyzfilter,tp,LOCATION_EXTRA,0,nil,g)
-	if #xyzg>0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
-		Duel.XyzSummon(tp,xyz,nil,g)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local xyz=Duel.SelectMatchingCard(tp,s.xyzfilter,tp,LOCATION_EXTRA,0,1,1,nil,sg):GetFirst()
+	if xyz then
+		Duel.XyzSummon(tp,xyz,nil,sg)
 	end
 end
 function s.efcon(e,tp,eg,ep,ev,re,r,rp)
-	return (r&REASON_XYZ)~=0 and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
+	return (r&REASON_XYZ)>0 and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.efop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=c:GetReasonCard()
-	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,1))
+	--Increase ATK
+	local e1=Effect.CreateEffect(rc)
 	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
-	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetRange(LOCATION_MZONE)
+	e1:SetValue(function(_,c) return c:GetOverlayCount()*300 end)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-	e1:SetValue(s.atkval)
 	rc:RegisterEffect(e1,true)
 	if not rc:IsType(TYPE_EFFECT) then
+		--Treated as an Effect Monster
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_ADD_TYPE)
@@ -108,7 +101,4 @@ function s.efop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		rc:RegisterEffect(e2,true)
 	end
-end
-function s.atkval(e,c)
-	return c:GetOverlayCount()*300
 end

@@ -1,26 +1,26 @@
 --ブービーゲーム
---Booby game
+--Boo-Boo Game
 --Scripted by Kohana Sonogami
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Take no battle damage
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e1:SetOperation(s.ndmop)
 	c:RegisterEffect(e1)
-	--set
-	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,1))
-	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e1:SetCode(EVENT_TO_GRAVE)
-	e1:SetProperty(EFFECT_FLAG_DELAY)
-	e1:SetCountLimit(1,id)
-	e1:SetCondition(s.sscon)
-	e1:SetTarget(s.sstg)
-	e1:SetOperation(s.ssop)
-	c:RegisterEffect(e1)
+	--Set up to 2 Normal Traps from the GY
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e2:SetCode(EVENT_TO_GRAVE)
+	e2:SetProperty(EFFECT_FLAG_DELAY)
+	e2:SetCountLimit(1,id)
+	e2:SetCondition(s.sscon)
+	e2:SetTarget(s.sstg)
+	e2:SetOperation(s.ssop)
+	c:RegisterEffect(e2)
 end
 function s.ndmop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -33,30 +33,31 @@ function s.ndmop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE)
 	Duel.RegisterEffect(e1,tp)
 end
-function s.ssfilter(c)
-	return c:GetType()==0x4 and c:IsSSetable() and not c:IsCode(id)
+function s.setfilter(c)
+	return c:GetType()==TYPE_TRAP and c:IsSSetable() and not c:IsCode(id)
 end
 function s.sscon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return bit.band(r,REASON_DESTROY+REASON_EFFECT)==REASON_DESTROY+REASON_EFFECT and rp==1-tp and c:GetPreviousControler()==tp
+	return c:IsReason(REASON_EFFECT) and c:IsReason(REASON_DESTROY) and rp==1-tp and c:IsPreviousControler(tp)
 		and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEDOWN)
 end
 function s.sstg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.ssfilter(chkc) end
-	if chk==0 then return Duel.IsExistingMatchingCard(s.ssfilter,tp,LOCATION_GRAVE,0,1,nil) end
-	local g=Duel.SelectTarget(tp,s.ssfilter,tp,LOCATION_GRAVE,0,1,2,nil)
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.setfilter(chkc) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_GRAVE,0,1,nil) end
+	local g=Duel.SelectTarget(tp,s.setfilter,tp,LOCATION_GRAVE,0,1,2,nil)
+	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,#g,0,0)
 end
 function s.ssop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	local g=Duel.GetTargetCards(e)
-	if #g==0 then return end
-	Duel.SSet(tp,g)
-	for tc in aux.Next(g) do
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_TRAP_ACT_IN_SET_TURN)
-		e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		tc:RegisterEffect(e1)
+	if #g>0 and Duel.SSet(tp,g)>0 then
+		local c=e:GetHandler()
+		for tc in g:Iter() do
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_TRAP_ACT_IN_SET_TURN)
+			e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			tc:RegisterEffect(e1)
+		end
 	end
 end

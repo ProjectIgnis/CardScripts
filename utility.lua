@@ -439,6 +439,19 @@ function Card.UpdateScale(c,amt,reset,rc)
 	return 0
 end
 
+function Card.GetLinkMarker(c)
+	local res=0
+	if c:IsLinkMarker(LINK_MARKER_BOTTOM_LEFT) then res=res|LINK_MARKER_BOTTOM_LEFT end
+	if c:IsLinkMarker(LINK_MARKER_BOTTOM) then res=res|LINK_MARKER_BOTTOM end
+	if c:IsLinkMarker(LINK_MARKER_BOTTOM_RIGHT) then res=res|LINK_MARKER_BOTTOM_RIGHT end
+	if c:IsLinkMarker(LINK_MARKER_LEFT) then res=res|LINK_MARKER_LEFT end
+	if c:IsLinkMarker(LINK_MARKER_RIGHT) then res=res|LINK_MARKER_RIGHT end
+	if c:IsLinkMarker(LINK_MARKER_TOP_LEFT) then res=res|LINK_MARKER_TOP_LEFT end
+	if c:IsLinkMarker(LINK_MARKER_TOP) then res=res|LINK_MARKER_TOP end
+	if c:IsLinkMarker(LINK_MARKER_TOP_RIGHT) then res=res|LINK_MARKER_TOP_RIGHT end
+	return res
+end
+
 function Card.GetToBeLinkedZone(tc,c,tp,clink,emz)
 	local zone=0
 	local seq=tc:GetSequence()

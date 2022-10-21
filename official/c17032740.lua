@@ -46,7 +46,7 @@ end
 function s.coinop(e,tp,eg,ep,ev,re,r,rp)
 	local total_heads=Duel.CountHeads(Duel.TossCoin(tp,3))
 	if total_heads==3 then
-		local g=Duel.FieldGroup(tp,0,LOCATION_MZONE)
+		local g=Duel.GetFieldGroup(tp,0,LOCATION_MZONE)
 		Duel.Destroy(g,REASON_EFFECT)
 	elseif total_heads==2 then
 		local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)

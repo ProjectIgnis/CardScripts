@@ -30,23 +30,23 @@ TODO (combine with top one?)
 
 ## Use the `SET_` constants instead of hardcoded values for archetypes
 
-Self explanatory. If the constant doesn't exist, create it. Things to look out for are magic hexadecimal values (_e.g._ `0x26ed`).
+Self explanatory. If the constant doesn't exist, create it. Things to look out for are magic hexadecimal values (_e.g._: `0x26ed`).
 
 ## Add timing hints to quick effects
 
-Even though hints do not have a functional impact, they substantially improve the user experience when used properly in key effects. Cards specially affected by this are quick-effects that can be activated only in certain phases.
+Even though hints do not have a functional impact, they substantially improve the user experience when used properly in key effects. Cards specially affected by this are quick effects that can be activated only in certain phases.
 
 _e.g._:
 ```lua
 --for a Quick Effect that destroys monsters on either field, this would prompt the user when a monster is summoned or an attack is declared.
-e2:SetHintTiming(TIMINGS_CHECK_MONSTER+TIMING_BATTLE_START)
---for a Quick Effect that can be activated only on the Main Phase, this would prompt the user when the opponent is leaving it.
-e2:SetHintTiming(0,TIMING_MAIN_END)
+e1:SetHintTiming(TIMINGS_CHECK_MONSTER+TIMING_BATTLE_START)
+--for a Quick Effect that can be activated only on the Main Phase, this would prompt the user when the opponent is leaving said phase.
+e1:SetHintTiming(0,TIMING_MAIN_END)
 ```
 
-## Remove damage step flag  from single+trigger effects
+## Remove Damage Step flag from single+trigger effects
 
-For effects that have its type set as `Effect.SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_*)`(* is either `O` or `F), the correct damage step behavior is already automatically handled in the core, remove the `Effect.SetProperty(EFFECT_FLAG_DAMAGE_STEP)`.
+For effects that have its type set as `Effect.SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_*)`(* is either `O` or `F`), the correct Damage Step behavior is already automatically handled in the core, remove the `Effect.SetProperty(EFFECT_FLAG_DAMAGE_STEP)`.
 
 ## Remove `if tc` check from targetting effects unless it's mandatory 
 
@@ -62,7 +62,25 @@ TODO (Does it apply to only monsters that Special Summon or could things like im
 
 ## Use `Duel.SelectEffect` when choosing effects to apply/activate
 
-TODO
+Try to use this helper function instead of writing boilerplate code to choose effects (read its documentation). Note that in certain scenarios you should instead use separated effects due to ruling reasons (_e.g._: Daigusto Emeral).
+
+_e.g._:
+```lua
+local b1=true --Some condition 1.
+local b2=false --Some condition 2. 
+local op=Duel.SelectEffect(tp,
+	{b1,aux.Stringid(id,1)},
+	{b2,aux.Stringid(id,2)},
+	{b1 and b2 and e:GetLabel()==0,aux.Stringid(id,3)})
+if op==1 then
+	--Do something for first choice.
+elseif op==2 then
+	--Do something for second choice.
+elseif op==3 then
+	--Do something for third choice.
+end
+e:SetLabel(op) --Potentially do something else with the choice down the line.
+```
 
 ## Use `aux.dxmcostgen` for simple detachment costs
 
@@ -78,11 +96,15 @@ e1:SetCost(aux.AND(aux.dxmcostgen(1,1,nil),s.othercost))
 
 ## Use `aux.selfreleasecost` for cards that tribute only themselves as cost
 
-TODO
+_e.g._:
+```lua
+--"You can Tribute this card;"
+e1:SetCost(aux.selfreleasecost)
+```
 
 ## Use `Card.IsCanBeXyzMaterial` on effects that attach
 
-TODO
+Do not simply call `Duel.Overlay` or `Card.Overlay`, first check if the card(s) can be attached with the aforementioned function.
 
 ## Use `aux.SelectUnselect` for effects that target/select cards with different filters at the same time
 
@@ -94,4 +116,4 @@ TODO
 
 ## Use bitwise operations for values that are meant to be used as bitfields
 
-TODO
+Constants like location, timing, resets, etc. should be binary or'd (op `|`) instead of just summed (op `+`), because you shouldn't rely on sum carry to set the correct bit in a value.

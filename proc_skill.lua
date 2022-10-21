@@ -166,8 +166,8 @@ function Auxiliary.SetSkillOp(coverNum,skillcon,skillop,countlimit,efftype)
 		Duel.Hint(HINT_SKILL_COVER,c:GetControler(),coverid|(coverid<<32))
 		Duel.Hint(HINT_SKILL,c:GetControler(),c:GetCode())
 		--send to limbo then draw 1 if the skill was in the hand
-		if e:GetHandler():IsPreviousLocation(LOCATION_HAND) then 
-			Duel.Draw(p,1,REASON_RULE)
+		if c:IsPreviousLocation(LOCATION_HAND) then 
+			Duel.Draw(c:GetControler(),1,REASON_RULE)
 		end
 		e:Reset()
 	end

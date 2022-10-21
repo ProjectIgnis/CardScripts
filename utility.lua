@@ -692,7 +692,7 @@ local positions={
 }
 
 local function prettyPrintCardRaw(c)
-	local str='{ "code": ' .. c:GetCode()
+	local str='{ "code": ' .. c:GetCode() .. ', "original_code": ' ..c:GetOriginalCode()
 	local location=c:GetLocation()
 	local sequence=c:GetSequence()
 	if c:IsLocation(LOCATION_FZONE) then
@@ -713,7 +713,7 @@ end
 function Debug.CardToString(c)
 	return 'Card: ' .. prettyPrintCardRaw(c)
 end
-	
+
 local function prettyPrintGroupRaw(g)
 	local len=#g
 	local str='{ "size": ' .. len

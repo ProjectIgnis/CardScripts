@@ -814,7 +814,7 @@ local function prettyPrintCardRaw(c,fullInfo)
 	str=str .. formatProperty(c:GetAttribute(),'attribute',attributes)
 	str=str .. formatProperty(c:GetRace(),'race',races)
 	local monster=c:IsMonster()
-	if monster
+	if monster then
 		if c:HasLevel() then
 			str=str .. ', "level": ' .. c:GetLevel()
 		end

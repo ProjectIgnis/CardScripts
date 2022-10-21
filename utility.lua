@@ -763,6 +763,17 @@ local races={
 	[RACE_CYBERSE]='"RACE_CYBERSE"'
 }
 
+local link_markers={
+	[LINK_MARKER_BOTTOM_LEFT]='"LINK_MARKER_BOTTOM_LEFT"',
+	[LINK_MARKER_BOTTOM]='"LINK_MARKER_BOTTOM"',
+	[LINK_MARKER_BOTTOM_RIGHT]='"LINK_MARKER_BOTTOM_RIGHT"',
+	[LINK_MARKER_LEFT]='"LINK_MARKER_LEFT"',
+	[LINK_MARKER_RIGHT]='"LINK_MARKER_RIGHT"',
+	[LINK_MARKER_TOP_LEFT]='"LINK_MARKER_TOP_LEFT"',
+	[LINK_MARKER_TOP]='"LINK_MARKER_TOP"',
+	[LINK_MARKER_TOP_RIGHT]='"LINK_MARKER_TOP_RIGHT"'
+}
+
 local function formatProperty(prop,prop_name,table)
 	local str=''
 	if prop~=0 then
@@ -802,6 +813,25 @@ local function prettyPrintCardRaw(c,fullInfo)
 	str=str .. formatProperty(c:GetType(),'type',types)
 	str=str .. formatProperty(c:GetAttribute(),'attribute',attributes)
 	str=str .. formatProperty(c:GetRace(),'race',races)
+	local monster=c:IsMonster()
+	if monster
+		if c:HasLevel() then
+			str=str .. ', "level": ' .. c:GetLevel()
+		end
+		if c:IsType(TYPE_XYZ) then
+			str=str .. ', "rank": ' .. c:GetRank()
+		end
+		if c:IsType(TYPE_LINK) then
+			str=str .. ', "link_rating": ' .. c:GetLink()
+		end
+	end
+	str=str .. formatProperty(c:GetLinkMarker(),'link_marker',link_markers)
+	if monster then
+		str=str .. ', "attack": ' .. c:GetAttack()
+		if not c:IsType(TYPE_LINK) then
+			str=str .. ', "defense": ' .. c:GetDefense()
+		end
+	end
 	return str .. ' }'
 end
 

@@ -32,7 +32,6 @@ function s.cfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_EQUIP) and c:IsSpell()
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	Duel.DiscardDeck(tp,2,REASON_EFFECT)
 	local g=Duel.GetOperatedGroup()
 	Duel.DiscardDeck(1-tp,2,REASON_EFFECT)

@@ -11,23 +11,17 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.filter(c)
-	return c:IsFaceup() and c:CanGetPiercingRush()
-end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(aux.FaceupFilter(Card.CanGetPiercingRush),tp,LOCATION_MZONE,0,1,nil) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	--Effect
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local tg=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)
+	local tg=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.CanGetPiercingRush),tp,LOCATION_MZONE,0,1,1,nil)
 	if #tg>0 then
-		Duel.HintSelection(tg)
+		Duel.HintSelection(tg,true)
 		local tc=tg:GetFirst()
-		if tc:IsFaceup() then
-			--Inflict piercing damage
-			tc:AddPiercing(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,c)
-		end
+		--Inflict piercing damage
+		tc:AddPiercing(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,e:GetHandler())
 	end
 end

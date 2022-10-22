@@ -27,13 +27,14 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local dg=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil)
 	if chk==0 then return #dg>0 end
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,dg,#dg,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local dg=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil)
 	if #dg>0 then
 		local sg=dg:Select(tp,1,1,nil)
 		sg=sg:AddMaximumCheck()
-		Duel.HintSelection(sg)
+		Duel.HintSelection(sg,true)
 		Duel.Destroy(sg,REASON_EFFECT)
 	end
 end

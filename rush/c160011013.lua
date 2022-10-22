@@ -24,13 +24,15 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
-	--Effect
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
-	Duel.HintSelection(Group.FromCards(tc))
-	if tc and tc:IsFaceup() then
-		--Piering
-		tc:AddPiercing(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,c)
+	local c=e:GetHandler()
+	if Duel.SendtoGrave(c,REASON_COST)>0 then
+		--Effect
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+		local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
+		Duel.HintSelection(Group.FromCards(tc),true)
+		if tc then
+			--Piering
+			tc:AddPiercing(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,c)
+		end
 	end
 end

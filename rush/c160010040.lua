@@ -24,24 +24,19 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP() and Duel.GetFieldGroupCount(1-tp,LOCATION_HAND,0)==0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) end
-end
-function s.filter(c)
-	return c:IsFaceup() and c:CanGetPiercingRush()
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.CanGetPiercingRush),tp,LOCATION_MZONE,0,1,nil) end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	--Requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_GRAVE,0,2,2,nil)
 	if #g~=2 or Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)~=2 then return end
 	--Effect
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local sg=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)
-	if #sg>0 then
-		Duel.HintSelection(sg)
-		local tc=sg:GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.CanGetPiercingRush),tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
+	if tc then
+		Duel.HintSelection(tc,true)
 		--Piercing
-		tc:AddPiercing(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,c)
+		tc:AddPiercing(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,e:GetHandler())
 	end
 end

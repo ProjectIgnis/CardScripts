@@ -36,7 +36,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local tg=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil)
-	Duel.HintSelection(tg)
+	Duel.HintSelection(tg,true)
 	if Duel.SendtoDeck(tg,nil,SEQ_DECKTOP,REASON_COST)==1 then
 		--Effect
 		local g=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_MZONE,nil)
@@ -44,7 +44,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 			local dg=g:Select(tp,1,1,nil)
 			dg:AddMaximumCheck()
-			Duel.HintSelection(dg)
+			Duel.HintSelection(dg,true)
 			Duel.Destroy(dg,REASON_EFFECT)
 		end
 	end

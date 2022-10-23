@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 s.listed_names={id,67169062} --to be changed by Avarice's ID (Rush)
 function s.tdfilter(c)
-	return c:IsMonster() and c:IsAbleToDeckAsCost()
+	return c:IsMonster() and c:IsAbleToDeckOrExtraAsCost()
 end
 function s.tdcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_GRAVE,0,5,nil) end

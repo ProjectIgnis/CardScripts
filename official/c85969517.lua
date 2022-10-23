@@ -133,7 +133,7 @@ function s.gthop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if tc:IsRelateToEffect(e) and Duel.SendtoHand(tc,nil,REASON_EFFECT)>0
 		and tc:IsLocation(LOCATION_HAND) and Duel.CheckPendulumZones(tp)
-		and not c:IsForbidden() then
+		and c:IsRelateToEffect(e) and not c:IsForbidden() then
 		Duel.MoveToField(c,tp,tp,LOCATION_PZONE,POS_FACEUP,true)
 	end
 end

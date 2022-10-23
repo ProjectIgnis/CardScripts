@@ -1,8 +1,8 @@
 # Modernizing card scripts
 
-Sometimes old cards need to have their Lua script updated due to ruling/functional updates or technical updates (either in the scripting engine or improvements in the ecosystem around it) and oftentimes occurs that these scripts could use a modernization as a whole: They use old idioms, deprecated functionality or simply are not up to the standards that we are used to today.
+Sometimes old cards need to have their Lua script updated due to ruling, functional, and/or technical updates (either in the scripting engine or improvements in the ecosystem around it) and oftentimes, it would turn out that said scripts could use a modernization as a whole: they use old idioms, deprecated functionality and/or are simply not up to the standards that we are used to today.
 
-The following list has been created so that these "modernization steps" are documented somewhere and can be look up for if you are in the mood to improve some script you touched. It is also recommended to consider wether or not a full script rewrite might be worth, in which case, this list also has you covered with common scenarios and examples on what to do.
+The following list has been created so that these "modernization steps" are documented somewhere and can be looked up if you are in the mood to improve some script you touched. It is also recommended to consider whether or not a full script rewrite might be worth it, in which case, this list also has you covered with common scenarios and examples of things to keep in mind.
 
 ## Use UTF-8 encoding and Unix line endings
 
@@ -12,7 +12,7 @@ Configure your editor to follow these settings, or make it obey the `.editorconf
 
 A card script should start with its official Japanese name in the first line as a comment (using Japanese characters, **not** romanized), followed by its official TCG name in English in the next line.
 
-When the card has not yet been imported to the TCG, an unofficial translation must be added as placeholder (try to match the database/proxy name). In the event that the card has not been imported yet to the OCG, leave the Japanese name empty. In both cases however try to update them later once the card is imported to the respective region/scope.
+When the card has not yet been imported to the TCG, an unofficial translation must be added as placeholder, matching the database/proxy name. In the event that the card has not been imported yet to the OCG, leave the Japanese name empty. In both cases however, try to update them later once the card is imported to the respective region/scope.
 
 _e.g._:
 ```lua
@@ -20,13 +20,19 @@ _e.g._:
 --Ash Blossom & Joyous Spring
 ```
 
-## Add descriptions to all activated effects, within reason
+## Add descriptions to (almost) every activated effect
 
-TODO (except plain card activations of continuous/field/pendulum spells/traps)
+Activated effects should have their own descriptions, set through `Effect.SetDescription`. Previously, they were usually not set if a card has only one activated effect of a given type, the idea being that there is no need to differentiate between effects if there is only one. Nowadays however, it is not too uncommon for cards to gain additional effects mid-duel through copying and granting effects, or for other cards to apply other cards' effects. 
 
-## make effect comments more descriptive and capitalize the first word and some gameplay terms like Special Summon
+Rather than trying to think of such or similar scenarios in each individual script, it it more practical to simply be consistent about it and have a description explicitly associated to each activated effect. It also has the added benefit of letting AI frameworks like Windbot properly check which effect is which through their descriptions.
 
-TODO (combine with top one?)
+The exceptions to this are the activation effects of Field Spells, Continuous Spells, Pendulum Spells, i.e., their `EFFECT_TYPE_ACTIVATE` effects that place them face-up on the field.
+
+Note that their database strings would also have to be updated to add the missing strings for the new descriptions, especially if some older strings need to be moved up to match the script (string `0` may become string `1` due to a newly-added description).
+
+## Make effect comments more descriptive
+
+TODO (+note to capitalize the first word and some gameplay terms like Special Summon)
 
 ## Use the `SET_` constants instead of hardcoded values for archetypes
 
@@ -34,19 +40,21 @@ Self explanatory. If the constant doesn't exist, create it. Things to look out f
 
 ## Add timing hints to quick effects
 
-Even though hints do not have a functional impact, they substantially improve the user experience when used properly in key effects. Cards specially affected by this are quick effects that can be activated only in certain phases.
+Even though hints do not have a functional impact, they substantially improve the user experience when used properly in key effects. Effects that should specially be considered for this are quick effects that can be activated only in certain phases.
 
 _e.g._:
 ```lua
 --for a Quick Effect that destroys monsters on either field, this would prompt the user when a monster is summoned or an attack is declared.
 e1:SetHintTiming(TIMINGS_CHECK_MONSTER+TIMING_BATTLE_START)
---for a Quick Effect that can be activated only on the Main Phase, this would prompt the user when the opponent is leaving said phase.
+--for a Quick Effect that can be activated only in the Main Phase, this would prompt the user when the opponent is leaving said phase.
 e1:SetHintTiming(0,TIMING_MAIN_END)
 ```
 
-## Remove Damage Step flag from single+trigger effects
+## Remove the Damage Step flag from SINGLE+TRIGGER effects
 
-For effects that have its type set as `Effect.SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_*)`(* is either `O` or `F`), the correct Damage Step behavior is already automatically handled in the core, remove the `Effect.SetProperty(EFFECT_FLAG_DAMAGE_STEP)`.
+For effects that have their type set as `EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_*` (* is either `O` or `F`), the correct Damage Step behavior is already automatically handled in the core, remove the `EFFECT_FLAG_DAMAGE_STEP` in the `SetProperty` call.
+
+TODO: note cards that have to explicitly check the opposite (Fusion Parasite)
 
 ## Remove `if tc` check from targetting effects unless it's mandatory 
 
@@ -62,7 +70,8 @@ TODO (Does it apply to only monsters that Special Summon or could things like im
 
 ## Use `Duel.SelectEffect` when choosing effects to apply/activate
 
-Try to use this helper function instead of writing boilerplate code to choose effects (read its documentation). Note that in certain scenarios you should instead use separated effects due to ruling reasons (_e.g._: Daigusto Emeral).
+Try to use this helper function instead of writing boilerplate code to choose effects (read its documentation).
+~~Note that in certain scenarios you should instead use separated effects due to ruling reasons (_e.g._: Daigusto Emeral).~~ TODO: better way to phrase this distinction
 
 _e.g._:
 ```lua
@@ -84,7 +93,7 @@ e:SetLabel(op) --Potentially do something else with the choice down the line.
 
 ## Use `aux.dxmcostgen` for simple detachment costs
 
-Try to not re-write boilerplate code for a card that detaches Xyz Material(s) as cost, instead, use the aforementioned auxiliary function to generate the function for `Effect.SetCost`, if the situation permits it. Read the documentation of the function for more information.
+Try not to re-write boilerplate code for a card that detaches an Xyz Material(s) as cost, instead, use the aforementioned auxiliary function to generate the function for `Effect.SetCost`, if the situation permits it. Read the documentation of the function for more information.
 
 _e.g._:
 ```lua
@@ -117,3 +126,7 @@ TODO
 ## Use bitwise operations for values that are meant to be used as bitfields
 
 Constants like location, timing, resets, etc. should be binary or'd (op `|`) instead of just summed (op `+`), because you shouldn't rely on sum carry to set the correct bit in a value.
+
+## Remove the `IsRelateToEffect` check from cards that need to remain face-up to resolve their effects
+
+TODO

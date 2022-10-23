@@ -32,7 +32,9 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,e:GetHandler():GetAttack())
+	local c=e:GetHandler()
+	if not (c:IsRelateToEffect(e) and c:IsFaceup()) then return end
+	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,c:GetAttack())
 	if #g==0 then return end
 	Duel.Destroy(g,REASON_EFFECT)
 end

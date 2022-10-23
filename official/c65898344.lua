@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_ATKCHANGE)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e3:SetProperty(EFFECT_FLAG_DELAY)
+	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e3:SetRange(LOCATION_GRAVE|LOCATION_SZONE)
 	e3:SetCountLimit(1,{id,1})
@@ -37,7 +37,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.rmfilter(c,e,tp)
-	return c:IsCanBeEffectTarget(e) and (c:IsControler(1-tp) or (c:IsFaceup() and c:IsRace(RACE_FISH)))
+	return c:IsCanBeEffectTarget(e) and c:IsAbleToRemove()
+		and (c:IsControler(1-tp) or (c:IsFaceup() and c:IsRace(RACE_FISH)))
 end
 function s.rmrescon(sg,e,tp,mg)
     return sg:FilterCount(Card.IsControler,nil,tp)==1

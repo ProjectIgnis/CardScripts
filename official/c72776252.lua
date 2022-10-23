@@ -67,7 +67,7 @@ function s.rmconfilter(c,tp)
 		and c:GetReasonPlayer()==1-tp and not c:IsReason(REASON_DESTROY)
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return not eg:IsContains(e:GetHandler()) and eg:IsExists(s.rmconfilter,1,nil,tp)
+	return eg:IsExists(s.rmconfilter,1,nil,tp)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsOnField() and chkc:IsAbleToRemove() end

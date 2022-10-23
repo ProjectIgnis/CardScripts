@@ -64,7 +64,7 @@ function s.edop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_EXTRA)
 	if #g==0 then return end
 	Duel.ConfirmCards(tp,g)
-	local rg=g:Filter(Card.IsAbleToRemove,nil,POS_FACEUP)
+	local rg=g:Filter(Card.IsAbleToRemove,nil,tp,POS_FACEUP)
 	local sg=g:Filter(s.spfilter,nil,e,tp)
 	local b1=#rg>0
 	local b2=#sg>0

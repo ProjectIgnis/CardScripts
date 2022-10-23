@@ -58,7 +58,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 		and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
 end
 function s.thfilter(c)
-	return c:IsSetCard(SET_GISHKI) and c:IsRitualMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_GISHKI) and c:IsRitualMonster() and c:IsAbleToHand() and c:IsFaceup()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_MZONE,0,1,nil) end

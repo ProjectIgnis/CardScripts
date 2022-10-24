@@ -2,7 +2,7 @@
 --Tragoedia
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special summon
+	--Special summon itself from the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sumtg)
 	e1:SetOperation(s.sumop)
 	c:RegisterEffect(e1)
-	--Increase ATK
+	--Gains 600 ATK/DEF
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -22,13 +22,8 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetValue(s.value)
 	c:RegisterEffect(e2)
-	--Increase DEF
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e3:SetRange(LOCATION_MZONE)
+	local e3=e2:Clone()
 	e3:SetCode(EFFECT_UPDATE_DEFENSE)
-	e3:SetValue(s.value)
 	c:RegisterEffect(e3)
 	--Take control of a target
 	local e4=Effect.CreateEffect(c)
@@ -42,13 +37,13 @@ function s.initial_effect(c)
 	e4:SetTarget(s.cttar)
 	e4:SetOperation(s.ctop)
 	c:RegisterEffect(e4)
-	--Level change
+	--Change its own level
 	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_IGNITION)
-	e5:SetRange(LOCATION_MZONE)
 	e5:SetDescription(aux.Stringid(id,2))
-	e5:SetCountLimit(1)
+	e5:SetType(EFFECT_TYPE_IGNITION)
 	e5:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e5:SetRange(LOCATION_MZONE)
+	e5:SetCountLimit(1)
 	e5:SetTarget(s.lvtar)
 	e5:SetOperation(s.lvop)
 	c:RegisterEffect(e5)
@@ -92,25 +87,29 @@ function s.cttar(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		Duel.GetControl(tc,tp)
 	end
 end
+function s.lvlfilter(c,lvl)
+	return c:HasLevel() and not c:IsLevel(lvl)
+end
 function s.lvtar(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and chkc:IsMonster() end
-	if chk==0 then return Duel.IsExistingTarget(Card.HasLevel,tp,LOCATION_GRAVE,0,1,nil) end
+	local lvl=e:GetHandler():GetLevel()
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.lvlfilter(chkc,lvl) end
+	if chk==0 then return Duel.IsExistingTarget(s.lvlfilter,tp,LOCATION_GRAVE,0,1,nil,lvl) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	Duel.SelectTarget(tp,Card.HasLevel,tp,LOCATION_GRAVE,0,1,1,nil)
+	Duel.SelectTarget(tp,s.lvlfilter,tp,LOCATION_GRAVE,0,1,1,nil,lvl)
 end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local c=e:GetHandler()
-	if tc and tc:IsRelateToEffect(e) and c:IsFaceup() and c:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) and c:IsFaceup() and c:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)
 		e1:SetValue(tc:GetLevel())
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end

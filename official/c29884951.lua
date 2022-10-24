@@ -1,9 +1,9 @@
 -- 相剣瑞獣－純鈞
--- Chun Jun, the Xiangjian Auspicious Beast
+-- Swordsoul Auspice Chunjun
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Destroy self and opponent monster
+	-- Destroy itself and an opponent's monster that battles your Wyrm monster 
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
-	-- Special Summon self from hand
+	-- Special Summon itself from hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -22,12 +22,12 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
 	e2:SetCountLimit(1,id)
-	e2:SetCondition(s.spcon)
+	e2:SetCondition(function() return Duel.IsMainPhase() end)
 	e2:SetCost(s.spcost)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	-- Banish
+	-- Banish 1 card from the field or GY
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_REMOVE)
@@ -61,9 +61,6 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsMainPhase()
-end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,nil,1,false,aux.ReleaseCheckMMZ,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
@@ -92,7 +89,7 @@ function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 	end
 end

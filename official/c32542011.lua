@@ -71,7 +71,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if #g>0 then
 			Duel.HintSelection(g,true)
 			if break_chk then Duel.BreakEffect() end
-			if Duel.Destroy(g,REASON_EFFECT)>0 and Duel.GetFieldGroup(tp,LOCATION_HAND,0)>0 then
+			if Duel.Destroy(g,REASON_EFFECT)>0 and Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>0 then
 				Duel.BreakEffect()
 				Duel.DiscardHand(tp,nil,1,1,REASON_DISCARD+REASON_EFFECT)
 			end

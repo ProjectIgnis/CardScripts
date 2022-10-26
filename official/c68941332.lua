@@ -3,7 +3,7 @@
 --scripted by Naim, updated by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Prevent the target's effects from being activated and gain control if a Plant is tributed
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_CONTROL)
@@ -18,13 +18,15 @@ function s.initial_effect(c)
 	e1:SetLabel(1)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x141}
+function s.filter(c)
+	return c:IsFaceup() and (c:IsType(TYPE_EFFECT) or c:GetOriginalType()&TYPE_EFFECT>0)
+end
 function s.cfilter(c,tp)
 	return c:IsRikkaReleasable(tp) and Duel.GetMZoneCount(tp,c,tp,LOCATION_REASON_CONTROL)>0
-		and Duel.IsExistingTarget(aux.FaceupFilter(Card.IsControlerCanBeChanged),tp,0,LOCATION_MZONE,1,c)
+		and Duel.IsExistingTarget(aux.AND(s.filter,Card.IsControlerCanBeChanged),tp,0,LOCATION_MZONE,1,c)
 end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local a=Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil)
+function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local a=Duel.IsExistingTarget(s.filter,tp,0,LOCATION_MZONE,1,nil)
 	local b=Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil,tp)
 	if chk==0 then return a or b end
 	if b and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
@@ -36,20 +38,21 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsFaceup()  end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.filter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	if e:GetLabel()==1 then
-		local g=Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsControlerCanBeChanged),tp,0,LOCATION_MZONE,1,1,nil)
+		local g=Duel.SelectTarget(tp,aux.AND(s.filter,Card.IsControlerCanBeChanged),tp,0,LOCATION_MZONE,1,1,nil)
 		Duel.SetOperationInfo(0,CATEGORY_CONTROL,g,1,0,0)
 	else
-		local g=Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
+		local g=Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil)
 	end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsFaceup() and  tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) then
+	if tc:IsFaceup() and  tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) then
+		local c=e:GetHandler()
+		--Target cannot activate its effects
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(aux.Stringid(id,2))
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -57,10 +60,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
+		--Gain control of the target
 		if e:GetLabel()==1 and tc:IsControlerCanBeChanged() and tc:IsControler(1-tp) then
 			Duel.BreakEffect()
 			Duel.GetControl(tc,tp,PHASE_END,1)
 			if tc:IsControler(1-tp) then return end
+			--Target becomes a Plant monster
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_CHANGE_RACE)

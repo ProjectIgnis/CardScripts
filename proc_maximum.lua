@@ -702,3 +702,8 @@ function aux.summonproc(c,ns,opt,min,max,val,desc,f,sumop)
 	e1:SetValue(val)
 	return e1
 end
+
+--Returns true if a monster can get a piercing effect as per Rush rules
+function Card.CanGetPiercingRush(c)
+    return not (c:IsHasEffect(EFFECT_CANNOT_ATTACK) or c:IsHasEffect(EFFECT_PIERCE))
+end

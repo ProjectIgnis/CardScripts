@@ -1,7 +1,8 @@
 --トレジャー・パンダー
+--Treasure Panda
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	--Special Summon 1 Normal Monster from your Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -14,40 +15,26 @@ end
 function s.cfilter(c)
 	return c:IsSpellTrap() and c:IsAbleToRemoveAsCost(POS_FACEDOWN)
 end
-function s.filter(c,e,tp,lv)
-	return c:IsType(TYPE_NORMAL) and c:IsLevelBelow(lv) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+function s.rescon(sg,e,tp,mg)
+	return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,#sg)
+end
+function s.spfilter(c,e,tp,lvl)
+	return c:IsType(TYPE_NORMAL) and c:IsLevel(lvl) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then
-		local ct=math.min(3,Duel.GetMatchingGroupCount(s.cfilter,tp,LOCATION_GRAVE,0,nil))
-		return ct>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-			and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp,ct)
-	end
-	local cg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_GRAVE,0,nil)
-	local ct=math.min(3,#cg)
-	local tg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK,0,nil,e,tp,ct)
-	local lvt={}
-	local pc=1
-	for i=1,3 do
-		if tg:IsExists(s.sfilter,1,nil,i,e,tp) then lvt[pc]=i pc=pc+1 end
-	end
-	lvt[pc]=nil
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
-	local lv=Duel.AnnounceNumber(tp,table.unpack(lvt))
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local rg=cg:Select(tp,lv,lv,nil)
+	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_GRAVE,0,nil)
+	local ct=math.min(#g,3)
+	if chk==0 then return ct>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and aux.SelectUnselectGroup(g,e,tp,1,ct,s.rescon,0) end
+	local rg=aux.SelectUnselectGroup(g,e,tp,1,ct,s.rescon,1,tp,HINTMSG_REMOVE,s.rescon)
 	Duel.Remove(rg,POS_FACEDOWN,REASON_COST)
-	Duel.SetTargetParam(lv)
+	e:SetLabel(#rg)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
-function s.sfilter(c,lv,e,tp)
-	return c:IsType(TYPE_NORMAL) and c:GetLevel()==lv and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	local lv=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)==0 then return end
+	local lvl=e:GetLabel()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.sfilter,tp,LOCATION_DECK,0,1,1,nil,lv,e,tp)
+	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,lvl)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end

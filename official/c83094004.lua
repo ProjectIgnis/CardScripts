@@ -1,5 +1,5 @@
 --エアロピΞ
---Aeropixie
+--Aeropixthree
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -59,12 +59,12 @@ function s.seqop(e,tp,eg,ep,ev,re,r,rp)
 	local zone=0
 	for i=0,4 do
 		if Duel.CheckLocation(tp,LOCATION_MZONE,i) and Duel.CheckLocation(1-tp,LOCATION_MZONE,4-i) then
-			zone=zone|2^i
+			zone=zone|1<<i
 		end
 	end
 	if zone==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
-	local selzone=Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,0xffffff-zone)
+	local selzone=Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,0xffffff&(~zone))
 	Duel.MoveSequence(c,math.log(selzone,2))
 	Duel.MoveSequence(tc,4-math.log(selzone,2))
 	if tc:IsFaceup() then

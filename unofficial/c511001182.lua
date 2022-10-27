@@ -1,3 +1,4 @@
+--ニュートリノ・ダウジング
 --Neutrino Dowsing
 local s,id=GetID()
 function s.initial_effect(c)
@@ -18,14 +19,12 @@ end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
 end
+function s.xyzfilter(c)
+	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(0x107b)
+end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Group.CreateGroup()
-	for i=0,4 do
-		local tc=Duel.GetFieldCard(tp,LOCATION_MZONE,i)
-		if tc and tc:IsFaceup() and tc:IsSetCard(0x107b) and tc:IsType(TYPE_XYZ) then
-			g:Merge(tc:GetOverlayGroup())
-		end
-	end
+	Duel.GetMatchingGroup(s.xyzfilter,tp,LOCATION_MZONE,0,nil):ForEach(function(c)g:Merge(c:GetOverlayGroup()) end)
 	if chk==0 then return #g>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVEXYZ)
 	local sg=g:Select(tp,1,1,nil)

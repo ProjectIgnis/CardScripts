@@ -1,4 +1,5 @@
 --捨て身の宝札
+--Card of Sacrifice (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -13,56 +14,35 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 	aux.GlobalCheck(s,function()
-		s[0]=true
-		s[1]=true
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_CHANGE_POS)
 		ge1:SetOperation(s.poscheck)
 		Duel.RegisterEffect(ge1,0)
-		local ge2=Effect.CreateEffect(c)
-		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge2:SetCode(EVENT_ADJUST)
-		ge2:SetCountLimit(1)
-		ge2:SetOperation(s.clear)
-		Duel.RegisterEffect(ge2,0)
 	end)
 end
 function s.poscheck(e,tp,eg,ep,ev,re,r,rp)
 	if re==nil then
-		s[rp]=false
+		Duel.RegisterFlagEffect(rp,id,RESET_PHASE+PHASE_END,0,1)
 	end
-end
-function s.clear(e,tp,eg,ep,ev,re,r,rp)
-	s[0]=true
-	s[1]=true
 end
 function s.check(tp)
-	local at1=0
-	local ct=0
-	for i=0,4 do
-		local tc=Duel.GetFieldCard(tp,LOCATION_MZONE,i)
-		if tc and tc:IsPosition(POS_FACEUP_ATTACK) then
-			at1=at1+tc:GetAttack()
-			ct=ct+1
-		end
-	end
-	local at2=-1
-	for i=0,4 do
-		local tc=Duel.GetFieldCard(1-tp,LOCATION_MZONE,i)
-		if tc and tc:IsFaceup() then
-			local atk=tc:GetAttack()
-			if at2<0 or atk<at2 then at2=atk end
-		end
-	end
-	return at1<at2 and ct>0
+	local sg=Duel.GetMatchingGroup(Card.IsPosition,tp,LOCATION_MZONE,0,nil,POS_FACEUP_ATTACK)
+	if #sg<1 then return false end
+	local og=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
+	if #og==0 then return false end
+	local at1=sg:GetSum(Card.GetAttack)
+	local tg,at2=og:GetMinGroup(Card.GetAttack)
+	return at1<at2
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return s.check(tp)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetActivityCount(tp,ACTIVITY_SUMMON)==0 and Duel.GetActivityCount(tp,ACTIVITY_FLIPSUMMON)==0
-		and Duel.GetActivityCount(tp,ACTIVITY_SPSUMMON)==0 and s[tp] end
+	if chk==0 then return Duel.GetActivityCount(tp,ACTIVITY_SUMMON)==0
+		and Duel.GetActivityCount(tp,ACTIVITY_FLIPSUMMON)==0
+		and Duel.GetActivityCount(tp,ACTIVITY_SPSUMMON)==0
+		and Duel.GetFlagEffect(tp,id)==0 end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
@@ -83,6 +63,12 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e4:SetReset(RESET_PHASE+PHASE_END)
 	e4:SetTargetRange(LOCATION_MZONE,0)
 	Duel.RegisterEffect(e4,tp)
+	local e5=Effect.CreateEffect(e:GetHandler())
+	e5:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e5:SetDescription(aux.Stringid(id,1))
+	e5:SetReset(RESET_PHASE+PHASE_END)
+	e5:SetTargetRange(1,0)
+	Duel.RegisterEffect(e5,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,2) end

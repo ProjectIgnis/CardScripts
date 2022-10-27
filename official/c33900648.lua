@@ -1,4 +1,5 @@
 --クリアー・ワールド
+--Clear World
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -111,13 +112,7 @@ end
 s[0]=0
 s[1]=0
 function s.raccheck(p)
-	local rac=0
-	local g=Duel.GetMatchingGroup(Card.IsFaceup,p,LOCATION_MZONE,0,nil)
-	local tc=g:GetFirst()
-	for tc in aux.Next(g) do
-		rac=(rac|tc:GetAttribute())
-	end
-	s[p]=rac
+	s[p]=Duel.GetMatchingGroup(Card.IsFaceup,p,LOCATION_MZONE,0,nil):GetBitwiseOr(Card.GetAttribute)
 end
 function s.adjustop(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsPlayerAffectedByEffect(0,97811903) then

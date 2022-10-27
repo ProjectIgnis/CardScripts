@@ -1,4 +1,5 @@
 --ストレートフラッシュ
+--Straight Flush
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,14 +13,16 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	for i=0,4 do
-		if Duel.GetFieldCard(1-tp,LOCATION_SZONE,i)==nil then return false end
-	end
-	return true
-end
 function s.filter(c)
-	return c:GetSequence()<5
+	local seq=c:GetSequence()
+	if Duel.IsDuelType(DUEL_3_COLUMNS_FIELD) then
+		return seq>0 and seq<4
+	else
+		return seq<5
+	end
+end
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetMatchingGroupCount(s.filter,tp,0,LOCATION_SZONE,nil)==(Duel.IsDuelType(DUEL_3_COLUMNS_FIELD) and 3 or 5)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_SZONE,1,nil) end

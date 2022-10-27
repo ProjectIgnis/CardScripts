@@ -35,18 +35,7 @@ function s.atktg(e,c)
 end
 function s.value(e,c)
 	local tp=e:GetHandlerPlayer()
-	local att=0
-	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
-	local tc=g:GetFirst()
-	for tc in aux.Next(g) do
-		att=(att|tc:GetAttribute())
-	end
-	local ct=0
-	while att~=0 do
-		if (att&0x1)~=0 then ct=ct+1 end
-		att=(att>>1)
-	end
-	return ct*200
+	return Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil):GetBinClassCount(Card.GetAttribute)*200
 end
 function s.spfilter(c)
 	return c:IsMonster() and c:IsAttribute(ATTRIBUTES)

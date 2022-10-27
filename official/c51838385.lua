@@ -1,4 +1,5 @@
 --ナイトメアテーベ
+--Theban Nightmare
 local s,id=GetID()
 function s.initial_effect(c)
 	--atk
@@ -11,10 +12,10 @@ function s.initial_effect(c)
 	e1:SetValue(1500)
 	c:RegisterEffect(e1)
 end
+function s.filter(c)
+	return c:GetSequence()<5
+end
 function s.atkcon(e)
 	local tp=e:GetHandlerPlayer()
-	for i=0,4 do
-		if Duel.GetFieldCard(tp,LOCATION_SZONE,i) then return false end
-	end
-	return Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)==0
+	return Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)+Duel.GetMatchingGroupCount(s.filter,tp,LOCATION_SZONE,0,nil)==0
 end

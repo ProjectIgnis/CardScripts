@@ -39,6 +39,7 @@ make_deprecated_function_alias("Auxiliary.EnableSpiritReturn","Spirit.AddProcedu
 make_deprecated_function_alias("Auxiliary.SpiritReturnReg","Spirit.SummonRegister")
 make_deprecated_function_alias("Auxiliary.SpiritReturnOperation","Spirit.ReturnOperation")
 make_deprecated_function_alias("Auxiliary.FilterFaceupFunction","Auxiliary.FaceupFilter")
+make_deprecated_function_alias("Auxiliary.MZFilter","Card.IsInMainMZone")
 
 local function make_deleted_function(funcname,message)
 	load(funcname .. [[= function()

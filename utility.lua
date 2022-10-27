@@ -1285,10 +1285,6 @@ function Auxiliary.SelectUnselectGroup(g,e,tp,minc,maxc,rescon,chk,seltp,hintmsg
 	end
 	return sg
 end
---check for free Zone for monsters to be Special Summoned except from Extra Deck
-function Auxiliary.MZFilter(c,tp)
-	return c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5 and c:IsControler(tp)
-end
 --check for Free Monster Zones
 function Auxiliary.ChkfMMZ(sumcount)
 	return	function(sg,e,tp,mg)

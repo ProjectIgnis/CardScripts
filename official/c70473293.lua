@@ -29,7 +29,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	return true
 end
 function s.zonecheck(sg,tp,exg)
-	return Duel.GetMzoneCount(tp,sg)>0
+	return Duel.GetMZoneCount(tp,sg)>0
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) 

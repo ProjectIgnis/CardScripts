@@ -30,7 +30,7 @@ function s.rescon(sg,e,tp,mg)
 end
 function s.spfilter(c)
 	return c:IsLevelAbove(7) and c:IsRace(RACE_PLANT) and c:IsAbleToRemoveAsCost() 
-		and (c:IsLocation(LOCATION_HAND) or (aux.SpElimFilter(c,true) and Duel.GetMzoneCount(tp,c)>0))
+		and (c:IsLocation(LOCATION_HAND) or (aux.SpElimFilter(c,true) and Duel.GetMZoneCount(tp,c)>0))
 end
 function s.spcon(e,c)
 	if c==nil then return true end

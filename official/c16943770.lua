@@ -44,7 +44,7 @@ function s.indcon(e)
 end
 function s.cfilter(c,ft)
 	return c:IsSetCard(0x101b) and not c:IsCode(id) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true) 
-		and Duel.GetMzoneCount(tp,c)>0
+		and Duel.GetMZoneCount(tp,c)>0
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) end

@@ -18,7 +18,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.costfilter(c,e,tp)
 	return c:IsMonster() and c:IsSetCard(0xc008) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
-		and Duel.GetMzoneCount(tp,c)>0
+		and Duel.GetMZoneCount(tp,c)>0
 		and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE,0,1,c,e,tp)
 end
 function s.spfilter(c,e,tp)

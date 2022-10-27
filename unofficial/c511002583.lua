@@ -20,7 +20,7 @@ function s.filter(c,e,tp)
 end
 function s.cfilter(c,e,tp)
 	return c:IsRace(RACE_ROCK) and c:IsType(TYPE_XYZ) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true) 
-		and Duel.GetMzoneCount(tp,c)>0
+		and Duel.GetMZoneCount(tp,c)>0
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,2,c,e,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

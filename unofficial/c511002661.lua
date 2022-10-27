@@ -18,7 +18,7 @@ end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)
 	local g,exg=Duel.GetReleaseGroup(tp):Split(aux.ReleaseCostFilter,nil,tp)
-	if chk==0 then return #g>0 and Duel.GetMzoneCount(g,c)>0 end
+	if chk==0 then return #g>0 and Duel.GetMZoneCount(g,c)>0 end
 	if #exg>0 and Duel.SelectYesNo(tp,aux.Stringid(59160188,2)) then
 		g:Merge(exg)
 	end

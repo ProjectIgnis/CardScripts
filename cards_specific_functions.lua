@@ -1141,3 +1141,76 @@ end
 function Arcana.SetCoinResult(c,coin)
 	return c:SetFlagEffectLabel(CARD_REVERSAL_OF_FATE,coin)
 end
+
+Infernoid={}
+local InfernoidInt={}
+function InfernoidInt.spfilter(c)
+	return c:IsSetCard(SET_INFERNOID) and c:IsMonster() and c:IsAbleToRemoveAsCost() 
+end
+function InfernoidInt.getLocations(c,tp)	
+	local locations=LOCATION_HAND
+	if Duel.IsPlayerAffectedByEffect(tp,69832741) then
+		locations=locations|LOCATION_MZONE
+	elseif c:IsHasEffect(34822850) then
+		locations=locations|LOCATION_GRAVE|LOCATION_MZONE
+	else
+		locations=locations|LOCATION_GRAVE
+	end
+	return locations
+end
+function InfernoidInt.summonCondition(monstersToBanish)
+	return function(e,c)
+		if c==nil then return true end
+		local tp=c:GetControler()
+		local sum=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsType,TYPE_EFFECT),tp,LOCATION_MZONE,0,nil):GetSum(function(c)
+			return c:IsType(TYPE_XYZ) and c:GetRank() or c:GetLevel()
+		end)
+		if sum>8 then return false end
+		local locations=InfernoidInt.getLocations(c,tp)
+		if (locations&LOCATION_MZONE)==0 then
+			local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+			return ft>0 and Duel.IsExistingMatchingCard(InfernoidInt.spfilter,tp,locations,0,monstersToBanish,c)
+		else
+			return aux.SelectUnselectGroup(Duel.GetMatchingGroup(InfernoidInt.spfilter,tp,locations,0,c),e,tp,monstersToBanish,monstersToBanish,aux.ChkfMMZ(1),0)
+		end
+	end
+end
+function InfernoidInt.summonTarget(monstersToBanish)
+	return function(e,tp,eg,ep,ev,re,r,rp,c)
+		local c=e:GetHandler()
+		local locations=InfernoidInt.getLocations(c,tp)
+		local mg=Duel.GetMatchingGroup(InfernoidInt.spfilter,tp,locations,0,c)
+		local g=aux.SelectUnselectGroup(mg,e,tp,monstersToBanish,monstersToBanish,aux.ChkfMMZ(1),1,tp,HINTMSG_REMOVE,nil,nil,true)
+		if #g>0 then
+			g:KeepAlive()
+			e:SetLabelObject(g)
+			return true
+		end
+		return false
+	end
+end
+function InfernoidInt.summonOperation(e,tp,eg,ep,ev,re,r,rp,c)
+	local g=e:GetLabelObject()
+	if not g then return end
+	Duel.Remove(g,POS_FACEUP,REASON_COST)
+	g:DeleteGroup()
+end
+function Infernoid.RegisterSummonProcedure(c,monstersToBanish)
+	--special summon condition
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
+	e1:SetValue(aux.FALSE)
+	c:RegisterEffect(e1)
+	--special summon
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetCode(EFFECT_SPSUMMON_PROC)
+	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e2:SetRange(monstersToBanish>1 and (LOCATION_HAND|LOCATION_GRAVE) or LOCATION_HAND)
+	e2:SetCondition(InfernoidInt.summonCondition(monstersToBanish))
+	e2:SetTarget(InfernoidInt.summonTarget(monstersToBanish))
+	e2:SetOperation(InfernoidInt.summonOperation)
+	c:RegisterEffect(e2)
+end

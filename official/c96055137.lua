@@ -3,105 +3,29 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--special summon condition
+	Infernoid.RegisterSummonProcedure(c,2)
+	--Banish monster when declaring an attack
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e1:SetValue(aux.FALSE)
+	e1:SetCategory(CATEGORY_REMOVE)
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
+	e1:SetTarget(s.rmtg1)
+	e1:SetOperation(s.rmop1)
 	c:RegisterEffect(e1)
-	--special summon
+	--Tribute 1 monster and banish
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(EFFECT_SPSUMMON_PROC)
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e2:SetRange(LOCATION_HAND+LOCATION_GRAVE)
-	e2:SetCondition(s.spcon)
-	e2:SetTarget(s.sptg)
-	e2:SetOperation(s.spop)
+	e2:SetCategory(CATEGORY_REMOVE)
+	e2:SetType(EFFECT_TYPE_QUICK_O)
+	e2:SetCode(EVENT_FREE_CHAIN)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e2:SetCountLimit(1)
+	e2:SetCost(s.rmcost2)
+	e2:SetTarget(s.rmtg2)
+	e2:SetOperation(s.rmop2)
 	c:RegisterEffect(e2)
-	--remove
-	local e3=Effect.CreateEffect(c)
-	e3:SetCategory(CATEGORY_REMOVE)
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_ATTACK_ANNOUNCE)
-	e3:SetTarget(s.rmtg1)
-	e3:SetOperation(s.rmop1)
-	c:RegisterEffect(e3)
-	--remove
-	local e4=Effect.CreateEffect(c)
-	e4:SetCategory(CATEGORY_REMOVE)
-	e4:SetType(EFFECT_TYPE_QUICK_O)
-	e4:SetCode(EVENT_FREE_CHAIN)
-	e4:SetRange(LOCATION_MZONE)
-	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e4:SetCountLimit(1)
-	e4:SetCost(s.rmcost2)
-	e4:SetTarget(s.rmtg2)
-	e4:SetOperation(s.rmop2)
-	c:RegisterEffect(e4)
 end
-s.listed_series={0xbb}
-function s.spfilter(c)
-	return c:IsSetCard(0xbb) and c:IsMonster() and c:IsAbleToRemoveAsCost() 
-		and (c:IsLocation(LOCATION_HAND) or aux.SpElimFilter(c,true,true))
-end
-function s.spcon(e,c)
-	if c==nil then return true end
-	local tp=c:GetControler()
-	local sum=0
-	for i=0,6 do
-		local tc=Duel.GetFieldCard(tp,LOCATION_MZONE,i)
-		if tc and tc:IsFaceup() and tc:IsType(TYPE_EFFECT) then
-			if tc:IsType(TYPE_XYZ) then sum=sum+tc:GetRank()
-			else sum=sum+tc:GetLevel() end
-		end
-	end
-	if sum>8 then return false end
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if ft<-1 then return false end
-	if c:IsHasEffect(34822850) then
-		if ft>0 then
-			return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE+LOCATION_HAND,0,2,c)
-		else
-			local ct=-ft+1
-			return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_MZONE,0,ct,nil)
-				and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE+LOCATION_HAND,0,2,c)
-		end
-	else
-		if Duel.IsPlayerAffectedByEffect(tp,69832741) then
-			return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,2,c)
-		else
-			return ft>0 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE+LOCATION_HAND,0,2,c)
-		end
-	end
-end
-function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
-	local c=e:GetHandler()
-	local g=nil
-	local rg1=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE+LOCATION_HAND,0,c)
-	local rg2=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,c)
-	local rg3=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_GRAVE+LOCATION_HAND,0,c)
-	if c:IsHasEffect(34822850) then
-		g=aux.SelectUnselectGroup(rg1,e,tp,2,2,aux.ChkfMMZ(1),1,tp,HINTMSG_REMOVE,nil,nil,true)
-	elseif Duel.IsPlayerAffectedByEffect(tp,69832741) then
-		g=aux.SelectUnselectGroup(rg2,e,tp,2,2,aux.ChkfMMZ(1),1,tp,HINTMSG_REMOVE,nil,nil,true)
-	else
-		g=aux.SelectUnselectGroup(rg3,e,tp,2,2,aux.ChkfMMZ(1),1,tp,HINTMSG_REMOVE,nil,nil,true)
-	end
-	if #g>0 then
-		g:KeepAlive()
-		e:SetLabelObject(g)
-		return true
-	end
-	return false
-end
-function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=e:GetLabelObject()
-	if not g then return end
-	Duel.Remove(g,POS_FACEUP,REASON_COST)
-	g:DeleteGroup()
-end
+s.listed_series={SET_INFERNOID}
 function s.rmtg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_EXTRA,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_EXTRA)
@@ -129,7 +53,7 @@ function s.rmtg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.rmop2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 	end
 end

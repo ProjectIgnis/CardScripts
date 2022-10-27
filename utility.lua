@@ -1288,7 +1288,7 @@ end
 --check for Free Monster Zones
 function Auxiliary.ChkfMMZ(sumcount)
 	return	function(sg,e,tp,mg)
-				return sg:FilterCount(Auxiliary.MZFilter,nil,tp)+Duel.GetLocationCount(tp,LOCATION_MZONE)>=sumcount
+				return Duel.GetMZoneCount(tp,sg)>=sumcount
 			end
 end
 --check for cards that can stay on the field, but not always

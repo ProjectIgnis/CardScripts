@@ -1,4 +1,5 @@
 --幻獣機サーバルホーク
+--Mecha Phantom Beast Sabre Hawk
 local s,id=GetID()
 function s.initial_effect(c)
 	--level
@@ -47,13 +48,7 @@ end
 s.listed_series={0x101b}
 s.listed_names={TOKEN_MECHA_PHANTOM_BEAST}
 function s.lvval(e,c)
-	local tp=c:GetControler()
-	local lv=0
-	for i=0,4 do
-		local tc=Duel.GetFieldCard(tp,LOCATION_MZONE,i)
-		if tc and tc:IsCode(TOKEN_MECHA_PHANTOM_BEAST) then lv=lv+tc:GetLevel() end
-	end
-	return lv
+	return Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsCode,TOKEN_MECHA_PHANTOM_BEAST),c:GetControler(),LOCATION_MZONE,0,nil):GetSum(Card.GetLevel)
 end
 function s.indcon(e)
 	return Duel.IsExistingMatchingCard(Card.IsType,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil,TYPE_TOKEN)

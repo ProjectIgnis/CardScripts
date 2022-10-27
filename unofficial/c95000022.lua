@@ -49,7 +49,7 @@ end
 function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g,exg=Duel.GetReleaseGroup(tp):Split(aux.ReleaseCostFilter,e:GetHandler(),tp)
 	exg:RemoveCard(e:GetHandler())
-	if chk==0 then return #g>0 and g:FilterCount(aux.MZFilter,nil,tp)+Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
+	if chk==0 then return #g>0 and Duel.GetMZoneCount(tp,g)>0 end
 	if #exg>0 and Duel.SelectYesNo(tp,aux.Stringid(59160188,2)) then
 		g:Merge(exg)
 	end

@@ -1,4 +1,5 @@
 --幻獣機エアロスバード
+--Mecha Phantom Beast Aerosguin
 local s,id=GetID()
 function s.initial_effect(c)
 	--level
@@ -36,26 +37,19 @@ end
 s.listed_series={0x101b}
 s.listed_names={TOKEN_MECHA_PHANTOM_BEAST}
 function s.lvval(e,c)
-	local tp=c:GetControler()
-	local lv=0
-	for i=0,4 do
-		local tc=Duel.GetFieldCard(tp,LOCATION_MZONE,i)
-		if tc and tc:IsCode(TOKEN_MECHA_PHANTOM_BEAST) then lv=lv+tc:GetLevel() end
-	end
-	return lv
+	return Duel.GetMatchingGroup(Card.IsCode,c:GetControler(),LOCATION_MZONE,0,nil,TOKEN_MECHA_PHANTOM_BEAST):GetSum(Card.GetLevel)
 end
 function s.indcon(e)
 	return Duel.IsExistingMatchingCard(Card.IsType,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil,TYPE_TOKEN)
 end
 function s.cfilter(c,ft)
 	return c:IsSetCard(0x101b) and not c:IsCode(id) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true) 
-		and (ft>0 or (aux.MZFilter(c,c:GetControler()) and ft>-1))
+		and Duel.GetMzoneCount(tp,c)>0
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,ft) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil,ft)
+	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

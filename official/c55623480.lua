@@ -1,4 +1,5 @@
 --妖精伝姫－シラユキ
+--Fairy Tail - Snow
 local s,id=GetID()
 function s.initial_effect(c)
 	--position
@@ -49,16 +50,10 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local ct=-ft+1
 	local sg=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,e:GetHandler())
-	if chk==0 then return #sg>=7 and (ft>0 or sg:FilterCount(aux.MZFilter,nil,tp)>=ct) end
+	if chk==0 then return #sg>=7 and Duel.GetMZoneCount(tp,sg)>0 end
 	local g
-	if ft<=0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		g=sg:FilterSelect(tp,aux.MZFilter,ct,ct,nil,tp)
-		if ct<7 then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-			local g1=sg:Select(tp,7-ct,7-ct,g)
-			g:Merge(g1)
-		end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)==0 then
+		g=aux.SelectUnselectGroup(sg,e,tp,7,7,aux.ChkfMMZ(1),1,tp,HINTMSG_REMOVE)
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		g=sg:Select(tp,7,7,nil)

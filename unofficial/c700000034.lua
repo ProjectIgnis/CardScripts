@@ -76,7 +76,7 @@ function s.resconse2(fc,rg,mft)
 				local exct=sg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA)
 				Fusion.CheckExact=#sg
 				local res=Duel.GetLocationCountFromEx(tp,tp,rg)>=exct and (not ect or exct<(ect-1))
-					and rg:FilterCount(aux.MZFilter,nil,tp)+mft>=sg:FilterCount(aux.NOT(Card.IsLocation),nil,LOCATION_EXTRA)
+					and rg:FilterCount(Card.IsInMainMZone,nil,tp)+mft>=sg:FilterCount(aux.NOT(Card.IsLocation),nil,LOCATION_EXTRA)
 					and fc:CheckFusionMaterial(sg,nil,tp)
 				Fusion.CheckExact=nil
 				return res

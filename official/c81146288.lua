@@ -28,16 +28,15 @@ function s.rescon(sg,e,tp,mg)
 	return sg:IsExists(Card.IsLocation,1,nil,LOCATION_HAND)
 		and (sg:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE) or (sg:IsExists(aux.SpElimFilter,1,nil,true)))
 end
-function s.spfilter(c,ft)
+function s.spfilter(c)
 	return c:IsLevelAbove(7) and c:IsRace(RACE_PLANT) and c:IsAbleToRemoveAsCost() 
-		and (c:IsLocation(LOCATION_HAND) or (aux.SpElimFilter(c,true) and (ft>0 or (aux.MZFilter(c,c:GetControler()) and ft>-1))))
+		and (c:IsLocation(LOCATION_HAND) or (aux.SpElimFilter(c,true) and Duel.GetMzoneCount(tp,c)>0))
 end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=e:GetHandlerPlayer()
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND,0,e:GetHandler(),ft)
-	local rg2=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil,ft)
+	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND,0,e:GetHandler())
+	local rg2=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
 	rg:Merge(rg2)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2 and #rg>0 and #rg2>0
 		and aux.SelectUnselectGroup(rg,e,tp,2,2,s.rescon,0)

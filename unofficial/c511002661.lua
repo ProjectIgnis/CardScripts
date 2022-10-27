@@ -1,8 +1,10 @@
---Turf
+ --縄張り
+ --Turf
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Special Summon 1 Insect monster from the hand
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)

@@ -1,15 +1,17 @@
+--ゴルゴニック・リチューアル
 --Gorgonic Ritual
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special Summon
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_ACTIVATE)
-	e3:SetCode(EVENT_FREE_CHAIN)
-	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e3:SetCost(s.cost)
-	e3:SetTarget(s.target)
-	e3:SetOperation(s.activate)
-	c:RegisterEffect(e3)
+	--Special Summon 2 Rock monsters from the GY
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCost(s.cost)
+	e1:SetTarget(s.target)
+	e1:SetOperation(s.activate)
+	c:RegisterEffect(e1)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)

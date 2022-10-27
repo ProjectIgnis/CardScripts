@@ -1,9 +1,9 @@
+--ボルテージサモン
 --Voltage Summon
---scripted by:urielkama
---fixed by MLD
+--scripted by:urielkama and MLD
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Special Summon 1 Level 4 or lower monster from the Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -35,20 +35,20 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local sg=g:Select(tp,ct,ct,nil)
 			Duel.BreakEffect()
-			local tc=sg:GetFirst()
-			while tc do
+			local c=e:GetHandler()
+			for tc in sg:Iter() do
 				Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
-				local e1=Effect.CreateEffect(e:GetHandler())
+				local e1=Effect.CreateEffect(c)
 				e1:SetType(EFFECT_TYPE_SINGLE)
 				e1:SetCode(EFFECT_DISABLE)
 				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 				tc:RegisterEffect(e1)
-				local e2=Effect.CreateEffect(e:GetHandler())
+				local e2=Effect.CreateEffect(c)
 				e2:SetType(EFFECT_TYPE_SINGLE)
 				e2:SetCode(EFFECT_DISABLE_EFFECT)
 				e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 				tc:RegisterEffect(e2)
-				local e3=Effect.CreateEffect(e:GetHandler())
+				local e3=Effect.CreateEffect(c)
 				e3:SetType(EFFECT_TYPE_SINGLE)
 				e3:SetCode(EFFECT_SET_BASE_ATTACK)
 				e3:SetValue(0)
@@ -57,7 +57,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				local e4=e3:Clone()
 				e4:SetCode(EFFECT_SET_BASE_DEFENSE)
 				tc:RegisterEffect(e4)
-				tc=sg:GetNext()
 			end
 			Duel.SpecialSummonComplete()
 		end

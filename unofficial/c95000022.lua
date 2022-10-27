@@ -1,4 +1,4 @@
---Number C1: Numeron Chaos Gate Shunya
+--Don Thousand/Monster A (Number C1: Numeron Chaos Gate Shunya)
 local s,id=GetID()
 function s.initial_effect(c)
 	--no type/attribute/level
@@ -13,38 +13,38 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_CHANGE_ATTRIBUTE)
 	c:RegisterEffect(e2)
 	c:SetStatus(STATUS_NO_LEVEL,true)
-	--cannot special summon
+	--Cannot be Special Summoned
 	local e3=Effect.CreateEffect(c)
 	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e3)
-	--summon with 1 tribute
+	--Normal Summon with 1 tribute
 	local e4=aux.AddNormalSummonProcedure(c,true,false,1,1)
 	local e5=aux.AddNormalSetProcedure(c,true,false,1,1)
-	--tribute limit
+	--Tribute limit
 	local e6=Effect.CreateEffect(c)
 	e6:SetType(EFFECT_TYPE_SINGLE)
 	e6:SetCode(EFFECT_TRIBUTE_LIMIT)
 	e6:SetValue(s.tlimit)
 	c:RegisterEffect(e6)
-	--spsummon
+	--Inflict damage
 	local e7=Effect.CreateEffect(c)
 	e7:SetDescription(aux.Stringid(id,0))
 	e7:SetCategory(CATEGORY_DAMAGE)
-	e7:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e7:SetCountLimit(1)
 	e7:SetType(EFFECT_TYPE_IGNITION)
+	e7:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e7:SetRange(LOCATION_MZONE)
+	e7:SetCountLimit(1)
 	e7:SetCost(s.damcost)
 	e7:SetTarget(s.damtg)
 	e7:SetOperation(s.damop)
 	c:RegisterEffect(e7)
 end
-s.listed_series={0x48}
+s.listed_series={SET_NUMBER}
 s.mark=0
 function s.tlimit(e,c)
-	return not c:IsType(TYPE_TOKEN) or not c:IsSetCard(0x48)
+	return not c:IsType(TYPE_TOKEN) or not c:IsSetCard(SET_NUMBER)
 end
 function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g,exg=Duel.GetReleaseGroup(tp):Split(aux.ReleaseCostFilter,e:GetHandler(),tp)

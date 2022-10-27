@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x7}
+s.listed_series={SET_ANCIENT_GEAR}
 s.listed_names={CARD_POLYMERIZATION}
 function s.cfilter(c)
 	return c:IsCode(CARD_POLYMERIZATION) and c:IsAbleToGraveAsCost()
@@ -28,7 +28,7 @@ function s.matfilter(c,e,tp,fc,se)
 	return c:IsMonster() and c:IsCanBeFusionMaterial(fc) and (not se or not c:IsImmuneToEffect(se)) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.spfilter(c,e,tp,rg,se)
-	if not c:IsType(TYPE_FUSION) or not c:IsSetCard(0x7) or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) then return false end
+	if not c:IsType(TYPE_FUSION) or not c:IsSetCard(SET_ANCIENT_GEAR) or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) then return false end
 	local minc=c.min_material_count
 	local maxc=c.max_material_count
 	if not minc then return false end
@@ -132,7 +132,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	mg:Sub(rsg)
 	local matg=aux.SelectUnselectGroup(mg,e,tp,ct,ct,s.rescon2(fc,mft,exft),1,tp,HINTMSG_SPSUMMON)
 	if Duel.SpecialSummon(matg,0,tp,tp,false,false,POS_FACEUP) > 0 then
-		for tc in aux.Next(matg) do
+		for tc in matg:Iter() do
 			if tc:IsLocation(LOCATION_MZONE) then
 				s.disop(e,tp,eg,ep,ev,re,r,rp,tc)
 			end

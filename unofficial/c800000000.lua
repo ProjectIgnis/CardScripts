@@ -1,9 +1,9 @@
+-- 強引な取引き
 -- Forceful Deal
--- scripted by: UnknownGuest
---fixed by MLD
+-- scripted by UnknownGuest and MLD
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Activate
+	-- Gain control of all summoned monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)

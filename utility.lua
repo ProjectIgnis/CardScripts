@@ -115,6 +115,7 @@ end
 if not c946 then
 	c946 = {}
 	setmetatable(c946, Card)
+	c946.__tostring=Debug.CardToStringWrapper
 	rawset(c946,"__index",c946)
 	c946.initial_effect=function()end
 end
@@ -590,6 +591,7 @@ function Duel.LoadCardScript(code)
 		self_table=_G[card]
 		setmetatable(self_table, Card)
 		rawset(self_table,"__index",self_table)
+		self_table.__tostring=Debug.CardToStringWrapper
 		self_code=tonumber(string.sub(card,2))
 		Duel.LoadScript(code)
 		self_table=oldtable
@@ -652,19 +654,6 @@ function bit.replace(r,v,field,width)
 	local f,m=fieldargs(field,width)
 	return (r&~(m<<f))|((v&m)<< f)
 end
-
-type=(function()
-	local oldf=type
-	return function(o)
-		local tp=oldf(o)
-		if tp~="userdata" then return tp
-		elseif o.GetOriginalCode then return "Card"
-		elseif o.KeepAlive then return "Group"
-		elseif o.SetLabelObject then return "Effect"
-		else return "userdata"
-		end
-	end
-end)()
 
 function Auxiliary.Stringid(code,id)
 	return (id&0xfffff)|code<<20
@@ -2190,6 +2179,7 @@ function Auxiliary.DefaultFieldReturnOp(rg)
 	select_field_return_cards(1-turn_p,g1)
 end
 
+Duel.LoadScript("debug_utility.lua")
 Duel.LoadScript("cards_specific_functions.lua")
 Duel.LoadScript("proc_fusion.lua")
 Duel.LoadScript("proc_fusion_spell.lua")

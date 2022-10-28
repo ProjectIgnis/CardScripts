@@ -1,11 +1,11 @@
 -- 相剣大邪－七星龍淵
--- Qixing Long Yuan, the Swordsoul Catastrophe
+-- Swordsoul Sinister Sovereign - Qixing Longyuan
 local s,id=GetID()
 function s.initial_effect(c)
 	--Synchro Summon
 	c:EnableReviveLimit()
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTunerEx(Card.IsRace,RACE_WYRM),1,99)
-	--Draw
+	--Draw 1 card when a Wyrm monster is Synchro Summoned
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DRAW)
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.drtg)
 	e1:SetOperation(s.drop)
 	c:RegisterEffect(e1)
-	--Banish monster
+	--Banish 1 monster and inflict 1200 Damage
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_REMOVE+CATEGORY_DAMAGE)
@@ -42,7 +42,7 @@ function s.initial_effect(c)
 	e2a:SetLabelObject(e2)
 	e2a:SetOperation(s.regop)
 	c:RegisterEffect(e2a)
-	--Banish Spell/Trap
+	--Banish Spell/Trap and inflict 1200 Damage
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_REMOVE+CATEGORY_DAMAGE)
@@ -99,7 +99,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tg=eg:Filter(s.filter,nil,tp)
 	if #tg>0 then
-		for tc in aux.Next(tg) do
+		for tc in tg:Iter() do
 			tc:RegisterFlagEffect(id,RESET_CHAIN,0,1)
 		end
 		local g=e:GetLabelObject():GetLabelObject()
@@ -112,7 +112,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 end
 --banish spell/trap
 function s.rmcon2(e,tp,eg,ep,ev,re,r,rp)
-	return ep==1-tp and re:IsActiveType(TYPE_SPELL+TYPE_TRAP) 
+	return ep==1-tp and re:IsSpellTrapEffect() and re:GetHandler():IsRelateToEffect(re)
 end
 function s.rmtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return re:GetHandler():IsAbleToRemove() end

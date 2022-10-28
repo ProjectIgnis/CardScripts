@@ -1,5 +1,5 @@
 --幻獣機テザーウルフ
--- Mecha Phantom Beast Tetherwolf
+--Mecha Phantom Beast Tetherwolf
 local s,id=GetID()
 function s.initial_effect(c)
 	--level
@@ -47,7 +47,6 @@ function s.initial_effect(c)
 end
 s.listed_names={TOKEN_MECHA_PHANTOM_BEAST}
 function s.lvval(e,c)
-	local tp=c:GetControler()
 	return Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsCode,TOKEN_MECHA_PHANTOM_BEAST),c:GetControler(),LOCATION_MZONE,0,nil):GetSum(Card.GetLevel)
 end
 function s.indcon(e)

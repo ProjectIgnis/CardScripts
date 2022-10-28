@@ -22,7 +22,7 @@ function s.spfilter(c,e,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local sg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)
-	if chk==0 then return #sg>0 and Duel.GetMZoneCount(sg,c)>=#sg
+	if chk==0 then return #sg>0 and Duel.GetMZoneCount(tp,sg)>=#sg
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,#sg,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end

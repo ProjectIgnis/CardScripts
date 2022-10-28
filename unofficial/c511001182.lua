@@ -22,7 +22,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.xyzfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(SET_GALAXY_EYES) and and c:GetOverlayCount()>0
+	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(SET_GALAXY_EYES) and c:GetOverlayCount()>0
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_MZONE,0,1,nil) end

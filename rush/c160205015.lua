@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.thfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_FIEND) and c:IsType(TYPE_MAXIMUM) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsRace(RACE_FIEND) and c:IsType(TYPE_MAXIMUM) and c:IsAbleToHand() and not c:IsMaximumModeSide()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_MZONE,0,1,nil) end
@@ -25,6 +25,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_MZONE,0,1,2,nil)
 	if #g>0 then
+		g=g:AddMaximumCheck()
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end

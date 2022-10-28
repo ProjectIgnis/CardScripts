@@ -22,16 +22,19 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFacedown,tp,0,LOCATION_ONFIELD,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFacedown,tp,0,LOCATION_SZONE,1,nil) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--effect
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEDOWN)
 	local g=Duel.SelectMatchingCard(tp,Card.IsFacedown,tp,0,LOCATION_SZONE,1,2,nil)
-	if #g>0 then
-		Duel.ConfirmCards(tp,g)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-		local sg=g:Select(tp,1,1,nil)
-		if #sg>0 and Duel.Destroy(sg,REASON_EFFECT)>0 and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_CAN_D),tp,LOCATION_MZONE,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+	if #g==0 then return end
+	Duel.ConfirmCards(tp,g)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+	local sg=g:Select(tp,1,1,nil)
+	if #sg>0 then
+		Duel.HintSelection(sg,true)
+		if Duel.Destroy(sg,REASON_EFFECT)>0 and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_CAN_D),tp,LOCATION_MZONE,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.Recover(tp,1000,REASON_EFFECT)
 		end
 	end

@@ -1,6 +1,5 @@
 --天の冥福
 --Heavenly Rest
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 level 1 normal monster from GY
@@ -8,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_POSITION+CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_DESTROYED)
-	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
@@ -29,8 +28,8 @@ function s.posfilter(c)
 	return c:IsFaceup() and c:IsCanTurnSet() and c:IsCanChangePositionRush()
 end
 function s.filter2(c,tp)
-	return c:GetReasonPlayer()==1-tp and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
-		and (c:IsReason(REASON_EFFECT) or (c:IsReason(REASON_BATTLE) and Duel.GetAttacker():IsControler(1-tp))) and c:IsLevel(10)
+	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
+		and c:GetPreviousLevelOnField()==10 and c:GetReasonPlayer()==1-tp and c:IsReason(REASON_EFFECT+REASON_BATTLE)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
@@ -44,7 +43,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local dg=Duel.GetMatchingGroup(Card.IsFacedown,tp,0,LOCATION_ONFIELD,nil)
 		if #dg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 			local sg=dg:Select(tp,1,1,nil)
-			Duel.HintSelection(sg)
+			Duel.HintSelection(sg,true)
 			Duel.Destroy(sg,REASON_EFFECT)
 		end
 	end

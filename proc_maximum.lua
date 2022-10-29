@@ -375,20 +375,23 @@ function Card.RegisterEffectRush(c,eff)
 	end
 end
 -- summon only in attack
+local function summon_pos_target(e,c)
+	return c:IsSummonType(SUMMON_TYPE_MAXIMUM) and c:IsLocation(LOCATION_HAND)
+end
 local function initial_effect()
 	local e1=Effect.GlobalEffect()
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_FORCE_SPSUMMON_POSITION)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,1)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSummonType,SUMMON_TYPE_MAXIMUM))
+	e1:SetTarget(summon_pos_target)
 	e1:SetValue(POS_FACEUP_ATTACK)
 	Duel.RegisterEffect(e1,0)
 	local e2=Effect.GlobalEffect()
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_FORCE_MZONE)
 	e2:SetTargetRange(0xff,0xff)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSummonType,SUMMON_TYPE_MAXIMUM))
+	e2:SetTarget(summon_pos_target)
 	e2:SetValue(function(e,c)
 					if c:IsMaximumModeCenter() then
 						return 0x4

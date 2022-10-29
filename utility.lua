@@ -516,11 +516,11 @@ function Card.IsBattleDestroyed(c)
 end
 
 function Card.IsInMainMZone(c,tp)
-	return c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5 and (not tp or c:IsControler(tp))
+	return c:IsLocation(LOCATION_MMZONE) and (not tp or c:IsControler(tp))
 end
 
 function Card.IsInExtraMZone(c,tp)
-	return c:IsLocation(LOCATION_MZONE) and c:GetSequence()>4 and (not tp or c:IsControler(tp))
+	return c:IsLocation(LOCATION_EMZONE) and (not tp or c:IsControler(tp))
 end
 
 function Card.AnnounceAnotherAttribute(c,tp)

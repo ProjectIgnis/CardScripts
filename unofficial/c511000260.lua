@@ -49,10 +49,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
-	local seq=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_SEQUENCE)
-	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.GetAttacker()==e:GetHandler()
-		and ep~=tp and loc==LOCATION_SZONE and seq<5 and Duel.IsChainNegatable(ev)
+	local c=e:GetHandler()
+	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION_SYMBOLIC)
+	return ep==1-tp and loc==LOCATION_STZONE and not c:IsStatus(STATUS_BATTLE_DESTROYED)
+		and c==Duel.GetAttacker() and Duel.IsChainNegatable(ev)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

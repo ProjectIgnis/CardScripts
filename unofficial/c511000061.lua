@@ -6,10 +6,10 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_GRAVE)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET,EFFECT_FLAG2_FORCE_ACTIVATE_LOCATION)
+	e1:SetValue(LOCATION_SZONE)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
-	e1:SetValue(LOCATION_SZONE)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x4B}

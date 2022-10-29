@@ -333,6 +333,7 @@ EFFECT_FLAG_IMMEDIATELY_APPLY   = 0x80000000
 EFFECT_FLAG2_CONTINUOUS_EQUIP   = 0x0001
 EFFECT_FLAG2_COF                = 0x0002
 EFFECT_FLAG2_CHECK_SIMULTANEOUS = 0x0004 --the effect shouldn't trigger if the card was sent in the triggering location at the same time of the event that triggered it
+EFFECT_FLAG2_FORCE_ACTIVATE_LOCATION = 0x40000000
 EFFECT_FLAG2_MAJESTIC_MUST_COPY = 0x80000000
 --Effect codes
 EFFECT_IMMUNE_EFFECT                = 1

@@ -1,4 +1,5 @@
 --禁断のトラペゾヘドロン
+--Forbidden Trapezohedron
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,35 +12,31 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.cfilter(c,tpe)
-	return c:IsFaceup() and c:IsType(tpe)
-end
+s.listed_series={SET_OUTER_ENTITY,SET_ELDER_ENTITY,SET_OLD_ENTITY}
 function s.filter(c,e,tp,cat)
 	return c:IsSetCard(cat) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		local flag=0
-		if Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil,TYPE_FUSION) then flag=flag+1 end
-		if Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil,TYPE_SYNCHRO) then flag=flag+2 end
-		if Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil,TYPE_XYZ) then flag=flag+4 end
+		local flag=Duel.GetFieldGroup(tp,LOCATION_MZONE,0):GetBitwiseOr(function(c)return c:GetType()&(TYPE_FUSION|TYPE_SYNCHRO|TYPE_XYZ)end)
 		e:SetLabel(flag)
-		if flag==3 then
-			return e:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,0x10b7)
-		elseif flag==6 then
-			return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,0x20b7)
-		elseif flag==5 then
-			return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,0x40b7)
-		else return false end
+		if flag==(TYPE_FUSION|TYPE_SYNCHRO) then
+			return e:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,SET_OUTER_ENTITY)
+		elseif flag==(TYPE_SYNCHRO|TYPE_XYZ) then
+			return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,SET_ELDER_ENTITY)
+		elseif flag==(TYPE_FUSION|TYPE_XYZ) then
+			return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,SET_OLD_ENTITY)
+		else
+			return false
+		end
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local flag=e:GetLabel()
-	if flag==3 then
+	if flag==(TYPE_FUSION|TYPE_SYNCHRO) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,0x10b7)
-		local sc=g:GetFirst()
+		local sc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,SET_OUTER_ENTITY):GetFirst()
 		if sc then
 			Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)
 			local c=e:GetHandler()
@@ -48,15 +45,15 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				Duel.Overlay(sc,c)
 			end
 		end
-	elseif flag==6 then
+	elseif flag==(TYPE_SYNCHRO|TYPE_XYZ) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,0x20b7)
+		local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,SET_ELDER_ENTITY)
 		if #g>0 then
 			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 		end
-	else
+	elseif flag==(TYPE_FUSION|TYPE_XYZ) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,0x40b7)
+		local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,SET_OLD_ENTITY)
 		if #g>0 then
 			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 		end

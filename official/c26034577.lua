@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	Infernoid.RegisterSummonProcedure(c,1)
-	--Return 1 monster to the hand
+	--Return 1 face-up card to the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	--Tribute 1 monster and banish
+	--Banish 1 card from the opponent's GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_REMOVE)
@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCountLimit(1)
-	e2:SetCondition(s.rmcon)
+	e2:SetCondition(function(_,tp) return Duel.IsTurnPlayer(1-tp) end)
 	e2:SetCost(s.rmcost)
 	e2:SetTarget(s.rmtg)
 	e2:SetOperation(s.rmop)
@@ -46,9 +46,6 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
-end
-function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsTurnPlayer(tp)
 end
 function s.rmfilter(c,e)
 	return c:IsAbleToRemove() and aux.SpElimFilter(c) and (not e or c:IsCanBeEffectTarget(e))

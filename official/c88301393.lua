@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	Infernoid.RegisterSummonProcedure(c,2)
-	--chain attack
+	--Make a second attack after destroying a monster by battle
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.atcon)
 	e1:SetOperation(s.atop)
 	c:RegisterEffect(e1)
-	--Tribute 1 monster and banish
+	--Banish 1 card from the opponent's GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_REMOVE)

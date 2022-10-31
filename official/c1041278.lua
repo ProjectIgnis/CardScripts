@@ -1,9 +1,9 @@
--- 分かつ烙印
--- Branded Expulsion
--- Scripted by Hatter
+--分かつ烙印
+--Branded Expulsion
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon 2 non-Fusion monsters
+	--Special Summon 2 non-Fusion monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -32,7 +32,7 @@ function s.rescon(ag,g1,g2)
 		local ft2=Duel.GetLocationCount(1-tp,LOCATION_MZONE)
 		local res1=ft1>=2 and #(ag&sg)>=2
 		local res2=ft1>0 and ft2>0 and #(sg&g1)>0 and #(sg&g2)>0
-		return res1 or res2,not (res1 or res2)
+		return res1 or res2
 	end
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

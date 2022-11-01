@@ -1,45 +1,49 @@
 --プログレオ
 --Progleo
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--Link summon procedure
+	--Link Summon procedure
 	Link.AddProcedure(c,aux.NOT(aux.FilterBoolFunctionEx(Card.IsType,TYPE_TOKEN)),2)
-	--Special summon 1 link monster from either GY
+	--Special Summon 1 Link Monster from either GY
 	local e1=Effect.CreateEffect(c)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCost(s.cost)
-	e1:SetTarget(s.target)
-	e1:SetOperation(s.operation)
+	e1:SetCountLimit(1,id)
+	e1:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK) end)
+	e1:SetCost(s.spcost)
+	e1:SetTarget(s.sptg)
+	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-function s.cfilter(c,g,tp,mc)
-	return c:IsAbleToRemoveAsCost() and g:IsContains(c) and Duel.GetMZoneCount(tp,Group.FromCards(c,mc))>0
+function s.cfilter(c,tp,mc)
+	return c:IsAbleToRemoveAsCost() and Duel.GetMZoneCount(tp,Group.FromCards(c,mc))>0
 end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local lg=c:GetLinkedGroup()
-	if chk==0 then return c:IsAbleToRemoveAsCost() and #lg > 0 and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil,lg,tp,c) end
-	local bg=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE,0,1,1,nil,lg,tp,c)+c
-	Duel.Remove(bg,POS_FACEUP,REASON_COST)
+	local lg=c:GetLinkedGroup():Match(s.cfilter,nil,tp,c)
+	if chk==0 then return c:IsAbleToRemoveAsCost() and #lg>0 end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	local g=lg:Select(tp,1,1,nil,tp,c)+c
+	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
-function s.filter(c,e,tp)
+function s.spfilter(c,e,tp)
 	return c:IsLinkMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc,e,tp) end
-	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,e,tp) end
-	local tc=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,1,nil,e,tp)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,tc,1,tp,LOCATION_GRAVE)
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and s.spfilter(chkc,e,tp) end
+	if chk==0 then return Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,e,tp) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local g=Duel.SelectTarget(tp,s.spfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,1,nil,e,tp)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,tp,LOCATION_GRAVE)
 end
-function s.operation(e,tp,eg,ep,ev,re,r,rp)
+function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
+	if tc:IsRelateToEffect(e) and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
 		--Banish it if it leaves the field
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetDescription(3300)

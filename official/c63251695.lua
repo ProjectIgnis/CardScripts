@@ -1,18 +1,19 @@
 --ダイナミスト・レックス
+--Dinomist Rex
 local s,id=GetID()
 function s.initial_effect(c)
-	--pendulum summon
+	--Pendulum Summon
 	Pendulum.AddProcedure(c)
-	--
+	--Negate an activated effect that targets 1 "Dinomist" card
 	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_DISABLE)
+	e2:SetCategory(CATEGORY_DISABLE+CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_CHAIN_SOLVING)
 	e2:SetRange(LOCATION_PZONE)
 	e2:SetCondition(s.negcon)
 	e2:SetOperation(s.negop)
 	c:RegisterEffect(e2)
-	--
+	--Tribute 1 "Dinomist" and apply 1 effect
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_TODECK)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -23,9 +24,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.effop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xd8}
+s.listed_series={SET_DINOMIST}
 function s.tfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0xd8) and c:IsControler(tp) and c:IsLocation(LOCATION_ONFIELD)
+	return c:IsFaceup() and c:IsSetCard(SET_DINOMIST) and c:IsControler(tp) and c:IsLocation(LOCATION_ONFIELD)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
@@ -45,31 +46,26 @@ function s.effcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler()==Duel.GetAttacker() and e:GetHandler():IsRelateToBattle()
 end
 function s.effcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,e:GetHandler(),0xd8) end
-	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,nil,e:GetHandler(),0xd8)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,e:GetHandler(),SET_DINOMIST) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
+	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,nil,e:GetHandler(),SET_DINOMIST)
 	Duel.Release(g,REASON_COST)
 end
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=e:GetHandler():CanChainAttack(0,true)
 	local b2=Duel.IsExistingMatchingCard(Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD+LOCATION_HAND,1,nil)
 	if chk==0 then return b1 or b2 end
-	local opt=0
-	if b1 and b2 then
-		opt=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
-	elseif b1 then
-		opt=Duel.SelectOption(tp,aux.Stringid(id,1))
-	else
-		opt=Duel.SelectOption(tp,aux.Stringid(id,2))+1
-	end
+	local opt=Duel.SelectEffect(tp,
+		{b1,aux.Stringid(id,1)},
+		{b2,aux.Stringid(id,2)})
 	e:SetLabel(opt)
-	if opt==1 then
+	if opt==2 then
 		Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,1-tp,LOCATION_ONFIELD+LOCATION_HAND)
 	end
 end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if e:GetLabel()==0 then
-		if not c:IsRelateToBattle() then return end
+	if e:GetLabel()==1 and c:IsRelateToBattle() then
 		Duel.ChainAttack()
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -85,18 +81,14 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	else
 		local g1=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,0,LOCATION_HAND,nil)
 		local g2=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD,nil)
-		local opt=0
-		if #g1>0 and #g2>0 then
-			opt=Duel.SelectOption(tp,aux.Stringid(id,3),aux.Stringid(id,4))
-		elseif #g1>0 then
-			opt=0
-		elseif #g2>0 then
-			opt=1
-		else
-			return
-		end
+		local b1=#g1>0
+		local b2=#g2>0
+		if not (b1 or b2) then return end
+		local opt=Duel.SelectEffect(tp,
+			{b1,aux.Stringid(id,3)},
+			{b2,aux.Stringid(id,4)})
 		local sg=nil
-		if opt==0 then
+		if opt==1 then
 			sg=g1:RandomSelect(tp,1)
 		else
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)

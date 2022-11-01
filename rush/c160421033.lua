@@ -29,7 +29,7 @@ function s.posfilter(c)
 end
 function s.filter2(c,tp)
 	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
-		and c:GetPreviousLevelOnField()==10 and c:GetReasonPlayer()==1-tp and c:IsReason(REASON_EFFECT+REASON_BATTLE)
+		and c:GetOriginalLevel()==10 and c:GetReasonPlayer()==1-tp and c:IsReason(REASON_EFFECT+REASON_BATTLE)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Effect

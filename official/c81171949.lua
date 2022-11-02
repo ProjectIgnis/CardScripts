@@ -33,7 +33,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==1-e:GetHandler():GetPreviousControler() and r&REASON_EFFECT~=0 and r&REASON_RETURN==0
+	local c=e:GetHandler()
+	local prev=c:GetPreviousControler()
+	return prev==c:GetControler() and rp==1-prev and r&REASON_EFFECT~=0 and r&REASON_RETURN==0
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

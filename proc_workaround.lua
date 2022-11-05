@@ -1,22 +1,4 @@
 --Utilities to be added to the core
-Duel.Overlay=(function()
-	local oldf=Duel.Overlay
-	return function(c,g,autosend)
-		if autosend then
-			local sg
-			if type(g)=="Group" then
-				sg=Group.CreateGroup()
-				for tc in g:Iter() do
-					sg:Merge(tc:GetOverlayGroup())
-				end
-			else
-				sg=g:GetOverlayGroup()
-			end
-			Duel.SendtoGrave(sg,REASON_RULE)
-		end
-		return oldf(c,g)
-	end
-end)()
 --Raise the EVENT_TOHAND_CONFIRM event when a card in the hand is revealed (used by "Puppet King" and "Puppet Queen")
 Duel.ConfirmCards=(function()
 	local oldfunc=Duel.ConfirmCards
@@ -29,8 +11,6 @@ Duel.ConfirmCards=(function()
 		return res
 	end
 end)()
-
-Duel.AnnounceNumberRange=Duel.AnnounceLevel
 
 --Remove counter from only 1 card if it is the only card with counter
 local p_rem=Duel.RemoveCounter

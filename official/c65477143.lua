@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCondition(function(e) return e:GetHandler():IsPreviousLocation(LOCATION_PZONE) end)
+	e2:SetCondition(function(e) return e:GetHandler():IsSummonLocation(LOCATION_PZONE) end)
 	e2:SetOperation(s.revop)
 	c:RegisterEffect(e2)
 	-- Shuffle 1 "Abyss Script" Spell to the Deck

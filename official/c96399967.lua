@@ -1,5 +1,5 @@
 --機巧鳥－常世宇受賣長鳴
---Gizmek Naganaki
+--Gizmek Naganaki, the Sunrise Signaler
 --scripted by Rundas
 local s,id=GetID()
 function s.initial_effect(c)
@@ -27,18 +27,18 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 --Tribute + Special Summon
-function s.relfilter(c,e,tp,ft)
+function s.relfilter(c,e,tp)
 	return c:IsRace(RACE_MACHINE) and c:IsDefense(c:GetAttack())
-		and (ft>0 or c:IsInMainMZone(tp)) and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetLevel())
+		and Duel.GetMZoneCount(c,tp)>0 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetLevel())
 end
 function s.spfilter(c,e,tp,lv)
 	return c:IsRace(RACE_MACHINE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:GetLevel()<lv and c:IsDefense(c:GetAttack())
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if chk==0 then return ft>-1 and Duel.CheckReleaseGroupCost(tp,s.relfilter,1,false,nil,nil,e,tp,ft) end
+	if chk==0 then return ft>-1 and Duel.CheckReleaseGroupCost(tp,s.relfilter,1,false,nil,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g=Duel.SelectReleaseGroupCost(tp,s.relfilter,1,1,false,nil,nil,e,tp,ft)
+	local g=Duel.SelectReleaseGroupCost(tp,s.relfilter,1,1,false,nil,nil,e,tp)
 	e:SetLabel(g:GetFirst():GetLevel())
 	Duel.Release(g,REASON_COST)
 end

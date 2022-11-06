@@ -1,5 +1,5 @@
 --喜劇のデスピアン
---Despian of Comedy
+--Despian Comedy
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -30,9 +30,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x166}
+s.listed_series={SET_DESPIA}
 function s.disfilter(c,tp)
-	return c:IsSetCard(0x166) and c:IsLocation(LOCATION_ONFIELD) and c:IsFaceup() and c:IsControler(tp)
+	return c:IsSetCard(SET_DESPIA) and c:IsLocation(LOCATION_ONFIELD) and c:IsFaceup() and c:IsControler(tp)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if not (rp==1-tp and re:IsHasProperty(EFFECT_FLAG_CARD_TARGET)) then return false end
@@ -51,13 +51,12 @@ end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateEffect(ev)
 end
-function s.cfilter(c,ft,tp)
-	return c:IsType(TYPE_FUSION) and (ft>0 or c:IsInMainMZone(tp))
+function s.cfilter(c,tp)
+	return c:IsType(TYPE_FUSION) and Duel.GetMZoneCount(tp,c)>0
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if chk==0 then return ft>-1 and Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil,ft,tp) end
-	local g=Duel.SelectReleaseGroupCost(tp,s.cfilter,1,1,false,nil,nil,ft,tp)
+	if chk==0 then return ft>-1 and Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil,tp) end
+	local g=Duel.SelectReleaseGroupCost(tp,s.cfilter,1,1,false,nil,nil,tp)
 	Duel.Release(g,REASON_COST)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

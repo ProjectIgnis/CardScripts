@@ -1,6 +1,5 @@
 --閃刀機－ホーネットビット
 --Sky Striker Mecha - Hornet Drones
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 token to your field
@@ -16,7 +15,7 @@ function s.initial_effect(c)
 end
 s.listed_names={52340445}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(Card.IsInMainMZone,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.GetFieldGroupCount(tp,LOCATION_MMZONE,0)==0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local atk=0
@@ -24,7 +23,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		atk=1500
 	end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x1115,TYPES_TOKEN,atk,atk,1,RACE_WARRIOR,ATTRIBUTE_DARK,POS_FACEUP_DEFENSE) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,SET_SKY_STRIKER_ACE,TYPES_TOKEN,atk,atk,1,RACE_WARRIOR,ATTRIBUTE_DARK,POS_FACEUP_DEFENSE) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 end
@@ -34,7 +33,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		atk=1500
 	end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
-		or not Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x1115,TYPES_TOKEN,atk,atk,1,RACE_WARRIOR,ATTRIBUTE_DARK,POS_FACEUP_DEFENSE) then return end
+		or not Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,SET_SKY_STRIKER_ACE,TYPES_TOKEN,atk,atk,1,RACE_WARRIOR,ATTRIBUTE_DARK,POS_FACEUP_DEFENSE) then return end
 	local token=Duel.CreateToken(tp,id+1)
 	if Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP_DEFENSE) then
 		--Cannot be tributed

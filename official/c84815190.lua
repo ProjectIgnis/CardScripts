@@ -1,5 +1,5 @@
 --フルール・ド・バロネス 
---Baroness de Fleur
+--Baronne de Fleur
 local s,id=GetID()
 function s.initial_effect(c)
 	--Synchro Summon
@@ -77,8 +77,7 @@ function s.spfilter(c,e,tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if c:IsInMainMZone() then ft=ft+1 end
+	local ft=Duel.GetMZoneCount(tp,c)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) and chkc~=c end
 	if chk==0 then return ft>0 and c:IsAbleToExtra()
 		and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE,0,1,c,e,tp) end

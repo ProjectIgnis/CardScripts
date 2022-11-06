@@ -1,7 +1,6 @@
---
+--大騎甲虫インヴィンシブル・アトラス
 --Giant Beetrooper Invincible Atlas
 --Scripted by DyXel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Link Summon.
@@ -44,40 +43,33 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spatkop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x172}
+s.listed_series={SET_BEETROOPER}
 function s.indcon(e)
 	local c=e:GetHandler()
 	return c:IsSummonType(SUMMON_TYPE_LINK) and c:IsAttackBelow(3000)
 end
-function s.cfilter(c,tp,tc,ft,spcheck)
-	return c:IsRace(RACE_INSECT) and (c~=tc or (spcheck and (ft>0 or c:IsInMainMZone(tp))))
+function s.cfilter(c,tp,tc,spcheck)
+	return c:IsRace(RACE_INSECT) and (c~=tc or (spcheck and Duel.GetMZoneCount(tp,c)>0))
 end
 function s.spatkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local spcheck=Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil,tp,c,ft,spcheck) end
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil,tp,c,spcheck) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g=Duel.SelectReleaseGroupCost(tp,s.cfilter,1,1,false,nil,nil,tp,c,ft,spcheck)
+	local g=Duel.SelectReleaseGroupCost(tp,s.cfilter,1,1,false,nil,nil,tp,c,spcheck)
 	Duel.Release(g,REASON_COST)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x172) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_BEETROOPER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spatktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local atk=e:GetHandler():IsLocation(LOCATION_MZONE)
 	local spcheck=Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp)
-	local sel=-1
-	if atk and spcheck then
-		sel=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))
-	elseif spcheck then
-		sel=Duel.SelectOption(tp,aux.Stringid(id,0))
-	elseif atk then
-		sel=Duel.SelectOption(tp,aux.Stringid(id,1))+1
-	end
+	local sel=Duel.SelectEffect(tp,{atk,aux.Stringid(id,0)},{spcheck,aux.Stringid(id,1)})
 	e:SetLabel(sel)
-	if sel==0 then
+	if sel==1 then
 		e:SetCategory(CATEGORY_SPECIAL_SUMMON)
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 	else
@@ -86,7 +78,7 @@ function s.spatktg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spatkop(e,tp,eg,ep,ev,re,r,rp)
 	local sel=e:GetLabel()
-	if sel==0 then
+	if sel==1 then
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)

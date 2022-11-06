@@ -37,16 +37,16 @@ function s.initial_effect(c)
 	e3:SetOperation(s.drop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x137}
-s.listed_names={}
+s.listed_series={SET_ANCIENT_WARRIORS}
+s.listed_names={id}
 function s.atcon(e)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x137),e:GetOwnerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_ANCIENT_WARRIORS),e:GetOwnerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)
 end
 function s.costfilter(c,tp)
-	return c:IsAbleToGraveAsCost() and (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 or c:IsInMainMZone(tp))
+	return c:IsAbleToGraveAsCost() and Duel.GetMZoneCount(tp,c)>0
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,nil,tp) end
@@ -55,7 +55,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x137) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
+	return c:IsSetCard(SET_ANCIENT_WARRIORS) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp) end
@@ -72,8 +72,8 @@ end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local b=Duel.GetAttackTarget()
-	return (a:IsControler(tp) and a~=e:GetHandler() and a:IsSetCard(0x137))
-		or (b and b:IsControler(tp) and b:IsFaceup() and b~=e:GetHandler() and b:IsSetCard(0x137))
+	return (a:IsControler(tp) and a~=e:GetHandler() and a:IsSetCard(SET_ANCIENT_WARRIORS))
+		or (b and b:IsControler(tp) and b:IsFaceup() and b~=e:GetHandler() and b:IsSetCard(SET_ANCIENT_WARRIORS))
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end

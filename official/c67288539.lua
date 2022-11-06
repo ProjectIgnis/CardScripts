@@ -43,7 +43,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x170}
+s.listed_series={SET_TOPOLOGIC}
 --indestructible
 function s.indfilter(c,cc)
 	return c:IsFaceup() and c:IsType(TYPE_LINK) and c:GetLinkedGroup():IsContains(cc)
@@ -78,9 +78,9 @@ function s.rmfilter(c,e,tp)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA+LOCATION_GRAVE,0,1,nil,e,tp,c)
 end
 function s.spfilter(c,e,tp,rmc)
-	return c:IsSetCard(0x170) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_TOPOLOGIC) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and ((c:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp,rmc,c)>0)
-		or (c:IsLocation(LOCATION_GRAVE) and (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 or rmc:IsInMainMZone(tp))))
+		or (c:IsLocation(LOCATION_GRAVE) and Duel.GetMZoneCount(tp,rmc)>0))
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.rmfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,e,tp) end

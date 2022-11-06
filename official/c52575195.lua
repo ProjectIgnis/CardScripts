@@ -39,7 +39,7 @@ function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local tc=e:GetLabelObject()
 	local label=e:GetLabel()
-	if chk==0 then return tc:IsAbleToRemove() and (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 or c:IsInMainMZone())
+	if chk==0 then return tc:IsAbleToRemove() and Duel.GetMZoneCount(tp,c)>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and (label==0 or (label==1 and not c:IsStatus(STATUS_CHAINING))) end
 	Duel.SetTargetCard(tc)

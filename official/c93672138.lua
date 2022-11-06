@@ -31,23 +31,23 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tgop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x153,0x154,0x155}
+s.listed_series={SET_KI_SIKIL,SET_LIL_LA,SET_EVIL_TWIN}
 function s.lcheck(g,lc,sumtype,tp)
-	return g:IsExists(Card.IsSetCard,1,nil,0x155,lc,sumtype,tp)
+	return g:IsExists(Card.IsSetCard,1,nil,SET_EVIL_TWIN,lc,sumtype,tp)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.spfilter(c,e,tp)
-	return (c:IsSetCard(0x153) or c:IsSetCard(0x154)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard({SET_KI_SIKIL,SET_LIL_LA}) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sprescon(sg)
-	return sg:FilterCount(Card.IsSetCard,nil,0x153)<2 and sg:FilterCount(Card.IsSetCard,nil,0x154)<2
+	return sg:FilterCount(Card.IsSetCard,nil,SET_KI_SIKIL)<2 and sg:FilterCount(Card.IsSetCard,nil,SET_LIL_LA)<2
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		return (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 or e:GetHandler():IsInMainMZone())
+		return Duel.GetMZoneCount(tp,e:GetHandler())>0
 			and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
@@ -64,7 +64,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tgcostfilter(c,ct)
-	return c:IsSetCard(0x155) and c:IsAbleToGraveAsCost() and c:IsMonster()
+	return c:IsSetCard(SET_EVIL_TWIN) and c:IsAbleToGraveAsCost() and c:IsMonster()
 		and (not c:IsLocation(LOCATION_MZONE) or (c:IsFaceup() and ct>1))
 end
 function s.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -1,12 +1,12 @@
 -- ヴァリアンツの聚－幻中
--- Valiants Assemble – Mamonaka
+-- Mamonaka the Vaylantz United
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	Pendulum.AddProcedure(c,false)
 	c:EnableReviveLimit()
 	-- 3 "Valiants" monsters
-	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x17e),3)
+	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_VAYLANTZ),3)
 	-- Special Summon self or move 1 "Valiants" monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -40,7 +40,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.penop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x17e}
+s.listed_series={SET_VAYLANTZ}
 function s.spmvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local sp=s.sptg(e,tp,eg,ep,ev,re,r,rp,0)
 	local mv=s.mvtg(e,tp,eg,ep,ev,re,r,rp,0)
@@ -74,24 +74,24 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.mvtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingTarget(Card.CheckAdjacent,tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(Card.CheckAdjacent,tp,LOCATION_MMZONE,0,1,nil) end
 end
 function s.mvop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELECT)
-	local tc=Duel.SelectMatchingCard(tp,Card.CheckAdjacent,tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,Card.CheckAdjacent,tp,LOCATION_MMZONE,0,1,1,nil):GetFirst()
 	if tc then 
 		tc:MoveAdjacent()
 	end
 end
 function s.plfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsInMainMZone()
+	return c:IsFaceup() and c:IsType(TYPE_EFFECT)
 end
 function s.pltg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(1-tp) and s.plfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.plfilter,tp,0,LOCATION_MZONE,1,nil) end
+	if chkc then return chkc:IsInMainMZone(1-tp) and s.plfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(s.plfilter,tp,0,LOCATION_MMZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local tc=Duel.SelectTarget(tp,s.plfilter,tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
+	local tc=Duel.SelectTarget(tp,s.plfilter,tp,0,LOCATION_MMZONE,1,1,nil):GetFirst()
 	local dc=Duel.GetFieldCard(1-tp,LOCATION_SZONE,tc:GetSequence())
 	if dc then
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,dc,1,0,0)

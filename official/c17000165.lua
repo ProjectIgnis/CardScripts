@@ -34,22 +34,21 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={TOKEN_REPTILIANNE}
-s.listed_series={0x3c}
-function s.desfilter(c,ft)
-	return c:IsFaceup() and c:IsAttack(0) and (ft>0 or c:IsInMainMZone())
+s.listed_series={SET_REPTILIANNE}
+function s.desfilter(c,tp)
+	return c:IsFaceup() and c:IsAttack(0) and Duel.GetMZoneCount(tp,c)>0
 end
 function s.spfilter(c,e,tp)
 	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsRace(RACE_REPTILE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if chk==0 then
-		return Duel.IsExistingTarget(s.desfilter,tp,LOCATION_MZONE,0,1,nil,ft)
+		return Duel.IsExistingTarget(s.desfilter,tp,LOCATION_MZONE,0,1,nil,tp)
 			and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g1=Duel.SelectTarget(tp,s.desfilter,tp,LOCATION_MZONE,0,1,1,nil,ft)
+	local g1=Duel.SelectTarget(tp,s.desfilter,tp,LOCATION_MZONE,0,1,1,nil,tp)
 	e:SetLabelObject(g1:GetFirst())
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g2=Duel.SelectTarget(tp,s.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
@@ -68,18 +67,17 @@ end
 function s.ctlcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and re:IsActiveType(TYPE_MONSTER)
 end
-function s.ctlfilter(c,ft)
-	return c:IsFaceup() and c:IsControlerCanBeChanged() and c:IsAttack(0) and (ft>0 or c:IsInMainMZone())
+function s.ctlfilter(c,tp)
+	return c:IsFaceup() and c:IsControlerCanBeChanged() and c:IsAttack(0) and Duel.GetMZoneCount(1-tp,c,tp)>0
 end
 function s.ctltg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local ft=Duel.GetLocationCount(1-tp,LOCATION_MZONE)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.ctlfilter(chkc,ft) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.ctlfilter(chkc,tp) end
 	if chk==0 then
-		return Duel.IsExistingTarget(s.ctlfilter,tp,0,LOCATION_MZONE,1,nil,ft)
+		return Duel.IsExistingTarget(s.ctlfilter,tp,0,LOCATION_MZONE,1,nil,tp)
 			and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_REPTILIANNE,0,TYPES_TOKEN,0,0,1,RACE_REPTILE,ATTRIBUTE_EARTH,POS_FACEUP,1-tp)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
-	local g=Duel.SelectTarget(tp,s.ctlfilter,tp,0,LOCATION_MZONE,1,1,nil,ft)
+	local g=Duel.SelectTarget(tp,s.ctlfilter,tp,0,LOCATION_MZONE,1,1,nil,tp)
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)

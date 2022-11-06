@@ -1,5 +1,5 @@
 --いろはもみじ
---Irohamomiji
+--Maple Maiden
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -74,14 +74,13 @@ function s.group(seq,tp)
 	return g
 end
 function s.gyfilter(c,tp)
-	if not c:IsInMainMZone() then return false end
 	return #(s.group(c:GetSequence(),1-tp))>0
 end
 function s.gytg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and s.gyfilter(chkc,tp) end
-	if chk==0 then return Duel.IsExistingTarget(s.gyfilter,tp,0,LOCATION_MZONE,1,nil,tp) end
+	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MMZONE) and s.gyfilter(chkc,tp) end
+	if chk==0 then return Duel.IsExistingTarget(s.gyfilter,tp,0,LOCATION_MMZONE,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	Duel.SelectTarget(tp,s.gyfilter,tp,0,LOCATION_MZONE,1,1,nil,tp)
+	Duel.SelectTarget(tp,s.gyfilter,tp,0,LOCATION_MMZONE,1,1,nil,tp)
 end
 function s.gyop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

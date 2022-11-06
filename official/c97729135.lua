@@ -1,5 +1,5 @@
 --にらみ合い
---Starring Contest
+--Staring Contest
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -15,39 +15,35 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e2:SetCondition(s.mvcon(0))
+	e2:SetCondition(s.mvcon(true))
 	e2:SetTarget(s.mvtg1)
 	e2:SetOperation(s.mvop1)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
 	e3:SetDescription(aux.Stringid(id,1))
-	e3:SetCondition(s.mvcon(1))
+	e3:SetCondition(s.mvcon(false))
 	e3:SetTarget(s.mvtg2)
 	e3:SetOperation(s.mvop2)
 	c:RegisterEffect(e3)
 end
-function s.getzone(p,eg)
-	local zone=0
-	for tc in aux.Next(eg:Filter(s.cfilter,nil,p)) do
-		zone=zone|tc:GetColumnZone(LOCATION_MZONE,0,0,1-p)
-	end
-	return zone
-end
 function s.cfilter(c,tp)
 	return c:IsSummonPlayer(tp) and c:IsInExtraMZone()
 end
-function s.mvcon(i)
+function s.mvcon(self)
 	return function(e,tp,eg,ep,ev,re,r,rp)
-		return eg:IsExists(s.cfilter,1,nil,tp-i*(2*tp - 1))
+		return eg:IsExists(s.cfilter,1,nil,self and tp or 1-tp)
 	end
+end
+function s.getzone(p,eg)
+	return eg:Filter(s.cfilter,nil,p):GetBitwiseOr(Card.GetColumnZone,LOCATION_MZONE,0,0,1-p)
 end
 function s.mvtg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local zone=s.getzone(tp,eg)
 	if chkc then return chkc:IsInMainMZone(1-tp) end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsInMainMZone,tp,0,LOCATION_MZONE,1,nil)
+	if chk==0 then return Duel.IsExistingTarget(nil,tp,0,LOCATION_MMZONE,1,nil)
 		and Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp,LOCATION_REASON_CONTROL,zone)>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
-	Duel.SelectTarget(tp,Card.IsInMainMZone,tp,0,LOCATION_MZONE,1,1,nil)
+	Duel.SelectTarget(tp,nil,tp,0,LOCATION_MMZONE,1,1,nil)
 end
 function s.mvop1(e,tp,eg,ep,ev,re,r,rp)
 	local zone=s.getzone(tp,eg)
@@ -60,10 +56,10 @@ end
 function s.mvtg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local zone=s.getzone(1-tp,eg)
 	if chkc then return chkc:IsInMainMZone(tp) end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsInMainMZone,tp,LOCATION_MZONE,0,1,nil)
+	if chk==0 then return Duel.IsExistingTarget(nil,tp,LOCATION_MMZONE,0,1,nil)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_CONTROL,zone)>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
-	Duel.SelectTarget(tp,Card.IsInMainMZone,tp,LOCATION_MZONE,0,1,1,nil)
+	Duel.SelectTarget(tp,nil,tp,LOCATION_MMZONE,0,1,1,nil)
 end
 function s.mvop2(e,tp,eg,ep,ev,re,r,rp)
 	local zone=s.getzone(1-tp,eg)

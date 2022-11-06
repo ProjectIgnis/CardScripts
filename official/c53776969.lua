@@ -1,5 +1,5 @@
 --スケアクロー・ライトハート
---Scareclaw Licht Heart
+--Scareclaw Light-Heart
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -29,9 +29,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_VISAS_STARFROST,56063182}
-s.listed_series={0x17c}
+s.listed_series={SET_SCARECLAW}
 function s.matfilter(c,sc,st,tp)
-	return c:IsInMainMZone(tp) and (c:IsSetCard(0x17c,sc,st,tp) or c:IsSummonCode(sc,st,tp,CARD_VISAS_STARFROST))
+	return c:IsInMainMZone(tp) and (c:IsSetCard(SET_SCARECLAW,sc,st,tp) or c:IsSummonCode(sc,st,tp,CARD_VISAS_STARFROST))
 end
 function s.thcon(e)
 	local c=e:GetHandler()

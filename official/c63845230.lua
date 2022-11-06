@@ -64,9 +64,6 @@ function s.spcon(e,c)
 	local rg=Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_EXTRA,0,c,POS_FACEDOWN)
 	return Duel.GetMZoneCount(tp,rg)>0 and #rg>4 and aux.SelectUnselectGroup(rg,e,tp,5,#rg,aux.ChkfMMZ(1),0)
 end
-function s.mmzfilter(c,tp)
-	return c:IsInMainMZone(tp) and c:IsAbleToRemoveAsCost(POS_FACEDOWN)
-end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,c)
 	local rg=Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_EXTRA,0,c,POS_FACEDOWN)
 	local g1=Group.CreateGroup()
@@ -74,7 +71,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,c)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	if ft<=0 then
-		g1=Duel.SelectMatchingCard(tp,s.mmzfilter,tp,LOCATION_MZONE,0,1,1,true,c,tp)
+		g1=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,LOCATION_MMZONE,0,1,1,true,c,POS_FACEDOWN)
 		if g1 and #g1>0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 			g2=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_EXTRA,0,4,#rg,true,Group.FromCards(c,g1:GetFirst()),POS_FACEDOWN)

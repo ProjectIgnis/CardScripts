@@ -1,5 +1,5 @@
 -- ヴァリアンツＤ－デューク
--- Valiants' Dominator - Duke
+-- Vaylantz Dominator Duke
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -39,9 +39,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={CARD_VALIANTS_KOENIGWISSEN}
-s.listed_series={0x17e}
+s.listed_series={SET_VAYLANTZ}
 function s.spconfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x17e) and c:IsAttribute(ATTRIBUTE_FIRE)
+	return c:IsFaceup() and c:IsSetCard(SET_VAYLANTZ) and c:IsAttribute(ATTRIBUTE_FIRE)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsEnvironment(CARD_VALIANTS_KOENIGWISSEN,PLAYER_ALL,LOCATION_FZONE)
@@ -89,13 +89,13 @@ function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsLocation(LOCATION_MZONE) and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function s.ctfilter(c)
-	return c:IsFaceup() and c:IsInMainMZone() and c:IsControlerCanBeChanged()
+	return c:IsFaceup() and c:IsControlerCanBeChanged()
 end
 function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.ctfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.ctfilter,tp,0,LOCATION_MZONE,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_MMZONE) and chkc:IsControler(1-tp) and s.ctfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(s.ctfilter,tp,0,LOCATION_MMZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
-	local g=Duel.SelectTarget(tp,s.ctfilter,tp,0,LOCATION_MZONE,1,1,nil)
+	local g=Duel.SelectTarget(tp,s.ctfilter,tp,0,LOCATION_MMZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,g,1,0,0)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
@@ -122,7 +122,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_ADD_SETCODE)
-		e3:SetValue(0x17e)
+		e3:SetValue(SET_VAYLANTZ)
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e3)
 	end

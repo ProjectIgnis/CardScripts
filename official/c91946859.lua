@@ -31,24 +31,23 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x2093}
+s.listed_series={SET_CYBER_ANGEL}
 function s.indfilter(e,c)
-	return c:IsRitualMonster() and c:IsSetCard(0x2093)
+	return c:IsRitualMonster() and c:IsSetCard(SET_CYBER_ANGEL)
 end
 function s.spcondition(e,tp,eg,ep,ev,re,r,rp)
 	return tp==ep and (r==REASON_BATTLE or tp~=rp)
 end
-function s.infilter(c,e,tp,ft)
-	return s.indfilter(e,c) and (ft>0 or c:IsInMainMZone(tp))
+function s.infilter(c,e,tp)
+	return s.indfilter(e,c) and Duel.GetMZoneCount(tp,c)>0
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,c,e,tp)
 end
 function s.spfilter(c,e,tp)
 	return s.indfilter(e,c) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,true,false)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.infilter,1,true,nil,nil,e,tp,ft) end
-	local g=Duel.SelectReleaseGroupCost(tp,s.infilter,1,1,true,nil,nil,e,tp,ft)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.infilter,1,true,nil,nil,e,tp) end
+	local g=Duel.SelectReleaseGroupCost(tp,s.infilter,1,1,true,nil,nil,e,tp)
 	Duel.Release(g,REASON_COST)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

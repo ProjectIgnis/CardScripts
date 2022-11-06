@@ -25,20 +25,20 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x14a}
+s.listed_series={SET_APPLIANCER}
 function s.filter(c)
-	return c:IsType(TYPE_LINK) and c:IsAbleToRemove() and c:IsSetCard(0x14a) and c:IsInMainMZone()
+	return c:IsType(TYPE_LINK) and c:IsAbleToRemove() and c:IsSetCard(SET_APPLIANCER)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MMZONE,0,nil)
 	if chk==0 then return #g>0 end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,LOCATION_MZONE)
 end
 function s.spfilter(c,e,tp)
-return c:IsType(TYPE_LINK) and c:IsSetCard(0x14a) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
+return c:IsType(TYPE_LINK) and c:IsSetCard(SET_APPLIANCER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g1=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)
+	local g1=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MMZONE,0,nil)
 	if #g1<1 then return end
 	if Duel.Remove(g1,POS_FACEUP,REASON_EFFECT)>0 then
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
@@ -55,7 +55,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.cfilter(c,tp)
-	return c:IsSetCard(0x14a) and c:IsAbleToRemoveAsCost() and c:IsSpellTrap()
+	return c:IsSetCard(SET_APPLIANCER) and c:IsAbleToRemoveAsCost() and c:IsSpellTrap()
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,e:GetHandler(),tp) end

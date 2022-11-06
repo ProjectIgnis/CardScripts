@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.ctop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x8e}
+s.listed_series={SET_VAMPIRE}
 function s.lcheck(g,lc,sumtype,tp)
 	return g:IsExists(Card.IsRace,1,nil,RACE_ZOMBIE,lc,sumtype,tp)
 end
@@ -62,15 +62,14 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
-function s.ctcostfilter(c,ft,tp)
-	return c:IsSetCard(0x8e) and (ft>0 or c:IsInMainMZone(tp))
+function s.ctcostfilter(c,tp)
+	return c:IsSetCard(SET_VAMPIRE) and Duel.GetMZoneCount(tp,c,tp,LOCATION_REASON_CONTROL)>0
 		and Duel.IsExistingTarget(Card.IsAbleToChangeControler,tp,0,LOCATION_MZONE,1,c)
 end
 function s.ctcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_CONTROL)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.ctcostfilter,1,false,nil,nil,ft,tp) end
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.ctcostfilter,1,false,nil,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g=Duel.SelectReleaseGroupCost(tp,s.ctcostfilter,1,1,false,nil,nil,ft,tp)
+	local g=Duel.SelectReleaseGroupCost(tp,s.ctcostfilter,1,1,false,nil,nil,tp)
 	Duel.Release(g,REASON_COST)
 end
 function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

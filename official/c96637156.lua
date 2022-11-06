@@ -1,5 +1,5 @@
 -- 席取－六双丸
--- Sekitori - Musomaru
+-- Musical Sumo Dice Games
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_DICE+CATEGORY_CONTROL+CATEGORY_TOGRAVE)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e1:SetCode(EVENT_PHASE+PHASE_BATTLE_START)
-	e1:SetRange(LOCATION_MZONE)
+	e1:SetRange(LOCATION_MMZONE)
 	e1:SetCountLimit(1)
 	e1:SetCondition(function(_,tp) return Duel.IsTurnPlayer(1-tp) end)
 	e1:SetTarget(s.mvtg)

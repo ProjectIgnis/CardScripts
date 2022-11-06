@@ -13,5 +13,5 @@ function s.initial_effect(c)
 end
 function s.hspcon(e,c)
 	if c==nil then return true end
-	return not Duel.IsExistingMatchingCard(Card.IsInMainMZone,0,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+	return Duel.GetFieldGroupCount(0,LOCATION_MMZONE,LOCATION_MMZONE)==0
 end

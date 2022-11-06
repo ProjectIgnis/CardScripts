@@ -1,5 +1,5 @@
 --VV-百識公国
---Valiants Vorld - Koenig Wissen
+--Vaylantz World - Konig Wissen
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -22,10 +22,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.plop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x17e}
+s.listed_series={SET_VAYLANTZ}
 s.listed_names={id}
 function s.filter(c)
-	return c:IsType(TYPE_FIELD) and c:IsSpell() and c:IsSetCard(0x17e) and not c:IsCode(id)
+	return c:IsType(TYPE_FIELD) and c:IsSpell() and c:IsSetCard(SET_VAYLANTZ) and not c:IsCode(id)
 		and not c:IsForbidden()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -37,7 +37,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil)
 	if #g>0 then
 		local tc=g:GetFirst()
-		local fc=Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)
+		local fc=Duel.GetFieldCard(1-tp,LOCATION_FZONE,0)
 		if fc then
 			Duel.SendtoGrave(fc,REASON_RULE)
 			Duel.BreakEffect()
@@ -49,15 +49,15 @@ function s.plcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_FZONE,LOCATION_FZONE)==2
 end
 function s.plfilter(c,tp)
-	if not (c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsInMainMZone()) then return false end
+	if not (c:IsFaceup() and c:IsType(TYPE_EFFECT)) then return false end
 	local cg=c:GetColumnGroup()
 	return #cg>0 and cg:IsExists(aux.AND(Card.IsControler,Card.IsMonster),1,nil,tp)
 end
 function s.pltg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(1-tp) and s.plfilter(chkc,tp) end
-	if chk==0 then return Duel.IsExistingTarget(s.plfilter,tp,0,LOCATION_MZONE,1,nil,tp) end
+	if chkc then return chkc:IsControler(1-tp) and c:IsLocation(LOCATION_MMZONE) and s.plfilter(chkc,tp) end
+	if chk==0 then return Duel.IsExistingTarget(s.plfilter,tp,0,LOCATION_MMZONE,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local tc=Duel.SelectTarget(tp,s.plfilter,tp,0,LOCATION_MZONE,1,1,nil,tp):GetFirst()
+	local tc=Duel.SelectTarget(tp,s.plfilter,tp,0,LOCATION_MMZONE,1,1,nil,tp):GetFirst()
 	local dc=Duel.GetFieldCard(1-tp,LOCATION_SZONE,tc:GetSequence())
 	if dc then
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,dc,1,0,0)

@@ -104,11 +104,11 @@ function s.rescon(sg,e,tp,mg)
 	return sg:GetClassCount(Card.GetControler)==1
 end
 function s.chtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(Card.IsInMainMZone,0,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local g=Duel.GetFieldGroup(tp,LOCATION_MMZONE,LOCATION_MMZONE)
 	if chk==0 then return aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0) end
 end
 function s.chop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(Card.IsInMainMZone,0,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local g=Duel.GetFieldGroup(tp,LOCATION_MMZONE,LOCATION_MMZONE)
 	if #g==0 then return end
 	local swap_g=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,aux.Stringid(id,5))
 	if #swap_g~=2 then return end

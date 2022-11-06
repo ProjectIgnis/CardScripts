@@ -20,16 +20,15 @@ end
 function s.filter(c,e,tp)
 	return c:IsRace(RACE_SPELLCASTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function s.rfilter(c,e,tp,ft)
+function s.rfilter(c,e,tp)
 	return c:IsReleasableByEffect() and c:IsCanBeEffectTarget(e)
-		and (ft>0 or c:IsInMainMZone(tp))
+		and Duel.GetMZoneCount(tp,c)>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.rfilter(chkc,e,tp,ft) end
-	if chk==0 then return ft>-1 and Duel.CheckReleaseGroup(tp,s.rfilter,1,nil,e,tp,ft)
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.rfilter(chkc,e,tp) end
+	if chk==0 then return Duel.CheckReleaseGroup(tp,s.rfilter,1,nil,e,tp)
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil,e,tp) end
-	local g=Duel.SelectReleaseGroup(tp,s.rfilter,1,1,nil,e,tp,ft)
+	local g=Duel.SelectReleaseGroup(tp,s.rfilter,1,1,nil,e,tp)
 	Duel.SetTargetCard(g)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
@@ -41,7 +40,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local sg=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 		if #sg==0 then return end
 		if Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)==0 then return end
-		local dg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+		local dg=Duel.GetFieldGroup(tp,LOCATION_MZONE,LOCATION_MZONE)
 		if #dg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 			local des=dg:Select(tp,1,1,nil)

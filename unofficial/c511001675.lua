@@ -38,7 +38,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(dice)
 		tc:RegisterEffect(e1)
 		local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND,0,nil,tc:GetLevel(),e,tp)
-		if tc:IsReleasableByEffect() and (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 or tc:IsInMainMZone()) and #g>0 and Duel.SelectYesNo(tp,aux.Stringid(102380,0)) then
+		if tc:IsReleasableByEffect() and Duel.GetMZoneCount(tp,tc)>0 and #g>0 and Duel.SelectYesNo(tp,aux.Stringid(102380,0)) then
 			Duel.Release(tc,REASON_EFFECT)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local sg=g:Select(tp,1,1,nil)

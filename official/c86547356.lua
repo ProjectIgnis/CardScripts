@@ -27,22 +27,21 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xb}
-function s.cfilter(c,e,tp,ft)
+s.listed_series={SET_INFERNITY}
+function s.cfilter(c,e,tp)
 	return c:IsAttribute(ATTRIBUTE_DARK) and c:HasLevel() and (c:IsControler(tp) or c:IsFaceup())
-		and (ft>0 or (c:IsInMainMZone() and c:IsControler(tp)))
+		and Duel.GetMZoneCount(tp,c)>0
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp,c:GetLevel(),c:GetCode())
 end
 function s.spfilter(c,e,tp,lvl,code)
-	return c:IsSetCard(0xb) and c:IsMonster() and c:IsLevel(lvl)
+	return c:IsSetCard(SET_INFERNITY) and c:IsMonster() and c:IsLevel(lvl)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(code) 
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil,e,tp,ft) end
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local tc=Duel.SelectReleaseGroupCost(tp,s.cfilter,1,1,false,nil,nil,e,tp,ft):GetFirst()
+	local tc=Duel.SelectReleaseGroupCost(tp,s.cfilter,1,1,false,nil,nil,e,tp):GetFirst()
 	e:SetLabel(tc:GetLevel(),tc:GetCode())
 	Duel.Release(tc,REASON_COST)
 end
@@ -75,7 +74,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummonComplete()
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xb) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_INFERNITY) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.thfilter(chkc) end

@@ -1,5 +1,5 @@
--- 白の聖女エクレシア 
--- Ecclesia, the Virtuous in White
+--白の聖女エクレシア 
+--Incredible Ecclesia, the Virtuous
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -47,7 +47,7 @@ function s.initial_effect(c)
 	end)
 end
 s.listed_names={CARD_ALBAZ}
-s.listed_series={0x16d}
+s.listed_series={SET_SWORDSOUL}
 -- global check
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	for tc in aux.Next(eg) do
@@ -71,10 +71,10 @@ function s.sscost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.ssfilter(c,e,tp)
-	return (c:IsCode(CARD_ALBAZ) or c:IsSetCard(0x16d)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return (c:IsCode(CARD_ALBAZ) or c:IsSetCard(SET_SWORDSOUL)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sstg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 or e:GetHandler():IsInMainMZone())
+	if chk==0 then return Duel.GetMZoneCount(tp,c)>0
 		and Duel.IsExistingMatchingCard(s.ssfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
 end

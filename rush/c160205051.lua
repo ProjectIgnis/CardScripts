@@ -5,7 +5,6 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--double tribute
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
@@ -28,7 +27,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,0,3,3,nil)
 	Duel.HintSelection(g)
-	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)
 	local c=e:GetHandler()
 	c:AddDoubleTribute(id,s.otfilter,s.eftg,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,FLAG_DOUBLE_TRIB_DRAGON+FLAG_DOUBLE_TRIB_LEVEL7)
 	--Prevent non-Dragon or High Dragon from attacking
@@ -46,4 +44,3 @@ end
 function s.eftg(e,c)
 	return c:IsRace(RACE_DRAGON) and c:IsLevel(7) and c:IsSummonableCard()
 end
-

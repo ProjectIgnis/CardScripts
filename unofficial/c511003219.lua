@@ -47,6 +47,7 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTACKTARGET)
 				local sc=Duel.SelectMatchingCard(tp,aux.TRUE,tp,LOCATION_MZONE,0,1,1,c):GetFirst()
 				Duel.ChangeAttackTarget(sc)
+				Duel.CalculateDamage(a,sc)
 			end
 		end
 	end

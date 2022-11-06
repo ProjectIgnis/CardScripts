@@ -29,7 +29,7 @@ end
 --Tribute + Special Summon
 function s.relfilter(c,e,tp)
 	return c:IsRace(RACE_MACHINE) and c:IsDefense(c:GetAttack())
-		and Duel.GetMZoneCount(c,tp)>0 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetLevel())
+		and Duel.GetMZoneCount(tp,c)>0 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetLevel())
 end
 function s.spfilter(c,e,tp,lv)
 	return c:IsRace(RACE_MACHINE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:GetLevel()<lv and c:IsDefense(c:GetAttack())

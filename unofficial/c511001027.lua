@@ -26,7 +26,7 @@ function s.cfilter(tc)
 	return tc and tc:IsFaceup()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return (s.cfilter(Duel.GetFieldCard(tp,LOCATION_SZONE,5)) or s.cfilter(Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)))
+	return (s.cfilter(Duel.GetFieldCard(tp,LOCATION_FZONE,0)) or s.cfilter(Duel.GetFieldCard(1-tp,LOCATION_FZONE,0)))
 end
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x6a) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

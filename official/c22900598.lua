@@ -16,7 +16,7 @@ end
 s.listed_series={0x8e}
 s.listed_names={62188962}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetFieldCard(tp,LOCATION_SZONE,5)~=nil then return false end
+	if Duel.GetFieldCard(tp,LOCATION_FZONE,0)~=nil then return false end
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
 	return #g>0 and g:FilterCount(Card.IsRace,nil,RACE_ZOMBIE)==#g
 end

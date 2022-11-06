@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
+	local tc=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
 	return tc and tc:GetCounter(0x91)<7 and not Duel.IsPlayerAffectedByEffect(tp,100100090)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -21,7 +21,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
-	local tc=Duel.GetFieldCard(p,LOCATION_SZONE,5)
+	local tc=Duel.GetFieldCard(p,LOCATION_FZONE,0)
 	if not tc or Duel.IsPlayerAffectedByEffect(p,100100090) then return end
 	tc:RegisterFlagEffect(110000000,RESET_CHAIN,0,1)
 	if tc:GetCounter(0x91)<7 then
@@ -39,7 +39,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	tc:RegisterEffect(e3)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
+	local tc=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
 	if tc:GetCounter(0x91)<=1 then return end
 	if tc:GetCounter(0x91)>1 then
 		tc:RemoveCounter(tp,0x91,tc:GetCounter(0x91)-1,REASON_EFFECT)

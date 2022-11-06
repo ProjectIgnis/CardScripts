@@ -1933,10 +1933,10 @@ end
 function Duel.ActivateFieldSpell(c,e,tp,eg,ep,ev,re,r,rp,target_p)
 	if not target_p then target_p=tp end
 	if c then
-		local fc=Duel.GetFieldCard(target_p,LOCATION_SZONE,5)
+		local fc=Duel.GetFieldCard(target_p,LOCATION_FZONE,0)
 		if Duel.IsDuelType(DUEL_1_FIELD) then
 			if fc then Duel.Destroy(fc,REASON_RULE) end
-			of=Duel.GetFieldCard(1-target_p,LOCATION_SZONE,5)
+			of=Duel.GetFieldCard(1-target_p,LOCATION_FZONE,0)
 			if of and Duel.Destroy(of,REASON_RULE)==0 then
 				Duel.SendtoGrave(c,REASON_RULE)
 				return false

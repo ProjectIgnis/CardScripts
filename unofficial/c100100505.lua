@@ -17,7 +17,7 @@ function s.cfilter(c)
 	return c:GetSequence()~=5
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
+	local tc=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,0,LOCATION_SZONE,3,nil)
 		and tc and tc:GetCounter(0x91)>1
 end

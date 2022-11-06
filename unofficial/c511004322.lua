@@ -233,13 +233,13 @@ function s.spelloperation(e,tp,eg,ep,ev,re,r,rp)
 			local loc=LOCATION_SZONE
 			if (tpe&TYPE_FIELD)~=0 then
 				loc=LOCATION_FZONE
-				local fc=Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)
+				local fc=Duel.GetFieldCard(1-tp,LOCATION_FZONE,0)
 				if Duel.GetFlagEffect(tp,62765383)>0 then
 					if fc then Duel.Destroy(fc,REASON_RULE) end
-					of=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
+					of=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
 					if fc and Duel.Destroy(fc,REASON_RULE)==0 then Duel.SendtoGrave(tc,REASON_RULE) end
 				else
-					Duel.GetFieldCard(tp,LOCATION_SZONE,5)
+					Duel.GetFieldCard(tp,LOCATION_FZONE,0)
 					if fc and Duel.SendtoGrave(fc,REASON_RULE)==0 then Duel.SendtoGrave(tc,REASON_RULE) end
 				end
 			end

@@ -16,7 +16,7 @@ function s.cfilter(tc)
 	return tc and tc:IsFaceup()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return (s.cfilter(Duel.GetFieldCard(tp,LOCATION_SZONE,5)) or s.cfilter(Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)))
+	return (s.cfilter(Duel.GetFieldCard(tp,LOCATION_FZONE,0)) or s.cfilter(Duel.GetFieldCard(1-tp,LOCATION_FZONE,0)))
 end
 function s.filter1(c)
 	return c:IsEarthbound() and c:IsMonster() and c:IsAbleToHand()

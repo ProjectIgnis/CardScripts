@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	end)
 end 
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local tc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
+	local tc=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
 	if chk==0 then return Duel.CheckLPCost(tp,2000) and tc and tc:IsCanRemoveCounter(tp,0x91,3,REASON_COST) end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	tc:RemoveCounter(tp,0x91,3,REASON_COST)

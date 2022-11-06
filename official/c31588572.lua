@@ -61,7 +61,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	elseif tc:IsType(TYPE_SPELL+TYPE_TRAP) then
 		if tc:IsType(TYPE_FIELD) then
-			local fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
+			local fc=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
 			if fc then
 				Duel.SendtoGrave(fc,REASON_RULE)
 				Duel.BreakEffect()

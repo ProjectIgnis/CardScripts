@@ -15,11 +15,11 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
-		and (Duel.GetFieldCard(tp,LOCATION_SZONE,5) or Duel.GetFieldCard(1-tp,LOCATION_SZONE,5))
+		and (Duel.GetFieldCard(tp,LOCATION_FZONE,0) or Duel.GetFieldCard(1-tp,LOCATION_FZONE,0))
 		end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
-	local tc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
-	local tc2=Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)
+	local tc=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
+	local tc2=Duel.GetFieldCard(1-tp,LOCATION_FZONE,0)
 	if tc or tc2 then
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 	end

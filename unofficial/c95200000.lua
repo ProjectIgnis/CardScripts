@@ -32,9 +32,9 @@ function s.play(e,tp,eg,ep,ev,re,r,rp)
 	e:SetProperty(te:GetProperty())
 	Duel.ClearTargetCard()
 	if not tc:IsType(TYPE_FIELD) then
-		local of=Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)
+		local of=Duel.GetFieldCard(1-tp,LOCATION_FZONE,0)
 		if of then Duel.Destroy(of,REASON_RULE) end
-		of=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
+		of=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
 		if of and Duel.Destroy(of,REASON_RULE)==0 then Duel.SendtoGrave(tc,REASON_RULE) end
 	end
 	Duel.MoveToField(tc,p,p,LOCATION_FZONE,POS_FACEUP,true)

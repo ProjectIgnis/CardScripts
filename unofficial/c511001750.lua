@@ -104,9 +104,9 @@ function s.drop1(e,tp,eg,ep,ev,re,r,rp,c,og)
 			Duel.HintSelection(rg)
 			local rc=rg:GetFirst()
 			if (rc:GetType()&TYPE_FIELD) then
-				local of=Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)
+				local of=Duel.GetFieldCard(1-tp,LOCATION_FZONE,0)
 				if of then Duel.Destroy(of,REASON_RULE) end
-				of=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
+				of=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
 				if of and Duel.Destroy(of,REASON_RULE)==0 and Duel.SendtoGrave(of,REASON_RULE)==0 then
 					Duel.SendtoGrave(rc,REASON_RULE)
 				end
@@ -151,9 +151,9 @@ function s.drop2(e,tp,eg,ep,ev,re,r,rp)
 			Duel.HintSelection(rg)
 			local rc=rg:GetFirst()
 			if (rc:GetType()&TYPE_FIELD) then
-				local of=Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)
+				local of=Duel.GetFieldCard(1-tp,LOCATION_FZONE,0)
 				if of then Duel.Destroy(of,REASON_RULE) end
-				of=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
+				of=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
 				if of and Duel.Destroy(of,REASON_RULE)==0 and Duel.SendtoGrave(of,REASON_RULE)==0 then
 					Duel.SendtoGrave(rc,REASON_RULE)
 				end

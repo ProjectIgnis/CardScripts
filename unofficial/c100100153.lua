@@ -19,7 +19,7 @@ function s.initial_effect(c)
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local tc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
+	local tc=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
 	if not tc then return end
 	tc:RegisterFlagEffect(110000000,RESET_CHAIN,0,1)
 	tc:AddCounter(0x91,1)

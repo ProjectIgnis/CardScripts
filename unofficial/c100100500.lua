@@ -20,7 +20,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if tp==ep or not Duel.IsChainNegatable(ev) then return false end
 	if not re:IsActiveType(TYPE_MONSTER) and not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return false end
 	local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DESTROY)
-	local td=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
+	local td=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
 	return td and ex and tg~=nil and tc+tg:FilterCount(s.cfilter,nil)-#tg>0 and td:GetCounter(0x91)>1
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

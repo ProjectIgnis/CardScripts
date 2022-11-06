@@ -15,7 +15,7 @@ function s.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:IsAbleToExtra()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local td=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
+	local td=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chk) end
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) 
 		and td and td:GetCounter(0x91)>1 end

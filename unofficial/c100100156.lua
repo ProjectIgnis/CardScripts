@@ -16,7 +16,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local d=math.floor(ev/300)
-	local tc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
+	local tc=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
 	if not tc or Duel.IsPlayerAffectedByEffect(tp,100100090) then return end
 	tc:RegisterFlagEffect(110000000,RESET_CHAIN,0,1)
 	if (12-tc:GetCounter(0x91))<d then

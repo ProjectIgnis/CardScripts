@@ -14,5 +14,5 @@ function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and (Duel.GetFieldCard(tp,LOCATION_SZONE,5) or Duel.GetFieldCard(1-tp,LOCATION_SZONE,5))
+		and (Duel.GetFieldCard(tp,LOCATION_FZONE,0) or Duel.GetFieldCard(1-tp,LOCATION_FZONE,0))
 end

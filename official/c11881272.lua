@@ -46,7 +46,7 @@ function s.filter(c)
 	return c:IsLevelAbove(5) and c:IsSetCard(0x8)
 end
 function s.tgocon(e)
-	return Duel.GetFieldCard(e:GetHandlerPlayer(),LOCATION_SZONE,5)
+	return Duel.GetFieldCard(e:GetHandlerPlayer(),LOCATION_FZONE,0)
 end
 function s.atkval(e,c)
 	local def=c:GetBaseDefense()

@@ -94,9 +94,9 @@ function s.actg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.ChangePosition(tc,POS_FACEUP)
 	Duel.ClearTargetCard()
 	if (tpe&TYPE_FIELD)~=0 then
-		local of=Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)
+		local of=Duel.GetFieldCard(1-tp,LOCATION_FZONE,0)
 		if of then Duel.Destroy(of,REASON_RULE) end
-		of=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
+		of=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
 		if of and Duel.Destroy(of,REASON_RULE)==0 then Duel.SendtoGrave(tc,REASON_RULE) end
 	end
 	Duel.Hint(HINT_CARD,0,tc:GetCode())

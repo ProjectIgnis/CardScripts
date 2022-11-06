@@ -25,7 +25,7 @@ function s.filter(c,e,tp,eg,ep,ev,re,r,rp,b)
 			return true
 		end
 	end
-	if c:IsType(TYPE_FIELD) and Duel.CheckLocation(tp,LOCATION_SZONE,5) and te then return true end
+	if c:IsType(TYPE_FIELD) and Duel.CheckLocation(tp,LOCATION_FZONE,0) and te then return true end
 	return false
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

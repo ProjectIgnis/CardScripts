@@ -44,7 +44,7 @@ function s.initial_effect(c)
 end
 s.listed_names={48179391}
 function s.condition(e,tp,eg,ep,ev,re,r,rp,chk)
-	local tc=Duel.GetFieldCard(e:GetHandlerPlayer(),LOCATION_SZONE,5)
+	local tc=Duel.GetFieldCard(e:GetHandlerPlayer(),LOCATION_FZONE,0)
 	return tc and tc:IsFaceup() and tc:IsCode(48179391)
 end
 function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk)

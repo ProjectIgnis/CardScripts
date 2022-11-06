@@ -31,7 +31,7 @@ function s.plfilter(c,targ_p,code)
 		and not c:IsOriginalCode(code) and (c:IsControler(targ_p) or c:IsAbleToChangeControler())
 end
 function s.placefield(c,tp,targ_p)
-	local fc=Duel.GetFieldCard(targ_p,LOCATION_SZONE,5)
+	local fc=Duel.GetFieldCard(targ_p,LOCATION_FZONE,0)
 	if fc then
 		Duel.SendtoGrave(fc,REASON_RULE)
 		Duel.BreakEffect()

@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
-	local td=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
+	local td=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
 	return td and td:GetCounter(0x91)>1
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

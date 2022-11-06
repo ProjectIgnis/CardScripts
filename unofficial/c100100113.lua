@@ -10,12 +10,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
-	local tc1=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
-	local tc2=Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)
+	local tc1=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
+	local tc2=Duel.GetFieldCard(1-tp,LOCATION_FZONE,0)
 	return tc1 and tc2 and tc1:GetCounter(0x91)>1 and tc2:GetCounter(0x91)>5
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)
+	local tc=Duel.GetFieldCard(1-tp,LOCATION_FZONE,0)
 	if not tc then return end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	tc:RemoveCounter(tp,0x91,6,REASON_COST)

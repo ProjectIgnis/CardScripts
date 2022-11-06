@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local phase=Duel.GetCurrentPhase()
-	local tc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
+	local tc=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
 	if phase~=PHASE_DAMAGE or Duel.IsDamageCalculated() then return false end

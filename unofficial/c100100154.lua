@@ -28,8 +28,8 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnCount()>=e:GetLabel() and Duel.GetTurnPlayer()==tp
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	local tc1=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
-	local tc2=Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)
+	local tc1=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
+	local tc2=Duel.GetFieldCard(1-tp,LOCATION_FZONE,0)
 	if not tc1 or not tc2 then return end
 	if tc2:GetCounter(0x91)>tc1:GetCounter(0x91) then
 		tc1:RegisterFlagEffect(110000000,RESET_CHAIN,0,1)

@@ -51,7 +51,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cond2(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFieldCard(tp,LOCATION_SZONE,5)==nil
+	return Duel.GetFieldCard(tp,LOCATION_FZONE,0)==nil
 end
 function s.filter2(c,e,tp)
 	return c:IsSetCard(0x107) and c:IsType(TYPE_FIELD) and c:CheckActivateEffect(false,false,false)~=nil

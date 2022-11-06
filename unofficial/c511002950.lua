@@ -27,8 +27,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local tc1=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
-	local tc2=Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)
+	local tc1=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
+	local tc2=Duel.GetFieldCard(1-tp,LOCATION_FZONE,0)
 	return (tc1 and tc1:IsFaceup()) or (tc2 and tc2:IsFaceup())
 end
 function s.tg(e,c)

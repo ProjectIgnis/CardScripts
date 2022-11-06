@@ -17,7 +17,7 @@ function s.cfilter(tc)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and re:IsActiveType(TYPE_SPELL) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev) 
-		and s.cfilter(Duel.GetFieldCard(tp,LOCATION_SZONE,5))
+		and s.cfilter(Duel.GetFieldCard(tp,LOCATION_FZONE,0))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

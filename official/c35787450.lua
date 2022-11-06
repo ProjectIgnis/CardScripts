@@ -14,18 +14,18 @@ end
 s.counter_place_list={0x1b}
 s.listed_names={75041269}
 function s.check(tp)
-	local tc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
+	local tc=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
 	return tc and tc:IsFaceup() and tc:IsCode(75041269)
 end
 function s.addcon(e,tp,eg,ep,ev,re,r,rp)
 	return s.check(0) or s.check(1)
 end
 function s.addc(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
+	local tc=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
 	if tc and tc:IsFaceup() and tc:IsCode(75041269) then
 		tc:AddCounter(0x1b,2)
 	end
-	tc=Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)
+	tc=Duel.GetFieldCard(1-tp,LOCATION_FZONE,0)
 	if tc and tc:IsFaceup() and tc:IsCode(75041269) then
 		tc:AddCounter(0x1b,2)
 	end

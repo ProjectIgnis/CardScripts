@@ -25,5 +25,5 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.destg(e,c)
-	return c==Duel.GetFieldCard(c:GetControler(),LOCATION_SZONE,5)
+	return c==Duel.GetFieldCard(c:GetControler(),LOCATION_FZONE,0)
 end

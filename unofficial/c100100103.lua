@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
+	local tc=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
 	return tc and tc:GetCounter(0x91)>1 and tc:GetCounter(0x91)<12 and not Duel.IsPlayerAffectedByEffect(tp,100100090)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -21,7 +21,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local tc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
+	local tc=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
 	if chk==0 then
 		if e:GetLabel()~=1 then return false end
 		e:SetLabel(0)
@@ -34,7 +34,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	local tc=Duel.GetFieldCard(p,LOCATION_SZONE,5)
+	local tc=Duel.GetFieldCard(p,LOCATION_FZONE,0)
 	if not tc then return end
 	if d<=0 or Duel.IsPlayerAffectedByEffect(p,100100090) then return end
 	tc:RegisterFlagEffect(110000000,RESET_CHAIN,0,1)

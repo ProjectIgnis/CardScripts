@@ -1,5 +1,5 @@
 -- 決闘塔アルカトラズ
--- Duel Tower Alcatraz
+-- Duel Tower
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e0:SetType(EFFECT_TYPE_ACTIVATE)
 	e0:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e0)
-	-- Reveal monsters
+	-- Reveal monsters from the Deck and Special Summon 1 monster from the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_REMOVE+CATEGORY_SPECIAL_SUMMON)
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1)
 	e1:SetOperation(s.rvop)
 	c:RegisterEffect(e1)
-	-- Destroy all cards next End Phase
+	-- Destroy all cards during the next End Phase
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -33,11 +33,11 @@ function s.rvfilter(c,tp)
 end
 function s.rvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
-	local turn_p=Duel.GetTurnPlayer()
+	local players={Duel.GetTurnPlayer(),1-Duel.GetTurnPlayer()}
 	-- Each player can choose to reveal
 	local rv={}
-	for p=turn_p,1-turn_p do
+	for _,p in ipairs(players) do
+		Debug.Message("p = "..tostring(p))
 		if Duel.IsExistingMatchingCard(s.rvfilter,p,LOCATION_DECK,0,1,nil,tp)
 			and Duel.SelectYesNo(p,aux.Stringid(id,2)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
@@ -46,7 +46,7 @@ function s.rvop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	-- Reveal later so player B doesn't know what player A chose
 	local atk={}
-	for p=turn_p,1-turn_p do
+	for _,p in ipairs(players) do
 		local g=rv[p]
 		if g and #g>0 then
 			Duel.ConfirmCards(1-p,g)
@@ -76,7 +76,6 @@ function s.rvop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.desregop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
 	-- Destroy all cards
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,1))

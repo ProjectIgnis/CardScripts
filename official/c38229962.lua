@@ -67,7 +67,7 @@ function s.spatktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local atk=e:GetHandler():IsLocation(LOCATION_MZONE)
 	local spcheck=Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp)
-	local sel=Duel.SelectEffect(tp,{atk,aux.Stringid(id,0)},{spcheck,aux.Stringid(id,1)})
+	local sel=Duel.SelectEffect(tp,{spcheck,aux.Stringid(id,0)},{atk,aux.Stringid(id,1)})
 	e:SetLabel(sel)
 	if sel==1 then
 		e:SetCategory(CATEGORY_SPECIAL_SUMMON)

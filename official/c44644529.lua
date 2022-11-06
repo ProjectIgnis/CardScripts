@@ -1,5 +1,5 @@
 --双天の転身
---Dual Avatar Turning
+--Dual Avatar Ascendance
 --Logical Nonsense
 
 --Substitute ID
@@ -33,16 +33,16 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 	--Lists "Dual Avatar" archetype
-s.listed_series={0x14e}
+s.listed_series={SET_DUAL_AVATAR}
 	--Can special summon ED monsters outside EMZ? Cache the result
 s.fsx_anywhere=Duel.IsDuelType(DUEL_FSX_MMZONE)
 	--Check "Dual Avatar" monster to destroy
 function s.desfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x14e) and c:IsLevelAbove(1)
+	return c:IsFaceup() and c:IsSetCard(SET_DUAL_AVATAR) and c:IsLevelAbove(1)
 end
 	--Check "Dual Avatar" monster to special summon
 function s.spfilter(c,e,tp,tc,is_emz,has_mmz)
-	if (not c:IsSetCard(0x14e)) or (not c:IsLevelAbove(1)) or
+	if (not c:IsSetCard(SET_DUAL_AVATAR)) or (not c:IsLevelAbove(1)) or
 	   (not (math.abs(c:GetOriginalLevel()-tc:GetLevel())==1)) or
 	   (not c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)) then
 		return false
@@ -57,7 +57,7 @@ end
 	--Compound filter for proper target selection
 function s.tgfilter(c,e,tp)
 	local is_emz=c:IsInExtraMZone(tp)
-	local has_mmz=Duel.GetLocationCount(tp, LOCATION_MZONE)>0
+	local has_mmz=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 	return s.desfilter(c) and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK|LOCATION_EXTRA,0,1,nil,e,tp,c,is_emz,has_mmz)
 end
 	--Activation legality
@@ -88,7 +88,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for "Dual Avatar" monster
 function s.thfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x14e) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(SET_DUAL_AVATAR) and c:IsAbleToHand()
 end
 	--Activation legality
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

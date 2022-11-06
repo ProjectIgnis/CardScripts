@@ -1,7 +1,6 @@
 --斬機シグマ
 --Mathmech Sigma
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon itself from hand or GY
@@ -24,10 +23,10 @@ function s.initial_effect(c)
 	e2:SetValue(s.ntval)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x132}
+s.listed_series={SET_MATHMECH}
 
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(Card.IsInExtraMZone,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.GetFieldGroupCount(tp,LOCATION_EMZONE,0)==0
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -67,5 +66,5 @@ function s.lizfilter(e,c)
 	return not c:IsOriginalRace(RACE_CYBERSE)
 end
 function s.ntval(c,sc,tp)
-	return sc and sc:IsSetCard(0x132)
+	return sc and sc:IsSetCard(SET_MATHMECH)
 end

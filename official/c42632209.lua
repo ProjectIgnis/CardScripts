@@ -9,9 +9,8 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e1:SetRange(LOCATION_MZONE)
+	e1:SetRange(LOCATION_EMZONE)
 	e1:SetCode(EFFECT_IMMUNE_EFFECT)
-	e1:SetCondition(s.econ)
 	e1:SetValue(s.efilter)
 	c:RegisterEffect(e1)
 	--Double damage
@@ -33,12 +32,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x132}
-function s.econ(e)
-	return e:GetHandler():IsInExtraMZone()
-end
+s.listed_series={SET_MATHMECH}
 function s.efilter(e,te)
-	return not te:GetOwner():IsSetCard(0x132)
+	return not te:GetOwner():IsSetCard(SET_MATHMECH)
 end
 function s.dcon(e)
 	return e:GetHandler():GetBattleTarget()~=nil and e:GetHandler():IsInExtraMZone()
@@ -48,7 +44,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsReason(REASON_BATTLE) or (c:IsReason(REASON_EFFECT) and rp==1-tp)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x132) and c:IsAbleToHand()
+	return c:IsSetCard(SET_MATHMECH) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

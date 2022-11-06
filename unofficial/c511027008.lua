@@ -21,15 +21,15 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c)
-	return c:IsInExtraMZone() and c:IsType(TYPE_LINK)
+	return c:IsType(TYPE_LINK)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetAttacker():IsControler(1-tp) and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.GetAttacker():IsControler(1-tp) and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_EMZONE,0,1,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc==Duel.GetAttacker() end
 	local tg=Duel.GetAttacker()
-	local zone=aux.GetMMZonesPointedTo(tp,s.cfilter,LOCATION_MZONE,0,1-tp)
+	local zone=aux.GetMMZonesPointedTo(tp,s.cfilter,LOCATION_EMZONE,0,1-tp)
 	if chk==0 then return zone>0 and Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp,LOCATION_REASON_COUNT,zone)>0
 		and tg:IsOnField() and tg:IsCanBeEffectTarget(e) end
 	Duel.SetTargetCard(tg)
@@ -38,7 +38,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) or tc:IsControler(tp) or tc:IsImmuneToEffect(e)
 		or Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp,LOCATION_REASON_COUNT,zone)==0 then return end
-	local zone=aux.GetMMZonesPointedTo(tp,s.cfilter,LOCATION_MZONE,0,1-tp)
+	local zone=aux.GetMMZonesPointedTo(tp,s.cfilter,LOCATION_EMZONE,0,1-tp)
 	if zone==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
 	Duel.MoveSequence(tc,math.log(Duel.SelectDisableField(tp,1,0,LOCATION_MZONE,~zone<<16)>>16,2))

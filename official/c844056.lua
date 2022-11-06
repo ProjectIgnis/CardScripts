@@ -16,13 +16,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.rmfilter(c)
-	return c:IsFaceup() and c:IsInExtraMZone() and c:IsAbleToRemove()
+	return c:IsFaceup() and c:IsAbleToRemove()
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.rmfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.rmfilter,0,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_EMZONE) and s.rmfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(s.rmfilter,0,LOCATION_EMZONE,LOCATION_EMZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectTarget(tp,s.rmfilter,0,LOCATION_MZONE,LOCATION_MZONE,1,2,nil)
+	local g=Duel.SelectTarget(tp,s.rmfilter,0,LOCATION_EMZONE,LOCATION_EMZONE,1,2,nil)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,0,0)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)

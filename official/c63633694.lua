@@ -41,7 +41,7 @@ function s.initial_effect(c)
 end
 	--If there a monster in the EMZ
 function s.spcon1(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(Card.IsInExtraMZone,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+	return Duel.GetFieldGroupCount(tp,LOCATION_EMZONE,LOCATION_EMZONE)>0
 end
 	--Activation legality
 function s.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -58,7 +58,7 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for face-up monster in EMZ
 function s.eqfilter(c,tp)
-	return c:IsFaceup() and c:IsInExtraMZone() and (c:IsControler(tp) or c:IsAbleToChangeControler())
+	return c:IsFaceup() and (c:IsControler(tp) or c:IsAbleToChangeControler())
 		and not c:IsForbidden()
 end
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
@@ -71,11 +71,11 @@ end
 	--Activation legality
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.eqfilter(chkc,tp) and chkc~=c end
+	if chkc then return chkc:IsLocation(LOCATION_EMZONE) and s.eqfilter(chkc,tp) and chkc~=c end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingTarget(s.eqfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c,tp) end
+		and Duel.IsExistingTarget(s.eqfilter,tp,LOCATION_EMZONE,LOCATION_EMZONE,1,c,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	local g=Duel.SelectTarget(tp,s.eqfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,c,tp)
+	local g=Duel.SelectTarget(tp,s.eqfilter,tp,LOCATION_EMZONE,LOCATION_EMZONE,1,1,c,tp)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,g,1,0,0)
 end
 	--Registered as equipped with own effect

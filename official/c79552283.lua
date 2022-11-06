@@ -33,10 +33,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x17c}
+s.listed_series={SET_SCARECLAW}
 s.listed_names={CARD_VISAS_STARFROST}
 function s.atkfilter(c)
-	return c:IsFaceup() and (c:IsSetCard(0x17c) or c:IsCode(CARD_VISAS_STARFROST)) and not c:IsHasEffect(EFFECT_CANNOT_ATTACK)
+	return c:IsFaceup() and (c:IsSetCard(SET_SCARECLAW) or c:IsCode(CARD_VISAS_STARFROST)) and not c:IsHasEffect(EFFECT_CANNOT_ATTACK)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingTarget(s.atkfilter,tp,LOCATION_MZONE,0,1,nil) end
@@ -57,10 +57,10 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	tc:RegisterEffect(e1)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x17c) and c:IsInExtraMZone()
+	return c:IsFaceup() and c:IsSetCard(SET_SCARECLAW)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==1-tp and Duel.IsChainDisablable(ev) and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	return rp==1-tp and Duel.IsChainDisablable(ev) and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_EMZONE,0,1,nil)
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

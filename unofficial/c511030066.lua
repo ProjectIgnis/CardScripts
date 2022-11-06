@@ -62,12 +62,12 @@ s.listed_names={id}
 s.matfilter=aux.FilterBoolFunctionEx(Card.IsType,TYPE_NORMAL)
 function s.emzcon(e,c)
 	local tp=e:GetHandler():GetControler()
-	local g=Duel.GetMatchingGroup(Card.IsInExtraMZone,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	if #g==2 then
+	local ct=Duel.GetFieldGroupCount(tp,LOCATION_EMZONE,LOCATION_EMZONE)
+	if ct==2 then
 		return false
-	elseif #g==1 and e:GetHandler():IsCanBeSpecialSummoned(e,SUMMON_TYPE_LINK,tp,false,false,POS_FACEUP,tp,0x60) then
+	elseif ct==1 and e:GetHandler():IsCanBeSpecialSummoned(e,SUMMON_TYPE_LINK,tp,false,false,POS_FACEUP,tp,0x60) then
 		return s.linkcon(e,e:GetHandler())
-	elseif #g==0 then
+	elseif ct==0 then
 		return s.linkcon(e,e:GetHandler())
 	end
 end

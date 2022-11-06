@@ -37,7 +37,6 @@ function s.rvop(e,tp,eg,ep,ev,re,r,rp)
 	-- Each player can choose to reveal
 	local rv={}
 	for _,p in ipairs(players) do
-		Debug.Message("p = "..tostring(p))
 		if Duel.IsExistingMatchingCard(s.rvfilter,p,LOCATION_DECK,0,1,nil,tp)
 			and Duel.SelectYesNo(p,aux.Stringid(id,2)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)

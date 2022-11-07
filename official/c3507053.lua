@@ -57,15 +57,16 @@ function s.mvcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsTurnPlayer(tp) and Duel.IsBattlePhase()
 end
 function s.mvtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_MMZONE,0,1,e:GetHandler(),SET_APPLIANCER) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_APPLIANCER),tp,LOCATION_MMZONE,0,1,e:GetHandler()) end
 end
 function s.mvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local tc=Duel.SelectMatchingCard(tp,Card.IsSetCard,tp,LOCATION_MMZONE,0,1,1,c,SET_APPLIANCER):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsSetCard,SET_APPLIANCER),tp,LOCATION_MMZONE,0,1,1,c):GetFirst()
 	if tc then
 		Duel.SwapSequence(c,tc)
+		--Can make a 2nd attack
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)

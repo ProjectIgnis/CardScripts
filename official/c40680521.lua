@@ -84,14 +84,11 @@ function s.mvop(e,tp,eg,ep,ev,re,r,rp)
 		tc:MoveAdjacent()
 	end
 end
-function s.plfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_EFFECT)
-end
 function s.pltg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsInMainMZone(1-tp) and s.plfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.plfilter,tp,0,LOCATION_MMZONE,1,nil) end
+	if chkc then return chkc:IsInMainMZone(1-tp) and chkc:IsFaceup() and chkc:IsType(TYPE_EFFECT) end
+	if chk==0 then return Duel.IsExistingTarget(aux.FaceupFilter(Card.IsType,TYPE_EFFECT),tp,0,LOCATION_MMZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local tc=Duel.SelectTarget(tp,s.plfilter,tp,0,LOCATION_MMZONE,1,1,nil):GetFirst()
+	local tc=Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsType,TYPE_EFFECT),tp,0,LOCATION_MMZONE,1,1,nil):GetFirst()
 	local dc=Duel.GetFieldCard(1-tp,LOCATION_SZONE,tc:GetSequence())
 	if dc then
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,dc,1,0,0)
@@ -119,11 +116,11 @@ function s.plop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.pencon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
-		and c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp) and c:IsSummonType(SUMMON_TYPE_SPECIAL)
+		and c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp
 end
 function s.pentg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckPendulumZones(tp)end
+	if chk==0 then return Duel.CheckPendulumZones(tp) end
 end
 function s.penop(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.CheckPendulumZones(tp) then return end

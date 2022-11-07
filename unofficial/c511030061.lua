@@ -3,10 +3,10 @@
 --Scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
-	--Link Summon
 	c:EnableReviveLimit()
+	--Link Summon
 	Link.AddProcedure(c,s.matfilter,1)
-	--Cannot be Link Material
+	--Cannot be used as Link Material
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.lkcon)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	--increase ATK
+	--Increase ATK
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1)
 	e4:SetCondition(aux.NOT(s.colinkcon))
-	e4:SetOperation(s.atknegop)
+	e4:SetOperation(function() Duel.NegateAttack() end)
 	c:RegisterEffect(e4)
 end
 s.listed_series={SET_APPLIANCER}
@@ -56,29 +56,29 @@ function s.colinkcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetMutualLinkedGroupCount()>0
 end
 function s.mvcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and Duel.IsBattlePhase() and e:GetHandler():GetMutualLinkedGroupCount()>0
+	return Duel.IsTurnPlayer(tp) and Duel.IsBattlePhase() and e:GetHandler():GetMutualLinkedGroupCount()>0
 end
-function s.mvfilter(c,tp)
+function s.mvfilter(c)
 	return c:IsSetCard(SET_APPLIANCER) and c:IsLinkMonster() and c:IsLink(1)
 end
 function s.mvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc~=e:GetHandler() and s.mvfilter(chkc,tp) end
-	if chk==0 then return Duel.IsExistingTarget(s.mvfilter,tp,LOCATION_MMZONE,0,1,e:GetHandler(),tp) end
+	local c=e:GetHandler()
+	if chkc then return chkc~=c and s.mvfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(s.mvfilter,tp,LOCATION_MMZONE,0,1,c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	Duel.SelectTarget(tp,s.mvfilter,tp,LOCATION_MMZONE,0,1,1,e:GetHandler(),tp)
+	Duel.SelectTarget(tp,s.mvfilter,tp,LOCATION_MMZONE,0,1,1,c)
 end
 function s.mvop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if not (e:GetHandler():IsRelateToEffect(e) or tc:IsRelateToEffect(e)) then return end
-	Duel.SwapSequence(e:GetHandler(),tc)
-	local e1=Effect.CreateEffect(e:GetHandler())
+	if not (c:IsRelateToEffect(e) and tc:IsRelateToEffect(e)) then return end
+	Duel.SwapSequence(c,tc)
+	--Can make a 2nd attack
+	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetCode(EFFECT_EXTRA_ATTACK)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	e1:SetValue(1)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	tc:RegisterEffect(e1)
-end
-function s.atknegop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.NegateAttack()
 end

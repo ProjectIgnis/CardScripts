@@ -1,7 +1,8 @@
 --赤い忍者
+--Crimson Ninja
 local s,id=GetID()
 function s.initial_effect(c)
-	--flip
+	--Destroy 1 Set Trap card
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)
@@ -25,8 +26,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
-		if tc:IsFacedown() then Duel.ConfirmCards(tp,tc) end
+	if tc and tc:IsRelateToEffect(e) then
+		if tc:IsFacedown() then
+			Duel.ConfirmCards(tp,tc)
+		end
 		if tc:IsTrap() then Duel.Destroy(tc,REASON_EFFECT) end
 	end
 end

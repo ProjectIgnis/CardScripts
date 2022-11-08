@@ -2,7 +2,7 @@
 
 Sometimes old cards need to have their Lua script updated due to ruling, functional, and/or technical updates (either in the scripting engine or improvements in the ecosystem around it) and oftentimes, it would turn out that said scripts could use a modernization as a whole: they use old idioms, deprecated functionality and/or are simply not up to the standards that we are used to today.
 
-The following list has been created so that these "modernization steps" are documented somewhere and can be looked up if you are in the mood to improve some script you touched. It is also recommended to consider whether or not a full script rewrite might be worth it, in which case, this list also has you covered with common scenarios and examples of things to keep in mind.
+The following list has been created so that these "modernization steps" are documented somewhere and can be looked up if you are in the mood to improve some script you touched. It is also recommended to consider whether or not a full script rewrite might be worth it, in which case, this list also has you covered with common scenarios and examples of things to keep in mind when doing so.
 
 ## Use UTF-8 encoding and Unix line endings
 
@@ -12,9 +12,8 @@ Configure your editor to follow these settings, or make it obey the `.editorconf
 
 A card script should start with its official Japanese name in the first line as a comment (using Japanese characters, **not** romanized), followed by its official TCG name in English in the next line.
 
-When the card has not yet been imported to the TCG, an unofficial translation must be added as placeholder, matching the database/proxy name. In the event that the card has not been imported yet to the OCG, leave the Japanese name empty. In both cases however, try to update them later once the card is imported to the respective region/scope.
+When the card has not yet been imported to the TCG regions, an unofficial translation must be added as placeholder, matching the database/proxy name. In the event that the card has not been imported yet to the OCG, leave the Japanese name empty. In both cases however, try to update them later once the card is imported to the respective region/scope. _e.g._:
 
-_e.g._:
 ```lua
 --灰流うらら
 --Ash Blossom & Joyous Spring
@@ -26,7 +25,7 @@ Activated effects should have their own descriptions, set through `Effect.SetDes
 
 Rather than trying to think of such or similar scenarios in each individual script, it it more practical to simply be consistent about it and have a description explicitly associated to each activated effect. It also has the added benefit of letting AI frameworks like Windbot properly check which effect is which through their descriptions.
 
-The exceptions to this are the activation effects of Field Spells, Continuous Spells, Pendulum Spells, i.e., their `EFFECT_TYPE_ACTIVATE` effects that place them face-up on the field.
+The exceptions to this are the activations of Field Spells, Continuous Spells, Pendulum Spells, i.e., their `EFFECT_TYPE_ACTIVATE` effects that place them face-up on the field.
 
 Note that their database strings would also have to be updated to add the missing strings for the new descriptions, especially if some older strings need to be moved up to match the script (string `0` may become string `1` due to a newly-added description).
 
@@ -40,9 +39,8 @@ Self explanatory. If the constant doesn't exist, create it. Things to look out f
 
 ## Add timing hints to quick effects
 
-Even though hints do not have a functional impact, they substantially improve the user experience when used properly in key effects. Effects that should specially be considered for this are quick effects that can be activated only in certain phases.
+Even though hints do not have a functional impact, they substantially improve the user experience when used properly in key effects. Effects that should specially be considered for this are quick effects that can be activated only in certain phases. _e.g._:
 
-_e.g._:
 ```lua
 --for a Quick Effect that destroys monsters on either field, this would prompt the user when a monster is summoned or an attack is declared.
 e1:SetHintTiming(TIMINGS_CHECK_MONSTER+TIMING_BATTLE_START)

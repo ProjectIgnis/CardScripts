@@ -1,0 +1,28 @@
+--Dino Destruction
+--Scripted by The Razgriz
+local s,id=GetID()
+function s.initial_effect(c)
+	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop,1)
+end
+function s.filter(c)
+	return c:IsFaceup() and c:IsRace(RACE_DINOSAUR) and c:GetLevel()==6
+end
+function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
+	--condition
+	return aux.CanActivateSkill(tp) and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)
+end
+function s.flipop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
+	Duel.Hint(HINT_CARD,tp,id)
+	--opt register
+	Duel.RegisterFlagEffect(ep,id,RESET_PHASE+PHASE_END,0,0)
+	local sg=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)
+	local tc=sg:GetFirst()
+	if tc then
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_PIERCE)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		tc:RegisterEffect(e1)
+	end
+end

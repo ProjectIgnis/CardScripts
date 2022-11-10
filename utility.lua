@@ -209,7 +209,6 @@ local function make_exact_type_check(type)
 	return aux.FilterBoolFunction(Card.IsExactType,type)
 end
 
-Card.IsNormalSpell=make_exact_type_check(TYPE_SPELL)
 Card.IsQuickPlaySpell=make_exact_type_check(TYPE_SPELL|TYPE_QUICKPLAY)
 Card.IsContinuousSpell=make_exact_type_check(TYPE_SPELL|TYPE_CONTINUOUS)
 Card.IsEquipSpell=make_exact_type_check(TYPE_SPELL|TYPE_EQUIP)
@@ -217,12 +216,19 @@ Card.IsFieldSpell=make_exact_type_check(TYPE_SPELL|TYPE_FIELD)
 Card.IsRitualSpell=make_exact_type_check(TYPE_SPELL|TYPE_RITUAL)
 Card.IsLinkSpell=make_exact_type_check(TYPE_SPELL|TYPE_LINK)
 
-Card.IsNormalTrap=make_exact_type_check(TYPE_TRAP)
 Card.IsContinuousTrap=make_exact_type_check(TYPE_TRAP|TYPE_CONTINUOUS)
 Card.IsCounterTrap=make_exact_type_check(TYPE_TRAP|TYPE_COUNTER)
 
 Card.IsRitualMonster=make_exact_type_check(TYPE_MONSTER|TYPE_RITUAL)
 Card.IsLinkMonster=make_exact_type_check(TYPE_MONSTER|TYPE_LINK)
+
+function Card.IsNormalSpell(c)
+	return c:GetType()==TYPE_SPELL
+end
+
+function Card.IsNormalTrap(c)
+	return c:GetType()==TYPE_TRAP
+end
 
 function Card.IsNonEffectMonster(c)
 	return c:IsMonster() and not c:IsType(TYPE_EFFECT)

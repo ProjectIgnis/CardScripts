@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.filter(c)
-	return (c:IsMonster() and c:IsRace(RACE_INSECT|RACE_PLANT)) or c:IsNormalTrap()
+	return (c:IsMonster() and c:IsLevel(4) and c:IsRace(RACE_INSECT|RACE_PLANT)) or c:IsNormalTrap()
 end
 s.drcostfilter=aux.AND(s.filter,Card.IsDiscardable)
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)

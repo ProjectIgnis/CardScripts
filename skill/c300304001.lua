@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x8}
+s.listed_series={SET_HERO}
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	--Battle Start
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -23,7 +23,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x8) and c:IsMonster()
+	return c:IsFaceup() and c:IsSetCard(SET_HERO) and c:IsMonster()
 end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():GetFlagEffect(id)>0 then return false end

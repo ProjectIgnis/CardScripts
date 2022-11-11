@@ -6,10 +6,11 @@ function s.initial_effect(c)
 end
 s.listed_series={0xc008}
 function s.filter(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0xc008) and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,c:GetLevel(),e,tp)
+	return c:IsFaceup() and c:IsSetCard(SET_DESTINY_HERO)
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,c:GetLevel(),e,tp)
 end
 function s.spfilter(c,lv,e,tp)
-	return c:IsSetCard(0xc008) and c:GetLevel()<lv and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_DESTINY_HERO) and c:GetLevel()<lv and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	local g1=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
@@ -53,7 +54,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e4,tp)
 end
 function s.sumlimit(e,c)
-	return not c:IsSetCard(0xc008)
+	return not c:IsSetCard(SET_DESTINY_HERO)
 end
 function s.EPop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(2<<32))

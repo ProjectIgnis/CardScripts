@@ -56,7 +56,7 @@ end
 --Draw Functions
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=eg:GetFirst()
-	return Duel.GetCurrentPhase()==PHASE_DRAW and Duel.GetTurnPlayer()==tp and ec:IsReason(REASON_RULE) and ec:IsRace(RACE_DINOSAUR) and ec:IsAbleToDeck()
+	return Duel.GetCurrentPhase()==PHASE_DRAW and Duel.IsTurnPlayer(tp) and ec:IsReason(REASON_RULE) and ec:IsRace(RACE_DINOSAUR) and ec:IsAbleToDeck()
 end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
@@ -71,12 +71,12 @@ end
 --ATK gain functions
 function s.atkcon(e)
 	local tp=e:GetHandlerPlayer()
-	return aux.CanActivateSkill(tp) and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_DINOSAUR),tp,LOCATION_MZONE,0,1,nil)
+	return aux.CanActivateSkill(tp) and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_DINOSAUR),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
-	local tc=Duel.SelectMatchingCard(tp,aux.FilterFaceupFunction(Card.IsRace,RACE_DINOSAUR),tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsRace,RACE_DINOSAUR),tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -85,5 +85,3 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	tc:RegisterEffect(e1)
 end
-
-

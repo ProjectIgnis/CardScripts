@@ -4,13 +4,16 @@ local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop)
 end
-s.listed_series={0x93}
+s.listed_series={SET_CYBER}
 s.listed_name={CARD_CYBER_DRAGON}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x93) and c:IsRace(RACE_MACHINE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_CYBER) and c:IsRace(RACE_MACHINE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
-	return aux.CanActivateSkill(tp) and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp) and Duel.GetFlagEffect(ep,id)==0 and Duel.GetLP(tp)<=1500 and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
+	return aux.CanActivateSkill(tp) and Duel.GetLP(tp)<=1500
+		and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
+		and Duel.GetFlagEffect(ep,id)==0
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))

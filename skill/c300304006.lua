@@ -4,12 +4,14 @@ local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop,1)
 end
-s.listed_series={0x34,0x1034}
+s.listed_series={SET_CRYSTAL,SET_CRYSTAL_BEAST}
 function s.filter(c)
-	return c:IsSetCard(0x1034) and c:IsMonster()
+	return c:IsSetCard(SET_CRYSTAL_BEAST) and c:IsMonster()
 end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
-	return aux.CanActivateSkill(tp) and Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,nil) and Duel.GetFlagEffect(ep,id)<2 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+	return aux.CanActivateSkill(tp) and Duel.GetFlagEffect(ep,id)<2
+		and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+		and Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,nil)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
@@ -56,5 +58,5 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e4,tp)
 end
 function s.sumlimit(e,c)
-	return not (c:IsRace(RACE_DRAGON) or c:IsSetCard(0x34))
+	return not (c:IsRace(RACE_DRAGON) or c:IsSetCard(SET_CRYSTAL))
 end

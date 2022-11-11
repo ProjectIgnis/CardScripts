@@ -4,9 +4,9 @@ local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop)
 end
-s.listed_series={0x41}
+s.listed_series={SET_LV}
 function s.costfilter(c,e,tp)
-	return c:IsSetCard(0x41) and c:IsAbleToGraveAsCost() and c:IsFaceup() and c.listed_names and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil,c,e,tp)
+	return c:IsSetCard(SET_LV) and c:IsAbleToGraveAsCost() and c:IsFaceup() and c.listed_names and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil,c,e,tp)
 end
 function s.spfilter(c,class,e,tp)
 	return c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,2000,tp,false,false) and class.listed_names and c:IsCode(table.unpack(class.listed_names))

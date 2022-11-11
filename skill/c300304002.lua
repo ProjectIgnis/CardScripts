@@ -15,7 +15,9 @@ end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	local g1=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
 	local g2=Duel.GetFieldGroup(tp,0,LOCATION_MZONE):Filter(Card.IsMonster,nil)
-	return aux.CanActivateSkill(tp) and #g1==1 and #g2>#g1 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil,e,tp) and Duel.GetFlagEffect(ep,id)==0
+	return aux.CanActivateSkill(tp) and #g1==1 and #g2>#g1
+		and Duel.GetFlagEffect(ep,id)==0
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil,e,tp)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))

@@ -4,15 +4,15 @@ local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop)
 end
-s.listed_series={0x7}
+s.listed_series={SET_ANCIENT_GEAR}
 s.listed_names={83104731}
 --Fusion Summon Functions
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--condition
-	return aux.CanActivateSkill(tp) and s.fusTarget(e,tp,eg,ep,ev,re,r,rp,0) and Duel.GetFlagEffect(ep,id)==0
+	return aux.CanActivateSkill(tp) and Duel.GetFlagEffect(ep,id)==0 and s.fusTarget(e,tp,eg,ep,ev,re,r,rp,0)
 end
 function s.fusfilter(c,e,tp,m,f,chkf)
-	return c:IsType(TYPE_FUSION) and (not f or f(c)) and c:IsSetCard(0x7)
+	return c:IsType(TYPE_FUSION) and (not f or f(c)) and c:IsSetCard(SET_ANCIENT_GEAR)
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial(m,nil,chkf)
 end
 function s.cfilter(c,e,tp)
@@ -60,8 +60,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	local chkf=tp
 	local mg1=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_MZONE,0,nil,e)
 	local sg1=Duel.GetMatchingGroup(s.fusfilter,tp,LOCATION_EXTRA,0,nil,e,tp,mg1,nil,chkf)
-	local mg2=nil
-	local sg2=nil
+	local mg2,sg2=nil,nil
 	local ce=Duel.GetChainMaterial(tp)
 	if ce~=nil then
 		local fgroup=ce:GetTarget()
@@ -106,7 +105,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.matfilter(c,e)
-	return c:IsSetCard(0x7) and not c:IsImmuneToEffect(e) and c:IsCanBeFusionMaterial()
+	return c:IsSetCard(SET_ANCIENT_GEAR) and not c:IsImmuneToEffect(e) and c:IsCanBeFusionMaterial()
 end
 function s.aggfilter(c,e)
 	return c:IsFaceup() and c:IsCode(83104731,95735217,7171149,12652643) and c:IsOnField() and not c:IsImmuneToEffect(e) and c:IsCanBeFusionMaterial()

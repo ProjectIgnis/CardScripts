@@ -8,24 +8,23 @@ s.listed_names={10248389,11460577,97023549}
 --Fusion Summon Functions
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--condition
-	return aux.CanActivateSkill(tp) and s.fusTarget(e,tp,eg,ep,ev,re,r,rp,0) and Duel.GetFlagEffect(ep,id)<2
+	return aux.CanActivateSkill(tp) and Duel.GetFlagEffect(ep,id)<2 and s.fusTarget(e,tp,eg,ep,ev,re,r,rp,0)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
-   Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
-   Duel.Hint(HINT_CARD,tp,id)
-   --Pre-Fusion check
-   local g1=s.fusTarget(e,tp,eg,ep,ev,re,r,rp,0)
-   --TPD Register
-   Duel.RegisterFlagEffect(ep,id,0,0,0)
-   --Fusion Summon "Cyber Blader" using either "Etoile Cyber" or "Blade Skater" from field and the other from hand, Deck or GY
-   s.fusTarget(e,tp,eg,ep,ev,re,r,rp,1)
-   local mg=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_MZONE+LOCATION_HAND+LOCATION_DECK,0,nil)
-   Duel.SetFusionMaterial(mg)
-   local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-   Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-   local tc=Duel.SelectMatchingCard(tp,s.fusfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,mg,ft):GetFirst()
-   local fmat=Group.CreateGroup()
-   if tc then
+	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
+	Duel.Hint(HINT_CARD,tp,id)
+	--Pre-Fusion check
+	local g1=s.fusTarget(e,tp,eg,ep,ev,re,r,rp,0)
+	--TPD Register
+	Duel.RegisterFlagEffect(ep,id,0,0,0)
+	--Fusion Summon "Cyber Blader" using either "Etoile Cyber" or "Blade Skater" from field and the other from hand, Deck or GY
+	s.fusTarget(e,tp,eg,ep,ev,re,r,rp,1)
+	local mg=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_MZONE+LOCATION_HAND+LOCATION_DECK,0,nil)
+	Duel.SetFusionMaterial(mg)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local tc=Duel.SelectMatchingCard(tp,s.fusfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp):GetFirst()
+	local fmat=Group.CreateGroup()
+	if tc then
 		mg:Match(s.matfilter,tc)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
 		local sc1=mg:FilterSelect(tp,Card.IsLocation,1,1,nil,LOCATION_MZONE):GetFirst()
@@ -50,18 +49,19 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	tc:RegisterEffect(e1)
 end
-function s.fusDiscardFilter(c,e,tp,m,ft)
-	return c:IsDiscardable() and Duel.IsExistingMatchingCard(s.fusfilter,tp,LOCATION_EXTRA,0,1,c,e,tp,m-c,ft)
+function s.fusDiscardFilter(c,e,tp)
+	return c:IsDiscardable() and Duel.IsExistingMatchingCard(s.fusfilter,tp,LOCATION_EXTRA,0,1,c,e,tp)
 end
-function s.fusfilter(c,e,tp,mg,ft)
+function s.fusfilter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,true) and c:IsCode(10248389) 
 end
 function s.fusTarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	local mg=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_MZONE+LOCATION_HAND+LOCATION_DECK,0,nil)
 	Duel.SetFusionMaterial(mg)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if chk==0 then return ft>-1 and Duel.IsExistingMatchingCard(s.fusDiscardFilter,tp,LOCATION_HAND,0,1,nil,e,tp,mg,ft) and mg:FilterCount(Card.IsLocation,nil,LOCATION_MZONE)>0 end
-	Duel.DiscardHand(tp,s.fusDiscardFilter,1,1,REASON_COST+REASON_DISCARD,nil,e,tp,mg,ft)
+	if chk==0 then return ft>-1 and mg:FilterCount(Card.IsLocation,nil,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(s.fusDiscardFilter,tp,LOCATION_HAND,0,1,nil,e,tp) end
+	Duel.DiscardHand(tp,s.fusDiscardFilter,1,1,REASON_COST+REASON_DISCARD,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.mfilter(c,code)

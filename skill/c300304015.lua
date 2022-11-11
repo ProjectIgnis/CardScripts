@@ -4,9 +4,9 @@ local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop,1)
 end
-s.listed_series={0x4093}
+s.listed_series={SET_CYBERDARK}
 function s.filter(c)
-	return c:IsSetCard(0x4093) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_CYBERDARK) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	local b1=Duel.GetFlagEffect(ep,id)==0 and Duel.GetLP(tp)<=3000
@@ -75,4 +75,3 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-	

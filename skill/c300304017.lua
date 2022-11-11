@@ -13,7 +13,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	--OPD register
 	Duel.RegisterFlagEffect(ep,id,0,0,0)
 	--Energize!
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsType,TYPE_MONSTER),tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsMonster),tp,LOCATION_MZONE,0,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)
 	local att=Duel.AnnounceAttribute(tp,1,ATTRIBUTE_FIRE|ATTRIBUTE_WATER|ATTRIBUTE_EARTH|ATTRIBUTE_WIND)
 	for tc in g:Iter() do
@@ -41,8 +41,8 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_ADJUST)
-	e1:SetRange(0x5f)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e1:SetRange(0x5f)
 	e1:SetLabel(att)
 	e1:SetCondition(s.con)
 	e1:SetOperation(s.op)
@@ -51,12 +51,12 @@ end
 function s.con(e)
 	local tp=e:GetHandlerPlayer()
 	local att=e:GetLabel()
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsType,TYPE_MONSTER),tp,LOCATION_MZONE,0,nil):Filter(Card.IsAttribute,nil,att)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsMonster),tp,LOCATION_MZONE,0,nil):Filter(Card.IsAttribute,nil,att)
 	return #g==0
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local att=e:GetLabel()
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsType,TYPE_MONSTER),tp,LOCATION_MZONE,0,nil):Filter(Card.IsAttribute,nil,att)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsMonster),tp,LOCATION_MZONE,0,nil):Filter(Card.IsAttribute,nil,att)
 	if #g==0 then
 		Duel.Hint(HINT_SKILL_FLIP,tp,id|(2<<32))
 	end

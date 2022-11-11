@@ -29,12 +29,12 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_SWAP_BASE_AD)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xf}
+s.listed_series={SET_OJAMA}
 function s.atcon(e)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0xf),e:GetHandler():GetControler(),LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,SET_OJAMA),e:GetHandler():GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function s.costfilter(c)
-	return c:IsSetCard(0xf) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_OJAMA) and c:IsAbleToGraveAsCost()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end
@@ -43,7 +43,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0xf) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_OJAMA) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end

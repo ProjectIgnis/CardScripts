@@ -40,7 +40,7 @@ function s.tgfilter(c,e)
 	return c:IsCanBeEffectTarget(e) and c:IsAbleToDeck() and (c:IsLocation(LOCATION_ONFIELD) or c:IsRitualMonster())
 end
 function s.rescon(sg,e,tp)
-	return sg:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE)
+	return sg:FilterCount(Card.IsLocation,nil,LOCATION_GRAVE)==1
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

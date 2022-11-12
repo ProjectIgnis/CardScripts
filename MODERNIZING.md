@@ -127,4 +127,4 @@ Constants like location, timing, resets, etc. should be binary or'd (op `|`) ins
 
 ## Remove the `IsRelateToEffect` check from cards that need to remain face-up to resolve their effects
 
-TODO
+The behaviour of continuous-like Spells/Traps which must remain face-up on the field to resolve their activated effects is now automatically handled in the core, rendering the check redundant.

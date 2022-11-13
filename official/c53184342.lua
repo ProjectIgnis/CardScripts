@@ -59,11 +59,15 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
+function s.distg(c,eqpc)
+	return c:IsNegatableMonster() or (eqpc and c:IsFaceup() and c:GetAttack()>0)
+end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsNegatableMonster() end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsNegatableMonster,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	local eqpc=Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,TYPE_EQUIP),tp,LOCATION_ONFIELD,0,1,nil)
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.distg(chkc,eqpc) end
+	if chk==0 then return Duel.IsExistingTarget(s.distg,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,eqpc) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_NEGATE)
-	local g=Duel.SelectTarget(tp,Card.IsNegatableMonster,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+	local g=Duel.SelectTarget(tp,s.distg,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,eqpc)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -1,19 +1,19 @@
 --王神鳥シムルグ
---Simorgh, Bird of Kings
+--Simorgh, Bird of Sovereignty
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
+	--Link Summon
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,nil,2,3,s.lcheck)
-	--cannot be link material
+	--Cannot be Link Material
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	--cannot target
+	--Opponent cannot target Winged-Beast monsters
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.indtg)
 	e2:SetValue(aux.tgoval)
 	c:RegisterEffect(e2)
-	--Destroy replace
+	--Destruction replacement
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.desreptg)
 	e3:SetOperation(s.desrepop)
 	c:RegisterEffect(e3)
-	--special summon
+	--Special Summon 1 Winged-Beast monster from the Deck
 	local e4=Effect.CreateEffect(c)
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e4:SetDescription(aux.Stringid(id,0))
@@ -43,7 +43,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x12d}
+s.listed_series={SET_SIMORGH}
 function s.lcheck(g,lc,sumtype,tp)
 	return g:IsExists(Card.IsRace,1,nil,RACE_WINGEDBEAST,lc,sumtype,tp)
 end
@@ -52,7 +52,7 @@ function s.indtg(e,c)
 	return c==oc or (c:IsRace(RACE_WINGEDBEAST) and oc:GetLinkedGroup():IsContains(c))
 end
 function s.repfilter(c,e)
-	return c:IsFaceup() and c:IsSetCard(0x12d)
+	return c:IsFaceup() and c:IsSetCard(SET_SIMORGH)
 		and c:IsDestructable(e) and not c:IsStatus(STATUS_DESTROY_CONFIRMED)
 end
 function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -72,19 +72,23 @@ function s.desrepop(e,tp,eg,ep,ev,re,r,rp)
 	g:GetFirst():SetStatus(STATUS_DESTROY_CONFIRMED,false)
 	Duel.Destroy(g,REASON_EFFECT+REASON_REPLACE)
 end
-function s.spfilter(c,e,tp)
-	local ct=Duel.GetLocationCount(0,LOCATION_SZONE)+Duel.GetLocationCount(1,LOCATION_SZONE)
-	return c:IsRace(RACE_WINGEDBEAST) and ct>0 and c:IsLevelBelow(ct) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+function s.sequence(c)
+	return c:GetSequence()<5
+end
+function s.spfilter(c,e,tp,lv)
+	return c:IsRace(RACE_WINGEDBEAST) and c:IsLevelBelow(lv) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and 
-		Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp) end
+	local ct=5*2-Duel.GetMatchingGroupCount(s.sequence,0,LOCATION_SZONE,LOCATION_SZONE,nil)
+	if chk==0 then return ct>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and 
+		Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp,ct) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	local ct=5*2-Duel.GetMatchingGroupCount(s.sequence,0,LOCATION_SZONE,LOCATION_SZONE,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp,ct)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end

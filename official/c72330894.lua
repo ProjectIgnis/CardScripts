@@ -72,21 +72,18 @@ function s.desrepop(e,tp,eg,ep,ev,re,r,rp)
 	g:GetFirst():SetStatus(STATUS_DESTROY_CONFIRMED,false)
 	Duel.Destroy(g,REASON_EFFECT+REASON_REPLACE)
 end
-function s.sequence(c)
-	return c:GetSequence()<5
-end
 function s.spfilter(c,e,tp,lv)
 	return c:IsRace(RACE_WINGEDBEAST) and c:IsLevelBelow(lv) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ct=5*2-Duel.GetMatchingGroupCount(s.sequence,0,LOCATION_SZONE,LOCATION_SZONE,nil)
+	local ct=5*2-Duel.GetMatchingGroupCount(nil,0,LOCATION_STZONE,LOCATION_STZONE,nil)
 	if chk==0 then return ct>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and 
 		Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp,ct) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	local ct=5*2-Duel.GetMatchingGroupCount(s.sequence,0,LOCATION_SZONE,LOCATION_SZONE,nil)
+	local ct=5*2-Duel.GetMatchingGroupCount(nil,0,LOCATION_STZONE,LOCATION_STZONE,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp,ct)
 	if #g>0 then

@@ -1,13 +1,14 @@
 --キャッスル・ゲート
+--Castle Gate
 local s,id=GetID()
 function s.initial_effect(c)
-	--battle indestructable
+	--Cannot be destroyed by battle
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	--damage
+	--Tribute 1 Level 5 or lower monster to inflict damage
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DAMAGE)
@@ -15,19 +16,19 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
-	e2:SetCondition(s.condition)
+	e2:SetCondition(function(e) return e:GetHandler():IsAttackPos() end)
 	e2:SetCost(s.cost)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsAttackPos()
+function s.cfilter(c)
+	return c:IsLevelBelow(5) and c:GetTextAttack()>0
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsLevelBelow,1,false,nil,nil,5) end
-	local sg=Duel.SelectReleaseGroupCost(tp,Card.IsLevelBelow,1,1,false,nil,nil,5)
-	e:SetLabel(sg:GetFirst():GetBaseAttack())
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil) end
+	local sg=Duel.SelectReleaseGroupCost(tp,s.cfilter,1,1,false,nil,nil)
+	e:SetLabel(sg:GetFirst():GetTextAttack())
 	Duel.Release(sg,REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

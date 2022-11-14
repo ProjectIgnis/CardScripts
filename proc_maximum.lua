@@ -625,6 +625,7 @@ FLAG_DOUBLE_TRIB_GALAXY=160317115
 FLAG_DOUBLE_TRIB_WIND=160011022 -- Bluegrass Stealer
 FLAG_DOUBLE_TRIB_PSYCHIC=160011122
 FLAG_DOUBLE_TRIB_LEVEL7=160205051 -- Double Twin Dragon
+FLAG_DOUBLE_TRIB_GREYSTORM=160414002 -- Cosmo Predictor
 function Card.AddDoubleTribute(c,id,otfilter,eftg,reset,...)
 	for i,flag in ipairs{...} do
 		c:RegisterFlagEffect(flag,reset,0,1)

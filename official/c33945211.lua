@@ -66,8 +66,7 @@ function s.repfilter(c,tp)
 		and c:IsReason(REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,69832741)
-		and c:IsAbleToRemove() and eg:IsExists(s.repfilter,1,nil,tp) end
+	if chk==0 then return c:IsAbleToRemove() and eg:IsExists(s.repfilter,1,nil,tp) end
 	return Duel.SelectEffectYesNo(tp,c,96)
 end
 function s.repval(e,c)

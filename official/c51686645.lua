@@ -1,5 +1,5 @@
 --捲怒重来
---Kendochourai
+--Revenge Rally
 --Logical Nonsense
 
 --Substitute ID
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	--Draw 1 card, or 2 cards and discard 1
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetCategory(CATEGORY_DRAW)
+	e2:SetCategory(CATEGORY_DRAW+CATEGORY_HANDES)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e2:SetCode(EVENT_TO_GRAVE)
 	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_PLAYER_TARGET)

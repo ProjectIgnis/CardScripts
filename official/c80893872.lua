@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	-- Reduce level then discard
 	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_HANDES)
+	e2:SetCategory(CATEGORY_LVCHANGE+CATEGORY_HANDES)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1)

@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	--shuffle
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
-	e3:SetCategory(CATEGORY_DRAW)
+	e3:SetCategory(CATEGORY_DRAW+CATEGORY_HANDES)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e3:SetCode(EVENT_BATTLE_DAMAGE)
 	e3:SetRange(LOCATION_SZONE)

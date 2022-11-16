@@ -33,14 +33,11 @@ function s.repfilter(c,tp)
 		and c:IsControler(tp) and c:IsReason(REASON_EFFECT+REASON_BATTLE) and not c:IsReason(REASON_REPLACE)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 and e:GetHandler():IsAbleToRemove()
-		and not e:GetHandler():IsStatus(STATUS_DESTROY_CONFIRMED) and eg:IsExists(s.repfilter,1,nil,tp) end
-	if Duel.SelectEffectYesNo(tp,e:GetHandler(),96) then
-		Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
-		return true
-	else
-		return false
-	end
+	local c=e:GetHandler()
+	if chk==0 then return not c:IsStatus(STATUS_DESTROY_CONFIRMED)
+		and not (c:IsLocation(LOCATION_GRAVE) and Duel.IsPlayerAffectedByEffect(tp,69832741))
+		and c:IsAbleToRemove() and eg:IsExists(s.repfilter,1,nil,tp)
+	return Duel.SelectEffectYesNo(tp,c,96)
 end
 function s.repval(e,c)
 	return s.repfilter(c,e:GetHandlerPlayer())

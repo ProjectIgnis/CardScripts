@@ -1,5 +1,5 @@
 -- 剣神官ムドラ
--- Mudora the Cestus Oracle
+-- Mudora the Sword Oracle
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -69,7 +69,7 @@ function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return c~=chkc and chkc:IsLocation(LOCATION_MZONE+LOCATION_GRAVE) and s.rmfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(s.rmfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,1,c) end
 	local max=(Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_EXCHANGE_SPIRIT),tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil) and 5 or 3)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectTarget(tp,s.rmfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,1,max,c)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,0,0)
 end

@@ -1,3 +1,4 @@
+--アローザル・ハイドライブ・モナーク
 --Rousing Hydradrive Monarch
 --Made by Beetron-1 Beetletop
 local s,id=GetID()

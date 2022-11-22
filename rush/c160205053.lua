@@ -18,7 +18,7 @@ function s.initial_effect(c)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsMonster,tp,LOCATION_GRAVE,0,nil)
-	return #g>0 and not g:IsExists(aux.NOT(Card.IsRace,RACE_PSYCHIC|RACE_OMEGAPSYCHIC),1,nil)
+	return #g>0 and not g:IsExists(aux.NOT(Card.IsRace),1,nil,RACE_PSYCHIC|RACE_OMEGAPSYCHIC)
 end
 function s.cfilter(c,e,tp)
 	return c:IsAbleToGraveAsCost() and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,c,e,tp)

@@ -45,6 +45,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local rg=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 	if #rg>0 and Duel.SpecialSummon(rg,0,tp,tp,false,false,POS_FACEUP)>0 and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,CARD_CAN_D)
 		and c:IsRelateToEffect(e) and c:IsFaceup() then
+		Duel.BreakEffect()
 		--Increase ATK
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

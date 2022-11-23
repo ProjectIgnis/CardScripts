@@ -19,14 +19,15 @@ function s.initial_effect(c)
 	e2:SetTarget(s.eftg)
 	e2:SetLabelObject(e1)
 	c:RegisterEffect(e2)
-	--Return Link monsters to Extra Deck
+	--Return 2 Link monsters to Extra Deck
 	local e3=Effect.CreateEffect(c)
+	e3:SetCategory(CATEGORY_TOEXTRA)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_PHASE+PHASE_END)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCountLimit(1,id)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e3:SetCondition(s.tecon)
+	e3:SetCondition(function(_,tp) return Duel.IsTurnPlayer(tp) end)
 	e3:SetCost(aux.bfgcost)
 	e3:SetTarget(s.tetg)
 	e3:SetOperation(s.teop)
@@ -71,24 +72,19 @@ function s.extraval(chk,summon_type,e,...)
 		end
 	end
 end
-function s.tefilter1(c)
-	return c:IsRace(RACE_CYBERSE) and c:IsType(TYPE_LINK) and Duel.IsExistingTarget(s.tefilter2,0,LOCATION_GRAVE,0,1,c)
+function s.tedfilter(c,e)
+	return c:IsLinkMonster() and c:IsCanBeEffectTarget(e)
 end
-function s.tefilter2(c)
-	return c:IsType(TYPE_LINK)
-end
-function s.tecon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.tefilter1,tp,LOCATION_GRAVE,0,1,nil) and Duel.GetTurnPlayer()==tp
+function s.rescon(sg,e,tp)
+	return sg:IsExists(Card.IsRace,1,nil,RACE_CYBERSE)
 end
 function s.tetg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return Duel.IsExistingTarget(s.tefilter1,tp,LOCATION_GRAVE,0,1,nil) and Duel.IsExistingTarget(s.tefilter2,tp,LOCATION_GRAVE,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g1=Duel.SelectTarget(tp,s.tefilter1,tp,LOCATION_GRAVE,0,1,1,nil)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g2=Duel.SelectTarget(tp,s.tefilter2,tp,LOCATION_GRAVE,0,1,1,g1:GetFirst())
-	g1:Merge(g2)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,g1,2,0,0)
+	local rg=Duel.GetMatchingGroup(s.tedfilter,tp,LOCATION_GRAVE,0,nil,e)
+	if chk==0 then return #rg>=2 and aux.SelectUnselectGroup(rg,e,tp,2,2,s.rescon,0) end
+	local g=aux.SelectUnselectGroup(rg,e,tp,2,2,s.rescon,1,tp,HINTMSG_TODECK)
+	Duel.SetTargetCard(g)
+	Duel.SetOperationInfo(0,CATEGORY_TOEXTRA,g,#g,0,0)
 end
 function s.teop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)

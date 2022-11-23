@@ -33,7 +33,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	return true
 end
 function s.cfilter(c,e,tp)
-	return c:IsAttribute(ATTRIBUTE_DARK|ATTRIBUTE_LIGHT)
+	return c:IsAttribute(ATTRIBUTE_DARK|ATTRIBUTE_LIGHT) and c:HasLevel()
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND|LOCATION_EXTRA,0,1,nil,e,tp,c:GetOriginalRace(),c:GetOriginalLevel(),c:GetOriginalAttribute())
 end
 function s.spfilter(c,e,tp,race,lvl,att)

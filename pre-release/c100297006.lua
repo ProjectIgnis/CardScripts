@@ -45,7 +45,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.tgfilter(c,e,tp)
-	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_DARK)
+	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_DARK) and c:HasLevel()
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK|LOCATION_EXTRA,0,1,nil,e,tp,c:GetOriginalLevel(),c:GetOriginalRace())
 end
 function s.spfilter(c,e,tp,lvl,race)

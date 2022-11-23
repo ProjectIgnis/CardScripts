@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--special summon
+	--Special Summon procedure
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
@@ -13,19 +13,20 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--must attack
+	--Monsters in ATK position must attack
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_MUST_ATTACK)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(0,LOCATION_MZONE)
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsAttackPos))
 	e2:SetCondition(s.atkcon)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_MUST_ATTACK_MONSTER)
 	e3:SetValue(s.atklimit)
 	c:RegisterEffect(e3)
-	--special summon
+	--Destroy monsters and inflict damage
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,0))
 	e4:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)
@@ -71,7 +72,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
 	if a~=c then d=a end
 	return c:IsRelateToBattle() and c:IsFaceup()
-		and d and d:GetLocation()==LOCATION_GRAVE and d:IsMonster()
+		and d and d:IsLocation(LOCATION_GRAVE) and d:IsMonster()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -87,8 +88,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atkcon(e)
-	local ph=Duel.GetCurrentPhase()
-	return Duel.GetTurnPlayer()~=e:GetHandlerPlayer() and ph>=0x8 and ph<=0x20
+	return Duel.IsTurnPlayer(1-e:GetHandlerPlayer()) and Duel.IsBattlePhase()
 end
 function s.atklimit(e,c)
 	return c==e:GetHandler()

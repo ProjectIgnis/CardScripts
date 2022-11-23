@@ -22,9 +22,9 @@ function s.cfilter(c,e,tp,code)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter2,tp,LOCATION_DECK,0,2,c) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter2,tp,LOCATION_DECK+LOCATION_HAND,0,2,c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.cfilter2,tp,LOCATION_DECK,0,2,2,c)
+	local g=Duel.SelectMatchingCard(tp,s.cfilter2,tp,LOCATION_DECK+LOCATION_HAND,0,2,2,c)
 	g:AddCard(c)
 	Duel.SendtoGrave(g,REASON_COST)
 end

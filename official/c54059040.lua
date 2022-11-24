@@ -28,7 +28,7 @@ end
 function s.posfilter(c,e)
 	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsAttribute(ATTRIBUTE_ALL-ATTRIBUTE_WATER) and (not e or c:IsRelateToEffect(e))
 end
-function s.target2(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(s.posfilter,1,nil)
 		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.SetTargetCard(eg)

@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--Add 1 non-WIND "roid" monster to the hand
+	--search
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	--Prevent effects the negateion of activations that include a Fusion Summon
+	--prevent fusion negation
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetCost(s.cost)
 	e2:SetOperation(s.fusop)
 	c:RegisterEffect(e2)
-	--Change itself to Dragon type
+	--race change
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetType(EFFECT_TYPE_IGNITION)
@@ -33,14 +33,14 @@ function s.initial_effect(c)
 	e3:SetOperation(s.rcop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_ROID}
+s.listed_series={0x16}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDiscardable() end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 end
 function s.thfilter(c)
-	return c:IsMonster() and c:IsSetCard(SET_ROID) and c:IsAttribute(ATTRIBUTE_ALL-ATTRIBUTE_WIND) and c:IsAbleToHand()
+	return c:IsSetCard(0x16) and not c:IsAttribute(ATTRIBUTE_WIND) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

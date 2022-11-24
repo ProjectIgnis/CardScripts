@@ -1,8 +1,7 @@
 --陽炎獣 グリプス
---Hazy Flame Griffin
 local s,id=GetID()
 function s.initial_effect(c)
-	--Cannot be targeted by the opponent's effects
+	--cannot be target
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
@@ -10,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(aux.tgoval)
 	c:RegisterEffect(e1)
-	--Special Summon itself from the hand
+	--special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_SPSUMMON_PROC)
@@ -20,11 +19,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c)
-	return c:IsMonster() and (c:IsFacedown() or c:IsAttribute(ATTRIBUTE_ALL-ATTRIBUTE_FIRE))
+	return (c:IsFacedown() or not c:IsAttribute(ATTRIBUTE_FIRE)) and c:IsMonster()
 end
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 		and	Duel.GetFieldGroupCount(c:GetControler(),0,LOCATION_MZONE)>0
-		and not Duel.IsExistingMatchingCard(s.cfilter,c:GetControler(),LOCATION_MZONE|LOCATION_GRAVE,0,1,nil)
+		and not Duel.IsExistingMatchingCard(s.cfilter,c:GetControler(),LOCATION_MZONE+LOCATION_GRAVE,0,1,nil)
 end

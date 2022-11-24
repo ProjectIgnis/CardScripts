@@ -2,20 +2,20 @@
 --Snowdust Giant
 local s,id=GetID()
 function s.initial_effect(c)
-	--Xyz Summon procedure
+	--xyz summon
 	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_WATER),4,2)
 	c:EnableReviveLimit()
-	--Add Ice counters to monsters on the field
+	--counter
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetCountLimit(1)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCost(aux.dxmcostgen(1,1,nil))
+	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
-	--Decrease the ATK of non-WATER monsters
+	--atkdown
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
@@ -28,6 +28,10 @@ end
 s.counter_list={0x1015}
 function s.cfilter(c)
 	return c:IsAttribute(ATTRIBUTE_WATER) and not c:IsPublic()
+end
+function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
+	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
@@ -47,7 +51,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atktg(e,c)
-	return c:IsAttribute(ATTRIBUTE_ALL-ATTRIBUTE_WATER)
+	return not c:IsAttribute(ATTRIBUTE_WATER)
 end
 function s.atkval(e,c)
 	return Duel.GetCounter(0,1,1,0x1015)*-200

@@ -1,14 +1,13 @@
 --A・O・J サウザンド・アームズ
---Ally of Justice Thousand Arms
 local s,id=GetID()
 function s.initial_effect(c)
-	--Can attack all LIGHT monsters
+	--attack all
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_ATTACK_ALL)
 	e1:SetValue(s.atkfilter)
 	c:RegisterEffect(e1)
-	--Destroy a non-LIGHT monster before damage calculation
+	--destroy
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DESTROY)
@@ -26,7 +25,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 		local c=e:GetHandler()
 		local a=Duel.GetAttacker()
 		if a==c then a=Duel.GetAttackTarget() end
-		return a and a:IsAttribute(ATTRIBUTE_ALL-ATTRIBUTE_LIGHT)
+		return a and not a:IsAttribute(ATTRIBUTE_LIGHT)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,e:GetHandler(),1,0,0)
 end

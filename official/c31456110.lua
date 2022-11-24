@@ -1,8 +1,7 @@
 --ヴェルズ・ゴーレム
---Evilswarm Golem
 local s,id=GetID()
 function s.initial_effect(c)
-	--Destroy 1 level 5 or higher non-DARK monsters
+	--destroy
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -15,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_ALL-ATTRIBUTE_DARK) and c:IsLevelAbove(5)
+	return c:IsFaceup() and c:IsAttribute(0x5f) and c:IsLevelAbove(5)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end

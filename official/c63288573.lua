@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	c:SetSPSummonOnce(id)
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,s.matfilter,1,1)
-	--stats up
+	--Gain 100 ATK per Spell in your GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetValue(s.atkval)
 	c:RegisterEffect(e1)
-	--search
+	--Add to hand 1 "Sky Striker" Spell from the GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -24,15 +24,15 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x115}
+s.listed_series={SET_SKY_STRIKER}
 function s.matfilter(c,scard,sumtype,tp)
-	return c:IsSetCard(0x1115,scard,sumtype,tp) and not c:IsAttribute(ATTRIBUTE_FIRE,scard,sumtype,tp)
+	return c:IsSetCard(SET_SKY_STRIKER_ACE,scard,sumtype,tp) and c:IsAttribute(ATTRIBUTE_ALL-ATTRIBUTE_FIRE,scard,sumtype,tp)
 end
 function s.atkval(e)
 	return Duel.GetMatchingGroupCount(Card.IsSpell,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil)*100
 end
-function s.thfilter(c,tp)
-	return c:IsSetCard(0x115) and c:IsSpell() and c:IsAbleToHand()
+function s.thfilter(c)
+	return c:IsSetCard(SET_SKY_STRIKER) and c:IsSpell() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end

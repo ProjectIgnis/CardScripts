@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	c:SetSPSummonOnce(id)
 	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--Link summon procedure
+	--Link Summon procedure
 	Link.AddProcedure(c,s.matfilter,1,1)
 	--Targeted monster cannot attack
 	local e1=Effect.CreateEffect(c)
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.natg)
 	e1:SetOperation(s.naop)
 	c:RegisterEffect(e1)
-	--Gain 100 LP each time you activate a "Sky Striker" spell card or effect
+	--Gain 100 LP each time you activate a "Sky Striker" Spell card or effect
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_CHAINING)
@@ -31,14 +31,13 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_CHAIN_SOLVED)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCondition(s.lpcon)
+	e3:SetCondition(function(e) return e:GetHandler():GetFlagEffect(1)>0 end)
 	e3:SetOperation(s.lpop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x115}
-
+s.listed_series={SET_SKY_STRIKER}
 function s.matfilter(c,scard,sumtype,tp)
-	return c:IsSetCard(0x1115,scard,sumtype,tp) and not c:IsAttribute(ATTRIBUTE_EARTH,scard,sumtype,tp)
+	return c:IsSetCard(SET_SKY_STRIKER_ACE,scard,sumtype,tp) and c:IsAttribute(ATTRIBUTE_ALL-ATTRIBUTE_EARTH,scard,sumtype,tp)
 end
 function s.natg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsFaceup() end
@@ -59,13 +58,9 @@ function s.naop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 	end
 end
-function s.lpcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return c:GetFlagEffect(1)>0
-end
 function s.lpop(e,tp,eg,ep,ev,re,r,rp)
 	local c=re:GetHandler()
-	if re:IsActiveType(TYPE_SPELL) and rp==tp and c:IsSetCard(0x115) then
+	if re:IsSpellEffect() and rp==tp and c:IsSetCard(SET_SKY_STRIKER) then
 		Duel.Hint(HINT_CARD,0,id)
 		Duel.Recover(tp,100,REASON_EFFECT)
 	end

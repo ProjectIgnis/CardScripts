@@ -1,17 +1,17 @@
 --閃刀姫-ハヤテ
---Brandish Maiden Hayate
+--Sky Striker Ace -Hayate
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetSPSummonOnce(id)
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,s.matfilter,1,1)
-	--direct attack
+	--Can attack directly
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_DIRECT_ATTACK)
 	c:RegisterEffect(e1)
-	--to grave
+	--Send 1 "Sky Striker" card from Deck to the GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOGRAVE)
@@ -21,12 +21,12 @@ function s.initial_effect(c)
 	e2:SetOperation(s.gyop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x115}
+s.listed_series={SET_SKY_STRIKER}
 function s.matfilter(c,scard,sumtype,tp)
-	return c:IsSetCard(0x1115,scard,sumtype,tp) and not c:IsAttribute(ATTRIBUTE_WIND,scard,sumtype,tp)
+	return c:IsSetCard(SET_SKY_STRIKER_ACE,scard,sumtype,tp) and c:IsAttribute(ATTRIBUTE_ALL-ATTRIBUTE_WIND,scard,sumtype,tp)
 end
 function s.tgfilter(c)
-	return c:IsSetCard(0x115) and c:IsAbleToGrave()
+	return c:IsSetCard(SET_SKY_STRIKER) and c:IsAbleToGrave()
 end
 function s.gytg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -39,4 +39,3 @@ function s.gyop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(g,REASON_EFFECT)
 	end
 end
-

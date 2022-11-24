@@ -2,7 +2,7 @@
 --Sirenorca
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	--Special Summon itself from the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
@@ -11,12 +11,12 @@ function s.initial_effect(c)
 	e1:SetCondition(s.spcon)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	--change level
+	--Change level of all monsters you control
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e2:SetCondition(s.lvcon)
+	e2:SetCondition(function(e) return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1 end )
 	e2:SetTarget(s.lvtg)
 	e2:SetOperation(s.lvop)
 	c:RegisterEffect(e2)
@@ -31,9 +31,6 @@ function s.spcon(e,c)
 		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil,RACE_FISH)
 		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil,RACE_WINGEDBEAST)
 end
-function s.lvcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1
-end
 function s.filter(c)
 	return c:IsFaceup() and c:HasLevel()
 end
@@ -46,7 +43,7 @@ end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local lv=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)
-	for tc in aux.Next(g) do
+	for tc in g:Iter() do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)
@@ -63,5 +60,5 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e2,tp)
 end
 function s.actfilter(e,c)
-	return c:GetControler()==e:GetHandlerPlayer() and c:IsMonster() and not c:IsAttribute(ATTRIBUTE_WATER)
+	return c:GetControler()==e:GetHandlerPlayer() and c:IsMonster() and c:IsAttribute(ATTRIBUTE_ALL-ATTRIBUTE_WATER)
 end

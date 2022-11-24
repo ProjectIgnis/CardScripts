@@ -2,7 +2,7 @@
 --Speedroid CarTurbo
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	--Special Summon itself from the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--atk change
+	--All WIND monsters gain 800 ATK
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_ATKCHANGE)
@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.adop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x2016}
+s.listed_series={SET_SPEEDROID}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsAttribute,ATTRIBUTE_WIND),tp,LOCATION_MZONE,0,1,nil)
 end
@@ -50,10 +50,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.aclimit(e,re,tp)
 	local rc=re:GetHandler()
-	return re:IsActiveType(TYPE_MONSTER) and not rc:IsAttribute(ATTRIBUTE_WIND)
+	return re:IsMonsterEffect() and rc:IsAttribute(ATTRIBUTE_ALL-ATTRIBUTE_WIND)
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x2016) and c:IsMonster() and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(SET_SPEEDROID) and c:IsMonster() and c:IsAbleToRemoveAsCost()
 end
 function s.adcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -69,8 +69,8 @@ function s.adtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.adop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsAttribute,ATTRIBUTE_WIND),tp,LOCATION_MZONE,0,nil)
-	local tc=g:GetFirst()
-	for tc in aux.Next(g) do
+	if #g==0 then return end
+	for tc g:Iter() do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)

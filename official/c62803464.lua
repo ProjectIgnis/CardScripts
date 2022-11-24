@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-s.listed_series={0xbf}
+s.listed_series={SET_CHARMER}
 function s.disfilter(c,tp,cc)
 	return c:IsAttribute(ATTRIBUTE_EARTH) and c:IsDiscardable()
 		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,cc:GetOriginalRace(),c:GetOriginalRace())
@@ -70,8 +70,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.actlimit(e,re,rp)
-	local rc=re:GetHandler()
-	return re:IsActiveType(TYPE_MONSTER) and not rc:IsAttribute(ATTRIBUTE_EARTH)
+	return re:IsMonsterEffect() and re:GetHandler():IsAttribute(ATTRIBUTE_ALL-ATTRIBUTE_EARTH)
 end
 function s.cfilter(c,tp)
 	return c:GetPreviousAttributeOnField()&ATTRIBUTE_EARTH~=0 and c:IsPreviousControler(tp)

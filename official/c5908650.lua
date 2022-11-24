@@ -2,7 +2,7 @@
 --Shopina the Melodious Maestra
 local s,id=GetID()
 function s.initial_effect(c)
-	--to hand
+	--Add 1 LIGHT Fairy monster from the GY to the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND)
@@ -17,7 +17,8 @@ function s.initial_effect(c)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_CHAIN,s.chainfilter)
 end
 function s.chainfilter(re,tp,cid)
-	return not (re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsAttribute(ATTRIBUTE_LIGHT))
+	local att=Duel.GetChainInfo(cid,CHAININFO_TRIGGERING_ATTRIBUTE)
+	return not (re:IsMonsterEffect() and not att&(ATTRIBUTE_ALL-ATTRIBUTE_LIGHT)~=0)
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_CHAIN)==0 end
@@ -32,7 +33,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,1),nil)
 end
 function s.aclimit(e,re,tp)
-	return re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsAttribute(ATTRIBUTE_LIGHT)
+	return re:IsMonsterEffect() and re:GetHandler():IsAttribute(ATTRIBUTE_ALL-ATTRIBUTE_LIGHT)
 end
 function s.filter(c)
 	return c:IsRace(RACE_FAIRY) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsAbleToHand()

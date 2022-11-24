@@ -1,6 +1,5 @@
 --ＷＷ－スノウ・ベル
 --Windwitch - Snow Bell
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon itself from hand
@@ -26,7 +25,7 @@ function s.cfilter1(c)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_WIND)
 end
 function s.cfilter2(c)
-	return c:IsFacedown() or not c:IsAttribute(ATTRIBUTE_WIND)
+	return c:IsFacedown() or c:IsAttribute(ATTRIBUTE_ALL-ATTRIBUTE_WIND)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter1,tp,LOCATION_MZONE,0,2,nil)

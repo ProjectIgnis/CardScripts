@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-s.listed_series={0xbf}
+s.listed_series={SET_CHARMER}
 	--Discard this card + 1 WIND monster
 function s.dfilter(c)
 	return c:IsAttribute(ATTRIBUTE_WIND) and c:IsDiscardable()
@@ -71,8 +71,7 @@ function s.shop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Can only activate WIND monsters' effects for rest of turn
 function s.actlimit(e,re,rp)
-	local rc=re:GetHandler()
-	return re:IsActiveType(TYPE_MONSTER) and not rc:IsAttribute(ATTRIBUTE_WIND)
+	return re:IsMonsterEffect() and re:GetHandler():IsAttribute(ATTRIBUTE_ALL-ATTRIBUTE_WIND)
 end
 	--Check for a WIND monster you had
 function s.cfilter(c,tp)

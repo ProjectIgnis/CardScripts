@@ -52,7 +52,7 @@ function s.spfilter(c,e,tp,lvl,race)
 	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:GetOriginalLevel()==lvl and c:IsOriginalRace(race)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and ((c:IsLocation(LOCATION_DECK) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0)
-		or (c:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp)>0))
+		or (c:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0))
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.tgfilter(chkc,e,tp) end

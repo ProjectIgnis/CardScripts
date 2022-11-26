@@ -27,17 +27,18 @@ function s.spcon(e,c)
 	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_HAND,0)==1
 		and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
-function s.filter(c,tp)
+function s.repfilter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
 		and c:IsSetCard(0xb) and not c:IsReason(REASON_REPLACE)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return not Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),69832741) and Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)==0
-		and eg:IsExists(s.filter,1,nil,tp) and e:GetHandler():IsAbleToRemove() end
-	return Duel.SelectEffectYesNo(tp,e:GetHandler(),96)
+	local c=e:GetHandler()
+	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)==0
+		and c:IsAbleToRemove() and eg:IsExists(s.repfilter,1,nil,tp) end
+	return Duel.SelectEffectYesNo(tp,c,96)
 end
 function s.repval(e,c)
-	return s.filter(c,e:GetHandlerPlayer())
+	return s.repfilter(c,e:GetHandlerPlayer())
 end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT+REASON_REPLACE)

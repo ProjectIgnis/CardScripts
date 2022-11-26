@@ -1,5 +1,5 @@
 --アルグールマゼラ
---Al Ghoul Mazera
+--Alghoul Mazera
 --Logical Nonsense
 
 --Substitute ID
@@ -29,19 +29,18 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 	--If your Zombie monster(s) would be destroyed by battle or effect
-function s.filter(c,tp)
+function s.repfilter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsRace(RACE_ZOMBIE)
 		and c:IsReason(REASON_BATTLE+REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
 end
 	--Activation legality
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return not Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),69832741)
-		and eg:IsExists(s.filter,1,nil,tp) and c:IsAbleToRemove() end
+	if chk==0 then return c:IsAbleToRemove() and eg:IsExists(s.repfilter,1,nil,tp) end
 	return Duel.SelectEffectYesNo(tp,c,96)
 end
 function s.repval(e,c)
-	return s.filter(c,e:GetHandlerPlayer())
+	return s.repfilter(c,e:GetHandlerPlayer())
 end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT+REASON_REPLACE)

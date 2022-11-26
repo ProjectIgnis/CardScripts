@@ -1,6 +1,6 @@
 --サイバース・シンクロン
 --Cyberse Synchron
---scripted by Logical Nonsense
+--Scripted by Logical Nonsense
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -49,15 +49,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for your monster in EMZ
 function s.repfilter(c,tp)
-	return  c:IsLocation(LOCATION_MZONE)  and c:GetSequence()>=5 and c:IsControler(tp)
+	return  c:IsLocation(LOCATION_MZONE) and c:GetSequence()>=5 and c:IsControler(tp)
 		and c:IsReason(REASON_EFFECT+REASON_BATTLE) and not c:IsReason(REASON_REPLACE)
 end
 	--Activation legality
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToRemove() and eg:IsExists(s.repfilter,1,nil,tp) and Duel.GetFlagEffect(tp,id)==0 end
-	if Duel.SelectEffectYesNo(tp,e:GetHandler(),96) then 
-		Duel.RegisterFlagEffect(tp,id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
-	return true end
+	local c=e:GetHandler()
+	if chk==0 then return c:IsAbleToRemove() and eg:IsExists(s.repfilter,1,nil,tp) end
+	return Duel.SelectEffectYesNo(tp,c,96)
 end
 	--
 function s.repval(e,c)
@@ -65,6 +64,5 @@ function s.repval(e,c)
 end
 	--Substutite destruction
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT)
+	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT+REASON_REPLACE)
 end
-

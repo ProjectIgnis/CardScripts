@@ -71,7 +71,7 @@ end
 function s.ctcon(e)
 	local c=e:GetHandler()
 	return c:IsSummonLocation(LOCATION_EXTRA) and c:GetControler()==e:GetHandlerPlayer()
-ena
+end
 function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,4,0,0x577)

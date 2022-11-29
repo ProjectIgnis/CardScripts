@@ -1,6 +1,7 @@
 --終焔魔神ディスペラシオン［Ｒ］
 --Doomblaze Fiend Overlord Despairacion [R]
 --scripted by YoshiDuels
+Duel.LoadCardScript("c160205009.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)

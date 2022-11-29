@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--equip
-	aux.AddEquipProcedure(c,0,s.eqfilter,s.eqlimit,,nil,nil,s.gainop)
+	aux.AddEquipProcedure(c,0,s.eqfilter,s.eqlimit,nil,nil,s.gainop)
 	--Increase ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_EQUIP)

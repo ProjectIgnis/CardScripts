@@ -515,3 +515,4 @@ SET_MIKANKO                       = 0x18e
 SET_AQUAMIRROR                    = 0x18f
 --Beta archetypes
 SET_FIREWALL                      = 0x28c
+SET_GOLD_PRIDE                    = 0x28d

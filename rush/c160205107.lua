@@ -1,6 +1,7 @@
 --終焔魔神ディスペラシオン［Ｌ］
 --Doomblaze Fiend Overlord Despairacion [L]
 --scripted by YoshiDuels
+Duel.LoadCardScript("c160205007.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--Cannot be destroyed

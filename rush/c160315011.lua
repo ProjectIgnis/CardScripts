@@ -22,8 +22,8 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsStatus(STATUS_SUMMON_TURN) and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0 end
-	local ct=Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)
+	if chk==0 then return Duel.GetFieldGroupCountRush(tp,0,LOCATION_MZONE)>0 end
+	local ct=Duel.GetFieldGroupCountRush(tp,0,LOCATION_MZONE)
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetTargetParam(ct*100)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,ct*100)

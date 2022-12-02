@@ -78,7 +78,7 @@ end
 function s.ovop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or not c:IsType(TYPE_XYZ) or c:IsImmuneToEffect(e) then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTACH)
 	local g=eg:FilterSelect(tp,s.ovfilter,1,1,nil,e,c,tp)
 	if #g>0 then
 		Duel.Overlay(c,g)

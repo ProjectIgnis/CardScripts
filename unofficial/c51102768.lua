@@ -73,8 +73,8 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		if Duel.MoveToField(g:GetFirst(),tp,tp,LOCATION_PZONE,POS_FACEUP,true) then
 			Duel.NegateAttack()
-			end
 		end
+	end
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -97,8 +97,8 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		if Duel.MoveToField(g:GetFirst(),tp,tp,LOCATION_PZONE,POS_FACEUP,true) then
 			Duel.NegateEffect(ev)
-			end
-		end
+	        end
+	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsFaceup),tp,LOCATION_PZONE,0,1,nil)

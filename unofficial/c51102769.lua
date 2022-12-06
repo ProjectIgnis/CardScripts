@@ -238,7 +238,7 @@ function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
-    local tc=re:GetHandler()
+	local tc=re:GetHandler()
 	local x
 	if tc:IsOnField() then x=true end
 	if not tc:IsOnField() then x=false end

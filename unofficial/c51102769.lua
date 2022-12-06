@@ -249,8 +249,8 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RaiseEvent(tc,EVENT_SSET,e,REASON_EFFECT,1-tp,1-tp,0)
 	end
 	if x==false then
-		Duel.SSet(1-tp,tc)
-		Duel.RaiseEvent(tc,EVENT_SSET,e,REASON_EFFECT,1-tp,1-tp,0)
+			Duel.SSet(1-tp,tc)
+			Duel.RaiseEvent(tc,EVENT_SSET,e,REASON_EFFECT,1-tp,1-tp,0)
 	end
 end
 local e1=Effect.CreateEffect(e:GetHandler())

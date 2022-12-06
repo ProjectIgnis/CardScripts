@@ -18,7 +18,7 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local atkr=Duel.GetAttacker()
 	local defr=Duel.GetAttackTarget()
-	return atkr and defr and atkr:IsControler(1-tp) and atkr:IsLevelBelow(8) and defr:IsControler(tp) and defr:IsType(TYPE_MAXIMUM)
+	return atkr and defr and atkr:IsControler(1-tp) and atkr:IsLevelBelow(8) and defr:IsFaceup() and defr:IsControler(tp) and defr:IsType(TYPE_MAXIMUM)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,600) end

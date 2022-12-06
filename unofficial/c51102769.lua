@@ -4,16 +4,16 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
-    Pendulum.AddProcedure(c)
+        Pendulum.AddProcedure(c)
 	--Cannot be normal summoned/set
-    c:EnableUnsummonable()
+        c:EnableUnsummonable()
 	--Cannot be pend summoned from hand
-    local e1=Effect.CreateEffect(c)
-    e1:SetType(EFFECT_TYPE_SINGLE)
-    e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-    e1:SetCode(EFFECT_SPSUMMON_CONDITION)
-    e1:SetValue(s.limit)
-    c:RegisterEffect(e1)
+        local e1=Effect.CreateEffect(c)
+        e1:SetType(EFFECT_TYPE_SINGLE)
+        e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+        e1:SetCode(EFFECT_SPSUMMON_CONDITION)
+        e1:SetValue(s.limit)
+        c:RegisterEffect(e1)
 	--special summon procedure
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)

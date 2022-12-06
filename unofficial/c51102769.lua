@@ -242,15 +242,15 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local x
 	if tc:IsOnField() then x=true end
 	if not tc:IsOnField() then x=false end
-    if Duel.NegateActivation(ev) and tc:IsSSetable() then
-	if tc:IsFaceup() and x==true then
+		if Duel.NegateActivation(ev) and tc:IsSSetable() then
+		if tc:IsFaceup() and x==true then
 		tc:CancelToGrave()
-        Duel.ChangePosition(tc,POS_FACEDOWN)
-        Duel.RaiseEvent(tc,EVENT_SSET,e,REASON_EFFECT,1-tp,1-tp,0)
+		Duel.ChangePosition(tc,POS_FACEDOWN)
+		Duel.RaiseEvent(tc,EVENT_SSET,e,REASON_EFFECT,1-tp,1-tp,0)
 	end
 	if x==false then
-	Duel.SSet(1-tp,tc)
-    Duel.RaiseEvent(tc,EVENT_SSET,e,REASON_EFFECT,1-tp,1-tp,0)
+		Duel.SSet(1-tp,tc)
+		Duel.RaiseEvent(tc,EVENT_SSET,e,REASON_EFFECT,1-tp,1-tp,0)
 	end
 end
 local e1=Effect.CreateEffect(e:GetHandler())

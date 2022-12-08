@@ -36,7 +36,7 @@ function s.thfilter(c,e,tp)
 	return c:IsMonster() and c:IsSetCard(SET_MYUTANT) and c:IsLevelBelow(4)
 		and (c:IsAbleToHand() or (c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
 end
-function s.rescon(fg)
+function s.rescon(ft)
 	return function(sg,e,tp)
 		return sg:IsExists(Card.IsAbleToHand,1,nil)
 			or (ft>0 and sg:IsExists(Card.IsCanBeSpecialSummoned,1,nil,e,0,tp,false,false))

@@ -54,7 +54,7 @@ function s.initial_effect(c)
 	--negate
 	local e6=Effect.CreateEffect(c)
 	e6:SetCategory(CATEGORY_NEGATE)
-		e6:SetType(EFFECT_TYPE_QUICK_O)
+	e6:SetType(EFFECT_TYPE_QUICK_O)
 	e6:SetCode(EVENT_CHAINING)
 	e6:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e6:SetRange(LOCATION_MZONE)

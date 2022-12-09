@@ -97,9 +97,9 @@ function s.dicecost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.dicetg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local sg=Duel.GetMatchingGroup(s.sgfilter,tp,0,LOCATION_MZONE,nil,att)
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,sg,#sg,tp,0)
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,0,0,1-tp,#sg*500)
+	local sg=Duel.GetMatchingGroup(Card.IsAbleToGrave,tp,0,LOCATION_MZONE,nil)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOGRAVE,sg,#sg,tp,0)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_DAMAGE,0,0,1-tp,#sg*500)
 end
 function s.diceop(e,tp,eg,ep,ev,re,r,rp)
 	local dice=Duel.TossDice(tp,1)

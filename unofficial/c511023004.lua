@@ -15,11 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local d=Duel.GetAttacker()
-	if d==c then d=Duel.GetAttackTarget() end
-	return c:IsRelateToBattle() and Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)==0
-		and d:IsLocation(LOCATION_GRAVE) and d:IsReason(REASON_BATTLE) and d:IsMonster()
+	return Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)==0 and aux.bdogcon(e)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

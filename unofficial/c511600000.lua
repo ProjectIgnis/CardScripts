@@ -93,8 +93,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:UpdateAttack(atk,nil,c)==atk and Duel.CheckPendulumZones(tp)
 		and c:IsRelateToEffect(e) then
-			Duel.BreakEffect()
-			Duel.MoveToField(c,tp,tp,LOCATION_PZONE,POS_FACEUP,true)
-		end
+		Duel.BreakEffect()
+		Duel.MoveToField(c,tp,tp,LOCATION_PZONE,POS_FACEUP,true)
 	end
 end

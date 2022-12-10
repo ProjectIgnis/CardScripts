@@ -106,7 +106,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) or Duel.SpecialSummon(c,0,tp,tp,true,true,POS_FACEUP)==0 then return end
 	c:CompleteProcedure()
 	local g=Duel.GetMatchingGroup(nil,0,LOCATION_ONFIELD,LOCATION_ONFIELD,c)
-	if #g>0 and Duel.Destroy(g,REASON_EFFECT)>0 and Duel.CheckPendulumZones(tp)
+	if #g>0 and Duel.Destroy(g,REASON_EFFECT)>0 and Duel.CheckPendulumZones(tp) and c:IsType(TYPE_PENDULUM)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
 		Duel.BreakEffect()
 		Duel.MoveToField(c,tp,tp,LOCATION_PZONE,POS_FACEUP,true)

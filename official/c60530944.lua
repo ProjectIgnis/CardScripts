@@ -1,8 +1,10 @@
 --異種闘争
+--Battle of the Elements
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Players send monsters to the GY until they control only 1 attribute
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOGRAVE)
 	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -44,5 +46,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local r2=Duel.AnnounceAttribute(1-tp,1,s.getattr(g2))
 	g2:Remove(s.rmfilter,nil,r2)
 	g1:Merge(g2)
-	Duel.SendtoGrave(g1,REASON_EFFECT)
+	Duel.SendtoGrave(g1,REASON_RULE)
 end

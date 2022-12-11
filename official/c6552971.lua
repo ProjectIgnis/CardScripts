@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Reveal 1 Cyberse monster and add 1 "@Ignister" monster to the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -56,7 +56,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetLabelObject(e1)
 		Duel.RegisterEffect(e2,tp)
 	end
-	--Cannot only activate the effects of Cyberse monsters
+	--Can only activate the effects of Cyberse monsters
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_CANNOT_ACTIVATE)

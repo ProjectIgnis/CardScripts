@@ -118,5 +118,5 @@ function s.diceop(e,tp,eg,ep,ev,re,r,rp)
 	end  
 end
 function s.distg(e,c)
-	return c:IsAttribute(e:GetHandler():GetAttribute()) and not c:IsCode(id)
+	return c:IsAttribute(e:GetHandler():GetAttribute()) and c~=e:GetHandler()
 end

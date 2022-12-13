@@ -37,9 +37,9 @@ function s.initial_effect(c)
 	e3:SetTarget(s.reptg)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_KSHATRI_LA}
+s.listed_series={SET_KASHTIRA}
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(SET_KSHATRI_LA) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_KASHTIRA) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

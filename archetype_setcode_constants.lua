@@ -504,11 +504,11 @@ SET_WINGMAN                       = 0x185
 SET_DOODLE_BEAST                  = 0x1186
 SET_DOODLEBOOK                    = 0x2186
 SET_G_GOLEM                       = 0x187
+SET_RAINBOW_BRIDGE                = 0x188
+SET_BYSTIAL                       = 0x189
 SET_GHOTI                         = 0x18b
+SET_KASHTIRA                      = 0x18a
 --Currently unreleased in the TCG, the official English name is unknown
-SET_BRIDGE                        = 0x188
-SET_BYSSTED                       = 0x189
-SET_KSHATRI_LA                    = 0x18a
 SET_RESCUE_ACE                    = 0x18c
 SET_PURERY                        = 0x18d
 SET_MIKANKO                       = 0x18e

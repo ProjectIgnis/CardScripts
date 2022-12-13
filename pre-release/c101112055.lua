@@ -28,10 +28,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_VISAS_STARFROST,101112036}
-s.listed_series={SET_KSHATRI_LA}
+s.listed_series={SET_KASHTIRA}
 function s.rmconfilter(c,tp)
 	return c:IsReason(REASON_BATTLE|REASON_EFFECT) and c:GetPreviousTypeOnField()&TYPE_XYZ>0
-		and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousSetCard(SET_KSHATRI_LA)
+		and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousSetCard(SET_KASHTIRA)
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)

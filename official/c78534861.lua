@@ -31,9 +31,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.negop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_SCARECLAW,SET_KSHATRI_LA}
+s.listed_series={SET_SCARECLAW,SET_KASHTIRA}
 function s.archfilter(c)
-	return c:IsSetCard(SET_SCARECLAW) or c:IsSetCard(SET_KSHATRI_LA)
+	return c:IsSetCard(SET_SCARECLAW) or c:IsSetCard(SET_KASHTIRA)
 end
 function s.rmfilter(c)
 	return s.archfilter(c) and c:IsAbleToRemove() and (c:IsLocation(LOCATION_HAND) or aux.SpElimFilter(c,true))

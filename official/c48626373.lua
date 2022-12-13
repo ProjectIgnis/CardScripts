@@ -48,14 +48,14 @@ function s.initial_effect(c)
 	end)
 end
 s.listed_names={73542331}
-s.listed_series={SET_KSHATRI_LA}
+s.listed_series={SET_KASHTIRA}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if re:GetHandler():IsCode(73542331) then
 		Duel.RegisterFlagEffect(0,id,RESET_PHASE+PHASE_END,0,1)
 	end
 end
 function s.xyzfilter(c,tp,xyzc)
-	return c:IsFaceup() and c:IsSetCard(SET_KSHATRI_LA,xyzc,SUMMON_TYPE_XYZ,tp)
+	return c:IsFaceup() and c:IsSetCard(SET_KASHTIRA,xyzc,SUMMON_TYPE_XYZ,tp)
 end
 function s.xyzop(e,tp,chk)
 	if chk==0 then return Duel.GetFlagEffect(0,id)>0 and Duel.GetFlagEffect(tp,id+1)==0 end

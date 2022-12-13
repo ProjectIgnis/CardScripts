@@ -37,9 +37,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_names={73542331}
-s.listed_series={SET_KSHATRI_LA}
+s.listed_series={SET_KASHTIRA}
 function s.thfilter(c)
-	return c:IsMonster() and c:IsSetCard(SET_KSHATRI_LA) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(SET_KASHTIRA) and c:IsAbleToHand()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil)

@@ -43,7 +43,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.rmop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x18a}
+s.listed_series={SET_KASHTIRA}
 function s.ntcon(e,c,minc)
 	if c==nil then return true end
 	return minc==0 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
@@ -52,7 +52,7 @@ function s.nttg(e,c)
 	return c:IsLevel(7)
 end
 function s.spfilter(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x18a) and not c:IsType(TYPE_XYZ)
+	return c:IsFaceup() and c:IsSetCard(SET_KASHTIRA) and not c:IsType(TYPE_XYZ)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -76,7 +76,7 @@ function s.rmfilter(c,tp)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE+LOCATION_GRAVE) and c:IsControler(1-tp) and s.rmfilter(chkc,tp) end
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x18a),tp,LOCATION_MZONE,0,1,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_KASHTIRA),tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingTarget(s.rmfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,3,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectTarget(tp,s.rmfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,3,3,nil,tp)
@@ -84,5 +84,7 @@ function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)
-	if #g>0 then Duel.Remove(g,POS_FACEDOWN,REASON_EFFECT) end
+	if #g>0 then
+		Duel.Remove(g,POS_FACEDOWN,REASON_EFFECT)
+	end
 end

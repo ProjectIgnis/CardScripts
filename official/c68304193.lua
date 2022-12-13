@@ -39,14 +39,14 @@ function s.initial_effect(c)
 	e4:SetCondition(s.rmeffcon)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x18a}
+s.listed_series={SET_KASHTIRA}
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=e:GetHandlerPlayer()
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0,nil)==0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x18a) and c:IsSpell() and c:IsAbleToHand()
+	return c:IsSetCard(SET_KASHTIRA) and c:IsSpell() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

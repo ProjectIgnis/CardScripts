@@ -1,5 +1,5 @@
---エンシェント・フェアリー・ドラゴン
---Ancient Fairy Dragon
+--エンシェント・フェアリー・ドラゴン (Pre-Errata)
+--Ancient Fairy Dragon (Pre-Errata)
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCountLimit(1,{id,0})
+	e1:SetCountLimit(1)
 	e1:SetCondition(function() return Duel.GetCurrentPhase()==PHASE_MAIN1 end)
 	e1:SetCost(s.spcost)
 	e1:SetTarget(s.sptg)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_DESTROY+CATEGORY_RECOVER+CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1,{id,1})
+	e2:SetCountLimit(1)
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
@@ -60,19 +60,17 @@ end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetFieldGroup(0,LOCATION_FZONE,LOCATION_FZONE)
 	if chk==0 then return #g>0 end
-	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,1000)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
-function s.thfilter(c,og)
-	return c:IsFieldSpell() and c:IsAbleToHand() and not og:IsExists(Card.IsCode,1,nil,c:GetCode())
+function s.thfilter(c)
+	return c:IsFieldSpell() and c:IsAbleToHand()
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local dg=Duel.GetFieldGroup(0,LOCATION_FZONE,LOCATION_FZONE)
 	if not (#dg>0 and Duel.Destroy(dg,REASON_EFFECT)>0 and Duel.Recover(tp,1000,REASON_EFFECT)>0) then return end
-	local og=Duel.GetOperatedGroup()
-	local hg=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil,og)
+	local hg=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil)
 	if #hg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local sg=hg:Select(tp,1,1,nil)

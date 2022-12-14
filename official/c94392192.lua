@@ -65,9 +65,11 @@ function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_DECK)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)==0 then return end
-	Duel.ConfirmDecktop(1-tp,5)
-	local g=Duel.GetDecktopGroup(1-tp,5)
+	local ct=math.min(5,Duel.GetFieldGroupCount(tp,0,LOCATION_DECK))
+	if ct==0 then return end
+	local ac=Duel.AnnounceNumberRange(tp,1,ct)
+	Duel.ConfirmDecktop(1-tp,ac)
+	local g=Duel.GetDecktopGroup(1-tp,ac)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local sg=g:FilterSelect(tp,Card.IsAbleToRemove,1,1,nil,tp,POS_FACEDOWN)
 	if #sg>0 then

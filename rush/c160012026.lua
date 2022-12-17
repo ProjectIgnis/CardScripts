@@ -22,9 +22,6 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_GRAVE,0,1,nil) end
 end
-function s.spfilter(c,e,tp)
-	return c:IsCode(160007003) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)

@@ -31,7 +31,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	Duel.DiscardHand(tp,s.filter,1,1,REASON_EFFECT)==0 then return end
+	if Duel.DiscardHand(tp,s.filter,1,1,REASON_EFFECT)==0 then return end
 	local ct=Duel.GetOperatedGroup():FilterCount(Card.IsLocation,nil,LOCATION_GRAVE)
 	if ct>0 then
 		Duel.Draw(tp,1,REASON_EFFECT)

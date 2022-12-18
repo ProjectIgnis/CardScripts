@@ -3,10 +3,10 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--synchro summon
-	Synchro.AddProcedure(c,aux.FilterSummonCode(21159309),1,1,Synchro.NonTuner(nil),1,99,nil,nil,nil,s.matfilter)
 	c:EnableReviveLimit()
-	--must first be synchro summoned
+	--Synchro Summon procedure
+	Synchro.AddProcedure(c,aux.FilterSummonCode(21159309),1,1,Synchro.NonTuner(nil),1,99,nil,nil,nil,s.matfilter)
+	--Must first be Synchro Summoned
 	local e0=Effect.CreateEffect(c)
 	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SINGLE_RANGE)
 	e0:SetType(EFFECT_TYPE_SINGLE)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e0:SetValue(aux.synlimit)
 	c:RegisterEffect(e0)
-	--negate effects
+	--Negate the effects of 1 monster your opponent controls
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DISABLE)
@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.distg)
 	e1:SetOperation(s.disop)
 	c:RegisterEffect(e1)
-	--extra attack
+	--Extra attacks
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_EXTRA_ATTACK)
 	e2:SetValue(s.atkval)
 	c:RegisterEffect(e2)
-	--negate activation
+	--Negate the activation of an opponent's card or effect and banish it
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_NEGATE+CATEGORY_REMOVE)
@@ -44,7 +44,7 @@ function s.initial_effect(c)
 	e3:SetCondition(s.negcon)
 	e3:SetTarget(s.negtg)
 	e3:SetOperation(s.negop)
-	c:RegisterEffect(e3)	
+	c:RegisterEffect(e3)
 end
 s.material={21159309}
 s.listed_names={21159309,CARD_STARDUST_DRAGON}
@@ -55,19 +55,16 @@ end
 function s.matfilter(g,sc,tp)
 	return g:IsExists(s.cfilter,1,nil,sc,tp)
 end
-function s.disfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and not c:IsDisabled()
-end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.disfilter,tp,0,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsNegatableMonster,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,nil,1,1-tp,LOCATION_MZONE)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_NEGATE)
-	local g=Duel.SelectMatchingCard(tp,s.disfilter,tp,0,LOCATION_MZONE,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,Card.IsNegatableMonster,tp,0,LOCATION_MZONE,1,1,nil)
 	if #g>0 then
-		Duel.HintSelection(g)
+		Duel.HintSelection(g,true)
 		local tc=g:GetFirst()
 		--Negate effects
 		local e1=Effect.CreateEffect(c)
@@ -100,7 +97,7 @@ function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and Duel.Remove(c,POS_FACEUP,REASON_COST+REASON_TEMPORARY)>0 then
+	if c:IsRelateToEffect(e) and Duel.Remove(c,POS_FACEUP,REASON_EFFECT+REASON_TEMPORARY)>0 then
 		--Return during the End Phase
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

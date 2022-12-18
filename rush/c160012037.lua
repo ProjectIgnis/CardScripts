@@ -41,52 +41,37 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function s.spfilter3(c,e,tp)
-	return c:IsDefense(200) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+    return c:IsDefense(200) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function s.lvfilter1(c,g)
-	return g:IsExists(s.afilter2,1,c,c:GetLevel())
-end
-function s.afilter2(c,lvl)
-	return c:IsLevel(lvl)
+function s.spcheck(sg,e,tp,mg)
+    return sg:GetClassCount(Card.GetLevel)==1
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	--Requirement
-	local g=Duel.GetMatchingGroup(s.tdfilter,tp,LOCATION_GRAVE,0,nil)
-	local td=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,2,tp,HINTMSG_SELECT)
-	Duel.HintSelection(td,true)
-	if Duel.SendtoDeck(td,nil,SEQ_DECKSHUFFLE,REASON_COST)>0 then
-		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=1 then return end
-		--group used to check if the summoned monsters are normal
-		local tg=Group.CreateGroup()
-			
-		--summon
-		local sg=Duel.GetMatchingGroup(s.spfilter3,tp,LOCATION_GRAVE,0,nil,e,tp)
-		local dg=sg:Filter(s.lvfilter1,nil,sg)
-		if #dg>=1 then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-			local tc1=dg:Select(tp,1,1,nil):GetFirst()
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-			local tc2=dg:FilterSelect(tp,s.afilter2,1,1,tc1,tc1:GetLevel()):GetFirst()
-			tg:AddCard(tc1)
-			tg:AddCard(tc2)
-			Duel.SpecialSummonStep(tc1,0,tp,tp,false,false,POS_FACEUP)
-			Duel.SpecialSummonStep(tc2,0,tp,tp,false,false,POS_FACEUP)
-			Duel.SpecialSummonComplete()		
-		end
-		--normal check
-		for tc in tg:Iter() do
-			if tc:IsType(TYPE_NORMAL) and tc:IsFaceup() then
-				local e1=Effect.CreateEffect(e:GetHandler())
-				e1:SetType(EFFECT_TYPE_SINGLE)
-				e1:SetCode(EFFECT_UPDATE_ATTACK)
-				e1:SetValue(2200)
-				e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-				tc:RegisterEffect(e1)
-			end
-		end	
-	end
+    --Requirement
+    local g=Duel.GetMatchingGroup(s.tdfilter,tp,LOCATION_GRAVE,0,nil)
+    local sg=Duel.GetMatchingGroup(s.spfilter3,tp,LOCATION_GRAVE,0,nil,e,tp)
+    local td=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon(sg),2,tp,HINTMSG_SELECT)
+    Duel.HintSelection(td,true)
+    if Duel.SendtoDeck(td,nil,SEQ_DECKSHUFFLE,REASON_COST)>0 then
+        if Duel.GetLocationCount(tp,LOCATION_MZONE)<=1 then return end
+        --summon
+        local tg=aux.SelectUnselectGroup(sg,e,tp,2,2,s.spcheck,1,tp,HINTMSG_SPSUMMON)
+        for tc in tg:Iter() do
+            if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) and tc:IsType(TYPE_NORMAL) and tc:IsFaceup() then
+                local e1=Effect.CreateEffect(e:GetHandler())
+                e1:SetType(EFFECT_TYPE_SINGLE)
+                e1:SetCode(EFFECT_UPDATE_ATTACK)
+                e1:SetValue(2200)
+                e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+                tc:RegisterEffect(e1)
+            end
+        end    
+        Duel.SpecialSummonComplete()
+    end
 end
-function s.rescon(sg,e,tp,mg)
-	local gg=(g-sg)
-	return Duel.IsExistingMatchingCard(s.spfilter3,tp,LOCATION_GRAVE,0,1,sg,e,tp) and gg:GetClassCount(Card.GetLevel)~=#gg
+function s.rescon(g)
+    return function(sg,e,tp,mg)
+        local gg=(g-sg)
+        return gg:GetClassCount(Card.GetLevel)~=#gg
+    end
 end

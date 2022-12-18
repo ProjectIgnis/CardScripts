@@ -8,12 +8,19 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
+	e1:SetCondition(s.condition)
 	e1:SetCost(s.cost)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
+end
+function s.filter1(c,tp)
+	return c:IsSummonPlayer(1-tp) and c:IsLocation(LOCATION_MZONE)
+end
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(s.filter1,1,nil,tp)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_MZONE,0,1,nil) end

@@ -50,11 +50,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if tc then
 		Duel.ChangeAttackTarget(tc)
 		local sg=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
-		if sg:IsExists(s.filter,1,nil,sg) and Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_MZONE,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+		if sg:IsExists(s.filter,1,nil,sg) and Duel.IsExistingMatchingCard(nil,tp,0,LOCATION_MZONE,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-			local dg=Duel.SelectMatchingCard(tp,aux.TRUE,tp,0,LOCATION_MZONE,1,1,nil)
+			local dg=Duel.SelectMatchingCard(tp,nil,tp,0,LOCATION_MZONE,1,1,nil)
 			dg=dg:AddMaximumCheck()
-			Duel.HintSelection(dg)
+			Duel.HintSelection(dg,true)
 			Duel.BreakEffect()
 			Duel.Destroy(dg,REASON_EFFECT)
 		end

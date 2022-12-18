@@ -31,20 +31,20 @@ function s.thfilter(c)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	-- Requirement
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local td=Duel.SelectMatchingCard(tp,Card.IsAbleToDeckOrExtraAsCost,tp,LOCATION_HAND,0,1,1,nil)
-	if #td>0 and Duel.SendtoDeck(td,nil,SEQ_DECKBOTTOM,REASON_COST)>0 then
-		-- Effect
-		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-			local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
-			if #g>0 then
-				Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
-				local g2=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_GRAVE,0,nil)
-				if #g2>0 and g:GetFirst():IsType(TYPE_NORMAL) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-					local sg=g2:Select(tp,1,1,nil)
-					Duel.HintSelection(sg)
-					Duel.SSet(tp,sg)
-				end
+	if #td==0 or Duel.SendtoDeck(td,nil,SEQ_DECKBOTTOM,REASON_COST)==0 then return end
+	-- Effect
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(s.filter),tp,LOCATION_GRAVE,0,1,nil,e,tp) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
+		if #g>0 and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)>0 and g:GetFirst():IsType(TYPE_NORMAL) then
+			local g2=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.thfilter),tp,LOCATION_GRAVE,0,nil)
+			if #g2>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
+				local sg=g2:Select(tp,1,1,nil)
+				Duel.HintSelection(sg,true)
+				Duel.SSet(tp,sg)
 			end
 		end
 	end

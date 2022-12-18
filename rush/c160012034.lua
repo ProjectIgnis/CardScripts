@@ -76,7 +76,7 @@ function s.operation2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.PayLPCost(tp,500) 
 	--Effect
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
-	local g=Duel.SelectMatchingCard(tp,s.setfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.setfilter),tp,LOCATION_GRAVE,0,1,1,nil)
 	if #g==0 then return end
 	Duel.HintSelection(g,true)
 	Duel.SSet(tp,g)

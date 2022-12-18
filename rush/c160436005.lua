@@ -32,6 +32,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if #tg>1 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 			local sg=tg:Select(tp,1,1,nil)
+			Duel.HintSelection(sg,true)
 			Duel.Destroy(sg,REASON_EFFECT)
 		else 
 			Duel.Destroy(tg,REASON_EFFECT) 

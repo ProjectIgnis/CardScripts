@@ -35,11 +35,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Recover(p,d,REASON_EFFECT)
 		--Set cards
 		local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
-		local sg=Duel.GetMatchingGroup(s.sfilter,tp,LOCATION_GRAVE,0,nil)
+		local sg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.sfilter),tp,LOCATION_GRAVE,0,nil)
 		if ft>0 and #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.BreakEffect()
-			local tg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.sfilter),tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
-			Duel.HintSelection(tg)
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
+			local tg=Duel.SelectMatchingCard(tp,s.sfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
+			Duel.HintSelection(tg,true)
 			Duel.SSet(tp,tg)
 		end
 	end

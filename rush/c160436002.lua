@@ -32,6 +32,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 	local dg=Duel.GetMatchingGroup(Card.IsSpellTrap,tp,0,LOCATION_ONFIELD,nil)
 	if #dg>0 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local sg=dg:Select(tp,1,1,nil)
 		Duel.HintSelection(sg,true)
 		Duel.Destroy(sg,REASON_EFFECT)

@@ -37,11 +37,8 @@ function s.splimit(e,c,sump,sumtype,sumpos,targetp)
 	if c:IsSetCard(SET_TELLARKNIGHT) or c:IsSetCard(SET_ZEFRA) then return false end
 	return (sumtype&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_PENDULUM)
-end
 function s.filter1(c)
-	return c:IsFaceup() and c:IsSetCard(SET_TELLARKNIGHT,SET_ZEFRA)
+	return c:IsFaceup() and c:IsSetCard({SET_TELLARKNIGHT,SET_ZEFRA})
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

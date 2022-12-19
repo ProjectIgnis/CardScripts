@@ -24,7 +24,7 @@ function s.costfilter(c,tp)
 		and Duel.IsExistingMatchingCard(s.ctrlfilter,tp,0,LOCATION_MZONE,1,nil,c:GetRace()) 
 end
 function s.ctrlfilter(c,race)
-	return c:IsFaceup() and c:IsRace(race) and c:IsLevelAbove(5) and c:IsLevelBelow(8) and c:IsControlerCanBeChanged()
+	return c:IsFaceup() and c:IsRace(race) and c:IsLevelAbove(5) and c:IsLevelBelow(8) and c:IsControlerCanBeChanged(true)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() and Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil,tp) end

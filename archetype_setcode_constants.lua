@@ -465,6 +465,7 @@ SET_WAR_ROCK                      = 0x161
 SET_MATERIACTOR                   = 0x162
 SET_OGDOADIC                      = 0x163
 SET_SOLFACHORD                    = 0x164
+SET_GRANSOLFACHORD                = 0x1164
 SET_URSARCTIC                     = 0x165
 SET_DESPIA                        = 0x166
 SET_MAGIKEY                       = 0x167

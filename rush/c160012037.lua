@@ -54,6 +54,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.HintSelection(td,true)
 	if Duel.SendtoDeck(td,nil,SEQ_DECKSHUFFLE,REASON_COST)>0 then
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=1 then return end
+		sg:RemoveCard(td)
 		--summon
 		local tg=aux.SelectUnselectGroup(sg,e,tp,2,2,s.spcheck,1,tp,HINTMSG_SPSUMMON)
 		for tc in tg:Iter() do

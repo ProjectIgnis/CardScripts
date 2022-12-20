@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e3a:SetRange(LOCATION_MZONE)
 	e3a:SetCondition(s.negcon)
 	e3a:SetOperation(s.negop)
-	c:RegisterEffect(e3)
+	c:RegisterEffect(e3a)
 end
 s.listed_series={SET_SCARECLAW,SET_KASHTIRA}
 function s.archfilter(c)

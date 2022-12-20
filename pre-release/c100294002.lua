@@ -34,6 +34,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_NEOS}
 s.listed_series={SET_ARMED_DRAGON,SET_ELEMENTAL_HERO}
+s.material_setcode={SET_HERO,SET_ELEMENTAL_HERO,SET_NEOS,SET_ARMED_DRAGON}
 function s.cfilter(c,tp)
 	return c:IsRace(RACE_DRAGON) and c:HasLevel()
 		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsLevelBelow,c:GetLevel()),tp,0,LOCATION_MZONE,1,nil)

@@ -28,22 +28,13 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_DISABLE)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(0,LOCATION_MZONE)
-	e3:SetTarget(function(_,c) return c:GetFlagEffect(id)>0 end)
+	e3:SetTarget(s.distg)
 	c:RegisterEffect(e3)
-	local e3a=Effect.CreateEffect(c)
-	e3a:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e3a:SetCode(EVENT_BE_BATTLE_TARGET)
-	e3a:SetRange(LOCATION_MZONE)
-	e3a:SetCondition(s.negcon)
-	e3a:SetOperation(s.negop)
-	c:RegisterEffect(e3a)
 end
 s.listed_series={SET_SCARECLAW,SET_KASHTIRA}
-function s.archfilter(c)
-	return c:IsSetCard(SET_SCARECLAW) or c:IsSetCard(SET_KASHTIRA)
-end
 function s.rmfilter(c)
-	return s.archfilter(c) and c:IsAbleToRemove() and (c:IsLocation(LOCATION_HAND) or aux.SpElimFilter(c,true))
+	return c:IsSetCard({SET_SCARECLAW,SET_KASHTIRA}) and c:IsAbleToRemove()
+		and (c:IsLocation(LOCATION_HAND) or aux.SpElimFilter(c,true))
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -63,18 +54,16 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 	end
 end
-function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	local a,b=Duel.GetBattleMonster(tp)
-	if a and b and s.archfilter(a) then
-		e:SetLabelObject(b)
+function s.distg(e,c)
+	local fid=e:GetHandler():GetFieldID()
+	for _,label in ipairs({c:GetFlagEffectLabel(id)}) do
+		if fid==label then return true end
+	end
+	local bc=c:GetBattleTarget()
+	if c:IsRelateToBattle() and bc and bc:IsControler(e:GetHandlerPlayer())
+		and bc:IsFaceup() and bc:IsSetCard({SET_SCARECLAW,SET_KASHTIRA}) then
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1,fid)
 		return true
 	end
-	e:SetLabelObject(nil)
 	return false
-end
-function s.negop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetLabelObject()
-	if tc then
-		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
-	end
 end

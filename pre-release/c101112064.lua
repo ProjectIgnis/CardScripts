@@ -40,7 +40,7 @@ end
 function s.xyzfilter(c,e,tp,mc)
 	return mc:IsType(TYPE_XYZ,c,SUMMON_TYPE_XYZ,tp) and c:IsType(TYPE_XYZ) and c:IsSetCard({SET_TELLARKNIGHT,SET_CONSTELLAR})
 		and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and not c:IsRank(mc:GetRank())
-		and mc:IsCanBeXyzMaterial(c,tp,REASON_EFFECT) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
+		and mc:IsCanBeXyzMaterial(c) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end
 function s.xyztgfilter(c,e,tp)
 	if not (c:IsFaceup() and c:IsSetCard({SET_TELLARKNIGHT,SET_CONSTELLAR}) and c:IsType(TYPE_XYZ)) then return false end

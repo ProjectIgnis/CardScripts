@@ -1,15 +1,15 @@
--- スケアクロー・クシャトリラ
--- Scareclaw Kshatri-La
--- Scripted by Hatter
+--スケアクロー・クシャトリラ
+--Scareclaw Kashtira
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Can attack while in face-up Defense Position
+	--Can attack while in face-up Defense Position
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_DEFENSE_ATTACK)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	-- Special Summon this card
+	--Special Summon this card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_REMOVE)
@@ -22,13 +22,20 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	-- Negate effects of monsters that battle your "Scareclaw" or "Kshatri-la" monsters
+	--Negate the effects of monsters that battle your "Scareclaw" or "Kashtira" monsters
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e3:SetCode(EVENT_BE_BATTLE_TARGET)
+	e3:SetType(EFFECT_TYPE_FIELD)
+	e3:SetCode(EFFECT_DISABLE)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCondition(s.negcon)
-	e3:SetOperation(s.negop)
+	e3:SetTargetRange(0,LOCATION_MZONE)
+	e3:SetTarget(function(_,c) return c:GetFlagEffect(id)>0 end)
+	c:RegisterEffect(e3)
+	local e3a=Effect.CreateEffect(c)
+	e3a:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e3a:SetCode(EVENT_BE_BATTLE_TARGET)
+	e3a:SetRange(LOCATION_MZONE)
+	e3a:SetCondition(s.negcon)
+	e3a:SetOperation(s.negop)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_SCARECLAW,SET_KASHTIRA}
@@ -67,15 +74,7 @@ function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
-	if not tc then return end
-	-- Negate its effects
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_DISABLE)
-	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
-	tc:RegisterEffect(e1)
-	local e2=e1:Clone()
-	e2:SetCode(EFFECT_DISABLE_EFFECT)
-	e2:SetValue(RESET_TURN_SET)
-	tc:RegisterEffect(e2)
+	if tc then
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
+	end
 end

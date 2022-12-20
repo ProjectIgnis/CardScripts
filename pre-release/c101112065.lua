@@ -61,7 +61,7 @@ function s.actop(e,tp,eg,ep,ev,re,r,rp)
 		if #pg>0 then
 			if breakeff then Duel.BreakEffect() end
 			breakeff=true
-			if Duel.Destroy(g,REASON_EFFECT)>0
+			if Duel.Destroy(pg,REASON_EFFECT)>0
 				and Duel.IsExistingMatchingCard(Card.IsOddScale,tp,LOCATION_PZONE,0,1,nil) then
 				Duel.BreakEffect()
 				Duel.Draw(tp,1,REASON_EFFECT)

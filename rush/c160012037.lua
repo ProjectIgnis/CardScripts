@@ -22,7 +22,7 @@ function s.tdfilter(c)
 end
 function s.spfilter(c,e,tp)
 	return c:IsDefense(200) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_GRAVE,0,1,nil,e,tp,c)
+		and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_GRAVE,0,1,c,e,tp,c)
 end
 function s.spfilter2(c,e,tp,tc)
 	local g=Group.CreateGroup()

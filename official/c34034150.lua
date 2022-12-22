@@ -23,14 +23,14 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_cards={100297014}
+s.listed_cards={60023855}
 function s.selfspcon(e,c)
 	if c==nil then return true end
 	local tp=e:GetHandlerPlayer()
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 end
 function s.spfilter(c,e,tp)
-	return c:IsCode(100297014) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsCode(60023855) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetMZoneCount(tp,e:GetHandler())>0

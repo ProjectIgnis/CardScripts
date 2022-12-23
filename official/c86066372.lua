@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.atkop)
 	e1:SetLabelObject(e0)
 	c:RegisterEffect(e1)
-	--Destroy
+	--Destroy 1 card the opponent controls
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DESTROY)
@@ -49,7 +49,7 @@ end
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	e:SetLabel(0)
-	if g:IsExists(Card.IsType,1,nil,TYPE_LINK) then
+	if g:IsExists(Card.IsLinkMonster,1,nil) then
 		e:SetLabel(1)
 	end
 end
@@ -93,7 +93,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.costfilter(c,e,tp)
 	local attr=c:GetAttribute()
-	return c:IsType(TYPE_LINK) and c:IsAbleToRemoveAsCost() and s.attr_list[tp]&attr==0
+	return c:IsLinkMonster() and c:IsAbleToRemoveAsCost() and s.attr_list[tp]&attr==0
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,e,tp) end
@@ -110,6 +110,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local att=e:GetLabel()
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectMatchingCard(tp,nil,tp,0,LOCATION_ONFIELD,1,1,nil)
 	if #g>0 then
 		Duel.HintSelection(g,true)

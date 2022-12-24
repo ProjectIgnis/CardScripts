@@ -3,7 +3,7 @@
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)
-	--summon with 3 tribute
+	--Summon with 3 tribute
 	local e1=aux.AddNormalSummonProcedure(c,true,true,3,3,SUMMON_TYPE_TRIBUTE+1,aux.Stringid(id,0))
 	--Destroy all monsters your opponent controls
 	local e1=Effect.CreateEffect(c)

@@ -44,9 +44,8 @@ function s.eftg(e,c)
 	return e:GetHandler():GetEquipTarget()==c
 end
 function s.condition(e)
-	local c=e:GetHandler():GetEquipTarget()
-	return c:IsAttribute(ATTRIBUTE_DARK)
+	return e:GetHandler():GetEquipTarget():IsAttribute(ATTRIBUTE_DARK)
 end
 function s.efilter(e,te)
-	return te:IsActiveType(TYPE_TRAP) and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
+	return te:IsTrapEffect() and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
 end

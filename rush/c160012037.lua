@@ -50,7 +50,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	local g=Duel.GetMatchingGroup(s.tdfilter,tp,LOCATION_GRAVE,0,nil)
 	local sg=Duel.GetMatchingGroup(s.spfilter3,tp,LOCATION_GRAVE,0,nil,e,tp)
-	local td=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon(sg),2,tp,HINTMSG_SELECT)
+	local td=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon(sg),2,tp,HINTMSG_TODECK)
 	Duel.HintSelection(td,true)
 	if Duel.SendtoDeck(td,nil,SEQ_DECKSHUFFLE,REASON_COST)>0 then
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=1 then return end
@@ -59,15 +59,15 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local tg=aux.SelectUnselectGroup(sg,e,tp,2,2,s.spcheck,1,tp,HINTMSG_SPSUMMON)
 		for tc in tg:Iter() do
 			if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) and tc:IsType(TYPE_NORMAL) then
-			local e1=Effect.CreateEffect(e:GetHandler())
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetValue(2200)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			tc:RegisterEffect(e1)
+				local e1=Effect.CreateEffect(e:GetHandler())
+				e1:SetType(EFFECT_TYPE_SINGLE)
+				e1:SetCode(EFFECT_UPDATE_ATTACK)
+				e1:SetValue(2200)
+				e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+				tc:RegisterEffect(e1)
+			end
 		end
-	end
-	Duel.SpecialSummonComplete()
+		Duel.SpecialSummonComplete()
 	end
 end
 function s.rescon(g)

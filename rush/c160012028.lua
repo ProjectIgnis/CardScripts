@@ -32,7 +32,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_GRAVE,0,2,2,nil)
-	Duel.HintSelection(g)
+	Duel.HintSelection(g,true)
 	if not Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST) then return end
 	--Effect
 	if c:IsFaceup() and c:IsRelateToEffect(e) then

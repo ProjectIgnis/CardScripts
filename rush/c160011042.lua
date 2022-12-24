@@ -37,6 +37,5 @@ function s.value(e,c)
 	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSpell),e:GetHandlerPlayer(),LOCATION_ONFIELD,0,nil)*200
 end
 function s.condition(e)
-	local c=e:GetHandler():GetEquipTarget()
-	return c:IsAttribute(ATTRIBUTE_DARK)
+	return e:GetHandler():GetEquipTarget():IsAttribute(ATTRIBUTE_DARK)
 end

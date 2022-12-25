@@ -518,3 +518,4 @@ SET_AQUAMIRROR                    = 0x18f
 SET_FIREWALL                      = 0x28c
 SET_GOLD_PRIDE                    = 0x28d
 SET_MANADOME                      = 0x28e
+SET_NEMURELIA                     = 0x28f

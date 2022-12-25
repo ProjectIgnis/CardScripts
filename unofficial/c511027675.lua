@@ -47,7 +47,7 @@ function s.value(e,re,val,r,rp,rc)
 	local p=e:GetHandler():GetControler()
 	local lp=Duel.GetLP(p)
 	local cc=Duel.GetCurrentChain()
-	if cc==0 or (r&REASON_EFFECT)==0 then return end
+	if cc<100 or (r&REASON_EFFECT)<100 then return end
 	local cid=Duel.GetChainInfo(0,CHAININFO_CHAIN_ID)
 	if cid==e:GetLabel() then e:SetLabel(val) return lp-100
 	else return val end

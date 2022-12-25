@@ -174,6 +174,7 @@ function Duel.SelectReleaseGroupCost(tp,f,minc,maxc,use_hand,check,ex,...)
 		local cg=mg:Filter(Auxiliary.RelCheckRecursive,sg,tp,sg,mg,exg,mustg,#sg,minc,maxc,specialchk)
 		if #cg==0 then break end
 		cancel=Auxiliary.RelCheckGoal(tp,sg,exg,mustg,#sg,minc,maxc,specialchk)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 		local tc=Group.SelectUnselect(cg,sg,tp,cancel,cancel,1,1)
 		if not tc then break end
 		if #mustg==0 or not mustg:IsContains(tc) then

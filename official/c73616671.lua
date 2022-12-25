@@ -1,7 +1,8 @@
 --イリュージョン・マジック
+--Illusion Magic
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Add up to 2 "Dark Magician" to the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -15,6 +16,7 @@ end
 s.listed_names={CARD_DARK_MAGICIAN}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsRace,1,false,nil,nil,RACE_SPELLCASTER) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 	local g=Duel.SelectReleaseGroupCost(tp,Card.IsRace,1,1,false,nil,nil,RACE_SPELLCASTER)
 	Duel.Release(g,REASON_COST)
 end

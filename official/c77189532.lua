@@ -64,7 +64,7 @@ function s.extraval1(chk,summon_type,e,...)
 	local c=e:GetHandler()
 	if chk==0 then
 		local tp,sc=...
-		if summon_type~=SUMMON_TYPE_LINK or not sc:IsSetCard(0x101) or Duel.GetFlagEffect(tp,id)>0 then
+		if summon_type~=SUMMON_TYPE_LINK or not sc:IsSetCard(SET_CODE_TALKER) or Duel.GetFlagEffect(tp,id)>0 then
 			return Group.CreateGroup()
 		else
 			table.insert(s.flagmap1[c],c:RegisterFlagEffect(id,0,0,1))
@@ -94,23 +94,23 @@ function s.extracon2(c,e,tp,sg,mg,lc,og,chk)
 	return ct==0 or ((sg+mg):Filter(s.extrafilter2,nil,e:GetHandlerPlayer()):IsExists(Card.IsCode,1,og,id) and ct<2)
 end
 function s.flagcheck2(c)
-	return c:GetFlagEffect(id+100)>0
+	return c:GetFlagEffect(id+1)>0
 end
 function s.extraval2(chk,summon_type,e,...)
 	local c=e:GetHandler()
 	if chk==0 then
 		local tp,sc=...
-		if summon_type~=SUMMON_TYPE_LINK or not sc:IsSetCard(SET_BORREL) or Duel.GetFlagEffect(tp,id+100)>0 then
+		if summon_type~=SUMMON_TYPE_LINK or not sc:IsSetCard(SET_BORREL) or Duel.GetFlagEffect(tp,id+1)>0 then
 			return Group.CreateGroup()
 		else
-			s.flagmap2[c]=c:RegisterFlagEffect(id+100,0,0,1)
+			s.flagmap2[c]=c:RegisterFlagEffect(id+1,0,0,1)
 			return Group.FromCards(c)
 		end
 	elseif chk==1 then
 		local sg,sc,tp=...
-		if summon_type&SUMMON_TYPE_LINK==SUMMON_TYPE_LINK and #sg>0 and Duel.GetFlagEffect(tp,id+100)==0 then
+		if summon_type&SUMMON_TYPE_LINK==SUMMON_TYPE_LINK and #sg>0 and Duel.GetFlagEffect(tp,id+1)==0 then
 			Duel.Hint(HINT_CARD,tp,id)
-			Duel.RegisterFlagEffect(tp,id+100,RESET_PHASE+PHASE_END,0,1)
+			Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE+PHASE_END,0,1)
 		end
 	elseif chk==2 then
 		if s.flagmap2[c] then

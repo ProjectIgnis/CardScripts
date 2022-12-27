@@ -67,7 +67,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=e:GetLabelObject()
 	if chk==0 then return g:IsExists(s.chk,1,nil,tp,e) end
 	if #g>1 then
-		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
+		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))
 		e:SetLabel(g:Select(tp,1,1,nil):GetFirst():GetCardID())
 	else
 		e:SetLabel(g:GetFirst():GetCardID())

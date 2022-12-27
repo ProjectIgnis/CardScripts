@@ -234,8 +234,8 @@ function Auxiliary.SetVrainsSkillOp(skillcon,skillop,efftype)
 		Duel.SendtoDeck(c,tp,-2,REASON_RULE)
 		Duel.Hint(HINT_SKILL_COVER,c:GetControler(),VRAINS_SKILL_COVER)
 		Duel.Hint(HINT_SKILL,c:GetControler(),c:GetCode())
-		if e:GetHandler():IsPreviousLocation(LOCATION_HAND) then 
-			Duel.Draw(p,1,REASON_RULE)
+		if c:IsPreviousLocation(LOCATION_HAND) then 
+			Duel.Draw(c:GetControler(),1,REASON_RULE)
 		end
 		e:Reset()
 	end

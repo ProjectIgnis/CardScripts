@@ -19,6 +19,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_TRAP_ACT_IN_SET_TURN)
 	e2:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
+	e2:SetDescription(aux.Stringid(id,2))
 	e2:SetCondition(s.actcon)
 	c:RegisterEffect(e2)
 end

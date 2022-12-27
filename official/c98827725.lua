@@ -1,4 +1,5 @@
 --幻影騎士団シェード・ブリガンダイン
+--The Phantom Knights of Shade Brigandine
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -16,6 +17,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_TRAP_ACT_IN_SET_TURN)
 	e2:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
 	e2:SetCondition(s.actcon)
+	e2:SetDescription(aux.Stringid(id,0))
 	c:RegisterEffect(e2)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

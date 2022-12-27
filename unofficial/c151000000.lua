@@ -67,9 +67,11 @@ if not ActionDuel then
 		e6:SetTarget(aux.TargetBoolFunction(Card.IsActionSpell))
 		Duel.RegisterEffect(e6,0)
 		local e7=e6:Clone()
+		e7:SetDescription(aux.Stringid(id,7))
 		e7:SetCode(EFFECT_QP_ACT_IN_NTPHAND)
 		Duel.RegisterEffect(e7,0)
 		local e8=e6:Clone()
+		e8:SetDescription(aux.Stringid(id,7))
 		e8:SetCode(EFFECT_QP_ACT_IN_SET_TURN)
 		Duel.RegisterEffect(e8,0)
 		--cover

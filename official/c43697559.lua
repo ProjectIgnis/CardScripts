@@ -1,4 +1,5 @@
 --ジェット・ロイド
+--Jetroid
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
@@ -16,5 +17,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_TRAP_ACT_IN_HAND)
 	e1:SetTargetRange(LOCATION_HAND,0)
 	e1:SetReset(RESET_CHAIN)
+	e1:SetDescription(aux.Stringid(id,0))
 	Duel.RegisterEffect(e1,tp)
 end

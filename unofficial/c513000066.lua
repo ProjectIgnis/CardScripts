@@ -1,5 +1,5 @@
---ウィジャ盤 (Anime)
---Destiny Board (Anime)
+--ウィジャ盤 (Manga)
+--Destiny Board (Manga)
 --Updated by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
@@ -37,6 +37,7 @@ function s.initial_effect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE)
 	e5:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e5:SetCode(EFFECT_QP_ACT_IN_SET_TURN)
+	e5:SetDescription(aux.Stringid(id,1))
 	c:RegisterEffect(e5)
 end
 s.listed_names={31829185}

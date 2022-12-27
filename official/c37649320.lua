@@ -1,4 +1,5 @@
 --バージェストマ・オパビニア
+--Paleozoic Opabinia
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -18,6 +19,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_TRAP_ACT_IN_HAND)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xd4))
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetTargetRange(LOCATION_HAND,0)
 	c:RegisterEffect(e2)
 	--search

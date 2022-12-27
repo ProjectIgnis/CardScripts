@@ -15,6 +15,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_HAND,0)
 	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x180))
+	e2:SetDescription(aux.Stringid(id,1))
 	c:RegisterEffect(e2)
 	--Return up to 3 "Runick" Quick-Play Spells to the Deck and draw the same number
 	local e3=Effect.CreateEffect(c)

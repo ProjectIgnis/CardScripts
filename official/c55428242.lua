@@ -1,4 +1,5 @@
 --アトラの蟲惑魔
+--Traptrix Atrax
 local s,id=GetID()
 function s.initial_effect(c)
 	--immune
@@ -7,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EFFECT_IMMUNE_EFFECT)
-	e1:SetValue(s.efilter)
+	e1:SetValue(function(_,te) return s.is_normal_hole(te:GetHandler()) end)
 	c:RegisterEffect(e1)
 	--
 	local e2=Effect.CreateEffect(c)
@@ -15,7 +16,8 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_TRAP_ACT_IN_HAND)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(LOCATION_HAND,0)
-	e2:SetTarget(s.etarget)
+	e2:SetTarget(function(_,c) return s.is_normal_hole(c) end)
+	e2:SetDescription(aux.Stringid(id,0))
 	c:RegisterEffect(e2)
 	--
 	local e3=Effect.CreateEffect(c)
@@ -39,16 +41,12 @@ function s.initial_effect(c)
 	e5:SetTarget(s.distarget)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x4c,0x89}
-function s.efilter(e,te)
-	local c=te:GetHandler()
-	return c:GetType()==TYPE_TRAP and (c:IsSetCard(0x4c) or c:IsSetCard(0x89))
-end
-function s.etarget(e,c)
-	return c:GetType()==TYPE_TRAP and (c:IsSetCard(0x4c) or c:IsSetCard(0x89))
+s.listed_series={SET_TRAP_HOLE,SET_HOLE}
+function s.is_normal_hole(c)
+	return c:IsNormalTrap() and c:IsSetCard{SET_TRAP_HOLE,SET_HOLE}
 end
 function s.distarget(e,c)
-	return c:GetType()==TYPE_TRAP or c:GetType()==TYPE_TRAP+TYPE_EQUIP
+	return c:IsNormalTrap() or c:IsExactType(TYPE_TRAP|TYPE_EQUIP)
 end
 function s.chainfilter(e,ct)
 	local p=e:GetHandlerPlayer()

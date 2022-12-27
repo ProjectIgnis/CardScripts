@@ -29,6 +29,7 @@ function s.initial_effect(c)
 	e4:SetProperty(EFFECT_FLAG_DELAY)
 	e4:SetCode(EVENT_CHAINING)
 	e4:SetRange(LOCATION_MZONE)
+	e4:SetDescription(aux.Stringid(id,0))
 	e4:SetCountLimit(1,id)
 	e4:SetCondition(s.thcon)
 	e4:SetLabelObject(g)
@@ -67,7 +68,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=e:GetLabelObject()
 	if chk==0 then return g:IsExists(s.chk,1,nil,tp,e) end
 	if #g>1 then
-		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))
+		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
 		e:SetLabel(g:Select(tp,1,1,nil):GetFirst():GetCardID())
 	else
 		e:SetLabel(g:GetFirst():GetCardID())

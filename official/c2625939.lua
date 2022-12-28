@@ -25,7 +25,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	ft=math.min(ft,3)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
 	if ft>1 then
-		ft=Duel.AnnounceNumberRange(tp,1,ct)
+		ft=Duel.AnnounceNumberRange(tp,1,ft)
 	end
 	Duel.BreakEffect()
 	for i=1,ft do

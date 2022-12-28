@@ -44,7 +44,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		if not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,TYPE_FUSION),tp,LOCATION_MZONE,0,1,nil) then return end
 		local g2=Duel.GetMatchingGroup(s.thfilter,tp,0,LOCATION_ONFIELD,nil)
 		if #g2>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 			local sg=g2:Select(tp,1,1,nil)
 			Duel.HintSelection(sg,true)
 			if #sg>0 then

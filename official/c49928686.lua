@@ -1,5 +1,5 @@
 -- スプライト・ピクシーズ
--- Splight Pixies
+-- Spright Pixies
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -45,7 +45,7 @@ function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local a,d=Duel.GetBattleMonster(tp)
-	if a:IsRelateToBattle() and a:IsFaceup() and d:IsRelateToBattle() and d:IsFaceup()
+	if a and d and a:IsRelateToBattle() and a:IsFaceup() and d:IsRelateToBattle() and d:IsFaceup()
 		and d:IsControler(1-tp) then
 		-- Increase ATK/DEF
 		local e1=Effect.CreateEffect(e:GetHandler())

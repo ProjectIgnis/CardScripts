@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={id}
-s.listed_series={0x160,0x189}
+s.listed_series={SET_BRANDED,SET_BYSTIAL}
 function s.spfilter(c,tp)
 	return c:IsAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK) and c:IsAbleToRemove() and aux.SpElimFilter(c,true)
 		and c:IsFaceup() and Duel.GetMZoneCount(tp,c)>0
@@ -61,8 +61,8 @@ function s.spquickcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
 end
 function s.tgfilter(c)
-	return ((c:IsSetCard(0x189) and c:IsMonster() and not c:IsCode(id))
-		or (c:IsSetCard(0x160) and c:IsSpellTrap())) and c:IsAbleToGrave()
+	return ((c:IsSetCard(SET_BYSTIAL) and c:IsMonster() and not c:IsCode(id))
+		or (c:IsSetCard(SET_BRANDED) and c:IsSpellTrap())) and c:IsAbleToGrave()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end

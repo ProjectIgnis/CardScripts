@@ -201,7 +201,7 @@ function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locati
 							if not extrafil then
 								local ret = {repl_function[1](e,tp,mg1)}
 								if ret[1] then
-									ret[1]:Match(matfilter,nil)
+									ret[1]:Match(matfilter,nil,e,tp,0)
 									Fusion.ExtraGroup=ret[1]:Filter(Card.IsCanBeFusionMaterial,nil,nil,value):Match(aux.NOT(Card.IsImmuneToEffect),nil,e)
 									mg1:Merge(ret[1])
 								end
@@ -211,7 +211,7 @@ function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locati
 								local ret = {extrafil(e,tp,mg1)}
 								local repl={repl_function[1](e,tp,mg1)}
 								if ret[1] then
-									repl[1]:Match(matfilter,nil)
+									repl[1]:Match(matfilter,nil,e,tp,0)
 									ret[1]:Merge(repl[1])
 									Fusion.ExtraGroup=ret[1]:Filter(Card.IsCanBeFusionMaterial,nil,nil,value):Match(aux.NOT(Card.IsImmuneToEffect),nil,e)
 									mg1:Merge(ret[1])
@@ -337,7 +337,7 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 						if not extrafil then
 							local ret = {repl_function[1](e,tp,mg1)}
 							if ret[1] then
-								ret[1]:Match(matfilter,nil)
+								ret[1]:Match(matfilter,nil,e,tp,1)
 								Fusion.ExtraGroup=ret[1]:Filter(Card.IsCanBeFusionMaterial,nil,nil,value):Match(aux.NOT(Card.IsImmuneToEffect),nil,e)
 								mg1:Merge(ret[1])
 							end
@@ -347,7 +347,7 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 							local ret = {extrafil(e,tp,mg1)}
 							local repl={repl_function[1](e,tp,mg1)}
 							if ret[1] then
-								repl[1]:Match(matfilter,nil)
+								repl[1]:Match(matfilter,nil,e,tp,1)
 								ret[1]:Merge(repl[1])
 								Fusion.ExtraGroup=ret[1]:Filter(Card.IsCanBeFusionMaterial,nil,nil,value):Match(aux.NOT(Card.IsImmuneToEffect),nil,e)
 								mg1:Merge(ret[1])

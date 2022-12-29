@@ -1,15 +1,15 @@
--- スケアクロー・クシャトリラ
--- Scareclaw Kshatri-La
--- Scripted by Hatter
+--スケアクロー・クシャトリラ
+--Scareclaw Kashtira
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Can attack while in face-up Defense Position
+	--Can attack while in face-up Defense Position
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_DEFENSE_ATTACK)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	-- Special Summon this card
+	--Special Summon this card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_REMOVE)
@@ -22,21 +22,19 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	-- Negate effects of monsters that battle your "Scareclaw" or "Kshatri-la" monsters
+	--Negate the effects of monsters that battle your "Scareclaw" or "Kashtira" monsters
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e3:SetCode(EVENT_BE_BATTLE_TARGET)
+	e3:SetType(EFFECT_TYPE_FIELD)
+	e3:SetCode(EFFECT_DISABLE)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCondition(s.negcon)
-	e3:SetOperation(s.negop)
+	e3:SetTargetRange(0,LOCATION_MZONE)
+	e3:SetTarget(s.distg)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_SCARECLAW,SET_KSHATRI_LA}
-function s.archfilter(c)
-	return c:IsSetCard(SET_SCARECLAW) or c:IsSetCard(SET_KSHATRI_LA)
-end
+s.listed_series={SET_SCARECLAW,SET_KASHTIRA}
 function s.rmfilter(c)
-	return s.archfilter(c) and c:IsAbleToRemove() and (c:IsLocation(LOCATION_HAND) or aux.SpElimFilter(c,true))
+	return c:IsSetCard({SET_SCARECLAW,SET_KASHTIRA}) and c:IsAbleToRemove()
+		and (c:IsLocation(LOCATION_HAND) or aux.SpElimFilter(c,true))
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -56,26 +54,16 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 	end
 end
-function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	local a,b=Duel.GetBattleMonster(tp)
-	if a and b and s.archfilter(a) then
-		e:SetLabelObject(b)
+function s.distg(e,c)
+	local fid=e:GetHandler():GetFieldID()
+	for _,label in ipairs({c:GetFlagEffectLabel(id)}) do
+		if fid==label then return true end
+	end
+	local bc=c:GetBattleTarget()
+	if c:IsRelateToBattle() and bc and bc:IsControler(e:GetHandlerPlayer())
+		and bc:IsFaceup() and bc:IsSetCard({SET_SCARECLAW,SET_KASHTIRA}) then
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1,fid)
 		return true
 	end
-	e:SetLabelObject(nil)
 	return false
-end
-function s.negop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetLabelObject()
-	if not tc then return end
-	-- Negate its effects
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_DISABLE)
-	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
-	tc:RegisterEffect(e1)
-	local e2=e1:Clone()
-	e2:SetCode(EFFECT_DISABLE_EFFECT)
-	e2:SetValue(RESET_TURN_SET)
-	tc:RegisterEffect(e2)
 end

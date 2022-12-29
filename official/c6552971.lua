@@ -1,9 +1,9 @@
---めぐり-Ai-
---When A.I. First Met You
+--めぐり－Ａｉ－
+--A.I Meet You
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Reveal 1 Cyberse monster and add 1 "@Ignister" monster to the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x135}
+s.listed_series={SET_IGNISTER}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)
 	return true
@@ -23,16 +23,16 @@ function s.cfilter(c,tp)
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,c)
 end
 function s.filter(c,rc)
-	return c:IsSetCard(0x135) and c:IsAttribute(rc:GetAttribute()) and c:IsAbleToHand()
+	return c:IsSetCard(SET_IGNISTER) and c:IsAttribute(rc:GetAttribute()) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND+LOCATION_EXTRA,0,1,nil,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND|LOCATION_EXTRA,0,1,nil,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
-	local rc=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND+LOCATION_EXTRA,0,1,1,nil,tp):GetFirst()
+	local rc=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND|LOCATION_EXTRA,0,1,1,nil,tp):GetFirst()
 	if rc then
 		Duel.ConfirmCards(1-tp,rc)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
@@ -56,6 +56,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetLabelObject(e1)
 		Duel.RegisterEffect(e2,tp)
 	end
+	--Can only activate the effects of Cyberse monsters
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_CANNOT_ACTIVATE)
@@ -68,12 +69,14 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.aclimit(e,re,tp)
 	local rc=re:GetHandler()
-	return re:IsActiveType(TYPE_MONSTER) and not rc:IsRace(RACE_CYBERSE)
+	return re:IsMonsterEffect() and not rc:IsRace(RACE_CYBERSE)
+end
+function s.nmfilter(c,tp,code)
+	return c:IsCode(code) and c:IsSummonPlayer(tp)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==0 then return end
-	local tc=eg:GetFirst()
-	if tc:IsCode(e:GetLabel()) and tc:IsSummonPlayer(tp) then
+	if eg:IsExists(s.nmfilter,1,nil,tp,e:GetLabel()) then
 		e:SetLabel(0)
 	end
 end

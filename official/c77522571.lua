@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	Pendulum.AddProcedure(c)
-	--Special summon (pendulum)
+	--Special Summon 1 Fiend monster from the Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg1)
 	e1:SetOperation(s.spop1)
 	c:RegisterEffect(e1)
-	--Special summon (deck)
+	--Special Summon 1 "Frightfur", "Fluffal" or "Edge Imp" montser from the Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -25,32 +25,31 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg2)
 	e2:SetOperation(s.spop2)
 	c:RegisterEffect(e2)
-	--Special summon (deck)
+	--Special Summon 1 "Frightfur" Fusion monsterfrom the Extra Deck
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCountLimit(1,77522573)
+	e3:SetCountLimit(1,{id,2})
 	e3:SetCost(s.cost)
 	e3:SetTarget(s.extg)
 	e3:SetOperation(s.exop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xa9,0xc3,0xad}
+s.listed_series={SET_FLUFFAL,SET_EDGE_IMP,SET_FRIGHTFUR}
 function s.fright_unit(c)
-	return c:IsSetCard(0xa9) or c:IsSetCard(0xc3) or c:IsSetCard(0xad)
+	return c:IsSetCard({SET_FLUFFAL,SET_EDGE_IMP,SET_FRIGHTFUR})
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100)
 	return true
 end
-function s.spcfilter1(c)
+function s.costfilter(c)
 	return c:IsFaceup() and s.fright_unit(c) and c:IsLevelBelow(4)
 end
 function s.spfilter1(c,e,tp)
-	return c:IsRace(RACE_FIEND) 
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsRace(RACE_FIEND) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spkfilter1(c,rc)
 	return c:IsLevel(rc:GetLevel()) and not c:IsCode(rc:GetCode())
@@ -63,10 +62,10 @@ function s.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if e:GetLabel()~=100 then return false end
 		e:SetLabel(0)
-		return Duel.CheckReleaseGroupCost(tp,s.spcfilter1,1,false,s.spcheck1,nil,mg)
+		return Duel.CheckReleaseGroupCost(tp,s.costfilter,1,false,s.spcheck1,nil,mg)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local mg=Duel.SelectReleaseGroupCost(tp,s.spcfilter1,1,1,false,s.spcheck1,nil,mg)
+	local mg=Duel.SelectReleaseGroupCost(tp,s.costfilter,1,1,false,s.spcheck1,nil,mg)
 	e:SetLabelObject(mg:GetFirst())
 	Duel.Release(mg,REASON_COST)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
@@ -119,7 +118,7 @@ function s.excfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_FIEND) and c:HasLevel()
 end
 function s.exfilter(c,e,tp,chk)
-	return c:IsSetCard(0xad) and c:IsType(TYPE_FUSION) and (not chk or Duel.GetLocationCountFromEx(tp,tp,nil,c)>0) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false)
+	return c:IsSetCard(SET_FRIGHTFUR) and c:IsType(TYPE_FUSION) and (not chk or Duel.GetLocationCountFromEx(tp,tp,nil,c)>0) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false)
 end
 function s.exkfilter(c,sg,tp)
 	return Duel.GetLocationCountFromEx(tp,tp,sg,c)>0 and c:IsLevel(sg:GetSum(Card.GetOriginalLevel))
@@ -141,7 +140,6 @@ function s.extg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.exop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCountFromEx(tp)<1 then return end
 	local g=Duel.GetMatchingGroup(s.exfilter,tp,LOCATION_EXTRA,0,nil,e,tp,true):Filter(Card.IsLevel,nil,e:GetLabel())
 	if #g>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

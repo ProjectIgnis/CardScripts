@@ -43,9 +43,9 @@ function s.initial_effect(c)
 	e4:SetOperation(s.tgmlop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={SET_TEARLAMENTS,SET_KSHATRI_LA}
+s.listed_series={SET_TEARLAMENTS,SET_KASHTIRA}
 function s.rmfilter(c)
-	return (c:IsSetCard(SET_TEARLAMENTS) or c:IsSetCard(SET_KSHATRI_LA)) and c:IsAbleToRemove()
+	return (c:IsSetCard(SET_TEARLAMENTS) or c:IsSetCard(SET_KASHTIRA)) and c:IsAbleToRemove()
 		and (c:IsLocation(LOCATION_HAND) or aux.SpElimFilter(c,true))
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

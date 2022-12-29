@@ -1,7 +1,8 @@
 --セイクリッド・シェラタン
+--Constellar Sheratan
 local s,id=GetID()
 function s.initial_effect(c)
-	--search
+	--Add 1 "Constellar" monster from the Deck to the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -9,11 +10,11 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetTarget(s.tg)
 	e1:SetOperation(s.op)
-	c:RegisterEffect(e1)
+	c:RegisterEffect(e1,false,REGISTER_FLAG_TELLAR)
 end
-s.listed_series={0x53}
+s.listed_series={SET_CONSTELLAR}
 function s.filter(c)
-	return c:IsSetCard(0x53) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_CONSTELLAR) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

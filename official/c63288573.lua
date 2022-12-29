@@ -26,7 +26,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_SKY_STRIKER}
 function s.matfilter(c,scard,sumtype,tp)
-	return c:IsSetCard(SET_SKY_STRIKER,scard,sumtype,tp) and c:IsAttribute(ATTRIBUTE_ALL-ATTRIBUTE_FIRE,scard,sumtype,tp)
+	return c:IsSetCard(SET_SKY_STRIKER_ACE,scard,sumtype,tp) and c:IsAttribute(ATTRIBUTE_ALL-ATTRIBUTE_FIRE,scard,sumtype,tp)
 end
 function s.atkval(e)
 	return Duel.GetMatchingGroupCount(Card.IsSpell,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil)*100

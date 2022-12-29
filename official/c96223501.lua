@@ -1,45 +1,44 @@
 --竜星因士－セフィラツバーン
+--Satellarknight Zefrathuban
 local s,id=GetID()
 function s.initial_effect(c)
-	--pendulum summon
+	--Pendulum Summon procedure
 	Pendulum.AddProcedure(c)
-	--splimit
+	--You cannot Pendulum Summon, except "tellarknight" and "Zefra" monsters
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_NEGATE)
+	e1:SetRange(LOCATION_PZONE)
+	e1:SetTargetRange(1,0)
+	e1:SetTarget(s.splimit)
+	c:RegisterEffect(e1)
+	--Destroy 1 card you control and 1 face-up card your opponent controls
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_NEGATE)
-	e2:SetRange(LOCATION_PZONE)
-	e2:SetTargetRange(1,0)
-	e2:SetTarget(s.splimit)
-	c:RegisterEffect(e2)
-	--destroy
-	local e3=Effect.CreateEffect(c)
-	e3:SetCategory(CATEGORY_DESTROY)
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
-	e3:SetCode(EVENT_SUMMON_SUCCESS)
-	e3:SetCountLimit(1,id)
-	e3:SetTarget(s.target)
-	e3:SetOperation(s.operation)
+	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetCategory(CATEGORY_DESTROY)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
+	e2:SetCode(EVENT_SUMMON_SUCCESS)
+	e2:SetCountLimit(1,id)
+	e2:SetTarget(s.target)
+	e2:SetOperation(s.operation)
+	c:RegisterEffect(e2,false,REGISTER_FLAG_TELLAR)
+	local e3=e2:Clone()
+	e3:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 	c:RegisterEffect(e3)
-	local e4=e3:Clone()
-	e4:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
+	local e4=e2:Clone()
+	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e4:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_PENDULUM) end)
 	c:RegisterEffect(e4)
-	local e5=e3:Clone()
-	e5:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e5:SetCondition(s.condition)
-	c:RegisterEffect(e5)
 end
-s.listed_series={0x9c,0xc4}
+s.listed_series={SET_TELLARKNIGHT,SET_ZEFRA}
 function s.splimit(e,c,sump,sumtype,sumpos,targetp)
-	if c:IsSetCard(0x9c) or c:IsSetCard(0xc4) then return false end
+	if c:IsSetCard(SET_TELLARKNIGHT) or c:IsSetCard(SET_ZEFRA) then return false end
 	return (sumtype&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_PENDULUM)
-end
 function s.filter1(c)
-	return c:IsFaceup() and (c:IsSetCard(0x9c) or c:IsSetCard(0xc4))
+	return c:IsFaceup() and c:IsSetCard({SET_TELLARKNIGHT,SET_ZEFRA})
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

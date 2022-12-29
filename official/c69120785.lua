@@ -43,9 +43,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.rmvop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x189}
+s.listed_series={SET_BYSTIAL}
 function s.cfilter(c)
-	return c:IsSetCard(0x189) and c:IsReleasable()
+	return c:IsSetCard(SET_BYSTIAL) and c:IsReleasable()
 end
 function s.spcon(e,c)
 	if c==nil then return true end

@@ -26,13 +26,13 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_KSHATRI_LA}
+s.listed_series={SET_KASHTIRA}
 s.listed_names={id}
 function s.tgfilter(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(SET_KSHATRI_LA) and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetAttribute())
+	return c:IsFaceup() and c:IsSetCard(SET_KASHTIRA) and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetAttribute())
 end
 function s.spfilter(c,e,tp,attr)
-	return c:IsSetCard(SET_KSHATRI_LA) and not c:IsAttribute(attr) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(SET_KASHTIRA) and not c:IsAttribute(attr) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
@@ -68,7 +68,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	aux.addTempLizardCheck(c,tp,function(_,c) return not c:IsOriginalType(TYPE_XYZ) end)
 end
 function s.thfilter(c)
-	return c:IsFaceup() and c:IsSetCard(SET_KSHATRI_LA) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(SET_KASHTIRA) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and s.thfilter(chkc) end

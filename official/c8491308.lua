@@ -23,7 +23,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_SKY_STRIKER}
 function s.matfilter(c,scard,sumtype,tp)
-	return c:IsSetCard(SET_SKY_STRIKER,scard,sumtype,tp) and c:IsAttribute(ATTRIBUTE_ALL-ATTRIBUTE_WIND,scard,sumtype,tp)
+	return c:IsSetCard(SET_SKY_STRIKER_ACE,scard,sumtype,tp) and c:IsAttribute(ATTRIBUTE_ALL-ATTRIBUTE_WIND,scard,sumtype,tp)
 end
 function s.tgfilter(c)
 	return c:IsSetCard(SET_SKY_STRIKER) and c:IsAbleToGrave()

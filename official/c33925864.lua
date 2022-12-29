@@ -27,9 +27,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_KSHATRI_LA}
+s.listed_series={SET_KASHTIRA}
 function s.xyzfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(SET_KSHATRI_LA)
+	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(SET_KASHTIRA)
 end
 function s.rmvcond(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
@@ -62,10 +62,10 @@ function s.rmvop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c,tp)
-	return c:IsMonster() and c:IsSetCard(SET_KSHATRI_LA) and c:GetOwner()==tp and c:IsAbleToHand() 
+	return c:IsMonster() and c:IsSetCard(SET_KASHTIRA) and c:GetOwner()==tp and c:IsAbleToHand() 
 end
 function s.tgfilter(c,tp)
-	if not (c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(SET_KSHATRI_LA)) then return false end
+	if not (c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(SET_KASHTIRA)) then return false end
 	local g=c:GetOverlayGroup()
 	return g:IsExists(s.thfilter,1,nil,tp)
 end

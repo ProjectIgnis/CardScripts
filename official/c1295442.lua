@@ -36,17 +36,21 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x16e}
+s.listed_series={SET_ICEJADE}
 function s.atkval(e)
 	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsMonster),e:GetHandlerPlayer(),LOCATION_REMOVED,LOCATION_REMOVED,nil)*400
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsFaceup() and chkc:IsSetCard(0x16e) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsFaceup() and chkc:IsSetCard(SET_ICEJADE) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingTarget(aux.FaceupFilter(Card.IsSetCard,0x16e),tp,LOCATION_MZONE,0,1,nil) end
+		and Duel.IsExistingTarget(aux.FaceupFilter(Card.IsSetCard,SET_ICEJADE),tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsSetCard,0x16e),tp,LOCATION_MZONE,0,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,0,0)
+	Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsSetCard,SET_ICEJADE),tp,LOCATION_MZONE,0,1,1,nil)
+	local c=e:GetHandler()
+	Duel.SetOperationInfo(0,CATEGORY_EQUIP,c,1,0,0)
+	if c:IsLocation(LOCATION_GRAVE) then
+		Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,c,1,0,0)
+	end
 end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

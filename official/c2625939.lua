@@ -18,20 +18,16 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.IsExistingMatchingCard(Card.IsRace,tp,LOCATION_GRAVE,0,3,nil,RACE_CYBERSE)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
+	if not Duel.NegateAttack() then return end
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if not Duel.NegateAttack() or ft<=0
-		or not Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,0,0,1,RACE_CYBERSE,ATTRIBUTE_LIGHT,POS_FACEUP_DEFENSE)
-		or not Duel.SelectYesNo(tp,aux.Stringid(id,1))
-		then return end
-	Duel.BreakEffect()
+	if ft==0 or not Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,0,0,1,RACE_CYBERSE,ATTRIBUTE_LIGHT,POS_FACEUP_DEFENSE)
+		or not Duel.SelectYesNo(tp,aux.Stringid(id,1)) then return end
+	ft=math.min(ft,3)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
-	if ft~=1 then
-		local ct = {}
-		for i=1,math.min(ft,3) do
-			ct[#ct+1]=i
-		end
-		ft=Duel.AnnounceNumber(tp,table.unpack(ct))
+	if ft>1 then
+		ft=Duel.AnnounceNumberRange(tp,1,ft)
 	end
+	Duel.BreakEffect()
 	for i=1,ft do
 		local token=Duel.CreateToken(tp,id+1)
 		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP_DEFENSE)

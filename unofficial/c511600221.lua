@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_names={511009428}
+s.listed_names={98875864}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsBattlePhase()
 end
@@ -27,7 +27,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,nil,Duel.GetTurnCount())
 		and Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,511009428,0,TYPES_TOKEN,0,0,1,RACE_CYBERSE,ATTRIBUTE_EARTH,POS_FACEUP) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,98875864,0,TYPES_TOKEN,0,0,1,RACE_CYBERSE,ATTRIBUTE_EARTH,POS_FACEUP) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELF)
 	Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil,Duel.GetTurnCount())
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPPO)
@@ -38,8 +38,8 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,511009428,0,TYPES_TOKEN,0,0,1,RACE_CYBERSE,ATTRIBUTE_EARTH,POS_FACEUP) then
-		local token=Duel.CreateToken(tp,511009428)
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,98875864,0,TYPES_TOKEN,0,0,1,RACE_CYBERSE,ATTRIBUTE_EARTH,POS_FACEUP) then
+		local token=Duel.CreateToken(tp,98875864)
 		local c=e:GetHandler()
 		local oc=e:GetLabelObject()
 		local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
@@ -79,7 +79,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atklimit(e,c)
-	return c:IsCode(511009428)
+	return c:IsCode(98875864)
 end
 function s.effcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetLabelObject() and e:GetLabelObject():IsRelateToCard(e:GetHandler())

@@ -154,8 +154,8 @@ function Auxiliary.CostWithReplace(base,replacecode,extracon,alwaysexecute)
 			end
 			return false
 		end
-		if alwaysexecute then alwaysexecute(e,tp,eg,ep,ev,re,r,rp,1) end
 		local effs=cost_replace_getvalideffs(replacecode,extracon,e,tp,eg,ep,ev,re,r,rp,chk)
+		if alwaysexecute then alwaysexecute(e,tp,eg,ep,ev,re,r,rp,1) end
 		if not cost_chk or #effs>0 then
 			local eff=effs[1]
 			if #effs>1 then
@@ -776,6 +776,7 @@ Card.RegisterEffect=(function()
 		if val==2 then return 511001692 end -- access to Cardian Summoning conditions/effects
 		if val==4 then return  12081875 end -- access to Thunder Dragon effects that activate by discarding
 		if val==8 then return 511310036	end -- access to Allure Queen effects that activate by sending themselves to GY
+		if val==16 then return 101112045 end -- access to tellarknights/constellar effects that activate when Normal Summoned
 		return nil
 	end
 	return function(c,e,forced,...)

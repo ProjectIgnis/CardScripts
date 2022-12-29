@@ -27,7 +27,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil)
-	Duel.HintSelection(g)
+	Duel.HintSelection(g,true)
 	if #g>0 and Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)>0 then
 		--Effect
 		local c=e:GetHandler()
@@ -35,6 +35,17 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			local ct=Duel.GetMatchingGroupCountRush(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 			c:UpdateLevel(ct,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,c)
 		end
+		--Prevent non-fiend from attacking
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetCode(EFFECT_CANNOT_ATTACK)
+		e1:SetProperty(EFFECT_FLAG_OATH)
+		e1:SetTargetRange(LOCATION_MZONE,0)
+		e1:SetTarget(s.ftarget)
+		e1:SetReset(RESET_PHASE+PHASE_END)
+		Duel.RegisterEffect(e1,tp)
 	end
 end
-
+function s.ftarget(e,c)
+	return not c:IsRace(RACE_FIEND)
+end

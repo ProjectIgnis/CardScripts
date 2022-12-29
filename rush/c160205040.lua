@@ -14,9 +14,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c,tp)
-	return c:GetPreviousLevelOnField()==6 and c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:GetReasonPlayer()==1-tp
-		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp)
-		and not Duel.IsExistingMatchingCard(nil,tp,LOCATION_MZONE,0,1,c)
+	return c:GetPreviousLevelOnField()==6 and c:GetReasonPlayer()==1-tp and c:IsPreviousLocation(LOCATION_MZONE) 
+		and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp) and not Duel.IsExistingMatchingCard(nil,tp,LOCATION_MZONE,0,1,c)
+		and (c:IsReason(REASON_EFFECT) or (c:IsReason(REASON_BATTLE) and Duel.GetAttacker():IsControler(1-tp)))
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

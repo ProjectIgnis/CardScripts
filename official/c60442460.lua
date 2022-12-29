@@ -23,14 +23,14 @@ function s.initial_effect(c)
 	e1:SetOperation(s.negop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={SET_BYSSTED}
+s.listed_series={SET_BYSTIAL}
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	if not (ep==1-tp and Duel.IsChainDisablable(ev)) or re:GetHandler():IsDisabled() then return false end
 	local ch=Duel.GetCurrentChain(true)-1
 	if ch>0 then
 		local cplayer=Duel.GetChainInfo(ch,CHAININFO_TRIGGERING_CONTROLER)
 		local ceff=Duel.GetChainInfo(ch,CHAININFO_TRIGGERING_EFFECT)
-		if cplayer==tp and ceff:GetHandler():IsSetCard(SET_BYSSTED) and ceff:IsActiveType(TYPE_MONSTER) then
+		if cplayer==tp and ceff:GetHandler():IsSetCard(SET_BYSTIAL) and ceff:IsActiveType(TYPE_MONSTER) then
 			return true
 		end
 	end
@@ -38,7 +38,7 @@ function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	if #g~=1 then return false end
 	local tc=g:GetFirst()
-	return tc:IsSetCard(SET_BYSSTED) and tc:IsControler(tp) and tc:IsLocation(LOCATION_MZONE) and tc:IsFaceup()
+	return tc:IsSetCard(SET_BYSTIAL) and tc:IsControler(tp) and tc:IsLocation(LOCATION_MZONE) and tc:IsFaceup()
 end
 function s.rmvfilter(c)
 	return c:IsAttribute(ATTRIBUTE_LIGHT|ATTRIBUTE_DARK) and c:IsAbleToRemove() and aux.SpElimFilter(c,true)

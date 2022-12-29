@@ -1,9 +1,9 @@
 -- クシャトリラ・オーガ
--- Kshatri-La Ogre
+-- Kashtira Ogre
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon this card
+	-- Special Summon itself from the hand if you control no monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.spcon)
 	c:RegisterEffect(e1)
-	-- Search 1 "Kshatri-la" Trap
+	-- Add 1 "Kashtira" Trap from the Deck to the hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
-	-- Banish 1 card face-down
+	-- Excavate the opponent's Deck and banish 1 card, face-down
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_REMOVE)
@@ -39,14 +39,14 @@ function s.initial_effect(c)
 	e4:SetCondition(s.rmeffcon)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x18a}
+s.listed_series={SET_KASHTIRA}
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=e:GetHandlerPlayer()
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0,nil)==0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x18a) and c:IsTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_KASHTIRA) and c:IsTrap() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -61,13 +61,15 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)>=5 and Duel.IsPlayerCanRemove(tp) end
+	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)>0 and Duel.IsPlayerCanRemove(tp) end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_DECK)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)<5 then return end
-	Duel.ConfirmDecktop(1-tp,5)
-	local g=Duel.GetDecktopGroup(1-tp,5)
+	local ct=math.min(5,Duel.GetFieldGroupCount(tp,0,LOCATION_DECK))
+	if ct==0 then return end
+	local ac=Duel.AnnounceNumberRange(tp,1,ct)
+	Duel.ConfirmDecktop(1-tp,ac)
+	local g=Duel.GetDecktopGroup(1-tp,ac)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local sg=g:FilterSelect(tp,Card.IsAbleToRemove,1,1,nil,tp,POS_FACEDOWN)
 	if #sg>0 then
@@ -76,5 +78,5 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rmeffcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==1-tp and re:IsActiveType(TYPE_MONSTER)
+	return ep==1-tp and re:IsMonsterEffect()
 end

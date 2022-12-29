@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
 	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e0:SetCode(EFFECT_REVIVE_LIMIT)
-	e0:SetCondition(s.rvlimit)
+	e0:SetCondition(function(e) return not e:GetHandler():IsLocation(LOCATION_HAND) end)
 	c:RegisterEffect(e0)
 	--Special Summon condition
 	local e1=Effect.CreateEffect(c)
@@ -33,8 +33,8 @@ function s.initial_effect(c)
 	--Damage when the opponent Special Summons from the Extra Deck
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e3:SetRange(LOCATION_MZONE)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e3:SetRange(LOCATION_MZONE)
 	e3:SetCondition(s.damcon)
 	e3:SetOperation(s.damop)
 	c:RegisterEffect(e3)
@@ -52,10 +52,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_names={16494704}
-s.listed_series={0x99}
-function s.rvlimit(e)
-	return not e:GetHandler():IsLocation(LOCATION_HAND)
-end
+s.listed_series={SET_ODD_EYES}
 function s.splimit(e,se,sp,st)
 	return (st&SUMMON_TYPE_RITUAL)==SUMMON_TYPE_RITUAL or ((st&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 		and e:GetHandler():IsLocation(LOCATION_HAND))
@@ -65,17 +62,14 @@ function s.thfilter(c)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil)
-		and c:IsAbleToHand() end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,c,2,tp,LOCATION_DECK+LOCATION_GRAVE+LOCATION_PZONE)
+	if chk==0 then return c:IsAbleToHand() and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,c,2,tp,LOCATION_DECK|LOCATION_GRAVE|LOCATION_PZONE)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
-	if #g>0 and Duel.SendtoHand(g,nil,REASON_EFFECT)>0
-		and g:GetFirst():IsLocation(LOCATION_HAND) then
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil)
+	if #g>0 and Duel.SendtoHand(g,nil,REASON_EFFECT)>0 and g:GetFirst():IsLocation(LOCATION_HAND) then
 		Duel.ConfirmCards(1-tp,g)
 		Duel.BreakEffect()
 		if Duel.SendtoHand(c,nil,REASON_EFFECT)>0 then
@@ -94,22 +88,26 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(1-tp,300,REASON_EFFECT)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==1-tp and re:IsActiveType(TYPE_SPELL) and Duel.IsChainDisablable(ev)
+	return rp==1-tp and re:IsSpellEffect() and Duel.IsChainDisablable(ev)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckPendulumZones(tp) end
+	local c=e:GetHandler()
+	if chk==0 then return c:IsType(TYPE_PENDULUM) and Duel.CheckPendulumZones(tp) end
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
+	if c:IsSummonType(SUMMON_TYPE_RITUAL) then
+		Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
+	end
 end
-function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x99) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and Duel.GetLocationCountFromEx(tp,tp,e:GetHandler(),c)
+function s.spfilter(c,e,tp,mc)
+	return c:IsSetCard(SET_ODD_EYES) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and Duel.GetLocationCountFromEx(tp,tp,mc,c)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.CheckPendulumZones(tp) then return end
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	local sg=Group.CreateGroup()
-	if c:IsSummonType(SUMMON_TYPE_RITUAL) then sg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_EXTRA,0,nil,e,tp) end
+	if c:IsSummonType(SUMMON_TYPE_RITUAL) then sg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_EXTRA,0,nil,e,tp,c) end
 	if Duel.MoveToField(c,tp,tp,LOCATION_PZONE,POS_FACEUP,true) and Duel.NegateEffect(ev)
 		and #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 		Duel.BreakEffect()

@@ -1,5 +1,5 @@
 --神碑の翼フギン
---Huginn, Wings of the Mysterune
+--Hugin the Runick Wings
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -61,18 +61,15 @@ function s.repfilter(c,tp)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToRemove() and eg:IsExists(s.repfilter,1,c,tp) and not eg:IsContains(c) end
-	if Duel.SelectEffectYesNo(tp,c,96) then
-		return true
-	else
-		return false
-	end
+	if chk==0 then return not c:IsStatus(STATUS_DESTROY_CONFIRMED)
+		and c:IsAbleToRemove() and eg:IsExists(s.repfilter,1,nil,tp) end
+	return Duel.SelectEffectYesNo(tp,c,96)
 end
 function s.repval(e,c)
-	return c~=e:GetHandler() and s.repfilter(c,e:GetHandlerPlayer())
+	return s.repfilter(c,e:GetHandlerPlayer())
 end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT)
+	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT+REASON_REPLACE)
 end
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	return (r&REASON_EFFECT+REASON_BATTLE)~=0 and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)

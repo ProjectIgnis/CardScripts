@@ -3,21 +3,21 @@
 --scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
-	--pendulum summon
+	--Pendulum Summon
 	Pendulum.AddProcedure(c)
-	--indes
+	--Prevent a monster(s) from being destroyed by battle
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(34149830,0))
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_QUICK_O)
+	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e1:SetRange(LOCATION_PZONE)
-	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--destroy replace
+	--Return 1 card in your Pendulum Zone to the hand instead of destruction
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -27,7 +27,6 @@ function s.initial_effect(c)
 	e2:SetOperation(s.repop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x99}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	local bc=tc:GetBattleTarget()
@@ -65,9 +64,6 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	e:SetLabelObject(dg)
 	return #dg>0
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x99)
-end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsStatus(STATUS_CHAINING) end
 	Duel.SetTargetCard(e:GetLabelObject())
@@ -89,7 +85,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:IsReason(REASON_BATTLE) 
+	if chk==0 then return c:IsReason(REASON_BATTLE) and c:IsType(TYPE_PENDULUM)
 		and Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,LOCATION_PZONE,0,1,nil) end
 	if Duel.SelectEffectYesNo(tp,c,96) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)

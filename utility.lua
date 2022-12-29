@@ -154,8 +154,8 @@ function Auxiliary.CostWithReplace(base,replacecode,extracon,alwaysexecute)
 			end
 			return false
 		end
-		if alwaysexecute then alwaysexecute(e,tp,eg,ep,ev,re,r,rp,1) end
 		local effs=cost_replace_getvalideffs(replacecode,extracon,e,tp,eg,ep,ev,re,r,rp,chk)
+		if alwaysexecute then alwaysexecute(e,tp,eg,ep,ev,re,r,rp,1) end
 		if not cost_chk or #effs>0 then
 			local eff=effs[1]
 			if #effs>1 then

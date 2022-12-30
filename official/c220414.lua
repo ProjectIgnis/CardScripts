@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	e3:SetCategory(CATEGORY_REMOVE)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCondition(function(e) return e:GetHandler():GetCounter(0x14a)>=2 end)
+	e3:SetCondition(function(e) return e:GetHandler():GetCounter(0x14a)==2 end)
 	e3:SetCost(s.rmcost)
 	e3:SetTarget(s.rmtg)
 	e3:SetOperation(s.rmop)
@@ -48,7 +48,7 @@ function s.counterop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetAttacker():IsControler(1-tp) and e:GetHandler():GetCounter(0x14a)>=1
+	return Duel.GetAttacker():IsControler(1-tp) and e:GetHandler():GetCounter(0x14a)==1
 end
 function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

@@ -28,7 +28,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SendtoGrave(tc,REASON_COST)>0 and tc:IsLocation(LOCATION_GRAVE) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,e,tp):GetFirst()
-		Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEUP)
+		Duel.SpecialSummon(sc,0,tp,tp,true,false,POS_FACEUP)
 	end
 	--Your opponents takes no effect damage for the rest of this turn
 	local e1=Effect.CreateEffect(e:GetHandler())

@@ -12,7 +12,7 @@ function s.spfilter(c,e,tp)
 	return c:IsCode(32543380) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsTurnPlayer(tp) and Duel.GetFlagEffect(tp,id)==0
+	return aux.CanActivateSkill(tp) and Duel.IsTurnPlayer(tp) and Duel.GetFlagEffect(tp,id)==0
 		and Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_SZONE,0,1,nil)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp)
 end

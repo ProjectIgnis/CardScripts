@@ -62,7 +62,7 @@ function Pendulum.Condition()
 				else
 					g=Duel.GetFieldGroup(tp,loc,0)
 				end
-				return g:IsExists(Pendulum.Filter,1,nil,e,tp,lscale,rscale,c:IsHasEffect(511007000) and rpz:IsHasEffect(511007000))
+				return g:IsExists(Pendulum.Filter,1,nil,e,tp,lscale,rscale,c:IsHasEffect(511007000))
 			end
 end
 function Pendulum.Operation()
@@ -83,9 +83,9 @@ function Pendulum.Operation()
 				if ft2>0 then loc=loc+LOCATION_EXTRA end
 				local tg=nil
 				if og then
-					tg=og:Filter(Card.IsLocation,nil,loc):Match(Pendulum.Filter,nil,e,tp,lscale,rscale,c:IsHasEffect(511007000) and rpz:IsHasEffect(511007000))
+					tg=og:Filter(Card.IsLocation,nil,loc):Match(Pendulum.Filter,nil,e,tp,lscale,rscale,c:IsHasEffect(511007000))
 				else
-					tg=Duel.GetMatchingGroup(Pendulum.Filter,tp,loc,0,nil,e,tp,lscale,rscale,c:IsHasEffect(511007000) and rpz:IsHasEffect(511007000))
+					tg=Duel.GetMatchingGroup(Pendulum.Filter,tp,loc,0,nil,e,tp,lscale,rscale,c:IsHasEffect(511007000))
 				end
 				ft1=math.min(ft1,tg:FilterCount(Card.IsLocation,nil,LOCATION_HAND))
 				ft2=math.min(ft2,tg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA))

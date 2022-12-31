@@ -40,6 +40,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.HintSelection(g,true)
 	if #g>0 and Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)>0 then
 		--Effect
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local dg=Duel.SelectMatchingCard(tp,s.desfilter,tp,0,LOCATION_MZONE,1,1,nil)
 		dg=dg:AddMaximumCheck()
 		if #dg>0 then

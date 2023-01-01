@@ -1,11 +1,11 @@
 --幻奏の華楽聖ブルーム・ハーモニスト
---Bloom Harmonist the Melodious Virtuoso
+--Bloom Harmonist the Melodious Composer
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_FAIRY),2,2)
-	--special summon
+	--Special Summon "Melodious" monster from the Extra Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--actlimit
+	--Prevent activations when "Melodious" monsters battle
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,aux.FilterBoolFunction(Card.IsSetCard,0x9b))
 end
-s.listed_series={0x9b}
+s.listed_series={SET_MELODIOUS}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
@@ -39,7 +39,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0 end
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
 	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
@@ -49,10 +49,10 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.splimit(e,c)
-	return not c:IsSetCard(0x9b)
+	return not c:IsSetCard(SET_MELODIOUS)
 end
 function s.spfilter(c,e,tp,zone)
-	return c:IsSetCard(0x9b) and c:IsLevelAbove(1) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,tp,zone)
+	return c:IsSetCard(SET_MELODIOUS) and c:IsLevelAbove(1) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,tp,zone)
 end
 function s.spcheck(sg,e,tp,mg)
 	return sg:GetClassCount(Card.GetLevel)==#sg
@@ -79,7 +79,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.actcon(e)
 	local a=Duel.GetAttacker()
-	return a and a:IsControler(e:GetHandlerPlayer()) and a:IsSetCard(0x9b) 
+	return a and a:IsControler(e:GetHandlerPlayer()) and a:IsSetCard(SET_MELODIOUS)
 		and e:GetHandler():GetLinkedGroup():IsContains(a)
 end
-

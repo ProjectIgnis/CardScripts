@@ -712,3 +712,15 @@ end
 function Card.CanGetPiercingRush(c)
     return not (c:IsHasEffect(EFFECT_CANNOT_ATTACK) or c:IsHasEffect(EFFECT_PIERCE))
 end
+-- Checks if the monster would be a valid target for the equip card
+-- Needed because Rush cards typically don't need this check after they are equipped
+function Card.CheckEquipTargetRush(equip,monster)
+	local effect=equip:GetActivateEffect()
+	if nil~=effect then
+		local filter=effect:GetTarget()
+		if nil~=filter then
+			return filter(effect,effect:GetHandlerPlayer(),nil,nil,nil,nil,nil,nil,nil,monster)
+		end
+	end
+	return false
+end

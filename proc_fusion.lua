@@ -890,7 +890,7 @@ function Fusion.ContactCon(f,fcon)
 		if c==nil then return true end
 		local m=f(e:GetHandlerPlayer())
 		local chkf=c:GetControler()|FUSPROC_CONTACTFUS
-		return c:CheckFusionMaterial(m,nil,chkf) and (not fcon or fcon(e:GetHandlerPlayer()))
+		return c:IsFacedown() and c:CheckFusionMaterial(m,nil,chkf) and (not fcon or fcon(e:GetHandlerPlayer()))
 	end
 end
 function Fusion.ContactTg(f)

@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e4:SetCode(EFFECT_QP_ACT_IN_SET_TURN)
+	e4:SetDescription(aux.Stringid(id,0))
 	c:RegisterEffect(e4)
 end
 function s.cfilter(c,e,tp,eg,ep,ev,re,r,rp,chain)

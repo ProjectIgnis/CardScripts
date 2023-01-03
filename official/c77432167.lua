@@ -1,5 +1,5 @@
 --太陽神の合一
---One with the Sun God
+--Sun God Unification
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_TRAP_ACT_IN_SET_TURN)
 	e2:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
 	e2:SetCondition(s.actcon)
+	e2:SetDescription(aux.Stringid(id,2))
 	c:RegisterEffect(e2)
 	--Increase ATK
 	local e3=Effect.CreateEffect(c)

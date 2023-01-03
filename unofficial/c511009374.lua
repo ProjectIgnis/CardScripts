@@ -38,6 +38,7 @@ function s.initial_effect(c)
 	local e7=Effect.CreateEffect(c)
 	e7:SetType(EFFECT_TYPE_SINGLE)
 	e7:SetCode(EFFECT_TRAP_ACT_IN_HAND)
+	e7:SetDescription(aux.Stringid(id,0))
 	c:RegisterEffect(e7)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

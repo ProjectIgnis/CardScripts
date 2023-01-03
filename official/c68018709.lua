@@ -1,4 +1,5 @@
 --失楽の聖女
+--Condemned Maiden
 local s,id=GetID()
 function s.initial_effect(c)
 	--act qp in hand
@@ -8,5 +9,6 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTargetRange(LOCATION_HAND,0)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_DUEL)
+	e1:SetDescription(aux.Stringid(id,0))
 	c:RegisterEffect(e1)
 end

@@ -1,5 +1,5 @@
 --魔弾の射手 ザ・キッド
---Magibullet Shooter The Kid
+--Magical Musketeer Kidbrave
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate from hand
@@ -9,6 +9,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x108))
 	e1:SetTargetRange(LOCATION_HAND,0)
+	e1:SetDescription(aux.Stringid(id,0))
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_TRAP_ACT_IN_HAND)

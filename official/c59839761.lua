@@ -1,4 +1,5 @@
 --デルタ・クロウ－アンチ・リバース
+--Delta Crow - Anti Reverse
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -16,6 +17,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_TRAP_ACT_IN_HAND)
 	e2:SetCondition(s.handcon)
+	e2:SetDescription(aux.Stringid(id,0))
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x33}

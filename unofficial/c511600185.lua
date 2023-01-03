@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_TRAP_ACT_IN_HAND)
 	e3:SetCondition(s.handcon)
+	e3:SetDescription(aux.Stringid(id,0))
 	c:RegisterEffect(e3)
 end
 function s.cfilter(c,rate)

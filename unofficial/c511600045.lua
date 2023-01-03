@@ -1,5 +1,5 @@
---トリックスター・トリート (Anime)
---Trickstar Treat (Anime)
+--トリックスター・トリート
+--Trickstar Treat
 --scripted by Larry126, fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
@@ -128,6 +128,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_TRAP_ACT_IN_SET_TURN)
+		e2:SetDescription(aux.Stringid(id,1))
 		e2:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e2)

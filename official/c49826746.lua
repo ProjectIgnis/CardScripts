@@ -1,4 +1,5 @@
 --黒翼の魔術師
+--Night Wing Sorceress
 local s,id=GetID()
 function s.initial_effect(c)
 	--Trap activate in set turn
@@ -9,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTargetRange(LOCATION_SZONE,0)
 	e1:SetTarget(aux.TargetBoolFunction(Card.IsCode,CARD_ASSAULT_MODE))
+	e1:SetDescription(aux.Stringid(id,0))
 	c:RegisterEffect(e1)
 end
 s.listed_names={CARD_ASSAULT_MODE}

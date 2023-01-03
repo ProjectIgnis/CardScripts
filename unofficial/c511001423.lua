@@ -16,12 +16,12 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_QP_ACT_IN_NTPHAND)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetCondition(s.handcon)
+	e2:SetDescription(aux.Stringid(id,0))
 	c:RegisterEffect(e2)
 end
 function s.handcon(e)
-	local ph=Duel.GetCurrentPhase()
 	return Duel.IsExistingMatchingCard(s.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
-		and ph>=0x08 and ph<=0x20
+		and Duel.IsBattlePhase()
 end
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsC()

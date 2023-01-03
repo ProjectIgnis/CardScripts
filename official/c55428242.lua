@@ -2,7 +2,7 @@
 --Traptrix Atrax
 local s,id=GetID()
 function s.initial_effect(c)
-	--immune
+	--Unaffected by the effects of "Hole" Normal Traps
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -10,29 +10,29 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_IMMUNE_EFFECT)
 	e1:SetValue(function(_,te) return s.is_normal_hole(te:GetHandler()) end)
 	c:RegisterEffect(e1)
-	--
+	--Can activate "Hole" Normal Traps from your hand
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_TRAP_ACT_IN_HAND)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(LOCATION_HAND,0)
 	e2:SetTarget(function(_,c) return s.is_normal_hole(c) end)
-	e2:SetDescription(aux.Stringid(id,0))
 	c:RegisterEffect(e2)
-	--
+	--Cannot negate the activation of your Normal Traps
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_CANNOT_INACTIVATE)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetValue(s.chainfilter)
 	c:RegisterEffect(e3)
+	--Cannot negate the effects of your Normal Traps
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
 	e4:SetCode(EFFECT_CANNOT_DISEFFECT)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetValue(s.chainfilter)
 	c:RegisterEffect(e4)
-	--cannot disable
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_FIELD)
 	e5:SetCode(EFFECT_CANNOT_DISABLE)
@@ -43,7 +43,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_TRAP_HOLE,SET_HOLE}
 function s.is_normal_hole(c)
-	return c:IsNormalTrap() and c:IsSetCard{SET_TRAP_HOLE,SET_HOLE}
+	return c:IsNormalTrap() and c:IsSetCard({SET_TRAP_HOLE,SET_HOLE})
 end
 function s.distarget(e,c)
 	return c:IsNormalTrap() or c:IsExactType(TYPE_TRAP|TYPE_EQUIP)

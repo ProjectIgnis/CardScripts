@@ -17,16 +17,19 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_TRAP_ACT_IN_HAND)
 	e2:SetDescription(aux.Stringid(id,2))
+	e2:SetValue(function(e,c) e:SetLabel(1) end)
 	c:RegisterEffect(e2)
+	e1:SetLabelObject(e2)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 		and re:IsActiveType(TYPE_TRAP) and Duel.IsChainNegatable(ev)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	if e:GetHandler():IsStatus(STATUS_ACT_FROM_HAND) then
-		Duel.PayLPCost(tp,math.floor(Duel.GetLP(tp)/2))
+	if chk==0 then e:GetLabelObject():SetLabel(0) return true end
+	if e:GetLabelObject():GetLabel()>0 then
+		e:GetLabelObject():SetLabel(0)
+		Duel.PayLPCost(tp,Duel.GetLP(tp)//2)
 	end
 end
 function s.setfilter(c)

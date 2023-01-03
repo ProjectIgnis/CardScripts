@@ -13,13 +13,11 @@ function s.initial_effect(c)
 	e1:SetTargetRange(LOCATION_HAND,0)
 	e1:SetDescription(aux.Stringid(id,2))
 	e1:SetCondition(s.handcon)
+	e1:SetValue(s.handvalue)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_TRAP_ACT_IN_HAND)
 	c:RegisterEffect(e2)
-	local e3=e1:Clone()
-	e3:SetCode(id)
-	c:RegisterEffect(e3)
 	--activate cost
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
@@ -27,7 +25,6 @@ function s.initial_effect(c)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e4:SetTargetRange(1,0)
-	e4:SetCost(s.costchk)
 	e4:SetTarget(s.costtg)
 	e4:SetOperation(s.costop)
 	c:RegisterEffect(e4)
@@ -44,17 +41,16 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function s.handcon(e)
-	return Duel.GetTurnPlayer()~=e:GetHandlerPlayer() and e:GetHandler():GetOverlayCount()~=0
+	local tp=e:GetHandlerPlayer()
+	return Duel.GetTurnPlayer()~=tp and e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_EFFECT)
+end
+function s.handvalue(e,rc,re)
+	re:GetHandler():RegisterFlagEffect(id,RESET_CHAIN,0,1)
 end
 function s.costtg(e,te,tp)
 	local tc=te:GetHandler()
 	return Duel.GetTurnPlayer()~=e:GetHandlerPlayer()
-		and tc:IsLocation(LOCATION_HAND) and tc:GetEffectCount(id)>0
-		and ((tc:GetEffectCount(EFFECT_QP_ACT_IN_NTPHAND)<=tc:GetEffectCount(id) and tc:IsType(TYPE_QUICKPLAY))
-			or (tc:GetEffectCount(EFFECT_TRAP_ACT_IN_HAND)<=tc:GetEffectCount(id) and tc:IsTrap()))
-end
-function s.costchk(e,te_or_c,tp)
-	return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_EFFECT)
+		and tc:IsLocation(LOCATION_HAND) and tc:GetFlagEffect(id)>0
 end
 function s.costop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)

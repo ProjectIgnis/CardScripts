@@ -19,6 +19,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_TRAP_ACT_IN_HAND)
 	e2:SetCondition(s.handcon)
+	e2:SetDescription(aux.Stringid(id,2))
 	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_BLACK_WINGED_DRAGON}

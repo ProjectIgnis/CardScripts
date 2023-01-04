@@ -1,5 +1,5 @@
 --魔弾の射手 ワイルド
---Magibullet Shooter Wild
+--Magical Musketeer Wild
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate from hand
@@ -8,6 +8,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_QP_ACT_IN_NTPHAND)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x108))
+	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetTargetRange(LOCATION_HAND,0)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
@@ -21,6 +22,7 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,id)
+	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCondition(s.tdcon)
 	e3:SetTarget(s.tdtg)
 	e3:SetOperation(s.tdop)

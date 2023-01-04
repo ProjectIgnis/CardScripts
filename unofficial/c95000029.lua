@@ -1,4 +1,4 @@
---Nonexistence
+--Z-ONE/Trap A
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_TRAP_ACT_IN_HAND)
+	e2:SetDescription(aux.Stringid(id,0))
 	c:RegisterEffect(e2)
 	--sp summon
 	local e3=Effect.CreateEffect(c)

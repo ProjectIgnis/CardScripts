@@ -46,6 +46,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_TRAP_ACT_IN_SET_TURN)
 		e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetDescription(aux.Stringid(id,0))
 		tc:RegisterEffect(e1)
 	else
 		Duel.SendtoGrave(tc,REASON_EFFECT+REASON_REVEAL)

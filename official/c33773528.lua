@@ -17,6 +17,7 @@ function s.initial_effect(c)
 	e2:SetTargetRange(LOCATION_SZONE,0)
 	e2:SetCondition(function(e) return Duel.IsMainPhase() and Duel.IsTurnPlayer(e:GetHandlerPlayer()) end)
 	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_ATTRACTION))
+	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCountLimit(1,id)
 	c:RegisterEffect(e2)
 	--Set 1 "Attraction" Trap that is banished or in the GY

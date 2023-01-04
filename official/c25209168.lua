@@ -1,5 +1,5 @@
 -- 絶望と希望の逆転
--- Exchange of the Heart
+-- Exchange of Despair and Hope
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -63,6 +63,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCode(EFFECT_TRAP_ACT_IN_SET_TURN)
 			e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetDescription(aux.Stringid(id,3))
 			g:GetFirst():RegisterEffect(e1)
 		end
 	end

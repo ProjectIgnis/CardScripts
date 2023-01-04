@@ -56,6 +56,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 			end
 			e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetDescription(aux.Stringid(id,3))
 			tc:RegisterEffect(e1)
 		end
 	end

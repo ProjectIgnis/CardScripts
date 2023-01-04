@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={CARD_BLACK_WINGED_DRAGON}
-s.listed_series={0x33}
+s.listed_series={SET_BLACKWING}
 s.counter_list={COUNTER_FEATHER}
 function s.spcfilter(c,tp)
 	return c:IsFaceup() and c:IsSummonPlayer(tp) and c:IsAttribute(ATTRIBUTE_DARK)
@@ -43,11 +43,12 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.spcfilter,1,nil,tp)
 end
 function s.spfilter(c,e,tp,atk)
-	return (c:IsSetCard(0x33) or c:IsCode(CARD_BLACK_WINGED_DRAGON)) and c:GetAttack()<atk and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and c:IsFaceup()
+	return (c:IsSetCard(SET_BLACKWING) or c:IsCode(CARD_BLACK_WINGED_DRAGON)) and c:IsFaceup() and c:GetAttack()<atk
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local ag,atk=eg:Filter(s.spcfilter,nil,tp):GetMaxGroup(Card.GetAttack)
+	local _,atk=eg:Filter(s.spcfilter,nil,tp):GetMaxGroup(Card.GetAttack)
+	if not atk then atk=0 end
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp,atk) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil,e,tp,atk) end

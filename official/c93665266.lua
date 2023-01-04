@@ -1,7 +1,8 @@
 --水晶機巧－クオン
+--Crystron Quan
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	--Special Summon a monster from the hand and Synchro Summon a Machine monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -16,9 +17,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.sccon(e,tp,eg,ep,ev,re,r,rp)
-	local ph=Duel.GetCurrentPhase()
-	return not e:GetHandler():IsStatus(STATUS_CHAINING) and Duel.GetTurnPlayer()~=tp
-		and (ph==PHASE_MAIN1 or (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE) or ph==PHASE_MAIN2)
+	return not e:GetHandler():IsStatus(STATUS_CHAINING) and Duel.IsTurnPlayer(1-tp)
+		and Duel.IsMainPhase() or Duel.IsBattlePhase()
 end
 function s.scfilter1(c,e,tp,mc)
 	local mg=Group.FromCards(c,mc)
@@ -37,6 +37,7 @@ end
 function s.scop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local c=e:GetHandler()
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.scfilter1,tp,LOCATION_HAND,0,1,1,nil,e,tp,c)
 	local tc=g:GetFirst()
 	if not tc or not Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then return end

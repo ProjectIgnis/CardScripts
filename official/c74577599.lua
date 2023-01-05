@@ -21,7 +21,10 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_TRAP_ACT_IN_SET_TURN)
 	e2:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
 	e2:SetDescription(aux.Stringid(id,2))
+	e2:SetValue(function(e,c) e:SetLabel(1) end)
+	e2:SetCondition(function(e) return Duel.IsExistingMatchingCard(s.spcostfilter,e:GetHandlerPlayer(),LOCATION_HAND,0,1,nil) end)
 	c:RegisterEffect(e2)
+	e1:SetLabelObject(e2)
 	--Special Summon 1 "Traptrix" monster
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
@@ -42,9 +45,11 @@ function s.spcostfilter(c)
 	return c:IsNormalTrap() and c:IsDiscardable()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if not e:GetHandler():IsStatus(STATUS_SET_TURN) then return true end
-	if chk==0 then return Duel.IsExistingMatchingCard(s.spcostfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,s.spcostfilter,1,1,REASON_COST+REASON_DISCARD)
+	if chk==0 then e:GetLabelObject():SetLabel(0) return true end
+	if e:GetLabelObject():GetLabel()>0 then
+		e:GetLabelObject():SetLabel(0)
+		Duel.DiscardHand(tp,s.spcostfilter,1,1,REASON_COST+REASON_DISCARD)
+	end
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:IsHasType(EFFECT_TYPE_ACTIVATE) 

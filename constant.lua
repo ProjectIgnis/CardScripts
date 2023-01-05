@@ -990,6 +990,6 @@ WIN_REASON_ZERO_GATE           = 0x53
 WIN_REASON_DEUCE               = 0x54
 WIN_REASON_DECK_MASTER         = 0x56
 WIN_REASON_DRAW_OF_FATE        = 0x57
-WIN_REASON_SEKITORI            = 0x58
+WIN_REASON_MUSICAL_SUMO        = 0x58
 Duel.LoadScript("card_counter_constants.lua")
 Duel.LoadScript("archetype_setcode_constants.lua")

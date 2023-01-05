@@ -59,6 +59,6 @@ function s.mvop(e,tp,eg,ep,ev,re,r,rp)
 	end
 
 	if switch and Duel.GetControl(c,1-tp,0,0,1<<nseq) or Duel.MoveSequence(c,seq) then
-		if win then Duel.Win(tp,WIN_REASON_SEKITORI) end
+		if win then Duel.Win(tp,WIN_REASON_MUSICAL_SUMO) end
 	else return s.cannot_move(c) end
 end

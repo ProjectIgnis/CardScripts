@@ -99,34 +99,76 @@ function s.cpcon(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetTurnPlayer()==1-tp then return false end
 	return Duel.IsMainPhase() or Duel.IsBattlePhase()
 end
+function s.filter(c)
+	return c:IsNegatableMonster()
+end
 function s.cptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	local c=e:GetHandler()
 	if chkc then return chkc:IsLocation(LOCATION_MZONE+LOCATION_GRAVE) and chkc:IsMonster() end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsMonster,tp,LOCATION_GRAVE+LOCATION_MZONE,LOCATION_GRAVE+LOCATION_MZONE,1,nil) 
-		and e:GetHandler():GetFlagEffect(id+1)==0 end
+		if c:IsHasEffect(511009518) then
+			if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil) end
+		else
+			if chk==0 then return Duel.IsExistingTarget(Card.IsMonster,tp,LOCATION_GRAVE+LOCATION_MZONE,LOCATION_GRAVE+LOCATION_MZONE,1,nil) 
+			and e:GetHandler():GetFlagEffect(id+1)==0 end
+		end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	Duel.SelectTarget(tp,Card.IsMonster,tp,LOCATION_GRAVE+LOCATION_MZONE,LOCATION_GRAVE+LOCATION_MZONE,1,1,nil)
+	local tc=Duel.SelectTarget(tp,Card.IsMonster,tp,LOCATION_GRAVE+LOCATION_MZONE,LOCATION_GRAVE+LOCATION_MZONE,1,1,nil)
+	local tc2=tc:GetFirst()
+		if tc2:IsLocation(LOCATION_MZONE) and tc2:IsControler(1-tp) then
+		e:SetLabel(1)
+	else
+		e:SetLabel(0)
+	end
+end
+function s.copfilter(c)
+	return c:IsFaceup() and c:GetFlagEffect(id)==0
 end
 function s.cpop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local tc=Duel.GetFirstTarget()
-	if tc and c:IsRelateToEffect(e) and c:IsFaceup() and tc:IsRelateToEffect(e) and not tc:IsType(TYPE_TOKEN) then
-		local code=tc:GetOriginalCode()
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		tc:RegisterEffect(e1)
-		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetValue(RESET_TURN_SET)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		tc:RegisterEffect(e2)
-		if not tc:IsType(TYPE_TRAPMONSTER) then
-			c:CopyEffect(code,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,1)
-			c:RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,0)
+	if c:IsHasEffect(511009518) and e:GetLabel()==1 then
+		local tg=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
+		local tc=tg:GetFirst()
+			while tc do
+				local e1=Effect.CreateEffect(c)
+				e1:SetType(EFFECT_TYPE_SINGLE)
+				e1:SetCode(EFFECT_DISABLE)
+				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+				tc:RegisterEffect(e1)
+				local e2=Effect.CreateEffect(c)
+				e2:SetType(EFFECT_TYPE_SINGLE)
+				e2:SetCode(EFFECT_DISABLE_EFFECT)
+				e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+				tc:RegisterEffect(e2)
+				tc=tg:GetNext()
+					local wg=Duel.GetMatchingGroup(s.copfilter,tp,0,LOCATION_MZONE,nil)
+						for wbc in aux.Next(wg) do
+							if c:IsFaceup() then
+								local cid=c:CopyEffect(wbc:GetOriginalCode(),RESET_EVENT+RESETS_STANDARD_DISABLE,1)
+								wbc:RegisterFlagEffect(id,0,0,0,cid)
+							end
+						end
+				end
+		else
+			local tc=Duel.GetFirstTarget()
+			if tc and c:IsRelateToEffect(e) and c:IsFaceup() and tc:IsRelateToEffect(e) and not tc:IsType(TYPE_TOKEN) then
+				local code=tc:GetOriginalCode()
+				local e1=Effect.CreateEffect(c)
+				e1:SetType(EFFECT_TYPE_SINGLE)
+				e1:SetCode(EFFECT_DISABLE)
+				e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+				tc:RegisterEffect(e1)
+				local e2=Effect.CreateEffect(c)
+				e2:SetType(EFFECT_TYPE_SINGLE)
+				e2:SetCode(EFFECT_DISABLE_EFFECT)
+				e2:SetValue(RESET_TURN_SET)
+				e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+				tc:RegisterEffect(e2)
+					if not tc:IsType(TYPE_TRAPMONSTER) then
+						c:CopyEffect(code,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,1)
+						c:RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,0)
+					end
+			end
 		end
-	end
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToExtraAsCost() end

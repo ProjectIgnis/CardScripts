@@ -58,7 +58,7 @@ function s.initial_effect(c)
 	end)
 end
 s.listed_names={CARD_EXCHANGE_SPIRIT}
-s.listed_series={0x2e}
+s.listed_series={SET_GRAVEKEEPERS}
 function s.limcon(e)
 	return Duel.IsExistingMatchingCard(Card.IsCode,e:GetHandlerPlayer(),LOCATION_GRAVE,0,1,nil,CARD_EXCHANGE_SPIRIT)
 end
@@ -68,7 +68,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.thfilter(c)
 	return c:IsAbleToHand() and c:IsMonster()
-		and (c:IsSetCard(0x2e) or (c:IsAttribute(ATTRIBUTE_EARTH) and c:IsRace(RACE_FAIRY)))
+		and (c:IsSetCard(SET_GRAVEKEEPERS) or (c:IsAttribute(ATTRIBUTE_EARTH) and c:IsRace(RACE_FAIRY)))
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -94,7 +94,7 @@ function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) or Duel.GetDrawCount(1-tp)~=1 then return end
+	if not c:IsRelateToEffect(e) or Duel.GetDrawCount(1-tp)<1 then return end
 	--Look at the drawn card
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -106,12 +106,12 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.drawcheck(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetCurrentPhase()==PHASE_DRAW and (r&REASON_RULE)==REASON_RULE then
-		local dc=eg:GetFirst()
-		if not dc then return end
-		Duel.ConfirmCards(tp,dc)
-		if dc:IsCode(e:GetLabel()) then
-			Duel.SendtoGrave(dc,REASON_EFFECT)
+	if Duel.GetCurrentPhase()==PHASE_DRAW and (r&REASON_RULE)==REASON_RULE and #eg>0 then
+		Duel.ConfirmCards(tp,eg)
+		for dc in eg:Iter() do
+			if dc:IsCode(e:GetLabel()) then
+				Duel.SendtoGrave(dc,REASON_EFFECT)
+			end
 		end
 		Duel.ShuffleHand(1-tp)
 	end

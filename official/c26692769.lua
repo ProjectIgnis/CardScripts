@@ -5,7 +5,7 @@ function s.initial_effect(c)
 	--Link Summon procedure
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_DARK),2)
 	c:EnableReviveLimit()
-	--Send to grave and set 1 "Phantom Knights" Spell/Trap
+	--Send 1 monster to the GY and set 1 "Phantom Knights" Spell/Trap
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOGRAVE)
@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
-	--Cannot link material
+	--Cannot be Link material
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
@@ -36,17 +36,17 @@ function s.initial_effect(c)
 	e3:SetValue(1)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x10db,0xdb}
+s.listed_series={SET_THE_PHANTOM_KNIGHTS,SET_PHANTOM_KNIGHTS}
 function s.tgfilter(c,tp)
-	return c:IsSetCard(0x10db) and c:IsAbleToGrave() and c:IsMonster()
+	return c:IsSetCard(SET_THE_PHANTOM_KNIGHTS) and c:IsMonster() and c:IsAbleToGrave() 
 		and Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK,0,1,c)
 end
 function s.setfilter(c)
-	return c:IsSetCard(0xdb) and c:IsSpellTrap() and c:IsSSetable()
+	return c:IsSetCard(SET_PHANTOM_KNIGHTS) and c:IsSpellTrap() and c:IsSSetable()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil,tp)
-		and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+		and Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
@@ -56,6 +56,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoGrave(g,REASON_EFFECT)
 	local og=Duel.GetOperatedGroup():Filter(Card.IsLocation,nil,LOCATION_GRAVE)
 	if #og>0 and Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK,0,1,nil) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 		local tc=Duel.SelectMatchingCard(tp,s.setfilter,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
 		if tc then
 			Duel.BreakEffect()
@@ -72,14 +73,14 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() end
-	if chk==0 then return Duel.IsExistingTarget(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
+	local g=Duel.SelectTarget(tp,nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,PLAYER_ALL,LOCATION_ONFIELD)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end

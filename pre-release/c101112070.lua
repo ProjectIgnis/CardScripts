@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetHintTiming(0,TIMING_END_PHASE)
+	e2:SetHintTiming(TIMING_END_PHASE,TIMING_END_PHASE)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(function(_,tp) return Duel.GetFlagEffect(tp,id)>0 and Duel.GetCurrentPhase()==PHASE_END end)
 	e2:SetTarget(s.thtg)
@@ -39,7 +39,7 @@ end
 s.listed_names={CARD_ALBAZ}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	for tc in eg:Iter() do
-		if tc:IsType(TYPE_FUSION) then 
+		if tc:IsType(TYPE_FUSION) then z
 			Duel.RegisterFlagEffect(tc:GetControler(),id,RESET_PHASE+PHASE_END,0,1)
 		end
 	end

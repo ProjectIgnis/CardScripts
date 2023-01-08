@@ -108,10 +108,9 @@ end
 function s.drawcheck(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetCurrentPhase()==PHASE_DRAW and (r&REASON_RULE)==REASON_RULE and #eg>0 then
 		Duel.ConfirmCards(tp,eg)
-		for dc in eg:Iter() do
-			if dc:IsCode(e:GetLabel()) then
-				Duel.SendtoGrave(dc,REASON_EFFECT)
-			end
+		local dg=eg:Filter(Card.IsCode,nil,e:GetLabel())
+		if #dg>0 then
+			Duel.SendtoGrave(dg,REASON_EFFECT)
 		end
 		Duel.ShuffleHand(1-tp)
 	end

@@ -39,7 +39,7 @@ end
 s.listed_names={CARD_ALBAZ}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	for tc in eg:Iter() do
-		if tc:IsType(TYPE_FUSION) then z
+		if tc:IsType(TYPE_FUSION) then
 			Duel.RegisterFlagEffect(tc:GetControler(),id,RESET_PHASE+PHASE_END,0,1)
 		end
 	end

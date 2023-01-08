@@ -4,16 +4,16 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_EFFECT),2,nil,s.matcheck)
-	--cannot be destroyed by battle
+	--Cannot be destroyed by battle while it is linked
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e1:SetCondition(s.indcon)
+	e1:SetCondition(function(e) return e:GetHandler():IsLinked() end)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	--to deck
+	--Shuffle 1 Machine monster into the Deck and set 1 "Orcust" Spell/Trap
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TODECK)
@@ -31,12 +31,9 @@ function s.initial_effect(c)
 	e3:SetCondition(s.tdcon2)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x11b}
+s.listed_series={SET_ORCUST}
 function s.matcheck(g,lc,sumtype,tp)
-	return g:IsExists(Card.IsSetCard,1,nil,0x11b,lc,sumtype,tp)
-end
-function s.indcon(e)
-	return e:GetHandler():IsLinked()
+	return g:IsExists(Card.IsSetCard,1,nil,SET_ORCUST,lc,sumtype,tp)
 end
 function s.tdcon1(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsPlayerAffectedByEffect(tp,CARD_ORCUSTRATED_BABEL)
@@ -55,7 +52,7 @@ function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,#g,0,0)
 end
 function s.filter(c)
-	return c:IsSetCard(0x11b) and c:IsType(TYPE_TRAP+TYPE_SPELL) and c:IsSSetable()
+	return c:IsSetCard(SET_ORCUST) and c:IsSpellTrap() and c:IsSSetable()
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -68,6 +65,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK,0,nil)
 	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.BreakEffect()
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 		local sg=g:Select(tp,1,1,nil)
 		Duel.SSet(tp,sg)
 	end

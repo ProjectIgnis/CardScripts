@@ -38,12 +38,14 @@ function s.changeop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_ADD_ATTRIBUTE)
 		e1:SetValue(ATTRIBUTE_ALL&~ATTRIBUTE_DIVINE)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		--Becomes a Machine monster
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_CHANGE_RACE)
 		e2:SetValue(RACE_MACHINE)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e2)
 	end
 end

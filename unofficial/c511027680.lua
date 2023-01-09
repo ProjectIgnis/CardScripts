@@ -1,3 +1,4 @@
+--ＧＯ－ＤＤ・Ｗ０ＲＬＤ
 --Go-D/D World
 --Made by Beetron-1 Beetletop
 local s,id=GetID()
@@ -8,9 +9,10 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
+	--Treated as "Go-D/D"
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(EFFECT_CHANGE_SETCODE)
+	e2:SetCode(EFFECT_ADD_SETCODE)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_ONFIELD,LOCATION_ONFIELD)
 	e2:SetCondition(s.changecon)
@@ -28,9 +30,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(0,1)
 	Duel.RegisterEffect(e1,tp)
 end
-function s.changefilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xaf)
-end
 function s.changecon(e)
-	return Duel.IsExistingMatchingCard(s.changefilter,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,5,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0xaf),e:GetHandlerPlayer(),LOCATION_ONFIELD,0,5,nil)
 end

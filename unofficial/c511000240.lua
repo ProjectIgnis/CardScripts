@@ -39,11 +39,11 @@ function s.initial_effect(c)
 	e5:SetCondition(s.monstercon)
 	e5:SetValue(s.monsterval)
 	c:RegisterEffect(e5)
-	--"Right Arm of the Forbidden One": Whenever this card battles an opponent's monster, it gains 1000 ATK at the end of the Damage Step.
+	--"Right Arm of the Forbidden One": Each time this card battles, it gains 1000 ATK at the end of the Damage Step.
 	local e6=Effect.CreateEffect(c)
 	e6:SetDescription(aux.Stringid(id,0))
-	e6:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e6:SetCategory(CATEGORY_ATKCHANGE)
+	e6:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e6:SetCode(EVENT_DAMAGE_STEP_END)
 	e6:SetRange(LOCATION_MZONE)
 	e6:SetCondition(s.atkcon)

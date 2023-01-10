@@ -51,22 +51,20 @@ function s.initial_effect(c)
 	c:RegisterEffect(e6)
 	--Revert ATK changes if removed from field/if no Right Arm in GY
 	local e7=Effect.CreateEffect(c)
-    	e7:SetType(EFFECT_TYPE_SINGLE)
-    	e7:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-    	e7:SetRange(LOCATION_MZONE)
-    	e7:SetCode(EFFECT_UPDATE_ATTACK)
-    	e7:SetLabelObject(e6)
-    	e7:SetValue(s.atkval)
-    	c:RegisterEffect(e7)
-    	local e8=Effect.CreateEffect(c)
-    	e8:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-    	e8:SetCode(EVENT_ADJUST)
-    	e8:SetRange(0xff)
-    	e8:SetLabelObject(e6)
-    	e8:SetCondition(s.adjustcon)
-    	e8:SetOperation(s.adjustop)
-    	c:RegisterEffect(e8)
+	e7:SetType(EFFECT_TYPE_SINGLE)
+	e7:SetCode(EFFECT_UPDATE_ATTACK)
+	e7:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e7:SetRange(LOCATION_MZONE)
+	e7:SetValue(s.atkval)
+	c:RegisterEffect(e7)
+	local e8=Effect.CreateEffect(c)
+	e8:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e8:SetCode(EVENT_MOVE)
+	e8:SetRange(LOCATION_MZONE)
+	e8:SetOperation(s.resetatk)
+	c:RegisterEffect(e8)
 end
+s.listed_names={33396948,44519536,8124921,7902349,70903634}
 function s.battlecon(e)
 	return Duel.IsExistingMatchingCard(Card.IsCode,e:GetHandlerPlayer(),LOCATION_GRAVE,0,1,nil,33396948)
 end
@@ -94,22 +92,16 @@ end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsFaceup() and c:IsRelateToEffect(e) then
-		e:SetLabel(e:GetLabel()+1)
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD_DISABLE,0,1)
 	end
 end
 function s.atkval(e,c)
-	local ct=e:GetLabelObject():GetLabel()
-	return ct*1000
+	return e:GetHandler():GetFlagEffect(id)*1000
 end
-function s.adjustcon(e)
-	return (not Duel.IsExistingMatchingCard(Card.IsCode,e:GetHandlerPlayer(),LOCATION_GRAVE,0,1,nil,70903634) 
-        or (e:GetHandler():IsLocation(LOCATION_MZONE) and e:GetHandler():GetFlagEffect(id)==0))
-	and e:GetLabelObject():GetLabel()>0
-end
-function s.adjustop(e,tp,eg,ep,ev,re,r,rp)    
-	if e:GetHandler():GetFlagEffect(id)==0 then e:GetLabelObject():SetLabel(0) end
-	if not Duel.IsExistingMatchingCard(Card.IsCode,e:GetHandlerPlayer(),LOCATION_GRAVE,0,1,nil,70903634) then 
-		e:GetLabelObject():SetLabel(0)
+function s.resetatk(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,70903634) then return end
+	local c=e:GetHandler()
+	if c:GetFlagEffect(id)>0 then
+		c:ResetFlagEffect(id)
 	end
 end

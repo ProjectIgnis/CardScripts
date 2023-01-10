@@ -1,4 +1,5 @@
---Infernity Destroyer
+--インフェルニティ・デストロイヤー (Anime)
+--Infernity Destroyer (Anime)
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
@@ -7,18 +8,14 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DAMAGE)
 	e1:SetCode(EVENT_BATTLE_DESTROYING)
-	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e1:SetCondition(s.damcon)
 	e1:SetTarget(s.damtg)
 	e1:SetOperation(s.damop)
 	c:RegisterEffect(e1)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local d=Duel.GetAttacker()
-	if d==c then d=Duel.GetAttackTarget() end
-	return c:IsRelateToBattle() and Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)==0
-		and d:IsReason(REASON_BATTLE) and d:IsMonster()
+	return Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)==0 and aux.bdogcon(e)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

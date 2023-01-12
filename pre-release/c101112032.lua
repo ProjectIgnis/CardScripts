@@ -74,7 +74,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	if #rg>0 then
 		local turn_chk=Duel.GetTurnCount()
 		local reset_count=Duel.GetCurrentPhase()<=PHASE_STANDBY and 2 or 1
-		aux.RemoveUntil(rg,nil,REASON_EFFECT,PHASE_STANDBY,id,e,tp,aux.DefaultFieldReturnOp,
+		aux.RemoveUntil(rg,nil,REASON_EFFECT,PHASE_STANDBY,id+100,e,tp,aux.DefaultFieldReturnOp,
 			function() return Duel.GetTurnCount()==turn_chk+1 end,
 			RESET_PHASE|PHASE_STANDBY,reset_count
 		)

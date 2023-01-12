@@ -85,7 +85,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e0,tp)
 end
 function s.psfilter(c,tp)
-	return c:IsSummonPlayer(tp) and c:IsSummonType(SUMMON_TYPE_PENDULUM) and c:HasLevel()
+	return c:IsSummonPlayer(tp) and c:IsSummonType(SUMMON_TYPE_PENDULUM)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local ef=e:GetLabelObject()
@@ -95,13 +95,13 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 		e:Reset()
 	end
 end
-function s.limcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetLabelObject():GetLabel()==0
+function s.pendfilter(c,tp)
+	return c:IsSummonPlayer(tp) and c:IsSummonType(SUMMON_TYPE_PENDULUM) and c:HasLevel()
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if eg:IsContains(c) then return false end
-	local lg=aux.zptgroup(eg,nil,c):Match(s.psfilter,nil,tp)
+	local lg=aux.zptgroup(eg,nil,c):Match(s.pendfilter,nil,tp)
 	return lg:GetClassCount(Card.GetOriginalLevel)>1
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

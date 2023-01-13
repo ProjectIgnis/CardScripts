@@ -33,6 +33,7 @@ function s.nsop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	--Can Normal Summon/Set 1 additional Spirit monster
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
 	e1:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)

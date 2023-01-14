@@ -1,31 +1,20 @@
---パーフェクト機械王
+--パーフェクト機械王 (Anime)
+--Perfect Machine King (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
-	--fusion material
+	--Fusion Materials
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,false,false,44203504,46700124)
-	--spsummon condition
+	Fusion.AddProcMix(c,true,true,44203504,46700124)
+	--Gains 500 ATK for each Machine monster on the field
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e1:SetValue(s.splimit)
+	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e1:SetCode(EFFECT_UPDATE_ATTACK)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetValue(s.val)
 	c:RegisterEffect(e1)
-	--atkup
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e2:SetCode(EFFECT_UPDATE_ATTACK)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetValue(s.val)
-	c:RegisterEffect(e2)
 end
-function s.splimit(e,se,sp,st)
-	return (st&SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
-end
+s.listed_names={44203504,46700124}
 function s.val(e,c)
-	return Duel.GetMatchingGroupCount(s.filter,c:GetControler(),LOCATION_MZONE,LOCATION_MZONE,nil)*500
-end
-function s.filter(c)
-	return c:IsFaceup() and c:IsRace(RACE_MACHINE)
+	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsRace,RACE_MACHINE),c:GetControler(),LOCATION_MZONE,LOCATION_MZONE,nil)*500
 end

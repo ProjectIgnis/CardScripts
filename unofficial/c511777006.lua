@@ -1,9 +1,8 @@
 --摩天楼2－ヒーローシティ (Anime)
 --Skyscraper 2 - Hero City (Anime)
 --fixed by MLD
-local s,id,alias=GetID()
+local s,id=GetID()
 function s.initial_effect(c)
-	alias=c:GetOriginalCodeRule()
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -11,10 +10,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--Special Summon 1 "Elemental HERO" monster from your Graveyard
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(alias,0))
+	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetType(EFFECT_TYPE_IGNITION)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetCountLimit(1)
 	e2:SetTarget(s.sptg)
@@ -34,7 +33,6 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,tp,LOCATION_GRAVE)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEUP)

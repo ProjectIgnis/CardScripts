@@ -1,10 +1,12 @@
---ダーク・ダイブ・ボンバー
+--ダーク・ダイブ・ボンバー (Anime)
+--Dark Strike Fighter (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
-	--synchro summon
-	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,1)
+	--Must be Special Summoned properly
 	c:EnableReviveLimit()
-	--damage
+	--Summon procedure
+	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
+	--Tribute 1 other monster to inflict damage to your opponent
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(32646477,0))
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)

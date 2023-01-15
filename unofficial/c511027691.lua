@@ -15,15 +15,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--draw
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,1))
-	e2:SetCategory(CATEGORY_DRAW)
+	e2:SetCategory(CATEGORY_ATKCHANGE)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(s.drcost)
-	e2:SetTarget(s.drtg)
-	e2:SetOperation(s.drop)
+	e2:SetCost(s.lowercost)
+	e2:SetTarget(s.lowertg)
+	e2:SetOperation(s.lowerop)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x12b}
@@ -79,7 +77,7 @@ end
 function s.cfilter(c)
 	return c:IsSetCard(0x12b) and c:IsMonster() and c:IsAbleToRemoveAsCost()
 end
-function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.lowercost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,0)
 		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,c) end
@@ -93,13 +91,13 @@ function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	g:AddCard(c)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
-function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.lowertg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
 end
-function s.drop(e,tp,eg,ep,ev,re,r,rp)
+function s.lowerop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local xd=e:GetLabel()
 	if tc then

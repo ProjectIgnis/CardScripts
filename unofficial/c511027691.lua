@@ -1,4 +1,6 @@
+--海晶乙女の決意
 --Marincess Decision
+--Made By Beetron-1 Beetletop
 local s,id=GetID()
 function s.initial_effect(c)
 	--Link Summon

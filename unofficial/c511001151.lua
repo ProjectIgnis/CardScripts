@@ -31,8 +31,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_MZONE)
 	local ct=#g-Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)
 	if ct>0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-		local dg=g:Select(tp,ct,ct,nil)
-		Duel.Destroy(dg,REASON_EFFECT)
+		if ct<#g then 
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+			local dg=g:Select(tp,ct,ct,nil)
+			Duel.Destroy(dg,REASON_EFFECT)
+		else 
+			Duel.Destroy(g,REASON_EFFECT)
+		end
 	end
 end

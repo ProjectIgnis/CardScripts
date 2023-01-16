@@ -1,8 +1,7 @@
 --Ｅ・ＨＥＲＯ フレイム・ウィングマン (Anime)
 --Elemental HERO Flame Wingman (Anime)
-local s,id,alias=GetID()
+local s,id=GetID()
 function s.initial_effect(c)
-	alias=c:GetOriginalCodeRule()
 	--Fusion Materials
 	c:EnableReviveLimit()
 	Fusion.AddProcMix(c,true,true,21844576,58932615)
@@ -15,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--Inflict damage
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(alias,0))
+	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DAMAGE)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)

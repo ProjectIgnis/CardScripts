@@ -1,4 +1,6 @@
+--白しろの鉄壁てっぺき
 --White Barrier
+--Made by Beetron-1 Beetletop
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -6,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--ha
+	--Prevent damage
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_BE_BATTLE_TARGET)

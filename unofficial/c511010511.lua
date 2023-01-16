@@ -1,15 +1,14 @@
 --インフェルニティ・ミラージュ (Anime)
 --Infernity Mirage (Anime)
-local s,id,alias=GetID()
+local s,id=GetID()
 function s.initial_effect(c)
-	alias=c:GetOriginalCodeRule()
 	--Special Summon 2 "Infernity" monsters from your Graveyard
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(alias,0))
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(s.spcon)
 	e1:SetCost(aux.selfreleasecost)
@@ -35,8 +34,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ft<=0 then return end
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
+	local sg=Duel.GetTargetCards(e)
 	if ft<#sg or (#sg>1 and Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)) then return end
 	if #sg>0 then
 		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)

@@ -1,6 +1,6 @@
  --白の悪夢ホワイト・ナイトメア
 --White Nightmare
---Scripted by Beetron-1 Beetletop
+--Made by Beetron-1 Beetletop
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate

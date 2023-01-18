@@ -28,7 +28,7 @@ function s.setfilter(c)
 	return c:IsTrap() and c:IsSSetable()
 end
 function s.excvtop(e,tp,eg,ep,ev,re,r,rp)
-	local excct=5-Duel.GetMatchingGroupCount(nil,0,0,LOCATION_STZONE,nil)
+	local excct=5-Duel.GetMatchingGroupCount(nil,tp,0,LOCATION_STZONE,nil)
 	Duel.ConfirmDecktop(tp,excct)
 	local g=Duel.GetDecktopGroup(tp,excct)
 	if #g==0 then return end

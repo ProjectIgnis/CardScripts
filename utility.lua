@@ -776,7 +776,7 @@ Card.RegisterEffect=(function()
 		if val==2 then return 511001692 end -- access to Cardian Summoning conditions/effects
 		if val==4 then return  12081875 end -- access to Thunder Dragon effects that activate by discarding
 		if val==8 then return 511310036	end -- access to Allure Queen effects that activate by sending themselves to GY
-		if val==16 then return 101112045 end -- access to tellarknights/constellar effects that activate when Normal Summoned
+		if val==16 then return 58858807 end -- access to tellarknights/constellar effects that activate when Normal Summoned
 		return nil
 	end
 	return function(c,e,forced,...)

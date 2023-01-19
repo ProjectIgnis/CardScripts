@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={CARD_VISAS_STARFROST,101112036}
+s.listed_names={CARD_VISAS_STARFROST,65815684}
 s.listed_series={SET_KASHTIRA}
 function s.rmconfilter(c,tp)
 	return c:IsReason(REASON_BATTLE|REASON_EFFECT) and c:GetPreviousTypeOnField()&TYPE_XYZ>0
@@ -42,7 +42,7 @@ function s.rmfilter(c,e,tp)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c)
 end
 function s.spfilter(c,e,tp,mc)
-	return c:IsCode(101112036) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
+	return c:IsCode(65815684) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.rmfilter,tp,LOCATION_HAND|LOCATION_DECK|LOCATION_MZONE,0,1,nil,e,tp) end

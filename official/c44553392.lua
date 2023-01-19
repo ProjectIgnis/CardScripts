@@ -11,12 +11,12 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
-	e1:SetCondition(function() return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,101112036),0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end)
+	e1:SetCondition(function() return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,65815684),0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_names={101112036,CARD_VISAS_STARFROST}
+s.listed_names={65815684,CARD_VISAS_STARFROST}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chkc then return chkc:IsOnField() and chkc~=c end
@@ -33,7 +33,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not (tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)>0) then return end
 	--Special Summon 1 of your banished "Visas Starfrost"
-	if tc:IsOriginalCode(101112036) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if tc:IsOriginalCode(65815684) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_REMOVED,0,1,nil,e,tp)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -43,10 +43,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 		end
 	--Make 1 "Vicious Astroud" you control gain 1500 ATK
-	elseif not tc:IsOriginalCode(101112036) and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,101112036),tp,LOCATION_MZONE,0,1,nil)
+	elseif not tc:IsOriginalCode(65815684) and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,65815684),tp,LOCATION_MZONE,0,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
-		local sc=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsCode,101112036),tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
+		local sc=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsCode,65815684),tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
 		if not sc then return end
 		Duel.HintSelection(sc,true)
 		Duel.BreakEffect()

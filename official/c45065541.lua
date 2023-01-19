@@ -26,14 +26,14 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={id,CARD_VISAS_STARFROST,101112058} --Primal Planet Kalarium, to be changed when it receives the official ID
+s.listed_names={id,CARD_VISAS_STARFROST,82460246}
 s.listed_series={SET_MANADOME}
 function s.thfilter(c,alt)
-	return c:IsAbleToHand() and (c:IsCode(101112058) or (alt and c:IsSetCard(SET_MANADOME) and c:IsSpellTrap() and not c:IsCode(id)))
+	return c:IsAbleToHand() and (c:IsCode(82460246) or (alt and c:IsSetCard(SET_MANADOME) and c:IsSpellTrap() and not c:IsCode(id)))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) end
-	local alt=Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,101112058),tp,LOCATION_ONFIELD,0,1,nil)
+	local alt=Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,82460246),tp,LOCATION_ONFIELD,0,1,nil)
 	if chk==0 then return Duel.IsExistingTarget(nil,tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,alt)
 	end
@@ -45,7 +45,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)>0 then
-		local alt=Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,101112058),tp,LOCATION_ONFIELD,0,1,nil)
+		local alt=Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,82460246),tp,LOCATION_ONFIELD,0,1,nil)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil,alt)
 		if #g>0 then

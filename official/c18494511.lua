@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetCondition(function(e) return e:GetHandler():GetEquipCount()>0 end)
 	c:RegisterEffect(e2)
 end
-s.listed_names={7142724,id+100}
+s.listed_names={7142724,id+1}
 s.listed_series={SET_ICEJADE}
 function s.cfilter(c)
 	return c:IsDiscardable() and (c:IsSetCard(SET_ICEJADE) or (c:IsMonster() and c:IsAttribute(ATTRIBUTE_WATER)))
@@ -45,10 +45,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,1,tp,tp,false,false,POS_FACEUP)>0
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+100,SET_ICEJADE,TYPES_TOKEN,0,0,3,RACE_AQUA,ATTRIBUTE_WATER)
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,SET_ICEJADE,TYPES_TOKEN,0,0,3,RACE_AQUA,ATTRIBUTE_WATER)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.BreakEffect()
-		local token=Duel.CreateToken(tp,id+100)
+		local token=Duel.CreateToken(tp,id+1)
 		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
 		--Cannot Special Summon non-WATER monsters from Extra Deck
 		local e1=Effect.CreateEffect(c)

@@ -25,7 +25,17 @@ function Link.AddProcedure(c,f,min,max,specialchk,desc)
 	c:RegisterEffect(e1)
 end
 function Link.ConditionFilter(c,f,lc,tp)
-	return c:IsCanBeLinkMaterial(lc,tp) and (not f or f(c,lc,SUMMON_TYPE_LINK|MATERIAL_LINK,tp))
+	local res1=c:IsCanBeLinkMaterial(lc,tp) and (not f or f(c,lc,SUMMON_TYPE_LINK|MATERIAL_LINK,tp))
+	local res2=false
+	local formud_eff=c:IsHasEffect(50366775)
+	if formud_eff then
+		local label={formud_eff:GetLabel()}
+		for i=1,#label-1,2 do
+			c:AssumeProperty(label[i],label[i+1])
+		end
+		res2=c:IsCanBeLinkMaterial(lc,tp) and (not f or f(c,lc,SUMMON_TYPE_LINK|MATERIAL_LINK,tp))
+	end
+	return res1 or res2
 end
 function Link.GetLinkCount(c)
 	if c:IsLinkMonster() and c:GetLink()>1 then
@@ -186,6 +196,20 @@ function Link.Operation(f,minc,maxc,specialchk)
 						ex[3]:GetValue()(1,SUMMON_TYPE_LINK,ex[3],ex[1]&g,c,tp)
 						if ex[3]:CheckCountLimit(tp) then
 							ex[3]:UseCountLimit(tp,1)
+						end
+					end
+				end
+				for tc in g:Iter() do
+					local formud_eff=tc:IsHasEffect(50366775)
+					if formud_eff then
+						local res1=tc:IsCanBeLinkMaterial(c,tp) and (not f or f(tc,c,SUMMON_TYPE_LINK|MATERIAL_LINK,tp))
+						local label={formud_eff:GetLabel()}
+						for i=1,#label-1,2 do
+							tc:AssumeProperty(label[i],label[i+1])
+						end
+						local res2=tc:IsCanBeLinkMaterial(c,tp) and (not f or f(tc,c,SUMMON_TYPE_LINK|MATERIAL_LINK,tp))
+						if not res2 or (res1 and res2 and not Duel.SelectEffectYesNo(tp,tc)) then
+							Duel.AssumeReset()
 						end
 					end
 				end

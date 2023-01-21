@@ -31,7 +31,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Destroy(g,REASON_EFFECT)>0 then
 		local dg=Duel.GetOperatedGroup()
 		local atk=dg:FilterCount(Card.IsSpell,nil)*1000
-		local sg=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
+		local sg=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(Card.IsFaceup),tp,0,LOCATION_MZONE,nil)
 		if #sg>0 and atk>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			local c=e:GetHandler()
 			for tc in sg:Iter() do

@@ -613,6 +613,7 @@ end
 
 
 --Double tribute handler
+FLAG_TRIPLE_TRIBUTE=160012000
 FLAG_NO_TRIBUTE=160001029
 FLAG_DOUBLE_TRIB=160009052 --Executie up
 FLAG_DOUBLE_TRIB_DRAGON=160402002 --righteous dragon
@@ -640,6 +641,15 @@ function Card.AddDoubleTribute(c,id,otfilter,eftg,reset,...)
 	e2:SetLabelObject(e1)
 	if reset~=0 then e2:SetReset(reset) end
 	c:RegisterEffect(e2)
+	local e3=aux.summonproc3trib(c,aux.Stringid(id,1),otfilter)
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetTargetRange(LOCATION_HAND,0)
+	e4:SetTarget(aux.ThreeTribGrantTarget(eftg))
+	e4:SetLabelObject(e3)
+	if reset~=0 then e4:SetReset(reset) end
+	c:RegisterEffect(e4)
 end
 function aux.DoubleTributeCon(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsPlayerAffectedByEffect(tp,FLAG_NO_TRIBUTE)
@@ -708,7 +718,61 @@ function aux.summonproc(c,ns,opt,min,max,val,desc,f,sumop)
 	e1:SetValue(val)
 	return e1
 end
-
+function aux.ThreeTribGrantTarget(eftg)
+	return function(e,c)
+		return eftg(e,c) and c:GetFlagEffect(FLAG_TRIPLE_TRIBUTE)~=0
+	end
+end
+function aux.summonproc3trib(c,desc,otfilter)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	if desc then e1:SetDescription(desc) end
+	e1:SetCode(EFFECT_SUMMON_PROC)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e1:SetCondition(aux.ThreeTributeCondition(otfilter))
+	e1:SetTarget(aux.ThreeTributeTarget(otfilter))
+	e1:SetOperation(aux.ThreeTributeOperation())
+	e1:SetValue(SUMMON_TYPE_TRIBUTE+1)
+	c:RegisterEffect(e1)
+	return e1
+end
+function aux.ThreeTributeCondition(otfilter)
+	return function (e,c)
+		if c==nil then return true end
+		local tp=e:GetHandlerPlayer()
+		local rg1=Duel.GetReleaseGroup(tp)
+		local rg2=Duel.GetMatchingGroup(otfilter,tp,LOCATION_MZONE,0,nil,tp)
+		return aux.SelectUnselectGroup(rg1,e,tp,2,2,aux.ChkfMMZ(1),0)
+			and aux.SelectUnselectGroup(rg2,e,tp,1,1,aux.ChkfMMZ(1),0)
+	end
+end
+function aux.ThreeTributeTarget(otfilter)
+	return function (e,tp,eg,ep,ev,re,r,rp,c)
+		local rg1=Duel.GetMatchingGroup(otfilter,tp,LOCATION_MZONE,0,nil,tp)
+		local mg1=aux.SelectUnselectGroup(rg1,e,tp,1,1,aux.ChkfMMZ(1),1,tp,HINTMSG_RELEASE,nil,nil,true)
+		if #mg1>0 then
+			local sg=mg1:GetFirst()
+			local rg2=Duel.GetReleaseGroup(tp)
+			rg2:RemoveCard(sg)
+			local mg2=aux.SelectUnselectGroup(rg2,e,tp,1,1,aux.ChkfMMZ(1),1,tp,HINTMSG_RELEASE,nil,nil,true)
+			mg1:Merge(mg2)
+		end
+		if #mg1==2 then
+			mg1:KeepAlive()
+			e:SetLabelObject(mg1)
+			return true
+		end
+		return false
+	end
+end
+function aux.ThreeTributeOperation()
+	return function (e,tp,eg,ep,ev,re,r,rp,c)
+		local g=e:GetLabelObject()
+		if not g then return end
+		Duel.Release(g,REASON_COST)
+		g:DeleteGroup()
+	end
+end
 --Returns true if a monster can get a piercing effect as per Rush rules
 function Card.CanGetPiercingRush(c)
     return not (c:IsHasEffect(EFFECT_CANNOT_ATTACK) or c:IsHasEffect(EFFECT_PIERCE))

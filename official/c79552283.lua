@@ -16,6 +16,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_SZONE)
 	e1:SetCountLimit(1)
+	e1:SetCondition(function(_,tp) return Duel.IsTurnPlayer(tp) and Duel.GetCurrentPhase()<PHASE_MAIN2 end)
 	e1:SetTarget(s.atktg)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
@@ -36,7 +37,8 @@ end
 s.listed_series={SET_SCARECLAW}
 s.listed_names={CARD_VISAS_STARFROST}
 function s.atkfilter(c)
-	return c:IsFaceup() and (c:IsSetCard(SET_SCARECLAW) or c:IsCode(CARD_VISAS_STARFROST)) and not c:IsHasEffect(EFFECT_CANNOT_ATTACK)
+	return c:IsFaceup() and (c:IsSetCard(SET_SCARECLAW) or c:IsCode(CARD_VISAS_STARFROST))
+		and not c:IsLinkMonster() and not c:IsHasEffect(EFFECT_CANNOT_ATTACK)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingTarget(s.atkfilter,tp,LOCATION_MZONE,0,1,nil) end

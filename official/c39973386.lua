@@ -34,12 +34,12 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.cfilter(c,e,tp)
 	return c:IsAttribute(ATTRIBUTE_DARK|ATTRIBUTE_LIGHT) and c:HasLevel()
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND|LOCATION_EXTRA,0,1,nil,e,tp,c:GetOriginalRace(),c:GetOriginalLevel(),c:GetOriginalAttribute())
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND|LOCATION_EXTRA,0,1,nil,e,tp,c:GetOriginalRace(),c:GetOriginalLevel(),c:GetOriginalAttribute(),c)
 end
-function s.spfilter(c,e,tp,race,lvl,att)
+function s.spfilter(c,e,tp,race,lvl,att,cost_card)
 	return c:IsAttribute(ATTRIBUTE_DARK|ATTRIBUTE_LIGHT) and c:IsOriginalRace(race) and c:GetOriginalLevel()==lvl and not c:IsOriginalAttribute(att)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and ((c:IsLocation(LOCATION_HAND) and Duel.GetMZoneCount(tp,c)>0) or (c:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0))
+		and ((c:IsLocation(LOCATION_HAND) and Duel.GetMZoneCount(tp,cost_card)>0) or (c:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp,cost_card,c)>0))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

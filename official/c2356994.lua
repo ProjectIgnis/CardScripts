@@ -26,7 +26,7 @@ function s.skipop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_SKIP_BP)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetTargetRange(0,1)
-	if Duel.IsTurnPlayer(tp) then
+	if Duel.IsTurnPlayer(1-tp) then
 		local turn=Duel.GetTurnCount()
 		e1:SetCondition(function() return Duel.GetTurnCount()~=turn end)
 		e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,2)

@@ -37,7 +37,7 @@ function s.tgfilter(c,e,tp)
 		or Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,c,c:GetLinkedZone(1-tp),1-tp))
 end
 function s.spfilter(c,e,summonPlayer,targetCard,targetCardZones,toFieldPlayer)
-	local zone=(targetCardZones|(c:IsLinkMonster() and targetCard:GetToBeLinkedZone(c,toFieldPlayer) or 0))&0x1f
+	local zone=(targetCardZones|(c:IsLinkMonster() and targetCard:GetToBeLinkedZone(c,toFieldPlayer) or 0))&ONLYMMZONE
 	return zone>0 and c:IsCanBeSpecialSummoned(e,0,summonPlayer,false,false,POS_FACEUP,toFieldPlayer,zone)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -62,7 +62,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			{b1,aux.Stringid(id,2)},
 			{b2,aux.Stringid(id,3)})
 		local toFieldPlayer=op==1 and tp or 1-tp
-		local zone=(tc:GetLinkedZone(toFieldPlayer)|(sc:IsLinkMonster() and tc:GetToBeLinkedZone(sc,toFieldPlayer) or 0))&0x1f
+		local zone=(tc:GetLinkedZone(toFieldPlayer)|(sc:IsLinkMonster() and tc:GetToBeLinkedZone(sc,toFieldPlayer) or 0))&ONLYMMZONE
 		Duel.SpecialSummonStep(sc,0,tp,toFieldPlayer,false,false,POS_FACEUP,zone)
 		g1=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_GRAVE,0,nil,e,tp,tc,tc:GetLinkedZone(tp),tp)
 		g2=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_GRAVE,0,nil,e,tp,tc,tc:GetLinkedZone(1-tp),1-tp)

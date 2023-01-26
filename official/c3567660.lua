@@ -17,7 +17,7 @@ function s.initial_effect(c)
 end
 function s.filter(c,tp)
 	return c:IsFaceup() and c:IsLinkMonster() and c:IsInExtraMZone()
-		and c:GetLink()>0 and Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_CONTROL,c:GetLinkedZone(tp)&0x1f)>0
+		and c:GetLink()>0 and Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_CONTROL,c:GetLinkedZone(tp)&ZONES_MMZ)>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc,tp) end
@@ -31,7 +31,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc or not tc:IsRelateToEffect(e) or not tc:IsControler(tp) then return end
-	local zone=tc:GetLinkedZone(tp)&0x1f
+	local zone=tc:GetLinkedZone(tp)&ZONES_MMZ
 	if Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_CONTROL,zone)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
 		local nseq=math.log(Duel.SelectDisableField(tp,1,LOCATION_MZONE,LOCATION_MZONE,~zone),2)

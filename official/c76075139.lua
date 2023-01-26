@@ -44,12 +44,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_VAYLANTZ}
+local mask=0x2|0x8|0x20|0x40
 function s.splimit(e,se,sp,st)
 	return not e:GetHandler():IsLocation(LOCATION_EXTRA) or aux.fuslimit(e,se,sp,st) or aux.penlimit(e,se,sp,st)
 end
 function s.hspfilter(c,tp,sc)
 	local zone=1<<c:GetSequence()
-	return zone&0x6a==zone and c:IsSetCard(SET_VAYLANTZ) and c:IsLevelAbove(5)
+	return zone&mask==zone and c:IsSetCard(SET_VAYLANTZ) and c:IsLevelAbove(5)
 		and not c:IsType(TYPE_FUSION) and Duel.GetLocationCountFromEx(tp,tp,c,sc)>0
 end
 function s.hspcon(e,c)
@@ -92,7 +93,7 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then
-		local zone=(1<<c:GetSequence())&0x1f
+		local zone=(1<<c:GetSequence())&ZONES_MMZ
 		return zone~=0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
@@ -100,7 +101,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	local zone=(1<<c:GetSequence())&0x1f
+	local zone=(1<<c:GetSequence())&ZONES_MMZ
 	if zone~=0 then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP,zone)
 	end

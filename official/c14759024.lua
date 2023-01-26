@@ -20,6 +20,7 @@ function s.thfilter(c)
 	return c:IsSetCard(SET_CONSTELLAR) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	--Excluding itself for a proper interaction with "Tellarknight Constellar Caduceus" [58858807]
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,e:GetHandler()) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end

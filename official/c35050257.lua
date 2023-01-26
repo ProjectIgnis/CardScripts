@@ -1,16 +1,15 @@
 --サイバー・ラーバァ
 --Cyber Larva
-local s,id=GetID(c)
 local s,id=GetID()
 function s.initial_effect(c)
-	--avoid battle damage
+	--Avoid battle damage
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e1:SetCode(EVENT_BE_BATTLE_TARGET)
 	e1:SetOperation(s.op1)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special Summon 1 "Cyber Larva" from the Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)

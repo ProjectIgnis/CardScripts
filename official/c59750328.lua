@@ -1,9 +1,8 @@
 --命削りの宝札
 --Card of Demise
-local s,id=GetID(c)
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Draw up to 3 cards
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DRAW)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)

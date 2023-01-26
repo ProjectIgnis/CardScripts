@@ -1,15 +1,14 @@
 --レザーライフ・ドラゴン
---Leather-Life Dragon
+--Insurrection Dragon
 --Scripted by The Razgriz
 local s,id=GetID()
-local s,id=GetID()
 function s.initial_effect(c)
-	--ATK gain/Trap destruction protection
+	--Increase ATK and prevent destruction by Trap effects
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TODECK+CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetCountLimit(1)
 	e1:SetRange(LOCATION_MZONE)
+	e1:SetCountLimit(1)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
@@ -23,7 +22,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,e:GetHandler(),1,tp,LOCATION_MZONE)
+	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,e:GetHandler(),1,tp,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -53,5 +52,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e2,true)
 end
 function s.indval(e,re,r,rp)
-	return (r&REASON_EFFECT)~=0 and re:IsActiveType(TYPE_TRAP) and rp~=e:GetHandlerPlayer()
+	return (r&REASON_EFFECT)~=0 and re:IsTrapEffect() and rp==1-e:GetHandlerPlayer()
 end

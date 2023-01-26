@@ -39,7 +39,7 @@ function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_GRAVE,LOCATION_GRAVE,nil)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,0,0)
 	local c=e:GetHandler()
-	if c:GetMaterial():IsExists(s.matfilter,1,nil,c)
+	if c:GetMaterial():IsExists(s.matfilter,1,nil,c) then
 		local g2=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,c)
 		Duel.SetPossibleOperationInfo(0,CATEGORY_DESTROY,g2,#g2,0,0)
 	end

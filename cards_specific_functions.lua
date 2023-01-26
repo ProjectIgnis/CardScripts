@@ -216,7 +216,7 @@ function Auxiliary.MaleficUniqueFilter(cc)
 	t[cc]=true
 	mt.has_malefic_unique=t
 	return 	function(c)
-				return not Duel.IsPlayerAffectedByEffect(c:GetControler(),75223115) and c:IsSetCard(0x23)
+				return not Duel.IsPlayerAffectedByEffect(c:GetControler(),75223115) and c:IsSetCard(SET_MALEFIC)
 			end
 end
 --Procedure for Malefic monsters' Special Summon (includes handling of Malefic Paradox Gear)
@@ -233,7 +233,7 @@ function Auxiliary.AddMaleficSummonProcedure(c,code,loc,excon)
 	c:RegisterEffect(e1)
 end
 function Auxiliary.MaleficSummonFilter(c,cd)
-	return ((cd and c:IsCode(cd)) or (not cd and c:IsSetCard(0x23))) and c:IsAbleToRemoveAsCost()
+	return ((cd and c:IsCode(cd)) or (not cd and c:IsSetCard(SET_MALEFIC))) and c:IsAbleToRemoveAsCost()
 end
 function Auxiliary.MaleficSummonSubstitute(c,cd,tp)
 	return c:IsHasEffect(48829461,tp) and c:IsAbleToRemoveAsCost()
@@ -293,7 +293,7 @@ function Witchcrafter.repcon(e)
 end
 function Witchcrafter.repval(base,e,tp,eg,ep,ev,re,r,rp,chk,extracon)
 	local c=e:GetHandler()
-	return c:IsControler(tp) and c:IsMonster() and c:IsSetCard(0x128)
+	return c:IsControler(tp) and c:IsMonster() and c:IsSetCard(SET_WITCHCRAFTER)
 end
 function Witchcrafter.repop(id)
 	return function(base,e,tp,eg,ep,ev,re,r,rp)
@@ -380,7 +380,7 @@ function Auxiliary.LavaOperation(required,filter)
 	end
 end
 function Auxiliary.AddKaijuProcedure(c)
-	c:SetUniqueOnField(1,0,aux.FilterBoolFunction(Card.IsSetCard,0xd3),LOCATION_MZONE)
+	c:SetUniqueOnField(1,0,aux.FilterBoolFunction(Card.IsSetCard,SET_KAIJU),LOCATION_MZONE)
 	local e1 = aux.AddLavaProcedure(c,1,POS_FACEUP_ATTACK)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
@@ -396,9 +396,7 @@ function Auxiliary.KaijuCondition(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(function(c)
-											return c:IsFaceup() and c:IsSetCard(0xd3)
-										end,tp,0,LOCATION_MZONE,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFunction(Card.IsSetCard,SET_KAIJU),tp,0,LOCATION_MZONE,1,nil)
 end
 function Auxiliary.CheckStealEquip(c,e,tp)
 	if c:IsFacedown() or not c:IsControlerCanBeChanged() or not c:IsControler(1-tp) then return false end
@@ -512,7 +510,7 @@ end
 --(card in the same column as a security force)
 function Auxiliary.SecurityTarget(e,_c)
 	return _c:GetColumnGroup():IsExists(function(c,tp)
-											return c:IsControler(tp) and c:IsFaceup() and c:IsMonster() and c:IsSetCard(0x15a)
+											return c:IsControler(tp) and c:IsFaceup() and c:IsMonster() and c:IsSetCard(SET_S_FORCE)
 										 end,1,_c,e:GetHandlerPlayer())
 end
 
@@ -591,7 +589,7 @@ end
 -- Amazement and Ɐttraction helper functions
 AA = {}
 function AA.eqtgfilter(c,tp)
-	return c:IsFaceup() and (c:IsSetCard(0x15e) or (not c:IsControler(tp)))
+	return c:IsFaceup() and (c:IsSetCard(SET_AMAZEMENT) or (not c:IsControler(tp)))
 end
 function AA.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and AA.eqtgfilter(chkc,tp) end
@@ -647,11 +645,11 @@ function Auxiliary.AttractionEquipCon(self)
 	end
 end
 function AA.eqsfilter(c,tp)
-	return c:IsSetCard(0x15f) and c:IsTrap() and c:GetEquipTarget() and
+	return c:IsSetCard(SET_ATTRACTION) and c:IsTrap() and c:GetEquipTarget() and
 		   Duel.IsExistingMatchingCard(AA.eqmfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c:GetEquipTarget(),tp)
 end
 function AA.eqmfilter(c,tp)
-	return c:IsFaceup() and (c:IsSetCard(0x15e) or (not c:IsControler(tp)))
+	return c:IsFaceup() and (c:IsSetCard(SET_AMAZEMENT) or (not c:IsControler(tp)))
 end
 function AA.qeqetg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -687,7 +685,7 @@ end
 -- Description: cost for "Security Force" cards that banish a card from the hand, needed for "Security Force Chase" from LIOV
 local SecurityForce={}
 function SecurityForce.CostFilter(c)
-	return c:IsSetCard(0x15a) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(SET_S_FORCE) and c:IsAbleToRemoveAsCost()
 end
 function SecurityForce.Cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(SecurityForce.CostFilter,tp,LOCATION_HAND,0,1,nil) end
@@ -841,7 +839,7 @@ end
 
 Drytron={}
 function Drytron.TributeCostFilter(c,tp)
-	return ((c:IsSetCard(0x151) and c:IsMonster()) or c:IsRitualMonster()) and (c:IsControler(tp) or c:IsFaceup())
+	return ((c:IsSetCard(SET_DRYTRON) and c:IsMonster()) or c:IsRitualMonster()) and (c:IsControler(tp) or c:IsFaceup())
 		and (c:IsInMainMZone(tp) or Duel.GetLocationCount(tp,LOCATION_MZONE)>0)
 end
 function Drytron.TributeBaseCost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -906,8 +904,8 @@ Effect.CreateMysteruneQPEffect = (function()
 	end
 
 	local function spfilter(c,e,tp)
-		return c:IsSetCard(0x180) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-			and Duel.GetLocationCountFromEx(tp,tp,nil,c,0x60)>0
+		return c:IsSetCard(SET_RUNICK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+			and Duel.GetLocationCountFromEx(tp,tp,nil,c,ONLYEMZONE)>0
 	end
 
 	local function sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -919,7 +917,7 @@ Effect.CreateMysteruneQPEffect = (function()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
 		if #g>0 then
-			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP,0x60)
+			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP,ONLYEMZONE)
 		end
 		skipop(e,tp,eg,ep,ev,re,r,rp)
 	end
@@ -1021,9 +1019,9 @@ end)()
 --[[
 	Effect.CreateVernalizerSPEffect(c,id,desc,uniquecat,uniquetg,uniqueop)
 
-	Creates an ignition Effect object for the "Vernalizer Fairy" effects that
+	Creates an ignition Effect object for the "Vernusylph" effects that
 	discard themselves and another card from the hand.
-	Includes handling for "Flower Crown of the Vernalizer Fairy" cost replacement.
+	Includes handling for "Vernusylph Corolla" cost replacement.
 
 	Card c: the owner of the Effect
 	int id: the card ID used for the HOPT restriction and strings
@@ -1035,10 +1033,10 @@ end)()
 		it can also return an optional passcode (int) which will be excluded from the special summon
 --]]
 Effect.CreateVernalizerSPEffect=(function()
-	local stringbase=9350312 -- use strings from "Hills and Blooms" so they don't need to be stored in every card
+	local stringbase=9350312 -- use strings from "Flourishing Hils" so they don't need to be stored in every card
 
 	local function verncostfilter(c)
-		return (c:IsMonster() or c:IsSetCard(0x183)) and c:IsDiscardable()
+		return (c:IsMonster() or c:IsSetCard(SET_VERNUSYLPH)) and c:IsDiscardable()
 	end
 
 	local function verncost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -1104,7 +1102,7 @@ function Auxiliary.WelcomeLabrynthTrapDestroyOperation(e,tp)
 	local addeff=Duel.IsPlayerAffectedByEffect(tp,CARD_LABRYNTH_LABYRINTH)
 	if not (addeff and addeff:CheckCountLimit(tp)
 		and e:IsHasType(EFFECT_TYPE_ACTIVATE) and e:GetActiveType()==TYPE_TRAP
-		and c:IsSetCard(0x117f) and not c:IsStatus(STATUS_ACT_FROM_HAND)
+		and c:IsSetCard(SET_WELCOME_LABRYNTH) and not c:IsStatus(STATUS_ACT_FROM_HAND)
 		and Duel.IsExistingMatchingCard(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
 		and Duel.SelectYesNo(tp,aux.Stringid(CARD_LABRYNTH_LABYRINTH,1))) then return end
 	addeff:UseCountLimit(tp)
@@ -1147,7 +1145,7 @@ local InfernoidInt={}
 function InfernoidInt.spfilter(c)
 	return c:IsSetCard(SET_INFERNOID) and c:IsMonster() and c:IsAbleToRemoveAsCost() 
 end
-function InfernoidInt.getLocations(c,tp)	
+function InfernoidInt.getLocations(c,tp)
 	local locations=LOCATION_HAND
 	if Duel.IsPlayerAffectedByEffect(tp,69832741) then
 		locations=locations|LOCATION_MZONE

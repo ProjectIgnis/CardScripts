@@ -1099,7 +1099,7 @@ function Auxiliary.dxmcostgen(min,max,op)
 	end
 	return function(e,tp,eg,ep,ev,re,r,rp,chk)
 		local c=e:GetHandler()
-		local nn=c:IsSetCard(0x14b) and c:IsType(TYPE_XYZ) and Duel.IsPlayerAffectedByEffect(tp,CARD_NUMERON_NETWORK)
+		local nn=c:IsSetCard(SET_NUMERON) and c:IsType(TYPE_XYZ) and Duel.IsPlayerAffectedByEffect(tp,CARD_NUMERON_NETWORK)
 		local crm=c:CheckRemoveOverlayCard(tp,min,REASON_COST)
 		if chk==0 then return (nn and c:IsLocation(LOCATION_MZONE)) or crm end
 		if nn and (not crm or Duel.SelectYesNo(tp,aux.Stringid(CARD_NUMERON_NETWORK,1))) then
@@ -2070,7 +2070,7 @@ function Auxiliary.GetMMZonesPointedTo(player,by_filter,player_location,oppo_loc
 	local loc1=player_location==nil and LOCATION_MZONE or player_location
 	local loc2=oppo_location==nil and loc1 or oppo_location
 	target_player=target_player==nil and player or target_player
-	return Duel.GetMatchingGroup(link_card_filter,player,loc1,loc2,nil,by_filter,...):GetLinkedZone(target_player)&0x1f
+	return Duel.GetMatchingGroup(link_card_filter,player,loc1,loc2,nil,by_filter,...):GetLinkedZone(target_player)&ONLYMMZONE
 end
 
 --[[

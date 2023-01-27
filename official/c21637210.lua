@@ -47,7 +47,7 @@ function s.initial_effect(c)
 end
 local TYPES=TYPE_RITUAL|TYPE_FUSION|TYPE_SYNCHRO|TYPE_XYZ
 local function getcount(tp)
-	return Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil):GetBinClassCount(function(c) return c:GetType()&TYPES end)
+	return Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsMonster),tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil):GetBinClassCount(function(c) return c:GetType()&TYPES end)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()

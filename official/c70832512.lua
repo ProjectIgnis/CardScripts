@@ -24,10 +24,11 @@ end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local dg=eg:Filter(s.desfilter,e:GetHandler(),nil)
+	Duel.SetTargetCard(dg)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,dg,#dg,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local dg=eg:Filter(s.desfilter,nil)
+	local dg=eg:Filter(s.desfilter,nil):Filter(Card.IsRelateToEffect,nil,e)
 	if #dg>0 then
 		Duel.Destroy(dg,REASON_EFFECT)
 	end

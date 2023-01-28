@@ -1,37 +1,34 @@
 --レアル・クルセイダー
+--Absolute Crusader
 local s,id=GetID()
 function s.initial_effect(c)
-	--destroy
+	--Destroy level 5 or higher monsters that are Special Summoned
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)
-	e1:SetType(EFFECT_TYPE_TRIGGER_F+EFFECT_TYPE_FIELD)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e1:SetCost(s.cost)
-	e1:SetTarget(s.target)
-	e1:SetOperation(s.operation)
+	e1:SetCondition(s.descond)
+	e1:SetCost(aux.selfreleasecost)
+	e1:SetTarget(s.destg)
+	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
 end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsRelateToEffect(e) and e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
+function s.desfilter(c)
+	return c:IsFaceup() and c:IsLevelAbove(5)
 end
-function s.dfilter(c,e)
-	return c:IsFaceup() and c:IsLevelAbove(5) and (not e or c:IsRelateToEffect(e))
+function s.descond(e,tp,eg,ep,ev,re,r,rp,chk)
+	return eg:IsExists(s.desfilter,1,e:GetHandler())
 end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then
-		if not eg:IsExists(s.dfilter,1,nil) then return false end
-		if e:GetHandler():IsStatus(STATUS_CHAINING) then return false end
-		e:GetHandler():SetStatus(STATUS_CHAINING,true)
-		return true
-	end
-	Duel.SetTargetCard(eg)
+function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	local dg=eg:Filter(s.desfilter,e:GetHandler(),nil)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,dg,#dg,0,0)
 end
-function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local g=eg:Filter(s.dfilter,nil,e)
-	if #g~=0 then
-		Duel.Destroy(g,REASON_EFFECT)
+function s.desop(e,tp,eg,ep,ev,re,r,rp)
+	local dg=eg:Filter(s.desfilter,nil)
+	if #dg>0 then
+		Duel.Destroy(dg,REASON_EFFECT)
 	end
 end

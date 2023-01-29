@@ -1,7 +1,8 @@
 --カタパルト・タートル
+--Catapult Turtle
 local s,id=GetID()
 function s.initial_effect(c)
-	--damage
+	--Tribute 1 monster to inflict damage equal to half of its ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DAMAGE)
@@ -14,9 +15,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+function s.cfilter(c)
+	return c:GetAttack()>0
+end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,nil,1,false,nil,nil) end
-	local sg=Duel.SelectReleaseGroupCost(tp,nil,1,1,false,nil,nil)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil) end
+	local sg=Duel.SelectReleaseGroupCost(tp,s.cfilter,1,1,false,nil,nil)
 	e:SetLabel(sg:GetFirst():GetAttack()/2)
 	Duel.Release(sg,REASON_COST)
 end

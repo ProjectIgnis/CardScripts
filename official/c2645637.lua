@@ -4,10 +4,10 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,0,id)
-	--Kink summon procedure
+	--Link Summon procedure
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_ZOMBIE),2)
-	--disable
+	--Negated activated effects of banished monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_CHAIN_SOLVING)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.discon)
 	e1:SetOperation(s.disop)
 	c:RegisterEffect(e1)
-	--negate
+	--Change ATK of a target to 0 and negate its effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DISABLE)
@@ -30,14 +30,14 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
 	e3:SetDescription(aux.Stringid(id,0))
-	e3:SetCode(EVENT_CHAIN_SOLVED)
+	e3:SetCode(EVENT_CHAIN_SOLVING)
 	e3:SetCondition(s.atkcon2)
 	c:RegisterEffect(e3)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then return false end
 	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
-	return rp==1-tp and re:IsActiveType(TYPE_MONSTER) and loc==LOCATION_REMOVED
+	return rp==1-tp and re:IsMonsterEffect() and loc==LOCATION_REMOVED
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateEffect(ev)
@@ -82,5 +82,5 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atkcon2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
-	return loc==LOCATION_GRAVE and re:IsActiveType(TYPE_MONSTER)
+	return loc==LOCATION_GRAVE and re:IsMonsterEffect()
 end

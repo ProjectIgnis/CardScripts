@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
 	e3:SetDescription(aux.Stringid(id,0))
-	e3:SetCode(EVENT_CHAIN_SOLVING)
+	e3:SetCode(EVENT_CHAINING)
 	e3:SetCondition(s.atkcon2)
 	c:RegisterEffect(e3)
 end

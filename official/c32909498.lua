@@ -1,5 +1,5 @@
 -- クシャトリラ・フェンリル
--- Kshatri-La Fenrir
+-- Kashtira Fenrir
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.spcon)
 	c:RegisterEffect(e1)
-	-- Search 1 "Kshatri-la" monster
+	-- Search 1 "Kashtira" monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
-	-- Banish 1 card face-down
+	-- Banish 1 face card the opponent controls, face-down
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_REMOVE)
@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	local e4=e3:Clone()
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
-	e4:SetCode(EVENT_CHAIN_SOLVED)
+	e4:SetCode(EVENT_CHAINING)
 	e4:SetCondition(s.rmeffcon)
 	c:RegisterEffect(e4)
 end
@@ -78,5 +78,5 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.rmeffcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==1-tp and re:IsActiveType(TYPE_MONSTER)
+	return ep==1-tp and re:IsMonsterEffect()
 end

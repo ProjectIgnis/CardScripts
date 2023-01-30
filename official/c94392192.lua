@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	local e4=e3:Clone()
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e4:SetProperty(EFFECT_FLAG_DELAY)
-	e4:SetCode(EVENT_CHAIN_SOLVED)
+	e4:SetCode(EVENT_CHAINING)
 	e4:SetCondition(s.rmeffcon)
 	c:RegisterEffect(e4)
 end

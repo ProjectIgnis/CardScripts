@@ -917,7 +917,7 @@ Effect.CreateMysteruneQPEffect = (function()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
 		if #g>0 then
-			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP,ONLYEMZONE)
+			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP,ZONES_EMZ)
 		end
 		skipop(e,tp,eg,ep,ev,re,r,rp)
 	end

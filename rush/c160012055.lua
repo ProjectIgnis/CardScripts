@@ -5,6 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c)
-	return c:IsMonster() and c:IsAbleToDeckOrExtraAsCost() 
+	return c:IsMonster() and c:IsAbleToDeckOrExtraAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,2,nil) end
@@ -43,19 +44,17 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #g==0 or Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)==0 then return end
 	-- Effect
 	local dg=Duel.GetMatchingGroup(s.tdfilter3,tp,0,LOCATION_GRAVE,nil)
-	local sg=aux.SelectUnselectGroup(dg,e,tp,2,7,s.rescon,1,tp,HINTMSG_TODECK)
+	local sg=aux.SelectUnselectGroup(dg,e,tp,2,7,aux.dncheck,1,tp,HINTMSG_TODECK)
 	if #sg==0 then return end
 	Duel.HintSelection(sg,true)
 	if Duel.SendtoDeck(sg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>=6 
 		and Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.shufflefilter),tp,0,LOCATION_MZONE,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		local g2=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.shufflefilter),tp,0,LOCATION_MZONE,1,1,nil)
 		if #g2>0 then
 			Duel.HintSelection(g2,true)
 			Duel.SendtoDeck(g2,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 		end
 	end
-end
-function s.rescon(sg,e,tp,mg)
-	return sg:GetClassCount(Card.GetCode)==#sg
 end

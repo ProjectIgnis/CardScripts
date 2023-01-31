@@ -59,7 +59,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 				e2:SetType(EFFECT_TYPE_FIELD)
 				e2:SetCode(EFFECT_CANNOT_ATTACK)
 				e2:SetTargetRange(LOCATION_MZONE,0)
-				e2:SetTarget(function(_,c) return not (c:IsRace(RACE_CELESTIALWARRIOR) or c:IsRace(RACE_WARRIOR)) end)
+				e2:SetTarget(function(_,c) return not c:IsRace(RACE_CELESTIALWARRIOR|RACE_WARRIOR) end)
 				e2:SetReset(RESET_PHASE+PHASE_END)
 				Duel.RegisterEffect(e2,tp)
 			end

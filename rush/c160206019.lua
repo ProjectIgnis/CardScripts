@@ -1,13 +1,14 @@
 --偉大魔獣 ガーゼット
+--Great Maju Garzett (Rush)
 local s,id=GetID()
 function s.initial_effect(c)
-	--tribute check
+	--Tribute check
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_MATERIAL_CHECK)
 	e1:SetValue(s.valcheck)
 	c:RegisterEffect(e1)
-	--give atk effect only when  summon
+	--Gain ATK equal to the ATK of 1 monster tributed for its Tribute Summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_SUMMON_COST)

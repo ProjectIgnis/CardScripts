@@ -905,7 +905,7 @@ Effect.CreateMysteruneQPEffect = (function()
 
 	local function spfilter(c,e,tp)
 		return c:IsSetCard(SET_RUNICK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-			and Duel.GetLocationCountFromEx(tp,tp,nil,c,ONLYEMZONE)>0
+			and Duel.GetLocationCountFromEx(tp,tp,nil,c,ZONES_EMZ)>0
 	end
 
 	local function sptg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -2070,7 +2070,7 @@ function Auxiliary.GetMMZonesPointedTo(player,by_filter,player_location,oppo_loc
 	local loc1=player_location==nil and LOCATION_MZONE or player_location
 	local loc2=oppo_location==nil and loc1 or oppo_location
 	target_player=target_player==nil and player or target_player
-	return Duel.GetMatchingGroup(link_card_filter,player,loc1,loc2,nil,by_filter,...):GetLinkedZone(target_player)&ONLYMMZONE
+	return Duel.GetMatchingGroup(link_card_filter,player,loc1,loc2,nil,by_filter,...):GetLinkedZone(target_player)&ZONES_MMZ
 end
 
 --[[

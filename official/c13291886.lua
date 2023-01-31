@@ -50,7 +50,7 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then
-		local zone=(1<<c:GetSequence())&0x1f
+		local zone=(1<<c:GetSequence())&ZONES_MMZ
 		return zone~=0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
@@ -58,7 +58,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	local zone=(1<<c:GetSequence())&0x1f
+	local zone=(1<<c:GetSequence())&ZONES_MMZ
 	if zone~=0 then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP,zone)
 	end
@@ -116,7 +116,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetDescription(3206)
 		e2:SetCode(EFFECT_CANNOT_ATTACK)
 		tc:RegisterEffect(e2)
-		-- Treated as a "Valiants" monster
+		-- Treated as a "Vaylantz" monster
 		local e3=Effect.CreateEffect(c)
 		e3:SetDescription(aux.Stringid(id,3))
 		e3:SetProperty(EFFECT_FLAG_CLIENT_HINT)

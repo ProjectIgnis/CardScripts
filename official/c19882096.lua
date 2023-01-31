@@ -32,5 +32,5 @@ function s.hspval(e,c)
 		left_right=tc:IsInMainMZone() and 1 or 0
 		zone=(zone|tc:GetColumnZone(LOCATION_MZONE,left_right,left_right,tp))
 	end
-	return 0,zone&0x1f
+	return 0,zone&ZONES_MMZ
 end

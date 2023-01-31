@@ -20,8 +20,9 @@ LOCATION_EMZONE = 0x1000
 --Locations used for redirecting
 LOCATION_DECKBOT = 0x10001
 LOCATION_DECKSHF = 0x20001
---Location used to filter monster zones
-ONLYMMZONE = 0x1f
+--Constants used to filter monster zones
+ZONES_MMZ = 0x1f
+ZONES_EMZ = 0x60
 --Sequences used for SendtoDeck
 SEQ_DECKTOP     = 0
 SEQ_DECKBOTTOM  = 1

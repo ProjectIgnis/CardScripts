@@ -1,5 +1,5 @@
 -- ヴァリアンツＭ－マーキス
--- Vaylantz Mad - Marquis
+-- Vaylantz Mad Marques
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -51,7 +51,7 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then
-		local zone=(1<<c:GetSequence())&0x1f
+		local zone=(1<<c:GetSequence())&ZONES_MMZ
 		return zone~=0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
@@ -59,7 +59,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	local zone=(1<<c:GetSequence())&0x1f
+	local zone=(1<<c:GetSequence())&ZONES_MMZ
 	if zone~=0 then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP,zone)
 	end
@@ -92,7 +92,8 @@ function s.sspcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsLocation(LOCATION_MZONE) and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function s.sspfilter(c,e,tp)
-	return c:IsOriginalType(TYPE_MONSTER) and c:GetSequence()<5 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,(1<<c:GetSequence())&0x1f)
+	return c:IsOriginalType(TYPE_MONSTER) and c:GetSequence()<5
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,(1<<c:GetSequence())&ZONES_MMZ)
 end
 function s.ssptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.sspfilter,tp,LOCATION_SZONE,0,1,nil,e,tp) end
@@ -107,6 +108,6 @@ function s.sspop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=g:Select(tp,1,1,nil):GetFirst()
 	if tc then 
-		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP,(1<<tc:GetSequence())&0x1f)
+		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP,(1<<tc:GetSequence())&ZONES_MMZ)
 	end
 end

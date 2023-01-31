@@ -50,7 +50,7 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then
-		local zone=(1<<c:GetSequence())&0x1f
+		local zone=(1<<c:GetSequence())&ZONES_MMZ
 		return zone~=0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
@@ -58,7 +58,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	local zone=(1<<c:GetSequence())&0x1f
+	local zone=(1<<c:GetSequence())&ZONES_MMZ
 	if zone~=0 then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP,zone)
 	end
@@ -82,7 +82,7 @@ function s.sspcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.sspfilter(c,e,tp)
 	return c:IsSetCard(SET_VAYLANTZ) and c:IsOriginalType(TYPE_MONSTER) and c:GetSequence()<5
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,(1<<c:GetSequence())&0x1f)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,(1<<c:GetSequence())&ZONES_MMZ)
 end
 function s.ssptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_SZONE) and s.sspfilter(chkc,e,tp) end
@@ -94,6 +94,6 @@ end
 function s.sspop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then 
-		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP,(1<<tc:GetSequence())&0x1f)
+		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP,(1<<tc:GetSequence())&ZONES_MMZ)
 	end
 end

@@ -25,7 +25,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,e:GetHandler()) end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetMatchingGroupCount(nil,,tp,0,LOCATION_ONFIELD,nil)>0 end
+	if chk==0 then return Duel.GetMatchingGroupCount(nil,tp,0,LOCATION_ONFIELD,nil)>0 end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement

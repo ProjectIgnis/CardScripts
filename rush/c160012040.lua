@@ -38,8 +38,10 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.atkfilter),tp,LOCATION_MZONE,0,1,nil) end
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
+	--Requirement
 	if Duel.DiscardDeck(tp,1,REASON_COST)<1 then return end
+	--Effect
+	local c=e:GetHandler()
 	if c:IsFaceup() and c:IsRelateToEffect(e) then
 		local atkval=Duel.GetMatchingGroupCount(aux.FilterMaximumSideFunctionEx(s.atkfilter),tp,LOCATION_MZONE,0,nil)*1000
 		local e1=Effect.CreateEffect(c)

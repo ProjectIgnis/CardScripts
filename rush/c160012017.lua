@@ -28,6 +28,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			c:AddPiercing(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			local desg=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_MZONE,nil)
 			if #desg>0 and c:IsStatus(STATUS_SPSUMMON_TURN) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 				local tg=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.desfilter),tp,0,LOCATION_MZONE,1,1,nil)
 				if #tg>0 then 
 					tg=tg:AddMaximumCheck()

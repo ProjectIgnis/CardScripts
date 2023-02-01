@@ -3,10 +3,10 @@
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)
-	--battle protection
+	--Prevent battle destruction
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCategory(CATEGORY_POSITION)
 	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCondition(s.condition)
@@ -17,7 +17,7 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttackTarget()
 	local ac=Duel.GetAttacker()
-	return tc and tc:IsFaceup() and tc:IsControler(tp) and ac:IsControler(1-tp) 
+	return tc and tc:IsFaceup() and tc:IsControler(tp) and ac:IsControler(1-tp)
 		and tc:IsLevelBelow(4) and tc:IsType(TYPE_NORMAL) and tc:IsRace(RACE_GALAXY) and not tc:IsHasEffect(EFFECT_INDESTRUCTABLE_BATTLE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

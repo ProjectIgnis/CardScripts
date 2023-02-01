@@ -1,10 +1,10 @@
 --紫眼の星猫
---Purple eyes Star Cat
+--Purple-Eyes Star Cat
 local s,id=GetID()
 function s.initial_effect(c)
-	--Set from your GY
+	--Set 1 "Stray Force" from your GY
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_RECOVER)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
@@ -24,10 +24,12 @@ function s.filter2(c)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
-	local g=Duel.SelectMatchingCard(tp,s.setfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.setfilter),tp,LOCATION_GRAVE,0,1,1,nil)
 	if #g==0 or Duel.SSet(tp,g)==0 then return end
 	if Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_MZONE,0,1,nil,tp) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.BreakEffect()
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_APPLYTO)
 		local g2=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_MZONE,0,1,1,nil)
 		if #g2>0 then
 			Duel.HintSelection(g2,true)

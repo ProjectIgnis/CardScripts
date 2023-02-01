@@ -4,6 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
@@ -18,12 +19,14 @@ end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=Duel.GetAttacker()
 	if chk==0 then return tc end
+	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,tc,1,0,-200)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_DESTROY,nil,1,0,LOCATION_MZONE)
 end
 function s.desfilter(c)
 	return c:IsFaceup() and c:IsAttackPos()
 end
 function s.cfilter2(c)
-	return c:IsFaceup() and c:IsRace(RACE_BEAST+RACE_BEASTWARRIOR+RACE_WARRIOR) and c:IsDefense(200) and not c:IsMaximumModeSide()
+	return c:IsFaceup() and c:IsRace(RACE_BEAST|RACE_BEASTWARRIOR|RACE_WARRIOR) and c:IsDefense(200) and not c:IsMaximumModeSide()
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()

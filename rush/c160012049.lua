@@ -30,12 +30,14 @@ function s.desfilter(c)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,chk)
 	--Requirement
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local td=Duel.SelectMatchingCard(tp,Card.IsAbleToDeckOrExtraAsCost,tp,LOCATION_HAND,0,1,1,nil)
 	if Duel.SendtoDeck(td,nil,SEQ_DECKBOTTOM,REASON_COST)~=0 then
 		--Effect
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		if ft<1 then return end
 		if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE,0,1,math.min(ft,2),nil,e,tp)
 		if #g>0 then
 			Duel.HintSelection(g,true)

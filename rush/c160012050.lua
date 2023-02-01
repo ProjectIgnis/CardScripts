@@ -5,6 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -24,7 +25,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,e:GetHandler()) end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetMatchingGroupCount(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)>0 end
+	if chk==0 then return Duel.GetMatchingGroupCount(nil,,tp,0,LOCATION_ONFIELD,nil)>0 end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
@@ -34,8 +35,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 	if Duel.SendtoGrave(g,REASON_COST)~=0 then
 		--effect
-		local dg=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)
+		local dg=Duel.GetMatchingGroup(nil,tp,0,LOCATION_ONFIELD,nil)
 		if #dg>0 then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 			local sg=dg:Select(tp,1,1,nil)
 			Duel.HintSelection(sg,true)
 			Duel.Destroy(sg,REASON_EFFECT)

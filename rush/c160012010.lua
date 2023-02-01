@@ -24,4 +24,3 @@ function s.val(e,c)
 	local ct2=Duel.GetMatchingGroupCount(s.filter2,tp,LOCATION_SZONE,0,nil,e:GetHandler())
 	return (ct+ct2)*500
 end
-

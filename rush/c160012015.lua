@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Draw
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,1))
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DRAW)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.costfilter(c)
-	return c:IsMonster() and c:IsRace(RACE_BEAST+RACE_WARRIOR) and c:IsDefense(200) and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and c:IsRace(RACE_BEAST|RACE_WARRIOR) and c:IsDefense(200) and c:IsAbleToGraveAsCost()
 end
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end

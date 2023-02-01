@@ -13,15 +13,14 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.eqfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_WARRIOR+RACE_FAIRY+RACE_CELESTIALWARRIOR) and not c:IsMaximumModeSide()
+	return c:IsFaceup() and c:IsRace(RACE_WARRIOR|RACE_FAIRY|RACE_CELESTIALWARRIOR) and not c:IsMaximumModeSide()
 end
 function s.eqlimit(e,c)
-    return c:IsFaceup()
+	return c:IsFaceup()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil)
 end
 function s.value(e,c)
-	local lvl=e:GetHandler():GetEquipTarget():GetLevel()
-	return lvl*100
+	return e:GetHandler():GetEquipTarget():GetLevel()*100
 end

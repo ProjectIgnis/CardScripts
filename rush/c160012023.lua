@@ -11,12 +11,13 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	e1:SetCondition(function(e)return e:GetHandler():IsStatus(STATUS_SUMMON_TURN) end)
+	e1:SetCondition(function(e) return e:GetHandler():IsStatus(STATUS_SUMMON_TURN) end)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.drtg)
 	e1:SetOperation(s.drop)
 	c:RegisterEffect(e1)
 end
+s.listed_names={CARD_FUSION,160012052}
 function s.cfilter(c)
 	return c:IsCode(CARD_FUSION,160012052) and not c:IsPublic()
 end

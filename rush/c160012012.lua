@@ -17,8 +17,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.drop)
 	c:RegisterEffect(e1)
 end
+s.listed_names={160012046,160012047,160012003}
 function s.cfilter(c)
-	return c:IsMonster() and not (c:IsRace(RACE_DRAGON) or c:IsRace(RACE_HIGHDRAGON))
+	return c:IsMonster() and not c:IsRace(RACE_DRAGON|RACE_HIGHDRAGON)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(Card.IsMonster,tp,LOCATION_GRAVE,0,1,nil)

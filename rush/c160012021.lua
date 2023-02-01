@@ -3,7 +3,7 @@
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Mill and add to hand
+	-- Change name to ""Soleil the Skysavior Angel", mill 3 cards and add 1 "Fusion" to the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DECKDES+CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.mlop)
 	c:RegisterEffect(e1)
 end
+s.listed_names={CARD_SKYSAVIOR_SOLEIL,CARD_FUSION}
 function s.cfilter(c)
 	return c:IsMonster() and c:IsRace(RACE_WARRIOR) and not c:IsPublic()
 end
@@ -43,10 +44,11 @@ function s.mlop(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffectRush(e1)
 	Duel.DiscardDeck(tp,3,REASON_EFFECT)
 	local g=Duel.GetOperatedGroup()
-	if g:FilterCount(s.filter,nil)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+	if g:FilterCount(aux.NecroValleyFilter(s.filter),nil)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local sg=g:FilterSelect(tp,s.filter,1,1,nil)
 		if #sg>0 then
+			Due.HintSelection(sg,true)
 			Duel.SendtoHand(sg,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,sg)
 		end

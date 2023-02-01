@@ -3,7 +3,7 @@
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)
-	-- atk + damage
+	--Increase its own ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
@@ -16,13 +16,10 @@ end
 function s.cfilter(c)
 	return c:IsRace(RACE_CELESTIALWARRIOR) and not c:IsPublic()
 end
-function s.rescon(sg,e,tp,mg)
-	return sg:GetClassCount(Card.GetCode)==#sg
-end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_EXTRA,0,nil)
-	if chk==0 then return aux.SelectUnselectGroup(g,e,tp,1,5,s.rescon,0) end
-	local sg=aux.SelectUnselectGroup(g,e,tp,1,5,s.rescon,1,tp,HINTMSG_CONFIRM)
+	if chk==0 then return aux.SelectUnselectGroup(g,e,tp,1,5,aux.dncheck,0) end
+	local sg=aux.SelectUnselectGroup(g,e,tp,1,5,aux.dncheck,1,tp,HINTMSG_CONFIRM)
 	Duel.ConfirmCards(1-tp,sg)
 	e:SetLabel(#sg)
 end
@@ -34,14 +31,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(atk)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
 	c:RegisterEffectRush(e1)
 	--Prevent monsters from attacking
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_CANNOT_ATTACK)
 	e2:SetTargetRange(LOCATION_MZONE,0)
-	e2:SetTarget(function(_,c) return not (c:IsRace(RACE_CELESTIALWARRIOR) or c:IsRace(RACE_WARRIOR) or c:IsRace(RACE_FAIRY)) end)
+	e2:SetTarget(function(_,c) return not c:IsRace(RACE_CELESTIALWARRIOR|RACE_WARRIOR|RACE_FAIRY) end)
 	e2:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 	--Cannot attack directly

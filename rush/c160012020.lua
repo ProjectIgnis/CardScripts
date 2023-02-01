@@ -3,7 +3,7 @@
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)
-	--Excavate the top 3 cards and Special Summon
+	--Change name to "Lua the Skysavior Angel", excavate 4 cards and add 1 excavated "Fusion" to the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -15,6 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_names={CARD_SKYSAVIOR_LUA,CARD_FUSION}
 function s.cfilter(c)
 	return c:IsMonster() and c:IsRace(RACE_WARRIOR) and not c:IsPublic()
 end
@@ -27,6 +28,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=4 end
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.filter(c)
 	return c:IsCode(CARD_FUSION) and c:IsAbleToHand()
@@ -46,7 +48,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetDecktopGroup(tp,4)
 	if g:IsExists(s.filter,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local tg=g:FilterSelect(tp,s.filter,1,1,nil,e,tp)
+		local tg=g:FilterSelect(tp,s.filter,1,1,nil)
 		if #tg>0 then
 			Duel.SendtoHand(tg,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,tg)
@@ -60,4 +62,3 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SortDeckbottom(tp,tp,ct)
 	end
 end
-

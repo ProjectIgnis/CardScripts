@@ -19,6 +19,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(zone>>16)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.GetFlagEffect(tp,id)>0 then return end
 	local zone=e:GetLabel()
 	local nseq=math.log(zone,2)
 	if not Duel.CheckLocation(1-tp,LOCATION_MZONE,nseq) then return end

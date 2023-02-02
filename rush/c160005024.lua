@@ -27,7 +27,7 @@ end
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	local flag=0
-	if g:IsExists(s.filter,2,nil) then flag=1 end
+	if g:FilterCount(s.filter,nil)==#g then flag=1 end
 	e:SetLabel(flag)
 end
 function s.descond(e,tp,eg,ep,ev,re,r,rp)

@@ -24,7 +24,7 @@ end
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	local flag=0
-	if g:IsExists(Card.IsLevelAbove,2,nil,5) then flag=1 end
+	if g:FilterCount(Card.IsLevelAbove,nil,5)==#g then flag=1 end
 	e:SetLabel(flag)
 end
 function s.descond(e,tp,eg,ep,ev,re,r,rp)

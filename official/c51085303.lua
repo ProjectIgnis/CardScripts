@@ -1,4 +1,5 @@
 --E・HERO ブルーメ
+--Elemental HERO Roison Rose
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -8,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e1)
-	--atk/def
+	--Increase ATK and decrease DEF by 200
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
@@ -16,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.adcon)
 	e2:SetOperation(s.adop)
 	c:RegisterEffect(e2)
-	--
+	--Only "Elemental HERO Roison Rose" can be attack target
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
@@ -25,7 +26,7 @@ function s.initial_effect(c)
 	e3:SetValue(s.atlimit)
 	c:RegisterEffect(e3)
 end
-s.listed_names={id}
+s.listed_names={id,25090294}
 function s.adcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp
 end

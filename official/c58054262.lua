@@ -1,4 +1,5 @@
 --マシンナーズ・フォース
+--Machina Force
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -8,14 +9,14 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e1)
-	--attack cost
+	--Must pay 1000 LP to declare attack
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_ATTACK_COST)
 	e2:SetCost(s.atcost)
 	e2:SetOperation(s.atop)
 	c:RegisterEffect(e2)
-	--special summon
+	--Special Summon 3 monsters from the GY
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -27,6 +28,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={22666164,60999392,23782705,96384007}
 function s.atcost(e,c,tp)
 	return Duel.CheckLPCost(tp,1000)
 end

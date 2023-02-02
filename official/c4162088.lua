@@ -1,4 +1,5 @@
 --サイバー・レーザー・ドラゴン
+--Cyber Laser Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -8,18 +9,19 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e1)
-	--destroy
+	--Destroy 1 monster with ATK/DEf equal to or higher than its own ATK
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetCountLimit(1)
-	e2:SetRange(LOCATION_MZONE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCountLimit(1)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
+s.listed_names={66607691}
 function s.filter(c,atk)
 	return c:IsFaceup() and (c:IsAttackAbove(atk) or c:IsDefenseAbove(atk))
 end

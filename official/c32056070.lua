@@ -8,19 +8,19 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--apply effecy
+	--Apply effect based on the attribute of the summoned monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_CUSTOM+id)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
+	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTarget(s.target)
 	c:RegisterEffect(e2)
 	local g=Group.CreateGroup()
 	g:KeepAlive()
 	e2:SetLabelObject(g)
-	--Mass register
+	--Resgister summons
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -45,11 +45,11 @@ s.listed_names={TOKEN_IGNISTER}
 function s.filter(c,e,tp)
 	local attr=c:GetAttribute()
 	if not (c:IsFaceup() and c:IsRace(RACE_CYBERSE) and c:GetBaseAttack()==2300 and s.attr_list[tp]&attr==0) then return false end
-	if attr&(ATTRIBUTE_EARTH+ATTRIBUTE_WATER)~=0 then
+	if attr&(ATTRIBUTE_EARTH|ATTRIBUTE_WATER)~=0 then
 		return s.atktg(e,tp,nil,0,0,nil,0,0,0)
-	elseif attr&(ATTRIBUTE_WIND+ATTRIBUTE_LIGHT)~=0 then
+	elseif attr&(ATTRIBUTE_WIND|ATTRIBUTE_LIGHT)~=0 then
 		return s.distg(e,tp,nil,0,0,nil,0,0,0)
-	elseif attr&(ATTRIBUTE_DARK+ATTRIBUTE_FIRE)~=0 then
+	elseif attr&(ATTRIBUTE_DARK|ATTRIBUTE_FIRE)~=0 then
 		return s.tktg(e,tp,nil,0,0,nil,0,0,0)
 	else
 		return false
@@ -58,7 +58,7 @@ end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=eg:Filter(s.filter,nil,e,tp)
 	if #tg>0 then
-		for tc in aux.Next(tg) do
+		for tc in tg:Iter() do
 			tc:RegisterFlagEffect(id,RESET_CHAIN,0,1)
 		end
 		local g=e:GetLabelObject():GetLabelObject()
@@ -158,7 +158,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_IGNISTER,0x135,TYPES_TOKEN,0,0,1,RACE_CYBERSE,ATTRIBUTE_DARK) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_IGNISTER,SET_IGNISTER,TYPES_TOKEN,0,0,1,RACE_CYBERSE,ATTRIBUTE_DARK) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 end
@@ -167,7 +167,7 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	s.operation(c,tp,e:GetLabel())
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_IGNISTER,0x135,TYPES_TOKEN,0,0,1,RACE_CYBERSE,ATTRIBUTE_DARK) then
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_IGNISTER,SET_IGNISTER,TYPES_TOKEN,0,0,1,RACE_CYBERSE,ATTRIBUTE_DARK) then
 		local token=Duel.CreateToken(tp,TOKEN_IGNISTER)
 		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
 	end

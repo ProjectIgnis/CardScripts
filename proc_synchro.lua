@@ -82,9 +82,9 @@ function Synchro.Condition(f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
 				local g
 				local mgchk
 				if sub1 then
-					sub1=aux.OR(sub1,function(_c) return _c:IsHasEffect(30765615) end)
+					sub1=aux.OR(sub1,function(_c) return _c:IsHasEffect(30765615) and (not f1 or f1(_c,c,SUMMON_TYPE_SYNCHRO|MATERIAL_SYNCHRO,tp)) end)
 				else
-					sub1=function(_c) return _c:IsHasEffect(30765615) end
+					sub1=function(_c) return _c:IsHasEffect(30765615) and (not f1 or f1(_c,c,SUMMON_TYPE_SYNCHRO|MATERIAL_SYNCHRO,tp)) end
 				end
 				if mg then
 					dg=mg
@@ -525,9 +525,9 @@ function Synchro.Target(f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
 				local g
 				local dg
 				if sub1 then
-					sub1=aux.OR(sub1,function(_c) return _c:IsHasEffect(30765615) end)
+					sub1=aux.OR(sub1,function(_c) return _c:IsHasEffect(30765615) and (not f1 or f1(_c,c,SUMMON_TYPE_SYNCHRO|MATERIAL_SYNCHRO,tp)) end)
 				else
-					sub1=function(_c) return _c:IsHasEffect(30765615) end
+					sub1=function(_c) return _c:IsHasEffect(30765615) and (not f1 or f1(_c,c,SUMMON_TYPE_SYNCHRO|MATERIAL_SYNCHRO,tp)) end
 				end
 				if mg then
 					mgchk=true

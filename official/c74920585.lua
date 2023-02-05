@@ -1,5 +1,5 @@
 -- 壱世壊に奏でる哀唱
--- Tearalaments Salic
+-- Tearalaments Sulliek
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.distg)
 	e1:SetOperation(s.disop)
 	c:RegisterEffect(e1)
-	-- Add 1 "Tearalaments" monster to the hand
+	-- Add 1 "Tearlaments" monster to the hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
@@ -36,10 +36,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_VISAS_STARFROST}
-s.listed_series={0x182}
+s.listed_series={SET_TEARLAMENTS}
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_VISAS_STARFROST),tp,LOCATION_ONFIELD,0,1,nil)
-		or Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x182),tp,LOCATION_MZONE,0,1,nil)
+		or Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_TEARLAMENTS),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.tgfilter(c)
 	return c:IsType(TYPE_EFFECT) and c:IsNegatableMonster()
@@ -55,7 +55,7 @@ function s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if not (tc:IsFaceup() and tc:IsRelateToEffect(e)) or tc:IsImmuneToEffect(e) then return end
+	if not (tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsCanBeDisabledByEffect(e)) or tc:IsImmuneToEffect(e) then return end
 	-- Negate its effects
 	Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -76,7 +76,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x182) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_TEARLAMENTS) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

@@ -63,7 +63,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE|LOCATION_HAND,0,c)
 	if #g<2 then return end
 	local dg=aux.SelectUnselectGroup(g,e,tp,2,2,aux.ChkfMMZ(1),1,tp,HINTMSG_DESTROY)
-	if #dg==2 and Duel.Destroy(g,REASON_EFFECT)==2 and c:IsRelateToEffect(e) then
+	if #dg==2 and Duel.Destroy(dg,REASON_EFFECT)==2 and c:IsRelateToEffect(e) then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 		c:CompleteProcedure()
 	end

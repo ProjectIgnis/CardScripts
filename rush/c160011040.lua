@@ -23,7 +23,7 @@ function s.eqfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_GALAXY) and not c:IsMaximumModeSide()
 end
 function s.eqlimit(e,c)
-    return c:IsFaceup()
+	return c:IsFaceup()
 end
 function s.value(e,c)
 	local tp=e:GetHandlerPlayer()

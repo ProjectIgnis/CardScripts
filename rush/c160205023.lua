@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e3:SetValue(s.indval)
 	c:RegisterEffect(e3)
 end
+s.listed_names={CARD_CYBER_DRAGON}
 function s.otfilter(c)
 	return c:IsCode(CARD_CYBER_DRAGON) and c:IsFaceup()
 end

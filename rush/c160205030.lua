@@ -15,6 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_names={160205022,160205023}
 function s.costfilter(c)
 	return c:IsFaceup() and c:IsLevelAbove(5) and c:IsRace(RACE_MACHINE) and c:IsAbleToGraveAsCost()
 end

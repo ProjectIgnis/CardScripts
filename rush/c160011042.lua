@@ -28,7 +28,7 @@ function s.eqfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_DRAGON) and not c:IsMaximumModeSide()
 end
 function s.eqlimit(e,c)
-    return c:IsFaceup()
+	return c:IsFaceup()
 end
 function s.eftg(e,c)
 	return e:GetHandler():GetEquipTarget()==c

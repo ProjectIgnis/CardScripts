@@ -1,9 +1,9 @@
 --バック・トゥ・ザ☆フュージョン
---Back to The☆Fusion
+--Back to The Fusion
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)
-	--Add 1 monster from the grave to the hand
+	--Add 1 "Fusion" from the graveyard to the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={CARD_FUSION}
 function s.filter(c,g)
 	return g:IsExists(Card.IsCode,1,c,c:GetCode())
 end
@@ -36,7 +37,6 @@ function s.cfilter(c,code)
 	return c:IsType(TYPE_NORMAL) and c:IsMonster() and c:IsCode(code)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	--Effect
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local dg=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_GRAVE,0,1,1,nil)
@@ -47,6 +47,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.GetMatchingGroup(s.thfilter2,tp,LOCATION_GRAVE,0,nil,tp)
 		if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.BreakEffect()
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 			local g2=Duel.SelectMatchingCard(tp,s.thfilter2,tp,LOCATION_GRAVE,0,1,1,nil,tp)
 			if #g2>0 then
 				Duel.HintSelection(g2,true)

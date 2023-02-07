@@ -25,5 +25,5 @@ function s.eqfilter(c)
 	return c:IsFaceup() and not c:IsMaximumModeSide()
 end
 function s.eqlimit(e,c)
-    return c:IsFaceup()
+	return c:IsFaceup()
 end

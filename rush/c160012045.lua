@@ -22,7 +22,7 @@ function s.eqfilter(c)
 	return c:IsFaceup() and c:IsCode(160301001) and not c:IsMaximumModeSide()
 end
 function s.eqlimit(e,c)
-    return c:IsFaceup()
+	return c:IsFaceup()
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_EQUIP) and c:GetEquipTarget()

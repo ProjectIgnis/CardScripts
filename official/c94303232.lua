@@ -82,6 +82,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local dc=g:GetFirst()
 	if dc==tc then dc=g:GetNext() end
+	e:SetLabelObject(dc)
 	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		if dc:IsRelateToEffect(e) then
 			--tc:RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD,0,1)

@@ -38,28 +38,18 @@ function s.initial_effect(c)
 	e3:SetTarget(s.rmtg)
 	e3:SetOperation(s.rmop)
 	c:RegisterEffect(e3)
-	-- Count activations of "Kshatri-La Shangri-La"
-	aux.GlobalCheck(s,function()
-		local ge1=Effect.CreateEffect(c)
-		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge1:SetCode(EVENT_CHAIN_SOLVED)
-		ge1:SetOperation(s.checkop)
-		Duel.RegisterEffect(ge1,0)
-	end)
+	--Check if "Kashtira Shangri-lra" activated its effects this turn
+	Duel.AddCustomActivityCounter(id,ACTIVITY_CHAIN,function(re) return not re:GetHandler():IsCode(73542331) end)
 end
 s.listed_names={73542331}
 s.listed_series={SET_KASHTIRA}
-function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	if re:GetHandler():IsCode(73542331) then
-		Duel.RegisterFlagEffect(0,id,RESET_PHASE+PHASE_END,0,1)
-	end
-end
 function s.xyzfilter(c,tp,xyzc)
 	return c:IsFaceup() and c:IsSetCard(SET_KASHTIRA,xyzc,SUMMON_TYPE_XYZ,tp)
 end
 function s.xyzop(e,tp,chk)
-	if chk==0 then return Duel.GetFlagEffect(0,id)>0 and Duel.GetFlagEffect(tp,id+1)==0 end
-	Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE+PHASE_END,0,1)
+	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 and
+		(Duel.GetCustomActivityCount(id,tp,ACTIVITY_CHAIN)>0 or Duel.GetCustomActivityCount(id,1-tp,ACTIVITY_CHAIN)>0) end
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,EFFECT_FLAG_OATH,1)
 	return true
 end
 function s.ovcost(e,tp,eg,ep,ev,re,r,rp,chk)

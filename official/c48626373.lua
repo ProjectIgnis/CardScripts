@@ -1,5 +1,5 @@
 -- クシャトリラ・アライズハート
--- Kshatri-La Ariseheart
+-- Kashtira Arise-Heart
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
-	e3:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E+TIMING_MAIN_END)
+	e3:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E|TIMING_MAIN_END)
 	e3:SetCost(aux.dxmcostgen(3,3))
 	e3:SetTarget(s.rmtg)
 	e3:SetOperation(s.rmop)
@@ -42,7 +42,7 @@ function s.initial_effect(c)
 	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge1:SetCode(EVENT_CHAINING)
+		ge1:SetCode(EVENT_CHAIN_SOLVED)
 		ge1:SetOperation(s.checkop)
 		Duel.RegisterEffect(ge1,0)
 	end)

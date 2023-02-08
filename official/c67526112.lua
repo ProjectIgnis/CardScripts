@@ -13,7 +13,8 @@ function s.matfil(c,e,tp,chk)
 	return c:IsOnField() and c:IsDestructable(e) and not c:IsImmuneToEffect(e)
 end
 function s.extratg(e,tp,eg,ep,ev,re,r,rp,chk)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,tp,LOCATION_ONFIELD)
+	local dg=Duel.GetFusionMaterial(tp):Filter(Card.IsOnField,nil,e,tp,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,dg,2,tp,LOCATION_ONFIELD)
 end
 function s.extraop(e,tc,tp,sg)
 	local res=Duel.Destroy(sg,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)==#sg

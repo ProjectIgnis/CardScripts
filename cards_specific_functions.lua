@@ -38,7 +38,7 @@ end
 
 --return if Card c was special summoned by the effect of a "Nouvellez" monster
 function Card.IsNouvellezSummoned(c)
-	return c:GetSummonType()==SUMMON_TYPE_SPECIAL+181
+	return c:IsSummonType(SUMMON_BY_NOUVELLEZ)
 end
 
 --sp_summon condition for "Nouvellez" monsters

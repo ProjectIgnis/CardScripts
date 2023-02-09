@@ -105,6 +105,7 @@ TOKEN_OJAMA_DUO                     = 14470846
 
 --Specific Special Summons
 SUMMON_WITH_MONSTER_REBORN = 1010
+SUMMON_BY_NOUVELLEZ = 181
 
 --Commonly used Rush Cards
 CARD_AMALILITH            = 160428037

@@ -24,16 +24,27 @@ function Auxiliary.NecroValleyFilter(f)
 			end
 end
 
---sp_summon condition for gladiator beast monsters
+--sp_summon condition for "Gladiator Beast" monsters
 function Auxiliary.gbspcon(e,tp,eg,ep,ev,re,r,rp)
 	local st=e:GetHandler():GetSummonType()
 	return st>=(SUMMON_TYPE_SPECIAL+100) and st<(SUMMON_TYPE_SPECIAL+150)
 end
 
---sp_summon condition for evolsaur monsters
+--sp_summon condition for "Evolsaur" monsters
 function Auxiliary.evospcon(e,tp,eg,ep,ev,re,r,rp)
 	local st=e:GetHandler():GetSummonType()
 	return st>=(SUMMON_TYPE_SPECIAL+150) and st<(SUMMON_TYPE_SPECIAL+180)
+end
+
+--return if Card c was special summoned by the effect of a "Nouvellez" monster
+function Card.IsNouvellezSummoned(c)
+	local st=c:GetSummonType()
+	return st>=(SUMMON_TYPE_SPECIAL+180) and st<(SUMMON_TYPE_SPECIAL+190)
+end
+
+--sp_summon condition for "Nouvellez" monsters
+function Auxiliary.nouvspcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():IsNouvellezSummoned()
 end
 
 --check for Spirit Elimination

@@ -519,3 +519,5 @@ SET_MANADOME                      = 0x191
 SET_NEMURELIA                     = 0x192
 --Beta archetypes
 SET_GOLD_PRIDE                    = 0x28d
+SET_NOUVELLEZ                     = 0x28e
+SET_RECIPE                        = 0x28f

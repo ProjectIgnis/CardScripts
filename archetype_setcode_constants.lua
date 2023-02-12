@@ -521,3 +521,4 @@ SET_NEMURELIA                     = 0x192
 SET_GOLD_PRIDE                    = 0x28d
 SET_NOUVELLEZ                     = 0x28e
 SET_RECIPE                        = 0x28f
+SET_FAVORITE                      = 0x290

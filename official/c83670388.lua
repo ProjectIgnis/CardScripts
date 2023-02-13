@@ -65,7 +65,7 @@ function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:GetBaseAttack()>0 then
+	if tc:IsRelateToEffect(e) and tc:GetBaseAttack()>0 then
 		Duel.Damage(1-tp,tc:GetBaseAttack(),REASON_EFFECT)
 	end
 end

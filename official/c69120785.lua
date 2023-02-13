@@ -87,7 +87,7 @@ function s.rmvop(e,tp,eg,ep,ev,re,r,rp)
 		local c=e:GetHandler()
 		local fid=c:GetFieldID()
 		local og=Duel.GetOperatedGroup()
-		for oc in aux.Next(og) do
+		for oc in og:Iter() do
 			oc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,2,fid)
 		end
 		og:KeepAlive()

@@ -111,7 +111,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tg=eg:Filter(s.tgfilter,nil,tp)
 	if #tg>0 then
-		for tc in aux.Next(tg) do
+		for tc in tg:Iter() do
 			tc:RegisterFlagEffect(id,RESET_CHAIN,0,1)
 		end
 		local g=e:GetLabelObject():GetLabelObject()

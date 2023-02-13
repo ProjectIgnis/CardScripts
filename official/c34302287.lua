@@ -76,7 +76,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	if not tc or tc:IsFacedown() or not tc:IsRelateToEffect(e) then return end
 	local g=Duel.GetMatchingGroup(s.eqfilter,tp,LOCATION_SZONE,0,nil,tc)
 	local eq=g:GetFirst()
-	for eq in aux.Next(g) do
+	for eq in g:Iter() do
 		Duel.Equip(tp,eq,tc,true,true)
 	end
 	Duel.EquipComplete()

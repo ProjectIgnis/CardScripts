@@ -27,8 +27,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return r==REASON_RITUAL
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local rc=eg:GetFirst()
-	for eg in aux.Next(eg) do
+	for rc in eg:Iter() do
 		if rc:GetFlagEffect(id)==0 then
 			--cannot special summon
 			local e1=Effect.CreateEffect(e:GetHandler())

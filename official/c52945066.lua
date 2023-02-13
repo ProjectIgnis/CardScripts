@@ -59,7 +59,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 			local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
 			if #g>0 and Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil):IsExists(Card.IsLinkAbove,1,nil,2) then
 				Duel.BreakEffect()
-				for gc in aux.Next(g) do
+				for gc in g:Iter() do
 					--Your monsters are unaffected by opponent's card effects
 					local e3=Effect.CreateEffect(c)
 					e3:SetDescription(3110)

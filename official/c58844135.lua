@@ -77,7 +77,7 @@ end
 function s.gyop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)
 	g:Match(aux.NOT(Card.IsImmuneToEffect),nil,e)
-	for tc in aux.Next(g) do
+	for tc in g:Iter() do
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 		--Send to GY
 		local e1=Effect.CreateEffect(e:GetHandler())

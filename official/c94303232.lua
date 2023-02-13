@@ -37,8 +37,7 @@ function s.initial_effect(c)
 	end)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=eg:GetFirst()
-	for tc in aux.Next(eg) do
+	for tc in eg:Iter() do
 		if tc:IsPreviousPosition(POS_FACEUP_ATTACK) and tc:IsPosition(POS_FACEUP_DEFENSE) then
 			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 		end

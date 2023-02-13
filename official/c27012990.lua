@@ -64,7 +64,7 @@ function s.retcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject()
-	for c in aux.Next(g) do
+	for c in g:Iter() do
 		Duel.ReturnToField(c)
 	end
 	g:DeleteGroup()

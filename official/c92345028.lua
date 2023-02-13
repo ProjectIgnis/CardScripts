@@ -40,7 +40,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #g==0 then return end
 	ft=math.min(ft,Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and 1 or 2)
 	local sg=aux.SelectUnselectGroup(g,e,tp,1,ft,aux.dncheck,1,tp,HINTMSG_SPSUMMON)
-	for tc in aux.Next(sg) do
+	for tc in sg:Iter() do
 		if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE) then
 			--Negate their effects
 			local e1=Effect.CreateEffect(e:GetHandler())

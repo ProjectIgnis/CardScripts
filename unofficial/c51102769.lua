@@ -1,6 +1,6 @@
 --G.O.D.-Eyes Phantom Dragon
 --All-Eyes-Eyes Phantom Dragon (Manga)
---Made By Beetron-1 Beetletop
+--Made by Rundas found and adjusted by Beetron-1 Beetletop
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon

@@ -4,7 +4,7 @@ function s.initial_effect(c)
 	--negate attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_DAMAGE)
+	e1:SetCategory(CATEGORY_DAMAGE+CATEGORY_NEGATEATTACK)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_BE_BATTLE_TARGET)
 	e1:SetRange(LOCATION_HAND)
@@ -27,7 +27,9 @@ end
 function s.natg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetAttacker():IsOnField() end
 	local dam=Duel.GetAttacker():GetAttack()/2
+	local a=Duel.GetAttacker()
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,dam)
+	Duel.SetOperationInfo(0,CATEGORY_NEGATEATTACK,a,1,0,0)
 end
 function s.naop(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()

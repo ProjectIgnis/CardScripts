@@ -8,10 +8,12 @@ function s.initial_effect(c)
 	--Disable attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_NEGATEATTACK)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e1:SetCost(aux.dxmcostgen(1,1,nil))
+	e1:SetTarget(s.atktg)
 	e1:SetOperation(function() Duel.NegateAttack() end)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 	--Self destroy
@@ -26,6 +28,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.xyz_number=39
+function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	local a=Duel.GetAttacker()
+	Duel.SetOperationInfo(0,CATEGORY_NEGATEATTACK,a,1,0,0)
+end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return Duel.GetAttackTarget()==c and c:GetOverlayCount()==0

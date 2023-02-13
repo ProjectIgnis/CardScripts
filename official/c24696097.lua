@@ -29,6 +29,7 @@ function s.initial_effect(c)
 	--disable attack
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
+	e3:SetCategory(CATEGORY_NEGATEATTACK)
 	e3:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_FIELD)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetCode(EVENT_ATTACK_ANNOUNCE)
@@ -114,6 +115,8 @@ function s.datg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		and not e:GetHandler():IsStatus(STATUS_CHAINING) end
 	Duel.SetTargetCard(Duel.GetAttacker())
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,e:GetHandler(),1,0,0)
+	local a=Duel.GetAttacker()
+	Duel.SetOperationInfo(0,CATEGORY_NEGATEATTACK,a,1,0,0)
 end
 function s.daop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

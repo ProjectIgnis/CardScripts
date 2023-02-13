@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	--Negate attack and special summon 1 "Odd-Eyes" monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_NEGATEATTACK)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
@@ -39,6 +39,8 @@ end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_GRAVE)
+	local a=Duel.GetAttacker()
+	Duel.SetOperationInfo(0,CATEGORY_NEGATEATTACK,a,1,0,0)
 end
 function s.spfilter1(c,e,tp)
 	return c:IsSetCard(0x99) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

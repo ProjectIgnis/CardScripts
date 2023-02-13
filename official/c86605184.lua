@@ -17,15 +17,21 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--Negate attack, and if you do, opponent's monster's ATK becomes 0
 	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_ATKCHANGE)
+	e2:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_NEGATEATTACK)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(s.atkcon)
 	e2:SetCost(aux.bfgcost)
+	e2:SetTarget(s.atktg)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
+end
+function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	local a=Duel.GetAttacker()
+	Duel.SetOperationInfo(0,CATEGORY_NEGATEATTACK,a,1,0,0)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

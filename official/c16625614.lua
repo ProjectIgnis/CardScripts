@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e3:SetCategory(CATEGORY_COIN)
+	e3:SetCategory(CATEGORY_COIN+CATEGORY_NEGATEATTACK)
 	e3:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e3:SetRange(LOCATION_FZONE)
 	e3:SetCondition(s.condition)
@@ -36,6 +36,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_COIN,nil,0,tp,1)
+	Duel.SetOperationInfo(0,CATEGORY_NEGATEATTACK,Duel.GetAttacker(),1,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

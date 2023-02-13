@@ -19,17 +19,23 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--Change ATK to 0
 	local e3=Effect.CreateEffect(c)
-	e3:SetCategory(CATEGORY_ATKCHANGE)
+	e3:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_NEGATEATTACK)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
 	e3:SetCondition(s.atkcon)
+	e3:SetTarget(s.atktg)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
 end
 s.listed_names={CARD_KURIBOH}
 s.listed_series={0xa4}
+function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	local a=Duel.GetAttacker()
+	Duel.SetOperationInfo(0,CATEGORY_NEGATEATTACK,a,1,0,0)
+end
 function s.thcfilter(c,tp)
 	return c:IsPreviousSetCard(0xa4) and c:IsPreviousControler(tp)
 end

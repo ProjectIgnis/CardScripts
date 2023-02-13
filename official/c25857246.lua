@@ -13,11 +13,13 @@ function s.initial_effect(c)
 	--atk
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetCategory(CATEGORY_NEGATEATTACK)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(s.atkcon)
+	e2:SetTarget(s.atktg)
 	e2:SetCost(s.atkcost)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
@@ -49,6 +51,11 @@ function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
+end
+function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	local a=Duel.GetAttacker()
+	Duel.SetOperationInfo(0,CATEGORY_NEGATEATTACK,a,1,0,0)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateAttack() then

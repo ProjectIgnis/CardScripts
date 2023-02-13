@@ -22,11 +22,13 @@ function s.initial_effect(c)
 	--negate attack
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetCategory(CATEGORY_NEGATEATTACK)
 	e2:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_FIELD)
 	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(s.dacon)
+	e2:SetTarget(s.atktg)
 	e2:SetOperation(s.daop)
 	c:RegisterEffect(e2)
 	--special summon
@@ -45,6 +47,11 @@ function s.initial_effect(c)
 end
 s.synchro_tuner_required=1
 s.synchro_nt_required=1
+function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	local a=Duel.GetAttacker()
+	Duel.SetOperationInfo(0,CATEGORY_NEGATEATTACK,a,1,0,0)
+end
 function s.disfilter(c,tp)
 	return c:IsLocation(LOCATION_MZONE) and c:IsControler(tp)
 end

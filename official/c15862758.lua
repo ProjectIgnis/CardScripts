@@ -43,7 +43,7 @@ function s.initial_effect(c)
 	--negate attack
 	local e7=Effect.CreateEffect(c)
 	e7:SetDescription(aux.Stringid(id,0))
-	e7:SetCategory(CATEGORY_RECOVER)
+	e7:SetCategory(CATEGORY_RECOVER+CATEGORY_NEGATEATTACK)
 	e7:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e7:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e7:SetRange(LOCATION_MZONE)
@@ -80,6 +80,8 @@ end
 function s.natg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetAttacker():IsOnField() end
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,Duel.GetAttacker():GetAttack())
+	local a=Duel.GetAttacker()
+	Duel.SetOperationInfo(0,CATEGORY_NEGATEATTACK,a,1,0,0)
 end
 function s.naop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateAttack() then

@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	--Negate Attack + Pop
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
-	e2:SetCategory(CATEGORY_DESTROY)
+	e2:SetCategory(CATEGORY_DESTROY+CATEGORY_NEGATEATTACK)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
@@ -38,12 +38,14 @@ function s.spcon(e,c)
 end
 --Negate Attack + Pop
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	local a=Duel.GetAttacker()
 	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and chkc:IsControler(tp) end
 	if chk==0 then return Duel.GetAttacker():IsControler(1-tp)
 		and Duel.IsExistingTarget(nil,tp,LOCATION_ONFIELD,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local tc=Duel.SelectTarget(tp,nil,tp,LOCATION_ONFIELD,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tc,1,tp,LOCATION_ONFIELD)
+	Duel.SetOperationInfo(0,CATEGORY_NEGATEATTACK,a,1,0,0)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

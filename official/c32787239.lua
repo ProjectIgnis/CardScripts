@@ -15,10 +15,12 @@ function s.initial_effect(c)
 	--negate attack
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
+	e3:SetCategory(CATEGORY_NEGATEATTACK)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_BE_BATTLE_TARGET)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,id)
+	e3:SetTarget(s.atktg)
 	e3:SetCondition(s.condition)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
@@ -42,6 +44,11 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
 	return d and d:IsControler(tp) and d:IsFaceup() and d:IsType(TYPE_PENDULUM)
+end
+function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	local a=Duel.GetAttacker()
+	Duel.SetOperationInfo(0,CATEGORY_NEGATEATTACK,a,1,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateAttack()

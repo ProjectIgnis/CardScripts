@@ -40,11 +40,12 @@ function s.initial_effect(c)
 	--Action Spell! "Evasion"!
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,3))
-	e4:SetCategory(CATEGORY_TOHAND+CATEGORY_HANDES)
+	e4:SetCategory(CATEGORY_TOHAND+CATEGORY_HANDES+CATEGORY_NEGATEATTACK)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e4:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1)
+	e4:SetTarget(s.atktg2)
 	e4:SetOperation(s.atkop2)
 	c:RegisterEffect(e4)
 end
@@ -129,6 +130,10 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.thfilter2(c)
 	return c:IsFaceup() and c:IsSpell() and c:IsAbleToHand()
+end
+function s.atktg2(e,tp,eg,ep,ev,re,r,rp,chk)
+	local a=Duel.GetAttacker()
+	Duel.SetOperationInfo(0,CATEGORY_NEGATEATTACK,a,1,0,0)
 end
 function s.atkop2(e,tp,eg,ep,ev,re,r,rp)
 	local bc=Duel.GetAttackTarget()

@@ -7,6 +7,7 @@ function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--negate attack
 	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_NEGATEATTACK)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -14,6 +15,7 @@ function s.initial_effect(c)
 	e1:SetHintTiming(0,TIMING_BATTLE_PHASE)
 	e1:SetCondition(s.atkcon)
 	e1:SetCost(s.atkcost)
+	e1:SetTarget(s.atktg)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
 	--material
@@ -43,6 +45,11 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	if at and at:IsStatus(STATUS_ATTACK_CANCELED) then return false end
 	local c=e:GetHandler()
 	return c==Duel.GetAttackTarget() and c:GetOverlayCount()>0
+end
+function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	local a=Duel.GetAttacker()
+	Duel.SetOperationInfo(0,CATEGORY_NEGATEATTACK,a,1,0,0)
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetFlagEffect(id)==0 end

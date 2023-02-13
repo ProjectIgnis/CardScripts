@@ -48,11 +48,13 @@ function s.initial_effect(c)
 	--negate attack
 	local e6=Effect.CreateEffect(c)
 	e6:SetDescription(aux.Stringid(id,2))
+	e6:SetCategory(CATEGORY_NEGATEATTACK)
 	e6:SetType(EFFECT_TYPE_QUICK_O)
 	e6:SetRange(LOCATION_MZONE)
 	e6:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e6:SetCountLimit(1)
 	e6:SetCondition(s.negcon)
+	e6:SetTarget(s.atktg)
 	e6:SetCost(s.cost)
 	e6:SetOperation(s.negop)
 	c:RegisterEffect(e6)
@@ -102,6 +104,11 @@ function s.dsop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
+end
+function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	local a=Duel.GetAttacker()
+	Duel.SetOperationInfo(0,CATEGORY_NEGATEATTACK,a,1,0,0)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateAttack() then

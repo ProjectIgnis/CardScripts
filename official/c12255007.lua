@@ -16,12 +16,14 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--negate attack
 	local e2=Effect.CreateEffect(c)
+	e2:SetCategory(CATEGORY_NEGATEATTACK)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetRange(LOCATION_PZONE)
 	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e2:SetCountLimit(1)
 	e2:SetCondition(s.condition)
 	e2:SetCost(s.cost)
+	e2:SetTarget(s.atktg)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
@@ -36,6 +38,11 @@ function s.actcon(e)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
+end
+function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	local a=Duel.GetAttacker()
+	Duel.SetOperationInfo(0,CATEGORY_NEGATEATTACK,a,1,0,0)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,nil,0x9f) end

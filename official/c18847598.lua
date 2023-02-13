@@ -23,11 +23,13 @@ function s.initial_effect(c)
 	--Negate attack on a "Advanced Crystal Beast" monster
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
+	e3:SetCategory(CATEGORY_NEGATEATTACK)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_BE_BATTLE_TARGET)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
 	e3:SetCondition(s.attcond)
+	e3:SetTarget(s.atktg)
 	e3:SetOperation(s.attop)
 	c:RegisterEffect(e3)
 	--Negate the activation of an effect that targets "Advanced Dark" or "Advanced Crystal Beast" cards
@@ -46,6 +48,11 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_ADVANCED_DARK}
 s.listed_series={0x5034}
+function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	local a=Duel.GetAttacker()
+	Duel.SetOperationInfo(0,CATEGORY_NEGATEATTACK,a,1,0,0)
+end
 function s.tgcon(e)
 	return not Duel.IsEnvironment(CARD_ADVANCED_DARK)
 end

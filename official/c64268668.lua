@@ -5,7 +5,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_QUICK_O)
-	e1:SetCategory(CATEGORY_ATKCHANGE)
+	e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_NEGATEATTACK)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetHintTiming(TIMING_BATTLE_PHASE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -38,6 +38,8 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	end
 	if a:IsControler(tp) then return Duel.SetTargetCard(a)
 	else return Duel.SetTargetCard(d) end
+	local a=Duel.GetAttacker()
+	Duel.SetOperationInfo(0,CATEGORY_NEGATEATTACK,a,1,0,0)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

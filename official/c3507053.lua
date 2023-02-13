@@ -37,11 +37,13 @@ function s.initial_effect(c)
 	--Negate attack
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
+	e4:SetCategory(CATEGORY_NEGATEATTACK)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e4:SetCode(EVENT_BE_BATTLE_TARGET)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1)
 	e4:SetCondition(aux.NOT(s.colinkcon))
+	e4:SetTarget(s.atktg)
 	e4:SetOperation(function() Duel.NegateAttack() end)
 	c:RegisterEffect(e4)
 end
@@ -58,6 +60,11 @@ function s.mvcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.mvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_APPLIANCER),tp,LOCATION_MMZONE,0,1,e:GetHandler()) end
+end
+function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	local a=Duel.GetAttacker()
+	Duel.SetOperationInfo(0,CATEGORY_NEGATEATTACK,a,1,0,0)
 end
 function s.mvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

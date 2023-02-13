@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	--Negate the attack and inflict damage
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
-	e2:SetCategory(CATEGORY_DAMAGE)
+	e2:SetCategory(CATEGORY_DAMAGE+CATEGORY_NEGATEATTACK)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e2:SetRange(LOCATION_MZONE)
@@ -71,6 +71,8 @@ function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local _,bc1=Duel.GetBattleMonster(tp)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,bc1:GetBaseAttack()/2)
+	local a=Duel.GetAttacker()
+	Duel.SetOperationInfo(0,CATEGORY_NEGATEATTACK,a,1,0,0)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.NegateAttack() then return end

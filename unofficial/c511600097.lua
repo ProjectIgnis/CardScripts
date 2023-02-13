@@ -7,6 +7,7 @@ function s.initial_effect(c)
 	Pendulum.AddProcedure(c)
 	--peffect
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_REMOVE+CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_TO_DECK)
@@ -49,9 +50,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)>0
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) then
 		local og=Duel.GetOperatedGroup()
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
 		local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil):GetFirst()
-		local c=e:GetHandler()
 		if tc then
+			local c=e:GetHandler()
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)

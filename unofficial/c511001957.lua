@@ -1,5 +1,5 @@
---閃珖竜 スターダスト (Anime)
---Stardust Spark Dragon (Anime)
+--閃珖竜 スターダスト (Manga)
+--Stardust Spark Dragon (Manga)
 --updated by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
 	e1:SetTarget(s.reptg)
-	e1:SetValue(s.repval)
+	e1:SetValue(function(e,tc) return tc==e:GetLabelObject() end)
 	e1:SetOperation(s.repop)
 	c:RegisterEffect(e1)
 end
@@ -21,22 +21,21 @@ function s.repfilter(c)
 	return c:IsOnField() and not c:IsReason(REASON_REPLACE)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	local g=eg:Filter(s.repfilter,nil)
-	if chk==0 then return #g>0 end
-	if Duel.SelectEffectYesNo(tp,c) then
-		local tg=g:Select(tp,1,1,nil)
-		local tc=tg:GetFirst()
-		if tc then
-			Duel.Hint(HINT_CARD,0,id)
-			Duel.HintSelection(tg)
-			e:SetLabelObject(tc)
+	if chk==0 then return eg:IsExists(s.repfilter,1,nil) end
+	if Duel.SelectEffectYesNo(tp,e:GetHandler(),96) then
+		local g=eg:Filter(s.repfilter,nil)
+		local tc
+		if #g==1 then
+			tc=g:GetFirst()
+		else
+			Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))
+			tc=g:Select(tp,1,1,nil):GetFirst()
 		end
+		Duel.Hint(HINT_CARD,0,id)
+		Duel.HintSelection(tc)
+		e:SetLabelObject(tc)
 		return true
 	else return false end
-end
-function s.repval(e,c)
-	return c==e:GetLabelObject() and c:IsOnField()
 end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())

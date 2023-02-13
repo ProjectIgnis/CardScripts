@@ -63,7 +63,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 		e0:SetType(EFFECT_TYPE_SINGLE)
 		e0:SetCode(EFFECT_TRAP_ACT_IN_SET_TURN)
 		e0:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
-		e0:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e0:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e0:SetDescription(aux.Stringid(id,0))
 		tc:RegisterEffect(e0)
 	end

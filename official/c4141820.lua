@@ -39,7 +39,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetLabel(ep)
 			e1:SetCondition(s.hdcon)
 			e1:SetOperation(s.hdop)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			rc:RegisterEffect(e1,true)
 			rc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
 		end

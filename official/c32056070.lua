@@ -82,15 +82,15 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	local attr=sc:GetAttribute()
 	e:SetLabel(attr)
-	if attr&(ATTRIBUTE_EARTH+ATTRIBUTE_WATER)~=0 then
+	if attr&(ATTRIBUTE_EARTH|ATTRIBUTE_WATER)~=0 then
 		e:SetCategory(CATEGORY_ATKCHANGE)
 		e:SetOperation(s.atkop)
 		s.atktg(e,tp,eg,ep,ev,re,r,rp,1)
-	elseif attr&(ATTRIBUTE_WIND+ATTRIBUTE_LIGHT)~=0 then
+	elseif attr&(ATTRIBUTE_WIND|ATTRIBUTE_LIGHT)~=0 then
 		e:SetCategory(CATEGORY_DISABLE)
 		e:SetOperation(s.disop)
 		s.distg(e,tp,eg,ep,ev,re,r,rp,1)
-	elseif attr&(ATTRIBUTE_DARK+ATTRIBUTE_FIRE)~=0 then
+	elseif attr&(ATTRIBUTE_DARK|ATTRIBUTE_FIRE)~=0 then
 		e:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 		e:SetOperation(s.tkop)
 		s.tktg(e,tp,eg,ep,ev,re,r,rp,1)

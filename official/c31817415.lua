@@ -68,7 +68,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCost(aux.selfreleasecost)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e1)
 end
 function s.spfilter(c,e,tp,mc)

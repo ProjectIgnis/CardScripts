@@ -35,7 +35,7 @@ function s.arcanareg(c,coin)
 	e1:SetCode(EVENT_CHAIN_SOLVED)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetOperation(s.speop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e1)
 	Arcana.RegisterCoinResult(c,coin)
 end

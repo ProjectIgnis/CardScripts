@@ -36,7 +36,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 			e1:SetCode(EVENT_BATTLE_DESTROYING)
 			e1:SetOperation(s.drawop)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			rc:RegisterEffect(e1,true)
 			rc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
 		end

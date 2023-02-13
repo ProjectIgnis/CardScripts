@@ -44,7 +44,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local e0=Effect.CreateEffect(e:GetHandler())
 		e0:SetType(EFFECT_TYPE_SINGLE)
 		e0:SetCode(id)
-		e0:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e0:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e0:SetValue(0)
 		tc:RegisterEffect(e0)
 		--win
@@ -55,7 +55,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetOperation(s.winop)
 		e1:SetOwnerPlayer(tp)
 		e1:SetLabelObject(e0)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 end

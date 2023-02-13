@@ -31,7 +31,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_EVIL_EYE}
 function s.thfilter(c)
-    return c:IsSetCard(SET_EVIL_EYE) and c:IsSpell() and c:IsType(TYPE_EQUIP) and c:IsAbleToHand()
+    return c:IsSetCard(SET_EVIL_EYE) and c:IsEquipSpell() and c:IsAbleToHand()
 end
 function s.tgfilter(c)
     return c:IsSetCard(SET_EVIL_EYE) and c:IsAbleToGraveAsCost()
@@ -84,7 +84,7 @@ function s.eqtcfilter(c,ec)
 	return c:IsSetCard(SET_EVIL_EYE) and c:IsLinkMonster() and c:IsFaceup() and ec:CheckEquipTarget(c)
 end
 function s.eqfilter(c,tp)
-	return c:IsSetCard(SET_EVIL_EYE) and c:IsSpell() and c:IsType(TYPE_EQUIP) and c:CheckUniqueOnField(tp)
+	return c:IsSetCard(SET_EVIL_EYE) and c:IsEquipSpell() and c:CheckUniqueOnField(tp)
 		and Duel.IsExistingMatchingCard(s.eqtcfilter,tp,LOCATION_MZONE,0,1,nil,c)
 end
 function s.eqptg(e,tp,eg,ep,ev,re,r,rp,chk)

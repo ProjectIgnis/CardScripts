@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x10af}
+s.listed_series={SET_DDD}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(Card.IsLocation,1,nil,LOCATION_EXTRA)
 end
@@ -33,7 +33,7 @@ function s.pfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_PENDULUM)
 end
 function s.filter(c)
-	return c:IsSetCard(0x10af) and c:IsFaceup()
+	return c:IsSetCard(SET_DDD) and c:IsFaceup()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetMatchingGroupCount(s.pfilter,tp,0,LOCATION_EXTRA,nil)
@@ -56,7 +56,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-			e1:SetValue(#og*100)
+			e1:SetValue(#og*200)
 			tc:RegisterEffect(e1)
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_SINGLE)

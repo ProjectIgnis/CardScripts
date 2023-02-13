@@ -10,7 +10,7 @@ function s.fcheck(tp,sg,fc)
 end
 function s.fextra(e,tp,mg)
 	if Duel.GetFieldGroupCount(tp,LOCATION_EMZONE,0)==0 and not Duel.IsPlayerAffectedByEffect(tp,69832741) then
-		local eg=Duel.GetMatchingGroup(s.exfilter0,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
+		local eg=Duel.GetMatchingGroup(s.exfilter0,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil)
 		if #eg>0 then
 			return eg,s.fcheck
 		end

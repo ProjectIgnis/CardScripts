@@ -34,7 +34,7 @@ function s.setfilter(c)
 	return c:IsSetCard(SET_LABRYNTH) and c:IsSpellTrap() and c:IsSSetable()
 end
 function s.setcostfilter(c,tp)
-	return c:IsDiscardable() and Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,c)
+	return c:IsDiscardable() and Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,c)
 end
 function s.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -44,7 +44,7 @@ function s.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
-	local g=Duel.SelectMatchingCard(tp,s.setfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.setfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,1,nil)
 	if #g>0 then
 		Duel.SSet(tp,g)
 	end

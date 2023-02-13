@@ -42,7 +42,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local pg=aux.GetMustBeMaterialGroup(tp,Group.CreateGroup(),tp,nil,nil,REASON_SYNCHRO)
-	local g=Duel.GetMatchingGroup(s.tdfilter,tp,LOCATION_REMOVED+LOCATION_GRAVE,0,nil)
+	local g=Duel.GetMatchingGroup(s.tdfilter,tp,LOCATION_REMOVED|LOCATION_GRAVE,0,nil)
 	if chk==0 then return #pg<=0 and aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0) end
 	local dg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_TODECK)
 	e:SetLabel(dg:GetSum(Card.GetLevel))

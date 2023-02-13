@@ -59,11 +59,11 @@ function s.spfilter(c,e,tp,code)
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_REMOVED+LOCATION_GRAVE,0,1,nil,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_REMOVED|LOCATION_GRAVE,0,1,nil,tp) end
 end
 	--Place 1 "Dream Mirror of Joy" or "Dream Mirror of Terror" from banished/GY into field zone
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local ag=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_REMOVED+LOCATION_GRAVE,0,1,1,nil,tp)
+	local ag=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_REMOVED|LOCATION_GRAVE,0,1,1,nil,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 	if #ag>0 then
 		local ac=ag:GetFirst()

@@ -104,7 +104,7 @@ end
 	--If was sent to GY because equipped monster left the field
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetPreviousEquipTarget()
-	return e:GetHandler():IsReason(REASON_LOST_TARGET) and not ec:IsLocation(LOCATION_ONFIELD+LOCATION_OVERLAY)
+	return e:GetHandler():IsReason(REASON_LOST_TARGET) and not ec:IsLocation(LOCATION_ONFIELD|LOCATION_OVERLAY)
 end
 	--Activation legality
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)

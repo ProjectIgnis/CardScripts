@@ -39,7 +39,7 @@ function s.atkfilter(c,g)
 	return c:IsFaceup() and (not g:IsContains(c) or #g>1)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
+	local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.atkfilter(chkc,g) end
 	if chk==0 then return #g>0 and Duel.IsExistingTarget(s.atkfilter,tp,LOCATION_MZONE,0,1,nil,g) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
@@ -47,7 +47,7 @@ function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,tc)
+	local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,tc)
 	if #g>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		local sg=g:Select(tp,1,5,tc)

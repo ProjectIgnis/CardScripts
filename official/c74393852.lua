@@ -60,13 +60,13 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ep==1-tp and e:GetHandler():GetOverlayCount()>=12
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND+LOCATION_ONFIELD)
+	local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND|LOCATION_ONFIELD)
 	if chk==0 then return #g>0 end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,#g,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND+LOCATION_ONFIELD)
+	local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND|LOCATION_ONFIELD)
 	if #g>0 and Duel.SendtoGrave(g,REASON_EFFECT)>0 then
 		local og=Duel.GetOperatedGroup()
 		if og:FilterCount(Card.IsLocation,0,LOCATION_GRAVE)==0 then return end

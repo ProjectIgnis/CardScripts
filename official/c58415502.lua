@@ -40,18 +40,18 @@ function s.tgrescon(summg)
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		local summg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_EXTRA+LOCATION_GRAVE,0,nil,e,tp)
+		local summg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND|LOCATION_DECK|LOCATION_EXTRA|LOCATION_GRAVE,0,nil,e,tp)
 		if #summg<1 then return false end
-		local g=Duel.GetMatchingGroup(s.tgfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,nil)
+		local g=Duel.GetMatchingGroup(s.tgfilter,tp,LOCATION_MZONE|LOCATION_HAND,0,nil)
 		return #g>2 and aux.SelectUnselectGroup(g,e,tp,3,3,s.tgrescon(summg),0)
 	end
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,3,tp,LOCATION_MZONE+LOCATION_HAND)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_EXTRA+LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,3,tp,LOCATION_MZONE|LOCATION_HAND)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_DECK|LOCATION_EXTRA|LOCATION_GRAVE)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
-	local summg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND+LOCATION_DECK+LOCATION_EXTRA+LOCATION_GRAVE,0,nil,e,tp)
+	local summg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND|LOCATION_DECK|LOCATION_EXTRA|LOCATION_GRAVE,0,nil,e,tp)
 	if #summg<1 then return end
-	local g=Duel.GetMatchingGroup(s.tgfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,nil)
+	local g=Duel.GetMatchingGroup(s.tgfilter,tp,LOCATION_MZONE|LOCATION_HAND,0,nil)
 	if #g<3 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	g=aux.SelectUnselectGroup(g,e,tp,3,3,s.tgrescon(summg),1,tp,HINTMSG_TOGRAVE)

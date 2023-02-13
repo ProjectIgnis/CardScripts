@@ -29,7 +29,7 @@ function s.initial_effect(c)
 end
 s.listed_names={13331639}
 s.listed_series={SET_PENDULUM_DRAGON,SET_XYZ_DRAGON,SET_SYNCHRO_DRAGON,SET_FUSION_DRAGON}
-local LOCATION_HDEG=LOCATION_HAND+LOCATION_DECK+LOCATION_EXTRA+LOCATION_GRAVE
+local LOCATION_HDEG=LOCATION_HAND|LOCATION_DECK|LOCATION_EXTRA|LOCATION_GRAVE
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.PayLPCost(tp,math.floor(Duel.GetLP(tp)/2))

@@ -61,11 +61,11 @@ end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=e:GetHandlerPlayer()
-	local rg=Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_EXTRA,0,c,POS_FACEDOWN)
+	local rg=Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND|LOCATION_ONFIELD|LOCATION_EXTRA,0,c,POS_FACEDOWN)
 	return Duel.GetMZoneCount(tp,rg)>0 and #rg>4 and aux.SelectUnselectGroup(rg,e,tp,5,#rg,aux.ChkfMMZ(1),0)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,c)
-	local rg=Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_EXTRA,0,c,POS_FACEDOWN)
+	local rg=Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND|LOCATION_ONFIELD|LOCATION_EXTRA,0,c,POS_FACEDOWN)
 	local g1=Group.CreateGroup()
 	local g2=Group.CreateGroup()
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
@@ -74,7 +74,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,c)
 		g1=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,LOCATION_MMZONE,0,1,1,true,c,POS_FACEDOWN)
 		if g1 and #g1>0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-			g2=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_EXTRA,0,4,#rg,true,Group.FromCards(c,g1:GetFirst()),POS_FACEDOWN)
+			g2=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND|LOCATION_ONFIELD|LOCATION_EXTRA,0,4,#rg,true,Group.FromCards(c,g1:GetFirst()),POS_FACEDOWN)
 			if g2 and #g2>0 then
 				g1:Merge(g2)
 				g1:KeepAlive()
@@ -83,7 +83,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,c)
 			end
 		end
 	else
-		g1=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_EXTRA,0,5,#rg,true,c,POS_FACEDOWN)
+		g1=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND|LOCATION_ONFIELD|LOCATION_EXTRA,0,5,#rg,true,c,POS_FACEDOWN)
 		if g1 and #g1>0 then
 			g1:KeepAlive()
 			e:SetLabelObject(g1)

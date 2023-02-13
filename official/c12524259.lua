@@ -17,7 +17,7 @@ end
 function s.tgfilter(c,e,tp,chk)
 	return c:IsRace(RACE_MACHINE)
 		and c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsControler(tp) and c:IsCanBeEffectTarget(e)
-		and (chk or Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil,c))
+		and (chk or Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_DECK|LOCATION_HAND,0,1,nil,c))
 end
 function s.cfilter(c,ec)
 	return c:IsRace(RACE_MACHINE) and c:IsType(TYPE_UNION) 
@@ -31,13 +31,13 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return ft>0 and Duel.IsExistingTarget(s.tgfilter,tp,LOCATION_MZONE,0,1,c,e,tp,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,s.tgfilter,tp,LOCATION_MZONE,0,1,1,c,e,tp,nil)
-	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,tp,LOCATION_DECK+LOCATION_HAND)
+	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,tp,LOCATION_DECK|LOCATION_HAND)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsControler(tp) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-		local sg=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,tc)
+		local sg=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_DECK|LOCATION_HAND,0,1,1,nil,tc)
 		local ec=sg:GetFirst()
 		if ec and aux.CheckUnionEquip(ec,tc) and Duel.Equip(tp,ec,tc) then
 			aux.SetUnionState(ec)

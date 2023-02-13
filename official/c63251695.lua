@@ -53,14 +53,14 @@ function s.effcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=e:GetHandler():CanChainAttack(0,true)
-	local b2=Duel.IsExistingMatchingCard(Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD+LOCATION_HAND,1,nil)
+	local b2=Duel.IsExistingMatchingCard(Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD|LOCATION_HAND,1,nil)
 	if chk==0 then return b1 or b2 end
 	local opt=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,1)},
 		{b2,aux.Stringid(id,2)})
 	e:SetLabel(opt)
 	if opt==2 then
-		Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,1-tp,LOCATION_ONFIELD+LOCATION_HAND)
+		Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,1-tp,LOCATION_ONFIELD|LOCATION_HAND)
 	end
 end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)

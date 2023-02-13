@@ -40,7 +40,7 @@ function s.lvfilter(c)
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then 
-		return Duel.IsExistingMatchingCard(s.lvfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil)
+		return Duel.IsExistingMatchingCard(s.lvfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,nil)
 			and Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil,REASON_EFFECT+REASON_DISCARD)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,tp,1)
@@ -48,7 +48,7 @@ end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
-	local g=Duel.SelectMatchingCard(tp,s.lvfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.lvfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,1,nil)
 	if #g>0 then
 		local tc=g:GetFirst()
 		if tc:IsLocation(LOCATION_MZONE) then

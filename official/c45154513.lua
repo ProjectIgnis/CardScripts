@@ -47,7 +47,7 @@ function s.repop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check if it was in hand/GY
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsPreviousLocation(LOCATION_HAND+LOCATION_GRAVE)
+	return e:GetHandler():IsPreviousLocation(LOCATION_HAND|LOCATION_GRAVE)
 end
 	--Activation legality
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

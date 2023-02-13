@@ -47,9 +47,9 @@ function s.drcfilter(c)
 		and c:IsAbleToRemoveAsCost()
 end
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.drcfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.drcfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.drcfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.drcfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)

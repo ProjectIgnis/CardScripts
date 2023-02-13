@@ -96,9 +96,9 @@ function s.costfilter(c,e,tp)
 	return c:IsLinkMonster() and c:IsAbleToRemoveAsCost() and s.attr_list[tp]&attr==0
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,e,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil,e,tp)
 	e:SetLabel(g:GetFirst():GetAttribute())
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end

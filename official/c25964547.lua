@@ -19,11 +19,11 @@ function s.filter(c,tp)
 	return c:IsFieldSpell() and c:IsCode(CARD_DREAM_MIRROR_JOY,CARD_DREAM_MIRROR_TERROR)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK+LOCATION_HAND,0,nil)
+	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK|LOCATION_HAND,0,nil)
 	if chk==0 then return g:GetClassCount(Card.GetCode)>1 end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK+LOCATION_HAND,0,nil)
+	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK|LOCATION_HAND,0,nil)
 	if g:GetClassCount(Card.GetCode)<2 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))
 	local tg1=g:Select(tp,1,1,nil)

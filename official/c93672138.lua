@@ -71,11 +71,11 @@ function s.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	if chk==0 then
 		return #g>0 and aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,0)
-			and Duel.IsExistingMatchingCard(s.tgcostfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_MZONE,0,1,nil,#g)
+			and Duel.IsExistingMatchingCard(s.tgcostfilter,tp,LOCATION_HAND|LOCATION_DECK|LOCATION_MZONE,0,1,nil,#g)
 	end
 	aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,1)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local cg=Duel.SelectMatchingCard(tp,s.tgcostfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_MZONE,0,1,1,nil,#g)
+	local cg=Duel.SelectMatchingCard(tp,s.tgcostfilter,tp,LOCATION_HAND|LOCATION_DECK|LOCATION_MZONE,0,1,1,nil,#g)
 	Duel.SendtoGrave(cg,REASON_COST)
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)

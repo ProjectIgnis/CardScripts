@@ -40,7 +40,7 @@ function s.arcanareg(c,coin)
 	Arcana.RegisterCoinResult(c,coin)
 end
 function s.speop(e,tp,eg,ep,ev,re,r,rp)
-	if not re:IsActiveType(TYPE_SPELL) or not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
+	if not re:IsSpellEffect() or not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
 	local c=e:GetHandler()
 	local val=Arcana.GetCoinResult(c)
 	if val==COIN_HEADS then

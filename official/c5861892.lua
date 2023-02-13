@@ -116,7 +116,7 @@ function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	if not g or not g:IsContains(c) then return false end
-	return Arcana.GetCoinResult(c)==COIN_TAILS and (re:IsHasType(EFFECT_TYPE_ACTIVATE) or re:IsActiveType(TYPE_MONSTER))
+	return Arcana.GetCoinResult(c)==COIN_TAILS and (re:IsHasType(EFFECT_TYPE_ACTIVATE) or re:IsMonsterEffect())
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

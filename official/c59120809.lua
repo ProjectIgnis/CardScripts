@@ -44,7 +44,7 @@ end
 s.listed_series={SET_SCARECLAW}
 function s.immval(e,te)
 	local tc=te:GetHandler()
-	return te:IsActiveType(TYPE_MONSTER) and te:IsActivated() and te:GetActivateLocation()==LOCATION_MZONE
+	return te:IsMonsterEffect() and te:IsActivated() and te:GetActivateLocation()==LOCATION_MZONE
 		and ((tc:IsDefensePos() and tc:IsRelateToEffect(te)) or (tc:IsPreviousPosition(POS_DEFENSE) and not tc:IsRelateToEffect(te)))
 end
 function s.spfilter(c,e,tp)

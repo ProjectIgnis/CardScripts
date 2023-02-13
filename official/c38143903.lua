@@ -23,7 +23,7 @@ function s.initial_effect(c)
 end
 s.toss_coin=true
 function s.con(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
+	return re:IsMonsterEffect() and Duel.IsChainNegatable(ev)
 		and re:GetActivateLocation()&LOCATION_ONFIELD>0
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)

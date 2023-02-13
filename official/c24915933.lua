@@ -51,7 +51,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local trig_p=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_PLAYER)
-	return re and re:IsActivated() and re:IsActiveType(TYPE_MONSTER) and trig_p==1-tp
+	return re and re:IsActivated() and re:IsMonsterEffect() and trig_p==1-tp
 end
 function s.spfilter(c,e,tp,ec)
 	if not c:IsCanBeSpecialSummoned(e,0,tp,false,false) then return end

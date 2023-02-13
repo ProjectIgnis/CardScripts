@@ -79,7 +79,7 @@ function s.distg(e,c)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local cseq=e:GetLabel()
-	if not re:IsActiveType(TYPE_SPELL+TYPE_TRAP) then return end
+	if not re:IsSpellTrapEffect() then return end
 	local rc=re:GetHandler()
 	if rc:GetFlagEffect(id)>0 then return end
 	local p,loc,seq=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_CONTROLER,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_SEQUENCE)

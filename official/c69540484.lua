@@ -69,7 +69,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==1-tp and re:IsActiveType(TYPE_SPELL)
+	return rp==1-tp and re:IsSpellEffect()
 end
 function s.rmfilter(c,tp)
 	return c:IsAbleToRemove(tp,POS_FACEDOWN) and aux.SpElimFilter(c)

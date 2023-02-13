@@ -44,10 +44,10 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_TRAPTRIX}
 function s.immval(e,te)
-	if te:IsActiveType(TYPE_TRAP) then return true end
+	if te:IsTrapEffect() then return true end
 	local tc=te:GetOwner()
 	local c=e:GetHandler()
-	return c~=tc and te:IsActivated() and te:IsActiveType(TYPE_MONSTER)
+	return c~=tc and te:IsActivated() and te:IsMonsterEffect()
 		and c:GetOverlayGroup():IsExists(Card.IsRace,1,nil,tc:GetRace())
 end
 function s.thfilter(c)

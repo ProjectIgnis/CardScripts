@@ -70,16 +70,16 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.aclimit1(e,tp,eg,ep,ev,re,r,rp)
-	if ep~=tp or not re:IsHasType(EFFECT_TYPE_ACTIVATE) or not re:IsActiveType(TYPE_TRAP) then return end
+	if ep~=tp or not re:IsHasType(EFFECT_TYPE_ACTIVATE) or not re:IsTrapEffect() then return end
 	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 end
 function s.aclimit2(e,tp,eg,ep,ev,re,r,rp)
-	if ep~=tp or not re:IsHasType(EFFECT_TYPE_ACTIVATE) or not re:IsActiveType(TYPE_TRAP) then return end
+	if ep~=tp or not re:IsHasType(EFFECT_TYPE_ACTIVATE) or not re:IsTrapEffect() then return end
 	Duel.ResetFlagEffect(tp,id)
 end
 function s.econ(e)
 	return Duel.GetFlagEffect(e:GetHandlerPlayer(),id)~=0
 end
 function s.elimit(e,te,tp)
-	return te:IsHasType(EFFECT_TYPE_ACTIVATE) and te:IsActiveType(TYPE_TRAP)
+	return te:IsHasType(EFFECT_TYPE_ACTIVATE) and te:IsTrapEffect()
 end

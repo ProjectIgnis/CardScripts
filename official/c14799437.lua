@@ -43,7 +43,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
-		and re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and Duel.IsChainNegatable(ev)
+		and re:IsSpellTrapEffect() and Duel.IsChainNegatable(ev)
 end
 function s.cfilter(c)
 	return not c:IsStatus(STATUS_BATTLE_DESTROYED)

@@ -79,7 +79,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummonComplete()
 end
 function s.immcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==1-tp and re:IsActiveType(TYPE_MONSTER)
+	return rp==1-tp and re:IsMonsterEffect()
 end
 function s.immfilter(c)
 	return c:IsRace(RACE_CYBERSE) and c:IsLinkMonster() and c:IsFaceup()

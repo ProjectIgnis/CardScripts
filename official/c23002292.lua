@@ -23,7 +23,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and re:IsHasType(EFFECT_TYPE_ACTIVATE)
-		and re:IsActiveType(TYPE_TRAP) and Duel.IsChainNegatable(ev)
+		and re:IsTrapEffect() and Duel.IsChainNegatable(ev)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then e:GetLabelObject():SetLabel(0) return true end

@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.settg)
 	e1:SetOperation(s.setop)
 	c:RegisterEffect(e1)
-	Duel.AddCustomActivityCounter(id,ACTIVITY_CHAIN,function(re) return not re:IsActiveType(TYPE_MONSTER) end)
+	Duel.AddCustomActivityCounter(id,ACTIVITY_CHAIN,function(re) return not re:IsMonsterEffect() end)
 end
 s.listed_names={id}
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)

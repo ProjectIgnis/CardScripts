@@ -33,7 +33,7 @@ s.material={CARD_DARK_MAGICIAN,CARD_DARK_MAGICIAN_GIRL}
 s.material_setcode={0x10a2,0x20a2,0x30a2}
 s.listed_names={CARD_DARK_MAGICIAN,CARD_DARK_MAGICIAN_GIRL}
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+	return re:IsSpellTrapEffect()
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end

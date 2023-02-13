@@ -31,7 +31,7 @@ end
 s.listed_names={34230233}
 function s.chcon(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	return rp==1-tp and (re:IsActiveType(TYPE_MONSTER) or ((rc:GetType()==TYPE_SPELL or rc:GetType()==TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE)))
+	return rp==1-tp and (re:IsMonsterEffect() or ((rc:IsNormalSpell() or rc:IsNormalTrap()) and re:IsHasType(EFFECT_TYPE_ACTIVATE)))
 end
 function s.chtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>0 end

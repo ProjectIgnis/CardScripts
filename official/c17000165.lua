@@ -65,7 +65,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.ctlcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==1-tp and re:IsActiveType(TYPE_MONSTER)
+	return rp==1-tp and re:IsMonsterEffect()
 end
 function s.ctlfilter(c,tp)
 	return c:IsFaceup() and c:IsControlerCanBeChanged() and c:IsAttack(0) and Duel.GetMZoneCount(1-tp,c,tp)>0

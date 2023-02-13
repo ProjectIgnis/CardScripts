@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_IMMUNE_EFFECT)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK) end)
-	e1:SetValue(function(_,te) return te:IsActiveType(TYPE_TRAP) end)
+	e1:SetValue(function(_,te) return te:IsTrapEffect() end)
 	c:RegisterEffect(e1)
 	-- "Traptrix" monsters gain 1000 ATK
 	local e2=Effect.CreateEffect(c)

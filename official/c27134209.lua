@@ -80,7 +80,7 @@ function s.chainop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.chainlm(e,ep,tp)
-	return ep==tp or not e:IsActiveType(TYPE_MONSTER)
+	return ep==tp or not e:IsMonsterEffect()
 end
 function s.desfilter(c)
 	return c:IsFaceup() and not c:IsRace(RACE_PLANT|RACE_INSECT)

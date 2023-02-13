@@ -67,7 +67,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.plfilter(c)
-	return c:IsType(TYPE_FIELD) and c:ListsCode(TOKEN_BRAVE) and not c:IsForbidden()
+	return c:IsFieldSpell() and c:ListsCode(TOKEN_BRAVE) and not c:IsForbidden()
 end
 function s.pltg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.plfilter,tp,LOCATION_DECK,0,1,nil) end

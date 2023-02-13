@@ -50,7 +50,7 @@ function s.setfilter(c,e,tp)
 	if c:IsMonster() then
 		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
 	elseif c:IsSpellTrap() then
-		return (c:IsType(TYPE_FIELD) or Duel.GetLocationCount(tp,LOCATION_SZONE)>0) and c:IsSSetable()
+		return (c:IsFieldSpell() or Duel.GetLocationCount(tp,LOCATION_SZONE)>0) and c:IsSSetable()
 	end
 	return false
 end
@@ -74,7 +74,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 			andifyoudo=true
 		end
 	elseif tc:IsSpellTrap() then
-		if tc:IsType(TYPE_FIELD) then
+		if tc:IsFieldSpell() then
 			local fc=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
 			if fc then
 				Duel.SendtoGrave(fc,REASON_RULE)

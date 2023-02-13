@@ -54,7 +54,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c,tp,code)
-	return c:IsType(TYPE_FIELD) and c:IsSetCard(SET_TRIAMID) and c:GetActivateEffect():IsActivatable(tp,true,true) and not c:IsCode(code)
+	return c:IsFieldSpell() and c:IsSetCard(SET_TRIAMID) and c:GetActivateEffect():IsActivatable(tp,true,true) and not c:IsCode(code)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tc=Duel.GetFieldCard(tp,LOCATION_FZONE,0)

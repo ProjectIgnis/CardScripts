@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetValue(1)
 	e2:SetCondition(s.actcon)
 	c:RegisterEffect(e2)
-	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,aux.FilterBoolFunction(Card.IsSetCard,0x9b))
+	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,aux.FilterBoolFunction(Card.IsSetCard,SET_MELODIOUS))
 end
 s.listed_series={SET_MELODIOUS}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

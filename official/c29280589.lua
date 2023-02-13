@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Fusion summon from hand
-	local params = {aux.FilterBoolFunction(Card.IsSetCard,0xad),nil,nil,nil,Fusion.ForcedHandler}
+	local params = {aux.FilterBoolFunction(Card.IsSetCard,SET_FRIGHTFUR),nil,nil,nil,Fusion.ForcedHandler}
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)

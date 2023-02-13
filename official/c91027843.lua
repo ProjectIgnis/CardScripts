@@ -46,7 +46,7 @@ function s.initial_effect(c)
 		local ge1=Effect.GlobalEffect()
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
 		ge1:SetLabelObject(e1)
-		ge1:SetTargetRange(0xff,0xff)
+		ge1:SetTargetRange(LOCATION_ALL,LOCATION_ALL)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end

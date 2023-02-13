@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.material={CARD_DARK_MAGICIAN,CARD_DARK_MAGICIAN_GIRL}
-s.material_setcode={0x10a2,0x20a2,0x30a2}
+s.material_setcode={SET_DARK_MAGICIAN,SET_MAGICIAN_GIRL,SET_DARK_MAGICIAN_GIRL}
 s.listed_names={CARD_DARK_MAGICIAN,CARD_DARK_MAGICIAN_GIRL}
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsSpellTrapEffect()

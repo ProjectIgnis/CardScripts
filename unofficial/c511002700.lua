@@ -4,10 +4,12 @@ function s.initial_effect(c)
 	--negate attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(80538728,0))
+	e1:SetCategory(CATEGORY_NEGATEATTACK)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
+	e1:SetTarget(s.atktg)
 	e1:SetCondition(s.atcon)
 	e1:SetOperation(s.atop)
 	c:RegisterEffect(e1)
@@ -29,6 +31,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={23424603}
+function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	local a=Duel.GetAttacker()
+	Duel.SetOperationInfo(0,CATEGORY_NEGATEATTACK,a,1,0,0)
+end
 function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsEnvironment(23424603) and Duel.GetAttacker():IsControler(1-tp)
 end

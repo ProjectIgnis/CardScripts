@@ -1,10 +1,10 @@
---スキエルＣ３ (TF6)
---Skiel Carrier 3 (TF6)
+--スキエルＣ３
+--Skiel Carrier 3
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_NEGATEATTACK)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_BE_BATTLE_TARGET)
-	e3:SetRange(LOCATION_MZONE)
+	e3:SetRange(LOCATION_ONFIELD)
 	e3:SetCountLimit(1)
 	e3:SetCondition(s.cbcon)
 	e3:SetOperation(s.cbop)
@@ -46,6 +46,8 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
 	return true
 	end
 	return false
+	local a=Duel.GetAttacker()
+	Duel.SetOperationInfo(0,CATEGORY_NEGATEATTACK,a,1,0,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=e:GetLabelObject()
@@ -53,11 +55,15 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Release(g,REASON_COST)
 	g:DeleteGroup()
 end
+function s.cfilter(c)
+	return c:IsType(TYPE_MONSTER) and c:IsFaceup() and (c:IsSetCard(0x3013)) 
+end
 function s.sdcon(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x3013),0,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+	return not Duel.IsExistingMatchingCard(s.cfilter,e:GetHandlerPlayer(),LOCATION_ONFIELD,LOCATION_ONFIELD,1,e:GetHandler()) and not e:GetHandler():IsCode(63468625)
 end
 function s.cbcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:GetFirst():IsControler(tp)
+	local d=Duel.GetAttackTarget()
+	return d and d:IsControler(tp) and e:GetHandler():IsType(TYPE_MONSTER)
 end
 function s.cbop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateAttack()

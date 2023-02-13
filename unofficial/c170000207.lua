@@ -13,9 +13,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--Negate attacks
 	local e2=Effect.CreateEffect(c)
+	e2:SetCategory(CATEGORY_NEGATEATTACK)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_BE_BATTLE_TARGET)
 	e2:SetCost(s.indcost)
+	e2:SetTarget(s.target)
 	e2:SetOperation(s.indop)
 	c:RegisterEffect(e2)
 end
@@ -48,6 +50,11 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 		return
 	end
 	Duel.Equip(tp,eqc,tc)
+end
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	local a=Duel.GetAttacker()
+	Duel.SetOperationInfo(0,CATEGORY_NEGATEATTACK,a,1,0,0)
 end
 function s.indcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end

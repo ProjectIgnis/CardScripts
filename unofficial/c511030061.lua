@@ -36,15 +36,22 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	--Negate attack
 	local e4=Effect.CreateEffect(c)
+	e4:SetCategory(CATEGORY_NEGATEATTACK)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e4:SetCode(EVENT_BE_BATTLE_TARGET)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1)
+	e4:SetTarget(s.atktg)
 	e4:SetCondition(aux.NOT(s.colinkcon))
 	e4:SetOperation(function() Duel.NegateAttack() end)
 	c:RegisterEffect(e4)
 end
 s.listed_series={SET_APPLIANCER}
+function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	local a=Duel.GetAttacker()
+	Duel.SetOperationInfo(0,CATEGORY_NEGATEATTACK,a,1,0,0)
+end
 function s.matfilter(c,lc,sumtype,tp)
 	return c:IsSetCard(SET_APPLIANCER,fc,sumtype,tp) and c:IsLink(1)
 end

@@ -18,11 +18,13 @@ function s.initial_effect(c)
 	--effect
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(10032958,0))
+	e2:SetCategory(CATEGORY_NEGATEATTACK)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e2:SetCost(s.cost)
 	e2:SetCondition(s.effcon)
+	e2:SetTarget(s.efftg)
 	e2:SetOperation(s.effop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 	--name
@@ -73,6 +75,10 @@ end
 function s.effcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	return a:IsControler(1-tp) and a:IsPosition(POS_FACEUP_ATTACK)
+end
+function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetOperationInfo(0,CATEGORY_NEGATEATTACK,Duel.GetAttacker(),1,0,0)
 end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()

@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	--Destroy and damage
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(alias,1))
-	e4:SetCategory(CATEGORY_DAMAGE+CATEGORY_DESTROY)
+	e4:SetCategory(CATEGORY_DAMAGE+CATEGORY_DESTROY+CATEGORY_NEGATEATTACK)
 	e4:SetType(EFFECT_TYPE_QUICK_O)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e4:SetCode(EVENT_FREE_CHAIN)
@@ -147,6 +147,8 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,bc,1,0,0)
 		Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,bc:GetAttack())
 	end
+	local a=Duel.GetAttacker()
+	Duel.SetOperationInfo(0,CATEGORY_NEGATEATTACK,a,1,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

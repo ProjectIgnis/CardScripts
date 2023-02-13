@@ -8,6 +8,7 @@ function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--disable attack
 	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_NEGATEATTACK)
 	e1:SetDescription(aux.Stringid(c:Alias(),0))
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -17,7 +18,7 @@ function s.initial_effect(c)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
-	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e1,false)
 	--battle indestructable
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
@@ -31,12 +32,15 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker()~=nil
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
+	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST) 
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	local a=Duel.GetAttacker()
 	if chk==0 then return e:GetHandler():GetFlagEffect(id)==0 end
 	e:GetHandler():RegisterFlagEffect(id,RESET_CHAIN,0,1)
+	Duel.SetOperationInfo(0,CATEGORY_NEGATEATTACK,a,1,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateAttack()

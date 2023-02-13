@@ -26,10 +26,12 @@ function s.initial_effect(c)
 	--battle target
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
+	e3:SetCategory(CATEGORY_NEGATEATTACK)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_BE_BATTLE_TARGET)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
+	e3:SetTarget(s.target)
 	e3:SetCondition(s.cbcon)
 	e3:SetOperation(s.cbop)
 	c:RegisterEffect(e3)
@@ -72,6 +74,11 @@ function s.sdcon(e)
 end
 function s.cbcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:GetFirst():IsControler(tp)
+end
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	local a=Duel.GetAttacker()
+	Duel.SetOperationInfo(0,CATEGORY_NEGATEATTACK,a,1,0,0)
 end
 function s.cbop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateAttack()

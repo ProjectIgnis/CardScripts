@@ -4,11 +4,13 @@ function s.initial_effect(c)
 	--negate 1 attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_NEGATEATTACK)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_BE_BATTLE_TARGET)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.nacon)
+	e1:SetTarget(s.atktg)
 	e1:SetOperation(s.naop)
 	c:RegisterEffect(e1)
 	--cannot be battle target
@@ -31,6 +33,11 @@ function s.initial_effect(c)
 	e3:SetTarget(s.sdtg)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
+end
+function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)	
+	if chk==0 then return true end
+	local a=Duel.GetAttacker()
+	Duel.SetOperationInfo(0,CATEGORY_NEGATEATTACK,a,1,0,0)
 end
 function s.nacon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

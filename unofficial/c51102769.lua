@@ -242,7 +242,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local x
 	if tc:IsOnField() then x=true end
 	if not tc:IsOnField() then x=false end
-	if Duel.NegateActivation(ev) and tc:IsSSetable() or tc:IsType(TYPE_PENDULUM) then
+	if Duel.NegateActivation(ev) and tc:IsSSetable() and not tc:IsType(TYPE_PENDULUM) then
 		if tc:IsFaceup() and x==true then
 			tc:CancelToGrave()
 			Duel.ChangePosition(tc,POS_FACEDOWN)

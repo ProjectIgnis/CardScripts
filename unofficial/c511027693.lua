@@ -1,5 +1,6 @@
---城壁壊しの大槍
---Ballista of Rampart Smashing
+--ギャラクシーバリア
+--Galaxy Barrier
+--Made by Beetron-1 Beetletop
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c)

@@ -47,8 +47,9 @@ function s.initial_effect(c)
 	e5:SetOperation(s.spop2)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x101b}
+s.listed_series={SET_MECHA_PHANTOM_BEAST}
 s.listed_names={TOKEN_MECHA_PHANTOM_BEAST}
+local ACTIVATED_EFFECT=EFFECT_TYPE_ACTIVATE|EFFECT_TYPE_FLIP|EFFECT_TYPE_IGNITION|EFFECT_TYPE_TRIGGER_O|EFFECT_TYPE_QUICK_O|EFFECT_TYPE_TRIGGER_F|EFFECT_TYPE_QUICK_F
 function s.lvval(e,c)
 	return Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsCode,TOKEN_MECHA_PHANTOM_BEAST),c:GetControler(),LOCATION_MZONE,0,nil):GetSum(Card.GetLevel)
 end
@@ -59,7 +60,7 @@ function s.cfilter(c,tp)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp) and c:IsReason(REASON_COST)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return re and re:GetHandler()~=e:GetHandler() and re:IsHasType(0x7f0) and eg:IsExists(s.cfilter,1,nil,tp)
+	return re and re:GetHandler()~=e:GetHandler() and re:IsHasType(ACTIVATED_EFFECT) and eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsRelateToEffect(e) end
@@ -82,7 +83,7 @@ function s.spcost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(g,REASON_COST)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x101b) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_MECHA_PHANTOM_BEAST) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp) end

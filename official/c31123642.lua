@@ -26,14 +26,14 @@ function s.initial_effect(c)
 	e2:SetOperation(s.repop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x107e,0x207e,0x48,0x7f}
+s.listed_series={SET_ZW,SET_ZS,SET_NUMBER,SET_UTOPIC}
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:CheckRemoveOverlayCard(tp,2,REASON_COST) end
 	c:RemoveOverlayCard(tp,2,2,REASON_COST)
 end
 function s.spfilter(c,e,tp)
-	return (c:IsSetCard(0x107e) or c:IsSetCard(0x207e))
+	return (c:IsSetCard(SET_ZW) or c:IsSetCard(SET_ZS))
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -74,10 +74,10 @@ function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return not c:IsType(TYPE_XYZ) and c:IsLocation(LOCATION_EXTRA)
 end
 function s.atktg(e,c)
-	return not c:IsSetCard(0x48)
+	return not c:IsSetCard(SET_NUMBER)
 end
 function s.repfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x7f) and c:IsType(TYPE_XYZ) 
+	return c:IsFaceup() and c:IsSetCard(SET_UTOPIC) and c:IsType(TYPE_XYZ) 
 		and c:GetOriginalAttribute() & ATTRIBUTE_LIGHT ~= 0 and not c:IsCode(id) 
 		and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) 
 		and not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_EFFECT+REASON_BATTLE)

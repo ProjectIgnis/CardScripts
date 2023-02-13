@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.repop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x14a}
+s.listed_series={SET_APPLIANCER}
 function s.indcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
@@ -32,7 +32,7 @@ function s.indcon(e,tp,eg,ep,ev,re,r,rp)
 	if d:IsControler(tp) then
 		tc=d
 	end
-	if not (tc:IsFaceup() and tc:IsSetCard(0x14a)) then return false end
+	if not (tc:IsFaceup() and tc:IsSetCard(SET_APPLIANCER)) then return false end
 	e:SetLabelObject(tc)
 	return true
 end
@@ -60,7 +60,7 @@ function s.indop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.repfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x14a) and c:IsLocation(LOCATION_MZONE)
+	return c:IsFaceup() and c:IsSetCard(SET_APPLIANCER) and c:IsLocation(LOCATION_MZONE)
 		and c:IsControler(tp) and c:IsReason(REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)

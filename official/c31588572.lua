@@ -28,12 +28,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-s.listed_series={0x130}
+s.listed_series={SET_UNCHAINED}
 function s.setfilter(c,e,tp)
-	if not c:IsSetCard(0x130) then return end
-	if c:IsMonster() and not c:IsCode(id) then 
+	if not c:IsSetCard(SET_UNCHAINED) then return end
+	if c:IsMonster() and not c:IsCode(id) then
 		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
-	elseif c:IsType(TYPE_SPELL+TYPE_TRAP) then 
+	elseif c:IsSpellTrap() then
 		return (c:IsType(TYPE_FIELD) or Duel.GetLocationCount(tp,LOCATION_SZONE)>0) and c:IsSSetable()
 	end
 	return false
@@ -46,7 +46,7 @@ function s.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tc=g:GetFirst()
 	if tc:IsMonster() then
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,tp,LOCATION_GRAVE)
-	elseif tc:IsType(TYPE_SPELL+TYPE_TRAP) then
+	elseif tc:IsSpellTrap() then
 		Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,1,tp,LOCATION_GRAVE)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,0,0)
@@ -59,7 +59,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)>0 then
 			andifyoudo=true
 		end
-	elseif tc:IsType(TYPE_SPELL+TYPE_TRAP) then
+	elseif tc:IsSpellTrap() then
 		if tc:IsType(TYPE_FIELD) then
 			local fc=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
 			if fc then
@@ -74,7 +74,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	if andifyoudo then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-		local g=Duel.SelectMatchingCard(tp,aux.TRUE,tp,LOCATION_ONFIELD,0,1,1,nil)
+		local g=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_ONFIELD,0,1,1,nil)
 		if #g>0 then
 			Duel.BreakEffect()
 			Duel.Destroy(g,REASON_EFFECT)
@@ -86,19 +86,18 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 		and not (re and re:GetHandler():IsCode(id))
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x130) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP) and not c:IsCode(id)
+	return c:IsSetCard(SET_UNCHAINED) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP) and not c:IsCode(id)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_DECK)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,1,nil,e,tp)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-

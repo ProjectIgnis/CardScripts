@@ -22,9 +22,9 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x12b}
+s.listed_series={SET_MARINCESS}
 function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x12b) and c:IsLinkMonster() and c:IsControler(tp)
+	return c:IsFaceup() and c:IsSetCard(SET_MARINCESS) and c:IsLinkMonster() and c:IsControler(tp)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return s.cfilter(eg:GetFirst(),tp)
@@ -45,7 +45,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.actfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x12b) and c:IsLinkMonster() and c:IsLinkAbove(3)
+	return c:IsFaceup() and c:IsSetCard(SET_MARINCESS) and c:IsLinkMonster() and c:IsLinkAbove(3)
 end
 function s.actcon(e)
 	return Duel.IsExistingMatchingCard(s.actfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)

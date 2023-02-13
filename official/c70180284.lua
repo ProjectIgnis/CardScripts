@@ -27,15 +27,15 @@ function s.initial_effect(c)
 	e3:SetOperation(s.repop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x3d}
+s.listed_series={SET_SIX_SAMURAI}
 function s.tgcfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x3d) and c:IsControler(tp)
+	return c:IsFaceup() and c:IsSetCard(SET_SIX_SAMURAI) and c:IsControler(tp)
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg and eg:IsExists(s.tgcfilter,1,e:GetHandler(),tp)
 end
 function s.tgfilter(c)
-	return c:IsSetCard(0x3d) and c:IsAbleToGrave()
+	return c:IsSetCard(SET_SIX_SAMURAI) and c:IsAbleToGrave()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -49,7 +49,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.repfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x3d)
+	return c:IsFaceup() and c:IsSetCard(SET_SIX_SAMURAI)
 		and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and c:IsReason(REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -19,9 +19,9 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x33}
+s.listed_series={SET_BLACKWING}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x33)
+	return c:IsFaceup() and c:IsSetCard(SET_BLACKWING)
 end
 function s.handcon(e)
 	local g=Duel.GetFieldGroup(e:GetHandlerPlayer(),LOCATION_MZONE,0)
@@ -29,7 +29,7 @@ function s.handcon(e)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttackTarget()
-	return tc and tc:IsFaceup() and tc:IsControler(tp) and tc:IsSetCard(0x33)
+	return tc and tc:IsFaceup() and tc:IsControler(tp) and tc:IsSetCard(SET_BLACKWING)
 end
 function s.filter(c)
 	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsAbleToRemove()

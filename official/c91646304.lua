@@ -24,12 +24,12 @@ function s.initial_effect(c)
 	e2:SetOperation(s.repop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x116}
+s.listed_series={SET_CRUSADIA}
 function s.spval(e,c)
 	return 0,aux.GetMMZonesPointedTo(c:GetControler())
 end
 function s.repfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x116) and c:IsLocation(LOCATION_MZONE)
+	return c:IsFaceup() and c:IsSetCard(SET_CRUSADIA) and c:IsLocation(LOCATION_MZONE)
 		and c:IsControler(tp) and c:IsReason(REASON_EFFECT+REASON_BATTLE) and not c:IsReason(REASON_REPLACE)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)

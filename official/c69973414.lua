@@ -23,13 +23,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_BLACK_WINGED_DRAGON}
-s.listed_series={0x33}
+s.listed_series={SET_BLACKWING}
 function s.tdfilter(c)
-	return c:IsSetCard(0x33) and c:HasLevel() and c:IsFaceup() and c:IsAbleToDeckOrExtraAsCost()
+	return c:IsSetCard(SET_BLACKWING) and c:HasLevel() and c:IsFaceup() and c:IsAbleToDeckOrExtraAsCost()
 end
 function s.spfilter(c,e,tp,lv)
 	return Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsType(TYPE_SYNCHRO) 
-		and (c:IsSetCard(0x33) or c:IsCode(CARD_BLACK_WINGED_DRAGON))
+		and (c:IsSetCard(SET_BLACKWING) or c:IsCode(CARD_BLACK_WINGED_DRAGON))
 		and c:IsLevel(lv) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SYNCHRO,tp,false,false)
 end
 function s.rescon(sg,e,tp,mg)
@@ -57,8 +57,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.handcon(e)
-	return Duel.IsExistingMatchingCard(s.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,2,nil)
-end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x33)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_BLACKWING),e:GetHandlerPlayer(),LOCATION_MZONE,0,2,nil)
 end

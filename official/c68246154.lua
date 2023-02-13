@@ -38,7 +38,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x108}
+s.listed_series={SET_MAGICAL_MUSKET}
 function s.regop(e)
 	local c=e:GetHandler()
 	local flageff={c:GetFlagEffectLabel(1)}
@@ -60,7 +60,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return flageff==nil
 end
 function s.thfilter(c,...)
-	return c:IsSetCard(0x108) and not c:IsCode(...) and c:IsAbleToHand()
+	return c:IsSetCard(SET_MAGICAL_MUSKET) and not c:IsCode(...) and c:IsAbleToHand()
 end
 function s.chk(c,tp,e)
 	return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,c,c:GetCode())

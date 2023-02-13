@@ -34,9 +34,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.repop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xd4}
+s.listed_series={SET_PALEOZOIC}
 function s.efilter(e,re)
-	return re:IsActiveType(TYPE_MONSTER) and re:GetOwner()~=e:GetOwner()
+	return re:IsMonsterEffect() and re:GetOwner()~=e:GetOwner()
 end
 function s.gyfilter(c,tp)
 	if c:IsFaceup() then return false end
@@ -47,7 +47,7 @@ function s.gyfilter(c,tp)
 	return Duel.GetLocationCount(tp,LOCATION_SZONE)>zc
 end
 function s.setfilter(c,i)
-	return c:IsSetCard(0xd4) and c:IsTrap() and c:IsSSetable(i)
+	return c:IsSetCard(SET_PALEOZOIC) and c:IsTrap() and c:IsSSetable(i)
 end
 function s.gytg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_SZONE) and s.gyfilter(chkc,tp) end

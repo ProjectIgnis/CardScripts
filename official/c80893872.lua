@@ -21,9 +21,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.lvop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x5a}
+s.listed_series={SET_PENGUIN}
 function s.thfilter(c)
-	return c:IsSetCard(0x5a) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_PENGUIN) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -36,7 +36,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.lvfilter(c)
-	return c:IsSetCard(0x5a) and c:IsLevelAbove(2) and not (c:IsLocation(LOCATION_MZONE) and c:IsFacedown())
+	return c:IsSetCard(SET_PENGUIN) and c:IsLevelAbove(2) and not (c:IsLocation(LOCATION_MZONE) and c:IsFacedown())
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then 

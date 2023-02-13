@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_QP_ACT_IN_NTPHAND)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x108))
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_MAGICAL_MUSKET))
 	e1:SetTargetRange(LOCATION_HAND,0)
 	e1:SetDescription(aux.Stringid(id,0))
 	c:RegisterEffect(e1)
@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.drop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x108}
+s.listed_series={SET_MAGICAL_MUSKET}
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
@@ -37,7 +37,7 @@ function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsColumn(seq,p,LOCATION_SZONE)
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x108) and c:IsDiscardable()
+	return c:IsSetCard(SET_MAGICAL_MUSKET) and c:IsDiscardable()
 end
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end

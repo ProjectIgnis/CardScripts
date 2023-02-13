@@ -1,10 +1,8 @@
 --E・HERO リキッドマン
 --Elemental HERO Liquid Soldier
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
-
 function s.initial_effect(c)
 	--Upon normal summon, revive 1 level or lower "HERO" monster
 	local e1=Effect.CreateEffect(c)
@@ -28,13 +26,12 @@ function s.initial_effect(c)
 	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={}
+s.listed_names={id}
 	--Part of "HERO" archetype
-s.listed_series={0x8}
-
+s.listed_series={SET_HERO}
 	--Check for level 4 or lower "HERO" monster
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x8) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_HERO) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and not c:IsCode(id)
 end
 	--Activation legality
@@ -57,7 +54,7 @@ end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=c:GetReasonCard()
-	return c:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and rc:IsSetCard(0x8) and r & REASON_FUSION == REASON_FUSION
+	return c:IsLocation(LOCATION_GRAVE|LOCATION_REMOVED) and rc:IsSetCard(SET_HERO) and r & REASON_FUSION == REASON_FUSION
 end
 	--Activation legality
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)

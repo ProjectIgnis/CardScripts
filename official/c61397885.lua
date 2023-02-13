@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.eqop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xfa}
+s.listed_series={SET_PHANTASM_SPIRAL}
 s.listed_names={CARD_UMI}
 function s.cfilter(c)
 	return c:IsFacedown() or not c:IsType(TYPE_NORMAL)
@@ -85,10 +85,10 @@ function s.handcon(e)
 end
 function s.efilter(c,tp)
 	return c:IsFaceup() and c:IsType(TYPE_NORMAL)
-		and Duel.IsExistingMatchingCard(s.eqfilter,tp,LOCATION_GRAVE+LOCATION_HAND,0,1,nil,c)
+		and Duel.IsExistingMatchingCard(s.eqfilter,tp,LOCATION_GRAVE|LOCATION_HAND,0,1,nil,c)
 end
 function s.eqfilter(c,tc)
-	return c:IsType(TYPE_EQUIP) and c:IsSetCard(0xfa) and c:CheckEquipTarget(tc)
+	return c:IsType(TYPE_EQUIP) and c:IsSetCard(SET_PHANTASM_SPIRAL) and c:CheckEquipTarget(tc)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.efilter(chkc,tp) end
@@ -101,7 +101,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc or tc:IsFacedown() or not tc:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.eqfilter),tp,LOCATION_GRAVE+LOCATION_HAND,0,1,1,nil,tc)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.eqfilter),tp,LOCATION_GRAVE|LOCATION_HAND,0,1,1,nil,tc)
 	local eq=g:GetFirst()
 	if eq then
 		Duel.Equip(tp,eq,tc,true)

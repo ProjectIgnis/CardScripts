@@ -50,23 +50,23 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge,0)
 	end)
 end
-s.listed_series={0x18c}
+s.listed_series={SET_RESCUE_ACE}
 s.listed_names={id}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	if not (re and re:GetHandler():IsSetCard(0x18c)) then return end
+	if not (re and re:GetHandler():IsSetCard(SET_RESCUE_ACE)) then return end
 	local sg=eg:Filter(Card.IsType,nil,TYPE_QUICKPLAY|TYPE_TRAP)
 	for ec in sg:Iter() do
 		ec:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 	end
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x18c) and not c:IsCode(id)
+	return c:IsFaceup() and c:IsSetCard(SET_RESCUE_ACE) and not c:IsCode(id)
 end
 function s.con(e)
 	return Duel.IsExistingMatchingCard(s.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x18c) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_RESCUE_ACE) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

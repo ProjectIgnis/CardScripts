@@ -1,6 +1,6 @@
+--Ｆ．Ａ．オーバー・ヒート
 --F.A. Overheat
 --scripted by Naim
---fixed by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -23,13 +23,13 @@ function s.initial_effect(c)
 	e2:SetOperation(s.activate2)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x107}
+s.listed_series={SET_FA}
 function s.cond(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
 		and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x107) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_FA) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -54,7 +54,7 @@ function s.cond2(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldCard(tp,LOCATION_FZONE,0)==nil
 end
 function s.filter2(c,e,tp)
-	return c:IsSetCard(0x107) and c:IsType(TYPE_FIELD) and c:CheckActivateEffect(false,false,false)~=nil
+	return c:IsSetCard(SET_FA) and c:IsFieldSpell() and c:CheckActivateEffect(false,false,false)~=nil
 end
 function s.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.NecroValleyFilter(s.filter2),tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,tp) end

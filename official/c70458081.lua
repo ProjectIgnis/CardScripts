@@ -20,13 +20,13 @@ function s.initial_effect(c)
 	e2:SetOperation(s.repop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x9f}
+s.listed_series={SET_PERFORMAPAL}
 s.listed_names={id}
 function s.atlimit(e,c)
-	return c:IsFaceup() and c:IsSetCard(0x9f) and c~=e:GetHandler()
+	return c:IsFaceup() and c:IsSetCard(SET_PERFORMAPAL) and c~=e:GetHandler()
 end
 function s.repfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x9f) and not c:IsCode(id) and c:IsOnField() 
+	return c:IsFaceup() and c:IsSetCard(SET_PERFORMAPAL) and not c:IsCode(id) and c:IsOnField() 
 		and c:IsControler(tp) and not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_EFFECT+REASON_BATTLE)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)

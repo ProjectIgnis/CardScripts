@@ -21,14 +21,14 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x33}
+s.listed_series={SET_BLACKWING}
 s.listed_names={9012916}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local p,loct=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_PLAYER,CHAININFO_TRIGGERING_LOCATION)
 	return loct==LOCATION_MZONE and re:IsActiveType(TYPE_MONSTER) and p~=tp and Duel.IsChainNegatable(ev)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x33) and c:IsAbleToGraveAsCost() and not c:IsStatus(STATUS_BATTLE_DESTROYED)
+	return c:IsFaceup() and c:IsSetCard(SET_BLACKWING) and c:IsAbleToGraveAsCost() and not c:IsStatus(STATUS_BATTLE_DESTROYED)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil) end
@@ -59,7 +59,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c)
-	return c:IsFaceup() and (c:IsCode(9012916) or (c:IsSetCard(0x33) and c:IsType(TYPE_SYNCHRO)))
+	return c:IsFaceup() and (c:IsCode(9012916) or (c:IsSetCard(SET_BLACKWING) and c:IsType(TYPE_SYNCHRO)))
 end
 function s.handcon(e)
 	return Duel.IsExistingMatchingCard(s.filter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)

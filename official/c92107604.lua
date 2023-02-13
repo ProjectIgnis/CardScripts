@@ -31,13 +31,13 @@ function s.initial_effect(c)
 	e3:SetOperation(s.drop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x180}
+s.listed_series={SET_RUNICK}
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==tp and re:GetHandler():IsSetCard(0x180) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL)
+	return rp==tp and re:GetHandler():IsSetCard(SET_RUNICK) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsSpellEffect()
 		and re:IsActiveType(TYPE_QUICKPLAY)
 end
 function s.tdfilter(c)
-	return c:IsSetCard(0x180) and c:GetType()==TYPE_SPELL+TYPE_QUICKPLAY and c:IsAbleToDeck()
+	return c:IsSetCard(SET_RUNICK) and c:IsQuickPlaySpell() and c:IsAbleToDeck()
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.tdfilter(chkc) end

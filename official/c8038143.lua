@@ -13,20 +13,21 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--act in hand
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_TRAP_ACT_IN_HAND)
 	e2:SetCondition(s.handcon)
-	e2:SetDescription(aux.Stringid(id,0))
 	c:RegisterEffect(e2)
 end
+s.listed_series={SET_GALAXY_EYES,SET_GALAXY_EYES_TACHYON_DRAGON}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x107b)
+	return c:IsFaceup() and c:IsSetCard(SET_GALAXY_EYES)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil) then return false end
 	for i=1,ev do
 		local te,tgp=Duel.GetChainInfo(i,CHAININFO_TRIGGERING_EFFECT,CHAININFO_TRIGGERING_PLAYER)
-		if tgp~=tp and (te:IsActiveType(TYPE_MONSTER) or te:IsHasType(EFFECT_TYPE_ACTIVATE)) and Duel.IsChainNegatable(i) then
+		if tgp~=tp and (te:IsMonsterEffect() or te:IsHasType(EFFECT_TYPE_ACTIVATE)) and Duel.IsChainNegatable(i) then
 			return true
 		end
 	end
@@ -65,7 +66,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoDeck(dg,nil,2,REASON_EFFECT)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x307b)
+	return c:IsFaceup() and c:IsSetCard(SET_GALAXY_EYES_TACHYON_DRAGON)
 end
 function s.handcon(e)
 	return Duel.IsExistingMatchingCard(s.filter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)

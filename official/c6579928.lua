@@ -21,12 +21,12 @@ function s.initial_effect(c)
 	e2:SetOperation(s.repop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x3d}
+s.listed_series={SET_SIX_SAMURAI}
 function s.filter(c,att)
 	return c:IsFaceup() and c:IsAttribute(att)
 end
 function s.thfilter(c,tp)
-	return c:IsSetCard(0x3d) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_SIX_SAMURAI) and c:IsMonster() and c:IsAbleToHand()
 		and not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil,c:GetAttribute())
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

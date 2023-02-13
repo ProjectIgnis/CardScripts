@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_QP_ACT_IN_NTPHAND)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x108))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_MAGICAL_MUSKET))
 	e2:SetDescription(aux.Stringid(id,2))
 	e2:SetTargetRange(LOCATION_HAND,0)
 	c:RegisterEffect(e2)
@@ -51,18 +51,18 @@ function s.initial_effect(c)
 	e8:SetOperation(s.clearop)
 	c:RegisterEffect(e8)
 end
-s.listed_series={0x108}
+s.listed_series={SET_MAGICAL_MUSKET}
 function s.otfilter(c,tp)
-	return c:IsSetCard(0x108) and (c:IsControler(tp) or c:IsFaceup())
+	return c:IsSetCard(SET_MAGICAL_MUSKET) and (c:IsControler(tp) or c:IsFaceup())
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	if re:GetHandler():IsSetCard(0x108) and rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) then
+	if re:GetHandler():IsSetCard(SET_MAGICAL_MUSKET) and rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		local val=e:GetLabelObject():GetLabel()
 		e:GetLabelObject():SetLabel(val+1)
 	end
 end
 function s.regop2(e,tp,eg,ep,ev,re,r,rp)
-	if re:GetHandler():IsSetCard(0x108) and rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) then
+	if re:GetHandler():IsSetCard(SET_MAGICAL_MUSKET) and rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		local val=e:GetLabelObject():GetLabel()
 		if val==0 then val=1 end
 		e:GetLabelObject():SetLabel(val-1)

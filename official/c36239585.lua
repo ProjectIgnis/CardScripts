@@ -1,7 +1,6 @@
 --ゴーストリックの妖精
 --Ghostrick Fairy
 --Scripted by AlphaKretin
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Cannot be normal summoned if player controls no "Ghostrick" monster
@@ -30,13 +29,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.setop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x8d}
-
-function s.sfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x8d)
-end
+s.listed_series={SET_GHOSTRICK}
 function s.sumcon(e)
-	return not Duel.IsExistingMatchingCard(s.sfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
+	return not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_GHOSTRICK),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -51,7 +46,7 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.setfilter(c,e,tp)
-	if not c:IsSetCard(0x8d) then return end
+	if not c:IsSetCard(SET_GHOSTRICK) then return end
 	if c:IsMonster() then
 		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
 	elseif c:IsSpellTrap() then

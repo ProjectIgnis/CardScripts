@@ -20,10 +20,10 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x1f}
+s.listed_series={SET_NEO_SPACIAN}
 s.listed_names={CARD_NEOS}
 function s.filter(c,e,tp)
-	return (c:IsSetCard(0x1f) or c:IsCode(CARD_NEOS)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return (c:IsSetCard(SET_NEO_SPACIAN) or c:IsCode(CARD_NEOS)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -39,7 +39,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.filter),tp,LOCATION_HAND+LOCATION_GRAVE,0,nil,e,tp)
 	local g=aux.SelectUnselectGroup(sg,e,tp,1,ft,aux.dncheck,1,tp,HINTMSG_SPSUMMON)
 	if #g>0 then
-		for tc in aux.Next(g) do
+		for tc in g:Iter() do
 			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
@@ -61,9 +61,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e3,true)
 			--Lizard check
-			local e6=aux.createContinuousLizardCheck(c,LOCATION_MZONE,s.lizfilter)
-			e6:SetReset(RESET_EVENT+RESETS_STANDARD)
-			tc:RegisterEffect(e6,true)
+			local e4=aux.createContinuousLizardCheck(c,LOCATION_MZONE,s.lizfilter)
+			e4:SetReset(RESET_EVENT+RESETS_STANDARD)
+			tc:RegisterEffect(e4,true)
 		end
 	end
 end
@@ -76,4 +76,3 @@ end
 function s.lizfilter(e,c)
 	return not c:IsOriginalType(TYPE_FUSION)
 end
-

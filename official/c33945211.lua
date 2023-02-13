@@ -34,9 +34,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x12b} 
+s.listed_series={SET_MARINCESS}
 function s.cfilter(c,tp)
-	return c:IsSetCard(0x12b) and c:IsTrap()
+	return c:IsSetCard(SET_MARINCESS) and c:IsTrap()
 		and c:IsAbleToRemoveAsCost() and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,c:GetCode())
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -47,7 +47,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(g:GetFirst():GetCode())
 end
 function s.thfilter(c,code)
-	return c:IsSetCard(0x12b) and c:IsTrap() and c:IsAbleToHand() and not c:IsCode(code)
+	return c:IsSetCard(SET_MARINCESS) and c:IsTrap() and c:IsAbleToHand() and not c:IsCode(code)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,e:GetLabel()) end
@@ -84,7 +84,7 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)

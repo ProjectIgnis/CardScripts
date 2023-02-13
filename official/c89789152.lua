@@ -22,10 +22,9 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x7b,0x307b}
-
+s.listed_series={SET_GALAXY,SET_GALAXY_EYES_TACHYON_DRAGON}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x7b) and c:IsRace(RACE_DRAGON)
+	return c:IsFaceup() and c:IsSetCard(SET_GALAXY) and c:IsRace(RACE_DRAGON)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -61,7 +60,7 @@ function s.efilter(e,re)
 	return e:GetHandler()~=re:GetOwner()
 end
 function s.hfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x307b)
+	return c:IsFaceup() and c:IsSetCard(SET_GALAXY_EYES_TACHYON_DRAGON)
 end
 function s.handcon(e)
 	return Duel.IsExistingMatchingCard(s.hfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)

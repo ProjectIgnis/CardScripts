@@ -35,10 +35,10 @@ function s.initial_effect(c)
 	e5:SetOperation(s.repop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x3d}
-s.material_setcode=0x3d
+s.listed_series={SET_SIX_SAMURAI}
+s.material_setcode=SET_SIX_SAMURAI
 function s.ffilter(c,fc,sumtype,tp,sub,mg,sg)
-	return c:IsSetCard(0x3d,fc,sumtype,tp) and c:GetAttribute(fc,sumtype,tp)~=0 and (not sg or not sg:IsExists(s.fusfilter,1,c,c:GetAttribute(fc,sumtype,tp),fc,sumtype,tp))
+	return c:IsSetCard(SET_SIX_SAMURAI,fc,sumtype,tp) and c:GetAttribute(fc,sumtype,tp)~=0 and (not sg or not sg:IsExists(s.fusfilter,1,c,c:GetAttribute(fc,sumtype,tp),fc,sumtype,tp))
 end
 function s.contactfil(tp)
 	return Duel.GetMatchingGroup(Card.IsAbleToGraveAsCost,tp,LOCATION_ONFIELD,0,nil)
@@ -53,13 +53,13 @@ function s.splimit(e,se,sp,st)
 	return e:GetHandler():GetLocation()~=LOCATION_EXTRA
 end
 function s.costfilter(c)
-	return c:IsSetCard(0x3d) and c:IsAbleToRemoveAsCost() and ((c:IsOnField() and c:IsFaceup()) or c:IsLocation(LOCATION_HAND)) 
+	return c:IsSetCard(SET_SIX_SAMURAI) and c:IsAbleToRemoveAsCost() and ((c:IsOnField() and c:IsFaceup()) or c:IsLocation(LOCATION_HAND)) 
 		and Duel.IsExistingTarget(Card.IsAbleToRemove,0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
 end
 function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_ONFIELD|LOCATION_HAND,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_ONFIELD|LOCATION_HAND,0,1,1,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -76,7 +76,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.repfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x3d) and not c:IsReason(REASON_REPLACE)
+	return c:IsFaceup() and c:IsSetCard(SET_SIX_SAMURAI) and not c:IsReason(REASON_REPLACE)
 		and c:IsOnField() and c:IsControler(tp) and c:IsReason(REASON_EFFECT+REASON_BATTLE)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)

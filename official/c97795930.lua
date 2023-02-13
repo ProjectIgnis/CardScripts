@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.repop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xfa}
+s.listed_series={SET_PHANTASM_SPIRAL}
 s.listed_names={56649609,CARD_UMI}
 function s.filter(c)
 	return c:IsFaceup() and c:IsCode(56649609)
@@ -60,7 +60,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.winfilter(c)
-	return c:IsSetCard(0xfa) and c:IsType(TYPE_EQUIP)
+	return c:IsSetCard(SET_PHANTASM_SPIRAL) and c:IsType(TYPE_EQUIP)
 end
 function s.wincon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -31,8 +31,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.setop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xba,0x95}
-
+s.listed_series={SET_RAIDRAPTOR,SET_RANK_UP_MAGIC}
 function s.matfilter(c,rc,st,tp)
 	return c:IsAttribute(ATTRIBUTE_DARK,rc,st,tp) and c:IsRace(RACE_WINGEDBEAST,rc,st,tp)
 end
@@ -79,14 +78,14 @@ end
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	local rc=re:GetHandler()
-	return re:IsActiveType(TYPE_XYZ) and rc:IsSetCard(0xba) and rc:IsControler(tp)
+	return re:IsActiveType(TYPE_XYZ) and rc:IsSetCard(SET_RAIDRAPTOR) and rc:IsControler(tp)
 	--[[
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) 
-		and re:IsActiveType(TYPE_MONSTER) and rc:IsSetCard(0xba) and rc:IsType(TYPE_XYZ) and rc:GetControler()==tp
+		and re:IsActiveType(TYPE_MONSTER) and rc:IsSetCard(SET_RAIDRAPTOR) and rc:IsType(TYPE_XYZ) and rc:GetControler()==tp
 	]]
 end
 function s.setfilter(c)
-	return c:IsSpell() and c:IsSetCard(0x95) and c:IsSSetable()
+	return c:IsSpell() and c:IsSetCard(SET_RANK_UP_MAGIC) and c:IsSSetable()
 end
 function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<1 then return end
@@ -94,7 +93,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.SelectMatchingCard(tp,s.setfilter,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
 	if tc then
 		Duel.SSet(tp,tc)
-		if tc:IsType(TYPE_QUICKPLAY) then
+		if tc:IsQuickPlaySpell() then
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE)

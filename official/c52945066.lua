@@ -1,7 +1,6 @@
 --海晶乙女波動
 --Marincess Wave
 --Scripted by Larry126
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Negate 1 of opponent's monsters
@@ -24,10 +23,9 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x12b}
-
+s.listed_series={SET_MARINCESS}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x12b) and c:IsLinkMonster()
+	return c:IsFaceup() and c:IsSetCard(SET_MARINCESS) and c:IsLinkMonster()
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -82,7 +80,7 @@ function s.efilter(e,re)
 	return e:GetOwnerPlayer()~=re:GetOwnerPlayer()
 end
 function s.actfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x12b) and c:IsLinkMonster() and c:IsLinkAbove(3)
+	return c:IsFaceup() and c:IsSetCard(SET_MARINCESS) and c:IsLinkMonster() and c:IsLinkAbove(3)
 end
 function s.actcon(e)
 	return Duel.IsExistingMatchingCard(s.actfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)

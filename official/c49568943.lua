@@ -22,10 +22,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x17e}
+s.listed_series={SET_VAYLANTZ}
 s.listed_names={id}
 function s.filter(c)
-	return c:IsType(TYPE_FIELD) and c:IsSpell() and c:IsSetCard(0x17e) and not c:IsCode(id)
+	return c:IsFieldSpell() and c:IsSetCard(SET_VAYLANTZ) and not c:IsCode(id)
 		and not c:IsForbidden()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

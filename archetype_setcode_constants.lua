@@ -509,6 +509,7 @@ SET_RAINBOW_BRIDGE                = 0x188
 SET_BYSTIAL                       = 0x189
 SET_GHOTI                         = 0x18b
 SET_KASHTIRA                      = 0x18a
+SET_GOLD_PRIDE                    = 0x193
 --Currently unreleased in the TCG, the official English name is unknown
 SET_RESCUE_ACE                    = 0x18c
 SET_PURERY                        = 0x18d
@@ -518,7 +519,6 @@ SET_FIREWALL                      = 0x190
 SET_MANADOME                      = 0x191
 SET_NEMURELIA                     = 0x192
 --Beta archetypes
-SET_GOLD_PRIDE                    = 0x28d
 SET_NOUVELLEZ                     = 0x28e
 SET_RECIPE                        = 0x28f
 SET_FAVORITE                      = 0x290

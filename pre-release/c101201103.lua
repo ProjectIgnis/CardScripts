@@ -69,7 +69,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spfilter(c,e,tp,mc)
 	local mt=c:GetMetatable()
-	return mt.synchro_nt_required>=2 and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
+	return mt.synchro_nt_required and mt.synchro_nt_required>=2 and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SYNCHRO,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

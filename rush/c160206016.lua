@@ -13,18 +13,19 @@ function s.initial_effect(c)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
 end
+s.toss_coin=true
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then 
-	return Duel.GetFieldGroupCountRush(tp,0,LOCATION_MZONE)>0 
-		and e:GetHandler():GetEffectCount(EFFECT_EXTRA_ATTACK)==0 
+	return Duel.GetFieldGroupCountRush(tp,0,LOCATION_MZONE)>0
+		and e:GetHandler():GetEffectCount(EFFECT_EXTRA_ATTACK)==0
 		and Duel.IsAbleToEnterBP() 
 	end
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	local ct=Duel.GetFieldGroupCountRush(tp,0,LOCATION_MZONE)
 	local heads=Duel.CountHeads(Duel.TossCoin(tp,ct))
 	--Effect
+	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
 		if heads>0 then
 			local e1=Effect.CreateEffect(c)

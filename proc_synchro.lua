@@ -785,6 +785,13 @@ end
 function Synchro.Operation(e,tp,eg,ep,ev,re,r,rp,c,smat,mg)
 	local g=e:GetLabelObject()
 	c:SetMaterial(g)
+	--Execute the operation function of the Synchro Monster's "EFFECT_MATERIAL_CHECK" effect, if it exists ("Cupid Pitch")
+	local mat_check_eff=c:IsHasEffect(EFFECT_MATERIAL_CHECK)
+	if mat_check_eff then
+		local mat_check_op=mat_check_eff:GetOperation()
+		if mat_check_op then mat_check_op(mat_check_eff,c) end
+	end
+	--Use up the count limit of any "EFFECT_SYNCHRO_MAT_FROM_HAND" effect in the material group ("Revolution Synchron") 
 	for mc in g:Iter() do
 		local handmatfilter=mc:IsHasEffect(EFFECT_SYNCHRO_MAT_FROM_HAND)
 		if handmatfilter and handmatfilter:GetValue(handmatfilter,mc,c) then

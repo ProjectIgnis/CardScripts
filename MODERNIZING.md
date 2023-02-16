@@ -25,13 +25,13 @@ Activated effects should have their own descriptions, set through `Effect.SetDes
 
 Rather than trying to think of such or similar scenarios in each individual script, it it more practical to simply be consistent about it and have a description explicitly associated to each activated effect. It also has the added benefit of letting AI frameworks like Windbot properly check which effect is which through their descriptions.
 
-The exceptions to this are the activations of Field Spells, Continuous Spells, Pendulum Spells, i.e., their `EFFECT_TYPE_ACTIVATE` effects that place them face-up on the field.
+The exceptions to this are the activations of Field Spells, Continuous Spells, Pendulum Spells, _i.e._, their `EFFECT_TYPE_ACTIVATE` effects that place them face-up on the field.
 
 Note that their database strings would also have to be updated to add the missing strings for the new descriptions, especially if some older strings need to be moved up to match the script (string `0` may become string `1` due to a newly-added description).
 
 ## Make effect comments more descriptive
 
-Comments as "sp.summon" or "draw" are not very useful to describe what an effect is supposed to do. Detailed versions of what the effect is supposed to do are preferred, using at most 1 line. The first word and gameplay terms that are capitalized in the rulebook should be capitalized. Example:
+Comments such as "sp.summon" and "draw" are not very useful to describe what an effect is supposed to do. Detailed versions of what the effect is supposed to do are preferred, using at most 1 line. The first word and gameplay terms that are capitalized in the rulebook should be capitalized. _e.g._:
 
 ```lua
 --Special Summon 1 "tellarknight" monster from the Deck
@@ -55,11 +55,11 @@ e1:SetHintTiming(0,TIMING_MAIN_END)
 ## Remove the Damage Step flag from SINGLE+TRIGGER effects
 
 For effects that have their type set as `EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_*` (* is either `O` or `F`), the correct Damage Step behavior is already automatically handled in the core, remove the `EFFECT_FLAG_DAMAGE_STEP` in the `SetProperty` call.
-Exceptions to this can be made based on rulings. For example, "Proof of Pruflas" and "Fusion Parasite" are single effects ruled not to be activatable in the Damage Step.
+Exceptions to this can be made based on rulings. _e.g._: "Proof of Pruflas" and "Fusion Parasite" are single effects ruled not to be activatable in the Damage Step.
 
 ## Remove `if tc` check from targetting effects unless it's mandatory 
 
-Effects that target should always have access to the target in the operation, unless something goes wrong. By using `if tc` that is obscured and might cause misinteractions that can be missed, as script errors might not be generated. Such a check should be kept only in cards that are mandatory trigger effects (where the target might not exist), otherwise only the `Card.IsRelateToEffect` should be used. Example:
+Effects that target should always have access to the target in the operation, unless something goes wrong. By using `if tc`, this is obscured and might cause misinteractions that can be missed, as script errors might not be generated. Such a check should be kept only in cards that are mandatory trigger effects (where the target might not exist), otherwise only the `Card.IsRelateToEffect` should be used. _e.g._:
 
 Change:
 ```lua
@@ -78,20 +78,19 @@ end
 
 ## Add `Duel.SetPossibleOperationInfo` to effects that have optional or not guaranteed parts in the resolution
 
-`Duel.SetPossibleOperationInfo` was introduced to deal with cards that detect effects that 'include doing X', when only detecting the effect category is not enough. As such, if an effect has any optional part of its resolution that could be informed via `Duel.SetOperationInfo` if it was mandatory, then that information should be set via `Duel.SetPossibleOperationInfo`. Examples: "Veil of Darkness" (optional draw in the resolution), "Supay Duskwalker" (optional Special Summon from the hand or Deck)
+`Duel.SetPossibleOperationInfo` was introduced to deal with cards that detect effects which 'include doing X', when only detecting the effect category is not enough. As such, if an effect has any optional part of its resolution that could be informed via `Duel.SetOperationInfo` if it was mandatory, then that information should be set via `Duel.SetPossibleOperationInfo`. _e.g._: "Veil of Darkness" (optional draw in the resolution), "Supay Duskwalker" (optional Special Summon from the hand or Deck).
 
 
-## Use `Duel.GetMZoneCount` for effects that remove monsters on the field and ~~Special~~ Summon another
+## Use `Duel.GetMZoneCount` for effects that remove monsters on the field and Summon another
 
-If an effect summons a monster but requires (either by effect or by cost) removing another another monster from the field (e.g. Tributing/banishing/destroying it, etc) before performing the summon, using only `Duel.GetLocationCount` will not be enough to account for the possibility of that monster removed setting free a Monster Zone. Instea `Duel.GetMZoneCount` should be used, proviinge it the matching exclusion parameter to properly handle these interactions. Example: "Condemned Witch"
-
+If an effect summons a monster but requires (either by effect or by cost) removing another another monster from the field (_e.g._: Tributing/banishing/destroying it, etc) before performing the summon, using only `Duel.GetLocationCount` will not be enough to account for the possibility of that monster removed setting free a Monster Zone. Instead, `Duel.GetMZoneCount` should be used, providing it the matching exclusion parameter to properly handle these interactions. _e.g._: "Condemned Witch".
 
 ## Use `Duel.SelectEffect` when choosing effects to apply/activate
 
 Try to use this helper function instead of writing boilerplate code to choose effects (read its documentation).
 Confirm if the effect should be kept as separated effects due to ruling reasons (_e.g._: "Daigusto Emeral").
 
-_e.g._:
+Another example:
 ```lua
 local b1=true --Some condition 1.
 local b2=false --Some condition 2. 
@@ -135,11 +134,11 @@ Do not simply call `Duel.Overlay` or `Card.Overlay`, first check if the card(s) 
 
 ## Use `aux.SelectUnselectGroup` for effects that target/select cards with different filters at the same time
 
-If an effect targets/selects cards that must meet differen criteria at the same time, SelectUnselectGroup provides a clean way to do it, possibly shorting the script and/or avoiding multiple nested filters. Examples: "Swordsoul Blackout", "Marincess Aqua Argonaut" and "Ninjitsu Art Notebook of Mystery"
+If an effect targets/selects cards that must meet different criteria at the same time, `SelectUnselectGroup` provides a clean way to do it, possibly shortening the script and/or avoiding multiple nested filters. _e.g._: "Swordsoul Blackout", "Marincess Aqua Argonaut" and "Ninjitsu Art Notebook of Mystery".
 
 ## Replace the id in effect codes if they are a magic value meant to be used to interact with other cards
 
-If a card needs to check for effects hardcoded as the ID of the card that implements them, the corresponding constant should be used instead of such id. If the constant does not exist and the effect is commonly used, it should be created and put in `constant.lua`. Example:
+If a card needs to check for effects hardcoded as the ID of the card that implements them, the corresponding constant should be used instead of such id. If the constant does not exist and the effect is commonly used, it should be created and put in `constant.lua`. _e.g._:
 
 Change:
 ```lua

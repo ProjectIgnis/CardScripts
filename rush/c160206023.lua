@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_BEAST) and c:IsLevelAbove(7) and not c:IsPublic()
+	return c:IsMonster() and c:IsRace(RACE_BEAST) and c:IsLevelAbove(7) and not c:IsPublic()
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil) end
@@ -24,7 +24,8 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>2 end
 end
 function s.spfilter(c,e,tp)
-	return c:IsMonster() and c:IsRace(RACE_BEAST) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsMonster() and c:IsRace(RACE_BEAST) and c:IsLevelBelow(4)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
@@ -43,7 +44,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local tg=g:FilterSelect(tp,s.spfilter,1,ft,nil,e,tp)
 			if #tg>0 then
-				Duel.SpecialSummon(tg,0,tp,tp,false,false,POS_FACEUP)
+				Duel.SpecialSummon(tg,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)
 				g:RemoveCard(tg)
 			end
 		end

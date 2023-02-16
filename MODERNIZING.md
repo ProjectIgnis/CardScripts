@@ -1,6 +1,6 @@
 # Modernizing card scripts
 
-Sometimes old cards need to have their Lua script updated due to ruling, functional, and/or technical updates (either in the scripting engine or improvements in the ecosystem around it) and oftentimes, it would turn out that said scripts could use a modernization as a whole: they use old idioms, deprecated functionality and/or are simply not up to the standards that we are used to today.
+Sometimes old cards need to have their Lua script updated due to ruling, functional, and/or technical updates (either in the scripting engine or improvements in the ecosystem around it), and oftentimes, it would turn out that said scripts could use a modernization as a whole: they use old idioms, deprecated functionality, and/or are simply not up to the standards that we are used to today.
 
 The following list has been created so that these "modernization steps" are documented somewhere and can be looked up if you are in the mood to improve some script you touched. It is also recommended to consider whether or not a full script rewrite might be worth it, in which case, this list also has you covered with common scenarios and examples of things to keep in mind when doing so.
 
@@ -55,11 +55,12 @@ e1:SetHintTiming(0,TIMING_MAIN_END)
 ## Remove the Damage Step flag from SINGLE+TRIGGER effects
 
 For effects that have their type set as `EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_*` (* is either `O` or `F`), the correct Damage Step behavior is already automatically handled in the core, remove the `EFFECT_FLAG_DAMAGE_STEP` in the `SetProperty` call.
-Exceptions to this can be made based on rulings. For example, Proof of Pruflas and Fusion Parasite are single effects ruled not to be activatable in the Damage Step.
+Exceptions to this can be made based on rulings. For example, "Proof of Pruflas" and "Fusion Parasite" are single effects ruled not to be activatable in the Damage Step.
 
 ## Remove `if tc` check from targetting effects unless it's mandatory 
 
-Effects that target should always have access to the target in the operation, unless something goes wrong. By using `if tc` that is obscured and might cause misinteractions that can be missed, as script errors might not be generated. Such check should be only kept in cards that are mandatory trigger effects (where the target might not exist) and only the IsRelateToEffect should be used. Example:
+Effects that target should always have access to the target in the operation, unless something goes wrong. By using `if tc` that is obscured and might cause misinteractions that can be missed, as script errors might not be generated. Such a check should be kept only in cards that are mandatory trigger effects (where the target might not exist), otherwise only the `Card.IsRelateToEffect` should be used. Example:
+
 Change:
 ```lua
 local tc=Duel.GetFirstTarget()
@@ -75,20 +76,20 @@ if tc:IsRelateToEffect(e) then
 end
 ```
 
-## Add `Duel.SetPossibleOperationInfo` to effects that have optional parts in the resolution
+## Add `Duel.SetPossibleOperationInfo` to effects that have optional or not guaranteed parts in the resolution
 
-`Duel.SetPossibleOperationInfo` was introduced to deal with cards that detect effects that 'include doing X', when only detecting the effect category is not enough. As such, if an effect has any optional part of its resolution that could be informed via `Duel.SetOperationInfo` if it was mandatory, then that information should be set via SetPossibleOperationInfo. Examples: Veil of Darkness (optional draw in the resolution), Supay Duskwalker (optional special summon from the hand or Deck)
+`Duel.SetPossibleOperationInfo` was introduced to deal with cards that detect effects that 'include doing X', when only detecting the effect category is not enough. As such, if an effect has any optional part of its resolution that could be informed via `Duel.SetOperationInfo` if it was mandatory, then that information should be set via `Duel.SetPossibleOperationInfo`. Examples: "Veil of Darkness" (optional draw in the resolution), "Supay Duskwalker" (optional Special Summon from the hand or Deck)
 
 
 ## Use `Duel.GetMZoneCount` for effects that remove monsters on the field and ~~Special~~ Summon another
 
-If an effect summons a monster but requires (either by effect of by cost) removing another another monster from the field (tributing it, banishing it, destroying it, etc), using only Duel.GetLocationCount will not be enough to account for the possibility of that monster removed setting free a monster zone. Use `Duel.GetMZoneCount` and provide it the matching exclusion parameter to properly handle these interactions. Example: Condemned Witch
+If an effect summons a monster but requires (either by effect or by cost) removing another another monster from the field (e.g. Tributing/banishing/destroying it, etc) before performing the summon, using only `Duel.GetLocationCount` will not be enough to account for the possibility of that monster removed setting free a Monster Zone. Instea `Duel.GetMZoneCount` should be used, proviinge it the matching exclusion parameter to properly handle these interactions. Example: "Condemned Witch"
 
 
 ## Use `Duel.SelectEffect` when choosing effects to apply/activate
 
 Try to use this helper function instead of writing boilerplate code to choose effects (read its documentation).
-Confirm if the effect should be kept as separated effects due to ruling reasons (_e.g._: Daigusto Emeral).
+Confirm if the effect should be kept as separated effects due to ruling reasons (_e.g._: "Daigusto Emeral").
 
 _e.g._:
 ```lua
@@ -138,7 +139,8 @@ If an effect targets/selects cards that must meet differen criteria at the same 
 
 ## Replace the id in effect codes if they are a magic value meant to be used to interact with other cards
 
-If a card needs to check for effects hardcoded as the ID of the card that implements them, the corresponding constant should be used instead of such id. If the constant does not exist and the effect is commonly used, it should be created and put in constant.lua Example:
+If a card needs to check for effects hardcoded as the ID of the card that implements them, the corresponding constant should be used instead of such id. If the constant does not exist and the effect is commonly used, it should be created and put in `constant.lua`. Example:
+
 Change:
 ```lua
 if c:IsHasEffect(61777313) then
@@ -158,4 +160,4 @@ Constants like location, timing, resets, etc. should be binary or'd (op `|`) ins
 
 ## Remove the `IsRelateToEffect` check from cards that need to remain face-up to resolve their effects
 
-The behaviour of continuous-like Spells/Traps which must remain face-up on the field to resolve their activated effects is now automatically handled in the core, rendering the check redundant.
+The behaviour of continuous-like Spells/Traps which must remain face-up on the field to resolve their activated effects is now automatically handled in the core, rendering the check redundant. Plus, in the off chance that another card/effect can apply that effect's operation function that check existing could cause wrong interactions in some cases.

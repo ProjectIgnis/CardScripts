@@ -43,10 +43,10 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge,0)
 	end)
 end
-s.listed_series={0x103}
+s.listed_series={SET_ALTERGEIST}
 s.act_turn=true
 function s.tgfilter(c)
-	return c:IsSetCard(0x103) and c:IsMonster() and c:IsAbleToGrave()
+	return c:IsSetCard(SET_ALTERGEIST) and c:IsMonster() and c:IsAbleToGrave()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_HAND,0,1,nil) end
@@ -59,11 +59,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then Duel.SendtoGrave(g,REASON_EFFECT) end
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and re:IsActiveType(TYPE_TRAP)
-		and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
+	return ep~=tp and re:IsTrapEffect() and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x103) and c:IsMonster() and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_ALTERGEIST) and c:IsMonster() and c:IsAbleToGraveAsCost()
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
@@ -87,8 +86,8 @@ function s.actcon(e)
 	return e:GetHandler():GetFlagEffect(id)~=0
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	if not re or not re:GetHandler():IsSetCard(0x103) then return end
-	for ec in aux.Next(eg) do
+	if not re or not re:GetHandler():IsSetCard(SET_ALTERGEIST) then return end
+	for ec in eg:Iter() do
 		ec:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 	end
 end

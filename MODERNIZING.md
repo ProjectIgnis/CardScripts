@@ -31,12 +31,11 @@ Note that their database strings would also have to be updated to add the missin
 
 ## Make effect comments more descriptive
 
-Comments as "sp.summon" or "draw" are not very useful to describe what an effect is supposed to do. Detailed version of what the effect is supposed to do are preferred , using at most 1 line. First word and gameplay terms that are capitalized in the rulebook should be also capitalized here
+Comments as "sp.summon" or "draw" are not very useful to describe what an effect is supposed to do. Detailed versions of what the effect is supposed to do are preferred, using at most 1 line. The first word and gameplay terms that are capitalized in the rulebook should be capitalized. Example:
 
 ```lua
 --Special Summon 1 "tellarknight" monster from the Deck
 ```
-
 
 ## Use the `SET_` constants instead of hardcoded values for archetypes
 
@@ -60,7 +59,7 @@ Exceptions to this can be made based on rulings. For example, Proof of Pruflas a
 
 ## Remove `if tc` check from targetting effects unless it's mandatory 
 
-Effects that target should always have access to the target in the operation, unless something wents wrong. By using `if tc` that is obscured and might cause misinteractions that can be missed, as script errors might not be generated. Such check should be only kept in cards that are mandatory trigger effects (where the target might not exist) and only the IsRelateToEffect should be used. Example:
+Effects that target should always have access to the target in the operation, unless something goes wrong. By using `if tc` that is obscured and might cause misinteractions that can be missed, as script errors might not be generated. Such check should be only kept in cards that are mandatory trigger effects (where the target might not exist) and only the IsRelateToEffect should be used. Example:
 Change:
 ```lua
 local tc=Duel.GetFirstTarget()
@@ -83,7 +82,7 @@ end
 
 ## Use `Duel.GetMZoneCount` for effects that remove monsters on the field and ~~Special~~ Summon another
 
-If an effect Summon a monster but requires (either by effect of by cost) removing another another monster from the field (tributing it, banishing it, destroying it, etc), using only Duel.GetLocationCount will not be enough to account for the possibility of that monster removed setting free a monster zone. Use `Duel.GetMZoneCount` and provide it the matching exclusion parameter to properly handle these interactions. Example: Condemned Witch
+If an effect summons a monster but requires (either by effect of by cost) removing another another monster from the field (tributing it, banishing it, destroying it, etc), using only Duel.GetLocationCount will not be enough to account for the possibility of that monster removed setting free a monster zone. Use `Duel.GetMZoneCount` and provide it the matching exclusion parameter to properly handle these interactions. Example: Condemned Witch
 
 
 ## Use `Duel.SelectEffect` when choosing effects to apply/activate
@@ -135,7 +134,7 @@ Do not simply call `Duel.Overlay` or `Card.Overlay`, first check if the card(s) 
 
 ## Use `aux.SelectUnselectGroup` for effects that target/select cards with different filters at the same time
 
-If an effect targets/selects cards that must meet differen criteria at the same time, SelectUnselectGroup provides a clean way to to that, possibly shorting the script and/or avoiding multiple nested filter. Examples: "Swordsoul Blackout", "Marincess Aqua Argonaut" and "Ninjitsu Art Notebook of Mystery"
+If an effect targets/selects cards that must meet differen criteria at the same time, SelectUnselectGroup provides a clean way to do it, possibly shorting the script and/or avoiding multiple nested filters. Examples: "Swordsoul Blackout", "Marincess Aqua Argonaut" and "Ninjitsu Art Notebook of Mystery"
 
 ## Replace the id in effect codes if they are a magic value meant to be used to interact with other cards
 

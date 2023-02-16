@@ -45,7 +45,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_ATTRACTION}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsTraEffect() and re:IsHasType(EFFECT_TYPE_ACTIVATE)
+	return re:IsTrapEffect() and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

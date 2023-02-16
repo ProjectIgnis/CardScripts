@@ -37,11 +37,11 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	if g2:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then
 		Duel.ShuffleDeck(tp)
 	end
-	local ct=g2:FilterCount(Card.IsLocation,nil,LOCATION_DECK+LOCATION_EXTRA)
+	local ct=g2:FilterCount(Card.IsLocation,nil,LOCATION_DECK|LOCATION_EXTRA)
 	if ct>0 then
 		--Effect
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-		local g3=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,0,LOCATION_GRAVE,1,2,nil)
+		local g3=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(Card.IsAbleToDeck),tp,0,LOCATION_GRAVE,1,2,nil)
 		if #g3==0 then return end
 		if Duel.SendtoDeck(g3,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 then
 			local g4=Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_GRAVE,0,nil,67169062,id)

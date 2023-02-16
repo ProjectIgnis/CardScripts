@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.MaximumAttack=3000
+s.listed_names={160205010,160205012}
 function s.filter1(c)
 	return c:IsCode(160205010)
 end
@@ -37,5 +38,5 @@ function s.indcon(e)
 	return e:GetHandler():IsMaximumMode()
 end
 function s.indval(e,re,rp)
-	return re:IsActiveType(TYPE_TRAP) and aux.indoval(e,re,rp)
+	return re:IsTrapEffect() and aux.indoval(e,re,rp)
 end

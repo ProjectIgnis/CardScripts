@@ -17,6 +17,7 @@ function s.initial_effect(c)
 	c:AddMaximumAtkHandler()
 end
 s.MaximumAttack=3500
+s.lsited_names={160202001,160202003}
 function s.filter1(c)
 	return c:IsCode(160202001)
 end
@@ -28,5 +29,5 @@ function s.indcon(e)
 	return e:GetHandler():IsMaximumMode()
 end
 function s.indval(e,re,rp)
-	return re:IsActiveType(TYPE_TRAP) and aux.indoval(e,re,rp)
+	return re:IsTrapEffect() and aux.indoval(e,re,rp)
 end

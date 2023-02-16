@@ -26,7 +26,7 @@ function s.initial_effect(c)
 end
 s.MaximumSide="Right"
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return c:IsLocation(LOCATION_HAND+LOCATION_GRAVE) and c:IsLevel(7)
+	return c:IsLocation(LOCATION_HAND|LOCATION_GRAVE) and c:IsLevel(7)
 end
 function s.maxCon(e)
 	return e:GetHandler():IsMaximumMode()

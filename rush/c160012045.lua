@@ -18,6 +18,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.efilter)
 	c:RegisterEffect(e2)
 end
+s.listed_names={id,160301001}
 function s.eqfilter(c)
 	return c:IsFaceup() and c:IsCode(160301001) and not c:IsMaximumModeSide()
 end
@@ -31,8 +32,8 @@ function s.value(e,c)
 	return Duel.GetMatchingGroupCountRush(s.filter,e:GetHandlerPlayer(),LOCATION_SZONE,LOCATION_SZONE,nil)*1000
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,160012045),tp,LOCATION_ONFIELD,0,1,nil)
+	return not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,id),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.efilter(e,te)
-	return te:IsActiveType(TYPE_TRAP) and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
+	return te:IsTrapEffect() and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
 end

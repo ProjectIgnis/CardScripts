@@ -14,8 +14,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.indtg(e,c)
-	return c:IsLevelAbove(7) and c:IsRace(RACE_WARRIOR+RACE_CELESTIALWARRIOR)
+	return c:IsLevelAbove(7) and c:IsRace(RACE_WARRIOR|RACE_CELESTIALWARRIOR)
 end
 function s.efilter(e,re,rp)
-	return re:IsActiveType(TYPE_TRAP) and aux.indoval(e,re,rp)
+	return re:IsTrapEffect() and aux.indoval(e,re,rp)
 end

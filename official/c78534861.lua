@@ -30,6 +30,14 @@ function s.initial_effect(c)
 	e3:SetTargetRange(0,LOCATION_MZONE)
 	e3:SetTarget(s.distg)
 	c:RegisterEffect(e3)
+	--Adjust itself to apply the negation effect right away
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e4:SetCode(EVENT_BE_BATTLE_TARGET)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetOperation(function(e) Duel.AdjustInstantly(e:GetHandler()) end)
+	c:RegisterEffect(e4)
 end
 s.listed_series={SET_SCARECLAW,SET_KASHTIRA}
 function s.rmfilter(c)

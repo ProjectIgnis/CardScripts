@@ -31,11 +31,16 @@ Note that their database strings would also have to be updated to add the missin
 
 ## Make effect comments more descriptive
 
-TODO (+note to capitalize the first word and some gameplay terms like Special Summon)
+Comments as "sp.summon" or "draw" are not very useful to describe what an effect is supposed to do. Detailed version of what the effect is supposed to do are preferred , using at most 1 line. First word and gameplay terms that are capitalized in the rulebook should be also capitalized here
+
+```lua
+--Special Summon 1 "tellarknight" monster from the Deck
+```
+
 
 ## Use the `SET_` constants instead of hardcoded values for archetypes
 
-Self explanatory. If the constant doesn't exist, create it. Things to look out for are magic hexadecimal values (_e.g._: `0x26ed`).
+If a card script uses a setcode, replace its hexadecimal value by the corresponding constant name obtained from our [list of archetype constants](https://github.com/ProjectIgnis/CardScripts/blob/master/archetype_setcode_constants.lua). If the matching constant does not exist, it should be created.
 
 ## Add timing hints to quick effects
 
@@ -51,25 +56,40 @@ e1:SetHintTiming(0,TIMING_MAIN_END)
 ## Remove the Damage Step flag from SINGLE+TRIGGER effects
 
 For effects that have their type set as `EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_*` (* is either `O` or `F`), the correct Damage Step behavior is already automatically handled in the core, remove the `EFFECT_FLAG_DAMAGE_STEP` in the `SetProperty` call.
-
-TODO: note cards that have to explicitly check the opposite (Fusion Parasite)
+Exceptions to this can be made based on rulings. For example, Proof of Pruflas and Fusion Parasite are single effects ruled not to be activatable in the Damage Step.
 
 ## Remove `if tc` check from targetting effects unless it's mandatory 
 
-TODO (should simply check if tc is related)
+Effects that target should always have access to the target in the operation, unless something wents wrong. By using `if tc` that is obscured and might cause misinteractions that can be missed, as script errors might not be generated. Such check should be only kept in cards that are mandatory trigger effects (where the target might not exist) and only the IsRelateToEffect should be used. Example:
+Change:
+```lua
+local tc=Duel.GetFirstTarget()
+if tc and tc:IsRelateToEffect(e) then
+	--do things
+end
+```
+to:
+```lua
+local tc=Duel.GetFirstTarget()
+if tc:IsRelateToEffect(e) then
+	--do things
+end
+```
 
-## Add `Duel.SetPossibleOperationInfo` to effects that have optional "stuff"
+## Add `Duel.SetPossibleOperationInfo` to effects that have optional parts in the resolution
 
-TODO (decide what "stuff" should be)
+`Duel.SetPossibleOperationInfo` was introduced to deal with cards that detect effects that 'include doing X', when only detecting the effect category is not enough. As such, if an effect has any optional part of its resolution that could be informed via `Duel.SetOperationInfo` if it was mandatory, then that information should be set via SetPossibleOperationInfo. Examples: Veil of Darkness (optional draw in the resolution), Supay Duskwalker (optional special summon from the hand or Deck)
+
 
 ## Use `Duel.GetMZoneCount` for effects that remove monsters on the field and ~~Special~~ Summon another
 
-TODO (Does it apply to only monsters that Special Summon or could things like immediate normal summons count?)
+If an effect Summon a monster but requires (either by effect of by cost) removing another another monster from the field (tributing it, banishing it, destroying it, etc), using only Duel.GetLocationCount will not be enough to account for the possibility of that monster removed setting free a monster zone. Use `Duel.GetMZoneCount` and provide it the matching exclusion parameter to properly handle these interactions. Example: Condemned Witch
+
 
 ## Use `Duel.SelectEffect` when choosing effects to apply/activate
 
 Try to use this helper function instead of writing boilerplate code to choose effects (read its documentation).
-~~Note that in certain scenarios you should instead use separated effects due to ruling reasons (_e.g._: Daigusto Emeral).~~ TODO: better way to phrase this distinction
+Confirm if the effect should be kept as separated effects due to ruling reasons (_e.g._: Daigusto Emeral).
 
 _e.g._:
 ```lua
@@ -113,13 +133,25 @@ e1:SetCost(aux.selfreleasecost)
 
 Do not simply call `Duel.Overlay` or `Card.Overlay`, first check if the card(s) can be attached with the aforementioned function.
 
-## Use `aux.SelectUnselect` for effects that target/select cards with different filters at the same time
+## Use `aux.SelectUnselectGroup` for effects that target/select cards with different filters at the same time
 
-TODO (check "Swordsoul Blackout" and "Marincess Aqua Argonaut" for examples)
+If an effect targets/selects cards that must meet differen criteria at the same time, SelectUnselectGroup provides a clean way to to that, possibly shorting the script and/or avoiding multiple nested filter. Examples: "Swordsoul Blackout", "Marincess Aqua Argonaut" and "Ninjitsu Art Notebook of Mystery"
 
 ## Replace the id in effect codes if they are a magic value meant to be used to interact with other cards
 
-TODO
+If a card needs to check for effects hardcoded as the ID of the card that implements them, the corresponding constant should be used instead of such id. If the constant does not exist and the effect is commonly used, it should be created and put in constant.lua Example:
+Change:
+```lua
+if c:IsHasEffect(61777313) then
+	--do things
+end
+```
+to
+```lua
+if c:IsHasEffect(EFFECT_SYNSUB_NORDIC) then
+	--do things
+end
+```
 
 ## Use bitwise operations for values that are meant to be used as bitfields
 

@@ -2,7 +2,7 @@
 --Malevolent Catastrophe (Rush)
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Destroy all Spell/Traps ont he field
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -13,7 +13,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	local at=Duel.GetAttacker()
+	return at and at:IsControler(1-tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

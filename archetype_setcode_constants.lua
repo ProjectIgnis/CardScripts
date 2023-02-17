@@ -5,8 +5,6 @@
 	Notes:
 - To be formatted, probably alphabetically while keeping sub-archetypes with the original.
 
-- 0x67 Iron (unused, non-existent archetype, アイアン, 9 OCG cards include it in their names)
-- 0x68 Tin (unused, non-existent archetype, ブリキ, 3 OCG cards include it in their names)
 - 0x6c Lightray (unused, non-existent archetype, ライトレイ, 6 OCG cards include it in their names)
 - 0x8c Druid (unused, non-existent archetype, ドルイド, 4 OCG cards include it in their names)
 
@@ -510,6 +508,8 @@ SET_BYSTIAL                       = 0x189
 SET_GHOTI                         = 0x18b
 SET_KASHTIRA                      = 0x18a
 SET_GOLD_PRIDE                    = 0x193
+SET_KOALA                         = 0x67
+SET_KANGAROO                      = 0x68
 --Currently unreleased in the TCG, the official English name is unknown
 SET_RESCUE_ACE                    = 0x18c
 SET_PURERY                        = 0x18d

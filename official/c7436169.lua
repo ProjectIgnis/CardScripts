@@ -1,4 +1,4 @@
--- トリヴィカルマ
+--トリヴィカルマ
 --Trivikarma
 --scripted by Naim
 local s,id=GetID()
@@ -59,20 +59,20 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc1=g:GetFirst()
 	local tc2=g:GetNext()
 	if tc2==e:GetLabelObject() then tc1,tc2=tc2,tc1 end
-	if tc2 and tc2:IsControler(1-tp) and tc2:IsFaceup() and not tc2:IsDisabled() and not tc2:IsImmuneToEffect(e) then
+	if tc2 and tc2:IsControler(1-tp) and tc2:IsFaceup() and tc2:IsCanBeDisabledByEffect(e) then
 		local c=e:GetHandler()
 		Duel.NegateRelatedChain(tc2,RESET_TURN_SET)
 		--Negate the effects of the opponent's monster
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc2:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetValue(RESET_TURN_SET)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc2:RegisterEffect(e2)
 		local val=math.max(tc2:GetBaseAttack(),tc2:GetBaseDefense())/2
 		if val==0 then return end

@@ -18,11 +18,11 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then 
 	return Duel.GetFieldGroupCountRush(tp,0,LOCATION_MZONE)>0
 		and e:GetHandler():GetEffectCount(EFFECT_EXTRA_ATTACK)==0
-		and Duel.IsAbleToEnterBP() 
+		and Duel.IsAbleToEnterBP()
 	end
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
-	local ct=Duel.GetFieldGroupCountRush(tp,0,LOCATION_MZONE)
+	local ct=Duel.GetMatchingGroupCountRush(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 	local heads=Duel.CountHeads(Duel.TossCoin(tp,ct))
 	--Effect
 	local c=e:GetHandler()
@@ -34,9 +34,9 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 			e1:SetCode(EFFECT_EXTRA_ATTACK)
 			e1:SetValue(1)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 			c:RegisterEffect(e1)
 		end
-		if heads==3 then c:AddPiercing(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END) end
+		if heads==3 then c:AddPiercing(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END) end
 	end
 end

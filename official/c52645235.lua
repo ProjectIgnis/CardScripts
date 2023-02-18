@@ -1,12 +1,12 @@
 -- エピュアリィ・ハピネス
--- Epurery Happiness
+-- Epurrely Happiness
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	-- 2 Level 2 monsters
 	Xyz.AddProcedure(c,nil,2,2)
-	-- Search 1 "Purery" card
+	-- Search 1 "Purrely" card
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_ATKCHANGE)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	-- Attach "Purery" Quick-Play Spell
+	-- Attach "Purrely" Quick-Play Spell
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TOHAND)
@@ -29,9 +29,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={82105704}
-s.listed_series={0x18d}
+s.listed_series={SET_PURRELY}
 function s.thfilter(c)
-	return c:IsSetCard(0x18d) and c:IsAbleToHand()
+	return c:IsSetCard(SET_PURRELY) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -64,7 +64,7 @@ end
 function s.qpovcon(e,tp,eg,ep,ev,re,r,rp)
 	if rp==1-tp or not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return false end
 	local rc=re:GetHandler()
-	return rc:IsSetCard(0x18d) and rc:GetType()==TYPE_SPELL+TYPE_QUICKPLAY
+	return rc:IsSetCard(SET_PURRELY) and rc:GetType()==TYPE_SPELL+TYPE_QUICKPLAY
 		and rc:IsOnField() and rc:IsCanBeXyzMaterial(e:GetHandler(),tc,REASON_EFFECT)
 end
 function s.qpovtg(e,tp,eg,ep,ev,re,r,rp,chk)

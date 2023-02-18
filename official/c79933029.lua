@@ -29,9 +29,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_PURERY}
+s.listed_series={SET_PURRELY}
 function s.thfilter(c)
-	return c:IsSetCard(SET_PURERY) and not c:IsQuickPlaySpell() and c:IsAbleToHand()
+	return c:IsSetCard(SET_PURRELY) and not c:IsQuickPlaySpell() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -46,7 +46,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.qpfilter(c,e,tp,mc)
-	return c:IsSetCard(SET_PURERY) and c:IsQuickPlaySpell()
+	return c:IsSetCard(SET_PURRELY) and c:IsQuickPlaySpell()
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,mc,c)
 end
 function s.spfilter(c,e,tp,mc,sc)

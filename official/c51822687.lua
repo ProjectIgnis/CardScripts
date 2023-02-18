@@ -1,5 +1,5 @@
 --エクスピュアリィ・ハピネス
---Expurery Happiness
+--Expurrely Happiness
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -28,12 +28,12 @@ function s.initial_effect(c)
 	e2:SetOperation(s.dmgop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x18d}
+s.listed_series={SET_PURRELY}
 function s.ovfilter(c,tp,lc)
 	return c:IsFaceup() and c:IsRank(2) and c:GetOverlayCount()>=5
 end
 function s.disfilter(c)
-	return c:IsSetCard(0x18d) and c:GetOriginalLevel()==1
+	return c:IsSetCard(SET_PURRELY) and c:GetOriginalLevel()==1
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

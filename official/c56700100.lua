@@ -1,5 +1,5 @@
 --ピュアリィ・マイフレンド
---Purery, My Friend
+--My Friend Purrely
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--Reveal 3 "Purery" cards and add 1 to the hand
+	--Reveal 3 "Purrely" cards and add 1 to the hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
-	--Add up to 3 "Purery" Quick-Play Spells to the hand
+	--Add up to 3 "Purrely" Quick-Play Spells to the hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TOHAND)
@@ -34,20 +34,20 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={id}
-s.listed_series={0x18d}
+s.listed_series={SET_PURRELY}
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,500) end
 	Duel.PayLPCost(tp,500)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x18d) and c:IsAbleToHand() and not c:IsCode(id)
+	return c:IsSetCard(SET_PURRELY) and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,3,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil,0x18d)
+	local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil,SET_PURRELY)
 	if #g>=3 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local sg=g:Select(tp,3,3,nil)
@@ -58,14 +58,14 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.xyzfilter(c,tp)
-	return c:IsPreviousPosition(POS_FACEUP) and c:IsType(TYPE_XYZ) and c:IsPreviousSetCard(0x18d) and c:IsPreviousControler(tp)
+	return c:IsPreviousPosition(POS_FACEUP) and c:IsType(TYPE_XYZ) and c:IsPreviousSetCard(SET_PURRELY) and c:IsPreviousControler(tp)
 		and c:GetReasonPlayer()==1-tp
 end
 function s.rthcond(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.xyzfilter,1,nil,tp)
 end
 function s.qpfilter(c)
-	return c:IsSetCard(0x18d) and c:IsSpell() and c:IsType(TYPE_QUICKPLAY) and c:IsAbleToHand()
+	return c:IsSetCard(SET_PURRELY) and c:IsSpell() and c:IsType(TYPE_QUICKPLAY) and c:IsAbleToHand()
 end
 function s.rthtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.qpfilter,tp,LOCATION_GRAVE,0,1,nil) end

@@ -346,8 +346,8 @@ SET_SUPREME_KING_GATE             = 0x10f8
 SET_SUPREME_KING_DRAGON           = 0x20f8
 SET_TRUE_DRACO_KING               = 0xf9
 SET_PHANTASM_SPIRAL               = 0xfa
-SET_TRICKSTAR                     = 0xfb
-SET_GOUKI                         = 0xfc
+SET_GOUKI                         = 0xfb
+SET_TRICKSTAR                     = 0xfc
 SET_WORLD_CHALICE                 = 0xfd
 SET_WORLD_LEGACY                  = 0xfe
 SET_CLEAR_WING                    = 0xff
@@ -510,12 +510,12 @@ SET_KASHTIRA                      = 0x18a
 SET_GOLD_PRIDE                    = 0x193
 SET_KOALA                         = 0x67
 SET_KANGAROO                      = 0x68
---Currently unreleased in the TCG, the official English name is unknown
 SET_RESCUE_ACE                    = 0x18c
-SET_PURERY                        = 0x18d
+SET_PURRELY                       = 0x18d
 SET_MIKANKO                       = 0x18e
 SET_AQUAMIRROR                    = 0x18f
 SET_FIREWALL                      = 0x190
+--Currently unreleased in the TCG, the official English name is unknown
 SET_MANADOME                      = 0x191
 SET_NEMURELIA                     = 0x192
 --Beta archetypes

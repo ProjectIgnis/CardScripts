@@ -29,18 +29,18 @@ function s.coinop(e,tp,eg,ep,ev,re,r,rp)
 	s.arcanareg(c,Arcana.TossCoin(c,tp))
 end
 function s.arcanareg(c,coin)
-	--disable effect
+	--Apply effect when a Spell Card is activated
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_CHAIN_SOLVED)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetOperation(s.speop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e1)
 	Arcana.RegisterCoinResult(c,coin)
 end
 function s.speop(e,tp,eg,ep,ev,re,r,rp)
-	if not re:IsActiveType(TYPE_SPELL) or not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
+	if not re:IsSpellEffect() or not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
 	local c=e:GetHandler()
 	local val=Arcana.GetCoinResult(c)
 	if val==COIN_HEADS then
@@ -48,7 +48,7 @@ function s.speop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(c:GetBaseAttack()*2)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_PHASE|PHASE_END)
 		c:RegisterEffect(e1)
 	elseif val==COIN_TAILS then
 		Duel.Recover(1-tp,500,REASON_EFFECT)

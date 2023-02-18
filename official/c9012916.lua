@@ -2,11 +2,12 @@
 --Black-Winged Dragon
 local s,id=GetID()
 function s.initial_effect(c)
+	--Allow Feather Counters
 	c:EnableCounterPermit(0x10)
-	--synchro summon
+	--Synchro Summon
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
 	c:EnableReviveLimit()
-	--damage reduce
+	--Replace effect damage
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CHANGE_DAMAGE)
@@ -18,7 +19,7 @@ function s.initial_effect(c)
 	local e4=e1:Clone()
 	e4:SetCode(EFFECT_NO_EFFECT_DAMAGE)
 	c:RegisterEffect(e4)
-	--atkdown-c
+	--Decrease its own ATK by each Feather Counter
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -26,9 +27,10 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetValue(s.atkval)
 	c:RegisterEffect(e2)
-	--atkdown
+	--Decrease ATK of a monster and inflict damage
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
+	e3:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DAMAGE)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetRange(LOCATION_MZONE)
@@ -59,7 +61,9 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsFaceup() end
 	if chk==0 then return Duel.IsExistingTarget(Card.HasNonZeroAttack,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	Duel.SelectTarget(tp,Card.HasNonZeroAttack,tp,0,LOCATION_MZONE,1,1,nil)
+	local tc=Duel.SelectTarget(tp,Card.HasNonZeroAttack,tp,0,LOCATION_MZONE,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,e:GetLabel())
+	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,tc,1,0,-e:GetLabel())
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
@@ -68,11 +72,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local atk=tc:GetAttack()
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-val)
 		tc:RegisterEffect(e1)
-		if val>atk then Duel.Damage(1-tp,atk,REASON_EFFECT)
-		else Duel.Damage(1-tp,val,REASON_EFFECT) end
+		if val>atk then
+			Duel.Damage(1-tp,atk,REASON_EFFECT)
+		else
+			Duel.Damage(1-tp,val,REASON_EFFECT)
+		end
 	end
 end

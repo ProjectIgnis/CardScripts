@@ -2,7 +2,7 @@
 --Infinite Impermanence
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Negate the effects of 1 monster the opponent controls
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DISABLE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -12,11 +12,11 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--act in hand
+	--Can be activated from the hand
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_TRAP_ACT_IN_HAND)
-	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCondition(s.handcon)
 	c:RegisterEffect(e2)
 end
@@ -33,9 +33,9 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	local pos=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
-	if tc and ((tc:IsFaceup() and not tc:IsDisabled() and not tc:IsImmuneToEffect(e)) or tc:IsType(TYPE_TRAPMONSTER)) and tc:IsRelateToEffect(e) then
+	if tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsCanBeDisabledByEffect(e) then
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
+		--Negate its effects
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
@@ -47,10 +47,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetValue(RESET_TURN_SET)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e2)
-		if not tc:IsImmuneToEffect(e1) and not tc:IsImmuneToEffect(e2)
-			and c:IsRelateToEffect(e) and pos&POS_FACEDOWN>0 then
+		local pos=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
+		if c:IsRelateToEffect(e) and pos&POS_FACEDOWN>0 then
 			Duel.BreakEffect()
 			c:RegisterFlagEffect(id,RESET_CHAIN,0,0)
+			--Negate Spell/Trap effects in the same column
 			local e3=Effect.CreateEffect(c)
 			e3:SetType(EFFECT_TYPE_FIELD)
 			e3:SetCode(EFFECT_DISABLE)
@@ -69,6 +70,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e5:SetReset(RESET_PHASE+PHASE_END)
 			e5:SetLabel(c:GetSequence())
 			Duel.RegisterEffect(e5,tp)
+			local zone=1<<(c:GetSequence()+8)
+			Duel.Hint(HINT_ZONE,tp,zone)
 		end
 	end
 end
@@ -79,7 +82,7 @@ function s.distg(e,c)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local cseq=e:GetLabel()
-	if not re:IsActiveType(TYPE_SPELL+TYPE_TRAP) then return end
+	if not re:IsSpellTrapEffect() then return end
 	local rc=re:GetHandler()
 	if rc:GetFlagEffect(id)>0 then return end
 	local p,loc,seq=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_CONTROLER,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_SEQUENCE)

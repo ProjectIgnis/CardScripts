@@ -82,7 +82,7 @@ end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFlagEffect(tp,id)>0 then return end
 	local rc=re:GetHandler()
-	if not (re and re:IsActivated() and re:IsActiveType(TYPE_MONSTER) and rc) then return end
+	if not (re and re:IsActivated() and re:IsMonsterEffect() and rc) then return end
 	local c=e:GetHandler()
 	local tg=eg:Filter(s.tgfilter,nil,rc)
 	if #tg>0 then

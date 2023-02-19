@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.repop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x119}
+s.listed_series={SET_SALAMANGREAT}
 s.listed_names={CARD_SALAMANGREAT_SANCTUARY}
 function s.matfilter(c,scard,sumtype,tp)
 	return c:IsLevelBelow(4) and c:IsRace(RACE_CYBERSE,scard,sumtype,tp)
@@ -52,7 +52,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.repfilter(c,tp)
-	return c:IsFaceup() and c:IsControler(tp) and c:IsOnField() and c:IsSetCard(0x119)
+	return c:IsFaceup() and c:IsControler(tp) and c:IsOnField() and c:IsSetCard(SET_SALAMANGREAT)
 		and not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_EFFECT+REASON_BATTLE)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)

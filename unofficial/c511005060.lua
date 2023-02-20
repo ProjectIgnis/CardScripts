@@ -26,7 +26,7 @@ function s.flag_op(e,tp,eg,ep,ev,re,r,rp)
 	s['cstore_'..ch]={eg,ep,ev,re,r,rp}
 end
 function s.hnd_fil(c,e,tp,eg,ep,ev,re,r,rp)
-	if c:IsSpell() and not s['no_react_ev'] then
+	if c:IsSpell() and not c['no_react_ev'] then
 	local te=c:GetActivateEffect()
 	if not te then return end
 	local cd=te:GetCondition()
@@ -50,7 +50,7 @@ function s.hnd_fil(c,e,tp,eg,ep,ev,re,r,rp)
 	return false
 end
 function s.szo_fil(c,e,tp,eg,ep,ev,re,r,rp)
-	return not c:IsFaceup() and s.hnd_fil(c,e,tp,eg,ep,ev,re,r,rp)
+	return c:IsFacedown() and s.hnd_fil(c,e,tp,eg,ep,ev,re,r,rp)
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

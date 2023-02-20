@@ -173,7 +173,7 @@ function s.disop2(e,tp,eg,ep,ev,re,r,rp)
 			end
 		end
 		for sc in g:Iter() do
-			c:SetCardTarget(tc)
+			c:SetCardTarget(sc)
 		end
 	end
 end

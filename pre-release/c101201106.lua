@@ -3,7 +3,6 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	-- c:EnableCounterPermit(0x1148)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -37,10 +36,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_names={CARD_CRIMSON_DRAGON}
-s.counter_place_list={0x1148}
+s.counter_place_list={COUNTER_SIGNAL}
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(Card.IsSummonType,1,nil,SUMMON_TYPE_SYNCHRO) then
-		e:GetHandler():AddCounter(0x1148,2)
+		e:GetHandler():AddCounter(COUNTER_SIGNAL,2)
 	end
 end
 function s.tunerspfilter(c,e,tp)
@@ -51,11 +50,11 @@ function s.syncspfilter(c,e,tp)
 end
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local b1=Duel.IsCanRemoveCounter(tp,1,0,0x1148,4,REASON_COST)
+	local b1=Duel.IsCanRemoveCounter(tp,1,0,COUNTER_SIGNAL,4,REASON_COST)
 		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.HasLevel),tp,LOCATION_MZONE,0,1,nil)
-	local b2=Duel.IsCanRemoveCounter(tp,1,0,0x1148,7,REASON_COST) and ft>0 
+	local b2=Duel.IsCanRemoveCounter(tp,1,0,COUNTER_SIGNAL,7,REASON_COST) and ft>0 
 		and Duel.IsExistingMatchingCard(s.tunerspfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
-	local b3=Duel.IsCanRemoveCounter(tp,1,0,0x1148,10,REASON_COST) and ft>0
+	local b3=Duel.IsCanRemoveCounter(tp,1,0,COUNTER_SIGNAL,10,REASON_COST) and ft>0
 		and Duel.IsExistingMatchingCard(s.syncspfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
 	if chk==0 then return b1 or b2 or b3 end
 	local op=Duel.SelectEffect(tp,
@@ -64,7 +63,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 		{b3,aux.Stringid(id,4)})
 	e:SetLabel(op)
 	local ct=(op==1 and 4) or (op==2 and 7) or (op==3 and 10)
-	Duel.RemoveCounter(tp,1,0,0x1148,ct,REASON_COST)
+	Duel.RemoveCounter(tp,1,0,COUNTER_SIGNAL,ct,REASON_COST)
 	if op==1 then
 		e:SetCategory(CATEGORY_LVCHANGE)
 	else

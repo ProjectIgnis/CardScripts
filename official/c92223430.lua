@@ -1,14 +1,14 @@
 --神鳥の霊峰エルブルズ
---Elborz, Sacred Peak of Simorgh
+--Elborz, the Sacred Lands of Simorgh
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--boost
+	--Increase the ATK/DEF of WIND Wigned Beast monsters by 300
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e3)
-	--less tribute
+	--Level 5 or higher WIND  Winged Beast can be summoned for 1 less Tribute
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,0))
 	e4:SetType(EFFECT_TYPE_IGNITION)
@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e4:SetCost(s.trcost)
 	e4:SetOperation(s.trop)
 	c:RegisterEffect(e4)
-	--normal summon
+	--Normal Summon 1 Winged Beast monster
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,1))
 	e5:SetCategory(CATEGORY_SUMMON)
@@ -49,6 +49,7 @@ function s.trfilter(c)
 end
 function s.trcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.trfilter,tp,LOCATION_HAND,0,1,nil) end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local g=Duel.SelectMatchingCard(tp,s.trfilter,tp,LOCATION_HAND,0,1,1,nil)
 	Duel.ConfirmCards(1-tp,g)
@@ -56,18 +57,17 @@ function s.trcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.trop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD)
-	e3:SetCode(EFFECT_DECREASE_TRIBUTE)
-	e3:SetTargetRange(LOCATION_HAND,0)
-	e3:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_WINGEDBEAST))
-	e3:SetValue(0x10001)
-	e3:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e3,tp)
-	local e4=e3:Clone()
-	e4:SetCode(EFFECT_DECREASE_TRIBUTE_SET)
-	Duel.RegisterEffect(e4,tp)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_DECREASE_TRIBUTE)
+	e1:SetTargetRange(LOCATION_HAND,0)
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_WINGEDBEAST))
+	e1:SetValue(0x10001)
+	e1:SetReset(RESET_PHASE|PHASE_END)
+	Duel.RegisterEffect(e1,tp)
+	local e2=e1:Clone()
+	e2:SetCode(EFFECT_DECREASE_TRIBUTE_SET)
+	Duel.RegisterEffect(e2,tp)
 end
 function s.nsfilter(c)
 	return c:IsRace(RACE_WINGEDBEAST) and c:IsSummonable(true,nil)
@@ -77,11 +77,11 @@ function s.nscon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.nstg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.nsfilter,tp,LOCATION_HAND,0,1,nil) end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.SetOperationInfo(0,CATEGORY_SUMMON,nil,1,0,0)
 end
 function s.nsop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.nsfilter,tp,LOCATION_HAND,0,1,1,nil)
 	local tc=g:GetFirst()

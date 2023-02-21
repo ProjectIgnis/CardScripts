@@ -2,7 +2,7 @@
 --Fake Feather
 local s,id=GetID()
 function s.initial_effect(c)
-	--copy trap
+	--Copy the Effects of a Normal Trap card
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -13,9 +13,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={id}
-s.listed_series={0x33}
+s.listed_series={SET_BLACKWING}
 function s.cfilter(c)
-	return c:IsSetCard(0x33) and c:IsMonster() and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_BLACKWING) and c:IsMonster() and c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
@@ -24,7 +24,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.filter(c,e,tp,chk,chain)
-	if c:GetType()~=0x4 or c:IsCode(id) then return false end
+	if not c:IsNormalTrap() or c:IsCode(id) then return false end
 	local te,eg,ep,ev,re,r,rp
 	if chk==0 then
 		te,eg,ep,ev,re,r,rp=c:CheckActivateEffect(false,true,true)

@@ -42,14 +42,14 @@ function s.filter1(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return Duel.IsExistingTarget(s.filter1,tp,LOCATION_MZONE+LOCATION_PZONE,0,1,e:GetHandler())
+	if chk==0 then return Duel.IsExistingTarget(s.filter1,tp,LOCATION_MZONE|LOCATION_PZONE,0,1,e:GetHandler())
 		and Duel.IsExistingTarget(Card.IsFacedown,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g1=Duel.SelectTarget(tp,s.filter1,tp,LOCATION_MZONE+LOCATION_PZONE,0,1,1,e:GetHandler())
+	local g1=Duel.SelectTarget(tp,s.filter1,tp,LOCATION_MZONE|LOCATION_PZONE,0,1,1,e:GetHandler())
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g2=Duel.SelectTarget(tp,Card.IsFacedown,tp,0,LOCATION_ONFIELD,1,1,nil)
 	g1:Merge(g2)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g1,2,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g1,#g1,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)

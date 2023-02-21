@@ -94,13 +94,13 @@ function s.scop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	--Cannot Special Summon, except "Yosenju" monsters
 	local e0=Effect.CreateEffect(c)
+	e0:SetDescription(aux.Stringid(id,4))
 	e0:SetType(EFFECT_TYPE_FIELD)
 	e0:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e0:SetDescription(aux.Stringid(id,4))
 	e0:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e0:SetTargetRange(1,0)
 	e0:SetTarget(s.splimit)
-	e0:SetReset(RESET_PHASE+PHASE_END)
+	e0:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e0,tp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
@@ -109,7 +109,7 @@ function s.scop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LSCALE)
 		e1:SetValue(11)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_CHANGE_RSCALE)
@@ -125,8 +125,9 @@ function s.sthtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.sthop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
-	Duel.SendtoHand(c,nil,REASON_EFFECT)
+	if c:IsRelateToEffect(e) then
+		Duel.SendtoHand(c,nil,REASON_EFFECT)
+	end
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsAbleToHand() and chkc:IsController(1-tp) end
@@ -156,7 +157,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetValue(500)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 end

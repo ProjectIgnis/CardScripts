@@ -44,7 +44,7 @@ function s.thfilter(c,e,tp)
 		or c:IsControler(1-tp)) and c:IsAbleToHand() and c:IsCanBeEffectTarget(e)
 end
 function s.rescon(sg,e,tp,mg)
-    return sg:FilterCount(Card.IsControler,nil,tp)==1
+	return sg:FilterCount(Card.IsControler,nil,tp)==1
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -61,9 +61,8 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsTurnPlayer(1-tp) and re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+	return Duel.IsTurnPlayer(1-tp) and re:IsSpellTrapEffect() and Duel.IsChainDisablable(ev)
 		and (Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)&LOCATION_ONFIELD)~=0
-		and Duel.IsChainDisablable(ev)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_MARINCESS) and c:IsOriginalType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

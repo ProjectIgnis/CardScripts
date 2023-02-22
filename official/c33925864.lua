@@ -37,27 +37,34 @@ end
 function s.rmfilter(c,p)
 	return Duel.IsPlayerCanRemove(p,c) and not c:IsType(TYPE_TOKEN)
 end
+function s.rmtkfilter(c,p)
+	return Duel.IsPlayerCanRemove(p,c)
+end
 function s.rmvtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g1=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_MZONE,0,nil,tp)
-	local g2=Duel.GetMatchingGroup(s.rmfilter,tp,0,LOCATION_MZONE,nil,1-tp)
-	if chk==0 then return (#g1>1 and not Duel.IsPlayerAffectedByEffect(tp,30459350))
-		or (#g2>1 and not Duel.IsPlayerAffectedByEffect(1-tp,30459350)) end
+	local g1=Duel.GetMatchingGroup(s.rmtkfilter,tp,LOCATION_MZONE,0,nil,tp)
+	local g2=Duel.GetMatchingGroup(s.rmtkfilter,tp,0,LOCATION_MZONE,nil,1-tp)
+	local g3=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_MZONE,0,nil,tp) --Check there are at least 1 non-token monsters
+	local g4=Duel.GetMatchingGroup(s.rmfilter,tp,0,LOCATION_MZONE,nil,1-tp)
+	if chk==0 then return (#g1>1 and #g3>0 and not Duel.IsPlayerAffectedByEffect(tp,30459350))
+		or (#g2>1 and #g4>0 and not Duel.IsPlayerAffectedByEffect(1-tp,30459350)) end
 end
 function s.rmvop(e,tp,eg,ep,ev,re,r,rp)
 	local p1=Duel.GetTurnPlayer() --used to make the turn player banish first
 	local p2=1-Duel.GetTurnPlayer()
-	local g1=Duel.GetMatchingGroup(s.rmfilter,p1,LOCATION_MZONE,0,nil,p1)
-	if not Duel.IsPlayerAffectedByEffect(p1,30459350) and #g1>1 then
-		local ct=#g1-1
+	local g1=Duel.GetMatchingGroup(s.rmtkfilter,p1,LOCATION_MZONE,0,nil,p1)
+	local g2=Duel.GetMatchingGroup(s.rmfilter,p1,LOCATION_MZONE,0,nil,p1)
+	if not Duel.IsPlayerAffectedByEffect(p1,30459350) and #g1>1 and #g2>0 then
+		local ct=math.min(#g1-1,#g2)
 		Duel.Hint(HINT_SELECTMSG,p1,HINTMSG_REMOVE)
-		local sg=g1:FilterSelect(p1,Card.IsAbleToRemove,ct,ct,nil,p1,POS_FACEDOWN,REASON_RULE)
+		local sg=g2:FilterSelect(p1,Card.IsAbleToRemove,ct,ct,nil,p1,POS_FACEDOWN,REASON_RULE)
 		Duel.Remove(sg,POS_FACEDOWN,REASON_RULE)
 	end
-	local g2=Duel.GetMatchingGroup(s.rmfilter,p2,LOCATION_MZONE,0,nil,p2)
-	if not Duel.IsPlayerAffectedByEffect(p2,30459350) and #g2>1 then
-		local ct=#g2-1
+	local g3=Duel.GetMatchingGroup(s.rmtkfilter,p2,LOCATION_MZONE,0,nil,p2)
+	local g4=Duel.GetMatchingGroup(s.rmfilter,p1,LOCATION_MZONE,0,nil,p1)
+	if not Duel.IsPlayerAffectedByEffect(p2,30459350) and #g3>1 and #g4>0 then
+		local ct=math.min(#g3-1,#g4)
 		Duel.Hint(HINT_SELECTMSG,p2,HINTMSG_REMOVE)
-		local sg=g2:FilterSelect(p2,Card.IsAbleToRemove,ct,ct,nil,p2,POS_FACEDOWN,REASON_RULE)
+		local sg=g4:FilterSelect(p2,Card.IsAbleToRemove,ct,ct,nil,p2,POS_FACEDOWN,REASON_RULE)
 		Duel.Remove(sg,POS_FACEDOWN,REASON_RULE)
 	end
 end

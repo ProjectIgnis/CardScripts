@@ -70,7 +70,7 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) then return end
 	local opt=0
-	if tc:IsPosition(POS_FACEDOWN) then
+	if (tc:IsPosition(POS_FACEDOWN) or tc:IsType(TYPE_TOKEN)) then
 		opt=POS_FACEUP_ATTACK
 	elseif tc:IsPosition(POS_FACEUP_ATTACK) then
 		opt=POS_FACEDOWN_DEFENSE

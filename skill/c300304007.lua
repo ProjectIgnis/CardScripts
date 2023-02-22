@@ -5,7 +5,7 @@ function s.initial_effect(c)
 	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop)
 end
 s.listed_series={SET_CYBER}
-s.listed_name={CARD_CYBER_DRAGON}
+s.listed_names={CARD_CYBER_DRAGON}
 function s.filter(c,e,tp)
 	return c:IsSetCard(SET_CYBER) and c:IsRace(RACE_MACHINE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

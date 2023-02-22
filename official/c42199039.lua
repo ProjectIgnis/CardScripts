@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e0:SetCode(EFFECT_UPDATE_ATTACK)
 	e0:SetValue(0)
 	c:RegisterEffect(e0)
-	--Return to the hand and grant direct attack
+	--Return to the hand and allow direct attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND)
@@ -40,7 +40,7 @@ function s.dttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and chkc~=c and s.tgfilter(chkc) end
 	local ec=c:GetEquipTarget()
-	if chk==0 then return Duel.IsAbleToEnterBP() and ec and not ec:IsHasEffect(EFFECT_DIRECT_ATTACK)
+	if chk==0 then return ec and not ec:IsHasEffect(EFFECT_DIRECT_ATTACK)
 		and Duel.IsExistingTarget(s.tgfilter,tp,LOCATION_ONFIELD,0,1,c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g=Duel.SelectTarget(tp,s.tgfilter,tp,LOCATION_ONFIELD,0,1,1,c)

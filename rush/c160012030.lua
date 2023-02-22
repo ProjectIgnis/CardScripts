@@ -28,28 +28,26 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
-	if Duel.DiscardDeck(tp,1,REASON_COST)==1 then
-		--Effect
-		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-			local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
-			Duel.HintSelection(g,true)
-			if #g>0 then
-				Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
-				local atkg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsRace,RACE_GALAXY),tp,LOCATION_MZONE,0,nil)
-				local ct=Duel.GetMatchingGroup(Card.IsMonster,tp,LOCATION_GRAVE,LOCATION_GRAVE,nil):GetClassCount(Card.GetAttribute)
-				if #atkg>0 and ct>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-					Duel.BreakEffect()
-					for tc in atkg:Iter() do
-						local e1=Effect.CreateEffect(e:GetHandler())
-						e1:SetType(EFFECT_TYPE_SINGLE)
-						e1:SetCode(EFFECT_UPDATE_ATTACK)
-						e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-						e1:SetValue(ct*300)
-						e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-						tc:RegisterEffect(e1)
-					end
-				end
+	if Duel.DiscardDeck(tp,1,REASON_COST)~=1 then return end
+	--Effect
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
+		Duel.HintSelection(g,true)
+		if #g==0 then return end
+		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+		local atkg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsRace,RACE_GALAXY),tp,LOCATION_MZONE,0,nil)
+		local ct=Duel.GetMatchingGroup(Card.IsMonster,tp,LOCATION_GRAVE,LOCATION_GRAVE,nil):GetClassCount(Card.GetAttribute)
+		if #atkg>0 and ct>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+			Duel.BreakEffect()
+			for tc in atkg:Iter() do
+				local e1=Effect.CreateEffect(e:GetHandler())
+				e1:SetType(EFFECT_TYPE_SINGLE)
+				e1:SetCode(EFFECT_UPDATE_ATTACK)
+				e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+				e1:SetValue(ct*300)
+				e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+				tc:RegisterEffect(e1)
 			end
 		end
 	end

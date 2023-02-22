@@ -20,11 +20,11 @@ function s.initial_effect(c)
 end
 s.MaximumSide="Left"
 function s.indval(e,re,rp)
-	return re:IsActiveType(TYPE_TRAP) and aux.indoval(e,re,rp)
+	return re:IsTrapEffect() and aux.indoval(e,re,rp)
 end
 function s.maxCon(e)
 	return e:GetHandler():IsMaximumMode()
 end
 function s.indval2(e,re,rp)
-	return re:IsActiveType(TYPE_SPELL) and aux.indoval(e,re,rp)
+	return re:IsSpellEffect() and aux.indoval(e,re,rp)
 end

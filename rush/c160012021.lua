@@ -48,7 +48,7 @@ function s.mlop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local sg=g:FilterSelect(tp,s.filter,1,1,nil)
 		if #sg>0 then
-			Due.HintSelection(sg,true)
+			Duel.HintSelection(sg,true)
 			Duel.SendtoHand(sg,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,sg)
 		end

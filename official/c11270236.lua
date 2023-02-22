@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetCode(EFFECT_ADD_ATTRIBUTE)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetValue(0x2f)
+	e2:SetValue(ATTRIBUTE_EARTH|ATTRIBUTE_WATER|ATTRIBUTE_FIRE|ATTRIBUTE_WIND|ATTRIBUTE_DARK)
 	c:RegisterEffect(e2)
 	--Banish 1 "Invoked" monster and monsters with the same attribute
 	local e3=Effect.CreateEffect(c)

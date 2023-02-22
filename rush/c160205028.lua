@@ -43,7 +43,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local sg=dg:Select(tp,1,1,nil)
 		sg=sg:AddMaximumCheck()
-		Duel.HintSelection(sg)
+		Duel.HintSelection(sg,true)
 		Duel.Destroy(sg,REASON_EFFECT)
 	end
 end

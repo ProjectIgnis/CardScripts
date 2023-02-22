@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-local NYTRO_TOKEN=id+100
+local NYTRO_TOKEN=id+1
 s.listed_names={NYTRO_TOKEN}
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

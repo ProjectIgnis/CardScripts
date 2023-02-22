@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_FAIRY+RACE_WARRIOR) and not c:IsPublic()
+	return c:IsMonster() and c:IsRace(RACE_FAIRY|RACE_WARRIOR) and not c:IsPublic()
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,2,nil) end
@@ -54,7 +54,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_ATTACK)
 	e1:SetProperty(EFFECT_FLAG_OATH)
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetTarget(s.ftarget)
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsLevelBelow,8))
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	--no damage
@@ -67,10 +67,10 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 end
-function s.ftarget(e,c)
-	return c:IsLevelBelow(8)
-end
 function s.damval(e,re,val,r,rp,rc)
-	if rp==e:GetHandlerPlayer() and (r&REASON_EFFECT)~=0 then return 0
-	else return val end
+	if rp==e:GetHandlerPlayer() and (r&REASON_EFFECT)~=0 then
+		return 0
+	else
+		return val
+	end
 end

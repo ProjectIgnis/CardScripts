@@ -1,5 +1,5 @@
 --ピュアリィ
---Purery
+--Purrely
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -27,14 +27,14 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x18d}
+s.listed_series={SET_PURRELY}
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=3 end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x18d) and c:IsSpellTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_PURRELY) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
@@ -56,7 +56,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcfilter(c,e,tp,mc)
-	return c:IsSetCard(0x18d) and c:IsType(TYPE_QUICKPLAY) and not c:IsPublic()
+	return c:IsSetCard(SET_PURRELY) and c:IsType(TYPE_QUICKPLAY) and not c:IsPublic()
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,mc,c)
 end
 function s.spfilter(c,e,tp,mc,sc)

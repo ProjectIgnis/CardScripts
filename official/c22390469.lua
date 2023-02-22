@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={101111101} --Gold Pride - Leon
+s.listed_names={23512906}
 function s.cfilter(c)
 	return c:IsFaceup() and c:GetBaseAttack()>0
 end
@@ -65,7 +65,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK|LOCATION_GRAVE)
 end
 function s.spfilter(c,e,tp)
-	return c:IsCode(101111101) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsCode(23512906) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

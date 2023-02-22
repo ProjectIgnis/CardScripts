@@ -3,21 +3,21 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	-- summon with 1 tribute
+	-- Can be tribute Summoned using 1 "Magical Musket" monster
 	local e1=aux.AddNormalSummonProcedure(c,true,true,1,1,SUMMON_TYPE_TRIBUTE,aux.Stringid(id,0),s.otfilter)
-	--activate from hand
+	--"Magical Musket" Spell/Traps can be activated from the hand
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,2))
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_QP_ACT_IN_NTPHAND)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x108))
-	e2:SetDescription(aux.Stringid(id,2))
 	e2:SetTargetRange(LOCATION_HAND,0)
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_MAGICAL_MUSKET))
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_TRAP_ACT_IN_HAND)
 	c:RegisterEffect(e3)
-	--draw
+	--Draw cards during the opponent's End Phase
 	local e4=Effect.CreateEffect(c)
 	e4:SetCategory(CATEGORY_DRAW)
 	e4:SetDescription(aux.Stringid(id,1))
@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e4:SetCountLimit(1,id)
-	e4:SetCondition(s.drcon)
+	e4:SetCondition(function(_,tp) return Duel.IsTurnPlayer(1-tp) end)
 	e4:SetTarget(s.drtg)
 	e4:SetOperation(s.drop)
 	c:RegisterEffect(e4)
@@ -51,18 +51,18 @@ function s.initial_effect(c)
 	e8:SetOperation(s.clearop)
 	c:RegisterEffect(e8)
 end
-s.listed_series={0x108}
+s.listed_series={SET_MAGICAL_MUSKET}
 function s.otfilter(c,tp)
-	return c:IsSetCard(0x108) and (c:IsControler(tp) or c:IsFaceup())
+	return c:IsSetCard(SET_MAGICAL_MUSKET) and (c:IsControler(tp) or c:IsFaceup())
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	if re:GetHandler():IsSetCard(0x108) and rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) then
+	if re:GetHandler():IsSetCard(SET_MAGICAL_MUSKET) and rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		local val=e:GetLabelObject():GetLabel()
 		e:GetLabelObject():SetLabel(val+1)
 	end
 end
 function s.regop2(e,tp,eg,ep,ev,re,r,rp)
-	if re:GetHandler():IsSetCard(0x108) and rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) then
+	if re:GetHandler():IsSetCard(SET_MAGICAL_MUSKET) and rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		local val=e:GetLabelObject():GetLabel()
 		if val==0 then val=1 end
 		e:GetLabelObject():SetLabel(val-1)
@@ -71,9 +71,6 @@ end
 function s.clearop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetLabelObject():SetLabel(0)
 end
-function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
-end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local d=e:GetLabel()
 	if chk==0 then return d>0 and Duel.IsPlayerCanDraw(tp,d) end
@@ -81,7 +78,6 @@ function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,d)
 end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 	local d=e:GetLabel()
 	if d>0 then

@@ -1,7 +1,6 @@
 --ゴッド・ブレイズ・キャノン
 --Blaze Cannon
 --Logical Nonsense
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Grant multiple effects to 1 "The Winged Dragon of Ra"
@@ -16,7 +15,6 @@ function s.initial_effect(c)
 end
 	--Specifically lists "The Winged Dragon of Ra"
 s.listed_names={CARD_RA}
-
 	--Check for "The Winged Dragon of Ra"
 function s.selfilter(c)
 	return c:IsFaceup() and c:IsCode(CARD_RA) and c:GetFlagEffect(id)==0
@@ -27,11 +25,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 	--Grant multiple effects to 1 "The Winged Dragon of Ra"
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local g=Duel.SelectMatchingCard(tp,s.selfilter,tp,LOCATION_MZONE,0,1,1,nil)
-	local tc=g:GetFirst()
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_APPLYTO)
+	local tc=Duel.SelectMatchingCard(tp,s.selfilter,tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
 	if not tc then return end
-	Duel.HintSelection(g)
+	Duel.HintSelection(tc,true)
 	if tc:GetFlagEffect(id)==0 then
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,0))
 		--Unaffected by opponent's card effects
@@ -77,13 +74,13 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker()==c or (Duel.GetAttackTarget() and Duel.GetAttackTarget()==c)
 end
 	--Check for monsters that did not attack
-function s.atkfilter(c)
-	return c:GetAttackAnnouncedCount()==0 and c:IsFaceup() and c:GetTextAttack()>0
+function s.atkfilter(c,tp)
+	return c:GetAttackAnnouncedCount()==0 and c:GetTextAttack()>0 and (c:IsControler(tp) or c:IsFaceup())
 end
 	--Tribute cost
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.atkfilter,1,false,nil,e:GetHandler()) end
-	local g=Duel.SelectReleaseGroupCost(tp,s.atkfilter,1,99,false,nil,e:GetHandler())
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.atkfilter,1,false,nil,e:GetHandler(),tp) end
+	local g=Duel.SelectReleaseGroupCost(tp,s.atkfilter,1,99,false,nil,e:GetHandler(),tp)
 	local ct=Duel.Release(g,REASON_COST)
 	if g then
 		g:KeepAlive()
@@ -97,7 +94,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject()
 	if not g then return end
 	local atk=0
-	for tc in aux.Next(g) do
+	for tc in g:Iter() do
 		local batk=tc:GetTextAttack()
 		if batk>0 then
 			atk=atk+batk

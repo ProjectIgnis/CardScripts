@@ -14,8 +14,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={160006038}
 function s.revfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_FAIRY) and not c:IsPublic()
+	return c:IsMonster() and c:IsRace(RACE_FAIRY) and not c:IsPublic()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.revfilter,tp,LOCATION_HAND,0,2,nil) end
@@ -37,10 +38,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	Duel.HintSelection(g)
 	if #g>0 and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)>0 and not g:GetFirst():IsCode(160006038) then
-		local tg=Duel.SelectMatchingCard(tp,Card.IsType,tp,LOCATION_HAND,0,2,2,nil,TYPE_MONSTER)
+		local tg=Duel.SelectMatchingCard(tp,Card.IsMonster,tp,LOCATION_HAND,0,2,2,nil)
 		Duel.SendtoGrave(tg,REASON_EFFECT)
 	end
 end

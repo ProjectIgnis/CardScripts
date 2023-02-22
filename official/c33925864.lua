@@ -1,5 +1,5 @@
 --六世壊根清浄
---Kshatri-La Big Bang
+--Kashtira Big Bang
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -34,30 +34,29 @@ end
 function s.rmvcond(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
-function s.rmfilter(c,p)
-	return Duel.IsPlayerCanRemove(p,c) and not c:IsType(TYPE_TOKEN)
-end
 function s.rmvtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g1=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_MZONE,0,nil,tp)
-	local g2=Duel.GetMatchingGroup(s.rmfilter,tp,0,LOCATION_MZONE,nil,1-tp)
-	if chk==0 then return (#g1>1 and not Duel.IsPlayerAffectedByEffect(tp,30459350))
-		or (#g2>1 and not Duel.IsPlayerAffectedByEffect(1-tp,30459350)) end
+	local g1=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
+	local g2=Duel.GetFieldGroup(tp,0,LOCATION_MZONE)
+	if chk==0 then return (#g1>1 and g1:IsExists(Card.IsAbleToRemove,1,nil,tp,POS_FACEDOWN,REASON_RULE))
+		or (#g2>1 and g2:IsExists(Card.IsAbleToRemove,1,nil,1-tp,POS_FACEDOWN,REASON_RULE)) end
 end
 function s.rmvop(e,tp,eg,ep,ev,re,r,rp)
 	local p1=Duel.GetTurnPlayer() --used to make the turn player banish first
 	local p2=1-Duel.GetTurnPlayer()
-	local g1=Duel.GetMatchingGroup(s.rmfilter,p1,LOCATION_MZONE,0,nil,p1)
-	if not Duel.IsPlayerAffectedByEffect(p1,30459350) and #g1>1 then
-		local ct=#g1-1
+	local g1=Duel.GetFieldGroup(p1,LOCATION_MZONE,0)
+	local rg1=g1:Filter(Card.IsAbleToRemove,nil,p1,POS_FACEDOWN,REASON_RULE)
+	if #g1>1 and #rg1>0 then
+		local ct=math.min(#g1-1,#rg1)
 		Duel.Hint(HINT_SELECTMSG,p1,HINTMSG_REMOVE)
-		local sg=g1:FilterSelect(p1,Card.IsAbleToRemove,ct,ct,nil,p1,POS_FACEDOWN,REASON_RULE)
+		local sg=rg1:Select(p1,ct,ct,nil)
 		Duel.Remove(sg,POS_FACEDOWN,REASON_RULE)
 	end
-	local g2=Duel.GetMatchingGroup(s.rmfilter,p2,LOCATION_MZONE,0,nil,p2)
-	if not Duel.IsPlayerAffectedByEffect(p2,30459350) and #g2>1 then
-		local ct=#g2-1
+	local g2=Duel.GetFieldGroup(p2,LOCATION_MZONE,0)
+	local rg2=g2:Filter(Card.IsAbleToRemove,nil,p2,POS_FACEDOWN,REASON_RULE)
+	if #g2>1 and #rg2>0 then
+		local ct=math.min(#g2-1,#rg2)
 		Duel.Hint(HINT_SELECTMSG,p2,HINTMSG_REMOVE)
-		local sg=g2:FilterSelect(p2,Card.IsAbleToRemove,ct,ct,nil,p2,POS_FACEDOWN,REASON_RULE)
+		local sg=rg2:Select(p2,ct,ct,nil)
 		Duel.Remove(sg,POS_FACEDOWN,REASON_RULE)
 	end
 end

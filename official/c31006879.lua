@@ -2,8 +2,9 @@
 --Ready! Set! Duel!
 local s,id=GetID()
 function s.initial_effect(c)
-	--Search 1 "Synchron" on activation
+	--Search 1 "Synchron" monster
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -19,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1)
 	e2:SetCondition(function(_,tp) return Duel.IsTurnPlayer(tp) end)
-	e2:SetOperation(s.ctop)
+	e2:SetOperation(function(e) e:GetHandler():AddCounter(COUNTER_SIGNAL,1) end)
 	c:RegisterEffect(e2)
 	--Draw 2 then send 1 to the GY ("Speed Spell - Angel Baton")
 	local e3=Effect.CreateEffect(c)
@@ -32,16 +33,14 @@ function s.initial_effect(c)
 	e3:SetOperation(s.drop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x1017}
-s.counter_list={0x1148}
-function s.filter(c,e,tp)
-	return c:IsSetCard(0x1017) and c:IsMonster() and c:IsAbleToHand()
+s.listed_series={SET_SYNCHRON}
+s.counter_place_list={COUNTER_SIGNAL}
+function s.thfilter(c,e,tp)
+	return c:IsSetCard(SET_SYNCHRON) and c:IsMonster() and c:IsAbleToHand()
 end
-function s.activate(e,tp,eg,ep,ev,re,r,rp) -- Add to hand
-	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK,0,nil)
-	if #g>0 and (not Duel.IsExistingMatchingCard(nil,tp,LOCATION_ONFIELD,0,1,c))
+function s.activate(e,tp,eg,ep,ev,re,r,rp)
+	local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil)
+	if #g>0 and not Duel.IsExistingMatchingCard(nil,tp,LOCATION_ONFIELD,0,1,e:GetHandler())
 		and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local sg=g:Select(tp,1,1,nil)
@@ -49,14 +48,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp) -- Add to hand
 		Duel.ConfirmCards(1-tp,sg)
 	end
 end
-function s.ctop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():AddCounter(0x1148,1)
-end
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToGraveAsCost()
-		and Duel.IsCanRemoveCounter(tp,1,0,0x1148,2,REASON_COST) end
-	Duel.RemoveCounter(tp,1,0,0x1148,2,REASON_COST)
+		and Duel.IsCanRemoveCounter(tp,1,0,COUNTER_SIGNAL,2,REASON_COST) end
+	Duel.RemoveCounter(tp,1,0,COUNTER_SIGNAL,2,REASON_COST)
 	Duel.SendtoGrave(c,REASON_COST)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)

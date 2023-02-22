@@ -16,11 +16,11 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_ONFIELD,LOCATION_ONFIELD)
 	e2:SetCondition(s.changecon)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xaf))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_DD))
 	e2:SetValue(0x20af)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xaf,0x20af}
+s.listed_series={SET_DD,0x20af}
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -31,5 +31,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.changecon(e)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0xaf),e:GetHandlerPlayer(),LOCATION_ONFIELD,0,5,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_DD),e:GetHandlerPlayer(),LOCATION_ONFIELD,0,5,nil)
 end

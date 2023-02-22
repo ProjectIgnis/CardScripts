@@ -29,33 +29,35 @@ function s.initial_effect(c)
 	e2:SetOperation(s.posop)
 	c:RegisterEffect(e2)
 end
-function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsControler(tp) and c:IsFaceup() and c:IsCanTurnSet() and c:IsLocation(LOCATION_MZONE)
+function s.cfilter(c,tp,e)
+	return c:IsFaceup() and c:IsControler(tp) and c:IsCanTurnSet() and c:IsLocation(LOCATION_MZONE) and c:IsCanBeEffectTarget(e)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil,tp)
+	return eg:IsExists(s.cfilter,1,nil,tp,e)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return eg:IsContains(chkc) and s.cfilter(chkc,tp) end
+	if chkc then return eg:IsContains(chkc) and s.cfilter(chkc,tp,e) end
 	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and c:IsCanBeSpecialSummoned(e,1,tp,false,false)
-		and eg:IsExists(s.cfilter,1,nil,tp) end
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and eg:IsExists(s.cfilter,1,nil,tp,e) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local tg=eg:FilterSelect(tp,s.cfilter,1,1,nil,tp)
+	local tg=eg:FilterSelect(tp,s.cfilter,1,1,nil,tp,e)
 	Duel.SetTargetCard(tg)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,tp,0)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,tg,1,tp,POS_FACEDOWN_DEFENSE)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP) and tc:IsRelateToEffect(e) and tc:IsFaceup() then
-		Duel.ChangePosition(tc,POS_FACEDOWN_DEFENSE)
+	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 then
+		local tc=Duel.GetFirstTarget()
+		if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+			Duel.ChangePosition(tc,POS_FACEDOWN_DEFENSE)
+		end
 	end
 end
 function s.posfilter(c)
-	return c:IsCanTurnSet() or c:IsFacedown()
+	return c:IsCanTurnSet() or not c:IsPosition(POS_FACEUP_ATTACK)
 end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.posfilter(chkc) end
@@ -68,7 +70,7 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) then return end
 	local opt=0
-	if tc:IsPosition(POS_FACEDOWN) then
+	if (tc:IsPosition(POS_FACEDOWN) or tc:IsType(TYPE_TOKEN)) then
 		opt=POS_FACEUP_ATTACK
 	elseif tc:IsPosition(POS_FACEUP_ATTACK) then
 		opt=POS_FACEDOWN_DEFENSE

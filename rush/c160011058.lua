@@ -27,7 +27,7 @@ function s.eqfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_NORMAL) and c:IsAttackBelow(1400)
 end
 function s.eqlimit(e,c)
-    return c:IsFaceup()
+	return c:IsFaceup()
 end
 function s.otfilter(c,tp)
 	local eg=c:GetEquipGroup()

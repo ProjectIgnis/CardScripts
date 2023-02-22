@@ -1,5 +1,5 @@
 --災誕の呪眼
---Evil Eye Resurrection
+--Evil Eye Unleashed
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -31,21 +31,21 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_EVIL_EYE}
 function s.thfilter(c)
-    return c:IsSetCard(SET_EVIL_EYE) and c:IsSpell() and c:IsType(TYPE_EQUIP) and c:IsAbleToHand()
+	return c:IsSetCard(SET_EVIL_EYE) and c:IsEquipSpell() and c:IsAbleToHand()
 end
 function s.tgfilter(c)
-    return c:IsSetCard(SET_EVIL_EYE) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_EVIL_EYE) and c:IsAbleToGraveAsCost()
 end
 function s.rescon(sg)
-    return sg:FilterCount(Card.IsMonster,nil)==1
+	return sg:FilterCount(Card.IsMonster,nil)==1
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-    local g=Duel.GetMatchingGroup(s.tgfilter,tp,LOCATION_DECK,0,nil)
-    local hg=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil)
-    if #hg==1 then g:Sub(hg) end
-    if chk==0 then return #hg>0 and aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0) end
-    local dg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_TOGRAVE)
-    Duel.SendtoGrave(dg,REASON_COST)
+	local g=Duel.GetMatchingGroup(s.tgfilter,tp,LOCATION_DECK,0,nil)
+	local hg=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil)
+	if #hg==1 then g:Sub(hg) end
+	if chk==0 then return #hg>0 and aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0) end
+	local dg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_TOGRAVE)
+	Duel.SendtoGrave(dg,REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -84,7 +84,7 @@ function s.eqtcfilter(c,ec)
 	return c:IsSetCard(SET_EVIL_EYE) and c:IsLinkMonster() and c:IsFaceup() and ec:CheckEquipTarget(c)
 end
 function s.eqfilter(c,tp)
-	return c:IsSetCard(SET_EVIL_EYE) and c:IsSpell() and c:IsType(TYPE_EQUIP) and c:CheckUniqueOnField(tp)
+	return c:IsSetCard(SET_EVIL_EYE) and c:IsEquipSpell() and c:CheckUniqueOnField(tp)
 		and Duel.IsExistingMatchingCard(s.eqtcfilter,tp,LOCATION_MZONE,0,1,nil,c)
 end
 function s.eqptg(e,tp,eg,ep,ev,re,r,rp,chk)

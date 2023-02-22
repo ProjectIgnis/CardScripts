@@ -3,7 +3,7 @@
 --Scripted by ahtelel and Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special summon 2 level 9 monsters from deck
+	--Special summon 1 Level 9 monster from the hand or 2 from the deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -11,6 +11,18 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
+end
+function s.spfilter1(c,e,tp)
+	return c:IsLevel(9) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+end
+function s.spfilter2(c,e,tp)
+	if not c:IsFaceup() or not c:IsLevel(9) then return false end
+	local g=Duel.GetMatchingGroup(s.spfilter3,tp,LOCATION_DECK,0,nil,e,tp,c)
+	return g:GetClassCount(Card.GetCode)>1
+end
+function s.spfilter3(c,e,tp,tc)
+	return c:IsLevel(9) and c:GetOriginalRace()~=tc:GetOriginalRace() and c:GetOriginalAttribute()~=tc:GetOriginalAttribute()
+		and not c:IsCode(tc:GetCode()) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -44,9 +56,6 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		s.sptg2(e,tp,eg,ep,ev,re,r,rp,1)
 	end
 end
-function s.spfilter1(c,e,tp)
-	return c:IsLevel(9) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-end
 function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -55,23 +64,14 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-function s.spfilter2(c,e,tp)
-	if not c:IsFaceup() or not c:IsLevel(9) then return false end
-	local g=Duel.GetMatchingGroup(s.spfilter3,tp,LOCATION_DECK,0,nil,e,tp,c)
-	return g:GetClassCount(Card.GetCode)>1
-end
-function s.spfilter3(c,e,tp,tc)
-	return c:IsLevel(9) and c:GetOriginalRace()~=tc:GetOriginalRace() and c:GetOriginalAttribute()~=tc:GetOriginalAttribute()
-		and not c:IsCode(tc:GetCode()) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-end
 function s.spop2(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if not tc:IsRelateToEffect(e) or ft<2 or Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
 	local g=Duel.GetMatchingGroup(s.spfilter3,tp,LOCATION_DECK,0,nil,e,tp,tc)
 	local sg=aux.SelectUnselectGroup(g,e,tp,2,2,aux.dncheck,1,tp,HINTMSG_SPSUMMON)
 	if sg and #sg==2 then
+		local c=e:GetHandler()
 		local fid=c:GetFieldID()
 		for sc in sg:Iter() do
 			Duel.SpecialSummonStep(sc,0,tp,tp,false,false,POS_FACEUP)
@@ -81,9 +81,9 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			sc:RegisterEffect(e1,true)
-			sc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
+			sc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1,fid)
 		end
 		Duel.SpecialSummonComplete()
 		sg:KeepAlive()

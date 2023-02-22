@@ -16,7 +16,7 @@ function s.eqfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_MACHINE) and not c:IsMaximumModeSide()
 end
 function s.eqlimit(e,c)
-    return c:IsFaceup()
+	return c:IsFaceup()
 end
 function s.gainop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

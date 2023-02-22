@@ -15,8 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-end 
-s.listed_names={160012016}
+end
 function s.tdfilter(c)
 	return c:IsMonster() and c:IsDefense(200) and c:IsAbleToDeckOrExtraAsCost()
 end
@@ -50,6 +49,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	local g=Duel.GetMatchingGroup(s.tdfilter,tp,LOCATION_GRAVE,0,nil)
 	local sg=Duel.GetMatchingGroup(s.spfilter3,tp,LOCATION_GRAVE,0,nil,e,tp)
+	if #g<2 or #sg<2 then return end
 	local td=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon(sg),2,tp,HINTMSG_TODECK)
 	Duel.HintSelection(td,true)
 	if Duel.SendtoDeck(td,nil,SEQ_DECKSHUFFLE,REASON_COST)>0 then

@@ -10,7 +10,7 @@ function s.ritualfil(c)
 	return c:IsSetCard(SET_CYBER_ANGEL) and c:IsRitualMonster()
 end
 function s.mfilter(c)
-	return c:HasLevel() and c:IsRace(RACE_WARRIOR+RACE_FAIRY) and c:IsAbleToDeck()
+	return c:HasLevel() and c:IsRace(RACE_WARRIOR|RACE_FAIRY) and c:IsAbleToDeck()
 end
 function s.extrafil(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -20,7 +20,7 @@ function s.extrafil(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.extraop(mg,e,tp,eg,ep,ev,re,r,rp)
-	local mat2=mg:Filter(Card.IsLocation,nil,LOCATION_GRAVE):Filter(Card.IsRace,nil,RACE_WARRIOR+RACE_FAIRY)
+	local mat2=mg:Filter(Card.IsLocation,nil,LOCATION_GRAVE):Filter(Card.IsRace,nil,RACE_WARRIOR|RACE_FAIRY)
 	mg:Sub(mat2)
 	Duel.ReleaseRitualMaterial(mg)
 	Duel.SendtoDeck(mat2,nil,2,REASON_EFFECT+REASON_MATERIAL+REASON_RITUAL)

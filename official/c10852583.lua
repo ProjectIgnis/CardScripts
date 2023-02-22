@@ -49,7 +49,7 @@ end
 function s.mvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local tc=eg:GetFirst()
-	tc:CreateEffectRelation(e)
+	if tc:IsLocation(LOCATION_MZONE) then tc:CreateEffectRelation(e) end
 end
 function s.mvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

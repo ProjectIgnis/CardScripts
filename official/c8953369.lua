@@ -1,5 +1,5 @@
 --クシャトリラ・オーバーラップ
---Kshatri-La Overlap
+--Kashtira Overlap
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -37,7 +37,7 @@ function s.rmvfilter(c)
 		and (c:IsLocation(LOCATION_HAND) or c:IsFaceup())
 end
 function s.tgfilter(c,tp)
-	return c:IsFaceup() and Duel.IsExistingMatchingCard(s.rmvfilter,tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_MZONE,LOCATION_MZONE,1,c)
+	return c:IsFaceup() and Duel.IsExistingMatchingCard(s.rmvfilter,tp,LOCATION_HAND|LOCATION_GRAVE|LOCATION_MZONE,LOCATION_MZONE,1,c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.tgfilter(chkc,tp) end
@@ -45,12 +45,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
 	local tc=Duel.SelectTarget(tp,s.tgfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,tp)
 	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,tc,1,0,1500)
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,PLAYER_EITHER,LOCATION_HAND+LOCATION_GRAVE+LOCATION_MZONE)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,PLAYER_EITHER,LOCATION_HAND|LOCATION_GRAVE|LOCATION_MZONE)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local exclude=tc and tc:IsRelateToEffect(e) or nil --don't use tc as exclusion if it's not related to effect anymore
-	local g=Duel.GetMatchingGroup(s.rmvfilter,tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_MZONE,LOCATION_MZONE,exclude)
+	local g=Duel.GetMatchingGroup(s.rmvfilter,tp,LOCATION_HAND|LOCATION_GRAVE|LOCATION_MZONE,LOCATION_MZONE,exclude)
 	local rg=Group.CreateGroup()
 	--if we have cards other than the target to banish, select from a group without the target
 	if #g>0 then
@@ -68,7 +68,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(1500)
 		tc:RegisterEffect(e1)
 	end
@@ -94,14 +94,14 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e2:SetValue(RESET_TURN_SET)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		tc:RegisterEffect(e2)
 	end
 end

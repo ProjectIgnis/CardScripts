@@ -82,16 +82,24 @@ function Synchro.Condition(f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
 				local g
 				local mgchk
 				if sub1 then
-					sub1=aux.OR(sub1,function(_c) return _c:IsHasEffect(30765615) end)
+					sub1=aux.OR(sub1,function(_c) return _c:IsHasEffect(30765615) and (not f1 or f1(_c,c,SUMMON_TYPE_SYNCHRO|MATERIAL_SYNCHRO,tp)) end)
 				else
-					sub1=function(_c) return _c:IsHasEffect(30765615) end
+					sub1=function(_c) return _c:IsHasEffect(30765615) and (not f1 or f1(_c,c,SUMMON_TYPE_SYNCHRO|MATERIAL_SYNCHRO,tp)) end
 				end
 				if mg then
 					dg=mg
 					g=mg:Filter(Card.IsCanBeSynchroMaterial,c,c)
 					mgchk=true
 				else
-					dg=Duel.GetMatchingGroup(function(mc) return mc:IsFaceup() and (mc:IsControler(tp) or mc:IsCanBeSynchroMaterial(c)) end,tp,LOCATION_MZONE,LOCATION_MZONE,c)
+					local function synchmatfilter(mc)
+						local handmatfilter=mc:IsHasEffect(EFFECT_SYNCHRO_MAT_FROM_HAND)
+						local handmatvalue=nil
+						if handmatfilter then handmatvalue=handmatfilter:GetValue() end
+						return (mc:IsLocation(LOCATION_MZONE) and mc:IsFaceup()
+							and (mc:IsControler(tp) or mc:IsCanBeSynchroMaterial(c)))
+							or (handmatfilter and handmatfilter:CheckCountLimit(tp) and handmatvalue(handmatfilter,mc,c))
+					end
+					dg=Duel.GetMatchingGroup(synchmatfilter,tp,LOCATION_MZONE|LOCATION_HAND,LOCATION_MZONE,c)
 					g=dg:Filter(Card.IsCanBeSynchroMaterial,nil,c)
 					mgchk=false
 				end
@@ -525,9 +533,9 @@ function Synchro.Target(f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
 				local g
 				local dg
 				if sub1 then
-					sub1=aux.OR(sub1,function(_c) return _c:IsHasEffect(30765615) end)
+					sub1=aux.OR(sub1,function(_c) return _c:IsHasEffect(30765615) and (not f1 or f1(_c,c,SUMMON_TYPE_SYNCHRO|MATERIAL_SYNCHRO,tp)) end)
 				else
-					sub1=function(_c) return _c:IsHasEffect(30765615) end
+					sub1=function(_c) return _c:IsHasEffect(30765615) and (not f1 or f1(_c,c,SUMMON_TYPE_SYNCHRO|MATERIAL_SYNCHRO,tp)) end
 				end
 				if mg then
 					mgchk=true
@@ -535,7 +543,15 @@ function Synchro.Target(f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
 					g=mg:Filter(Card.IsCanBeSynchroMaterial,c,c)
 				else
 					mgchk=false
-					dg=Duel.GetMatchingGroup(function(mc) return mc:IsFaceup() and (mc:IsControler(tp) or mc:IsCanBeSynchroMaterial(c)) end,tp,LOCATION_MZONE,LOCATION_MZONE,c)
+					local function synchmatfilter(mc)
+						local handmatfilter=mc:IsHasEffect(EFFECT_SYNCHRO_MAT_FROM_HAND)
+						local handmatvalue=nil
+						if handmatfilter then handmatvalue=handmatfilter:GetValue() end
+						return (mc:IsLocation(LOCATION_MZONE) and mc:IsFaceup()
+							and (mc:IsControler(tp) or mc:IsCanBeSynchroMaterial(c)))
+							or (handmatfilter and handmatfilter:CheckCountLimit(tp) and handmatvalue(handmatfilter,mc,c))
+					end
+					dg=Duel.GetMatchingGroup(synchmatfilter,tp,LOCATION_MZONE|LOCATION_HAND,LOCATION_MZONE,c)
 					g=dg:Filter(Card.IsCanBeSynchroMaterial,nil,c)
 				end
 				local pg=Auxiliary.GetMustBeMaterialGroup(tp,dg,tp,c,g,REASON_SYNCHRO)
@@ -769,6 +785,19 @@ end
 function Synchro.Operation(e,tp,eg,ep,ev,re,r,rp,c,smat,mg)
 	local g=e:GetLabelObject()
 	c:SetMaterial(g)
+	--Execute the operation function of the Synchro Monster's "EFFECT_MATERIAL_CHECK" effect, if it exists ("Cupid Pitch")
+	local mat_check_eff=c:IsHasEffect(EFFECT_MATERIAL_CHECK)
+	if mat_check_eff then
+		local mat_check_op=mat_check_eff:GetOperation()
+		if mat_check_op then mat_check_op(mat_check_eff,c) end
+	end
+	--Use up the count limit of any "EFFECT_SYNCHRO_MAT_FROM_HAND" effect in the material group ("Revolution Synchron") 
+	for mc in g:Iter() do
+		local handmatfilter=mc:IsHasEffect(EFFECT_SYNCHRO_MAT_FROM_HAND)
+		if handmatfilter and handmatfilter:GetValue(handmatfilter,mc,c) then
+			handmatfilter:UseCountLimit(tp)
+		end
+	end
 	local tg=g:Filter(Auxiliary.TatsunecroFilter,nil)
 	if #tg>0 then
 		Synchro.Send=2

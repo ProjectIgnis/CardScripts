@@ -1,9 +1,9 @@
---
+--リブロマンサー・アフェクテッド
 --Libromancer Displaced
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--Return 1 "libromancer" to the hand and take control of opponent's monster
+	--Return 1 "Libromancer" monster to the hand and take control of opponent's monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_CONTROL)
@@ -16,14 +16,15 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x17d}
+s.listed_series={SET_LIBROMANCER}
 function s.tgfilter(c,e,tp)
-	return (c:IsFaceup() and c:IsSetCard(0x17d) and c:IsControler(tp)) or (c:IsControler(1-tp) and c:IsControlerCanBeChanged())
+	return (c:IsFaceup() and c:IsSetCard(SET_LIBROMANCER) and c:IsControler(tp))
+		or (c:IsControler(1-tp) and c:IsControlerCanBeChanged(true))
 		and c:IsCanBeEffectTarget(e)
 end
 function s.rescon(sg,e,tp,mg)
 	local rg=sg:Filter(Card.IsControler,nil,tp)
-	return #rg==1 and Duel.GetMZoneCount(tp,rg)>0
+	return #rg==1 and Duel.GetMZoneCount(tp,rg,tp,LOCATION_REASON_CONTROL)>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -48,7 +49,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if not tg1:IsRitualMonster() then
 			local c=e:GetHandler()
 			local fid=c:GetFieldID()
-			tg2:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
+			tg2:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1,fid)
 			--Return it to the hand during the End Phase
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

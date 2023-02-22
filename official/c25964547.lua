@@ -1,7 +1,6 @@
 --夢現の夢魔鏡
 --Dream Mirror Hypnagogia
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Place 1 "Dream Mirror of Joy" and 1 "Dream Mirror of Terror" from hand/deck to the field zones
@@ -9,22 +8,21 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
+	e1:SetHintTiming(0,TIMING_STANDBY_PHASE+TIMING_END_PHASE)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
-	e1:SetHintTiming(0,TIMING_STANDBY_PHASE+TIMING_END_PHASE)
 	c:RegisterEffect(e1)
 end
 s.listed_names={CARD_DREAM_MIRROR_JOY,CARD_DREAM_MIRROR_TERROR}
-
 function s.filter(c,tp)
-	return c:IsType(TYPE_FIELD) and c:IsCode(CARD_DREAM_MIRROR_JOY,CARD_DREAM_MIRROR_TERROR)
+	return c:IsFieldSpell() and c:IsCode(CARD_DREAM_MIRROR_JOY,CARD_DREAM_MIRROR_TERROR)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK+LOCATION_HAND,0,nil)
+	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK|LOCATION_HAND,0,nil)
 	if chk==0 then return g:GetClassCount(Card.GetCode)>1 end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK+LOCATION_HAND,0,nil)
+	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK|LOCATION_HAND,0,nil)
 	if g:GetClassCount(Card.GetCode)<2 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))
 	local tg1=g:Select(tp,1,1,nil)

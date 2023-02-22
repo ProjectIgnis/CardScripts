@@ -40,7 +40,7 @@ function s.arcanareg(c,coin)
 	e1:SetCost(s.skipcost)
 	e1:SetTarget(s.skiptg)
 	e1:SetOperation(s.skipop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e1)
 	--
 	local e2=Effect.CreateEffect(c)
@@ -53,7 +53,7 @@ function s.arcanareg(c,coin)
 	e2:SetCondition(s.thcon)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e2)
 	Arcana.RegisterCoinResult(c,coin)
 end
@@ -75,11 +75,11 @@ function s.skipop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetCode(EFFECT_SKIP_TURN)
 	e1:SetTargetRange(0,1)
-	e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+	e1:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and Arcana.GetCoinResult(e:GetHandler())==COIN_TAILS
+	return ep==1-tp and Arcana.GetCoinResult(e:GetHandler())==COIN_TAILS
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

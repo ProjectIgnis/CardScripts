@@ -35,23 +35,22 @@ function s.initial_effect(c)
 	e3:SetOperation(s.xyzop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x168}
+s.listed_series={SET_GUNKAN}
 s.listed_names={CARD_SUSHIP_SHARI}
-
 function s.cfilter(c,tp)
-	return c:IsMonster() and c:IsSetCard(0x168) and c:IsSummonPlayer(tp)
+	return c:IsMonster() and c:IsSetCard(SET_GUNKAN) and c:IsSummonPlayer(tp)
 end
 function s.dtcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.dttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>1
-		and Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_DECK,0,1,nil,0x168) end
+		and Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_DECK,0,1,nil,SET_GUNKAN) end
 end
 function s.dtop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
-	local tc=Duel.SelectMatchingCard(tp,Card.IsSetCard,tp,LOCATION_DECK,0,1,1,nil,0x168):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,Card.IsSetCard,tp,LOCATION_DECK,0,1,1,nil,SET_GUNKAN):GetFirst()
 	if tc then
 		Duel.ShuffleDeck(tp)
 		Duel.MoveSequence(tc,0)
@@ -59,8 +58,8 @@ function s.dtop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c,tp)
-	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) 
-		and c:GetReasonPlayer()==1-tp and c:IsSetCard(0x168) and c:IsSummonLocation(LOCATION_EXTRA)
+	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
+		and c:GetReasonPlayer()==1-tp and c:IsSetCard(SET_GUNKAN) and c:IsSummonLocation(LOCATION_EXTRA)
 end
 function s.xyzcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.filter,1,nil,tp)
@@ -69,7 +68,7 @@ function s.spfilter(c,e,tp)
 	return c:IsCode(CARD_SUSHIP_SHARI) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.xyzfilter(c,e,tp)
-	return c:IsSetCard(0x168) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
+	return c:IsSetCard(SET_GUNKAN) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 		and Duel.GetLocationCountFromEx(tp,tp,nil,c)
 end
 function s.xyzop(e,tp,eg,ep,ev,re,r,rp)

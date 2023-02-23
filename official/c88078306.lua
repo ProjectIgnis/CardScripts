@@ -60,7 +60,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e1:SetValue(LOCATION_REMOVED)
-			e1:SetReset(RESET_EVENT|RESETS_REDIRECT|RESET_TOFIELD)
+			e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 			tc:RegisterEffect(e1)
 		end
 	end

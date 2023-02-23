@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Fusion summon from hand
-	local params = {aux.FilterBoolFunction(Card.IsSetCard,0xad),nil,nil,nil,Fusion.ForcedHandler}
+	local params = {aux.FilterBoolFunction(Card.IsSetCard,SET_FRIGHTFUR),nil,nil,nil,Fusion.ForcedHandler}
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e1:SetTarget(Fusion.SummonEffTG(table.unpack(params)))
 	e1:SetOperation(Fusion.SummonEffOP(table.unpack(params)))
 	c:RegisterEffect(e1)
-	--Destruction replacement effect
+	--Destruction replacement for a "Frightfur" Fusion Monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -31,15 +31,15 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-s.listed_series={0xad}
+s.listed_series={SET_FRIGHTFUR}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsPublic() end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==1-tp and Duel.IsMainPhase()
+	return Duel.IsTurnPlayer(1-tp) and Duel.IsMainPhase()
 end
 function s.repfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0xad) and c:IsType(TYPE_FUSION) and c:IsLocation(LOCATION_MZONE)
+	return c:IsFaceup() and c:IsSetCard(SET_FRIGHTFUR) and c:IsType(TYPE_FUSION) and c:IsLocation(LOCATION_MZONE)
 		and c:IsControler(tp) and c:IsReason(REASON_EFFECT+REASON_BATTLE) and not c:IsReason(REASON_REPLACE)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)

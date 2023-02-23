@@ -1,5 +1,5 @@
 --樹冠の甲帝ベアグラム
---Tree Crown Armorperor Beagram
+--Beargram, Shelled Emperor of the Forest Crown
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -80,7 +80,7 @@ function s.chainop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.chainlm(e,ep,tp)
-	return ep==tp or not e:IsActiveType(TYPE_MONSTER)
+	return ep==tp or not e:IsMonsterEffect()
 end
 function s.desfilter(c)
 	return c:IsFaceup() and not c:IsRace(RACE_PLANT|RACE_INSECT)
@@ -103,7 +103,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end

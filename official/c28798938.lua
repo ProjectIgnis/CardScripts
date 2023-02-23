@@ -54,9 +54,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCondition(function() return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL end)
 		e1:SetTarget(function(_,c) return c:IsSetCard(SET_DUAL_AVATAR) and c:IsRelateToBattle() end)
 		e1:SetValue(3000)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,2))
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,2))
 	end
 	if (flag&2)>0 then
 		--Banish 1 card on the field during the opponent's turn
@@ -72,9 +72,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCondition(function(e,tp) return Duel.IsTurnPlayer(1-tp) end)
 		e2:SetTarget(s.rmtg)
 		e2:SetOperation(s.rmop)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e2)
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,3))
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,3))
 	end
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -123,7 +123,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 			e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 			e1:SetValue(1)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 			tc:RegisterEffect(e1)
 			--Cannot be destroyed by effects
 			local e2=e1:Clone()

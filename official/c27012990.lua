@@ -3,7 +3,7 @@
 --scripted by Larry126 and AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Increase the ATK 1 face-up monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
@@ -16,20 +16,20 @@ function s.initial_effect(c)
 	e1:SetTarget(s.atktg)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
-	--act in hand
+	--Can be activated from the hand
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_TRAP_ACT_IN_HAND)
-	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCondition(s.actcon)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x12b}
+s.listed_series={SET_MARINCESS}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsLinkMonster() and c:IsSetCard(0x12b) and c:IsAbleToRemoveAsCost()
+	return c:IsFaceup() and c:IsLinkMonster() and c:IsSetCard(SET_MARINCESS) and c:IsAbleToRemoveAsCost()
 		and Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,c)
 end
 function s.rescon(sg,e,tp,mg)
@@ -43,7 +43,7 @@ function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if tgct==#mg then ct=#mg-1 end
 	if ct==0 then ct=1 end
 	local g=aux.SelectUnselectGroup(mg,e,tp,1,ct,s.rescon,1,tp,HINTMSG_REMOVE,nil,nil)
-	if Duel.Remove(g,POS_FACEUP,REASON_COST+REASON_TEMPORARY)==#g then
+	if Duel.Remove(g,POS_FACEUP,REASON_COST|REASON_TEMPORARY)==#g then
 		g:KeepAlive()
 		e:SetLabelObject(g)
 		local e1=Effect.CreateEffect(e:GetHandler())
@@ -54,17 +54,20 @@ function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 		e1:SetCountLimit(1)
 		e1:SetCondition(s.retcon)
 		e1:SetOperation(s.retop)
-		if Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_STANDBY then e1:SetReset(RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,2)
-		else e1:SetReset(RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN) end
+		if Duel.IsTurnPlayer(tp) and Duel.GetCurrentPhase()==PHASE_STANDBY then
+			e1:SetReset(RESET_PHASE|PHASE_STANDBY|RESET_SELF_TURN,2)
+		else
+			e1:SetReset(RESET_PHASE|PHASE_STANDBY|RESET_SELF_TURN)
+		end
 		Duel.RegisterEffect(e1,tp)
 	end
 end
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and Duel.GetTurnCount()~=e:GetLabel()
+	return Duel.IsTurnPlayer(tp) and Duel.GetTurnCount()~=e:GetLabel()
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject()
-	for c in aux.Next(g) do
+	for c in g:Iter() do
 		Duel.ReturnToField(c)
 	end
 	g:DeleteGroup()
@@ -78,17 +81,17 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
+	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(e:GetLabelObject():GetSum(Card.GetLink)*300)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end
 function s.actfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x12b) and c:IsLinkMonster() and c:IsLinkAbove(3)
+	return c:IsFaceup() and c:IsSetCard(SET_MARINCESS) and c:IsLinkMonster() and c:IsLinkAbove(3)
 end
 function s.actcon(e)
 	return Duel.IsExistingMatchingCard(s.actfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)

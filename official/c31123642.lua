@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	Xyz.AddProcedure(c,nil,4,2)
-	--spsummon
+	--Special Summon 1 "ZW -" or "Zs -" from the Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
-	--destroy replace
+	--Destruction replacement for a "Utopia" or "Utopic" Xyz monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EFFECT_DESTROY_REPLACE)
@@ -26,14 +26,14 @@ function s.initial_effect(c)
 	e2:SetOperation(s.repop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x107e,0x207e,0x48,0x7f}
+s.listed_series={SET_ZW,SET_ZS,SET_NUMBER,SET_UTOPIC}
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:CheckRemoveOverlayCard(tp,2,REASON_COST) end
 	c:RemoveOverlayCard(tp,2,2,REASON_COST)
 end
 function s.spfilter(c,e,tp)
-	return (c:IsSetCard(0x107e) or c:IsSetCard(0x207e))
+	return (c:IsSetCard(SET_ZW) or c:IsSetCard(SET_ZS))
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -50,7 +50,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	ge1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	ge1:SetTargetRange(1,0)
 	ge1:SetTarget(s.splimit)
-	ge1:SetReset(RESET_PHASE+PHASE_END)
+	ge1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(ge1,tp)
 	--cannot attack
 	local ge2=Effect.CreateEffect(c)
@@ -59,7 +59,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	ge2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	ge2:SetTargetRange(LOCATION_MZONE,0)
 	ge2:SetTarget(s.atktg)
-	ge2:SetReset(RESET_PHASE+PHASE_END)
+	ge2:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(ge2,tp)
 	--client hint
 	aux.RegisterClientHint(c,nil,tp,1,0,aux.Stringid(id,2),nil)
@@ -74,12 +74,12 @@ function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return not c:IsType(TYPE_XYZ) and c:IsLocation(LOCATION_EXTRA)
 end
 function s.atktg(e,c)
-	return not c:IsSetCard(0x48)
+	return not c:IsSetCard(SET_NUMBER)
 end
 function s.repfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x7f) and c:IsType(TYPE_XYZ) 
-		and c:GetOriginalAttribute() & ATTRIBUTE_LIGHT ~= 0 and not c:IsCode(id) 
-		and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) 
+	return c:IsFaceup() and c:IsSetCard(SET_UTOPIC) and c:IsType(TYPE_XYZ)
+		and c:GetOriginalAttribute()&ATTRIBUTE_LIGHT~=0 and not c:IsCode(id)
+		and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp)
 		and not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_EFFECT+REASON_BATTLE)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)

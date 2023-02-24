@@ -2,7 +2,7 @@
 --Djinn Disserere of Rituals
 local s,id=GetID()
 function s.initial_effect(c)
-	--Extra ritual material
+	--Can be used for a Ritual Summon while it is in the GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -27,23 +27,22 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return r==REASON_RITUAL
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local rc=eg:GetFirst()
-	for rc in aux.Next(eg) do
+	for rc in eg:Iter() do
 		if rc:GetFlagEffect(id)==0 then
 			--Unaffected by traps
 			local e1=Effect.CreateEffect(e:GetHandler())
-			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetDescription(3103)
+			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CLIENT_HINT)
 			e1:SetRange(LOCATION_MZONE)
 			e1:SetCode(EFFECT_IMMUNE_EFFECT)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			e1:SetValue(s.efilter)
 			rc:RegisterEffect(e1,true)
-			rc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+			rc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 		end
 	end
 end
 function s.efilter(e,te)
-	return te:IsActiveType(TYPE_TRAP)
+	return te:IsTrapEffect()
 end

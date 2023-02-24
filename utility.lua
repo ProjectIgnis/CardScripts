@@ -575,6 +575,15 @@ function Card.HasLevel(c)
 	return false
 end
 
+--Returns true if the Card "c" has the flag effect with code "id"
+function Card.HasFlagEffect(c,id,ct)
+	return c:GetFlagEffect(id)>=(ct or 1)
+end
+--Returns true if the player "tp" has the flag effect with code "id"
+function Duel.HasFlagEffect(tp,id,ct)
+	return Duel.GetFlagEffect(tp,id)>=(ct or 1)
+end
+
 function Card.GetMetatable(c,currentCode)
 	if currentCode then return _G["c" .. c:GetCode()] end
 	return c.__index
@@ -1622,7 +1631,7 @@ function Card.ListsCounter(c,counter_type)
 	return false
 end
 --Checks whether a card (c) has an effect that places a certain type of counter
-function Card.ListsCounter(c,counter_type)
+function Card.PlacesCounter(c,counter_type)
 	if not c.counter_place_list then return false end
 	for _,ccounter in ipairs(c.counter_place_list) do
 		if counter_type==ccounter then return true end

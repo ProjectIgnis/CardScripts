@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Bushido Counte permit
+	--Bushido Counter permit
 	c:EnableCounterPermit(COUNTER_BUSHIDO)
 	--Link Summon procedure
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_WARRIOR),2,2,s.lcheck)

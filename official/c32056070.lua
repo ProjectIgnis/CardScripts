@@ -1,5 +1,5 @@
 --ユウ-Ai-
---You & A.I.
+--You and A.I.
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -82,15 +82,15 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	local attr=sc:GetAttribute()
 	e:SetLabel(attr)
-	if attr&(ATTRIBUTE_EARTH+ATTRIBUTE_WATER)~=0 then
+	if attr&(ATTRIBUTE_EARTH|ATTRIBUTE_WATER)~=0 then
 		e:SetCategory(CATEGORY_ATKCHANGE)
 		e:SetOperation(s.atkop)
 		s.atktg(e,tp,eg,ep,ev,re,r,rp,1)
-	elseif attr&(ATTRIBUTE_WIND+ATTRIBUTE_LIGHT)~=0 then
+	elseif attr&(ATTRIBUTE_WIND|ATTRIBUTE_LIGHT)~=0 then
 		e:SetCategory(CATEGORY_DISABLE)
 		e:SetOperation(s.disop)
 		s.distg(e,tp,eg,ep,ev,re,r,rp,1)
-	elseif attr&(ATTRIBUTE_DARK+ATTRIBUTE_FIRE)~=0 then
+	elseif attr&(ATTRIBUTE_DARK|ATTRIBUTE_FIRE)~=0 then
 		e:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 		e:SetOperation(s.tkop)
 		s.tktg(e,tp,eg,ep,ev,re,r,rp,1)
@@ -99,7 +99,7 @@ end
 function s.operation(c,tp,att)
 	s.attr_list[tp]=s.attr_list[tp]|att
 	for _,str in aux.GetAttributeStrings(att) do
-		c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,EFFECT_FLAG_CLIENT_HINT,1,0,str)
+		c:RegisterFlagEffect(0,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,EFFECT_FLAG_CLIENT_HINT,1,0,str)
 	end
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -107,7 +107,6 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
 	s.operation(c,tp,e:GetLabel())
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local tc=Duel.SelectMatchingCard(tp,Card.HasNonZeroAttack,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil):GetFirst()
@@ -116,7 +115,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		e1:SetValue(math.ceil(atk/2))
 		tc:RegisterEffect(e1)
 	end
@@ -127,7 +126,6 @@ function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
 	s.operation(c,tp,e:GetLabel())
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_NEGATE)
 	local tc=Duel.SelectMatchingCard(tp,Card.IsNegatable,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil):GetFirst()
@@ -137,21 +135,21 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetValue(RESET_TURN_SET)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		tc:RegisterEffect(e2)
 		if tc:IsType(TYPE_TRAPMONSTER) then
 			local e3=Effect.CreateEffect(c)
 			e3:SetType(EFFECT_TYPE_SINGLE)
 			e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e3:SetCode(EFFECT_DISABLE_TRAPMONSTER)
-			e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e3:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 			tc:RegisterEffect(e3)
 		end
 	end
@@ -164,7 +162,6 @@ function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
 	s.operation(c,tp,e:GetLabel())
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_IGNISTER,SET_IGNISTER,TYPES_TOKEN,0,0,1,RACE_CYBERSE,ATTRIBUTE_DARK) then

@@ -45,7 +45,6 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	local b3=Duel.IsExistingMatchingCard(s.dinofilter,tp,LOCATION_MZONE,0,1,nil) and Duel.IsExistingMatchingCard(s.bondfilter,tp,LOCATION_DECK,0,1,nil) 
 	local b4=Duel.IsExistingMatchingCard(s.mfilter,tp,0,LOCATION_MZONE,1,nil)
 	if Duel.GetTurnCount()==1 then Duel.ResetFlagEffect(ep,id) end
-	Debug.Message(ct)
 	--Discard 1 Dinosaur to add 1 Dinosaur with different Attribute from Deck
 	if ct==1 and b1 then
 		Duel.Hint(HINT_CARD,0,id)

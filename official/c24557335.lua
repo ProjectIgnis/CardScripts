@@ -1,9 +1,9 @@
 --天威龍－シュターナ
---Tenyi Dragon Sthana
+--Tenyi Spirit - Shthana
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	--spsummon
+	--Special Summon itself from the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--ss and destroy
+	--Special Summon a non-Effect monster that was destroyed, then destroy 1 monster the opponent controls
 	local e2=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DESTROY)
@@ -50,9 +50,9 @@ function s.cfilter(c,e,tp)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return s.cfilter(chkc,e,tp) end
-	if chk==0 then return eg:IsExists(s.cfilter,1,nil,e,tp)
-		and ((not eg:IsContains(e:GetHandler())) 
-		or e:GetHandler():IsLocation(LOCATION_HAND)) end
+	local c=e:GetHandler()
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and eg:IsExists(s.cfilter,1,nil,e,tp) and ((not eg:IsContains(c)) or c:IsLocation(LOCATION_HAND)) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=eg:FilterSelect(tp,s.cfilter,1,1,nil,e,tp)
 	Duel.SetTargetCard(g:GetFirst())
@@ -61,9 +61,9 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0
-		and Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_MZONE,1,nil)
+		and Duel.IsExistingMatchingCard(nil,tp,0,LOCATION_MZONE,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
-		local des=Duel.SelectMatchingCard(tp,aux.TRUE,tp,0,LOCATION_MZONE,1,1,nil)
+		local des=Duel.SelectMatchingCard(tp,nil,tp,0,LOCATION_MZONE,1,1,nil)
 		if #des>0 then
 			Duel.Destroy(des,REASON_EFFECT)
 		end

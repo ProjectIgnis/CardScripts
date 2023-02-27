@@ -1,9 +1,9 @@
---E・HERO ネクロイド・シャーマン
+--Ｅ・ＨＥＲＯ ネクロイド・シャーマン
 --Elemental HERO Necroid Shaman
 local s,id=GetID()
 function s.initial_effect(c)
-	--Fusion material
 	c:EnableReviveLimit()
+	--Fusion Materials
 	Fusion.AddProcMix(c,true,true,86188410,89252153)
 	--Must be Fusion Summoned 
 	local e1=Effect.CreateEffect(c)
@@ -19,25 +19,26 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e2:SetTarget(s.target)
-	e2:SetOperation(s.operation)
+	e2:SetTarget(s.destg)
+	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
 s.material_setcode={SET_HERO,SET_ELEMENTAL_HERO}
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) end
 	if chk==0 then return true end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,aux.TRUE,tp,0,LOCATION_MZONE,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
+	local g=Duel.SelectTarget(tp,nil,tp,0,LOCATION_MZONE,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,tp,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,1-tp,LOCATION_GRAVE)
 end
 function s.spfilter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,1-tp)
 end
-function s.operation(e,tp,eg,ep,ev,re,r,rp)
+function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)~=0 and Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0 then
+	if tc and tc:IsRelateToEffect(e) and tc:IsControler(1-tp) and Duel.Destroy(tc,REASON_EFFECT)>0
+		and Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=Duel.SelectMatchingCard(tp,s.spfilter,tp,0,LOCATION_GRAVE,1,1,nil,e,tp)
 		if #sg>0 then

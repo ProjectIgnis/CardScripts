@@ -4,8 +4,8 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0xd4),2,2)
-	--immune
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_PALEOZOIC),2,2)
+	--Unaffected by monsters' effects
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_IMMUNE_EFFECT)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(s.efilter)
 	c:RegisterEffect(e1)
-	--to grave
+	--Send 1 Set card on the field to the GY and Set 1 "Paleozoic" Trap card directly from the Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_TOGRAVE)
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -23,20 +23,20 @@ function s.initial_effect(c)
 	e2:SetTarget(s.gytg)
 	e2:SetOperation(s.gyop)
 	c:RegisterEffect(e2)
-	--replace des
+	--Destruction replacement for Set card(s)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EFFECT_DESTROY_REPLACE)
-	e3:SetRange(LOCATION_GRAVE+LOCATION_MZONE)
+	e3:SetRange(LOCATION_GRAVE|LOCATION_MZONE)
 	e3:SetCountLimit(1,{id,1})
 	e3:SetTarget(s.reptg)
 	e3:SetValue(s.repval)
 	e3:SetOperation(s.repop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xd4}
+s.listed_series={SET_PALEOZOIC}
 function s.efilter(e,re)
-	return re:IsActiveType(TYPE_MONSTER) and re:GetOwner()~=e:GetOwner()
+	return re:IsMonsterEffect() and re:GetOwner()~=e:GetOwner()
 end
 function s.gyfilter(c,tp)
 	if c:IsFaceup() then return false end
@@ -46,8 +46,8 @@ function s.gyfilter(c,tp)
 	end
 	return Duel.GetLocationCount(tp,LOCATION_SZONE)>zc
 end
-function s.setfilter(c,i)
-	return c:IsSetCard(0xd4) and c:IsTrap() and c:IsSSetable(i)
+function s.setfilter(c,ignore)
+	return c:IsSetCard(SET_PALEOZOIC) and c:IsTrap() and c:IsSSetable(ignore)
 end
 function s.gytg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_SZONE) and s.gyfilter(chkc,tp) end
@@ -65,12 +65,13 @@ function s.gyop(e,tp,eg,ep,ev,re,r,rp)
 		local sc=Duel.SelectMatchingCard(tp,s.setfilter,tp,LOCATION_DECK,0,1,1,nil,false):GetFirst()
 		if sc then
 			Duel.SSet(tp,sc)
+			--Can be activated this turn
 			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetDescription(aux.Stringid(id,0))
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_TRAP_ACT_IN_SET_TURN)
 			e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-			e1:SetDescription(aux.Stringid(id,0))
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			sc:RegisterEffect(e1)
 		end
 	end
@@ -89,5 +90,5 @@ function s.repval(e,c)
 	return s.repfilter(c,e:GetHandlerPlayer())
 end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT+REASON_REPLACE)
+	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT|REASON_REPLACE)
 end

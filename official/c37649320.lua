@@ -2,10 +2,10 @@
 --Paleozoic Opabinia
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
-	Xyz.AddProcedure(c,nil,2,2)
 	c:EnableReviveLimit()
-	--immune
+	--Xyz Summon Procedure
+	Xyz.AddProcedure(c,nil,2,2)
+	--Unaffected by monsters' effects
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_IMMUNE_EFFECT)
@@ -13,31 +13,31 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(s.efilter)
 	c:RegisterEffect(e1)
-	--activate trap in hand
+	--Add 1 "Paleozoic" Trap Card from hand to the GY
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(EFFECT_TRAP_ACT_IN_HAND)
+	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xd4))
-	e2:SetDescription(aux.Stringid(id,1))
-	e2:SetTargetRange(LOCATION_HAND,0)
-	c:RegisterEffect(e2)
-	--search
+	e2:SetCountLimit(1,id)
+	e2:SetCondition(s.thcon)
+	e2:SetCost(s.thcost)
+	e2:SetTarget(s.thtg)
+	e2:SetOperation(s.thop)
+	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
+	--"Paleozoic" Trap cards can be activated from the hand
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,0))
-	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
-	e3:SetType(EFFECT_TYPE_IGNITION)
+	e3:SetDescription(aux.Stringid(id,1))
+	e3:SetType(EFFECT_TYPE_FIELD)
+	e3:SetCode(EFFECT_TRAP_ACT_IN_HAND)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCountLimit(1,id)
-	e3:SetCondition(s.thcon)
-	e3:SetCost(s.thcost)
-	e3:SetTarget(s.thtg)
-	e3:SetOperation(s.thop)
-	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
+	e3:SetTargetRange(LOCATION_HAND,0)
+	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_PALEOZOIC))
+	c:RegisterEffect(e3)
 end
-s.listed_series={0xd4}
+s.listed_series={SET_PALEOZOIC}
 function s.efilter(e,re)
-	return re:IsActiveType(TYPE_MONSTER) and re:GetOwner()~=e:GetOwner()
+	return re:IsMonsterEffect() and re:GetOwner()~=e:GetOwner()
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsTrap,1,nil)
@@ -47,7 +47,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xd4) and c:IsTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_PALEOZOIC) and c:IsTrap() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

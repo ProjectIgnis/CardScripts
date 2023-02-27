@@ -1,5 +1,5 @@
 --復烙印
---Rebranded
+--Branded Ragained
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -51,12 +51,13 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_BYSTIAL}
 function s.cfilter(c,e)
-	return c:IsAttribute(ATTRIBUTE_DARK+ATTRIBUTE_LIGHT) and c:IsFaceup() and c:IsAbleToDeck() and not c:IsType(TYPE_TOKEN) and c:IsCanBeEffectTarget(e)
+	return c:IsAttribute(ATTRIBUTE_DARK|ATTRIBUTE_LIGHT) and c:IsFaceup()
+		and c:IsAbleToDeck() and not c:IsType(TYPE_TOKEN) and c:IsCanBeEffectTarget(e)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=eg:Filter(s.cfilter,nil,e)
 	if #tg>0 then
-		for tc in aux.Next(tg) do
+		for tc in tg:Iter() do
 			tc:RegisterFlagEffect(id,RESET_CHAIN,0,1)
 		end
 		local g=e:GetLabelObject():GetLabelObject()
@@ -83,7 +84,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,SEQ_DECKBOTTOM,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_DECK+LOCATION_EXTRA) then
+	if tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,SEQ_DECKBOTTOM,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_DECK|LOCATION_EXTRA) then
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end
 end

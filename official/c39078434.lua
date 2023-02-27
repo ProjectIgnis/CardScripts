@@ -1,5 +1,5 @@
 --ジャイアント・メサイア
---Giant Antlion
+--Infinite Antlion
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -100,7 +100,7 @@ function s.equipop(c,e,tp,tc)
 	e1:SetType(EFFECT_TYPE_EQUIP)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(500)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	tc:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_UPDATE_DEFENSE)
@@ -112,6 +112,6 @@ function s.equipop(c,e,tp,tc)
 	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e3:SetValue(function(e,c) return c==e:GetLabelObject() end)
 	e3:SetLabelObject(c)
-	e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 	tc:RegisterEffect(e3)
 end

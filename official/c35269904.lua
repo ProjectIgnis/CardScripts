@@ -1,5 +1,5 @@
 -- 三戦の号
--- Triple Tactic
+-- Triple Tactics Thrust
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -14,15 +14,15 @@ function s.initial_effect(c)
 	e1:SetTarget(s.settg)
 	e1:SetOperation(s.setop)
 	c:RegisterEffect(e1)
-	Duel.AddCustomActivityCounter(id,ACTIVITY_CHAIN,function(re) return not re:IsActiveType(TYPE_MONSTER) end)
+	Duel.AddCustomActivityCounter(id,ACTIVITY_CHAIN,function(re) return not re:IsMonsterEffect() end)
 end
 s.listed_names={id}
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCustomActivityCount(id,1-tp,ACTIVITY_CHAIN)>0
 end
 function s.stfilter(c,tohand_chk)
-	local typ=c:GetType()
-	return (typ==TYPE_TRAP or typ==TYPE_SPELL) and ((tohand_chk and c:IsAbleToHand()) or c:IsSSetable()) and not c:IsCode(id)
+	return (c:IsNormalTrap() or c:IsNormalSpell()) and not c:IsCode(id)
+		and ((tohand_chk and c:IsAbleToHand()) or c:IsSSetable())
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
@@ -48,7 +48,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 		e1:SetCode(EFFECT_CANNOT_TRIGGER)
-		e1:SetReset(RESET_EVENT+RESETS_CANNOT_ACT+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_CANNOT_ACT|RESET_PHASE|PHASE_END)
 		sc:RegisterEffect(e1)
 	end
 end

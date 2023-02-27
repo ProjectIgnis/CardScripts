@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	Fusion.AddProcMix(c,true,true,34230233,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_DARK))
-	--Change effect
+	--Change the effect of a Normal Spell/Trap card or monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_QUICK_O)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.chtg)
 	e1:SetOperation(s.chop)
 	c:RegisterEffect(e1)
-	--Special Summon
+	--Special Summon 1 "Grapha, Dragon Lord of Dark World"
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_HANDES)
@@ -31,7 +31,7 @@ end
 s.listed_names={34230233}
 function s.chcon(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	return rp==1-tp and (re:IsActiveType(TYPE_MONSTER) or ((rc:GetType()==TYPE_SPELL or rc:GetType()==TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE)))
+	return rp==1-tp and (re:IsMonsterEffect() or ((rc:IsNormalSpell() or rc:IsNormalTrap()) and re:IsHasType(EFFECT_TYPE_ACTIVATE)))
 end
 function s.chtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>0 end
@@ -56,14 +56,14 @@ function s.spfilter(c,e,tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE+LOCATION_REMOVED)
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE|LOCATION_REMOVED,0,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE|LOCATION_REMOVED)
 	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,PLAYER_ALL,1)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE|LOCATION_REMOVED,0,1,1,nil,e,tp)
 	if #g>0 and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)>0
 		and (Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>0 or Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>0) then
 		local turn_pl=Duel.GetTurnPlayer()

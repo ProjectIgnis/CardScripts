@@ -27,29 +27,25 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsFaceup),tp,0,LOCATION_MZONE,1,nil) end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	--Requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g1=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,5,nil)
 	if #g1==0 then return end
 	Duel.HintSelection(g1,true)
-	Duel.SendtoDeck(g1,nil,SEQ_DECKTOP,REASON_EFFECT)
-	local g2=Duel.GetOperatedGroup()
-	if g2:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then
-		Duel.ShuffleDeck(tp)
-	end
+	local ct=Duel.SendtoDeck(g1,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	-- Effect
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
 	local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(Card.IsFaceup),tp,0,LOCATION_MZONE,1,1,nil)
 	if #g>0 then
 		Duel.HintSelection(g,true)
-		local atk=#g2*-300
+		local atk=ct*-300
+		local c=e:GetHandler()
 		-- Attack loss
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(atk)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		g:GetFirst():RegisterEffectRush(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UPDATE_DEFENSE)
@@ -57,10 +53,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		if c:IsMaximumMode() and Duel.IsExistingMatchingCard(Card.IsSpellTrap,tp,0,LOCATION_ONFIELD,1,nil)
 			and not Duel.IsExistingMatchingCard(Card.IsMonster,tp,LOCATION_GRAVE,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-			local g=Duel.SelectMatchingCard(tp,Card.IsSpellTrap,tp,0,LOCATION_ONFIELD,1,1,nil)
-			Duel.HintSelection(g,true)
+			local dg=Duel.SelectMatchingCard(tp,Card.IsSpellTrap,tp,0,LOCATION_ONFIELD,1,1,nil)
+			Duel.HintSelection(dg,true)
 			Duel.BreakEffect()
-			Duel.Destroy(g,REASON_EFFECT)
+			Duel.Destroy(dg,REASON_EFFECT)
 		end
 	end
 end

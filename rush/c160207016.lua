@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DESTROY)
-	e1:SetCountLimit(1,0)
+	e1:SetCountLimit(1)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
@@ -32,13 +32,17 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g1=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,5,nil)
 	if #g1==0 then return end
 	Duel.HintSelection(g1,true)
-	local ct=Duel.SendtoDeck(g1,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
+	Duel.SendtoDeck(g1,nil,SEQ_DECKTOP,REASON_EFFECT)
+	local g2=Duel.GetOperatedGroup()
+	if g2:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then
+		Duel.ShuffleDeck(tp)
+	end
 	-- Effect
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
 	local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(Card.IsFaceup),tp,0,LOCATION_MZONE,1,1,nil)
 	if #g>0 then
 		Duel.HintSelection(g,true)
-		local atk=ct*-300
+		local atk=#g2*-300
 		local c=e:GetHandler()
 		-- Attack loss
 		local e1=Effect.CreateEffect(c)

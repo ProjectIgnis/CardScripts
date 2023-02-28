@@ -33,7 +33,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local zone=c:GetColumnZone(LOCATION_MZONE)&ZONES_MMZ
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:IsHasType(EFFECT_TYPE_ACTIVATE)
-		and zone>0 and not Duel.IsExistingMatchingCard(Card.IsZone,tp,LOCATION_MZONE,0,1,nil,zone,tp)
+		and zone>0 and not Duel.IsExistingMatchingCard(aux.IsZone,tp,LOCATION_MZONE,0,1,nil,zone,tp)
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,TYPE_MONSTER|TYPE_NORMAL,2100,100,5,RACE_INSECT,ATTRIBUTE_EARTH) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,tp,0)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_DESTROY,nil,1,1-tp,LOCATION_MZONE)

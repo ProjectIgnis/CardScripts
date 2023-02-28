@@ -290,6 +290,12 @@ function Card.AddSideMaximumHandler(c,eff)
 	e11:SetCode(EFFECT_CANNOT_ATTACK)
 	e11:SetCondition(Maximum.sideCon)
 	c:RegisterEffect(e11)
+
+	--cannot activate effect if side piece
+	local e12=baseeff:Clone()
+	e12:SetCode(EFFECT_CANNOT_TRIGGER)
+	c:RegisterEffect(e12)
+
 	baseeff:Reset()
 end
 function Maximum.GetMaximumCenter(tp)

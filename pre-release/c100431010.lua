@@ -47,14 +47,14 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummonStep(c,0,tp,tp,true,false,POS_FACEUP,zone)
 	c:AddMonsterAttributeComplete()
 	Duel.SpecialSummonComplete()
-	local g=c:GetColumnGroup():Match(Card.IsControler,nil,1-tp)
-	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-		local dg=g:Select(tp,1,1,nil)
-		if #dg>0 then
-			Duel.BreakEffect()
-			Duel.Destroy(dg,REASON_EFFECT)
+	local dg=c:GetColumnGroup():Match(aux.AND(Card.IsControler,Card.IsMonster),nil,1-tp)
+	if #dg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+		if #dg>1 then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+			dg=dg:Select(tp,1,1,nil)
 		end
+		Duel.BreakEffect()
+		Duel.Destroy(dg,REASON_EFFECT)
 	end
 end
 function s.thfilter(c)

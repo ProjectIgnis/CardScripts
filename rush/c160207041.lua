@@ -30,19 +30,19 @@ function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
-	local ctdeck=Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)
-	if ctdeck>3 then ctdeck=3 end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	local ctdeck=math.min(3,Duel.GetFieldGroupCount(tp,LOCATION_DECK,0))
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND,0,1,ctdeck,nil)
-	local ct=#g
 	Duel.ConfirmCards(1-tp,g)
 	Duel.ShuffleHand(tp)
+	local ct=#g
 	if ct>0 then
 		--Effect
 		local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 		local ct2=Duel.Draw(p,ct,REASON_EFFECT)
 		local g1=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_HAND,0,ct2,ct2,nil)
 		if #g1<1 then return end
+		Duel.BreakEffect()
 		Duel.SendtoDeck(g1,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 end

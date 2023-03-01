@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	-- 2 monsters, including a Fiend monster
+	-- Link Summon procedure
 	Link.AddProcedure(c,nil,2,2,s.lcheck)
 	-- Destroy 1 face-up card
 	local e1=Effect.CreateEffect(c)
@@ -34,7 +34,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function s.fldfilter(c)
-	return c:IsCode(77297908) and c:IsType(TYPE_FIELD) and not c:IsForbidden()
+	return c:IsCode(77297908) and c:IsFieldSpell() and not c:IsForbidden()
 end
 function s.pendfilter(c)
 	return c:IsSetCard(SET_ABYSS_ACTOR) and c:IsType(TYPE_PENDULUM) and not c:IsForbidden()

@@ -2,8 +2,9 @@
 --Skydive Scorcher
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Destroy monsters and inflict damage
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -12,9 +13,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x3008,0xf6}
+s.listed_series={SET_ELEMENTAL_HERO,SET_SKYSCRAPER}
 function s.filter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x3008) and c:IsType(TYPE_FUSION)
+	return c:IsFaceup() and c:IsSetCard(SET_ELEMENTAL_HERO) and c:IsType(TYPE_FUSION)
 		and Duel.IsExistingMatchingCard(s.desfilter,tp,0,LOCATION_MZONE,1,nil,c:GetAttack())
 end
 function s.desfilter(c,atk)
@@ -38,7 +39,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,1,1-tp,dam)
 end
 function s.ffilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xf6)
+	return c:IsFaceup() and c:IsSetCard(SET_SKYSCRAPER)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

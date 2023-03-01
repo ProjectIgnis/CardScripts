@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_IMMUNE_EFFECT)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK) end)
-	e1:SetValue(function(_,te) return te:IsActiveType(TYPE_TRAP) end)
+	e1:SetValue(function(_,te) return te:IsTrapEffect() end)
 	c:RegisterEffect(e1)
 	-- "Traptrix" monsters gain 1000 ATK
 	local e2=Effect.CreateEffect(c)
@@ -63,6 +63,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local neg_chk=false
 	local c=e:GetHandler()
 	for tc in g:Iter() do
+		if tc:IsCanBeDisabledByEffect(e) then neg_chk=true end
 		-- Negate effects
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -73,7 +74,6 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetValue(RESET_TURN_SET)
 		tc:RegisterEffect(e2)
-		if not (neg_chk or tc:IsImmuneToEffect(e1) or tc:IsImmuneToEffect(e2)) then neg_chk=true end
 	end
 	if not neg_chk then return end
 	local rg=Duel.GetMatchingGroup(aux.AND(s.ntfilter,Card.IsAbleToRemove),tp,LOCATION_GRAVE,0,nil)

@@ -3,8 +3,9 @@
 --Anime version scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special Summon from your GY and Xyz Summon
+	--Special Summon 2 "Salamangreat" monsters from your GY and Xyz Summon
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DELAY,EFFECT_FLAG2_CHECK_SIMULTANEOUS)
@@ -25,7 +26,8 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_SALAMANGREAT}
 function s.cfilter(c,tp)
-	return c:GetPreviousTypeOnField()&TYPE_LINK>0 and c:IsPreviousSetCard(SET_SALAMANGREAT) and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp)
+	return c:GetPreviousTypeOnField()&TYPE_LINK>0 and c:IsPreviousSetCard(SET_SALAMANGREAT)
+		and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp)
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:GetReasonPlayer()==1-tp and c:IsReason(REASON_EFFECT)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -61,7 +63,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e1:SetCode(EFFECT_DISABLE)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			sc:RegisterEffect(e1)
 			local e2=e1:Clone()
 			e2:SetCode(EFFECT_DISABLE_EFFECT)
@@ -90,7 +92,7 @@ function s.efop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(function(_,c) return c:GetOverlayCount()*300 end)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	rc:RegisterEffect(e1,true)
 	if not rc:IsType(TYPE_EFFECT) then
 		--Treated as an Effect Monster
@@ -98,7 +100,7 @@ function s.efop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_ADD_TYPE)
 		e2:SetValue(TYPE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		rc:RegisterEffect(e2,true)
 	end
 end

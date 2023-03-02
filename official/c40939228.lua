@@ -55,13 +55,16 @@ end
 function s.matfilter(g,sc,tp)
 	return g:IsExists(s.cfilter,1,nil,sc,tp)
 end
+function s.disfilter(c)
+	return c:IsNegatableMonster() and c:IsType(TYPE_EFFECT)
+end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsNegatableMonster,tp,0,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.disfilter,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,nil,1,1-tp,LOCATION_MZONE)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_NEGATE)
-	local tc=Duel.SelectMatchingCard(tp,Card.IsNegatableMonster,tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.disfilter,tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
 	if not tc then return end
 	Duel.HintSelection(tc,true)
 	--Negate effects

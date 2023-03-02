@@ -61,7 +61,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.chainop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	if ep=tp and re:IsMonsterEffect() and rc:IsType(TYPE_SYNCHRO)
+	if ep==tp and re:IsMonsterEffect() and rc:IsType(TYPE_SYNCHRO)
 		and (rc:IsOriginalSetCard(SET_WARRIOR) or rc:IsOriginalSetCard(SET_SYNCHRON) or rc:IsOriginalSetCard(SET_STARDUST)) then
 		Duel.SetChainLimit(s.chainlm)
 	end

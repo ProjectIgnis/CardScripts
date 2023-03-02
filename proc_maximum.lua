@@ -147,7 +147,7 @@ function Card.IsMaximumMode(c)
 	return c:IsMaximumModeCenter() or c:IsMaximumModeSide()
 end
 function Card.IsMaximumModeCenter(c)
-	return c:GetFlagEffect(FLAG_MAXIMUM_CENTER)>0
+	return c:HasFlagEffect(FLAG_MAXIMUM_CENTER)
 end
 function Card.IsMaximumModeLeft(c)
 	local m=c:GetMetatable(true)
@@ -160,16 +160,16 @@ function Card.IsMaximumModeRight(c)
 	return m.MaximumSide=="Right"
 end
 function Card.IsMaximumModeSide(c)
-	return c:GetFlagEffect(FLAG_MAXIMUM_SIDE)~=0
+	return c:HasFlagEffect(FLAG_MAXIMUM_SIDE)
 end
 function Card.IsNotMaximumModeSide(c)
-	return not c:GetFlagEffect(FLAG_MAXIMUM_SIDE)~=0
+	return not c:HasFlagEffect(FLAG_MAXIMUM_SIDE)
 end
 function Card.WasMaximumModeSide(c)
-	return c:GetFlagEffect(FLAG_MAXIMUM_SIDE_PREONFIELD)~=0
+	return c:HasFlagEffect(FLAG_MAXIMUM_SIDE_PREONFIELD)
 end
 function Card.WasMaximumMode(c)
-	return c:GetFlagEffect(FLAG_MAXIMUM_SIDE_PREONFIELD)~=0 or c:GetFlagEffect(FLAG_MAXIMUM_CENTER_PREONFIELD)~=0
+	return c:HasFlagEffect(FLAG_MAXIMUM_SIDE_PREONFIELD) or c:HasFlagEffect(FLAG_MAXIMUM_CENTER_PREONFIELD)
 end
 --I used Gemini as a reference for that function, while waiting for more information
 function Auxiliary.IsMaximumMode(effect)

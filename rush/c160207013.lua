@@ -28,7 +28,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_GRAVE,0,1,nil) end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsNotMaxumimModeSide,tp,0,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsNotMaximumModeSide,tp,0,LOCATION_MZONE,1,nil) end
 end
 function s.filter(c)
 	return c:IsMonster() and c:IsType(TYPE_MAXIMUM)
@@ -42,11 +42,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local ct=g2:FilterCount(s.filter,nil)
 	Duel.SortDeckbottom(tp,tp,#g)
 	--Effect
-	local g=Duel.GetMatchingGroup(Card.IsNotMaxumimModeSide,tp,0,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(Card.IsNotMaximumModeSide,tp,0,LOCATION_MZONE,nil)
 	if #g>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local dg=g:Select(tp,1,1,nil)
-		dg:AddMaximumCheck()
+		dg=dg:AddMaximumCheck()
 		Duel.HintSelection(dg,true)
 		Duel.Destroy(dg,REASON_EFFECT)
 		if c:IsMaximumMode() and ct>2 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then

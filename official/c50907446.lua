@@ -3,10 +3,10 @@
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
-	--fusion material
 	c:EnableReviveLimit()
+	--Fusion Summon Procedure
 	Fusion.AddProcMixN(c,true,true,s.ffilter,2)
-	--must first be fusion summoned
+	--Must first be Fusion Summoned
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_EXTRA)
 	e1:SetValue(aux.fuslimit)
 	c:RegisterEffect(e1)
-	--negate
+	--Negate the effects of 1 card on the field
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DISABLE)
@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.negtg)
 	e2:SetOperation(s.negop)
 	c:RegisterEffect(e2)
-	--battle indes
+	--Cannot be destroyed by battle
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e3:SetValue(1)
 	c:RegisterEffect(e3)
-	--add to hand
+	--Add 1 "Shaddoll" card from the Deck or GY to the hand
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_TOHAND+CATEGORY_HANDES)
@@ -45,9 +45,9 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x9d}
+s.listed_series={SET_SHADDOLL}
 function s.ffilter(c,fc,sumtype,sp,sub,mg,sg)
-	return c:IsSetCard(0x9d,fc,sumtype,sp) and (not sg or sg:FilterCount(aux.TRUE,c)==0 or not sg:IsExists(Card.IsAttribute,1,c,c:GetAttribute(),fc,sumtype,sp))
+	return c:IsSetCard(SET_SHADDOLL,fc,sumtype,sp) and (not sg or sg:FilterCount(aux.TRUE,c)==0 or not sg:IsExists(Card.IsAttribute,1,c,c:GetAttribute(),fc,sumtype,sp))
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsNegatable() and chkc:IsControler(1-tp) end
@@ -64,42 +64,42 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp,chk)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e2)
 		if tc:IsType(TYPE_TRAPMONSTER) then
 			local e3=Effect.CreateEffect(c)
 			e3:SetType(EFFECT_TYPE_SINGLE)
 			e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e3:SetCode(EFFECT_DISABLE_TRAPMONSTER)
-			e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e3)
 		end
 	end
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x9d) and c:IsAbleToHand()
+	return c:IsSetCard(SET_SHADDOLL) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK|LOCATION_GRAVE)
 	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,tp,1)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil)
 	if #g>0 and Duel.SendtoHand(g,nil,REASON_EFFECT)>0 then
 		local og=Group.Filter(Duel.GetOperatedGroup(),Card.IsLocation,nil,LOCATION_HAND)
 		if #og>0 then
 			Duel.ConfirmCards(1-tp,g)
 			Duel.BreakEffect()
 			Duel.ShuffleHand(tp)
-			Duel.DiscardHand(tp,aux.TRUE,1,1,REASON_EFFECT+REASON_DISCARD)
+			Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT|REASON_DISCARD)
 		end
 	end
 end

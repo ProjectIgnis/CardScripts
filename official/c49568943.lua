@@ -10,8 +10,9 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--Special Summon
+	--Special Summon 1 monster from the Spell/Trap Zone
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_FZONE)
@@ -22,17 +23,16 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x17e}
+s.listed_series={SET_VAYLANTZ}
 s.listed_names={id}
 function s.filter(c)
-	return c:IsType(TYPE_FIELD) and c:IsSpell() and c:IsSetCard(0x17e) and not c:IsCode(id)
+	return c:IsFieldSpell() and c:IsSetCard(SET_VAYLANTZ) and not c:IsCode(id)
 		and not c:IsForbidden()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil)
 	if #g>0 then
@@ -61,7 +61,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then 
+	if tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP,(1<<tc:GetSequence())&ZONES_MMZ)
 	end
 end

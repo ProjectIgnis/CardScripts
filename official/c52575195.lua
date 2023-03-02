@@ -49,7 +49,7 @@ end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsControler(tp) and Duel.Remove(tc,tc:GetPosition(),REASON_EFFECT+REASON_TEMPORARY)>0 then
+	if tc:IsRelateToEffect(e) and tc:IsControler(tp) and Duel.Remove(tc,tc:GetPosition(),REASON_EFFECT|REASON_TEMPORARY)>0 then
 		--Return it during your next Standby Phase
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -65,7 +65,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 		else
 			e1:SetLabel(Duel.GetTurnCount()+1)
 		end
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetCondition(s.retcon)
 		e1:SetOperation(s.retop)
 		tc:RegisterEffect(e1)

@@ -58,10 +58,10 @@ function s.immop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetCode(EFFECT_IMMUNE_EFFECT)
 		e1:SetValue(s.efilter)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end
 function s.efilter(e,te)
-	return te:IsActiveType(TYPE_MONSTER) and te:GetOwner()~=e:GetOwner()
+	return te:IsMonsterEffect() and te:GetOwner()~=e:GetOwner()
 end

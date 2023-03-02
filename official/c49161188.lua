@@ -60,19 +60,19 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()~=0 then
 		--Can make a second attack
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3201)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EXTRA_ATTACK)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
-		e1:SetDescription(3201)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
 	end
 end
 function s.valcheck(e,c)
 	local c=e:GetHandler()
 	local g=c:GetMaterial()
-	local lg=g:Filter(Card.IsLocation,nil,LOCATION_MZONE,c,SUMMON_TYPE_FUSION)
+	local lg=g:Filter(Card.IsLocation,nil,LOCATION_MZONE)
 	if #g==#lg then
 		e:GetLabelObject():SetLabel(id)
 	end
@@ -99,7 +99,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		e1:SetValue(value/2)
 		c:RegisterEffect(e1)
 	end

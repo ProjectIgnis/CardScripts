@@ -1,5 +1,5 @@
 --撃鉄竜リンドブルム
---Lindwurm the Gunhammer Dragon
+--Rindbrumm the Striking Dragon
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -35,7 +35,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_ALBAZ}
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_MONSTER) and re:IsActiveType(TYPE_EXTRA)
+	return re:IsMonsterEffect() and re:IsActiveType(TYPE_EXTRA)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

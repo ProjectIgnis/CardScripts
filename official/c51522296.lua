@@ -41,8 +41,8 @@ function s.ritlimit(e,se,sp,st)
 end
 function s.unaval(e,te)
 	local tc=te:GetOwner()
-	return te:IsActiveType(TYPE_MONSTER) and te:IsActivated() 
-		and te:GetOwnerPlayer()==1-e:GetHandlerPlayer() 
+	return te:IsMonsterEffect() and te:IsActivated()
+		and te:GetOwnerPlayer()==1-e:GetHandlerPlayer()
 		and te:IsActiveType(TYPE_FUSION|TYPE_SYNCHRO|TYPE_XYZ|TYPE_LINK)
 end
 function s.applytg(e,tp,eg,ep,ev,re,r,rp,chk)

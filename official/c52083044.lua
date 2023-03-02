@@ -3,7 +3,7 @@
 --scripted by Rundas
 local s,id=GetID()
 function s.initial_effect(c)
-	--tribute + banish
+	--Banish 1 monster until the End Phase
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_REMOVE)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.btg)
 	e1:SetOperation(s.bop)
 	c:RegisterEffect(e1)
-	--to hand + Special Summon
+	--Return a "Time Thief" monster to the hand and Special Summon this card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON)
@@ -43,13 +43,13 @@ function s.btg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.bop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and Duel.Remove(tc,0,REASON_EFFECT+REASON_TEMPORARY)>0 then
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	if tc:IsRelateToEffect(e) and Duel.Remove(tc,0,REASON_EFFECT|REASON_TEMPORARY)>0 then
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1)
 		--Return the monster in the End Phase
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		e1:SetLabelObject(tc)
 		e1:SetCountLimit(1)
 		e1:SetCondition(s.retcon)
@@ -80,7 +80,7 @@ end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and Duel.SendtoHand(tc,nil,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_HAND)
+	if tc:IsRelateToEffect(e) and Duel.SendtoHand(tc,nil,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_HAND)
 		and c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 then
 		--Banish it when it leaves the field
 		local e1=Effect.CreateEffect(e:GetHandler())
@@ -88,7 +88,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e1,true)
 	end

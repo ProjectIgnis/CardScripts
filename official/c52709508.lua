@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Synchro summon
-	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x2),1,1,Synchro.NonTuner(nil),1,99)
+	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_GENEX),1,1,Synchro.NonTuner(nil),1,99)
 	c:EnableReviveLimit()
 	--Material verification
 	local e1=Effect.CreateEffect(c)
@@ -41,9 +41,9 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetTargetRange(0,1)
 		e1:SetValue(s.aclimit)
 		e1:SetCondition(s.actcon)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
-		c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,2))
+		c:RegisterFlagEffect(0,RESET_EVENT|RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,2))
 	end
 	if (att&ATTRIBUTE_FIRE)~=0 then
 		--Inflict damage when it destroys a monster by battle
@@ -56,9 +56,9 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCondition(aux.bdcon)
 		e1:SetTarget(s.damtg)
 		e1:SetOperation(s.damop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
-		c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,3))
+		c:RegisterFlagEffect(0,RESET_EVENT|RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,3))
 	end
 	if (att&ATTRIBUTE_LIGHT)~=0 then
 		--Special Summon a LIGHT monster from the GY
@@ -71,9 +71,9 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCountLimit(1)
 		e1:SetTarget(s.sptg)
 		e1:SetOperation(s.spop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
-		c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,4))
+		c:RegisterFlagEffect(0,RESET_EVENT|RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,4))
 	end
 end
 function s.aclimit(e,re,tp)

@@ -11,9 +11,9 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE+EFFECT_FLAG_IGNORE_RANGE+EFFECT_FLAG_IGNORE_IMMUNE)
 	e1:SetCode(EFFECT_TO_GRAVE_REDIRECT)
 	e1:SetRange(LOCATION_PZONE)
-	e1:SetTarget(s.rmtarget)
-	e1:SetTargetRange(0xff,0xff)
+	e1:SetTargetRange(LOCATION_ALL,LOCATION_ALL)
 	e1:SetValue(LOCATION_REMOVED)
+	e1:SetTarget(s.rmtarget)
 	c:RegisterEffect(e1)
 	--Special Summon itself
 	local e2=Effect.CreateEffect(c)
@@ -52,7 +52,7 @@ function s.cfilter(c)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND+LOCATION_PZONE,0,1,c) 
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND|LOCATION_PZONE,0,1,c) 
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
@@ -60,7 +60,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
-	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND+LOCATION_PZONE,0,1,1,c)
+	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND|LOCATION_PZONE,0,1,1,c)
 	if #g>0 and Duel.SendtoExtraP(g,tp,REASON_EFFECT)~=0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and c:IsRelateToEffect(e) then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
@@ -77,8 +77,8 @@ end
 function s.gyop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)
 	g:Match(aux.NOT(Card.IsImmuneToEffect),nil,e)
-	for tc in aux.Next(g) do
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	for tc in g:Iter() do
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1)
 		--Send to GY
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -87,7 +87,7 @@ function s.gyop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCountLimit(1)
 		e1:SetCondition(s.con)
 		e1:SetOperation(s.op)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		e1:SetLabelObject(tc)
 		Duel.RegisterEffect(e1,tp)
 	end

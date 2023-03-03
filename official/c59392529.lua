@@ -1,12 +1,10 @@
 --E・HERO リキッドマン
 --Elemental HERO Liquid Soldier
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
-
 function s.initial_effect(c)
-	--Upon normal summon, revive 1 level or lower "HERO" monster
+	--Special Summon 1 Level 4 or lower "HERO" monster from the GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -16,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--If sent to GY or banished for "HERO" fusion, draw 2
+	--Draw 2 cards if it is sent to GY or banished for the Fusion summon of a "HERO" monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_DRAW+CATEGORY_HANDES)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -28,13 +26,12 @@ function s.initial_effect(c)
 	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={}
+s.listed_names={id}
 	--Part of "HERO" archetype
-s.listed_series={0x8}
-
+s.listed_series={SET_HERO}
 	--Check for level 4 or lower "HERO" monster
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x8) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_HERO) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and not c:IsCode(id)
 end
 	--Activation legality
@@ -57,7 +54,7 @@ end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=c:GetReasonCard()
-	return c:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and rc:IsSetCard(0x8) and r & REASON_FUSION == REASON_FUSION
+	return c:IsLocation(LOCATION_GRAVE|LOCATION_REMOVED) and rc:IsSetCard(SET_HERO) and r & REASON_FUSION == REASON_FUSION
 end
 	--Activation legality
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -73,6 +70,6 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Draw(p,d,REASON_EFFECT)==2 then
 		Duel.ShuffleHand(p)
 		Duel.BreakEffect()
-		Duel.DiscardHand(p,nil,1,1,REASON_EFFECT+REASON_DISCARD)
+		Duel.DiscardHand(p,nil,1,1,REASON_EFFECT|REASON_DISCARD)
 	end
 end

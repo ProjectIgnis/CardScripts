@@ -49,7 +49,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SSet(tp,tc,tp,false)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
-			if tc:IsIsQuickPlaySpell() then
+			if tc:IsQuickPlaySpell() then
 				e1:SetCode(EFFECT_QP_ACT_IN_SET_TURN)
 			elseif tc:IsTrap() then
 				e1:SetCode(EFFECT_TRAP_ACT_IN_SET_TURN)

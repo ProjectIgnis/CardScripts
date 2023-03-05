@@ -1,5 +1,5 @@
 -- 土地ころがし
--- Repeated Land Transaction
+-- Land Flipping
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -27,7 +27,7 @@ function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_LEAVE_GRAVE,nil,1,1-g:GetFirst():GetControler(),LOCATION_GRAVE)
 end
 function s.plfilter(c,targ_p,code)
-	return c:IsType(TYPE_FIELD) and c:IsSpell() and not c:IsForbidden()
+	return c:IsFieldSpell() and not c:IsForbidden()
 		and not c:IsOriginalCode(code) and (c:IsControler(targ_p) or c:IsAbleToChangeControler())
 end
 function s.placefield(c,tp,targ_p)

@@ -1,5 +1,5 @@
 --導かれし烙印
---Branded Inevitable
+--Branded Befallen
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -30,7 +30,7 @@ function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	if ch>0 then
 		local cplayer=Duel.GetChainInfo(ch,CHAININFO_TRIGGERING_CONTROLER)
 		local ceff=Duel.GetChainInfo(ch,CHAININFO_TRIGGERING_EFFECT)
-		if cplayer==tp and ceff:GetHandler():IsSetCard(SET_BYSTIAL) and ceff:IsActiveType(TYPE_MONSTER) then
+		if cplayer==tp and ceff:GetHandler():IsSetCard(SET_BYSTIAL) and ceff:IsMonsterEffect() then
 			return true
 		end
 	end

@@ -22,8 +22,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.getattr(g)
 	local aat=0
-	local tc=g:GetFirst()
-	for tc in aux.Next(g) do
+	for tc in g:Iter() do
 		aat=(aat|tc:GetAttribute())
 	end
 	return aat

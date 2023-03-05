@@ -37,12 +37,13 @@ function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
+	--Prevent Battle Damage
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
-	e1:SetReset(RESET_PHASE+PHASE_DAMAGE_CAL)
+	e1:SetReset(RESET_PHASE|PHASE_DAMAGE_CAL)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.cointg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -55,7 +56,7 @@ function s.coinop(e,tp,eg,ep,ev,re,r,rp)
 	s.arcanareg(c,Arcana.TossCoin(c,tp))
 end
 function s.arcanareg(c,coin)
-	--coin effect
+	--Heads: Halve all Battle Damage you take
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -64,8 +65,9 @@ function s.arcanareg(c,coin)
 	e1:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
 	e1:SetCondition(s.rdcon1)
 	e1:SetValue(HALF_DAMAGE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e1)
+	--Tails: Halve all Battle Damage your opponent take
 	local e2=e1:Clone()
 	e2:SetTargetRange(0,1)
 	e2:SetCondition(s.rdcon2)

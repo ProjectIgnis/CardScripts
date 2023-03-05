@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.filter(c,e,tp)
-	return c:IsLevelBelow(3) and c:IsAttackPos() 
+	return c:GetLevel()<4 and c:HasLevel() and c:IsAttackPos() 
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,c:GetCode(),0,0x21,0,0,1,c:GetRace(),c:GetAttribute())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -39,7 +39,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or not tc or tc:IsFacedown() or not tc:IsRelateToEffect(e) then return end
 	if not Duel.IsPlayerCanSpecialSummonMonster(tp,tc:GetCode(),0,0x21,0,0,1,tc:GetRace(),tc:GetAttribute()) then return end
-	c:AddMonsterAttribute(TYPE_EFFECT+TYPE_SPELL+TYPE_TRAP)
+	c:AddMonsterAttribute(TYPE_EFFECT+TYPE_SPELL,tc:GetAttribute(),tc:GetRace(),tc:GetLevel(),tc:GetAttack(),tc:GetDefense())
 	if Duel.SpecialSummonStep(c,0,tp,tp,true,false,POS_FACEUP) then
 		c:AddMonsterAttributeComplete()
 		local e1=Effect.CreateEffect(c)

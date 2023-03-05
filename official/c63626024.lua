@@ -5,9 +5,10 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetDescription(aux.Stringid(id,0)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
@@ -15,17 +16,17 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--Destroy
+	--Send the Summoned monster to the GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
 	e2:SetCode(EVENT_LEAVE_FIELD)
-	e2:SetOperation(s.desop)
+	e2:SetOperation(s.tgop)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_NINJA}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,aux.ReleaseCheckMMZ,nil,SET_NINJA) end
-	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,aux.ReleaseCheckMMZ,nil,dg,SET_NINJA)
+	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,aux.ReleaseCheckMMZ,nil,SET_NINJA)
 	Duel.Release(g,REASON_COST)
 end
 function s.spfilter(c,e,tp)
@@ -39,10 +40,11 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
+		local c=e:GetHandler()
 		c:SetCardTarget(tc)
+		--Treated as a "Ninja" monster
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_ADD_SETCODE)
@@ -52,7 +54,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.SpecialSummonComplete()
 end
-function s.desop(e,tp,eg,ep,ev,re,r,rp)
+function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetFirstCardTarget()
 	if tc and tc:IsLocation(LOCATION_MZONE) then
 		Duel.SendtoGrave(tc,REASON_EFFECT)

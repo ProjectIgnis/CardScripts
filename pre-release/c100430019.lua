@@ -107,6 +107,6 @@ function s.vsop(e,tp,eg,ep,ev,re,r,rp)
 			g2=g2:Select(tp,1,1,nil)
 		end
 		Duel.HintSelection(g2,true)
-		Duel.SendtoHand(g2,tp,REASON_EFFECT)
+		Duel.SendtoHand(g2,nil,REASON_EFFECT)
 	end
 end

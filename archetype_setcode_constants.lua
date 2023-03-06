@@ -524,3 +524,4 @@ SET_NOUVELLEZ                     = 0x28e
 SET_RECIPE                        = 0x28f
 SET_FAVORITE                      = 0x290
 SET_LABYRINTH_WALL                = 0x291
+SET_VANQUISH_SOUL                 = 0x292

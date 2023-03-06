@@ -86,6 +86,9 @@ function s.vstg(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,PLAYER_EITHER,LOCATION_MZONE)
 	end
 end
+function s.rthfilter(c)
+	return c:IsFaceup() and c:IsAbleToHand() and c:IsDefenseAbove(0)
+end
 function s.vsop(e,tp,eg,ep,ev,re,r,rp)
 	local op=e:GetLabel()
 	local c=e:GetHandler()
@@ -97,7 +100,7 @@ function s.vsop(e,tp,eg,ep,ev,re,r,rp)
 		tc:UpdateAttack(-500,RESET_EVENT|RESETS_STANDARD,c)
 		tc:UpdateDefense(-500,RESET_EVENT|RESETS_STANDARD,c)
 	elseif op==2 then
-		local g2=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsAbleToHand),tp,LOCATION_MZONE,LOCATION_MZONE,nil):GetMinGroup(Card.GetDefense)
+		local g2=Duel.GetMatchingGroup(s.rthfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil):GetMinGroup(Card.GetDefense)
 		if #g2==0 then return end
 		if #g2>1 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)

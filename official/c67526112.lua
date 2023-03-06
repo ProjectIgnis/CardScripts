@@ -27,7 +27,7 @@ function s.stage2(e,tc,tp,sg,chk)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(s.atlimit)
 		tc:RegisterEffect(e1,true)
 		--Prevent direct attacks
@@ -35,7 +35,7 @@ function s.stage2(e,tc,tp,sg,chk)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
 		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1,true)
 		--Immune
 		local e3=Effect.CreateEffect(e:GetHandler())
@@ -44,7 +44,7 @@ function s.stage2(e,tc,tp,sg,chk)
 		e3:SetCode(EFFECT_IMMUNE_EFFECT)
 		e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CLIENT_HINT)
 		e3:SetRange(LOCATION_MZONE)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e3:SetValue(s.efilter)
 		tc:RegisterEffect(e3,true)
 	end
@@ -55,5 +55,5 @@ end
 function s.efilter(e,te)
 	local tc=te:GetOwner()
 	return tc:IsSummonType(SUMMON_TYPE_SPECIAL) and tc:IsSummonLocation(LOCATION_EXTRA) and tc~=e:GetHandler()
-		and te:IsActiveType(TYPE_MONSTER) and te:IsActivated() and te:GetActivateLocation()==LOCATION_MZONE
+		and te:IsMonsterEffect() and te:IsActivated() and te:GetActivateLocation()==LOCATION_MZONE
 end

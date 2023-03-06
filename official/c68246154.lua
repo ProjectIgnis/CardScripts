@@ -2,19 +2,19 @@
 --Magical Musketeer Doc
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate from hand
+	--"Magical Musket" Spell/Trap can be activated from the hand
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,2))
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_QP_ACT_IN_NTPHAND)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x108))
 	e1:SetTargetRange(LOCATION_HAND,0)
-	e1:SetDescription(aux.Stringid(id,2))
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_MAGICAL_MUSKET))
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_TRAP_ACT_IN_HAND)
 	c:RegisterEffect(e2)
-	--to hand
+	--Add 1 "Magical Musket" card from the GY to the hand
 	local g=Group.CreateGroup()
 	g:KeepAlive()
 	local e3=Effect.CreateEffect(c)
@@ -26,11 +26,11 @@ function s.initial_effect(c)
 	e3:SetOperation(s.regop)
 	c:RegisterEffect(e3)
 	local e4=Effect.CreateEffect(c)
+	e4:SetDescription(aux.Stringid(id,0))
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e4:SetProperty(EFFECT_FLAG_DELAY)
 	e4:SetCode(EVENT_CHAINING)
 	e4:SetRange(LOCATION_MZONE)
-	e4:SetDescription(aux.Stringid(id,0))
 	e4:SetCountLimit(1,id)
 	e4:SetCondition(s.thcon)
 	e4:SetLabelObject(g)
@@ -38,12 +38,12 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x108}
+s.listed_series={SET_MAGICAL_MUSKET}
 function s.regop(e)
 	local c=e:GetHandler()
 	local flageff={c:GetFlagEffectLabel(1)}
 	if flageff[1]==nil or c:GetFlagEffect(2)>0 then return end
-	c:RegisterFlagEffect(2,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_CHAIN,0,1)
+	c:RegisterFlagEffect(2,RESET_EVENT|(RESETS_STANDARD&~RESET_TURN_SET)|RESET_CHAIN,0,1)
 	local g=e:GetLabelObject()
 	g:Clear()
 	for _,i in ipairs(flageff) do
@@ -55,12 +55,12 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local p,loc,seq=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_CONTROLER,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_SEQUENCE)
 	if not (re:IsHasType(EFFECT_TYPE_ACTIVATE) and c:IsColumn(seq,p,LOCATION_SZONE)) then return false end
 	local flageff=c:GetFlagEffectLabel(1)
-	c:RegisterFlagEffect(1,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_CHAIN,0,1,re:GetHandler():GetCardID())
+	c:RegisterFlagEffect(1,RESET_EVENT|(RESETS_STANDARD&~RESET_TURN_SET)|RESET_CHAIN,0,1,re:GetHandler():GetCardID())
 	if flageff==nil then e:GetLabelObject():Clear() end
 	return flageff==nil
 end
 function s.thfilter(c,...)
-	return c:IsSetCard(0x108) and not c:IsCode(...) and c:IsAbleToHand()
+	return c:IsSetCard(SET_MAGICAL_MUSKET) and not c:IsCode(...) and c:IsAbleToHand()
 end
 function s.chk(c,tp,e)
 	return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,c,c:GetCode())

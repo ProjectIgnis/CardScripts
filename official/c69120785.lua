@@ -1,5 +1,5 @@
 --深淵の獣アルバ・ロス
---The Byssted Alba Los
+--The Bystial Alba Los
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e2:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL+1) end)
-	e2:SetTarget(function(e,c) return c:IsType(TYPE_RITUAL+TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK) and (c:IsType(TYPE_EFFECT) or c:IsOriginalType(TYPE_EFFECT)) end)
+	e2:SetTarget(function(e,c) return c:IsType(TYPE_RITUAL|TYPE_FUSION|TYPE_SYNCHRO|TYPE_XYZ|TYPE_LINK) and (c:IsType(TYPE_EFFECT) or c:IsOriginalType(TYPE_EFFECT)) end)
 	c:RegisterEffect(e2)
 	--Banish all face-down cards in the Extra Decks
 	local e3=Effect.CreateEffect(c)
@@ -87,8 +87,8 @@ function s.rmvop(e,tp,eg,ep,ev,re,r,rp)
 		local c=e:GetHandler()
 		local fid=c:GetFieldID()
 		local og=Duel.GetOperatedGroup()
-		for oc in aux.Next(og) do
-			oc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,2,fid)
+		for oc in og:Iter() do
+			oc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,2,fid)
 		end
 		og:KeepAlive()
 		--Return the banished cards to the Extra Deck
@@ -102,7 +102,7 @@ function s.rmvop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetLabelObject(og)
 		e1:SetCondition(s.rcond)
 		e1:SetOperation(s.roper)
-		e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+		e1:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN)
 		Duel.RegisterEffect(e1,tp)
 	end
 end
@@ -121,5 +121,5 @@ end
 function s.roper(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject()
 	local rg=g:Filter(s.rfilter,nil,e:GetLabel())
-	Duel.SendtoDeck(rg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT+REASON_RETURN)
+	Duel.SendtoDeck(rg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT|REASON_RETURN)
 end

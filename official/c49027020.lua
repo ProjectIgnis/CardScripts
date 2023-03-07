@@ -67,22 +67,25 @@ function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if not tc:IsRelateToEffect(e) or Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)==0 then return end
+	if tc:IsRelateToEffect(e) then
+		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
+	end
 	local c=e:GetHandler()
 	--Opponent can Special Summon 1 banished monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	local reset,reset_ct=RESET_PHASE|PHASE_STANDBY,1
+	local turn_ct=0
 	if Duel.GetCurrentPhase()==PHASE_STANDBY then
-		local turn=Duel.GetTurnCount()
-		e1:SetCondition(function() return Duel.GetTurnCount()~=turn end)
 		reset_ct=2
+		turn_ct=Duel.GetTurnCount()
 	end
-	e1:SetReset(reset,reset_ct)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.spcon)
 	e1:SetOperation(s.spop)
+	e1:SetLabel(turn_ct)
+	e1:SetReset(reset,reset_ct)
 	Duel.RegisterEffect(e1,tp)
 	aux.RegisterClientHint(c,0,tp,0,1,aux.Stringid(id,2),reset,reset_ct)
 end
@@ -90,7 +93,8 @@ function s.spfilter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,1-tp,false,false)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.spfilter,tp,0,LOCATION_REMOVED,1,nil,e,tp)
+	local label=e:GetLabel()
+	return Duel.IsExistingMatchingCard(s.spfilter,tp,0,LOCATION_REMOVED,1,nil,e,tp) and (label==0 or label~=Duel.GetTurnCount())
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.spfilter,tp,0,LOCATION_REMOVED,nil,e,tp)

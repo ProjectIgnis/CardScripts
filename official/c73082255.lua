@@ -40,13 +40,16 @@ function s.lvtg(e,c)
 end
 function s.lvval(e,c,rc)
 	local lv=c:GetLevel()
-	if rc:IsCode(id) then return 8
-	else return lv end
+	if rc:IsCode(id) then
+		return 8
+	else
+		return lv
+	end
 end
 function s.tgval(e,re,rp)
 	local rc=re:GetHandler()
 	local loc=re:GetActivateLocation()
-	return re:IsActiveType(TYPE_MONSTER) and loc==LOCATION_MZONE and not rc:IsSummonLocation(LOCATION_GRAVE)
+	return re:IsMonsterEffect() and loc==LOCATION_MZONE and not rc:IsSummonLocation(LOCATION_GRAVE)
 		and rc:IsSummonType(SUMMON_TYPE_SPECIAL)
 end
 function s.gytg(e,tp,eg,ep,ev,re,r,rp,chk)

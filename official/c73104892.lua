@@ -42,7 +42,7 @@ function s.attop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
 	e1:SetValue(rc)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e1)
 end
 function s.group(seq,tp)

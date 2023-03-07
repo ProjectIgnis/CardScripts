@@ -50,7 +50,7 @@ function s.coinop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	if Duel.TossCoin(tp,1)==COIN_TAILS then
-		c:RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,0,2)
+		c:RegisterFlagEffect(id+1,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_STANDBY|RESET_SELF_TURN,0,2)
 	end
 end
 function s.effectcon(e)
@@ -60,7 +60,7 @@ end
 function s.reccon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=eg:GetFirst()
-	return rc:IsRelateToBattle() and rc:IsSetCard(0x5) and rc:IsFaceup() and rc:IsControler(tp)
+	return rc:IsRelateToBattle() and rc:IsSetCard(SET_ARCANA_FORCE) and rc:IsFaceup() and rc:IsControler(tp)
 		and (c:GetFlagEffect(id+1)==0 or c:IsHasEffect(EFFECT_CANNOT_DISABLE))
 end
 function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -11,25 +11,22 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--act in hand
+	--Can be activated from the hand
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_TRAP_ACT_IN_HAND)
 	e2:SetCondition(s.handcon)
-	e2:SetDescription(aux.Stringid(id,0))
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x33}
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x33)
-end
+s.listed_series={SET_BLACKWING}
 function s.handcon(e)
 	local g=Duel.GetFieldGroup(e:GetHandlerPlayer(),LOCATION_MZONE,0)
-	return #g==3 and g:IsExists(s.cfilter,3,nil)
+	return #g==3 and g:IsExists(aux.FaceupFilter(Card.IsSetCard,SET_BLACKWING),3,nil)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttackTarget()
-	return tc and tc:IsFaceup() and tc:IsControler(tp) and tc:IsSetCard(0x33)
+	return tc and tc:IsFaceup() and tc:IsControler(tp) and tc:IsSetCard(SET_BLACKWING)
 end
 function s.filter(c)
 	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsAbleToRemove()

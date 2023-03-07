@@ -37,7 +37,7 @@ function s.opccost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterFlagEffect(tp,id,RESET_CHAIN,0,1)
 end
 function s.thfilter(c,tp)
-	return c:IsSetCard(SET_VANQUISH_SOUL) and not c:IsRace(RACE_MACHINE)
+	return c:IsSetCard(SET_VANQUISH_SOUL) and not c:IsRace(RACE_MACHINE) and c:IsFaceup()
 		and c:IsAbleToHand() and Duel.GetMZoneCount(tp,c)>0
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

@@ -42,8 +42,8 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local monct=Duel.GetMatchingGroupCount(Card.IsMonster,tp,0,LOCATION_ONFIELD,nil)
 	local stct=Duel.GetMatchingGroupCount(Card.IsSpellTrap,tp,0,LOCATION_ONFIELD,nil)
-	local b1=stct>0 and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,nil,)
-	local b2=monct>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
+	local b1=stct>0 and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil)
+	local b2=monct>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp)
 	if chk==0 then return b1 or b2 end
 	local op=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,0)},
@@ -52,7 +52,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		e:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 		e:SetOperation(s.thop)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
-	elseif op==2
+	elseif op==2 then
 		e:SetCategory(CATEGORY_SPECIAL_SUMMON)
 		e:SetOperation(s.spop)
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)

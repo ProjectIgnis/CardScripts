@@ -3,13 +3,13 @@
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
-	--Link summon
 	c:EnableReviveLimit()
+	--Link Summon procedure
 	Link.AddProcedure(c,s.matfilter,1,1)
 	--Activate 1 effect when it is Link Summoned
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_SINGLE)
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetCountLimit(1,id)
@@ -33,17 +33,17 @@ s.listed_series={SET_MAGICAL_MUSKET}
 function s.matfilter(c,lc,sumtype,tp)
 	return c:IsLevelBelow(8) and c:IsSetCard(SET_MAGICAL_MUSKET,lc,sumtype,tp)
 end
-function s.spfilter(c,e,tp)
-	return c:IsSetCard(SET_MAGICAL_MUSKET) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-end
 function s.thfilter(c)
 	return c:IsSetCard(SET_MAGICAL_MUSKET) and c:IsSpellTrap() and c:IsAbleToHand()
 end
+function s.spfilter(c,e,tp)
+	return c:IsSetCard(SET_MAGICAL_MUSKET) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local monct=Duel.GetMatchingGroupCount(Card.IsMonster,tp,0,LOCATION_ONFIELD,nil)
+	local monct=Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)
 	local stct=Duel.GetMatchingGroupCount(Card.IsSpellTrap,tp,0,LOCATION_ONFIELD,nil)
-	local b1=stct>0 and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil)
-	local b2=monct>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp)
+	local b1=monct>0 and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil)
+	local b2=stct>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp)
 	if chk==0 then return b1 or b2 end
 	local op=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,0)},
@@ -59,7 +59,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	local ct=Duel.GetMatchingGroupCount(Card.IsMonster,tp,0,LOCATION_ONFIELD,nil)
+	local ct=Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)
 	local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil)
 	if not (ct>0 and #g>0) then return end
 	local sg=aux.SelectUnselectGroup(g,e,tp,1,ct,aux.dncheck,1,tp,HINTMSG_ATOHAND)

@@ -3,32 +3,32 @@
 --Scripted by Hel
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
-	Link.AddProcedure(c,nil,2,2,s.lcheck)
-	c:EnableReviveLimit()
 	c:SetSPSummonOnce(id)
-	--must link summon
+	c:EnableReviveLimit()
+	--Link Summon Procedure
+	Link.AddProcedure(c,nil,2,2,s.lcheck)
+	--Must be Link Summoned
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e1:SetValue(aux.lnklimit)
 	c:RegisterEffect(e1)
-	--banish until the end of opp next turn
+	--Banish 1 monster until the end of your opponent's next turn
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_REMOVE)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
-	e2:SetCondition(s.tgcon)
+	e2:SetCondition(function s.tgcon(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK) end)
 	e2:SetTarget(s.tgtg)
 	e2:SetOperation(s.tgop)
 	c:RegisterEffect(e2)
-	--+1000 atk + send to grave
+	--Increase ATK by 1000 atk and send 1 card to the GY
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
-	e3:SetCategory(CATEGORY_TOGRAVE+CATEGORY_ATKCHANGE)
+	e3:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_TOGRAVE)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetRange(LOCATION_MZONE)
@@ -40,11 +40,8 @@ end
 function s.lcheck(g,lc,sumtype,tp)
 	return g:IsExists(Card.IsSetCard,1,nil,SET_SKY_STRIKER_ACE,lc,sumtype,tp)
 end
-function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
-end
 function s.tgfilter(c)
-	return c:IsFaceup() and c:IsAbleToRemove() 
+	return c:IsFaceup() and c:IsAbleToRemove()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.tgfilter(chkc) end
@@ -55,19 +52,19 @@ function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and Duel.Remove(tc,0,REASON_EFFECT+REASON_TEMPORARY)~=0 then
+	if tc:IsRelateToEffect(e) and Duel.Remove(tc,0,REASON_EFFECT|REASON_TEMPORARY)~=0 then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
 		e1:SetCountLimit(1)
 		e1:SetLabel(Duel.GetTurnCount())
 		e1:SetLabelObject(tc)
-		if Duel.GetCurrentPhase()==PHASE_END and Duel.GetTurnPlayer()~=tp then
-		e1:SetLabel(Duel.GetTurnCount())
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,2)
+		if Duel.GetCurrentPhase()==PHASE_END and Duel.IsTurnPlayer(1-tp) then
+			e1:SetLabel(Duel.GetTurnCount())
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END|RESET_OPPO_TURN,2)
 		else
-		e1:SetLabel(0)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+			e1:SetLabel(0)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END|RESET_OPPO_TURN)
 		end
 		e1:SetCondition(s.retcon)
 		e1:SetOperation(s.retop)
@@ -76,7 +73,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
-	return Duel.GetTurnCount()~=e:GetLabel() and Duel.GetTurnPlayer()~=tp
+	return Duel.GetTurnCount()~=e:GetLabel() and Duel.IsTurnPlayer(1-tp)
 		and tc and tc:GetReasonEffect() and tc:GetReasonEffect():GetHandler()==e:GetHandler()
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
@@ -93,8 +90,8 @@ end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and c:IsFaceup() and c:UpdateAttack(1000)==1000 then
+	if c:IsRelateToEffect(e) and c:IsFaceup() and c:UpdateAttack(1000)==1000 and tc:IsRelateToEffect(e) then
 		Duel.BreakEffect()
-		if tc and tc:IsRelateToEffect(e) then Duel.SendtoGrave(tc,REASON_EFFECT) end
+		Duel.SendtoGrave(tc,REASON_EFFECT)
 	end
 end

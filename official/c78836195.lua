@@ -39,7 +39,7 @@ function s.atkfilter(c,g)
 	return c:IsFaceup() and (not g:IsContains(c) or #g>1)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
+	local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.atkfilter(chkc,g) end
 	if chk==0 then return #g>0 and Duel.IsExistingTarget(s.atkfilter,tp,LOCATION_MZONE,0,1,nil,g) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
@@ -47,7 +47,7 @@ function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,tc)
+	local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,tc)
 	if #g>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		local sg=g:Select(tp,1,5,tc)
@@ -57,7 +57,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			e1:SetValue(300*rc)
 			tc:RegisterEffect(e1)
 		end
@@ -83,11 +83,11 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 		e1:SetAbsoluteRange(tp,1,0)
 		e1:SetTarget(function(_,c) return c:IsLocation(LOCATION_EXTRA) and not c:IsType(TYPE_SYNCHRO) end)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		token:RegisterEffect(e1,true)
 		-- Clock Lizard check
 		local e2=aux.createContinuousLizardCheck(c,LOCATION_MZONE,function(_,c) return not c:IsOriginalType(TYPE_SYNCHRO) end)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		token:RegisterEffect(e2,true)
 	end
 	Duel.SpecialSummonComplete()

@@ -35,11 +35,10 @@ function s.initial_effect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_REMOVE)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_QUICK_O)
-	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,0,EFFECT_COUNT_CODE_SINGLE)
-	e3:SetCondition(s.rmcon)
+	e3:SetCondition(function(e,tp) return Duel.GetAttacker():GetControler()==1-tp end)
 	e3:SetTarget(s.rmtg)
 	e3:SetOperation(s.rmop)
 	c:RegisterEffect(e3)
@@ -72,19 +71,16 @@ s.synchro_nt_required=1
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsType,c:GetControler(),LOCATION_GRAVE,0,nil,TYPE_TUNER)*500
 end
-function s.indval(e,re,tp)
-	return e:GetHandler():GetControler()==1-tp
-end
-function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetAttacker():GetControler()==1-tp
+function s.indval(e,re,rp)
+	return rp==1-e:GetHandlerPlayer()
 end
 function s.rmcon2(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and re:IsActiveType(TYPE_MONSTER)
+	return rp==1-tp and re:IsMonsterEffect()
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,nil) 
-		and c:IsAbleToRemove() end
+	if chk==0 then return c:IsAbleToRemove()
+		and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,nil) end
 	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,nil)
 	g:AddCard(c)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,0,0)
@@ -103,7 +99,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp,chk)
 			else
 				e:GetLabelObject():SetLabel(0)
 			end
-			c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_SELF_TURN,0,ct)
+			c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END|RESET_SELF_TURN,0,ct)
 		end
 	end
 end

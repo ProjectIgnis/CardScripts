@@ -180,6 +180,7 @@ SET_FIRE_FIST                     = 0x79
 SET_NOBLE_KNIGHT                  = 0x107a
 SET_INFERNOBLE_KNIGHT             = 0x507a
 SET_NOBLE_ARMS                    = 0x207a
+SET_INFERNOBLE_ARMS               = 0x607a
 SET_GALAXY                        = 0x7b
 SET_GALAXY_EYES                   = 0x107b
 SET_GALAXY_EYES_TACHYON_DRAGON    = 0x307b

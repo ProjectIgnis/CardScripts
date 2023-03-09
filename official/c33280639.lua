@@ -4,88 +4,80 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
-	e1:SetHintTiming(0,TIMING_END_PHASE)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--Protect
+	--Make "Destruction Sword" cards you control unanble to be destroyed by battle or card effects
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCost(aux.bfgcost)
+	e2:SetCondition(function(_,tp) return not Duel.HasFlagEffect(tp,id) end)
 	e2:SetOperation(s.immop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xd6,0xd7}
-s.listed_names={11790356}
-function s.cfilter1(c)
-	return c:IsSetCard(0xd6) and not c:IsCode(id) and c:IsAbleToGraveAsCost()
-end
-function s.cfilter2(c)
-	return c:IsSetCard(0xd7) and c:IsMonster() and c:IsAbleToGraveAsCost()
+s.listed_series={SET_DESTRUCTION_SWORD,SET_BUSTER_BLADER}
+s.listed_names={id,11790356}
+function s.cfilter(c)
+	return ((c:IsSetCard(SET_DESTRUCTION_SWORD) and not c:IsCode(id)) or (c:IsSetCard(SET_BUSTER_BLADER) and c:IsMonster()))
+		and c:IsAbleToGraveAsCost()
 end
 function s.rescon(sg,e,tp,mg)
-	return sg:IsExists(s.cfilter1,1,nil) and sg:IsExists(s.cfilter2,1,nil)
+	return sg:IsExists(Card.IsSetCard,1,nil,SET_DESTRUCTION_SWORD)
+		and sg:IsExists(aux.AND(Card.IsSetCard,Card.IsMonster),1,nil,SET_BUSTER_BLADER)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(s.cfilter1,tp,LOCATION_DECK,0,nil)+Duel.GetMatchingGroup(s.cfilter2,tp,LOCATION_DECK,0,nil)
+	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_DECK,0,nil)
 	if chk==0 then return aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0) end
 	local sg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_TOGRAVE,s.rescon)
 	Duel.SendtoGrave(sg,REASON_COST)
 end
-function s.filter(c,e,tp)
-	return c:IsCode(11790356) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+function s.spfilter(c,e,tp)
+	if not (c:IsCode(11790356) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)) then return false end
+	if c:IsLocation(LOCATION_EXTRA) then
+		return Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
+	else
+		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local loc=LOCATION_EXTRA
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then loc=loc+LOCATION_GRAVE end
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,loc,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,loc)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA|LOCATION_GRAVE,0,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA|LOCATION_GRAVE)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local loc=LOCATION_EXTRA
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then loc=loc+LOCATION_GRAVE end
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,loc,0,1,1,nil,e,tp)
-	local tc=g:GetFirst()
-	if tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,2)
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_PHASE+PHASE_END)
-		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-		e1:SetCondition(s.descon)
-		e1:SetOperation(s.desop)
-		e1:SetReset(RESET_PHASE+PHASE_END,2)
-		e1:SetCountLimit(1)
-		e1:SetLabel(Duel.GetTurnCount())
-		e1:SetLabelObject(tc)
-		Duel.RegisterEffect(e1,tp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local sc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_EXTRA|LOCATION_GRAVE,0,1,1,nil,e,tp):GetFirst()
+	if sc and Duel.SpecialSummonStep(sc,0,tp,tp,false,false,POS_FACEUP) then
+		--Destroy it during the End Phase of the next turn
+		local turn_count=Duel.GetTurnCount()
+		aux.DelayedOperation(sc,PHASE_END,id,e,tp,
+			function(ag) Duel.Destroy(ag,REASON_EFFECT) end,
+			function() return Duel.GetTurnCount()==turn_count+1 end,
+			nil,2
+		)
 	end
 	Duel.SpecialSummonComplete()
 end
-function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetLabelObject()
-	return Duel.GetTurnCount()~=e:GetLabel() and tc:GetFlagEffect(id)~=0
-end
-function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetLabelObject()
-	Duel.Destroy(tc,REASON_EFFECT)
-end
 function s.immop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local e1=Effect.CreateEffect(c)
+	if Duel.HasFlagEffect(tp,id) then return end
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
+	--Your "Destruction Sword" cards cannot be destroyed by battle or card effects
+	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-	e1:SetValue(1)
 	e1:SetTargetRange(LOCATION_ONFIELD,0)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xd6))
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_DESTRUCTION_SWORD))
+	e1:SetValue(1)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)

@@ -42,7 +42,7 @@ end
 function s.aclim(e,re,tp)
 	local rc=re:GetHandler()
 	local status=STATUS_SUMMON_TURN+STATUS_FLIP_SUMMON_TURN+STATUS_SPSUMMON_TURN
-	return re:IsActiveType(TYPE_MONSTER) and rc:IsLocation(LOCATION_MZONE) and rc:IsStatus(status)
+	return re:IsMonsterEffect() and rc:IsLocation(LOCATION_MZONE) and rc:IsStatus(status)
 end
 function s.damcfilter(c,tp,ct)
 	local bc=c:GetBattleTarget()
@@ -65,7 +65,7 @@ function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:GetBaseAttack()>0 then
+	if tc:IsRelateToEffect(e) and tc:GetBaseAttack()>0 then
 		Duel.Damage(1-tp,tc:GetBaseAttack(),REASON_EFFECT)
 	end
 end

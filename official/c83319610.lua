@@ -34,7 +34,7 @@ end
 s.listed_series={SET_WIND_UP}
 function s.tfilter(c,tp)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsRace(RACE_MACHINE)
-		and Duel.IsExistingMatchingCard(s.atchfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,c)
+		and Duel.IsExistingMatchingCard(s.atchfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,c)
 end
 function s.atchfilter(c)
 	return c:IsSetCard(SET_WIND_UP) and c:IsMonster() and (c:IsLocation(LOCATION_HAND) or c:IsFaceup())
@@ -51,7 +51,7 @@ function s.atchop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) or tc:IsImmuneToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTACH)
-	local atchc=Duel.SelectMatchingCard(tp,s.atchfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,tc):GetFirst()
+	local atchc=Duel.SelectMatchingCard(tp,s.atchfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,1,tc):GetFirst()
 	if atchc and not atchc:IsImmuneToEffect(e) and atchc:IsCanBeXyzMaterial(tc,tp,REASON_EFFECT) then
 		Duel.Overlay(tc,atchc,true)
 	end

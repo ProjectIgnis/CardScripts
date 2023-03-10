@@ -1,5 +1,5 @@
 -- イビリチュア・ネーレイマナス
--- Evigishki Nereimanas
+-- Evigishki Neremanas
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -55,7 +55,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==1-tp and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
-		and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
+		and re:IsMonsterEffect() and Duel.IsChainNegatable(ev)
 end
 function s.thfilter(c)
 	return c:IsSetCard(SET_GISHKI) and c:IsRitualMonster() and c:IsAbleToHand() and c:IsFaceup()

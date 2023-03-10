@@ -1,10 +1,9 @@
 --タキオン・ギャラクシースパイラル
 --Tachyon Spiral Galaxy
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
-	--Targeted dragon "Galaxy" monster becomes unaffected by other card effects and cannot be destroyed by battle
+	--Make 1 Dragon "Galaxy" monster unaffected by other card effects and prevent battle destruction
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -14,18 +13,17 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	e1:SetHintTiming(0,TIMING_BATTLE_START+TIMING_END_PHASE)
 	c:RegisterEffect(e1)
-	--Activate from hand
+	--Can be activated from the hand
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_TRAP_ACT_IN_HAND)
 	e2:SetCondition(s.handcon)
-	e2:SetDescription(aux.Stringid(id,0))
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x7b,0x307b}
-
+s.listed_series={SET_GALAXY,SET_GALAXY_EYES_TACHYON_DRAGON}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x7b) and c:IsRace(RACE_DRAGON)
+	return c:IsFaceup() and c:IsSetCard(SET_GALAXY) and c:IsRace(RACE_DRAGON)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -44,7 +42,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_IMMUNE_EFFECT)
 		e1:SetValue(s.efilter)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		tc:RegisterEffect(e1)
 		--Cannot be destroyed by battle
 		local e2=Effect.CreateEffect(c)
@@ -53,7 +51,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e2:SetValue(1)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		tc:RegisterEffect(e2)
 	end
 end
@@ -61,7 +59,7 @@ function s.efilter(e,re)
 	return e:GetHandler()~=re:GetOwner()
 end
 function s.hfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x307b)
+	return c:IsFaceup() and c:IsSetCard(SET_GALAXY_EYES_TACHYON_DRAGON)
 end
 function s.handcon(e)
 	return Duel.IsExistingMatchingCard(s.hfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)

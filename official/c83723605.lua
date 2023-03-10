@@ -13,22 +13,22 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--Activate from hand
+	--Can be activated from the hand
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_TRAP_ACT_IN_HAND)
 	e2:SetCondition(s.actcon)
-	e2:SetDescription(aux.Stringid(id,1))
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x12b}
+s.listed_series={SET_MARINCESS}
 --Return to Extra Deck and Special Summon
 function s.tgfilter(c,e,tp)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_WATER) and c:IsType(TYPE_LINK) and c:IsAbleToExtra()
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c)
 end
 function s.spfilter(c,e,tp,mc)
-	return c:IsType(TYPE_LINK) and c:IsSetCard(0x12b) and c:IsLink(mc:GetLink()) and not c:IsCode(mc:GetCode())
+	return c:IsLinkMonster() and c:IsSetCard(SET_MARINCESS) and c:IsLink(mc:GetLink()) and not c:IsCode(mc:GetCode())
 		and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_LINK,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -54,7 +54,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		sc:RegisterEffect(e1)
 		--Cannot be destroyed by battle this turn
 		local e2=e1:Clone()
@@ -67,7 +67,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 --Activate from hand
 function s.actfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x12b) and c:IsLinkMonster() and c:IsLinkAbove(3)
+	return c:IsFaceup() and c:IsSetCard(SET_MARINCESS) and c:IsLinkMonster() and c:IsLinkAbove(3)
 end
 function s.actcon(e)
 	return Duel.IsExistingMatchingCard(s.actfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)

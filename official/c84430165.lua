@@ -3,7 +3,7 @@
 --scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Inflict Damage 400x the Link Rating of monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DAMAGE)
@@ -14,17 +14,17 @@ function s.initial_effect(c)
 	e1:SetTarget(s.damtg)
 	e1:SetOperation(s.damop)
 	c:RegisterEffect(e1)
-	--act in hand
+	--Can be activated from the hand
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_TRAP_ACT_IN_HAND)
 	e2:SetCondition(s.actcon)
-	e2:SetDescription(aux.Stringid(id,1))
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x12b}
+s.listed_series={SET_MARINCESS}
 function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x12b) and c:IsLinkMonster() and c:IsControler(tp)
+	return c:IsFaceup() and c:IsSetCard(SET_MARINCESS) and c:IsLinkMonster() and c:IsControler(tp)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return s.cfilter(eg:GetFirst(),tp)
@@ -45,7 +45,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.actfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x12b) and c:IsLinkMonster() and c:IsLinkAbove(3)
+	return c:IsFaceup() and c:IsSetCard(SET_MARINCESS) and c:IsLinkMonster() and c:IsLinkAbove(3)
 end
 function s.actcon(e)
 	return Duel.IsExistingMatchingCard(s.actfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)

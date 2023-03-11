@@ -1,4 +1,5 @@
 --プリベント・スター
+--Prevention Star
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -37,10 +38,9 @@ function s.initial_effect(c)
 	end)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=eg:GetFirst()
-	for tc in aux.Next(eg) do
+	for tc in eg:Iter() do
 		if tc:IsPreviousPosition(POS_FACEUP_ATTACK) and tc:IsPosition(POS_FACEUP_DEFENSE) then
-			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+			tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1)
 		end
 	end
 end
@@ -73,7 +73,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=re:GetLabelObject()
 	if tc and c:IsRelateToEffect(re) and tc:IsRelateToEffect(re) and tc:IsFaceup() and Duel.Equip(tp,c,tc) then
-		tc:RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD,0,1)
+		tc:RegisterFlagEffect(id+1,RESET_EVENT|RESETS_STANDARD,0,1)
 	end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
@@ -85,14 +85,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e:SetLabelObject(dc)
 	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		if dc:IsRelateToEffect(e) then
-			--tc:RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD,0,1)
+			--tc:RegisterFlagEffect(id+1,RESET_EVENT|RESETS_STANDARD,0,1)
 			c:SetCardTarget(dc)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_OWNER_RELATE)
 			e1:SetRange(LOCATION_MZONE)
 			e1:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			e1:SetCondition(s.rcon)
 			dc:RegisterEffect(e1,true)
 			local e2=e1:Clone()

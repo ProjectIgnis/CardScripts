@@ -66,11 +66,11 @@ function s.rmfilter(c)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
-	if chkc then return c~=chkc and chkc:IsLocation(LOCATION_MZONE+LOCATION_GRAVE) and s.rmfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.rmfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,1,c) end
-	local max=(Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_EXCHANGE_SPIRIT),tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil) and 5 or 3)
+	if chkc then return c~=chkc and chkc:IsLocation(LOCATION_MZONE|LOCATION_GRAVE) and s.rmfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(s.rmfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,LOCATION_MZONE|LOCATION_GRAVE,1,c) end
+	local max=(Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_EXCHANGE_SPIRIT),tp,LOCATION_ONFIELD|LOCATION_GRAVE,0,1,nil) and 5 or 3)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectTarget(tp,s.rmfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,1,max,c)
+	local g=Duel.SelectTarget(tp,s.rmfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,LOCATION_MZONE|LOCATION_GRAVE,1,max,c)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,0,0)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp,chk)

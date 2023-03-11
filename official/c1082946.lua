@@ -25,7 +25,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		table.insert(sel,te)
 		table.insert(seld,te:GetDescription())
 	end
-	if #sel==1 then turne=sel[1] elseif #turne>1 then
+	if #sel==1 then turne=sel[1] elseif #sel>1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EFFECT)
 		local op=Duel.SelectOption(tp,table.unpack(seld))+1
 		turne=sel[op]

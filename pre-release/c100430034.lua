@@ -46,6 +46,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	--Negate the effects of all opponent's cards
 	local c=e:GetHandler()
 	for tc in g:Iter() do
+		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)

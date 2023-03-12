@@ -517,6 +517,7 @@ SET_PURRELY                       = 0x18d
 SET_MIKANKO                       = 0x18e
 SET_AQUAMIRROR                    = 0x18f
 SET_FIREWALL                      = 0x190
+SET_LABYRINTH_WALL                = 0x193
 --Currently unreleased in the TCG, the official English name is unknown
 SET_MANADOME                      = 0x191
 SET_NEMURELIA                     = 0x192
@@ -524,5 +525,4 @@ SET_NEMURELIA                     = 0x192
 SET_NOUVELLEZ                     = 0x28e
 SET_RECIPE                        = 0x28f
 SET_FAVORITE                      = 0x290
-SET_LABYRINTH_WALL                = 0x291
 SET_VANQUISH_SOUL                 = 0x292

@@ -50,16 +50,16 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=eg:GetFirst()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and #eg==1
-		and Duel.IsExistingMatchingCard(s.toonfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,tc:GetCode(),e,tp) end
+		and Duel.IsExistingMatchingCard(s.toonfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,nil,tc:GetCode(),e,tp) end
 	Duel.SetTargetCard(tc)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_DECK)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	if not tc then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.toonfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,tc:GetCode(),e,tp)
+	local g=Duel.SelectMatchingCard(tp,s.toonfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,1,nil,tc:GetCode(),e,tp)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end

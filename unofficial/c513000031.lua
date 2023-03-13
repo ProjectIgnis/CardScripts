@@ -46,19 +46,18 @@ function s.initial_effect(c)
 	e5:SetTarget(s.battg)
 	e5:SetValue(s.batval)
 	c:RegisterEffect(e5)
-	--reduce
-	local e8=Effect.CreateEffect(c)
-	e8:SetType(EFFECT_TYPE_FIELD)
-	e8:SetCode(EFFECT_CHANGE_DAMAGE)
-	e8:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e8:SetRange(LOCATION_MZONE)
-	e8:SetTargetRange(1,1)
-	e8:SetCondition(s.damcon)
-	e8:SetValue(s.damval)
-	c:RegisterEffect(e8)
-	local e9=e8:Clone()
-	e9:SetCode(EFFECT_NO_EFFECT_DAMAGE)
-	c:RegisterEffect(e9)
+	--damage reduce
+	local e6=Effect.CreateEffect(c)
+	e6:SetType(EFFECT_TYPE_FIELD)
+	e6:SetCode(EFFECT_CHANGE_DAMAGE)
+	e6:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e6:SetRange(LOCATION_MZONE)
+	e6:SetTargetRange(1,1)
+	e6:SetValue(s.damval)
+	c:RegisterEffect(e6)
+	local e7=e6:Clone()
+	e7:SetCode(EFFECT_NO_EFFECT_DAMAGE)
+	c:RegisterEffect(e7)
 end
 s.listed_names={24696097}
 function s.valcheck(e,c)
@@ -75,7 +74,7 @@ function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_EXTRA_ATTACK)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 	e1:SetValue(ct-1)
 	c:RegisterEffect(e1)
 end
@@ -104,16 +103,10 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 	end 
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	local a=Duel.GetAttacker()
-	local d=Duel.GetAttackTarget()
-	return d
+	return Duel.GetAttackTarget()
 end
 function s.desfilter(c,ca)
 	return not c:IsStatus(STATUS_BATTLE_DESTROYED) and (not ca or ca==c)
-end
-function s.damcon(e)
-	local ph=Duel.GetCurrentPhase()
-	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
 end
 function s.damval(e,re,val,r,rp,rc)
 	if (r&REASON_EFFECT)~=0 then 

@@ -1,14 +1,15 @@
---毒蛇神ヴェノミナーガ
+--毒蛇神ヴェノミナーガ (Anime)
+--Vennominaga The Deity of Poisonous Snakes (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--spsummon condition
+	--Special Summon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e1)
-	--atkup
+	--Gains 1000 ATK for each Reptile monster in your GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
@@ -16,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetValue(s.atkval)
 	c:RegisterEffect(e2)
-	--special summon
+	--Special Summons itself after battle destruction
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(8062132,0))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -27,7 +28,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.target)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
-	--unaffectable
+	--Cannot be targeted and is unaffected by opponent's cards 
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -39,10 +40,9 @@ function s.initial_effect(c)
 	e5:SetCode(EFFECT_IMMUNE_EFFECT)
 	e5:SetValue(s.efilter)
 	c:RegisterEffect(e5)
-	--win
+	--Win condition
 	local e6=Effect.CreateEffect(c)
 	e6:SetDescription(aux.Stringid(8062132,1))
-	e6:SetCategory(CATEGORY_COUNTER)
 	e6:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e6:SetCode(EVENT_BATTLE_DAMAGE)
 	e6:SetCondition(s.ctcon)
@@ -88,7 +88,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCountLimit(1)
 	e2:SetCondition(s.wincon)
 	e2:SetOperation(s.winop)
-	e2:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,3)
+	e2:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,3)
 	Duel.RegisterEffect(e2,tp)
 	local descnum=tp==c:GetOwner() and 0 or 1
 	local e3=Effect.CreateEffect(c)
@@ -99,7 +99,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetLabelObject(e2)
 	e3:SetOwnerPlayer(tp)
 	e3:SetOperation(s.reset)
-	e3:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,3)
+	e3:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,3)
 	c:RegisterEffect(e3)
 end
 function s.reset(e,tp,eg,ep,ev,re,r,rp)
@@ -113,7 +113,7 @@ function s.winop(e,tp,eg,ep,ev,re,r,rp)
 	e:SetLabel(ct)
 	e:GetHandler():SetTurnCounter(ct)
 	if ct==3 then
-		Duel.Win(tp,0x12)
+		Duel.Win(tp,WIN_REASON_VENNOMINAGA)
 		if re then re:Reset() end
 	end
 end

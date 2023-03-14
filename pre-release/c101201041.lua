@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCost(s.spcost)
+	e3:SetCost(aux.CostWithReplace(s.spcost,CARD_URSARCTIC_BIG_DIPPER,s.extracon))
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
@@ -72,6 +72,9 @@ function s.sprop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=e:GetLabelObject()
 	if not g then return end
 	Duel.SendtoGrave(g,REASON_COST)
+end
+function s.extracon(base,c,e,tp)
+	return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp)
 end
 function s.ursfilter(c)
 	return c:IsSetCard(SET_URSARCTIC) and c:IsLevel(8)

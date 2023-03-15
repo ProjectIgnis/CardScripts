@@ -58,7 +58,7 @@ function s.initial_effect(c)
 end
 function s.cfilter(c,e,tp)
 	return c:IsMonster() and c:IsType(TYPE_SYNCHRO) and not c:IsType(TYPE_TUNER)
-		and c:IsCanBeEffectTarget(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and c:IsControler(tp) and c:IsCanBeEffectTarget(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=eg:Filter(s.cfilter,nil,e,tp)

@@ -32,10 +32,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if #g1==0 and #g2==0 then return end
 		Duel.BreakEffect()
 		if #g1>0 then
-			Duel.SendtoGrave(g1,REASON_RULE)
+			Duel.SendtoGrave(g1,REASON_RULE,PLAYER_NONE,turn_p)
 		end
 		if #g2>0 then
-			Duel.SendtoGrave(g2,REASON_RULE)
+			Duel.SendtoGrave(g2,REASON_RULE,PLAYER_NONE,1-turn_p)
 		end
 	end
 end

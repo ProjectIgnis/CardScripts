@@ -68,10 +68,9 @@ function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
-	if Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and tc:IsRelateToEffect(e)
-		and tc:IsControler(tp) and tc:IsFaceup() and Duel.Equip(tp,c,tc,true) then
+	if not (c:IsRelateToEffect(e) and tc:IsRelateToEffect(e)) then return end
+	if Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and tc:IsControler(tp) and tc:IsFaceup() and Duel.Equip(tp,c,tc,true) then
 		--Equip limit
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

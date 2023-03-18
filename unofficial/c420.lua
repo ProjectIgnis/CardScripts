@@ -674,8 +674,8 @@ if not AnimeArchetype then
 	Card.IsNumeronius=MakeCheck({0x53b},AnimeArchetype.OCGNumeronius)
 
 	-- Papillon パピヨン
-	-- Moonlit Papillon
-	Card.IsPapillon=MakeCheck({0x53c},{16366944})
+	-- Moonlit Papillon/Rose Papillon
+	Card.IsPapillon=MakeCheck({0x53c},{16366944,100200233})
 
 	-- Parasite パラサイト
 	-- Graydle Parasite/Fusion Parasite

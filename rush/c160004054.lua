@@ -22,20 +22,23 @@ end
 function s.costfilter(c)
 	return c:IsRace(RACE_WYRM) and c:IsFaceup() and c:IsAbleToGraveAsCost() and not c:IsMaximumModeSide()
 end
+function s.filter(c)
+	return c:IsFaceup() and c:CanAttack()
+end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil,e,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	-- requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	g=g:AddMaximumCheck()
-	Duel.HintSelection(g)
+	Duel.HintSelection(g,true)
 	local ct=Duel.SendtoGrave(g,REASON_COST)
 	if ct>0 then
 		--Effect
-		local g=Duel.SelectMatchingCard(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
-		Duel.HintSelection(g)
+		local g=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil)
+		Duel.HintSelection(g,true)
 		if #g>0 then
 			--cannot attack
 			local ge2=Effect.CreateEffect(e:GetHandler())

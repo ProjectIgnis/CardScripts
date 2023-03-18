@@ -23,7 +23,7 @@ function s.valcheck(e,c)
 	if #g==1 and g:GetFirst():GetFlagEffect(FLAG_DOUBLE_TRIB)>0 then
 		atk=g:GetFirst():GetTextAttack()*2
 	else
-		for tc g:Iter() do
+		for tc in g:Iter() do
 			local catk=tc:GetTextAttack()
 			atk=atk+(catk>=0 and catk or 0)
 		end

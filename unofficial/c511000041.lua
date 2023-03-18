@@ -1,9 +1,11 @@
+--ファンタジスタ・ディエチ
 --Playmaker
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
+	--Xyz Summon
 	Xyz.AddProcedure(c,nil,5,3)
 	c:EnableReviveLimit()
+	--Flip
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_POSITION)
@@ -12,21 +14,18 @@ function s.initial_effect(c)
 	e1:SetTarget(s.postg)
 	e1:SetOperation(s.posop)
 	c:RegisterEffect(e1)
+	--Chain attack
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCountLimit(1)
-	e2:SetRange(LOCATION_MZONE)
 	e2:SetCode(EVENT_DAMAGE_STEP_END)
-	e2:SetCost(s.atkcost)
-	e2:SetTarget(s.atktg)
-	e2:SetOperation(s.atkop)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCondition(s.cacon)
+	e1:SetCost(aux.dxmcostgen(1,1,nil))
+	e2:SetTarget(s.catg)
+	e2:SetOperation(s.caop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
-end
-function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -37,28 +36,22 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsFacedown,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	Duel.ChangePosition(g,0,0,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK,true)
 end
-function s.filter(c)
-	return c:IsFaceup()
+function s.cacon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return  Duel.GetAttacker()==c and Duel.GetAttackTarget()~=nil and c:CanChainAttack(0,true)
 end
-function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil) end
-	local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil)
-	local tc=nil
-	if #g>0 then
-		local tg=g:GetMaxGroup(Card.GetAttack)
-		if #tg>1 then
-			local sg=tg:Select(tp,1,1,nil)
-			tc=sg:GetFirst()
-			
-		else
-			tc=tg:GetFirst()
-		end
-	end
+function s.catg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil):GetMaxGroup(Card.GetAttack)
+	if chkc then return g:IsContains(chkc) end
+	if chk==0 then return g:IsExists(Card.IsCanBeEffectTarget,1,nil,e) end
+	local tg=g:Filter(Card.IsCanBeEffectTarget,nil,e)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+	local tc=g:Select(tp,1,1,nil)
 	Duel.SetTargetCard(tc)
 end
-function s.atkop(e,tp,eg,ep,ev,re,r,rp)
+function s.caop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		Duel.ChainAttack(tc)
 	end
 end

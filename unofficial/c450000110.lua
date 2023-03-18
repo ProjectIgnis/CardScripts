@@ -1,4 +1,5 @@
 --ドリーム・ピッチ
+--Stadium of Dreams
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_SET_POSITION)
 	e2:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
-	e2:SetRange(LOCATION_SZONE)
+	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e2:SetTarget(s.target)
 	e2:SetValue(POS_FACEUP_DEFENSE+NO_FLIP_EFFECT)

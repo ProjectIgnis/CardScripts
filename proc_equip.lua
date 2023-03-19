@@ -1,4 +1,3 @@
-
 --add procedure to equip spells equipping by rule
 function Auxiliary.AddEquipProcedure(c,p,f,eqlimit,cost,tg,op,con)
 	--Note: p==0 is check equip spell controler, p==1 for opponent's, PLAYER_ALL for both player's monsters
@@ -8,7 +7,7 @@ function Auxiliary.AddEquipProcedure(c,p,f,eqlimit,cost,tg,op,con)
 	e1:SetCategory(CATEGORY_EQUIP)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_CONTINUOUS_TARGET)
 	if con then
 		e1:SetCondition(con)
 	end
@@ -16,7 +15,7 @@ function Auxiliary.AddEquipProcedure(c,p,f,eqlimit,cost,tg,op,con)
 		e1:SetCost(cost)
 	end
 	e1:SetTarget(Auxiliary.EquipTarget(tg,p,f))
-	e1:SetOperation(op)
+	e1:SetOperation(Auxiliary.EquipOperation(op))
 	c:RegisterEffect(e1)
 	--Equip limit
 	local e2=Effect.CreateEffect(c)
@@ -54,23 +53,16 @@ function Auxiliary.EquipTarget(tg,p,f)
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 				local g=Duel.SelectTarget(tp,Auxiliary.EquipFilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,player,f,e,tp)
 				if tg then tg(e,tp,eg,ep,ev,re,r,rp,g:GetFirst()) end
-				local e1=Effect.CreateEffect(e:GetHandler())
-				e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-				e1:SetCode(EVENT_CHAIN_SOLVING)
-				e1:SetReset(RESET_CHAIN)
-				e1:SetLabel(Duel.GetCurrentChain())
-				e1:SetLabelObject(e)
-				e1:SetOperation(Auxiliary.EquipEquip)
-				Duel.RegisterEffect(e1,tp)
 				Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,0,0)
 			end
 end
-function Auxiliary.EquipEquip(e,tp,eg,ep,ev,re,r,rp)
-	if re~=e:GetLabelObject() then return end
-	local c=e:GetHandler()
-	local tc=Duel.GetChainInfo(Duel.GetCurrentChain(),CHAININFO_TARGET_CARDS):GetFirst()
-	if tc and c:IsRelateToEffect(re) and tc:IsRelateToEffect(re) and tc:IsFaceup() then
-		Duel.Equip(tp,c,tc)
-	end
+function Auxiliary.EquipOperation(op)
+	return	function(e,tp,eg,ep,ev,re,r,rp)
+				local c=e:GetHandler()
+				local tc=Duel.GetFirstTarget()
+				if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and tc:IsFaceup() then
+					Duel.Equip(tp,c,tc)
+				end
+				if op then op(e,tp,eg,ep,ev,re,r,rp) end
+			end
 end
-

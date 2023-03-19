@@ -113,7 +113,7 @@ TOKEN_WORLD_LEGACY                  = 46647145
 
 --Specific Special Summons
 SUMMON_WITH_MONSTER_REBORN = 1010
-SUMMON_BY_NOUVELLEZ = 181
+SUMMON_BY_NOUVELLES = 181
 
 --Commonly used Rush Cards
 CARD_AMALILITH            = 160428037

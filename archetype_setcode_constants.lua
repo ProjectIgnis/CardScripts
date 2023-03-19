@@ -519,10 +519,10 @@ SET_AQUAMIRROR                    = 0x18f
 SET_FIREWALL                      = 0x190
 SET_LABYRINTH_WALL                = 0x194
 SET_FAVORITE                      = 0x195
+SET_VANQUISH_SOUL                 = 0x196
+SET_NOUVELLES                     = 0x197
+SET_RECIPE                        = 0x198
 --Currently unreleased in the TCG, the official English name is unknown
 SET_MANADOME                      = 0x191
 SET_NEMURELIA                     = 0x192
 --Beta archetypes
-SET_NOUVELLEZ                     = 0x28e
-SET_RECIPE                        = 0x28f
-SET_VANQUISH_SOUL                 = 0x292

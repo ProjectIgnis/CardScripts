@@ -36,14 +36,14 @@ function Auxiliary.evospcon(e,tp,eg,ep,ev,re,r,rp)
 	return st>=(SUMMON_TYPE_SPECIAL+150) and st<(SUMMON_TYPE_SPECIAL+180)
 end
 
---return if Card c was special summoned by the effect of a "Nouvellez" monster
-function Card.IsNouvellezSummoned(c)
-	return c:IsSummonType(SUMMON_BY_NOUVELLEZ)
+--return if Card c was special summoned by the effect of a "Nouvelles" monster
+function Card.IsNouvellesSummoned(c)
+	return c:IsSummonType(SUMMON_BY_NOUVELLES)
 end
 
 --sp_summon condition for "Nouvellez" monsters
 function Auxiliary.nouvspcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsNouvellezSummoned()
+	return e:GetHandler():IsNouvellesSummoned()
 end
 
 --check for Spirit Elimination

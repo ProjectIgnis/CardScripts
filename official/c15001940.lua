@@ -1,5 +1,5 @@
 --フォアグラシャ・ド・ヌーベルズ
---Foie Glasya de Nouvellez
+--Foie Glasya de Nouvelles
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.tdtg)
 	e1:SetOperation(s.tdop)
 	c:RegisterEffect(e1)
-	--Special Summon 1 Level 5 or 6 "Nouvellez" Ritual Monster
+	--Special Summon 1 Level 5 or 6 "Nouvelles" Ritual Monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_RELEASE+CATEGORY_SPECIAL_SUMMON)
@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e3:SetCondition(function(_,_,eg) return eg:IsExists(Card.IsLocation,1,nil,LOCATION_MZONE) end)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_RECIPE,SET_NOUVELLEZ}
+s.listed_series={SET_RECIPE,SET_NOUVELLES}
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsAbleToDeck() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToDeck,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil) end
@@ -48,11 +48,11 @@ function s.cfilter(c,tp)
 	return c:IsReleasableByEffect() and (s.selfnouvfilter(c,tp) or c:IsAttackPos())
 end
 function s.selfnouvfilter(c,tp)
-	return c:IsControler(tp) and c:IsSetCard(SET_NOUVELLEZ)
+	return c:IsControler(tp) and c:IsSetCard(SET_NOUVELLES)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(SET_NOUVELLEZ) and c:IsRitualMonster() and c:IsLevel(5,6)
-		and c:IsCanBeSpecialSummoned(e,SUMMON_BY_NOUVELLEZ,tp,false,true)
+	return c:IsSetCard(SET_NOUVELLES) and c:IsRitualMonster() and c:IsLevel(5,6)
+		and c:IsCanBeSpecialSummoned(e,SUMMON_BY_NOUVELLES,tp,false,true)
 end
 function s.rescon(sg,e,tp,mg)
 	return Duel.GetMZoneCount(tp,sg)>0 and sg:IsExists(s.atkposchk,1,nil,sg,tp)
@@ -75,7 +75,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,1,nil,e,tp)
 		if #g>0 then
-			Duel.SpecialSummon(g,SUMMON_BY_NOUVELLEZ,tp,tp,false,true,POS_FACEUP)
+			Duel.SpecialSummon(g,SUMMON_BY_NOUVELLES,tp,tp,false,true,POS_FACEUP)
 		end
 	end
 end

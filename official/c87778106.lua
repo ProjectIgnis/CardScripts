@@ -3,18 +3,18 @@
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Ritual Summon any "Nouvellez" monster
-	local e1=Ritual.AddProcGreater({handler=c,filter=aux.FilterBoolFunction(Card.IsSetCard,SET_NOUVELLEZ),
+	-- Ritual Summon any "Nouvelles" monster
+	local e1=Ritual.AddProcGreater({handler=c,filter=aux.FilterBoolFunction(Card.IsSetCard,SET_NOUVELLES),
 		stage2=s.stage2,extratg=s.extratg})
 	e1:SetCategory(e1:GetCategory()|CATEGORY_SEARCH|CATEGORY_TOHAND)
 end
-s.listed_series={SET_RECIPE,SET_NOUVELLEZ}
-s.listed_names={id,100430029} --Buerillabaisse de Nouvellez
+s.listed_series={SET_RECIPE,SET_NOUVELLES}
+s.listed_names={id,26223582} --Buerillabaisse de Nouvelles
 function s.thfilter(c)
 	return c:IsSetCard(SET_RECIPE) and c:IsRitualSpell() and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.stage2(mat,e,tp,eg,ep,ev,re,r,rp,tc)
-	if not tc:IsCode(100430029) then return end
+	if not tc:IsCode(26223582) then return end
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.thfilter),tp,LOCATION_GRAVE|LOCATION_DECK,0,nil)
 	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)

@@ -1,5 +1,5 @@
 --バグリエル・ド・ヌーベルズ
---Baegriller de Nouvellez
+--Baelgrill de Nouvelles
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -29,13 +29,13 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_RECIPE,SET_NOUVELLEZ}
+s.listed_series={SET_RECIPE,SET_NOUVELLES}
 s.listed_names={30243636}
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsNegatable,tp,0,LOCATION_ONFIELD,1,nil) end
 	local g=Duel.GetMatchingGroup(Card.IsNegatable,tp,0,LOCATION_ONFIELD,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,#g,0,0)
-	if e:GetHandler():IsNouvellezSummoned() then
+	if e:GetHandler():IsNouvellesSummoned() then
 		local rg=Duel.GetMatchingGroup(Card.IsReleasableByEffect,tp,0,LOCATION_MZONE,nil)
 		Duel.SetOperationInfo(0,CATEGORY_RELEASE,rg,#rg,0,0)
 	end
@@ -60,7 +60,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e2)
 	end
 	--Tribute as many monsters as possible
-	if c:IsNouvellezSummoned() then
+	if c:IsNouvellesSummoned() then
 		local rg=Duel.GetMatchingGroup(Card.IsReleasableByEffect,tp,0,LOCATION_MZONE,nil)
 		if #rg==0 then return end
 		Duel.BreakEffect()
@@ -71,7 +71,7 @@ function s.cfilter(c)
 	return c:IsAttackPos() and c:IsReleasableByEffect()
 end
 function s.spfilter(c,e,tp)
-	return c:IsCode(30243636) and c:IsCanBeSpecialSummoned(e,SUMMON_BY_NOUVELLEZ,tp,false,true)
+	return c:IsCode(30243636) and c:IsCanBeSpecialSummoned(e,SUMMON_BY_NOUVELLES,tp,false,true)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.cfilter(chkc) end
@@ -89,7 +89,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,1,nil,e,tp)
 		if #g>0 then
-			Duel.SpecialSummon(g,SUMMON_BY_NOUVELLEZ,tp,tp,false,true,POS_FACEUP)
+			Duel.SpecialSummon(g,SUMMON_BY_NOUVELLES,tp,tp,false,true,POS_FACEUP)
 		end
 	end
 end

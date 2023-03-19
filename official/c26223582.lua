@@ -1,21 +1,21 @@
--- コンフィラス・ド・ヌーベルズ
--- Confitras de Nouvellez
+-- ブエリヤベース・ド・ヌーベルズ
+-- Buerillabaisse de Nouvelles
 -- Scripted by Satella
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	-- Destroy 1 Spell/Trap on the field
+	-- Excavate the top 5 cards of your Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_DESTROY)
+	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e1:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
+	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetCountLimit(1,id)
-	e1:SetTarget(s.destg)
-	e1:SetOperation(s.desop)
+	e1:SetTarget(s.thtg)
+	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	-- Special Summon 1 Level 3 or 4 "Nouvellez" Ritual Monster
+	-- Special Summon 1 Level 2 or 3 "Nouvelles" Ritual Monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_RELEASE+CATEGORY_SPECIAL_SUMMON)
@@ -31,26 +31,34 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_BE_BATTLE_TARGET)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_NOUVELLEZ,SET_RECIPE}
-function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() and chkc:IsSpellTrap()  end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsSpellTrap,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,Card.IsSpellTrap,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
+s.listed_series={SET_NOUVELLES,SET_RECIPE}
+function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>4 end
+	Duel.SetTargetPlayer(tp)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
-function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
-		Duel.Destroy(tc,REASON_EFFECT)
+function s.thfilter(c)
+	return c:IsSetCard(SET_NOUVELLES) and c:IsAbleToHand()
+end
+function s.thop(e,tp,eg,ep,ev,re,r,rp)
+	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
+	Duel.ConfirmDecktop(p,5)
+	local g=Duel.GetDecktopGroup(p,5)
+	if #g>0 and g:IsExists(s.thfilter,1,nil) and Duel.SelectYesNo(p,aux.Stringid(id,2)) then
+		Duel.Hint(HINT_SELECTMSG,p,HINTMSG_ATOHAND)
+		local sg=g:FilterSelect(p,s.thfilter,1,1,nil)
+		Duel.SendtoHand(sg,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-p,sg)
+		Duel.ShuffleHand(p)
 	end
+	Duel.ShuffleDeck(p)
 end
 function s.cfilter(c)
 	return c:IsReleasableByEffect() and c:IsAttackPos()
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(SET_NOUVELLEZ) and c:IsRitualMonster() and c:IsLevel(3,4)
-		and c:IsCanBeSpecialSummoned(e,SUMMON_BY_NOUVELLEZ,tp,false,true)
+	return c:IsSetCard(SET_NOUVELLES) and c:IsRitualMonster() and c:IsLevel(2,3)
+		and c:IsCanBeSpecialSummoned(e,SUMMON_BY_NOUVELLES,tp,false,true)
 end
 function s.rescon(sg,e,tp,mg)
 	return Duel.GetMZoneCount(tp,sg)>0 and sg:IsContains(e:GetHandler())
@@ -75,7 +83,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,1,nil,e,tp)
 		if #g>0 then
-			Duel.SpecialSummon(g,SUMMON_BY_NOUVELLEZ,tp,tp,false,true,POS_FACEUP)
+			Duel.SpecialSummon(g,SUMMON_BY_NOUVELLES,tp,tp,false,true,POS_FACEUP)
 		end
 	end
 end

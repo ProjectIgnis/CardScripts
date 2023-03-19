@@ -30,9 +30,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={30243636}
-s.listed_series={SET_NOUVELLEZ}
+s.listed_series={SET_NOUVELLES}
 function s.cfilter(c)
-	return c:IsRitualMonster() and c:IsSetCard(SET_NOUVELLEZ) and c:IsFaceup()
+	return c:IsRitualMonster() and c:IsSetCard(SET_NOUVELLES) and c:IsFaceup()
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -48,7 +48,7 @@ function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re)
-		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsNouvellezSummoned),tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsNouvellesSummoned),tp,LOCATION_MZONE,0,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 		Duel.BreakEffect()
 		Duel.Destroy(eg,REASON_EFFECT)

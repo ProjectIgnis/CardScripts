@@ -1,10 +1,10 @@
 --バラムニエル・ド・ヌーベルズ
---Balameuniere de Nouvellez
+--Balameuniere de Nouvelles
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Add 1 "Nouvellez" or "Recipe" card to your hand
+	--Add 1 "Nouvelles" or "Recipe" card to your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	--Special Summon 1 Level 6 "Nouvellez" Ritual Monster
+	--Special Summon 1 Level 6 "Nouvelles" Ritual Monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_RELEASE+CATEGORY_SPECIAL_SUMMON)
@@ -34,9 +34,9 @@ function s.initial_effect(c)
 	e3:SetCondition(aux.nouvspcon)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_NOUVELLEZ,SET_RECIPE}
+s.listed_series={SET_NOUVELLES,SET_RECIPE}
 function s.thfilter(c)
-	return c:IsSetCard({SET_NOUVELLEZ,SET_RECIPE}) and c:IsAbleToHand()
+	return c:IsSetCard({SET_NOUVELLES,SET_RECIPE}) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -54,8 +54,8 @@ function s.cfilter(c)
 	return c:IsAttackPos() and c:IsReleasableByEffect()
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(SET_NOUVELLEZ) and c:IsRitualMonster() and c:IsLevel(6)
-		and c:IsCanBeSpecialSummoned(e,SUMMON_BY_NOUVELLEZ,tp,false,true)
+	return c:IsSetCard(SET_NOUVELLES) and c:IsRitualMonster() and c:IsLevel(6)
+		and c:IsCanBeSpecialSummoned(e,SUMMON_BY_NOUVELLES,tp,false,true)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.cfilter(chkc) end
@@ -73,7 +73,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,1,nil,e,tp)
 		if #g>0 then
-			Duel.SpecialSummon(g,SUMMON_BY_NOUVELLEZ,tp,tp,false,true,POS_FACEUP)
+			Duel.SpecialSummon(g,SUMMON_BY_NOUVELLES,tp,tp,false,true,POS_FACEUP)
 		end
 	end
 end

@@ -1,5 +1,5 @@
 --Ｎｏｕｖｅｌｌｅｚ Ａｕｂｅｒｇｅ 『À Ｔａｂｌｅ』
---Nouvellez Auberge "À Table"
+--Nouvelles Auberge "À Table"
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

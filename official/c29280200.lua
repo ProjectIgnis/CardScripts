@@ -1,5 +1,5 @@
 --ＶＳＤｒ．マッドラヴ
---Vanquish Soul - Dr. Madlove
+--Vanquish Soul Dr. Madlove
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

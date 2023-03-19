@@ -1,9 +1,9 @@
---Voici la Carte～メニューはこちら～
+--Ｖｏｉｃｉ ｌａ Ｃａｒｔｅ～メニューはこちら～
 --Voici la Carte - Here is the Menu
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--Take 2 "Nouvellez" monsters and make the opponent select 1 of them to add to your hand
+	--Take 2 "Nouvelles" monsters and make the opponent select 1 of them to add to your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -14,10 +14,10 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={SET_NOUVELLEZ}
-s.listed_names={100430037,100430038} -- Recette de Poisson - Fish Recipe, Recette de Viande - Meat Recipe
+s.listed_series={SET_NOUVELLES}
+s.listed_names={87778106,14166715} -- Recette de Poisson - Fish Recipe, Recette de Viande - Meat Recipe
 function s.revfilter(c)
-	return c:IsSetCard(SET_NOUVELLEZ) and c:IsMonster() and c:IsAbleToHand() and not c:IsPublic()
+	return c:IsSetCard(SET_NOUVELLES) and c:IsMonster() and c:IsAbleToHand() and not c:IsPublic()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.revfilter,tp,LOCATION_DECK,0,nil)
@@ -50,8 +50,8 @@ end
 function s.thfilter(c,rac)
 	if not c:IsAbleToHand() then return false end
 	if rac==RACE_BEASTWARRIOR then
-		return c:IsCode(100430037)
+		return c:IsCode(87778106)
 	elseif rac==RACE_WARRIOR then
-		return c:IsCode(100430038)
+		return c:IsCode(14166715)
 	end
 end

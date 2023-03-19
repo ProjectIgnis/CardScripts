@@ -1,3 +1,4 @@
+--復活の祭壇
 --Altar of Restoration
 local s,id=GetID()
 function s.initial_effect(c)
@@ -28,7 +29,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
-		Duel.SendtoHand(tc,nil,REASON_EFFECT)
+		Duel.SendtoHand(tc,tp,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,tc)
 	end
 end

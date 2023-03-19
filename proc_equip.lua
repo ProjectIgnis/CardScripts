@@ -58,10 +58,9 @@ function Auxiliary.EquipTarget(tg,p,f)
 end
 function Auxiliary.EquipOperation(op)
 	return	function(e,tp,eg,ep,ev,re,r,rp)
-				local c=e:GetHandler()
 				local tc=Duel.GetFirstTarget()
-				if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and tc:IsFaceup() then
-					Duel.Equip(tp,c,tc)
+				if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+					Duel.Equip(tp,e:GetHandler(),tc)
 				end
 				if op then op(e,tp,eg,ep,ev,re,r,rp) end
 			end

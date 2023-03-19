@@ -9,17 +9,17 @@ function s.initial_effect(c)
 	--Gains 500 ATK for each Tuner in your Graveyard
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(s.atkval)
 	c:RegisterEffect(e1)
 	--Cannot be destroyed by your opponent's card effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e2:SetValue(s.indval)
 	c:RegisterEffect(e2)
 	--Banish
@@ -57,7 +57,7 @@ s.synchro_nt_required=1
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsType,c:GetControler(),LOCATION_GRAVE,0,nil,TYPE_TUNER)*500
 end
-function s.indval(e,re,tp)
+function s.indval(e,re,rp)
 	return rp==1-e:GetHandlerPlayer()
 end
 function s.bancon(e,tp,eg,ep,ev,re,r,rp)
@@ -71,24 +71,27 @@ function s.banop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.Remove(c,POS_FACEUP,REASON_EFFECT+REASON_TEMPORARY)>0 then
 		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1)
-		if Duel.GetAttacker() and Duel.SelectEffectYesNo(tp,c) then Duel.NegateAttack()
+		local ac=Duel.GetAttacker()
+		if ac and ac:IsControler(1-tp) and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then Duel.NegateAttack()
 		else
 			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_FIELD)
+			e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 			e1:SetCode(EVENT_ATTACK_ANNOUNCE)
-			e1:SetRange(LOCATION_REMOVED)
-			e1:SetCountLimit(1)
 			e1:SetOperation(s.negop)
-			e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
-			c:RegisterEffect(e1)
+			e1:SetReset(RESET_PHASE|PHASE_END)
+			Duel.RegisterEffect(e1,tp)
 		end
 	end
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.NegateAttack()
+	if Duel.GetAttacker():IsControler(1-tp) and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+		Duel.Hint(HINT_CARD,1-tp,id)
+		Duel.NegateAttack()
+		e:Reset()
+	end
 end
 function s.rettg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:GetHandler():GetFlagEffect(id)>0 end
+	if chk==0 then return e:GetHandler():GetFlagEffect(id)>0 end
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

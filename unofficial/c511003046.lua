@@ -1,3 +1,4 @@
+--幻影調和
 --Vision Synchro
 local s,id=GetID()
 function s.initial_effect(c)
@@ -22,26 +23,7 @@ function s.scop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sc=g:Select(tp,1,1,nil):GetFirst()
 		Duel.SynchroSummon(tp,sc,nil,hg)
-		local fid=e:GetHandler():GetFieldID()
-		sc:RegisterFlagEffect(51103046,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,fid)
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_PHASE+PHASE_END)
-		e1:SetCountLimit(1)
-		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-		e1:SetLabel(fid)
-		e1:SetLabelObject(sc)
-		e1:SetReset(RESET_PHASE+PHASE_END)
-		e1:SetCondition(s.retcon)
-		e1:SetOperation(s.retop)
-		Duel.RegisterEffect(e1,tp)
+		sc:RegisterFlagEffect(id,RESET_EVENT|(RESETS_STANDARD&~RESET_TOFIELD),0,1,e:GetFieldID())
+		aux.DelayedOperation(sc,PHASE_END,id,e,tp,function(ag) Duel.SendtoDeck(ag,nil,SEQ_DECKTOP,REASON_EFFECT) end,nil)
 	end
-end
-function s.retcon(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetLabelObject()
-	return tc:GetFlagEffectLabel(51103046)==e:GetLabel()
-end
-function s.retop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetLabelObject()
-	Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)
 end

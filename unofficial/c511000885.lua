@@ -13,35 +13,35 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c,tp)
-	return c:IsOnField() and c:IsMonster() and c:IsControler(tp) and c:IsFaceup()
+	return c:IsOnField() and c:IsMonster() and c:IsControler(tp)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-    if tp==ep or not Duel.IsChainNegatable(ev) then return false end
-    local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DESTROY)
-    if ex and tg~=nil and tc+tg:FilterCount(s.cfilter,nil,tp)-#tg>0 then
-        return true
-    end
-    ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_TOHAND)
-    if ex and tg~=nil and tc+tg:FilterCount(s.cfilter,nil,tp)-#tg>0 then
-        return true
-    end
-    ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_REMOVE)
-    if ex and tg~=nil and tc+tg:FilterCount(s.cfilter,nil,tp)-#tg>0 then
-        return true
-    end
-    ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_TODECK)
-    if ex and tg~=nil and tc+tg:FilterCount(s.cfilter,nil,tp)-#tg>0 then
-        return true
-    end
-    ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_RELEASE)
-    if ex and tg~=nil and tc+tg:FilterCount(s.cfilter,nil,tp)-#tg>0 then
-        return true
-    end
-    ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_TOGRAVE)
-    if ex and tg~=nil and tc+tg:FilterCount(s.cfilter,nil,tp)-#tg>0 then
-        return true
-    end
-    return false
+	if tp==ep or not Duel.IsChainNegatable(ev) then return false end
+	local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DESTROY)
+	if ex and tg~=nil and tc+tg:FilterCount(s.cfilter,nil,tp)-#tg>0 then
+		return true
+	end
+	ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_TOHAND)
+	if ex and tg~=nil and tc+tg:FilterCount(s.cfilter,nil,tp)-#tg>0 then
+		return true
+	end
+	ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_REMOVE)
+	if ex and tg~=nil and tc+tg:FilterCount(s.cfilter,nil,tp)-#tg>0 then
+		return true
+	end
+	ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_TODECK)
+	if ex and tg~=nil and tc+tg:FilterCount(s.cfilter,nil,tp)-#tg>0 then
+		return true
+	end
+	ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_RELEASE)
+	if ex and tg~=nil and tc+tg:FilterCount(s.cfilter,nil,tp)-#tg>0 then
+		return true
+	end
+	ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_TOGRAVE)
+	if ex and tg~=nil and tc+tg:FilterCount(s.cfilter,nil,tp)-#tg>0 then
+		return true
+	end
+	return false
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -55,12 +55,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local e8=Effect.CreateEffect(e:GetHandler())
 	e8:SetType(EFFECT_TYPE_SINGLE)
 	e8:SetCode(EFFECT_DISABLE)
-	e8:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e8:SetReset(RESET_EVENT|RESETS_STANDARD)
 	re:GetHandler():RegisterEffect(e8,true)
 	local e9=Effect.CreateEffect(e:GetHandler())
 	e9:SetType(EFFECT_TYPE_SINGLE)
 	e9:SetCode(EFFECT_DISABLE_EFFECT)
-	e9:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e9:SetReset(RESET_EVENT|RESETS_STANDARD)
 	re:GetHandler():RegisterEffect(e9,true)
 	if re:GetHandler():IsRelateToEffect(re) then
 		Duel.Destroy(eg,REASON_EFFECT)

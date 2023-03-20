@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetCondition(s.accon)
 	e3:SetOperation(s.acop)
 	c:RegisterEffect(e3)
-	--special summon
+	--Add to hand or Special Summon 1 "Ursarctic" monster from the GY
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOHAND)
@@ -42,13 +42,12 @@ function s.initial_effect(c)
 	e4:SetOperation(s.operation)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x165}
+s.listed_series={SET_URSARCTIC}
 s.listed_names={CARD_URSARCTIC_BIG_DIPPER}
 function s.sprfilter(c)
 	return c:IsFaceup() and c:IsAbleToGraveAsCost() and c:HasLevel()
 end
 function s.sprfilter1(c,tp,g,sc)
-	local lv=c:GetLevel()
 	local g=Duel.GetMatchingGroup(s.sprfilter,tp,LOCATION_MZONE,0,nil)
 	return c:IsType(TYPE_TUNER) and g:IsExists(s.sprfilter2,1,c,tp,c,sc)
 end
@@ -62,8 +61,7 @@ function s.sprcon(e,c)
 	local g=Duel.GetMatchingGroup(s.sprfilter,tp,LOCATION_MZONE,0,nil)
 	return g:IsExists(s.sprfilter1,1,nil,tp,g,c)
 end
-function s.sprtg(e,tp,eg,ep,ev,re,r,rp,c)
-	local c=e:GetHandler()
+function s.sprtg(e,tp,eg,ep,ev,re,r,rp,chk,c)
 	local g=Duel.GetMatchingGroup(s.sprfilter,tp,LOCATION_MZONE,0,nil)
 	local g1=g:Filter(s.sprfilter1,nil,tp,g,c)
 	local mg1=aux.SelectUnselectGroup(g1,e,tp,1,1,nil,1,tp,HINTMSG_TOGRAVE,nil,nil,true)
@@ -106,7 +104,7 @@ function s.extracon(base,c,e,tp)
 	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,c,ft,base,tp)
 end
 function s.filter(c,ft,e,tp)
-	return (c:IsSetCard(0x165) and c:IsMonster()) and (c:IsAbleToHand() or (ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
+	return (c:IsSetCard(SET_URSARCTIC) and c:IsMonster()) and (c:IsAbleToHand() or (ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -120,19 +118,15 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	Duel.Hint(HINT_SELECTMSG,tp,0)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil,ft,e,tp)
-	if #g>0 then
-		local th=g:GetFirst():IsAbleToHand()
-		local sp=ft>0 and g:GetFirst():IsCanBeSpecialSummoned(e,0,tp,false,false)
-		local op=0
-		if th and sp then op=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))
-		elseif th then op=0
-		else op=1 end
-		if op==0 then
-			Duel.SendtoHand(g,nil,REASON_EFFECT)
-			Duel.ConfirmCards(1-tp,g)
-		else
-			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
-		end
+	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil,ft,e,tp):GetFirst()
+	if tc then
+		aux.ToHandOrElse(tc,tp,
+		function(tc)
+			return ft>0 and tc:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		end,
+		function(tc)
+			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+		end,
+		aux.Stringid(id,1))
 	end
 end

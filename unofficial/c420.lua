@@ -675,7 +675,7 @@ if not AnimeArchetype then
 
 	-- Papillon パピヨン
 	-- Moonlit Papillon/Rose Papillon
-	Card.IsPapillon=MakeCheck({0x53c},{16366944,100200233})
+	Card.IsPapillon=MakeCheck({0x53c},{16366944,8910240})
 
 	-- Parasite パラサイト
 	-- Graydle Parasite/Fusion Parasite

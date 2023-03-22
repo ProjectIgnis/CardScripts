@@ -30,7 +30,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local g=Duel.SelectMatchingCard(tp,Card.IsSpellTrap,tp,0,LOCATION_ONFIELD,1,1,nil)
 		Duel.HintSelection(g,true)
-		if Duel.Destroy(tc,REASON_EFFECT)>0 then
+		if Duel.Destroy(g,REASON_EFFECT)>0 then
 			local c=e:GetHandler()
 			if Duel.Damage(1-tp,1000,REASON_EFFECT)==1000 and c:IsFaceup() and c:IsRelateToEffect(e) then
 				Duel.BreakEffect()

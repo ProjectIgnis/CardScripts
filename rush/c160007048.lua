@@ -1,10 +1,11 @@
 -- 瓦バーン
--- Tile Burn
+-- Hot Off the Press
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Burn
+	-- Reveal cards from the opponent's deck and inflict damage
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DAMAGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)

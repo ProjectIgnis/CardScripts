@@ -2,16 +2,16 @@
 --Royal Demon's Death Doom
 local s,id=GetID()
 function s.initial_effect(c)
-	--mat check
+	--Material check
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
 	e0:SetCode(EFFECT_MATERIAL_CHECK)
 	e0:SetValue(s.valcheck)
 	c:RegisterEffect(e0)
-	--Destroy
+	--Destroy face-up monsters and inflict damage
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_DESTROY)
+	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
@@ -43,14 +43,20 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 	Duel.Destroy(g,REASON_EFFECT)
 	local dg=Duel.GetOperatedGroup()
+	if #dg==0 then return end
 	local tc=dg:GetFirst()
 	local dam=0
 	for tc in dg:Iter() do
 		if not tc:WasMaximumModeSide() then
 			local lvl=tc:GetLevel()
-			if lvl<0 then lvl=0 end
+			if lvl<0 then
+				lvl=0
+			end
 			dam=dam+(lvl*100)
 		end
 	end
-	Duel.Damage(1-tp,dam,REASON_EFFECT)
+	if dam>0 then
+		Duel.BreakEffect()
+		Duel.Damage(1-tp,dam,REASON_EFFECT)
+	end
 end

@@ -1,11 +1,11 @@
 --イノセント・ランサー
 --Innocent Lancer
 --Scripted by pyrQ
-
 local s,id=GetID()
 function s.initial_effect(c)
-	--Send 1 from hand to GY for piercing
+	--Gain piercing damage
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
@@ -29,7 +29,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local c=e:GetHandler()
 		if c:IsRelateToEffect(e) and c:IsFaceup() then
 			--Piercing
-			c:AddPiercing(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			c:AddPiercing(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		end
 	end
 end

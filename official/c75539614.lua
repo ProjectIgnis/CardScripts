@@ -1,7 +1,8 @@
 --サイコ・ブレイド
+--Psychic Blade
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Pay LP to equip this card
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_EQUIP)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -11,8 +12,9 @@ function s.initial_effect(c)
 	e1:SetCondition(s.condition)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
+	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--atk/def
+	--Equipped monster gain ATK/DEF equal to the LP paid
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
@@ -46,22 +48,21 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	local ac=Duel.AnnounceNumber(tp,table.unpack(t))
 	Duel.PayLPCost(tp,ac)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,ac)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1,ac)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,0,0)
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_CHAIN_SOLVING)
-	e1:SetReset(RESET_CHAIN)
-	e1:SetLabel(Duel.GetCurrentChain())
-	e1:SetLabelObject(e)
-	e1:SetOperation(Auxiliary.EquipEquip)
-	Duel.RegisterEffect(e1,tp)
+	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,tp,0)
+end
+function s.operation(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local tc=Duel.GetFirstTarget()
+	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and tc:IsFaceup() then
+		Duel.Equip(tp,c,tc)
+	end
 end
 function s.val(e,c)
 	local ct=e:GetHandler():GetFlagEffectLabel(id)

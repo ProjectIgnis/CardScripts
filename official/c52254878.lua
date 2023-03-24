@@ -41,17 +41,17 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_CHANGE_RACE)
 		e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
 		e1:SetValue(rc)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END,2)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_PHASE|PHASE_END,2)
 		c:RegisterEffect(e1)
 	end
-	if c:IsDifferentAttribute(att) then
-		-- Change attribute
+	if c:IsAttributeExcept(att) then
+		-- Change Attribute
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_CHANGE_ATTRIBUTE)
 		e2:SetProperty(EFFECT_FLAG_COPY_INHERIT)
 		e2:SetValue(att)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END,2)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_PHASE|PHASE_END,2)
 		c:RegisterEffect(e2)
 	end
 end

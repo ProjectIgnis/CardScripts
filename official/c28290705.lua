@@ -2,10 +2,10 @@
 --Fairy King Albverdich
 local s,id=GetID()
 function s.initial_effect(c)
+	c:EnableReviveLimit()
 	--Xyz Summon procedure
 	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_EARTH),4,2)
-	c:EnableReviveLimit()
-	--Decrease ATK/DEF of all non-EARTH monsters
+	--Non-EARTH monsters lose 500 ATK/DEF
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
@@ -17,18 +17,18 @@ function s.initial_effect(c)
 	e1:SetOperation(s.adop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_ALL-ATTRIBUTE_EARTH)
-end
 function s.adtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsAttributeExcept,ATTRIBUTE_EARTH),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 end
 function s.adop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsAttributeExcept,ATTRIBUTE_EARTH),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if #g==0 then return end
+	local c=e:GetHandler()
 	for tc in g:Iter() do
-		local e1=Effect.CreateEffect(e:GetHandler())
+		--Decrease ATK/DEF
+		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-500)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)

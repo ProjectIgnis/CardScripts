@@ -6,14 +6,8 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EFFECT_SELF_DESTROY)
-	e1:SetCondition(s.sdcon)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetCondition(function(e) return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsAttributeExcept,ATTRIBUTE_LIGHT),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil) end)
 	c:RegisterEffect(e1)
-end
-function s.sdfilter(c)
-	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_ALL-ATTRIBUTE_LIGHT)
-end
-function s.sdcon(e)
-	return Duel.IsExistingMatchingCard(s.sdfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end

@@ -1,10 +1,12 @@
---閃刀姫-ハヤテ
---Sky Striker Ace -Hayate
+--閃刀姫－ハヤテ
+--Sky Striker Ace - Hayate
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)
-	c:SetSPSummonOnce(id)
 	c:EnableReviveLimit()
+	--Can only Special Summon "Sky Striker Ace - Hayate" once per turn
+	c:SetSPSummonOnce(id)
+	--Link Summon procedure
 	Link.AddProcedure(c,s.matfilter,1,1)
 	--Can attack directly
 	local e1=Effect.CreateEffect(c)
@@ -21,9 +23,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.gyop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_SKY_STRIKER}
+s.listed_names={id}
+s.listed_series={SET_SKY_STRIKER_ACE,SET_SKY_STRIKER}
 function s.matfilter(c,scard,sumtype,tp)
-	return c:IsSetCard(SET_SKY_STRIKER_ACE,scard,sumtype,tp) and c:IsAttribute(ATTRIBUTE_ALL-ATTRIBUTE_WIND,scard,sumtype,tp)
+	return c:IsSetCard(SET_SKY_STRIKER_ACE,scard,sumtype,tp) and c:IsAttributeExcept(ATTRIBUTE_WIND,scard,sumtype,tp)
 end
 function s.tgfilter(c)
 	return c:IsSetCard(SET_SKY_STRIKER) and c:IsAbleToGrave()

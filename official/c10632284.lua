@@ -44,7 +44,7 @@ function s.chfilter(c,e)
 	return c:IsFaceup() and c:IsCanBeEffectTarget(e)
 end
 function s.tgfilter(c,rc,att)
-	return c:IsDifferentRace(rc) and c:IsDifferentAttribute(att)
+	return c:IsDifferentRace(rc) and c:IsAttributeExcept(att)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsFaceup() and chkc:IsLocation(LOCATION_MZONE) and s.tgfilter(chkc,e:GetLabel()) end
@@ -71,7 +71,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
 	end
-	if tc:IsDifferentAttribute(att) then
+	if tc:IsAttributeExcept(att) then
 		-- Change attribute
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

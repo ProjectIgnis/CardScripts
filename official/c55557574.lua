@@ -3,7 +3,7 @@
 --Scripted by fiftyfour
 local s,id=GetID()
 function s.initial_effect(c)
-	--Normal Summon a level 10 monster
+	--Normal Summon 1 Level 10 monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_SUMMON)
@@ -11,18 +11,15 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_MAIN_END+TIMING_BATTLE_START)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
-	e1:SetCondition(s.condition)
+	e1:SetCondition(function() return Duel.IsMainPhase() or Duel.IsBattlePhase() end)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
 s.listed_names={id,CARD_JACK_KNIGHT,CARD_KING_KNIGHT,CARD_QUEEN_KNIGHT}
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsMainPhase() or Duel.IsBattlePhase()
-end
 function s.thfilter(c)
 	return c:IsMonster() and c:GetTextAttack()==-2 and c:IsLevel(10)
-		and c:IsAttribute(ATTRIBUTE_ALL-ATTRIBUTE_DARK) and c:IsAbleToHand()
+		and c:IsAttributeExcept(ATTRIBUTE_DARK) and c:IsAbleToHand()
 end
 function s.mfilter(c,code)
 	return c:IsFaceup() and c:IsCode(code)
@@ -56,7 +53,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				Duel.BreakEffect()
 				Duel.ShuffleHand(tp)
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SUMMON)
-				local g2=Duel.SelectMatchingCard(tp,s.sfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,1,nil)
+				local g2=Duel.SelectMatchingCard(tp,s.sfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil)
 				local tc=g2:GetFirst()
 				if tc then
 					Duel.Summon(tp,tc,true,nil)
@@ -65,7 +62,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 	elseif a then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SUMMON)
-		local g=Duel.SelectMatchingCard(tp,s.sfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,1,nil)
+		local g=Duel.SelectMatchingCard(tp,s.sfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil)
 		local tc=g:GetFirst()
 		if tc then
 			Duel.Summon(tp,tc,true,nil)

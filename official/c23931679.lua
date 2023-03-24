@@ -46,7 +46,7 @@ function s.umicon(e,tp,eg,ep,ev,re,r,rp)
 		or Duel.IsEnvironment(CARD_UMI)
 end
 function s.nonwaterfilter(c)
-	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_ALL-ATTRIBUTE_WATER)
+	return c:IsFaceup() and c:IsAttributeExcept(ATTRIBUTE_WATER)
 end
 function s.fidfilter(c,code)
 	return c:GetFieldID()~=code
@@ -111,12 +111,11 @@ function s.adjustop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp)
-	if not c:IsAttribute(ATTRIBUTE_ALL-ATTRIBUTE_WATER) then return false end
+	if c:IsAttribute(ATTRIBUTE_WATER) then return false end
 	return Duel.IsExistingMatchingCard(s.nonwaterfilter,targetp or sump,LOCATION_MZONE,0,1,nil)
 end
 function s.thfilter(c)
-	return c:IsAbleToHand() and (c:IsCode(CARD_UMI)
-		or ((c:IsSetCard(SET_KAIRYU_SHIN) or c:IsSetCard(SET_SEA_STEALTH)) and c:IsSpellTrap()))
+	return c:IsAbleToHand() and (c:IsCode(CARD_UMI) or (c:IsSetCard({SET_KAIRYU_SHIN,SET_SEA_STEALTH}) and c:IsSpellTrap()))
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

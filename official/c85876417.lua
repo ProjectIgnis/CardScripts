@@ -24,7 +24,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return bc and bc:IsAttributeExcept(ATTRIBUTE_LIGHT)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then true end
+	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,e:GetHandler(),1,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)

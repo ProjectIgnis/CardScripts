@@ -40,6 +40,7 @@ make_deprecated_function_alias("Auxiliary.SpiritReturnReg","Spirit.SummonRegiste
 make_deprecated_function_alias("Auxiliary.SpiritReturnOperation","Spirit.ReturnOperation")
 make_deprecated_function_alias("Auxiliary.FilterFaceupFunction","Auxiliary.FaceupFilter")
 make_deprecated_function_alias("Auxiliary.MZFilter","Card.IsInMainMZone")
+make_deprecated_function_alias("Card.IsDifferentAttribute","Card.IsAttributeExcept")
 
 local function make_deleted_function(funcname,message)
 	load(funcname .. [[= function()

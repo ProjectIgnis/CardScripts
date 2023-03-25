@@ -1,5 +1,5 @@
 --スター・トライオ
---Star Trio
+--Star Tri-Leo
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)
@@ -30,6 +30,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetDecktopGroup(tp,3)
 	local tg=g:Filter(s.filter,nil)
 	if #tg>0 then
+		Duel.DisableShuffleCheck()
 		Duel.SendtoGrave(tg,REASON_EFFECT)
 		g:RemoveCard(tg)
 	end

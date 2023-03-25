@@ -7,6 +7,7 @@ function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--xyz summon
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
@@ -18,7 +19,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--destroy
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(39030163,2))
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
@@ -31,11 +32,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 	--material
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(39030163,1))
+	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_PHASE+PHASE_BATTLE)
 	e3:SetRange(LOCATION_MZONE)
-	--e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetCountLimit(1)
 	e3:SetCondition(s.mtcon)
 	e3:SetTarget(s.mttg)
@@ -43,7 +43,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	--banish
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(511000183,1))
+	e4:SetDescription(aux.Stringid(id,3))
 	e4:SetCategory(CATEGORY_DISABLE)
 	e4:SetType(EFFECT_TYPE_QUICK_O)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
@@ -76,12 +76,12 @@ function s.xyzcon(e,c)
 	if #mustg>0 or (min and min>1) then return false end
 	return Duel.CheckReleaseGroup(c:GetControler(),s.ovfilter,1,false,1,true,c,c:GetControler(),nil,false,nil,tp,c)
 end
-function s.xyztg(e,tp,eg,ep,ev,re,r,rp,c)
+function s.xyztg(e,tp,eg,ep,ev,re,r,rp,chk,c)
 	local g=Duel.SelectReleaseGroup(tp,s.ovfilter,1,1,false,true,true,c,nil,nil,false,nil,tp,c)
 	if g then
 		g:KeepAlive()
 		e:SetLabelObject(g)
-	return true
+		return true
 	end
 	return false
 end
@@ -118,22 +118,17 @@ end
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetBattledGroupCount()>0 and e:GetHandler():GetFlagEffect(id)~=0
 end
-function s.mttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local g=e:GetHandler():GetEquipGroup()
-	if chkc then return g:IsContains(chkc) and chkc:IsCanBeEffectTarget(e) end
-	if chk==0 then return g:IsExists(Card.IsCanBeEffectTarget,1,nil,e) end
-	local sg=g:Select(tp,1,#g,nil)
-	Duel.SetTargetCard(sg)
-end
-function s.mtfilter(c,e)
-	return c:IsRelateToEffect(e) and not c:IsImmuneToEffect(e)
+function s.mttg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return e:GetHandler():GetEquipCount()>0 end
 end
 function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(s.mtfilter,nil,e)
-	if #g>0 then
-		Duel.Overlay(c,g)
+	local g=c:GetEquipGroup():Filter(aux.NOT(Card.IsImmuneToEffect),nil,e)
+	if not c:IsRelateToEffect(e) or c:IsFacedown() or #g==0 then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTACH)
+	local tg=g:Select(tp,1,#g,nil)
+	if #tg>0 then
+		Duel.Overlay(c,tg)
 	end
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -164,13 +159,13 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 		local og=Duel.GetOperatedGroup()
 		if not og:IsContains(tc) then mcount=0 end
 		for tc in aux.Next(og) do
-			tc:RegisterFlagEffect(CARD_GALAXYEYES_P_DRAGON,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+			tc:RegisterFlagEffect(CARD_GALAXYEYES_P_DRAGON,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1)
 		end
 		og:KeepAlive()
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		e1:SetLabel(mcount)
 		e1:SetCountLimit(1)
 		e1:SetLabelObject(og)
@@ -193,7 +188,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if eg and #eg>0 then
 		for tc in aux.Next(eg) do
 			if tc:IsFaceup() and (r&REASON_COST)==REASON_COST then
-				tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+				tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1)
 			end
 		end
 	end

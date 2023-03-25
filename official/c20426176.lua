@@ -71,8 +71,8 @@ function s.attrop(e,tp,eg,ep,ev,re,r,rp)
 		local b1=sc:IsAbleToDeck()
 		local b2=ft>0 and sc:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		local op=Duel.SelectEffect(tp,
-		{b1,aux.Stringid(id,4)},
-		{b2,aux.Stringid(id,5)})
+			{b1,aux.Stringid(id,4)},
+			{b2,aux.Stringid(id,5)})
 		if not op then return end
 		Duel.BreakEffect()
 		if op==1 then

@@ -4,33 +4,34 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x204)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--tribute substitute
+	--Tribute Substitute
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(CARD_URSARCTIC_BIG_DIPPER)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e2:SetTargetRange(1,0)
 	e2:SetRange(LOCATION_FZONE)
+	e2:SetTargetRange(1,0)
 	e2:SetCountLimit(1)
 	e2:SetCondition(s.repcon)
 	e2:SetValue(s.repval)
 	e2:SetOperation(s.repop)
 	c:RegisterEffect(e2)
-	--add counter
+	--Add 1 counter to itself each time a monster is Special Summoned
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetRange(LOCATION_FZONE)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e3:SetOperation(s.countop)
 	c:RegisterEffect(e3)
-	--control
+	--Take control of 1 monster the opponent controls
 	local e4=Effect.CreateEffect(c)
+	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_CONTROL)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -43,17 +44,18 @@ function s.initial_effect(c)
 	e4:SetOperation(s.ctop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x165}
+s.listed_series={SET_URSARCTIC}
 s.counter_place_list={0x204}
 function s.repcfilter(c,extracon,base,params)
-	return c:IsSetCard(0x165) and c:IsLevelAbove(7) and c:IsAbleToRemoveAsCost() and (not extracon or extracon(base,c,table.unpack(params)))
+	return c:IsSetCard(SET_URSARCTIC) and c:IsLevelAbove(7) and c:IsAbleToRemoveAsCost()
+		and (not extracon or extracon(base,c,table.unpack(params)))
 end
 function s.repcon(e)
 	return Duel.IsExistingMatchingCard(s.repcfilter,e:GetHandlerPlayer(),LOCATION_GRAVE,0,1,nil)
 end
 function s.repval(base,e,tp,eg,ep,ev,re,r,rp,chk,extracon)
 	local c=e:GetHandler()
-	return c:IsMonster() and c:IsSetCard(0x165) and
+	return c:IsMonster() and c:IsSetCard(SET_URSARCTIC) and
 		(not extracon or Duel.IsExistingMatchingCard(s.repcfilter,e:GetHandlerPlayer(),LOCATION_GRAVE,0,1,nil,extracon,base,{e,tp,eg,ep,ev,re,r,rp,chk}))
 end
 function s.repop(base,e,tp,eg,ep,ev,re,r,rp)
@@ -66,7 +68,7 @@ function s.countop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(0x204,1)
 end
 function s.ctcfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_SYNCHRO) and c:IsSetCard(0x165)
+	return c:IsFaceup() and c:IsType(TYPE_SYNCHRO) and c:IsSetCard(SET_URSARCTIC)
 end
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.ctcfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
@@ -81,11 +83,11 @@ function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
 	local g=Duel.SelectTarget(tp,Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_CONTROL,g,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_CONTROL,g,1,tp,0)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and e:GetHandler():IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) and e:GetHandler():IsRelateToEffect(e) then
 		Duel.GetControl(tc,tp)
 	end
 end

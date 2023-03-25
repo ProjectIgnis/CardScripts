@@ -60,7 +60,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 		local ct=#g-7
 		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_TODECK)
 		local sg=g:Select(1-tp,ct,ct,nil)
-		Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(sg,nil,SEQ_DECKSHUFFLE,REASON_RULE,1-tp)
 	end
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

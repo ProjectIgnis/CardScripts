@@ -8,6 +8,7 @@ function s.initial_effect(c)
 	Fusion.AddProcMixN(c,false,false,160009002,1,s.matfilter,2)
 	-- Mill and gain atk
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DECKDES+CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
@@ -50,13 +51,16 @@ function s.mlop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetValue(s.efilter)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	c:RegisterEffect(e1)
-	--Gain ATK
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_UPDATE_ATTACK)
-	e2:SetValue(Duel.GetMatchingGroupCount(Card.IsMonster,tp,LOCATION_GRAVE,0,nil)*300)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-	c:RegisterEffect(e2)
+	local ct=Duel.GetMatchingGroupCount(Card.IsMonster,tp,LOCATION_GRAVE,0,nil)
+	if ct>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+		--Gain ATK
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_SINGLE)
+		e2:SetCode(EFFECT_UPDATE_ATTACK)
+		e2:SetValue(ct*300)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		c:RegisterEffect(e2)
+	end
 end
 function s.efilter(e,te)
 	return te:IsTrapEffect() and te:GetOwnerPlayer()~=e:GetHandlerPlayer()

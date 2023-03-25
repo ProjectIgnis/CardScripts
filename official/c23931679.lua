@@ -1,5 +1,5 @@
 --海竜神－リバイアサン
---Kairyu-Shin - Leviathan
+--Ocean Dragon Lord - Kairyu-Shin
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -40,13 +40,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.listed_names={CARD_UMI}
-s.listed_series={0x179,0x17a}
+s.listed_series={SET_KAIRYU_SHIN,SET_SEA_STEALTH}
 function s.umicon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_UMI),0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 		or Duel.IsEnvironment(CARD_UMI)
 end
 function s.nonwaterfilter(c)
-	return c:IsFaceup() and not c:IsAttribute(ATTRIBUTE_WATER)
+	return c:IsFaceup() and c:IsAttributeExcept(ATTRIBUTE_WATER)
 end
 function s.fidfilter(c,code)
 	return c:GetFieldID()~=code
@@ -115,8 +115,7 @@ function s.sumlimit(e,c,sump,sumtype,sumpos,targetp)
 	return Duel.IsExistingMatchingCard(s.nonwaterfilter,targetp or sump,LOCATION_MZONE,0,1,nil)
 end
 function s.thfilter(c)
-	return c:IsAbleToHand() and (c:IsCode(CARD_UMI)
-		or ((c:IsSetCard(0x179) or c:IsSetCard(0x17a)) and c:IsSpellTrap()))
+	return c:IsAbleToHand() and (c:IsCode(CARD_UMI) or (c:IsSetCard({SET_KAIRYU_SHIN,SET_SEA_STEALTH}) and c:IsSpellTrap()))
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

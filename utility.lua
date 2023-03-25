@@ -535,8 +535,11 @@ function Card.AnnounceAnotherAttribute(c,tp)
 	return Duel.AnnounceAttribute(tp,1,att&(att-1)==0 and ~att or ATTRIBUTE_ALL)
 end
 
-function Card.IsDifferentAttribute(c,att)
-	local _att=c:GetAttribute()
+--Returns true if "c" has any Attribute except "att"
+function Card.IsAttributeExcept(c,att,scard,sumtype,playerid)
+	sumtype=sumtype==nil and 0 or sumtype
+	playerid=playerid==nil and PLAYER_NONE or playerid
+	local _att=c:GetAttribute(scard,sumtype,playerid)
 	return (_att&att)~=_att
 end
 

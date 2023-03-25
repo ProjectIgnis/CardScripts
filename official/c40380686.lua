@@ -1,14 +1,14 @@
--- 
+-- ドロゴン・ベビー
 -- Baby Mudragon
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Can be treated as non-tuner for a Synchro Summon
+	-- Can be treated as non-Tuner for a Synchro Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EFFECT_NONTUNER)
+	e1:SetRange(LOCATION_MZONE)
 	c:RegisterEffect(e1)
 	-- Change Type or Attribute of a Synchro Monster
 	local e2=Effect.CreateEffect(c)
@@ -39,7 +39,7 @@ function s.chtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	else
 		local att=Duel.AnnounceAnotherAttribute(g,tp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-		local sg=g:FilterSelect(tp,Card.IsDifferentAttribute,1,1,nil,att)
+		local sg=g:FilterSelect(tp,Card.IsAttributeExcept,1,1,nil,att)
 		Duel.SetTargetCard(sg)
 		e:SetLabel(1,att)
 	end
@@ -54,15 +54,15 @@ function s.chop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_RACE)
 		e1:SetValue(decl)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		tc:RegisterEffect(e1)
-	elseif op==1 and tc:IsDifferentAttribute(decl) then
+	elseif op==1 and tc:IsAttributeExcept(decl) then
 		-- Change attribute
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
 		e1:SetValue(decl)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

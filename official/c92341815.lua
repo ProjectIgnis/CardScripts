@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,0,id)
 	aux.AddEquipProcedure(c,0)
-	--atk down
+	--Decrease ATK by 500 per monster that mentions "Adventurer Token"
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTargetRange(0,LOCATION_MZONE)
 	e1:SetValue(s.atkval)
 	c:RegisterEffect(e1)
-	--equip
+	--Equip itself to "Adventurer Token"
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_EQUIP)
@@ -26,9 +26,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.eqop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={TOKEN_BRAVE}
+s.listed_names={TOKEN_ADVENTURER}
 function s.atkfilter(c)
-	return c:IsFaceup() and c:ListsCode(TOKEN_BRAVE)
+	return c:IsFaceup() and c:ListsCode(TOKEN_ADVENTURER)
 end
 function s.atkval(e,c)
 	return Duel.GetMatchingGroup(s.atkfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,nil):GetClassCount(Card.GetCode)*-500
@@ -37,7 +37,7 @@ function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():CheckUniqueOnField(tp)
 end
 function s.eqfilter(c)
-	return c:IsFaceup() and c:IsCode(TOKEN_BRAVE)
+	return c:IsFaceup() and c:IsCode(TOKEN_ADVENTURER)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
@@ -52,8 +52,8 @@ end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and tc and tc:IsRelateToEffect(e) and tc:IsFaceup()
-		and tc:IsCode(TOKEN_BRAVE) and tc:IsControler(tp) and c:CheckUniqueOnField(tp) then
+	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and tc:IsFaceup()
+		and tc:IsCode(TOKEN_ADVENTURER) and tc:IsControler(tp) and c:CheckUniqueOnField(tp) then
 		Duel.Equip(tp,c,tc)
 	end
 end

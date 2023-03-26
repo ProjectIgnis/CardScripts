@@ -1,5 +1,5 @@
 --テセア聖霊器
---Sacred Spirit Vessel Thesea
+--Celestial Apparatus Tesea
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -27,12 +27,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
-s.listed_names={TOKEN_BRAVE}
+s.listed_names={TOKEN_ADVENTURER}
 function s.counterfilter(c)
-	return c:IsCode(TOKEN_BRAVE) or (c:ListsCode(TOKEN_BRAVE) and c:IsMonster())
+	return c:IsCode(TOKEN_ADVENTURER) or (c:ListsCode(TOKEN_ADVENTURER) and c:IsMonster())
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,TOKEN_BRAVE),tp,LOCATION_ONFIELD,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,TOKEN_ADVENTURER),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -47,7 +47,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c)
-	return not c:IsPublic() and c:ListsCode(TOKEN_BRAVE)
+	return not c:IsPublic() and c:ListsCode(TOKEN_ADVENTURER)
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0
@@ -64,14 +64,14 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.splimit(e,c)
-	return not (c:IsCode(TOKEN_BRAVE) or (c:ListsCode(TOKEN_BRAVE) and c:IsMonster()))
+	return not (c:IsCode(TOKEN_ADVENTURER) or (c:ListsCode(TOKEN_ADVENTURER) and c:IsMonster()))
 end
 function s.thfilter(c)
-	return c:IsSpell() and c:GetType()~=TYPE_SPELL and c:ListsCode(TOKEN_BRAVE) and c:IsAbleToHand()
+	return c:IsSpell() and not c:IsNormalSpell() and c:ListsCode(TOKEN_ADVENTURER) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

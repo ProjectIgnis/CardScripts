@@ -1,11 +1,11 @@
 --騎竜ドラコバック
---Dracoback the Dragon Steed
+--Dracoback, the Rideable Dragon
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,0,id)
 	aux.AddEquipProcedure(c,0)
-	--to hand
+	--Return to the hand 1 card the opponent controls
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	--equip
+	--Equip itself to "Adventurer Token"
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_EQUIP)
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.eqop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={TOKEN_BRAVE}
+s.listed_names={TOKEN_ADVENTURER}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetEquipTarget()
 	return tc and tc:IsNonEffectMonster()
@@ -52,7 +52,7 @@ function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():CheckUniqueOnField(tp)
 end
 function s.eqfilter(c)
-	return c:IsFaceup() and c:IsCode(TOKEN_BRAVE)
+	return c:IsFaceup() and c:IsCode(TOKEN_ADVENTURER)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
@@ -67,8 +67,8 @@ end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and tc and tc:IsRelateToEffect(e) and tc:IsFaceup()
-		and tc:IsCode(TOKEN_BRAVE) and tc:IsControler(tp) and c:CheckUniqueOnField(tp) then
+	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and tc:IsFaceup()
+		and tc:IsCode(TOKEN_ADVENTURER) and tc:IsControler(tp) and c:CheckUniqueOnField(tp) then
 		Duel.Equip(tp,c,tc)
 	end
 end

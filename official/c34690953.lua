@@ -1,5 +1,5 @@
 --禁呪アラティア
---Arametir, the Forbidden Spell
+--Curse of Aramatir
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -34,10 +34,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
-s.listed_names={TOKEN_BRAVE}
-local token_stats={TOKEN_BRAVE,0,TYPES_TOKEN,2000,2000,4,RACE_FAIRY,ATTRIBUTE_EARTH}
+s.listed_names={TOKEN_ADVENTURER}
+local token_stats={TOKEN_ADVENTURER,0,TYPES_TOKEN,2000,2000,4,RACE_FAIRY,ATTRIBUTE_EARTH}
 function s.counterfilter(c)
-	return c:IsCode(TOKEN_BRAVE) or (c:ListsCode(TOKEN_BRAVE) and c:IsMonster())
+	return c:IsCode(TOKEN_ADVENTURER) or (c:ListsCode(TOKEN_ADVENTURER) and c:IsMonster())
 end
 function s.tkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0 end
@@ -49,11 +49,11 @@ function s.tkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.splimit(e,c)
-	return not (c:IsCode(TOKEN_BRAVE) or (c:ListsCode(TOKEN_BRAVE) and c:IsMonster()))
+	return not (c:IsCode(TOKEN_ADVENTURER) or (c:ListsCode(TOKEN_ADVENTURER) and c:IsMonster()))
 end
 function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local nm,arch,typ,atk,def,lvl,rc,attr=table.unpack(token_stats)
@@ -73,7 +73,7 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 		{b1,aux.Stringid(id,3)},
 		{b2,aux.Stringid(id,4)})
 	local player=op==1 and tp or 1-tp
-	local token=Duel.CreateToken(tp,TOKEN_BRAVE)
+	local token=Duel.CreateToken(tp,TOKEN_ADVENTURER)
 	if Duel.SpecialSummon(token,0,tp,player,false,false,POS_FACEUP)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGrave,tp,LOCATION_HAND,0,1,1,nil)
@@ -106,6 +106,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		{b1,aux.Stringid(id,3)},
 		{b2,aux.Stringid(id,4)})
 	local player=op==1 and tp or 1-tp
-	local token=Duel.CreateToken(tp,TOKEN_BRAVE)
+	local token=Duel.CreateToken(tp,TOKEN_ADVENTURER)
 	Duel.SpecialSummon(token,0,tp,player,false,false,POS_FACEUP)
 end

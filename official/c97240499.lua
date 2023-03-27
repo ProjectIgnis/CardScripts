@@ -94,8 +94,8 @@ function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	return false
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
 	local bc=e:GetLabelObject()
+	if chk==0 then return bc:IsAbleToRemove() end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,bc,1,0,0)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)

@@ -50,7 +50,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 	end
-	local g=Duel.GetTargetCards(e)
+	local g=Duel.GetTargetCards(e):Filter(Card.IsFaceup,nil)
 	if #g==0 then return end
 	for tc in g:Iter() do
 		--Change level to the declared level

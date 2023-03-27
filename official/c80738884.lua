@@ -1,5 +1,5 @@
 --ＶＳ龍帝ノ槍
---Vanquish Soul - Calamity Kaiser 
+--Vanquish Soul - Calamity Kaiser
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
@@ -23,7 +23,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if rp==tp or not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_VANQUISH_SOUL),tp,LOCATION_MZONE,0,1,nil) then return false end
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	return tg:IsExists(s.filter,1,nil,tp) and Duel.IsChainNegatable(ev)
+	return tg and tg:IsExists(s.filter,1,nil,tp) and Duel.IsChainNegatable(ev)
 		and (re:IsMonsterEffect() or re:IsHasType(EFFECT_TYPE_ACTIVATE))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

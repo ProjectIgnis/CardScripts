@@ -58,7 +58,7 @@ function s.cfilter(c)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.cfilter(chkc) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.cfilter(chkc) and chkc~=c end
 	if chk==0 then return c:IsAbleToRemove() and Duel.IsExistingTarget(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c) end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)

@@ -4,6 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -25,10 +26,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) or tc:IsFaceup() then
-		if c:IsRelateToEffect(e) and e:IsHasType(EFFECT_TYPE_ACTIVATE) then
-			c:CancelToGrave()
-			Duel.SendtoDeck(c,nil,2,REASON_EFFECT)
-		end
+		s.todeckop(c,e)
 		return
 	end
 	if tc:IsTrap() then
@@ -54,7 +52,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.ClearTargetCard()
 			e:SetProperty(te:GetProperty())
 			Duel.Hint(HINT_CARD,0,tc:GetOriginalCode())
-			if tc:GetType()==TYPE_TRAP then
+			if tc:IsNormalTrap() then
 				tc:CancelToGrave(false)
 			end
 			tc:CreateEffectRelation(te)
@@ -64,10 +62,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			end
 			if target then target(te,tep,eg,ep,ev,re,r,rp,1) end
 			local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-			for tg in aux.Next(g) do
+			for tg in g:Iter() do
 				tg:CreateEffectRelation(te)
 			end
-			tc:SetStatus(STATUS_ACTIVATED,true)
 			if tc:IsHasEffect(EFFECT_REMAIN_FIELD) then
 				tc:SetStatus(STATUS_LEAVE_CONFIRMED,false)
 			end
@@ -76,7 +73,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			end
 			if operation then operation(te,tep,eg,ep,ev,re,r,rp) end
 			tc:ReleaseEffectRelation(te)
-			for tg in aux.Next(g) do
+			for tg in g:Iter() do
 				tg:ReleaseEffectRelation(te)
 			end
 		else
@@ -87,8 +84,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	else
 		Duel.ConfirmCards(tp,tc)
 	end
+	s.todeckop(c,e)
+end
+function s.todeckop(c,e)
 	if c:IsRelateToEffect(e) and e:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		c:CancelToGrave()
-		Duel.SendtoDeck(c,nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(c,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 end

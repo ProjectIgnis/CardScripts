@@ -1,3 +1,4 @@
+--黄泉天輪
 --Underworld Circle
 --fixed by Larry126
 local s,id=GetID()
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--Special Summon
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(102380,0))
+	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
@@ -34,7 +35,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	--ignoring summoning condition
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(4010,6))
+	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetType(EFFECT_TYPE_FIELD)
 	e4:SetCode(EFFECT_LIMIT_SUMMON_PROC)
 	e4:SetRange(LOCATION_SZONE)
@@ -203,7 +204,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	if Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(s.spfilter,1-tp,LOCATION_GRAVE,0,1,nil,e,1-tp)
-		and Duel.SelectYesNo(1-tp,aux.Stringid(102380,0))
+		and Duel.SelectYesNo(1-tp,aux.Stringid(id,0))
 		and Duel.GetFlagEffect(1-tp,id+1000)==0 then
 		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_SPSUMMON)
 		local g2=Duel.SelectMatchingCard(1-tp,s.spfilter,1-tp,LOCATION_GRAVE,0,1,1,nil,e,1-tp)

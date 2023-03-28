@@ -1,4 +1,4 @@
---トラスト・ガーディアン
+--トラスト・ガーディアン (Anime)
 --Trust Guardian (Anime)
 --scripted by AlphaKretin, some details fixed by MLD and Larry126
 local s,id=GetID()
@@ -24,7 +24,7 @@ function s.cop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_DESTROY_REPLACE)
 	e1:SetTarget(s.desreptg)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	rc:RegisterEffect(e1,true)
 	--self destroy
 	local e2=Effect.CreateEffect(c)
@@ -32,18 +32,19 @@ function s.cop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_SELF_DESTROY)
 	e2:SetCondition(s.sdcon)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 	rc:RegisterEffect(e2,true)
 end
 function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReason(REASON_BATTLE) end
-	if Duel.SelectYesNo(tp,aux.Stringid(4008,4)) then --Lose 400 ATK to avoid destruction?
+	local c=e:GetHandler()
+	if chk==0 then return c:IsReason(REASON_BATTLE) end
+	if Duel.SelectEffectYesNo(tp,c,96) then
 		local e1=Effect.CreateEffect(e:GetOwner())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-400)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e:GetHandler():RegisterEffect(e1)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
+		c:RegisterEffect(e1)
 		return true
 	else return false end
 end

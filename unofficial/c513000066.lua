@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--win
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(94212438,0))
+	e2:SetDescription(aux.Stringid(id,6))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCode(EVENT_PHASE+PHASE_END)
@@ -34,10 +34,10 @@ function s.initial_effect(c)
 	e4:SetCode(EFFECT_BECOME_QUICK)
 	c:RegisterEffect(e4)
 	local e5=Effect.CreateEffect(c)
+	e5:SetDescription(aux.Stringid(id,7))
 	e5:SetType(EFFECT_TYPE_SINGLE)
 	e5:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e5:SetCode(EFFECT_QP_ACT_IN_SET_TURN)
-	e5:SetDescription(aux.Stringid(id,1))
 	c:RegisterEffect(e5)
 end
 s.listed_names={31829185}
@@ -47,7 +47,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local c=e:GetHandler()
-	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(4013,0))
+	c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,0))
 end
 function s.lettercon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,31829185)
@@ -56,7 +56,7 @@ function s.letterop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ct=c:GetFlagEffectLabel(id)+1
 	c:ResetFlagEffect(id)
-	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,ct,aux.Stringid(4013,ct))
+	c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,ct,aux.Stringid(id,ct))
 end
 function s.winop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

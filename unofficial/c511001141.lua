@@ -5,6 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--LV/Attack
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e1:SetRange(LOCATION_MZONE)
@@ -19,16 +20,16 @@ function s.rop(e,tp,eg,ep,ev,re,r,rp)
 	local lv=c:GetFlagEffectLabel(id)
 	if lv then
 		c:ResetFlagEffect(id)
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,ct+lv,aux.Stringid(4015,ct+lv))
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,ct+lv,aux.Stringid(id,ct+lv))
 	else
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,ct,aux.Stringid(4015,ct))
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,ct,aux.Stringid(id,ct))
 	end
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
-	e1:SetProperty(EFFECT_FLAG_COPY_INHERIT+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_IGNORE_IMMUNE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetProperty(EFFECT_FLAG_COPY_INHERIT+EFFECT_FLAG_CANNOT_DISABLE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e1:SetValue(ct*500)
 	c:RegisterEffect(e1)
 end

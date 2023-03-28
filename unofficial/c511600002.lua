@@ -32,7 +32,7 @@ function s.op(c)
 	Duel.RegisterEffect(e3,0)
 	--Dimension Summon
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(4010,0))
+	e4:SetDescription(aux.Stringid(id,0))
 	e4:SetType(EFFECT_TYPE_FIELD)
 	e4:SetCode(EFFECT_SUMMON_PROC)
 	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE)
@@ -106,8 +106,8 @@ function s.sptop(e,tp,eg,ep,ev,re,r,rp)
 		local textDef=tc:GetTextDefense()
 		local ctl=tc:GetControler()
 		if textAtk~=-2 and textAtk~=0 then
-			Duel.Hint(HINT_SELECTMSG,ctl,aux.Stringid(4010,4))
-			local atkop=Duel.SelectOption(ctl,aux.Stringid(4010,1),aux.Stringid(4010,2),aux.Stringid(4010,3))
+			Duel.Hint(HINT_SELECTMSG,ctl,aux.Stringid(id,4))
+			local atkop=Duel.SelectOption(ctl,aux.Stringid(id,1),aux.Stringid(id,2),aux.Stringid(id,3))
 			if atkop==0 then
 				baseAtk=textAtk
 			elseif atkop==1 then
@@ -121,12 +121,12 @@ function s.sptop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_UNCOPYABLE)
 			e1:SetRange(LOCATION_MZONE)
 			e1:SetValue(baseAtk)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD-(RESET_TOFIELD+RESET_TEMP_REMOVE+RESET_TURN_SET))
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD-(RESET_TOFIELD|RESET_TEMP_REMOVE|RESET_TURN_SET))
 			tc:RegisterEffect(e1)
 		end
 		if textDef~=-2 and textDef~=0 then
-			Duel.Hint(HINT_SELECTMSG,ctl,aux.Stringid(4010,5))
-			local defop=Duel.SelectOption(ctl,aux.Stringid(4010,1),aux.Stringid(4010,2),aux.Stringid(4010,3))
+			Duel.Hint(HINT_SELECTMSG,ctl,aux.Stringid(id,5))
+			local defop=Duel.SelectOption(ctl,aux.Stringid(id,1),aux.Stringid(id,2),aux.Stringid(id,3))
 			if defop==0 then
 				baseDef=textDef
 			elseif defop==1 then
@@ -140,7 +140,7 @@ function s.sptop(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_UNCOPYABLE)
 			e2:SetRange(LOCATION_MZONE)
 			e2:SetValue(baseDef)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD-(RESET_TOFIELD+RESET_TEMP_REMOVE+RESET_TURN_SET))
+			e2:SetReset(RESET_EVENT|RESETS_STANDARD-(RESET_TOFIELD|RESET_TEMP_REMOVE|RESET_TURN_SET))
 			tc:RegisterEffect(e2)
 		end
 	end

@@ -1,3 +1,4 @@
+--ＤＤ魔導賢者トーマス (Anime)
 --D/D Savant Thomas (Anime)
 --fixed by MLD
 local s,id=GetID()
@@ -5,7 +6,7 @@ function s.initial_effect(c)
 	Pendulum.AddProcedure(c)
 	--Back to hand
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(41546,0))
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_PZONE)
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--Special Summon
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(41546,1))
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
@@ -25,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xaf,0x10af}
+s.listed_series={SET_DD,SET_DDD}
 function s.thfil(c)
 	return c:IsFaceup() and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
 end
@@ -34,7 +35,6 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,0)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.thfil,tp,LOCATION_EXTRA,0,1,1,nil)
 	if #g>0 then
@@ -43,10 +43,10 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.desfilter(c)
-	return c:IsSetCard(0xaf)
+	return c:IsSetCard(SET_DD)
 end
 function s.spfil(c,e,tp)
-	return c:IsSetCard(0x10af) and c:GetLevel()==8 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_DDD) and c:GetLevel()==8 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_PZONE) and chkc:IsControler(tp) and s.desfilter(chkc) end
@@ -67,12 +67,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(0,1)
 	e1:SetValue(s.val)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local e2=Effect.CreateEffect(c)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
-	e2:SetDescription(aux.Stringid(4016,3))
-	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetDescription(aux.Stringid(id,2))
+	e2:SetReset(RESET_PHASE|PHASE_END)
 	e2:SetTargetRange(0,1)
 	Duel.RegisterEffect(e2,tp)
 	local tc=Duel.GetFirstTarget()
@@ -84,12 +84,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			local e3=Effect.CreateEffect(c)
 			e3:SetType(EFFECT_TYPE_SINGLE)
 			e3:SetCode(EFFECT_DISABLE)
-			e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e3:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 			sc:RegisterEffect(e3)
 			local e4=Effect.CreateEffect(c)
 			e4:SetType(EFFECT_TYPE_SINGLE)
 			e4:SetCode(EFFECT_DISABLE_EFFECT)
-			e4:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e4:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 			sc:RegisterEffect(e4)
 			Duel.SpecialSummonComplete()
 		end

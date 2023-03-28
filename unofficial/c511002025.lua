@@ -1,3 +1,4 @@
+--クイズーモンキー
 --Quiz Monkey
 local s,id=GetID()
 function s.initial_effect(c)
@@ -17,7 +18,7 @@ function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x541)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,1-tp,aux.Stringid(4003,10))
+	Duel.Hint(HINT_SELECTMSG,1-tp,aux.Stringid(id,0))
 	local quest=Duel.AnnounceNumber(1-tp,0,1,2,3,4,5)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

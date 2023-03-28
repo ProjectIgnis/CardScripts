@@ -133,9 +133,9 @@ function s.op(oc)
 	local e11a=e11:Clone()
 	e11a:SetCode(EVENT_BE_MATERIAL)
 	Duel.RegisterEffect(e11a,0)
-	if Duel.SelectYesNo(0,aux.Stringid(4013,14)) and Duel.SelectYesNo(1,aux.Stringid(4013,14)) then
-		Duel.Hint(HINT_MESSAGE,0,aux.Stringid(4013,15))
-		Duel.Hint(HINT_MESSAGE,1,aux.Stringid(4013,15))
+	if Duel.SelectYesNo(0,aux.Stringid(id,0)) and Duel.SelectYesNo(1,aux.Stringid(id,0)) then
+		Duel.Hint(HINT_MESSAGE,0,aux.Stringid(id,1))
+		Duel.Hint(HINT_MESSAGE,1,aux.Stringid(id,1))
 		--manga rules
 		local e12=Effect.GlobalEffect()
 		e12:SetType(EFFECT_TYPE_FIELD)

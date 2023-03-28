@@ -1,11 +1,11 @@
---クリフォトン
+--クリフォトン (Anime)
 --Kuriphoton (Anime)
 --Fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(35112613,0))
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_HAND)
@@ -14,8 +14,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--Salvage
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND)
-	e2:SetDescription(aux.Stringid(35112613,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCost(s.thcost)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x55}
+s.listed_series={SET_PHOTON}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
 	Duel.PayLPCost(tp,math.floor(Duel.GetLP(tp)/2))
@@ -36,21 +36,21 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
 	e1:SetValue(0)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_NO_EFFECT_DAMAGE)
-	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 	local e3=Effect.CreateEffect(e:GetHandler())
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
-	e3:SetDescription(aux.Stringid(4016,4))
-	e3:SetReset(RESET_PHASE+PHASE_END)
+	e3:SetDescription(aux.Stringid(id,2))
+	e3:SetReset(RESET_PHASE|PHASE_END)
 	e3:SetTargetRange(1,0)
 	Duel.RegisterEffect(e3,tp)
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x55) and c:IsMonster() and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_PHOTON) and c:IsMonster() and c:IsAbleToGraveAsCost()
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end

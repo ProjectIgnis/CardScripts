@@ -42,7 +42,7 @@ function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	if Duel.CheckReleaseGroup(1-tp,Card.IsReleasableByEffect,1,nil) and Duel.SelectYesNo(1-tp,aux.Stringid(4014,4)) then
+	if Duel.CheckReleaseGroup(1-tp,Card.IsReleasableByEffect,1,nil) and Duel.SelectYesNo(1-tp,aux.Stringid(id,2)) then
 		local g=Duel.SelectReleaseGroup(1-tp,Card.IsReleasableByEffect,1,1,nil)
 		if Duel.Release(g,REASON_EFFECT)>0 then return end
 	end

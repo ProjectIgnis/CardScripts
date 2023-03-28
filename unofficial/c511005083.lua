@@ -1,7 +1,6 @@
---Infection Medium
 --インフェクション・ミーディアム
---By Shad3
---fixed by MLD
+--Infection Medium
+--Scripted by Shad3, fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -29,7 +28,7 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_DESTROYED)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
-	e4:SetDescription(aux.Stringid(4001,15))
+	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCondition(s.descon)
 	e4:SetTarget(s.destg)
 	e4:SetOperation(s.desop)
@@ -86,16 +85,16 @@ function s.despop(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 				e1:SetCode(EVENT_PRE_BATTLE_DAMAGE)
 				e1:SetOperation(s.damop)
-				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+				e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 				token:RegisterEffect(e1)
-				token:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
+				token:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,0)
 			end
 			Duel.SpecialSummonComplete()
 		end
 	end
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.SelectYesNo(tp,aux.Stringid(4001,14)) then
+	if Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.ChangeBattleDamage(tp,0)
 		Duel.ChangeBattleDamage(1-tp,0)
 	end

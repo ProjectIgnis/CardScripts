@@ -1,5 +1,5 @@
---ドン・サウザンドの契約
---Contract with Don Thousand
+--ドン・サウザンドの契約 (Anime)
+--Contract with Don Thousand (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -27,8 +27,6 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,PLAYER_ALL,1)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
 	Duel.Draw(tp,1,REASON_EFFECT)
 	Duel.Draw(1-tp,1,REASON_EFFECT)
 end
@@ -48,18 +46,13 @@ function s.cfop(e,tp,eg,ep,ev,re,r,rp)
 	while tc do
 		if tc:IsSpell() then
 			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetDescription(aux.Stringid(id,0))
 			e1:SetType(EFFECT_TYPE_FIELD)
-			e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+			e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 			e1:SetCode(EFFECT_CANNOT_SUMMON)
-			e1:SetReset(RESET_PHASE+PHASE_END)
+			e1:SetReset(RESET_PHASE|PHASE_END)
 			e1:SetTargetRange(1,0)
 			Duel.RegisterEffect(e1,tc:GetControler())
-			local e2=Effect.CreateEffect(e:GetHandler())
-			e2:SetDescription(aux.Stringid(4016,5))
-			e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
-			e2:SetReset(RESET_PHASE+PHASE_END)
-			e2:SetTargetRange(1,0)
-			Duel.RegisterEffect(e2,tc:GetControler())
 		end
 		tc=cg:GetNext()
 	end

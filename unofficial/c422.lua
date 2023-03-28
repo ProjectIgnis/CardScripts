@@ -22,7 +22,7 @@ if not IcePillarZone then
 			local tc=Duel.GetAttacker()
 			if CheckPillars(tp,1) and tc and tc:GetControler()~=tp
 				and tc:IsRelateToBattle() and not tc:IsStatus(STATUS_ATTACK_CANCELED)
-				and Duel.SelectYesNo(tp,aux.Stringid(4014,0)) then
+				and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 				IcePillarZone[tp+1]=IcePillarZone[tp+1] & ~Duel.SelectFieldZone(tp,1,LOCATION_MZONE,LOCATION_MZONE,~IcePillarZone[tp+1])
 				Duel.NegateAttack()
 			end
@@ -35,7 +35,7 @@ if not IcePillarZone then
 	e3:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e3:SetOperation(function(e,tp)
 		local tc=Duel.GetAttacker()
-		if CheckPillars(tp,1) and tc and tc:GetControler()~=tp and Duel.SelectYesNo(tp,aux.Stringid(4014,0)) then
+		if CheckPillars(tp,1) and tc and tc:GetControler()~=tp and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 			IcePillarZone[tp+1]=IcePillarZone[tp+1] & ~Duel.SelectFieldZone(tp,1,LOCATION_MZONE,LOCATION_MZONE,~IcePillarZone[tp+1])
 			Duel.NegateAttack()
 		end

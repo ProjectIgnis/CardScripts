@@ -25,7 +25,7 @@ if not DivineHierarchy then
 		control:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE)
 		control:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 		control:SetCode(EFFECT_CANNOT_CHANGE_CONTROL)
-		control:SetTarget(DivineHierarchy.control)
+		control:SetTarget(DivineHierarchy.granttg)
 		Duel.RegisterEffect(control,0)
 		local rel=Effect.GlobalEffect()
 		rel:SetType(EFFECT_TYPE_FIELD)
@@ -36,7 +36,7 @@ if not DivineHierarchy then
 		Duel.RegisterEffect(rel,0)
 		--last 1 turn
 		local ep=Effect.GlobalEffect()
-		ep:SetDescription(aux.Stringid(4011,15))
+		ep:SetDescription(aux.Stringid(id,15))
 		ep:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ep:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE)
 		ep:SetRange(LOCATION_MZONE)
@@ -83,7 +83,7 @@ if not DivineHierarchy then
 		ge5:SetLabelObject(im)
 		Duel.RegisterEffect(ge5,0)
 	end
-	
+
 	function DivineHierarchy.granttg(e,c)
 		return c:GetFlagEffect(513000065)>0 and c:IsFaceup()
 	end
@@ -122,9 +122,6 @@ if not DivineHierarchy then
 			and (not tc:GetFlagEffectLabel(513000065) or c:GetFlagEffectLabel(513000065)>tc:GetFlagEffectLabel(513000065)))
 			or (te:IsHasCategory(CATEGORY_TOHAND+CATEGORY_DESTROY+CATEGORY_REMOVE+CATEGORY_TODECK+CATEGORY_RELEASE+CATEGORY_TOGRAVE+CATEGORY_FUSION_SUMMON)
 			and te:IsActiveType(TYPE_SPELL+TYPE_TRAP))
-	end
-	function DivineHierarchy.control(e,c)
-		return c:GetFlagEffect(513000065)>0 and c:IsFaceup() and not c:IsHasEffect(513000134)
 	end
 	function DivineHierarchy.rellimit(e,c,tp,sumtp)
 		return c:GetFlagEffect(513000065)>0 and c:IsFaceup() and c:IsControler(1-tp)

@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--copy
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(25793414,0))
+	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
@@ -44,7 +44,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 	--spsummon
 	local e5=Effect.CreateEffect(c)
-	e5:SetDescription(aux.Stringid(95923441,0))
+	e5:SetDescription(aux.Stringid(id,2))
 	e5:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e5:SetType(EFFECT_TYPE_QUICK_O)
 	e5:SetCode(EVENT_FREE_CHAIN)
@@ -55,13 +55,13 @@ function s.initial_effect(c)
 	e5:SetOperation(s.spop2)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x20f8}
+s.listed_series={SET_SUPREME_KING_DRAGON}
 s.listed_names={13331639}
 function s.spfilter(c,tp)
 	return c:IsControler(1-tp) and c:IsType(TYPE_FUSION) and c:IsSummonType(SUMMON_TYPE_FUSION)
 end
 function s.costfilter(c,tp,sg,tc)
-	if not c:IsSetCard(0x20f8) then return false end
+	if not c:IsSetCard(SET_SUPREME_KING_DRAGON) then return false end
 	sg:AddCard(c)
 	local res
 	if #sg<2 then
@@ -82,7 +82,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local sg=Group.CreateGroup()
 	if Duel.CheckReleaseGroup(tp,s.costfilter,1,nil,tp,sg,c) and e:GetHandler():IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,true) 
-		and c:CheckFusionMaterial() and Duel.SelectYesNo(tp,aux.Stringid(4003,6)) then
+		and c:CheckFusionMaterial() and Duel.SelectEffectYesNo(tp,c,aux.Stringid(id,0)) then
 		while #sg<2 do
 			local g=Duel.SelectReleaseGroup(tp,s.costfilter,1,1,sg,tp,sg,c)
 			sg:Merge(g)
@@ -100,31 +100,30 @@ function s.cpcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsMainPhase() or Duel.IsBattlePhase()
 end
 function s.cptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE+LOCATION_GRAVE) and chkc:IsMonster() end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsMonster,tp,LOCATION_GRAVE+LOCATION_MZONE,LOCATION_GRAVE+LOCATION_MZONE,1,nil) 
+	if chkc then return chkc:IsLocation(LOCATION_MZONE|LOCATION_GRAVE) and chkc:IsMonster() end
+	if chk==0 then return Duel.IsExistingTarget(Card.IsMonster,tp,LOCATION_GRAVE|LOCATION_MZONE,LOCATION_GRAVE|LOCATION_MZONE,1,nil) 
 		and e:GetHandler():GetFlagEffect(id+1)==0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	Duel.SelectTarget(tp,Card.IsMonster,tp,LOCATION_GRAVE+LOCATION_MZONE,LOCATION_GRAVE+LOCATION_MZONE,1,1,nil)
+	Duel.SelectTarget(tp,Card.IsMonster,tp,LOCATION_GRAVE|LOCATION_MZONE,LOCATION_GRAVE|LOCATION_MZONE,1,1,nil)
 end
 function s.cpop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc and c:IsRelateToEffect(e) and c:IsFaceup() and tc:IsRelateToEffect(e) and not tc:IsType(TYPE_TOKEN) then
-		local code=tc:GetOriginalCode()
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetValue(RESET_TURN_SET)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		tc:RegisterEffect(e2)
 		if not tc:IsType(TYPE_TRAPMONSTER) then
-			c:CopyEffect(code,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,1)
-			c:RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,0)
+			c:CopyEffect(tc:GetOriginalCode(),RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,1)
+			c:RegisterFlagEffect(id+1,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,0)
 		end
 	end
 end
@@ -133,7 +132,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoDeck(e:GetHandler(),nil,0,REASON_COST)
 end
 function s.spfilter2(c,e,tp,ec)
-	return c:IsFaceup() and c:IsSetCard(0x20f8) and c:IsType(TYPE_PENDULUM)
+	return c:IsFaceup() and c:IsSetCard(SET_SUPREME_KING_DRAGON) and c:IsType(TYPE_PENDULUM)
 		and Duel.GetLocationCountFromEx(tp,tp,ec,c)>=2
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -157,7 +156,7 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_SET_ATTACK_FINAL)
 			e2:SetValue(0)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e2)
 		end
 	end

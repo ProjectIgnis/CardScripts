@@ -1,6 +1,6 @@
 --デストーイ・マイスター (Manga)
 --Frightfur Meister (Manga)
---scripted by Larry126
+--Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--special summon
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(4013,9))
+	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetCountLimit(1)
@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--special summon ex
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(4013,10))
+	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetCountLimit(1)
@@ -36,16 +36,16 @@ function s.initial_effect(c)
 	e3:SetOperation(s.exop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xad,0xa9,0xc3}
+s.listed_series={SET_FRIGHTFUR,SET_FLUFFAL,SET_EDGE_IMP}
 function s.spcheck(sg,tp,exg,e)
 	return Duel.IsExistingMatchingCard(s.exfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,sg)
 end
 function s.exfilter(c,e,tp,sg)
-	return c:IsSetCard(0xad) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and c:IsType(TYPE_FUSION)
+	return c:IsSetCard(SET_FRIGHTFUR) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and c:IsType(TYPE_FUSION)
 		and c:IsLevel(sg:GetSum(Card.GetLevel)) and Duel.GetLocationCountFromEx(tp,tp,sg,c)>0
 end
 function s.cgfilter(c)
-	return c:IsMonster() and c:IsSetCard(0xad)
+	return c:IsMonster() and c:IsSetCard(SET_FRIGHTFUR)
 end
 function s.excost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100)
@@ -64,7 +64,7 @@ function s.extg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.sefilter(c,e,tp,lv)
-	return c:IsSetCard(0xad) and c:IsLevel(lv) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and c:IsType(TYPE_FUSION)
+	return c:IsSetCard(SET_FRIGHTFUR) and c:IsLevel(lv) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and c:IsType(TYPE_FUSION)
 end
 function s.exop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -74,7 +74,7 @@ function s.exop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0xad) and c:IsMonster()
+	return c:IsFaceup() and c:IsSetCard(SET_FRIGHTFUR) and c:IsMonster()
 end
 function s.atkcon(e)
 	return Duel.IsExistingMatchingCard(s.filter,e:GetHandlerPlayer(),LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler())
@@ -84,7 +84,7 @@ function s.cfilter(c,code)
 end
 function s.spfilter(c,e,tp)
 	return c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and (c:IsSetCard(0xad) or c:IsSetCard(0xa9) or c:IsSetCard(0xc3))
+		and (c:IsSetCard(SET_FRIGHTFUR) or c:IsSetCard(SET_FLUFFAL) or c:IsSetCard(SET_EDGE_IMP))
 		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil,c:GetCode())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

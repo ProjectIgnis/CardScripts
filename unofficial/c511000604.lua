@@ -18,9 +18,9 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,1000)
 	local commands=''
 	while true do
-		commands=commands..tostring(Duel.SelectOption(tp,aux.Stringid(4010,8),aux.Stringid(4010,9),
-			aux.Stringid(4010,10),aux.Stringid(4010,11),aux.Stringid(4010,12),aux.Stringid(4010,13),
-			aux.Stringid(4010,14),aux.Stringid(4010,15)))
+		commands=commands..tostring(Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1),
+			aux.Stringid(id,2),aux.Stringid(id,3),aux.Stringid(id,4),aux.Stringid(id,5),
+			aux.Stringid(id,6),aux.Stringid(id,7)))
 		if string.find(commands, "01234") then
 			e:SetLabel(0)
 			break
@@ -44,7 +44,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_EXTRA_RELEASE)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e1)
 		end
 	end

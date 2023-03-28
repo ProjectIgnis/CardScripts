@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e1:SetRange(LOCATION_DECK+LOCATION_EXTRA+LOCATION_HAND)
+	e1:SetRange(LOCATION_DECK|LOCATION_EXTRA|LOCATION_HAND)
 	e1:SetCondition(s.spcon)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
@@ -30,17 +30,18 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
 	e3:SetValue(s.atlimit)
 	c:RegisterEffect(e3)
-	--double damage
+	--Double damage
 	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
+	e4:SetType(EFFECT_TYPE_FIELD)
+	e4:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
 	e4:SetRange(LOCATION_MZONE)
-	e4:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-	e4:SetCondition(s.damcon)
-	e4:SetOperation(s.damop)
+	e4:SetTargetRange(LOCATION_MZONE,0)
+	e4:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_PENDULUM))
+	e4:SetValue(aux.ChangeBattleDamage(1,DOUBLE_DAMAGE))
 	c:RegisterEffect(e4)
 	--spsummon
 	local e5=Effect.CreateEffect(c)
-	e5:SetDescription(aux.Stringid(95923441,0))
+	e5:SetDescription(aux.Stringid(id,1))
 	e5:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e5:SetType(EFFECT_TYPE_QUICK_O)
 	e5:SetCode(EVENT_FREE_CHAIN)
@@ -52,7 +53,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 	--Peffect
 	local e6=Effect.CreateEffect(c)
-	e6:SetDescription(aux.Stringid(52352005,0))
+	e6:SetDescription(aux.Stringid(id,2))
 	e6:SetCategory(CATEGORY_TODECK)
 	e6:SetType(EFFECT_TYPE_IGNITION)
 	e6:SetRange(LOCATION_PZONE)
@@ -61,13 +62,13 @@ function s.initial_effect(c)
 	e6:SetOperation(s.penop)
 	c:RegisterEffect(e6)
 end
-s.listed_series={0x20f8}
+s.listed_series={SET_SUPREME_KING_DRAGON}
 s.listed_names={13331639}
 function s.spfilter(c,tp)
 	return c:IsControler(1-tp) and c:IsType(TYPE_PENDULUM) and c:IsSummonType(SUMMON_TYPE_PENDULUM)
 end
 function s.costfilter(c,tp,sg,tc)
-	if not c:IsSetCard(0x20f8) then return false end
+	if not c:IsSetCard(SET_SUPREME_KING_DRAGON) then return false end
 	sg:AddCard(c)
 	local res
 	if #sg<2 then
@@ -94,8 +95,9 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local sg=Group.CreateGroup()
-	if Duel.CheckReleaseGroup(tp,s.costfilter,1,nil,tp,sg,c) and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) 
-		and Duel.SelectYesNo(tp,aux.Stringid(4003,8)) then
+	if Duel.CheckReleaseGroup(tp,s.costfilter,1,nil,tp,sg,c)
+		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) 
+		and Duel.SelectEffectYesNo(tp,c,aux.Stringid(id,0)) then
 		while #sg<2 do
 			local g=Duel.SelectReleaseGroup(tp,s.costfilter,1,1,sg,tp,sg,c)
 			sg:Merge(g)
@@ -117,16 +119,8 @@ end
 function s.atlimit(e,c)
 	return c:IsFaceup() and c:IsType(TYPE_PENDULUM) and c~=e:GetHandler()
 end
-function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	local a=Duel.GetAttacker()
-	local d=Duel.GetAttackTarget()
-	return (a:IsControler(tp) and a:IsType(TYPE_PENDULUM)) or (d and d:IsControler(tp) and d:IsType(TYPE_PENDULUM))
-end
-function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.ChangeBattleDamage(1-tp,ev*2)
-end
 function s.spfilter2(c,e,tp,ec)
-	return c:IsFaceup() and c:IsSetCard(0x20f8) and c:IsType(TYPE_PENDULUM)
+	return c:IsFaceup() and c:IsSetCard(SET_SUPREME_KING_DRAGON) and c:IsType(TYPE_PENDULUM)
 		and Duel.GetLocationCountFromEx(tp,tp,ec,c)>=2
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -155,14 +149,14 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_SET_ATTACK_FINAL)
 			e2:SetValue(0)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e2)
 		end
 	end
 end
 function s.pencost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,nil,0x20f8) end
-	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,nil,nil,0x20f8)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,nil,SET_SUPREME_KING_DRAGON) end
+	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,nil,nil,SET_SUPREME_KING_DRAGON)
 	Duel.Release(g,REASON_COST)
 end
 function s.pentg(e,tp,eg,ep,ev,re,r,rp,chk)

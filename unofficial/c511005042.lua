@@ -1,15 +1,15 @@
---地獄大百足
---Hell Centipede
+--地獄大百足 (Manga)
+--Hundred-Footed Horror (Manga)
 --original script by Shad3
 local s,id=GetID()
 function s.initial_effect(c)
 	c:AddSetcodesRule(id,true,0x567)
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SUMMON_PROC)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCondition(s.condition)
-	e1:SetDescription(aux.Stringid(4001,4))
 	c:RegisterEffect(e1)
 end
 function s.condition(e,c)

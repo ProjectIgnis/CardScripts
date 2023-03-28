@@ -18,6 +18,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.illegal=true
+s.listes_series={SET_ELEMENTAL_HERO,SET_NEO_SPACIAN}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local dl=6
@@ -27,37 +28,37 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local op=0
 	local proof=true
 	if dl==1 then
-		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(4005,0))
-		op=Duel.SelectOption(tp,aux.Stringid(4005,1),aux.Stringid(4005,2),aux.Stringid(4005,3))
+		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))
+		op=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2),aux.Stringid(id,3))
 		if op~=0 then
 			proof=false
 		end
 	end
 	if dl==2 then
-		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(4005,4))
-		op=Duel.SelectOption(tp,aux.Stringid(4005,5),aux.Stringid(4005,6),aux.Stringid(4005,7))
+		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,4))
+		op=Duel.SelectOption(tp,aux.Stringid(id,5),aux.Stringid(id,6),aux.Stringid(id,7))
 		if op~=1 then
 			proof=false
 		end
 	end
 	if dl==3 then
-		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(4005,8))
-		op=Duel.SelectOption(tp,aux.Stringid(4005,9),aux.Stringid(4005,10),aux.Stringid(4005,3))
+		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,8))
+		op=Duel.SelectOption(tp,aux.Stringid(id,9),aux.Stringid(id,10),aux.Stringid(id,3))
 		if op~=0 then
 			proof=false
 		end
 	end
 	if dl==4 then
-		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(4005,11))
+		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,11))
 		local mon=Duel.AnnounceNumber(tp,1,2,3,4,5,6,7,8,9,10,11,12)
-		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(4005,12))
+		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,12))
 		local day=Duel.AnnounceNumber(tp,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31)
 		if mon~=7 or day~=28 then
 			proof=false
 		end
 	end
 	if dl==5 then
-		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(4005,13))
+		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,13))
 		op=Duel.AnnounceCard(tp)
 		if op~=501000006 and op~=501000007 and op~=501000004 then
 			proof=false
@@ -68,7 +69,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.atktg(e,c)
-	return c:IsSetCard(0x3008) or c:IsSetCard(0x1f)
+	return c:IsSetCard(SET_ELEMENTAL_HERO) or c:IsSetCard(SET_NEO_SPACIAN)
 end
 function s.val(e,c)
 	return c:GetAttack()*2

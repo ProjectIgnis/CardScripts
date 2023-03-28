@@ -1,7 +1,6 @@
---Galaxy Shockwave
 --銀河衝撃
---By Shad3
---fixed by MLD
+--Galaxy Shockwave
+--Scripted by Shad3, fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -15,8 +14,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={SET_GALAXY}
 function s.filter(c)
-	return c:IsSetCard(0x7b) and c:IsFaceup()
+	return c:IsSetCard(SET_GALAXY) and c:IsFaceup()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -24,7 +24,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tc=Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
 	local bc=tc:GetBattleTarget()
 	if Duel.GetAttacker() and tc:IsRelateToBattle() and bc and bc:IsFaceup() and tc:GetAttack()==bc:GetAttack() 
-		and s.atkcost(e,tp,eg,ep,ev,re,r,rp,0) and Duel.SelectYesNo(tp,aux.Stringid(4002,0)) then
+		and s.atkcost(e,tp,eg,ep,ev,re,r,rp,0) and Duel.SelectEffectYesNo(tp,e:GetHandler()) then
 		s.atkcost(e,tp,eg,ep,ev,re,r,rp,1)
 		Duel.SetTargetParam(1)
 	end
@@ -65,7 +65,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetLabelObject(e1)
 		tc:RegisterEffect(e3)
 		if label==1 then
-			tc:RegisterFlagEffect(fid,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE,0,1)
+			tc:RegisterFlagEffect(fid,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE,0,1)
 			s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
@@ -85,7 +85,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x7b) and c:IsMonster() and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(SET_GALAXY) and c:IsMonster() and c:IsAbleToRemoveAsCost()
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -98,7 +98,7 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return tc and tc:IsRelateToBattle() and tc:GetBattleTarget() and tc:GetBattleTarget():IsFaceup() 
 		and tc:GetAttack()==tc:GetBattleTarget():GetAttack() and tc:GetFlagEffect(e:GetLabel())==0 end
 	Duel.SetTargetCard(tc)
-	tc:RegisterFlagEffect(e:GetLabel(),RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE,0,1)
+	tc:RegisterFlagEffect(e:GetLabel(),RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE,0,1)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
@@ -109,12 +109,12 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(1500)
-	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+	e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
 	tc:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_DISABLE)
-	e2:SetReset(RESET_PHASE+PHASE_DAMAGE)
+	e2:SetReset(RESET_PHASE|PHASE_DAMAGE)
 	bc:RegisterEffect(e2)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_DISABLE_EFFECT)
@@ -123,7 +123,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e4:SetCode(EFFECT_TYPE_SINGLE)
 	e4:SetType(EFFECT_IMMUNE_EFFECT)
 	e4:SetValue(s.imval)
-	e4:SetReset(RESET_PHASE+PHASE_DAMAGE)
+	e4:SetReset(RESET_PHASE|PHASE_DAMAGE)
 	bc:RegisterEffect(e4)
 end
 function s.imval(e,re)

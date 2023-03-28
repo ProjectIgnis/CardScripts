@@ -1,6 +1,6 @@
 --Ｄスケイル・バトルシーラ
 --D-Scale Battle Coela
---scripted by Larry126
+--Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Move to its own linked zone
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(4013,12))
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--Move to linked zone of other card
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(4013,13))
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)

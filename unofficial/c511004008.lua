@@ -1,3 +1,4 @@
+--スピリチュアル・フュージョン
 --Spiritual Fusion
 --Scripted by Edo9300
 local s,id=GetID()

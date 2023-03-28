@@ -1,10 +1,11 @@
 --テンペスト・オブ・ファイア
 --Tempest Fire
---scripted by Larry126
+--Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -12,14 +13,11 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_FIRE)
-end
 function s.cfilter(c,atk)
 	return c:IsFaceup() and c:IsAttackBelow(atk)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local tg,atk=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil,e):GetMinGroup(Card.GetAttack)
+	local tg,atk=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsAttribute,ATTRIBUTE_FIRE),tp,LOCATION_MZONE,0,nil,e):GetMinGroup(Card.GetAttack)
 	if chkc then return tg and tg:IsContains(chkc) end
 	if chk==0 then return tg and tg:IsExists(Card.IsCanBeEffectTarget,1,nil,e)
 		and Duel.IsExistingMatchingCard(s.cfilter,tp,0,LOCATION_MZONE,1,nil,atk) end
@@ -50,11 +48,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 	if e:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		local e1=Effect.GlobalEffect()
+		e1:SetDescription(aux.Stringid(id,1))
 		e1:SetType(EFFECT_TYPE_FIELD)
-		e1:SetDescription(aux.Stringid(4016,9))
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		e1:SetTargetRange(1,0)
 		Duel.RegisterEffect(e1,tp)
 		local e2=e1:Clone()

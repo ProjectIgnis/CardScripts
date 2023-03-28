@@ -1,7 +1,7 @@
---The Sun of God Dragon
+--ＴＨＥ ＳＵＮ ＯＦ ＧＯＤ ＤＲＡＧＯＮ
 --マイケル・ローレンス・ディーによってスクリプト
---scripted by MLD, credit to TPD & Cybercatman
---updated and currently maintained by Larry126
+--Scripted by MLD, credit to TPD & Cybercatman
+--Updated and currently maintained by Larry126
 Duel.LoadScript("c421.lua")
 local s,id=GetID()
 function s.initial_effect(c)
@@ -61,7 +61,6 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(df,0)
 	end)
 end
-s.listed_names={95286165,10000010,511000987}
 --De-Fusion
 function s.dffilter(c)
 	return c:IsCode(95286165) and c:GetFlagEffect(608286299)==0
@@ -70,7 +69,7 @@ function s.dfop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.dffilter,tp,0xff,0xff,nil)
 	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(tc)
-		e1:SetDescription(aux.Stringid(4012,8))
+		e1:SetDescription(aux.Stringid(id,5))
 		e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE+CATEGORY_RECOVER)
 		e1:SetType(EFFECT_TYPE_ACTIVATE)
 		e1:SetCode(tc:GetActivateEffect():GetCode())
@@ -114,7 +113,7 @@ end
 function s.immortal(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	if s.payatkcost(e,tp,eg,ep,ev,re,r,rp,0) then
-		local op=Duel.SelectOption(tp,aux.Stringid(4012,3),aux.Stringid(4012,4),aux.Stringid(4012,5))
+		local op=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1),aux.Stringid(id,2))
 		if op==0 then
 			s.payatkcost(e,tp,eg,ep,ev,re,r,rp,1)
 			e:SetOperation(s.payatkop)
@@ -124,7 +123,7 @@ function s.immortal(e,tp,eg,ep,ev,re,r,rp,chk)
 			e:SetOperation(nil)
 		end
 	else
-		local op=Duel.SelectOption(tp,aux.Stringid(4012,4),aux.Stringid(4012,5))
+		local op=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
 		if op==0 then
 			e:SetOperation(s.egpop)
 		else
@@ -170,7 +169,7 @@ function s.payatkop(e,tp,eg,ep,ev,re,r,rp)
 		def:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(def)
 		local e4=Effect.CreateEffect(c)
-		e4:SetDescription(aux.Stringid(4012,6))
+		e4:SetDescription(aux.Stringid(id,3))
 		e4:SetType(EFFECT_TYPE_QUICK_O)
 		e4:SetCode(EVENT_FREE_CHAIN)
 		e4:SetRange(LOCATION_MZONE)
@@ -334,7 +333,7 @@ function s.egpop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(511000237)
 		c:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
-		e2:SetDescription(aux.Stringid(4012,7))
+		e2:SetDescription(aux.Stringid(id,4))
 		e2:SetCategory(CATEGORY_TOGRAVE)
 		e2:SetType(EFFECT_TYPE_QUICK_O)
 		e2:SetCode(EVENT_FREE_CHAIN)
@@ -446,48 +445,4 @@ function s.valcheck(e,c)
 		e2:SetValue(def)
 		c:RegisterEffect(e2)
 	end
-end
--------------------------------------------
---Chanting
-function s.sumop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
---[[	local chant=true
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(4012,9))
-	local op=Duel.SelectOption(tp,aux.Stringid(4012,10),aux.Stringid(4012,11),aux.Stringid(4012,12),aux.Stringid(4012,13),aux.Stringid(4012,14),aux.Stringid(4012,15))
-	if op~=3 then
-		local op2=Duel.SelectOption(1-tp,aux.Stringid(4012,10),aux.Stringid(4012,11),aux.Stringid(4012,12),aux.Stringid(4012,13),aux.Stringid(4012,14),aux.Stringid(4012,15))
-		if op2~=3 then
-			chant=false
-		else
-			if not Duel.GetControl(c,1-tp) then
-				chant=false
-			end
-		end
-	end
-	if chant==false then
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_CANNOT_ATTACK)
-		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		c:RegisterEffect(e1)
-		local e2=e1:Clone()
-		e2:SetCode(EFFECT_CANNOT_TRIGGER)
-		c:RegisterEffect(e2)
-		local e3=e1:Clone()
-		e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-		e3:SetCode(EFFECT_IGNORE_BATTLE_TARGET)
-		e3:SetValue(1)
-		e3:SetRange(LOCATION_MZONE)
-		c:RegisterEffect(e3)
-	end
-	Duel.BreakEffect()]]
-	--control
-	local e6=Effect.CreateEffect(c)
-	e6:SetType(EFFECT_TYPE_SINGLE)
-	e6:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE)
-	e6:SetRange(LOCATION_MZONE)
-	e6:SetCode(EFFECT_CANNOT_CHANGE_CONTROL)
-	e6:SetReset(RESET_EVENT+RESETS_STANDARD)
-	c:RegisterEffect(e6)
 end

@@ -1,7 +1,6 @@
---Infection Extension
 --インフェクション・エクステンション
---By Shad3
---cleaned up and fixed by MLD and edo9300
+--Infection Extension
+--Scripted by Shad3, cleaned up and fixed by MLD and edo9300
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -27,6 +26,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)]]
 	--IBToken Destroyed
 	local e4=Effect.CreateEffect(c)
+	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e4:SetCode(EVENT_DESTROYED)
 	e4:SetRange(LOCATION_SZONE)
@@ -56,13 +56,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PRE_BATTLE_DAMAGE)
 		e1:SetOperation(s.damop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 	Duel.SpecialSummonComplete()
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	if ev>0 and Duel.SelectYesNo(tp,aux.Stringid(4001,14)) then
+	if ev>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.ChangeBattleDamage(tp,0)
 		Duel.ChangeBattleDamage(1-tp,0)
 	end

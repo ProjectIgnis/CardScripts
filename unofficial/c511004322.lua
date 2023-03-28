@@ -121,7 +121,7 @@ end
 function s.activeoperation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.Hint(HINT_CARD,0,id)
-	if not Duel.SelectYesNo(1-tp,aux.Stringid(4007,1)) or not Duel.SelectYesNo(tp,aux.Stringid(4007,1)) then
+	if not Duel.SelectYesNo(1-tp,aux.Stringid(id,0)) or not Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		local sg=Duel.GetMatchingGroup(Card.IsCode,tp,0x7f,0x7f,nil,id)
 		Duel.SendtoDeck(sg,nil,-2,REASON_RULE)
 		return
@@ -193,7 +193,7 @@ function s.normalsetoperation(e,tp,eg,ep,ev,re,r,rp)
 			Duel.DisableShuffleCheck()
 			Duel.SendtoDeck(c,tp,an,REASON_RULE)
 			forbidden[tp][an+1]=true
-			Duel.Hint(HINT_MESSAGE,tp,aux.Stringid(4002,9))
+			Duel.Hint(HINT_MESSAGE,tp,aux.Stringid(id,1))
 		else
 			--re organize forbidden list
 			for i=an+1,n do
@@ -202,7 +202,7 @@ function s.normalsetoperation(e,tp,eg,ep,ev,re,r,rp)
 		end
 	else
 		forbidden[tp][an+1]=true
-		Duel.Hint(HINT_MESSAGE,tp,aux.Stringid(4002,9))
+		Duel.Hint(HINT_MESSAGE,tp,aux.Stringid(id,1))
 	end
 end
 --spell
@@ -278,11 +278,11 @@ function s.spelloperation(e,tp,eg,ep,ev,re,r,rp)
 			end
 		else
 			forbidden[tp][an+1]=true
-			Duel.Hint(HINT_MESSAGE,tp,aux.Stringid(4002,9))
+			Duel.Hint(HINT_MESSAGE,tp,aux.Stringid(id,1))
 		end
 	else
 		forbidden[tp][an+1]=true
-		Duel.Hint(HINT_MESSAGE,tp,aux.Stringid(4002,9))
+		Duel.Hint(HINT_MESSAGE,tp,aux.Stringid(id,1))
 	end
 end
 --trap
@@ -348,11 +348,11 @@ function s.trapoperation(e,tp,eg,ep,ev,re,r,rp)
 			end
 		else
 			forbidden[tp][an+1]=true
-			Duel.Hint(HINT_MESSAGE,tp,aux.Stringid(4002,9))
+			Duel.Hint(HINT_MESSAGE,tp,aux.Stringid(id,1))
 		end
 	else
 		forbidden[tp][an+1]=true
-		Duel.Hint(HINT_MESSAGE,tp,aux.Stringid(4002,9))
+		Duel.Hint(HINT_MESSAGE,tp,aux.Stringid(id,1))
 	end
 end
 --[[

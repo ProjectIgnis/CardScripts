@@ -29,7 +29,7 @@ function s.eftg(e,c)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:GetFlagEffect(id)==0 and Duel.SelectEffectYesNo(tp,c) then
+	if c:GetFlagEffect(id)==0 and Duel.SelectEffectYesNo(tp,c,aux.Stringid(id,0)) then
 		Duel.Hint(HINT_CARD,0,c:GetOriginalCode())
 		Duel.NegateAttack()
 		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,0)

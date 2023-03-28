@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--atk change
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(67547370,1))
+	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_ATKCHANGE)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_SINGLE)
@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	--spsummon
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(95923441,0))
+	e4:SetDescription(aux.Stringid(id,2))
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e4:SetType(EFFECT_TYPE_QUICK_O)
 	e4:SetCode(EVENT_FREE_CHAIN)
@@ -47,7 +47,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop2)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x20f8}
+s.listed_series={SET_SUPREME_KING_DRAGON}
 s.listed_names={13331639}
 function s.spfilter(c,tp)
 	return c:IsControler(1-tp) and c:IsType(TYPE_XYZ) and c:IsSummonType(SUMMON_TYPE_XYZ)
@@ -58,7 +58,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsXyzSummonable() and Duel.SelectYesNo(tp,aux.Stringid(4003,7)) then
+	if c:IsXyzSummonable() and Duel.SelectEffectYesNo(tp,c,aux.Stringid(id,0)) then
 		Duel.XyzSummon(tp,c,nil)
 	end
 end
@@ -101,7 +101,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 			e1:SetValue(0)
 			tc:RegisterEffect(e1)
 			sum=sum+atk
@@ -114,7 +114,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 			e1:SetValue(0)
 			if tc:RegisterEffect(e1)~=0 and atk and atk>0 then
 				sum=atk
@@ -126,7 +126,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_UPDATE_ATTACK)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		e2:SetValue(sum)
 		c:RegisterEffect(e2)
 	end
@@ -137,7 +137,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoDeck(e:GetHandler(),nil,0,REASON_COST)
 end
 function s.spfilter2(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x20f8) and c:IsType(TYPE_PENDULUM) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsFaceup() and c:IsSetCard(SET_SUPREME_KING_DRAGON) and c:IsType(TYPE_PENDULUM) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
@@ -162,7 +162,7 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_SET_ATTACK_FINAL)
 			e2:SetValue(0)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e2)
 		end
 	end

@@ -1,8 +1,10 @@
---Sphin-Quiz
+--スフィンクイズー
+--Quiz Sphinx
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,4))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetRange(LOCATION_HAND)
@@ -22,7 +24,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--Quest
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(95100088,1))
+	e3:SetDescription(aux.Stringid(id,5))
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_BE_BATTLE_TARGET)
 	e3:SetRange(LOCATION_MZONE)
@@ -56,25 +58,25 @@ function s.qcon(e,tp,eg,ep,ev,re,r,rp)
 	return r~=REASON_REPLACE and bt:IsSetCard(0x541)
 end
 function s.qop(e,tp,eg,ep,ev,re,r,rp)
-	local ghd=Duel.GetFieldGroup(tp,LOCATION_HAND+LOCATION_DECK,LOCATION_HAND+LOCATION_DECK)
+	local ghd=Duel.GetFieldGroup(tp,LOCATION_HAND|LOCATION_DECK,LOCATION_HAND|LOCATION_DECK)
 	local gex=Duel.GetFieldGroup(tp,LOCATION_EXTRA,LOCATION_EXTRA)
 	if #ghd==0 and #gex==0 then return end
 	local op=0
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(4003,14))
+	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,3))
 	if #ghd>0 and #gex>0 then
-		op=Duel.SelectOption(tp,aux.Stringid(4003,11),aux.Stringid(4003,12),aux.Stringid(4003,13))
+		op=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1),aux.Stringid(id,2))
 	elseif #ghd>0 then
-		Duel.SelectOption(tp,aux.Stringid(4003,11))
+		Duel.SelectOption(tp,aux.Stringid(id,0))
 		op=0
 	else
-		op=Duel.SelectOption(tp,aux.Stringid(4003,12),aux.Stringid(4003,13))
+		op=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
 		op=op+1
 	end
 	local lv=0
 	local quest=0
 	if op==0 then
-		Duel.Hint(HINT_MESSAGE,1-tp,aux.Stringid(4003,11))
-		Duel.Hint(HINT_SELECTMSG,1-tp,aux.Stringid(4003,11))
+		Duel.Hint(HINT_MESSAGE,1-tp,aux.Stringid(id,0))
+		Duel.Hint(HINT_SELECTMSG,1-tp,aux.Stringid(id,0))
 		quest=Duel.AnnounceNumber(1-tp,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15)
 		lv=ghd:GetMaxGroup(Card.GetLevel):GetFirst():GetLevel()
 		Duel.ConfirmCards(1-tp,ghd)
@@ -84,15 +86,15 @@ function s.qop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ShuffleHand(tp)
 		Duel.ShuffleHand(1-tp)
 	elseif op==1 then
-		Duel.Hint(HINT_MESSAGE,1-tp,aux.Stringid(4003,12))
-		Duel.Hint(HINT_SELECTMSG,1-tp,aux.Stringid(4003,12))
+		Duel.Hint(HINT_MESSAGE,1-tp,aux.Stringid(id,1))
+		Duel.Hint(HINT_SELECTMSG,1-tp,aux.Stringid(id,1))
 		quest=Duel.AnnounceNumber(1-tp,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15)
 		lv=gex:GetMaxGroup(Card.GetLevel):GetFirst():GetLevel()
 		Duel.ConfirmCards(1-tp,gex)
 		Duel.ConfirmCards(tp,gex)
 	else
-		Duel.Hint(HINT_MESSAGE,1-tp,aux.Stringid(4003,13))
-		Duel.Hint(HINT_SELECTMSG,1-tp,aux.Stringid(4003,13))
+		Duel.Hint(HINT_MESSAGE,1-tp,aux.Stringid(id,2))
+		Duel.Hint(HINT_SELECTMSG,1-tp,aux.Stringid(id,2))
 		quest=Duel.AnnounceNumber(1-tp,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15)
 		lv=gex:GetMaxGroup(Card.GetRank):GetFirst():GetRank()
 		Duel.ConfirmCards(1-tp,gex)
@@ -112,6 +114,6 @@ function s.qop(e,tp,eg,ep,ev,re,r,rp)
 			end
 		end
 	else
-		Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+		Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE|PHASE_BATTLE,1)
 	end
 end

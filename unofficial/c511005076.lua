@@ -1,7 +1,6 @@
---Shining Horizon
 --シャイニング・ホライゾン
---By Shad3
---fixed by MLD
+--Shining Horizon
+--Scripted by Shad3, fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -36,7 +35,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ConfirmCards(1-p,tc)
 	Duel.ShuffleHand(p)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and tc:GetType()==TYPE_SPELL
-		and tc:CheckActivateEffect(false,false,false)~=nil and Duel.SelectYesNo(tp,7) then
+		and tc:CheckActivateEffect(false,false,false)~=nil and Duel.SelectEffectYesNo(tp,tc) then
 		local tpe=tc:GetType()
 		local te=tc:GetActivateEffect()
 		local tg=te:GetTarget()

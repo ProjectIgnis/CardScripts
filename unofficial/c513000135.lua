@@ -1,6 +1,7 @@
---The God of Obelisk
+--ＴＨＥ ＧＯＤ ＯＦ ＯＢＥＬＩＳＫ
 --マイケル・ローレンス・ディーによってスクリプト
---scripted by MLD, credits to TPD & Cybercatman, updated by Larry126
+--Scripted by MLD, credit to TPD & Cybercatman
+--Updated and currently maintained by Larry126
 Duel.LoadScript("c421.lua")
 local s,id=GetID()
 function s.initial_effect(c)
@@ -9,7 +10,7 @@ function s.initial_effect(c)
 	local e2=aux.AddNormalSetProcedure(c,true,false,3,3)
 	--destory
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(4012,1))
+	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
@@ -20,7 +21,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	--Soul Energy Max
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(4012,2))
+	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetType(EFFECT_TYPE_QUICK_O)
 	e4:SetCode(EVENT_FREE_CHAIN)
 	e4:SetRange(LOCATION_MZONE)

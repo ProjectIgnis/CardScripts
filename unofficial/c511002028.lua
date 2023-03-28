@@ -1,4 +1,5 @@
---Last Question
+--ラスト・クエスチョン
+--Final Question
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -15,8 +16,8 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp and Duel.IsAbleToEnterBP()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_MESSAGE,1-tp,aux.Stringid(4005,14))
-	Duel.Hint(HINT_SELECTMSG,1-tp,aux.Stringid(4005,14))
+	Duel.Hint(HINT_MESSAGE,1-tp,aux.Stringid(id,0))
+	Duel.Hint(HINT_SELECTMSG,1-tp,aux.Stringid(id,0))
 	local quest=Duel.AnnounceNumber(1-tp,0,1,2,3,4,5,6,7,8,9,10)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -24,13 +25,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCountLimit(1)
 	e1:SetLabel(quest)
 	e1:SetOperation(s.op)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_PHASE+PHASE_END)
 	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetReset(RESET_PHASE|PHASE_END)
 	e2:SetCountLimit(1)
 	e2:SetLabel(0)
 	e2:SetOperation(s.endop)

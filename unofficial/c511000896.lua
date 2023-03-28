@@ -1,7 +1,8 @@
+--覇者の呪縛
 --Spell of the Ruler
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Equip Effect
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_EQUIP)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--damage
+	--Inflict damage if equipped monster is sent to GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e2:SetDescription(aux.Stringid(id,0))
@@ -39,21 +40,26 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		Duel.Equip(tp,c,tc)
-		--Atkup
+		--Equipped monster gains 700 ATK/cannot change battle position
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_EQUIP)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(700)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e1)
-		--Equip limit
 		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetCode(EFFECT_EQUIP_LIMIT)
-		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e2:SetValue(s.eqlimit)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-		c:RegisterEffect(e2)
+		e2:SetType(EFFECT_TYPE_EQUIP)
+		e2:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
+        	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+        	c:RegisterEffect(e2)
+		--Equip Limit
+		local e3=Effect.CreateEffect(c)
+		e3:SetType(EFFECT_TYPE_SINGLE)
+		e3:SetCode(EFFECT_EQUIP_LIMIT)
+		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e3:SetValue(s.eqlimit)
+		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+		c:RegisterEffect(e3)
 	end
 end
 function s.eqlimit(e,c)

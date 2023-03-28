@@ -1,8 +1,10 @@
 --進化の特異点
+--Evo-Singularity
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Special Summon 1 "Evolzaur" from the Extra Deck and attach 1 "Evoltile" and 1 "Evolsaur" to it
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -11,35 +13,35 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x504e}
-function s.filter(c,cat)
-	return c:IsSetCard(cat) and c:IsMonster()
+s.listed_series={SET_EVOLTILE,SET_EVOLSAUR,SET_EVOLZAR}
+function s.filter(c,e)
+	return c:IsMonster() and c:IsSetCard({SET_EVOLTILE,SET_EVOLSAUR}) and c:IsCanBeEffectTarget(e)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x504e) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_EVOLZAR) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+end
+function s.rescon(sg,e,tp,mg)
+	return sg:IsExists(Card.IsSetCard,1,nil,SET_EVOLTILE) and sg:IsExists(Card.IsSetCard,1,nil,SET_EVOLSAUR)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,nil,0x304e)
-		and Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,nil,0x604e)
+	if chkc then return false end
+	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_GRAVE,0,nil,e)
+	if chk==0 then return #g>=2 and aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-	local g1=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil,0x304e)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-	local g2=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil,0x604e)
-	g1:Merge(g2)
-	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g1,2,0,0)
+	local sg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_ATTACH)
+	Duel.SetTargetCard(sg)
+	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,sg,#sg,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_EXTRA,0,nil,e,tp)
 	if #g==0 then return end
-	local mg=Duel.GetTargetCards(e)
-	if #mg~=2 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local sg=g:Select(tp,1,1,nil)
-	local sc=sg:GetFirst()
-	if sc then
-		Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)
+	local sc=g:Select(tp,1,1,nil):GetFirst()
+	if sc and Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)>0 then
+		local mg=Duel.GetTargetCards(e)
+		if #mg>0 then
 		Duel.Overlay(sc,mg)
+		end
 	end
 end

@@ -51,7 +51,7 @@ end
 function s.fidfilter(c,fid)
 	return c:GetFieldID()>fid
 end
-local faceupfil=aux.FilterFaceupFunction(Card.IsHasEffect,id)
+local faceupfil=aux.FaceupFilter(Card.IsHasEffect,id)
 function s.adjustop(e,tp,eg,ep,ev,re,r,rp)
 	local phase=Duel.GetCurrentPhase()
 	if (phase==PHASE_DAMAGE and not Duel.IsDamageCalculated()) or phase==PHASE_DAMAGE_CAL then return end

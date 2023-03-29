@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_SET_ATTACK)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e3:SetRange(LOCATION_MZONE)
+	e3:SetCondition(function(e) return e:GetHandler():GetBattleTarget() end)
 	e3:SetValue(s.atkval)
 	c:RegisterEffect(e3)
 	--negate
@@ -74,7 +75,7 @@ function s.spop(e,tp,c)
 			e1:SetLabel(0)
 			e1:SetOperation(s.spop2)
 			rc:RegisterEffect(e1)
-			rc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+			rc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 		end
 		rc=g:GetNext()
 	end
@@ -87,7 +88,7 @@ function s.spop2(e,tp,c)
 	if c:GetControler()~=Duel.GetTurnPlayer() then return end
 	local ct=e:GetLabel()
 	if c:GetFlagEffect(id)~=0 and ct==8 then 
-		c:RegisterFlagEffect(100000111,RESET_EVENT+RESETS_STANDARD,0,1) 
+		c:RegisterFlagEffect(100000111,RESET_EVENT|RESETS_STANDARD,0,1) 
 	else	
 		e:SetLabel(ct+1)
 	end
@@ -110,7 +111,7 @@ function s.efilter(e,te)
 end
 function s.atkval(e,c)
 	local bc=c:GetBattleTarget()
-	return bc and bc:GetAttack()+1000
+	return bc:IsHasEffect(21208154) and bc:IsAttack(0) and c:GetAttack() or bc:GetAttack()+1000
 end
 function s.distg(e,c)
 	return e:GetHandler():GetBattleTarget()==c

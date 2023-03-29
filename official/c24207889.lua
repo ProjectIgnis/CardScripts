@@ -9,13 +9,14 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(TIMING_STANDBY_PHASE,TIMING_STANDBY_PHASE+TIMINGS_CHECK_MONSTER)
 	c:RegisterEffect(e1)
-	--adjust
+	--Adjust
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(id)
 	e2:SetRange(LOCATION_SZONE)
+	e2:SetCondition(function(e) return e:GetHandler():IsStatus(STATUS_EFFECT_ENABLED) end)
 	c:RegisterEffect(e2)
-	--cannot summon,spsummon,flipsummon
+	--Cannot Normal Summon, Special Summon or Flip Summon
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
 	e4:SetRange(LOCATION_SZONE)

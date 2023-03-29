@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetValue(1400)
 	c:RegisterEffect(e1)
 end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local bc=e:GetHandler():GetBattleTarget()
+function s.condition(e)
+	local bc=e:GetHandler():GetEquipTarget():GetBattleTarget()
 	return bc and bc:IsFaceup() and bc:IsRace(RACE_DRAGON)
 end

@@ -2,39 +2,29 @@
 --At the start of each Draw Phase: Each player declares Spell or Trap Card. Add from the Worlds banlist 1 random card of that type to that player's hand. If the card is a Trap card, it can be Set instead, and it can be activated this turn.
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.EnableExtraRules(c,s,s.init)
-end
-function s.init(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_PREDRAW)
 	e1:SetCountLimit(1)
-	e1:SetCondition(s.condition)
 	e1:SetOperation(s.operation)
 	Duel.RegisterEffect(e1,0)
 	local e2=e1:Clone()
 	Duel.RegisterEffect(e2,1)
 end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetFlagEffect(id+ep)==0
-end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	Duel.RegisterFlagEffect(ep,id,RESET_PHASE+PHASE_END,0,1)
 	local f1=Duel.SelectOption(tp,71,72)
 	if f1==0 then
 		local num=Duel.GetRandomNumber(1,#ban_spell)
-		add_spell_id=ban_spell[num]
-		g1=Duel.CreateToken(tp,add_spell_id)
+		local g1=Duel.CreateToken(tp,ban_spell[num])
 		Duel.Hint(HINT_CARD,ep,g1:GetCode())
 		Duel.SendtoHand(g1,tp,REASON_RULE)
 	end
 	if f1==1 then
 		local num=Duel.GetRandomNumber(1,#ban_trap)
-		add_trap_id=ban_trap[num]
-		g2=Duel.CreateToken(tp,add_trap_id)
+		local g2=Duel.CreateToken(tp,ban_trap[num])
 		Duel.Hint(HINT_CARD,ep,g2:GetCode())
 		if Duel.GetLocationCount(tp,LOCATION_SZONE)>0 then
-			f2=Duel.SelectOption(tp,1153,573)
+			local f2=Duel.SelectOption(tp,1153,573)
 			if f2==0 then
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 				Duel.MoveToField(g2,tp,tp,LOCATION_SZONE,POS_FACEDOWN,true)

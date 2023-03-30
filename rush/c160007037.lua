@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Fusion materials
-	Fusion.AddProcMix(c,true,true,CARD_PRINTING_PRESSER,160007007)
+	Fusion.AddProcMix(c,true,true,CARD_PRINTING_PRESSER,CARD_SCOOP_SCOOTER)
 	--Make monsters lose ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

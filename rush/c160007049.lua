@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_names={CARD_PRINTING_PRESSER,CARD_WHIRR}
+s.listed_names={CARD_PRINTING_PRESSER,CARD_SCOOP_SCOOTER}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_EARTH) and c:IsLevelAbove(7)
 end

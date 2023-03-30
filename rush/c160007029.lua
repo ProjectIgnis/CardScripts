@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-s.listed_names={CARD_PRINTING_PRESSER,CARD_WHIRR,160003054}
+s.listed_names={CARD_PRINTING_PRESSER,CARD_SCOOP_SCOOTER,160003054}
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
 end
@@ -29,7 +29,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
 end
 function s.thfilter(c)
-	return c:IsCode(CARD_WHIRR,160003054) and c:IsAbleToHand()
+	return c:IsCode(CARD_SCOOP_SCOOTER,160003054) and c:IsAbleToHand()
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SendtoGrave(e:GetHandler(),REASON_COST)<1 then return end

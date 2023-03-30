@@ -1,11 +1,11 @@
--- 報道艦轟鎧號 疾風迅雷
--- Lightning Speed, the Rumbling Report Warship
+--報道艦轟鎧號 疾風迅雷
+--Newsflash the Journalistic Juggernaut
 local s,id=GetID()
 function s.initial_effect(c)
-	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,CARD_TOUGHROID,CARD_WHIRR)
-	--Draw
+	--Fusion materials
+	Fusion.AddProcMix(c,true,true,CARD_PRINTING_PRESSER,160007007)
+	--Make monsters lose ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
@@ -25,10 +25,9 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(1-tp,7) end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	--requirement
-	if not Duel.IsPlayerCanDiscardDeck(1-tp,7) or Duel.DiscardDeck(tp,1,REASON_COST)<1 then return end
-	--effect
-	local c=e:GetHandler()
+	--Requirement
+	if Duel.DiscardDeck(tp,1,REASON_COST)<1 then return end
+	--Effect
 	Duel.ConfirmDecktop(1-tp,7)
 	local g=Duel.GetDecktopGroup(1-tp,7)
 	local sg=g:Filter(Card.IsMonster,nil)
@@ -41,13 +40,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if #g2==0 then return end
 	if Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		for tc in g2:Iter() do
-		--Decrease ATK
-			local e2=Effect.CreateEffect(c)
-			e2:SetType(EFFECT_TYPE_SINGLE)
-			e2:SetCode(EFFECT_UPDATE_ATTACK)
-			e2:SetValue(val)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			tc:RegisterEffectRush(e2)
+			--Decrease ATK
+			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_UPDATE_ATTACK)
+			e1:SetValue(val)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
+			tc:RegisterEffectRush(e1)
 		end
 	end
 end

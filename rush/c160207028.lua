@@ -25,6 +25,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_GRAVE,0,3,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,3,tp,LOCATION_GRAVE)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_DESTROY,nil,1,1-tp,LOCATION_MZONE)
 end
 function s.spfilter(c,e,tp)
 	return c:IsLevelBelow(4) and c:IsRace(RACE_SEASERPENT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -34,28 +35,33 @@ function s.desfilter(c)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,0,3,3,nil)
 	Duel.HintSelection(g,true)
 	Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_COST)
 	Duel.SortDeckbottom(tp,tp,#g)
 	-- Special Summon
-	local sg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_GRAVE,0,nil,e,tp)
-	if #sg>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	local sg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE,0,nil,e,tp)
+	if #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local ssg=sg:Select(tp,1,1,nil)
 		if #ssg>0 then
 			Duel.BreakEffect()
-			Duel.SpecialSummon(ssg,0,tp,tp,false,false,POS_FACEUP_ATTACK)
+			if Duel.SpecialSummon(ssg,0,tp,tp,false,false,POS_FACEUP_ATTACK)>0
+			and Duel.GetMatchingGroupCount(Card.IsMonster,tp,LOCATION_GRAVE,0,nil)==0 then
+				--Destroy 1 face-up Level 8 or lower monster on your opponent's field
+				local dg=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_MZONE,nil)
+				if #dg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+					dg=dg:Select(tp,1,1,nil)
+					if #dg==0 then return end
+					Duel.HintSelection(dg,true)
+					dg:AddMaximumCheck()
+					Duel.BreakEffect()
+					Duel.Destroy(dg,REASON_EFFECT)
+				end
+			end
 		end
-	end
-	-- Destroy
-	local dg=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_MZONE,nil)
-	if #dg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-		local sg=dg:Select(tp,1,1,nil)
-		if #sg==0 then return end
-		Duel.HintSelection(sg,true)
-		Duel.BreakEffect()
-		Duel.Destroy(sg,REASON_EFFECT)
 	end
 end

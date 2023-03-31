@@ -1,3 +1,4 @@
+--闇道化師と化したマサヒロ
 --Masahiro the Dark Clown
 local s,id=GetID()
 function s.initial_effect(c)
@@ -9,12 +10,6 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	local e2=Effect.CreateEffect(c)
-	e2:SetCode(EFFECT_ADD_TYPE)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetProperty(EFFECT_FLAG_IGNORE_RANGE+EFFECT_FLAG_SET_AVAILABLE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e2:SetValue(TYPE_NORMAL)
-	c:RegisterEffect(e2)
 end
 s.illegal=true
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -32,7 +27,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if c:IsRelateToEffect(e) and tc and tc:IsRelateToEffect(e) then
 		if not tc:IsOriginalCode(id) then
-			c:ReplaceEffect(tc:GetOriginalCode(),RESET_EVENT+RESETS_STANDARD)
+			c:ReplaceEffect(tc:GetOriginalCode(),RESET_EVENT|RESETS_STANDARD)
 		end
 		if not tc:IsOriginalCode(id) or Duel.IsExistingTarget(s.cfilter,tp,LOCATION_GRAVE,0,1,nil) then
 			Duel.RaiseSingleEvent(c,EVENT_FLIP,e,r,rp,ep,ev)

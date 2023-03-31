@@ -1,3 +1,4 @@
+--山岳の闘士トモヒロ
 --Tomohiro the Mountain Warrior
 local s,id=GetID()
 function s.initial_effect(c)
@@ -12,12 +13,6 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	local e2=Effect.CreateEffect(c)
-	e2:SetCode(EFFECT_ADD_TYPE)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetProperty(EFFECT_FLAG_IGNORE_RANGE+EFFECT_FLAG_SET_AVAILABLE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e2:SetValue(TYPE_NORMAL)
-	c:RegisterEffect(e2)
 end
 s.illegal=true
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

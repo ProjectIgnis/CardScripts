@@ -47,8 +47,9 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) or Duel.Destroy(tc,REASON_EFFECT)==0 then return end
+	local c=e:GetHandler()
 	local val=math.max(tc:GetTextAttack(),tc:GetTextDefense())//2
-	if val>0 then
-		e:GetHandler():UpdateAttack(val,RESET_EVENT|RESETS_STANDARD_DISABLE)
+	if val>0 and c:IsRelateToEffect(e) and c:IsFaceup() then
+		c:UpdateAttack(val,RESET_EVENT|RESETS_STANDARD_DISABLE)
 	end
 end

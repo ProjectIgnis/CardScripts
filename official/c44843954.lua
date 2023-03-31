@@ -61,8 +61,8 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.tedcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToDeck() end
-	Duel.SendtoDeck(c,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
+	if chk==0 then return c:IsAbleToDeckAsCost() end
+	Duel.SendtoDeck(c,nil,SEQ_DECKBOTTOM,REASON_COST)
 end
 function s.tedfilter(c)
 	return c:IsCode(CARD_DREAMING_NEMURELIA) and c:IsFaceup() and c:IsAbleToExtra() and not c:IsForbidden()

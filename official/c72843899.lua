@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_UPDATE_ATTACK)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(LOCATION_MZONE,0)
-	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x5034))
+	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_ADVANCED_CRYSTAL_BEAST))
 	e3:SetValue(400)
 	c:RegisterEffect(e3)
 	local e4=e3:Clone()
@@ -45,7 +45,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e6)
 end
 s.listed_names={CARD_ADVANCED_DARK}
-s.listed_series={0x5034}
+s.listed_series={SET_ADVANCED_CRYSTAL_BEAST}
 function s.tgcon(e)
 	return not Duel.IsEnvironment(CARD_ADVANCED_DARK)
 end

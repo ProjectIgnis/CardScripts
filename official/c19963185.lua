@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_DIRECT_ATTACK)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(LOCATION_MZONE,0)
-	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x5034))
+	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_ADVANCED_CRYSTAL_BEAST))
 	c:RegisterEffect(e3)
 	--Battle damage is halved if attacking directly
 	local e4=Effect.CreateEffect(c)
@@ -34,13 +34,13 @@ function s.initial_effect(c)
 	e4:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetTargetRange(LOCATION_MZONE,0)
-	e4:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x5034))
+	e4:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_ADVANCED_CRYSTAL_BEAST))
 	e4:SetCondition(s.rdmgcond)
 	e4:SetValue(aux.ChangeBattleDamage(1,HALF_DAMAGE))
 	c:RegisterEffect(e4)
 end
 s.listed_names={CARD_ADVANCED_DARK}
-s.listed_series={0x5034}
+s.listed_series={SET_ADVANCED_CRYSTAL_BEAST}
 function s.tgcon(e)
 	return not Duel.IsEnvironment(CARD_ADVANCED_DARK)
 end

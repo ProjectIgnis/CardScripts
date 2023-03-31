@@ -45,7 +45,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_names={CARD_ADVANCED_DARK}
-s.listed_series={0x5034}
+s.listed_series={SET_ADVANCED_CRYSTAL_BEAST}
 function s.tgcon(e)
 	return not Duel.IsEnvironment(CARD_ADVANCED_DARK)
 end
@@ -66,13 +66,13 @@ function s.replaceop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.attcond(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
-	return d:IsFaceup() and d:IsSetCard(0x5034) and d:IsControler(tp)
+	return d:IsFaceup() and d:IsSetCard(SET_ADVANCED_CRYSTAL_BEAST) and d:IsControler(tp)
 end
 function s.attop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateAttack()
 end
 function s.advfilter(c,tp)
-	return c:IsControler(tp) and c:IsFaceup() and (c:IsSetCard(0x5034) or c:IsCode(CARD_ADVANCED_DARK))
+	return c:IsControler(tp) and c:IsFaceup() and (c:IsSetCard(SET_ADVANCED_CRYSTAL_BEAST) or c:IsCode(CARD_ADVANCED_DARK))
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) or rp==tp then return false end

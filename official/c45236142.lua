@@ -43,7 +43,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_names={CARD_ADVANCED_DARK}
-s.listed_series={0x5034}
+s.listed_series={SET_ADVANCED_CRYSTAL_BEAST}
 function s.tgcon(e)
 	return not Duel.IsEnvironment(CARD_ADVANCED_DARK)
 end
@@ -83,7 +83,7 @@ function s.searchop(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x5034) and (c:IsAbleToHand() or c:IsAbleToDeck())
+	return c:IsFaceup() and c:IsSetCard(SET_ADVANCED_CRYSTAL_BEAST) and (c:IsAbleToHand() or c:IsAbleToDeck())
 end
 function s.thdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and s.cfilter(chkc) end

@@ -37,7 +37,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.listed_names={CARD_ADVANCED_DARK}
-s.listed_series={0x5034}
+s.listed_series={SET_ADVANCED_CRYSTAL_BEAST}
 function s.tgcon(e)
 	return not Duel.IsEnvironment(CARD_ADVANCED_DARK)
 end
@@ -57,7 +57,7 @@ function s.replaceop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RaiseEvent(c,EVENT_CUSTOM+47408488,e,0,tp,0,0)
 end
 function s.filter(c)
-	return c:IsSetCard(0x5034) and not c:IsForbidden() and (not c:IsLocation(LOCATION_REMOVED) or c:IsFaceup())
+	return c:IsSetCard(SET_ADVANCED_CRYSTAL_BEAST) and not c:IsForbidden() and (not c:IsLocation(LOCATION_REMOVED) or c:IsFaceup())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsLocation(LOCATION_MZONE) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0

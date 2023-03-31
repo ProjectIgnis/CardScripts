@@ -2,15 +2,7 @@
 --Scar-Dragon Whip
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
-	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_EQUIP)
-	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetCost(s.cost)
-	e1:SetTarget(s.target)
-	c:RegisterEffect(e1)
+	local e1=aux.AddEquipProcedure(c,nil,nil,nil,s.cost)
 	--Increase ATK by 500
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
@@ -26,7 +18,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	--Return banished cards to the hand
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(47126872,1))
+	e4:SetDescription(aux.Stringid(id,0))
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e4:SetCode(EVENT_LEAVE_FIELD)
 	e4:SetCondition(s.retcon)
@@ -40,37 +32,25 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,0,LOCATION_HAND,2,2,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
+	local fid=e:GetHandler():GetFieldID()
 	for tc in g:Iter() do
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1,fid)
 	end
 	g:KeepAlive()
 	e:SetLabelObject(g)
+	e:SetLabel(fid)
 end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,tp,0)
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_CHAIN_SOLVING)
-	e1:SetReset(RESET_CHAIN)
-	e1:SetLabel(Duel.GetCurrentChain())
-	e1:SetLabelObject(e)
-	e1:SetOperation(aux.EquipEquip)
-	Duel.RegisterEffect(e1,tp)
-end
-function s.filter(c)
-	return c:GetFlagEffect(id)~=0
+function s.filter(c,fid)
+	return c:GetFlagEffectLabel(id)==fid
 end
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
-	local g=e:GetLabelObject():GetLabelObject()
-	return g:IsExists(s.filter,1,nil)
+	local eff=e:GetLabelObject()
+	return eff:GetLabelObject():IsExists(s.filter,1,nil,eff:GetLabel())
 end
 function s.rettg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local g=e:GetLabelObject():GetLabelObject():Filter(s.filter,nil,e:GetHandler())
+	local eff=e:GetLabelObject()
+	local g=eff:GetLabelObject():Filter(s.filter,nil,eff:GetLabel())
 	Duel.SetTargetCard(g)
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)

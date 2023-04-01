@@ -3,7 +3,7 @@
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Destroy a monster with the highest ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)
@@ -33,9 +33,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #tg>1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local sg=tg:Select(tp,1,1,nil)
+		sg=sg:AddMaximumCheck()
 		Duel.HintSelection(sg,true)
 		Duel.Destroy(sg,REASON_EFFECT)
-	else 
+	else
+		tg=tg:AddMaximumCheck()
 		Duel.Destroy(tg,REASON_EFFECT) 
 	end
 end

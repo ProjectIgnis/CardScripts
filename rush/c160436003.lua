@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Fusion Summon Procedure
-	Fusion.AddProcMixN(c,false,false,160312023,2)
+	Fusion.AddProcMixN(c,false,false,CARD_TAMABOT,2)
 	--Draw and gain ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DRAW)

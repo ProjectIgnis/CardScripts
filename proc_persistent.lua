@@ -23,9 +23,9 @@ function Auxiliary.AddPersistentProcedure(c,p,f,category,property,hint1,hint2,co
 		end
 	end
 	if property then
-		e1:SetProperty(EFFECT_FLAG_CARD_TARGET+property)
+		e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_CONTINUOUS_TARGET+property)
 	else
-		e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+		e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_CONTINUOUS_TARGET)
 	end
 	if con then
 		e1:SetCondition(con)
@@ -34,17 +34,8 @@ function Auxiliary.AddPersistentProcedure(c,p,f,category,property,hint1,hint2,co
 		e1:SetCost(cost)
 	end
 	e1:SetTarget(Auxiliary.PersistentTarget(tg,p,f))
-	e1:SetOperation(op)
+	e1:SetOperation(Auxiliary.PersistentOperation(anypos,op))
 	c:RegisterEffect(e1)
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e2:SetRange(LOCATION_SZONE)
-	e2:SetCode(EVENT_CHAIN_SOLVED)
-	e2:SetLabelObject(e1)
-	e2:SetCondition(Auxiliary.PersistentTgCon)
-	e2:SetOperation(Auxiliary.PersistentTgOp(anypos))
-	c:RegisterEffect(e2)
 end
 function Auxiliary.PersistentFilter(c,p,f,e,tp,tg,eg,ep,ev,re,r,rp)
 	return (p==PLAYER_ALL or c:IsControler(p)) and (not f or f(c,e,tp)) and (not tg or tg(e,tp,eg,ep,ev,re,r,rp,c,0))
@@ -67,17 +58,15 @@ function Auxiliary.PersistentTarget(tg,p,f)
 				if tg then tg(e,tp,eg,ep,ev,re,r,rp,g:GetFirst(),1) end
 			end
 end
-function Auxiliary.PersistentTgCon(e,tp,eg,ep,ev,re,r,rp)
-	return re==e:GetLabelObject()
-end
-function Auxiliary.PersistentTgOp(anypos)
-	return function(e,tp,eg,ep,ev,re,r,rp)
-			local c=e:GetHandler()
-			local tc=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS):GetFirst()
-			if c:IsRelateToEffect(re) and tc and (anypos or tc:IsFaceup()) and tc:IsRelateToEffect(re) then
+function Auxiliary.PersistentOperation(anypos,op)
+	return	function(e,tp,eg,ep,ev,re,r,rp)
+			local tc=Duel.GetFirstTarget()
+			if (anypos or tc:IsFaceup()) and tc:IsRelateToEffect(e) then
+				local c=e:GetHandler()
 				c:SetCardTarget(tc)
-				c:CreateRelation(tc,RESET_EVENT+RESETS_STANDARD)
+				c:CreateRelation(tc,RESET_EVENT|RESETS_STANDARD)
 			end
+			if op then op(e,tp,eg,ep,ev,re,r,rp) end
 		end
 end
 function Auxiliary.PersistentTargetFilter(e,c)

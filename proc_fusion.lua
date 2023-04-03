@@ -390,15 +390,15 @@ function Fusion.CheckMixRep(sg,g,fc,sub,sub2,contact,sumtype,chkf,tp,fun1,minc,m
 	if fun2 then
 		return sg:IsExists(Fusion.CheckMixRepFilter,1,g,sg,g,fc,sub,sub2,contact,sumtype,chkf,tp,fun1,minc,maxc,fun2,...)
 	else
-		local ct1=sg:FilterCount(fun1,g,fc,sub,sub2,mg,sg,tp,contact,sumtype)
-		local ct2=sg:FilterCount(fun1,g,fc,false,sub2,mg,sg,tp,contact,sumtype)
+		local ct1=sg:FilterCount(fun1,g,fc,sub,sub2,sg,g,tp,contact,sumtype)
+		local ct2=sg:FilterCount(fun1,g,fc,false,sub2,sg,g,tp,contact,sumtype)
 		return ct1==#sg-#g and ct1-ct2<=1
 	end
 end
 function Fusion.CheckMixRepFilter(c,sg,g,fc,sub,sub2,contact,sumtype,chkf,tp,fun1,minc,maxc,fun2,...)
-	if fun2(c,fc,sub,sub2,mg,sg,tp,contact,sumtype) then
+	if fun2(c,fc,sub,sub2,sg,(g+c),tp,contact,sumtype) then
 		g:AddCard(c)
-		local sub=sub and fun2(c,fc,false,sub2,mg,sg,tp,contact,sumtype)
+		local sub=sub and fun2(c,fc,false,sub2,sg,g,tp,contact,sumtype)
 		local res=Fusion.CheckMixRep(sg,g,fc,sub,sub2,contact,sumtype,chkf,tp,fun1,minc,maxc,...)
 		g:RemoveCard(c)
 		return res
@@ -413,9 +413,9 @@ function Fusion.CheckMixRepGoal(tp,sg,mustg,fc,sub,sub2,contact,sumtype,chkf,fun
 end
 function Fusion.CheckMixRepTemplate(c,cond,tp,mg,sg,mustg,g,fc,sub,sub2,contact,sumtype,chkf,fun1,minc,maxc,...)
 	for i,f in ipairs({...}) do
-		if f(c,fc,sub,sub2,mg,sg,tp,contact,sumtype) then
+		if f(c,fc,sub,sub2,mg,(g+c),tp,contact,sumtype) then
 			g:AddCard(c)
-			local sub=sub and f(c,fc,false,sub2,mg,sg,tp,contact,sumtype)
+			local sub=sub and f(c,fc,false,sub2,mg,g,tp,contact,sumtype)
 			local t={...}
 			table.remove(t,i)
 			local res=cond(tp,mg,sg,mustg-c,g,fc,sub,sub2,contact,sumtype,chkf,fun1,minc,maxc,table.unpack(t))
@@ -424,9 +424,9 @@ function Fusion.CheckMixRepTemplate(c,cond,tp,mg,sg,mustg,g,fc,sub,sub2,contact,
 		end
 	end
 	if maxc>0 then
-		if fun1(c,fc,sub,sub2,mg,sg,tp,contact,sumtype) then
+		if fun1(c,fc,sub,sub2,mg,(g+c),tp,contact,sumtype) then
 			g:AddCard(c)
-			local sub=sub and fun1(c,fc,false,sub2,mg,sg,tp,contact,sumtype)
+			local sub=sub and fun1(c,fc,false,sub2,mg,g,tp,contact,sumtype)
 			local res=cond(tp,mg,sg,mustg-c,g,fc,sub,sub2,contact,sumtype,chkf,fun1,minc-1,maxc-1,...)
 			g:RemoveCard(c)
 			if res then return true end
@@ -455,16 +455,16 @@ function Fusion.CheckSelectMixRep(tp,mg,sg,mustg,g,fc,sub,sub2,contact,sumtype,c
 end
 function Fusion.CheckSelectMixRepAll(c,tp,mg,sg,mustg,g,fc,sub,sub2,contact,sumtype,chkf,fun1,minc,maxc,fun2,...)
 	if fun2 then
-		if fun2(c,fc,sub,sub2,mg,sg,tp,contact,sumtype) then
+		if fun2(c,fc,sub,sub2,mg,(g+c),tp,contact,sumtype) then
 			g:AddCard(c)
-			local sub=sub and fun2(c,fc,false,sub2,mg,sg,tp,contact,sumtype)
+			local sub=sub and fun2(c,fc,false,sub2,mg,g,tp,contact,sumtype)
 			local res=Fusion.CheckSelectMixRep(tp,mg,sg,mustg,g,fc,sub,sub2,contact,sumtype,chkf,fun1,minc,maxc,...)
 			g:RemoveCard(c)
 			return res
 		end
-	elseif maxc>0 and fun1(c,fc,sub,sub2,mg,sg,tp,contact,sumtype) then
+	elseif maxc>0 and fun1(c,fc,sub,sub2,mg,(g+c),tp,contact,sumtype) then
 		g:AddCard(c)
-		local sub=sub and fun1(c,fc,false,sub2,mg,sg,tp,contact,sumtype)
+		local sub=sub and fun1(c,fc,false,sub2,mg,g,tp,contact,sumtype)
 		local res=Fusion.CheckSelectMixRep(tp,mg,sg,mustg,g,fc,sub,sub2,contact,sumtype,chkf,fun1,minc-1,maxc-1)
 		g:RemoveCard(c)
 		return res

@@ -28,15 +28,15 @@ function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		return true
 	else return false end
 end
-function s.atkop(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.atkop(e)
 	local c=e:GetHandler()
 	local eq=c:GetEquipTarget()
-	if eq then
+	if c:IsStatus(STATUS_DESTROY_CONFIRMED) and eq then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_EQUIP)
 		e1:SetCode(EFFECT_SET_ATTACK)
 		e1:SetValue(eq:GetAttack()*2)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
 	end
 	return false

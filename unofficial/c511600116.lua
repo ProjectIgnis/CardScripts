@@ -1,6 +1,6 @@
 --パワー・ツール・ドラゴン (Anime)
 --Power Tool Dragon (Anime)
---scripted by Larry126
+--Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Search
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(135598,0))
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetCountLimit(1)
@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.thfilter(c)
-	return c:GetType()&TYPE_EQUIP+TYPE_SPELL==TYPE_EQUIP+TYPE_SPELL and c:IsAbleToHand()
+	return c:IsEquipSpell() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -38,26 +38,21 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local g=cg:RandomSelect(tp,1)
 	if #g>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,g)
 	end
 end
 function s.repfilter(c)
-	return c:IsSpell() and c:IsLocation(LOCATION_SZONE) and not c:IsStatus(STATUS_DESTROY_CONFIRMED)
+	return c:IsFaceup() and c:IsEquipSpell() and not c:IsStatus(STATUS_DESTROY_CONFIRMED)
 end
 function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then
-		local g=c:GetEquipGroup()
-		return not c:IsReason(REASON_REPLACE) and g:IsExists(s.repfilter,1,nil)
-	end
-	if Duel.SelectEffectYesNo(tp,c,96) then
-		local g=c:GetEquipGroup()
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local sg=g:FilterSelect(tp,s.repfilter,1,1,nil)
-		Duel.SetTargetCard(sg)
-		return true
-	else return false end
+	if chk==0 then return not c:IsReason(REASON_REPLACE)
+		and c:GetEquipGroup():IsExists(s.repfilter,1,nil) end
+	return Duel.SelectEffectYesNo(tp,c,96)
 end
 function s.desrepop(e,tp,eg,ep,ev,re,r,rp)
-	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	Duel.SendtoGrave(tg,REASON_EFFECT+REASON_REPLACE)
+	local g=e:GetHandler():GetEquipGroup()
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	local tg=g:FilterSelect(tp,s.repfilter,1,1,nil)
+	Duel.SendtoGrave(tg,REASON_EFFECT)
 end

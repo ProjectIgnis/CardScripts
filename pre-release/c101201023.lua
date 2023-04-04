@@ -109,9 +109,12 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
+function s.valfilter(c)
+	return c:IsLevelAbove(8) and c:IsSummonType(SUMMON_TYPE_TRIBUTE)
+end
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
-	if g:IsExists(Card.IsLevelAbove,1,nil,8) then
+	if g:IsExists(s.valfilter,1,nil) then
 		e:GetLabelObject():SetLabel(1)
 	else
 		e:GetLabelObject():SetLabel(0)

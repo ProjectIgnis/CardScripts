@@ -36,7 +36,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,0,3,3,nil)
+	local g=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,3,nil)
 	Duel.HintSelection(g,true)
 	Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_COST)
 	Duel.SortDeckbottom(tp,tp,#g)

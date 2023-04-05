@@ -527,3 +527,4 @@ SET_RECIPE                        = 0x198
 SET_MANADOME                      = 0x191
 SET_NEMURELIA                     = 0x192
 --Beta archetypes
+SET_VISAS                         = 0x293

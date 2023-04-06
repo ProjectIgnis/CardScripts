@@ -36,7 +36,9 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then return false end
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	if not tg or #tg~=1 or not tg:GetFirst():IsType(TYPE_PENDULUM) or not tg:GetFirst():IsLocation(LOCATION_MZONE) then return false end
+	local tc=tg:GetFirst()
+	if #tg~=1 or not tc or not tc:IsType(TYPE_PENDULUM) or not tc:IsControler(tp)
+		or not tc:IsLocation(LOCATION_MZONE) then return false end
 	return re:IsActiveType(TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)

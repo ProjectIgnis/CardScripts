@@ -27,5 +27,5 @@ function s.maxCon(e)
 	return e:GetHandler():IsMaximumMode()
 end
 function s.indval2(e,re,rp)
-	return re:IsTrapEffect() and aux.indoval(e,re,rp)
+	return re:IsSpellEffect() and aux.indoval(e,re,rp)
 end

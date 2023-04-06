@@ -41,27 +41,25 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_COST)
 	Duel.SortDeckbottom(tp,tp,#g)
 	-- Special Summon
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local sg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE,0,nil,e,tp)
-	if #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local ssg=sg:Select(tp,1,1,nil)
 		if #ssg>0 then
 			Duel.BreakEffect()
-			if Duel.SpecialSummon(ssg,0,tp,tp,false,false,POS_FACEUP_ATTACK)>0
-			and Duel.GetMatchingGroupCount(Card.IsMonster,tp,LOCATION_GRAVE,0,nil)==0 then
-				--Destroy 1 face-up Level 8 or lower monster on your opponent's field
-				local dg=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_MZONE,nil)
-				if #dg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
-					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-					dg=dg:Select(tp,1,1,nil)
-					if #dg==0 then return end
-					Duel.HintSelection(dg,true)
-					dg:AddMaximumCheck()
-					Duel.BreakEffect()
-					Duel.Destroy(dg,REASON_EFFECT)
-				end
-			end
+			Duel.SpecialSummon(ssg,0,tp,tp,false,false,POS_FACEUP_ATTACK)
 		end
+	end
+	--Destroy 1 face-up Level 8 or lower monster on your opponent's field
+	local dg=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_MZONE,nil)
+	if Duel.GetMatchingGroupCount(Card.IsMonster,tp,LOCATION_GRAVE,0,nil)==0 
+		and #dg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+		dg=dg:Select(tp,1,1,nil)
+		if #dg==0 then return end
+		Duel.HintSelection(dg,true)
+		dg:AddMaximumCheck()
+		Duel.BreakEffect()
+		Duel.Destroy(dg,REASON_EFFECT)
 	end
 end

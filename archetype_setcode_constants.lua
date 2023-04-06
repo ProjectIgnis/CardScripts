@@ -528,3 +528,5 @@ SET_MANADOME                      = 0x191
 SET_NEMURELIA                     = 0x192
 --Beta archetypes
 SET_VISAS                         = 0x293
+SET_COUNTER                       = 0x294
+SET_BATTLIN_BOXING                = 0x295

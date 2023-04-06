@@ -101,7 +101,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 		if tc then
 			Duel.HintSelection(tc,true)
 			if Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_DECK|LOCATION_EXTRA) then
-				if tc:IsLocation(LOCATION_DECK) then
+				if tc:IsControler(tp) and tc:IsLocation(LOCATION_DECK) then
 					Duel.ShuffleDeck(tp)
 				end
 				Duel.Draw(tp,1,REASON_EFFECT)

@@ -1,5 +1,5 @@
 --add procedure to equip spells equipping by rule
-function Auxiliary.AddEquipProcedure(c,p,f,eqlimit,cost,tg,op,con)
+function Auxiliary.AddEquipProcedure(c,p,f,eqlimit,cost,tg,op,con,prop)
 	--Note: p==0 is check equip spell controler, p==1 for opponent's, PLAYER_ALL for both player's monsters
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -7,7 +7,7 @@ function Auxiliary.AddEquipProcedure(c,p,f,eqlimit,cost,tg,op,con)
 	e1:SetCategory(CATEGORY_EQUIP)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_CONTINUOUS_TARGET)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_CONTINUOUS_TARGET+prop or 0)
 	if con then
 		e1:SetCondition(con)
 	end

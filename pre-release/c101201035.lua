@@ -56,7 +56,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	aux.RemoveUntil(g,nil,REASON_EFFECT,PHASE_END,id,e,tp,aux.DefaultFieldReturnOp)
 end
 function s.cfilter(c,tp)
-	return c:GetReasonPlayer()==1-tp and c:IsPreviousLocation(LOCATION_DECK)
+	return c:IsControler(1-tp) and c:IsPreviousLocation(LOCATION_DECK)
 end
 function s.tkcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

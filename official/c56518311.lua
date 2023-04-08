@@ -2,7 +2,7 @@
 --Metalfoes Vanisher
 local s,id=GetID()
 function s.initial_effect(c)
-	--Enable pendulum summon
+	--Pendulum attributes
 	Pendulum.AddProcedure(c)
 	--Add 1 "Metalfoes" card from GY
 	local e1=Effect.CreateEffect(c)
@@ -41,8 +41,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.rmop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xe1}
-
+s.listed_series={SET_METALFOES}
 function s.cfilter(c,tp)
 	return c:IsReason(REASON_EFFECT) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
 end
@@ -50,7 +49,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xe1) and c:IsAbleToHand() and not c:IsCode(id)
+	return c:IsSetCard(SET_METALFOES) and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,nil) end
@@ -65,25 +64,14 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rescon(sg,e,tp,mg)
-	return sg:IsExists(Card.IsSetCard,1,nil,0xe1)
-end
-function s.mzfilter(c)
-	return c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5
-end
-function s.rescon2(sg,e,tp,mg)
-	return sg:IsExists(Card.IsSetCard,1,nil,0xe1) and sg:IsExists(s.mzfilter,1,nil)
+	return sg:IsExists(Card.IsSetCard,1,nil,SET_METALFOES) and Duel.GetMZoneCount(tp,sg,tp)>0
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsCanBeEffectTarget,e),tp,LOCATION_ONFIELD,0,nil,e)
-	local filter=s.rescon
-	if ft==0 or (ft==1 and Duel.GetMatchingGroupCount(s.mzfilter,tp,LOCATION_MZONE,0,nil)>4) then
-		filter=s.rescon2
-	end
 	if chk==0 then return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and aux.SelectUnselectGroup(g,1,tp,2,2,filter,chk,tp) end
-	local tg=aux.SelectUnselectGroup(g,1,tp,2,2,filter,chk,tp)
+		and aux.SelectUnselectGroup(g,1,tp,2,2,s.rescon,chk,tp) end
+	local tg=aux.SelectUnselectGroup(g,1,tp,2,2,s.rescon,chk,tp)
 	Duel.SetTargetCard(tg)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,2,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
@@ -97,22 +85,21 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return re and re:GetHandler():IsSetCard(0xe1)
+	return re and re:IsHasType(EFFECT_TYPE_ACTIONS) and re:GetHandler():IsSetCard(SET_METALFOES)
 end
 function s.rmfilter(c)
 	return c:IsMonster() and c:IsAbleToRemove() and aux.SpElimFilter(c,false,true)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE+LOCATION_GRAVE) and chkc:IsControler(1-tp) and s.rmfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.rmfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE|LOCATION_GRAVE) and chkc:IsControler(1-tp) and s.rmfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(s.rmfilter,tp,0,LOCATION_MZONE|LOCATION_GRAVE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectTarget(tp,s.rmfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,1,nil)
+	local g=Duel.SelectTarget(tp,s.rmfilter,tp,0,LOCATION_MZONE|LOCATION_GRAVE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	local c=e:GetHandler()
-	if tc and tc:IsRelateToEffect(e) then 
+	if tc:IsRelateToEffect(e) then
 		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 	end
 end

@@ -42,7 +42,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 	local dam=Duel.Damage(p,#g*200,REASON_EFFECT)
 	local g2=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(Card.IsFaceup),tp,0,LOCATION_MZONE,nil)
-	if #g2>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+	if dam>0 and #g2>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		for tc in g2:Iter() do
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)

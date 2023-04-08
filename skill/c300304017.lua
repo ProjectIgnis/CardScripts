@@ -5,7 +5,7 @@ function s.initial_effect(c)
 	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop)
 end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
-	return aux.CanActivateSkill(tp) and Duel.GetFlagEffect(id)==0
+	return aux.CanActivateSkill(tp) and not Duel.HasFlagEffect(tp,id)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))

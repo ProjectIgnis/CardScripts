@@ -25,7 +25,7 @@ function s.initial_effect(c)
 end
 s.MaximumAttack=4000
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsMaximumMode()
+	return e:GetHandler():IsMaximumMode() and not Duel.IsExistingMatchingCard(Card.IsMonster,e:GetHandlerPlayer(),LOCATION_GRAVE,0,1,nil)
 end
 function s.filter1(c)
 	return c:IsCode(160207016)

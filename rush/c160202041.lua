@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 	--If your attack position DARK monster with 0 ATK was destroyed by opponent's attack
 function s.filter(c,tp)
-	return c:IsAttribute(ATTRIBUTE_DARK) and c:GetBaseAttack()==0 and c:IsPreviousPosition(POS_ATTACK)
+	return c:IsAttribute(ATTRIBUTE_DARK) and c:GetPreviousAttackOnField()==0 and c:IsPreviousPosition(POS_ATTACK)
 		and c:GetReasonPlayer()==1-tp and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
 		and (c:IsReason(REASON_BATTLE) and Duel.GetAttacker():IsControler(1-tp))
 end

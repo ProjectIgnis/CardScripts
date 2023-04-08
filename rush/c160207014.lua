@@ -51,6 +51,5 @@ function s.actcon(e)
 	return Duel.GetAttacker()==e:GetHandler()
 end
 function s.indcon(e)
-	--maximum mode check to do
-	return e:GetHandler():IsMaximumMode()
+	return e:GetHandler():IsMaximumMode() and not Duel.IsExistingMatchingCard(Card.IsMonster,e:GetHandlerPlayer(),LOCATION_GRAVE,0,1,nil)
 end

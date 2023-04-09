@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1)
+	e2:SetCountLimit(1,0,EFFECT_COUNT_CODE_SINGLE)
 	e2:SetCost(s.cost)
 	e2:SetOperation(s.indesop)
 	c:RegisterEffect(e2)
@@ -30,17 +30,14 @@ end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) end
 end
-function s.filter(c)
-	return c:GetSequence()<5
-end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_SZONE,LOCATION_SZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(nil,tp,LOCATION_STZONE,LOCATION_STZONE,1,nil) end
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.DiscardDeck(tp,1,REASON_COST)<1 then return end
 	if c:IsFaceup() and c:IsRelateToEffect(e) then
-		local atkval=Duel.GetMatchingGroupCount(s.filter,tp,LOCATION_SZONE,LOCATION_SZONE,nil)*500
+		local atkval=Duel.GetMatchingGroupCount(nil,tp,LOCATION_STZONE,LOCATION_STZONE,nil)*500
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)

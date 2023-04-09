@@ -22,12 +22,9 @@ function s.initial_effect(c)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
 end
-function s.filter(c)
-	return c:GetSequence()<5
-end
 function s.con(e)
-	return Duel.GetMatchingGroupCount(s.filter,e:GetHandlerPlayer(),LOCATION_SZONE,0,nil)>0
+	return Duel.IsExistingMatchingCard(nil,e:GetHandlerPlayer(),LOCATION_STZONE,0,1,nil)
 end
 function s.indcond(e)
-	return e:GetHandler():IsAttackPos() and Duel.GetTurnPlayer()~=e:GetHandlerPlayer() and s.con(e)
+	return e:GetHandler():IsAttackPos() and Duel.IsTurnPlayer(1-e:GetHandlerPlayer()) and s.con(e)
 end

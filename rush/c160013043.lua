@@ -59,7 +59,7 @@ function s.indesop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(function(e,te)return te:GetOwnerPlayer()~=e:GetHandlerPlayer()end)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)
-		local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_SZONE,0,nil)
+		local g=Duel.GetMatchingGroup(nil,tp,LOCATION_STZONE,0,nil)
 		local g2=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(Card.IsFaceup),tp,0,LOCATION_ONFIELD,nil)
 		if #g>0 and #g2>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)

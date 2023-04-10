@@ -117,7 +117,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	Duel.Hint(HINT_SELECTMSG,tp,0)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELF)
 	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil,ft,e,tp):GetFirst()
 	if tc then
 		aux.ToHandOrElse(tc,tp,

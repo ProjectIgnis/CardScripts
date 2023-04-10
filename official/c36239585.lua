@@ -99,6 +99,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.IsExistingMatchingCard(Card.IsCanTurnSet,tp,0,LOCATION_MZONE,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 			Duel.BreakEffect()
 			local ct=Duel.GetMatchingGroupCount(Card.IsFacedown,tp,LOCATION_ONFIELD,0,nil)
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
 			local g=Duel.SelectMatchingCard(tp,Card.IsCanTurnSet,tp,0,LOCATION_MZONE,1,ct,nil)
 			Duel.HintSelection(g)
 				Duel.ChangePosition(g,POS_FACEDOWN_DEFENSE)

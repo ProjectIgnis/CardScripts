@@ -15,18 +15,19 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
-	return a:IsControler(1-tp) and a:IsStatus(STATUS_OPPO_BATTLE)
+	local at=Duel.GetAttackTarget()
+	return a:IsControler(1-tp) and at and at:IsControler(tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	local d=Duel.GetAttackTarget()
-	if chk==0 then return d:IsControler(tp) and d:IsOnField() and d:IsCanBeEffectTarget(e) end
-	Duel.SetTargetCard(d)
+	local at=Duel.GetAttackTarget()
+	if chk==0 then return at:IsOnField() and at:IsCanBeEffectTarget(e) end
+	Duel.SetTargetCard(at)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)

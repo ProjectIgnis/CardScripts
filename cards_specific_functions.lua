@@ -327,7 +327,7 @@ end
 
 --Special Summon limit for "Evil HERO" Fusion monsters
 function Auxiliary.EvilHeroLimit(e,se,sp,st)
-	return se:GetHandler():IsCode(CARD_DARK_FUSION) or (Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),300306009) and se:GetHandler():IsCode(48130397))
+	return se:GetHandler():IsCode(CARD_DARK_FUSION) or (Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),SKILL_DARK_UNITY) and se:GetHandler():IsCode(CARD_SUPER_POLYMERIZATION))
 		or (Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),EFFECT_SUPREME_CASTLE) and st&SUMMON_TYPE_FUSION==SUMMON_TYPE_FUSION)
 end
 --Special Summon limit for "Fossil" Fusion monsters

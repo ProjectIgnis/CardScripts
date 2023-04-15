@@ -20,6 +20,7 @@ function s.valcheck(e,c)
 	local tc=c:GetMaterial():GetFirst()
 	local atk=0
 	if tc then atk=tc:GetTextAttack()*2 end
+	if tc and tc:IsMaximumMode() then atk=tc.MaximumAttack*2 end
 	if atk<0 then atk=0 end
 	if e:GetLabel()==1 then
 		e:SetLabel(0)

@@ -10,6 +10,7 @@ function s.initial_effect(c)
 	Link.AddProcedure(c,s.matfilter,1,1)
 	--Targeted monster cannot attack
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -29,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_CHAIN_SOLVED)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCondition(function(e) return e:GetHandler():GetFlagEffect(1)>0 end)
+	e3:SetCondition(function(e) return e:GetHandler():HasFlagEffect(1) end)
 	e3:SetOperation(s.lpop)
 	c:RegisterEffect(e3)
 end
@@ -47,19 +48,19 @@ end
 function s.naop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
+		local ct=Duel.IsTurnPlayer(tp) and 2 or 1
 		--Cannot attack
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetDescription(3206)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_CANNOT_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,1)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,ct)
 		tc:RegisterEffect(e1)
 	end
 end
 function s.lpop(e,tp,eg,ep,ev,re,r,rp)
-	local rc=re:GetHandler()
-	if re:IsSpellEffect() and rp==tp and rc:IsSetCard(SET_SKY_STRIKER) then
+	if re:IsSpellEffect() and rp==tp and re:GetHandler():IsSetCard(SET_SKY_STRIKER) then
 		Duel.Hint(HINT_CARD,0,id)
 		Duel.Recover(tp,100,REASON_EFFECT)
 	end

@@ -20,11 +20,17 @@ function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	local tc=g:GetFirst()
 	local atk=0
-	if #g==1 and g:GetFirst():GetFlagEffect(FLAG_DOUBLE_TRIB)>0 then
-		atk=g:GetFirst():GetTextAttack()*2
+	if #g==1 and tc:GetFlagEffect(FLAG_DOUBLE_TRIB)>0 then
+		atk=tc:GetTextAttack()*2
+		if tc:IsMaximumMode() then
+			atk=tc.MaximumAttack*2
+		end
 	else
 		for tc in g:Iter() do
 			local catk=tc:GetTextAttack()
+			if tc:IsMaximumMode() then
+				catk=tc.MaximumAttack*2
+			end
 			atk=atk+(catk>=0 and catk or 0)
 		end
 	end

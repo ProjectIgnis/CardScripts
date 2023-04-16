@@ -587,6 +587,31 @@ function Duel.HasFlagEffect(tp,id,ct)
 	return Duel.GetFlagEffect(tp,id)>=(ct or 1)
 end
 
+--Negates the effect of the selected card.
+--Useful to reduce clutter with effects like "but its effects are negated".
+function Card.NegateEffects(tc,c,reset)
+	if not reset then reset=RESET_EVENT|RESETS_STANDARD end
+	reset=reset|(RESET_EVENT|RESETS_STANDARD)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_DISABLE)
+	e1:SetReset(reset)
+	tc:RegisterEffect(e1)
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetCode(EFFECT_DISABLE_EFFECT)
+	e2:SetReset(reset)
+	tc:RegisterEffect(e2)
+	if tc:IsType(TYPE_TRAPMONSTER) then
+		local e3=Effect.CreateEffect(c)
+		e3:SetType(EFFECT_TYPE_SINGLE)
+		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e3:SetCode(EFFECT_DISABLE_TRAPMONSTER)
+		e3:SetReset(reset)
+		tc:RegisterEffect(e3)
+	end
+end
+
 function Card.GetMetatable(c,currentCode)
 	if currentCode then return _G["c" .. c:GetCode()] end
 	return c.__index

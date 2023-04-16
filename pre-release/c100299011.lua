@@ -78,7 +78,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CHANGE_DAMAGE)
 	e1:SetTargetRange(0,1)
-	e1:SetValue(function(_,_,val) return val*2 end)
+	e1:SetValue(function(_,_,val,r) return r&REASON_EFFECT>0 and val*2 or val end)
 	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end

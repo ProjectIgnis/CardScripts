@@ -72,5 +72,11 @@ end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,tp,id)
 	Duel.Hint(HINT_CARD,1-tp,id)
-	e:GetOwner():MoveToDeckMasterZone(tp)
+	local c=e:GetOwner()
+	c:MoveToDeckMasterZone(tp)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	c:RegisterEffect(e1)
 end

@@ -1,5 +1,6 @@
 --光子化
 --Lumenize (Anime)
+--Made by Kevdaplog
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -59,19 +59,19 @@ function s.initial_effect(c)
 	e6:SetOperation(s.drop)
 	c:RegisterEffect(e6)
 end
-s.listed_series={0x40}
+s.listed_series={SET_FORBIDDEN_ONE}
 function s.atkfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x40)
+	return c:IsMonster() and c:IsSetCard(SET_FORBIDDEN_ONE)
 end
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(s.atkfilter,c:GetControler(),LOCATION_GRAVE,0,nil)*1000
 end
 function s.spcon(e,c)
 	if c==nil then return true end
-	return Duel.CheckReleaseGroup(c:GetControler(),Card.IsSetCard,1,false,1,true,c,c:GetControler(),nil,false,nil,0x40)
+	return Duel.CheckReleaseGroup(c:GetControler(),Card.IsSetCard,1,false,1,true,c,c:GetControler(),nil,false,nil,SET_FORBIDDEN_ONE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.SelectReleaseGroup(tp,Card.IsSetCard,1,1,false,true,true,c,nil,nil,false,nil,0x40)
+	local g=Duel.SelectReleaseGroup(tp,Card.IsSetCard,1,1,false,true,true,c,nil,nil,false,nil,SET_FORBIDDEN_ONE)
 	if g then
 		g:KeepAlive()
 		e:SetLabelObject(g)
@@ -95,7 +95,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 end
 function s.thfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x40) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(SET_FORBIDDEN_ONE) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -113,7 +113,7 @@ function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE) and e:GetHandler():IsReason(REASON_BATTLE)
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x40) and not c:IsPublic()
+	return c:IsMonster() and c:IsSetCard(SET_FORBIDDEN_ONE) and not c:IsPublic()
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1)

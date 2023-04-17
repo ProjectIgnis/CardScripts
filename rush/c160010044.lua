@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMixN(c,false,false,160303019,2)
+	Fusion.AddProcMixN(c,true,true,160303019,2)
 	--Toss a coin a draw
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_COIN+CATEGORY_DRAW)

@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Fusion Summon Procedure
-	Fusion.AddProcMixN(c,false,false,160012002,2)
+	Fusion.AddProcMixN(c,true,true,160012002,2)
 	--Make a Normal monster able to attack twice this turn
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

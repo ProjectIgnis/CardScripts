@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMixN(c,false,false,160009002,1,s.matfilter,2)
+	Fusion.AddProcMixN(c,true,true,160009002,1,s.matfilter,2)
 	-- Mill and gain atk
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Fusion Summon Procedure
-	Fusion.AddProcMixN(c,false,false,CARD_CYBER_DRAGON,2)
+	Fusion.AddProcMixN(c,true,true,CARD_CYBER_DRAGON,2)
 	--Extra attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -12,4 +12,4 @@ function s.initial_effect(c)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
 end
-s.material_setcode={0x93,0x1093}
+s.material_setcode={SET_CYBER,SET_CYBER_DRAGON}

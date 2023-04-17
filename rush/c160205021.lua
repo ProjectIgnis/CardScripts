@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Fusion Summon Procedure
-	Fusion.AddProcMixN(c,false,false,CARD_CYBER_DRAGON,2)
+	Fusion.AddProcMixN(c,true,true,CARD_CYBER_DRAGON,2)
 	--Draw up to 5 cards and discard 4 and Special Summon 1 monster from the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

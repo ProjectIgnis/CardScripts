@@ -593,6 +593,7 @@ function Card.NegateEffects(tc,c,reset,negates_cards,ct)
 	if not reset then reset=RESET_EVENT|RESETS_STANDARD end
 	reset=reset|(RESET_EVENT|RESETS_STANDARD)
 	if not ct then ct=1 end
+	Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 	--Negate its effects
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

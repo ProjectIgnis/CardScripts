@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(TIMING_DRAW_PHASE+TIMINGS_CHECK_MONSTER_E,TIMING_DRAW_PHASE+TIMINGS_CHECK_MONSTER_E)
+	e1:SetHintTiming(TIMING_DRAW_PHASE+TIMINGS_CHECK_MONSTER_E)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
@@ -21,13 +21,14 @@ function s.initial_effect(c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local gy_check=true
-	if e:GetLabel()==1 then gy_check=aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,chk) end
+	local c=e:GetHandler()
+	if e:GetLabel()==1 then gy_check=c:IsAbleToRemoveAsCost() end
 	if chk==0 then return gy_check end
 	Duel.PayLPCost(tp,math.floor(Duel.GetLP(tp)/2))
-	if e:GetLabel()==1 then aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,chk) end
+	if e:GetLabel()==1 then Duel.Remove(c,POS_FACEUP,REASON_COST) end
 end
 function s.filter(c)
-	return c:GetType()==0x4 and c:CheckActivateEffect(false,true,false)~=nil
+	return c:IsNormalTrap() and c:CheckActivateEffect(false,true,false)~=nil
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then
@@ -46,7 +47,6 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.ClearTargetCard()
 	g:GetFirst():CreateEffectRelation(e)
 	local tg=te:GetTarget()
-	e:SetCategory(te:GetCategory())
 	e:SetProperty(te:GetProperty())
 	if tg then tg(e,tp,ceg,cep,cev,cre,cr,crp,1) end
 	te:SetLabelObject(e:GetLabelObject())

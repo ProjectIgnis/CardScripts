@@ -1,4 +1,5 @@
---Combat Wheel
+--コンバット・ホイール (Anime)
+--Combat Wheel (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -6,7 +7,7 @@ function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--adup
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(38180759,0))
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetRange(LOCATION_MZONE)

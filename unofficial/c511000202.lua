@@ -30,7 +30,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return a and a:IsControler(1-tp) and Duel.GetAttackTarget()
 		and not e:GetHandler():IsStatus(STATUS_CHAINING)
 end
-function s.operation(e,tp,eg,ep,ev,re,r,rp))
+function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateAttack()
 	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,0)
 end

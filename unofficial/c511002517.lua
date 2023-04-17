@@ -1,4 +1,5 @@
---機皇神マシニクル∞
+--機皇神マシニクル∞³ (Anime)
+--Meklord Astro Mekanikle (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--equip
@@ -28,10 +29,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 	--gain eff
 	local e5=Effect.CreateEffect(c)
-	e5:SetDescription(aux.Stringid(10032958,0))
+	e5:SetDescription(aux.Stringid(id,2))
 	e5:SetType(EFFECT_TYPE_QUICK_O)
 	e5:SetCode(EVENT_FREE_CHAIN)
 	e5:SetRange(LOCATION_MZONE)
+	e5:SetCondition(function(_,tp) return Duel.IsTurnPlayer(tp) end)
 	e5:SetCost(s.effcost)
 	e5:SetTarget(s.efftg)
 	e5:SetOperation(s.effop)

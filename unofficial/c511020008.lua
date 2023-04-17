@@ -1,9 +1,11 @@
---Hidden Soldiers (Anime)
+--隠れ兵 (Manga)
+--Hidden Soldiers (Manga)
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
@@ -19,7 +21,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
+	return eg:IsExists(Card.IsSummonPlayer,1,nil,1-tp) 
 end
 function s.filter(c,e,tp)
 	return c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

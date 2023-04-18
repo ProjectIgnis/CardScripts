@@ -2,104 +2,92 @@
 --Spirit Illusion
 local s,id=GetID()
 function s.initial_effect(c)
+	aux.AddEquipProcedure(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_EQUIP+CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
-	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_CONTINUOUS_TARGET)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
+	e1:SetType(EFFECT_TYPE_IGNITION)
+	e1:SetRange(LOCATION_SZONE)
+	e1:SetCountLimit(1)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--Equip limit
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_EQUIP_LIMIT)
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e2:SetValue(1)
-	c:RegisterEffect(e2)
-	--Destroy
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
-	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e3:SetCode(EVENT_LEAVE_FIELD_P)
-	e3:SetOperation(s.checkop)
-	c:RegisterEffect(e3)
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
-	e4:SetCode(EVENT_LEAVE_FIELD)
-	e4:SetOperation(s.desop)
-	e4:SetLabelObject(e3)
-	c:RegisterEffect(e4)
 end
-function s.filter(c,tp)
-	return c:IsFaceup() 
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,c:GetAttack(),c:GetDefense(),c:GetLevel(),c:GetRace(),c:GetAttribute())
-end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc,tp) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
-		and Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,tp) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,tp)
-	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,0,0)
+s.listed_names={id+1}
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	local eq=e:GetHandler():GetEquipTarget()
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and eq:HasLevel()
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,eq:GetAttack(),eq:GetDefense(),
+			eq:GetLevel(),eq:GetRace(),eq:GetAttribute())
+	end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() and Duel.Equip(tp,c,tc) then
-		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 
-			or not Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,tc:GetAttack(),tc:GetDefense(),
-			tc:GetLevel(),tc:GetRace(),tc:GetAttribute()) then return end
-		local token=Duel.CreateToken(tp,id+1)
-		token:CopyEffect(tc:GetOriginalCode(),RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD,1)
-		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_SET_ATTACK)
-		e1:SetValue(tc:GetAttack())
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		token:RegisterEffect(e1)
-		local e2=e1:Clone()
-		e2:SetCode(EFFECT_SET_DEFENSE)
-		e2:SetValue(tc:GetDefense())
-		token:RegisterEffect(e2)
-		local e3=e1:Clone()
-		e3:SetCode(EFFECT_CHANGE_LEVEL)
-		e3:SetValue(tc:GetLevel())
-		token:RegisterEffect(e3)
-		local e4=e1:Clone()
-		e4:SetCode(EFFECT_CHANGE_RACE)
-		e4:SetValue(tc:GetRace())
-		token:RegisterEffect(e4)
-		local e5=e1:Clone()
-		e5:SetCode(EFFECT_CHANGE_ATTRIBUTE)
-		e5:SetValue(tc:GetAttribute())
-		token:RegisterEffect(e5)
-		if tc:IsType(TYPE_EFFECT) and not token:IsType(TYPE_EFFECT) then
-			local e6=Effect.CreateEffect(c)
-			e6:SetType(EFFECT_TYPE_SINGLE)
-			e6:SetCode(EFFECT_ADD_TYPE)
-			e6:SetValue(TYPE_EFFECT)
-			e6:SetReset(RESET_EVENT+RESETS_STANDARD)
-			token:RegisterEffect(e6)
+	local eq=c:GetEquipTarget()
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 or not eq:HasLevel()
+		or not Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,eq:GetAttack(),eq:GetDefense(),
+			eq:GetLevel(),eq:GetRace(),eq:GetAttribute()) then return end
+	local token=Duel.CreateToken(tp,id+1)
+	--There can only be 1 "Doppelganger Token" on the field
+	token:SetUniqueOnField(1,1,id+1)
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_FIELD)
+	e0:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	e0:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e0:SetRange(LOCATION_MZONE)
+	e0:SetTargetRange(1,1)
+	e0:SetTarget(function(_,_c) return _c:IsCode(id+1) end)
+	e0:SetReset(RESET_EVENT|RESETS_STANDARD&~RESET_TOFIELD)
+	token:RegisterEffect(e0)
+	--Add monster properties
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_SET_BASE_ATTACK)
+	e1:SetValue(eq:GetAttack())
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD&~RESET_TOFIELD)
+	token:RegisterEffect(e1)
+	local e2=e1:Clone()
+	e2:SetCode(EFFECT_SET_BASE_DEFENSE)
+	e2:SetValue(eq:GetDefense())
+	token:RegisterEffect(e2)
+	local e3=e1:Clone()
+	e3:SetCode(EFFECT_CHANGE_LEVEL)
+	e3:SetValue(eq:GetLevel())
+	token:RegisterEffect(e3)
+	local e4=e1:Clone()
+	e4:SetCode(EFFECT_CHANGE_RACE)
+	e4:SetValue(eq:GetRace())
+	token:RegisterEffect(e4)
+	local e5=e1:Clone()
+	e5:SetCode(EFFECT_CHANGE_ATTRIBUTE)
+	e5:SetValue(eq:GetAttribute())
+	token:RegisterEffect(e5)
+	if Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP) then
+		--Cannot be tributed
+		local e6=Effect.CreateEffect(c)
+		e6:SetDescription(3303)
+		e6:SetType(EFFECT_TYPE_SINGLE)
+		e6:SetCode(EFFECT_UNRELEASABLE_SUM)
+		e6:SetProperty(EFFECT_FLAG_CLIENT_HINT)
+		e6:SetValue(1)
+		e6:SetReset(RESET_EVENT|RESETS_STANDARD)
+		token:RegisterEffect(e6)
+		local e7=e6:Clone()
+		e7:SetCode(EFFECT_UNRELEASABLE_NONSUM)
+		token:RegisterEffect(e7)
+		--Gain effects
+		if eq:IsOriginalType(TYPE_EFFECT) then
+			token:CopyEffect(eq:GetOriginalCode(),RESET_EVENT|RESETS_STANDARD)
+			local e8=Effect.CreateEffect(c)
+			e8:SetType(EFFECT_TYPE_SINGLE)
+			e8:SetCode(EFFECT_ADD_TYPE)
+			e8:SetValue(TYPE_EFFECT)
+			e8:SetReset(RESET_EVENT|RESETS_STANDARD)
+			token:RegisterEffect(e8)
 		end
-		Duel.SpecialSummonComplete()
-		c:SetCardTarget(token)
 	end
-end
-function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetHandler():IsDisabled() then
-		e:SetLabel(1)
-	else e:SetLabel(0) end
-end
-function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetLabelObject():GetLabel()~=0 then return end
-	local g=e:GetHandler():GetCardTarget()
-	local tc=g:Filter(aux.TRUE,e:GetHandler():GetEquipTarget()):GetFirst()
-	if tc and tc:IsLocation(LOCATION_MZONE) then
-		Duel.Destroy(tc,REASON_EFFECT)
-	end
+	Duel.SpecialSummonComplete()
 end

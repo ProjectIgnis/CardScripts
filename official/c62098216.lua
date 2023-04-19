@@ -1,5 +1,5 @@
 --Ｅｖｉｌ★Ｔｗｉｎｓ キスキル・リィラ
---Evil★Twins Kisikil-Lilla
+--Evil★Twins Ki-sikil & Lil-la
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -48,9 +48,9 @@ function s.initial_effect(c)
 	e6:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e6)
 end
-s.listed_series={0x153,0x154}
+s.listed_series={SET_KI_SIKIL,SET_LIL_LA}
 function s.rfilter(c,tp)
-	return c:IsType(TYPE_LINK) and (c:IsControler(tp) or c:IsFaceup())
+	return c:IsLinkMonster() and (c:IsControler(tp) or c:IsFaceup())
 end
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -81,10 +81,10 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	if ct>0 then
 		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_TOGRAVE)
 		local sg=g:Select(1-tp,ct,ct,nil)
-		Duel.SendtoGrave(sg,REASON_RULE)
+		Duel.SendtoGrave(sg,REASON_RULE,PLAYER_NONE,1-tp)
 	end
 end
 function s.atkcon(e)
 	local g=Duel.GetFieldGroup(e:GetHandler():GetControler(),LOCATION_GRAVE,0)
-	return g:IsExists(Card.IsSetCard,1,nil,0x153) and g:IsExists(Card.IsSetCard,1,nil,0x154)
+	return g:IsExists(Card.IsSetCard,1,nil,SET_KI_SIKIL) and g:IsExists(Card.IsSetCard,1,nil,SET_LIL_LA)
 end

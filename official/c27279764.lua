@@ -54,7 +54,7 @@ function s.tlimit(e,c)
 	return not c:IsSetCard(SET_QLI)
 end
 function s.efilter(e,te)
-	if te:IsSpellTraEffect() then
+	if te:IsSpellTrapEffect() then
 		return true
 	else
 		return aux.qlifilter(e,te)

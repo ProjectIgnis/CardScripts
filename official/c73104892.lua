@@ -3,11 +3,12 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--Synchro Summon
-	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
 	c:EnableReviveLimit()
+	--Synchro Summon Procedure
+	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
 	--Change Attribute
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
@@ -15,8 +16,9 @@ function s.initial_effect(c)
 	e1:SetTarget(s.atttg)
 	e1:SetOperation(s.attop)
 	c:RegisterEffect(e1)
-	--Send to GY
+	--Make the opponent send 1 card to GY
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOGRAVE)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -90,7 +92,7 @@ function s.gyop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_TOGRAVE)
 			local sg=g:Select(1-tp,1,1,nil)
 			Duel.HintSelection(sg,true)
-			Duel.SendtoGrave(sg,REASON_RULE)
+			Duel.SendtoGrave(sg,REASON_RULE,PLAYER_NONE,1-tp)
 		end
 	end
 end

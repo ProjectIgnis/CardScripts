@@ -53,6 +53,7 @@ SET_BES                           = 0x15
 SET_ROID                          = 0x16
 SET_VEHICROID                     = 0x1016
 SET_SPEEDROID                     = 0x2016
+SET_SYNCHRO                       = 0x17
 SET_SYNCHRON                      = 0x1017
 SET_SYNCHRO_DRAGON                = 0x2017
 SET_CLOUDIAN                      = 0x18

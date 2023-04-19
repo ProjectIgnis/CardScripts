@@ -44,7 +44,6 @@ function s.initial_effect(c)
 	end)
 end
 s.listed_series={SET_ALTERGEIST}
-s.act_turn=true
 function s.tgfilter(c)
 	return c:IsSetCard(SET_ALTERGEIST) and c:IsMonster() and c:IsAbleToGrave()
 end

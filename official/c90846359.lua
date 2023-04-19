@@ -48,8 +48,7 @@ function s.sumlimit(e,c,sump,sumtype,sumpos,targetp)
 end
 function s.getrace(g)
 	local arc=0
-	local tc=g:GetFirst()
-	for tc in aux.Next(g) do
+	for tc in g:Iter() do
 		arc=(arc|tc:GetRace())
 	end
 	return arc
@@ -63,7 +62,8 @@ function s.adjustop(e,tp,eg,ep,ev,re,r,rp)
 	local g1=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
 	local g2=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 	local c=e:GetHandler()
-	if #g1==0 then s[tp]=0
+	if #g1==0 then
+		s[tp]=0
 	else
 		local rac=s.getrace(g1)
 		if (rac&rac-1)~=0 then
@@ -75,7 +75,8 @@ function s.adjustop(e,tp,eg,ep,ev,re,r,rp)
 		g1:Remove(s.rmfilter,nil,rac)
 		s[tp]=rac
 	end
-	if #g2==0 then s[1-tp]=0
+	if #g2==0 then
+		s[1-tp]=0
 	else
 		local rac=s.getrace(g2)
 		if (rac&rac-1)~=0 then
@@ -87,9 +88,14 @@ function s.adjustop(e,tp,eg,ep,ev,re,r,rp)
 		g2:Remove(s.rmfilter,nil,rac)
 		s[1-tp]=rac
 	end
-	g1:Merge(g2)
+	local readjust=false
 	if #g1>0 then
-		Duel.SendtoGrave(g1,REASON_RULE)
-		Duel.Readjust()
+		Duel.SendtoGrave(g1,REASON_RULE,PLAYER_NONE,tp)
+		readjust=true
 	end
+	if #g2>0 then
+		Duel.SendtoGrave(g2,REASON_RULE,PLAYER_NONE,1-tp)
+		readjust=true
+	end
+	if readjust then Duel.Readjust() end
 end

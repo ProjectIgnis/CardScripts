@@ -17,21 +17,21 @@ function s.initial_effect(c)
 	e2:SetCondition(function(e) return e:GetHandler():IsStatus(STATUS_EFFECT_ENABLED) end)
 	c:RegisterEffect(e2)
 	--Cannot Normal Summon, Special Summon or Flip Summon
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_FIELD)
-	e4:SetRange(LOCATION_SZONE)
-	e4:SetCode(EFFECT_FORCE_SPSUMMON_POSITION)
-	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e4:SetTargetRange(1,1)
-	e4:SetTarget(s.sumlimit)
-	e4:SetValue(POS_FACEDOWN)
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_FIELD)
+	e3:SetRange(LOCATION_SZONE)
+	e3:SetCode(EFFECT_FORCE_SPSUMMON_POSITION)
+	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e3:SetTargetRange(1,1)
+	e3:SetTarget(s.sumlimit)
+	e3:SetValue(POS_FACEDOWN)
+	c:RegisterEffect(e3)
+	local e4=e3:Clone()
+	e4:SetCode(EFFECT_CANNOT_SUMMON)
 	c:RegisterEffect(e4)
-	local e5=e4:Clone()
-	e5:SetCode(EFFECT_CANNOT_SUMMON)
+	local e5=e3:Clone()
+	e5:SetCode(EFFECT_CANNOT_FLIP_SUMMON)
 	c:RegisterEffect(e5)
-	local e6=e4:Clone()
-	e6:SetCode(EFFECT_CANNOT_FLIP_SUMMON)
-	c:RegisterEffect(e6)
 	aux.GlobalCheck(s,function()
 		s.lastFieldId={}
 		s.lastFieldId[0]=nil
@@ -94,8 +94,19 @@ function s.adjustop(e,tp,eg,ep,ev,re,r,rp)
 			end
 		end
 	end
+	local p=e:GetHandlerPlayer()
+	local g1,g2=Group.CreateGroup(),Group.CreateGroup()
+	local readjust=false
 	if #sg>0 then
-		Duel.SendtoGrave(sg,REASON_RULE)
-		Duel.Readjust()
+		g1,g2=sg:Split(Card.IsControler,nil,p)
 	end
+	if #g1>0 then
+		Duel.SendtoGrave(g1,REASON_RULE,PLAYER_NONE,p)
+		readjust=true
+	end
+	if #g2>0 then
+		Duel.SendtoGrave(g2,REASON_RULE,PLAYER_NONE,1-p)
+		readjust=true
+	end
+	if readjust then Duel.Readjust() end
 end

@@ -48,8 +48,7 @@ function s.sumlimit(e,c,sump,sumtype,sumpos,targetp)
 end
 function s.getattribute(g)
 	local aat=0
-	local tc=g:GetFirst()
-	for tc in aux.Next(g) do
+	for tc in g:Iter() do
 		aat=(aat|tc:GetAttribute())
 	end
 	return aat
@@ -87,9 +86,14 @@ function s.adjustop(e,tp,eg,ep,ev,re,r,rp)
 		g2:Remove(s.rmfilter,nil,att)
 		s[1-tp]=att
 	end
-	g1:Merge(g2)
+	local readjust=false
 	if #g1>0 then
-		Duel.SendtoGrave(g1,REASON_RULE)
-		Duel.Readjust()
+		Duel.SendtoGrave(g1,REASON_RULE,PLAYER_NONE,tp)
+		readjust=true
 	end
+	if #g2>0 then
+		Duel.SendtoGrave(g2,REASON_RULE,PLAYER_NONE,1-tp)
+		readjust=true
+	end
+	if readjust then Duel.Readjust() end
 end

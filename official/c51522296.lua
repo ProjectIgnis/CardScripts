@@ -1,5 +1,5 @@
 --凶導の白き天底
---White Zoa of Dogmatika
+--Dogmatika Alba Zoa
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -16,8 +16,8 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_IMMUNE_EFFECT)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_DOGMATIKA))
 	e2:SetTargetRange(LOCATION_MZONE,0)
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_DOGMATIKA))
 	e2:SetValue(s.unaval)
 	c:RegisterEffect(e2)
 	--Your opponent applies 1 effect
@@ -68,10 +68,10 @@ function s.applyop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_TOGRAVE)
 		local g=Duel.SelectMatchingCard(1-tp,Card.IsAbleToGrave,tp,0,LOCATION_HAND|LOCATION_EXTRA,send_ct,send_ct,nil)
 		if #g>0 then
-			Duel.SendtoGrave(g,REASON_EFFECT)
+			Duel.SendtoGrave(g,REASON_EFFECT,PLAYER_NONE,1-tp)
 		end
 	elseif op==2 then
 		texg:Match(Card.IsAbleToExtra,nil)
-		Duel.SendtoDeck(texg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
+		Duel.SendtoDeck(texg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT,1-tp)
 	end
 end

@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.negop)
 	c:RegisterEffect(e3)
 end
-s.listed_name={id,CARD_CHIMERA_MYTHICAL_BEAST,CARD_CHIMERA_FUSION}
+s.listed_names={id,CARD_CHIMERA_MYTHICAL_BEAST,CARD_CHIMERA_FUSION}
 function s.indestg(e,c)
 	local handler=e:GetHandler()
 	return c==handler or c==handler:GetBattleTarget()

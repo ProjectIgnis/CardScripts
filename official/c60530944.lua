@@ -44,6 +44,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,1-tp,aux.Stringid(id,0))
 	local r2=Duel.AnnounceAttribute(1-tp,1,s.getattr(g2))
 	g2:Remove(s.rmfilter,nil,r2)
-	g1:Merge(g2)
-	Duel.SendtoGrave(g1,REASON_RULE)
+	Duel.SendtoGrave(g1,REASON_RULE,PLAYER_NONE,tp)
+	Duel.SendtoGrave(g2,REASON_RULE,PLAYER_NONE,1-tp)
 end

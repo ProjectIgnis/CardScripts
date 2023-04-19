@@ -49,7 +49,7 @@ function s.rmvop(e,tp,eg,ep,ev,re,r,rp)
 		local ct=math.min(#g1-1,#rg1)
 		Duel.Hint(HINT_SELECTMSG,p1,HINTMSG_REMOVE)
 		local sg=rg1:Select(p1,ct,ct,nil)
-		Duel.Remove(sg,POS_FACEDOWN,REASON_RULE)
+		Duel.Remove(sg,POS_FACEDOWN,REASON_RULE,PLAYER_NONE,p1)
 	end
 	local g2=Duel.GetFieldGroup(p2,LOCATION_MZONE,0)
 	local rg2=g2:Filter(Card.IsAbleToRemove,nil,p2,POS_FACEDOWN,REASON_RULE)
@@ -57,7 +57,7 @@ function s.rmvop(e,tp,eg,ep,ev,re,r,rp)
 		local ct=math.min(#g2-1,#rg2)
 		Duel.Hint(HINT_SELECTMSG,p2,HINTMSG_REMOVE)
 		local sg=rg2:Select(p2,ct,ct,nil)
-		Duel.Remove(sg,POS_FACEDOWN,REASON_RULE)
+		Duel.Remove(sg,POS_FACEDOWN,REASON_RULE,PLAYER_NONE,p2)
 	end
 end
 function s.thfilter(c,tp)

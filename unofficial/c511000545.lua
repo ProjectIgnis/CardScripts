@@ -1,4 +1,5 @@
---Baby Spider
+--ベビー・スパイダー (Manga)
+--Baby Spider (Manga)
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)

@@ -595,9 +595,9 @@ if not AnimeArchetype then
 	Card.IsMagnet=MakeCheck({0x534,0x2066})
 
 	-- Mantis カマキリ
-	-- Empress Mantis
+	-- Empress Mantis,Praying Mantis,Guard Mantis
 	AnimeArchetype.OCGMantis={
-		58818411
+		58818411,31600513,53754104
 	}
 	Card.IsMantis=MakeCheck({0x535},AnimeArchetype.OCGMantis)
 

@@ -3,7 +3,6 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_TODECK)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -53,6 +52,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	else
 		e:SetProperty(0)
 	end
+	e:SetCategory((op~=0 and CATEGORY_TODECK or 0)+(op~=1 and CATEGORY_SEARCH+CATEGORY_TOHAND or 0))
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local op=e:GetLabel()

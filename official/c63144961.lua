@@ -6,7 +6,6 @@ function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_EQUIP)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -44,6 +43,9 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	end
 	if choice==0 or choice==3 or choice==7 then
 		Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,1-tp,LOCATION_MZONE)
+		e:SetCategory(CATEGORY_EQUIP)
+	else
+		e:SetCategory(0)
 	end
 	e:SetLabel(choice)
 end

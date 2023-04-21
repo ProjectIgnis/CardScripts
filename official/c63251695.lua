@@ -15,7 +15,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--Tribute 1 "Dinomist" and apply 1 effect
 	local e3=Effect.CreateEffect(c)
-	e3:SetCategory(CATEGORY_TODECK)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_DAMAGE_STEP_END)
 	e3:SetCondition(s.effcon)
@@ -61,6 +60,9 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(opt)
 	if opt==2 then
 		Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,1-tp,LOCATION_ONFIELD|LOCATION_HAND)
+		e:SetCategory(CATEGORY_TODECK)
+	else
+		e:SetCategory(0)
 	end
 end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)

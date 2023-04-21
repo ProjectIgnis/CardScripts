@@ -6,7 +6,6 @@ function s.initial_effect(c)
 	--Banish from GY + choice effect
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_POSITION+CATEGORY_DESTROY+CATEGORY_ATKCHANGE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -52,9 +51,11 @@ function s.btg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local choice=Duel.SelectOption(tp,table.unpack(t))+(check1 and 0 or 1)
 	if choice==0 then
 		Duel.SetOperationInfo(0,CATEGORY_POSITION,Group.FromCards(tc1,tc2),2,tp,LOCATION_MZONE)
+		e:SetCategory(CATEGORY_POSITION)
 	elseif choice==1 then
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,tc1,1,tp,LOCATION_MZONE)
 		Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,tc2,1,tp,LOCATION_MZONE)
+		e:SetCategory(CATEGORY_DESTROY+CATEGORY_ATKCHANGE)
 	end
 	e:SetLabel(choice)
 end

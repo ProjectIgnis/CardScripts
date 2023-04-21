@@ -13,7 +13,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--Change position or attach as material
 	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_POSITION)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -51,6 +50,11 @@ function s.opttarget(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		{tc:GetFirst():IsCanChangePosition(),aux.Stringid(id,1)},
 		{true,aux.Stringid(id,2)})
 	e:SetLabel(op)
+	if op==0 then
+		e:SetCategory(CATEGORY_POSITION)
+	else
+		e:SetCategory(0)
+	end
 end
 -- Execute chosen effect
 function s.opteffect(e,tp,eg,ep,ev,re,r,rp)

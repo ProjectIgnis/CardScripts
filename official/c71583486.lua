@@ -6,7 +6,6 @@ function s.initial_effect(c)
 	-- Place to bottom or search and place to top
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_TODECK)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCode(EVENT_TO_GRAVE)
@@ -31,6 +30,8 @@ function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if op==1 then
 		e:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND+CATEGORY_TODECK)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
+	else 
+		e:SetCategory(CATEGORY_TODECK)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,c,1,tp,LOCATION_GRAVE)
 end

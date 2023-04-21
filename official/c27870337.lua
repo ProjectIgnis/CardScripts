@@ -38,8 +38,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local op=Duel.SelectOption(tp,table.unpack(ops))
 	local sel=opval[op]
 	if sel==1 then
+		e:SetCategory(0)
 		e:SetOperation(s.dtopop)
 	elseif sel==2 then
+		e:SetCategory(0)
 		e:SetOperation(s.htoeop)
 	elseif sel==3 then
 		e:SetCategory(CATEGORY_DRAW)

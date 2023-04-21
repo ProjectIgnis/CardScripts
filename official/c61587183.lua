@@ -3,7 +3,6 @@ local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_BATTLE_DAMAGE)
 	e1:SetCondition(s.condition)
@@ -36,7 +35,11 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		local g=Duel.SelectTarget(tp,Card.IsAbleToHand,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	else e:SetProperty(0) end
+		e:SetCategory(CATEGORY_TOHAND)
+	else 
+		e:SetProperty(0)
+		e:SetCategory(0) 
+	end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==0 then

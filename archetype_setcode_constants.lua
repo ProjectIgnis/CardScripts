@@ -5,7 +5,6 @@
 	Notes:
 - To be formatted, probably alphabetically while keeping sub-archetypes with the original.
 
-- 0x6c Lightray (unused, non-existent archetype, ライトレイ, 6 OCG cards include it in their names)
 - 0x8c Druid (unused, non-existent archetype, ドルイド, 4 OCG cards include it in their names)
 
 - 0x106d Djinn of Rituals (unused sub-archetype of "Djinn")
@@ -524,6 +523,7 @@ SET_FAVORITE                      = 0x195
 SET_VANQUISH_SOUL                 = 0x196
 SET_NOUVELLES                     = 0x197
 SET_RECIPE                        = 0x198
+SET_HELIOS                        = 0x6c
 --Currently unreleased in the TCG, the official English name is unknown
 SET_MANADOME                      = 0x191
 SET_NEMURELIA                     = 0x192

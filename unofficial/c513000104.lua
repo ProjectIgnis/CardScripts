@@ -1,25 +1,32 @@
---パワー・ウォール
+--パワー・ウォール (Anime)
+--Power Wall (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_DECKDES)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e1:SetCondition(s.condition)
-	e1:SetCost(s.cost)
+	e1:SetCost(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer() and Duel.GetBattleDamage(tp)>=100
+	return Duel.GetBattleDamage(tp)>0
 end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,1) end
+	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,1)
+end
+function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local dam=Duel.GetBattleDamage(tp)
-	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) end
+	if dam<=0 or not Duel.IsPlayerCanDiscardDeck(tp,1) then return end
+	local gc=0
 	local ct=Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)
-	if ct==1 then 
-		Duel.DiscardDeck(tp,1,REASON_COST)
-		e:SetLabel(1)
+	if ct==1 then
+		gc=1
 	else
 		local t={}
 		local l=1
@@ -29,20 +36,20 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 			t[l]=l
 			l=l+1
 		end
-		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(85087012,2))
-		local ac=Duel.AnnounceNumber(tp,table.unpack(t))
-		Duel.DiscardDeck(tp,ac,REASON_COST)
-		e:SetLabel(ac*100)
+		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
+		gc=Duel.AnnounceNumber(tp,table.unpack(t))
 	end
-end
-function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-	e1:SetOperation(s.damop)
-	e1:SetLabel(e:GetLabel())
-	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
-	Duel.RegisterEffect(e1,tp)
+	Duel.DiscardDeck(tp,gc,REASON_EFFECT)
+	local val=Duel.GetOperatedGroup():FilterCount(Card.IsLocation,nil,LOCATION_GRAVE)
+	if val>0 then
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e1:SetCode(EVENT_PRE_BATTLE_DAMAGE)
+		e1:SetOperation(s.damop)
+		e1:SetLabel(val*100)
+		e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
+		Duel.RegisterEffect(e1,tp)
+	end
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local dam=ev-e:GetLabel()

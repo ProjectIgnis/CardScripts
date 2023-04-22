@@ -1,4 +1,5 @@
---Trick Buster
+--トリック・バスター (Anime)
+--Trick Buster (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,7 +13,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and Duel.GetAttackTarget()==nil
+	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
+	return ep==1-tp and Duel.GetAttackTarget()==nil and #g==0
 end
 function s.desfilter(c)
 	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsDestructable()

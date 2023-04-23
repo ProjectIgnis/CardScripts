@@ -42,7 +42,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		if #g>0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 			local dg=g:Select(tp,1,1,nil)
-			dg:AddMaximumCheck()
+			dg=dg:AddMaximumCheck()
 			Duel.HintSelection(dg,true)
 			Duel.Destroy(dg,REASON_EFFECT)
 			local g2=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_GRAVE,0,nil,e,tp)

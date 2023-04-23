@@ -26,9 +26,6 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetTargetParam(1)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
-function s.filter(c)
-	return c:IsMaximumModeCenter() and c:CanGetPiercingRush()
-end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	--Requirement
@@ -39,10 +36,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		--Effect
 		local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 		Duel.Draw(p,d,REASON_EFFECT)
-		if Duel.IsAbleToEnterBP() and Duel.IsExistingMatchingCard(aux.FaceupFilter(s.filter),tp,LOCATION_MZONE,0,1,nil)
+		if Duel.IsAbleToEnterBP() and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsMaximumModeCenter),tp,LOCATION_MZONE,0,1,nil)
 			and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-			local g=Duel.SelectMatchingCard(tp,aux.FaceupFilter(s.filter),tp,LOCATION_MZONE,0,1,1,nil)
+			local g=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsMaximumModeCenter),tp,LOCATION_MZONE,0,1,1,nil)
 			if #g>0 then
 				Duel.HintSelection(g,true)
 				-- Piercing

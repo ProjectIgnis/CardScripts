@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,160010101,CARD_TAMABOT)
+	Fusion.AddProcMix(c,true,true,CARD_BLUETOOTH_B_DRAGON,CARD_TAMABOT)
 	-- Gain 500 ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -16,6 +16,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_names={CARD_BLUETOOTH_B_DRAGON,CARD_TAMABOT}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetMatchingGroupCount(Card.IsCode,e:GetHandlerPlayer(),LOCATION_GRAVE,LOCATION_GRAVE,nil,CARD_TAMABOT)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,ct) end

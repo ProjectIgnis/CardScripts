@@ -1,3 +1,4 @@
+--ヴォルカニック・マイン
 --Volcanic Mine
 --scripted by:urielkama
 --fixed by MLD
@@ -12,10 +13,11 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={TOKEN_BOMB}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(1-tp,LOCATION_MZONE)
 	if chk==0 then return ft>0
-		and Duel.IsPlayerCanSpecialSummonMonster(1-tp,511004107,0,0,1000,1000,1,RACE_PYRO,ATTRIBUTE_FIRE) end
+		and Duel.IsPlayerCanSpecialSummonMonster(1-tp,TOKEN_BOMB,0,0,1000,1000,1,RACE_PYRO,ATTRIBUTE_FIRE) end
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
 	local ft=Duel.GetLocationCount(1-tp,LOCATION_MZONE)
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,ft,0,0)
@@ -23,12 +25,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(1-tp,LOCATION_MZONE)
-	if ft<=0 or not Duel.IsPlayerCanSpecialSummonMonster(1-tp,511004107,0,0,1000,1000,1,RACE_PYRO,ATTRIBUTE_FIRE) then return end
+	if ft<=0 or not Duel.IsPlayerCanSpecialSummonMonster(1-tp,TOKEN_BOMB,0,0,1000,1000,1,RACE_PYRO,ATTRIBUTE_FIRE) then return end
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
 	local fid=e:GetHandler():GetFieldID()
 	local g=Group.CreateGroup()
 	for i=1,ft do
-		local token=Duel.CreateToken(1-tp,511004107)
+		local token=Duel.CreateToken(1-tp,TOKEN_BOMB)
 		Duel.SpecialSummonStep(token,0,tp,1-tp,false,false,POS_FACEUP_DEFENSE)
 		token:RegisterFlagEffect(51104114,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,fid)
 		g:AddCard(token)

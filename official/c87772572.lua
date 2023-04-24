@@ -34,7 +34,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local crac=Duel.AnnounceRace(tp,1,e:GetLabel())
 	local att=0
 	local catt=1
-	for iatt=0,7 do
+	while ATTRIBUTE_ALL&catt~=0 do
 		if Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,0x11,0,2200,4,crac,catt) then
 			att=att+catt
 		end

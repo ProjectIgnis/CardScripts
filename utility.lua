@@ -1248,13 +1248,13 @@ end
 function Duel.AnnounceAnotherAttribute(g,tp)
 	local att=g:GetBitwiseOr(Card.GetAttribute)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)
-	return Duel.AnnounceAttribute(tp,1,att&(att-1)==0 and ~att or ATTRIBUTE_ALL)
+	return Duel.AnnounceAttribute(tp,1,att&(att-1)==0 and (~att&ATTRIBUTE_ALL) or ATTRIBUTE_ALL)
 end
 
 function Duel.AnnounceAnotherRace(g,tp)
 	local race=g:GetBitwiseOr(Card.GetRace)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RACE)
-	return Duel.AnnounceRace(tp,1,race&(race-1)==0 and ~race or RACE_ALL)
+	return Duel.AnnounceRace(tp,1,race&(race-1)==0 and (~race&RACE_ALL) or RACE_ALL)
 end
 
 function Auxiliary.ResetEffects(g,eff)

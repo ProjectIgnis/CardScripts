@@ -66,8 +66,9 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
+	if not (tc:IsRelateToEffect(e) and tc:IsFaceup()) then return end
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if not tc:IsRelateToEffect(e) or ft<2 or Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
+	if ft<2 or Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
 	local g=Duel.GetMatchingGroup(s.spfilter3,tp,LOCATION_DECK,0,nil,e,tp,tc)
 	local sg=aux.SelectUnselectGroup(g,e,tp,2,2,aux.dncheck,1,tp,HINTMSG_SPSUMMON)
 	if sg and #sg==2 then

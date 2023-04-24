@@ -532,7 +532,7 @@ end
 function Card.AnnounceAnotherAttribute(c,tp)
 	local att=c:GetAttribute()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)
-	return Duel.AnnounceAttribute(tp,1,att&(att-1)==0 and ~att or ATTRIBUTE_ALL)
+	return Duel.AnnounceAttribute(tp,1,att&(att-1)==0 and (~att&ATTRIBUTE_ALL) or ATTRIBUTE_ALL)
 end
 
 --Returns true if "c" has any Attribute except "att"
@@ -546,7 +546,7 @@ end
 function Card.AnnounceAnotherRace(c,tp)
 	local race=c:GetRace()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RACE)
-	return Duel.AnnounceRace(tp,1,race&(race-1)==0 and ~race or RACE_ALL)
+	return Duel.AnnounceRace(tp,1,race&(race-1)==0 and (~race&RACE_ALL) or RACE_ALL)
 end
 
 function Card.IsDifferentRace(c,race)

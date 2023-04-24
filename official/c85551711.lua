@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Quick-Play Spell cards can be activated from the hand
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetDescription(aux.Stringid(id,2))
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_QP_ACT_IN_NTPHAND)
 	e1:SetRange(LOCATION_MZONE)
@@ -46,12 +46,12 @@ function s.handcon(e)
 	return Duel.IsTurnPlayer(1-tp) and e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_EFFECT)
 end
 function s.handvalue(e,rc,re)
-	re:GetHandler():RegisterFlagEffect(id,RESET_CHAIN,0,1)
+	re:GetHandler():RegisterFlagEffect(id,RESET_CHAIN,0,0,e:GetHandler():GetFieldID())
 end
 function s.costtg(e,te,tp)
 	local tc=te:GetHandler()
 	return Duel.GetTurnPlayer()~=e:GetHandlerPlayer()
-		and tc:IsLocation(LOCATION_HAND) and tc:GetFlagEffect(id)>0
+		and tc:IsLocation(LOCATION_HAND) and tc:GetFlagEffect(id)>0 and tc:GetFlagEffectLabel(id)==e:GetHandler():GetFieldID()
 end
 function s.costop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)

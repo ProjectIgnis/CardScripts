@@ -1,12 +1,12 @@
 --Anime card constants
-RACE_YOKAI			  =   0x4000000000000000
-RACE_CHARISMA		   =   0x8000000000000000
-ATTRIBUTE_LAUGH		 =   0x80
+RACE_YOKAI	=   0x400000000000000
+RACE_CHARISMA	 =   0x8000000000000000
+ATTRIBUTE_LAUGH   =   0x80
 
 
 -------------------------------------------------------------
 --Rank-Up related functions
-FLAG_RANKUP			 =   511001822
+FLAG_RANKUP =   511001822
 EFFECT_RANKUP_EFFECT	=   511001822
 
 function Auxiliary.EnableCheckRankUp(c,condition,operation,...)
@@ -115,7 +115,7 @@ end
 
 -------------------------------------------------------------
 --Armor monsters
-FLAG_ARMOR			  =   110000103
+FLAG_ARMOR	=   110000103
 if not aux.ArmorProcedure then
 	aux.ArmorProcedure={}
 	Armor=aux.ArmorProcedure
@@ -124,7 +124,7 @@ if not Armor then
 	Armor=aux.ArmorProcedure
 end
 function Armor.AddProcedure(c)
---	c:Type(c:Type()|TYPE_ARMOR)
+--  c:Type(c:Type()|TYPE_ARMOR)
 	--You can only attack with 1 Armor monster per turn.
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -181,7 +181,7 @@ end
 
 -------------------------------------------------------------
 --Plus and Minus monsters
-TYPE_PLUSMINUS		  =   (TYPE_PLUS|TYPE_MINUS)
+TYPE_PLUSMINUS  =   (TYPE_PLUS|TYPE_MINUS)
 function Card.IsPlusOrMinus(c)
 	local tpe=c:GetType()&TYPE_PLUSMINUS
 	return tpe~=0 and tpe~=TYPE_PLUSMINUS
@@ -214,23 +214,23 @@ function Auxiliary.AddPlusMinusAttribute(c)
 	e3:SetValue(PlusMinus.attract)
 	c:RegisterEffect(e3)
 end
-local function PlusMinus.nacon(e,tp,eg,ep,ev,re,r,rp)
+function PlusMinus.nacon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsPlusOrMinus() then return false end
 	local bc=c:GetBattleTarget()
 	return bc and bc:IsFaceup() and bc:IsType(c:GetType()&TYPE_PLUSMINUS)
 		and (Duel.GetCurrentPhase()<PHASE_DAMAGE or Duel.GetCurrentPhase()>PHASE_DAMAGE_CAL)
 end
-local function PlusMinus.naop(e,tp,eg,ep,ev,re,r,rp)
+function PlusMinus.naop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,1-tp,e:GetHandler():GetOriginalCode())
 	Duel.NegateAttack()
 end
-local function PlusMinus.attractcon(e)
+function PlusMinus.attractcon(e)
 	local c=e:GetHandler()
 	return c:IsPlusOrMinus() and c:CanAttack()
 		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,(~c:GetType())&TYPE_PLUSMINUS),c:GetControler(),0,LOCATION_MZONE,1,nil)
 end
-local function PlusMinus.attract(e,c)
+function PlusMinus.attract(e,c)
 	return c:IsFaceup() and c:IsType((~e:GetHandler():GetType())&TYPE_PLUSMINUS)
 end
 
@@ -314,7 +314,7 @@ local function onDeathTrigger()
 	Duel.RegisterEffect(rs3,0)
 end
 
-local function UnofficialEffect.op5(e,tp,eg,ep,ev,re,r,rp)
+function UnofficialEffect.op5(e,tp,eg,ep,ev,re,r,rp)
 	--ATK = 285, prev ATK = 284
 	--LVL = 585, prev LVL = 584
 	--DEF = 385, prev DEF = 384
@@ -335,19 +335,19 @@ local function UnofficialEffect.op5(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-local function UnofficialEffect.atkcfilter(c)
+function UnofficialEffect.atkcfilter(c)
 	if c:GetFlagEffect(285)==0 then return false end
 	return c:GetAttack()~=c:GetFlagEffectLabel(285)
 end
-local function UnofficialEffect.defcfilter(c)
+function UnofficialEffect.defcfilter(c)
 	if c:GetFlagEffect(385)==0 then return false end
 	return c:GetDefense()~=c:GetFlagEffectLabel(385)
 end
-local function UnofficialEffect.lvcfilter(c)
+function UnofficialEffect.lvcfilter(c)
 	if c:GetFlagEffect(585)==0 then return false end
 	return c:GetLevel()~=c:GetFlagEffectLabel(585)
 end
-local function UnofficialEffect.atkraiseeff(e,tp,eg,ep,ev,re,r,rp)
+function UnofficialEffect.atkraiseeff(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(UnofficialEffect.atkcfilter,tp,0x7f,0x7f,nil)
 	local g1=Group.CreateGroup() --change atk
 	local g2=Group.CreateGroup() --gain atk
@@ -454,7 +454,7 @@ local function UnofficialEffect.atkraiseeff(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterFlagEffect(tp,285,RESET_CHAIN,0,1)
 	Duel.RegisterFlagEffect(1-tp,285,RESET_CHAIN,0,1)
 end
-local function UnofficialEffect.atkraiseadj(e,tp,eg,ep,ev,re,r,rp)
+function UnofficialEffect.atkraiseadj(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFlagEffect(tp,285)~=0 or Duel.GetFlagEffect(1-tp,285)~=0 then return end
 	local g=Duel.GetMatchingGroup(UnofficialEffect.atkcfilter,tp,0x7f,0x7f,nil)
 	local g1=Group.CreateGroup() --change atk

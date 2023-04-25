@@ -49,7 +49,7 @@ end
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	for tc in aux.Next(g) do
-		tc:AddCounter(0x1149,#eg,REASON_EFFECT)
+		tc:AddCounter(0x1149,#eg,true)
 	end
 end
 function s.adcon(e)

@@ -30,7 +30,7 @@ end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetAttacker() and e:GetHandler():GetReasonCard() and e:GetHandler():GetReasonCard()==Duel.GetAttacker() then
 		Duel.Hint(HINT_CARD,0,id)
-		Duel.GetAttacker():AddCounter(0x1015,1,REASON_EFFECT)
+		Duel.GetAttacker():AddCounter(0x1015,1)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_CHANGE_POSITION)

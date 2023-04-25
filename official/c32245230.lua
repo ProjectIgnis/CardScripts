@@ -41,7 +41,7 @@ end
 function s.counter(e,tp,eg,ep,ev,re,r,rp)
 	local ct=eg:FilterCount(s.cfilter,nil,tp)
 	if ct>0 then
-		e:GetHandler():AddCounter(0x207,1,true)
+		e:GetHandler():AddCounter(0x207,1)
 	end
 end
 function s.spcfilter(c,tp)

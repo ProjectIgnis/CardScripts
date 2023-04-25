@@ -29,10 +29,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Draw(p,d,REASON_EFFECT)>0 then
 		local tc=Duel.GetOperatedGroup():GetFirst()
 		Duel.ConfirmCards(tp,tc)
+		Duel.ShuffleHand(1-tp)
 		local c=e:GetHandler()
 		if not (c:IsFaceup() and c:IsRelateToEffect(e)) then return end
 		local atk=tc:GetAttack()
 		if tc:IsMonster() and atk>0 then
+			--Increase ATK
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)

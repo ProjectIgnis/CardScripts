@@ -66,7 +66,7 @@ if not GenerateEffect then
 	end
 	
 	--Anime card constants
-	RACE_YOKAI  =   0x80000000
+	RACE_YOKAI  =   0x4000000000000000
 	RACE_CHARISMA   =   0x100000000
 	
 	ATTRIBUTE_LAUGH =   0x80

@@ -32,15 +32,19 @@ function s.initial_effect(c)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={SET_ROID}
 function s.thfilter(c)
-	return c:IsSetCard(0x16) and c:IsAbleToHand()
+	return c:IsSetCard(SET_ROID) and c:IsAbleToHand()
+end
+function s.desfilter(c,e)
+	return c:IsFaceup() and c:IsCanBeEffectTarget(e)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and chkc~=e:GetHandler() end
-	if chk==0 then return Duel.IsExistingTarget(nil,tp,LOCATION_ONFIELD,0,1,e:GetHandler())
+	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and chkc~=e:GetHandler() and s.desfilter(chkc,e) end
+	if chk==0 then return Duel.IsExistingTarget(s.desfilter,tp,LOCATION_ONFIELD,0,1,e:GetHandler(),e)
 		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,nil,tp,LOCATION_ONFIELD,0,1,1,e:GetHandler())
+	local g=Duel.SelectTarget(tp,s.desfilter,tp,LOCATION_ONFIELD,0,1,1,e:GetHandler(),e)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
@@ -61,17 +65,16 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	if not a:IsControler(tp) then
 		a=Duel.GetAttackTarget()
 	end
-	return a and a:IsSetCard(0x16) and Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL
+	return a and a:IsSetCard(SET_ROID) and Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL
 end
 function s.atkfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x16) and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and c:IsSetCard(SET_ROID) and c:IsAbleToGraveAsCost()
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.atkfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,s.atkfilter,tp,LOCATION_DECK,0,1,1,nil)
 	Duel.SendtoGrave(g,REASON_EFFECT)
-	local e1=Effect.CreateEffect(e:GetHandler())
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

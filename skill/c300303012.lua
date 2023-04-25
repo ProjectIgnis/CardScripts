@@ -60,20 +60,18 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.IsExistingMatchingCard(s.atkfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
+	if not Duel.SelectYesNo(tp,aux.Stringid(id,0)) then return end
 	local c=e:GetHandler()
-	local op=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))
-	if op==0 then
-		c:RegisterFlagEffect(id,RESET_PHASE|PHASE_END,0,0)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
-		local tc=Duel.SelectMatchingCard(tp,s.atkfilter,tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
-		if tc then
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetValue(100)
-			e1:SetReset(RESET_PHASE|PHASE_END)
-			tc:RegisterEffect(e1,true)
-		end
+	c:RegisterFlagEffect(id,RESET_PHASE|PHASE_END,0,0)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
+	local tc=Duel.SelectMatchingCard(tp,s.atkfilter,tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
+	if tc then
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_ATTACK)
+		e1:SetValue(100)
+		e1:SetReset(RESET_PHASE|PHASE_END)
+		tc:RegisterEffect(e1,true)
 	end
 end
 function s.trapcon(e,tp,eg,ep,ev,re,r,rp)
@@ -86,7 +84,7 @@ function s.traptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
 end
 function s.trapop(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.SelectYesNo(tp,aux.Stringid(id,2)) then return end
+	if not Duel.SelectYesNo(tp,aux.Stringid(id,1)) then return end
 	local rc=re:GetHandler()
 	if Duel.NegateEffect(ev) and rc:IsRelateToEffect(re) and rc:IsSSetable(true) then
 		rc:CancelToGrave()

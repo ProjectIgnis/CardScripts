@@ -10,7 +10,7 @@ function s.rmvfilter(c)
 	return c:IsLevelBelow(4) and c:HasLevel() and c:IsMonster() and c:IsAbleToRemoveAsCost()
 end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
-	return aux.CanActivateSkill(tp) and Duel.IsExistingMatchingCard(s.rmvfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,nil)
+	return aux.CanActivateSkill(tp) and Duel.IsExistingMatchingCard(s.rmvfilter,tp,LOCATION_HAND|LOCATION_ONFIELD,0,1,nil)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
@@ -22,7 +22,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)==0 and Duel.GetMatchingGroupCount(s.rmvfilter,tp,LOCATION_MZONE,0,nil)>0 then
 		loc=LOCATION_MZONE
 	else
-		loc=LOCATION_HAND+LOCATION_ONFIELD
+		loc=LOCATION_HAND|LOCATION_ONFIELD
 	end
 	local g=Duel.SelectMatchingCard(tp,s.rmvfilter,tp,loc,0,1,1,nil):GetFirst()
 	if Duel.Remove(g,POS_FACEUP,REASON_COST)>0 then 
@@ -45,11 +45,11 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 				e0a:SetValue(RACE_ROCK)
 				token:RegisterEffect(e0a,true)
 				local e0b=e0a:Clone()
-				e0b:SetCode(EFFECT_SET_BASE_ATTACK_FINAL)
+				e0b:SetCode(EFFECT_SET_BASE_ATTACK)
 				e0b:SetValue(300)
 				token:RegisterEffect(e0b,true)
 				local e0c=e0a:Clone()
-				e0c:SetCode(EFFECT_SET_BASE_DEFENSE_FINAL)
+				e0c:SetCode(EFFECT_SET_BASE_DEFENSE)
 				e0c:SetValue(300)
 				token:RegisterEffect(e0c,true)
 				local e0d=e0a:Clone()
@@ -58,7 +58,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 				token:RegisterEffect(e0d,true)
 				local e0e=e0a:Clone()
 				e0e:SetCode(EFFECT_CHANGE_SETCODE)
-				e0e:SetValue(SET_ALCHEMY_BEAST)
+				e0e:SetValue(0x501) --Alchemy beast
 				token:RegisterEffect(e0e,true)
 				--Change Attribute to that of banished monster
 				local e1=Effect.CreateEffect(e:GetHandler())

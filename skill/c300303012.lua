@@ -1,4 +1,4 @@
---Im Just Gonna Attack!
+--I'm Just Gonna Attack!
 --Scripted by The Razgriz
 local s,id=GetID()
 function s.initial_effect(c)
@@ -56,39 +56,40 @@ function s.atkfilter(c)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:GetFlagEffect(id)==0 and Duel.IsMainPhase() and Duel.GetTurnPlayer()==tp and Duel.IsExistingMatchingCard(s.atkfilter,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsMainPhase() and Duel.IsTurnPlayer(tp) and c:GetFlagEffect(id)==0
+		and Duel.IsExistingMatchingCard(s.atkfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local op=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,2))
+	local op=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))
 	if op==0 then
-		c:RegisterFlagEffect(id,RESET_PHASE+PHASE_END,0,0)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELECT)
+		c:RegisterFlagEffect(id,RESET_PHASE|PHASE_END,0,0)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
 		local tc=Duel.SelectMatchingCard(tp,s.atkfilter,tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
 		if tc then
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(100)
-			e1:SetReset(RESET_PHASE+PHASE_END)
+			e1:SetReset(RESET_PHASE|PHASE_END)
 			tc:RegisterEffect(e1,true)
 		end
 	end
 end
 function s.trapcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and re:IsHasType(EFFECT_TYPE_ACTIVATE)
-		and re:IsActiveType(TYPE_TRAP) and Duel.IsChainDisablable(ev) and Duel.IsBattlePhase() and Duel.GetTurnPlayer()==tp
+	return Duel.IsBattlePhase() and Duel.IsTurnPlayer(tp)
+		and rp==1-tp and re:IsTrapEffect() and re:IsHasType(EFFECT_TYPE_ACTIVATE)
+		and Duel.IsChainDisablable(ev)
 end
 function s.traptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
 end
 function s.trapop(e,tp,eg,ep,ev,re,r,rp)
+	if not Duel.SelectYesNo(tp,aux.Stringid(id,2)) then return end
 	local rc=re:GetHandler()
-	if Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-		if Duel.NegateEffect(ev) and rc:IsRelateToEffect(re) and rc:IsSSetable(true) then
-			rc:CancelToGrave()
-			Duel.ChangePosition(rc,POS_FACEDOWN)
-		end
+	if Duel.NegateEffect(ev) and rc:IsRelateToEffect(re) and rc:IsSSetable(true) then
+		rc:CancelToGrave()
+		Duel.ChangePosition(rc,POS_FACEDOWN)
 	end
 end

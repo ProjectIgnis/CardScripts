@@ -39,7 +39,7 @@ end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.ChangePosition(c,POS_FACEUP)
-	c:SetStatus(STATUS_EFFECT_ENABLED)
+	c:SetStatus(STATUS_EFFECT_ENABLED,true)
 	Duel.Hint(HINT_CARD,tp,id)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK,0,nil)
 	if #g>0 then

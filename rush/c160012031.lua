@@ -31,7 +31,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	if Duel.Draw(p,d,REASON_EFFECT)>0 then
 		local tc=Duel.GetOperatedGroup():GetFirst()
-		Duel.ConfirmCards(tp,tc)
+		Duel.ConfirmCards(1-tp,tc)
 		Duel.ShuffleHand(tp)
 		if tc:IsMonster() and tc:IsRace(RACE_PYRO) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 			and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE,0,1,nil,e,tp)

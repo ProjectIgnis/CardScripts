@@ -1,6 +1,6 @@
 --Anime card constants
-RACE_YOKAI	=   0x400000000000000
-RACE_CHARISMA	 =   0x8000000000000000
+RACE_YOKAI  =   0x400000000000000
+RACE_CHARISMA	=   0x8000000000000000
 ATTRIBUTE_LAUGH   =   0x80
 
 
@@ -115,7 +115,7 @@ end
 
 -------------------------------------------------------------
 --Armor monsters
-FLAG_ARMOR	=   110000103
+FLAG_ARMOR  =   110000103
 if not aux.ArmorProcedure then
 	aux.ArmorProcedure={}
 	Armor=aux.ArmorProcedure
@@ -194,7 +194,7 @@ if not PlusMinus then
 	PlusMinus=aux.PlusMinusProcedure
 end
 local PlusMi	nus={}
-function Auxiliary.AddPlusMinusAttribute(c)
+function Auxiliary.AddPlusMinusProcedure(c)
 	--Negate attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

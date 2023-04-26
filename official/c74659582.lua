@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tkop)
 	c:RegisterEffect(e2)
 end
-s.listed_cards={id+100}
+s.listed_cards={id+1}
 s.listed_series={SET_RUNICK}
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	return (Duel.IsTurnPlayer(tp) and Duel.IsMainPhase()) or (Duel.IsTurnPlayer(1-tp) and Duel.IsBattlePhase())
@@ -63,13 +63,13 @@ function s.tkcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+100,SET_RUNICK,TYPES_TOKEN,1500,1500,4,RACE_FAIRY,ATTRIBUTE_LIGHT,POS_FACEUP_ATTACK) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,SET_RUNICK,TYPES_TOKEN,1500,1500,4,RACE_FAIRY,ATTRIBUTE_LIGHT,POS_FACEUP_ATTACK) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,tp,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 end
 function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)==0 then return end
-	if not Duel.IsPlayerCanSpecialSummonMonster(tp,id+100,SET_RUNICK,TYPES_TOKEN,1500,1500,4,RACE_FAIRY,ATTRIBUTE_LIGHT,POS_FACEUP_ATTACK) then return end
-	local token=Duel.CreateToken(tp,id+100)
+	if not Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,SET_RUNICK,TYPES_TOKEN,1500,1500,4,RACE_FAIRY,ATTRIBUTE_LIGHT,POS_FACEUP_ATTACK) then return end
+	local token=Duel.CreateToken(tp,id+1)
 	Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP_ATTACK)
 end

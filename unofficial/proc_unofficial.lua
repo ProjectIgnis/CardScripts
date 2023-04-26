@@ -1,8 +1,4 @@
 --Anime card constants
-RACE_YOKAI  =   0x400000000000000
-RACE_CHARISMA	=   0x8000000000000000
-ATTRIBUTE_LAUGH   =   0x80
-
 
 -------------------------------------------------------------
 --Rank-Up related functions
@@ -263,15 +259,48 @@ end
 
 -------------------------------------------------------------
 --Global handlings
-UnofficialEffect={}
-Duel.LoadUnofficialEffect=function(unofficialEffect)
-	if unofficialModule==123456 then
-		unofficialModule() --call it
+local UnofficialEffect={}
+PROC_ATKDEF_CHANGED		 =   1
+PROC_IGNORE_BATTLE_INDES	=   2 
+PROC_ICE_PILLAR			 =   3
+PROC_DIVINE_HIERARCHY	   =   4 
+PROC_EVENT_LP0			  =   5
+PROC_YOKAI				  =   6
+PROC_LAUGH				  =   7
+PROC_CHARISMA			   =   8
+
+Duel.EnableUnofficialProcedure=function(...)
+	for _,proc in table.unpack(...) do
+		if proc==PROC_ATKDEF_CHANGED and not UnofficialEffect[PROC_ATKDEF_CHANGED] then
+			atkdefchanged()
+		elseif proc==PROC_IGNORE_BATTLE_INDES and not UnofficialEffect[PROC_IGNORE_BATTLE_INDES] then
+			ignoreBattleindes()
+		elseif proc==PROC_EVENT_LP0 and not UnofficialEffect[PROC_EVENT_LP0] then
+			onLP0Trigger()
+		elseif proc==PROC_ICE_PILLAR and not UnofficialEffect[PROC_ICE_PILLAR] then
+			icePillar()
+		elseif proc==PROC_YOKAI then
+			RACE_YOKAI = 0x400000000000000
+			unofficialRace(RACE_YOKAI)
+		elseif proc==PROC_CHARISMA then
+			RACE_CHARISMA = 0x8000000000000000
+			unofficialRace(RACE_CHARISMA)
+		elseif proc==PROC_LAUGH then
+			ATTRIBUTE_LAUGH = 0x80
+			unofficialAttribute(ATTRIBUTE_LAUGH)
+		end
 	end
 end
 
-UnofficialEffect={}
+local function unofficialRace(race)
+	if (RACE_ALL&race)==0 then RACE_ALL==(RACE_ALL|race) end
+end
+local function unofficialAttribute(att)
+	if (ATTRIBUTE_ALL&att)==0 then ATTRIBUTE_ALL==(ATTRIBUTE_ALL|att) end
+end
+
 local function atkdefchanged()
+	UnofficialEffect[PROC_ATKDEF_CHANGED]=true
 	local e5=Effect.GlobalEffect()
 	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e5:SetCode(EVENT_ADJUST)
@@ -298,7 +327,7 @@ local function ignoreBattleindes()
 	Duel.RegisterEffect(batIndes,0)
 end
 
-local function onDeathTrigger()
+local function onLP0Trigger()
 	--Relay Soul/Zero Gate
 	local rs1=Effect.GlobalEffect()
 	rs1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -780,3 +809,58 @@ function UnofficialEffect.newBatTgReplaceEquip(tg)
 	end
 end
 
+--Ice Pillar Mechanic
+--edo9300 and Larry126
+local function icePillar()
+	IcePillarZone = {}
+	IcePillarZone[1]=0
+	IcePillarZone[2]=0
+	--disable field
+	local e1=Effect.GlobalEffect()
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_DISABLE_FIELD)
+	e1:SetCondition(function()return IcePillarZone[1]|(IcePillarZone[2]<<16)>0 end)
+	e1:SetValue(function()
+		return IcePillarZone[1]|(IcePillarZone[2]<<16)
+	end)
+	Duel.RegisterEffect(e1,0)
+	--negate attack
+	local e2=Effect.GlobalEffect()
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e2:SetCode(EVENT_ADJUST)
+	e2:SetOperation(function(e,tp)
+		if Duel.CheckEvent(EVENT_ATTACK_ANNOUNCE) then
+			local tc=Duel.GetAttacker()
+			if CheckPillars(tp,1) and tc and tc:GetControler()~=tp
+				and tc:IsRelateToBattle() and not tc:IsStatus(STATUS_ATTACK_CANCELED)
+				and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+				IcePillarZone[tp+1]=IcePillarZone[tp+1] & ~Duel.SelectFieldZone(tp,1,LOCATION_MZONE,LOCATION_MZONE,~IcePillarZone[tp+1])
+				Duel.NegateAttack()
+			end
+		end
+	end)
+	Duel.RegisterEffect(e2,0)
+	Duel.RegisterEffect(e2:Clone(),1)
+	local e3=Effect.GlobalEffect()
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e3:SetCode(EVENT_ATTACK_ANNOUNCE)
+	e3:SetOperation(function(e,tp)
+		local tc=Duel.GetAttacker()
+		if CheckPillars(tp,1) and tc and tc:GetControler()~=tp and Duel.SelectYesNo(tp,aux.Stringid(422,0)) then
+			IcePillarZone[tp+1]=IcePillarZone[tp+1] & ~Duel.SelectFieldZone(tp,1,LOCATION_MZONE,LOCATION_MZONE,~IcePillarZone[tp+1])
+			Duel.NegateAttack()
+		end
+	end)
+	Duel.RegisterEffect(e3,0)
+	Duel.RegisterEffect(e3:Clone(),1)
+	CheckPillars=function(tp,c,zone)
+		local chkzone = zone and zone&IcePillarZone[1+tp] or IcePillarZone[1+tp]
+		local seq=0
+		for seq=0,7 do
+			if(chkzone&(1<<seq))>0 then
+				c=c-1
+			end
+		end
+		return c<1
+	end
+end

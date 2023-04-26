@@ -19,6 +19,20 @@ s.counter_place_list={COUNTER_FOG}
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 	Duel.Hint(HINT_CARD,tp,id)
+	--Each time you place a Fog Counter(s) on a monster(s), give it an additional Fog Counter.
+	local old_func=Card.AddCounter
+	function Card.AddCounter(c,countertype,count,singly)
+    	if countertype&COUNTER_FOG==COUNTER_FOG then 
+        	count=count+1
+    	end
+    		return old_func(c,countertype,count,singly)
+ 	end
+end
+
+--[[function s.op(e,tp,eg,ep,ev,re,r,rp)
+	(to be revisited later, requires core rework of counter placement to properly implement)
+	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
+	Duel.Hint(HINT_CARD,tp,id)
 	local c=e:GetHandler()
 	--Each time you place a Fog Counter(s) on a monster(s), give it an additional Fog Counter.
 	local e1=Effect.CreateEffect(c)
@@ -41,4 +55,4 @@ function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(COUNTER_FOG,1)
-end
+end]]--

@@ -524,10 +524,10 @@ SET_VANQUISH_SOUL                 = 0x196
 SET_NOUVELLES                     = 0x197
 SET_RECIPE                        = 0x198
 SET_HELIOS                        = 0x6c
+SET_VISAS                         = 0x199
 --Currently unreleased in the TCG, the official English name is unknown
 SET_MANADOME                      = 0x191
 SET_NEMURELIA                     = 0x192
 --Beta archetypes
-SET_VISAS                         = 0x293
 SET_COUNTER                       = 0x294
 SET_BATTLIN_BOXING                = 0x295

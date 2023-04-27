@@ -19,14 +19,16 @@ s.counter_place_list={COUNTER_FOG}
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 	Duel.Hint(HINT_CARD,tp,id)
+	
 	--Each time you place a Fog Counter(s) on a monster(s), give it an additional Fog Counter.
 	local old_func=Card.AddCounter
 	function Card.AddCounter(c,countertype,count,singly)
-    	if countertype&COUNTER_FOG==COUNTER_FOG then 
-        	count=count+1
-    	end
-    		return old_func(c,countertype,count,singly)
- 	end
+		local triggering_player=Duel.GetChainInfo(0,CHAININFO_TRIGGERING_PLAYER)
+		if countertype&COUNTER_FOG==COUNTER_FOG and triggering_player==tp then 
+			count=count+1
+		end
+		return old_func(c,countertype,count,singly)
+	end
 end
 
 --[[function s.op(e,tp,eg,ep,ev,re,r,rp)

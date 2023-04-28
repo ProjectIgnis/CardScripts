@@ -29,7 +29,7 @@ function s.filter2(c,lv1,tp)
 		and Duel.IsExistingMatchingCard(s.filter3,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,c,lv1-lv2)
 end
 function s.filter3(c,lv)
-	return c:IsAbleToRemove() and c:GetLevel()==lv and not c:IsType(TYPE_TUNER) and aux.SpElimFilter(c,true)
+	return c:IsAbleToRemove() and c:HasLevel() and c:GetLevel()==lv and not c:IsType(TYPE_TUNER) and aux.SpElimFilter(c,true)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -49,15 +49,15 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if tg1 and Duel.SpecialSummonStep(tg1,0,tp,tp,false,false,POS_FACEUP) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetRange(LOCATION_MZONE)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
-		e1:SetOperation(s.desop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetRange(LOCATION_MZONE)
 		e1:SetCountLimit(1)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
+		e1:SetOperation(s.rmvop)
 		tg1:RegisterEffect(e1)
 	end
 	Duel.SpecialSummonComplete()
 end
-function s.desop(e,tp,eg,ep,ev,re,r,rp)
+function s.rmvop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT)
 end

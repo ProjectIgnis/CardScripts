@@ -8,7 +8,7 @@ end
 function Synchro.Tuner(f,...)
 	local params={...}
 	return function(target,scard,sumtype,tp)
-		return target:IsType(TYPE_TUNER,scard,sumtype,tp) and (not f or f(target,table.unpack(params)))
+		return not target:IsNotTuner(scard,tp) and (not f or f(target,table.unpack(params)))
 	end
 end
 function Synchro.NonTuner(f,...)

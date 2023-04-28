@@ -47,19 +47,19 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local ssg=sg:Select(tp,1,1,nil)
 		if #ssg>0 then
 			Duel.BreakEffect()
-			Duel.SpecialSummon(ssg,0,tp,tp,false,false,POS_FACEUP_ATTACK)
+			local dg=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_MZONE,nil)
+			if Duel.SpecialSummon(ssg,0,tp,tp,false,false,POS_FACEUP_ATTACK)>0 
+				and Duel.GetMatchingGroupCount(Card.IsMonster,tp,LOCATION_GRAVE,0,nil)==0 
+				and #dg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+				--Destroy 1 face-up Level 8 or lower monster on your opponent's field
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+				dg=dg:Select(tp,1,1,nil)
+				if #dg==0 then return end
+				Duel.HintSelection(dg,true)
+				dg:AddMaximumCheck()
+				Duel.BreakEffect()
+				Duel.Destroy(dg,REASON_EFFECT)
+			end
 		end
-	end
-	--Destroy 1 face-up Level 8 or lower monster on your opponent's field
-	local dg=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_MZONE,nil)
-	if Duel.GetMatchingGroupCount(Card.IsMonster,tp,LOCATION_GRAVE,0,nil)==0 
-		and #dg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-		dg=dg:Select(tp,1,1,nil)
-		if #dg==0 then return end
-		Duel.HintSelection(dg,true)
-		dg:AddMaximumCheck()
-		Duel.BreakEffect()
-		Duel.Destroy(dg,REASON_EFFECT)
 	end
 end

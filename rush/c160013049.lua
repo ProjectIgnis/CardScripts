@@ -19,6 +19,7 @@ function s.stage2(e,tc,tp,mg,chk)
 			local g=Duel.GetOperatedGroup()
 			local ct2=g:FilterCount(Card.IsLocation,nil,LOCATION_GRAVE)
 			if ct2>0 and Duel.IsPlayerCanDiscardDeck(1-tp,7) and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+				Duel.BreakEffect()
 				Duel.DiscardDeck(1-tp,7,REASON_EFFECT)
 			end
 		end

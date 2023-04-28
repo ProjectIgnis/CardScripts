@@ -38,19 +38,18 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	-- requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_MZONE,0,3,3,nil)
-	local ct=Duel.SendtoGrave(g,REASON_COST)
-	if ct>0 then
+	if Duel.SendtoGrave(g,REASON_COST)>0 then
 		--Effect
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g2=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
-		if #g2>0 then
-			Duel.SpecialSummon(g2,0,tp,tp,false,false,POS_FACEUP)
+		if #g2>0 and Duel.SpecialSummon(g2,0,tp,tp,false,false,POS_FACEUP)>0 then
 			local g3=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.thfilter),tp,LOCATION_GRAVE,0,nil)
 			if #g3>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 				local sg=g3:Select(tp,1,1,nil)
 				Duel.HintSelection(sg,true)
+				Duel.BreakEffect()
 				Duel.SSet(tp,sg)
 			end
 		end

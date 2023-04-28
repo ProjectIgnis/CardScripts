@@ -3,16 +3,16 @@
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)
-	--fusion material
+	--Fusion Summon procedure
 	c:EnableReviveLimit()
 	Fusion.AddProcMix(c,true,true,160205022,CARD_CYBER_DRAGON)
-	--Destroy 2 of opponent's monsters
+	--Destroy up to 2 monsters the opponent control with total ATK equal or less than this card's
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetCountLimit(1)
 	e1:SetRange(LOCATION_MZONE)
+	e1:SetCountLimit(1)
 	e1:SetCost(s.descost)
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)

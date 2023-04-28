@@ -20,7 +20,6 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCost(s.gycost)
 	e2:SetTarget(s.gytg)
-	e2:SetOperation(s.gyop)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}

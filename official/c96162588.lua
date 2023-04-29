@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--force a tribute
+	--Make the opponent tribute a monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_RELEASE)
@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.reltg)
 	e2:SetOperation(s.relop)
 	c:RegisterEffect(e2)
-	--destroy
+	--Destroy this card
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_DESTROY)
@@ -34,9 +34,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x141}
+s.listed_series={SET_RIKKA}
 function s.relfilter(c,tp)
-	return c:IsPreviousSetCard(0x141) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
+	return c:IsPreviousSetCard(SET_RIKKA) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
 end
 function s.relcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.relfilter,1,nil,tp)
@@ -52,15 +52,15 @@ function s.relop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_RELEASE)
 		local sg=g:Select(1-tp,1,1,nil)
 		Duel.HintSelection(sg)
-		Duel.Release(sg,REASON_RULE)
+		Duel.Release(sg,REASON_RULE,1-tp)
 	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==1-tp and Duel.IsExistingMatchingCard(aux.FaceupFilter(aux.NOT(Card.IsRace),RACE_PLANT),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsTurnPlayer(1-tp) and Duel.IsExistingMatchingCard(aux.FaceupFilter(aux.NOT(Card.IsRace),RACE_PLANT),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,e:GetHandler(),1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,e:GetHandler(),1,tp,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

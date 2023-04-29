@@ -82,7 +82,7 @@ function s.adjustop(e,tp,eg,ep,ev,re,r,rp)
 				Duel.HintSelection(tc,true)
 			end
 			g0:RemoveCard(tc)
-			c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD_DISABLE,0,1,tc:GetFieldID())
+			c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD_DISABLE,0,1,tc:GetFieldID())
 		end
 	end
 	if ct1==0 and flag1 then
@@ -101,14 +101,19 @@ function s.adjustop(e,tp,eg,ep,ev,re,r,rp)
 				Duel.HintSelection(tc,true)
 			end
 			g1:RemoveCard(tc)
-			c:RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD_DISABLE,0,1,tc:GetFieldID())
+			c:RegisterFlagEffect(id+1,RESET_EVENT|RESETS_STANDARD_DISABLE,0,1,tc:GetFieldID())
 		end
 	end
-	g0:Merge(g1)
+	local readjust=false
 	if #g0>0 then
-		Duel.SendtoGrave(g0,REASON_RULE)
-		Duel.Readjust()
+		Duel.SendtoGrave(g0,REASON_RULE,PLAYER_NONE,tp)
+		readjust=true
 	end
+	if #g1>0 then
+		Duel.SendtoGrave(g1,REASON_RULE,PLAYER_NONE,1-tp)
+		readjust=true
+	end
+	if readjust then Duel.Readjust() end
 end
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp)
 	if c:IsAttribute(ATTRIBUTE_WATER) then return false end

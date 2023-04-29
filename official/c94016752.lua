@@ -3,8 +3,9 @@
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Make the opponent send a monster the control to the GY
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -37,7 +38,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
 	local g=Duel.SelectMatchingCard(1-tp,s.filter,1-tp,LOCATION_MZONE,0,1,1,nil,rc,at)
 	if #g>0 then
-		Duel.SendtoGrave(g,REASON_RULE)
+		Duel.SendtoGrave(g,REASON_RULE,PLAYER_NONE,1-tp)
 		if g:GetFirst():IsLocation(LOCATION_GRAVE) then
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_FIELD)

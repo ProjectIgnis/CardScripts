@@ -39,6 +39,6 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 		{b1,aux.Stringid(id,1)},
 		{b2,aux.Stringid(id,2)})
 	if op then
-		Duel.SendtoGrave(op==1 and tc or g,REASON_RULE)
+		Duel.SendtoGrave(op==1 and tc or g,REASON_RULE,PLAYER_NONE,1-tp)
 	end
 end

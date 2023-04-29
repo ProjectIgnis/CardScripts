@@ -1,5 +1,5 @@
 -- 台貫計量
--- Weight Measuring
+-- Weighbridge
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -35,6 +35,6 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=g:Select(1-tp,ct-1,ct-1,nil)
 	if #tg>0 then
 		Duel.HintSelection(tg,true)
-		Duel.SendtoGrave(tg,REASON_RULE)
+		Duel.SendtoGrave(tg,REASON_RULE,PLAYER_NONE,1-tp)
 	end
 end

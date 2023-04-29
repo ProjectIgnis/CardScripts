@@ -104,6 +104,7 @@ function s.adjustop(e,tp,eg,ep,ev,re,r,rp)
 			c:RegisterFlagEffect(id+1,RESET_EVENT|RESETS_STANDARD_DISABLE,0,1,tc:GetFieldID())
 		end
 	end
+	local readjust=false
 	if #g0>0 then
 		Duel.SendtoGrave(g0,REASON_RULE,PLAYER_NONE,tp)
 		readjust=true

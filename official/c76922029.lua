@@ -1,4 +1,5 @@
 --首領・ザルーグ
+--Don Zaloog
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
@@ -27,10 +28,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		op=1
 	end
 	e:SetLabel(op)
-	if op==0 then 
+	if op==0 then
 		Duel.SetOperationInfo(0,CATEGORY_HANDES,0,0,1-tp,1)
 		e:SetCategory(CATEGORY_HANDES)
-	else 
+	else
 		Duel.SetOperationInfo(0,CATEGORY_DECKDES,0,0,1-tp,2)
 		e:SetCategory(CATEGORY_DECKDES)
 	end

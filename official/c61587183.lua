@@ -1,4 +1,5 @@
 --黒蠍－逃げ足のチック
+--Dark Scorpion - Chick the Yellow
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
@@ -36,9 +37,9 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
 		e:SetCategory(CATEGORY_TOHAND)
-	else 
+	else
 		e:SetProperty(0)
-		e:SetCategory(0) 
+		e:SetCategory(0)
 	end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)

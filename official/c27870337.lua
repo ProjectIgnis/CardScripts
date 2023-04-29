@@ -1,5 +1,5 @@
 --ドレミコード・エレガンス
---Doremichord Elegance
+--Solfachord Elegance
 --Scripted by Hel
 local s,id=GetID()
 function s.initial_effect(c)
@@ -53,7 +53,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.filter(c)
-	return c:IsSetCard(0x164) and c:IsType(TYPE_PENDULUM) and not c:IsForbidden() 
+	return c:IsSetCard(0x164) and c:IsType(TYPE_PENDULUM) and not c:IsForbidden()
 end
 function s.dtoptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckPendulumZones(tp)
@@ -72,8 +72,8 @@ function s.check(sg,e,tp,mg)
 end
 function s.htoetg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK,0,nil)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil) 
-		and aux.SelectUnselectGroup(g,e,tp,2,2,s.check,0,tp,nil) 
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil)
+		and aux.SelectUnselectGroup(g,e,tp,2,2,s.check,0,tp,nil)
 		and (Duel.CheckLocation(tp,LOCATION_PZONE,0) and Duel.CheckLocation(tp,LOCATION_PZONE,1))
 	end
 end

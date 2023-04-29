@@ -1,4 +1,5 @@
 --鎖付きブーメラン
+--Kunai with Chain
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

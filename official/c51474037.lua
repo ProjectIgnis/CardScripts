@@ -1,5 +1,5 @@
 --ヤモイモリ
---Yamoimori
+--Yamorimori
 --scripted by Rundas
 local s,id=GetID()
 function s.initial_effect(c)

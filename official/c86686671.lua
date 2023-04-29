@@ -1,4 +1,5 @@
 --サイバー・リペア・プラント
+--Cyber Repair Plant
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

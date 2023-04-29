@@ -35,6 +35,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(g1,REASON_RULE,PLAYER_NONE,tp)
 	end
 	if #g2>1 then
-		Duel.SendtoGrave(g1,REASON_RULE,PLAYER_NONE,1-tp)
+		Duel.SendtoGrave(g2,REASON_RULE,PLAYER_NONE,1-tp)
 	end
 end

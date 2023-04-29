@@ -25,8 +25,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD|LOCATION_HAND,0)
 	local g1=Group.CreateGroup()
 	if ct>=6 then
+		local c=e:GetHandler()
+		local exc=c:IsRelateToEffect(e) and c or nil
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		g1=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_ONFIELD|LOCATION_HAND,0,ct-5,ct-5,nil)
+		g1=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_ONFIELD|LOCATION_HAND,0,ct-5,ct-5,exc)
 	end
 	ct=Duel.GetFieldGroupCount(1-tp,LOCATION_ONFIELD|LOCATION_HAND,0)
 	local g2=Group.CreateGroup()
@@ -34,6 +36,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_TOGRAVE)
 		g2=Duel.SelectMatchingCard(1-tp,nil,1-tp,LOCATION_ONFIELD|LOCATION_HAND,0,ct-5,ct-5,nil)
 	end
-	Duel.SendtoGrave(g1,REASON_EFFECT,PLAYER_NONE,1-tp)
-	Duel.SendtoGrave(g2,REASON_EFFECT,PLAYER_NONE,1-tp)
+	Duel.SendtoGrave(g1,REASON_RULE,PLAYER_NONE,1-tp)
+	Duel.SendtoGrave(g2,REASON_RULE,PLAYER_NONE,1-tp)
 end

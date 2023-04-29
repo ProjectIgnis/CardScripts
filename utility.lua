@@ -621,6 +621,21 @@ function Duel.GetMetatable(code)
 	return _G["c" .. code]
 end
 
+-- Load the target's card metatable in the duel, and makes so that
+-- the current loaded one gets replaced by it.
+-- This will basically make the script that called this function behave
+-- like script loading for alt arts work
+function Duel.LoadCardScriptAlias(code)
+	for key in pairs(self_table) do
+		if key~="__index" and key~="__tostring" then
+			error("Duel.LoadCardScriptAlias must be called in an empty script context",2)
+		end
+	end
+	local newtable=Duel.LoadCardScript(code)
+	rawset(self_table,"__index",newtable)
+	_G["c"..self_code] = newtable
+end
+
 function Duel.LoadCardScript(code)
 	if type(code)=="number" then
 		code="c"..code..".lua"
@@ -640,6 +655,7 @@ function Duel.LoadCardScript(code)
 		self_table=oldtable
 		self_code=oldcode
 	end
+	return _G[card]
 end
 
 

@@ -1,6 +1,6 @@
 --No.39 希望皇ホープ・ルーツ (Anime)
 --Number 39: Utopia Roots (Anime)
-Duel.LoadCardScript("84124261.lua")
+Duel.LoadCardScript(84124261)
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon

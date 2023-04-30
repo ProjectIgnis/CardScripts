@@ -301,6 +301,7 @@ function Card.AddSideMaximumHandler(c,eff)
 	e13:SetType(EFFECT_TYPE_SINGLE)
 	e13:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e13:SetCode(EFFECT_CANNOT_BE_MATERIAL)
+	e13:SetCondition(Maximum.sideCon)
 	e13:SetValue(aux.cannotmatfilter(SUMMON_TYPE_FUSION,SUMMON_TYPE_SYNCHRO,SUMMON_TYPE_XYZ,SUMMON_TYPE_LINK))
 	c:RegisterEffect(e13)
 

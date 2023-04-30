@@ -506,6 +506,7 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 							local extra_feff
 							if #extra_feff_mg>0 then extra_feff=GetExtraMatEff(extra_feff_mg:GetFirst(),tc) end
 							if #normal_mg>0 then
+								normal_mg=normal_mg:AddMaximumCheck()
 								Duel.SendtoGrave(normal_mg,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
 							end
 							if extra_feff then
@@ -513,6 +514,7 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 								if extra_feff_op then
 									extra_feff_op(e,tc,tp,extra_feff_mg)
 								else
+									extra_feff_mg=extra_feff_mg:AddMaximumCheck()
 									Duel.SendtoGrave(extra_feff_mg,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
 								end
 								--If the EFFECT_EXTRA_FUSION_MATERIAL effect is OPT

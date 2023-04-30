@@ -42,7 +42,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local sg=g:Filter(Card.IsRace,nil,RACE_PLANT)
 	if #sg>0 then
 		Duel.DisableShuffleCheck()
-		Duel.SendtoGrave(sg,REASON_EFFECT+REASON_EXCAVATE)
+		Duel.SendtoGrave(sg,REASON_EFFECT|REASON_EXCAVATE)
 	end
 	ac=ac-#sg
 	if ac>0 then

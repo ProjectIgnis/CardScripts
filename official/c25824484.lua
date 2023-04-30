@@ -31,7 +31,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	if tc:IsRace(RACE_PLANT) then
 		Duel.DisableShuffleCheck()
-		Duel.SendtoGrave(tc,REASON_EFFECT+REASON_REVEAL)
+		Duel.SendtoGrave(tc,REASON_EFFECT+REASON_EXCAVATE)
 		local ccount=Duel.GetOperatedGroup():FilterCount(Card.IsLocation,nil,LOCATION_GRAVE)
 		if ccount>0 then
 			Duel.Draw(tp,1,REASON_EFFECT)
@@ -42,7 +42,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.sdcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_DECK) and c:IsReason(REASON_REVEAL)
+	return c:IsPreviousLocation(LOCATION_DECK) and c:IsReason(REASON_EXCAVATE)
 end
 function s.sdop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=math.min(Duel.GetFieldGroupCount(tp,LOCATION_DECK,0),3)

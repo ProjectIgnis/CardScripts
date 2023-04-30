@@ -69,7 +69,7 @@ function s.operation_d(e,tp,eg,ep,ev,re,r,rp)
 		local tg=dg:FilterSelect(tp,s.tgfilter,1,1,nil)
 		dg:RemoveCard(tg)
 		Duel.DisableShuffleCheck()
-		Duel.SendtoGrave(tg,REASON_EFFECT+REASON_REVEAL)
+		Duel.SendtoGrave(tg,REASON_EFFECT+REASON_EXCAVATE)
 		ct=1
 	end
 	local ac=res-ct

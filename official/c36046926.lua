@@ -41,7 +41,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local sg=g:Filter(Card.IsRace,nil,RACE_PLANT)
 	if #sg>0 then
 		Duel.DisableShuffleCheck()
-		Duel.SendtoGrave(sg,REASON_EFFECT+REASON_REVEAL)
+		Duel.SendtoGrave(sg,REASON_EFFECT+REASON_EXCAVATE)
 	end
 	ac=ac-#sg
 	if ac>0 then
@@ -51,7 +51,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_DECK) and c:IsReason(REASON_REVEAL)
+	return c:IsPreviousLocation(LOCATION_DECK) and c:IsReason(REASON_EXCAVATE)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) end

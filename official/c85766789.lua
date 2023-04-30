@@ -73,6 +73,6 @@ function s.excop(e,tp,eg,ep,ev,re,r,rp)
 		end,
 		aux.Stringid(id,2))
 	else
-		Duel.SendtoGrave(tc,REASON_EFFECT+REASON_REVEAL)
+		Duel.SendtoGrave(tc,REASON_EFFECT+REASON_EXCAVATE)
 	end
 end

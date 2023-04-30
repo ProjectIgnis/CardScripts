@@ -54,7 +54,7 @@ function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 		local tg=g:Filter(Card.IsSetCard,nil,0x102)
 		if #tg>0 then
 			Duel.DisableShuffleCheck()
-			Duel.SendtoGrave(tg,REASON_EFFECT+REASON_REVEAL)
+			Duel.SendtoGrave(tg,REASON_EFFECT+REASON_EXCAVATE)
 		end
 		local ac=6-#tg
 		Duel.MoveToDeckBottom(ac,tp)

@@ -66,7 +66,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	if tc:IsRace(RACE_PLANT) then
 		Duel.DisableShuffleCheck()
-		Duel.SendtoGrave(g,REASON_EFFECT+REASON_REVEAL)
+		Duel.SendtoGrave(g,REASON_EFFECT+REASON_EXCAVATE)
 	else
 		local opt=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
 		if opt==1 then

@@ -74,7 +74,7 @@ function s.sp(e,tp,ct)
 		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)
 	end
 	if conf-#g>0 then
-		Duel.DiscardDeck(tp,conf-#g,REASON_EFFECT+REASON_REVEAL)
+		Duel.DiscardDeck(tp,conf-#g,REASON_EFFECT+REASON_EXCAVATE)
 	end
 	return g
 end

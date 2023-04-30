@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_HAND+LOCATION_ONFIELD) or (c:IsPreviousLocation(LOCATION_DECK) and	c:IsReason(REASON_REVEAL))
+	return c:IsPreviousLocation(LOCATION_HAND+LOCATION_ONFIELD) or (c:IsPreviousLocation(LOCATION_DECK) and	c:IsReason(REASON_EXCAVATE))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,1) end
@@ -27,7 +27,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	if tc:IsRace(RACE_PLANT) then
 		Duel.DisableShuffleCheck()
-		Duel.SendtoGrave(g,REASON_EFFECT+REASON_REVEAL)
+		Duel.SendtoGrave(g,REASON_EFFECT+REASON_EXCAVATE)
 	else
 		Duel.MoveSequence(tc,1)
 	end

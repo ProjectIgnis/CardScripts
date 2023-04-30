@@ -57,6 +57,6 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 			at:RegisterEffect(e1)
 		end
 	else
-		Duel.SendtoGrave(tc,REASON_EFFECT+REASON_REVEAL)
+		Duel.SendtoGrave(tc,REASON_EFFECT+REASON_EXCAVATE)
 	end
 end

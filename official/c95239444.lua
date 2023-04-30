@@ -62,7 +62,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetDecktopGroup(tp,ac)
 	local sg=g:Filter(Card.IsRace,nil,RACE_PLANT)
 	Duel.DisableShuffleCheck()
-	if Duel.SendtoGrave(sg,REASON_EFFECT+REASON_REVEAL)~=0 then
+	if Duel.SendtoGrave(sg,REASON_EFFECT+REASON_EXCAVATE)~=0 then
 		local ct=Duel.GetOperatedGroup():FilterCount(Card.IsLocation,nil,LOCATION_GRAVE)
 		if ct>0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)

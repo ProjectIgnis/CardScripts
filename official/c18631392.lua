@@ -100,7 +100,7 @@ function s.retop(code1,code2,code3)
 			end
 			if #g~=0 then
 				Duel.DisableShuffleCheck()
-				Duel.SendtoGrave(g,REASON_EFFECT+REASON_REVEAL)
+				Duel.SendtoGrave(g,REASON_EFFECT+REASON_EXCAVATE)
 			end
 			if c:IsRelateToEffect(e) then
 				local e1=Effect.CreateEffect(c)

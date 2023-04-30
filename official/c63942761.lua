@@ -26,7 +26,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local sg=g:Filter(s.filter,nil)
 	if #sg>0 then
 		Duel.DisableShuffleCheck()
-		Duel.SendtoGrave(sg,REASON_EFFECT+REASON_REVEAL)
+		Duel.SendtoGrave(sg,REASON_EFFECT+REASON_EXCAVATE)
 	end
 	Duel.MoveToDeckBottom(5-#sg,tp)
 	Duel.SortDeckbottom(tp,tp,5-#sg)

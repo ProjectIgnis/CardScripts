@@ -46,6 +46,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SpecialSummonComplete()
 		end
 	else
-		Duel.DiscardDeck(tp,dcount-seq,REASON_EFFECT+REASON_REVEAL)
+		Duel.DiscardDeck(tp,dcount-seq,REASON_EFFECT+REASON_EXCAVATE)
 	end
 end

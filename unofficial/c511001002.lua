@@ -21,5 +21,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsMonster() then
 		Duel.Damage(1-tp,1000,REASON_EFFECT)
 	end
-	Duel.SendtoGrave(g,REASON_EFFECT+REASON_REVEAL)
+	Duel.SendtoGrave(g,REASON_EFFECT+REASON_EXCAVATE)
 end

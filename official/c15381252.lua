@@ -37,7 +37,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local tc=g:GetFirst()
 		if tc:IsMonster() then
 			Duel.DisableShuffleCheck()
-			Duel.SendtoGrave(tc,REASON_EFFECT+REASON_REVEAL)
+			Duel.SendtoGrave(tc,REASON_EFFECT+REASON_EXCAVATE)
 			if tc:IsLocation(LOCATION_GRAVE) then
 				Duel.Damage(1-tp,500,REASON_EFFECT)
 				count=count-1

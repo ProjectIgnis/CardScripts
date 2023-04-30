@@ -38,7 +38,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.ConfirmCards(1-tp,sg)
 			g:RemoveCard(sg:GetFirst())
 		end
-		Duel.SendtoGrave(g,REASON_EFFECT+REASON_REVEAL)
+		Duel.SendtoGrave(g,REASON_EFFECT+REASON_EXCAVATE)
 	else
 		Duel.ShuffleDeck(tp)
 	end

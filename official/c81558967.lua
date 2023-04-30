@@ -55,7 +55,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 					Duel.SendtoGrave(sg,REASON_RULE)
 				end
 			g:Sub(sg)
-			Duel.SendtoGrave(g,REASON_EFFECT+REASON_REVEAL)
+			Duel.SendtoGrave(g,REASON_EFFECT+REASON_EXCAVATE)
 		end
 		Duel.ShuffleDeck(tp)
 	end

@@ -77,7 +77,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		end
 		Duel.SpecialSummonComplete()
 	end
-	Duel.SendtoGrave(g,REASON_EFFECT+REASON_REVEAL)
+	Duel.SendtoGrave(g,REASON_EFFECT+REASON_EXCAVATE)
 end
 function s.lvfilter(c,lg)
 	return c:IsRace(RACE_PLANT) and c:HasLevel() and lg:IsExists(aux.NOT(Card.IsLevel),1,nil,c:GetLevel())

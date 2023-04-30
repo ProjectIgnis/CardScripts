@@ -29,10 +29,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if spcard:IsAbleToHand() then
 		Duel.DisableShuffleCheck()
 		Duel.SendtoHand(spcard,nil,REASON_EFFECT)
-		Duel.DiscardDeck(tp,dcount-seq-1,REASON_EFFECT+REASON_REVEAL)
+		Duel.DiscardDeck(tp,dcount-seq-1,REASON_EFFECT+REASON_EXCAVATE)
 		Duel.ConfirmCards(1-tp,spcard)
 		Duel.ShuffleHand(tp)
 	else
-		Duel.DiscardDeck(tp,dcount-seq,REASON_EFFECT+REASON_REVEAL)
+		Duel.DiscardDeck(tp,dcount-seq,REASON_EFFECT+REASON_EXCAVATE)
 	end
 end

@@ -39,7 +39,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ConfirmDecktop(tp,1)
 	local g=Duel.GetDecktopGroup(tp,1)
 	Duel.DisableShuffleCheck()
-	if Duel.SendtoGrave(g,REASON_EFFECT+REASON_REVEAL)==0 then return end
+	if Duel.SendtoGrave(g,REASON_EFFECT+REASON_EXCAVATE)==0 then return end
 	local dg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.tdfilter),tp,LOCATION_GRAVE,0,nil)
 	if #dg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 		Duel.BreakEffect()
@@ -51,7 +51,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_DECK) and c:IsReason(REASON_REVEAL)
+	return c:IsPreviousLocation(LOCATION_DECK) and c:IsReason(REASON_EXCAVATE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

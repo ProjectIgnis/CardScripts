@@ -80,7 +80,7 @@ function s.revop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.ShuffleHand(1-tp)
 		end
 	elseif tc:IsTrap() then
-		Duel.DiscardDeck(1-tp,1,REASON_EFFECT+REASON_REVEAL+REASON_DISCARD)
+		Duel.DiscardDeck(1-tp,1,REASON_EFFECT+REASON_EXCAVATE+REASON_DISCARD)
 		local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
 		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_DISCARD)
 		local sg=g:Select(1-tp,1,1,nil)

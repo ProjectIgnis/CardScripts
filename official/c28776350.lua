@@ -105,6 +105,6 @@ function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	if #g~=0 then
 		Duel.DisableShuffleCheck()
-		Duel.SendtoGrave(g,REASON_EFFECT+REASON_REVEAL)
+		Duel.SendtoGrave(g,REASON_EFFECT+REASON_EXCAVATE)
 	end
 end

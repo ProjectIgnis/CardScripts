@@ -12,8 +12,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-function s.filter(c,e,tp)
-	return c:IsAttribute(ATTRIBUTE_DIVINE) and (c:IsAbleToHand() or c:IsCanBeSpecialSummoned(e,0,tp,false,false))
+function s.filter(c,e,tp,ft)
+	return c:IsAttribute(ATTRIBUTE_DIVINE) and (c:IsAbleToHand()
+		or (ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,1)
@@ -33,19 +34,18 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local ac=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
 	if tc:IsCode(ac) and tc:IsAbleToHand() then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
-		local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK,0,nil,e,tp)
+		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+		local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK,0,nil,e,tp,ft)
 		if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
-			local sg=g:Select(tp,1,1,nil)
-			local sc=sg:GetFirst()
+			local sc=g:Select(tp,1,1,nil):GetFirst()
 			local b1=sc:IsAbleToHand()
-			local b2=sc:IsCanBeSpecialSummoned(e,0,tp,false,false)
-			local op=0
-			if b1 and b2 then op=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
-			elseif b1 then op=Duel.SelectOption(tp,aux.Stringid(id,1))
-			else op=Duel.SelectOption(tp,aux.Stringid(id,2))+1 end
-			if op==0 then
+			local b2=sc:IsCanBeSpecialSummoned(e,0,tp,false,false) and ft>0
+			local op=Duel.SelectEffect(tp,
+					{b1,aux.Stringid(id,1)},
+					{b2,aux.Stringid(id,2)})
+			if op==1 then
 				Duel.SendtoHand(sc,nil,REASON_EFFECT)
 				Duel.ConfirmCards(1-tp,sc)
 			else
@@ -57,6 +57,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ShuffleHand(tp)
 	else
 		Duel.DisableShuffleCheck()
-		Duel.SendtoGrave(tc,REASON_EFFECT+REASON_EXCAVATE)
+		Duel.SendtoGrave(tc,REASON_EFFECT|REASON_EXCAVATE)
 	end
 end

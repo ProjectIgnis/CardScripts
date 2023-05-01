@@ -64,7 +64,7 @@ function s.cftg(e,tp,eg,ep,ev,re,r,rp,chk)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e1:SetCode(EFFECT_DRAW_COUNT)
 		e1:SetTargetRange(1,0)
-		e1:SetReset(RESET_PHASE+PHASE_DRAW)
+		e1:SetReset(RESET_PHASE|PHASE_DRAW)
 		e1:SetValue(0)
 		Duel.RegisterEffect(e1,tp)
 	end
@@ -80,7 +80,7 @@ function s.cfop(e,tp,eg,ep,ev,re,r,rp)
 		local tc=g:GetFirst()
 		Duel.DisableShuffleCheck()
 		if tc:IsRace(RACE_PLANT) then
-			Duel.SendtoGrave(tc,REASON_EFFECT+REASON_EXCAVATE)
+			Duel.SendtoGrave(tc,REASON_EFFECT|REASON_EXCAVATE)
 		else
 			Duel.SendtoHand(tc,nil,REASON_EFFECT)
 			Duel.ShuffleHand(tp)

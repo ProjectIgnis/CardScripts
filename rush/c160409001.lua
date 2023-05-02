@@ -47,9 +47,23 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 			e2:SetRange(LOCATION_MZONE)
 			e2:SetCode(EFFECT_EXTRA_ATTACK_MONSTER)
+			e2:SetCondition(s.macon)
 			e2:SetValue(1)
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			c:RegisterEffect(e2)
+			local e3=Effect.CreateEffect(c)
+			e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+			e3:SetCode(EVENT_BATTLE_DESTROYING)
+			e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+			e3:SetCondition(aux.bdcon)
+			e3:SetOperation(s.bdop)
+			c:RegisterEffect(e3)
 		end
 	end
+end
+function s.macon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():GetFlagEffect(id+1)>0
+end
+function s.bdop(e,tp,eg,ep,ev,re,r,rp)
+	e:GetHandler():RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 end

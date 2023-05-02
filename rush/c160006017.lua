@@ -44,17 +44,31 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			c:RegisterEffect(e2)
 			--Attack up to twice
+			local e3=Effect.CreateEffect(c)
+			e3:SetType(EFFECT_TYPE_SINGLE)
+			e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+			e3:SetRange(LOCATION_MZONE)
+			e3:SetCode(EFFECT_EXTRA_ATTACK_MONSTER)
+			e3:SetCondition(s.macon)
+			e3:SetValue(1)
+			e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			c:RegisterEffect(e3)
 			local e2=Effect.CreateEffect(c)
-			e2:SetType(EFFECT_TYPE_SINGLE)
-			e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-			e2:SetRange(LOCATION_MZONE)
-			e2:SetCode(EFFECT_EXTRA_ATTACK_MONSTER)
-			e2:SetValue(1)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			c:RegisterEffect(e2)
+			e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+			e4:SetCode(EVENT_BATTLE_DESTROYING)
+			e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+			e4:SetCondition(aux.bdcon)
+			e4:SetOperation(s.bdop)
+			c:RegisterEffect(e4)
 		end
 	end
 end
 function s.efilter(e,te)
 	return te:IsActiveType(TYPE_TRAP) and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
+end
+function s.macon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():GetFlagEffect(id+1)>0
+end
+function s.bdop(e,tp,eg,ep,ev,re,r,rp)
+	e:GetHandler():RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 end

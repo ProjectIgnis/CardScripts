@@ -16,22 +16,13 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsAbleToHand() end
-	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)>0
-		or Duel.IsExistingTarget(Card.IsAbleToHand,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
-	local op=0
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))
-	if Duel.IsExistingTarget(Card.IsAbleToHand,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
-		and Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)>0 then
-		op=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
-	elseif Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)>0 then
-		Duel.SelectOption(tp,aux.Stringid(id,2))
-		op=1
-	else
-		Duel.SelectOption(tp,aux.Stringid(id,1))
-		op=0
-	end
-	e:SetLabel(op)
-	if op==0 then
+	local b1=Duel.IsExistingTarget(Card.IsAbleToHand,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
+	local b2=Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)>0
+	if chk==0 then return b1 or b2 end
+	local op=Duel.SelectEffect(tp,
+		{b1,aux.Stringid(id,1)},
+		{b2,aux.Stringid(id,2)})
+	if op==1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 		local g=Duel.SelectTarget(tp,Card.IsAbleToHand,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
@@ -43,7 +34,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetLabel()==0 then
+	if e:GetLabel()==1 then
 		local tc=Duel.GetFirstTarget()
 		if tc and tc:IsRelateToEffect(e) then
 			Duel.SendtoHand(tc,nil,REASON_EFFECT)

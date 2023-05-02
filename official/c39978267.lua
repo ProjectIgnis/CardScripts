@@ -30,13 +30,9 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		else return chkc:IsLocation(LOCATION_SZONE) and s.eqfilter(chkc,e:GetHandler()) end
 	end
 	if chk==0 then return true end
-	local sel=0
-	if Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_SZONE,LOCATION_SZONE,1,nil) then sel=sel+1 end
-	if Duel.IsExistingMatchingCard(s.eqfilter,tp,LOCATION_SZONE,LOCATION_SZONE,1,nil,e:GetHandler()) then sel=sel+2 end
-	if sel==3 then
-		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))
-		sel=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))+1
-	end
+	local sel=Duel.SelectEffect(tp,
+		{Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_SZONE,LOCATION_SZONE,1,nil),aux.Stringid(id,1)},
+		{Duel.IsExistingMatchingCard(s.eqfilter,tp,LOCATION_SZONE,LOCATION_SZONE,1,nil,e:GetHandler(),aux.Stringid(id,2))})
 	e:SetLabel(sel)
 	if sel==1 then
 		e:SetCategory(CATEGORY_DESTROY)

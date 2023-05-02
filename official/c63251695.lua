@@ -29,7 +29,7 @@ function s.tfilter(c,tp)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	return e:GetHandler():GetFlagEffect(id)==0 and re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) 
+	return e:GetHandler():GetFlagEffect(id)==0 and re:IsHasProperty(EFFECT_FLAG_CARD_TARGET)
 		and g and g:IsExists(s.tfilter,1,e:GetHandler(),tp) and Duel.IsChainDisablable(ev)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
@@ -58,11 +58,11 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 		{b1,aux.Stringid(id,1)},
 		{b2,aux.Stringid(id,2)})
 	e:SetLabel(opt)
-	if opt==2 then
+	if opt==1 then
+		e:SetCategory(0)
+	else
 		Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,1-tp,LOCATION_ONFIELD|LOCATION_HAND)
 		e:SetCategory(CATEGORY_TODECK)
-	else
-		e:SetCategory(0)
 	end
 end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)

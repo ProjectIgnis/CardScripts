@@ -32,20 +32,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local b1=Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_DECK,0,1,nil)
 	local b2=Duel.IsExistingTarget(s.filter2,tp,LOCATION_GRAVE,0,1,nil)
 	if chk==0 then return b1 or b2 end
-	local op=0
-	if b1 and b2 then
-		if Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,3,nil,CARD_CYBER_DRAGON) then
-			op=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1),aux.Stringid(id,2))
-		else
-			op=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))
-		end
-	elseif b1 then
-		op=Duel.SelectOption(tp,aux.Stringid(id,0))
-	else
-		op=Duel.SelectOption(tp,aux.Stringid(id,1))+1
-	end
+	local op=Duel.SelectEffect(tp,
+		{b1,aux.Stringid(id,0)},
+		{b2,aux.Stringid(id,1)},
+		{b1 and b2 and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,3,nil,CARD_CYBER_DRAGON),aux.Stringid(id,2)})
 	e:SetLabel(op)
-	if op~=0 then
+	if op~=1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		local g=Duel.SelectTarget(tp,s.filter2,tp,LOCATION_GRAVE,0,1,1,nil)
 		Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,0,0)
@@ -53,11 +45,11 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	else
 		e:SetProperty(0)
 	end
-	e:SetCategory((op~=0 and CATEGORY_TODECK or 0)+(op~=1 and CATEGORY_SEARCH+CATEGORY_TOHAND or 0))
+	e:SetCategory((op~=1 and CATEGORY_TODECK or 0)+(op~=2 and CATEGORY_SEARCH+CATEGORY_TOHAND or 0))
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local op=e:GetLabel()
-	if op~=1 then
+	if op~=2 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,s.filter1,tp,LOCATION_DECK,0,1,1,nil)
 		if #g>0 then
@@ -65,7 +57,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.ConfirmCards(1-tp,g)
 		end
 	end
-	if op~=0 then
+	if op~=1 then
 		local tc=Duel.GetFirstTarget()
 		if tc:IsRelateToEffect(e) then
 			if op==2 then Duel.BreakEffect() end

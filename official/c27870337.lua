@@ -17,26 +17,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b2 = s.htoetg(e,tp,eg,ep,ev,re,r,rp,0)
 	local b3 = s.drawtg(e,tp,eg,ep,ev,re,r,rp,0)
 	if chk==0 then return b1 or b2 or b3 end
-	local ops={}
-	local opval={}
-	local off=1
-	if b1 then
-		ops[off]=aux.Stringid(id,0)
-		opval[off-1]=1
-		off=off+1
-	end
-	if b2 then
-		ops[off]=aux.Stringid(id,1)
-		opval[off-1]=2
-		off=off+1
-	end
-	if b3 then
-		ops[off]=aux.Stringid(id,2)
-		opval[off-1]=3
-		off=off+1
-	end
-	local op=Duel.SelectOption(tp,table.unpack(ops))
-	local sel=opval[op]
+	local sel=Duel.SelectEffect(tp,
+		{b1,aux.Stringid(id,0)},
+		{b2,aux.Stringid(id,1)},
+		{b3,aux.Stringid(id,2)})
 	if sel==1 then
 		e:SetCategory(0)
 		e:SetOperation(s.dtopop)

@@ -44,15 +44,13 @@ function s.btg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetTargetCard(tc2)
 	check1=check1 and tc2:IsCanChangePosition()
 	check2=check2 and tc2:GetAttack()>0
-	local t={}
-	if not check1 and not check2 then return end
-	if check1 then table.insert(t,aux.Stringid(id,1)) end
-	if check2 then table.insert(t,aux.Stringid(id,2)) end
-	local choice=Duel.SelectOption(tp,table.unpack(t))+(check1 and 0 or 1)
-	if choice==0 then
+	local choice=Duel.SelectEffect(tp,
+		{check1,aux.Stringid(id,1)},
+		{check2,aux.Stringid(id,2)})
+	if choice==1 then
 		Duel.SetOperationInfo(0,CATEGORY_POSITION,Group.FromCards(tc1,tc2),2,tp,LOCATION_MZONE)
 		e:SetCategory(CATEGORY_POSITION)
-	elseif choice==1 then
+	elseif choice==2 then
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,tc1,1,tp,LOCATION_MZONE)
 		Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,tc2,1,tp,LOCATION_MZONE)
 		e:SetCategory(CATEGORY_DESTROY+CATEGORY_ATKCHANGE)
@@ -63,9 +61,9 @@ function s.bop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)
 	if #g~=2 then return end
 	local choice=e:GetLabel()
-	if choice==0 then
+	if choice==1 then
 		Duel.ChangePosition(g,POS_FACEDOWN_DEFENSE)
-	elseif choice==1 then
+	elseif choice==2 then
 		local g1,g2=g:Split(Card.IsControler,nil,tp)
 		if Duel.Destroy(g1,REASON_EFFECT)>0 then
 			local e1=Effect.CreateEffect(e:GetHandler())

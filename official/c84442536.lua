@@ -22,36 +22,30 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if not g or #g~=1 then return false end
 	local tc=g:GetFirst()
 	e:SetLabelObject(tc)
-	return s.cfilter(tc,tp) 
+	return s.cfilter(tc,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetLabelObject()
-	if chk==0 then return tc and (Duel.IsChainNegatable(ev) or tc:IsLocation(LOCATION_MZONE)) end
-	local sel=0
-	if Duel.IsChainNegatable(ev) and tc:IsLocation(LOCATION_MZONE) then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EFFECT)
-		sel=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))
-	elseif tc:IsLocation(LOCATION_MZONE) then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EFFECT)
-		sel=Duel.SelectOption(tp,aux.Stringid(id,0))
-	else
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EFFECT)
-		sel=Duel.SelectOption(tp,aux.Stringid(id,1))+1
-	end
+	local b1=tc:IsLocation(LOCATION_MZONE)
+	local b2=Duel.IsChainNegatable(ev)
+	if chk==0 then return tc and (b1 or b2) end
+	local sel=Duel.SelectEffect(tp,
+		{b1,aux.Stringid(id,0)},
+		{b2,aux.Stringid(id,1)})
 	e:SetLabel(sel)
 	if sel==1 then
+		e:SetCategory(0)
+	else
 		Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 		if re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) then
 			Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
 		end
 		e:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
-	else
-		e:SetCategory(0)
 	end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local sel=e:GetLabel()
-	if sel==0 then
+	if sel==1 then
 		Duel.ChangeChainOperation(ev,s.repop)
 	else
 		if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then

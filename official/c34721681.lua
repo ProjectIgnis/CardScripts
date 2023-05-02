@@ -50,7 +50,7 @@ function s.opttarget(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		{tc:GetFirst():IsCanChangePosition(),aux.Stringid(id,1)},
 		{true,aux.Stringid(id,2)})
 	e:SetLabel(op)
-	if op==0 then
+	if op==1 then
 		e:SetCategory(CATEGORY_POSITION)
 	else
 		e:SetCategory(0)

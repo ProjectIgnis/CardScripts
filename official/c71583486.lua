@@ -20,27 +20,24 @@ function s.thfilter(c)
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToDeck() end
-	local op=-1
-	if Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) then
-		op=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))
-	else
-		op=Duel.SelectOption(tp,aux.Stringid(id,0))
-	end
+	local op=Duel.SelectEffect(tp,
+		{true,aux.Stringid(id,0)},
+		{Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil),aux.Stringid(id,1)})
 	e:SetLabel(op)
 	if op==1 then
+		e:SetCategory(CATEGORY_TODECK)
+	else
 		e:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND+CATEGORY_TODECK)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
-	else 
-		e:SetCategory(CATEGORY_TODECK)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,c,1,tp,LOCATION_GRAVE)
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local op=e:GetLabel()
-	if op==0 and c:IsRelateToEffect(e) then
+	if op==1 and c:IsRelateToEffect(e) then
 		Duel.SendtoDeck(c,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
-	elseif op==1 then
+	elseif op==2 then
 		Duel.DisableShuffleCheck(true)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)

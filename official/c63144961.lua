@@ -32,16 +32,11 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local eq=Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 	local datk=not tc:IsHasEffect(EFFECT_DIRECT_ATTACK) and Duel.IsAbleToEnterBP()
 	local dam=Duel.IsAbleToEnterBP()
-	local choice=-1
-	if eq and datk and dam then choice=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2),aux.Stringid(id,3))
-	elseif eq and datk then choice=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))+3
-	elseif datk and dam then choice=Duel.SelectOption(tp,aux.Stringid(id,2),aux.Stringid(id,3))+5
-	elseif eq and dam then choice=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,3))+7
-	elseif eq then choice=Duel.SelectOption(tp,aux.Stringid(id,1))
-	elseif datk then choice=Duel.SelectOption(tp,aux.Stringid(id,2))+1
-	elseif dam then choice=Duel.SelectOption(tp,aux.Stringid(id,3))+2
-	end
-	if choice==0 or choice==3 or choice==7 then
+	local choice=Duel.SelectEffect(tp,
+		{eq,aux.Stringid(id,1)},
+		{datk,aux.Stringid(id,2)},
+		{dam,aux.Stringid(id,3)})
+	if choice==1 then
 		Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,1-tp,LOCATION_MZONE)
 		e:SetCategory(CATEGORY_EQUIP)
 	else
@@ -54,12 +49,12 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local choice=e:GetLabel()
 	if not tc:IsRelateToEffect(e) then return end
-	if (choice==0 or choice==3 or choice==7) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 then
+	if choice==1 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 then
 		--Equip
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 		local ec=Duel.SelectMatchingCard(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
 		s.equipop(tc,e,tp,ec)
-	elseif (choice==1 or choice==4 or choice==5) and not tc:IsHasEffect(EFFECT_DIRECT_ATTACK) then
+	elseif choice==2 and not tc:IsHasEffect(EFFECT_DIRECT_ATTACK) then
 		--Direct attack
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(3205)
@@ -68,7 +63,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_DIRECT_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
-	elseif (choice==2 or choice==6 or choice==8) and Duel.IsAbleToEnterBP() then
+	elseif choice==3 and Duel.IsAbleToEnterBP() then
 		--Damage
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)

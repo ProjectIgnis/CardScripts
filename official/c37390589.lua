@@ -34,19 +34,15 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		and Duel.GetAttacker():IsCanChangePosition() and Duel.GetAttacker():IsCanBeEffectTarget(e)
 	local b2=e:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,0,1,nil)
 	if chk==0 then return b1 or b2 end
-	local opt=0
-	if b1 and b2 then
-		opt=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1),aux.Stringid(id,2))
-	elseif b1 then
-		opt=Duel.SelectOption(tp,aux.Stringid(id,0))
-	else
-		opt=Duel.SelectOption(tp,aux.Stringid(id,1))+1
-	end
+	local opt=Duel.SelectEffect(tp,
+		{b1,aux.Stringid(id,0)},
+		{b2,aux.Stringid(id,1)},
+		{b1 and b2,aux.Stringid(id,2)})
 	Duel.SetTargetParam(opt)
-	if opt==0 or opt==2 then
+	if opt~=2 then
 		Duel.SetTargetCard(Duel.GetAttacker())
 	end
-	if opt==1 or opt==2 then
+	if opt~=1 then
 		if e:GetLabel()==1 then
 			aux.RemainFieldCost(e,tp,eg,ep,ev,re,r,rp,1)
 		end
@@ -61,13 +57,13 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local opt=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
-	if opt==0 or opt==2 then
+	if opt~=2 then
 		local tc=Duel.GetAttacker()
 		if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:CanAttack() and not tc:IsStatus(STATUS_ATTACK_CANCELED) then
 			Duel.ChangePosition(tc,POS_FACEUP_DEFENSE)
 		end
 	end
-	if opt==1 or opt==2 then
+	if opt~=1 then
 		local tc=e:GetLabelObject()
 		if not c:IsLocation(LOCATION_SZONE) or not c:IsRelateToEffect(e) or c:IsStatus(STATUS_LEAVE_CONFIRMED) then return end
 		if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then

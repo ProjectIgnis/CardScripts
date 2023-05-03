@@ -53,11 +53,11 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 			e3:SetValue(1)
 			e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			c:RegisterEffect(e3)
-			local e2=Effect.CreateEffect(c)
+			local e4=Effect.CreateEffect(c)
 			e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-			e4:SetCode(EVENT_BATTLE_DESTROYING)
+			e4:SetCode(EVENT_BATTLED)
 			e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-			e4:SetCondition(aux.bdcon)
+			e4:SetCondition(s.bdcon)
 			e4:SetOperation(s.bdop)
 			c:RegisterEffect(e4)
 		end
@@ -68,6 +68,9 @@ function s.efilter(e,te)
 end
 function s.macon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id+1)>0
+end
+function s.bdcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetAttacker()==e:GetHandler() and Duel.GetAttackTarget()
 end
 function s.bdop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)

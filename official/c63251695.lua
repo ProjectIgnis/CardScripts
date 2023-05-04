@@ -15,6 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--Tribute 1 "Dinomist" and apply 1 effect
 	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_DAMAGE_STEP_END)
 	e3:SetCondition(s.effcon)
@@ -33,7 +34,7 @@ function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 		and g and g:IsExists(s.tfilter,1,e:GetHandler(),tp) and Duel.IsChainDisablable(ev)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+	if Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 		if Duel.NegateEffect(ev) then
 			Duel.BreakEffect()
@@ -55,8 +56,8 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b2=Duel.IsExistingMatchingCard(Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD|LOCATION_HAND,1,nil)
 	if chk==0 then return b1 or b2 end
 	local opt=Duel.SelectEffect(tp,
-		{b1,aux.Stringid(id,1)},
-		{b2,aux.Stringid(id,2)})
+		{b1,aux.Stringid(id,2)},
+		{b2,aux.Stringid(id,3)})
 	e:SetLabel(opt)
 	if opt==1 then
 		e:SetCategory(0)
@@ -87,8 +88,8 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 		local b2=#g2>0
 		if not (b1 or b2) then return end
 		local opt=Duel.SelectEffect(tp,
-			{b1,aux.Stringid(id,3)},
-			{b2,aux.Stringid(id,4)})
+			{b1,aux.Stringid(id,4)},
+			{b2,aux.Stringid(id,5)})
 		local sg=nil
 		if opt==1 then
 			sg=g1:RandomSelect(tp,1)

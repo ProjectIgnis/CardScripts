@@ -4,6 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetCondition(s.condition)
@@ -30,8 +31,8 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b2=Duel.IsChainNegatable(ev)
 	if chk==0 then return tc and (b1 or b2) end
 	local sel=Duel.SelectEffect(tp,
-		{b1,aux.Stringid(id,0)},
-		{b2,aux.Stringid(id,1)})
+		{b1,aux.Stringid(id,1)},
+		{b2,aux.Stringid(id,2)})
 	e:SetLabel(sel)
 	if sel==1 then
 		e:SetCategory(0)

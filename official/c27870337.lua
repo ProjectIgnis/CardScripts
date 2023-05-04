@@ -5,6 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
@@ -18,9 +19,9 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b3 = s.drawtg(e,tp,eg,ep,ev,re,r,rp,0)
 	if chk==0 then return b1 or b2 or b3 end
 	local sel=Duel.SelectEffect(tp,
-		{b1,aux.Stringid(id,0)},
-		{b2,aux.Stringid(id,1)},
-		{b3,aux.Stringid(id,2)})
+		{b1,aux.Stringid(id,1)},
+		{b2,aux.Stringid(id,2)},
+		{b3,aux.Stringid(id,3)})
 	if sel==1 then
 		e:SetCategory(0)
 		e:SetOperation(s.dtopop)
@@ -66,7 +67,7 @@ function s.move_to_pendulum_zone(c,tp,e)
 	Duel.MoveToField(c,tp,tp,LOCATION_PZONE,POS_FACEUP,true)
 end
 function s.htoeop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,3))
+	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,4))
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,nil)
 	local g2=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK,0,nil)
 	if #g>0 and Duel.SendtoExtraP(g,tp,REASON_EFFECT)>0 then

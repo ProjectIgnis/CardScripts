@@ -50,7 +50,7 @@ function s.thcon2(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE) and (r&REASON_FUSION)==REASON_FUSION
 end
 function s.thfilter2(c)
-	return c:IsAbleToHand() and c:IsRace(RACE_ILLUSIONIST)
+	return c:IsAbleToHand() and c:IsRace(RACE_ILLUSION)
 end
 function s.thtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter2,tp,LOCATION_DECK,0,1,nil) end

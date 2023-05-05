@@ -1,6 +1,5 @@
 --サイバー・ネットワーク
 --Cyber Network
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,13 +10,13 @@ function s.initial_effect(c)
 	e1:SetTarget(s.acttg)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--Banish 1 LIGHT machine monster from deck
+	--Banish 1 LIGHT machine monster from Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e2:SetCategory(CATEGORY_REMOVE)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
-	e2:SetRange(LOCATION_SZONE)
 	e2:SetCode(EVENT_FREE_CHAIN)
+	e2:SetRange(LOCATION_SZONE)
 	e2:SetHintTiming(0,TIMING_END_PHASE)
 	e2:SetCondition(s.condition)
 	e2:SetTarget(s.target)
@@ -36,7 +35,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={CARD_CYBER_DRAGON}
-
 function s.filter2(c)
 	return c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsAbleToRemove()
 end

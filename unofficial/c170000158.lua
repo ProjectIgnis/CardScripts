@@ -1,4 +1,5 @@
---Amulet Dragon
+--呪符竜 (Anime)
+--Amulet Dragon (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -8,7 +9,6 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_REMOVE)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)

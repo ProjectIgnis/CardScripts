@@ -3,7 +3,7 @@
 --Scripted by King Yamato
 local s,id=GetID()
 function s.initial_effect(c)
-	--Add to Hand
+	--Add 1 "Infinitrack" monster from Deck to hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -37,11 +37,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp) -- Add to hand
 		Duel.ConfirmCards(1-tp,sg)
 	end
 end
--- Machine-type Xyz monster
+-- Machine Xyz Monster
 function s.optfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsRace(RACE_MACHINE)
 end
--- Target 1 Machine-type Xyz monster and activate one of those effects
+-- Target 1 Machine Xyz Monster and activate one of those effects
 function s.opttarget(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.optfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(s.optfilter,tp,LOCATION_MZONE,0,1,nil) end

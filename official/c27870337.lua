@@ -3,7 +3,7 @@
 --Scripted by Hel
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Activate 1 of these effects
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)

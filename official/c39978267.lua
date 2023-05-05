@@ -2,7 +2,7 @@
 --Cyber Raider
 local s,id=GetID()
 function s.initial_effect(c)
-	--effect
+	--Destroy or equip 1 Equip Card on the field
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)

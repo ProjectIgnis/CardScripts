@@ -100,8 +100,12 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,e:GetHandler())
 	Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 end
+function s.onfieldcontroller(c,tp)
+	return c:IsLocation(LOCATION_MZONE) and c:IsControler(tp)
+end
 function s.ritual_custom_check(e,tp,g,c)
 	local count=#g
 	local class_count=g:GetClassCount(Card.GetRace)
-	return count==3 and class_count==3 and g:IsExists(Card.IsLocation,3,nil,LOCATION_ONFIELD),count>3, class_count~=count or g:IsExists(aux.NOT(Card.IsLocation),1,nil,LOCATION_ONFIELD)
+	local onfield_self_count=g:FilterCount(s.onfieldcontroller,nil,tp)
+	return count==3 and class_count==3 and onfield_self_count==3,count>3 or class_count~=count or onfield_self_count~=count
 end

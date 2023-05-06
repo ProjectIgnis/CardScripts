@@ -54,7 +54,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local c=e:GetHandler()
 	local tc=eg:GetFirst()
-	Debug.Message(tc)
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then --maybe also add aux.nvfilter(c)?
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	elseif c:IsRelateToEffect(e) and c:IsFaceup() then

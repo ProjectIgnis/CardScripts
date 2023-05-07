@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c)
-	return c:IsRace(RACE_REPTILE) and c:IsType(TYPE_NORMAL) and c:IsLevel(3) and c:IsFaceup()
+	return c:IsRace(RACE_REPTILE) and c:IsType(TYPE_NORMAL) and c:IsLevelBelow(3) and c:IsFaceup()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()

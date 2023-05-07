@@ -1,6 +1,6 @@
 --生者の末路
 --Fate of the Living
-Duel.EnableUnofficialProc(PROC_YOKAI)
+Duel.EnableUnofficialRace(RACE_YOKAI)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -14,6 +14,6 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_GRAVE,LOCATION_GRAVE)
 	e2:SetCode(EFFECT_CHANGE_RACE)
-	e2:SetValue(function() return RACE_YOKAI end)
+	e2:SetValue(RACE_YOKAI)
 	c:RegisterEffect(e2)
 end

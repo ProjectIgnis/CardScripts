@@ -1,6 +1,6 @@
 --シューティング・クェーサー・ドラゴン (Anime)
 --Shooting Quasar Dragon (Anime)
-Duel.LoadScript("c419.lua")
+Duel.EnableUnofficialProc(PROC_CANNOT_BATTLE_INDES)
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -40,7 +40,7 @@ function s.initial_effect(c)
 	--always Battle destroy
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_FIELD)
-	e5:SetCode(511010508)
+	e5:SetCode(EFFECT_CANNOT_BATTLE_INDES)
 	e5:SetRange(LOCATION_MZONE)
 	e5:SetTargetRange(0,LOCATION_MZONE)
 	e5:SetTarget(s.battg)

@@ -1,7 +1,7 @@
 --バイ・バインド
 --Double Bind
 --Scripted by The Razgriz and Larry126
-Duel.LoadScript("c419.lua")
+Duel.EnableUnofficialProc(PROC_CANNOT_BATTLE_INDES)
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -41,17 +41,17 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetCondition(function() return Duel.IsBattlePhase() end)
 		e1:SetValue(ec:GetAttack()*2)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		ec:RegisterEffect(e1)
 		 --always Battle destroy
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_FIELD)
-		e2:SetCode(511010508)
+		e2:SetCode(EFFECT_CANNOT_BATTLE_INDES)
 		e2:SetRange(LOCATION_MZONE)
 		e2:SetTargetRange(0,LOCATION_MZONE)
 		e2:SetTarget(s.battg)
 		e2:SetValue(1)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		ec:RegisterEffect(e2)
 	end
 end

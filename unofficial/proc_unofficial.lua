@@ -257,51 +257,45 @@ function Cardian.check(c,tp,eg,ep,ev,re,r,rp)
 end
 
 
+function Duel.EnableUnofficialRace(race)
+	RACE_ALL=(RACE_ALL|race)
+end
+function Duel.EnableUnofficialAttribute(att)
+	ATTRIBUTE_ALL=(ATTRIBUTE_ALL|att)
+end
+
+
 -------------------------------------------------------------
 --Global handlings
 local UnofficialProc={}
 PROC_ATKDEF_CHANGED   =   1
-PROC_IGNORE_BATTLE_INDES	=   2 
+PROC_CANNOT_BATTLE_INDES	=   2 
 PROC_ICE_PILLAR =   3
 PROC_DIVINE_HIERARCHY   =   4 
-PROC_EVENT_LP0	=   5
-PROC_YOKAI		=   6
-PROC_LAUGH		=   7
-PROC_CHARISMA		  =   8
+PROC_EVENT_LP0  =   5
+
+RACE_YOKAI = 0x4000000000000000
+ATTRIBUTE_LAUGH = 0x80
+RACE_CHARISMA = 0x8000000000000000
   
 Duel.EnableUnofficialProc=function(...)
 	for _,proc in ipairs({...}) do
 		if proc==PROC_ATKDEF_CHANGED and not UnofficialProc[PROC_ATKDEF_CHANGED] then
 			UnofficialProc[PROC_ATKDEF_CHANGED]=true
 			UnofficialProc.atkdefchanged()
-		elseif proc==PROC_IGNORE_BATTLE_INDES and not UnofficialProc[PROC_IGNORE_BATTLE_INDES] then
-			UnofficialProc[PROC_IGNORE_BATTLE_INDES]=true
-			UnofficialProc.ignoreBattleindes()
+		elseif proc==PROC_CANNOT_BATTLE_INDES and not UnofficialProc[PROC_CANNOT_BATTLE_INDES] then
+			UnofficialProc[PROC_CANNOT_BATTLE_INDES]=true
+			UnofficialProc.cannotBattleIndes()
 		elseif proc==PROC_EVENT_LP0 and not UnofficialProc[PROC_EVENT_LP0] then
 			UnofficialProc[PROC_EVENT_LP0]=true
 			UnofficialProc.onLP0Trigger()
 		elseif proc==PROC_ICE_PILLAR and not UnofficialProc[PROC_ICE_PILLAR] then
 			UnofficialProc[PROC_ICE_PILLAR]=true
 			UnofficialProc.icePillar()
-		elseif proc==PROC_YOKAI and not RACE_YOKAI then
-			RACE_YOKAI = 0x400000000000000
-			UnofficialProc.unofficialRace(RACE_YOKAI)
-		elseif proc==PROC_CHARISMA and not RACE_CHARISMA then
-			RACE_CHARISMA = 0x8000000000000000
-			UnofficialProc.unofficialRace(RACE_CHARISMA)
-		elseif proc==PROC_LAUGH and not ATTRIBUTE_LAUGH then
-			ATTRIBUTE_LAUGH = 0x80
-			UnofficialProc.unofficialAttribute(ATTRIBUTE_LAUGH)
 		end
 	end
 end
 
-function UnofficialProc.unofficialRace(race)
-	if (RACE_ALL&race)==0 then RACE_ALL=(RACE_ALL|race) end
-end
-function UnofficialProc.unofficialAttribute(att)
-	if (ATTRIBUTE_ALL&att)==0 then ATTRIBUTE_ALL=(ATTRIBUTE_ALL|att) end
-end
 
 function UnofficialProc.atkdefchanged()
 	local e5=Effect.GlobalEffect()
@@ -321,9 +315,9 @@ function UnofficialProc.atkdefchanged()
 	Duel.RegisterEffect(atkadj,0)
 end
 
-function UnofficialProc.ignoreBattleindes()
+function UnofficialProc.cannotBattleIndes()
 	local IndesTable={}
-	EFFECT_IGNORE_BATTLE_INDES = 511010508
+	EFFECT_CANNOT_BATTLE_INDES = 511010508
 	local regeff=Card.RegisterEffect
 	function Card.RegisterEffect(c,e,forced,...)
 		if e:GetCode()==EFFECT_DESTROY_REPLACE then
@@ -333,7 +327,7 @@ function UnofficialProc.ignoreBattleindes()
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetProperty(prop,EFFECT_FLAG2_MAJESTIC_MUST_COPY)
-			e2:SetCode(EFFECT_DESTROY_REPLACE+511010508)
+			e2:SetCode(EFFECT_DESTROY_REPLACE+EFFECT_CANNOT_BATTLE_INDES)
 			e2:SetLabelObject(e)
 			e2:SetLabel(c:GetOriginalCode())
 			if resetflag and resetcount then
@@ -350,12 +344,12 @@ function UnofficialProc.ignoreBattleindes()
 		return function(e)
 			if not e then return false end
 			local c=e:GetHandler()
-			if c:IsHasEffect(511010508) and (c:IsReason(REASON_BATTLE) or e:GetCode()==EFFECT_INDESTRUCTABLE_BATTLE) then
-				local effs={c:GetCardEffect(511010508)}
+			if c:IsHasEffect(EFFECT_CANNOT_BATTLE_INDES) and (c:IsReason(REASON_BATTLE) or e:GetCode()==EFFECT_INDESTRUCTABLE_BATTLE) then
+				local effs={c:GetCardEffect(EFFECT_CANNOT_BATTLE_INDES)}
 				for _,eff in ipairs(effs) do
 					local val=eff:GetValue()
 					if not val then
-						error("val in 511010508 cannot be nil",2)
+						error("val in EFFECT_CANNOT_BATTLE_INDES cannot be nil",2)
 					end
 					if val==1 or (type(val)=='function' and val(eff,e,c)) then return false end
 				end
@@ -369,12 +363,12 @@ function UnofficialProc.ignoreBattleindes()
 			local c=e:GetHandler()
 			local ec=c:GetEquipTarget()
 			if not ec then return false end
-			if ec:IsHasEffect(511010508) and (ec:IsReason(REASON_BATTLE) or e:GetCode()==EFFECT_INDESTRUCTABLE_BATTLE) then
-				local effs={ec:GetCardEffect(511010508)}
+			if ec:IsHasEffect(EFFECT_CANNOT_BATTLE_INDES) and (ec:IsReason(REASON_BATTLE) or e:GetCode()==EFFECT_INDESTRUCTABLE_BATTLE) then
+				local effs={ec:GetCardEffect(EFFECT_CANNOT_BATTLE_INDES)}
 				for _,eff in ipairs(effs) do
 					local val=eff:GetValue()
 					if not val then
-						error("val in 511010508 cannot be nil",2)
+						error("val in EFFECT_CANNOT_BATTLE_INDES cannot be nil",2)
 					end
 					if val==1 or (type(val)=='function' and val(eff,e,ec)) then return false end
 				end
@@ -385,12 +379,12 @@ function UnofficialProc.ignoreBattleindes()
 	local function newBatTg(tg)
 		return function(e,c)
 			if not e or not c then return false end
-			if c:IsHasEffect(511010508) and (c:IsReason(REASON_BATTLE) or e:GetCode()==EFFECT_INDESTRUCTABLE_BATTLE) then
-				local effs={c:GetCardEffect(511010508)}
+			if c:IsHasEffect(EFFECT_CANNOT_BATTLE_INDES) and (c:IsReason(REASON_BATTLE) or e:GetCode()==EFFECT_INDESTRUCTABLE_BATTLE) then
+				local effs={c:GetCardEffect(EFFECT_CANNOT_BATTLE_INDES)}
 				for _,eff in ipairs(effs) do
 					local val=eff:GetValue()
 					if not val then
-						error("val in 511010508 cannot be nil",2)
+						error("val in EFFECT_CANNOT_BATTLE_INDES cannot be nil",2)
 					end
 					if val==1 or val(eff,e,c) then return false end
 				end
@@ -414,12 +408,12 @@ function UnofficialProc.ignoreBattleindes()
 		end
 	end
 	local function replaceFilter(c,e)
-		if c:IsHasEffect(511010508) then
-			local effs={c:GetCardEffect(511010508)}
+		if c:IsHasEffect(EFFECT_CANNOT_BATTLE_INDES) then
+			local effs={c:GetCardEffect(EFFECT_CANNOT_BATTLE_INDES)}
 			for _,eff in ipairs(effs) do
 				local val=eff:GetValue()
 				if not val then
-					error("val in 511010508 cannot be nil",2)
+					error("val in EFFECT_CANNOT_BATTLE_INDES cannot be nil",2)
 				end
 				if val==1 or val(eff,e,c) then return false end
 			end
@@ -460,7 +454,7 @@ function UnofficialProc.ignoreBattleindes()
 			local indesBattle={tc:GetCardEffect(EFFECT_INDESTRUCTABLE_BATTLE)}
 			local indesCount={tc:GetCardEffect(EFFECT_INDESTRUCTABLE_COUNT)}
 			local desSubstitude={tc:GetCardEffect(EFFECT_DESTROY_SUBSTITUTE)}
-			local desReplace={tc:GetCardEffect(EFFECT_DESTROY_REPLACE+511010508)}
+			local desReplace={tc:GetCardEffect(EFFECT_DESTROY_REPLACE+EFFECT_CANNOT_BATTLE_INDES)}
 			for _,eff in ipairs(indes) do
 				newBatNotRepReg(eff)
 			end

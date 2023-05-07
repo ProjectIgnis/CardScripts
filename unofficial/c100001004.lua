@@ -1,6 +1,6 @@
 --百鬼夜行
 --Night of One Hundred Horrors
-Duel.EnableUnofficialProc(PROC_YOKAI)
+Duel.EnableUnofficialRace(RACE_YOKAI)
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate

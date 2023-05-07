@@ -1,6 +1,6 @@
 --もののけの巣くう祠 (Manga)
 --Haunted Shrine (Manga)
-Duel.EnableUnofficialProc(PROC_YOKAI)
+Duel.EnableUnofficialRace(RACE_YOKAI)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

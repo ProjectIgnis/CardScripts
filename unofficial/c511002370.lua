@@ -1,6 +1,6 @@
 --馬頭鬼 (Manga)
 --Mezuki (Manga)
-Duel.EnableUnofficialProc(PROC_YOKAI)
+Duel.EnableUnofficialRace(RACE_YOKAI)
 local s,id=GetID()
 function s.initial_effect(c)
 	--revive 

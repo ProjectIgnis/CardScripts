@@ -1,9 +1,11 @@
---九尾の狐
-Duel.LoadScript("c419.lua")
+--九尾の狐 (Manga)
+--Nine-Tailed Fox (Manga)
+Duel.EnableUnofficialProcedure(PROC_YOKAI)
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
@@ -20,6 +22,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--token
 	local e3=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP)

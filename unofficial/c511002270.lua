@@ -1,5 +1,6 @@
+--生者の末路
 --Fate of the Living
-Duel.LoadScript("c419.lua")
+Duel.EnableUnofficialProcedure(PROC_YOKAI)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

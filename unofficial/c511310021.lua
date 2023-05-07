@@ -2,7 +2,7 @@
 --Soul Infusing Sculptor
 --AlphaKretin
 --Credit to edo9300 for implementing the Ice Pillar mechanic
-Duel.EnableUnofficialProcedure(PROC_ICE_PILLAR)
+Duel.EnableUnofficialProc(PROC_ICE_PILLAR)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

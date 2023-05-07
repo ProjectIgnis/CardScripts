@@ -1,6 +1,6 @@
 --火車
 --Fire Wagon
-Duel.EnableUnofficialProcedure(PROC_YOKAI)
+Duel.EnableUnofficialProc(PROC_YOKAI)
 local s,id=GetID()
 function s.initial_effect(c)
 	--todeck

@@ -1,6 +1,6 @@
 --怨念の小太刀
 --Saber of Malice
-Duel.EnableUnofficialProcedure(PROC_YOKAI)
+Duel.EnableUnofficialProc(PROC_YOKAI)
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c)

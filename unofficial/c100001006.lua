@@ -1,6 +1,6 @@
 --九尾の狐 (Manga)
 --Nine-Tailed Fox (Manga)
-Duel.EnableUnofficialProcedure(PROC_YOKAI)
+Duel.EnableUnofficialProc(PROC_YOKAI)
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon

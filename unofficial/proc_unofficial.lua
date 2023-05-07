@@ -259,78 +259,250 @@ end
 
 -------------------------------------------------------------
 --Global handlings
-local UnofficialEffect={}
+local UnofficialProc={}
 PROC_ATKDEF_CHANGED   =   1
 PROC_IGNORE_BATTLE_INDES	=   2 
 PROC_ICE_PILLAR =   3
 PROC_DIVINE_HIERARCHY   =   4 
-PROC_EVENT_LP0	  =   5
-PROC_YOKAI		  =   6
-PROC_LAUGH		  =   7
-PROC_CHARISMA		   =   8
+PROC_EVENT_LP0	=   5
+PROC_YOKAI		=   6
+PROC_LAUGH		=   7
+PROC_CHARISMA		  =   8
   
-Duel.EnableUnofficialProcedure=function(...)
+Duel.EnableUnofficialProc=function(...)
 	for _,proc in ipairs({...}) do
-		if proc==PROC_ATKDEF_CHANGED and not UnofficialEffect[PROC_ATKDEF_CHANGED] then
-			UnofficialEffect[PROC_ATKDEF_CHANGED]=true
-			UnofficialEffect.atkdefchanged()
-		elseif proc==PROC_IGNORE_BATTLE_INDES and not UnofficialEffect[PROC_IGNORE_BATTLE_INDES] then
-			UnofficialEffect[PROC_IGNORE_BATTLE_INDES]=true
-			UnofficialEffect.ignoreBattleindes()
-		elseif proc==PROC_EVENT_LP0 and not UnofficialEffect[PROC_EVENT_LP0] then
-			UnofficialEffect[PROC_EVENT_LP0]=true
-			UnofficialEffect.onLP0Trigger()
-		elseif proc==PROC_ICE_PILLAR and not UnofficialEffect[PROC_ICE_PILLAR] then
-			UnofficialEffect[PROC_ICE_PILLAR]=true
-			UnofficialEffect.icePillar()
+		if proc==PROC_ATKDEF_CHANGED and not UnofficialProc[PROC_ATKDEF_CHANGED] then
+			UnofficialProc[PROC_ATKDEF_CHANGED]=true
+			UnofficialProc.atkdefchanged()
+		elseif proc==PROC_IGNORE_BATTLE_INDES and not UnofficialProc[PROC_IGNORE_BATTLE_INDES] then
+			UnofficialProc[PROC_IGNORE_BATTLE_INDES]=true
+			UnofficialProc.ignoreBattleindes()
+		elseif proc==PROC_EVENT_LP0 and not UnofficialProc[PROC_EVENT_LP0] then
+			UnofficialProc[PROC_EVENT_LP0]=true
+			UnofficialProc.onLP0Trigger()
+		elseif proc==PROC_ICE_PILLAR and not UnofficialProc[PROC_ICE_PILLAR] then
+			UnofficialProc[PROC_ICE_PILLAR]=true
+			UnofficialProc.icePillar()
 		elseif proc==PROC_YOKAI and not RACE_YOKAI then
 			RACE_YOKAI = 0x400000000000000
-			unofficialRace(RACE_YOKAI)
+			UnofficialProc.unofficialRace(RACE_YOKAI)
 		elseif proc==PROC_CHARISMA and not RACE_CHARISMA then
 			RACE_CHARISMA = 0x8000000000000000
-			unofficialRace(RACE_CHARISMA)
+			UnofficialProc.unofficialRace(RACE_CHARISMA)
 		elseif proc==PROC_LAUGH and not ATTRIBUTE_LAUGH then
 			ATTRIBUTE_LAUGH = 0x80
-			unofficialAttribute(ATTRIBUTE_LAUGH)
+			UnofficialProc.unofficialAttribute(ATTRIBUTE_LAUGH)
 		end
 	end
 end
 
-local function unofficialRace(race)
+function UnofficialProc.unofficialRace(race)
 	if (RACE_ALL&race)==0 then RACE_ALL=(RACE_ALL|race) end
 end
-local function unofficialAttribute(att)
+function UnofficialProc.unofficialAttribute(att)
 	if (ATTRIBUTE_ALL&att)==0 then ATTRIBUTE_ALL=(ATTRIBUTE_ALL|att) end
 end
 
-function UnofficialEffect.atkdefchanged()
+function UnofficialProc.atkdefchanged()
 	local e5=Effect.GlobalEffect()
 	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e5:SetCode(EVENT_ADJUST)
-	e5:SetOperation(UnofficialEffect.op5)
+	e5:SetOperation(UnofficialProc.op5)
 	Duel.RegisterEffect(e5,0)
 	local atkeff=Effect.GlobalEffect()
 	atkeff:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	atkeff:SetCode(EVENT_CHAIN_SOLVED)
-	atkeff:SetOperation(UnofficialEffect.atkraiseeff)
+	atkeff:SetOperation(UnofficialProc.atkraiseeff)
 	Duel.RegisterEffect(atkeff,0)
 	local atkadj=Effect.GlobalEffect()
 	atkadj:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	atkadj:SetCode(EVENT_ADJUST)
-	atkadj:SetOperation(UnofficialEffect.atkraiseadj)
+	atkadj:SetOperation(UnofficialProc.atkraiseadj)
 	Duel.RegisterEffect(atkadj,0)
 end
 
-function UnofficialEffect.ignoreBattleindes()
+function UnofficialProc.ignoreBattleindes()
+	local IndesTable={}
+	EFFECT_IGNORE_BATTLE_INDES = 511010508
+	local regeff=Card.RegisterEffect
+	function Card.RegisterEffect(c,e,forced,...)
+		if e:GetCode()==EFFECT_DESTROY_REPLACE then
+			local resetflag,resetcount=e:GetReset()
+			local prop=EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_SET_AVAILABLE
+			if e:IsHasProperty(EFFECT_FLAG_UNCOPYABLE) then prop=prop|EFFECT_FLAG_UNCOPYABLE end
+			local e2=Effect.CreateEffect(c)
+			e2:SetType(EFFECT_TYPE_SINGLE)
+			e2:SetProperty(prop,EFFECT_FLAG2_MAJESTIC_MUST_COPY)
+			e2:SetCode(EFFECT_DESTROY_REPLACE+511010508)
+			e2:SetLabelObject(e)
+			e2:SetLabel(c:GetOriginalCode())
+			if resetflag and resetcount then
+				e2:SetReset(resetflag,resetcount)
+			elseif resetflag then
+				e2:SetReset(resetflag)
+			end
+			c:RegisterEffect(e2)
+		end
+		return regeff(c,e,forced,table.unpack({...}))
+	end
+
+	local function newBatConSingle(con)
+		return function(e)
+			if not e then return false end
+			local c=e:GetHandler()
+			if c:IsHasEffect(511010508) and (c:IsReason(REASON_BATTLE) or e:GetCode()==EFFECT_INDESTRUCTABLE_BATTLE) then
+				local effs={c:GetCardEffect(511010508)}
+				for _,eff in ipairs(effs) do
+					local val=eff:GetValue()
+					if not val then
+						error("val in 511010508 cannot be nil",2)
+					end
+					if val==1 or (type(val)=='function' and val(eff,e,c)) then return false end
+				end
+			end
+			return not con or con(e)
+		end
+	end
+	local function newBatConEquip(con)
+		return function(e,c)
+			if not e then return false end
+			local c=e:GetHandler()
+			local ec=c:GetEquipTarget()
+			if not ec then return false end
+			if ec:IsHasEffect(511010508) and (ec:IsReason(REASON_BATTLE) or e:GetCode()==EFFECT_INDESTRUCTABLE_BATTLE) then
+				local effs={ec:GetCardEffect(511010508)}
+				for _,eff in ipairs(effs) do
+					local val=eff:GetValue()
+					if not val then
+						error("val in 511010508 cannot be nil",2)
+					end
+					if val==1 or (type(val)=='function' and val(eff,e,ec)) then return false end
+				end
+			end
+			return not con or con(e)
+		end
+	end
+	local function newBatTg(tg)
+		return function(e,c)
+			if not e or not c then return false end
+			if c:IsHasEffect(511010508) and (c:IsReason(REASON_BATTLE) or e:GetCode()==EFFECT_INDESTRUCTABLE_BATTLE) then
+				local effs={c:GetCardEffect(511010508)}
+				for _,eff in ipairs(effs) do
+					local val=eff:GetValue()
+					if not val then
+						error("val in 511010508 cannot be nil",2)
+					end
+					if val==1 or val(eff,e,c) then return false end
+				end
+			end
+			return not tg or tg(e,c)
+		end
+	end
+	local function newBatNotRepReg(eff)
+		if not IndesTable[eff] then
+			IndesTable[eff]=true
+			if eff:IsHasType(EFFECT_TYPE_SINGLE) then
+				local con=eff:GetCondition()
+				eff:SetCondition(newBatConSingle(con))
+			elseif eff:IsHasType(EFFECT_TYPE_EQUIP) then
+				local con=eff:GetCondition()
+				eff:SetCondition(newBatConEquip(con))
+			elseif eff:IsHasType(EFFECT_TYPE_FIELD) then
+				local tg=eff:GetTarget()
+				eff:SetTarget(newBatTg(tg))
+			end
+		end
+	end
+	local function replaceFilter(c,e)
+		if c:IsHasEffect(511010508) then
+			local effs={c:GetCardEffect(511010508)}
+			for _,eff in ipairs(effs) do
+				local val=eff:GetValue()
+				if not val then
+					error("val in 511010508 cannot be nil",2)
+				end
+				if val==1 or val(eff,e,c) then return false end
+			end
+		end
+		return true
+	end
+	local function newBatTgReplaceField(tg)
+		return function(e,tp,eg,ep,ev,re,r,rp,chk)
+			if r&REASON_BATTLE==REASON_BATTLE then
+				return tg(e,tp,eg:Filter(replaceFilter,nil,e),ep,ev,re,r,rp,chk)
+			else
+				return tg(e,tp,eg,ep,ev,re,r,rp,chk)
+			end
+		end
+	end
+	local function newBatTgReplaceFieldVal(val)
+		return function(e,c)
+			return (not c:IsReason(REASON_BATTLE) or replaceFilter(c,e)) and val(e,c)
+		end
+	end
+	local function newBatTgReplaceSingle(tg)
+		return function(e,tp,eg,ep,ev,re,r,rp,chk)
+			return (not e:GetHandler():IsReason(REASON_BATTLE) or replaceFilter(e:GetHandler(),e))
+				and tg(e,tp,eg,ep,ev,re,r,rp,chk)
+		end
+	end
+	local function newBatTgReplaceEquip(tg)
+		return function(e,tp,eg,ep,ev,re,r,rp,chk)
+			return (not e:GetHandler():GetEquipTarget():IsReason(REASON_BATTLE)
+				or replaceFilter(e:GetHandler():GetEquipTarget(),e))
+				and tg(e,tp,eg,ep,ev,re,r,rp,chk)
+		end
+	end
+	local function batregop(e,tp,eg,ep,ev,re,r,rp)
+		local tg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,nil)
+		for tc in aux.Next(tg) do
+			local indes={tc:GetCardEffect(EFFECT_INDESTRUCTABLE)}
+			local indesBattle={tc:GetCardEffect(EFFECT_INDESTRUCTABLE_BATTLE)}
+			local indesCount={tc:GetCardEffect(EFFECT_INDESTRUCTABLE_COUNT)}
+			local desSubstitude={tc:GetCardEffect(EFFECT_DESTROY_SUBSTITUTE)}
+			local desReplace={tc:GetCardEffect(EFFECT_DESTROY_REPLACE+511010508)}
+			for _,eff in ipairs(indes) do
+				newBatNotRepReg(eff)
+			end
+			for _,eff in ipairs(indesBattle) do
+				newBatNotRepReg(eff)
+			end
+			for _,eff in ipairs(indesCount) do
+				newBatNotRepReg(eff)
+			end
+			for _,eff in ipairs(desSubstitude) do
+				newBatNotRepReg(eff)
+			end
+			for _,tempe in ipairs(desReplace) do
+				local eff=tempe:GetLabelObject()
+				if not IndesTable[eff] then
+					IndesTable[eff]=true
+					if eff:IsHasType(EFFECT_TYPE_SINGLE) then
+						local tg=eff:GetTarget()
+						eff:SetTarget(newBatTgReplaceSingle(tg))
+					elseif eff:IsHasType(EFFECT_TYPE_EQUIP) then
+						local tg=eff:GetTarget()
+						eff:SetTarget(newBatTgReplaceEquip(tg))
+					elseif eff:IsHasType(EFFECT_TYPE_FIELD) then
+						local tg=eff:GetTarget()
+						local val=eff:GetValue()
+						eff:SetTarget(newBatTgReplaceField(tg))
+						eff:SetValue(newBatTgReplaceFieldVal(val))
+					end
+				end
+			end
+		end
+	end
+
 	--Ignore Battle Indestructability
 	local batIndes=Effect.GlobalEffect()
 	batIndes:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	batIndes:SetCode(EVENT_ADJUST)
-	batIndes:SetOperation(UnofficialEffect.batregop)
+	batIndes:SetOperation(batregop)
 	Duel.RegisterEffect(batIndes,0)
 end
 
-function UnofficialEffect.onLP0Trigger()
+function UnofficialProc.onLP0Trigger()
 	EVENT_LP0 = EVENT_CUSTOM|511002521
 	function Auxiliary.LP0ActivationValidity(eff)
 		local ge1=Effect.GlobalEffect()
@@ -390,7 +562,7 @@ function UnofficialEffect.onLP0Trigger()
 	Duel.RegisterEffect(rs3,0)
 end
 
-function UnofficialEffect.op5(e,tp,eg,ep,ev,re,r,rp)
+function UnofficialProc.op5(e,tp,eg,ep,ev,re,r,rp)
 	--ATK = 285, prev ATK = 284
 	--LVL = 585, prev LVL = 584
 	--DEF = 385, prev DEF = 384
@@ -411,27 +583,27 @@ function UnofficialEffect.op5(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function UnofficialEffect.atkcfilter(c)
+function UnofficialProc.atkcfilter(c)
 	if c:GetFlagEffect(285)==0 then return false end
 	return c:GetAttack()~=c:GetFlagEffectLabel(285)
 end
-function UnofficialEffect.defcfilter(c)
+function UnofficialProc.defcfilter(c)
 	if c:GetFlagEffect(385)==0 then return false end
 	return c:GetDefense()~=c:GetFlagEffectLabel(385)
 end
-function UnofficialEffect.lvcfilter(c)
+function UnofficialProc.lvcfilter(c)
 	if c:GetFlagEffect(585)==0 then return false end
 	return c:GetLevel()~=c:GetFlagEffectLabel(585)
 end
-function UnofficialEffect.atkraiseeff(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(UnofficialEffect.atkcfilter,tp,0x7f,0x7f,nil)
+function UnofficialProc.atkraiseeff(e,tp,eg,ep,ev,re,r,rp)
+	local g=Duel.GetMatchingGroup(UnofficialProc.atkcfilter,tp,0x7f,0x7f,nil)
 	local g1=Group.CreateGroup() --change atk
 	local g2=Group.CreateGroup() --gain atk
 	local g3=Group.CreateGroup() --lose atk
 	local g4=Group.CreateGroup() --gain atk from original
 	local g9=Group.CreateGroup() --lose atk from original
 	
-	local dg=Duel.GetMatchingGroup(UnofficialEffect.defcfilter,tp,0x7f,0x7f,nil)
+	local dg=Duel.GetMatchingGroup(UnofficialProc.defcfilter,tp,0x7f,0x7f,nil)
 	local g5=Group.CreateGroup() --change def
 	local g6=Group.CreateGroup() --gain def
 	--local g7=Group.CreateGroup() --lose def
@@ -515,7 +687,7 @@ function UnofficialEffect.atkraiseeff(e,tp,eg,ep,ev,re,r,rp)
 	end
 	--Duel.RaiseEvent(g6,,re,REASON_EFFECT,rp,ep,0)
 	
-	local lvg=Duel.GetMatchingGroup(UnofficialEffect.lvcfilter,tp,0x7f,0x7f,nil)
+	local lvg=Duel.GetMatchingGroup(UnofficialProc.lvcfilter,tp,0x7f,0x7f,nil)
 	if #lvg>0 then
 		for lvc in lvg:Iter() do
 			local prevlv=lvc:GetFlagEffectLabel(585)
@@ -530,16 +702,16 @@ function UnofficialEffect.atkraiseeff(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterFlagEffect(tp,285,RESET_CHAIN,0,1)
 	Duel.RegisterFlagEffect(1-tp,285,RESET_CHAIN,0,1)
 end
-function UnofficialEffect.atkraiseadj(e,tp,eg,ep,ev,re,r,rp)
+function UnofficialProc.atkraiseadj(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFlagEffect(tp,285)~=0 or Duel.GetFlagEffect(1-tp,285)~=0 then return end
-	local g=Duel.GetMatchingGroup(UnofficialEffect.atkcfilter,tp,0x7f,0x7f,nil)
+	local g=Duel.GetMatchingGroup(UnofficialProc.atkcfilter,tp,0x7f,0x7f,nil)
 	local g1=Group.CreateGroup() --change atk
 	local g2=Group.CreateGroup() --gain atk
 	local g3=Group.CreateGroup() --lose atk
 	local g4=Group.CreateGroup() --gain atk from original
 	local g9=Group.CreateGroup() --lose atk from original
 	
-	local dg=Duel.GetMatchingGroup(UnofficialEffect.defcfilter,tp,0x7f,0x7f,nil)
+	local dg=Duel.GetMatchingGroup(UnofficialProc.defcfilter,tp,0x7f,0x7f,nil)
 	local g5=Group.CreateGroup() --change def
 	--local g6=Group.CreateGroup() --gain def
 	--local g7=Group.CreateGroup() --lose def
@@ -618,7 +790,7 @@ function UnofficialEffect.atkraiseadj(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RaiseEvent(g9,511010103,e,REASON_EFFECT,rp,ep,0)
 	end
 	
-	local lvg=Duel.GetMatchingGroup(UnofficialEffect.lvcfilter,tp,0x7f,0x7f,nil)
+	local lvg=Duel.GetMatchingGroup(UnofficialProc.lvcfilter,tp,0x7f,0x7f,nil)
 	if #lvg>0 then
 		for lvc in lvg:Iter() do
 			local prevlv=lvc:GetFlagEffectLabel(585)
@@ -633,181 +805,11 @@ end
 
 
 
-IndesTable={}
 
-local regeff=Card.RegisterEffect
-function Card.RegisterEffect(c,e,forced,...)
-	if e:GetCode()==EFFECT_DESTROY_REPLACE then
-		local resetflag,resetcount=e:GetReset()
-		local prop=EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_SET_AVAILABLE
-		if e:IsHasProperty(EFFECT_FLAG_UNCOPYABLE) then prop=prop|EFFECT_FLAG_UNCOPYABLE end
-		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetProperty(prop,EFFECT_FLAG2_MAJESTIC_MUST_COPY)
-		e2:SetCode(EFFECT_DESTROY_REPLACE+511010508)
-		e2:SetLabelObject(e)
-		e2:SetLabel(c:GetOriginalCode())
-		if resetflag and resetcount then
-			e2:SetReset(resetflag,resetcount)
-		elseif resetflag then
-			e2:SetReset(resetflag)
-		end
-		c:RegisterEffect(e2)
-	end
-	return regeff(c,e,forced,table.unpack({...}))
-end
-
-function UnofficialEffect.batregop(e,tp,eg,ep,ev,re,r,rp)
-	local tg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,nil)
-	for tc in aux.Next(tg) do
-		local indes={tc:GetCardEffect(EFFECT_INDESTRUCTABLE)}
-		local indesBattle={tc:GetCardEffect(EFFECT_INDESTRUCTABLE_BATTLE)}
-		local indesCount={tc:GetCardEffect(EFFECT_INDESTRUCTABLE_COUNT)}
-		local desSubstitude={tc:GetCardEffect(EFFECT_DESTROY_SUBSTITUTE)}
-		local desReplace={tc:GetCardEffect(EFFECT_DESTROY_REPLACE+511010508)}
-		for _,eff in ipairs(indes) do
-			UnofficialEffect.newBatNotRepReg(eff)
-		end
-		for _,eff in ipairs(indesBattle) do
-			UnofficialEffect.newBatNotRepReg(eff)
-		end
-		for _,eff in ipairs(indesCount) do
-			UnofficialEffect.newBatNotRepReg(eff)
-		end
-		for _,eff in ipairs(desSubstitude) do
-			UnofficialEffect.newBatNotRepReg(eff)
-		end
-		for _,tempe in ipairs(desReplace) do
-			local eff=tempe:GetLabelObject()
-			if not IndesTable[eff] then
-				IndesTable[eff]=true
-				if eff:IsHasType(EFFECT_TYPE_SINGLE) then
-					local tg=eff:GetTarget()
-					eff:SetTarget(UnofficialEffect.newBatTgReplaceSingle(tg))
-				elseif eff:IsHasType(EFFECT_TYPE_EQUIP) then
-					local tg=eff:GetTarget()
-					eff:SetTarget(UnofficialEffect.newBatTgReplaceEquip(tg))
-				elseif eff:IsHasType(EFFECT_TYPE_FIELD) then
-					local tg=eff:GetTarget()
-					local val=eff:GetValue()
-					eff:SetTarget(UnofficialEffect.newBatTgReplaceField(tg))
-					eff:SetValue(UnofficialEffect.newBatTgReplaceFieldVal(val))
-				end
-			end
-		end
-	end
-end
-function UnofficialEffect.newBatNotRepReg(eff)
-	if not IndesTable[eff] then
-		IndesTable[eff]=true
-		if eff:IsHasType(EFFECT_TYPE_SINGLE) then
-			local con=eff:GetCondition()
-			eff:SetCondition(UnofficialEffect.newBatConSingle(con))
-		elseif eff:IsHasType(EFFECT_TYPE_EQUIP) then
-			local con=eff:GetCondition()
-			eff:SetCondition(UnofficialEffect.newBatConEquip(con))
-		elseif eff:IsHasType(EFFECT_TYPE_FIELD) then
-			local tg=eff:GetTarget()
-			eff:SetTarget(UnofficialEffect.newBatTg(tg))
-		end
-	end
-end
-function UnofficialEffect.newBatConSingle(con)
-	return function(e)
-		if not e then return false end
-		local c=e:GetHandler()
-		if c:IsHasEffect(511010508) and (c:IsReason(REASON_BATTLE) or e:GetCode()==EFFECT_INDESTRUCTABLE_BATTLE) then
-			local effs={c:GetCardEffect(511010508)}
-			for _,eff in ipairs(effs) do
-				local val=eff:GetValue()
-				if not val then
-					error("val in 511010508 cannot be nil",2)
-				end
-				if val==1 or (type(val)=='function' and val(eff,e,c)) then return false end
-			end
-		end
-		return not con or con(e)
-	end
-end
-function UnofficialEffect.newBatConEquip(con)
-	return function(e,c)
-		if not e then return false end
-		local c=e:GetHandler()
-		local ec=c:GetEquipTarget()
-		if not ec then return false end
-		if ec:IsHasEffect(511010508) and (ec:IsReason(REASON_BATTLE) or e:GetCode()==EFFECT_INDESTRUCTABLE_BATTLE) then
-			local effs={ec:GetCardEffect(511010508)}
-			for _,eff in ipairs(effs) do
-				local val=eff:GetValue()
-				if not val then
-					error("val in 511010508 cannot be nil",2)
-				end
-				if val==1 or (type(val)=='function' and val(eff,e,ec)) then return false end
-			end
-		end
-		return not con or con(e)
-	end
-end
-function UnofficialEffect.newBatTg(tg)
-	return function(e,c)
-		if not e or not c then return false end
-		if c:IsHasEffect(511010508) and (c:IsReason(REASON_BATTLE) or e:GetCode()==EFFECT_INDESTRUCTABLE_BATTLE) then
-			local effs={c:GetCardEffect(511010508)}
-			for _,eff in ipairs(effs) do
-				local val=eff:GetValue()
-				if not val then
-					error("val in 511010508 cannot be nil",2)
-				end
-				if val==1 or val(eff,e,c) then return false end
-			end
-		end
-		return not tg or tg(e,c)
-	end
-end
-function UnofficialEffect.replaceFilter(c,e)
-	if c:IsHasEffect(511010508) then
-		local effs={c:GetCardEffect(511010508)}
-		for _,eff in ipairs(effs) do
-			local val=eff:GetValue()
-			if not val then
-				error("val in 511010508 cannot be nil",2)
-			end
-			if val==1 or val(eff,e,c) then return false end
-		end
-	end
-	return true
-end
-function UnofficialEffect.newBatTgReplaceField(tg)
-	return function(e,tp,eg,ep,ev,re,r,rp,chk)
-		if r&REASON_BATTLE==REASON_BATTLE then
-			return tg(e,tp,eg:Filter(UnofficialEffect.replaceFilter,nil,e),ep,ev,re,r,rp,chk)
-		else
-			return tg(e,tp,eg,ep,ev,re,r,rp,chk)
-		end
-	end
-end
-function UnofficialEffect.newBatTgReplaceFieldVal(val)
-	return function(e,c)
-		return (not c:IsReason(REASON_BATTLE) or UnofficialEffect.replaceFilter(c,e)) and val(e,c)
-	end
-end
-function UnofficialEffect.newBatTgReplaceSingle(tg)
-	return function(e,tp,eg,ep,ev,re,r,rp,chk)
-		return (not e:GetHandler():IsReason(REASON_BATTLE) or UnofficialEffect.replaceFilter(e:GetHandler(),e))
-			and tg(e,tp,eg,ep,ev,re,r,rp,chk)
-	end
-end
-function UnofficialEffect.newBatTgReplaceEquip(tg)
-	return function(e,tp,eg,ep,ev,re,r,rp,chk)
-		return (not e:GetHandler():GetEquipTarget():IsReason(REASON_BATTLE)
-			or UnofficialEffect.replaceFilter(e:GetHandler():GetEquipTarget(),e))
-			and tg(e,tp,eg,ep,ev,re,r,rp,chk)
-	end
-end
 
 --Ice Pillar Mechanic
 --edo9300 and Larry126
-function UnofficialEffect.icePillar()
+function UnofficialProc.icePillar()
 	IcePillarZone = {}
 	IcePillarZone[1]=0
 	IcePillarZone[2]=0

@@ -1,6 +1,6 @@
 --煉獄の零門
 --Zero Gate of the Void
-Duel.EnableUnofficialProcedure(PROC_EVENT_LP0)
+Duel.EnableUnofficialProc(PROC_EVENT_LP0)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Return

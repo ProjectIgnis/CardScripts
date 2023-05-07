@@ -1,7 +1,7 @@
 --魂のリレー (Anime)
 --Relay Soul (Anime)
 --scripted by edo9300, fixes by MLD
-Duel.EnableUnofficialProcedure(PROC_EVENT_LP0)
+Duel.EnableUnofficialProc(PROC_EVENT_LP0)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Survive

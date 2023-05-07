@@ -1,6 +1,6 @@
 --牛頭鬼 (Manga)
 --Gozuki (Manga)
-Duel.EnableUnofficialProcedure(PROC_YOKAI)
+Duel.EnableUnofficialProc(PROC_YOKAI)
 local s,id=GetID()
 function s.initial_effect(c)
 	--send to grave

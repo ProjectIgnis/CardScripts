@@ -1,4 +1,5 @@
 --狂戦士の魂
+--Berserker Soul
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and eg:GetFirst():GetControler()==tp and ev<=1500 and Duel.GetAttackTarget()==nil
+	return ep==1-tp and eg:GetFirst():GetControler()==tp and ev<=1500 and Duel.GetAttackTarget()==nil
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -23,7 +24,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 		return #g>0 and g:FilterCount(Card.IsDiscardable,nil)==#g
 	end
 	local g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
-	Duel.SendtoGrave(g,REASON_COST+REASON_DISCARD)
+	Duel.SendtoGrave(g,REASON_COST|REASON_DISCARD)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,1) end
@@ -37,7 +38,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local tc=g:GetFirst()
 		if tc:IsMonster() then
 			Duel.DisableShuffleCheck()
-			Duel.SendtoGrave(tc,REASON_EFFECT+REASON_REVEAL)
+			Duel.SendtoGrave(tc,REASON_EFFECT|REASON_EXCAVATE)
 			if tc:IsLocation(LOCATION_GRAVE) then
 				Duel.Damage(1-tp,500,REASON_EFFECT)
 				count=count-1

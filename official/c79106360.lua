@@ -4,6 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--flip
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TODECK)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_FLIP)
 	e1:SetTarget(s.target)
@@ -74,7 +75,7 @@ function s.sp(e,tp,ct)
 		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)
 	end
 	if conf-#g>0 then
-		Duel.DiscardDeck(tp,conf-#g,REASON_EFFECT+REASON_REVEAL)
+		Duel.DiscardDeck(tp,conf-#g,REASON_EFFECT|REASON_EXCAVATE)
 	end
 	return g
 end

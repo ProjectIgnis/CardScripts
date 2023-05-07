@@ -50,7 +50,7 @@ function s.spcon(e,c)
 		and aux.SelectUnselectGroup(rg,e,tp,2,2,s.rescon,0)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
-	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE,0,nil,RACE_FAIRY+RACE_DRAGON)
+	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE,0,nil,RACE_FAIRY|RACE_DRAGON)
 	local g=aux.SelectUnselectGroup(rg,e,tp,2,2,s.rescon,1,tp,HINTMSG_TOGRAVE)
 	if #g>0 then
 		g:KeepAlive()
@@ -100,14 +100,14 @@ function s.retop(code1,code2,code3)
 			end
 			if #g~=0 then
 				Duel.DisableShuffleCheck()
-				Duel.SendtoGrave(g,REASON_EFFECT+REASON_REVEAL)
+				Duel.SendtoGrave(g,REASON_EFFECT|REASON_EXCAVATE)
 			end
 			if c:IsRelateToEffect(e) then
 				local e1=Effect.CreateEffect(c)
 				e1:SetType(EFFECT_TYPE_SINGLE)
 				e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 				e1:SetValue(#hg*1000)
-				e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+				e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 				c:RegisterEffect(e1)
 				local e2=e1:Clone()
 				e2:SetCode(EFFECT_SET_DEFENSE_FINAL)

@@ -1,8 +1,10 @@
+--苦渋の決断
 --Arduous Decision
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -27,6 +29,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SendtoHand(g2,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,g2)
 			Duel.ShuffleHand(tp)
-		else Duel.SendtoGrave(g,REASON_EFFECT+REASON_REVEAL) end
+		else Duel.SendtoGrave(g,REASON_EFFECT|REASON_EXCAVATE) end
 	end
 end

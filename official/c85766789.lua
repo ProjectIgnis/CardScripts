@@ -1,5 +1,5 @@
 -- 宝玉の祝福
--- Crystal Grace
+-- Crystal Boon
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	-- Excavate
+	-- Excavate the top card of your Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_SPECIAL_SUMMON+CATEGORY_DECKDES)
@@ -28,9 +28,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.excop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x1034}
+s.listed_series={SET_CRYSTAL_BEAST}
 function s.spfilter(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x1034) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsOriginalType(TYPE_MONSTER)
+	return c:IsFaceup() and c:IsSetCard(SET_CRYSTAL_BEAST) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsOriginalType(TYPE_MONSTER)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -49,7 +49,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.excconfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x1034) and c:IsLocation(LOCATION_SZONE) and not c:IsPreviousLocation(LOCATION_SZONE)
+	return c:IsFaceup() and c:IsSetCard(SET_CRYSTAL_BEAST)
+		and c:IsLocation(LOCATION_SZONE) and not c:IsPreviousLocation(LOCATION_SZONE)
 		and c:IsControler(tp) and c:GetSequence()<5
 end
 function s.exccon(e,tp,eg,ep,ev,re,r,rp)
@@ -63,7 +64,7 @@ function s.excop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ConfirmDecktop(tp,1)
 	local tc=Duel.GetDecktopGroup(tp,1):GetFirst()
 	Duel.DisableShuffleCheck()
-	if tc:IsSetCard(0x1034) then
+	if tc:IsSetCard(SET_CRYSTAL_BEAST) then
 		aux.ToHandOrElse(tc,tp,
 		function(sc)
 			return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and sc:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -73,6 +74,6 @@ function s.excop(e,tp,eg,ep,ev,re,r,rp)
 		end,
 		aux.Stringid(id,2))
 	else
-		Duel.SendtoGrave(tc,REASON_EFFECT+REASON_REVEAL)
+		Duel.SendtoGrave(tc,REASON_EFFECT|REASON_EXCAVATE)
 	end
 end

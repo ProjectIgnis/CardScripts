@@ -46,7 +46,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetDescription(aux.Stringid(id,0))
 		tc:RegisterEffect(e1)
 	else
-		Duel.SendtoGrave(tc,REASON_EFFECT|REASON_REVEAL)
+		Duel.SendtoGrave(tc,REASON_EFFECT|REASON_EXCAVATE)
 	end
 end
 function s.sdtg(e,tp,eg,ep,ev,re,r,rp,chk)

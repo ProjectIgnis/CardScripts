@@ -50,7 +50,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ShuffleHand(tp)
 	else
 		Duel.DisableShuffleCheck()
-		Duel.SendtoGrave(tc,REASON_EFFECT+REASON_REVEAL)
+		Duel.SendtoGrave(tc,REASON_EFFECT|REASON_EXCAVATE)
 	end
 end
 function s.cfilter(c,tp)
@@ -72,12 +72,11 @@ function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
-		if tc:IsType(TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ)
-			or Duel.SelectOption(tp,aux.Stringid(id,2),aux.Stringid(id,3))==0 then
-			Duel.SendtoDeck(tc,nil,SEQ_DECKTOP,REASON_EFFECT)
-		else
-			Duel.SendtoDeck(tc,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
-		end
+	if not tc:IsRelateToEffect(e) then return end
+	if tc:IsType(TYPE_FUSION|TYPE_SYNCHRO|TYPE_XYZ)
+		or Duel.SelectOption(tp,aux.Stringid(id,2),aux.Stringid(id,3))==0 then
+		Duel.SendtoDeck(tc,nil,SEQ_DECKTOP,REASON_EFFECT)
+	else
+		Duel.SendtoDeck(tc,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 	end
 end

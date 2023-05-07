@@ -2,17 +2,17 @@
 --Sylvan Guardioak
 local s,id=GetID()
 function s.initial_effect(c)
-	--deck
+	--Excavate up to 3 cards from your Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DECKDES)
 	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetCountLimit(1)
 	e1:SetRange(LOCATION_MZONE)
+	e1:SetCountLimit(1)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--to deck
+	--Place 1 Plant monster on the top of your Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,2))
 	e2:SetCategory(CATEGORY_TODECK)
@@ -29,9 +29,8 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsPlayerCanDiscardDeck(tp,1) then return end
-	local ct=Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)
+	local ct=math.min(3,Duel.GetFieldGroupCount(tp,LOCATION_DECK,0))
 	if ct==0 then return end
-	if ct>3 then ct=3 end
 	local t={}
 	for i=1,ct do t[i]=i end
 	Duel.Hint(HINTMSG_NUMBER,tp,HINT_NUMBER)
@@ -41,7 +40,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local sg=g:Filter(Card.IsRace,nil,RACE_PLANT)
 	if #sg>0 then
 		Duel.DisableShuffleCheck()
-		Duel.SendtoGrave(sg,REASON_EFFECT+REASON_REVEAL)
+		Duel.SendtoGrave(sg,REASON_EFFECT|REASON_EXCAVATE)
 	end
 	ac=ac-#sg
 	if ac>0 then
@@ -51,7 +50,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_DECK) and c:IsReason(REASON_REVEAL)
+	return c:IsPreviousLocation(LOCATION_DECK) and c:IsReason(REASON_EXCAVATE)
 end
 function s.filter(c)
 	return c:IsRace(RACE_PLANT) and c:IsAbleToDeck()
@@ -65,7 +64,7 @@ function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)
 	end
 end

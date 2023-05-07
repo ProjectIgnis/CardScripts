@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Link Summon Procedure
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_ALTERGEIST),2)
-	--Set 1 "Altergeist" Trap form the Deck
+	--Set 1 "Altergeist" Trap from the Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -47,10 +47,13 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SSet(tp,g)
 	end
 end
+function s.cstfilter(c)
+	return c:IsAbleToGraveAsCost() and Duel.GetMZoneCount(c:GetControler(),c)>0
+end
 function s.ctcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_ONFIELD,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cstfilter,tp,LOCATION_ONFIELD,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGraveAsCost,tp,LOCATION_ONFIELD,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.cstfilter,tp,LOCATION_ONFIELD,0,1,1,nil)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.ctfilter(c)

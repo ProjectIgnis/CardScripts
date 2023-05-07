@@ -260,32 +260,36 @@ end
 -------------------------------------------------------------
 --Global handlings
 local UnofficialEffect={}
-PROC_ATKDEF_CHANGED		 =   1
+PROC_ATKDEF_CHANGED   =   1
 PROC_IGNORE_BATTLE_INDES	=   2 
-PROC_ICE_PILLAR			 =   3
-PROC_DIVINE_HIERARCHY	   =   4 
-PROC_EVENT_LP0			  =   5
-PROC_YOKAI				  =   6
-PROC_LAUGH				  =   7
-PROC_CHARISMA			   =   8
-
+PROC_ICE_PILLAR =   3
+PROC_DIVINE_HIERARCHY   =   4 
+PROC_EVENT_LP0	  =   5
+PROC_YOKAI		  =   6
+PROC_LAUGH		  =   7
+PROC_CHARISMA		   =   8
+  
 Duel.EnableUnofficialProcedure=function(...)
-	for _,proc in table.unpack(...) do
+	for _,proc in ipairs({...}) do
 		if proc==PROC_ATKDEF_CHANGED and not UnofficialEffect[PROC_ATKDEF_CHANGED] then
-			atkdefchanged()
+			UnofficialEffect[PROC_ATKDEF_CHANGED]=true
+			UnofficialEffect.atkdefchanged()
 		elseif proc==PROC_IGNORE_BATTLE_INDES and not UnofficialEffect[PROC_IGNORE_BATTLE_INDES] then
-			ignoreBattleindes()
+			UnofficialEffect[PROC_IGNORE_BATTLE_INDES]=true
+			UnofficialEffect.ignoreBattleindes()
 		elseif proc==PROC_EVENT_LP0 and not UnofficialEffect[PROC_EVENT_LP0] then
-			onLP0Trigger()
+			UnofficialEffect[PROC_EVENT_LP0]=true
+			UnofficialEffect.onLP0Trigger()
 		elseif proc==PROC_ICE_PILLAR and not UnofficialEffect[PROC_ICE_PILLAR] then
-			icePillar()
-		elseif proc==PROC_YOKAI then
+			UnofficialEffect[PROC_ICE_PILLAR]=true
+			UnofficialEffect.icePillar()
+		elseif proc==PROC_YOKAI and not RACE_YOKAI then
 			RACE_YOKAI = 0x400000000000000
 			unofficialRace(RACE_YOKAI)
-		elseif proc==PROC_CHARISMA then
+		elseif proc==PROC_CHARISMA and not RACE_CHARISMA then
 			RACE_CHARISMA = 0x8000000000000000
 			unofficialRace(RACE_CHARISMA)
-		elseif proc==PROC_LAUGH then
+		elseif proc==PROC_LAUGH and not ATTRIBUTE_LAUGH then
 			ATTRIBUTE_LAUGH = 0x80
 			unofficialAttribute(ATTRIBUTE_LAUGH)
 		end
@@ -293,14 +297,13 @@ Duel.EnableUnofficialProcedure=function(...)
 end
 
 local function unofficialRace(race)
-	if (RACE_ALL&race)==0 then RACE_ALL==(RACE_ALL|race) end
+	if (RACE_ALL&race)==0 then RACE_ALL=(RACE_ALL|race) end
 end
 local function unofficialAttribute(att)
-	if (ATTRIBUTE_ALL&att)==0 then ATTRIBUTE_ALL==(ATTRIBUTE_ALL|att) end
+	if (ATTRIBUTE_ALL&att)==0 then ATTRIBUTE_ALL=(ATTRIBUTE_ALL|att) end
 end
 
-local function atkdefchanged()
-	UnofficialEffect[PROC_ATKDEF_CHANGED]=true
+function UnofficialEffect.atkdefchanged()
 	local e5=Effect.GlobalEffect()
 	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e5:SetCode(EVENT_ADJUST)
@@ -318,7 +321,7 @@ local function atkdefchanged()
 	Duel.RegisterEffect(atkadj,0)
 end
 
-local function ignoreBattleindes()
+function UnofficialEffect.ignoreBattleindes()
 	--Ignore Battle Indestructability
 	local batIndes=Effect.GlobalEffect()
 	batIndes:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -327,15 +330,59 @@ local function ignoreBattleindes()
 	Duel.RegisterEffect(batIndes,0)
 end
 
-local function onLP0Trigger()
+function UnofficialEffect.onLP0Trigger()
+	EVENT_LP0 = EVENT_CUSTOM|511002521
+	function Auxiliary.LP0ActivationValidity(eff)
+		local ge1=Effect.GlobalEffect()
+		ge1:SetType(EFFECT_TYPE_FIELD)
+		ge1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		ge1:SetTargetRange(1,0)
+		ge1:SetCode(511000793)
+		ge1:SetCondition(function(e) return eff:IsActivatable(e:GetHandlerPlayer()) end)
+		Duel.RegisterEffect(ge1,0)
+		local ge2=ge1:Clone()
+		Duel.RegisterEffect(ge2,1)
+	end
+
+	local function relayop(e,tp,eg,ep,ev,re,r,rp)
+		local c=e:GetHandler()
+		for p=0,1 do
+			if Duel.GetLP(p)<=0 and not Duel.IsPlayerAffectedByEffect(p,EFFECT_CANNOT_LOSE_LP)
+				and Duel.GetFlagEffect(p,511002521)==0 and Duel.IsPlayerAffectedByEffect(p,511000793) then
+				local ct=0
+				local ge1=Effect.GlobalEffect()
+				ge1:SetType(EFFECT_TYPE_FIELD)
+				ge1:SetCode(EFFECT_CANNOT_LOSE_LP)
+				ge1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+				ge1:SetTargetRange(1,0)
+				Duel.RegisterEffect(ge1,p)
+				local ge2=Effect.GlobalEffect()
+				ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+				ge2:SetCode(EVENT_ADJUST)
+				ge2:SetOperation(function()
+					if Duel.GetCurrentChain()==0 or ct>0 then
+						ct=ct+1
+					end
+					if (ct==2 and Duel.GetCurrentPhase()&PHASE_DAMAGE==0) or ct==3 then
+						Duel.ResetFlagEffect(p,511002521)
+						ge1:Reset()
+						ge2:Reset()
+					end
+				end)
+				Duel.RegisterEffect(ge2,p)
+				Duel.RaiseEvent(Duel.GetMatchingGroup(aux.TRUE,p,LOCATION_ALL,0,nil),EVENT_LP0,nil,0,0,p,0)
+				Duel.RegisterFlagEffect(p,511002521,0,0,0)
+			end
+		end
+	end
+
 	--Relay Soul/Zero Gate
 	local rs1=Effect.GlobalEffect()
 	rs1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	rs1:SetCode(EVENT_ADJUST)
-	rs1:SetOperation(UnofficialEffect.relayop)
+	rs1:SetOperation(relayop)
 	Duel.RegisterEffect(rs1,0)
 	local rs2=rs1:Clone()
-	rs2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	rs2:SetCode(EVENT_CHAIN_SOLVED)
 	Duel.RegisterEffect(rs2,0)
 	local rs3=rs2:Clone()
@@ -584,58 +631,7 @@ function UnofficialEffect.atkraiseadj(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 
-function UnofficialEffect.relayop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if Duel.GetLP(0)<=0 and not Duel.IsPlayerAffectedByEffect(0,EFFECT_CANNOT_LOSE_LP) and Duel.GetFlagEffect(0,511002521)==0 
-		and Duel.IsPlayerAffectedByEffect(0,511000793) then
-		local ge1=Effect.GlobalEffect()
-		ge1:SetType(EFFECT_TYPE_FIELD)
-		ge1:SetCode(EFFECT_CANNOT_LOSE_LP)
-		ge1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-		ge1:SetTargetRange(1,0)
-		Duel.RegisterEffect(ge1,0)
-		local ge2=Effect.GlobalEffect()
-		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
-		ge2:SetCode(EVENT_ADJUST)
-		ge2:SetLabelObject(ge1)
-		ge2:SetLabel(0)
-		ge2:SetOperation(UnofficialEffect.relayresetop)
-		Duel.RegisterEffect(ge2,0)
-		Duel.RaiseEvent(Duel.GetMatchingGroup(aux.TRUE,0,0xff,0,nil),511002521,nil,0,0,0,0)
-		Duel.RegisterFlagEffect(0,511002521,0,0,1)
-	end
-	if Duel.GetLP(1)<=0 and not Duel.IsPlayerAffectedByEffect(1,EFFECT_CANNOT_LOSE_LP) and Duel.GetFlagEffect(1,511002521)==0 
-		and Duel.IsPlayerAffectedByEffect(1,511000793) then
-		local ge1=Effect.GlobalEffect()
-		ge1:SetType(EFFECT_TYPE_FIELD)
-		ge1:SetCode(EFFECT_CANNOT_LOSE_LP)
-		ge1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-		ge1:SetTargetRange(1,0)
-		Duel.RegisterEffect(ge1,1)
-		local ge2=Effect.GlobalEffect()
-		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
-		ge2:SetCode(EVENT_ADJUST)
-		ge2:SetLabelObject(ge1)
-		ge2:SetLabel(0)
-		ge2:SetOperation(UnofficialEffect.relayresetop)
-		Duel.RegisterEffect(ge2,1)
-		Duel.RaiseEvent(Duel.GetMatchingGroup(aux.TRUE,0,0xff,0,nil),511002521,nil,0,0,1,0)
-		Duel.RegisterFlagEffect(1,511002521,0,0,1)
-	end
-end
-function UnofficialEffect.relayresetop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetCurrentChain()==0 or e:GetLabel()>0 then
-		local ct=e:GetLabel()+1
-		e:SetLabel(ct)
-	end
-	if (e:GetLabel()==2 and Duel.GetCurrentPhase()&PHASE_DAMAGE==0) or e:GetLabel()==3 then
-		e:GetLabelObject():Reset()
-		e:Reset()
-		Duel.ResetFlagEffect(tp,511002521)
-	end
-end
+
 
 IndesTable={}
 
@@ -811,7 +807,7 @@ end
 
 --Ice Pillar Mechanic
 --edo9300 and Larry126
-local function icePillar()
+function UnofficialEffect.icePillar()
 	IcePillarZone = {}
 	IcePillarZone[1]=0
 	IcePillarZone[2]=0

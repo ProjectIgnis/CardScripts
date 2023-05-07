@@ -1,11 +1,13 @@
+--魂をふきこむ彫刻家
 --Soul Infusing Sculptor
 --AlphaKretin
 --Credit to edo9300 for implementing the Ice Pillar mechanic
-Duel.LoadScript("c422.lua")
+Duel.EnableUnofficialProcedure(PROC_ICE_PILLAR)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -32,7 +34,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_CODE)
 		e1:SetValue(tc:GetCode())
-		e1:SetReset(RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		token:RegisterEffect(e1)
 		Duel.SpecialSummonComplete()
 	end

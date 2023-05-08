@@ -73,6 +73,7 @@ function s.batval(e,re,c)
 		and (not re:IsHasType(EFFECT_TYPE_SINGLE) or re:GetOwner()==c)
 		and (not re:IsHasType(EFFECT_TYPE_FIELD) or re:GetActivateLocation()>0)
 		and not re:GetHandler():IsHasEffect(EFFECT_CANNOT_DISABLE)
+		and not re:IsHasProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_NEGATE)
 end
 function s.distg(e,c)
 	return c~=e:GetHandler() and c:IsHasEffect(EFFECT_INDESTRUCTABLE_BATTLE)

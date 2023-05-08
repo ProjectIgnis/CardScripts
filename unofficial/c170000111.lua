@@ -2,5 +2,5 @@
 --Magnet Warrior Σ＋
 local s,id=GetID()
 function s.initial_effect(c)
-	c:AddPlusMinusProcedure()
+	PlusMinus.AddMagneticProcedure(c)
 end

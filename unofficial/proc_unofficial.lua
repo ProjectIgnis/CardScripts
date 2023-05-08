@@ -1,12 +1,12 @@
 --Anime card constants
-RACE_YOKAI	= 0x4000000000000000
+RACE_YOKAI  = 0x4000000000000000
 ATTRIBUTE_LAUGH = 0x80
 RACE_CHARISMA   = 0x8000000000000000
 
 -------------------------------------------------------------
 --Rank-Up related functions
 FLAG_RANKUP =   511001822
-EFFECT_RANKUP_EFFECT	=   511001822	   --SetLabel from the original effect is Reset
+EFFECT_RANKUP_EFFECT	=   511001822	  --SetLabel from the original effect is Reset
 
 function Auxiliary.EnableCheckRankUp(c,condition,operation,...)
 	local e1=Effect.CreateEffect(c)
@@ -204,8 +204,7 @@ if not PlusMinus then
 	PlusMinus=aux.PlusMinusProcedure
 end
 
-local PlusMinus={}
-function Auxiliary.AddPlusMinusProcedure(c)
+function PlusMinus.AddMagneticProcedure(c)
 	--Negate attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

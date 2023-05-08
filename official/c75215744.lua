@@ -38,18 +38,18 @@ function s.initial_effect(c)
 	e3:SetLabelObject(e2)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x168}
+s.listed_series={SET_GUNKAN}
 s.listed_names={CARD_SUSHIP_SHARI,CARD_SUSHIP_IKURA}
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	if ep==tp then return false end
 	local rc=eg:GetFirst()
-	return rc:IsControler(tp) and rc:IsSetCard(0x168) and rc:IsSummonLocation(LOCATION_EXTRA)
+	return rc:IsControler(tp) and rc:IsSetCard(SET_GUNKAN) and rc:IsSummonLocation(LOCATION_EXTRA)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) end
-	if chk==0 then return Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(nil,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,1,nil)
+	local g=Duel.SelectTarget(tp,nil,tp,0,LOCATION_ONFIELD,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
@@ -63,8 +63,8 @@ function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.regtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local effs=e:GetLabel()
-	if chk==0 then return (effs&1)==0 or Duel.IsPlayerCanDraw(tp,1) end
-	if (effs&1)~=0 then
+	if chk==0 then return ((effs&1)>0 and Duel.IsPlayerCanDraw(tp,1)) or (effs&2)>0 end
+	if (effs&1)>0 then
 		e:SetCategory(CATEGORY_DRAW)
 		Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 	else
@@ -75,18 +75,18 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local effs=e:GetLabel()
 	--"Gukan Suship Shari": Draw 1 card
-	if (effs&1)~=0 and Duel.IsPlayerCanDraw(tp,1) then
+	if (effs&1)>0 and Duel.IsPlayerCanDraw(tp,1) then
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end
 	--"Gukan Suship Ikura": This card can make a second attack during each Battle Phase.
-	if (effs&(1<<1))~=0 then
+	if (effs&2)>0 then
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(3201)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_EXTRA_ATTACK)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
 	end
 end
@@ -94,8 +94,8 @@ function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	local effs=0
 	--Check for "Gukan Suship Shari":
-	if g:IsExists(Card.IsCode,1,nil,CARD_SUSHIP_SHARI) then effs=1 end
+	if g:IsExists(Card.IsCode,1,nil,CARD_SUSHIP_SHARI) then effs=effs|1 end
 	--Check for "Gukan Suship Ikura":
-	if g:IsExists(Card.IsCode,1,nil,CARD_SUSHIP_IKURA) then effs=effs|(1<<1) end
+	if g:IsExists(Card.IsCode,1,nil,CARD_SUSHIP_IKURA) then effs=effs|2 end
 	e:GetLabelObject():SetLabel(effs)
 end

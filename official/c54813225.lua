@@ -1,7 +1,8 @@
 --ダックファイター
+--Duck Fighter
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	--Special Summon itself from the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -17,7 +18,7 @@ function s.spcheck(sg,tp)
 	return aux.ReleaseCheckMMZ(sg,tp) and sg:CheckWithSumGreater(Card.GetLevel,3,1,99)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsType,1,false,s.spcheck,nil,TYPE_TOKEN) end
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsType,1,99,false,s.spcheck,nil,TYPE_TOKEN) end
 	local g=Duel.SelectReleaseGroupCost(tp,Card.IsType,1,99,false,s.spcheck,nil,TYPE_TOKEN)
 	Duel.Release(g,REASON_COST)
 end

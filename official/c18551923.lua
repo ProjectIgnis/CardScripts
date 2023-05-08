@@ -3,7 +3,7 @@
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
-	--add to hand
+	--Add 1 "Evil Eye" card from the GY to the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_LEAVE_GRAVE)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	--banish your opponent's monster
+	--Banish 1  monster from the opponent's GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_REMOVE)
@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.rmtg)
 	e2:SetOperation(s.rmop)
 	c:RegisterEffect(e2)
-	--banish your card
+	--Banish 1 card from your GY
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_REMOVE+CATEGORY_LEAVE_GRAVE)
@@ -40,10 +40,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.rmsop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x129}
+s.listed_series={SET_EVIL_EYE}
 s.listed_names={CARD_EVIL_EYE_SELENE}
 function s.thfilter(c)
-	return c:IsSetCard(0x129) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_EVIL_EYE) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end
@@ -54,7 +54,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,tc)
 	end
@@ -73,15 +73,15 @@ function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectTarget(tp,s.rmfilter,tp,0,LOCATION_GRAVE,1,1,nil)
 	if Duel.GetCurrentPhase()==PHASE_STANDBY then
-		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY,EFFECT_FLAG_OATH,2,Duel.GetTurnCount())
+		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_STANDBY,EFFECT_FLAG_OATH,2,Duel.GetTurnCount())
 	else
-		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY,EFFECT_FLAG_OATH,1)
+		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_STANDBY,EFFECT_FLAG_OATH,1)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,0,0)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 	end
 end
@@ -91,12 +91,12 @@ function s.rmscon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.rmstg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local sg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_GRAVE,0,nil)
+	local sg=Duel.GetMatchingGroup(nil,tp,LOCATION_GRAVE,0,nil)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,sg,1,0,0)
 end
 function s.rmsop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectMatchingCard(tp,aux.TRUE,tp,LOCATION_GRAVE,0,1,1,nil)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	local g=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_GRAVE,0,1,1,nil)
 	if #g then
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 	end

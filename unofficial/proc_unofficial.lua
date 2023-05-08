@@ -233,21 +233,18 @@ end
 
 -------------------------------------------------------------
 Cardian={}
-function Cardian.check(c,tp,eg,ep,ev,re,r,rp)
-	if c:IsSetCard(0xe6) and c:IsMonster() then
+function Cardian.CheckSpCondition(c)
+	if c:IsSetCard(SET_FLOWER_CARDIAN) and c:IsMonster() then
 		local eff={c:GetCardEffect(511001692)}
 		for _,te2 in ipairs(eff) do
 			local te=te2:GetLabelObject()
-			local con=te:GetCondition()
-			local cost=te:GetCost()
-			local tg=te:GetTarget()
 			if te:GetType()==EFFECT_TYPE_FIELD then
+				local con=te:GetCondition()
 				if not con or con(te,c) then
 					return true
 				end
 			else
-				if (not con or con(te,tp,eg,ep,ev,re,r,rp)) and (not cost or cost(te,tp,eg,ep,ev,re,r,rp,0) 
-					and (not tg or tg(te,tp,eg,ep,ev,re,r,rp,0))) then
+				if te:IsActivatable(te:GetHandlerPlayer(),true,true) then
 					return true
 				end
 			end
@@ -257,6 +254,7 @@ function Cardian.check(c,tp,eg,ep,ev,re,r,rp)
 end
 
 
+-------------------------------------------------------------
 function Duel.EnableUnofficialRace(race)
 	RACE_ALL=(RACE_ALL|race)
 end

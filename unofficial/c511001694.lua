@@ -1,6 +1,5 @@
 --花札衛－桐に鳳凰－ (Anime)
 --Flower Cardian Paulownia with Phoenix (Anime)
-Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableUnsummonable()
@@ -42,7 +41,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Draw(tp,1,REASON_EFFECT)
 		if tc then
 			Duel.ConfirmCards(1-tp,tc)
-			if Cardian.check(tc,tp,eg,ep,ev,re,r,rp) then
+			if Cardian.CheckSpCondition(tc) then
 				Duel.ShuffleHand(tp)
 			else
 				Duel.SendtoGrave(tc,REASON_EFFECT)

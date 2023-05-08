@@ -1,5 +1,5 @@
---Cardian - Matsu
-Duel.LoadScript("c419.lua")
+--花札衛－松－ (Anime)
+--Flower Cardian Pine (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -39,7 +39,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Draw(tp,1,REASON_EFFECT)
 		if tc then
 			Duel.ConfirmCards(1-tp,tc)
-			if Cardian.check(tc,tp,eg,ep,ev,re,r,rp) then
+			if Cardian.CheckSpCondition(tc) then
 				Duel.ShuffleHand(tp)
 			else
 				Duel.SendtoGrave(tc,REASON_EFFECT)

@@ -68,7 +68,7 @@ function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.regtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local effs=e:GetLabel()
-	if chk==0 then return ((effs&1)>0 and Duel.IsPlayerCanDraw(tp,1)) or ((effs&1)>0) end
+	if chk==0 then return ((effs&1)>0 and Duel.IsPlayerCanDraw(tp,1)) or ((effs&2)>0) end
 	if (effs&1)>0 then
 		e:SetCategory(CATEGORY_DRAW)
 		Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)

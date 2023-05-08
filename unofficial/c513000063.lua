@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e1:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
+	e1:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,SET_NUMBER)))
 	c:RegisterEffect(e1)
 	--Banish cards from opponent's Monster or Spell/Trap Zones
 	local e2=Effect.CreateEffect(c)
@@ -42,21 +42,21 @@ function s.initial_effect(c)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetCondition(s.discon)
 	e4:SetOperation(s.disop)
-	e4:SetLabel(RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD-RESET_LEAVE)
+	e4:SetLabel(RESET_EVENT|RESETS_STANDARD&~(RESET_TOFIELD|RESET_LEAVE))
 	--Destroy this card if you would take damage or the equipped monster would be destroyed 
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_EQUIP)
 	e5:SetCode(EFFECT_DESTROY_REPLACE)
 	e5:SetTarget(s.reptg)
 	e5:SetOperation(s.repop)
-	e5:SetLabel(RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD-RESET_LEAVE)
+	e5:SetLabel(RESET_EVENT|RESETS_STANDARD&~(RESET_TOFIELD|RESET_LEAVE))
 	local e6=Effect.CreateEffect(c)
 	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e6:SetCode(EVENT_CHAIN_SOLVING)
 	e6:SetRange(LOCATION_SZONE)
 	e6:SetCondition(aux.damcon1)
 	e6:SetOperation(s.repop2)
-	e6:SetLabel(RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD-RESET_LEAVE)
+	e6:SetLabel(RESET_EVENT|RESETS_STANDARD&~(RESET_TOFIELD|RESET_LEAVE))
 	--Effects gained by Ranking-Up "Number 80: Rhapsody in Berserk"
 	local e7=Effect.CreateEffect(c)
 	e7:SetType(EFFECT_TYPE_SINGLE)
@@ -70,7 +70,7 @@ function s.initial_effect(c)
 	e9:SetLabelObject(e6)
 	c:RegisterEffect(e9)
 end
-s.listed_series={0x48}
+s.listed_series={SET_NUMBER}
 s.listed_names={93568288}
 s.xyz_number=80
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

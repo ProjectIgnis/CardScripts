@@ -34,7 +34,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local e7=Effect.CreateEffect(e:GetHandler())
 		e7:SetType(EFFECT_TYPE_SINGLE)
 		e7:SetCode(EFFECT_UPDATE_ATTACK)
-		e7:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e7:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e7:SetValue(-800)
 		tc:RegisterEffect(e7)
 	end

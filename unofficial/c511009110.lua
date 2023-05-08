@@ -39,7 +39,7 @@ function s.stage2(e,tc,tp,sg,chk)
 		e1:SetCountLimit(1)
 		e1:SetCondition(s.damcon)
 		e1:SetOperation(s.damop)
-		e1:SetReset(RESET_EVENT+0x3fe0000)
+		e1:SetReset(RESET_EVENT|0x3fe0000)
 		tc:RegisterEffect(e1)
 	end
 end

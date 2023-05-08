@@ -1,12 +1,12 @@
 --Anime card constants
-RACE_YOKAI	  = 0x4000000000000000
+RACE_YOKAI	= 0x4000000000000000
 ATTRIBUTE_LAUGH = 0x80
 RACE_CHARISMA   = 0x8000000000000000
 
 -------------------------------------------------------------
 --Rank-Up related functions
 FLAG_RANKUP =   511001822
-EFFECT_RANKUP_EFFECT	=   511001822
+EFFECT_RANKUP_EFFECT	=   511001822	   --SetLabel from the original effect is Reset
 
 function Auxiliary.EnableCheckRankUp(c,condition,operation,...)
 	local e1=Effect.CreateEffect(c)
@@ -69,7 +69,8 @@ function Auxiliary.RankUpCheckOperation(operation,...)
 		local rankupEffects={c:GetCardEffect(EFFECT_RANKUP_EFFECT)}
 		for _,rankupEffect in ipairs(rankupEffects) do
 			local te=rankupEffect:GetLabelObject():Clone()
-			te:SetReset(te:GetLabel())
+			local reset=te:GetLabel() or (RESET_EVENT|RESETS_STANDARD)
+			te:SetReset(reset)
 			c:RegisterEffect(te)
 		end
 		if operation then operation(e,tp,eg,ep,ev,re,r,rp) end
@@ -119,9 +120,11 @@ if not aux.ArmorProcedure then
 	aux.ArmorProcedure={}
 	Armor=aux.ArmorProcedure
 end
+
 if not Armor then
 	Armor=aux.ArmorProcedure
 end
+
 function Armor.AddProcedure(c)
 --  c:Type(c:Type()|TYPE_ARMOR)
 	--You can only attack with 1 Armor monster per turn.
@@ -148,19 +151,24 @@ function Armor.AddProcedure(c)
 	e3:SetOperation(Armor.RedirectAttackOperation)
 	c:RegisterEffect(e3)
 end
+
 function Armor.CannotAttack(e)
 	return Duel.HasFlagEffect(e:GetHandlerPlayer(),FLAG_ARMOR) and Duel.GetFlagEffectLabel(e:GetHandlerPlayer(),FLAG_ARMOR)~=e:GetHandler():GetFieldID()
 end
+
 function Armor.AttackRegister(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterFlagEffect(tp,FLAG_ARMOR,RESET_PHASE|PHASE_END,0,1,e:GetHandler():GetFieldID())
 end
+
 function Armor.RedirectAttackCondition(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttackTarget()
 	return r~=REASON_REPLACE and at:IsFaceup() and at:IsControler(tp) and at:IsType(TYPE_ARMOR)
 end
+
 function Armor.RedirectAttackFilter(c,code)
 	return c:IsFaceup() and c:IsType(TYPE_ARMOR) and not c:IsCode(code)
 end
+
 function Armor.RedirectAttackTarget(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local at=Duel.GetAttackTarget()
 	local code=at:GetCode()
@@ -170,6 +178,7 @@ function Armor.RedirectAttackTarget(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTACKTARGET)
 	Duel.SelectTarget(tp,Armor.RedirectAttackFilter,tp,LOCATION_MZONE,0,1,1,at,code)
 end
+
 function Armor.RedirectAttackOperation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
@@ -185,14 +194,17 @@ function Card.IsPlusOrMinus(c)
 	local tpe=c:GetType()&TYPE_PLUSMINUS
 	return tpe~=0 and tpe~=TYPE_PLUSMINUS
 end
+
 if not aux.PlusMinusProcedure then
 	aux.PlusMinusProcedure={}
 	PlusMinus=aux.PlusMinusProcedure
 end
+
 if not PlusMinus then
 	PlusMinus=aux.PlusMinusProcedure
 end
-local PlusMi	nus={}
+
+local PlusMinus={}
 function Auxiliary.AddPlusMinusProcedure(c)
 	--Negate attack
 	local e1=Effect.CreateEffect(c)
@@ -213,6 +225,7 @@ function Auxiliary.AddPlusMinusProcedure(c)
 	e3:SetValue(PlusMinus.attract)
 	c:RegisterEffect(e3)
 end
+
 function PlusMinus.nacon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsPlusOrMinus() then return false end
@@ -220,15 +233,18 @@ function PlusMinus.nacon(e,tp,eg,ep,ev,re,r,rp)
 	return bc and bc:IsFaceup() and bc:IsType(c:GetType()&TYPE_PLUSMINUS)
 		and (Duel.GetCurrentPhase()<PHASE_DAMAGE or Duel.GetCurrentPhase()>PHASE_DAMAGE_CAL)
 end
+
 function PlusMinus.naop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,1-tp,e:GetHandler():GetOriginalCode())
 	Duel.NegateAttack()
 end
+
 function PlusMinus.attractcon(e)
 	local c=e:GetHandler()
 	return c:IsPlusOrMinus() and c:CanAttack()
 		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,(~c:GetType())&TYPE_PLUSMINUS),c:GetControler(),0,LOCATION_MZONE,1,nil)
 end
+
 function PlusMinus.attract(e,c)
 	return c:IsFaceup() and c:IsType((~e:GetHandler():GetType())&TYPE_PLUSMINUS)
 end
@@ -261,6 +277,7 @@ end
 function Duel.EnableUnofficialRace(race)
 	RACE_ALL=(RACE_ALL|race)
 end
+
 function Duel.EnableUnofficialAttribute(att)
 	ATTRIBUTE_ALL=(ATTRIBUTE_ALL|att)
 end

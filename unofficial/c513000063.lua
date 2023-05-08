@@ -1,6 +1,5 @@
 --ＣＮｏ.８０ 葬装覇王レクイエム・イン・バーサーク (Anime)
 --Number C80: Requiem in Berserk (Anime)
-Duel.LoadScript("rankup_functions.lua")
 Duel.LoadCardScript("c20563387.lua")
 local s,id=GetID()
 function s.initial_effect(c)

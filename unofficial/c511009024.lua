@@ -1,6 +1,7 @@
+--オーバー・ザ・レッド
 --Over the Red
 --fixed by MLD
-Duel.LoadScript("c419.lua")
+Duel.EnableUnofficialProc(PROC_STATS_CHANGED)
 Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
+--パワーオフ
 --Power Off
-Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -2,7 +2,7 @@
 --Number C103: Ragnafinity (Anime)
 --Fixed by Larry126
 Duel.LoadScript("rankup_functions.lua")
-Duel.LoadScript("c419.lua")
+Duel.EnableUnofficialProc(PROC_STATS_CHANGED)
 Duel.LoadCardScript("c20785975.lua")
 local s,id=GetID()
 function s.initial_effect(c)

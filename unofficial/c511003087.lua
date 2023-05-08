@@ -1,5 +1,6 @@
---燃える闘志
-Duel.LoadScript("c419.lua")
+--燃える闘志 (Anime)
+--Fiery Fervor (Anime)
+Duel.EnableUnofficialProc(PROC_STATS_CHANGED)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

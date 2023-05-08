@@ -1,5 +1,6 @@
+--エクスチェンジ・ガード・ローブ
 --Guard Robe Exchange
-Duel.LoadScript("c419.lua")
+Duel.EnableUnofficialProc(PROC_STATS_CHANGED)
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c)

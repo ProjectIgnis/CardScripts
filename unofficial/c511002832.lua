@@ -1,5 +1,5 @@
+--１０万ガウス！
 --One Hundred Thousand Gauss
-Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,5 +1,6 @@
---遺言の札
-Duel.LoadScript("c419.lua")
+--遺言の札 (Anime)
+--Card of Last Will (Anime)
+Duel.EnableUnofficialProc(PROC_STATS_CHANGED)
 local s,id=GetID()
 function s.initial_effect(c)
 	--

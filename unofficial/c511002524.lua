@@ -1,5 +1,6 @@
---HSRマッハゴー・イータ
-Duel.LoadScript("c419.lua")
+--HSRマッハゴー・イータ (Anime)
+--Hi-Speedroid Hagoita (Anime)
+Duel.EnableUnofficialProc(PROC_STATS_CHANGED)
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon

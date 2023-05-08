@@ -1,6 +1,7 @@
+--追従
 --Flattery
 --scripted by Shad3, fixed and cleaned up by MLD
-Duel.LoadScript("c419.lua")
+Duel.EnableUnofficialProc(PROC_STATS_CHANGED)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

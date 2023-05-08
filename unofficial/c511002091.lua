@@ -1,5 +1,6 @@
---No.33 先史遺産－超兵器マシュ＝マック
-Duel.LoadScript("c419.lua")
+--No.33 先史遺産－超兵器マシュ＝マック (Anime)
+--Number 33: Chronomaly Machu Mech (Anime)
+Duel.EnableUnofficialProc(PROC_STATS_CHANGED)
 Duel.LoadCardScript("c39139935.lua")
 local s,id=GetID()
 function s.initial_effect(c)

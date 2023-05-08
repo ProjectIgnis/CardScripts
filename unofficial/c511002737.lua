@@ -1,5 +1,6 @@
---CH キング・アーサー
-Duel.LoadScript("c419.lua")
+--CH キング・アーサー (Anime)
+--Comics Hero King Arthur (Anime)
+Duel.EnableUnofficialProc(PROC_STATS_CHANGED)
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon

@@ -1,6 +1,7 @@
---Destiny HERO - Dystopiaguy
+--Ｄ－ＨＥＲＯ ディストピアガイ (Anime)
+--Destiny HERO - Dystopia (Anime)
 --fixed by MLD
-Duel.LoadScript("c419.lua")
+Duel.EnableUnofficialProc(PROC_STATS_CHANGED)
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material

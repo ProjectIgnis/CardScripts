@@ -1,7 +1,7 @@
---Performpal LaughMaker (Anime)
---scripted by GameMaster(GM)
---fixed amd cleaned up by MLD
-Duel.LoadScript("c419.lua")
+--ＥＭラフメイカー (Anime)
+--Performapal Laugh Maker (Anime)
+--Scripted by GameMaster(GM), fixed and cleaned up by MLD
+Duel.EnableUnofficialProc(PROC_STATS_CHANGED)
 local s,id=GetID()
 function s.initial_effect(c)
 	Pendulum.AddProcedure(c)

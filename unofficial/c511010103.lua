@@ -1,5 +1,6 @@
+--Ｎｏ．１０３ 神葬零嬢ラグナ・ゼロ (Anime)
 --Number 103: Ragnazero (Anime)
-Duel.LoadScript("c419.lua")
+Duel.EnableUnofficialProc(PROC_STATS_CHANGED)
 Duel.LoadCardScript("c94380860.lua")
 local s,id=GetID()
 function s.initial_effect(c)

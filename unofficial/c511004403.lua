@@ -1,7 +1,7 @@
 --ＳＲシュリケーンハリケーン
 --Speedroid Shuriken Hurricane
 --fixed by MLD
-Duel.LoadScript("c419.lua")
+Duel.EnableUnofficialProc(PROC_STATS_CHANGED)
 local s,id=GetID()
 function s.initial_effect(c)
 	--active

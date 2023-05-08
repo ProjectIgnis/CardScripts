@@ -1,5 +1,6 @@
---Tsukumo Slash
-Duel.LoadScript("c419.lua")
+--九十九スラッシュ
+--Tsukumo Slash (Manga)
+Duel.EnableUnofficialProc(PROC_STATS_CHANGED)
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate

@@ -1,7 +1,7 @@
 --暗黒騎士ガイアロード (Anime)
 --Lord Gaia the Fierce Knight (Anime)
---scripted by Larry126
-Duel.LoadScript("c419.lua")
+--Scripted by Larry126
+Duel.EnableUnofficialProc(PROC_STATS_CHANGED)
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate

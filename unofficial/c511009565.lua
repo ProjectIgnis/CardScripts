@@ -1,13 +1,15 @@
+--Ｅｍリバーサル・ダンサー
 --Performage Reversal Dancer
 --fixed by MLD
-Duel.LoadScript("c419.lua")
+Duel.EnableUnofficialProc(PROC_STATS_CHANGED)
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
 	Pendulum.AddProcedure(c)
 	--activate
 	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_DAMAGE)
+	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetCategory(CATEGORY_ATKCHANGE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(511000377)
@@ -19,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.op)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
+	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCode(511001441)
 	e3:SetLabel(LOCATION_MZONE)
 	e3:SetRange(LOCATION_MZONE)
@@ -33,7 +36,7 @@ function s.initial_effect(c)
 	e4:SetCountLimit(1,0,EFFECT_COUNT_CODE_SINGLE)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xc6}
+s.listed_series={SET_PERFORMAGE}
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	local ec=eg:GetFirst()
 	if #eg~=1 then return false end
@@ -42,7 +45,7 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return ec:IsControler(1-tp) and ec:GetAttack()~=val
 end
 function s.filter(c,label)
-	return c:IsFaceup() and (label==LOCATION_PZONE or c:IsSetCard(0xc6))
+	return c:IsFaceup() and (label==LOCATION_PZONE or c:IsSetCard(SET_PERFORMAGE))
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local label=e:GetLabel()
@@ -63,13 +66,13 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if e:GetLabel()==LOCATION_PZONE and not c:IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
+	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(atk)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 end

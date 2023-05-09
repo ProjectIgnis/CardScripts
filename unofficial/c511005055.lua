@@ -1,10 +1,12 @@
+--追従
 --Flattery
 --scripted by Shad3, fixed and cleaned up by MLD
-Duel.LoadScript("c419.lua")
+Duel.EnableUnofficialProc(PROC_STATS_CHANGED)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetCode(511001265)
@@ -21,7 +23,7 @@ function s.cfilter(c,tp)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
-	return eg:IsExists(s.cfilter,1,nil,tp) and ph>=0x08 and ph<=0x20
+	return eg:IsExists(s.cfilter,1,nil,tp) and Duel.IsBattlePhase()
 end
 function s.diffilter1(c,g)
 	local dif=0
@@ -59,11 +61,11 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local atk=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE)
 		e1:SetValue(atk)
 		tc:RegisterEffect(e1)
 	end

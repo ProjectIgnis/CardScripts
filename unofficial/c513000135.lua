@@ -2,7 +2,7 @@
 --マイケル・ローレンス・ディーによってスクリプト
 --Scripted by MLD, credit to TPD & Cybercatman
 --Updated and currently maintained by Larry126
-Duel.LoadScript("c421.lua")
+Duel.EnableUnofficialProc(PROC_DIVINE_HIERARCHY)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Summon with 3 Tribute
@@ -33,7 +33,6 @@ function s.initial_effect(c)
 		--avatar
 		local av=Effect.CreateEffect(c)
 		av:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		av:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_IGNORE_IMMUNE)
 		av:SetCode(EVENT_ADJUST)
 		av:SetCondition(s.avatarcon)
 		av:SetOperation(s.avatarop)
@@ -45,13 +44,17 @@ function s.avfilter(c)
 	local ae=nil
 	local de=nil
 	for _,atkte in ipairs(atktes) do
-		if atkte:GetOwner()==c and atkte:IsHasProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_REPEAT+EFFECT_FLAG_DELAY) then
+		if atkte:GetOwner()==c and defte:IsHasProperty(EFFECT_FLAG_SINGLE_RANGE)
+				and defte:IsHasProperty(EFFECT_FLAG_REPEAT)
+				and defte:IsHasProperty(EFFECT_FLAG_DELAY) then
 			ae=atkte:GetLabel()
 		end
 	end
 	local deftes={c:GetCardEffect(EFFECT_SET_DEFENSE_FINAL)}
 	for _,defte in ipairs(deftes) do
-		if defte:GetOwner()==c and defte:IsHasProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_REPEAT+EFFECT_FLAG_DELAY) then
+		if defte:GetOwner()==c and defte:IsHasProperty(EFFECT_FLAG_SINGLE_RANGE)
+				and defte:IsHasProperty(EFFECT_FLAG_REPEAT)
+				and defte:IsHasProperty(EFFECT_FLAG_DELAY) then
 			de=defte:GetLabel()
 		end
 	end
@@ -65,14 +68,18 @@ function s.avatarop(e,tp,eg,ev,ep,re,r,rp)
 	g:ForEach(function(c)
 		local atktes={c:GetCardEffect(EFFECT_SET_ATTACK_FINAL)}
 		for _,atkte in ipairs(atktes) do
-			if atkte:GetOwner()==c and atkte:IsHasProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_REPEAT+EFFECT_FLAG_DELAY) then
+			if atkte:GetOwner()==c and defte:IsHasProperty(EFFECT_FLAG_SINGLE_RANGE)
+				and defte:IsHasProperty(EFFECT_FLAG_REPEAT)
+				and defte:IsHasProperty(EFFECT_FLAG_DELAY) then
 				atkte:SetValue(s.avaval)
 				atkte:SetLabel(9999999)
 			end
 		end
 		local deftes={c:GetCardEffect(EFFECT_SET_DEFENSE_FINAL)}
 		for _,defte in ipairs(deftes) do
-			if defte:GetOwner()==c and defte:IsHasProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_REPEAT+EFFECT_FLAG_DELAY) then
+			if defte:GetOwner()==c and defte:IsHasProperty(EFFECT_FLAG_SINGLE_RANGE)
+				and defte:IsHasProperty(EFFECT_FLAG_REPEAT)
+				and defte:IsHasProperty(EFFECT_FLAG_DELAY) then
 				defte:SetValue(s.avaval)
 				defte:SetLabel(9999999)
 			end
@@ -122,13 +129,13 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and c:CanAttack() then
+	if c:IsRelateToEffect(e) and c:CanAttack() and not c:IsImmuneToEffect(e) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_SINGLE_RANGE)
 		e1:SetRange(LOCATION_MZONE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE+PHASE_BATTLE+PHASE_END+RESET_CHAIN)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE|PHASE_BATTLE|RESET_CHAIN)
 		e1:SetValue(s.adval)
 		c:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
@@ -137,9 +144,8 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EVENT_PRE_BATTLE_DAMAGE)
 		e2:SetCondition(s.damcon)
 		e2:SetOperation(s.damop)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE+PHASE_BATTLE+PHASE_END+RESET_CHAIN)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE|PHASE_BATTLE|RESET_CHAIN)
 		c:RegisterEffect(e2)
-		if c:IsImmuneToEffect(e1) or c:IsImmuneToEffect(e2) then return end
 		local g=Duel.GetFieldGroup(tp,0,LOCATION_MZONE)
 		if #g==0 or ((c:IsHasEffect(EFFECT_DIRECT_ATTACK) or not g:IsExists(aux.NOT(Card.IsHasEffect),1,nil,EFFECT_IGNORE_BATTLE_TARGET)) and Duel.SelectYesNo(tp,31)) then
 			Duel.CalculateDamage(c,nil)

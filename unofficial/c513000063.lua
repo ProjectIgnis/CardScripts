@@ -1,6 +1,5 @@
 --ＣＮｏ.８０ 葬装覇王レクイエム・イン・バーサーク (Anime)
 --Number C80: Requiem in Berserk (Anime)
-Duel.LoadScript("rankup_functions.lua")
 Duel.LoadCardScript("c20563387.lua")
 local s,id=GetID()
 function s.initial_effect(c)
@@ -13,7 +12,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e1:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
+	e1:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,SET_NUMBER)))
 	c:RegisterEffect(e1)
 	--Banish cards from opponent's Monster or Spell/Trap Zones
 	local e2=Effect.CreateEffect(c)
@@ -22,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
-	e2:SetCost(s.rmcost)
+	e2:SetCost(aux.dxmcostgen(1,1,nil))
 	e2:SetTarget(s.rmtg)
 	e2:SetOperation(s.rmop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
@@ -43,26 +42,24 @@ function s.initial_effect(c)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetCondition(s.discon)
 	e4:SetOperation(s.disop)
-	e4:SetLabel(RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD-RESET_LEAVE)
 	--Destroy this card if you would take damage or the equipped monster would be destroyed 
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_EQUIP)
 	e5:SetCode(EFFECT_DESTROY_REPLACE)
 	e5:SetTarget(s.reptg)
 	e5:SetOperation(s.repop)
-	e5:SetLabel(RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD-RESET_LEAVE)
 	local e6=Effect.CreateEffect(c)
 	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e6:SetCode(EVENT_CHAIN_SOLVING)
 	e6:SetRange(LOCATION_SZONE)
 	e6:SetCondition(aux.damcon1)
 	e6:SetOperation(s.repop2)
-	e6:SetLabel(RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD-RESET_LEAVE)
 	--Effects gained by Ranking-Up "Number 80: Rhapsody in Berserk"
 	local e7=Effect.CreateEffect(c)
 	e7:SetType(EFFECT_TYPE_SINGLE)
 	e7:SetCode(EFFECT_RANKUP_EFFECT)
 	e7:SetLabelObject(e4)
+	e7:SetLabel(RESET_EVENT|RESETS_STANDARD&~(RESET_TOFIELD|RESET_LEAVE))
 	c:RegisterEffect(e7)
 	local e8=e7:Clone()
 	e8:SetLabelObject(e5)
@@ -71,7 +68,7 @@ function s.initial_effect(c)
 	e9:SetLabelObject(e6)
 	c:RegisterEffect(e9)
 end
-s.listed_series={0x48}
+s.listed_series={SET_NUMBER}
 s.listed_names={93568288}
 s.xyz_number=80
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -196,29 +193,16 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,false,POS_FACEUP)
 end
-function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,0,0)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,nil)
-	local op=0
-	if sg:IsExists(Card.IsLocation,1,nil,LOCATION_MZONE) and sg:IsExists(Card.IsLocation,1,nil,LOCATION_STZONE) then
-		op=Duel.SelectOption(tp,1002,1003)
-	elseif sg:IsExists(Card.IsLocation,1,nil,LOCATION_MZONE) then
-		op=0
-	else
-		op=1
-	end
-	local bg
-	if op==0 then
-		bg=sg:Filter(Card.IsLocation,nil,LOCATION_MZONE)
-	else
-		bg=sg:Filter(Card.IsLocation,nil,LOCATION_STZONE)
-	end
+	if #sg==0 then return end
+	local b1=sg:IsExists(Card.IsLocation,1,nil,LOCATION_MZONE)
+	local b2=sg:IsExists(Card.IsLocation,1,nil,LOCATION_STZONE)
+	local op=Duel.SelectEffect(tp,{b1,1002},{b2,1003})
+	local bg=sg:Filter(Card.IsLocation,nil,op==1 and LOCATION_MZONE or LOCATION_STZONE)
 	Duel.Remove(bg,POS_FACEUP,REASON_EFFECT)
 end

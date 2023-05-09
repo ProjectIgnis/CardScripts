@@ -1,11 +1,12 @@
 --RUM－バリアンズ・フォース (Anime)
 --Rank-Up-Magic Barian's Force (Anime)
 Duel.LoadScript("c420.lua")
-Duel.LoadScript("c419.lua")
+Duel.EnableUnofficialProc(PROC_CANNOT_BATTLE_INDES)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -49,11 +50,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		--Negate battle indestruction
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD)
-		e1:SetCode(511010508)
+		e1:SetCode(EFFECT_CANNOT_BATTLE_INDES)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 		e1:SetValue(s.batval)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		sc:RegisterEffect(e1)
 		--Detach
 		local e2=Effect.CreateEffect(c)
@@ -73,6 +74,7 @@ function s.batval(e,re,c)
 		and (not re:IsHasType(EFFECT_TYPE_SINGLE) or re:GetOwner()==c)
 		and (not re:IsHasType(EFFECT_TYPE_FIELD) or re:GetActivateLocation()>0)
 		and not re:GetHandler():IsHasEffect(EFFECT_CANNOT_DISABLE)
+		and not re:IsHasProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_NEGATE)
 end
 function s.distg(e,c)
 	return c~=e:GetHandler() and c:IsHasEffect(EFFECT_INDESTRUCTABLE_BATTLE)
@@ -90,7 +92,7 @@ end
 function s.detop(e,tp,eg,ep,ev,re,r,rp)
 	local sc=e:GetLabelObject()
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() and sc then
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() and sc then
 		local og=tc:GetOverlayGroup()
 		if #og==0 then return end
 		if Duel.SendtoGrave(og,REASON_EFFECT)>0 then
@@ -98,7 +100,7 @@ function s.detop(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			e1:SetValue(#og*-300)
 			tc:RegisterEffect(e1)
 		end

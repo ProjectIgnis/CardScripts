@@ -2,12 +2,12 @@
 --Brave-Eyes Pendulum Dragon (Anime)
 --Scripted By TheOnePharaoh
 --fixed by MLD
-Duel.LoadScript("c419.lua")
+Duel.EnableUnofficialProc(PROC_CANNOT_BATTLE_INDES)
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x10f2),aux.FilterBoolFunctionEx(Card.IsRace,RACE_WARRIOR))
+	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_PENDULUM_DRAGON),aux.FilterBoolFunctionEx(Card.IsRace,RACE_WARRIOR))
 	--ATK Change
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	--Always Battle Destroy
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(id)
+	e2:SetCode(EFFECT_CANNOT_BATTLE_INDES)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(0,LOCATION_MZONE)
 	e2:SetTarget(s.tg)
@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x10f2}
+s.listed_series={SET_PENDULUM_DRAGON}
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tg=Duel.GetMatchingGroup(Card.HasNonZeroAttack,tp,LOCATION_MZONE,LOCATION_MZONE,c)
@@ -43,7 +43,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 			e1:SetValue(0)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 			tc:RegisterEffect(e1)
 		end
 		local e1=Effect.CreateEffect(c)
@@ -51,7 +51,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(atk)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD&(~RESET_TOFIELD))
 		c:RegisterEffect(e1)
 	end
 	Duel.Readjust()

@@ -1,11 +1,13 @@
---Tsukumo Slash
-Duel.LoadScript("c419.lua")
+--九十九スラッシュ (Manga)
+--Tsukumo Slash (Manga)
+Duel.EnableUnofficialProc(PROC_STATS_CHANGED)
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCode(511001762)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
@@ -18,7 +20,9 @@ function s.cfilter(c,tp)
 	return c:IsFaceup() and c:IsControler(1-tp) and c:GetAttack()~=val
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil,tp) and Duel.GetLP(tp)<=100 and Duel.GetLP(1-tp)<=100 and Duel.GetLP(tp)~=Duel.GetLP(1-tp)
+	return (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
+		and eg:IsExists(s.cfilter,1,nil,tp) and Duel.GetLP(tp)<=100
+		and Duel.GetLP(1-tp)<=100 and Duel.GetLP(tp)~=Duel.GetLP(1-tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_MZONE,0,1,nil) end
@@ -40,7 +44,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(val*100)
 		tc:RegisterEffect(e1)
 	end

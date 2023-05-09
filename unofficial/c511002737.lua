@@ -1,5 +1,6 @@
---CH キング・アーサー
-Duel.LoadScript("c419.lua")
+--CH キング・アーサー (Anime)
+--Comics Hero King Arthur (Anime)
+Duel.EnableUnofficialProc(PROC_STATS_CHANGED)
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -7,13 +8,14 @@ function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DAMAGE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(511001265)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(s.damcon)
-	e1:SetCost(s.damcost)
+	e1:SetCost(aux.dxmcostgen(1,1,nil))
 	e1:SetTarget(s.damtg)
 	e1:SetOperation(s.damop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
@@ -24,10 +26,6 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local val=0
 	if c:GetFlagEffect(284)>0 then val=c:GetFlagEffectLabel(284) end
 	return c:GetAttack()~=val
-end
-function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

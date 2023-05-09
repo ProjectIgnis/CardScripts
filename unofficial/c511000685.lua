@@ -1,10 +1,10 @@
 --ＷＲＵＭ－ホープ・フォース
 --Double-Rank-Up-Magic Utopia Force
-Duel.LoadScript("rankup_functions.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -49,7 +49,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #g>=2 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=g:Select(tp,2,2,nil)
-		aux.RankUpUsing(sg,84013237,aux.Stringid(id,0))
+		aux.RankUpUsing(sg,84013237,aux.Stringid(id,1))
 		local ct=Duel.SpecialSummon(sg,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP)
 		for spc in aux.Next(sg) do
 			spc:CompleteProcedure()

@@ -1,6 +1,5 @@
 --ＣＮｏ.６５ 裁断魔王ジャッジ・デビル (Anime)
 --Number C65: King Overfiend (Anime)
-Duel.LoadScript("rankup_functions.lua")
 Duel.LoadCardScript("c49195710.lua")
 local s,id=GetID()
 function s.initial_effect(c)
@@ -13,7 +12,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e1:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
+	e1:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,SET_NUMBER)))
 	c:RegisterEffect(e1)
 	--Decrease the ATK/DEF of a target by 1000
 	local e2=Effect.CreateEffect(c)
@@ -31,7 +30,6 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCode(EFFECT_CANNOT_TRIGGER)
 	e3:SetTargetRange(0,LOCATION_MZONE)
-	e3:SetLabel(RESET_EVENT+RESETS_STANDARD)
 	local e4=e3:Clone()
 	e4:SetCode(EFFECT_DISABLE)
 	local e5=Effect.CreateEffect(c)
@@ -43,7 +41,7 @@ function s.initial_effect(c)
 	e6:SetLabelObject(e4)
 	c:RegisterEffect(e6)
 end
-s.listed_series={0x48}
+s.listed_series={SET_NUMBER}
 s.listed_names={3790062}
 s.xyz_number=65
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

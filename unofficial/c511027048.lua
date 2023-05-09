@@ -1,14 +1,16 @@
 --バイ・バインド
 --Double Bind
 --Scripted by The Razgriz and Larry126
-Duel.LoadScript("c419.lua")
+Duel.EnableUnofficialProc(PROC_CANNOT_BATTLE_INDES)
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(511009110)
+	e1:SetHintTiming(TIMING_DAMAGE_STEP)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
@@ -41,17 +43,17 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetCondition(function() return Duel.IsBattlePhase() end)
 		e1:SetValue(ec:GetAttack()*2)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		ec:RegisterEffect(e1)
 		 --always Battle destroy
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_FIELD)
-		e2:SetCode(511010508)
+		e2:SetCode(EFFECT_CANNOT_BATTLE_INDES)
 		e2:SetRange(LOCATION_MZONE)
 		e2:SetTargetRange(0,LOCATION_MZONE)
 		e2:SetTarget(s.battg)
 		e2:SetValue(1)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		ec:RegisterEffect(e2)
 	end
 end

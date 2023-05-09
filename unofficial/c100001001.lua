@@ -1,5 +1,6 @@
---牛頭鬼(未)
-Duel.LoadScript("c419.lua")
+--牛頭鬼 (Manga)
+--Gozuki (Manga)
+Duel.EnableUnofficialRace(RACE_YOKAI)
 local s,id=GetID()
 function s.initial_effect(c)
 	--send to grave

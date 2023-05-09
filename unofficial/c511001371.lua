@@ -1,6 +1,5 @@
 --ＣＮｏ.４０ ギミック・パペット－デビルズ・ストリングス (Anime)
 --Number C40: Gimmick Puppet of Dark Strings (Anime)
-Duel.LoadScript("rankup_functions.lua")
 Duel.LoadCardScript("c69170557.lua")
 local s,id=GetID()
 function s.initial_effect(c)
@@ -13,7 +12,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e1:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
+	e1:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,SET_NUMBER)))
 	c:RegisterEffect(e1)
 	--draw
 	local e2=Effect.CreateEffect(c)
@@ -32,10 +31,9 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetCountLimit(1)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCost(s.ctcost)
+	e3:SetCost(aux.dxmcostgen(1,1,nil))
 	e3:SetTarget(s.cttg)
 	e3:SetOperation(s.ctop)
-	e3:SetLabel(RESET_EVENT+RESETS_STANDARD)
 	--destroy
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,2))
@@ -45,7 +43,6 @@ function s.initial_effect(c)
 	e4:SetCountLimit(1)
 	e4:SetTarget(s.destg)
 	e4:SetOperation(s.desop)
-	e4:SetLabel(RESET_EVENT+RESETS_STANDARD)
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE)
 	e5:SetCode(EFFECT_RANKUP_EFFECT)
@@ -55,13 +52,9 @@ function s.initial_effect(c)
 	e6:SetLabelObject(e4)
 	c:RegisterEffect(e6)
 end
-s.listed_series={0x48}
+s.listed_series={SET_NUMBER}
 s.listed_names={75433814}
 s.xyz_number=40
-function s.ctcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-end
 function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
 end

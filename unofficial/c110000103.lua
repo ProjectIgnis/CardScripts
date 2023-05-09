@@ -1,64 +1,38 @@
+--アクティブガード・アーマー
 --Active Guard
-Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
+	Armor.AddProcedure(c)
 	--no damage
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_CHANGE_DAMAGE)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetType(EFFECT_TYPE_QUICK_O)
+	e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e1:SetTargetRange(1,0)
-	e1:SetLabel(0)
-	e1:SetValue(s.damval)
+	e1:SetCondition(function(_,tp) return Duel.GetBattleDamage(tp)>0 end)
+	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--copy	
-	local e2=Effect.CreateEffect(c)
-	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e2:SetCode(EVENT_ADJUST)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetLabelObject(e1)
-	e2:SetOperation(s.regop)
+	local e2=e1:Clone()
+	e2:SetCode(EVENT_CHAINING)
+	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
+	e2:SetCondition(aux.damcon1)
 	c:RegisterEffect(e2)
 end
-function s.damval(e,re,val,r,rp,rc)
-	if val~=0 then
-		if e:GetHandler():GetFlagEffect(id)==0 then
-			e:SetLabel(1)
-		end
-		return 0
-	else return val end
-end
-function s.regop(e,tp,eg,ep,ev,re,r,rp)
+function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local val=e:GetLabelObject():GetLabel()
-	if val==1 then
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,0)
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-		e1:SetCode(EVENT_PHASE+PHASE_END)
-		e1:SetCountLimit(1)
-		e1:SetLabelObject(c)
-		e1:SetCondition(s.descon)
-		e1:SetOperation(s.desop)
-		e1:SetReset(RESET_PHASE+PHASE_END)
-		Duel.RegisterEffect(e1,tp)
-		e:GetLabelObject():SetLabel(0)
-	end
-end
-function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetLabelObject()
-	if tc:GetFlagEffect(id)>0 then
-		return true
-	else
-		e:Reset()
-		return false
-	end
-end
-function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_CARD,0,id)
-	local tc=e:GetLabelObject()
-	Duel.Destroy(tc,REASON_EFFECT)
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_CHANGE_DAMAGE)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e1:SetTargetRange(1,0)
+	e1:SetValue(0)
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e1,tp)
+	local e2=e1:Clone()
+	e2:SetCode(EFFECT_NO_EFFECT_DAMAGE)
+	e2:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e2,tp)
+	--Destroy this card during the End Phase of this turn
+	aux.DelayedOperation(c,PHASE_END,id,e,tp,function(ag) Duel.Destroy(ag,REASON_EFFECT) end)
 end

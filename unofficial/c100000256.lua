@@ -1,5 +1,6 @@
---ダイダラボッチ
-Duel.LoadScript("c419.lua")
+--ダイダラボッチ (Manga)
+--Daidara-Bocchi (Manga)
+Duel.EnableUnofficialRace(RACE_YOKAI)
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot special summon

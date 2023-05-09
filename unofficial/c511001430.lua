@@ -38,11 +38,11 @@ function s.initial_effect(c)
 	e3:SetCondition(s.spcon)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
-	e3:SetLabel(RESET_EVENT|RESETS_STANDARD_EXC_GRAVE&(~RESET_REMOVE))
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetCode(EFFECT_RANKUP_EFFECT)
 	e4:SetLabelObject(e3)
+	e4:SetLabel(RESET_EVENT|RESETS_STANDARD_EXC_GRAVE&(~RESET_REMOVE))
 	c:RegisterEffect(e4)
 end
 s.listed_series={SET_NUMBER}

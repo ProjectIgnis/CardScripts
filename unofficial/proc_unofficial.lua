@@ -1,12 +1,16 @@
---Anime card constants
-RACE_YOKAI  = 0x4000000000000000
+--Constants
 ATTRIBUTE_LAUGH = 0x80
 RACE_CHARISMA   = 0x8000000000000000
+
 
 -------------------------------------------------------------
 --Rank-Up related functions
 FLAG_RANKUP =   511001822
-EFFECT_RANKUP_EFFECT	=   511001822	--SetLabel from the original effect is Reset
+EFFECT_RANKUP_EFFECT	=   511001822
+--Works similar to EFFECT_TYPE_GRANT
+--Register the actual effects upon rankup
+--Implemented as such due to rankup effects can be copied by certain effects ignoring rankup conditions
+--SetLabel is Reset, defaults to RESET_EVENT|RESETS_STANDARD
 
 function Auxiliary.EnableCheckRankUp(c,condition,operation,...)
 	local e1=Effect.CreateEffect(c)
@@ -68,9 +72,9 @@ function Auxiliary.RankUpCheckOperation(operation,...)
 		local c=e:GetHandler()
 		local rankupEffects={c:GetCardEffect(EFFECT_RANKUP_EFFECT)}
 		for _,rankupEffect in ipairs(rankupEffects) do
+			local reset=rankupEffect:GetLabel()
 			local te=rankupEffect:GetLabelObject():Clone()
-			local reset=te:GetLabel() or (RESET_EVENT|RESETS_STANDARD)
-			te:SetReset(reset)
+			te:SetReset(reset>0 and reset or (RESET_EVENT|RESETS_STANDARD))
 			c:RegisterEffect(te)
 		end
 		if operation then operation(e,tp,eg,ep,ev,re,r,rp) end
@@ -189,7 +193,6 @@ end
 
 -------------------------------------------------------------
 --Plus and Minus monsters
-TYPE_PLUSMINUS  =   (TYPE_PLUS|TYPE_MINUS)
 function Card.IsPlusOrMinus(c)
 	local tpe=c:GetType()&TYPE_PLUSMINUS
 	return tpe~=0 and tpe~=TYPE_PLUSMINUS

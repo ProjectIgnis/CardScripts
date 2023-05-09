@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Fusion Summon procedure
-	Fusion.AddProcMixRep(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_GOLD_PRIDE),1,99,101112086)
+	Fusion.AddProcMixRep(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_GOLD_PRIDE),1,99,92003832)
 	--Equip monsters the opponent controls to this card
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -44,7 +44,7 @@ function s.initial_effect(c)
 	end)
 end
 s.listed_series={SET_GOLD_PRIDE}
-s.listed_names={101112086} --"Gold Pride - Roller Baller"
+s.listed_names={92003832} --"Gold Pride - Roller Baller"
 function s.effectfilter(e,ct)
 	local te,tp=Duel.GetChainInfo(ct,CHAININFO_TRIGGERING_EFFECT,CHAININFO_TRIGGERING_PLAYER)
 	return te:GetLabel()==id and Duel.GetLP(tp)<Duel.GetLP(1-tp)
@@ -86,7 +86,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK|LOCATION_GRAVE)
 end
 function s.spfilter(c,e,tp)
-	return c:IsCode(101112086) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsCode(92003832) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

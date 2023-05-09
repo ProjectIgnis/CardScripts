@@ -14,6 +14,6 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e2:SetCode(EFFECT_CHANGE_RACE)
-	e2:SetValue(RACE_YOKAI)
+	e2:SetValue(function() return RACE_YOKAI end)
 	c:RegisterEffect(e2)
 end

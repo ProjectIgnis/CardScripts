@@ -1,5 +1,5 @@
 --もののけの安息
---Spirit Rest
+--Spirits Rest
 Duel.EnableUnofficialRace(RACE_YOKAI)
 local s,id=GetID()
 function s.initial_effect(c)

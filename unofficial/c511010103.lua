@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Destroy
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(94380860,0))
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_DRAW)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)

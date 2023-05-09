@@ -1,5 +1,5 @@
---火車
---Fire Wagon
+--火車 (Manga)
+--Kasha (Manga)
 Duel.EnableUnofficialRace(RACE_YOKAI)
 local s,id=GetID()
 function s.initial_effect(c)

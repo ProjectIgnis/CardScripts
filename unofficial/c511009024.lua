@@ -7,6 +7,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -44,7 +45,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(tc:GetAttack()*2)
 		tc:RegisterEffect(e1)
 		local sg=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,tc)
-		if #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+		if #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 			local tg=sg:Select(tp,1,1,nil)

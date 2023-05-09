@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	Synchro.AddProcedure(c,nil,2,2,Synchro.NonTunerEx(Card.IsType,TYPE_SYNCHRO),1,1)
 	--damage
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(53981499,0))
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DAMAGE)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)

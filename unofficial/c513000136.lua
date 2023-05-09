@@ -2,7 +2,7 @@
 --マイケル・ローレンス・ディーによってスクリプト
 --Scripted by MLD, credit to TPD & Cybercatman
 --Updated and currently maintained by Larry126
-Duel.LoadScript("c421.lua")
+Duel.EnableUnofficialProc(PROC_DIVINE_HIERARCHY)
 local s,id=GetID()
 function s.initial_effect(c)
 	--X000

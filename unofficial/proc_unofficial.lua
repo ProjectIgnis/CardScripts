@@ -6,7 +6,7 @@ RACE_CHARISMA   = 0x8000000000000000
 -------------------------------------------------------------
 --Rank-Up related functions
 FLAG_RANKUP =   511001822
-EFFECT_RANKUP_EFFECT	=   511001822	  --SetLabel from the original effect is Reset
+EFFECT_RANKUP_EFFECT	=   511001822	--SetLabel from the original effect is Reset
 
 function Auxiliary.EnableCheckRankUp(c,condition,operation,...)
 	local e1=Effect.CreateEffect(c)
@@ -286,11 +286,11 @@ end
 --Global handlings
 UnofficialProc={}
 PROC_STATS_CHANGED   =   1
-PROC_CANNOT_BATTLE_INDES	=   2 
-PROC_ICE_PILLAR =   3
-PROC_DIVINE_HIERARCHY   =   4 
-PROC_EVENT_LP0  =   5
-  
+PROC_CANNOT_BATTLE_INDES	=   2
+PROC_EVENT_LP0  =   3
+PROC_ICE_PILLAR =   4
+PROC_DIVINE_HIERARCHY   =   5
+
 Duel.EnableUnofficialProc=function(...)
 	for _,proc in ipairs({...}) do
 		if proc==PROC_STATS_CHANGED and not UnofficialProc[PROC_STATS_CHANGED] then
@@ -305,6 +305,9 @@ Duel.EnableUnofficialProc=function(...)
 		elseif proc==PROC_ICE_PILLAR and not UnofficialProc[PROC_ICE_PILLAR] then
 			UnofficialProc[PROC_ICE_PILLAR]=true
 			UnofficialProc.icePillar()
+		elseif proc==PROC_DIVINE_HIERARCHY and not UnofficialProc[PROC_DIVINE_HIERARCHY] then
+			UnofficialProc[PROC_DIVINE_HIERARCHY]=true
+			UnofficialProc.divineHierarchy()
 		end
 	end
 end
@@ -866,4 +869,169 @@ function UnofficialProc.icePillar()
 		end
 		return c<1
 	end
+end
+
+
+--Divine Hierarchy Rules
+--Scripted by Larry126
+FLAG_DIVINE_HIERARCHY = 513000065
+function UnofficialProc.divineHierarchy()
+	local function rank1(c)
+		return not c:HasFlagEffect(FLAG_DIVINE_HIERARCHY)
+			and (c:IsOriginalCode(513000135) or c:IsOriginalCode(513000136)
+			or c:IsOriginalCode(513000137) or c:IsOriginalCode(513000139))
+	end
+	local function rank2(c)
+		return c:IsOriginalCode(513000134) or c:IsOriginalCode(513000138)
+	end
+	local function hrcon(e,tp,eg,ev,ep,re,r,rp)
+		return Duel.IsExistingMatchingCard(rank1,tp,0xff,0xff,1,nil)
+	end
+	local function rankop(e,tp,eg,ev,ep,re,r,rp)
+		local g=Duel.GetMatchingGroup(rank1,tp,0xff,0xff,nil)
+		for c in aux.Next(g) do
+			c:RegisterFlagEffect(FLAG_DIVINE_HIERARCHY,0,0,0,1)
+		end
+		for c in aux.Next(g:Filter(rank2,nil)) do
+			c:ResetFlagEffect(FLAG_DIVINE_HIERARCHY)
+			c:RegisterFlagEffect(FLAG_DIVINE_HIERARCHY,0,0,0,2)
+		end
+	end
+	local function hrfilter(e,te,c)
+		if not te then return false end
+		local tc=te:GetOwner()
+		return (te:IsActiveType(TYPE_MONSTER) and c~=tc
+			and (not tc:GetFlagEffectLabel(FLAG_DIVINE_HIERARCHY) or c:GetFlagEffectLabel(FLAG_DIVINE_HIERARCHY)>tc:GetFlagEffectLabel(FLAG_DIVINE_HIERARCHY)))
+			or (te:IsHasCategory(CATEGORY_TOHAND+CATEGORY_DESTROY+CATEGORY_REMOVE+CATEGORY_TODECK+CATEGORY_RELEASE+CATEGORY_TOGRAVE+CATEGORY_FUSION_SUMMON)
+			and te:IsActiveType(TYPE_SPELL+TYPE_TRAP))
+	end
+	local function rellimit(e,c,tp,sumtp)
+		return c:HasFlagEffect(FLAG_DIVINE_HIERARCHY) and c:IsFaceup() and c:IsControler(1-tp)
+	end
+	local function sumlimit(e,c)
+		if not c then return false end
+		return e:GetHandler():HasFlagEffect(FLAG_DIVINE_HIERARCHY) and e:GetHandler():IsFaceup() and not c:IsControler(e:GetHandlerPlayer())
+	end
+	local function reptg(e,tp,eg,ep,ev,re,r,rp,chk)
+		local c=e:GetHandler()
+		if chk==0 then return c:IsReason(REASON_EFFECT) and r&REASON_EFFECT~=0 and re and re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+			and c:HasFlagEffect(FLAG_DIVINE_HIERARCHY) end
+		return true
+	end
+	local function tglimit(e,c)
+		return c and c:GetFlagEffectLabel(FLAG_DIVINE_HIERARCHY)
+			and e:GetHandler():GetFlagEffectLabel(FLAG_DIVINE_HIERARCHY)>c:GetFlagEffectLabel(FLAG_DIVINE_HIERARCHY) or false
+	end
+	local function stgcon(e,tp,eg,ep,ev,re,r,rp)
+		local c=e:GetHandler()
+		local owner=false
+		local effs={c:GetCardEffect()}
+		for _,eff in ipairs(effs) do
+			if (eff:GetOwner()~=c and not eff:GetOwner():IsCode(0)
+				and not eff:IsHasProperty(EFFECT_FLAG_IGNORE_IMMUNE) and eff:GetCode()~=EFFECT_SPSUMMON_PROC
+				and (eff:GetTarget()==aux.PersistentTargetFilter or not eff:IsHasType(EFFECT_TYPE_GRANT+EFFECT_TYPE_FIELD))) then
+				owner=true
+				break
+			end
+		end
+		return c:HasFlagEffect(FLAG_DIVINE_HIERARCHY) and (owner or c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:GetPreviousLocation()~=0)
+	end
+	local function stgop(e,tp,eg,ep,ev,re,r,rp)
+		local c=e:GetHandler()
+		local effs={c:GetCardEffect()}
+		for _,eff in ipairs(effs) do
+			if eff:GetOwner()~=c and not eff:GetOwner():IsCode(0)
+				and not eff:IsHasProperty(EFFECT_FLAG_IGNORE_IMMUNE) and eff:GetCode()~=EFFECT_SPSUMMON_PROC
+				and (eff:GetTarget()==aux.PersistentTargetFilter or not eff:IsHasType(EFFECT_TYPE_GRANT+EFFECT_TYPE_FIELD)) then
+				eff:Reset()
+			end
+		end
+		if c:IsSummonType(SUMMON_TYPE_SPECIAL) then
+			if c:IsPreviousLocation(LOCATION_GRAVE) then
+				Duel.SendtoGrave(c,REASON_RULE,c:GetPreviousControler())
+			elseif c:IsPreviousLocation(LOCATION_DECK) then
+				Duel.SendtoDeck(c,c:GetPreviousControler(),2,REASON_RULE)
+			elseif c:IsPreviousLocation(LOCATION_HAND) then
+				Duel.SendtoHand(c,c:GetPreviousControler(),REASON_RULE)
+			elseif c:IsPreviousLocation(LOCATION_REMOVED) then
+				Duel.Remove(c,c:GetPreviousPosition(),REASON_RULE,c:GetPreviousControler())
+			end
+		end
+	end
+
+	--rank
+	local rank=Effect.GlobalEffect()
+	rank:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	rank:SetCode(EVENT_ADJUST)
+	rank:SetCondition(hrcon)
+	rank:SetOperation(rankop)
+	Duel.RegisterEffect(rank,0)
+	--immunes
+	local control=Effect.GlobalEffect()
+	control:SetType(EFFECT_TYPE_FIELD)
+	control:SetCode(EFFECT_CANNOT_CHANGE_CONTROL)
+	control:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+	control:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+	control:SetTarget(aux.TargetBoolFunction(aux.FaceupFilter(Card.HasFlagEffect,FLAG_DIVINE_HIERARCHY)))
+	Duel.RegisterEffect(control,0)
+	local immunity=control:Clone()
+	immunity:SetCode(EFFECT_IMMUNE_EFFECT)
+	immunity:SetValue(hrfilter)
+	Duel.RegisterEffect(immunity,0)
+	local rel=Effect.GlobalEffect()
+	rel:SetType(EFFECT_TYPE_FIELD)
+	rel:SetCode(EFFECT_CANNOT_RELEASE)
+	rel:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	rel:SetTargetRange(1,1)
+	rel:SetTarget(rellimit)
+	Duel.RegisterEffect(rel,0)
+	--last 1 turn
+	local ep=Effect.GlobalEffect()
+	ep:SetDescription(aux.Stringid(421,15))
+	ep:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	ep:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	ep:SetRange(LOCATION_MZONE)
+	ep:SetCode(EVENT_TURN_END)
+	ep:SetCondition(stgcon)
+	ep:SetOperation(stgop)
+	 --release limit
+	local r1=Effect.GlobalEffect()
+	r1:SetType(EFFECT_TYPE_SINGLE)
+	r1:SetCode(EFFECT_UNRELEASABLE_SUM)
+	r1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	r1:SetRange(LOCATION_MZONE)
+	r1:SetValue(sumlimit)
+	--battle
+	local dg=r1:Clone()
+	dg:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
+	dg:SetValue(tglimit)
+	local bt=dg:Clone()
+	bt:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+	-- immune to leaving
+	local im=Effect.GlobalEffect()
+	im:SetCode(EFFECT_SEND_REPLACE)
+	im:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	im:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	im:SetRange(LOCATION_MZONE)
+	im:SetTarget(reptg)
+	im:SetValue(function(e,c) return false end)
+	local ge1=Effect.GlobalEffect()
+	ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
+	ge1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+	ge1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+	ge1:SetTarget(aux.TargetBoolFunction(aux.FaceupFilter(Card.HasFlagEffect,FLAG_DIVINE_HIERARCHY)))
+	ge1:SetLabelObject(ep)
+	Duel.RegisterEffect(ge1,0)
+	local ge2=ge1:Clone()
+	ge2:SetLabelObject(r1)
+	Duel.RegisterEffect(ge2,0)
+	local ge3=ge1:Clone()
+	ge3:SetLabelObject(dg)
+	Duel.RegisterEffect(ge3,0)
+	local ge4=ge1:Clone()
+	ge4:SetLabelObject(bt)
+	Duel.RegisterEffect(ge4,0)
+	local ge5=ge1:Clone()
+	ge5:SetLabelObject(im)
+	Duel.RegisterEffect(ge5,0)
 end

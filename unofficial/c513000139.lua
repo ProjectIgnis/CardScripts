@@ -1,7 +1,7 @@
 --邪神イレイザー (Manga)
 --The Wicked Eraser (Manga)
 --Scripted by MLD & Larry126, credit to TPD & Cybercatman
-Duel.LoadScript("c421.lua")
+Duel.EnableUnofficialProc(PROC_DIVINE_HIERARCHY)
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon with 3 tribute

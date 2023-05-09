@@ -13,16 +13,16 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_CARDIAN)
 end
-function s.filter(c,ft,tp)
-	local re=c:GetReasonEffect()
-	return (ft>0 or c:GetSequence()<5) and c:IsLevel(7) and c:IsSetCard(SET_FLOWER_CARDIAN)
-		and (not c:IsSummonType(SUMMON_TYPE_SPECIAL) or (not re or not re:GetHandler():IsSetCard(SET_FLOWER_CARDIAN) or not re:GetHandler():IsMonster()))
+function s.filter(c)
+    local re=c:GetReasonEffect()
+    return c:IsLevel(7) and c:IsSetCard(SET_FLOWER_CARDIAN) and (not c:IsSummonType(SUMMON_TYPE_SPECIAL)
+        or (not re or not re:GetHandler():IsSetCard(SET_FLOWER_CARDIAN) or not re:GetHandler():IsMonster()))
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if chk==0 then return ft>-1 and Duel.CheckReleaseGroupCost(tp,s.filter,1,false,nil,nil,ft,tp) end
-	local g=Duel.SelectReleaseGroupCost(tp,s.filter,1,1,false,nil,nil,ft,tp)
-	Duel.Release(g,REASON_COST)
+    if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.filter,1,false,aux.ReleaseCheckMMZ,nil) end
+    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
+    local g=Duel.SelectReleaseGroupCost(tp,s.filter,1,1,false,aux.ReleaseCheckMMZ,nil)
+    Duel.Release(g,REASON_COST)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

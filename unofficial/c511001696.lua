@@ -14,11 +14,11 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_CARDIAN)
 end
-s.listed_series={0xe6}
+s.listed_series={SET_FLOWER_CARDIAN}
 function s.filter(c,ft,tp)
 	local re=c:GetReasonEffect()
-	return (ft>0 or c:GetSequence()<5) and c:GetLevel()==1 and c:IsSetCard(0xe6)
-		and (not c:IsSummonType(SUMMON_TYPE_SPECIAL) or (not re or not re:GetHandler():IsSetCard(0xe6) or not re:GetHandler():IsMonster()))
+	return (ft>0 or c:GetSequence()<5) and c:IsLevel(1) and c:IsSetCard(SET_FLOWER_CARDIAN)
+		and (not c:IsSummonType(SUMMON_TYPE_SPECIAL) or (not re or not re:GetHandler():IsSetCard(SET_FLOWER_CARDIAN) or not re:GetHandler():IsMonster()))
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)

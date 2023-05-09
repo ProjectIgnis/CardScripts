@@ -12,13 +12,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x1048}
+s.listed_series={SET_NUMBER_C}
 function s.filter(c,e)
-	return c:IsSetCard(0x1048) and c:IsType(TYPE_XYZ) and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())
+	return c:IsSetCard(SET_NUMBER_C) and c:IsType(TYPE_XYZ) and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())
 		and (c:GetRank()>0 or c:IsStatus(STATUS_NO_LEVEL)) and c:IsCanBeEffectTarget(e)
 end
 function s.xyzfilter(c,sg,e,tp)
-	if not c:IsSetCard(0x1048) or Duel.GetLocationCountFromEx(tp,tp,sg,c)<=0 then return false end
+	if not c:IsSetCard(SET_NUMBER_C) or Duel.GetLocationCountFromEx(tp,tp,sg,c)<=0 then return false end
 	if c.rum_limit and not sg:IsExists(function(mc) return c.rum_limit(mc,e) end,1,nil) then return false end
 	local se=nil
 	if c.rum_xyzsummon then

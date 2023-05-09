@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	e4:SetCountLimit(1,0,EFFECT_COUNT_CODE_SINGLE)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xc6}
+s.listed_series={SET_PERFORMAGE}
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	local ec=eg:GetFirst()
 	if #eg~=1 then return false end
@@ -43,7 +43,7 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return ec:IsControler(1-tp) and ec:GetAttack()~=val
 end
 function s.filter(c,label)
-	return c:IsFaceup() and (label==LOCATION_PZONE or c:IsSetCard(0xc6))
+	return c:IsFaceup() and (label==LOCATION_PZONE or c:IsSetCard(SET_PERFORMAGE))
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local label=e:GetLabel()
@@ -64,7 +64,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if e:GetLabel()==LOCATION_PZONE and not c:IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
+	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)

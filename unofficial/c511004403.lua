@@ -39,9 +39,9 @@ function s.initial_effect(c)
 	e4:SetCondition(s.descon)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x2016}
+s.listed_series={SET_SPEEDROID}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x2016)
+	return c:IsFaceup() and c:IsSetCard(SET_SPEEDROID)
 end
 function s.descon(e)
 	return not Duel.IsExistingMatchingCard(s.filter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)

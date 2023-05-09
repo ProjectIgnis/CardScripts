@@ -91,7 +91,7 @@ end
 function s.detop(e,tp,eg,ep,ev,re,r,rp)
 	local sc=e:GetLabelObject()
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() and sc then
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() and sc then
 		local og=tc:GetOverlayGroup()
 		if #og==0 then return end
 		if Duel.SendtoGrave(og,REASON_EFFECT)>0 then

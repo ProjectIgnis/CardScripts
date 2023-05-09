@@ -22,7 +22,7 @@ function s.cfilter(c,tp)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
-	return eg:IsExists(s.cfilter,1,nil,tp) and ph>=0x08 and ph<=0x20
+	return eg:IsExists(s.cfilter,1,nil,tp) and Duel.IsBattlePhase()
 end
 function s.diffilter1(c,g)
 	local dif=0
@@ -60,7 +60,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local atk=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)

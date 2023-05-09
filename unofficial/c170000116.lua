@@ -75,7 +75,7 @@ end
 function s.atkgop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() and c:IsRelateToEffect(e) and c:IsFaceup() then
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() and c:IsRelateToEffect(e) and c:IsFaceup() then
 		local atk=tc:GetAttack()/2
 		if atk<0 then return end
 		local e1=Effect.CreateEffect(c)

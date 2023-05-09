@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e1:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
+	e1:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,SET_NUMBER)))
 	c:RegisterEffect(e1)
 	--damage
 	local e2=Effect.CreateEffect(c)
@@ -60,7 +60,7 @@ function s.initial_effect(c)
 	e7:SetLabelObject(e5)
 	c:RegisterEffect(e7)
 end
-s.listed_series={0x48}
+s.listed_series={SET_NUMBER}
 s.listed_names={1992816}
 s.xyz_number=9
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

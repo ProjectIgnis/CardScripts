@@ -15,8 +15,8 @@ function s.initial_effect(c)
 end
 function s.filter(c,ft,tp)
 	local re=c:GetReasonEffect()
-	return (ft>0 or c:GetSequence()<5) and c:GetLevel()==10 and c:IsSetCard(0xe6)
-		and (not c:IsSummonType(SUMMON_TYPE_SPECIAL) or (not re or not re:GetHandler():IsSetCard(0xe6) or not re:GetHandler():IsMonster()))
+	return (ft>0 or c:GetSequence()<5) and c:IsLevel(1)0 and c:IsSetCard(SET_FLOWER_CARDIAN)
+		and (not c:IsSummonType(SUMMON_TYPE_SPECIAL) or (not re or not re:GetHandler():IsSetCard(SET_FLOWER_CARDIAN) or not re:GetHandler():IsMonster()))
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)

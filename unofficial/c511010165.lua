@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e1:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
+	e1:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,SET_NUMBER)))
 	c:RegisterEffect(e1)
 	--Decrease the ATK/DEF of a target by 1000
 	local e2=Effect.CreateEffect(c)
@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	e6:SetLabelObject(e4)
 	c:RegisterEffect(e6)
 end
-s.listed_series={0x48}
+s.listed_series={SET_NUMBER}
 s.listed_names={3790062}
 s.xyz_number=65
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

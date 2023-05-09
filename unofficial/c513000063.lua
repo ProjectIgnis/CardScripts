@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
-	e2:SetCost(s.rmcost)
+	e2:SetCost(aux.dxmcostgen(1,1,nil))
 	e2:SetTarget(s.rmtg)
 	e2:SetOperation(s.rmop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
@@ -195,29 +195,16 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,false,POS_FACEUP)
 end
-function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,0,0)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,nil)
-	local op=0
-	if sg:IsExists(Card.IsLocation,1,nil,LOCATION_MZONE) and sg:IsExists(Card.IsLocation,1,nil,LOCATION_STZONE) then
-		op=Duel.SelectOption(tp,1002,1003)
-	elseif sg:IsExists(Card.IsLocation,1,nil,LOCATION_MZONE) then
-		op=0
-	else
-		op=1
-	end
-	local bg
-	if op==0 then
-		bg=sg:Filter(Card.IsLocation,nil,LOCATION_MZONE)
-	else
-		bg=sg:Filter(Card.IsLocation,nil,LOCATION_STZONE)
-	end
+	if #sg==0 then return end
+	local b1=sg:IsExists(Card.IsLocation,1,nil,LOCATION_MZONE)
+	local b2=sg:IsExists(Card.IsLocation,1,nil,LOCATION_STZONE)
+	local op=Duel.SelectEffect(tp,{b1,1002},{b2,1003})
+	local bg=sg:Filter(Card.IsLocation,nil,op==1 and LOCATION_MZONE or LOCATION_STZONE)
 	Duel.Remove(bg,POS_FACEUP,REASON_EFFECT)
 end

@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
 	e0:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e0:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
+	e0:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,SET_NUMBER)))
 	c:RegisterEffect(e0)
 	--equip
 	local e1=Effect.CreateEffect(c)
@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1)
 	e1:SetTarget(s.eqtg)
 	e1:SetOperation(s.eqop)
-	aux.AddEREquipLimit(c,nil,aux.FilterBoolFunction(Card.IsSetCard,0x48),s.equipop,e1,nil)
+	aux.AddEREquipLimit(c,nil,aux.FilterBoolFunction(Card.IsSetCard,SET_NUMBER),s.equipop,e1,nil)
 	--equip 2
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
@@ -94,11 +94,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e12)
 	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
-s.listed_series={0x48}
+s.listed_series={SET_NUMBER}
 s.listed_names={9161357}
 s.xyz_number=6
 function s.eqfilter(c,tp)
-	return c:IsSetCard(0x48) and (c:IsAbleToChangeControler() or c:IsControler(tp))
+	return c:IsSetCard(SET_NUMBER) and (c:IsAbleToChangeControler() or c:IsControler(tp))
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.eqfilter(chkc,tp) end
@@ -114,7 +114,7 @@ end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		if c:IsFaceup() and c:IsRelateToEffect(e) and tc~=c then
 			s.equipop(c,e,tp,tc)
 		else Duel.SendtoGrave(tc,REASON_EFFECT) end

@@ -161,6 +161,17 @@ function(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselect
 					--add that forcedselection to the one of the Ritual Spell, if any
 					local extra_eff_g=mg:Filter(Card.IsHasEffect,nil,EFFECT_EXTRA_RITUAL_MATERIAL)
 					local func=forcedselection
+					--if a card controlled by the opponent has EFFECT_EXTRA_RELEASE, then it MUST be
+					--used as material
+					local extra_mat_g=mg:Filter(ExtraReleaseFilter,nil,tp)
+					if #extra_mat_g>0 then
+						--if one of those cards is facedown, then it can't be used as material, thus the
+						--summon is not doable
+						if extra_mat_g:IsExists(Card.IsPosition,1,nil,POS_FACEDOWN) then
+							return false
+						end
+						func=MergeForcedSelection(ForceExtraRelease(extra_mat_g),func)
+					end
 					if #extra_eff_g>0 then
 						local prev_repl_function=nil
 						for tmp_c in extra_eff_g:Iter() do
@@ -173,12 +184,6 @@ function(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselect
 								end
 							end
 						end
-					end
-					--if a card controlled by the opponent has EFFECT_EXTRA_RELEASE, then it MUST be
-					--used as material
-					local extra_mat_g=mg:Filter(ExtraReleaseFilter,nil,tp)
-					if #extra_mat_g>0 then
-						func=MergeForcedSelection(ForceExtraRelease(extra_mat_g),func)
 					end
 					Ritual.CheckMatFilter(matfilter,e,tp,mg,mg2)
 					return Duel.IsExistingMatchingCard(Ritual.Filter,tp,location,0,1,e:GetHandler(),filter,_type,e,tp,mg,mg2,func,specificmatfilter,lv,requirementfunc,sumpos)

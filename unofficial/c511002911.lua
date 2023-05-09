@@ -1,8 +1,10 @@
---奇跡の軌跡
+--奇跡の軌跡 (Anime)
+--Miracle Locus (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DRAW+CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
@@ -27,24 +29,23 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(1-tp,1,REASON_EFFECT)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
-		local e1=Effect.CreateEffect(e:GetHandler())
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+		local c=e:GetHandler()
+		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetCondition(s.atkcon)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetCondition(function()
+			local ph=Duel.GetCurrentPhase()
+			return ph==PHASE_DAMAGE or ph==PHASE_DAMAGE_CAL
+		end)
 		e1:SetValue(1000)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
-		local e2=Effect.CreateEffect(e:GetHandler())
+		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetCode(EFFECT_EXTRA_ATTACK)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetCode(EFFECT_EXTRA_ATTACK_MONSTER)
 		e2:SetValue(1)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		tc:RegisterEffect(e2)
 	end
-end
-function s.atkcon(e)
-	local ph=Duel.GetCurrentPhase()
-	if not (ph==PHASE_DAMAGE or ph==PHASE_DAMAGE_CAL) then return false end
-	return Duel.GetAttacker()
 end

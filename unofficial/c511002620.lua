@@ -1,4 +1,5 @@
---Harmonic Synchro Fusion
+--異界共鳴－シンクロ・フュージョン (Anime)
+--Harmonic Synchro Fusion (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro effect
@@ -23,7 +24,7 @@ function s.synfilter(c,e,tp,fc,fe)
 	return c:IsType(TYPE_SYNCHRO) and aux.SelectUnselectGroup(g,e,tp,fc.min_material_count,fc.max_material_count,s.rescon(fc,c,fe),0)
 end
 function s.rescon(fc,sc,fe)
-	return	function(sg,e,tp,mg)
+	return  function(sg,e,tp,mg)
 				local t={}
 				local tc=sg:GetFirst()
 				local prop=EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CANNOT_DISABLE

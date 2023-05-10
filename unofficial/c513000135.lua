@@ -44,9 +44,9 @@ function s.avfilter(c)
 	local ae=nil
 	local de=nil
 	for _,atkte in ipairs(atktes) do
-		if atkte:GetOwner()==c and defte:IsHasProperty(EFFECT_FLAG_SINGLE_RANGE)
-				and defte:IsHasProperty(EFFECT_FLAG_REPEAT)
-				and defte:IsHasProperty(EFFECT_FLAG_DELAY) then
+		if atkte:GetOwner()==c and atkte:IsHasProperty(EFFECT_FLAG_SINGLE_RANGE)
+				and atkte:IsHasProperty(EFFECT_FLAG_REPEAT)
+				and atkte:IsHasProperty(EFFECT_FLAG_DELAY) then
 			ae=atkte:GetLabel()
 		end
 	end
@@ -68,9 +68,9 @@ function s.avatarop(e,tp,eg,ev,ep,re,r,rp)
 	g:ForEach(function(c)
 		local atktes={c:GetCardEffect(EFFECT_SET_ATTACK_FINAL)}
 		for _,atkte in ipairs(atktes) do
-			if atkte:GetOwner()==c and defte:IsHasProperty(EFFECT_FLAG_SINGLE_RANGE)
-				and defte:IsHasProperty(EFFECT_FLAG_REPEAT)
-				and defte:IsHasProperty(EFFECT_FLAG_DELAY) then
+			if atkte:GetOwner()==c and atkte:IsHasProperty(EFFECT_FLAG_SINGLE_RANGE)
+				and atkte:IsHasProperty(EFFECT_FLAG_REPEAT)
+				and atkte:IsHasProperty(EFFECT_FLAG_DELAY) then
 				atkte:SetValue(s.avaval)
 				atkte:SetLabel(9999999)
 			end

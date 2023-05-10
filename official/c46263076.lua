@@ -1,39 +1,41 @@
 --地縛神 Ccapac Apu
+--Earthbound Immortal Ccapac Apu
 local s,id=GetID()
 function s.initial_effect(c)
-	c:SetUniqueOnField(1,1,aux.FilterBoolFunction(Card.IsSetCard,0x21),LOCATION_MZONE)
-	--
+	--There can only be 1 "Earthbound Immortal" on the field
+	c:SetUniqueOnField(1,1,aux.FilterBoolFunction(Card.IsSetCard,SET_EARTHBOUND_IMMORTAL),LOCATION_MZONE)
+	--Destroy it if no face-up Field Spell is on the field
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetCode(EFFECT_SELF_DESTROY)
+	e1:SetCondition(s.sdcon)
+	c:RegisterEffect(e1)
+	--Cannot be targeted for attacks
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetCode(EFFECT_CANNOT_BE_BATTLE_TARGET)
+	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetValue(aux.imval2)
+	c:RegisterEffect(e2)
+	--Can attack directly
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetCode(EFFECT_DIRECT_ATTACK)
+	c:RegisterEffect(e3)
+	--Inflict damage to the opponent
 	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e4:SetRange(LOCATION_MZONE)
-	e4:SetCode(EFFECT_SELF_DESTROY)
-	e4:SetCondition(s.sdcon)
+	e4:SetDescription(aux.Stringid(id,0))
+	e4:SetCategory(CATEGORY_DAMAGE)
+	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e4:SetCode(EVENT_BATTLE_DESTROYING)
+	e4:SetTarget(s.damtg)
+	e4:SetOperation(s.damop)
 	c:RegisterEffect(e4)
-	--battle target
-	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_SINGLE)
-	e5:SetCode(EFFECT_CANNOT_BE_BATTLE_TARGET)
-	e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e5:SetRange(LOCATION_MZONE)
-	e5:SetValue(aux.imval2)
-	c:RegisterEffect(e5)
-	--direct atk
-	local e6=Effect.CreateEffect(c)
-	e6:SetType(EFFECT_TYPE_SINGLE)
-	e6:SetCode(EFFECT_DIRECT_ATTACK)
-	c:RegisterEffect(e6)
-	--damage
-	local e7=Effect.CreateEffect(c)
-	e7:SetDescription(aux.Stringid(id,0))
-	e7:SetCategory(CATEGORY_DAMAGE)
-	e7:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e7:SetCode(EVENT_BATTLE_DESTROYING)
-	e7:SetTarget(s.damtg)
-	e7:SetOperation(s.damop)
-	c:RegisterEffect(e7)
 end
-s.listed_series={0x21}
+s.listed_series={SET_EARTHBOUND_IMMORTAL}
 function s.sdcon(e)
 	local c=e:GetHandler()
 	if c:IsStatus(STATUS_BATTLE_DESTROYED) then return false end

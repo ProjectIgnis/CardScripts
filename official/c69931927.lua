@@ -1,10 +1,9 @@
 --地縛神 Ｃｈａｃｕ Ｃｈａｌｌｈｕａ
 --Earthbound Immortal Chacu Challhua
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Can only be 1 "Earthbound Immortal" on the field
-	c:SetUniqueOnField(1,1,aux.FilterBoolFunction(Card.IsSetCard,0x21),LOCATION_MZONE)
+	c:SetUniqueOnField(1,1,aux.FilterBoolFunction(Card.IsSetCard,SET_EARTHBOUND_IMMORTAL),LOCATION_MZONE)
 	--Destroy itself if there is no face-up field spell
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -47,7 +46,7 @@ function s.initial_effect(c)
 	e5:SetCondition(s.bpcon)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x21}
+s.listed_series={SET_EARTHBOUND_IMMORTAL}
 function s.sdcon(e)
 	local c=e:GetHandler()
 	if c:IsStatus(STATUS_BATTLE_DESTROYED) then return false end
@@ -61,7 +60,7 @@ function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_ATTACK)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH+EFFECT_FLAG_CLIENT_HINT)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 	e:GetHandler():RegisterEffect(e1)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)

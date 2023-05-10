@@ -1,4 +1,5 @@
---Earthbound God Uru
+--地縛神 Ｕｒｕ (Anime)
+--Earthbound Immortal Uru (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	local e0=Effect.CreateEffect(c)
@@ -51,25 +52,25 @@ function s.initial_effect(c)
 	e6:SetTarget(s.controltg)
 	e6:SetOperation(s.controlop)
 	c:RegisterEffect(e6)
-	--Self Destroy During the End Phase
+	--Self Destroy during the End Phase
 	local e7=Effect.CreateEffect(c)
 	e7:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e7:SetCode(EVENT_PHASE+PHASE_END)
 	e7:SetRange(LOCATION_MZONE)
 	e7:SetCountLimit(1)
-	e7:SetCode(EVENT_PHASE+PHASE_END)
 	e7:SetCondition(s.nofieldcon)
 	e7:SetOperation(s.nofieldop)
 	c:RegisterEffect(e7)
 end
-s.listed_series={0x21}
+s.listed_series={SET_EARTHBOUND_IMMORTAL}
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return c:IsSetCard(0x21)
+	return c:IsSetCard(SET_EARTHBOUND_IMMORTAL)
 end
 function s.havefieldcon(e)
 	return Duel.IsExistingMatchingCard(Card.IsFaceup,0,LOCATION_FZONE,LOCATION_FZONE,1,nil)
 end
 function s.unaffectedval(e,te)
-	return te:IsActiveType(TYPE_SPELL+TYPE_TRAP) and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
+	return te:IsSpellTrapEffect() and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
 end
 function s.ctfilter(c,tp)
 	return Duel.IsExistingTarget(s.controlfilter,tp,0,LOCATION_MZONE,1,c)

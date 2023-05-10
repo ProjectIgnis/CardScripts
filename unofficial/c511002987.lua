@@ -1,5 +1,5 @@
---Earthbound Prisoner Ground Keeper
-Duel.LoadScript("c420.lua")
+--地縛囚人 グランド・キーパー (Anime)
+--Earthbound Prisoner Ground Keeper (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,tp)
-	return c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsEarthbound()
+	return c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsSetCard(SET_EARTHBOUND)
 end
 function s.indtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(s.filter,1,nil,tp) end

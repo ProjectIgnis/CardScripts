@@ -1,14 +1,13 @@
 --地縛戒隷ジオグレムリーナ
 --Earthbound Servant Geo Gremlina
-Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx2(Card.IsEarthbound),2)
-	--destroy
+	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_EARTHBOUND),2)
+	--Destroy and damage
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(48009503,0))
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
@@ -20,7 +19,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
 end
-s.material_setcode={0x151a}
+s.material_setcode=SET_EARTHBOUND
 function s.filter(c,tp)
 	return c:IsPreviousControler(1-tp) and (c:GetReason()&0x41)==0x41
 end

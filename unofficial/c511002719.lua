@@ -1,14 +1,13 @@
---地縛戒隷ジオグレムリン
---Earthbound Servant Geo Gremlin
-Duel.LoadScript("c420.lua")
+--地縛戒隷ジオグレムリン (Anime)
+--Earthbound Servant Geo Gremlin (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
-	--synchro summon
-	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx2(Card.IsEarthbound),1,1,Synchro.NonTunerEx2(Card.IsEarthbound),1,99)
+	--Synchro Summon
+	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_EARTHBOUND),1,1,Synchro.NonTunerEx(Card.IsSetCard,SET_EARTHBOUND),1,99)
 	c:EnableReviveLimit()
-	--destroy
+	--Destroy and skip Battle Phase or gain LP
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(95100602,0))
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_NO_TURN_RESET)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -28,6 +27,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
+s.listed_series={SET_EARTHBOUND}
 function s.cfilter(tc)
 	return tc and tc:IsFaceup()
 end
@@ -45,14 +45,14 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
-		if tc:IsFacedown() or Duel.SelectYesNo(1-tp,aux.Stringid(698785,0)) then
+		if tc:IsFacedown() or Duel.SelectYesNo(1-tp,aux.Stringid(id,1)) then
 			if Duel.Destroy(tc,REASON_EFFECT)>0 then
 				local e1=Effect.CreateEffect(e:GetHandler())
 				e1:SetType(EFFECT_TYPE_FIELD)
 				e1:SetCode(EFFECT_SKIP_BP)
 				e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 				e1:SetTargetRange(1,0)
-				e1:SetReset(RESET_PHASE+PHASE_END)
+				e1:SetReset(RESET_PHASE|PHASE_END)
 				Duel.RegisterEffect(e1,tp)
 			end
 		else

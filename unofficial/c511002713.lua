@@ -1,12 +1,11 @@
---地縛戒隷ジオグリフォン
---Earthbound Servant Geo Gryphon
-Duel.LoadScript("c420.lua")
+--地縛戒隷ジオグリフォン (Anime)
+--Earthbound Servant Geo Gryphon (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
-	--synchro summon
-	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx2(Card.IsEarthbound),1,1,Synchro.NonTunerEx2(Card.IsEarthbound),1,99)
+	--Synchro Summon
+	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_EARTHBOUND),1,1,Synchro.NonTunerEx(Card.IsSetCard,SET_EARTHBOUND),1,99)
 	c:EnableReviveLimit()
-	--destroy
+	--Skip Battle Phase or gain LP
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -18,8 +17,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={SET_EARTHBOUND}
 function s.cfilter(c,tp)
-	return c:IsEarthbound() and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
+	return c:IsSetcard(SET_EARTHBOUND) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

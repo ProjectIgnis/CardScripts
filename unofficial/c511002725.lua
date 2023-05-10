@@ -1,9 +1,10 @@
---Earthbound Salvation
-Duel.LoadScript("c420.lua")
+--地縛救魂
+--Earthbound Rescue
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -12,14 +13,11 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.cfilter(tc)
-	return tc and tc:IsFaceup()
-end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return (s.cfilter(Duel.GetFieldCard(tp,LOCATION_FZONE,0)) or s.cfilter(Duel.GetFieldCard(1-tp,LOCATION_FZONE,0)))
+	return Duel.IsExistingMatchingCard(Card.IsFaceup,0,LOCATION_FZONE,LOCATION_FZONE,1,nil)
 end
 function s.filter1(c)
-	return c:IsEarthbound() and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_EARTHBOUND) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.filter2(c)
 	return c:IsSpell() and c:IsAbleToHand()

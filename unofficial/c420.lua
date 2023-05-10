@@ -257,17 +257,7 @@ if not AnimeArchetype then
 		79569173,97169186,26381750,70156997,20590784,77428945,54762426,46918794,95220856,2084239,77754944,
 		7443908,4997565
 	}
-	Card.IsEarth=MakeCheck({0x51a},AnimeArchetype.OCGEarth,{"IsEarthbound","IsHell"})
-
-	-- Earthbound (list to update)
-	-- 地縛
-	-- じばく
-	-- Earthbound Revival/Roar of the Earthbound/Earthbound Whirlwind
-	-- Earthbound Linewalker/Call of the Earthbound
-	AnimeArchetype.OCGEarthbound={
-		64187086,56339050,96907086,67987302,65743242
-	}
-	Card.IsEarthbound=MakeCheck({0x151a,0x21},AnimeArchetype.OCGEarthbound)
+	Card.IsEarth=MakeCheck({0x51a,SET_EARTHBOUND},AnimeArchetype.OCGEarth,{"IsHell"})
 
 	-- Elf エルフ
 	-- Ghost Fairy Elfobia/Wing Egg Elf/Elf's Light

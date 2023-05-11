@@ -16,7 +16,7 @@ end
 s.listed_names={82340057} --Cerimonial Token
 s.listed_series={SET_EARTHBOUND_IMMORTAL}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetLP(tp)<=3000 and Duel.IsturnPlayer(1-tp) and Duel.GetAttackTarget()==nil
+	return Duel.GetLP(tp)<=3000 and Duel.IsTurnPlayer(1-tp) and Duel.GetAttackTarget()==nil
 end
 function s.filter(c)
 	return c:IsSetCard(SET_EARTHBOUND_IMMORTAL) and c:IsAbleToHand()

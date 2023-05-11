@@ -9,8 +9,8 @@ end
 --that have an EFFECT_EXTRA_RITUAL_MATERIAL effect on them
 Duel.GetRitualMaterial=(function()
 	local oldfunc=Duel.GetRitualMaterial
-	return function(tp,check)
-		local res=oldfunc(tp,check)
+	return function(tp,...)
+		local res=oldfunc(tp,...):Match(function(c)return c:IsControler(tp) or c:IsFaceup() end,nil)
 		local g=Duel.GetMatchingGroup(Card.IsHasEffect,tp,LOCATION_DECK|LOCATION_EXTRA,0,nil,EFFECT_EXTRA_RITUAL_MATERIAL)
 		if #g>0 then
 			res:Merge(g)
@@ -165,11 +165,6 @@ function(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselect
 					--used as material
 					local extra_mat_g=mg:Filter(ExtraReleaseFilter,nil,tp)
 					if #extra_mat_g>0 then
-						--if one of those cards is facedown, then it can't be used as material, thus the
-						--summon is not doable
-						if extra_mat_g:IsExists(Card.IsPosition,1,nil,POS_FACEDOWN) then
-							return false
-						end
 						func=MergeForcedSelection(ForceExtraRelease(extra_mat_g),func)
 					end
 					if #extra_eff_g>0 then

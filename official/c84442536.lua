@@ -12,9 +12,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xd1}
+s.listed_series={SET_GRAYDLE}
 function s.cfilter(c,tp)
-	return c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsSetCard(0xd1)
+	return c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsSetCard(SET_GRAYDLE)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if not (re:IsHasProperty(EFFECT_FLAG_CARD_TARGET)

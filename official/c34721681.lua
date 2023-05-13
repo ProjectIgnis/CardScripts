@@ -22,10 +22,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.opteffect)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x127}
+s.listed_series={SET_INFINITRACK}
 -- Infinitrack monster
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x127) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_INFINITRACK) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp) -- Add to hand
 	if not e:GetHandler():IsRelateToEffect(e) then return end

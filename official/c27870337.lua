@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x164}
+s.listed_series={SET_SOLFACHORD}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1 = s.dtoptg(e,tp,eg,ep,ev,re,r,rp,0)
 	local b2 = s.htoetg(e,tp,eg,ep,ev,re,r,rp,0)
@@ -38,7 +38,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.filter(c)
-	return c:IsSetCard(0x164) and c:IsType(TYPE_PENDULUM) and not c:IsForbidden()
+	return c:IsSetCard(SET_SOLFACHORD) and c:IsType(TYPE_PENDULUM) and not c:IsForbidden()
 end
 function s.dtoptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckPendulumZones(tp)

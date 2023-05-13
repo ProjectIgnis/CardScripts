@@ -1,5 +1,5 @@
 --地縛超神官
---Earthbound Great Linewalker
+--Earthbound Greater Linewalker
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -27,10 +27,10 @@ function s.initial_effect(c)
 	--Make the opponent's LP become 3000
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
-	e3:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_FIELD)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_SUMMON_SUCCESS)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCountLimit(1,{id,2})
 	e3:SetCondition(s.lpcon)
 	e3:SetOperation(s.lpop)
@@ -42,9 +42,10 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,0,1,nil,TYPE_SYNCHRO)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -68,7 +69,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.lpcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(aux.FaceupFilter(Card.IsSetCard,0x21),1,nil) and Duel.GetLP(1-tp)~=3000
+	return eg:IsExists(aux.FaceupFilter(Card.IsSetCard,SET_EARTHBOUND_IMMORTAL),1,nil) and Duel.GetLP(1-tp)~=3000
 end
 function s.lpop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SetLP(1-tp,3000)

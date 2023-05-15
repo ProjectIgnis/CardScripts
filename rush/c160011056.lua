@@ -35,5 +35,5 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_WIND) and c:IsAttackAbove(1800)
+	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_WIND) and c:IsAttackAbove(1800) and not c:IsMaximumModeSide()
 end

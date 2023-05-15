@@ -39,6 +39,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
+s.material_location=LOCATION_ONFIELD
 function s.ffilter(c,fc,sumtype,tp)
 	return c:IsAttribute(ATTRIBUTE_DARK,fc,sumtype,tp) and c:IsOnField() and not c:IsType(TYPE_TOKEN,fc,sumtype,tp)
 end

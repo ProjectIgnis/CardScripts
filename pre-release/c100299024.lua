@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e3:SetCode(EVENT_DESTROYED)
 	e3:SetCondition(s.discon)
+	e3:SetTarget(s.distg)
 	e3:SetOperation(s.disop)
 	c:RegisterEffect(e3)
 end
@@ -62,6 +63,12 @@ end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return rp==1-tp and c:IsPreviousControler(tp) and c:IsReason(REASON_EFFECT)
+end
+function s.disconfilter(c)
+	return c:IsSetCard(SET_EARTHBOUND) and c:IsFaceup() and c:IsMonster()
+end
+function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.disconfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil) end
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SetLP(1-tp,Duel.GetLP(1-tp)/2,REASON_EFFECT)

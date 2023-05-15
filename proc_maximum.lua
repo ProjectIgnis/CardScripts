@@ -80,6 +80,7 @@ function Maximum.AddProcedure(c,desc,...)
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE)
 	e5:SetCode(EFFECT_UPDATE_DEFENSE)
+	e5:SetCondition(Maximum.centerCon)
 	e5:SetValue(-1000000)
 	c:RegisterEffect(e5)
 end
@@ -304,6 +305,14 @@ function Card.AddSideMaximumHandler(c,eff)
 	e13:SetCondition(Maximum.sideCon)
 	e13:SetValue(aux.cannotmatfilter(SUMMON_TYPE_FUSION,SUMMON_TYPE_SYNCHRO,SUMMON_TYPE_XYZ,SUMMON_TYPE_LINK))
 	c:RegisterEffect(e13)
+
+	--makes so it virtually cannot have any DEF
+	local e16=Effect.CreateEffect(c)
+	e16:SetType(EFFECT_TYPE_SINGLE)
+	e16:SetCode(EFFECT_UPDATE_DEFENSE)
+	e16:SetCondition(Maximum.sideCon)
+	e16:SetValue(-1000000)
+	c:RegisterEffect(e16)
 
 	baseeff:Reset()
 end

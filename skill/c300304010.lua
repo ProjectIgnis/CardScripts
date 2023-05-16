@@ -9,7 +9,7 @@ function s.chainfilter(re,ep,cid)
 	return not (re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL))
 end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetFlagEffect(ep,id)>0 or Duel.GetCustomActivityCount(id,ep,ACTIVITY_CHAIN)>0 then return end
+	if Duel.GetFlagEffect(tp,id)>0 or Duel.GetCustomActivityCount(id,ep,ACTIVITY_CHAIN)>0 then return end
 	return aux.CanActivateSkill(tp) and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=3
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
@@ -17,8 +17,8 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,tp,id)
 	--Look at the top 3 cards of your deck and rearrange them
 	Duel.SortDecktop(tp,tp,3)
-	--OPD register
-	Duel.RegisterFlagEffect(ep,id,0,0,0)
+	--OPT register
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 	--Cannot activate Spell Cards for the rest of the turn
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)

@@ -58,7 +58,9 @@ end
 function s.coinop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
-	local coin=Arcana.TossCoin(c,tp)
+	s.arcanareg(c,Arcana.TossCoin(c,tp))
+end
+function s.arcanareg(c,coin)
 	--Destroy 1 monster on the field
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,2))

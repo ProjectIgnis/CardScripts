@@ -48,7 +48,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsType(TYPE_RITUAL|TYPE_EXTRA) and c:IsControler(tp)
+	return c:IsFaceup() and c:IsType(TYPE_RITUAL|TYPE_EXTRA) and c:IsSetCard(SET_SALAMANGREAT) and c:IsControler(tp)
 end
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

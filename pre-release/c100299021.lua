@@ -49,8 +49,9 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_EARTHBOUND}
 s.material_setcode=SET_EARTHBOUND
+s.miracle_synchro_fusion=true
 function s.matfilter(ty)
-	return  function(c,fc,sumtype,tp)
+	return function(c,fc,sumtype,tp)
 				return c:IsType(ty,fc,sumtype,tp) and c:IsSetCard(SET_EARTHBOUND,fc,sumtype,tp)
 			end
 end

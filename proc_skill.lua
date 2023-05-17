@@ -226,7 +226,7 @@ function Auxiliary.SetVrainsSkillOp(skillcon,skillop,efftype)
 				e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 				e1:SetCode(EVENT_CHAIN_END)
 				e1:SetCondition(skillcon)
-				e1:SetOperation(skillop)
+				e1:SetOperation(function(...) if Duel.SelectYesNo(e:GetHandlerPlayer(),aux.Stringid(c:GetOriginalCode())) then skillop(...) end)
 				Duel.RegisterEffect(e1,e:GetHandlerPlayer())
 			end
 		end

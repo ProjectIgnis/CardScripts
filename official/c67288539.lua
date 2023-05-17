@@ -49,7 +49,7 @@ function s.indfilter(c,cc)
 	return c:IsFaceup() and c:IsType(TYPE_LINK) and c:GetLinkedGroup():IsContains(cc)
 end
 function s.incon(e)
-	return Duel.IsExistingMatchingCard(s.indfilter,0,LOCATION_MZONE,LOCATION_MZONE,1,nil,e:GetHandler()) 
+	return Duel.IsExistingMatchingCard(s.indfilter,0,LOCATION_MZONE,LOCATION_MZONE,1,nil,e:GetHandler())
 end
 --destroy all
 function s.descon(e,tp,eg,ep,ev,re,r,rp)

@@ -3,7 +3,7 @@
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Destroy itself and an opponent's monster that battles your Wyrm monster 
+	-- Destroy itself and an opponent's monster that battles your Wyrm monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)

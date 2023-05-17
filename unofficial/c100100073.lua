@@ -12,7 +12,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1 and not Duel.CheckPhaseActivity() 
+	return Duel.GetCurrentPhase()==PHASE_MAIN1 and not Duel.CheckPhaseActivity()
 		and tc and tc:GetCounter(0x91)>5
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

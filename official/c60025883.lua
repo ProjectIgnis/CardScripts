@@ -46,7 +46,7 @@ function s.tkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.cfilter(c,e,tp,zone)
 	local lv=c:GetLevel()
-	return (c:IsSetCard(SET_POWER_TOOL) or ((c:GetLevel()==7 or c:GetLevel()==8) and c:IsRace(RACE_DRAGON))) 
+	return (c:IsSetCard(SET_POWER_TOOL) or ((c:GetLevel()==7 or c:GetLevel()==8) and c:IsRace(RACE_DRAGON)))
 		and c:IsType(TYPE_SYNCHRO) and lv>0 and c:IsAbleToRemoveAsCost()
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,c:GetAttack(),c:GetDefense(),lv,c:GetRace(),c:GetAttribute()) and Duel.GetMZoneCount(tp,nil,tp,LOCATION_REASON_TOFIELD,zone)>0
 end
@@ -95,7 +95,7 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 		e5:SetValue(tc:GetAttribute())
 		token:RegisterEffect(e5)
 		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP,zone)
-	end 
+	end
 end
 function s.tgcon(e)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,id+1),e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil)

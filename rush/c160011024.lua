@@ -37,7 +37,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.PayLPCost(tp,1000)
 	--effect
 	local g=Duel.GetFieldGroup(tp,LOCATION_HAND,LOCATION_HAND)
-	if Duel.SendtoGrave(g,REASON_EFFECT+REASON_DISCARD)<1 
+	if Duel.SendtoGrave(g,REASON_EFFECT+REASON_DISCARD)<1
 		or #g:Match(Card.IsLocation,nil,LOCATION_GRAVE)<1 then return end
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 	local dam=Duel.Damage(p,#g*200,REASON_EFFECT)

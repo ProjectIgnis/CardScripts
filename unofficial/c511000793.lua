@@ -28,7 +28,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 			local op=te:GetOperation()
 			if not op or op(e,c) then return false end
 		end
-		return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
+		return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 			and Duel.IsPlayerCanSpecialSummonMonster(tp,81020646,0,0x2021,3000,3000,8,RACE_DRAGON,ATTRIBUTE_DARK)
 	end
 	local e1=Effect.CreateEffect(c)

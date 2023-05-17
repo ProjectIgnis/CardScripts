@@ -37,7 +37,7 @@ function s.filter(c,e,tp,eg,ep,ev,re,r,rp,chain)
 		local te2=Duel.GetChainInfo(chain,CHAININFO_TRIGGERING_EFFECT)
 		local tc=te2:GetHandler()
 		local g=Group.FromCards(tc)
-		return (not condition or condition(te,tp,g,tp,chain,te2,REASON_EFFECT,tp)) and (not cost or cost(te,tp,g,tp,chain,te2,REASON_EFFECT,tp,0)) 
+		return (not condition or condition(te,tp,g,tp,chain,te2,REASON_EFFECT,tp)) and (not cost or cost(te,tp,g,tp,chain,te2,REASON_EFFECT,tp,0))
 			and (not target or target(te,tp,g,tp,chain,te2,REASON_EFFECT,tp,0))
 	elseif te:GetCode()==EVENT_FREE_CHAIN then
 		return (not condition or condition(te,tp,eg,ep,ev,re,r,rp)) and (not cost or cost(te,tp,eg,ep,ev,re,r,rp,0))
@@ -53,7 +53,7 @@ function s.cfilter(tc)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local chain=Duel.GetCurrentChain()
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter1,tp,LOCATION_GRAVE,0,1,nil,e,tp,eg,ep,ev,re,r,rp,chain) 
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter1,tp,LOCATION_GRAVE,0,1,nil,e,tp,eg,ep,ev,re,r,rp,chain)
 		and (s.cfilter(Duel.GetFieldCard(tp,LOCATION_FZONE,0)) or s.cfilter(Duel.GetFieldCard(1-tp,LOCATION_FZONE,0))) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

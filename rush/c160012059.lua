@@ -17,8 +17,8 @@ end
 function s.cfilter(c,tp)
 	return c:GetPreviousAttackOnField()>=1500 and c:GetPreviousAttributeOnField()==ATTRIBUTE_DARK
 		and (c:GetPreviousRaceOnField()&RACE_GALAXY)>0
-		and c:GetReasonPlayer()==1-tp and c:IsPreviousLocation(LOCATION_MZONE) 
-		and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp) 
+		and c:GetReasonPlayer()==1-tp and c:IsPreviousLocation(LOCATION_MZONE)
+		and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp)
 		and c:IsReason(REASON_BATTLE) and Duel.GetAttacker():IsControler(1-tp)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

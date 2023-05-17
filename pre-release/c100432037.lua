@@ -53,7 +53,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Overlay(sc,tc)
 		local no=sc.xyz_number
 		local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil)
-		if no and no>=101 and no<=107 and sc:IsSetCard(SET_NUMBER_C) 
+		if no and no>=101 and no<=107 and sc:IsSetCard(SET_NUMBER_C)
 			and #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 			local sg=g:Select(tp,1,1,nil)

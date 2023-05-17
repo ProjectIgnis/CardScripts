@@ -35,7 +35,7 @@ function s.cfilter2(c,e,tp,tun)
 		tc:AssumeProperty(ASSUME_ATTACK,tc:GetTextAttack())
 		tc:AssumeProperty(ASSUME_DEFENSE,tc:GetTextDefense())
 	end
-	local chk=Duel.GetLocationCountFromEx(tp,tp,g,TYPE_FUSION)>=2 
+	local chk=Duel.GetLocationCountFromEx(tp,tp,g,TYPE_FUSION)>=2
 		and Duel.IsExistingMatchingCard(s.fusfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,g)
 		and Duel.IsExistingMatchingCard(s.syncfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,g)
 	Duel.AssumeReset()

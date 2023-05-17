@@ -48,8 +48,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,chk)
 			if #g>0 then
 				Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 				local sg=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_MZONE,nil)
-				if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsLevel,5),tp,LOCATION_MZONE,0,1,nil) 
-					and #sg>0 
+				if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsLevel,5),tp,LOCATION_MZONE,0,1,nil)
+					and #sg>0
 					and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 					Duel.BreakEffect()
 					Duel.Destroy(sg,REASON_EFFECT)

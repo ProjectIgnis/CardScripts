@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_SEASERPENT) and c:IsAttribute(ATTRIBUTE_DARK|ATTRIBUTE_LIGHT) 
+	return c:IsFaceup() and c:IsRace(RACE_SEASERPENT) and c:IsAttribute(ATTRIBUTE_DARK|ATTRIBUTE_LIGHT)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetMatchingGroupCountRush(s.cfilter,tp,LOCATION_MZONE,0,nil)>=2

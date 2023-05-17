@@ -47,7 +47,7 @@ function s.chkfilter(c,g,sg,e,tp)
 		e2:SetReset(RESET_CHAIN)
 		c:RegisterEffect(e2)
 	end
-	local res=Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_EXTRA,0,1,nil,sg,e,tp) 
+	local res=Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_EXTRA,0,1,nil,sg,e,tp)
 		or g:IsExists(s.chkfilter,1,sg,g,sg,e,tp)
 	e1:Reset()
 	if e2 then e2:Reset() end

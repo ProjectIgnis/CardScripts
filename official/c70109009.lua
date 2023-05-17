@@ -1,4 +1,4 @@
---究極地縛神 
+--究極地縛神
 --Ultimate Earthbound Immortal
 local s,id=GetID()
 function s.initial_effect(c)

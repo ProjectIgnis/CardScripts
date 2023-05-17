@@ -225,16 +225,16 @@ function Synchro.CheckP31(c,g,tsg,ntsg,sg,f1,sub1,f2,sub2,min1,max1,min2,max2,re
 	if max and (tsg_count>max or (max-tsg_count)<min2) then
 		res = false
 	elseif max and (max-tsg_count)==min2 then
-		res=tsg:IsExists(Synchro.TunerFilter,tsg_count,nil,f1,sub1,sc,tp) and (not req1 or req1(tsg,sc,tp)) 
+		res=tsg:IsExists(Synchro.TunerFilter,tsg_count,nil,f1,sub1,sc,tp) and (not req1 or req1(tsg,sc,tp))
 			and g:IsExists(Synchro.CheckP32,1,sg,g,tsg,ntsg,sg,f2,sub2,min2,max2,req2,reqm,lv,sc,tp,pg,mgchk,min,max)
 	elseif tsg_count<min1 then
 		res=g:IsExists(Synchro.CheckP31,1,sg,g,tsg,ntsg,sg,f1,sub1,f2,sub2,min1,max1,min2,max2,req1,req2,reqm,lv,sc,tp,pg,mgchk,min,max)
 	elseif tsg_count<max1 then
-		res=g:IsExists(Synchro.CheckP31,1,sg,g,tsg,ntsg,sg,f1,sub1,f2,sub2,min1,max1,min2,max2,req1,req2,reqm,lv,sc,tp,pg,mgchk,min,max) 
-			or (tsg:IsExists(Synchro.TunerFilter,tsg_count,nil,f1,sub1,sc,tp) and (not req1 or req1(tsg,sc,tp)) 
+		res=g:IsExists(Synchro.CheckP31,1,sg,g,tsg,ntsg,sg,f1,sub1,f2,sub2,min1,max1,min2,max2,req1,req2,reqm,lv,sc,tp,pg,mgchk,min,max)
+			or (tsg:IsExists(Synchro.TunerFilter,tsg_count,nil,f1,sub1,sc,tp) and (not req1 or req1(tsg,sc,tp))
 				and g:IsExists(Synchro.CheckP32,1,sg,g,tsg,ntsg,sg,f2,sub2,min2,max2,req2,reqm,lv,sc,tp,pg,mgchk,min,max))
 	else
-		res=tsg:IsExists(Synchro.TunerFilter,tsg_count,nil,f1,sub1,sc,tp) and (not req1 or req1(tsg,sc,tp)) 
+		res=tsg:IsExists(Synchro.TunerFilter,tsg_count,nil,f1,sub1,sc,tp) and (not req1 or req1(tsg,sc,tp))
 			and g:IsExists(Synchro.CheckP32,1,sg,g,tsg,ntsg,sg,f2,sub2,min2,max2,req2,reqm,lv,sc,tp,pg,mgchk,min,max)
 	end
 	g:Merge(rg)
@@ -314,12 +314,12 @@ function Synchro.CheckP32(c,g,tsg,ntsg,sg,f2,sub2,min2,max2,req2,reqm,lv,sc,tp,p
 	elseif ntsg_count<min2 then
 		res=g:IsExists(Synchro.CheckP32,1,sg,g,tsg,ntsg,sg,f2,sub2,min2,max2,req2,reqm,lv,sc,tp,pg,mgchk,min,max)
 	elseif ntsg_count<max2 then
-		res=g:IsExists(Synchro.CheckP32,1,sg,g,tsg,ntsg,sg,f2,sub2,min2,max2,req2,reqm,lv,sc,tp,pg,mgchk,min,max) 
-			or ((not min or (tsg_count+ntsg_count)>=min) and (not req2 or req2(ntsg,sc,tp)) and (not reqm or reqm(sg,sc,tp)) 
-				and ntsg:IsExists(Synchro.NonTunerFilter,ntsg_count,nil,f2,sub2,sc,tp) 
+		res=g:IsExists(Synchro.CheckP32,1,sg,g,tsg,ntsg,sg,f2,sub2,min2,max2,req2,reqm,lv,sc,tp,pg,mgchk,min,max)
+			or ((not min or (tsg_count+ntsg_count)>=min) and (not req2 or req2(ntsg,sc,tp)) and (not reqm or reqm(sg,sc,tp))
+				and ntsg:IsExists(Synchro.NonTunerFilter,ntsg_count,nil,f2,sub2,sc,tp)
 				and sg:Includes(pg) and Synchro.CheckP43(tsg,ntsg,sg,lv,sc,tp))
 	else
-		res=(not min or (tsg_count+ntsg_count)>=min) and (not req2 or req2(ntsg,sc,tp)) and (not reqm or reqm(sg,sc,tp)) 
+		res=(not min or (tsg_count+ntsg_count)>=min) and (not req2 or req2(ntsg,sc,tp)) and (not reqm or reqm(sg,sc,tp))
 			and ntsg:IsExists(Synchro.NonTunerFilter,ntsg_count,nil,f2,sub2,sc,tp)
 			and sg:Includes(pg) and Synchro.CheckP43(tsg,ntsg,sg,lv,sc,tp)
 	end
@@ -392,15 +392,15 @@ function Synchro.CheckP41(c,tg,ntg,tsg,ntsg,sg,min1,max1,min2,max2,req1,req2,req
 	if max and (tsg_count>max or (max-tsg_count)<min2) then
 		res = false
 	elseif max and (max-tsg_count)==min2 then
-		res=(not req1 or req1(tsg,sc,tp)) 
+		res=(not req1 or req1(tsg,sc,tp))
 			and ntg:IsExists(Synchro.CheckP42,1,sg,ntg,tsg,ntsg,sg,min2,max2,req2,reqm,lv,sc,tp,pg,mgchk,min,max)
 	elseif tsg_count<min1 then
 		res=tg:IsExists(Synchro.CheckP41,1,sg,tg,ntg,tsg,ntsg,sg,min1,max1,min2,max2,req1,req2,reqm,lv,sc,tp,pg,mgchk,min,max)
 	elseif tsg_count<max1 then
-		res=tg:IsExists(Synchro.CheckP41,1,sg,tg,ntg,tsg,ntsg,sg,min1,max1,min2,max2,req1,req2,reqm,lv,sc,tp,pg,mgchk,min,max) 
+		res=tg:IsExists(Synchro.CheckP41,1,sg,tg,ntg,tsg,ntsg,sg,min1,max1,min2,max2,req1,req2,reqm,lv,sc,tp,pg,mgchk,min,max)
 			or ((not req1 or req1(tsg,sc,tp)) and ntg:IsExists(Synchro.CheckP42,1,sg,ntg,tsg,ntsg,sg,min2,max2,req2,reqm,lv,sc,tp,pg,mgchk,min,max))
 	else
-		res=(not req1 or req1(tsg,sc,tp)) 
+		res=(not req1 or req1(tsg,sc,tp))
 			and ntg:IsExists(Synchro.CheckP42,1,sg,ntg,tsg,ntsg,sg,min2,max2,req2,reqm,lv,sc,tp,pg,mgchk,min,max)
 	end
 	tg:Merge(trg)
@@ -469,11 +469,11 @@ function Synchro.CheckP42(c,ntg,tsg,ntsg,sg,min2,max2,req2,reqm,lv,sc,tp,pg,mgch
 	elseif ntsg_count<min2 then
 		res=ntg:IsExists(Synchro.CheckP42,1,sg,ntg,tsg,ntsg,sg,min2,max2,req2,reqm,lv,sc,tp,pg,mgchk,min,max)
 	elseif ntsg_count<max2 then
-		res=ntg:IsExists(Synchro.CheckP42,1,sg,ntg,tsg,ntsg,sg,min2,max2,req2,reqm,lv,sc,tp,pg,mgchk,min,max) 
-			or ((not min or (tsg_count+ntsg_count)>=min) and (not req2 or req2(ntsg,sc,tp)) and (not reqm or reqm(sg,sc,tp)) 
+		res=ntg:IsExists(Synchro.CheckP42,1,sg,ntg,tsg,ntsg,sg,min2,max2,req2,reqm,lv,sc,tp,pg,mgchk,min,max)
+			or ((not min or (tsg_count+ntsg_count)>=min) and (not req2 or req2(ntsg,sc,tp)) and (not reqm or reqm(sg,sc,tp))
 				and sg:Includes(pg) and Synchro.CheckP43(tsg,ntsg,sg,lv,sc,tp))
 	else
-		res=(not min or (tsg_count+ntsg_count)>=min) and (not req2 or req2(ntsg,sc,tp)) and (not reqm or reqm(sg,sc,tp)) 
+		res=(not min or (tsg_count+ntsg_count)>=min) and (not req2 or req2(ntsg,sc,tp)) and (not reqm or reqm(sg,sc,tp))
 			and sg:Includes(pg) and Synchro.CheckP43(tsg,ntsg,sg,lv,sc,tp)
 	end
 	ntg:Merge(ntrg)
@@ -633,7 +633,7 @@ function Synchro.Target(f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
 								tune=false
 							end
 						else
-							if (#ntsg>=min2 and (not req2 or req2(ntsg,c,tp)) and (not reqm or reqm(sg,c,tp)) 
+							if (#ntsg>=min2 and (not req2 or req2(ntsg,c,tp)) and (not reqm or reqm(sg,c,tp))
 								and ntsg:IsExists(Synchro.NonTunerFilter,#ntsg,nil,f2,sub2,c,tp)
 								and sg:Includes(pg) and Synchro.CheckP43(tsg,ntsg,sg,lv,c,tp)) then
 									finish=true
@@ -648,7 +648,7 @@ function Synchro.Target(f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
 							Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SMATERIAL)
 							local tc=Group.SelectUnselect(g2,sg,tp,finish,cancel)
 							if not tc then
-								if #ntsg>=min2 and (not req2 or req2(ntsg,c,tp)) and (not reqm or reqm(sg,c,tp)) 
+								if #ntsg>=min2 and (not req2 or req2(ntsg,c,tp)) and (not reqm or reqm(sg,c,tp))
 									and sg:Includes(pg) and Synchro.CheckP43(tsg,ntsg,sg,lv,c,tp) then break end
 								return false
 							end
@@ -791,7 +791,7 @@ function Synchro.Operation(e,tp,eg,ep,ev,re,r,rp,c,smat,mg)
 		local mat_check_op=mat_check_eff:GetOperation()
 		if mat_check_op then mat_check_op(mat_check_eff,c) end
 	end
-	--Use up the count limit of any "EFFECT_SYNCHRO_MAT_FROM_HAND" effect in the material group ("Revolution Synchron") 
+	--Use up the count limit of any "EFFECT_SYNCHRO_MAT_FROM_HAND" effect in the material group ("Revolution Synchron")
 	for mc in g:Iter() do
 		local handmatfilter=mc:IsHasEffect(EFFECT_SYNCHRO_MAT_FROM_HAND)
 		if handmatfilter and handmatfilter:GetValue(handmatfilter,mc,c) then

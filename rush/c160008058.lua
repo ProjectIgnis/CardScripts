@@ -15,7 +15,7 @@ end
 s.listed_names={CARD_SUMMONED_SKULL}
 function s.filter(c,tp)
 	return c:IsFaceup() and (c:IsCode(CARD_SUMMONED_SKULL) or c:IsRace(RACE_THUNDER))
-		and Duel.IsExistingMatchingCard(s.desfilter,tp,0,LOCATION_MZONE,1,nil,c:GetAttack()) 
+		and Duel.IsExistingMatchingCard(s.desfilter,tp,0,LOCATION_MZONE,1,nil,c:GetAttack())
 end
 function s.desfilter(c,atk)
 	return c:IsMonster() and c:IsFaceup() and c:HasDefense() and c:IsDefenseBelow(atk)

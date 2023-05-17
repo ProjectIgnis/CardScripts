@@ -32,7 +32,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateAttack() then
-		if not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and Duel.GetLocationCount(tp,LOCATION_MZONE)>1 
+		if not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and Duel.GetLocationCount(tp,LOCATION_MZONE)>1
 			and Duel.IsPlayerCanSpecialSummonMonster(tp,82340057,0,TYPES_TOKEN,0,0,1,RACE_ROCK,ATTRIBUTE_EARTH) then
 			for i=1,2 do
 				local token=Duel.CreateToken(tp,82340057)

@@ -31,7 +31,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SendtoGrave(tc,REASON_COST)==0 then return end
 	--Effect
 	local ct=Duel.GetMatchingGroupCountRush(s.cfilter,tp,LOCATION_MZONE,0,nil)
-	if Duel.Draw(tp,1,REASON_EFFECT)>0 and ct>1 and Duel.IsPlayerCanDraw(tp,1) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then 
+	if Duel.Draw(tp,1,REASON_EFFECT)>0 and ct>1 and Duel.IsPlayerCanDraw(tp,1) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.BreakEffect()
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end

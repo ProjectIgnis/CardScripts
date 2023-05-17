@@ -30,9 +30,9 @@ end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetFlagEffect(ep,id)+1
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local b1=ct==1 and Duel.IsExistingMatchingCard(s.disfilter,tp,LOCATION_HAND,0,1,nil,tp) 
+	local b1=ct==1 and Duel.IsExistingMatchingCard(s.disfilter,tp,LOCATION_HAND,0,1,nil,tp)
 	local b2=ct==2 and Duel.IsExistingMatchingCard(s.sumfilter,tp,LOCATION_HAND,0,1,nil) and ft>-1
-	local b3=ct==3 and Duel.IsExistingMatchingCard(s.dinofilter,tp,LOCATION_MZONE,0,1,nil) and Duel.IsExistingMatchingCard(s.bondfilter,tp,LOCATION_DECK,0,1,nil) 
+	local b3=ct==3 and Duel.IsExistingMatchingCard(s.dinofilter,tp,LOCATION_MZONE,0,1,nil) and Duel.IsExistingMatchingCard(s.bondfilter,tp,LOCATION_DECK,0,1,nil)
 	local b4=ct==4 and Duel.IsExistingMatchingCard(s.mfilter,tp,0,LOCATION_MZONE,1,nil)
 	return aux.CanActivateSkill(tp) and (b1 or b2 or b3 or b4)
 end
@@ -42,7 +42,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local b1=Duel.IsExistingMatchingCard(s.disfilter,tp,LOCATION_HAND,0,1,nil,tp)
 	local b2=Duel.IsExistingMatchingCard(s.sumfilter,tp,LOCATION_HAND,0,1,nil) and ft>-1
-	local b3=Duel.IsExistingMatchingCard(s.dinofilter,tp,LOCATION_MZONE,0,1,nil) and Duel.IsExistingMatchingCard(s.bondfilter,tp,LOCATION_DECK,0,1,nil) 
+	local b3=Duel.IsExistingMatchingCard(s.dinofilter,tp,LOCATION_MZONE,0,1,nil) and Duel.IsExistingMatchingCard(s.bondfilter,tp,LOCATION_DECK,0,1,nil)
 	local b4=Duel.IsExistingMatchingCard(s.mfilter,tp,0,LOCATION_MZONE,1,nil)
 	if Duel.GetTurnCount()==1 then Duel.ResetFlagEffect(ep,id) end
 	--Discard 1 Dinosaur to add 1 Dinosaur with different Attribute from Deck

@@ -35,7 +35,7 @@ function s.filter(c,e,tp)
 	if e:GetHandler():IsLocation(LOCATION_HAND) then
 		ft=ft-1
 	end
-	return c:GetFlagEffect(id)>0 and c:GetFlagEffect(id+1)==0 and c:IsSpell() and (ft>0 or c:IsType(TYPE_FIELD)) 
+	return c:GetFlagEffect(id)>0 and c:GetFlagEffect(id+1)==0 and c:IsSpell() and (ft>0 or c:IsType(TYPE_FIELD))
 		and c:CheckActivateEffect(false,false,false)~=nil
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

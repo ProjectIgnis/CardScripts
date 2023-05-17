@@ -92,13 +92,13 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local bc=c:GetBattleTarget()
 	if not bc or c:GetEffectCount(EFFECT_INDESTRUCTABLE_BATTLE)>0 then return false end
 	if bc==Duel.GetAttackTarget() and bc:IsDefensePos() then return false end
-	if c:IsAttackPos() and bc:IsDefensePos() and bc:GetEffectCount(EFFECT_DEFENSE_ATTACK)==1 
+	if c:IsAttackPos() and bc:IsDefensePos() and bc:GetEffectCount(EFFECT_DEFENSE_ATTACK)==1
 		and c:GetAttack()<=bc:GetDefense() then return true end
-	if c:IsAttackPos() and (bc:IsAttackPos() or bc:IsHasEffect(EFFECT_DEFENSE_ATTACK)) 
+	if c:IsAttackPos() and (bc:IsAttackPos() or bc:IsHasEffect(EFFECT_DEFENSE_ATTACK))
 		and c:GetAttack()<=bc:GetAttack() then return true end
-	if c:IsDefensePos() and bc:IsDefensePos() and bc:GetEffectCount(EFFECT_DEFENSE_ATTACK)==1 
+	if c:IsDefensePos() and bc:IsDefensePos() and bc:GetEffectCount(EFFECT_DEFENSE_ATTACK)==1
 		and c:GetDefense()<bc:GetDefense() then return true end
-	if c:IsDefensePos() and (bc:IsAttackPos() or bc:IsHasEffect(EFFECT_DEFENSE_ATTACK)) 
+	if c:IsDefensePos() and (bc:IsAttackPos() or bc:IsHasEffect(EFFECT_DEFENSE_ATTACK))
 		and c:GetDefense()<bc:GetAttack() then return true end
 	return false
 end

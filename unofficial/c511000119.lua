@@ -236,7 +236,7 @@ function s.dirtg(e,c)
 	return not Duel.IsExistingMatchingCard(aux.FilterEqualFunction(Card.GetFlagEffect,0,id),c:GetControler(),0,LOCATION_MZONE,1,nil)
 end
 function s.filter(c)
-	return (c:GetType()==TYPE_SPELL or c:IsType(TYPE_QUICKPLAY)) and c:GetActivateEffect() 
+	return (c:GetType()==TYPE_SPELL or c:IsType(TYPE_QUICKPLAY)) and c:GetActivateEffect()
 		and c:GetFlagEffect(id+1)==0
 end
 function s.activ(e,tp,eg,ep,ev,re,r,rp)

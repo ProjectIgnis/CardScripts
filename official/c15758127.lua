@@ -100,7 +100,7 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local g=Duel.GetMatchingGroup(s.spcfilter,tp,LOCATION_MZONE,0,nil)
-		return aux.SelectUnselectGroup(g,e,tp,2,2,s.spcheck,0) 
+		return aux.SelectUnselectGroup(g,e,tp,2,2,s.spcheck,0)
 	end
 	Duel.Hint(HINT_OPSELECTED,0,aux.Stringid(id,3))
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)

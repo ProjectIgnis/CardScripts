@@ -24,7 +24,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.CallCoin(tp) then
 		local gc=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
 		Duel.Draw(tp,5-gc,REASON_EFFECT)
-	else 
+	else
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)

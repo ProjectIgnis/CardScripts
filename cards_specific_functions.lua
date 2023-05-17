@@ -1153,7 +1153,7 @@ end
 Infernoid={}
 local InfernoidInt={}
 function InfernoidInt.spfilter(c)
-	return c:IsSetCard(SET_INFERNOID) and c:IsMonster() and c:IsAbleToRemoveAsCost() 
+	return c:IsSetCard(SET_INFERNOID) and c:IsMonster() and c:IsAbleToRemoveAsCost()
 end
 function InfernoidInt.getLocations(c,tp)
 	local locations=LOCATION_HAND

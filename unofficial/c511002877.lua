@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetValue(s.refval)
 	c:RegisterEffect(e1)
 	--def
-	local e5=Effect.CreateEffect(c) 
+	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e5:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e5:SetCode(EVENT_CHAIN_SOLVED)
@@ -33,7 +33,7 @@ function s.refval(e,re,val,r,rp,rc)
 end
 function s.surop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if Duel.GetLP(tp)<=0 and not c:IsStatus(STATUS_DISABLED) and not c:IsStatus(STATUS_BATTLE_DESTROYED) and c:IsDefensePos() 
+	if Duel.GetLP(tp)<=0 and not c:IsStatus(STATUS_DISABLED) and not c:IsStatus(STATUS_BATTLE_DESTROYED) and c:IsDefensePos()
 		and Duel.GetFlagEffect(tp,id)==0 then
 		Duel.Hint(HINT_CARD,0,id)
 		Duel.RegisterFlagEffect(tp,id,0,0,0)

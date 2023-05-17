@@ -22,7 +22,7 @@ function s.initial_effect(c)
 		ge2:SetOperation(s.winop)
 		Duel.RegisterEffect(ge2,0)
 	end)
-end 
+end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
 	if chk==0 then return Duel.CheckLPCost(tp,2000) and tc and tc:IsCanRemoveCounter(tp,0x91,3,REASON_COST) end

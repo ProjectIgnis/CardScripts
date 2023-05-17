@@ -39,7 +39,7 @@ function s.gchk(e,tp,eg,ev,ep,re,r,rp)
 	local c=eg:GetFirst()
 	while c do
 		if c:IsPreviousControler(tp) and c:IsMonster() and c:IsSetCard(SET_DOLL_MONSTER) then
-			s_g:AddCard(c) 
+			s_g:AddCard(c)
 		end
 		c=eg:GetNext()
 	end
@@ -50,7 +50,7 @@ function s.gclear(e,tp,eg,ev,ep,re,r,rp)
 	end
 end
 function s.sfilter(c,e,tp,g)
-	return c:IsMonster() and c:IsSetCard(SET_DOLL_MONSTER) and 
+	return c:IsMonster() and c:IsSetCard(SET_DOLL_MONSTER) and
 		g:IsExists(function (c,lv) return c:GetLevel()==lv end,1,nil,c:GetLevel()-2) and
 		c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SPECIAL,tp,false,false)
 end

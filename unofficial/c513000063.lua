@@ -42,7 +42,7 @@ function s.initial_effect(c)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetCondition(s.discon)
 	e4:SetOperation(s.disop)
-	--Destroy this card if you would take damage or the equipped monster would be destroyed 
+	--Destroy this card if you would take damage or the equipped monster would be destroyed
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_EQUIP)
 	e5:SetCode(EFFECT_DESTROY_REPLACE)
@@ -146,7 +146,7 @@ function s.repop(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.repop2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if not c:IsStatus(STATUS_DESTROY_CONFIRMED) 
+	if not c:IsStatus(STATUS_DESTROY_CONFIRMED)
 		and Duel.SelectEffectYesNo(tp,e:GetHandler()) then
 		Duel.SendtoGrave(c,REASON_EFFECT+REASON_REPLACE)
 		local cid=Duel.GetChainInfo(ev,CHAININFO_CHAIN_ID)

@@ -17,7 +17,7 @@ function s.initial_effect(c)
 end
 s.listed_names={160013053}
 function s.costfilter(c)
-	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_SPELLCASTER) 
+	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_SPELLCASTER)
 		and c:IsAbleToGraveAsCost() and not c:IsMaximumModeSide()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.fusfilter(c,e,tp,fe)
-	return c:IsType(TYPE_FUSION) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) 
+	return c:IsType(TYPE_FUSION) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false)
 		and Duel.IsExistingMatchingCard(s.synfilter,tp,LOCATION_EXTRA,0,1,c,e,tp,c,fe)
 		and Duel.GetLocationCountFromEx(tp,fe,nil,c)>1
 end
@@ -53,7 +53,7 @@ function s.rescon(fc,sc,fe)
 			end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return aux.CheckSummonGate(tp,2) and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) 
+	if chk==0 then return aux.CheckSummonGate(tp,2) and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
 		and Duel.IsExistingMatchingCard(s.fusfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,e) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_EXTRA)
 end

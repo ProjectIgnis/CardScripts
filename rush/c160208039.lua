@@ -44,7 +44,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			Duel.HintSelection(sg,true)
 			Duel.Destroy(sg,REASON_EFFECT)
 		end
-	end	
+	end
 end
 function s.rescon(sg,e,tp,mg)
 	return sg:FilterCount(Card.IsCode,nil,CARD_FUSION)<2 and sg:FilterCount(s.thfilter2,nil)<2

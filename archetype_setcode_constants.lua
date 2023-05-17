@@ -1,7 +1,7 @@
 --[[
 	Archetype setcode constants list (akin to common card names).
 	Includes every archetype that's being used in official card scripts.
-	
+
 	Notes:
 - To be formatted, probably alphabetically while keeping sub-archetypes with the original.
 
@@ -89,7 +89,7 @@ SET_ASSAULT_BLACKWING             = 0x1033
 SET_CRYSTAL                       = 0x34
 SET_CRYSTAL_BEAST                 = 0x1034
 SET_ULTIMATE_CRYSTAL              = 0x2034
-SET_ADVANCED_CRYSTAL_BEAST        = 0x5034	
+SET_ADVANCED_CRYSTAL_BEAST        = 0x5034
 SET_FABLED                        = 0x35
 SET_MACHINA                       = 0x36
 SET_MIST_VALLEY                   = 0x37

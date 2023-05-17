@@ -50,7 +50,7 @@ function s.otfilter(c,tp)
 	return c:IsRace(RACE_DINOSAUR) and (c:IsControler(tp) or c:IsFaceup())
 end
 function s.tscon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsMainPhase() and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_DINOSAUR),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) 
+	return Duel.IsMainPhase() and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_DINOSAUR),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function s.tstg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

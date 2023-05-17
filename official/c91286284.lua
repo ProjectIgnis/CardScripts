@@ -29,7 +29,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND|LOCATION_GRAVE,0,1,1,nil,e,tp)
 	if #g>0 and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)>0
-		and Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0 
+		and Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(Card.IsCanBeSpecialSummoned),1-tp,LOCATION_HAND|LOCATION_GRAVE,0,1,nil,e,0,1-tp,false,false)
 		and Duel.SelectYesNo(1-tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

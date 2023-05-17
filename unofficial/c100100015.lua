@@ -23,7 +23,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.cfilter(c,e,tp,ft)
 	local lv=c:GetLevel()
-	return lv>0 and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5)) and (c:IsControler(tp) or c:IsFaceup()) 
+	return lv>0 and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5)) and (c:IsControler(tp) or c:IsFaceup())
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,lv+1,e,tp)
 end
 function s.spfilter(c,lv,e,tp)

@@ -26,7 +26,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_GALAXYEYES_P_DRAGON}
 s.listed_series={SET_PHOTON,SET_GALAXY}
-function s.filter(c,ft,tp) 
+function s.filter(c,ft,tp)
 	return (c:IsSetCard(SET_PHOTON) or c:IsSetCard(SET_GALAXY)) and c:IsSpellTrap() and c:IsType(TYPE_CONTINUOUS)
 		and (c:IsAbleToHand() or (ft>0 and not c:IsForbidden() and c:CheckUniqueOnField(tp)))
 end

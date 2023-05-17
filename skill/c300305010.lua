@@ -3,10 +3,10 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop)
-end 
+end
 s.listed_names={25833572,25955164,62340868,98434877}
 function s.cfilter(c,tp)
-	return c:IsCode(25955164) and c:IsFaceup() and Duel.IsExistingMatchingCard(s.cfilter2,tp,LOCATION_MZONE,0,1,nil,tp)  
+	return c:IsCode(25955164) and c:IsFaceup() and Duel.IsExistingMatchingCard(s.cfilter2,tp,LOCATION_MZONE,0,1,nil,tp)
 end
 function s.cfilter2(c,tp)
 	return c:IsCode(62340868) and c:IsFaceup() and Duel.IsExistingMatchingCard(s.cfilter3,tp,LOCATION_MZONE,0,1,nil)

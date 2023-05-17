@@ -63,7 +63,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)
 end
 function s.splimit(e,c)
-	return c:IsLocation(LOCATION_EXTRA) and not c:IsRace(RACE_DRAGON|RACE_DINOSAUR|RACE_SEASERPENT|RACE_WYRM) 
+	return c:IsLocation(LOCATION_EXTRA) and not c:IsRace(RACE_DRAGON|RACE_DINOSAUR|RACE_SEASERPENT|RACE_WYRM)
 end
 function s.lizfilter(e,c)
 	return not c:IsRace(RACE_DINOSAUR|RACE_DRAGON|RACE_SEASERPENT|RACE_WYRM)

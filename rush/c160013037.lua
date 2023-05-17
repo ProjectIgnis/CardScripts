@@ -19,11 +19,11 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_BLUETOOTH_B_DRAGON,160013004}
 function s.costfilter(c,tp)
-	return c:IsAbleToGraveAsCost() 
+	return c:IsAbleToGraveAsCost()
 		and Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE,0,1,nil,tp) 
+	return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE,0,1,nil,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end

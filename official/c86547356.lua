@@ -35,7 +35,7 @@ function s.cfilter(c,e,tp)
 end
 function s.spfilter(c,e,tp,lvl,code)
 	return c:IsSetCard(SET_INFERNITY) and c:IsMonster() and c:IsLevel(lvl)
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(code) 
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(code)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100)

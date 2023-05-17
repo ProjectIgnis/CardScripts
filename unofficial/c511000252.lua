@@ -40,7 +40,7 @@ function s.initial_effect(c)
 	e5:SetCondition(s.havefieldcon)
 	e5:SetValue(1)
 	c:RegisterEffect(e5)
-	--Polestar Obey 
+	--Polestar Obey
 	local e6=Effect.CreateEffect(c)
 	e6:SetDescription(aux.Stringid(id,0))
 	e6:SetType(EFFECT_TYPE_IGNITION)
@@ -73,7 +73,7 @@ function s.unaffectedval(e,te)
 	return te:IsSpellTrapEffect() and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
 end
 function s.lpcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(Card.IsFaceup,0,LOCATION_FZONE,LOCATION_FZONE,1,nil) 
+	return Duel.IsExistingMatchingCard(Card.IsFaceup,0,LOCATION_FZONE,LOCATION_FZONE,1,nil)
 end
 function s.lpcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsAbleToEnterBP() end

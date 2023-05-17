@@ -121,7 +121,7 @@ function s.dtpfilter(c)
 	return c:IsTrap() and c:IsAbleToGraveAsCost()
 end
 function s.thfilter(c)
-	return c:IsLevelBelow(6) and c:IsSetCard(0x16) and c:IsRace(RACE_MACHINE) and c:IsAbleToHand() 
+	return c:IsLevelBelow(6) and c:IsSetCard(0x16) and c:IsRace(RACE_MACHINE) and c:IsAbleToHand()
 end
 function s.desfilter(c,atk)
 	return c:IsFaceup() and c:IsMonster() and c:IsAttackBelow(atk)

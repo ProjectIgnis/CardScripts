@@ -53,7 +53,7 @@ end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)
-	if #g==0 or Duel.SendtoHand(g,nil,REASON_EFFECT)==0 
+	if #g==0 or Duel.SendtoHand(g,nil,REASON_EFFECT)==0
 		or not g:GetFirst():IsLocation(LOCATION_HAND) then return end
 	Duel.ConfirmCards(1-tp,g)
 	local ct=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
@@ -81,7 +81,7 @@ function s.gthtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.gthop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if not (tc:IsRelateToEffect(e) and tc:RemoveOverlayCard(tp,1,1,REASON_EFFECT)) then return end 
+	if not (tc:IsRelateToEffect(e) and tc:RemoveOverlayCard(tp,1,1,REASON_EFFECT)) then return end
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
 		Duel.SendtoHand(c,nil,REASON_EFFECT)

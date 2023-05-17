@@ -77,7 +77,7 @@ function s.synop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and rp~=tp 
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and rp~=tp
 		and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)

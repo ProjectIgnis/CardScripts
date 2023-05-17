@@ -22,13 +22,13 @@ function s.initial_effect(c)
 		e3:SetCode(EFFECT_INDESTRUCTABLE)
 		e3:SetTargetRange(LOCATION_FZONE,LOCATION_FZONE)
 		e3:SetValue(1)
-		Duel.RegisterEffect(e3,0)	
+		Duel.RegisterEffect(e3,0)
 		local e4=e3:Clone()
 		e4:SetCode(EFFECT_CANNOT_REMOVE)
-		Duel.RegisterEffect(e4,0)	
+		Duel.RegisterEffect(e4,0)
 		local e5=e3:Clone()
 		e5:SetCode(EFFECT_CANNOT_TO_GRAVE)
-		Duel.RegisterEffect(e5,0)	
+		Duel.RegisterEffect(e5,0)
 		local e6=e3:Clone()
 		e6:SetCode(EFFECT_CANNOT_TO_HAND)
 		Duel.RegisterEffect(e6,0)
@@ -45,7 +45,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ed,1)
 		local ee=e7:Clone()
 		Duel.RegisterEffect(ee,1)
-		
+
 	end)
 end
 function s.filter(c,tp)
@@ -236,7 +236,7 @@ if not c44330098 then
 		return ep==tp and tp~=rp and not Duel.IsExistingMatchingCard(c44330098.filter,tp,LOCATION_ONFIELD,0,1,nil)
 	end
 	function c44330098.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
-		if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
+		if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 			and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 	end
@@ -510,7 +510,7 @@ if not c42338879 then
 				e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
 				e1:SetValue(LOCATION_REMOVED)
 				c:RegisterEffect(e1,true)
-			end		
+			end
 		end
 	end
 end
@@ -1349,7 +1349,7 @@ if not c90727556 then
 	c90727556.listed_series={0x100a}
 	function c90727556.condition(e,tp,eg,ep,ev,re,r,rp)
 		return Duel.GetCurrentPhase()==PHASE_MAIN1 and not Duel.CheckPhaseActivity() and e:GetHandler():IsSetCard(0x100a)
-			and Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_ONFIELD,0,1,nil,TYPE_SPELL+TYPE_TRAP)==1 
+			and Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_ONFIELD,0,1,nil,TYPE_SPELL+TYPE_TRAP)==1
 	end
 	function c90727556.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 		if chk==0 then return Duel.GetActivityCount(tp,ACTIVITY_SPSUMMON)==0 end
@@ -1667,7 +1667,7 @@ if not c40844552 then
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,0)
 	end
 	function c40844552.operation(e,tp,eg,ep,ev,re,r,rp)
-		if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) or Duel.GetLocationCount(tp,LOCATION_MZONE)<2 
+		if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) or Duel.GetLocationCount(tp,LOCATION_MZONE)<2
 			or not Duel.IsPlayerCanSpecialSummonMonster(tp,40844552+1,0,TYPES_TOKEN,1000,1000,4,RACE_WARRIOR,ATTRIBUTE_EARTH) then return end
 		for i=1,2 do
 			local token=Duel.CreateToken(tp,40844552+1)

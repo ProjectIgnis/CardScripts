@@ -51,7 +51,7 @@ end
 function s.gycon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
-	return c:GetOverlayGroup():IsExists(Card.IsType,1,nil,TYPE_NORMAL) 
+	return c:GetOverlayGroup():IsExists(Card.IsType,1,nil,TYPE_NORMAL)
 		and c:IsRelateToBattle() and bc and bc:IsFaceup() and bc:IsRelateToBattle()
 		and Duel.IsExistingMatchingCard(s.gyfilter,tp,LOCATION_GRAVE,0,1,nil,bc:GetAttribute())
 end

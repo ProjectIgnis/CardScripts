@@ -201,7 +201,7 @@ if not SealedDuel then
 		[11411223]={ [1]={11411223,511010010}; };
 		[47805931]={ [1]={47805931,511010020}; };
 		[80764541]={ [1]={80764541,511001997}; };
-		
+
 	}
 	function SealedDuel.alternate(code,anime)
 		local chk=anime and 1 or 0
@@ -223,21 +223,21 @@ if not SealedDuel then
 		if not Duel.AskEveryone(aux.Stringid(id,0)) then
 			return
 		end
-		
+
 		--pack selection
 		local selectpack={}
 		for _,sel in ipairs({Duel.SelectCardsFromCodes(tp,1,4,false,true,511003041,511003042,511003043,511003044)}) do
 			selectpack[sel[2]]=true
 		end
-		
+
 		--pack checking
 		if selectpack[3] and not selectpack[1] and not selectpack[2] and not selectpack[4] then
 			selectpack[2]=true
 		end
-		
+
 		--treat as all monster types
 		if Duel.AskEveryone(aux.Stringid(id,1)) then
-			Duel.Hint(HINT_OPSELECTED,1-tp,aux.Stringid(id,1)) 
+			Duel.Hint(HINT_OPSELECTED,1-tp,aux.Stringid(id,1))
 			local getrc=Card.GetRace
 			Card.GetRace=function(c)
 				if c:IsMonster() then return 0xfffffff end
@@ -265,7 +265,7 @@ if not SealedDuel then
 			Duel.Hint(HINT_OPSELECTED,tp,aux.Stringid(id,2))
 			Duel.Hint(HINT_OPSELECTED,1-tp,aux.Stringid(id,2))
 		end
-			
+
 		--anime counterparts
 		local groups={}
 		groups[0]={}
@@ -276,7 +276,7 @@ if not SealedDuel then
 		for i=1,counts[1] do
 			groups[1][i]={}
 		end
-		
+
 		for p=z,o do
 			for team=1,counts[p] do
 				for i=1,9 do
@@ -310,7 +310,7 @@ if not SealedDuel then
 				end
 			end
 		end
-		
+
 		for p=z,o do
 			for team=1,counts[p] do
 				Duel.SendtoDeck(Duel.GetFieldGroup(p,0xff,0),nil,-2,REASON_RULE)

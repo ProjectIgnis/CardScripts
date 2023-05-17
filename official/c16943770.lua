@@ -43,7 +43,7 @@ function s.indcon(e)
 	return Duel.IsExistingMatchingCard(Card.IsType,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil,TYPE_TOKEN)
 end
 function s.cfilter(c,tp)
-	return c:IsSetCard(SET_MECHA_PHANTOM_BEAST) and not c:IsCode(id) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true) 
+	return c:IsSetCard(SET_MECHA_PHANTOM_BEAST) and not c:IsCode(id) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 		and Duel.GetMZoneCount(tp,c)>0
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -58,7 +58,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_MECHA_PHANTOM_BEAST,SET_MECHA_PHANTOM_BEAST,TYPES_TOKEN,0,0,3,RACE_MACHINE,ATTRIBUTE_WIND) then
 		local token=Duel.CreateToken(tp,TOKEN_MECHA_PHANTOM_BEAST)
 		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)

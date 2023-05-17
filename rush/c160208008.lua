@@ -47,7 +47,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 		--Effect
 		local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 		Duel.Draw(p,d,REASON_EFFECT)
-		if Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) 
+		if Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)
 			and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(s.thfilter),tp,LOCATION_GRAVE,0,1,nil)
 			and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)

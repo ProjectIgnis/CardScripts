@@ -66,7 +66,7 @@ function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	return #g==0
 end
 function s.eqconfilter(c)
-	return c:GetFlagEffect(id)~=0 
+	return c:GetFlagEffect(id)~=0
 end
 	--Activation legality
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -97,7 +97,7 @@ function s.spfilter2(c,e,tp)
 end
 	--Activation legality
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and e:GetHandler():GetEquipGroup():IsExists(s.spfilter2,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_SZONE)
 end

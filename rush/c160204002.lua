@@ -1,4 +1,4 @@
---メタリオン・ヴリトラスター 
+--メタリオン・ヴリトラスター
 --Metallion Vritrastar
 local s,id=GetID()
 function s.initial_effect(c)
@@ -50,7 +50,7 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 			end
 		end
 	end
-	
+
 end
 --destroy dragon
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)

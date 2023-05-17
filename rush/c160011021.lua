@@ -19,7 +19,7 @@ function s.cfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_PSYCHIC) and not c:IsLevel(3)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsStatus(STATUS_SUMMON_TURN) and Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)<=4 
+	return e:GetHandler():IsStatus(STATUS_SUMMON_TURN) and Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)<=4
 		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,2,nil)
 end
 function s.filter(c)

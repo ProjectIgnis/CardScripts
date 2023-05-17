@@ -61,7 +61,7 @@ function s.rmvop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c,tp)
-	return c:IsMonster() and c:IsSetCard(SET_KASHTIRA) and c:GetOwner()==tp and c:IsAbleToHand() 
+	return c:IsMonster() and c:IsSetCard(SET_KASHTIRA) and c:GetOwner()==tp and c:IsAbleToHand()
 end
 function s.tgfilter(c,tp)
 	if not (c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(SET_KASHTIRA)) then return false end

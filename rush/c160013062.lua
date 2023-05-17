@@ -28,7 +28,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
 end
 function s.thfilter(c)
-	return c:IsLevelAbove(5) and c:IsDefense(1000) and c:IsAbleToHand() 
+	return c:IsLevelAbove(5) and c:IsDefense(1000) and c:IsAbleToHand()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()

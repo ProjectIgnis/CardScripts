@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e1b:SetTargetRange(0,LOCATION_MZONE)
 	e1b:SetTarget(aux.SecurityTarget)
 	c:RegisterEffect(e1b)
-	--Shuffle 1 "S-Force" monster into the Deck and Special Summon banished "S-Force" monster 
+	--Shuffle 1 "S-Force" monster into the Deck and Special Summon banished "S-Force" monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TODECK+CATEGORY_SPECIAL_SUMMON)

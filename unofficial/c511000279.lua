@@ -13,14 +13,14 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.accon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsPreviousPosition(POS_FACEDOWN) and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD) 
+	return e:GetHandler():IsPreviousPosition(POS_FACEDOWN) and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 		and e:GetHandler():IsReason(REASON_DESTROY)
 end
 function s.filter(c)
 	return c:CheckActivateEffect(false,false,false) and c:IsAbleToRemove()
 end
 function s.actg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0x13,0,1,nil) 
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0x13,0,1,nil)
 		and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,0x13)
 end

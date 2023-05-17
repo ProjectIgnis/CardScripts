@@ -45,7 +45,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
 	if tc and Duel.SendtoGrave(tc,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_GRAVE) then
 		local te,eg,ep,ev,re,r,rp=tc:CheckActivateEffect(false,true,false)
-		if not (te and Duel.SelectYesNo(tp,aux.Stringid(id,1))) then return end 
+		if not (te and Duel.SelectYesNo(tp,aux.Stringid(id,1))) then return end
 		e:SetLabelObject(te)
 		Duel.ClearTargetCard()
 		local tg=te:GetTarget()

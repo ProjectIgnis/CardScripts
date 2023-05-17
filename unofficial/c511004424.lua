@@ -58,7 +58,7 @@ function s.atcon(e,tp,eg,ev,ep,re,r,rp)
 		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0xf8),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.filter(c)
-	return c:IsFaceup() and not c:IsHasEffect(EFFECT_CANNOT_ATTACK) and not c:IsHasEffect(EFFECT_CANNOT_ATTACK_ANNOUNCE) 
+	return c:IsFaceup() and not c:IsHasEffect(EFFECT_CANNOT_ATTACK) and not c:IsHasEffect(EFFECT_CANNOT_ATTACK_ANNOUNCE)
 		and (c:IsAttackPos() or c:IsHasEffect(EFFECT_DEFENSE_ATTACK))
 end
 function s.attg(e,tp,eg,ev,ep,re,r,rp,chk,chkc)

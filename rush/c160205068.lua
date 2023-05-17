@@ -20,7 +20,7 @@ function s.filter1(c,tp)
 	return c:IsSummonPlayer(1-tp) and c:IsLevelBelow(8) and c:IsFaceup()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.filter1,1,nil,tp) 
+	return eg:IsExists(s.filter1,1,nil,tp)
 end
 function s.costfilter(c)
 	return c:IsFaceup() and c:IsAbleToGraveAsCost() and c:IsLevelAbove(5)

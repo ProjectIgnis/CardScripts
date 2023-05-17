@@ -48,7 +48,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.SelectMatchingCard(tp,s.trfilter,tp,LOCATION_MZONE|LOCATION_HAND,0,1,1,nil)
 		if #g>0 then
 			Duel.BreakEffect()
-			Duel.Release(g,REASON_EFFECT) 
+			Duel.Release(g,REASON_EFFECT)
 		end
 	end
 end

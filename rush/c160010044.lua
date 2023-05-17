@@ -28,7 +28,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
-	 Duel.PayLPCost(tp,600) 
+	 Duel.PayLPCost(tp,600)
 	 --Effect
 	local res=Duel.TossCoin(tp,1)
 	if res==COIN_HEADS then

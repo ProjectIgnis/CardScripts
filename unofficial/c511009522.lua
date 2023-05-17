@@ -96,7 +96,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local sg=Group.CreateGroup()
 	if Duel.CheckReleaseGroup(tp,s.costfilter,1,nil,tp,sg,c)
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) 
+		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.SelectEffectYesNo(tp,c,aux.Stringid(id,0)) then
 		while #sg<2 do
 			local g=Duel.SelectReleaseGroup(tp,s.costfilter,1,1,sg,tp,sg,c)
@@ -107,7 +107,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.indfilter(c)
-	return c:IsFaceup() and c:IsOnField() and c:IsType(TYPE_PENDULUM) 
+	return c:IsFaceup() and c:IsOnField() and c:IsType(TYPE_PENDULUM)
 end
 function s.indtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(s.indfilter,1,nil) end
@@ -126,7 +126,7 @@ function s.spfilter2(c,e,tp,ec)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToDeckOrExtraAsCost() 
+	if chk==0 then return c:IsAbleToDeckOrExtraAsCost()
 		and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_EXTRA,0,2,c,e,tp,c) end
 	Duel.SendtoExtraP(c,nil,REASON_COST)
 end

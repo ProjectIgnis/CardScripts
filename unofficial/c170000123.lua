@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() and not chkc:IsType(TYPE_MINUS) end
-	if chk==0 then return e:IsHasType(EFFECT_TYPE_ACTIVATE) 
+	if chk==0 then return e:IsHasType(EFFECT_TYPE_ACTIVATE)
 		and Duel.IsExistingTarget(aux.FaceupFilter(aux.NOT(Card.IsType),TYPE_MINUS),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	Duel.SelectTarget(tp,aux.FaceupFilter(aux.NOT(Card.IsType),TYPE_MINUS),tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)

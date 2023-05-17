@@ -36,9 +36,9 @@ function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_PURRELY) and c:IsLevel(1) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.Recover(tp,1000,REASON_EFFECT)==0 or Duel.Recover(1-tp,1000,REASON_EFFECT)==0 then return end	
+	if Duel.Recover(tp,1000,REASON_EFFECT)==0 or Duel.Recover(1-tp,1000,REASON_EFFECT)==0 then return end
 	--Discard 1 card and Special Summon 1 "Purrely" monster from the Deck
-	if Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) 
+	if Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then

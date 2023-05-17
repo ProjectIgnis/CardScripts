@@ -1,4 +1,4 @@
---白の聖女エクレシア 
+--白の聖女エクレシア
 --Incredible Ecclesia, the Virtuous
 local s,id=GetID()
 function s.initial_effect(c)
@@ -51,7 +51,7 @@ s.listed_series={SET_SWORDSOUL}
 -- global check
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	for tc in eg:Iter() do
-		if tc:IsType(TYPE_FUSION) then 
+		if tc:IsType(TYPE_FUSION) then
 			Duel.RegisterFlagEffect(tc:GetControler(),id,RESET_PHASE+PHASE_END,0,1)
 		end
 	end

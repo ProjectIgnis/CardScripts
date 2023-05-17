@@ -61,7 +61,7 @@ function s.rmcon(e)
 end
 function s.rmtg(e,c)
 	local tp=e:GetHandlerPlayer()
-	return c:GetOwner()==1-tp and Duel.IsPlayerCanRemove(tp,c) 
+	return c:GetOwner()==1-tp and Duel.IsPlayerCanRemove(tp,c)
 		and (c:GetReason()&(REASON_RELEASE|REASON_RITUAL)==(REASON_RELEASE|REASON_RITUAL)
 		or c:IsReason(REASON_FUSION|REASON_SYNCHRO|REASON_LINK))
 end

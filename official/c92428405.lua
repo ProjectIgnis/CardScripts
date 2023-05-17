@@ -100,7 +100,7 @@ function s.spfilter(c,e,tp,rmc)
 		and ((not loc_extr and Duel.GetMZoneCount(tp,rmc)>0) or (loc_extr and Duel.GetLocationCountFromEx(tp,tp,rmc,c)>0))
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,chk) 
+	if chk==0 then return aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.IsExistingMatchingCard(s.spcfilter,tp,LOCATION_MZONE,0,1,nil,e,tp) end
 	aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
@@ -122,7 +122,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HDEG,0,nil,e,tp)
 	local ft=math.min(Duel.GetLocationCount(tp,LOCATION_MZONE)+Duel.GetLocationCountFromEx(tp,tp),4)
-	if #g>0 and ft>0 then 
+	if #g>0 and ft>0 then
 		local checkfunc=aux.PropertyTableFilter(Card.GetSetCard,SET_PENDULUM_DRAGON,SET_XYZ_DRAGON,SET_SYNCHRO_DRAGON,SET_FUSION_DRAGON)
 		if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
 		local sg=aux.SelectUnselectGroup(g,e,tp,1,ft,s.rescon(checkfunc),1,tp,HINTMSG_SPSUMMON,s.rescon(checkfunc))

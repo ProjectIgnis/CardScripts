@@ -1,7 +1,7 @@
 --Anime Archtype
 if not AnimeArchetype then
 	AnimeArchetype = {}
-	
+
 	local MakeCheck=function(setcodes,archtable,extrafuncs)
 		return function(c,sc,sumtype,playerid)
 			sumtype=sumtype or 0
@@ -145,7 +145,7 @@ if not AnimeArchetype then
 	Card.IsCelestial=MakeCheck({0x254a},{69865139,25472513})
 
 	-- Cicada
-	-- 蝉 
+	-- 蝉
 	-- せみ
 	-- Number 3: Cicada King, Oily Cicada, Dream Cicada
 	Card.IsCicada=MakeCheck({0x50f},{4997565,79663524,5068132})
@@ -155,7 +155,7 @@ if not AnimeArchetype then
 	-- おうじゃ
 	-- Champion's Vigilance
 	Card.IsChampion=MakeCheck({0x152f},{82382815})
-	
+
 	-- Clear クリアー
 	-- Clear Vice Dragon/Clear World
 	Card.IsClear=MakeCheck({0x510},{97811903,82044279,33900648})

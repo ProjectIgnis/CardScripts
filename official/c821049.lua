@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(CARD_VISAS_STARFROST)
 	c:RegisterEffect(e1)
-	--Search 1 Spell/Trap that mentions "Visas Starfrost" 
+	--Search 1 Spell/Trap that mentions "Visas Starfrost"
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)

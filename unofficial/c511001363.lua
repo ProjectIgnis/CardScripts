@@ -110,7 +110,7 @@ function s.copycost(oc)
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))
 		local op=Duel.SelectEffect(tp,{a,aux.Stringid(id,1)},{b,aux.Stringid(id,2)})
 		if op==1 then
-			Duel.SendtoGrave(oc,REASON_COST) 
+			Duel.SendtoGrave(oc,REASON_COST)
 		else
 			Duel.PayLPCost(tp,400)
 		end

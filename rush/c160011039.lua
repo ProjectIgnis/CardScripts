@@ -27,7 +27,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil)	end
 end
 function s.filter(c)
-	return c:IsAttack(1000) and c:IsDefense(1000) 
+	return c:IsAttack(1000) and c:IsDefense(1000)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement

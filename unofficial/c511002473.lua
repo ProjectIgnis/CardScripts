@@ -41,7 +41,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			if type(prev)~='function' or prev(eff,te,tp) then return false end
 		end
 	end
-	if Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and tc:CheckActivateEffect(false,false,false)~=nil and not tc:IsHasEffect(EFFECT_CANNOT_TRIGGER) 
+	if Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and tc:CheckActivateEffect(false,false,false)~=nil and not tc:IsHasEffect(EFFECT_CANNOT_TRIGGER)
 		and Duel.SelectYesNo(tp,aux.Stringid(28265983,0)) then
 		local tpe=tc:GetType()
 		local tg=te:GetTarget()

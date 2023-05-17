@@ -80,7 +80,7 @@ function s.mvop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELECT)
 	local tc=Duel.SelectMatchingCard(tp,Card.CheckAdjacent,tp,LOCATION_MMZONE,0,1,1,nil):GetFirst()
-	if tc then 
+	if tc then
 		tc:MoveAdjacent()
 	end
 end

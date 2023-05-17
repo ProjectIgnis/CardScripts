@@ -77,7 +77,7 @@ function s.spfilter(c,e,tp,lv)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=5*2-Duel.GetMatchingGroupCount(nil,0,LOCATION_STZONE,LOCATION_STZONE,nil)
-	if chk==0 then return ct>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and 
+	if chk==0 then return ct>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and
 		Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,nil,e,tp,ct) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_DECK)
 end

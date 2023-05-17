@@ -25,7 +25,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 		loc=LOCATION_HAND|LOCATION_ONFIELD
 	end
 	local g=Duel.SelectMatchingCard(tp,s.rmvfilter,tp,loc,0,1,1,nil):GetFirst()
-	if Duel.Remove(g,POS_FACEUP,REASON_COST)>0 then 
+	if Duel.Remove(g,POS_FACEUP,REASON_COST)>0 then
 		local og=Duel.GetOperatedGroup():GetFirst()
 		local att=0
 		if og:IsPreviousLocation(LOCATION_ONFIELD) then

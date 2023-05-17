@@ -88,7 +88,7 @@ end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=e:GetLabelObject()
-	if #g==0 then return end 
+	if #g==0 then return end
 	local bg=g:FilterSelect(tp,s.filter,1,1,nil,tp,e)
 	if #bg>0 and Duel.Remove(bg,POS_FACEUP,REASON_EFFECT)>0 then
 		Duel.Damage(1-tp,1200,REASON_EFFECT)

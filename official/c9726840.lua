@@ -53,7 +53,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	if #g<1 or Duel.SendtoGrave(g,REASON_EFFECT)<1 or not g:GetFirst():IsLocation(LOCATION_GRAVE) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp):GetFirst()
-	if sc and Duel.SpecialSummonStep(sc,0,tp,tp,false,false,POS_FACEUP,ZONES_EMZ) 
+	if sc and Duel.SpecialSummonStep(sc,0,tp,tp,false,false,POS_FACEUP,ZONES_EMZ)
 		and Duel.IsExistingMatchingCard(s.attfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil,ATTRIBUTE_DARK)
 		and Duel.IsExistingMatchingCard(s.attfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil,ATTRIBUTE_LIGHT) then
 		-- Gain ATK

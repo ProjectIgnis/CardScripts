@@ -62,7 +62,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.imnval(e,te)
-	return te:IsMonsterEffect() and te:IsActivated() and te:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL) 
+	return te:IsMonsterEffect() and te:IsActivated() and te:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

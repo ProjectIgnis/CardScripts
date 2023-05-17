@@ -34,7 +34,7 @@ function s.rmfilter(c)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if not tc:IsRelateToEffect(e) or Duel.Destroy(tc,REASON_EFFECT)==0 
+	if not tc:IsRelateToEffect(e) or Duel.Destroy(tc,REASON_EFFECT)==0
 		or not Duel.IsExistingMatchingCard(s.hlfilter,tp,LOCATION_GRAVE,0,1,nil) then return end
 	local g=Duel.GetMatchingGroup(s.rmfilter,tp,0,LOCATION_MZONE|LOCATION_GRAVE,nil)
 	if #g==0 or not Duel.SelectYesNo(tp,aux.Stringid(id,1)) then return end

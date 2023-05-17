@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_EARTHBOUND}
-s.material_setcode=SET_EARTHBOUND 
+s.material_setcode=SET_EARTHBOUND
 function s.thfilter(c)
 	return c:IsFieldSpell() and c:IsAbleToHand()
 end

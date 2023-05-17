@@ -50,8 +50,8 @@ function s.spfil(c,e,tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_PZONE) and chkc:IsControler(tp) and s.desfilter(chkc) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
-		and Duel.IsExistingTarget(s.desfilter,tp,LOCATION_PZONE,0,1,nil) 
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingTarget(s.desfilter,tp,LOCATION_PZONE,0,1,nil)
 		and Duel.IsExistingMatchingCard(s.spfil,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,s.desfilter,tp,LOCATION_PZONE,0,1,1,nil)

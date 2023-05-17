@@ -40,7 +40,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g2=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil,511002255)
 	local g=g1:Clone()
 	g:Merge(g2)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2 and #g1>0 and #g2>0 
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2 and #g1>0 and #g2>0
 		and aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0)
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,38109772,0,0x21,2800,2300,7,RACE_DRAGON,ATTRIBUTE_FIRE) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)

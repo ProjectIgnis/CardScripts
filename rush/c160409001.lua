@@ -1,4 +1,4 @@
--- 零撃竜ゼロギアス 
+-- 零撃竜ゼロギアス
 -- Nullstrike Dragon Zerogias
 local s,id=GetID()
 function s.initial_effect(c)

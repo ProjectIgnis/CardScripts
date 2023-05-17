@@ -34,7 +34,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil)
 	local rg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_ATOHAND)
-	if #rg>0 then 
+	if #rg>0 then
 		Duel.SendtoHand(rg,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,rg)
 	end

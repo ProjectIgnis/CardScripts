@@ -28,7 +28,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 		mg:Match(s.matfilter,tc)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
 		local sc1=mg:FilterSelect(tp,Card.IsLocation,1,1,nil,LOCATION_MZONE):GetFirst()
-		if sc1 then 
+		if sc1 then
 			fmat:AddCard(sc1)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
 			local sc2=mg:FilterSelect(tp,s.mfilter,1,1,nil,sc1:GetCode()):GetFirst()
@@ -53,7 +53,7 @@ function s.fusDiscardFilter(c,e,tp)
 	return c:IsDiscardable() and Duel.IsExistingMatchingCard(s.fusfilter,tp,LOCATION_EXTRA,0,1,c,e,tp)
 end
 function s.fusfilter(c,e,tp)
-	return c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,true) and c:IsCode(10248389) 
+	return c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,true) and c:IsCode(10248389)
 end
 function s.fusTarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	local mg=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_MZONE+LOCATION_HAND+LOCATION_DECK,0,nil)

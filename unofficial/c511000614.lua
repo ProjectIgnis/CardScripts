@@ -133,7 +133,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		local cid=eq:CopyEffect(code,RESET_EVENT|RESETS_STANDARD,1)
 		eq:RegisterFlagEffect(id+code,RESET_EVENT|RESETS_STANDARD,0,1)
 		e:SetLabel(cid)
-	end 
+	end
 	if not eq or o~=eq or eq:IsDisabled() then
 		local cid=e:GetLabel()
 		o:ResetEffect(cid,RESET_COPY)

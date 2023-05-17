@@ -23,7 +23,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil) end
 	local tc=Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
 	local bc=tc:GetBattleTarget()
-	if Duel.GetAttacker() and tc:IsRelateToBattle() and bc and bc:IsFaceup() and tc:GetAttack()==bc:GetAttack() 
+	if Duel.GetAttacker() and tc:IsRelateToBattle() and bc and bc:IsFaceup() and tc:GetAttack()==bc:GetAttack()
 		and s.atkcost(e,tp,eg,ep,ev,re,r,rp,0) and Duel.SelectEffectYesNo(tp,e:GetHandler()) then
 		s.atkcost(e,tp,eg,ep,ev,re,r,rp,1)
 		Duel.SetTargetParam(1)
@@ -95,7 +95,7 @@ function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetLabelObject()
-	if chk==0 then return tc and tc:IsRelateToBattle() and tc:GetBattleTarget() and tc:GetBattleTarget():IsFaceup() 
+	if chk==0 then return tc and tc:IsRelateToBattle() and tc:GetBattleTarget() and tc:GetBattleTarget():IsFaceup()
 		and tc:GetAttack()==tc:GetBattleTarget():GetAttack() and tc:GetFlagEffect(e:GetLabel())==0 end
 	Duel.SetTargetCard(tc)
 	tc:RegisterFlagEffect(e:GetLabel(),RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE,0,1)

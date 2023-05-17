@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--"Purrely" monsters cannot be targeted the turn they are Special Summoned 
+	--"Purrely" monsters cannot be targeted the turn they are Special Summoned
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)

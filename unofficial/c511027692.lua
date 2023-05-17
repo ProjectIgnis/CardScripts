@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_DAMAGE)
 	e1:SetCondition(s.condition)
 	c:RegisterEffect(e1)
-	--You take no effect or battle 
+	--You take no effect or battle
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_CHANGE_DAMAGE)

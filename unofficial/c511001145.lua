@@ -46,7 +46,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			if type(prev)~='function' or prev(eff,te,tp) then return end
 		end
 	end
-	if (Duel.GetLocationCount(tp,LOCATION_SZONE)>0 or tc:IsType(TYPE_FIELD)) and tc:IsSpell() 
+	if (Duel.GetLocationCount(tp,LOCATION_SZONE)>0 or tc:IsType(TYPE_FIELD)) and tc:IsSpell()
 		and tc:CheckActivateEffect(false,false,false)~=nil and not tc:IsHasEffect(EFFECT_CANNOT_TRIGGER) then
 		local tpe=tc:GetType()
 		local tg=te:GetTarget()

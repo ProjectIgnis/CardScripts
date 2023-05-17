@@ -55,10 +55,10 @@ function s.gyop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCountLimit(1)
 	e1:SetOperation(s.tdop)
 	e1:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e1,tp)	
+	Duel.RegisterEffect(e1,tp)
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
-	local loc=LOCATION_ONFIELD|LOCATION_REMOVED|LOCATION_GRAVE 
+	local loc=LOCATION_ONFIELD|LOCATION_REMOVED|LOCATION_GRAVE
 	local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,loc,loc,nil)
 	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 end

@@ -31,14 +31,14 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 	--Add random Cyberse monster to ED
-	local storm=cytab[Duel.GetRandomNumber(1,#cytab)] 
+	local storm=cytab[Duel.GetRandomNumber(1,#cytab)]
 	local tc=Duel.CreateToken(tp,storm)
 	if tc:IsAbleToDeck() then
 		Duel.SendtoDeck(tc,tp,0,REASON_EFFECT)
 	end
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
-	local storm=cytab[Duel.GetRandomNumber(1,#cytab)]   
+	local storm=cytab[Duel.GetRandomNumber(1,#cytab)]
 	local tc=Duel.CreateToken(tp,storm)
 	if tc:IsAbleToDeck() then
 		Duel.SendtoDeck(tc,tp,0,REASON_EFFECT)

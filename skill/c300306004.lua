@@ -43,7 +43,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)
-	local cc,oc=Duel.GetBattleMonster(tp),Duel.GetBattleMonster(1-tp)	
+	local cc,oc=Duel.GetBattleMonster(tp),Duel.GetBattleMonster(1-tp)
 	local atk=cc:GetAttack()
 	if cc and cc:IsSetCard(SET_AMAZONESS) and oc and not oc:IsStatus(STATUS_BATTLE_DESTROYED) then
 		local e1=Effect.CreateEffect(e:GetHandler())

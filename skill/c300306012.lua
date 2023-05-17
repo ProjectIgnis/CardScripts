@@ -39,10 +39,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
 	local p=e:GetHandler():GetControler()
 	local tc=nil
-	if a:GetControler()==p and a:IsSetCard(SET_AMAZONESS) and d:IsStatus(STATUS_BATTLE_DESTROYED) then 
+	if a:GetControler()==p and a:IsSetCard(SET_AMAZONESS) and d:IsStatus(STATUS_BATTLE_DESTROYED) then
 		tc=d
-	elseif d:GetControler()==p or not tc or d==nil then 
-		return false 
+	elseif d:GetControler()==p or not tc or d==nil then
+		return false
 	end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)

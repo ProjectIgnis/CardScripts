@@ -69,7 +69,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 					fusg:AddCard(sc)
 				end
 			end
-			if tc.min_material_count>2 and #fusg==2 then 
+			if tc.min_material_count>2 and #fusg==2 then
 				local dg=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_DECK,0,nil,e,tc)
 				mg1:Merge(dg)
 				local mat1=Duel.SelectFusionMaterial(tp,tc,mg1,nil,chkf)
@@ -96,4 +96,3 @@ function s.matfilter(c,e,fc)
 	return c:IsSetCard(0x3008) and not c:IsImmuneToEffect(e) and c:IsCanBeFusionMaterial(fc)
 end
 
-	

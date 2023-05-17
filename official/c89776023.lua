@@ -39,7 +39,7 @@ end
 s.listed_series={SET_EVOLTILE}
 s.listed_names={5338223,24362891} --Evo-Force, Evo-Instant
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(SET_EVOLTILE) and c:IsCanBeSpecialSummoned(e,151,tp,false,false,POS_FACEDOWN_DEFENSE) 
+	return c:IsSetCard(SET_EVOLTILE) and c:IsCanBeSpecialSummoned(e,151,tp,false,false,POS_FACEDOWN_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

@@ -47,7 +47,7 @@ function s.thfilter2(c)
 	return c:IsMonster() and c:IsRace(RACE_WARRIOR) and c:IsType(TYPE_NORMAL) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,nil) 
+	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,nil)
 		and Duel.IsExistingMatchingCard(s.thfilter2,tp,LOCATION_GRAVE,0,1,nil)  end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,2,tp,LOCATION_GRAVE)
 end
@@ -58,7 +58,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local tg=aux.SelectUnselectGroup(sg,1,tp,2,2,s.rescon,1,tp)
 		Duel.SendtoHand(tg,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,tg)
-	end	
+	end
 end
 function s.rescon(sg,e,tp,mg)
 	return sg:FilterCount(s.thfilter,nil)==1 and sg:FilterCount(s.thfilter2,nil)==1

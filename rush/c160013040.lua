@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,nil) 
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,nil)
 		and e:GetHandler():GetEffectCount(EFFECT_EXTRA_ATTACK)==0 and Duel.IsAbleToEnterBP() end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

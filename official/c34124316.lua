@@ -43,7 +43,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetTurnPlayer()
 	local summonable1,nonsummonable1=Duel.GetDecktopGroup(p,5):Split(s.spchk,nil,e,p)
 	local summonable2,nonsummonable2=Duel.GetDecktopGroup(1-p,5):Split(s.spchk,nil,e,1-p)
-	
+
 	local ft1=Duel.GetLocationCount(p,LOCATION_MZONE)
 	if ft1>1 and Duel.IsPlayerAffectedByEffect(p,CARD_BLUEEYES_SPIRIT) and #summonable1>1 then
 		nonsummonable1:Merge(summonable1)
@@ -54,14 +54,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		nonsummonable2:Merge(summonable2)
 		summonable2:Clear()
 	end
-	
+
 	local tohand,tograve=nonsummonable1:Merge(nonsummonable2):Split(Card.IsAbleToHand,nil)
-	
+
 	Duel.DisableShuffleCheck()
-	
+
 	Duel.ConfirmDecktop(p,5)
 	summon(summonable1,e,p,tograve,ft1)
-	
+
 	Duel.ConfirmDecktop(1-p,5)
 	summon(summonable2,e,1-p,tograve,ft2)
 	Duel.SpecialSummonComplete()

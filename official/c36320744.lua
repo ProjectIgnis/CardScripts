@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--1 Tuner + 1+ non-Tuner monsters
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
-	--Search 1 card that mentions "Infernoble Knight Emperor Charles", or 1 "Horn of Olifant" 
+	--Search 1 card that mentions "Infernoble Knight Emperor Charles", or 1 "Horn of Olifant"
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_BE_BATTLE_TARGET)
 	c:RegisterEffect(e3)
 end
-s.listed_names={CARD_INFERNOBLE_CHARLES,55749927} --"Horn of Olifant" 
+s.listed_names={CARD_INFERNOBLE_CHARLES,55749927} --"Horn of Olifant"
 s.listed_series={SET_ROLAND}
 function s.thfilter(c)
 	return (c:ListsCode(CARD_INFERNOBLE_CHARLES) or c:IsCode(55749927)) and c:IsAbleToHand()

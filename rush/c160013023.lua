@@ -19,7 +19,7 @@ function s.costfilter(c)
 	return c:IsSpellTrap() and c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_ONFIELD,0,3,nil) 
+	return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_ONFIELD,0,3,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local dg=Duel.GetMatchingGroup(Card.IsNotMaximumModeSide,tp,0,LOCATION_MZONE,nil)

@@ -21,7 +21,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.costfilter(c,tp)
 	return c:IsMonster() and c:IsAbleToGraveAsCost()
-		and Duel.IsExistingMatchingCard(s.ctrlfilter,tp,0,LOCATION_MZONE,1,nil,c:GetRace()) 
+		and Duel.IsExistingMatchingCard(s.ctrlfilter,tp,0,LOCATION_MZONE,1,nil,c:GetRace())
 end
 function s.ctrlfilter(c,race)
 	return c:IsFaceup() and c:IsRace(race) and c:IsLevelAbove(5) and c:IsLevelBelow(8) and c:IsControlerCanBeChanged(true)

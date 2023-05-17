@@ -47,7 +47,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 	aux.GlobalCheck(s,function()
 		--spsummon proc
-		local e2=Effect.CreateEffect(c) 
+		local e2=Effect.CreateEffect(c)
 		e2:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
 		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e2:SetCode(EVENT_PHASE+PHASE_END)
@@ -64,8 +64,8 @@ function s.spop(e,tp,c)
 	local g=Duel.GetMatchingGroup(s.spfilter1,Duel.GetTurnPlayer(),LOCATION_MZONE,0,nil)
 	local rc=g:GetFirst()
 	while rc do
-		if rc:GetFlagEffect(id)==0 then 
-			local e1=Effect.CreateEffect(rc)	
+		if rc:GetFlagEffect(id)==0 then
+			local e1=Effect.CreateEffect(rc)
 			e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
 			e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 			e1:SetCode(EVENT_PHASE_START+PHASE_STANDBY)
@@ -87,9 +87,9 @@ function s.spop2(e,tp,c)
 	local c=e:GetHandler()
 	if c:GetControler()~=Duel.GetTurnPlayer() then return end
 	local ct=e:GetLabel()
-	if c:GetFlagEffect(id)~=0 and ct==8 then 
-		c:RegisterFlagEffect(100000111,RESET_EVENT|RESETS_STANDARD,0,1) 
-	else	
+	if c:GetFlagEffect(id)~=0 and ct==8 then
+		c:RegisterFlagEffect(100000111,RESET_EVENT|RESETS_STANDARD,0,1)
+	else
 		e:SetLabel(ct+1)
 	end
 end

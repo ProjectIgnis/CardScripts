@@ -32,7 +32,7 @@ function s.cfilter(tc)
 	return tc and tc:IsFaceup()
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return (s.cfilter(Duel.GetFieldCard(tp,LOCATION_FZONE,0)) or s.cfilter(Duel.GetFieldCard(1-tp,LOCATION_FZONE,0))) 
+	return (s.cfilter(Duel.GetFieldCard(tp,LOCATION_FZONE,0)) or s.cfilter(Duel.GetFieldCard(1-tp,LOCATION_FZONE,0)))
 		and Duel.GetCurrentPhase()==PHASE_MAIN1 and e:GetHandler():GetFlagEffect(id)~=0
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

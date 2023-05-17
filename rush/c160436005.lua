@@ -38,6 +38,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(sg,REASON_EFFECT)
 	else
 		tg=tg:AddMaximumCheck()
-		Duel.Destroy(tg,REASON_EFFECT) 
+		Duel.Destroy(tg,REASON_EFFECT)
 	end
 end

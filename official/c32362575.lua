@@ -22,7 +22,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local seq=-1
 	local spcard=nil
 	for tc in g:Iter() do
-		if tc:GetSequence()>seq then 
+		if tc:GetSequence()>seq then
 			seq=tc:GetSequence()
 			spcard=tc
 		end

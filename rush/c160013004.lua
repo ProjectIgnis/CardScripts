@@ -18,7 +18,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_BLUETOOTH_B_DRAGON,CARD_REDBOOT_B_DRAGON}
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsStatus(STATUS_SUMMON_TURN+STATUS_SPSUMMON_TURN) 
+	return e:GetHandler():IsStatus(STATUS_SUMMON_TURN+STATUS_SPSUMMON_TURN)
 		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_BLUETOOTH_B_DRAGON,CARD_REDBOOT_B_DRAGON),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)

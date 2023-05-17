@@ -173,7 +173,7 @@ function s.normalsetoperation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ConfirmCards(1-tp,c)
 	if c:IsMonster() and (c:IsSummonable(true,nil) or c:IsMSetable(true,nil)) and ((Duel.IsExistingMatchingCard(Card.IsReleasable,tp,LOCATION_MZONE,0,tmin,nil) and Duel.GetLocationCount(tp,LOCATION_MZONE)>-tmin) or (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and tmin==0)) then
 		local poi=0 --set/summon control variable
-		if c:IsSummonable(true,nil) or c:IsMSetable(true,nil) then 
+		if c:IsSummonable(true,nil) or c:IsMSetable(true,nil) then
 			poi=Duel.SelectOption(tp,1,1153)
 		elseif c:IsSummonable(true,nil) then
 			poi=0
@@ -265,7 +265,7 @@ function s.spelloperation(e,tp,eg,ep,ev,re,r,rp)
 				if op then op(e,tp,eg,ep,ev,re,r,rp) end
 			end
 			tc:ReleaseEffectRelation(te)
-			if etc then 
+			if etc then
 				etc=g:GetFirst()
 				while etc do
 					etc:ReleaseEffectRelation(te)
@@ -335,7 +335,7 @@ function s.trapoperation(e,tp,eg,ep,ev,re,r,rp)
 				if op then op(e,tp,eg,ep,ev,re,r,rp) end
 			end
 			tc:ReleaseEffectRelation(te)
-			if etc then 
+			if etc then
 				etc=g:GetFirst()
 				while etc do
 					etc:ReleaseEffectRelation(te)

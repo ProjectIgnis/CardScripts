@@ -30,7 +30,7 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if re:IsHasCategory(CATEGORY_NEGATE)
 		and Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_EFFECT):IsHasType(EFFECT_TYPE_ACTIVATE) then return false end
 	local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DESTROY)
-	return ex and tg~=nil and tc+tg:FilterCount(s.cfilter,nil,tp)-#tg>0 
+	return ex and tg~=nil and tc+tg:FilterCount(s.cfilter,nil,tp)-#tg>0
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateEffect(ev)

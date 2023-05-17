@@ -18,7 +18,7 @@ function s.tdcostfilter(c)
 	return c:IsDefense(500) and c:IsAbleToDeckOrExtraAsCost()
 end
 function s.tdcostrescon(sg,e,tp,mg)
-	return sg:GetClassCount(Card.GetAttribute)==#sg 
+	return sg:GetClassCount(Card.GetAttribute)==#sg
 end
 function s.tdcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

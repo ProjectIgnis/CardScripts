@@ -18,14 +18,14 @@ function s.thfilter(c,tp,eg,ep,ev,re,r,rp)
 	local cost=te:GetCost()
 	local target=te:GetTarget()
 	return c:IsCode(id+1) and c:IsSpell() and (not condition or condition(te,1-tp,eg,ep,ev,re,r,rp)) and (not cost or cost(te,1-tp,eg,ep,ev,re,r,rp,0))
-		and (not target or target(te,1-tp,eg,ep,ev,re,r,rp,0)) 
+		and (not target or target(te,1-tp,eg,ep,ev,re,r,rp,0))
 		and Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil,te)
 end
 function s.filter(c,e)
 	return c:IsFaceup() and c:IsCanBeEffectTarget(e)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,tp,eg,ep,ev,re,r,rp) and Duel.IsPlayerCanDraw(tp,6) 
+	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,tp,eg,ep,ev,re,r,rp) and Duel.IsPlayerCanDraw(tp,6)
 		and Duel.GetLocationCount(1-tp,LOCATION_SZONE)>0 end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(5)
@@ -93,7 +93,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				Duel.Equip(tp,tc,g:GetFirst())
 			end
 			tc:ReleaseEffectRelation(te)
-			if etc then	
+			if etc then
 				etc=g:GetFirst()
 				while etc do
 					etc:ReleaseEffectRelation(te)

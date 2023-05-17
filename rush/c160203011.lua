@@ -1,4 +1,4 @@
--- 抑竜ステルンプテラ 
+-- 抑竜ステルンプテラ
 -- Terrorsaur Sternptera
 local s,id=GetID()
 function s.initial_effect(c)

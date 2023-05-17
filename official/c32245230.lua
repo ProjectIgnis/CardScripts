@@ -61,7 +61,7 @@ function s.gyfilter(c,e,tp)
 end
 function s.spfilter(c,e,tp,gc)
 	return c:IsSetCard(0x7f) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsType(TYPE_XYZ)
-		and Duel.GetLocationCountFromEx(tp,tp,gc,c)>0 
+		and Duel.GetLocationCountFromEx(tp,tp,gc,c)>0
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

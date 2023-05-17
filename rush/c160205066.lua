@@ -38,7 +38,7 @@ function s.posfilter2(c)
 	return c:IsCode(80304126) and s.posfilter(c)
 end
 function s.rescon(sg,e,tp,mg)
-	return sg:IsExists(Card.IsCode,1,nil,80304126) 
+	return sg:IsExists(Card.IsCode,1,nil,80304126)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Effect

@@ -62,7 +62,7 @@ function s.tkntg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 end
 function s.tknop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0 
+	if Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,NYTRO_TOKEN,0,TYPES_TOKEN,0,0,8,RACE_PYRO,ATTRIBUTE_FIRE,POS_FACEUP,1-tp) then
 		local token=Duel.CreateToken(tp,NYTRO_TOKEN)
 		if Duel.SpecialSummonStep(token,0,tp,1-tp,false,false,POS_FACEUP) then

@@ -65,7 +65,7 @@ function s.tffilter(c,tp)
 end
 function s.tftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToExtra() and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 
+	if chk==0 then return c:IsAbleToExtra() and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and Duel.IsExistingMatchingCard(s.tffilter,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,nil,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_TOEXTRA,c,1,tp,0)
 end

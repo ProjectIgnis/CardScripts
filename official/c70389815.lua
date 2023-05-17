@@ -18,7 +18,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		if Duel.GetTurnPlayer()==tp then 
+		if Duel.GetTurnPlayer()==tp then
 			return s.thtg(e,tp,eg,ep,ev,re,r,rp,0)
 		else
 			return s.settg(e,tp,eg,ep,ev,re,r,rp,0)

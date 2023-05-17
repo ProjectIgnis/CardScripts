@@ -40,7 +40,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1a,tp)
 	local e1b=e1a:Clone()
 	e1b:SetCode(EFFECT_SET_PROC)
-	Duel.RegisterEffect(e1b,tp)	
+	Duel.RegisterEffect(e1b,tp)
 	--Level 6 or lower non-Fusion 'roids gain ATK
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))

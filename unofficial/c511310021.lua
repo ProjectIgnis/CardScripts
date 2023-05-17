@@ -26,7 +26,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not CheckPillars(tp,1) then return end
 	IcePillarZone[tp+1]=IcePillarZone[tp+1] & ~Duel.SelectFieldZone(tp,1,LOCATION_MZONE,LOCATION_MZONE,~IcePillarZone[tp+1])
 	local g = Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil,tp)
-	if #g>0 then 
+	if #g>0 then
 		local tc = g:GetFirst()
 		local token = Duel.CreateToken(tp,511310022)
 		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)

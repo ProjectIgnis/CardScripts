@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 function s.filter(c,e,tp)
 	local mg=c:GetMaterial()
-	return c:IsFaceup() and c:IsType(TYPE_PLUS) and c:IsType(TYPE_MINUS) and c:IsAbleToGrave() and #mg>0 
+	return c:IsFaceup() and c:IsType(TYPE_PLUS) and c:IsType(TYPE_MINUS) and c:IsAbleToGrave() and #mg>0
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>=#mg+1 and not mg:IsExists(s.mgfilter,1,nil,e,tp,c)
 end
 function s.mgfilter(c,e,tp,card)

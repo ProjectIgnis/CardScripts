@@ -10,7 +10,7 @@ function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
     --opd check
     if Duel.GetFlagEffect(ep,id)>0 then return end
     --condition
-    return aux.CanActivateSkill(tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.CheckLPCost(tp,2000) and 
+    return aux.CanActivateSkill(tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.CheckLPCost(tp,2000) and
     Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil,e,tp)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)

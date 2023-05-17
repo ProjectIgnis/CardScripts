@@ -102,7 +102,7 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.BreakEffect()
 		Duel.SpecialSummon(tc,SUMMON_TYPE_SYNCHRO,tp,tp,false,false,POS_FACEUP)
 		tc:CompleteProcedure()
-	end 
+	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttackTarget()
@@ -111,7 +111,7 @@ function s.desfilter(c,ca)
 	return not c:IsStatus(STATUS_BATTLE_DESTROYED) and (not ca or ca==c)
 end
 function s.damval(e,re,val,r,rp,rc)
-	if (r&REASON_EFFECT)~=0 then 
+	if (r&REASON_EFFECT)~=0 then
 	return 0
 	else return val
 	end

@@ -357,7 +357,7 @@ function UnofficialProc.statsChanged()
 		local g3=Group.CreateGroup() --lose atk
 		local g4=Group.CreateGroup() --gain atk from original
 		local g9=Group.CreateGroup() --lose atk from original
-		
+
 		local dg=Duel.GetMatchingGroup(defcfilter,tp,0x7f,0x7f,nil)
 		local g5=Group.CreateGroup() --change def
 		local g6=Group.CreateGroup() --gain def
@@ -391,7 +391,7 @@ function UnofficialProc.statsChanged()
 				tc:RegisterFlagEffect(285,0,0,1,0)
 			end
 		end
-		
+
 		for dc in dg:Iter() do
 			local prevdef=0
 			if dc:GetFlagEffect(385)>0 then prevdef=dc:GetFlagEffectLabel(385) end
@@ -417,7 +417,7 @@ function UnofficialProc.statsChanged()
 				dc:RegisterFlagEffect(385,0,0,1,0)
 			end
 		end
-		
+
 		if #g1>0 then
 			Duel.RaiseEvent(g1,511001265,re,REASON_EFFECT,rp,ep,0)
 			Duel.RaiseEvent(g1,511001441,re,REASON_EFFECT,rp,ep,0)
@@ -441,7 +441,7 @@ function UnofficialProc.statsChanged()
 			Duel.RaiseEvent(g9,511010103,re,REASON_EFFECT,rp,ep,0)
 		end
 		--Duel.RaiseEvent(g6,,re,REASON_EFFECT,rp,ep,0)
-		
+
 		local lvg=Duel.GetMatchingGroup(lvcfilter,tp,0x7f,0x7f,nil)
 		if #lvg>0 then
 			for lvc in lvg:Iter() do
@@ -453,7 +453,7 @@ function UnofficialProc.statsChanged()
 			end
 			Duel.RaiseEvent(lvg,511002524,re,REASON_EFFECT,rp,ep,0)
 		end
-		
+
 		Duel.RegisterFlagEffect(tp,285,RESET_CHAIN,0,1)
 		Duel.RegisterFlagEffect(1-tp,285,RESET_CHAIN,0,1)
 	end
@@ -465,7 +465,7 @@ function UnofficialProc.statsChanged()
 		local g3=Group.CreateGroup() --lose atk
 		local g4=Group.CreateGroup() --gain atk from original
 		local g9=Group.CreateGroup() --lose atk from original
-		
+
 		local dg=Duel.GetMatchingGroup(defcfilter,tp,0x7f,0x7f,nil)
 		local g5=Group.CreateGroup() --change def
 		--local g6=Group.CreateGroup() --gain def
@@ -499,7 +499,7 @@ function UnofficialProc.statsChanged()
 				tc:RegisterFlagEffect(285,0,0,1,0)
 			end
 		end
-		
+
 		for dc in dg:Iter() do
 			local prevdef=0
 			if dc:GetFlagEffect(385)>0 then prevdef=dc:GetFlagEffectLabel(385) end
@@ -525,7 +525,7 @@ function UnofficialProc.statsChanged()
 				dc:RegisterFlagEffect(285,0,0,1,0)
 			end
 		end
-		
+
 		if #g1>0 then
 			Duel.RaiseEvent(g1,511001265,e,REASON_EFFECT,rp,ep,0)
 		end

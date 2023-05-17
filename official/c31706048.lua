@@ -34,7 +34,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if g:IsExists(s.filter,1,nil) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 			local sg=g:FilterSelect(tp,s.filter,1,1,nil)
-			if sg:GetFirst():IsAbleToHand() then 
+			if sg:GetFirst():IsAbleToHand() then
 				Duel.SendtoHand(sg,nil,REASON_EFFECT)
 				Duel.ConfirmCards(1-tp,sg)
 				Duel.ShuffleHand(tp)

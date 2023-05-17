@@ -91,7 +91,7 @@ function s.avafilter(c)
 end
 function s.avaval(e,c)
 	local g=Duel.GetMatchingGroup(s.avafilter,0,LOCATION_MZONE,LOCATION_MZONE,nil)
-	if #g==0 then 
+	if #g==0 then
 		return 100
 	else
 		local tg,val=g:GetMaxGroup(Card.GetAttack)

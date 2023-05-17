@@ -67,6 +67,6 @@ function s.indesop(e,tp,eg,ep,ev,re,r,rp)
 			sg=sg:AddMaximumCheck()
 			Duel.HintSelection(sg,true)
 			Duel.Destroy(sg,REASON_EFFECT)
-		end 
+		end
 	end
 end

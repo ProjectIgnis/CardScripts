@@ -27,7 +27,7 @@ function s.cfilter(tc)
 	return tc and tc:IsFaceup()
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.filter,1,nil,tp) 
+	return eg:IsExists(s.filter,1,nil,tp)
 		and (s.cfilter(Duel.GetFieldCard(tp,LOCATION_FZONE,0)) or s.cfilter(Duel.GetFieldCard(1-tp,LOCATION_FZONE,0)))
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)

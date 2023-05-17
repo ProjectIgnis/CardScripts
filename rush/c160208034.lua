@@ -21,7 +21,7 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttackTarget()
 	local ac=Duel.GetAttacker()
-	return ac:IsControler(1-tp) and ac:GetLevel()>0 and tc and tc:IsControler(tp) and tc:IsFaceup() 
+	return ac:IsControler(1-tp) and ac:GetLevel()>0 and tc and tc:IsControler(tp) and tc:IsFaceup()
 		and tc:IsAttackPos() and tc:IsLevelAbove(7) and tc:IsAttribute(ATTRIBUTE_WIND)
 		and tc:IsRace(RACE_WARRIOR|RACE_BEAST)
 end

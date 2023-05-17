@@ -51,14 +51,14 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.rmvfilter(c,tp)
 	if not (c:IsSetCard({SET_TELLARKNIGHT,SET_CONSTELLAR}) and c:IsAbleToRemoveAsCost()
-		and c:IsHasEffect(id)) then 
+		and c:IsHasEffect(id)) then
 		return false
 	end
 	local eff=c:GetCardEffect(id)
 	local te=eff:GetLabelObject()
 	local con=te:GetCondition()
 	local tg=te:GetTarget()
-	if (not con or con(te,tp,Group.CreateGroup(),PLAYER_NONE,0,eff,REASON_EFFECT,PLAYER_NONE,0)) 
+	if (not con or con(te,tp,Group.CreateGroup(),PLAYER_NONE,0,eff,REASON_EFFECT,PLAYER_NONE,0))
 		and (not tg or tg(te,tp,Group.CreateGroup(),PLAYER_NONE,0,eff,REASON_EFFECT,PLAYER_NONE,0)) then
 		return true
 	end

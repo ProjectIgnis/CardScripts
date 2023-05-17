@@ -40,7 +40,7 @@ function s.initial_effect(c)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
-	return Duel.GetTurnPlayer()~=tp and ph>=0x08 and ph<=0x20 
+	return Duel.GetTurnPlayer()~=tp and ph>=0x08 and ph<=0x20
 		and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)

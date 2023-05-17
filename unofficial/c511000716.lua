@@ -120,6 +120,6 @@ function s.acop(e,tp,eg,ep,ev,re,r,rp)
 				etc:ReleaseEffectRelation(te)
 				etc=g:GetNext()
 			end
-		end 
+		end
 	end
 end

@@ -67,7 +67,7 @@ function s.matfilter(c,lc,sumtype,tp)
 end
 function s.attcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPosition(POS_FACEUP) and e:GetHandler():IsLocation(LOCATION_MZONE)
-end 
+end
 function s.ctcon(e)
 	local c=e:GetHandler()
 	return c:IsSummonLocation(LOCATION_EXTRA) and c:GetControler()==e:GetHandlerPlayer()
@@ -79,7 +79,7 @@ end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
-	   c:AddCounter(0x577,4)   
+	   c:AddCounter(0x577,4)
 	end
 end
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp)
@@ -115,7 +115,7 @@ function s.diceop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.BreakEffect()
 		local dc=Duel.GetOperatedGroup()
 		Duel.Damage(1-tp,#dc*500,REASON_EFFECT)
-	end  
+	end
 end
 function s.distg(e,c)
 	return c:IsAttribute(e:GetHandler():GetAttribute()) and c~=e:GetHandler()

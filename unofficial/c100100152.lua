@@ -31,7 +31,7 @@ function s.condition2(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFieldCard(tp,LOCATION_FZONE,0) and 
+	if chk==0 then return Duel.GetFieldCard(tp,LOCATION_FZONE,0) and
 		Duel.GetFieldCard(1-tp,LOCATION_FZONE,0) end
 	local tc1=Duel.GetFieldCard(tp,LOCATION_FZONE,0):GetCounter(0x91)
 	local tc2=Duel.GetFieldCard(1-tp,LOCATION_FZONE,0):GetCounter(0x91)

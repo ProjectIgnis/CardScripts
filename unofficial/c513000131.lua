@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	--Negate
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(EFFECT_DISABLE) 
+	e2:SetCode(EFFECT_DISABLE)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(0xff,0xff)
 	e2:SetTarget(s.disable)

@@ -56,7 +56,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.synop(e,tg,ntg,sg,lv,sc,tp)
-	local res=sg:CheckWithSumEqual(Card.GetSynchroLevel,lv,#sg,#sg,sc) 
+	local res=sg:CheckWithSumEqual(Card.GetSynchroLevel,lv,#sg,#sg,sc)
 		or sg:CheckWithSumEqual(function() return 2 end,lv,#sg,#sg)
 	return res,true
 end

@@ -89,7 +89,7 @@ function s.recop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Recover(p,s[1-tp],REASON_EFFECT)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsNegatable,tp,0,LOCATION_ONFIELD,1,nil) 
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsNegatable,tp,0,LOCATION_ONFIELD,1,nil)
 		or Duel.IsExistingMatchingCard(Card.IsFacedown,tp,LOCATION_SZONE,LOCATION_SZONE,1,nil) end
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)

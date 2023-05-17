@@ -10,7 +10,7 @@ function s.cfilter(c)
 	return c:IsMonster() and c:IsFaceup() and (c:IsSetCard(SET_RED_EYES) or (c:IsType(TYPE_NORMAL) and c:IsRace(RACE_DRAGON))) and not c:IsCode(CARD_REDEYES_B_DRAGON)
 end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
-	return aux.CanActivateSkill(tp) and Duel.GetFlagEffect(tp,id)==0 and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil) 
+	return aux.CanActivateSkill(tp) and Duel.GetFlagEffect(tp,id)==0 and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))

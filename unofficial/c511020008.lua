@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(Card.IsSummonPlayer,1,nil,1-tp) 
+	return eg:IsExists(Card.IsSummonPlayer,1,nil,1-tp)
 end
 function s.filter(c,e,tp)
 	return c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

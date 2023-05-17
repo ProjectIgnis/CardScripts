@@ -39,7 +39,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if #g>0 then
 		ct=Duel.Destroy(g,REASON_EFFECT)
-		if ct>0 then 
+		if ct>0 then
 			Duel.BreakEffect()
 			Duel.DiscardDeck(tp,ct,REASON_EFFECT)
 			Duel.DiscardDeck(1-tp,ct,REASON_EFFECT)

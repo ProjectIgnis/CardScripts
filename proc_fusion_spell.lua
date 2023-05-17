@@ -6,7 +6,7 @@
 --extraop		function called right before sending the monsters to the graveyard as material
 --gc			mandatory card or function returning a group to be used (for effects like Soprano)
 --stage2		function called after the monster has been summoned
---exactcount	
+--exactcount
 --location		location where to summon fusion monsters from (default LOCATION_EXTRA)
 --chkf			FUSPROC flags for the fusion summon
 --desc			summon effect description
@@ -37,7 +37,7 @@ Debug.ReloadFieldBegin=(function()
 				return Fusion.ExtraGroup and Fusion.ExtraGroup:IsContains(c)
 			end)
 			geff:SetValue(aux.TRUE)
-			Duel.RegisterEffect(geff,0)	
+			Duel.RegisterEffect(geff,0)
 		end
 	end
 )()
@@ -271,7 +271,7 @@ function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locati
 								Fusion.CheckAdditional=nil
 								Fusion.ExtraGroup=nil
 							end
-						end		
+						end
 					end
 					Fusion.CheckExact=nil
 					Fusion.CheckMin=nil

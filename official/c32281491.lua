@@ -11,17 +11,17 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 end
 s.listed_series={SET_UTOPIA,SET_NUMBER}
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(SET_NUMBER) and c:IsAttributeExcept(ATTRIBUTE_LIGHT) 
+	return c:IsSetCard(SET_NUMBER) and c:IsAttributeExcept(ATTRIBUTE_LIGHT)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.GetLocationCount(tp,LOCATION_SZONE)>1
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) 
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
 		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_UTOPIA),tp,LOCATION_MZONE,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,tp,0)
@@ -58,7 +58,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			end
 		end
 	end
-	Duel.SpecialSummonComplete()	
+	Duel.SpecialSummonComplete()
 end
 function s.limitop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())

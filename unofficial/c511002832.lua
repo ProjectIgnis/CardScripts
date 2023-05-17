@@ -17,7 +17,7 @@ function s.cfilter(c,tpe)
 	return c:IsFaceup() and c:IsType(tpe)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil,TYPE_PLUS) 
+	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil,TYPE_PLUS)
 		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil,TYPE_MINUS)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

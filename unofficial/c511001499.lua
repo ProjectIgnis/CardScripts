@@ -39,7 +39,7 @@ function s.filter(c,tp,eg,ep,ev,re,r,rp,chain)
 		local tc=te2:GetHandler()
 		local g=Group.FromCards(tc)
 		local p=tc:GetControler()
-		return (not condition or condition(e,tp,g,p,chain,te2,REASON_EFFECT,p)) and (not cost or cost(e,tp,g,p,chain,te2,REASON_EFFECT,p,0)) 
+		return (not condition or condition(e,tp,g,p,chain,te2,REASON_EFFECT,p)) and (not cost or cost(e,tp,g,p,chain,te2,REASON_EFFECT,p,0))
 			and (not target or target(e,tp,g,p,chain,te2,REASON_EFFECT,p,0))
 	elseif te:GetCode()==EVENT_FREE_CHAIN then
 		return (not condition or condition(e,tp,eg,ep,ev,re,r,rp)) and (not cost or cost(e,tp,eg,ep,ev,re,r,rp,0))
@@ -52,7 +52,7 @@ function s.filter(c,tp,eg,ep,ev,re,r,rp,chain)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local chain=Duel.GetCurrentChain()
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,e:GetHandler(),tp,eg,ep,ev,re,r,rp,chain) 
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,e:GetHandler(),tp,eg,ep,ev,re,r,rp,chain)
 		and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

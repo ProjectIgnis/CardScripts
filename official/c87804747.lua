@@ -48,7 +48,7 @@ function s.initial_effect(c)
 end
 function s.matfilter(lvl)
 	return function(c,fc,sumtype,tp)
-		return c:IsLevel(lvl) and c:IsRace(RACE_INSECT,fc,sumtype,tp) 
+		return c:IsLevel(lvl) and c:IsRace(RACE_INSECT,fc,sumtype,tp)
 	end
 end
 function s.splimit(e,se,sp,st)

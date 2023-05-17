@@ -5,7 +5,7 @@ function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Fusion Materials
 	Fusion.AddProcMix(c,true,true,86188410,89252153)
-	--Must be Fusion Summoned 
+	--Must be Fusion Summoned
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)

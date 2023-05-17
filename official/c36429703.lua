@@ -40,7 +40,7 @@ function s.spfilter(c,e,tp)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
@@ -77,7 +77,7 @@ function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	return re:IsActiveType(TYPE_XYZ) and rc:IsSetCard(SET_RAIDRAPTOR) and rc:IsControler(tp)
 	--[[
-	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) 
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
 		and re:IsMonsterEffect() and rc:IsSetCard(SET_RAIDRAPTOR) and rc:IsType(TYPE_XYZ) and rc:GetControler()==tp
 	]]
 end

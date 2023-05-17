@@ -35,7 +35,7 @@ s.listed_series={SET_NUMBER}
 s.listed_names={92365601}
 s.xyz_number=39
 function s.rankupregcon(e,tp,eg,ep,ev,re,r,rp)
-	return re and re:GetHandler():IsCode(92365601) 
+	return re and re:GetHandler():IsCode(92365601)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) end

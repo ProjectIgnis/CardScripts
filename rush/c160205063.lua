@@ -28,7 +28,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.HintSelection(g,true)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
-		if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,80304126),tp,LOCATION_MZONE,0,1,nil) 
+		if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,80304126),tp,LOCATION_MZONE,0,1,nil)
 			and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
 			local ag=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsCode,80304126),tp,LOCATION_MZONE,0,1,1,nil)

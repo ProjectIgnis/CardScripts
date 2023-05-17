@@ -3,8 +3,8 @@
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)
-	--Fusion Summon procedure
 	c:EnableReviveLimit()
+	--Fusion Summon procedure
 	Fusion.AddProcMix(c,true,true,160205022,CARD_CYBER_DRAGON)
 	--Destroy up to 2 monsters the opponent control with total ATK equal or less than this card's
 	local e1=Effect.CreateEffect(c)
@@ -24,9 +24,12 @@ end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,2,nil) end
 end
+function s.rescon(sg,e,tp,mg)
+	return sg:GetSum(Card.GetAttack)<=e:GetHandler():GetAttack()
+end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsNotMaximumModeSide),tp,0,LOCATION_MZONE,nil)
-	if chk==0 then return #g>0 end
+	if chk==0 then return #g>0 and aux.SelectUnselectGroup(g,e,tp,1,2,s.rescon,0) end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,LOCATION_MZONE)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
@@ -34,7 +37,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_GRAVE,0,2,2,nil)
 	Duel.HintSelection(g,true)
-	if not Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST) then return end
+	if Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)==0 then return end
 	--Effect
 	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsNotMaximumModeSide),tp,0,LOCATION_MZONE,nil)
 	if #g>0 then
@@ -44,7 +47,4 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		sg=sg:AddMaximumCheck()
 		Duel.Destroy(sg,REASON_EFFECT)
 	end
-end
-function s.rescon(sg,e,tp,mg)
-	return sg:GetSum(Card.GetAttack)<=e:GetHandler():GetAttack()
 end

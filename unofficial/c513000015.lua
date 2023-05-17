@@ -129,7 +129,7 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local mg=c:GetMaterial()
-	if chk==0 then c:IsSummonType(SUMMON_TYPE_SYNCHRO)
+	if chk==0 then return c:IsSummonType(SUMMON_TYPE_SYNCHRO)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>=#mg
 		and not mg:IsExists(s.mgfilter,1,nil,e,tp,c)
 	end
@@ -138,7 +138,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local mg=c:GetMaterial()
-	if #mg>Duel.GetLocationCount(tp,LOCATION_MZONE) or c:GetSummonType()~=SUMMON_TYPE_SYNCHRO 
+	if #mg>Duel.GetLocationCount(tp,LOCATION_MZONE) or not c:IsSummonType(SUMMON_TYPE_SYNCHRO)
 		or mg:IsExists(s.mgfilter,1,nil,e,tp,c) then return end
 	Duel.SpecialSummon(mg,0,tp,tp,false,false,POS_FACEUP)
 end

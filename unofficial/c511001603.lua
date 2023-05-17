@@ -41,6 +41,7 @@ function s.initial_effect(c)
 	e4:SetCode(21142671)
 	c:RegisterEffect(e4)
 end
+s.synchro_nt_required=1
 s.listed_names={39765958}
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

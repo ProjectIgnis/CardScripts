@@ -59,6 +59,8 @@ function s.initial_effect(c)
 	e7:SetCode(EFFECT_NO_EFFECT_DAMAGE)
 	c:RegisterEffect(e7)
 end
+s.synchro_tuner_required=1
+s.synchro_nt_required=2
 s.listed_names={24696097}
 function s.valcheck(e,c)
 	local g=c:GetMaterial()

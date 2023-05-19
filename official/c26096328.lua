@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.ovfilter(c,tp,lc)
-	return c:IsFaceup() and c:GetRank()==10 and c:IsRace(RACE_MACHINE,lc,SUMMON_TYPE_XYZ,tp)
+	return c:IsFaceup() and c:GetRank()==10 and c:IsType(TYPE_XYZ,lc,SUMMON_TYPE_XYZ,tp) and c:IsRace(RACE_MACHINE,lc,SUMMON_TYPE_XYZ,tp)
 end
 function s.xyzop(e,tp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end

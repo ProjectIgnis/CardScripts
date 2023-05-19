@@ -1,3 +1,4 @@
+--ハーピィズフルドレス
 --Harpie's Full Dress
 local s,id=GetID()
 function s.initial_effect(c)
@@ -26,7 +27,7 @@ function s.initial_effect(c)
 	e4:SetLabelObject(e3)
 	c:RegisterEffect(e4)
 end
-s.listed_names={CARD_HARPIE_LADY,160208002}
+s.listed_names={CARD_HARPIE_LADY,160208002} --Harpie Ladies
 function s.eqfilter(c)
 	return c:IsFaceup() and c:IsCode(CARD_HARPIE_LADY,160208002) and not c:IsMaximumModeSide()
 end
@@ -37,6 +38,6 @@ function s.eftg(e,c)
 	return e:GetHandler():GetEquipTarget()==c
 end
 function s.condition(e)
-	local ct=Duel.GetMatchingGroupCountRush(Card.IsMonster,e:GetHandlerPlayer(),LOCATION_MZONE,0,nil)
+	local ct=Duel.GetMatchingGroupCountRush(aux.FaceupFilter(Card.IsMonster),e:GetHandlerPlayer(),LOCATION_MZONE,0,nil)
 	return ct==1 or ct==3
 end

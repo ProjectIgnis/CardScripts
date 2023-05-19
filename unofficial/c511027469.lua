@@ -1,4 +1,5 @@
---RUM－ヌメロン・フォース
+--RUM－ヌメロン・フォース (anime)
+--Rank-Up-Magic Numeron Force (anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,4 +1,5 @@
---RUM－ヌメロン・フォース
+--RUM－ヌメロン・フォース (anime)
+--Rank-Up-Magic Numeron Force (anime)
 Duel.LoadScript("c420.lua")
 Duel.EnableUnofficialProc(PROC_CANNOT_BATTLE_INDES)
 local s,id=GetID()

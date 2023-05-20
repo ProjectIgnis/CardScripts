@@ -1,6 +1,6 @@
 --RUM－ヌメロン・フォース (anime)
 --Rank-Up-Magic Numeron Force (anime)
-Duel.LoadScript("c420.lua")
+--Duel.LoadScript("c420.lua")
 Duel.EnableUnofficialProc(PROC_CANNOT_BATTLE_INDES)
 local s,id=GetID()
 function s.initial_effect(c)
@@ -85,7 +85,6 @@ function s.batval(e,re,c)
 		and (not re:IsHasType(EFFECT_TYPE_FIELD) or re:GetActivateLocation()>0)
 		and not re:GetHandler():IsHasEffect(EFFECT_CANNOT_DISABLE)
 end
-function s.distg(e,c)
+--[[function s.distg(e,c)
 	return c~=e:GetHandler() and c:IsHasEffect(EFFECT_INDESTRUCTABLE_BATTLE)
-               end
-
+               end]]

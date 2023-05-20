@@ -49,7 +49,7 @@ function s.opttarget(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tc=Duel.SelectTarget(tp,s.optfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	local op=Duel.SelectEffect(tp,
 		{tc:GetFirst():IsCanChangePosition(),aux.Stringid(id,2)},
-		{true,aux.Stringid(id,3)})
+		{e:GetHandler():IsCanBeXyzMaterial(tc,tp,REASON_EFFECT),aux.Stringid(id,3)})
 	e:SetLabel(op)
 	if op==1 then
 		e:SetCategory(CATEGORY_POSITION)
@@ -61,12 +61,13 @@ end
 function s.opteffect(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if not c:IsRelateToEffect(e) or not tc:IsRelateToEffect(e)
-		or tc:IsImmuneToEffect(e) then return end
+	if not tc:IsRelateToEffect(e) or tc:IsImmuneToEffect(e) then return end
 	if e:GetLabel()==1 then
 		Duel.ChangePosition(tc,POS_FACEUP_DEFENSE,0,POS_FACEUP_ATTACK,0)
 	else
-		Duel.Overlay(tc,c)
+		if c:IsCanBeXyzMaterial(tc,tp,REASON_EFFECT) then
+			Duel.Overlay(tc,c)
+		end
 	end
 end
 

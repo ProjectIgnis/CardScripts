@@ -39,7 +39,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==1 then
 		local tc=Duel.GetFirstTarget()
-		if tc and tc:IsRelateToEffect(e) then
+		if tc:IsRelateToEffect(e) then
 			Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)
 		end
 	else

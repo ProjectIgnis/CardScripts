@@ -18,7 +18,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
 end
 function s.filter(c,g)
-	if not c:IsFaceup() or c:IsMaximumModeSide() or c:IsHasEffect(EFFECT_EXTRA_RELEASE) then return false end
+	if not c:IsFaceup() or c:IsMaximumModeSide() or c:IsHasEffect(EFFECT_EXTRA_RELEASE_SUM) then return false end
 	return g:CheckWithSumEqual(Card.GetLevel,c:GetLevel(),1,99)
 end
 function s.filter2(c)
@@ -38,7 +38,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoGrave(tg,REASON_EFFECT)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_EXTRA_RELEASE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetCode(EFFECT_EXTRA_RELEASE_SUM)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 	tc:RegisterEffect(e1)
 end

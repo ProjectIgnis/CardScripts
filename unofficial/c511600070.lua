@@ -13,11 +13,7 @@ function s.initial_effect(c)
 	c:EnableReviveLimit()
 	Xyz.AddProcedure(c,s.xyzfilter,nil,3)
 	--battle indestructable
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e1:SetValue(s.indes)
-	c:RegisterEffect(e1)
+	aux.AddNumberBattleIndes(c)
 	--cannot disable spsummon
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
@@ -35,14 +31,21 @@ function s.initial_effect(c)
 	--atk & def
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetCode(EFFECT_SET_ATTACK)
 	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e4:SetCode(EFFECT_SET_BASE_ATTACK)
 	e4:SetRange(LOCATION_MZONE)
+	e4:SetCondition(s.atkcon)
 	e4:SetValue(s.atkval)
 	c:RegisterEffect(e4)
 	local e5=e4:Clone()
-	e5:SetCode(EFFECT_SET_DEFENSE)
+	e5:SetCode(EFFECT_SET_BASE_DEFENSE)
 	c:RegisterEffect(e5)
+	--Materials
+	local e6=Effect.CreateEffect(c)
+	e6:SetType(EFFECT_TYPE_SINGLE)
+	e6:SetCode(EFFECT_MATERIAL_CHECK)
+	e6:SetValue(s.valcheck)
+	c:RegisterEffect(e6)
 	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -52,15 +55,18 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
-s.listed_series={0x48}
+s.listed_series={SET_NUMBER}
 s.xyz_number=0
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	for i=0,1 do
-		return Duel.IsPlayerAffectedByEffect(i,EFFECT_CANNOT_SPECIAL_SUMMON)
+		if Duel.IsPlayerAffectedByEffect(i,EFFECT_CANNOT_SPECIAL_SUMMON) then return true end
 	end
+	return false
 end
 function s.splimit(target)
 	return function (...)
+		local params={...}
+		local c=params[2]
 		return (not target or target(...)) and not zexal[c]
 	end
 end
@@ -89,9 +95,12 @@ end
 function s.chlimit(e,ep,tp)
 	return tp==ep
 end
-function s.atkval(e,c)
-	return c:GetOverlayGroup():GetSum(Card.GetRank)*500
+function s.atkcon(e)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ) and e:GetHandler():HasFlagEffect(id)
 end
-function s.indes(e,c)
-	return not c:IsSetCard(0x48)
+function s.atkval(e,c)
+	return e:GetHandler():GetFlagEffectLabel(id)
+end
+function s.valcheck(e,c)
+	c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD&~RESET_TOFIELD,0,0,c:GetMaterial():GetSum(Card.GetRank)*500)
 end

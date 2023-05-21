@@ -1,5 +1,5 @@
 --刀皇－都牟羽沓薙
---Sword Emperor - Tsumuhakutsunagi
+--Tsumuha-Kutsunagi the Lord of Swords
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -41,9 +41,10 @@ function s.gyop(e,tp,eg,ep,ev,re,r,rp)
 		local ct=math.min(#g,deck1,deck2)
 		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_TOGRAVE)
 		local sg=g:Select(1-tp,1,ct,nil)
-		local oc=Duel.SendtoGrave(sg,REASON_EFFECT)
+		local oc=Duel.SendtoGrave(sg,REASON_EFFECT,PLAYER_NONE,1-tp)
 		if oc>0 then
 			local turn_p=Duel.GetTurnPlayer()
+			Duel.BreakEffect()
 			Duel.Draw(turn_p,oc,REASON_EFFECT)
 			Duel.Draw(1-turn_p,oc,REASON_EFFECT)
 		end
@@ -59,6 +60,6 @@ function s.gyop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local loc=LOCATION_ONFIELD|LOCATION_REMOVED|LOCATION_GRAVE
-	local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,loc,loc,nil)
+	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(Card.IsAbleToDeck),tp,loc,loc,nil)
 	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 end

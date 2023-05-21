@@ -70,7 +70,9 @@ function s.ovfilter(c,e,xc,tp)
 		and not c:IsImmuneToEffect(e) and c:IsCanBeXyzMaterial(xc,tp,REASON_EFFECT)
 end
 function s.ovtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return eg:IsExists(s.ovfilter,1,nil,e,e:GetHandler(),tp) end
+	local c=e:GetHandler()
+	if chk==0 then return c:IsType(TYPE_XYZ) and eg:IsExists(s.ovfilter,1,nil,e,c,tp) end
+	Duel.SetTargetCard(eg)
 	if e:GetCode()==EVENT_TO_GRAVE then
 		Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,nil,1,1-tp,0)
 	end
@@ -78,8 +80,10 @@ end
 function s.ovop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or not c:IsType(TYPE_XYZ) or c:IsImmuneToEffect(e) then return end
+	local tg=Duel.GetTargetCards(e)
+	if #tg==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTACH)
-	local g=eg:FilterSelect(tp,s.ovfilter,1,1,nil,e,c,tp)
+	local g=tg:FilterSelect(tp,s.ovfilter,1,1,nil,e,c,tp)
 	if #g>0 then
 		Duel.Overlay(c,g)
 	end

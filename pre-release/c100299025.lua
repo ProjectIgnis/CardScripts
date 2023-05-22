@@ -27,7 +27,7 @@ function s.cfilter2(c,e,tp,tun)
 	if not (c:IsFaceup() and not c:IsType(TYPE_TUNER) and c:IsAbleToGraveAsCost() and not c:IsOriginalType(TYPE_TRAP)) then return false end
 	local g=Group.FromCards(tun,c)
 	for tc in g:Iter() do
-		tc:AssumeProperty(ASSUME_CODE,tc:GetOriginalCode())
+		tc:AssumeProperty(ASSUME_CODE,tc:GetOriginalCodeRule())
 		tc:AssumeProperty(ASSUME_TYPE,tc:GetOriginalType())
 		tc:AssumeProperty(ASSUME_LEVEL,tc:GetOriginalLevel())
 		tc:AssumeProperty(ASSUME_ATTRIBUTE,tc:GetOriginalAttribute())

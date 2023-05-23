@@ -78,7 +78,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.xyzfilter(c,xyz,sumtype,tp)
-	return c:IsType(TYPE_XYZ,xyz,sumtype,tp) and c:IsNumberS(xyz,sumtype,tp)
+	return c:IsType(TYPE_XYZ,xyz,sumtype,tp) and c:IsSetCard(SET_NUMBER_S,xyz,sumtype,tp)
 end
 function s.effcon(e)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL)

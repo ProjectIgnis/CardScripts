@@ -646,15 +646,6 @@ if not AnimeArchetype then
 	}
 	Card.IsCN39UtopiaRay=MakeCheck({0x1539},AnimeArchetype.OCGCN39UtopiaRay)
 
-	-- Number S
-	-- ＳＮｏ.
-	-- シャイニングナンバーズ
-	-- Number S39: Utopia the Lightning/Number S39: Utopia the Lightning/Number S0: Utopic ZEXAL
-	AnimeArchetype.OCGNumberS={
-		52653092,56832966,86532744
-	}
-	Card.IsNumberS=MakeCheck({0x2048},AnimeArchetype.OCGNumberS)
-
 	-- Numeronius
 	-- ヌメロニアス
 	-- Number C1000: Numeronius/Number iC1000: Numeronius Numeronia
@@ -796,7 +787,7 @@ if not AnimeArchetype then
 	AnimeArchetype.OCGShining={
 		22061412,88820235,25366484,62829077,53347303,90263923,12927849,21481146,2061963
 	}
-	Card.IsShining=MakeCheck({0x548},AnimeArchetype.OCGShining,{"IsNumberS"})
+	Card.IsShining=MakeCheck({0x548,0x2048},AnimeArchetype.OCGShining)
 
 	-- Skiel
 	-- スキエル

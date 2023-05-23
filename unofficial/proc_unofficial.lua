@@ -1,7 +1,7 @@
 --Constants
 ATTRIBUTE_LAUGH = 0x80
 RACE_CHARISMA   = 0x8000000000000000
-
+SET_NUMBER_S	= 0x2048
 
 -------------------------------------------------------------
 --Rank-Up related functions

@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,function(c) return not c:IsSummonLocation(LOCATION_EXTRA) end)
 end
-s.listed_names={id+100}
+s.listed_names={36629636}
 function s.tkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0 end
 	-- Cannot Special Summon monsters from the Extra Deck
@@ -34,15 +34,15 @@ function s.tkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and Duel.GetLocationCount(tp,LOCATION_MZONE)>=3
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+100,0,TYPES_TOKEN,0,0,1,RACE_PLANT,ATTRIBUTE_WIND,POS_FACEUP_DEFENSE) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,36629636,0,TYPES_TOKEN,0,0,1,RACE_PLANT,ATTRIBUTE_WIND,POS_FACEUP_DEFENSE) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,3,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,3,tp,0)
 end
 function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and Duel.GetLocationCount(tp,LOCATION_MZONE)>=3
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+100,0,TYPES_TOKEN,0,0,1,RACE_PLANT,ATTRIBUTE_WIND,POS_FACEUP_DEFENSE) then
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,36629636,0,TYPES_TOKEN,0,0,1,RACE_PLANT,ATTRIBUTE_WIND,POS_FACEUP_DEFENSE) then
 		for i=1,3 do
-			local token=Duel.CreateToken(tp,id+100)
+			local token=Duel.CreateToken(tp,36629636)
 			Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 		end
 		Duel.SpecialSummonComplete()

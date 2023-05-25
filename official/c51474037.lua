@@ -21,38 +21,33 @@ s.listed_names={id}
 function s.mfilter(c,e,tp)
 	return c:IsCanBeEffectTarget(e) and c:IsMonster() and (c:IsControler(1-tp) or c:IsRace(RACE_REPTILE))
 end
-function s.mfilter2(c,chk1,chk2,g2)
-	return (chk1 and c:IsCanChangePosition() and g2:IsExists(Card.IsCanChangePosition,1,nil)) or (chk2 and c:IsDestructable() and g2:IsExists(Card.IsAttackAbove,1,nil,1))
+function s.mfilter2(c,tp)
+	return c:IsControler(tp) and c:IsDestructable()
 end
-function s.mfilter3(c,chk1,chk2)
-	return (chk1 and c:IsCanChangePosition()) or (chk2 and c:IsAttackAbove(1))
+function s.mfilter3(c,tp)
+	return c:IsControler(1-tp) and c:IsAttackAbove(1)
+end
+function s.rescon(sg,e,tp,mg)
+	return sg:Filter(Card.IsCanChangePosition,nil):GetClassCount(Card.GetControler)==2
+		or (sg:IsExists(s.mfilter2,1,nil,tp) and sg:IsExists(s.mfilter3,1,nil,tp))
 end
 function s.btg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	local g1,g2=Duel.GetMatchingGroup(aux.FaceupFilter(s.mfilter,e,tp),tp,LOCATION_MZONE,LOCATION_MZONE,nil):Split(Card.IsControler,nil,tp)
-	if chk==0 and (#g1==0 or #g2==0) then return false end
-	local check1=g1:IsExists(Card.IsCanChangePosition,1,nil) and g2:IsExists(Card.IsCanChangePosition,1,nil)
-	local check2=g1:IsExists(Card.IsDestructable,1,nil) and g2:IsExists(Card.IsAttackAbove,1,nil,1)
-	if chk==0 then return check1 or check2 end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local tc1=g1:FilterSelect(tp,s.mfilter2,1,1,nil,check1,check2,g2):GetFirst()
-	Duel.SetTargetCard(tc1)
-	check1=check1 and tc1:IsCanChangePosition()
-	check2=check2 and tc1:IsDestructable()
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local tc2=g2:FilterSelect(tp,s.mfilter3,1,1,nil,check1,check2):GetFirst()
-	Duel.SetTargetCard(tc2)
-	check1=check1 and tc2:IsCanChangePosition()
-	check2=check2 and tc2:GetAttack()>0
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(s.mfilter,e,tp),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	if chk==0 then return aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0) end
+	local sg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_FACEUP)
+	Duel.SetTargetCard(sg)
+	local check1=sg:IsExists(Card.IsCanChangePosition,2,nil)
+	local check2=sg:IsExists(s.mfilter2,1,nil,tp) and sg:IsExists(s.mfilter3,1,nil,tp)
 	local choice=Duel.SelectEffect(tp,
 		{check1,aux.Stringid(id,1)},
 		{check2,aux.Stringid(id,2)})
 	if choice==1 then
-		Duel.SetOperationInfo(0,CATEGORY_POSITION,Group.FromCards(tc1,tc2),2,tp,LOCATION_MZONE)
+		Duel.SetOperationInfo(0,CATEGORY_POSITION,sg,2,tp,LOCATION_MZONE)
 		e:SetCategory(CATEGORY_POSITION)
 	elseif choice==2 then
-		Duel.SetOperationInfo(0,CATEGORY_DESTROY,tc1,1,tp,LOCATION_MZONE)
-		Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,tc2,1,tp,LOCATION_MZONE)
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,sg:Filter(Card.IsControler,nil,tp),1,tp,LOCATION_MZONE)
+		Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,sg:Filter(Card.IsControler,nil,1-tp),1,tp,LOCATION_MZONE)
 		e:SetCategory(CATEGORY_DESTROY+CATEGORY_ATKCHANGE)
 	end
 	e:SetLabel(choice)

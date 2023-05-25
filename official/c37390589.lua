@@ -67,7 +67,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if opt~=1 then
 		local tc=e:GetLabelObject()
 		if not c:IsLocation(LOCATION_SZONE) or not c:IsRelateToEffect(e) or c:IsStatus(STATUS_LEAVE_CONFIRMED) then return end
-		if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
+		if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 			Duel.Equip(tp,c,tc)
 			--Atkup
 			local e1=Effect.CreateEffect(c)

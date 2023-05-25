@@ -43,6 +43,9 @@ function s.initial_effect(c)
 	aux.GlobalCheck(s,function()
 		local oldf=Duel.Overlay
 		Duel.Overlay=function(c,g,grave)
+			if type(g)=="Card" then
+				g=Group.FromCards(g)
+			end
 			local mg=g:Clone()
 			if not grave then g:ForEach(function(gc) mg:Merge(gc:GetOverlayGroup()) end) end
 			local rank=mg:GetSum(Card.GetRank)

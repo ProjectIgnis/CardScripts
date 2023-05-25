@@ -33,7 +33,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local sel=Duel.SelectEffect(tp,
 		{Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_SZONE,LOCATION_SZONE,1,nil),aux.Stringid(id,1)},
 		{Duel.IsExistingMatchingCard(s.eqfilter,tp,LOCATION_SZONE,LOCATION_SZONE,1,nil,e:GetHandler(),aux.Stringid(id,2))})
-	e:SetLabel(sel)
+	e:SetLabel(sel or 0)
 	if sel==1 then
 		e:SetCategory(CATEGORY_DESTROY)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)

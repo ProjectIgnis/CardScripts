@@ -8,9 +8,10 @@ function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Change battle position/attack target
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e1:SetCode(EVENT_BATTLE_START)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e1:SetRange(LOCATION_MZONE)
+	e1:SetCondition(function(e,tp) return Duel.GetBattleMonster(tp)==e:GetHandler() end)
 	e1:SetTarget(s.postg)
 	e1:SetOperation(s.posop)
 	c:RegisterEffect(e1)
@@ -25,30 +26,34 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
+function s.posfilter(c)
+	return not c:IsPosition(POS_FACEUP_ATTACK) and c:IsCanChangePosition()
+end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsCanChangePosition,0,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
-	local sg=Duel.GetMatchingGroup(Card.IsCanChangePosition,0,LOCATION_MZONE,LOCATION_MZONE,nil)
+	if chk==0 then return true end
+	local sg=Duel.GetMatchingGroup(s.posfilter,0,LOCATION_MZONE,LOCATION_MZONE,nil)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,sg,#sg,0,0)
+end
+function s.afilter(c,tp)
+	return c:CanAttack() and not c:IsHasEffect(EFFECT_CANNOT_ATTACK_ANNOUNCE) and not c:IsHasEffect(EFFECT_CANNOT_ATTACK)
+		and ((Duel.IsExistingMatchingCard(Card.IsCanBeBattleTarget,tp,0,LOCATION_MZONE,1,nil,c)
+		or Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)==0 or not Duel.IsExistingMatchingCard(aux.NOT(Card.IsHasEffect),tp,0,LOCATION_MZONE,1,nil,EFFECT_IGNORE_BATTLE_TARGET))
+		or (c:IsHasEffect(EFFECT_DIRECT_ATTACK) and not c:IsHasEffect(EFFECT_CANNOT_DIRECT_ATTACK)))
 end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local a=Duel.GetAttacker()
-	local at=Duel.GetAttackTarget()
-	local g=Duel.GetMatchingGroup(Card.IsCanChangePosition,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	if #g>0 then
-		Duel.ChangePosition(g,POS_FACEUP_ATTACK)
-		Duel.BreakEffect()
-		if Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_MZONE,0,1,c) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
-			if a==c and at then
-				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTACK)
-				local sc=Duel.SelectMatchingCard(tp,aux.TRUE,tp,LOCATION_MZONE,0,1,1,c):GetFirst()
-				Duel.ChangeAttacker(sc)
-			elseif at and at==c then
-				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTACKTARGET)
-				local sc=Duel.SelectMatchingCard(tp,aux.TRUE,tp,LOCATION_MZONE,0,1,1,c):GetFirst()
-				Duel.ChangeAttackTarget(sc)
-			end
-		end
+	local g=Duel.GetMatchingGroup(s.posfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	if #g==0 or Duel.ChangePosition(g,POS_FACEUP_ATTACK)==0 or not c:IsRelateToBattle() then return end
+	Duel.BreakEffect()
+	local a,at=Duel.GetAttacker(),Duel.GetAttackTarget()
+	if a==c and Duel.IsExistingMatchingCard(s.afilter,tp,LOCATION_MZONE,0,1,c,tp) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTACK)
+		local sc=Duel.SelectMatchingCard(tp,s.afilter,tp,LOCATION_MZONE,0,1,1,c,tp):GetFirst()
+		if sc then Duel.ChangeAttacker(sc) end
+	elseif at and at==c and Duel.IsExistingMatchingCard(Card.IsCanBeBattleTarget,tp,LOCATION_MZONE,0,1,c,a) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTACKTARGET)
+		local sc=Duel.SelectMatchingCard(tp,Card.IsCanBeBattleTarget,tp,LOCATION_MZONE,0,1,1,c,a):GetFirst()
+		if sc then Duel.ChangeAttackTarget(sc) end
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
@@ -113,19 +118,19 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 				local loc=LOCATION_SZONE
 				if (tpe&TYPE_FIELD)~=0 then
 					loc=LOCATION_FZONE
-					local fc=Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)
+					local fc=Duel.GetFieldCard(1-tp,LOCATION_FZONE,0)
 					if Duel.IsDuelType(DUEL_1_FIELD) then
-						if fc then 
-							Duel.Destroy(fc,REASON_RULE) 
+						if fc then
+							Duel.Destroy(fc,REASON_RULE)
 						end
-						fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
-						if fc and Duel.Destroy(fc,REASON_RULE)==0 then 
-							Duel.SendtoGrave(tc,REASON_RULE) 
+						fc=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
+						if fc and Duel.Destroy(fc,REASON_RULE)==0 then
+							Duel.SendtoGrave(tc,REASON_RULE)
 						end
 					else
-						fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
-						if fc and Duel.SendtoGrave(fc,REASON_RULE)==0 then 
-							Duel.SendtoGrave(tc,REASON_RULE) 
+						fc=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
+						if fc and Duel.SendtoGrave(fc,REASON_RULE)==0 then
+							Duel.SendtoGrave(tc,REASON_RULE)
 						end
 					end
 				end

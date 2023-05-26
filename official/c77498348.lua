@@ -39,7 +39,6 @@ function s.initial_effect(c)
 	e5:SetCategory(CATEGORY_REMOVE)
 	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e5:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e5:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e5:SetCondition(function(e) return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1 end)
 	e5:SetCost(s.rmcost)
 	e5:SetTarget(s.rmtg)
@@ -71,7 +70,7 @@ function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetCode(EFFECT_CANNOT_BP)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
 	e1:SetTargetRange(1,0)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -96,7 +95,7 @@ end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==ATTRIBUTE_LIGHT then
 		local tc=Duel.GetFirstTarget()
-		if tc and tc:IsRelateToEffect(e) then
+		if tc:IsRelateToEffect(e) then
 			Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 		end
 	else
@@ -105,13 +104,13 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 		local rg=g:RandomSelect(tp,1)
 		local tc=rg:GetFirst()
 		Duel.Remove(tc,POS_FACEDOWN,REASON_EFFECT)
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
 		e1:SetCountLimit(1)
 		e1:SetLabelObject(tc)
-		e1:SetReset(RESET_PHASE+PHASE_END,2)
+		e1:SetReset(RESET_PHASE|PHASE_END,2)
 		e1:SetCondition(s.retcon)
 		e1:SetOperation(s.retop)
 		Duel.RegisterEffect(e1,tp)
@@ -123,7 +122,7 @@ function s.retcon(e,tp,eg,ep,ev,re,r,rp)
 		e:Reset()
 		return false
 	else
-		return Duel.GetTurnPlayer()==1-tp
+		return Duel.IsTurnPlayer(1-tp)
 	end
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)

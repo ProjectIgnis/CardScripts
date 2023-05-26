@@ -25,17 +25,15 @@ function s.initial_effect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_ATTACK_ANNOUNCE)
-	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCondition(s.ptcon)
 	e3:SetTarget(s.pttg)
 	e3:SetOperation(s.ptop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x122}
-
+s.listed_series={SET_VALKYRIE}
 function s.efilter(e,te)
-	return te:IsActiveType(TYPE_SPELL) and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
+	return te:IsSpellEffect() and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
 end
 function s.atkval(e,c)
 	return Duel.GetFieldGroupCount(c:GetControler(),0,LOCATION_MZONE)*500
@@ -58,12 +56,9 @@ function s.ptop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetTargetRange(LOCATION_MZONE,0)
-		e1:SetReset(RESET_PHASE+PHASE_END)
-		e1:SetTarget(s.ptfilter)
+		e1:SetReset(RESET_PHASE|PHASE_END)
+		e1:SetTarget(function(e,cc) return cc:IsSetCard(SET_VALKYRIE) end)
 		e1:SetValue(1)
 		Duel.RegisterEffect(e1,tp)
 	end
-end
-function s.ptfilter(e,c)
-	return c:IsSetCard(0x122)
 end

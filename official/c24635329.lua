@@ -1,17 +1,15 @@
 --聖なる影 ケイウス
---Qadoshaddoll Keios
+--Qadshaddoll Keios
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
-
 function s.initial_effect(c)
 	--FLIP: Special summon "Shaddoll" monster from hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_FLIP+EFFECT_TYPE_TRIGGER_O)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
+	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCountLimit(1,id)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
@@ -29,11 +27,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 	--Part of "Shaddoll" archetype
-s.listed_series={0x9d}
-
+s.listed_series={SET_SHADDOLL}
 	--Check for "Shaddoll" monster that can be special summoned in defense
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x9d) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_DEFENSE)
+	return c:IsSetCard(SET_SHADDOLL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_DEFENSE)
 end
 	--Activation legality
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -56,7 +53,7 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for "Shaddoll" monster
 function s.disfilter(c)
-	return c:IsSetCard(0x9d) and c:IsMonster() and c:IsAbleToGrave()
+	return c:IsSetCard(SET_SHADDOLL) and c:IsMonster() and c:IsAbleToGrave()
 end
 	--Activation legality
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -66,15 +63,14 @@ end
 	--Send "Shaddoll" monster from hand to GY, and you do, all your monsters gain ATK/DEF
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.disfilter,tp,LOCATION_HAND,0,1,1,c)
-	local tc=g:GetFirst()
-	if tc and Duel.SendtoGrave(tc,REASON_EFFECT)~=0 and g:GetFirst():IsLocation(LOCATION_GRAVE) then
+	local tc=Duel.SelectMatchingCard(tp,s.disfilter,tp,LOCATION_HAND,0,1,1,c):GetFirst()
+	if tc and Duel.SendtoGrave(tc,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_GRAVE) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetTargetRange(LOCATION_MZONE,0)
 		e1:SetValue(tc:GetOriginalLevel()*100)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UPDATE_DEFENSE)

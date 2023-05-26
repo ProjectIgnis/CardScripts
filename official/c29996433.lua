@@ -3,7 +3,7 @@
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--indes battle
+	--Cannot be destroyed by battle
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.indcond)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	--position
+	--Change battle position
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_POSITION)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
@@ -20,15 +20,14 @@ function s.initial_effect(c)
 	e2:SetCondition(s.poscon)
 	e2:SetOperation(s.posop)
 	c:RegisterEffect(e2)
-	--special summon
+	--Special Summon 1 "Dinowrestler Capoeiraptor" from the Deck
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
-	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetCountLimit(1,id)
-	e3:SetCondition(s.spcon)
+	e3:SetCondition(function(e) return e:GetHandler():IsDefensePos() end)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
@@ -46,9 +45,6 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ChangePosition(c,POS_FACEUP_DEFENSE)
 	end
 end
-function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsDefensePos()
-end
 function s.spfilter(c,e,tp)
 	return c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -65,4 +61,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-

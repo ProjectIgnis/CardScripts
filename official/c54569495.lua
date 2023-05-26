@@ -3,7 +3,7 @@
 --scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special summon
+	--Special summon itself from the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--Reduce damage
+	--Prevent battle damage
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -29,14 +29,14 @@ function s.initial_effect(c)
 	e2:SetOperation(s.damop1)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x12b}
+s.listed_series={SET_MARINCESS}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
 	return a and d and a:IsRelateToBattle() and d:IsRelateToBattle()
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x12b) and c:IsMonster() and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_MARINCESS) and c:IsMonster() and c:IsAbleToGraveAsCost()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
@@ -58,7 +58,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e1:SetTargetRange(1,0)
 		e1:SetValue(HALF_DAMAGE)
-		e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+		e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
 		Duel.RegisterEffect(e1,tp)
 	end
 end
@@ -67,7 +67,7 @@ function s.damcon1(e,tp,eg,ep,ev,re,r,rp)
 	return a and a:IsControler(1-tp)
 end
 function s.damfilter(c)
-	return c:IsSetCard(0x12b) and c:IsType(TYPE_LINK)
+	return c:IsSetCard(SET_MARINCESS) and c:IsLinkMonster()
 end
 function s.damtg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.damfilter,tp,LOCATION_GRAVE,0,1,nil) end

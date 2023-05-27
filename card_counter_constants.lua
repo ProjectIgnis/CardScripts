@@ -93,7 +93,7 @@ CARDS_SPIRIT_MESSAGE        = {31893528,67287533,94772232,30170981}
 
 --Commonly used Tokens
 TOKEN_ADVENTURER                    = 3285552
-TOKEN_BOMB                          = 100432119
+TOKEN_BOMB                          = 22411610
 TOKEN_DUAL_AVATAR_SPIRIT            = 87669905
 TOKEN_ENGINE                        = 82556059
 TOKEN_FIREBALL                      = 23116809

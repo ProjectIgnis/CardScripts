@@ -25,7 +25,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local b1=not Duel.HasFlagEffect(tp,id)
 		and Duel.IsExistingMatchingCard(s.thspfilter,tp,LOCATION_DECK,0,1,nil,e,tp,ft)
-	local b2=not Duel.HasFlagEffect(tp,id+100)
+	local b2=not Duel.HasFlagEffect(tp,id+1)
 		and Duel.IsExistingTarget(s.damfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 	if chk==0 then return b1 or b2 end
 	local op=Duel.SelectEffect(tp,
@@ -47,7 +47,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		local ctrl=tc:GetControler()
 		if ctrl==tp then dam=dam//2 end
 		Duel.SetTargetParam(ctrl)
-		Duel.RegisterFlagEffect(tp,id+100,RESET_PHASE|PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_END,0,1)
 		Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,dam)
 	end
 end

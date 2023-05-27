@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_VOLCANIC}
-s.listed_names={100432119}
+s.listed_names={TOKEN_BOMB}
 function s.tgfilter(c)
 	return c:IsRace(RACE_PYRO) and c:IsAbleToGrave()
 end
@@ -32,7 +32,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not (sc and Duel.SendtoGrave(sc,REASON_EFFECT)>0 and sc:IsLocation(LOCATION_GRAVE) and sc:IsSetCard(SET_VOLCANIC)) then return end
 	local b1=sc:HasLevel()
 	local b2=Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,100432119,0,TYPES_TOKEN,1000,1000,1,RACE_PYRO,ATTRIBUTE_FIRE,POS_FACEUP,1-tp)
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_BOMB,0,TYPES_TOKEN,1000,1000,1,RACE_PYRO,ATTRIBUTE_FIRE,POS_FACEUP,1-tp)
 	if (b1 or b2) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		local op=Duel.SelectEffect(tp,
 			{b1,aux.Stringid(id,2)},
@@ -41,7 +41,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if op==1 then
 			Duel.Damage(1-tp,sc:GetLevel()*100,REASON_EFFECT)
 		elseif op==2 then
-			local token=Duel.CreateToken(tp,100432119)
+			local token=Duel.CreateToken(tp,TOKEN_BOMB)
 			if Duel.SpecialSummonStep(token,0,tp,1-tp,false,false,POS_FACEUP) then
 				--Inflict 500 damage when destroyed
 				local e1=Effect.CreateEffect(e:GetHandler())

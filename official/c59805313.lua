@@ -32,7 +32,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
 	local b1=not Duel.HasFlagEffect(tp,id) and c:IsAbleToRemove()
 		and Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil)
-	local b2=not Duel.HasFlagEffect(tp,id+100)
+	local b2=not Duel.HasFlagEffect(tp,id+1)
 		and Duel.IsExistingMatchingCard(s.rmfilter,tp,LOCATION_ONFIELD|LOCATION_GRAVE,0,1,nil,tp,ft)
 	if chk==0 then return b1 or b2 end
 	local op=Duel.SelectEffect(tp,
@@ -45,7 +45,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SetOperationInfo(0,CATEGORY_REMOVE,c,1,tp,LOCATION_GRAVE)
 		Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 	elseif op==2 then
-		Duel.RegisterFlagEffect(tp,id+100,RESET_PHASE|PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_END,0,1)
 		e:SetCategory(CATEGORY_REMOVE)
 		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_ONFIELD|LOCATION_GRAVE)
 	end

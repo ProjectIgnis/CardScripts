@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_VOLCANIC}
-s.listed_names={id,100432119}
+s.listed_names={id,TOKEN_BOMB}
 function s.thfilter(c)
 	return c:IsSetCard(SET_VOLCANIC) and not c:IsCode(id) and c:IsAbleToHand()
 end
@@ -52,14 +52,14 @@ function s.tkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,100432119,0,TYPES_TOKEN,1000,1000,1,RACE_PYRO,ATTRIBUTE_FIRE,POS_FACEUP,1-tp) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_BOMB,0,TYPES_TOKEN,1000,1000,1,RACE_PYRO,ATTRIBUTE_FIRE,POS_FACEUP,1-tp) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 end
 function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp)==0
-		or not Duel.IsPlayerCanSpecialSummonMonster(tp,100432119,0,TYPES_TOKEN,1000,1000,1,RACE_PYRO,ATTRIBUTE_FIRE,POS_FACEUP,1-tp) then return end
-	local token=Duel.CreateToken(tp,100432119)
+		or not Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_BOMB,0,TYPES_TOKEN,1000,1000,1,RACE_PYRO,ATTRIBUTE_FIRE,POS_FACEUP,1-tp) then return end
+	local token=Duel.CreateToken(tp,TOKEN_BOMB)
 	if Duel.SpecialSummonStep(token,0,tp,1-tp,false,false,POS_FACEUP) then
 		--Inflict 500 damage when destroyed
 		local e1=Effect.CreateEffect(e:GetHandler())

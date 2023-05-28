@@ -1,5 +1,5 @@
 --電脳堺虎－虎々
---Virtual World Tiger - Huhu
+--Virtual World Tiger - Fufu
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -75,7 +75,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e1:SetCode(EFFECT_DISABLE)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 			tc:RegisterEffect(e1)
 			local e2=e1:Clone()
 			e2:SetCode(EFFECT_DISABLE_EFFECT)

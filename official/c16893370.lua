@@ -1,5 +1,5 @@
 --夢現の眠姫－ネムレリア・レアリゼ
---Nemurelia Réaliser, the Dreamaterializer Sleeping Princess
+--Nemleria Réaliser, the Dreamaterializer Sleeping Princess
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.effop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={CARD_DREAMING_NEMURELIA}
+s.listed_names={CARD_DREAMING_NEMLERIA}
 function s.tdfilter(c,tp)
 	return c:IsAbleToDeck() and Duel.GetMZoneCount(tp,c)>0
 end
@@ -56,7 +56,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tefilter(c)
-	return c:IsCode(CARD_DREAMING_NEMURELIA) and not c:IsForbidden()
+	return c:IsCode(CARD_DREAMING_NEMLERIA) and not c:IsForbidden()
 end
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.IsExistingMatchingCard(s.tefilter,tp,LOCATION_DECK,0,1,nil)

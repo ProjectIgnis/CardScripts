@@ -1,5 +1,5 @@
 --マナドゥム・プライムハート
---Manadome Prime-Heart
+--Mannadium Prime-Heart
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.atkop)
 	e1:SetLabelObject(e0)
 	c:RegisterEffect(e1)
-	--Cannot be targeted by opponent's effect if summoned with a "Manadome" Tuner
+	--Cannot be targeted by opponent's effect if summoned with a "Mannadium" Tuner
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -41,10 +41,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_MANADOME}
+s.listed_series={SET_MANNADIUM}
 s.listed_names={CARD_VISAS_STARFROST}
 function s.tunerfilter(c,sc,tp)
-	return c:IsSetCard(SET_MANADOME,sc,SUMMON_TYPE_SYNCHRO,tp) and c:IsType(TYPE_TUNER,sc,SUMMON_TYPE_SYNCHRO,tp)
+	return c:IsSetCard(SET_MANNADIUM,sc,SUMMON_TYPE_SYNCHRO,tp) and c:IsType(TYPE_TUNER,sc,SUMMON_TYPE_SYNCHRO,tp)
 end
 function s.valcheck(e,c)
 	local mg=c:GetMaterial()
@@ -60,7 +60,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_EXTRA_ATTACK)
 	e1:SetValue(e:GetLabelObject():GetLabel()-1)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 	c:RegisterEffect(e1)
 end
 function s.tgcond(e)

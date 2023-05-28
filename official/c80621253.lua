@@ -1,6 +1,6 @@
--- マナドゥム・トリッド
--- Manadome Trid
--- Scripted by Satella
+--マナドゥム・トリッド
+--Mannadium Trid
+--Scripted by Satella
 local s,id=GetID()
 function s.initial_effect(c)
 	-- Special Summon itself from your hand
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(s.spproccon)
 	c:RegisterEffect(e1)
-	-- Special Summon 1 "Manadome" Tuner monster from your Deck
+	-- Special Summon 1 "Mannadium" Tuner monster from your Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_VISAS_STARFROST}
-s.listed_series={SET_MANADOME}
+s.listed_series={SET_MANNADIUM}
 function s.cfilter(c)
 	return c:IsFaceup() and (c:IsCode(CARD_VISAS_STARFROST) or (c:IsMonster() and c:IsAttack(1500) and c:IsDefense(2100)))
 end
@@ -38,7 +38,7 @@ function s.spproccon(e,c)
 		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(SET_MANADOME) and c:IsType(TYPE_TUNER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_MANNADIUM) and c:IsType(TYPE_TUNER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

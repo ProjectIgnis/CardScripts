@@ -1,5 +1,5 @@
 --騎甲虫クルーエル・サターン
---Beetrooper Cruel Saturn
+--Beetrooper Cruel Saturnas
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

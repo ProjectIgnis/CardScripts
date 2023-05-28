@@ -1,5 +1,5 @@
 --融合複製
---Fusion Reproduction
+--Fusion Duplication
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

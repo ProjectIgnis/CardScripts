@@ -1,5 +1,5 @@
 -- 星騎士 アルテア
--- Tellarknight Altea
+-- Tellarknight Altairan
 -- Scripted by Satella
 local s,id=GetID()
 function s.initial_effect(c)

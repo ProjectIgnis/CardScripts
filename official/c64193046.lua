@@ -1,5 +1,5 @@
 --超重天神マスラ－Ｏ
---Superheavy Samurai Overlord Masurao
+--Superheavy Samurai Brave Masurawo
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -65,7 +65,7 @@ end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
 	tc:SetStatus(STATUS_DESTROY_CONFIRMED,false)
-	Duel.Destroy(tc,REASON_EFFECT+REASON_REPLACE)
+	Duel.Destroy(tc,REASON_EFFECT|REASON_REPLACE)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and re:IsSpellTrapEffect()

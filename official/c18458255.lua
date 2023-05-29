@@ -1,5 +1,5 @@
 --ネムレリアの寝姫楼
---The Sleeping Beauty Tower of Nemurelia
+--Dream Tower of Princess Nemleria
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -30,8 +30,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.repop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={CARD_DREAMING_NEMURELIA}
-s.listed_series={SET_NEMURELIA}
+s.listed_names={CARD_DREAMING_NEMLERIA}
+s.listed_series={SET_NEMLERIA}
 function s.cfilter(c)
 	return c:IsFacedown() and c:IsAbleToRemoveAsCost(POS_FACEDOWN)
 end
@@ -49,7 +49,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(function(_,c) return c:IsLocation(LOCATION_EXTRA) and not c:IsType(TYPE_PENDULUM) end)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.thfilter(c)
@@ -70,14 +70,14 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.repfilter(c,tp)
-	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and c:IsSetCard(SET_NEMURELIA)
+	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and c:IsSetCard(SET_NEMLERIA)
 		and not c:IsReason(REASON_REPLACE) and (c:IsReason(REASON_BATTLE) or (c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp))
 end
 function s.rmfilter(c,tp)
-	return c:IsFacedown() and c:IsAbleToRemove(tp,POS_FACEDOWN,REASON_EFFECT+REASON_REPLACE)
+	return c:IsFacedown() and c:IsAbleToRemove(tp,POS_FACEDOWN,REASON_EFFECT|REASON_REPLACE)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_DREAMING_NEMURELIA),tp,LOCATION_EXTRA,0,1,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_DREAMING_NEMLERIA),tp,LOCATION_EXTRA,0,1,nil)
 		and eg:IsExists(s.repfilter,1,nil,tp)
 		and Duel.IsExistingMatchingCard(s.rmfilter,tp,LOCATION_EXTRA,0,1,nil,tp) end
 	return Duel.SelectEffectYesNo(tp,e:GetHandler(),96)
@@ -88,6 +88,6 @@ end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,s.rmfilter,tp,LOCATION_EXTRA,0,1,1,nil,tp)
-	Duel.Remove(g,POS_FACEDOWN,REASON_EFFECT+REASON_REPLACE)
+	Duel.Remove(g,POS_FACEDOWN,REASON_EFFECT|REASON_REPLACE)
 	Duel.Hint(HINT_CARD,0,id)
 end

@@ -1,6 +1,6 @@
--- マナドゥム・ヒアレス
--- Manadome Hearless
--- Scripted by Satella
+--マナドゥム・ヒアレス
+--Mannadium Fearless
+--Scripted by Satella
 local s,id=GetID()
 function s.initial_effect(c)
 	-- Special Summon itself from your hand
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(s.spproccon)
 	c:RegisterEffect(e1)
-	-- Special Summon 1 "Manadome Hearless" from your Deck
+	-- Special Summon 1 "Mannadium Fearless" from your Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -52,7 +52,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCondition(function() return Duel.IsBattlePhase() end)
 	e1:SetTarget(function(_,c) return c:IsType(TYPE_SYNCHRO) end)
 	e1:SetValue(500)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	aux.RegisterClientHint(c,0,tp,1,0,aux.Stringid(id,1))
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end

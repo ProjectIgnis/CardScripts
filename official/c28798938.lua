@@ -1,5 +1,5 @@
 --双天の獅使－阿吽
---Dual Avatar Lion Envoys - Ah-Un
+--Dual Avatar - Manifested A-Un
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,6 +1,6 @@
--- 御巫舞踊－迷わし鳥
--- Dance of the Mikanko - Fascinating Bird
--- Scripted by Satella
+--御巫舞踊－迷わし鳥
+--Mikanko Dance - Mayowashidori
+--Scripted by Satella
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c)

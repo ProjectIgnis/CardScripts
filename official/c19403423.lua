@@ -1,5 +1,5 @@
 --時を裂く魔瞳
---Time-Rending Morganite
+--Time-Tearing Morganite
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --超重僧兵ビッグベン－Ｋ
---Superheavy Samurai Monk Warrior Big Benkei
+--Superheavy Samurai Monk Big Benkei
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

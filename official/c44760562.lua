@@ -1,9 +1,9 @@
--- マナドゥム・ミーク
--- Manadome Meek
--- Scripted by Satella
+--マナドゥム・ミーク
+--Mannadium Meek
+--Scripted by Satella
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon itself from your hand
+	--Special Summon itself from your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(s.spproccon)
 	c:RegisterEffect(e1)
-	-- Special Summon 1 "Manadome Meek" from your Deck
+	--Special Summon 1 "Mannadium Meek" from your Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_LVCHANGE)

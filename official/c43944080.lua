@@ -1,9 +1,9 @@
--- ネムレリアの夢守り－クエット
--- Nemurelia's Dream Defender - Couette
--- Scripted by Satella
+--ネムレリアの夢守り－クエット
+--Nemleria Dream Defender - Couette
+--Scripted by Satella
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon itself from the hand
+	--Special Summon itself from the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(s.spcon)
 	c:RegisterEffect(e1)
-	-- Negate the activation of your opponent's effect that targets your "Nemurelia" card
+	--Negate the activation of your opponent's effect that targets your "Nemleria" card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_NEGATE)
@@ -27,8 +27,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.negop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_NEMURELIA}
-s.listed_names={CARD_DREAMING_NEMURELIA}
+s.listed_names={CARD_DREAMING_NEMLERIA}
+s.listed_series={SET_NEMLERIA}
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
@@ -36,10 +36,10 @@ function s.spcon(e,c)
 		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,TYPE_PENDULUM),tp,LOCATION_EXTRA,0,1,nil)
 end
 function s.confilter(c,tp)
-	return c:IsSetCard(SET_NEMURELIA) and c:IsFaceup() and c:IsControler(tp) and c:IsOnField()
+	return c:IsSetCard(SET_NEMLERIA) and c:IsFaceup() and c:IsControler(tp) and c:IsOnField()
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_DREAMING_NEMURELIA),tp,LOCATION_EXTRA,0,1,nil) then return false end
+	if not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_DREAMING_NEMLERIA),tp,LOCATION_EXTRA,0,1,nil) then return false end
 	if not (rp==1-tp and re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)) then return false end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	return g:IsExists(s.confilter,1,nil,tp)

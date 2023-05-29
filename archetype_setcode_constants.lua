@@ -529,6 +529,6 @@ SET_VISAS                         = 0x199
 SET_COUNTER                       = 0x200
 SET_BATTLIN_BOXING                = 0x201
 --Currently unreleased in the TCG, the official English name is unknown
-SET_MANADOME                      = 0x191
-SET_NEMURELIA                     = 0x192
+SET_MANNADIUM                     = 0x191
+SET_NEMLERIA                      = 0x192
 --Beta archetypes

@@ -1,5 +1,5 @@
 --珠の御巫 フゥリ
---Furi the Orb Mikanko
+--Hu-Li the Jewel Mikanko
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

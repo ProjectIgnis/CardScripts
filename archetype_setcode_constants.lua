@@ -519,6 +519,8 @@ SET_PURRELY                       = 0x18d
 SET_MIKANKO                       = 0x18e
 SET_AQUAMIRROR                    = 0x18f
 SET_FIREWALL                      = 0x190
+SET_MANNADIUM                     = 0x191
+SET_NEMLERIA                      = 0x192
 SET_LABYRINTH_WALL                = 0x194
 SET_FAVORITE                      = 0x195
 SET_VANQUISH_SOUL                 = 0x196
@@ -529,6 +531,4 @@ SET_VISAS                         = 0x199
 SET_COUNTER                       = 0x200
 SET_BATTLIN_BOXING                = 0x201
 --Currently unreleased in the TCG, the official English name is unknown
-SET_MANNADIUM                     = 0x191
-SET_NEMLERIA                      = 0x192
 --Beta archetypes

@@ -39,7 +39,7 @@ function s.confilter(c,tp)
 	return c:IsSetCard(SET_NEMLERIA) and c:IsFaceup() and c:IsControler(tp) and c:IsOnField()
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_DREAMING_NEMURELIA),tp,LOCATION_EXTRA,0,1,nil) then return false end
+	if not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_DREAMING_NEMLERIA),tp,LOCATION_EXTRA,0,1,nil) then return false end
 	if not (rp==1-tp and re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)) then return false end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	return g:IsExists(s.confilter,1,nil,tp)

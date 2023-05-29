@@ -39,7 +39,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if #g==0 or Duel.SendtoHand(g,nil,REASON_EFFECT)==0 then return end
 	Duel.ConfirmCards(1-tp,g)
-	if not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_DREAMING_NEMURELIA),tp,LOCATION_EXTRA,0,1,nil) then return end
+	if not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_DREAMING_NEMLERIA),tp,LOCATION_EXTRA,0,1,nil) then return end
 	Duel.BreakEffect()
 	local c=e:GetHandler()
 	--Prevent activations when a "Nemleria" monster is Normal or Special Summoned
@@ -65,7 +65,7 @@ function s.tedcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoDeck(c,nil,SEQ_DECKBOTTOM,REASON_COST)
 end
 function s.tedfilter(c)
-	return c:IsCode(CARD_DREAMING_NEMURELIA) and c:IsFaceup() and c:IsAbleToExtra() and not c:IsForbidden()
+	return c:IsCode(CARD_DREAMING_NEMLERIA) and c:IsFaceup() and c:IsAbleToExtra() and not c:IsForbidden()
 end
 function s.tedtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and s.tedfilter(chkc) end

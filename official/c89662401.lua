@@ -60,7 +60,7 @@ function s.cacost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.cafilter(c)
-	return c:IsFacedown() and not c:HasFlagEffect(id) and not c:IsType(TYPE_EQUIP)
+	return c:IsFacedown() and not c:HasFlagEffect(id) and not c:GetEquipTarget()
 end
 function s.catg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_SZONE) and s.cafilter(chkc) end

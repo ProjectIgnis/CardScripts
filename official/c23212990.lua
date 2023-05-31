@@ -45,8 +45,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not (tc:IsRelateToEffect(e) and tc:IsControler(1-tp)) then return end
 	if e:GetLabel()==1 then
+		--Destroy 1 monster your opponent controls
 		Duel.Destroy(tc,REASON_EFFECT)
 	else
+		--Return 1 card your opponent controls to the hand
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end

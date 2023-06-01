@@ -1,4 +1,4 @@
--- 鋼機神ミラーイノベイター
+--鋼機神ミラーイノベイター
 --Steeltek Deity Mirror Innovator
 
 local s,id=GetID()

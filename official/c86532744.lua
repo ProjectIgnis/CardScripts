@@ -1,15 +1,15 @@
 --SNo.39 希望皇ホープONE
+--Number S39: Utopia Prime
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
 	c:EnableReviveLimit()
+	--Xyz Summon procedure
 	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_LIGHT),4,3,s.ovfilter,aux.Stringid(id,1))
-	--destroy
+	--Destroy Special Summoned monsters and inflict damage
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)
 	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)
 	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(s.condition)
 	e1:SetCost(s.cost)
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 end
 s.xyz_number=39
-s.listed_names={84013237}
+s.listed_names={84013237} --Number 39: Utopia
 function s.ovfilter(c,tp,lc)
 	return c:IsFaceup() and c:IsSummonCode(lc,SUMMON_TYPE_XYZ,tp,84013237)
 end

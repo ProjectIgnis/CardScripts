@@ -19,7 +19,7 @@ function s.cfilter(c)
 	return c:IsFaceup() and c:IsCode(CARD_HARPIE_LADY,160208002)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
+	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.spfilter(c,e,tp)
 	return c:IsCode(CARD_HARPIE_LADY,160208002) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)

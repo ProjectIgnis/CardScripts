@@ -31,10 +31,10 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g1=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil,e:GetLabel())
 	local g2=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil,e:GetLabel())
-	if #g1>1 then
+	if #g1>0 then
 		Duel.SendtoGrave(g1,REASON_RULE,PLAYER_NONE,tp)
 	end
-	if #g2>1 then
+	if #g2>0 then
 		Duel.SendtoGrave(g2,REASON_RULE,PLAYER_NONE,1-tp)
 	end
 end

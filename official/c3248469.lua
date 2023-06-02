@@ -38,7 +38,8 @@ function s.excvtop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 		local tc=g:FilterSelect(tp,s.setfilter,1,1,nil):GetFirst()
 		if tc and Duel.SSet(tp,tc) then
-			tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,2)
+			local fid=tc:GetFieldID()
+			tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,2,fid)
 			--Send it to the GY during the next End Phase
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -47,7 +48,7 @@ function s.excvtop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCountLimit(1)
 			e1:SetCondition(s.tgcon)
 			e1:SetOperation(s.tgop)
-			e1:SetLabel(Duel.GetTurnCount())
+			e1:SetLabel(Duel.GetTurnCount(),fid)
 			e1:SetLabelObject(tc)
 			e1:SetReset(RESET_PHASE|PHASE_END,2)
 			Duel.RegisterEffect(e1,tp)
@@ -61,9 +62,11 @@ function s.excvtop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
+	local turn,fid=e:GetLabel()
 	local tc=e:GetLabelObject()
-	return Duel.GetTurnCount()~=e:GetLabel() and tc:GetFlagEffect(id)>0
+	return Duel.GetTurnCount()~=turn and tc:GetFlagEffectLabel(id)==fid
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoGrave(e:GetLabelObject(),REASON_EFFECT)
+	e:Reset()
 end

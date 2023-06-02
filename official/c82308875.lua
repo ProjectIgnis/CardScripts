@@ -44,13 +44,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if d1+d2~=7 then return end
 	--If the total roll is exactly 7, apply 1 effect
 	local b1=Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
-	local b2=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND+LOCATION_GRAVE,LOCATION_GRAVE,1,nil,e,tp)
+	local b2=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND|LOCATION_GRAVE,LOCATION_GRAVE,1,nil,e,tp)
 	local b3=Duel.IsPlayerCanDraw(tp,3)
 	if not (b1 or b2 or b3) then return end
 	local op=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,1)},
 		{b2,aux.Stringid(id,2)},
-		{b2,aux.Stringid(id,3)})
+		{b3,aux.Stringid(id,3)})
 	if op==1 then
 		--Send all other cards on the field to the GY
 		local g=Duel.GetMatchingGroup(Card.IsAbleToGrave,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,c)
@@ -60,7 +60,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	elseif op==2 then
 		--Special Summon 1 monster from your hand or either GY
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local sg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND+LOCATION_GRAVE,LOCATION_GRAVE,1,1,nil,e,tp)
+		local sg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND|LOCATION_GRAVE,LOCATION_GRAVE,1,1,nil,e,tp)
 		if #sg==0 then return end
 		Duel.BreakEffect()
 		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
@@ -68,6 +68,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		--Draw 3 cards, then discard 2 cards
 		if Duel.Draw(tp,3,REASON_EFFECT)~=3 then return end
 		Duel.BreakEffect()
-		Duel.DiscardHand(tp,aux.TRUE,2,2,REASON_EFFECT+REASON_DISCARD)
+		Duel.DiscardHand(tp,nil,2,2,REASON_EFFECT|REASON_DISCARD)
 	end
 end

@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={59900655}
+s.listed_names={59900655} --Gold Pride - Nytro Head
 s.listed_series={SET_GOLD_PRIDE}
 function s.mfilter(c,lc,sumtype,tp)
 	return c:IsSetCard(SET_GOLD_PRIDE,lc,sumtype,tp) and c:HasLevel()
@@ -39,7 +39,7 @@ function s.matcheck(g,lc,sumtype,tp)
 	return g:GetClassCount(Card.GetLevel)==#g
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c:IsControler(1-tp) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) end
 	if chk==0 then return Duel.IsExistingTarget(nil,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local tc=Duel.SelectTarget(tp,nil,tp,0,LOCATION_MZONE,1,1,nil)

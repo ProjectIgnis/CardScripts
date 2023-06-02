@@ -5,32 +5,6 @@ end
 if not Ritual then
 	Ritual = aux.RitualProcedure
 end
---overwrite Duel.GetRitualMaterial to return Extra Deck monsters
---that have an EFFECT_EXTRA_RITUAL_MATERIAL effect on them
-Duel.GetRitualMaterial=(function()
-	local oldfunc=Duel.GetRitualMaterial
-	return function(tp,...)
-		local res=oldfunc(tp,...):Match(function(c)return c:IsControler(tp) or c:IsFaceup() end,nil)
-		local g=Duel.GetMatchingGroup(Card.IsHasEffect,tp,LOCATION_DECK|LOCATION_EXTRA,0,nil,EFFECT_EXTRA_RITUAL_MATERIAL)
-		if #g>0 then
-			res:Merge(g)
-		end
-		return res
-	end
-end)()
---overwrite Duel.ReleaseRitualMaterial to support sending Extra Deck
---"mats" to the GY by default
-Duel.ReleaseRitualMaterial=(function()
-	local oldfunc=Duel.ReleaseRitualMaterial
-	return function(g)
-		local extra_g=g:Filter(Card.IsLocation,nil,LOCATION_DECK|LOCATION_EXTRA)
-		if #extra_g>0 then
-			Duel.SendtoGrave(extra_g,REASON_RITUAL+REASON_EFFECT+REASON_MATERIAL)
-			g:Sub(extra_g)
-		end
-		return oldfunc(g)
-	end
-end)()
 function Ritual.GetMatchingFilterFunction(c)
 	local mt=c.__index
 	if not mt.ritual_matching_function or not mt.ritual_matching_function[c] then

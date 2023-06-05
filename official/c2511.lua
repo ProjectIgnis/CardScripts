@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-s.listed_series={0x17f}
+s.listed_series={SET_LABRYNTH}
 function s.accost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsDiscardable() end
@@ -44,23 +44,24 @@ function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCountLimit(1,{id,2})
 	e1:SetTargetRange(LOCATION_SZONE,0)
 	e1:SetCondition(s.accon)
-	e1:SetTarget(function(e,c) return c:GetType()==TYPE_TRAP end)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetTarget(function(e,c) return c:IsNormalTrap() end)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.accon(e)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x17f),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_LABRYNTH),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	if not (rp==tp and r&REASON_COST==REASON_COST and re and re:IsActivated()) then return false end
 	local rc=re:GetHandler()
 	return eg:IsExists(Card.IsPreviousLocation,1,e:GetHandler(),LOCATION_HAND)
-		and ((re:IsActiveType(TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE))
-		or (rc:IsSetCard(0x17f) and not rc:IsCode(id)))
+		and ((re:IsTrapEffect() and re:IsHasType(EFFECT_TYPE_ACTIVATE))
+		or (rc:IsSetCard(SET_LABRYNTH) and not rc:IsCode(id)))
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToHand() or (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)) end
+	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,c,1,tp,0)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,c,1,tp,0)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,tp,0)
 end

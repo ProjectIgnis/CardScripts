@@ -438,7 +438,7 @@ function Maximum.tribcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(Maximum.cfilter,1,nil,tp)
 end
 function Maximum.tribop(e,tp,eg,ep,ev,re,r,rp)
-	local c=eg:GetFirst()
+	local c=eg:Filter(Card.WasMaximumMode,nil):GetFirst()
 	local g=Duel.GetMatchingGroup(Card.IsMaximumMode,c:GetControler(),LOCATION_MZONE,0,nil)
 	Duel.Sendto(g,c:GetDestination(),0)
 	for tc in aux.Next(g) do

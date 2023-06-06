@@ -33,40 +33,16 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 		else
 			att=og:GetAttribute()
 		end
-		if Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,946,SET_ALCHEMY_BEAST,TYPES_TOKEN,300,300,3,RACE_ROCK,att,POS_FACEUP) then
-			local token=Duel.CreateToken(tp,946)
+		if Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,id+100,SET_ALCHEMY_BEAST,TYPES_TOKEN,500,500,3,RACE_ROCK,att,POS_FACEUP) then
+			local token=Duel.CreateToken(tp,id+100)
 			if Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)>0 then
-				--Set stats/Type
-				local e0a=Effect.CreateEffect(c)
-				e0a:SetType(EFFECT_TYPE_SINGLE)
-				e0a:SetCode(EFFECT_CHANGE_RACE)
-				e0a:SetRange(LOCATION_MZONE)
-				e0a:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_CANNOT_DISABLE)
-				e0a:SetValue(RACE_ROCK)
-				token:RegisterEffect(e0a,true)
-				local e0b=e0a:Clone()
-				e0b:SetCode(EFFECT_SET_BASE_ATTACK)
-				e0b:SetValue(300)
-				token:RegisterEffect(e0b,true)
-				local e0c=e0a:Clone()
-				e0c:SetCode(EFFECT_SET_BASE_DEFENSE)
-				e0c:SetValue(300)
-				token:RegisterEffect(e0c,true)
-				local e0d=e0a:Clone()
-				e0d:SetCode(EFFECT_CHANGE_LEVEL)
-				e0d:SetValue(3)
-				token:RegisterEffect(e0d,true)
-				local e0e=e0a:Clone()
-				e0e:SetCode(EFFECT_CHANGE_SETCODE)
-				e0e:SetValue(0x501) --Alchemy beast
-				token:RegisterEffect(e0e,true)
 				--Change Attribute to that of banished monster
 				local e1=Effect.CreateEffect(e:GetHandler())
 				e1:SetType(EFFECT_TYPE_SINGLE)
 				e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
 				e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 				e1:SetValue(att)
-				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+				e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 				token:RegisterEffect(e1)
 				--"Alchemy Beast Tokens" can attack directly
 				local e2=e1:Clone()
@@ -79,11 +55,11 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 				e3:SetRange(LOCATION_MZONE)
 				e3:SetCode(EFFECT_UNRELEASABLE_NONSUM)
 				e3:SetValue(1)
-				c:RegisterEffect(e3)
+				token:RegisterEffect(e3)
 				local e4=e3:Clone()
 				e4:SetCode(EFFECT_UNRELEASABLE_SUM)
 				e4:SetValue(function(e,c) return not c:IsCode(27408609) end)
-				c:RegisterEffect(e4)
+				token:RegisterEffect(e4)
 			end
 		end
 	end

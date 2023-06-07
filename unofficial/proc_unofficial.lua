@@ -938,7 +938,7 @@ function UnofficialProc.divineHierarchy()
 				break
 			end
 		end
-		return c:HasFlagEffect(FLAG_DIVINE_HIERARCHY) and (owner or c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:GetPreviousLocation()~=0)
+		return c:HasFlagEffect(FLAG_DIVINE_HIERARCHY) and (owner or c:IsSummonType(SUMMON_TYPE_SPECIAL))
 	end
 	local function stgop(e,tp,eg,ep,ev,re,r,rp)
 		local c=e:GetHandler()
@@ -959,6 +959,8 @@ function UnofficialProc.divineHierarchy()
 				Duel.SendtoHand(c,c:GetPreviousControler(),REASON_RULE)
 			elseif c:IsPreviousLocation(LOCATION_REMOVED) then
 				Duel.Remove(c,c:GetPreviousPosition(),REASON_RULE,c:GetPreviousControler())
+			elseif c:GetPreviousLocation()==0 then
+				Duel.RemoveCards(c)
 			end
 		end
 	end

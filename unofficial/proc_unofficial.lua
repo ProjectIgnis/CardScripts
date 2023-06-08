@@ -2,6 +2,7 @@
 ATTRIBUTE_LAUGH = 0x80
 RACE_CHARISMA   = 0x8000000000000000
 SET_NUMBER_S	= 0x2048
+SET_SUPREME_KING	= 0xf8
 
 -------------------------------------------------------------
 --Rank-Up related functions
@@ -87,7 +88,7 @@ end
 
 function Auxiliary.RankUpUsing(cg,id,hint)
 	if type(cg)=="Group" then
-		for c in aux.Next(cg) do
+		for c in cg:Iter() do
 			c:RegisterFlagEffect(511000685,RESET_EVENT|RESETS_STANDARD&(~RESET_TOFIELD),hint and EFFECT_FLAG_CLIENT_HINT or 0,1,id,hint)
 		end
 	else
@@ -97,7 +98,7 @@ end
 
 function Auxiliary.RankUpComplete(cg,hint)
 	if type(cg)=="Group" then
-		for c in aux.Next(cg) do
+		for c in cg:Iter() do
 			c:RegisterFlagEffect(511015134,RESET_EVENT|RESETS_STANDARD&(~RESET_TOFIELD),hint and EFFECT_FLAG_CLIENT_HINT or 0,1,nil,hint)
 		end
 	else
@@ -321,8 +322,8 @@ function UnofficialProc.statsChanged()
 		--ATK = 285, prev ATK = 284
 		--LVL = 585, prev LVL = 584
 		--DEF = 385, prev DEF = 384
-		local g=Duel.GetMatchingGroup(aux.TRUE,tp,0xff,0xff,nil)
-		for tc in aux.Next(g) do
+		local g=Duel.GetMatchingGroup(nil,tp,0xff,0xff,nil)
+		for tc in g:Iter() do
 			if tc:GetFlagEffect(285)==0 and tc:GetFlagEffect(585)==0 then
 				local atk=tc:GetAttack()
 				local def=tc:GetDefense()
@@ -708,8 +709,8 @@ function UnofficialProc.cannotBattleIndes()
 		end
 	end
 	local function batregop(e,tp,eg,ep,ev,re,r,rp)
-		local tg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,nil)
-		for tc in aux.Next(tg) do
+		local tg=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,nil)
+		for tc in tg:Iter() do
 			local indes={tc:GetCardEffect(EFFECT_INDESTRUCTABLE)}
 			local indesBattle={tc:GetCardEffect(EFFECT_INDESTRUCTABLE_BATTLE)}
 			local indesCount={tc:GetCardEffect(EFFECT_INDESTRUCTABLE_COUNT)}
@@ -797,7 +798,7 @@ function UnofficialProc.onLP0Trigger()
 					end
 				end)
 				Duel.RegisterEffect(ge2,p)
-				Duel.RaiseEvent(Duel.GetMatchingGroup(aux.TRUE,p,LOCATION_ALL,0,nil),EVENT_LP0,nil,0,0,p,0)
+				Duel.RaiseEvent(Duel.GetMatchingGroup(nil,p,LOCATION_ALL,0,nil),EVENT_LP0,nil,0,0,p,0)
 				Duel.RegisterFlagEffect(p,511002521,0,0,0)
 			end
 		end
@@ -893,21 +894,26 @@ function UnofficialProc.divineHierarchy()
 	end
 	local function rankop(e,tp,eg,ev,ep,re,r,rp)
 		local g=Duel.GetMatchingGroup(rank1,tp,0xff,0xff,nil)
-		for c in aux.Next(g) do
+		for c in g:Iter() do
 			c:RegisterFlagEffect(FLAG_DIVINE_HIERARCHY,0,0,0,1)
 		end
-		for c in aux.Next(g:Filter(rank2,nil)) do
+		for c in g:Filter(rank2,nil):Iter() do
 			c:ResetFlagEffect(FLAG_DIVINE_HIERARCHY)
 			c:RegisterFlagEffect(FLAG_DIVINE_HIERARCHY,0,0,0,2)
 		end
 	end
+	local function leaveChk(c,category)
+		local ex,tg=Duel.GetOperationInfo(0,category)
+		return ex and tg~=nil and tg:IsContains(c)
+	end
 	local function hrfilter(e,te,c)
 		if not te then return false end
 		local tc=te:GetOwner()
-		return (te:IsActiveType(TYPE_MONSTER) and c~=tc
+		return (te:IsMonsterEffect() and c~=tc
 			and (not tc:GetFlagEffectLabel(FLAG_DIVINE_HIERARCHY) or c:GetFlagEffectLabel(FLAG_DIVINE_HIERARCHY)>tc:GetFlagEffectLabel(FLAG_DIVINE_HIERARCHY)))
-			or (te:IsHasCategory(CATEGORY_TOHAND+CATEGORY_DESTROY+CATEGORY_REMOVE+CATEGORY_TODECK+CATEGORY_RELEASE+CATEGORY_TOGRAVE+CATEGORY_FUSION_SUMMON)
-			and te:IsActiveType(TYPE_SPELL+TYPE_TRAP))
+			or (te:IsSpellTrapEffect() and ((c:GetDestination()>0 and c:GetReasonEffect()==te)
+			or (leaveChk(c,CATEGORY_TOHAND) or leaveChk(c,CATEGORY_DESTROY) or leaveChk(c,CATEGORY_REMOVE)
+			or leaveChk(c,CATEGORY_TODECK) or leaveChk(c,CATEGORY_RELEASE) or leaveChk(c,CATEGORY_TOGRAVE))))
 	end
 	local function rellimit(e,c,tp,sumtp)
 		return c:HasFlagEffect(FLAG_DIVINE_HIERARCHY) and c:IsFaceup() and c:IsControler(1-tp)
@@ -918,7 +924,7 @@ function UnofficialProc.divineHierarchy()
 	end
 	local function reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		local c=e:GetHandler()
-		if chk==0 then return c:IsReason(REASON_EFFECT) and r&REASON_EFFECT~=0 and re and re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+		if chk==0 then return c:IsReason(REASON_EFFECT) and r&REASON_EFFECT~=0 and re and re:IsSpellTrapEffect()
 			and c:HasFlagEffect(FLAG_DIVINE_HIERARCHY) end
 		return true
 	end

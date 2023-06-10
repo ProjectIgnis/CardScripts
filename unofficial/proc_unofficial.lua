@@ -4,6 +4,9 @@ RACE_CHARISMA   = 0x8000000000000000
 SET_NUMBER_S	= 0x2048
 SET_SUPREME_KING	= 0xf8
 
+FLAG_RA_DEFUSION	= 513000134+511000987
+
+
 -------------------------------------------------------------
 --Rank-Up related functions
 FLAG_RANKUP =   511001822

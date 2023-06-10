@@ -4,8 +4,6 @@ RACE_CHARISMA   = 0x8000000000000000
 SET_NUMBER_S	= 0x2048
 SET_SUPREME_KING	= 0xf8
 
-FLAG_RA_DEFUSION	= 513000134+511000987
-
 
 -------------------------------------------------------------
 --Rank-Up related functions
@@ -296,7 +294,9 @@ PROC_STATS_CHANGED   =   1
 PROC_CANNOT_BATTLE_INDES	=   2
 PROC_EVENT_LP0  =   3
 PROC_ICE_PILLAR =   4
-PROC_DIVINE_HIERARCHY   =   5
+PROC_RA_DEFUSION   =   5
+PROC_DIVINE_HIERARCHY   =   6
+
 
 Duel.EnableUnofficialProc=function(...)
 	for _,proc in ipairs({...}) do
@@ -312,6 +312,9 @@ Duel.EnableUnofficialProc=function(...)
 		elseif proc==PROC_ICE_PILLAR and not UnofficialProc[PROC_ICE_PILLAR] then
 			UnofficialProc[PROC_ICE_PILLAR]=true
 			UnofficialProc.icePillar()
+		elseif proc==PROC_RA_DEFUSION and not UnofficialProc[PROC_RA_DEFUSION] then
+			UnofficialProc[PROC_RA_DEFUSION]=true
+			UnofficialProc.raDefusion()
 		elseif proc==PROC_DIVINE_HIERARCHY and not UnofficialProc[PROC_DIVINE_HIERARCHY] then
 			UnofficialProc[PROC_DIVINE_HIERARCHY]=true
 			UnofficialProc.divineHierarchy()
@@ -879,6 +882,91 @@ function UnofficialProc.icePillar()
 end
 
 
+--Ra and De-Fusion handling
+function UnofficialProc.raDefusion()
+	FLAG_RA_DEFUSION	=   513000134+511000987
+
+	local function filter(c)
+		return c:IsFaceup() and c:IsType(TYPE_FUSION) and (c:IsAbleToExtra() or c:IsCode(CARD_RA))
+	end
+	local function target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+		if chkc then return chkc:IsLocation(LOCATION_MZONE) and filter(chkc) end
+		if chk==0 then return Duel.IsExistingTarget(filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+		local tc=Duel.SelectTarget(tp,filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil):GetFirst()
+		if not tc:IsCode(CARD_RA) then
+			e:SetCategory(CATEGORY_TODECK+CATEGORY_SPECIAL_SUMMON)
+			Duel.SetOperationInfo(0,CATEGORY_TODECK,tc,1,0,0)
+			Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
+		else
+			e:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE+CATEGORY_RECOVER)
+			Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tc:GetControler(),tc:GetAttack())
+		end
+	end
+	local function mgfilter(c,e,tp,fusc,mg)
+		return c:IsControler(tp) and c:IsLocation(LOCATION_GRAVE)
+			and (c:GetReason()&0x40008)==0x40008 and c:GetReasonCard()==fusc
+			and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+			and fusc:CheckFusionMaterial(mg,c,PLAYER_NONE|FUSPROC_NOTFUSION)
+	end
+	function activate(e,tp,eg,ep,ev,re,r,rp)
+		local tc=Duel.GetFirstTarget()
+		if not tc:IsRelateToEffect(e) or tc:IsFacedown() then return end
+		if not tc:IsCode(CARD_RA) then
+			local mg=tc:GetMaterial()
+			local ct=#mg
+			local sumtype=tc:GetSummonType()
+			if Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)~=0 and (sumtype&SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
+				and ct>0 and ct<=Duel.GetLocationCount(tp,LOCATION_MZONE)
+				and mg:FilterCount(aux.NecroValleyFilter(mgfilter),nil,e,tp,tc,mg)==ct
+				and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
+				and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+				Duel.BreakEffect()
+				Duel.SpecialSummon(mg,0,tp,tp,false,false,POS_FACEUP)
+			end
+		else
+			local atk=tc:GetAttack()
+			if tc:RegisterFlagEffect(FLAG_RA_DEFUSION,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1) then
+				Duel.Recover(tc:GetControler(),atk,REASON_EFFECT)
+			end
+		end
+	end
+
+	local function dffilter(c)
+		return c:IsOriginalCode(95286165) and not c:HasFlagEffect(FLAG_RA_DEFUSION)
+	end
+	local function op1(e,tp,eg,ep,ev,re,r,rp)
+		for tc in Duel.GetMatchingGroup(dffilter,tp,LOCATION_ALL,LOCATION_ALL,nil):Iter() do
+			local te=tc:GetActivateEffect()
+			te:SetCategory(0)
+			te:SetTarget(target)
+			te:SetOperation(activate)
+			tc:RegisterFlagEffect(FLAG_RA_DEFUSION,0,0,0)
+		end
+	end
+	local function op2(e,tp,eg,ep,ev,re,r,rp)
+		for tc in eg:Filter(dffilter,nil):Iter() do
+			local te=tc:GetActivateEffect()
+			te:SetCategory(0)
+			te:SetTarget(target)
+			te:SetOperation(activate)
+			tc:RegisterFlagEffect(FLAG_RA_DEFUSION,0,0,0)
+		end
+	end
+
+	local ge1=Effect.GlobalEffect()
+	ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	ge1:SetCode(EVENT_STARTUP)
+	ge1:SetOperation(op1)
+	Duel.RegisterEffect(ge1,0)
+	local ge2=Effect.GlobalEffect()
+	ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	ge2:SetCode(EVENT_MOVE)
+	ge2:SetOperation(op2)
+	Duel.RegisterEffect(ge2,0)
+end
+
+
 --Divine Hierarchy Rules
 --Scripted by Larry126
 FLAG_DIVINE_HIERARCHY = 513000065
@@ -921,6 +1009,24 @@ function UnofficialProc.divineHierarchy()
 	local function rellimit(e,c,tp,sumtp)
 		return c:HasFlagEffect(FLAG_DIVINE_HIERARCHY) and c:IsFaceup() and c:IsControler(1-tp)
 	end
+	local function spsop(e,tp,eg,ep,ev,re,r,rp)
+		eg:Filter(function(c) return c:GetFlagEffectLabel(FLAG_DIVINE_HIERARCHY) end,nil):ForEach(function(c)
+			local prevCtrl=c:GetPreviousControler()
+			aux.DelayedOperation(c,PHASE_END,FLAG_DIVINE_HIERARCHY+c:GetOriginalCode(),e,tp,function()
+				if c:IsPreviousLocation(LOCATION_GRAVE) then
+					Duel.SendtoGrave(c,REASON_EFFECT,prevCtrl)
+				elseif c:IsPreviousLocation(LOCATION_DECK) then
+					Duel.SendtoDeck(c,prevCtrl,SEQ_DECKSHUFFLE,REASON_EFFECT)
+				elseif c:IsPreviousLocation(LOCATION_HAND) then
+					Duel.SendtoHand(c,prevCtrl,REASON_EFFECT)
+				elseif c:IsPreviousLocation(LOCATION_REMOVED) then
+					Duel.Remove(c,c:GetPreviousPosition(),REASON_EFFECT,prevCtrl)
+				elseif c:GetPreviousLocation()==0 then
+					Duel.RemoveCards(c)
+				end
+			end,nil,0)
+		end)
+	end
 	local function sumlimit(e,c)
 		if not c then return false end
 		return e:GetHandler():HasFlagEffect(FLAG_DIVINE_HIERARCHY) and e:GetHandler():IsFaceup() and not c:IsControler(e:GetHandlerPlayer())
@@ -937,17 +1043,16 @@ function UnofficialProc.divineHierarchy()
 	end
 	local function stgcon(e,tp,eg,ep,ev,re,r,rp)
 		local c=e:GetHandler()
-		local owner=false
+		if not c:HasFlagEffect(FLAG_DIVINE_HIERARCHY) then return false end
 		local effs={c:GetCardEffect()}
 		for _,eff in ipairs(effs) do
 			if (eff:GetOwner()~=c and not eff:GetOwner():IsCode(0)
 				and not eff:IsHasProperty(EFFECT_FLAG_IGNORE_IMMUNE) and eff:GetCode()~=EFFECT_SPSUMMON_PROC
 				and (eff:GetTarget()==aux.PersistentTargetFilter or not eff:IsHasType(EFFECT_TYPE_GRANT+EFFECT_TYPE_FIELD))) then
-				owner=true
-				break
+				return true
 			end
 		end
-		return c:HasFlagEffect(FLAG_DIVINE_HIERARCHY) and (owner or c:IsSummonType(SUMMON_TYPE_SPECIAL))
+		return false
 	end
 	local function stgop(e,tp,eg,ep,ev,re,r,rp)
 		local c=e:GetHandler()
@@ -957,19 +1062,6 @@ function UnofficialProc.divineHierarchy()
 				and not eff:IsHasProperty(EFFECT_FLAG_IGNORE_IMMUNE) and eff:GetCode()~=EFFECT_SPSUMMON_PROC
 				and (eff:GetTarget()==aux.PersistentTargetFilter or not eff:IsHasType(EFFECT_TYPE_GRANT+EFFECT_TYPE_FIELD)) then
 				eff:Reset()
-			end
-		end
-		if c:IsSummonType(SUMMON_TYPE_SPECIAL) then
-			if c:IsPreviousLocation(LOCATION_GRAVE) then
-				Duel.SendtoGrave(c,REASON_RULE,c:GetPreviousControler())
-			elseif c:IsPreviousLocation(LOCATION_DECK) then
-				Duel.SendtoDeck(c,c:GetPreviousControler(),2,REASON_RULE)
-			elseif c:IsPreviousLocation(LOCATION_HAND) then
-				Duel.SendtoHand(c,c:GetPreviousControler(),REASON_RULE)
-			elseif c:IsPreviousLocation(LOCATION_REMOVED) then
-				Duel.Remove(c,c:GetPreviousPosition(),REASON_RULE,c:GetPreviousControler())
-			elseif c:GetPreviousLocation()==0 then
-				Duel.RemoveCards(c)
 			end
 		end
 	end
@@ -1000,6 +1092,11 @@ function UnofficialProc.divineHierarchy()
 	rel:SetTargetRange(1,1)
 	rel:SetTarget(rellimit)
 	Duel.RegisterEffect(rel,0)
+	local sps=Effect.GlobalEffect()
+	sps:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	sps:SetCode(EVENT_SPSUMMON_SUCCESS)
+	sps:SetOperation(spsop)
+	Duel.RegisterEffect(sps,0)
 	--last 1 turn
 	local ep=Effect.GlobalEffect()
 	ep:SetDescription(aux.Stringid(421,15))

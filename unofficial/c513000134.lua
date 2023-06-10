@@ -2,7 +2,7 @@
 --マイケル・ローレンス・ディーによってスクリプト
 --Scripted by MLD, credit to TPD & Cybercatman
 --Updated and currently maintained by Larry126
-Duel.EnableUnofficialProc(PROC_DIVINE_HIERARCHY)
+Duel.EnableUnofficialProc(PROC_DIVINE_HIERARCHY,PROC_RA_DEFUSION)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Summon With 3 Tributes
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e4:SetCondition(s.egpcon)
+	e4:SetCondition(function(e) return e:GetHandler():IsPreviousLocation(LOCATION_GRAVE) end)
 	e4:SetTarget(s.immortal)
 	c:RegisterEffect(e4)
 	--Stats when Normal Summoned
@@ -32,60 +32,10 @@ function s.initial_effect(c)
 	local e6=Effect.CreateEffect(c)
 	e6:SetType(EFFECT_TYPE_SINGLE)
 	e6:SetCode(EFFECT_SUMMON_COST)
-	e6:SetLabelObject(e5)
-	e6:SetOperation(function(e,tp,eg,ep,ev,re,r,rp) e:GetLabelObject():SetLabel(1) end)
+	e6:SetOperation(function() e5:SetLabel(1) end)
 	c:RegisterEffect(e6)
-	aux.GlobalCheck(s,function()
-		--De-Fusion
-		local df=Effect.CreateEffect(c)
-		df:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		df:SetCode(EVENT_ADJUST)
-		df:SetOperation(s.dfop)
-		Duel.RegisterEffect(df,0)
-	end)
 end
---De-Fusion
-function s.dffilter(c)
-	return c:IsOriginalCode(95286165) and c:GetFlagEffect(608286299)==0
-end
-function s.dfop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(s.dffilter,tp,0xff,0xff,nil)
-	for tc in aux.Next(g) do
-		local e1=Effect.CreateEffect(tc)
-		e1:SetDescription(aux.Stringid(id,5))
-		e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE+CATEGORY_RECOVER)
-		e1:SetType(EFFECT_TYPE_ACTIVATE)
-		e1:SetCode(tc:GetActivateEffect():GetCode())
-		e1:SetProperty(tc:GetActivateEffect():GetProperty()|EFFECT_FLAG_IGNORE_IMMUNE)
-		e1:SetTarget(s.tg)
-		e1:SetOperation(s.op)
-		tc:RegisterEffect(e1)
-		tc:RegisterFlagEffect(608286299,0,0,0)
-	end
-end
-function s.dffilter2(c)
-	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:IsCode(10000010)
-end
-function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.dffilter2(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.dffilter2,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local g=Duel.SelectTarget(tp,s.dffilter2,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,g:GetFirst():GetAttack())
-end
-function s.op(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFirstTarget()
-	if not tc:IsRelateToEffect(e) or tc:IsFacedown() then return end
-	local atk=tc:GetAttack()
-	if tc:RegisterFlagEffect(FLAG_RA_DEFUSION,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1) then
-		Duel.Recover(tc:GetControler(),atk,REASON_EFFECT)
-	end
-end
--------------------------------------------
 --Resurrection
-function s.egpcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsPreviousLocation(LOCATION_GRAVE)
-end
 function s.immortal(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local op=Duel.SelectEffect(tp,
@@ -102,7 +52,7 @@ function s.immortal(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 -------------------------------------------
---Point to Point Transfer
+--One Turn Kill
 function s.payatkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local lpCost=Duel.GetLP(tp)-1
 	if chk==0 then return lpCost>0 and Duel.CheckLPCost(tp,lpCost) end
@@ -292,7 +242,7 @@ function s.dirop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 -------------------------------------------
---Egyption God Phoenix
+--God Phoenix
 function s.egpop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsFaceup() then
@@ -345,7 +295,7 @@ function s.egpop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.imfilter(e,te)
 	local c=e:GetOwner()
-	return c:GetDestination()>0 and c:GetReasonEffect()==te
+	return (c:GetDestination()>0 and c:GetReasonEffect()==te)
 		or (s.leaveChk(c,CATEGORY_TOHAND) or s.leaveChk(c,CATEGORY_DESTROY) or s.leaveChk(c,CATEGORY_REMOVE)
 		or s.leaveChk(c,CATEGORY_TODECK) or s.leaveChk(c,CATEGORY_RELEASE) or s.leaveChk(c,CATEGORY_TOGRAVE))
 end
@@ -402,7 +352,7 @@ function s.valcheck(e,c)
 	local mg=c:GetMaterial()
 	local atk=0
 	local def=0
-	for tc in aux.Next(mg) do
+	for tc in mg:Iter() do
 		local catk=tc:GetAttack()
 		local cdef=tc:GetDefense()
 		atk=atk+(catk>=0 and catk or 0)

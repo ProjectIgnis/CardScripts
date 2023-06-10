@@ -1,0 +1,45 @@
+--スクリーン・オブ・レッド (Anime)
+--Red Screen (Anime)
+local s,id=GetID()
+function s.initial_effect(c)
+	--Activate
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetHintTiming(0,TIMING_BATTLE_START)
+	c:RegisterEffect(e1)
+	--Cannot attack
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
+	e2:SetRange(LOCATION_SZONE)
+	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+	e2:SetCondition(s.econ)
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsAttackAbove,2000))
+	c:RegisterEffect(e2)
+	--Take 2000 damage
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(id,0))
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e3:SetCode(EVENT_PHASE+PHASE_END)
+	e3:SetRange(LOCATION_SZONE)
+	e3:SetCountLimit(1)
+	e3:SetCondition(function(e,tp) return Duel.IsTurnPlayer(tp) and s.econ(e) end)
+	e3:SetOperation(function(_,tp) Duel.Damage(tp,2000,REASON_EFFECT) end)
+	c:RegisterEffect(e3)
+	--Self destroy
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_SINGLE)
+	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e4:SetRange(LOCATION_SZONE)
+	e4:SetCode(EFFECT_SELF_DESTROY)
+	e4:SetCondition(s.sdcon)
+	c:RegisterEffect(e4)
+end
+s.listed_names={CARD_RED_DRAGON_ARCHFIEND}
+function s.econ(e)
+	return not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_RED_DRAGON_ARCHFIEND),e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil) or e:GetHandler():IsHasEffect(EFFECT_CANNOT_DISABLE)
+end
+function s.sdcon(e)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_RED_DRAGON_ARCHFIEND),e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil)
+end

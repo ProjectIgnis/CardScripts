@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 	--Always Battle Destroy
-   	local e2=Effect.CreateEffect(c)
+	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_CANNOT_BATTLE_INDES)
 	e2:SetRange(LOCATION_MZONE)
@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and Duel.IsMainPhase()
+	return Duel.IsTurnPlayer(1-tp) and Duel.IsMainPhase()
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ)
@@ -56,8 +56,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tg(e,c)
-	local bc=e:GetHandler():GetBattleTarget()
-	return bc and bc==c
+	return e:GetHandler():GetBattleTarget()==c
 end
 function s.val(e,re,c)
 	return re:GetOwnerPlayer()~=e:GetHandlerPlayer()

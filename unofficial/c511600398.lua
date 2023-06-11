@@ -188,7 +188,12 @@ function s.spchk(e,tp,eg,ep,ev,re,r,rp)
 end
 -----------------------------------------------------------------
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsBattlePhase() and Duel.GetCurrentChain()==0
+	local c=e:GetHandler()
+	return Duel.IsBattlePhase() and Duel.GetCurrentChain()==0 and (not c:IsHasEffect(EFFECT_CANNOT_ATTACK_ANNOUNCE)
+		and not c:IsHasEffect(EFFECT_FORBIDDEN) and not c:IsHasEffect(EFFECT_CANNOT_ATTACK)
+		and not Duel.IsPlayerAffectedByEffect(tp,EFFECT_CANNOT_ATTACK_ANNOUNCE)
+		and not Duel.IsPlayerAffectedByEffect(tp,EFFECT_CANNOT_ATTACK)
+		or c:IsHasEffect(EFFECT_UNSTOPPABLE_ATTACK))
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,nil,2,false,nil,e:GetHandler()) end

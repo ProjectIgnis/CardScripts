@@ -5,6 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(511001265)
 	e1:SetCondition(s.condition)
@@ -20,7 +21,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--destroy
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,0))
+	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCode(EVENT_TO_GRAVE)
@@ -29,13 +30,13 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-function s.cfilter(c,tp)
+function s.cfilter(c,p)
 	local val=0
 	if c:GetFlagEffect(284)>0 then val=c:GetFlagEffectLabel(284) end
-	return c:IsControler(tp) and c:GetAttack()~=val
+	return c:IsControler(p) and c:GetAttack()~=val
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil,tp) and re:IsActiveType(TYPE_MONSTER)
+	return eg:IsExists(s.cfilter,1,nil,1-tp) and re:IsActiveType(TYPE_MONSTER)
 end
 function s.val(e,c)
 	return c:GetAttack()*2

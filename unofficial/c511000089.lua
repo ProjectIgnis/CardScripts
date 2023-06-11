@@ -1,5 +1,5 @@
---ロイヤル・ストレート・スラッシャー
---Royal Straight Slasher
+--ロイヤル・ストレート・スラッシャー (Anime)
+--Royal Straight Slasher (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--Destroy
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(85771019,0))
+	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
@@ -21,9 +21,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={511000088}
+s.listed_names={58415502}
 function s.splimit(e,se,sp,st)
-	return se:GetHandler():IsCode(511000088)
+	return se:GetHandler():IsCode(58415502)
 end
 function s.desfilter1(c)
 	return c:IsMonster() and c:GetLevel()==1 and c:IsAbleToGrave()

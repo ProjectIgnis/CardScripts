@@ -2143,8 +2143,9 @@ end
 		int|nil reset_count: how many times the reset value must happen.
 			If not passed, the count will be 1.
 		int|nil hint: a string to show on the affected cards
+		int|nil effect_desc: a string to be used as the description of the delayed effect (useful when the same effect registers multiple different delayed effects)
 --]]
-function Auxiliary.DelayedOperation(card_or_group,phase,flag,e,tp,oper,cond,reset,reset_count,hint)
+function Auxiliary.DelayedOperation(card_or_group,phase,flag,e,tp,oper,cond,reset,reset_count,hint,effect_desc)
 	local g=(type(card_or_group)=="Group" and card_or_group or Group.FromCards(card_or_group))
 	if #g==0 then return end
 	reset=reset or (RESET_PHASE|phase)
@@ -2156,6 +2157,7 @@ function Auxiliary.DelayedOperation(card_or_group,phase,flag,e,tp,oper,cond,rese
 	--Apply operation
 	local c=e:GetHandler()
 	local e1=Effect.CreateEffect(c)
+	if effect_desc then e1:SetDescription(effect_desc) end
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e1:SetCode(EVENT_PHASE|phase)
@@ -2202,11 +2204,12 @@ end
 		int|nil reset_count: how many times the reset value must happen.
 			If not passed, the count will be 1.
 		int|nil hint: a string to show on the affected cards
+		int|nil effect_desc: a string to be used as the description of the delayed effect (useful when the same effect registers multiple different delayed effects)
 --]]
-function Auxiliary.RemoveUntil(card_or_group,pos,reason,phase,flag,e,tp,oper,cond,reset,reset_count,hint)
+function Auxiliary.RemoveUntil(card_or_group,pos,reason,phase,flag,e,tp,oper,cond,reset,reset_count,hint,effect_desc)
 	local g=(type(card_or_group)=="Group" and card_or_group or Group.FromCards(card_or_group))
 	if #g>0 and Duel.Remove(g,pos,reason|REASON_TEMPORARY)>0 and #g:Match(Card.IsLocation,nil,LOCATION_REMOVED)>0 then
-		return aux.DelayedOperation(g,phase,flag,e,tp,oper,cond,reset,reset_count,hint)
+		return aux.DelayedOperation(g,phase,flag,e,tp,oper,cond,reset,reset_count,hint,effect_desc)
 	end
 end
 

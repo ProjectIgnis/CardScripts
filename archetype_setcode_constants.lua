@@ -532,3 +532,5 @@ SET_COUNTER                       = 0x200
 SET_BATTLIN_BOXING                = 0x201
 --Currently unreleased in the TCG, the official English name is unknown
 --Beta archetypes
+SET_VEDA                          = 0x296
+SET_HEART                         = 0x297

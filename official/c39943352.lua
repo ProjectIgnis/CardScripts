@@ -53,7 +53,7 @@ function s.ovtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.ovop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) then
 		Duel.Overlay(tc,e:GetHandler())
 	end
 end

@@ -2,8 +2,9 @@
 --Yomi Kid
 local s,id=GetID()
 function s.initial_effect(c)
-	--destroy
+	-- Inflict 800 damage
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DAMAGE)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e1:SetCode(EVENT_TO_GRAVE)
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.damtg)
 	e1:SetOperation(s.damop)
 	c:RegisterEffect(e1)
-	--destroy
+	--Destroy all monsters you control
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_ADJUST)
@@ -36,8 +37,9 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.descon(e)
 	local c=e:GetHandler()
-	local ct=Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_MZONE,0)
-	return c:IsReason(REASON_DESTROY) and c:GetPreviousControler()==e:GetHandlerPlayer() and ct>0
+	local tp=e:GetHandlerPlayer()
+	return c:IsReason(REASON_DESTROY) and c:IsPreviousControler(tp)
+		and Duel.IsExistingMatchingCard(Card.IsDestructable,tp,LOCATION_MZONE,0,1,nil,e)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,tp,id)

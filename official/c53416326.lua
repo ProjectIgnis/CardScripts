@@ -1,5 +1,5 @@
 --円喚師フェアリ
---Hexenringe Master Faeri
+--Fairyant the Circular Sorcerer
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -18,14 +18,11 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetCode(EFFECT_NONTUNER)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetValue(s.ntval)
+	e2:SetValue(function(e,sc) return sc:IsRace(RACE_PLANT|RACE_INSECT) end)
 	c:RegisterEffect(e2)
 end
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.IsExistingMatchingCard(Card.IsRace,0,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,RACE_PLANT|RACE_INSECT)
 		and Duel.GetLocationCount(e:GetHandlerPlayer(),LOCATION_MZONE)>0
-end
-function s.ntval(c,sc,tp)
-	return sc and sc:IsRace(RACE_PLANT|RACE_INSECT)
 end

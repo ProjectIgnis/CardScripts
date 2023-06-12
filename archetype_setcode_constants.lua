@@ -19,6 +19,7 @@ SET_GENEX                         = 0x2
 SET_R_GENEX                       = 0x1002
 SET_GENEX_ALLY                    = 0x2002
 SET_HORUS                         = 0x3
+SET_HORUS_BLACK_FLAME_DRAGON      = 0x1003
 SET_AMAZONESS                     = 0x4
 SET_ARCANA_FORCE                  = 0x5
 SET_DARK_WORLD                    = 0x6

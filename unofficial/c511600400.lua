@@ -378,7 +378,7 @@ end
 --God Phoenix
 function s.egpop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect() and c:IsFaceup() then
+	if c:IsRelateToEffect(e) and c:IsFaceup() then
 		--Immunities
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

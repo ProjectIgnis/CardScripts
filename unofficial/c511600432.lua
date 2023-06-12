@@ -32,16 +32,13 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local ct=Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)
-	if ft>ct then ft=ct end
 	if ft<=0 then return end
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
+	if ft<ct then return end
 	if not Duel.IsPlayerCanSpecialSummonMonster(tp,27450401,0,TYPES_TOKEN,0,0,1,RACE_MACHINE,ATTRIBUTE_EARTH) then return end
-	local ctn=true
-	while ft>0 and ctn do
+	for i=1,ct do
 		local token=Duel.CreateToken(tp,27450401)
 		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
-		ft=ft-1
-		if ft<=0 or not Duel.SelectYesNo(tp,aux.Stringid(id,2)) then ctn=false end
 	end
 	Duel.SpecialSummonComplete()
 end

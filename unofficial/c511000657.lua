@@ -1,8 +1,8 @@
---時空超越
---Spacetime Transcendence
+--時空超越 (Anime)
+--Spacetime Transcendence (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Special Summon 1 Dinosaur monster from your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -16,7 +16,7 @@ function s.cfilter(c)
 	return c:IsRace(RACE_DINOSAUR) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.spfilter(c,e,tp,lv)
-	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:GetLevel()==lv
+	return c:IsRace(RACE_DINOSAUR) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:GetLevel()==lv
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)

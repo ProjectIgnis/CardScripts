@@ -1,8 +1,8 @@
---スターライト・ロード (Manga)
---Starlight Road (Manga)
+--スターライト・ロード (Anime)
+--Starlight Road (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Negate that effect and destroy that card, then Special Summon "Stardust Dragon"
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DISABLE+CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -17,7 +17,7 @@ function s.cfilter(c,p)
 	return c:GetControler()==p and c:IsOnField()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.IsChainDisablable(ev) then return false end
+	if tp==ep or not Duel.IsChainDisablable(ev) then return false end
 	local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DESTROY)
 	return ex and tg~=nil and tc+tg:FilterCount(s.cfilter,nil,tp)-#tg>1
 end

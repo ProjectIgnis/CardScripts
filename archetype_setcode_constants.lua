@@ -535,3 +535,4 @@ SET_BATTLIN_BOXING                = 0x201
 --Beta archetypes
 SET_VEDA                          = 0x296
 SET_HEART                         = 0x297
+SET_PATISSCIEL                    = 0x298

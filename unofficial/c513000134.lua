@@ -293,6 +293,10 @@ function s.egpop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e5)
 	end
 end
+function s.leaveChk(c,category)
+	local ex,tg=Duel.GetOperationInfo(0,category)
+	return ex and tg~=nil and tg:IsContains(c)
+end
 function s.imfilter(e,te)
 	local c=e:GetOwner()
 	return (c:GetDestination()>0 and c:GetReasonEffect()==te)

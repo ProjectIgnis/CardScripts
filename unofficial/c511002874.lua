@@ -41,10 +41,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e6)
 end
 function s.efilter1(e,re,rp)
-	return re:IsActiveType(TYPE_TRAP) and e:GetHandlerPlayer()~=rp
+	return re:IsTrapEffect() and e:GetHandlerPlayer()~=rp
 end
 function s.efilter2(e,te)
-	return te:IsActiveType(TYPE_TRAP) and e:GetHandlerPlayer()~=te:GetOwnerPlayer()
+	return te:IsTrapEffect() and e:GetHandlerPlayer()~=te:GetOwnerPlayer()
 end
 function s.cbcon(e,tp,eg,ep,ev,re,r,rp)
 	local bt=eg:GetFirst()

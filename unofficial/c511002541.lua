@@ -2,14 +2,13 @@
 --Chthonian Blast (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
-	--Destroy 1 monster on the field, and if you do, inflict damage to your opponent equal to half its ATK
+	--Destroy 1 face-up monster on the field, and if you do, inflict damage to your opponent equal to half its ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetCondition(s.condition)
+	e1:SetCondition(function(_,tp) return s[tp] end)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
@@ -34,27 +33,18 @@ function s.checkop1(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return s[tp]
-end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) end
-	if chk==0 then return Duel.IsExistingTarget(nil,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,nil,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
-	local d=g:GetFirst()
-	local atk=0
-	if d:IsFaceup() then atk=d:GetAttack()/2 end
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,atk)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
-		local atk=0
-		if tc:IsFaceup() then atk=tc:GetAttack()/2 end
-		if Duel.Destroy(tc,REASON_EFFECT)>0 then
-			Duel.Damage(1-tp,atk,REASON_EFFECT)
-		end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+	local tc=Duel.SelectMatchingCard(tp,Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil):GetFirst()
+	if not tc then return end
+	local dam=tc:GetAttack()/2
+	if Duel.Destroy(tc,REASON_EFFECT)>0 then
+		Duel.Damage(1-tp,dam,REASON_EFFECT)
 	end
 end

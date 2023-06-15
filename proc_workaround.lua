@@ -9,6 +9,7 @@ Duel.ConfirmCards=(function()
 		reveal_player=reveal_player or 1-player
 		reason=reason or (Duel.IsChainSolving() and REASON_EFFECT or REASON_COST)
 		local triggering_eff=Duel.GetChainInfo(0,CHAININFO_TRIGGERING_EFFECT)
+		if type(reveal_group)=="Card" then reveal_group=Group.FromCards(reveal_group) end
 		for tc in reveal_group:Iter() do
 			Duel.RaiseSingleEvent(tc,EVENT_CONFIRM,triggering_eff,reason,reveal_player,reveal_player,0)
 		end

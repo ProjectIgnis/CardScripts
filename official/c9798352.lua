@@ -1,12 +1,12 @@
 --奇采のプルフィネス
---Plufiness the Unconventional Commander
+--Prufinesse, the Tactical Trapper
 --Scripted by Hel
 local s,id=GetID()
 function s.initial_effect(c)
-	--Banish 1 Trap form Deck to gain 1 Level
+	--Banish 1 Trap from Deck to gain 1 Level
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_SINGLE)
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetCountLimit(1,id)
@@ -51,14 +51,10 @@ function s.bdcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.bdop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
-	--Increase Level
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_UPDATE_LEVEL)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
-	e1:SetValue(1)
-	c:RegisterEffect(e1)
+	if c:IsRelateToEffect(e) then
+		--Increase Level by 1
+		c:UpdateLevel(1)
+	end
 end
 function s.bgfilter(c)
 	return c:IsTrap() and c:IsAbleToRemove()
@@ -73,21 +69,16 @@ end
 function s.bgop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)>0 then
-		--Increase Level
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_LEVEL)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
-		e1:SetValue(1)
-		c:RegisterEffect(e1)
+	if tc:IsRelateToEffect(e) and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)>0 then
+		--Increase Level by 1
+		c:UpdateLevel(1)
 	end
 end
 function s.stcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and e:GetHandler():IsPreviousControler(tp)
 end
 function s.stfilter(c)
-	return c:GetType()==TYPE_TRAP and c:IsSSetable() and c:IsFaceup()
+	return c:IsNormalTrap() and c:IsFaceup() and c:IsSSetable()
 end
 function s.sttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0

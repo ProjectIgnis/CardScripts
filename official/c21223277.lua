@@ -49,7 +49,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
 	local g=Duel.GetTargetCards(e)
-	if #g==0 or ft<#g return end
+	if #g==0 or ft<#g then return end
 	local c=e:GetHandler()
 	if c:IsFacedown() or not c:IsRelateToEffect(e) then return end
 	for tc in g:Iter() do

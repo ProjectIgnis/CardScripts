@@ -31,10 +31,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.tdop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={100299024,100299025}
+s.listed_names={71089030,7473735}
 s.listed_series={SET_EARTHBOUND}
 function s.thfilter(c)
-	return c:IsCode(100299024,100299025) and c:IsAbleToHand()
+	return c:IsCode(71089030,7473735) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,nil) end

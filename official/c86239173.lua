@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--"Kaitoptera" + 1 Dinosaur or Dragon monster
-	Fusion.AddProcMix(c,true,true,100299002,aux.FilterBoolFunctionEx(Card.IsRace,RACE_DINOSAUR|RACE_DRAGON))
+	Fusion.AddProcMix(c,true,true,50834074,aux.FilterBoolFunctionEx(Card.IsRace,RACE_DINOSAUR|RACE_DRAGON))
 	--Place 1 Field Spell face-up in the Field Zone
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.nsop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={100299002}
+s.listed_names={50834074}
 function s.plfilter(c)
 	return c:IsFieldSpell() and not c:IsForbidden()
 end

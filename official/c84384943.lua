@@ -31,9 +31,9 @@ function s.initial_effect(c)
 	e4:SetOperation(s.damop)
 	c:RegisterEffect(e4)
 end
-s.listed_names={100299010}
+s.listed_names={11489642}
 function s.thfilter(c)
-	return c:IsCode(100299010) and c:IsAbleToHand()
+	return c:IsCode(11489642) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

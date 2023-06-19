@@ -19,7 +19,7 @@ function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) end
 end
 function s.desfilter(c)
-	return c:IsFaceup() and c:IsAttackBelow(1500) and not c:IsNotMaximumModeSide()
+	return c:IsFaceup() and c:IsAttackBelow(1500) and c:IsNotMaximumModeSide()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.desfilter,tp,0,LOCATION_MZONE,1,nil) end

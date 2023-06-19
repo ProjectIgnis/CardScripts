@@ -24,7 +24,7 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_GRAVE)
 end
 function s.desfilter(c)
-	return c:IsFaceup() and c:IsAttackPos()
+	return c:IsFaceup() and c:IsAttackPos() and c:IsNotMaximumModeSide()
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)

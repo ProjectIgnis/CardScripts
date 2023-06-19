@@ -27,6 +27,9 @@ end
 function s.cfilter(c)
 	return c:IsLocation(LOCATION_GRAVE) and c:IsRace(RACE_GALAXY) and c:IsAttribute(ATTRIBUTE_DARK)
 end
+function s.desfilter(c)
+	return c:IsFaceup() and c:IsLevelBelow(8) and c:IsNotMaximumModeSide()
+end
 function s.mlop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	--Effect
@@ -42,7 +45,7 @@ function s.mlop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(ct-1)
 		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		c:RegisterEffect(e1)
-		local sg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsLevelBelow,8),tp,0,LOCATION_MZONE,nil)
+		local sg=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_MZONE,nil)
 		if ct==3 and g:GetClassCount(Card.GetLevel)==1 and #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.Destroy(sg,REASON_EFFECT)
 		end

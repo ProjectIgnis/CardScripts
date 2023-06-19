@@ -306,6 +306,15 @@ function Card.AddSideMaximumHandler(c,eff)
 	e13:SetValue(aux.cannotmatfilter(SUMMON_TYPE_FUSION,SUMMON_TYPE_SYNCHRO,SUMMON_TYPE_XYZ,SUMMON_TYPE_LINK))
 	c:RegisterEffect(e13)
 
+	--self destroy
+	local e14=Effect.CreateEffect(c)
+	e14:SetType(EFFECT_TYPE_SINGLE)
+	e14:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e14:SetRange(LOCATION_MZONE)
+	e14:SetCode(EFFECT_SELF_DESTROY)
+	e14:SetCondition(Maximum.SelfDestructCondition)
+	c:RegisterEffect(e14)
+
 	--makes so it virtually cannot have any DEF
 	local e16=Effect.CreateEffect(c)
 	e16:SetType(EFFECT_TYPE_SINGLE)
@@ -315,6 +324,9 @@ function Card.AddSideMaximumHandler(c,eff)
 	c:RegisterEffect(e16)
 
 	baseeff:Reset()
+end
+function Maximum.SelfDestructCondition(e)
+	return e:GetHandler():IsMaximumModeSide() and not Duel.IsExistingMatchingCard(Card.IsMaximumModeCenter,0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 end
 function Maximum.GetMaximumCenter(tp)
 	return Duel.GetMatchingGroup(Card.IsMaximumModeCenter,tp,LOCATION_MZONE,0,nil):GetFirst()

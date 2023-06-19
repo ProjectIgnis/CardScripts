@@ -26,7 +26,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for level 8 or lower attack position monsters
 function s.desfilter(c)
-	return c:IsAttackPos() and c:IsLevelBelow(8)
+	return c:IsAttackPos() and c:IsLevelBelow(8) and c:IsNotMaximumModeSide()
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

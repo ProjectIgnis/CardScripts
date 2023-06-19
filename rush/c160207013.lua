@@ -49,8 +49,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		dg=dg:AddMaximumCheck()
 		Duel.HintSelection(dg,true)
 		Duel.Destroy(dg,REASON_EFFECT)
-		if c:IsMaximumMode() and ct>2 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-			local sg=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)
+		local sg=Duel.GetMatchingGroup(Card.IsNotMaximumModeSide,tp,0,LOCATION_ONFIELD,nil)
+		if c:IsMaximumMode() and ct>2 and #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.Destroy(sg,REASON_EFFECT)
 		end
 	end

@@ -34,7 +34,7 @@ function s.cfilter2(c)
 	return c:IsMonster() and c:IsType(TYPE_NORMAL) and c:IsLevel(5)
 end
 function s.desfilter(c)
-	return c:IsFaceup() and c:IsLevelAbove(7) and c:IsType(TYPE_NORMAL)
+	return c:IsFaceup() and c:IsLevelAbove(7) and c:IsType(TYPE_NORMAL) and c:IsNotMaximumModeSide()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--requirement

@@ -23,7 +23,7 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_DESTROY,nil,1,0,LOCATION_MZONE)
 end
 function s.desfilter(c)
-	return c:IsFaceup() and c:IsAttackPos()
+	return c:IsFaceup() and c:IsAttackPos() and c:IsNotMaximumModeSide()
 end
 function s.cfilter2(c)
 	return c:IsFaceup() and c:IsRace(RACE_BEAST|RACE_BEASTWARRIOR|RACE_WARRIOR) and c:IsDefense(200) and not c:IsMaximumModeSide()

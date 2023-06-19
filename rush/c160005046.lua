@@ -43,9 +43,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			local sg=dg:Select(tp,1,1,nil)
 			sg=sg:AddMaximumCheck()
 			Duel.HintSelection(sg)
-			if Duel.Destroy(sg,REASON_EFFECT)>0 and sg:GetFirst():GetPreviousRaceOnField()&RACE_SPELLCASTER>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
-				local sg=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_MZONE,nil)
-				Duel.Destroy(sg,REASON_EFFECT)
+			local sg2=Duel.GetMatchingGroup(Card.IsNotMaximumModeSide,tp,0,LOCATION_MZONE,nil)
+			if Duel.Destroy(sg,REASON_EFFECT)>0 and sg:GetFirst():GetPreviousRaceOnField()&RACE_SPELLCASTER>0 and #sg2>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+				Duel.Destroy(sg2,REASON_EFFECT)
 			end
 		end
 	end

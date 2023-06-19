@@ -28,13 +28,16 @@ end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.costfilter),tp,LOCATION_MZONE,0,1,nil) end
 end
+function s.desfilter(c)
+	return c:IsFaceup() and c:IsNotMaximumModeSide()
+end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.costfilter),tp,LOCATION_MZONE,0,1,1,nil)
 	g=g:AddMaximumCheck()
 	local ct=Duel.SendtoGrave(g,REASON_COST)
 	if ct>0 then
-		local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+		local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 		local sg=g:GetMaxGroup(Card.GetLevel)
 		if #sg>0 then
 			Duel.Destroy(sg,REASON_EFFECT)

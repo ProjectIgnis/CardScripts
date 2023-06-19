@@ -31,7 +31,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_DESTROY,nil,1,tp,LOCATION_MZONE)
 end
 function s.desfilter(c)
-	return c:IsFaceup() and c:IsLevelAbove(7) and c:IsType(TYPE_NORMAL)
+	return c:IsFaceup() and c:IsLevelAbove(7) and c:IsType(TYPE_NORMAL) and c:IsNotMaximumModeSide()
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,chk)
 	--Requirement

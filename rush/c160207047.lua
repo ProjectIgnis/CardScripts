@@ -26,10 +26,13 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	tc:CreateEffectRelation(e)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tc,1,0,0)
 end
+function s.desfilter(c)
+	return c:IsFaceup() and c:IsNotMaximumModeSide()
+end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	if tc and tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)>0 then
-		local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
+		local g=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_MZONE,nil)
 		if not Duel.IsExistingMatchingCard(Card.IsMonster,tp,LOCATION_GRAVE,0,1,nil) and #g>0 then
 			Duel.BreakEffect()
 			Duel.Destroy(g,REASON_EFFECT)

@@ -21,7 +21,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end
 end
 function s.oppfilter(c)
-	return c:IsFaceup() and c:IsAttackPos() and c:IsLevelBelow(8)
+	return c:IsFaceup() and c:IsAttackPos() and c:IsLevelBelow(8) and c:IsNotMaximumModeSide()
 end
 function s.tdfilter(c)
 	return c:IsMonster() and c:IsRace(RACE_PYRO) and c:IsAbleToDeck() and c:HasLevel()
@@ -32,7 +32,7 @@ function s.rescon(lvl)
 	end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local og=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(s.oppfilter),tp,0,LOCATION_MZONE,nil)
+	local og=Duel.GetMatchingGroup(s.oppfilter,tp,0,LOCATION_MZONE,nil)
 	local lvl=og:GetSum(Card.GetLevel)
 	local dg=Duel.GetMatchingGroup(s.tdfilter,tp,LOCATION_GRAVE,0,nil)
 	if chk==0 then return #dg>=3 and aux.SelectUnselectGroup(dg,e,tp,3,3,s.rescon(lvl),0) end
@@ -45,7 +45,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND,0,1,1,nil)
 	if Duel.SendtoGrave(g,REASON_COST)>0 then
 		--Effect
-		local og=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(s.oppfilter),tp,0,LOCATION_MZONE,nil)
+		local og=Duel.GetMatchingGroup(s.oppfilter,tp,0,LOCATION_MZONE,nil)
 		local lvl=og:GetSum(Card.GetLevel)
 		local dg=Duel.GetMatchingGroup(s.tdfilter,tp,LOCATION_GRAVE,0,nil)
 		if #dg<3 then return end

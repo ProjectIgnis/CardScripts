@@ -13,11 +13,11 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_names={7903368,100299008,100299009}
+s.listed_names={7903368,58996839,84384943}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,7903368),tp,LOCATION_ONFIELD,0,1,nil)
-		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,100299008),tp,LOCATION_ONFIELD,0,1,nil)
-		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,100299009),tp,LOCATION_ONFIELD,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,58996839),tp,LOCATION_ONFIELD,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,84384943),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local sg=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler())

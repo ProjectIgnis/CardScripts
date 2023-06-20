@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e1b:SetRange(LOCATION_MZONE)
 	e1b:SetLabelObject(e1a)
 	e1b:SetTargetRange(0,LOCATION_MZONE)
-	e1b:SetTarget(aux.SecurityTarget)
+	e1b:SetTarget(aux.SForceTarget)
 	c:RegisterEffect(e1b)
 	--Shuffle 1 "S-Force" monster into the Deck and Special Summon banished "S-Force" monster
 	local e2=Effect.CreateEffect(c)

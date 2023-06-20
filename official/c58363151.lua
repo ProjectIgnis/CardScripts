@@ -1,11 +1,10 @@
 --Ｓ－Ｆｏｒｃｅ プラ＝ティナ
---Security Force Pla=Tina
+--S-Force Pla-Tina
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
-	--If normal or special summoned, special summon 1 of your banished "Security Force" monsters
+	--Special Summon 1 of your banished "S-Force" monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -19,38 +18,37 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
-	--An opponent's monster facing your "Security Force" monster loses 600 ATK
+	--Decrease the ATK of opponent's monster in the same column as your "S-Force" monsters by 600
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_UPDATE_ATTACK)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(0,LOCATION_MZONE)
-	e3:SetTarget(aux.SecurityTarget)
+	e3:SetTarget(aux.SForceTarget)
 	e3:SetValue(-600)
 	c:RegisterEffect(e3)
 end
-	--Lists "Security Force" archetype
-s.listed_series={0x15a}
-	--Specifically lists itself
+--Lists "S-Force" archetype
+s.listed_series={SET_S_FORCE}
+--Specifically lists itself
 s.listed_names={id}
-
-	--Check for a "Security Force" monster, besides "Security Force Pla=Tina"
+--Check for a "S-Force" monster, besides "S-Force Pla-Tina"
 function s.filter(c,e,tp)
-	return not c:IsCode(id) and c:IsSetCard(0x15a) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_S_FORCE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(id)
 end
-	--Activation legality
+--Activation legality
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingTarget(s.filter,tp,LOCATION_REMOVED,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_REMOVED,0,1,1,nil,e,tp)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,tp,0)
 end
-	--Special summon 1 of your banished "Security Force" monsters
+--Special summon 1 of your banished "S-Force" monsters
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

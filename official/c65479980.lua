@@ -1,10 +1,11 @@
---S-Force ドッグ・タッグ
---Security Force Dog Tag
+--Ｓ－Ｆｏｒｃｅ ドッグ・タッグ
+--S-Force Dog Tag
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--spsummon
+	--Special Summon itself from the hand
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
@@ -18,7 +19,7 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
-	--cannot trigger
+	--Monsters in the same column as your "S-Force" monsters cannot activate their effects during your Main Phase
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetRange(LOCATION_MZONE)
@@ -26,13 +27,13 @@ function s.initial_effect(c)
 	e3:SetCondition(s.atcon)
 	e3:SetValue(s.atlimit)
 	e3:SetTargetRange(0,LOCATION_MZONE)
-	e3:SetTarget(aux.SecurityTarget)
+	e3:SetTarget(aux.SForceTarget)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x15a}
+s.listed_series={SET_S_FORCE}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(Card.IsSummonPlayer,1,nil,1-tp) 
-		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x15a),tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_S_FORCE),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

@@ -1,11 +1,11 @@
 --Ｓ－Ｆｏｒｃｅ グラビティーノ
 --Security Force Gravitino
 --Scripted by edo9300
-
 local s,id=GetID()
 function s.initial_effect(c)
-	--If normal or special summoned, add 1 "Security Force" card from deck
+	--Search 1 "S-Force" card
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
-	--An opponent's monster that faces a "Security Force" monster is banished if it leaves
+	--Banish opponent's monsters in the same column as your "S-Force" monster when they leave the field
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetProperty(EFFECT_FLAG_SET_AVAILABLE+EFFECT_FLAG_IGNORE_IMMUNE)
@@ -25,13 +25,12 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 	e3:SetTargetRange(0,LOCATION_MZONE)
 	e3:SetValue(LOCATION_REMOVED)
-	e3:SetTarget(aux.SecurityTarget)
+	e3:SetTarget(aux.SForceTarget)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x15a}
-
+s.listed_series={SET_S_FORCE}
 function s.thfilter(c)
-	return c:IsSetCard(0x15a) and c:IsAbleToHand() and not c:IsCode(id)
+	return c:IsSetCard(SET_S_FORCE) and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

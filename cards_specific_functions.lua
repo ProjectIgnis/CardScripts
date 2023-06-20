@@ -516,7 +516,7 @@ function Auxiliary.IceBarrierDiscardCost(f,discard,minc,maxc)
 	end
 end
 
---Function to be used as the target for "S-Force" effects that apply to monsters in the same column as the handler
+--Function to be used as the target for "S-Force" effects that apply to monsters in the same column as your "S-Force" monsters
 function Auxiliary.SForceTarget(e,cc)
 	local function filter(cc,tp)
 		return c:IsControler(tp) and c:IsFaceup() and c:IsMonster() and c:IsSetCard(SET_S_FORCE)

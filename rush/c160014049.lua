@@ -38,6 +38,6 @@ function s.condition2(e)
 	return c:IsType(TYPE_MAXIMUM)
 end
 function s.indtg(e,c)
-	if e:GetHandler():IsMaximumMode() then return c:IsMaximumMode() end
+	if e:GetHandler():GetEquipTarget():IsMaximumMode() then return c:IsMaximumMode() end
 	return c==e:GetHandler():GetEquipTarget()
 end

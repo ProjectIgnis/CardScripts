@@ -30,7 +30,7 @@ function s.eqlimit(e,c)
 	return c:IsFaceup()
 end
 function s.indtg(e,c)
-	if e:GetHandler():IsMaximumMode() then return c:IsMaximumMode() end
+	if e:GetHandler():GetEquipTarget():IsMaximumMode() then return c:IsMaximumMode() end
 	return c==e:GetHandler():GetEquipTarget()
 end
 function s.tdfilter(c)

@@ -12,10 +12,14 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--Cannot be destroyed by the card effects
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_EQUIP)
+	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+	e2:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
+	e2:SetRange(LOCATION_SZONE)
+	e2:SetTargetRange(LOCATION_ONFIELD,0)
 	e2:SetCondition(s.condition2)
-	e2:SetValue(s.efilter)
+	e2:SetTarget(s.indtg)
+	e2:SetValue(aux.indoval)
 	c:RegisterEffect(e2)
 end
 function s.eqfilter(c)
@@ -33,6 +37,7 @@ function s.condition2(e)
 	local c=e:GetHandler():GetEquipTarget()
 	return c:IsType(TYPE_MAXIMUM)
 end
-function s.efilter(e,te)
-	return te:GetOwnerPlayer()~=e:GetHandlerPlayer()
+function s.indtg(e,c)
+	if e:GetHandler():IsMaximumMode() then return c:IsMaximumMode() end
+	return c==e:GetHandler():GetEquipTarget()
 end

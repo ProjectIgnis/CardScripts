@@ -1,9 +1,8 @@
---Harami Kushiro the Shichirin Samurai
 --七輪の侍ハラミ・クシロウ
-
+--Shichirin Samurai - Kushiro the Skewer Master
 local s,id=GetID()
 function s.initial_effect(c)
-	--Destroy all level 7 or lower monsters on the field
+	--Destroy all level 8 or lower monsters on the field
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)
@@ -16,7 +15,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(Card.IsAttribute,tp,LOCATION_GRAVE,0,7,nil,ATTRIBUTE_FIRE) and e:GetHandler():IsStatus(STATUS_SUMMON_TURN+STATUS_SPSUMMON_TURN)
+	return e:GetHandler():IsStatus(STATUS_SUMMON_TURN|STATUS_SPSUMMON_TURN)
+		and Duel.IsExistingMatchingCard(Card.IsAttribute,tp,LOCATION_GRAVE,0,7,nil,ATTRIBUTE_FIRE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_MZONE,nil)
@@ -27,7 +27,6 @@ function s.desfilter(c)
 	return c:IsAttackAbove(2500) and c:IsLevelBelow(8) and c:IsFaceup() and c:IsNotMaximumModeSide()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_MZONE,nil)
 	if #g>0 then
 		Duel.Destroy(g,REASON_EFFECT)

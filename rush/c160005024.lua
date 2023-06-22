@@ -1,5 +1,5 @@
 -- ロイヤルデモンズ・デスドゥーム
---Royal Demon's Death Doom
+--Royal Rebel's Doom Metal
 local s,id=GetID()
 function s.initial_effect(c)
 	--Material check

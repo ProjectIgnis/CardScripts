@@ -2,10 +2,10 @@
 --Blazebolt Chemistorm Fenghuang Volcalize Phoenix [L]
 local s,id=GetID()
 function s.initial_effect(c)
-	--destroy 1 level 9 monster, then destroy 1 monster if in max mode
+	--Destroy 1 level 9 monster, then destroy 1 monster if in max mode
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)

@@ -17,7 +17,7 @@ end
 function s.cfilter(c)
 	return not c:IsHasEffect(EFFECT_XYZ_MATERIAL)
 end
-function s.xyzfilter(c,mg)
+function s.xyzfilter(c,tp,mg)
 	return c:IsXyzSummonable(nil,mg) and Duel.GetLocationCountFromEx(tp,tp,mg,c)>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -32,7 +32,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 			tc:RegisterEffect(e1)
 			table.insert(reset,e1)
 		end
-		local res=Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_EXTRA,0,1,nil,mg)
+		local res=Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_EXTRA,0,1,nil,tp,mg)
 		for _,eff in ipairs(reset) do
 			eff:Reset()
 		end
@@ -48,12 +48,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_XYZ_MATERIAL)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		table.insert(reset,e1)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local xyz=Duel.SelectMatchingCard(tp,s.xyzfilter,tp,LOCATION_EXTRA,0,1,1,nil,mg):GetFirst()
+	local xyz=Duel.SelectMatchingCard(tp,s.xyzfilter,tp,LOCATION_EXTRA,0,1,1,nil,tp,mg):GetFirst()
 	if xyz then
 		Duel.XyzSummon(tp,xyz,nil,mg,99,99)
 		local e1=Effect.CreateEffect(c)
@@ -64,7 +64,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				eff:Reset()
 			end
 		end)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		xyz:RegisterEffect(e1,true)
 	else
 		for _,eff in ipairs(reset) do

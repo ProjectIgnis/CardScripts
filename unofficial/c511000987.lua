@@ -28,7 +28,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local at=Duel.GetAttacker()
 	if chkc then return chkc==at and at:IsType(TYPE_FUSION) and (at:IsAbleToExtra() or at:IsCode(10000010)) end
-	if chk==0 then return t:IsOnField() and at:IsType(TYPE_FUSION)
+	if chk==0 then return at:IsOnField() and at:IsType(TYPE_FUSION)
 		and (at:IsAbleToExtra() or at:IsCode(10000010)) and at:IsCanBeEffectTarget(e) end
 	Duel.SetTargetCard(at)
 	if not at:IsCode(10000010) then

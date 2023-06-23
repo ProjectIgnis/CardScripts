@@ -1,3 +1,3 @@
---融合
---Polymerization (Rush)
-Duel.LoadCardScriptAlias(160206025)
+--ドラゴン・トライブ・フュージョン
+--Dragon Tribe Fusion
+Duel.LoadCardScriptAlias(160206024)

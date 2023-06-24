@@ -947,6 +947,7 @@ ANNOUNCE_CARD_FILTER = 0x8
 --Commonly used hardcoded effects
 EFFECT_CYBERDARK_WORLD       = 64753988
 EFFECT_ICEBARRIER_REPLACE    = 18319762
+EFFECT_MULTIPLE_TUNERS       = 21142671
 EFFECT_SFORCE_REPLACE        = 55049722 --Uses "S-Force Chase"'s code, but it is also an effect of "S-Force Retroactive"
 EFFECT_SUPREME_CASTLE        = 72043279
 EFFECT_SYNSUB_NORDIC         = 61777313

@@ -518,7 +518,7 @@ end
 
 --Function to be used as the target for "S-Force" effects that apply to monsters in the same column as your "S-Force" monsters
 function Auxiliary.SForceTarget(e,cc)
-	local function filter(cc,tp)
+	local function filter(c,tp)
 		return c:IsControler(tp) and c:IsFaceup() and c:IsMonster() and c:IsSetCard(SET_S_FORCE)
 	end
 	return cc:GetColumnGroup():IsExists(filter,1,cc,e:GetHandlerPlayer())

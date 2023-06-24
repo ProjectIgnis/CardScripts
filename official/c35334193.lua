@@ -1,8 +1,6 @@
 --Ｓ－Ｆｏｒｃｅ ジャスティファイ
---Security Force Justify
+--S-Force Justify
 --Logical Nonsense and DyXel
-
---Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -42,40 +40,25 @@ function s.initial_effect(c)
 	e3:SetOperation(s.rmop)
 	c:RegisterEffect(e3)
 end
-	--Lists "Security Force" archetype
-s.listed_series={0x15a}
-
-	--Include a "Security Force" monster as link material
+--Lists "S-Force" archetype
+s.listed_series={SET_S_FORCE}
+--Include a "S-Force" monster as link material
 function s.matcheck(g,lc,sumtype,tp)
-	return g:IsExists(Card.IsSetCard,1,nil,0x15a,lc,sumtype,tp)
+	return g:IsExists(Card.IsSetCard,1,nil,SET_S_FORCE,lc,sumtype,tp)
 end
-	--Activation legality
+--Activation legality
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsNegatableMonster() and chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsNegatableMonster,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,Card.IsNegatableMonster,tp,0,LOCATION_MZONE,1,1,nil)
 end
-	--Negate 1 of opponent's monsters, then you can move it to a zone this card points to
+--Negate 1 of opponent's monsters, then you can move it to a zone this card points to
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() and not tc:IsDisabled() and not tc:IsImmuneToEffect(e) then
-		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
-		--Negate its effects
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_DISABLE)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		tc:RegisterEffect(e1)
-		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e2:SetValue(RESET_TURN_SET)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		tc:RegisterEffect(e2)
+		tc:NegateEffects(c,RESET_PHASE|PHASE_END)
 		--Move
 		if c:IsInExtraMZone(tp) then
 			local zone=c:GetLinkedZone(1-tp)
@@ -88,17 +71,17 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-	--If this card attacks
+--If this card attacks
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker()==e:GetHandler()
 end
-	--Activation legality
+--Activation legality
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local lg=e:GetHandler():GetLinkedGroup():Filter(Card.IsAbleToRemove,nil)
 	if chk==0 then return #lg>0 end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,lg,#lg,0,0)
 end
-	--Banish all monsters this card points to
+--Banish all monsters this card points to
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local lg=e:GetHandler():GetLinkedGroup():Filter(Card.IsAbleToRemove,nil)
 	Duel.Remove(lg,POS_FACEUP,REASON_EFFECT)

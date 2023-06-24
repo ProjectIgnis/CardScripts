@@ -1,9 +1,9 @@
 --S-Force エッジ・レイザー
---Security Force Edge Laser
+--S-Force Edge Razor
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--spsummon
+	--Special Summon 1 "S-Force" monster from the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -17,19 +17,19 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
-	--cannot be link material
+	--Monsters in the same column as your "S-Force" monster cannot be used as Link Material for Link 3 or higher monsters
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
 	e3:SetValue(s.sumlimit)
 	e3:SetTargetRange(0,LOCATION_MZONE)
-	e3:SetTarget(aux.SecurityTarget)
+	e3:SetTarget(aux.SForceTarget)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x15a}
+s.listed_series={SET_S_FORCE}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x15a) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK)
+	return c:IsSetCard(SET_S_FORCE) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

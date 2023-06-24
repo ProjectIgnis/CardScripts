@@ -64,7 +64,7 @@ function s.initial_effect(c)
 	local e6=Effect.CreateEffect(c)
 	e6:SetType(EFFECT_TYPE_SINGLE)
 	e6:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e6:SetCode(21142671)
+	e6:SetCode(EFFECT_MULTIPLE_TUNERS)
 	c:RegisterEffect(e6)
 end
 s.synchro_nt_required=1

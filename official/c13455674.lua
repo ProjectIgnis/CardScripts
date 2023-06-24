@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e4:SetCode(21142671)
+	e4:SetCode(EFFECT_MULTIPLE_TUNERS)
 	c:RegisterEffect(e4)
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)

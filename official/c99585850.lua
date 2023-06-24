@@ -3,9 +3,9 @@
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
-	--Synchro summon
 	c:EnableReviveLimit()
-	Synchro.AddProcedure(c,nil,3,3,Synchro.NonTuner(Card.IsType,TYPE_SYNCHRO),1,1)
+	--Synchro Summon Procedure
+	Synchro.AddProcedure(c,nil,3,3,Synchro.NonTuner(Card.IsType,TYPE_SYNCHRO),1,99)
 	--Must first be synchro summoned
 	local e0=Effect.CreateEffect(c)
 	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SINGLE_RANGE)
@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-	e2:SetValue(s.indval)
+	e2:SetValue(aux.indoval)
 	c:RegisterEffect(e2)
 	--Banish itself an all cards the opponent controls
 	local e3=Effect.CreateEffect(c)
@@ -70,9 +70,6 @@ end
 s.synchro_nt_required=1
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsType,c:GetControler(),LOCATION_GRAVE,0,nil,TYPE_TUNER)*500
-end
-function s.indval(e,re,rp)
-	return rp==1-e:GetHandlerPlayer()
 end
 function s.rmcon2(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and re:IsMonsterEffect()

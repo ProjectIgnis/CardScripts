@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetCode(EFFECT_CHANGE_CODE)
 	e1:SetRange(LOCATION_MZONE|LOCATION_GRAVE)
-	e1:SetValue(70902743)
+	e1:SetValue(CARD_RED_DRAGON_ARCHFIEND)
 	c:RegisterEffect(e1)
 	-- Special Summon 1 "Red Dragon Archfiend" from your Extra Deck
 	local e2=Effect.CreateEffect(c)
@@ -26,10 +26,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={70902743}
+s.listed_names={CARD_RED_DRAGON_ARCHFIEND}
 function s.spfilter(c,e,tp)
 	local pg=aux.GetMustBeMaterialGroup(tp,Group.CreateGroup(),tp,c,nil,REASON_SYNCHRO)
-	return #pg<=0 and c:IsCode(70902743) and c:IsType(TYPE_SYNCHRO) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
+	return #pg<=0 and c:IsCode(CARD_RED_DRAGON_ARCHFIEND) and c:IsType(TYPE_SYNCHRO) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SYNCHRO,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

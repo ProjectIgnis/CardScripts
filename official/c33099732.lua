@@ -40,7 +40,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local fusparams={handler=e:GetHandler(),fusfilter=s.ffilter,matfilter=aux.FALSE,
 						extrafil=s.fextra,extraop=Fusion.BanishMaterial,extratg=s.extratg}
 	local b1=not Duel.HasFlagEffect(tp,id) and Duel.IsExistingMatchingCard(s.exfilter,tp,LOCATION_EXTRA,0,1,nil,tp)
-	local b2=not Duel.HasFlagEffect(tp,id+100) and Fusion.SummonEffTG(fusparams)(e,tp,eg,ep,ev,re,r,rp,0)
+	local b2=not Duel.HasFlagEffect(tp,id+1) and Fusion.SummonEffTG(fusparams)(e,tp,eg,ep,ev,re,r,rp,0)
 	if chk==0 then return b1 or b2 end
 	local op=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,1)},
@@ -51,7 +51,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		e:SetCategory(CATEGORY_TOGRAVE)
 		Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 	elseif op==2 then
-		Duel.RegisterFlagEffect(tp,id+100,RESET_PHASE|PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_END,0,1)
 		Fusion.SummonEffTG(fusparams)(e,tp,eg,ep,ev,re,r,rp,1)
 		e:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON+CATEGORY_REMOVE)
 	end

@@ -849,7 +849,7 @@ function UnofficialProc.icePillar()
 			local tc=Duel.GetAttacker()
 			if CheckPillars(tp,1) and tc and tc:GetControler()~=tp
 				and tc:IsRelateToBattle() and not tc:IsStatus(STATUS_ATTACK_CANCELED)
-				and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+				and Duel.SelectYesNo(tp,aux.Stringid(422,0)) then
 				IcePillarZone[tp+1]=IcePillarZone[tp+1] & ~Duel.SelectFieldZone(tp,1,LOCATION_MZONE,LOCATION_MZONE,~IcePillarZone[tp+1])
 				Duel.NegateAttack()
 			end
@@ -920,7 +920,7 @@ function UnofficialProc.raDefusion()
 				and ct>0 and ct<=Duel.GetLocationCount(tp,LOCATION_MZONE)
 				and mg:FilterCount(aux.NecroValleyFilter(mgfilter),nil,e,tp,tc,mg)==ct
 				and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
-				and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+				and Duel.SelectYesNo(tp,aux.Stringid(95286165,0)) then
 				Duel.BreakEffect()
 				Duel.SpecialSummon(mg,0,tp,tp,false,false,POS_FACEUP)
 			end

@@ -57,6 +57,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_names={CARD_ZARC}
+s.miracle_synchro_fusion=true
 function s.matfilter(typ)
 	return function(c,fc,sumtype,tp)
 		return c:IsRace(RACE_DRAGON,fc,sumtype,tp) and c:IsType(typ,fc,sumtype,tp)

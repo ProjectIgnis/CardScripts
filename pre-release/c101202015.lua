@@ -62,8 +62,8 @@ end
 function s.spsynccon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==1-tp and Duel.GetAttackTarget()==nil
 end
-function s.relfilter(c,e)
-	return c:HasLevel() and not c:IsType(TYPE_TUNER) and c:IsReleasableByEffect(e)
+function s.relfilter(c)
+	return c:HasLevel() and not c:IsType(TYPE_TUNER) and c:IsReleasableByEffect()
 		and (c:IsLocation(LOCATION_HAND) or c:IsFaceup())
 end
 function s.spfilter(c,e,tp,matg,lv)
@@ -77,7 +77,7 @@ function s.rescon(sg,e,tp,mg)
 end
 function s.spsynctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(s.relfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,nil,e)
+	local g=Duel.GetMatchingGroup(s.relfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,nil)
 	g:Merge(c)
 	if chk==0 then return c:HasLevel() and #g>=2
 		and aux.SelectUnselectGroup(g,e,tp,2,#g,s.rescon,0) end
@@ -87,7 +87,7 @@ end
 function s.spsyncop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	local g=Duel.GetMatchingGroup(s.relfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,nil,e)
+	local g=Duel.GetMatchingGroup(s.relfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,nil)
 	g:Merge(c)
 	if #g<2 then return end
 	local rg=aux.SelectUnselectGroup(g,e,tp,2,#g,s.rescon,1,tp,HINTMSG_RELEASE)

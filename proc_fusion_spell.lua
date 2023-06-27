@@ -445,7 +445,9 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 					if sel[1]==e then
 						Fusion.ExtraGroup=nil
 						backupmat=mat1:Clone()
-						tc:SetMaterial(mat1)
+						if not notfusion then
+							tc:SetMaterial(mat1)
+						end
 						--Checks for the case that the Fusion Summoning effect has an "extraop"
 						local extra_feff_mg=mat1:Filter(GetExtraMatEff,nil,tc)
 						if #extra_feff_mg>0 and extraop then

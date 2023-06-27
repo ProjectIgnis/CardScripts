@@ -19,7 +19,7 @@ end
 s.xyz_number=39
 s.listed_names={84013237}
 function s.ovfilter(c,tp,lc)
-	return c:IsFaceup() and c:IsControler(tp) and c:IsSummonCode(lc,SUMMON_TYPE_XYZ,tp,84013237)
+	return c:IsFaceup() and c:IsSummonCode(lc,SUMMON_TYPE_XYZ,tp,84013237)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetLP(tp)<=1000

@@ -37,7 +37,7 @@ s.listed_series={SET_NUMBER}
 s.xyz_number=0
 s.listed_names={65305468}
 function s.ovfilter(c,tp,lc)
-	return c:IsFaceup() and c:IsControler(tp) and c:IsSummonCode(lc,SUMMON_TYPE_XYZ,tp,65305468)
+	return c:IsFaceup() and c:IsSummonCode(lc,SUMMON_TYPE_XYZ,tp,65305468)
 end
 function s.xyzfilter(c,xyz,sumtype,tp)
 	return c:IsType(TYPE_XYZ,xyz,sumtype,tp) and not c:IsSetCard(SET_NUMBER)

@@ -2,8 +2,8 @@
 -- Swordsoul Sinister Sovereign - Qixing Longyuan
 local s,id=GetID()
 function s.initial_effect(c)
-	--Synchro Summon
 	c:EnableReviveLimit()
+	--Synchro Summon procedure
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTunerEx(Card.IsRace,RACE_WYRM),1,99)
 	--Draw 1 card when a Wyrm monster is Synchro Summoned
 	local e1=Effect.CreateEffect(c)
@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_CUSTOM+id)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,{id,1})
+	e2:SetCondition(function() return Duel.GetCurrentPhase()~=PHASE_DAMAGE and Duel.GetCurrentPhase()~=PHASE_DAMAGE_CAL end)
 	e2:SetTarget(s.rmtg)
 	e2:SetOperation(s.rmop)
 	c:RegisterEffect(e2)
@@ -72,7 +73,6 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
---banish monster
 function s.filter(c,tp,e)
 	return c:IsSummonPlayer(1-tp) and c:IsLocation(LOCATION_MZONE) and c:IsAbleToRemove()
 		and (not e or c:IsRelateToEffect(e))
@@ -110,7 +110,6 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+id,e,0,tp,tp,0)
 	end
 end
---banish spell/trap
 function s.rmcon2(e,tp,eg,ep,ev,re,r,rp)
 	return ep==1-tp and re:IsSpellTrapEffect() and re:GetHandler():IsRelateToEffect(re)
 end

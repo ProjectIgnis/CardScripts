@@ -76,6 +76,7 @@ function s.nacon(e,tp,eg,ep,ev,re,r,rp)
 	local bc=ec:GetBattleTarget()
 	return bc and bc:IsFaceup() and bc:IsType(TYPE_PLUS)
 		and (Duel.GetCurrentPhase()<PHASE_DAMAGE or Duel.GetCurrentPhase()>PHASE_DAMAGE_CAL)
+		and not Duel.GetAttacker():IsStatus(STATUS_ATTACK_CANCELED)
 end
 function s.naop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,1-tp,id)

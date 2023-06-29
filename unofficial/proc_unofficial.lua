@@ -236,6 +236,7 @@ function PlusMinus.nacon(e,tp,eg,ep,ev,re,r,rp)
 	local bc=c:GetBattleTarget()
 	return bc and bc:IsFaceup() and bc:IsType(c:GetType()&TYPE_PLUSMINUS)
 		and (Duel.GetCurrentPhase()<PHASE_DAMAGE or Duel.GetCurrentPhase()>PHASE_DAMAGE_CAL)
+		and not Duel.GetAttacker():IsStatus(STATUS_ATTACK_CANCELED)
 end
 
 function PlusMinus.naop(e,tp,eg,ep,ev,re,r,rp)

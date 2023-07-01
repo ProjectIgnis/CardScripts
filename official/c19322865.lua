@@ -71,7 +71,8 @@ function s.spfilter(c,e,tp,tc)
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsType(TYPE_EFFECT)
+		and Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0
 		and tc:IsLocation(LOCATION_DECK|LOCATION_EXTRA) then
 		local g=Duel.GetMatchingGroup(s.spfilter,tp,0,LOCATION_EXTRA,nil,e,tp,tc)
 		if #g>0 and Duel.SelectYesNo(1-tp,aux.Stringid(id,2)) then

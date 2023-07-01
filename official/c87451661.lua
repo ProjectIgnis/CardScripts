@@ -25,6 +25,12 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
+	-- Check if this card was used as Synchro Material for the successful Synchro Summon of a DARK Dragon Synchro Monster
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e3:SetCode(EVENT_BE_MATERIAL)
+	e3:SetOperation(s.matcheck)
+	c:RegisterEffect(e3)
 end
 s.listed_names={CARD_RED_DRAGON_ARCHFIEND}
 function s.spfilter(c,e,tp)
@@ -35,8 +41,7 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
-	local rc=e:GetHandler():GetReasonCard()
-	if (r&REASON_SYNCHRO)==REASON_SYNCHRO and rc:IsAttribute(ATTRIBUTE_DARK) and rc:IsRace(RACE_DRAGON) then
+	if e:GetHandler():HasFlagEffect(id) then
 		e:SetLabel(1)
 		Duel.SetPossibleOperationInfo(0,CATEGORY_DESTROY,nil,1,1-tp,LOCATION_MZONE)
 	else
@@ -50,8 +55,16 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	tc:SetMaterial(nil)
 	if Duel.SpecialSummon(tc,SUMMON_TYPE_SYNCHRO,tp,tp,false,false,POS_FACEUP)==0 then return end
 	tc:CompleteProcedure()
+	if e:GetLabel()==0 then return end
 	local g=Duel.GetMatchingGroup(Card.IsAttackPos,tp,0,LOCATION_MZONE,nil)
-	if #g>0 and e:GetLabel()==1 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Destroy(g,REASON_EFFECT)
+	end
+end
+function s.matcheck(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local rc=c:GetReasonCard()
+	if (r&REASON_SYNCHRO)==REASON_SYNCHRO and rc:IsAttribute(ATTRIBUTE_DARK) and rc:IsRace(RACE_DRAGON) then
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 	end
 end

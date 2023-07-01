@@ -20,8 +20,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
-	e2:SetCode(EVENT_FLIP)
-	c:RegisterEffect(e2)
+	e3:SetCode(EVENT_FLIP)
+	c:RegisterEffect(e3)
 	--Banish Special Summoned monster
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
@@ -48,8 +48,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0 and c:IsRelateToEffect(e) then
 		c:SetCardTarget(tc)
 		e:GetLabelObject():SetLabelObject(tc)
-		c:CreateRelation(tc,RESET_EVENT+RESET_OVERLAY+RESET_TOFIELD+RESET_TURN_SET)
-		tc:CreateRelation(c,RESET_EVENT+RESETS_STANDARD)
+		c:CreateRelation(tc,RESET_EVENT|RESET_OVERLAY|RESET_TOFIELD|RESET_TURN_SET)
+		tc:CreateRelation(c,RESET_EVENT|RESETS_STANDARD)
 	end
 end
 function s.leave(e,tp,eg,ep,ev,re,r,rp)

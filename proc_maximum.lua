@@ -326,7 +326,7 @@ function Card.AddSideMaximumHandler(c,eff)
 	baseeff:Reset()
 end
 function Maximum.SelfDestructCondition(e)
-	return e:GetHandler():IsMaximumModeSide() and not Duel.IsExistingMatchingCard(Card.IsMaximumModeCenter,0,LOCATION_ONFIELD,0,1,nil)
+	return e:GetHandler():IsMaximumModeSide() and not Duel.IsExistingMatchingCard(Card.IsMaximumModeCenter,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil)
 end
 function Maximum.GetMaximumCenter(tp)
 	return Duel.GetMatchingGroup(Card.IsMaximumModeCenter,tp,LOCATION_MZONE,0,nil):GetFirst()

@@ -38,7 +38,7 @@ function s.initial_effect(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)
-	if chk==0 then return ct>0 end
+	if chk==0 then return ct>0 and Duel.IsTurnPlayer(1-tp) end
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,ct*300)
 	if e:GetLabel()>0 then
         Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,0,tp,1)

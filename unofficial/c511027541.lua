@@ -1,4 +1,6 @@
+--スピードロイド 三つ目のダイス (アニメ)
 --Speedroid Tri-Eyed Dice (Anime)
+--Made by When
 local s,id=GetID()
 function s.initial_effect(c)
 	--negate attack

@@ -14,7 +14,6 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x106e}
 function s.spfilter1(c,e,tp)
 	return c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 	and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_HAND,0,2,c,c:GetLevel(),e,tp)

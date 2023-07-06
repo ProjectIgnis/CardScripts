@@ -1,9 +1,9 @@
---スピードロイド 三つ目のダイス (アニメ)
+--ＳＲ三ツ目のダイス (Anime)
 --Speedroid Tri-Eyed Dice (Anime)
 --Made by When
 local s,id=GetID()
 function s.initial_effect(c)
-	--negate attack
+	--Negate attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)

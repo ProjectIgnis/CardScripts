@@ -32,11 +32,13 @@ function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
+        if not Duel.SelectYesNo(tp,aux.Stringid(id,0)) then return end
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 	Duel.Hint(HINT_CARD,tp,id)
 	--OPD register
 	Duel.RegisterFlagEffect(ep,id,0,0,0)
 	--Here Goes Something!
+	
 	local tc=Duel.GetFieldGroup(tp,LOCATION_MZONE,0):GetFirst()
 	--That "HERO" monster you control gains 800 ATK while it battles an opponent's monster/can attack all monsters opponent controls, once each
 	local e1=Effect.CreateEffect(e:GetHandler())

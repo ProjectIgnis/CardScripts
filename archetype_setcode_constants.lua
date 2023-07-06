@@ -536,3 +536,6 @@ SET_BATTLIN_BOXING                = 0x201
 SET_VEDA                          = 0x296
 SET_HEART                         = 0x297
 SET_PATISSCIEL                    = 0x298
+SET_DIABELLESTARR                 = 0x299
+SET_TAINTED_TREASURE              = 0x29a
+SET_SNAKE_EYE                     = 0x29b

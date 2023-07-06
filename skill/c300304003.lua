@@ -2,7 +2,7 @@
 --Scripted by the Razgriz
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddFieldSkillProcedure(c,2,true)
+	aux.AddFieldSkillProcedure(c,2,false)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)

@@ -20,7 +20,7 @@ function s.spcheck(sg,e,tp,mg)
 	return sg:GetClassCount(Card.GetLevel)==1
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-    local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND,0,nil,e,tp)
+    local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND,0,nil,e,tp)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
         and aux.SelectUnselectGroup(g,e,tp,3,3,s.spcheck,0) end
     local sg=aux.SelectUnselectGroup(g,e,tp,3,3,s.spcheck,1,tp,HINTMSG_CONFIRM)

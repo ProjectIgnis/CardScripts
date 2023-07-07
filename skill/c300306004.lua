@@ -34,7 +34,8 @@ function s.bfilter(c)
 end
 function s.condition(e)
 	local tp=e:GetHandlerPlayer()
-	return Duel.GetBattleDamage(tp)>0
+	local a,at=Duel.GetBattleMonster(tp)
+	return Duel.GetBattleDamage(tp)>0 and a and at and a:IsAttackPos() and a:IsSetCard(SET_AMAZONESS)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local cc,oc=Duel.GetBattleMonster(tp),Duel.GetBattleMonster(1-tp)
@@ -53,6 +54,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(-atk)
 		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		oc:RegisterEffect(e1)
+		local e2=e1:Clone()
+		e2:SetCode(EFFECT_UPDATE_DEFENSE)
+		oc:RegisterEffect(e2)
 	end
 end
 

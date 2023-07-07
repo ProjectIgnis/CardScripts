@@ -24,7 +24,6 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
         and aux.SelectUnselectGroup(g,e,tp,3,3,s.spcheck,0) end
     local sg=aux.SelectUnselectGroup(g,e,tp,3,3,s.spcheck,1,tp,HINTMSG_CONFIRM)
-    sg:AddCard(sg)
 	sg:KeepAlive()
     e:SetLabelObject(sg)
 	Duel.ConfirmCards(1-tp,sg)

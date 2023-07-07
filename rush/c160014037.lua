@@ -24,7 +24,9 @@ function s.initial_effect(c)
 	end)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.RegisterFlagEffect(ep,id,RESET_PHASE|PHASE_END,0,1)
+	for tc in eg:Iter() do
+		Duel.RegisterFlagEffect(tc:GetSummonPlayer(),id,RESET_PHASE+PHASE_END,0,1)
+	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.HasFlagEffect(tp,id)

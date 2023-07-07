@@ -59,7 +59,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local a,at=Duel.GetBattleMonster(tp)
-	return a and at and a:IsFaceup() and a:IsSetCard(SET_ROID)
+	return a and at and a:IsFaceup() and a:IsSetCard(SET_ROID) and a:GetBaseAttack()~=a:GetBaseDefense()
 end
 function s.atkfilter(c)
 	return c:IsMonster() and c:IsSetCard(SET_ROID) and c:IsAbleToGraveAsCost()

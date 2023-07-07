@@ -26,11 +26,9 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_SPIRIT)
-end
+s.listed_card_types={TYPE_SPIRIT}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return not eg:IsContains(e:GetHandler()) and eg:IsExists(s.cfilter,1,nil)
+	return not eg:IsContains(e:GetHandler()) and eg:IsExists(aux.FaceupFilter(Card.IsType,TYPE_SPIRIT),1,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end

@@ -23,6 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
 end
+s.listed_card_types={TYPE_SPIRIT}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetCurrentPhase()~=PHASE_DAMAGE or Duel.IsDamageCalculated() then return false end
 	local a,b=Duel.GetBattleMonster(tp)
@@ -36,7 +37,7 @@ function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,1,1,nil)
 	e:SetLabelObject(g:GetFirst())
-	Duel.SendtoGrave(g,REASON_COST+REASON_DISCARD)
+	Duel.SendtoGrave(g,REASON_COST|REASON_DISCARD)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -45,6 +46,6 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if not tc then return end
 	local atk=math.max(tc:GetAttack(),0)
 	local def=math.max(tc:GetDefense(),0)
-	c:UpdateAttack(atk,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
-	c:UpdateDefense(def,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
+	c:UpdateAttack(atk,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE)
+	c:UpdateDefense(def,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE)
 end

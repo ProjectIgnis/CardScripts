@@ -19,6 +19,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.aclimit)
 	c:RegisterEffect(e2)
 end
+s.listed_card_types={TYPE_SPIRIT}
 function s.aclimit(e,re,tp)
-	return not re:GetHandler():IsType(TYPE_SPIRIT) and re:IsActiveType(TYPE_MONSTER)
+	return not re:GetHandler():IsType(TYPE_SPIRIT) and re:IsMonsterEffect()
 end

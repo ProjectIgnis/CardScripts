@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_FLIP)
 	c:RegisterEffect(e3)
 end
+s.listed_card_types={TYPE_SPIRIT}
 function s.thfilter(c)
 	return c:IsType(TYPE_SPIRIT) and c:IsAbleToHand()
 end

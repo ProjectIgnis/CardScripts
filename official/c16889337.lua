@@ -23,6 +23,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={id}
+s.listed_card_types={TYPE_SPIRIT}
 function s.thfilter(c)
 	return c:IsType(TYPE_SPIRIT) and not c:IsCode(id) and c:IsAbleToHand()
 end

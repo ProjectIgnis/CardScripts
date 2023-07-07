@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={73055622,TOKEN_SHINOBIRD}
+s.listed_card_types={TYPE_SPIRIT}
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_RITUAL)
 end

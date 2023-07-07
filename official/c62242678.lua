@@ -2,19 +2,19 @@
 --Hot Red Dragon Archfiend King Calamity
 local s,id=GetID()
 function s.initial_effect(c)
-	--synchro summon
 	c:EnableReviveLimit()
+	--Synchro Summon Procedure
 	Synchro.AddProcedure(c,nil,2,2,Synchro.NonTunerEx(s.matfilter),1,1)
-	--act limit
-	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e2:SetCondition(s.limcon)
-	e2:SetTarget(s.limtg)
-	e2:SetOperation(s.limop)
-	c:RegisterEffect(e2)
-	--damage
+	--Opponent cannot activate card or effects of cards they control for the rest of the turn
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e1:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) end)
+	e1:SetTarget(s.limtg)
+	e1:SetOperation(s.limop)
+	c:RegisterEffect(e1)
+	--Inflict damage equal to the ATK of a monster destroyed by battle
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_DAMAGE)
@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.damtg)
 	e3:SetOperation(s.damop)
 	c:RegisterEffect(e3)
-	--spsummon
+	--Special Summon 1 Level 8 or lower DARK Synchro monster from the GY
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,2))
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -36,19 +36,16 @@ function s.initial_effect(c)
 	e4:SetTarget(s.sptg)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
-	--double tuner
+	--Multiple tuners
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE)
 	e5:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e5:SetCode(21142671)
+	e5:SetCode(EFFECT_MULTIPLE_TUNERS)
 	c:RegisterEffect(e5)
 end
 s.synchro_nt_required=1
 function s.matfilter(c,val,scard,sumtype,tp)
 	return c:IsRace(RACE_DRAGON,scard,sumtype,tp) and c:IsAttribute(ATTRIBUTE_DARK,scard,sumtype,tp) and c:IsType(TYPE_SYNCHRO,scard,sumtype,tp)
-end
-function s.limcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
 function s.limtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -65,7 +62,7 @@ function s.limop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetDescription(aux.Stringid(id,3))
 	e1:SetTargetRange(0,1)
 	e1:SetValue(s.aclimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.aclimit(e,re,tp)
@@ -84,7 +81,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(p,d,REASON_EFFECT)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and e:GetHandler():IsPreviousControler(tp)
+	return rp==1-tp and e:GetHandler():IsPreviousControler(tp)
 end
 function s.spfilter(c,e,tp)
 	return c:IsLevelBelow(8) and c:IsRace(RACE_DRAGON) and c:IsAttribute(ATTRIBUTE_DARK)

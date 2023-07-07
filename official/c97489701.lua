@@ -2,67 +2,64 @@
 --Red Nova Dragon
 local s,id=GetID()
 function s.initial_effect(c)
-	--synchro summon
 	c:EnableReviveLimit()
-	Synchro.AddProcedure(c,nil,2,2,aux.FilterBoolFunction(Card.IsCode,70902743),1,1)
-	--atk
+	--Synchro Summon Procedure
+	Synchro.AddProcedure(c,nil,2,2,aux.FilterBoolFunction(Card.IsCode,CARD_RED_DRAGON_ARCHFIEND),1,1)
+	--Gains 500 ATK per each Tuner in your GY
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetCode(EFFECT_UPDATE_ATTACK)
+	e1:SetValue(s.atkval)
+	c:RegisterEffect(e1)
+	--Cannot be destroyed by an opponent's effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCode(EFFECT_UPDATE_ATTACK)
-	e2:SetValue(s.atkval)
+	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+	e2:SetValue(aux.indoval)
 	c:RegisterEffect(e2)
-	--indestructable
+	--Banish itself and negate an attack
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e3:SetDescription(aux.Stringid(id,0))
+	e3:SetCategory(CATEGORY_REMOVE)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e3:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-	e3:SetValue(s.indval)
+	e3:SetCondition(s.nacon)
+	e3:SetTarget(s.natg)
+	e3:SetOperation(s.naop)
 	c:RegisterEffect(e3)
-	--negate attack
+	--Special Summon itself during the End Phase
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(id,0))
-	e4:SetCategory(CATEGORY_REMOVE)
-	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e4:SetCode(EVENT_ATTACK_ANNOUNCE)
-	e4:SetRange(LOCATION_MZONE)
-	e4:SetCondition(s.nacon)
-	e4:SetTarget(s.natg)
-	e4:SetOperation(s.naop)
+	e4:SetDescription(aux.Stringid(id,1))
+	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+	e4:SetCode(EVENT_PHASE+PHASE_END)
+	e4:SetRange(LOCATION_REMOVED)
+	e4:SetCountLimit(1)
+	e4:SetCondition(s.spcon)
+	e4:SetTarget(s.sptg)
+	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
-	--special summon
+	--Multiple Tuners
 	local e5=Effect.CreateEffect(c)
-	e5:SetDescription(aux.Stringid(id,1))
-	e5:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e5:SetCode(EVENT_PHASE+PHASE_END)
-	e5:SetRange(LOCATION_REMOVED)
-	e5:SetCountLimit(1)
-	e5:SetCondition(s.spcon)
-	e5:SetTarget(s.sptg)
-	e5:SetOperation(s.spop)
+	e5:SetType(EFFECT_TYPE_SINGLE)
+	e5:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e5:SetCode(EFFECT_MULTIPLE_TUNERS)
 	c:RegisterEffect(e5)
-	--double tuner
-	local e6=Effect.CreateEffect(c)
-	e6:SetType(EFFECT_TYPE_SINGLE)
-	e6:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e6:SetCode(21142671)
-	c:RegisterEffect(e6)
 end
-s.material={70902743}
-s.listed_names={70902743}
+s.material={CARD_RED_DRAGON_ARCHFIEND}
+s.listed_names={CARD_RED_DRAGON_ARCHFIEND}
 s.synchro_nt_required=1
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsType,c:GetControler(),LOCATION_GRAVE,0,nil,TYPE_TUNER)*500
 end
-function s.indval(e,re,tp)
-	return e:GetHandler():GetControler()~=tp
-end
 function s.nacon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetAttacker():GetControler()~=tp
+	return Duel.GetAttacker():IsControler(1-tp)
 end
 function s.natg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc==Duel.GetAttacker() end
@@ -75,7 +72,7 @@ function s.naop(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.NegateAttack()
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.Remove(c,POS_FACEUP,REASON_EFFECT)~=0 then
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

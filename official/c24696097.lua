@@ -2,33 +2,34 @@
 --Shooting Star Dragon
 local s,id=GetID()
 function s.initial_effect(c)
-	--synchro summon
-	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_SYNCHRO),1,1,aux.FilterSummonCode(CARD_STARDUST_DRAGON),1,1)
 	c:EnableReviveLimit()
-	--multi attack
+	--Synchro Summon Procedure
+	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_SYNCHRO),1,1,aux.FilterSummonCode(CARD_STARDUST_DRAGON),1,1)
+	--Excavate the top 5 cards of your deck and gain extra attack per Tuner monster excavated
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetCountLimit(1)
 	e1:SetRange(LOCATION_MZONE)
+	e1:SetCountLimit(1)
 	e1:SetCondition(s.mtcon)
 	e1:SetOperation(s.mtop)
 	c:RegisterEffect(e1)
-	--negate
+	--Negate effects that would destroy cards on the field
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DISABLE+CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_CHAINING)
-	e2:SetCountLimit(1)
 	e2:SetRange(LOCATION_MZONE)
+	e2:SetCountLimit(1)
 	e2:SetCondition(s.discon)
 	e2:SetTarget(s.distg)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
-	--disable attack
+	--Banish itself and negate an attack
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
+	e3:SetCategory(CATEGORY_REMOVE)
 	e3:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_FIELD)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetCode(EVENT_ATTACK_ANNOUNCE)
@@ -38,7 +39,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.datg)
 	e3:SetOperation(s.daop)
 	c:RegisterEffect(e3)
-	--Revive
+	--Special Summon itself after it is banished by its own effect
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,3))
 	e4:SetType(EFFECT_TYPE_TRIGGER_F+EFFECT_TYPE_FIELD)
@@ -49,7 +50,7 @@ function s.initial_effect(c)
 	e4:SetTarget(s.sumtg)
 	e4:SetOperation(s.sumop)
 	c:RegisterEffect(e4)
-	--double tuner check
+	--Multiple tuners
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE)
 	e5:SetCode(EFFECT_MATERIAL_CHECK)
@@ -74,7 +75,7 @@ function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EXTRA_ATTACK)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		e1:SetValue(ct-1)
 		c:RegisterEffect(e1)
 	elseif ct==0 then
@@ -82,7 +83,7 @@ function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_CANNOT_ATTACK)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		c:RegisterEffect(e2)
 	end
 end
@@ -106,27 +107,28 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.dacon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetAttacker():GetControler()~=tp
+	return Duel.GetAttacker():GetControler()==1-tp
 end
 function s.datg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	local c=e:GetHandler()
 	if chkc then return chkc==Duel.GetAttacker() end
-	if chk==0 then return e:GetHandler():IsAbleToRemove() and Duel.GetAttacker():IsCanBeEffectTarget(e)
-		and not e:GetHandler():IsStatus(STATUS_CHAINING) end
+	if chk==0 then return c:IsAbleToRemove() and Duel.GetAttacker():IsCanBeEffectTarget(e)
+		and not c:IsStatus(STATUS_CHAINING) end
 	Duel.SetTargetCard(Duel.GetAttacker())
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,e:GetHandler(),1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,c,1,0,0)
 end
 function s.daop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.Remove(c,POS_FACEUP,REASON_EFFECT)~=0 then
 		Duel.NegateAttack()
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,0)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,0)
 	end
 end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:GetFlagEffect(id)>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
 function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -139,8 +141,8 @@ function s.valcheck(e,c)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-		e1:SetCode(21142671)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_PHASE+PHASE_END)
+		e1:SetCode(EFFECT_MULTIPLE_TUNERS)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD&~(RESET_TOFIELD)|RESET_PHASE|PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end

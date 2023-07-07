@@ -14,25 +14,20 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
+	--Register when a player Special Summons a monster
 	aux.GlobalCheck(s,function()
-		s[0]=false
-		s[1]=false
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_SPSUMMON_SUCCESS)
 		ge1:SetOperation(s.checkop)
 		Duel.RegisterEffect(ge1,0)
-		aux.AddValuesReset(function()
-			s[0]=false
-			s[1]=false
-		end)
 	end)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	s[ep]=true
+	Duel.RegisterFlagEffect(ep,id,RESET_PHASE|PHASE_END,0,1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return not s[tp]
+	return not Duel.HasFlagEffect(tp,id)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,2) end

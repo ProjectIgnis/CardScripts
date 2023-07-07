@@ -3,9 +3,10 @@
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)
-	--place Black Whirlwind
+	--Place 1 "Black Whirlwind" face-up on the field
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_SUMMON+CATEGORY_TOGRAVE)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id)
@@ -15,13 +16,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.tfop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x33}
-s.listed_names={91351370}
+s.listed_series={SET_BLACKWING}
+s.listed_names={91351370} --Black Whirlwind
 function s.tfcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
 end
 function s.filter(c)
-	return c:IsSetCard(0x33) and c:IsMonster() and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(SET_BLACKWING) and c:IsMonster() and c:IsAbleToRemoveAsCost()
 end
 function s.tfcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
@@ -35,6 +36,8 @@ end
 function s.tftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and Duel.IsExistingMatchingCard(s.tffilter,tp,LOCATION_DECK,0,1,nil,tp) end
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SUMMON,e:GetHandler(),1,0,0)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOGRAVE,e:GetHandler(),1,0,0)
 end
 function s.tfop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -42,16 +45,17 @@ function s.tfop(e,tp,eg,ep,ev,re,r,rp)
 	e0:SetType(EFFECT_TYPE_FIELD)
 	e0:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e0:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e0:SetReset(RESET_PHASE+PHASE_END)
+	e0:SetReset(RESET_PHASE|PHASE_END)
 	e0:SetTargetRange(1,0)
 	e0:SetTarget(s.splimit)
 	Duel.RegisterEffect(e0,tp)
 	aux.RegisterClientHint(c,nil,tp,1,0,aux.Stringid(id,3),nil)
-	--lizard check
+	--Clock Lizard check
 	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)
+	--Place 1 "Black Whirlwind" face-up on the field
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
-	local tc=Duel.GetFirstMatchingCard(s.tffilter,tp,LOCATION_DECK,0,nil,tp)
+	local tc=Duel.SelectMatchingCard(tp,s.tffilter,tp,LOCATION_DECK,0,1,1,nil,tp):GetFirst()
 	if tc and Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true) and c:IsLocation(LOCATION_HAND)
 		and (c:IsSummonableCard() or c:IsAbleToGrave()) then
 		Duel.BreakEffect()
@@ -60,19 +64,16 @@ function s.tfop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SUMMON_PROC)
 		e1:SetCondition(s.ntcon)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		c:RegisterEffect(e1)
-		if c:IsSummonable(true,nil) and c:IsAbleToGrave() then
-			op=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
-		elseif c:IsAbleToGrave() then
-			op=Duel.SelectOption(tp,aux.Stringid(id,2))+1
-		else
-			op=Duel.SelectOption(tp,aux.Stringid(id,2))+1
-		end
-		e:SetLabel(op)
-		if op==0 then
+		local b1=c:IsSummonable(true,nil)
+		local b2=c:IsAbleToGrave()
+		local op=Duel.SelectEffect(tp,
+				{b1,aux.Stringid(id,1)},
+				{b2,aux.Stringid(id,2)})
+		if op==1 then
 			Duel.Summon(tp,c,true,nil)
-		else		
+		else
 			Duel.SendtoGrave(e:GetHandler(),REASON_EFFECT)
 		end
 	end
@@ -83,7 +84,7 @@ function s.tfop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e2:SetCountLimit(1)
 	e2:SetOperation(s.gyop)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 	tc:RegisterEffect(e2)
 end
 function s.ntcon(e,c,minc)
@@ -91,8 +92,8 @@ function s.ntcon(e,c,minc)
 	return minc==0 and c:GetLevel()>4 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
 function s.gyop(e,tp,eg,ep,ev,re,r,rp)
-	local cr=e:GetHandler()
-	if Duel.SendtoGrave(cr,REASON_EFFECT)~=0 and cr:IsLocation(LOCATION_GRAVE) then
+	local c=e:GetHandler()
+	if Duel.SendtoGrave(c,REASON_EFFECT)>0 and c:IsLocation(LOCATION_GRAVE) then
 		Duel.Damage(tp,1000,REASON_EFFECT)
 	end
 end

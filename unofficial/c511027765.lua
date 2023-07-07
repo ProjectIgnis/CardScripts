@@ -7,38 +7,33 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(s.sptg)
+	e1:SetCost(s.spcost)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-function s.spfilter1(c,e,tp)
+function s.spfilter(c,e,tp)
 	return c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-	and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_HAND,0,2,c,c:GetLevel(),e,tp)
 end
-function s.spfilter2(c,lv,e,tp)
-	return c:GetLevel()==lv and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+function s.spcheck(sg,e,tp,mg)
+	return sg:GetClassCount(Card.GetLevel)==1
 end
-function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-        and Duel.IsExistingMatchingCard(s.spfilter1,tp,LOCATION_HAND,0,1,nil,e,tp) end
+function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
+    local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND,0,nil,e,tp)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+        and aux.SelectUnselectGroup(g,e,tp,3,3,s.spcheck,0) end
+    local sg=aux.SelectUnselectGroup(g,e,tp,3,3,s.spcheck,1,tp,HINTMSG_CONFIRM)
+    sg:AddCard(sg)
+	sg:KeepAlive()
+    e:SetLabelObject(sg)
+	Duel.ConfirmCards(1-tp,sg)
+	Duel.ShuffleHand(tp)
     Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
-	    local g1=Duel.SelectMatchingCard(tp,s.spfilter1,tp,LOCATION_HAND,0,1,1,nil,e,tp)
-        Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
-        local g2=Duel.SelectMatchingCard(tp,s.spfilter2,tp,LOCATION_HAND,0,2,2,g1:GetFirst(),g1:GetFirst():GetLevel(),e,tp)
-	    g1:Merge(g2)
-	    Duel.ConfirmCards(1-tp,g1)
-	    Duel.ShuffleHand(tp)
-		if #g1>0 then
-		    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-			Duel.SpecialSummon(g1:Select(tp,1,1,nil),0,tp,tp,false,false,POS_FACEUP)
-		end
+	local sg=e:GetLabelObject()
+	if #sg>0 then
+		Duel.SpecialSummon(sg:Select(tp,1,1,nil):GetFirst(),0,tp,tp,false,false,POS_FACEUP)
 	end
 end

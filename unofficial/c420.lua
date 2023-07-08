@@ -223,7 +223,7 @@ if not AnimeArchetype then
 		72657739,91939608,85639257,2903036,49563947,82579942,
 		92418590,39806198
 	}
-	Card.IsDoll=MakeCheck({0x517,0x9d,0x25c},AnimeArchetype.OCGDoll)
+	Card.IsDoll=MakeCheck({0x517,0x9d,0x15c},AnimeArchetype.OCGDoll)
 
 	-- Drone
 	-- ドローン

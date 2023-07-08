@@ -54,10 +54,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsCode,CARD_ZARC),tp,LOCATION_ONFIELD,0,nil)
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,tp,LOCATION_ONFIELD)
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK|LOCATION_EXTRA)
-	elseif sel==2 then
+	elseif op==2 then
 		e:SetCategory(0)
 		Duel.RegisterFlagEffect(tp,id+100,RESET_PHASE|PHASE_END,0,1)
-	elseif sel==3 then
+	elseif op==3 then
 		e:SetCategory(0)
 		Duel.RegisterFlagEffect(tp,id+200,RESET_PHASE|PHASE_END,0,1)
 	end

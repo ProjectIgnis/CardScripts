@@ -1,4 +1,4 @@
---スリーカード召喚
+--スリーカード・サモン
 --Three Card Summon
 --Made by When
 local s,id=GetID()

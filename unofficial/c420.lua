@@ -223,8 +223,7 @@ if not AnimeArchetype then
 		72657739,91939608,85639257,2903036,49563947,82579942,
 		92418590,39806198
 	}
-	Card.IsDoll=MakeCheck({0x517,0x9d},AnimeArchetype.OCGDoll)
-
+	Card.IsDoll=MakeCheck({0x517,0x9d,0x25c},AnimeArchetype.OCGDoll)
 
 	-- Drone
 	-- ドローン
@@ -233,7 +232,6 @@ if not AnimeArchetype then
 		24610207,756652,4474060
 	}
 	Card.IsDrone=MakeCheck({0x581},AnimeArchetype.OCGDrone)
-
 
 	-- Druid ドルイド
 	-- Secret Sect Druid Wid/Secret Sect Druid Dru/Aurkus, Lightsworn Druid

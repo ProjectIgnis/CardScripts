@@ -1,7 +1,8 @@
 --八汰烏の骸
+--Legacy of Yata-Garasu
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Draw 1 card or 2 if the opponent controls a Spirit monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DRAW)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -11,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_card_types={TYPE_SPIRIT}
 function s.filter(c)
 	return c:IsType(TYPE_SPIRIT) and c:IsFaceup()
 end

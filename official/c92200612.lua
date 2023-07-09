@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+s.listed_card_types={TYPE_SPIRIT}
 function s.cfilter(c)
 	return c:IsType(TYPE_SPIRIT) and c:IsAbleToHand()
 end

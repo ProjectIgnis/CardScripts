@@ -29,6 +29,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.mtop)
 	c:RegisterEffect(e3)
 end
+s.listed_card_types={TYPE_SPIRIT}
 function s.filter(c,tp)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
 		and c:IsControler(tp) and c:IsType(TYPE_SPIRIT)

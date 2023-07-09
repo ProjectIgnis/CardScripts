@@ -5,16 +5,18 @@ local TOKEN_SPIRIT=id+1
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_DESTROYED)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
+	e1:SetCode(EVENT_DESTROYED)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
 s.listed_names={id+1}
+s.listed_card_types={TYPE_SPIRIT}
 function s.cfilter(c,tp,e)
 	return c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE)
 		and c:IsPreviousPosition(POS_FACEUP) and c:IsType(TYPE_SPIRIT) and c:IsLocation(LOCATION_GRAVE) 

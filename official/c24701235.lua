@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.operation)
 	c:RegisterEffect(e4)
 end
+s.listed_card_types={TYPE_SPIRIT}
 function s.nsop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFlagEffect(tp,id)>0 then return end
 	local c=e:GetHandler()
@@ -38,9 +39,9 @@ function s.nsop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
 	e1:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
 	e1:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_SPIRIT))
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 	aux.RegisterClientHint(c,nil,tp,1,0,aux.Stringid(id,1))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

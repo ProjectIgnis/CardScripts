@@ -2,7 +2,7 @@
 --Izanagi
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	--Special Summon procedure
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--spirit may not return
+	--Spirit monster do not have to return to the hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_SPIRIT_MAYNOT_RETURN)
@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	c:RegisterEffect(e2)
 end
+s.listed_card_types={TYPE_SPIRIT}
 function s.filter(c)
 	return c:IsType(TYPE_SPIRIT) and c:IsAbleToRemoveAsCost()
 end
@@ -47,4 +48,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 	g:DeleteGroup()
 end
-

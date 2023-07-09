@@ -1,5 +1,5 @@
 --霊魂の拠所
---Shnobird Power Spot
+--Shinobird Power Spot
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

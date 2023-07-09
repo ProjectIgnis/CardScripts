@@ -1,5 +1,5 @@
 --霊子エネルギー固定装置
---Spiritual Energy Seetle Machine
+--Spiritual Energy Settle Machine
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

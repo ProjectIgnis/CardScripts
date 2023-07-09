@@ -1,5 +1,5 @@
 --封神鏡
---Fensgsheng Mirror
+--Fengsheng Mirror
 local s,id=GetID()
 function s.initial_effect(c)
 	--Discard 1 spirit monster from the opponent's hand

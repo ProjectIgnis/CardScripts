@@ -34,7 +34,7 @@ function s.initial_effect(c)
 end
 s.listed_card_types={TYPE_SPIRIT}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetAttackTarget():IsControler(1-tp)
+	return Duel.GetAttacker():IsControler(1-tp)
 end
 function s.cfilter(c)
 	return c:IsType(TYPE_SPIRIT) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)

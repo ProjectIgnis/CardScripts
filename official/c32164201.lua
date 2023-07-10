@@ -38,7 +38,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 	--Lists "Utopia" archetype
-s.listed_series={0x107f}
+s.listed_series={SET_UTOPIA}
 
 	--If opponent's LP is 2000 higher than yours
 function s.spcon(e,c)
@@ -53,7 +53,7 @@ function s.eqcon(e)
 end
 	--Check for a "Utopia" monster
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x107f)
+	return c:IsFaceup() and c:IsSetCard(SET_UTOPIA)
 end
 	--Activation legality
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -81,12 +81,13 @@ function s.equipop(c,e,tp,tc)
 	e1:SetType(EFFECT_TYPE_EQUIP)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(1000)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e1)
 end
 	--If a monster effect is activated on opponent's field
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==1-tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainDisablable(ev)
+	return rp==1-tp and e:GetHandler():GetEquipTarget()
+		and re:IsMonsterEffect() and Duel.IsChainDisablable(ev)
 		and Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)==LOCATION_MZONE
 		and e:GetHandler():GetFlagEffect(id)==0
 end
@@ -94,7 +95,7 @@ end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	if Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
-		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1)
 		Duel.Hint(HINT_CARD,0,id)
 		Duel.NegateEffect(ev)
 	end

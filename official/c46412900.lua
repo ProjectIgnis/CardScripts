@@ -44,7 +44,8 @@ end
 s.listed_names={id}
 s.listed_series={SET_BLAZE_ACCELERATOR,SET_VOLCANIC}
 function s.spcfilter(c,tp)
-	return c:IsFaceup() and (c:IsRace(RACE_PYRO) or c:IsSetCard(SET_BLAZE_ACCELERATOR)) and c:IsAbleToRemoveAsCost()
+	return ((c:IsMonster() and c:IsRace(RACE_PYRO)) or c:IsSetCard(SET_BLAZE_ACCELERATOR))
+		and c:IsFaceup() and c:IsAbleToRemoveAsCost()
 end
 function s.rescon(sg,e,tp,mg)
 	return Duel.GetMZoneCount(tp,sg)>0

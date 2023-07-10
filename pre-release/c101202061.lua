@@ -13,6 +13,7 @@ function s.initial_effect(c)
 								desc=aux.Stringid(id,0), matfilter=s.matfilter,location=LOCATION_DECK})
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_FZONE)
+	e2:SetCountLimit(1)
 	c:RegisterEffect(e2)
 	--Activate 1 of these effects
 	local e3=Effect.CreateEffect(c)

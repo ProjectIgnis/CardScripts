@@ -81,7 +81,7 @@ end
 function s.regop2(e,tp,eg,ep,ev,re,r,rp)
 	local cg=e:GetLabelObject():GetLabelObject()
 	--Raise 1 event after chain
-    if Duel.GetFlagEffect(tp,id)==0 and re:IsHasCategory(CATEGORY_TOGRAVE) and #cg>0 then
+    if Duel.GetFlagEffect(tp,id)==0 and #cg>0 then
         Duel.RegisterFlagEffect(tp,id,RESET_CHAIN,0,1)
         Duel.RaiseEvent(e:GetHandler(),EVENT_CUSTOM+id,e,0,tp,tp,0)
     end

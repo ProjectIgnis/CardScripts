@@ -4,11 +4,12 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddUnionProcedure(c)
-	--equip
+	--Equip 1 union monster to an appropriate target
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_SZONE)
 	e1:SetCountLimit(1,id)
+	e1:SetCondition(function(e) return e:GetHandler():GetEquipTarget() end)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
@@ -24,11 +25,7 @@ function s.filter(c,ec,ign_ct)
 	return c:IsLevelBelow(4) and c:IsType(TYPE_UNION) and c:CheckUnionTarget(ec) and aux.CheckUnionEquip(c,ec,ign_ct)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then 
-		local ec=e:GetHandler():GetEquipTarget()
-		return Duel.GetLocationCount(tp,LOCATION_SZONE)>-1 and ec
-			and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,ec,1) 
-	end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e:GetHandler():GetEquipTarget(),1) end
 	e:GetLabelObject():CreateEffectRelation(e)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
@@ -42,4 +39,3 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

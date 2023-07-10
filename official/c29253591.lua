@@ -34,8 +34,7 @@ function s.synlimit(e,c)
 	return not c:IsSetCard(SET_DRAGUNITY)
 end
 function s.slevel(e,c)
-	local lv=e:GetHandler():GetLevel()
-	return 4*65536+lv
+	return 4<<16|e:GetHandler():GetLevel()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

@@ -38,7 +38,7 @@ function s.initial_effect(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)
-	if chk==0 then return ct>0 and Duel.IsTurnPlayer(1-tp) end
+	if chk==0 then return ct>0 and Duel.IsMainPhase() and Duel.IsTurnPlayer(1-tp) end
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,ct*300)
 	if e:GetLabel()>0 then
         Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,0,tp,1)
@@ -61,9 +61,6 @@ end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
     --Use the label object of e1 to store the cards
     local g=e:GetLabelObject():GetLabelObject()
-    if Duel.GetFlagEffect(tp,id)==0 then
-    	g:Clear()
-    end
     g:Merge(eg)
     e:GetLabelObject():SetLabelObject(g)
     --Use the label of e1 to see if there were cards from the deck
@@ -73,9 +70,11 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
     	e:GetLabelObject():SetLabel(0)
     end
     --Raise 1 event per chain
-    if Duel.GetFlagEffect(tp,id)==0 and Duel.GetCurrentChain()==0 then
-        Duel.RaiseEvent(e:GetHandler(),EVENT_CUSTOM+id,e,0,tp,tp,0)
-        g:Clear()
+    if Duel.GetCurrentChain()==0 then
+    	g:Clear()
+    	if Duel.GetFlagEffect(tp,id)==0 then
+        	Duel.RaiseEvent(e:GetHandler(),EVENT_CUSTOM+id,e,0,tp,tp,0)
+        end
     end
 end
 function s.regop2(e,tp,eg,ep,ev,re,r,rp)

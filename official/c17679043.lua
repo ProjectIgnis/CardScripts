@@ -61,7 +61,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_CANNOT_ATTACK)
-		e3:SetReset(RESET_EVENT|(RESETS_STANDARD&~(RESET_TURN_SET)|RESET_PHASE|PHASE_END)
+		e3:SetReset(RESET_EVENT|(RESETS_STANDARD&~RESET_TURN_SET)|RESET_PHASE|PHASE_END)
 		tc:RegisterEffect(e3)
 	end
 end

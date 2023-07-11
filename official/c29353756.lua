@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.spcon)
 	c:RegisterEffect(e1)
-	--equip
+	--Equip itself to an "Utopia" monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -75,7 +75,7 @@ function s.equipop(c,e,tp,tc)
 	c:RegisterEffect(e1)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==tp and e:GetHandler():GetEquipTarget()
+	return rp==1-tp and e:GetHandler():GetEquipTarget()
 		and Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)==LOCATION_SZONE
 		and re:IsTrapEffect() and Duel.IsChainDisablable(ev) 
 end

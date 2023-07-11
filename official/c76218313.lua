@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	--clock lizard
 	local e4=aux.createContinuousLizardCheck(c,LOCATION_SZONE,nil,0,0xff)
-	e4:SetCondition(s.effcon)
+	e4:SetCondition(function(e) return e:GetHandler():GetEquipTarget() end)
 	c:RegisterEffect(e4)
 end
 s.listed_names={78193831} --"Buster Blader"

@@ -1,11 +1,11 @@
 --聖魔の乙女アルテミス
---Magistus Maiden Artemis
+--Artemis, the Magistus Moon Maiden
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetSPSummonOnce(id)
-	--Link Summon
 	c:EnableReviveLimit()
+	--Link Summon Procedure
 	Link.AddProcedure(c,s.matfilter,1,1)
 	--Equip to monsters
 	local e1=Effect.CreateEffect(c)
@@ -23,24 +23,24 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
-	--Search
+	--Search 1 "Magistus" monster
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCountLimit(1,{id,1})
-	e3:SetCondition(s.thcon)
+	e3:SetCondition(function(e) return e:GetHandler():GetEquipTarget() end)
 	e3:SetTarget(s.thtg)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x152}
+s.listed_series={SET_MAGISTUS}
 function s.matfilter(c,lc,sumtype,tp)
 	return c:IsLevelBelow(4) and c:IsRace(RACE_SPELLCASTER,lc,sumtype,tp)
 end
 function s.eqfilter(c,e)
-	return c:IsFaceup() and c:IsSetCard(0x152) and c:IsCanBeEffectTarget(e)
+	return c:IsFaceup() and c:IsSetCard(SET_MAGISTUS) and c:IsCanBeEffectTarget(e)
 end
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.eqfilter,1,e:GetHandler(),e) and not eg:IsContains(e:GetHandler())
@@ -67,7 +67,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_EQUIP_LIMIT)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e1:SetValue(s.eqlimit)
 	e1:SetLabelObject(tc)
 	c:RegisterEffect(e1)
@@ -76,10 +76,7 @@ function s.eqlimit(e,c)
 	return c==e:GetLabelObject()
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x152) and c:IsMonster() and c:IsAbleToHand()
-end
-function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetEquipTarget()
+	return c:IsSetCard(SET_MAGISTUS) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

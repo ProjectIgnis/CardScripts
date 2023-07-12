@@ -30,8 +30,9 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
-		local c=e:GetHandler()
+	if not (tc:IsRelateToEffect(e) and tc:IsFaceup()) then return end
+	local c=e:GetHandler()
+	if not tc:IsImmuneToEffect(e) then
 		-- Unaffected by other monsters' effects
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(3101)
@@ -46,25 +47,26 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local prevturn=Duel.GetTurnCount()
 		-- Send it to the GY during the Standby Phase of the next turn
 		aux.DelayedOperation(tc,PHASE_STANDBY,id,e,tp,function(ag) Duel.SendtoGrave(ag,REASON_EFFECT) end,function() return Duel.GetTurnCount()~=prevturn end,nil,resetcount,aux.Stringid(id,1))
-		local tc_atk=tc:GetAttack()
-		if tc_atk==0 then return end
-		local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
-		if #g==0 then return end
-		Duel.BreakEffect()
-		local dg=Group.CreateGroup()
-		for oc in g:Iter() do
-			local preatk=oc:GetAttack()
-			-- Decrease ATK
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetValue(-tc_atk)
-			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
-			oc:RegisterEffect(e1)
-			if preatk~=0 and oc:GetAttack()==0 then dg:AddCard(oc) end
-		end
-		if #dg==0 then return end
-		Duel.BreakEffect()
-		Duel.Destroy(dg,REASON_EFFECT)
 	end
+	local tc_atk=tc:GetAttack()
+	if tc_atk==0 then return end
+	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
+	if #g==0 then return end
+	Duel.BreakEffect()
+	local dg=Group.CreateGroup()
+	for oc in g:Iter() do
+		local preatk=oc:GetAttack()
+		-- Decrease ATK
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_SINGLE)
+		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e2:SetCode(EFFECT_UPDATE_ATTACK)
+		e2:SetValue(-tc_atk)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
+		oc:RegisterEffect(e2)
+		if preatk~=0 and oc:GetAttack()==0 then dg:AddCard(oc) end
+	end
+	if #dg==0 then return end
+	Duel.BreakEffect()
+	Duel.Destroy(dg,REASON_EFFECT)
 end

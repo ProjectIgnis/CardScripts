@@ -15,16 +15,17 @@ function s.initial_effect(c)
 	e1:SetOperation(s.eqop)
 	c:RegisterEffect(e1)
 	aux.AddZWEquipLimit(c,s.eqcon,function(tc,c,tp) return s.filter(tc) and tc:IsControler(tp) end,s.equipop,e1)
-	--
+	--"ZW" cards cannot be destroyed by your opponent's effects while this card is equipped to a monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_ONFIELD,0)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x107e))
-	e2:SetValue(s.indval)
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_ZW))
+	e2:SetCondition(function(e) return e:GetHandler():GetEquipTarget() end)
+	e2:SetValue(aux.indoval)
 	c:RegisterEffect(e2)
-	--destroy sub
+	--Destruction replacement for the equipped monster
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_EQUIP)
 	e3:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
@@ -32,12 +33,12 @@ function s.initial_effect(c)
 	e3:SetValue(s.repval)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x107f,0x107e}
+s.listed_series={SET_UTOPIA,SET_ZW}
 function s.eqcon(e)
 	return e:GetHandler():CheckUniqueOnField(e:GetHandlerPlayer())
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x107f)
+	return c:IsFaceup() and c:IsSetCard(SET_UTOPIA)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -64,11 +65,8 @@ function s.equipop(c,e,tp,tc)
 	e1:SetType(EFFECT_TYPE_EQUIP)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(1200)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e1)
-end
-function s.indval(e,re,rp)
-	return rp==1-e:GetHandlerPlayer()
 end
 function s.repval(e,re,r,rp)
 	return (r&REASON_EFFECT)~=0

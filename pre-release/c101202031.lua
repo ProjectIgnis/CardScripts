@@ -80,14 +80,14 @@ function s.daop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.damfilter(c,e,tp)
-	return c:IsMonster() and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(1-tp)
-		and c:IsLocation(LOCATION_GRAVE|LOCATION_REMOVED) and c:IsReason(REASON_EFFECT)
-		and c:IsCanBeEffectTarget(e) and c:GetTextAttack()>0
+	local rc=c:GetReasonEffect():GetHandler()
+	return rc:IsSetCard(SET_EARTHBOUND) and c:IsMonster() and c:IsPreviousLocation(LOCATION_MZONE)
+		and c:IsPreviousControler(1-tp) and c:IsLocation(LOCATION_GRAVE|LOCATION_REMOVED)
+		and c:IsReason(REASON_EFFECT) and c:IsCanBeEffectTarget(e) and c:GetTextAttack()>0
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local rc=re:GetHandler()
 	if chkc then return eg:IsContains(chkc) and s.damfilter(chkc,e,tp) end
-	if chk==0 then return rc and rc:IsSetCard(SET_EARTHBOUND) and eg:IsExists(s.damfilter,1,nil,e,tp) end
+	if chk==0 then return eg:IsExists(s.damfilter,1,nil,e,tp) end
 	local g=eg:Filter(s.damfilter,nil,e,tp)
 	local tc=nil
 	if #g>1 then

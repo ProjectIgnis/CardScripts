@@ -174,6 +174,7 @@ SET_GEARGIANO                     = 0x1072
 SET_XYZ                           = 0x73
 SET_CXYZ                          = 0x1073
 SET_XYZ_DRAGON                    = 0x2073
+SET_ARMORED_XYZ                   = 0x4073
 SET_MERMAIL                       = 0x74
 SET_ABYSS                         = 0x75
 SET_HERALDIC_BEAST                = 0x76

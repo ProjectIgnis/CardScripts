@@ -1,3 +1,6 @@
+--パラレル・セレクト (アニメ)
+--Parallel Select (anime)
+--Made by When
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

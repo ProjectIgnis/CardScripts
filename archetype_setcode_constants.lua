@@ -541,3 +541,4 @@ SET_DIABELLESTARR                 = 0x299
 SET_TAINTED_TREASURE              = 0x29a
 SET_SNAKE_EYE                     = 0x29b
 SET_MEMENTO                       = 0x29c
+SET_TISTINA                       = 0x29d

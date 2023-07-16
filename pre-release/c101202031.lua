@@ -87,7 +87,7 @@ function s.damfilter(c,e,tp)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return eg:IsContains(chkc) and s.damfilter(chkc,e,tp) end
-	if chk==0 then return eg:IsExists(s.damfilter,1,nil,e,tp) end
+	if chk==0 then return r&REASON_EFFECT==REASON_EFFECT and eg:IsExists(s.damfilter,1,nil,e,tp) end
 	local g=eg:Filter(s.damfilter,nil,e,tp)
 	local tc=nil
 	if #g>1 then

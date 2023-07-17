@@ -125,5 +125,5 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.aclimit(e,re,tp)
 	local rc=re:GetHandler()
-	return re:IsMonsterEffect() and rc:HasLevel() and rc:IsSummonLocation(LOCATION_EXTRA)
+	return re:IsMonsterEffect() and rc:HasLevel() and rc:IsSummonLocation(LOCATION_EXTRA) and rc:IsLocation(LOCATION_MZONE)
 end

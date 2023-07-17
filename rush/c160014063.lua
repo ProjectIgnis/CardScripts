@@ -15,26 +15,25 @@ function s.initial_effect(c)
 	local g=Group.CreateGroup()
 	g:KeepAlive()
 	e1:SetLabelObject(g)
-	aux.GlobalCheck(s,function()
-		--Register cards sent
-		local e0=Effect.CreateEffect(c)
-		e0:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e0:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
-		e0:SetCode(EVENT_TO_GRAVE)
-		e0:SetRange(LOCATION_SZONE)
-		e0:SetLabelObject(e1)
-		e0:SetCondition(s.condition)
-		e0:SetOperation(s.regop)
-		Duel.RegisterEffect(e0,0)
-		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e2:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
-		e2:SetCode(EVENT_CHAIN_SOLVED)
-		e2:SetRange(LOCATION_SZONE)
-		e2:SetLabelObject(e1)
-		e2:SetOperation(s.regop2)
-		Duel.RegisterEffect(e2,0)
-	end)
+	--Register cards sent
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e0:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
+	e0:SetCode(EVENT_TO_GRAVE)
+	e0:SetRange(LOCATION_SZONE)
+	e0:SetLabelObject(e1)
+	e0:SetCondition(s.condition)
+	e0:SetOperation(s.regop)
+	Duel.RegisterEffect(e0,0)
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e2:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
+	e2:SetCode(EVENT_CHAIN_SOLVED)
+	e2:SetRange(LOCATION_SZONE)
+	e2:SetLabelObject(e1)
+	e2:SetOperation(s.regop2)
+	Duel.RegisterEffect(e2,0)
+	--cannot use global effect here because labels wouldn't be properly registered on different copies
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)
@@ -78,11 +77,15 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
     end
 end
 function s.regop2(e,tp,eg,ep,ev,re,r,rp)
-	local cg=e:GetLabelObject():GetLabelObject()
-	--Raise 1 event after chain
-    if Duel.GetFlagEffect(tp,id)==0 and #cg>0 then
-    	cg:Clear() --Must be cleared so multiple copies cannot trigger
-        Duel.RegisterFlagEffect(tp,id,RESET_CHAIN,0,1)
-        Duel.RaiseEvent(e:GetHandler(),EVENT_CUSTOM+id,e,0,tp,tp,0)
-    end
+	if e:GetHandler():IsLocation(LOCATION_SZONE) and e:GetHandler():IsFacedown() then --need to check here because face-down Defense Position cards cannot use effects
+		local cg=e:GetLabelObject():GetLabelObject()
+		--Raise 1 event after chain
+	    if Duel.GetFlagEffect(tp,id)==0 and #cg>0 then
+	    	if not cg:IsExists(s.filter,1,nil,1-tp) then -- The following does not apply if a card is sent from the Deck, as in that case, the first copy will trigger the second copy
+	    		cg:Clear() --Must be cleared so multiple copies cannot trigger
+	    	end
+	        Duel.RegisterFlagEffect(tp,id,RESET_CHAIN,0,1)
+	        Duel.RaiseEvent(e:GetHandler(),EVENT_CUSTOM+id,e,0,tp,tp,0)
+	    end
+	end
 end

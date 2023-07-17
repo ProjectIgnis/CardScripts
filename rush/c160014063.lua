@@ -73,7 +73,6 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
     if Duel.GetCurrentChain()==0 then
     	g:Clear()
     	if Duel.GetFlagEffect(tp,id)==0 then
-    		Debug.Message('Plouf')
         	Duel.RaiseEvent(e:GetHandler(),EVENT_CUSTOM+id,e,0,tp,tp,0)
         end
     end

@@ -73,6 +73,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
     if Duel.GetCurrentChain()==0 then
     	g:Clear()
     	if Duel.GetFlagEffect(tp,id)==0 then
+    		Debug.Message('Plouf')
         	Duel.RaiseEvent(e:GetHandler(),EVENT_CUSTOM+id,e,0,tp,tp,0)
         end
     end
@@ -81,6 +82,7 @@ function s.regop2(e,tp,eg,ep,ev,re,r,rp)
 	local cg=e:GetLabelObject():GetLabelObject()
 	--Raise 1 event after chain
     if Duel.GetFlagEffect(tp,id)==0 and #cg>0 then
+    	cg:Clear() --Must be cleared so multiple copies cannot trigger
         Duel.RegisterFlagEffect(tp,id,RESET_CHAIN,0,1)
         Duel.RaiseEvent(e:GetHandler(),EVENT_CUSTOM+id,e,0,tp,tp,0)
     end

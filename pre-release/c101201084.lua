@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Fusion Summon Procedure
-	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsCode,{12275533,99733359}),aux.FilterBoolFunctionEx(Card.IsRace,RACE_MACHINE|RACE_DINOSAUR))
+	Fusion.AddProcMix(c,true,true,{12275533,99733359},aux.FilterBoolFunctionEx(Card.IsRace,RACE_MACHINE|RACE_DINOSAUR))
 	--Cannot be destroyed by battle
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={12275533,99733359}
 function s.rescon(sg,e,tp,mg)
 	return sg:FilterCount(Card.IsControler,nil,tp)==1
 end

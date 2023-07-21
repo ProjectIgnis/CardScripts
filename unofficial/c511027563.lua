@@ -1,3 +1,6 @@
+--異い次じ元げんの一角戦士ユニコーンナイト (Anime)
+--D.D. Unicorn Knight (Anime)
+--Made by When
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

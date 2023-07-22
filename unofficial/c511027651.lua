@@ -28,7 +28,8 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_REMOVED,LOCATION_REMOVED,1,1,nil)
-	if Duel.SendtoHand(g,tp,REASON_EFFECT)~=0 then
+	local tc=g:GetFirst()
+	if Duel.SendtoHand(tc,tp,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_HAND) then
 	    Duel.ConfirmCards(1-tp,g)
 	    Duel.Draw(tp,1,REASON_EFFECT)
 	end

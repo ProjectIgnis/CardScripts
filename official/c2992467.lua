@@ -50,7 +50,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if Duel.SpecialSummonStep(c,0,tp,1-rp,false,false,POS_FACEUP) then
+	if Duel.SpecialSummonStep(c,0,tp,1-rp,false,false,POS_FACEUP_DEFENSE) then
 		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 	end
 	Duel.SpecialSummonComplete()

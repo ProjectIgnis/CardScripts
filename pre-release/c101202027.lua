@@ -42,7 +42,7 @@ end
 s.toss_coin=true
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp) end
-	Duel.SetOperationInfo(0,CATEGORY_COIN,nil,0,tp,1)
+	Duel.SetOperationInfo(0,CATEGORY_COIN,nil,0,tp,0)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
@@ -69,13 +69,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.coinop(e,tp,eg,ep,ev,re,r,rp)
-	local heads_ct=0
-	local res={Duel.GetCoinResult()}
-	for _,coin in ipairs(res) do
-		if coin==COIN_HEADS then
-			heads_ct=heads_ct+1
-		end
-	end
+	local heads_ct=aux.GetCoinHeadsFromEv(ev)
 	if not Duel.IsChainSolving() then
 		Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+id,re,r,rp,ep,heads_ct)
 	else

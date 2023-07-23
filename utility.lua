@@ -1636,6 +1636,21 @@ function Auxiliary.GetCoinEffectHintString(coin)
 		return 63
 	end
 end
+function Auxiliary.GetCoinCountFromEv(ev)
+	return ev&0xff
+end
+function Auxiliary.GetCoinHeadsFromEv(ev)
+	return (ev>>8)&0xff
+end
+function Auxiliary.GetCoinTailsFromEv(ev)
+	return (ev>>16)&0xff
+end
+function Auxiliary.GetDiceCountSelfFromEv(ev)
+	return ev&0xffff
+end
+function Auxiliary.GetDiceCountOppoFromEv(ev)
+	return (ev>>16)&0xffff
+end
 
 --Returns the zones, on the specified player's field, pointed by the specified number of Link markers. Includes Extra Monster Zones.
 function Duel.GetZoneWithLinkedCount(count,tp)

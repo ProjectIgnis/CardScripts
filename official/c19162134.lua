@@ -110,20 +110,20 @@ function s.tossop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if ep==tp then
 		for i=1,ev do
-			c:RegisterFlagEffect(id+1,RESET_EVENT|RESETS_STANDARD|RESET_PHASE+|PHASE_END,0,1)
+			c:RegisterFlagEffect(id+1,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1)
 		end
 	else
 		for i=1,ev do
-			c:RegisterFlagEffect(id+2,RESET_EVENT|RESETS_STANDARD|RESET_PHASE+|PHASE_END,0,1)
+			c:RegisterFlagEffect(id+2,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1)
 		end
 	end
 	if c:GetFlagEffect(id+1)>=5 and c:GetFlagEffect(id+3)==0 then
 		s.drop1(e,tp,eg,ep,ev,re,r,rp)
-		c:RegisterFlagEffect(id+3,RESET_EVENT|RESETS_STANDARD|RESET_PHASE+|PHASE_END,0,1)
+		c:RegisterFlagEffect(id+3,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1)
 	end
 	if c:GetFlagEffect(id+2)>=5 and c:GetFlagEffect(id+4)==0 then
 		s.drop2(e,tp,eg,ep,ev,re,r,rp)
-		c:RegisterFlagEffect(id+4,RESET_EVENT|RESETS_STANDARD|RESET_PHASE+|PHASE_END,0,1)
+		c:RegisterFlagEffect(id+4,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1)
 	end
 end
 function s.diceop(e,tp,eg,ep,ev,re,r,rp)
@@ -132,26 +132,26 @@ function s.diceop(e,tp,eg,ep,ev,re,r,rp)
 	local ct2=(ev>>16)
 	if ep==tp then
 		for i=1,ct1 do
-			c:RegisterFlagEffect(id+1,RESET_EVENT|RESETS_STANDARD|RESET_PHASE+|PHASE_END,0,1)
+			c:RegisterFlagEffect(id+1,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1)
 		end
 		for i=1,ct2 do
-			c:RegisterFlagEffect(id+2,RESET_EVENT|RESETS_STANDARD|RESET_PHASE+|PHASE_END,0,1)
+			c:RegisterFlagEffect(id+2,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1)
 		end
 	else
 		for i=1,ct2 do
-			c:RegisterFlagEffect(id+1,RESET_EVENT|RESETS_STANDARD|RESET_PHASE+|PHASE_END,0,1)
+			c:RegisterFlagEffect(id+1,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1)
 		end
 		for i=1,ct1 do
-			c:RegisterFlagEffect(id+2,RESET_EVENT|RESETS_STANDARD|RESET_PHASE+|PHASE_END,0,1)
+			c:RegisterFlagEffect(id+2,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1)
 		end
 	end
 	if c:GetFlagEffect(id+1)>=5 and c:GetFlagEffect(id+3)==0 then
 		s.drop1(e,tp,eg,ep,ev,re,r,rp)
-		c:RegisterFlagEffect(id+3,RESET_EVENT|RESETS_STANDARD|RESET_PHASE+|PHASE_END,0,1)
+		c:RegisterFlagEffect(id+3,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1)
 	end
 	if c:GetFlagEffect(id+2)>=5 and c:GetFlagEffect(id+4)==0 then
 		s.drop2(e,tp,eg,ep,ev,re,r,rp)
-		c:RegisterFlagEffect(id+4,RESET_EVENT|RESETS_STANDARD|RESET_PHASE+|PHASE_END,0,1)
+		c:RegisterFlagEffect(id+4,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1)
 	end
 end
 function s.damcon1(e,tp,eg,ep,ev,re,r,rp)

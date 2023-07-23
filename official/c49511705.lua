@@ -48,7 +48,7 @@ function s.effcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)
-	local ct=Duel.CountHeads(Duel.GetCoinResult())
+	local ct=aux.GetCoinHeadsFromEv(ev)
 	if ct>0 then
 		Duel.Damage(1-tp,500,REASON_EFFECT)
 	end

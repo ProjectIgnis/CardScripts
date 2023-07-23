@@ -106,7 +106,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCode(EFFECT_EQUIP_LIMIT)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e1:SetValue(1)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 			c:RegisterEffect(e1)
 			--end
 			local e2=Effect.CreateEffect(c)
@@ -116,9 +116,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetCountLimit(1)
 			e2:SetCode(EVENT_PHASE+PHASE_END)
 			e2:SetOperation(s.op)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 			c:RegisterEffect(e2)
-			c:RegisterFlagEffect(511000118,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+			c:RegisterFlagEffect(511000118,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1)
 		end
 	end
 end
@@ -131,7 +131,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RaiseSingleEvent(e:GetHandler(),id,e,0,tp,tp,0)
 end
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,31829185)
+	return Duel.IsTurnPlayer(1-tp) and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,31829185)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
@@ -197,7 +197,7 @@ function s.moveop(e,tp,eg,ep,ev,re,r,rp,c,og)
 			e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 			e4:SetRange(LOCATION_MZONE)
 			e4:SetValue(s.efilter)
-			e4:SetReset(RESET_EVENT+0x47c0000)
+			e4:SetReset(RESET_EVENT|RESET_TOGRAVE|RESET_REMOVE|RESET_TEMP_REMOVE|RESET_TOHAND|RESET_TODECK|RESET_OVERLAY)
 			tc:RegisterEffect(e4,true)
 			--cannot be battle target
 			local e2=Effect.CreateEffect(c)
@@ -206,7 +206,7 @@ function s.moveop(e,tp,eg,ep,ev,re,r,rp,c,og)
 			e2:SetRange(LOCATION_MZONE)
 			e2:SetCode(EFFECT_CANNOT_BE_BATTLE_TARGET)
 			e2:SetValue(aux.imval1)
-			e2:SetReset(RESET_EVENT+0x47c0000)
+			e2:SetReset(RESET_EVENT|RESET_TOGRAVE|RESET_REMOVE|RESET_TEMP_REMOVE|RESET_TOHAND|RESET_TODECK|RESET_OVERLAY)
 			tc:RegisterEffect(e2,true)
 			--Direct attack
 			local e3=Effect.CreateEffect(c)
@@ -215,15 +215,15 @@ function s.moveop(e,tp,eg,ep,ev,re,r,rp,c,og)
 			e3:SetRange(LOCATION_MZONE)
 			e3:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 			e3:SetTarget(s.dirtg)
-			e3:SetReset(RESET_EVENT+0x47c0000)
+			e3:SetReset(RESET_EVENT|RESET_TOGRAVE|RESET_REMOVE|RESET_TEMP_REMOVE|RESET_TOHAND|RESET_TODECK|RESET_OVERLAY)
 			tc:RegisterEffect(e3,true)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CANNOT_ATTACK)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-			e1:SetReset(RESET_EVENT+0x47c0000)
+			e1:SetReset(RESET_EVENT|RESET_TOGRAVE|RESET_REMOVE|RESET_TEMP_REMOVE|RESET_TOHAND|RESET_TODECK|RESET_OVERLAY)
 			tc:RegisterEffect(e1,true)
-			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+			tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 		end
 	end
 	return
@@ -236,7 +236,7 @@ function s.dirtg(e,c)
 	return not Duel.IsExistingMatchingCard(aux.FilterEqualFunction(Card.GetFlagEffect,0,id),c:GetControler(),0,LOCATION_MZONE,1,nil)
 end
 function s.filter(c)
-	return (c:GetType()==TYPE_SPELL or c:IsType(TYPE_QUICKPLAY)) and c:GetActivateEffect()
+	return (c:IsNormalSpell() or c:IsQuickPlaySpell()) and c:GetActivateEffect()
 		and c:GetFlagEffect(id+1)==0
 end
 function s.activ(e,tp,eg,ep,ev,re,r,rp)
@@ -261,7 +261,7 @@ function s.activ(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetRange(LOCATION_HAND)
 			e1:SetValue(LOCATION_MZONE)
 			tc:RegisterEffect(e1)
-			tc:RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+			tc:RegisterFlagEffect(id+1,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1)
 		end
 		tc=g:GetNext()
 	end

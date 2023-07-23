@@ -61,7 +61,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e4:SetLabel(1-tp)
 		e4:SetCondition(s.losecon)
 		e4:SetOperation(s.loseop)
-		e4:SetReset(RESET_EVENT+0xc020000)
+		e4:SetReset(RESET_EVENT|RESET_TURN_SET|RESET_OVERLAY|RESET_MSCHANGE)
 		tc:RegisterEffect(e4,true)
 		Duel.SpecialSummonComplete()
 	end

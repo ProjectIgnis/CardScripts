@@ -1,9 +1,12 @@
+--パラレル・セレクト (アニメ)
+--Parallel Select (anime)
+--Made by When
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCategory(CATEGORY_DRAW)
+	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_DRAW)
 	e1:SetCode(EVENT_DESTROYED)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCondition(s.condition)

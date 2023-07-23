@@ -73,8 +73,9 @@ function s.coinop(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsChainSolving() then
 		Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+id,re,r,rp,ep,heads_ct)
 	else
+		local total_ct=aux.GetCoinCountFromEv(ev)
 		local chain_solved_eff=e:GetLabelObject()
-		chain_solved_eff:SetLabel(chain_solved_eff:GetLabel()+heads_ct,#res)
+		chain_solved_eff:SetLabel(chain_solved_eff:GetLabel()+heads_ct,total_ct)
 	end
 end
 function s.chainsolvedop(e,tp,eg,ep,ev,re,r,rp)

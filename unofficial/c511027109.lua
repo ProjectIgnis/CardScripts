@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	--Counter
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetCategory(CATEGORY_COUNTER)
+	e2:SetCategory(CATEGORY_POSITION+CATEGORY_COUNTER)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetCode(EVENT_SUMMON_SUCCESS)
@@ -31,22 +31,18 @@ function s.initial_effect(c)
 	e4:SetValue(s.repval)
 	c:RegisterEffect(e4)
 end
-function s.filter(c,p)
-	return c:IsFaceup() and c:IsRace(RACE_ROCK) and c:IsControler(p)
-end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.filter,1,nil,tp)
+	return eg:IsExists(aux.FaceupFilter(Card.IsRace,RACE_ROCK),1,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetTargetCard(eg:Filter(s.filter,nil,tp))
+	Duel.SetTargetCard(eg:Filter(aux.FaceupFilter(Card.IsRace,RACE_ROCK),nil))
 	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,0x1096)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetTargetCards(e)
 	for tc in tg:Iter() do
-		if tc:IsFaceup() then
-			Duel.ChangePosition(tc,POS_FACEUP_DEFENSE)
+		if Duel.ChangePosition(tc,POS_FACEUP_DEFENSE)>0 and tc:IsPosition(POS_FACEUP_DEFENSE) then
 			tc:AddCounter(0x1096,1)
 		end
 	end

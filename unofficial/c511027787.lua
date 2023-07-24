@@ -1,4 +1,4 @@
---ＲＲ－レディネス (アニメ)
+--ＲＲ－レディネス (Anime)
 --Raidraptor - Readiness (Anime)
 --Made by When
 local s,id=GetID()

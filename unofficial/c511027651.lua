@@ -1,5 +1,5 @@
---パラレル・セレクト (アニメ)
---Parallel Select (anime)
+--パラレル・セレクト (Anime)
+--Parallel Selection (Anime)
 --Made by When
 local s,id=GetID()
 function s.initial_effect(c)
@@ -33,7 +33,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_REMOVED,LOCATION_REMOVED,1,1,nil)
 	local tc=g:GetFirst()
 	if tc and Duel.SendtoHand(tc,tp,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_HAND) then
-	    Duel.ConfirmCards(1-tp,g)
-	    Duel.Draw(tp,1,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,g)
+		Duel.Draw(tp,1,REASON_EFFECT)
 	end
 end

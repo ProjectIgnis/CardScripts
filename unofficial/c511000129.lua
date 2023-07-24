@@ -37,7 +37,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetTargetCards(e)
-	tg:ForEach(function(tc) if tc:IsFaceup() then tc:AddCounter(0x1096,1) end)
+	tg:ForEach(function(tc) if tc:IsFaceup() then tc:AddCounter(0x1096,1) end end)
 end
 function s.repfilter(c,tp)
 	return c:IsLocation(LOCATION_MZONE) and c:GetCounter(0x1096)>0

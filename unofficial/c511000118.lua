@@ -16,10 +16,11 @@ function s.initial_effect(c)
 	--Return to Monster Zone
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetTarget(s.rttg)
-	e2:SetOperation(s.rtop)
+	e2:SetTarget(s.sptg)
+	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -56,16 +57,21 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetValue(function(_e) return -(_e:GetHandler():GetBaseAttack()) end)
 	e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e2)
-	c:RegisterFlagEffect(id+1,RESET_EVENT|RESETS_STANDARD,0,1,pos)
+	c:RegisterFlagEffect(id+1,RESET_EVENT|RESETS_STANDARD,0,1)
 end
-function s.rttg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and not c:HasFlagEffect(id) and c:GetFlagEffectLabel(id+1) end
+		and c:IsCanBeSpecialSummoned(e,0,tp,true,false,POS_FACEUP_ATTACK)
+		and not c:HasFlagEffect(id) and c:HasFlagEffect(id+1) end
 	c:RegisterFlagEffect(id,RESET_EVENT|(RESETS_STANDARD&~(RESET_TOFIELD|RESET_LEAVE))|RESET_PHASE|PHASE_END,0,1)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
-function s.rtop(e,tp,eg,ep,ev,re,r,rp)
+function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	Duel.MoveToField(c,tp,tp,LOCATION_MZONE,c:GetFlagEffectLabel(id+1),true)
+	if Duel.SpecialSummon(c,0,tp,tp,true,false,POS_FACEUP_ATTACK)==0 and Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
+		and c:IsCanBeSpecialSummoned(e,0,tp,true,false,POS_FACEUP_ATTACK) then
+		Duel.SendtoGrave(c,REASON_RULE)
+	end
 end

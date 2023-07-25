@@ -310,8 +310,8 @@ function Card.IsColumn(c,seq,tp,loc)
 	if not c:IsOnField() then return false end
 	local cseq=c:GetSequence()
 	local seq=seq
-	local loc=loc and loc or c:GetLocation()
-	local tp=tp and tp or c:GetControler()
+	local loc=loc or c:GetLocation()
+	local tp=tp or c:GetControler()
 	if c:IsLocation(LOCATION_MZONE) then
 		if cseq==5 then cseq=1 end
 		if cseq==6 then cseq=3 end
@@ -332,9 +332,9 @@ function Card.IsColumn(c,seq,tp,loc)
 end
 
 function Card.UpdateAttack(c,amt,reset,rc)
-	rc=rc and rc or c
+	rc=rc or c
 	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
-	reset=reset and reset or RESET_EVENT+r
+	reset=reset or RESET_EVENT+r
 	local atk=c:GetAttack()
 	if atk>=-amt then --If amt is positive, it would become negative and always be lower than or equal to atk, if amt is negative, it would become postive and if it is too much it would be higher than atk
 		local e1=Effect.CreateEffect(rc)
@@ -352,9 +352,9 @@ function Card.UpdateAttack(c,amt,reset,rc)
 end
 
 function Card.UpdateDefense(c,amt,reset,rc)
-	rc=rc and rc or c
+	rc=rc or c
 	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
-	reset=reset and reset or RESET_EVENT+r
+	reset=reset or RESET_EVENT+r
 	local def=c:GetDefense()
 	if def and def>=-amt then --See Card.UpdateAttack
 		local e1=Effect.CreateEffect(rc)
@@ -372,9 +372,9 @@ function Card.UpdateDefense(c,amt,reset,rc)
 end
 
 function Card.UpdateLevel(c,amt,reset,rc)
-	rc=rc and rc or c
+	rc=rc or c
 	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
-	reset=reset and reset or RESET_EVENT+r
+	reset=reset or RESET_EVENT+r
 	local lv=c:GetLevel()
 	if c:IsLevelBelow(2147483647) then
 		if lv+amt<=0 then amt=-(lv-1) end --Unlike ATK, if amt is too much should reduce as much as possible
@@ -390,9 +390,9 @@ function Card.UpdateLevel(c,amt,reset,rc)
 end
 
 function Card.UpdateRank(c,amt,reset,rc)
-	rc=rc and rc or c
+	rc=rc or c
 	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
-	reset=reset and reset or RESET_EVENT+r
+	reset=reset or RESET_EVENT+r
 	local rk=c:GetRank()
 	if c:IsRankBelow(2147483647) then
 		if rk+amt<=0 then amt=-(rk-1) end --See Card.UpdateLevel
@@ -408,9 +408,9 @@ function Card.UpdateRank(c,amt,reset,rc)
 end
 
 function Card.UpdateLink(c,amt,reset,rc)
-	rc=rc and rc or c
+	rc=rc or c
 	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
-	reset=reset and reset or RESET_EVENT+r
+	reset=reset or RESET_EVENT+r
 	local lk=c:GetLink()
 	if c:IsLinkBelow(2147483647) then
 		if lk+amt<=0 then amt=-(lk-1) end --See Card.UpdateLevel
@@ -426,9 +426,9 @@ function Card.UpdateLink(c,amt,reset,rc)
 end
 
 function Card.UpdateScale(c,amt,reset,rc)
-	rc=rc and rc or c
+	rc=rc or c
 	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
-	reset=reset and reset or RESET_EVENT+r
+	reset=reset or RESET_EVENT+r
 	local scl=c:GetLeftScale()
 	if scl then
 		if scl+amt<=0 then amt = -(scl-1) end --See Card.UpdateLevel
@@ -783,7 +783,7 @@ function Auxiliary.GetExtraMaterials(tp,mustg,sc,summon_type)
 			local eg=te:GetValue()(0,summon_type,te,tp,sc)-mustg
 			eg:KeepAlive()
 			tg=tg+eg
-			local efun=te:GetOperation() and te:GetOperation() or aux.TRUE
+			local efun=te:GetOperation() or aux.TRUE
 			table.insert(t,{eg,efun,te})
 		end
 	end
@@ -1316,7 +1316,7 @@ function Auxiliary.SelectUnselectGroup(g,e,tp,minc,maxc,rescon,chk,seltp,hintmsg
 		end
 		return false
 	end
-	local hintmsg=hintmsg and hintmsg or 0
+	local hintmsg=hintmsg or 0
 	local sg=Group.CreateGroup()
 	while true do
 		local finishable = #sg>=minc and (not finishcon or finishcon(sg,e,tp,g))

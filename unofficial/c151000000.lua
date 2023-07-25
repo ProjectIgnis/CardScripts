@@ -195,7 +195,7 @@ if not ActionDuel then
 	function ActionDuel.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		local c=e:GetHandler()
 		local originalField=e:GetLabelObject():GetLabelObject()
-		local t=string.find(originalField.af,'m') and originalField.tableAction or (c.tableAction and c.tableAction or (originalField.tableAction and originalField.tableAction or tableActionGeneric))
+		local t=(string.find(originalField.af,'m') and originalField.tableAction) or c.tableAction or (originalField.tableAction or tableActionGeneric
 		if chk==0 then return #t>0 end
 		ac=Duel.GetRandomNumber(1,#t)
 		e:SetLabel(t[ac])

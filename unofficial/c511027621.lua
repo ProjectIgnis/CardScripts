@@ -42,12 +42,12 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
     return ph>=0x08 and ph<=0x20 and Duel.GetTurnPlayer()~=tp and s[tp]
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) and Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsMonster,tp,0,LOCATION_MZONE,1,nil) and Duel.IsExistingMatchingCard(Card.IsMonster,tp,LOCATION_MZONE,0,1,nil) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local g1=Duel.SelectMatchingCard(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
-	local g2=Duel.SelectMatchingCard(tp,Card.IsFaceup,tp,LOCATION_MZONE,0,1,1,nil)
+	local g1=Duel.SelectMatchingCard(tp,Card.IsMonster,tp,0,LOCATION_MZONE,1,1,nil)
+	local g2=Duel.SelectMatchingCard(tp,Card.IsMonster,tp,LOCATION_MZONE,0,1,1,nil)
 	local tc1=g1:GetFirst()
 	local tc2=g2:GetFirst()
 	if tc1:IsPosition(POS_FACEUP_ATTACK) or tc2:IsPosition(POS_FACEUP_ATTACK) and tc1 and tc2 then

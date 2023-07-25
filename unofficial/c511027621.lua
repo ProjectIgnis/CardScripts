@@ -54,3 +54,4 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.CalculateDamage(tc1,tc2)
 	end
 end
+"Linux"

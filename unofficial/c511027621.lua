@@ -16,7 +16,7 @@ function s.initial_effect(c)
         s[1]=true
         local ge1=Effect.CreateEffect(c)
         ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-        ge1:SetCode(EVENT_DAMAGE_STEP_END)
+        ge1:SetCode(EVENT_BATTLED)
         ge1:SetOperation(s.checkop)
         Duel.RegisterEffect(ge1,0)
         local ge2=Effect.CreateEffect(c)
@@ -38,11 +38,10 @@ function s.clear(e,tp,eg,ep,ev,re,r,rp)
     s[1]=false
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-    local ph=Duel.GetCurrentPhase()
-    return ph>=0x08 and ph<=0x20 and Duel.GetTurnPlayer()~=tp and s[tp]
+    return tp~=Duel.GetTurnPlayer() and Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE and s[tp]
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsMonster,tp,0,LOCATION_MZONE,1,nil) and Duel.IsExistingMatchingCard(Card.IsMonster,tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsMonster,tp,0,LOCATION_MZONE,1,nil) and Duel.IsExistingMatchingCard(Card.IsMonster,tp,LOCATION_MZONE,0,1,nil) and Duel.IsExistingMatchingCard(Card.IsPosition,tp,LOCATION_MZONE,0,1,nil,POS_FACEUP_ATTACK) or Duel.IsExistingMatchingCard(Card.IsPosition,tp,0,LOCATION_MZONE,1,nil,POS_FACEUP_ATTACK) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)

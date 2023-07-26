@@ -44,12 +44,22 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsMonster,tp,0,LOCATION_MZONE,1,nil) and Duel.IsExistingMatchingCard(Card.IsMonster,tp,LOCATION_MZONE,0,1,nil) and Duel.IsExistingMatchingCard(Card.IsPosition,tp,LOCATION_MZONE,0,1,nil,POS_FACEUP_ATTACK) or Duel.IsExistingMatchingCard(Card.IsPosition,tp,0,LOCATION_MZONE,1,nil,POS_FACEUP_ATTACK) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
+    local g2=Duel.SelectMatchingCard(tp,Card.IsMonster,tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
+	local g1=Duel.SelectMatchingCard(tp,Card.IsMonster,tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
+	if g1:IsPosition(POS_FACEUP_DEFENSE) or g1:IsPosition(POS_FACEDOWN_DEFENSE) then
+	   g2=Duel.SelectMatchingCard(tp,Card.IsPosition,tp,LOCATION_MZONE,0,1,1,nil,POS_FACEUP_ATTACK):GetFirst()
+	elseif g2:IsPosition(POS_FACEUP_DEFENSE) or g2:IsPosition(POS_FACEDOWN_DEFENSE) then
+	   g1=Duel.SelectMatchingCard(tp,Card.IsPosition,tp,0,LOCATION_MZONE,1,1,nil,POS_FACEUP_ATTACK):GetFirst()
+	else
+	   g2=Duel.SelectMatchingCard(tp,Card.IsMonster,tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
+	   g1=Duel.SelectMatchingCard(tp,Card.IsMonster,tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
+	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local g1=Duel.SelectMatchingCard(tp,Card.IsMonster,tp,0,LOCATION_MZONE,1,1,nil)
-	local g2=Duel.SelectMatchingCard(tp,Card.IsMonster,tp,LOCATION_MZONE,0,1,1,nil)
-	local tc1=g1:GetFirst()
-	local tc2=g2:GetFirst()
-	if tc1:IsPosition(POS_FACEUP_ATTACK) or tc2:IsPosition(POS_FACEUP_ATTACK) and tc1 and tc2 then
-		Duel.CalculateDamage(tc1,tc2)
+	if g1:IsPosition(POS_FACEUP_DEFENSE) or g1:IsPosition(POS_FACEDOWN_DEFENSE) and g2:IsPosition(POS_FACEUP_ATTACK) and g1 and g2 then
+		Duel.CalculateDamage(g2,g1)
+	elseif g2:IsPosition(POS_FACEUP_DEFENSE) or g2:IsPosition(POS_FACEDOWN_DEFENSE) and g1:IsPosition(POS_FACEUP_ATTACK) and g1 and g2 then
+	    Duel.CalculateDamage(g1,g2)
+	else
+	    Duel.CalculateDamage(g2,g1)
 	end
 end

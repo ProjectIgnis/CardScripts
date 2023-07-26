@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_DIABELLESTARR,SET_TAINTED_TREASURE}
+s.listed_series={SET_DIABELLESTARR,SET_SINFUL_SPOILS}
 s.listed_names={id}
 function s.thfilter(c)
 	return c:IsSetCard(SET_DIABELLESTARR) and c:IsMonster() and c:IsAbleToHand()
@@ -45,7 +45,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tdfilter(c)
-	return c:IsSetCard(SET_TAINTED_TREASURE) and c:IsSpellTrap() and c:IsAbleToDeck() and c:IsFaceup() and not c:IsCode(id)
+	return c:IsSetCard(SET_SINFUL_SPOILS) and c:IsSpellTrap() and c:IsAbleToDeck() and c:IsFaceup() and not c:IsCode(id)
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED|LOCATION_GRAVE) and chkc:IsControler(tp) and s.tdfilter(chkc) end

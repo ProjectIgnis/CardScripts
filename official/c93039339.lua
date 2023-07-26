@@ -46,13 +46,13 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 			local sp=tc:GetSummonPlayer()
 			Duel.RegisterFlagEffect(sp,id,RESET_PHASE|PHASE_END,0,1)
 			if Duel.HasFlagEffect(sp,id,2) then
-				Duel.RegisterFlagEffect(sp,id+100,RESET_PHASE|PHASE_END,0,2)
+				Duel.RegisterFlagEffect(sp,id+1,RESET_PHASE|PHASE_END,0,2)
 			end
 		end
 	end
 end
 function s.xyzop(e,tp,chk)
-	if chk==0 then return Duel.HasFlagEffect(1-tp,id+100) end
+	if chk==0 then return Duel.HasFlagEffect(1-tp,id+1) end
 	--Cannot Normal or Special Summon this turn
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetDescription(aux.Stringid(id,2))

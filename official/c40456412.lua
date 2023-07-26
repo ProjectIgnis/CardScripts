@@ -38,9 +38,9 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=not Duel.HasFlagEffect(tp,id)
 		and Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_ONFIELD,0,1,nil,e,tp)
-	local b2=not Duel.HasFlagEffect(tp,id+100) and Duel.CheckPendulumZones(tp) 
+	local b2=not Duel.HasFlagEffect(tp,id+1) and Duel.CheckPendulumZones(tp) 
 		and Duel.IsExistingMatchingCard(s.pcfilter,tp,LOCATION_EXTRA,0,1,nil)
-	local b3=not Duel.HasFlagEffect(tp,id+200) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+	local b3=not Duel.HasFlagEffect(tp,id+2) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK,0,1,nil)
 	if chk==0 then return b1 or b2 or b3 end
 	local op=Duel.SelectEffect(tp,
@@ -56,10 +56,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK|LOCATION_EXTRA)
 	elseif op==2 then
 		e:SetCategory(0)
-		Duel.RegisterFlagEffect(tp,id+100,RESET_PHASE|PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_END,0,1)
 	elseif op==3 then
 		e:SetCategory(0)
-		Duel.RegisterFlagEffect(tp,id+200,RESET_PHASE|PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id+2,RESET_PHASE|PHASE_END,0,1)
 	end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

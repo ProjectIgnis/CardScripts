@@ -70,7 +70,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e3:SetCode(EFFECT_CANNOT_TRIGGER)
-		e3:SetCondition(function(e) return e:GetHandler():HasFlagEffect(id+100) end)
+		e3:SetCondition(function(e) return e:GetHandler():HasFlagEffect(id+1) end)
 		e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 		sc:RegisterEffect(e3)
 		--Banish it face-down during the End Phase
@@ -82,9 +82,9 @@ function s.aclimit(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if re:GetHandler()~=c then return end
 	if e:GetCode()==EVENT_CHAINING then
-		c:RegisterFlagEffect(id+100,RESET_EVENT|RESETS_STANDARD,0,1)
+		c:RegisterFlagEffect(id+1,RESET_EVENT|RESETS_STANDARD,0,1)
 	else
-		c:ResetFlagEffect(id+100)
+		c:ResetFlagEffect(id+1)
 	end
 end
 function s.cfilter(c,tp)

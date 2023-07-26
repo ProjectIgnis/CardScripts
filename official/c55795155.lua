@@ -41,8 +41,8 @@ function s.initial_effect(c)
 	e3:SetTarget(s.atktg)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
+	--Track if a face-down Pendulum Monster was Special Summoned from the Extra Deck
 	aux.GlobalCheck(s,function()
-		--Track if a face-down Pendulum Monster was Special Summoned from the Extra Deck
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_SPSUMMON_SUCCESS)

@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={CARD_ZARC}
-s.listed_series={SET_PENDULUM_DRAGON,SET_FUSION_DRAGON,SET_SYNCHRO_DRAGON,SET_XYZ_DRAGON }
+s.listed_series={SET_PENDULUM_DRAGON,SET_FUSION_DRAGON,SET_SYNCHRO_DRAGON,SET_XYZ_DRAGON}
 function s.fextra(e,tp,mg)
 	local loc=LOCATION_DECK|LOCATION_EXTRA 
 	if not Duel.IsPlayerAffectedByEffect(tp,69832741) then

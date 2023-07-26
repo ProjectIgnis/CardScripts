@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spgyop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={SET_TAINTED_TREASURE}
+s.listed_series={SET_SINFUL_SPOILS}
 function s.tgfilter(c,tp,bool)
 	local tg_check=nil
 	if bool then
@@ -74,7 +74,7 @@ function s.spprocop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 function s.setfilter(c)
-	return c:IsSetCard(SET_TAINTED_TREASURE) and c:IsSpellTrap() and c:IsSSetable()
+	return c:IsSetCard(SET_SINFUL_SPOILS) and c:IsSpellTrap() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK,0,1,nil) end

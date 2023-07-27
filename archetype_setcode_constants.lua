@@ -532,6 +532,7 @@ SET_HELIOS                        = 0x6c
 SET_VISAS                         = 0x199
 SET_COUNTER                       = 0x200
 SET_BATTLIN_BOXING                = 0x201
+SET_TISTINA                       = 0x208
 --Currently unreleased in the TCG, the official English name is unknown
 SET_VEDA                          = 0x202
 SET_DIABELLESTARR                 = 0x203
@@ -541,4 +542,3 @@ SET_PATISSCIEL                    = 0x206
 SET_HEART                         = 0x207
 --Beta archetypes
 SET_MEMENTO                       = 0x29c
-SET_TISTINA                       = 0x29d

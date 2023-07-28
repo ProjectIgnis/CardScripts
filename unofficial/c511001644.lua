@@ -1,15 +1,17 @@
---機皇神龍アステリスク
+--機皇神龍アステリスク (Anime)
+--Meklord Astro Dragon Asterisk (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	--Special Summon this card
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.spcon)
 	c:RegisterEffect(e1)
-	--attack
+	--Change ATK
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_SET_ATTACK)
@@ -17,9 +19,9 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetValue(s.atkval)
 	c:RegisterEffect(e2)
-	--damage
+	--Inflict 1000 damage
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(38522377,1))
+	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_DAMAGE)
 	e3:SetType(EFFECT_TYPE_TRIGGER_F+EFFECT_TYPE_FIELD)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -28,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.damtg)
 	e3:SetOperation(s.damop)
 	c:RegisterEffect(e3)
-	--cannot be target
+	--Cannot be targeted for attacks
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
 	e4:SetRange(LOCATION_MZONE)
@@ -36,7 +38,7 @@ function s.initial_effect(c)
 	e4:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
 	e4:SetValue(s.tg)
 	c:RegisterEffect(e4)
-	--destroy replace
+	--Destroy replace
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
 	e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -45,13 +47,11 @@ function s.initial_effect(c)
 	e5:SetTarget(s.desreptg)
 	c:RegisterEffect(e5)
 end
-function s.spfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x13)
-end
+s.listed_series={SET_MEKLORD}
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.spfilter,c:GetControler(),LOCATION_MZONE,0,3,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_MEKLORD),c:GetControler(),LOCATION_MZONE,0,3,nil)
 end
 function s.atkfilter(c)
 	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsRace(RACE_MACHINE)
@@ -92,11 +92,11 @@ end
 function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return not c:IsReason(REASON_REPLACE)
-		and Duel.IsExistingMatchingCard(Card.IsRace,tp,LOCATION_MZONE,0,1,e:GetHandler(),RACE_MACHINE) end
-	if Duel.SelectYesNo(tp,aux.Stringid(67511500,0)) then
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_MACHINE),tp,LOCATION_MZONE,0,1,c) end
+	if Duel.SelectEffectYesNo(tp,c,96) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local g=Duel.SelectMatchingCard(tp,Card.IsRace,tp,LOCATION_MZONE,0,1,1,e:GetHandler(),RACE_MACHINE)
-		Duel.SendtoGrave(g,REASON_EFFECT+REASON_REPLACE)
+		local g=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsRace,RACE_MACHINE),tp,LOCATION_MZONE,0,1,1,c)
+		Duel.SendtoGrave(g,REASON_EFFECT|REASON_REPLACE)
 		return true
 	else return false end
 end

@@ -412,7 +412,7 @@ function Card.RegisterEffectRush(c,eff)
 end
 -- summon only in attack
 local function summon_pos_target(e,c)
-	return c:IsSummonType(SUMMON_TYPE_MAXIMUM) and c:IsLocation(LOCATION_HAND)
+	return c:IsMaximumMode()
 end
 local function initial_effect()
 	local e1=Effect.GlobalEffect()

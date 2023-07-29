@@ -1,17 +1,18 @@
---sophiaの影霊衣
+--ｓｏｐｈｉａの影霊衣
 --Nekroz of Sophia
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--cannot special summon
+	--Must be Ritual Summoned
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e1:SetValue(s.splimit)
 	c:RegisterEffect(e1)
-	--cannot spsummon
+	--Prevent Special summons from the Extra Deck
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_HAND)
@@ -30,18 +31,27 @@ function s.initial_effect(c)
 	e3:SetOperation(s.rmop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xb4}
+s.listed_series={SET_NEKROZ}
 function s.splimit(e,se,sp,st)
 	return e:GetHandler():IsLocation(LOCATION_HAND) and (st&SUMMON_TYPE_RITUAL)==SUMMON_TYPE_RITUAL
 end
 function s.mat_filter(c)
 	return c:IsLocation(LOCATION_ONFIELD)
 end
+function s.onfieldcontroller(c,tp)
+	return c:IsLocation(LOCATION_MZONE) and c:IsControler(tp)
+end
+function s.ritual_custom_check(e,tp,g,c)
+	local count=#g
+	local class_count=g:GetClassCount(Card.GetRace)
+	local onfield_self_count=g:FilterCount(s.onfieldcontroller,nil,tp)
+	return count==3 and class_count==3 and onfield_self_count==3,count>3 or class_count~=count or onfield_self_count~=count
+end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN1
 end
 function s.cfilter(c)
-	return c:IsSetCard(0xb4) and c:IsSpell() and c:IsDiscardable()
+	return c:IsSetCard(SET_NEKROZ) and c:IsSpell() and c:IsDiscardable()
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDiscardable()
@@ -53,11 +63,11 @@ function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetDescription(aux.Stringid(id,1))
+	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetReset(RESET_PHASE+PHASE_MAIN1)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e1:SetReset(RESET_PHASE|PHASE_MAIN1)
 	e1:SetTargetRange(0,1)
 	e1:SetTarget(s.sumlimit)
 	Duel.RegisterEffect(e1,tp)
@@ -75,11 +85,11 @@ function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetTargetRange(1,0)
 	Duel.RegisterEffect(e1,tp)
 	--lizard check
-	aux.addTempLizardCheck(e:GetHandler(),tp,aux.TRUE,RESET_PHASE+PHASE_END,0,0xff)
+	aux.addTempLizardCheck(e:GetHandler(),tp,aux.TRUE,RESET_PHASE|PHASE_END,0,0xff)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_CANNOT_SUMMON)
 	Duel.RegisterEffect(e2,tp)
@@ -92,20 +102,11 @@ function s.rmfilter(c)
 	return c:IsAbleToRemove() and (c:IsLocation(LOCATION_SZONE) or aux.SpElimFilter(c,false,true))
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.rmfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,1,e:GetHandler()) end
-	local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,e:GetHandler())
+	if chk==0 then return Duel.IsExistingMatchingCard(s.rmfilter,tp,LOCATION_ONFIELD|LOCATION_GRAVE,LOCATION_ONFIELD|LOCATION_GRAVE,1,e:GetHandler()) end
+	local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_ONFIELD|LOCATION_GRAVE,LOCATION_ONFIELD|LOCATION_GRAVE,e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,0,0)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,e:GetHandler())
+	local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_ONFIELD|LOCATION_GRAVE,LOCATION_ONFIELD|LOCATION_GRAVE,e:GetHandler())
 	Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
-end
-function s.onfieldcontroller(c,tp)
-	return c:IsLocation(LOCATION_MZONE) and c:IsControler(tp)
-end
-function s.ritual_custom_check(e,tp,g,c)
-	local count=#g
-	local class_count=g:GetClassCount(Card.GetRace)
-	local onfield_self_count=g:FilterCount(s.onfieldcontroller,nil,tp)
-	return count==3 and class_count==3 and onfield_self_count==3,count>3 or class_count~=count or onfield_self_count~=count
 end

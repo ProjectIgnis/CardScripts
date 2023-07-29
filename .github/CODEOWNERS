@@ -1,8 +1,11 @@
 # Repository documentation, configuration, and continuous integration
-*             @kevinlul
+# TODO: To be decided.
 
 # Default card script reviewers
 *.lua         @pyrQ
+
+# Anime card script reviewers
+c511*.lua     @larry126
 
 /unofficial/  @larry126
 /rush/        @ClementLouis

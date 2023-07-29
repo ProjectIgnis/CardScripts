@@ -61,7 +61,7 @@ function s.effcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local op=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,1)},
 		{b2,aux.Stringid(id,2)},
-		{b2,aux.Stringid(id,3)})
+		{b3,aux.Stringid(id,3)})
 	e:SetLabel(op)
 	local ct=4+(op-1)*3
 	Duel.RemoveCounter(tp,1,1,COUNTER_SIGNAL,ct,REASON_COST)

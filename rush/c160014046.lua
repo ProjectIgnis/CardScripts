@@ -3,8 +3,8 @@
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)
-	--fusion material
 	c:EnableReviveLimit()
+	--fusion material
 	Fusion.AddProcMix(c,true,true,6368038,28279543)
 	--This turn, this card can attack directly
 	local e1=Effect.CreateEffect(c)
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-s.material_setcode=0xbd
+s.material_setcode=SET_GAIA_THE_FIERCE_KNIGHT
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():CanAttack() and e:GetHandler():IsStatus(STATUS_SPSUMMON_TURN)
 end
@@ -56,7 +56,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DIRECT_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end

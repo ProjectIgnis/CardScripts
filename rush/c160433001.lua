@@ -1,8 +1,9 @@
---竜騎士ガイア
+--竜騎士ガイア (Rush)
+--Gaia he Dragon Champion (Rush)
 local s,id=GetID()
 function s.initial_effect(c)
-	--fusion material
 	c:EnableReviveLimit()
+	--fusion material
 	Fusion.AddProcMix(c,true,true,6368038,28279543)
 end
-s.material_setcode=0xbd
+s.material_setcode=SET_GAIA_THE_FIERCE_KNIGHT

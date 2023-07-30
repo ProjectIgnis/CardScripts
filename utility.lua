@@ -1543,7 +1543,8 @@ function Duel.MoveToDeckBottom(obj,tp)
 end
 
 function Duel.GetTargetCards(e)
-	return Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
+	return tg and tg:Filter(Card.IsRelateToEffect,nil,e) or nil
 end
 
 --for zone checking (zone is the zone, tp is referencial player)

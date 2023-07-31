@@ -15,7 +15,7 @@ end
 s.listed_series={SET_CRYSTAL_BEAST}
 function s.plcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_STZONE,0,e:GetHandler())
-	if chk==0 then return #g>0 and #g=g:FilterCount(Card.IsAbleToGraveAsCost,nil) end
+	if chk==0 then return #g>0 and #g==g:FilterCount(Card.IsAbleToGraveAsCost,nil) end
 	g:Filter(Card.IsAbleToGraveAsCost,nil)
 	Duel.SendtoGrave(g,REASON_COST)
 end

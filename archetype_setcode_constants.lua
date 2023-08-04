@@ -542,3 +542,4 @@ SET_PATISSCIEL                    = 0x206
 SET_HEART                         = 0x207
 --Beta archetypes
 SET_MEMENTO                       = 0x29c
+SET_VALMONICA                     = 0x29e

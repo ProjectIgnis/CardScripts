@@ -838,24 +838,21 @@ Card.RegisterEffect=(function()
 		local reg_e=oldf(c,e,forced)
 		if not reg_e or reg_e<=0 then return reg_e end
 		local resetflag,resetcount=e:GetReset()
-		for _,val in ipairs{...} do
-			local code=aux.MapRegisterCode(val)
-			if code then
-				local prop=EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_SET_AVAILABLE
-				if e:IsHasProperty(EFFECT_FLAG_UNCOPYABLE) then prop=prop|EFFECT_FLAG_UNCOPYABLE end
-				local e2=Effect.CreateEffect(c)
-				e2:SetType(EFFECT_TYPE_SINGLE)
-				e2:SetProperty(prop,EFFECT_FLAG2_MAJESTIC_MUST_COPY)
-				e2:SetCode(code)
-				e2:SetLabelObject(e)
-				e2:SetLabel(c:GetOriginalCode())
-				if resetflag and resetcount then
-					e2:SetReset(resetflag,resetcount)
-				elseif resetflag then
-					e2:SetReset(resetflag)
-				end
-				c:RegisterEffect(e2)
+		for _,code in ipairs{...} do
+			local prop=EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_SET_AVAILABLE
+			if e:IsHasProperty(EFFECT_FLAG_UNCOPYABLE) then prop=prop|EFFECT_FLAG_UNCOPYABLE end
+			local e2=Effect.CreateEffect(c)
+			e2:SetType(EFFECT_TYPE_SINGLE)
+			e2:SetProperty(prop,EFFECT_FLAG2_MAJESTIC_MUST_COPY)
+			e2:SetCode(code)
+			e2:SetLabelObject(e)
+			e2:SetLabel(c:GetOriginalCode())
+			if resetflag and resetcount then
+				e2:SetReset(resetflag,resetcount)
+			elseif resetflag then
+				e2:SetReset(resetflag)
 			end
+			c:RegisterEffect(e2)
 		end
 		return reg_e
 	end

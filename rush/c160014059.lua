@@ -18,7 +18,7 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local tc=Duel.GetAttackTarget()
-	return a and a:IsControler(1-tp) and tc and tc:IsRace(RACE_PYRO) and tc:IsControler(tp)
+	return a and a:IsControler(1-tp) and tc and tc:IsFaceup() and tc:IsRace(RACE_PYRO) and tc:IsControler(tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tg=Duel.GetAttackTarget()

@@ -822,22 +822,24 @@ function Auxiliary.GetMustBeMaterialGroup(tp,eg,sump,sc,g,r)
 end
 
 --for additional registers
+function Auxiliary.MapRegisterCode(val)
+	if val==1 then return 511002571	end -- access to effects that activate that detach an Xyz Material as cost
+	if val==2 then return 511001692 end -- access to Cardian Summoning conditions/effects
+	if val==4 then return  12081875 end -- access to Thunder Dragon effects that activate by discarding
+	if val==8 then return 511310036	end -- access to Allure Queen effects that activate by sending themselves to GY
+	if val==16 then return 58858807 end -- access to tellarknights/constellar effects that activate when Normal Summoned
+	if val==REGISTER_FLAG_VALMONICA_RCV then return EFFECT_REG_VALMONICA_RCV end --access to Valmonica effects that include LP recovery
+	if val==REGISTER_FLAG_VALMONICA_DMG then return EFFECT_REG_VALMONICA_DMG end --access to Valmonica effects that include LP damage
+	return nil
+end
 Card.RegisterEffect=(function()
 	local oldf=Card.RegisterEffect
-	local function map_to_effect_code(val)
-		if val==1 then return 511002571	end -- access to effects that activate that detach an Xyz Material as cost
-		if val==2 then return 511001692 end -- access to Cardian Summoning conditions/effects
-		if val==4 then return  12081875 end -- access to Thunder Dragon effects that activate by discarding
-		if val==8 then return 511310036	end -- access to Allure Queen effects that activate by sending themselves to GY
-		if val==16 then return 58858807 end -- access to tellarknights/constellar effects that activate when Normal Summoned
-		return nil
-	end
 	return function(c,e,forced,...)
 		local reg_e=oldf(c,e,forced)
 		if not reg_e or reg_e<=0 then return reg_e end
 		local resetflag,resetcount=e:GetReset()
 		for _,val in ipairs{...} do
-			local code=map_to_effect_code(val)
+			local code=aux.MapRegisterCode(val)
 			if code then
 				local prop=EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_SET_AVAILABLE
 				if e:IsHasProperty(EFFECT_FLAG_UNCOPYABLE) then prop=prop|EFFECT_FLAG_UNCOPYABLE end

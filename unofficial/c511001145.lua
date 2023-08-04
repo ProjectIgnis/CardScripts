@@ -1,3 +1,4 @@
+--魔法の教科書
 --Spell Textbook
 local s,id=GetID()
 function s.initial_effect(c)
@@ -55,7 +56,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e:SetCategory(te:GetCategory())
 		e:SetProperty(te:GetProperty())
 		Duel.ClearTargetCard()
+		local loc=LOCATION_SZONE
 		if (tpe&TYPE_FIELD)~=0 then
+			local loc=LOCATION_FZONE
 			local fc=Duel.GetFieldCard(1-tp,LOCATION_FZONE,0)
 			if Duel.IsDuelType(DUEL_1_FIELD) then
 				if fc then Duel.Destroy(fc,REASON_RULE) end
@@ -66,7 +69,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				if fc and Duel.SendtoGrave(fc,REASON_RULE)==0 then Duel.SendtoGrave(tc,REASON_RULE) end
 			end
 		end
-		Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+		Duel.MoveToField(tc,tp,tp,loc,POS_FACEUP,true)
 		Duel.Hint(HINT_CARD,0,tc:GetOriginalCode())
 		tc:CreateEffectRelation(te)
 		if (tpe&TYPE_EQUIP+TYPE_CONTINUOUS+TYPE_FIELD)==0 and not tc:IsHasEffect(EFFECT_REMAIN_FIELD) then

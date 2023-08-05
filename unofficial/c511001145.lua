@@ -58,7 +58,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ClearTargetCard()
 		local loc=LOCATION_SZONE
 		if (tpe&TYPE_FIELD)~=0 then
-			local loc=LOCATION_FZONE
+			loc=LOCATION_FZONE
 			local fc=Duel.GetFieldCard(1-tp,LOCATION_FZONE,0)
 			if Duel.IsDuelType(DUEL_1_FIELD) then
 				if fc then Duel.Destroy(fc,REASON_RULE) end

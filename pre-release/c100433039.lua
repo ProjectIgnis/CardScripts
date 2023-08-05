@@ -47,7 +47,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp,angle_or_delvin) --Additional paramete
 	local break_chk=nil
 	if op==1 or op==3 then
 		--Gain 500 LP and Destroy 1 Spell/Trap on the field
-		local g=Duel.GetMatchingGroup(Card.IsSpellTrap,tp,LOCATION_ONFIELD,0,e:GetHandler())
+		local g=Duel.GetMatchingGroup(Card.IsSpellTrap,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler())
 		if Duel.Recover(tp,500,REASON_EFFECT)>0 and #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,4)) then
 			break_chk=true
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)

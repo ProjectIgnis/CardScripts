@@ -74,6 +74,13 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetOperation(s.addcounter)
 		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_CHAIN)
 		c:RegisterEffect(e1)
+		--Reset "e1" at the end of the Chain Link
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e2:SetCode(EVENT_CHAIN_SOLVED)
+		e2:SetOperation(function() e1:Reset() end)
+		e2:SetReset(RESET_CHAIN)
+		Duel.RegisterEffect(e2,tp)
 	end
 end
 function s.addcounter(e,tp,eg,ep,ev,re,r,rp)

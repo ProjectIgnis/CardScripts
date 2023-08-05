@@ -59,7 +59,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp,angle_or_delvin) --Additional paramete
 	end
 	if op==2 or op==3 then
 		--Take 500 damage and return 1 monster on the field to the hand
-		local g=Duel.GetMatchingGroup(Card.IsAbleToHand,tp,LOCATION_MZONE,0,nil)
+		local g=Duel.GetMatchingGroup(Card.IsAbleToHand,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 		if break_chk then Duel.BreakEffect() end
 		if Duel.Damage(tp,500,REASON_EFFECT)>0 and #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,5)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)

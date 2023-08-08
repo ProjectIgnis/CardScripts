@@ -38,10 +38,17 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_DESTROYED)
 	e3:SetCountLimit(1,{id,2})
-	e3:SetCondition(s.spcon)
+	e3:SetCondition(function(e) return e:GetLabel()>0 and e:GetHandler():IsPreviousLocation(LOCATION_MZONE) end)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
+	--Save how many materials it had before leaving the field
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e4:SetCode(EVENT_LEAVE_FIELD_P)
+	e4:SetOperation(function(e) e:GetLabelObject():SetLabel(e:GetHandler():GetOverlayCount()) end)
+	e4:SetLabelObject(e3)
+	c:RegisterEffect(e4)
 end
 s.listed_series={SET_FIRE_KING}
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -73,12 +80,6 @@ function s.stdesop(e,tp,eg,ep,ev,re,r,rp)
 			c:UpdateAttack(500)
 		end
 	end
-end
-function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local ct=c:GetOverlayCount()
-	e:SetLabel(ct)
-	return ct>0 and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_FIRE_KING) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

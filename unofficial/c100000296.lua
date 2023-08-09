@@ -1,4 +1,5 @@
---ハーピィの羽根吹雪
+--ハーピィの羽根吹雪 (Anime)
+--Harpie's Feather Storm (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,10 +13,11 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={SET_HARPIE}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local ph=Duel.GetCurrentPhase()
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x64),tp,LOCATION_MZONE,0,1,nil)
-		and re:IsActiveType(TYPE_MONSTER) and ph>=0x08 and ph<=0x20 and tp~=ep
+	if Duel.GetTurnPlayer()==e:GetHandlerPlayer() then return false end
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_HARPIE),tp,LOCATION_MZONE,0,1,nil)
+		and re:IsMonsterEffect() and Duel.IsBattlePhase() and tp~=ep
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -29,5 +31,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if re:GetHandler():IsRelateToEffect(re) then
 		Duel.Destroy(eg,REASON_EFFECT)
 	end
-	Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+	Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE|PHASE_BATTLE,1)
 end

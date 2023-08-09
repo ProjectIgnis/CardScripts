@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_HARPIE}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetTurnPlayer()==e:GetHandlerPlayer() then return false end
+	if Duel.GetTurnPlayer()==1-e:GetHandlerPlayer() then return false end
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_HARPIE),tp,LOCATION_MZONE,0,1,nil)
 		and re:IsMonsterEffect() and Duel.IsBattlePhase() and tp~=ep
 end

@@ -31,7 +31,7 @@ s.listed_series={SET_YUBEL}
 s.listed_names={CARD_YUBEL,48130397} --Super Polymerization
 s.counter_place_list={0x25}
 function s.yubelfilter(c)
-	return c:IsFaceup() and (c:IsCode(CARD_YUBEL) or c:ListsCode(CARD_YUBEL))
+	return c:IsFaceup() and (c:IsSetCard(SET_YUBEL) or c:ListsCode(CARD_YUBEL))
 end
 function s.countercon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.yubelfilter,1,nil)
@@ -65,22 +65,21 @@ function s.superpolyfilter(c)
 	return c:IsCode(48130397) and c:IsAbleToHand()
 end
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
 	--Special Summon 1 "Yubel" from your GY
-	local b1=c:IsCanRemoveCounter(tp,0x25,1,REASON_COST)
+	local b1=Duel.IsCanRemoveCounter(tp,1,0,0x25,1,REASON_COST)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
 	--Add 1 of your banished cards to your hand
-	local b2=c:IsCanRemoveCounter(tp,0x25,2,REASON_COST)
+	local b2=Duel.IsCanRemoveCounter(tp,1,0,0x25,2,REASON_COST)
 		and Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,LOCATION_REMOVED,0,1,nil)
 	--Banish 1 card from your Deck
-	local b3=c:IsCanRemoveCounter(tp,0x25,3,REASON_COST)
+	local b3=Duel.IsCanRemoveCounter(tp,1,0,0x25,3,REASON_COST)
 		and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_DECK,0,1,nil)
 	--Destroy 1 card on the field
-	local b4=c:IsCanRemoveCounter(tp,0x25,4,REASON_COST)
+	local b4=Duel.IsCanRemoveCounter(tp,1,0,0x25,4,REASON_COST)
 		and Duel.IsExistingMatchingCard(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 	--Search 1 "Super Polymerization"
-	local b5=c:IsCanRemoveCounter(tp,0x25,5,REASON_COST)
+	local b5=Duel.IsCanRemoveCounter(tp,1,0,0x25,5,REASON_COST)
 		and Duel.IsExistingMatchingCard(s.superpolyfilter,tp,LOCATION_DECK,0,1,nil)
 	if chk==0 then return (b1 or b2 or b3 or b4 or b5) end
 	local op=Duel.SelectEffect(tp,
@@ -90,7 +89,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 		{b4,aux.Stringid(id,4)},
 		{b5,aux.Stringid(id,5)})
 	e:SetLabel(op)
-	c:RemoveCounter(tp,0x25,op,REASON_COST)
+	Duel.RemoveCounter(tp,1,0,0x25,op,REASON_COST)
 	if op==1 then
 		e:SetCategory(CATEGORY_SPECIAL_SUMMON)
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)

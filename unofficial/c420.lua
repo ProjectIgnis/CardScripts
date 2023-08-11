@@ -991,7 +991,6 @@ if not AnimeArchetype then
 	}
 	Card.IsY=MakeCheck({0x56d,0xc1},AnimeArchetype.OCGY)
 
-
 	-- Yomi 黄泉
 	-- Treeborn Frog
 	-- Yomi Ship
@@ -1000,12 +999,6 @@ if not AnimeArchetype then
 	}
 	Card.IsYomi=MakeCheck({0x563},AnimeArchetype.OCGYomi)
 
-	-- Yubel (archetype) ユベル
-	AnimeArchetype.OCGYubel={
-		-- Yubel, Yubel terror, Yubel nighmare
-		78371393,4779091,31764700
-	}
-	Card.IsYubel=MakeCheck({0x561},AnimeArchetype.OCGYubel)
 
 	--Z
 	AnimeArchetype.OCGZ={

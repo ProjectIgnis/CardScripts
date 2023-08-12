@@ -540,8 +540,8 @@ SET_SINFUL_SPOILS                 = 0x204
 SET_SNAKE_EYE                     = 0x205
 SET_PATISSCIEL                    = 0x206
 SET_HEART                         = 0x207
---Beta archetypes
-SET_MEMENTO                       = 0x29c
-SET_VALMONICA                     = 0x29e
-SET_YUBEL                         = 0x29f
-SET_CENTURION                     = 0x2a0
+--Pre-release archetypes
+SET_MEMENTO                       = 0x19a
+SET_CENTURION                     = 0x19b
+SET_VALMONICA                     = 0x19c
+SET_YUBEL                         = 0x19d

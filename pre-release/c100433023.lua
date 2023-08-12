@@ -44,7 +44,7 @@ function s.rmvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.rmvop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)>0 then
+	if tc:IsRelateToEffect(e) and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_REMOVED) then
 		local turn_ct=Duel.GetTurnCount()
 		local reset_ct=Duel.GetCurrentPhase()<=PHASE_STANDBY and 2 or 1
 		--Special Summon it to its owner's field during the Standby Phase of the next turn

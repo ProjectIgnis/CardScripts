@@ -23,11 +23,12 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
+s.listed_names={CARD_GAIA_CHAMPION}
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and	not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsAttackPos),tp,LOCATION_MZONE,0,1,nil)
+		and not Duel.IsExistingMatchingCard(Card.IsAttackPos,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.tgfilter(c)
 	return c:IsMonster() and c:IsType(TYPE_FUSION) and c:IsAbleToGraveAsCost()
@@ -38,6 +39,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local dg=Duel.GetMatchingGroup(Card.IsSpellTrap,tp,0,LOCATION_ONFIELD,nil)
 	if chk==0 then return #dg>0 end
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,dg,1,tp,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
@@ -52,10 +54,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.HintSelection(sg,true)
 		Duel.Destroy(sg,REASON_EFFECT)
 		if Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,CARD_GAIA_CHAMPION) 
-			and Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil)
+			and Duel.IsExistingMatchingCard(nil,tp,0,LOCATION_ONFIELD,1,nil)
 			and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-			local g=Duel.SelectMatchingCard(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,1,nil)
+			local g=Duel.SelectMatchingCard(tp,nil,tp,0,LOCATION_ONFIELD,1,1,nil)
 			g=g:AddMaximumCheck()
 			Duel.HintSelection(g,true)
 			Duel.BreakEffect()

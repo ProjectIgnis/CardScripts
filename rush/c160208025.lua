@@ -31,20 +31,20 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,2,tp,LOCATION_GRAVE)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	--effect
+	--Effect
 	local sg=Duel.GetMatchingGroup(Card.IsAbleToHand,tp,LOCATION_GRAVE,0,nil)
 	if #sg>0 then
-		local tg=aux.SelectUnselectGroup(sg,1,tp,2,2,s.rescon,1,tp)
+		local tg=aux.SelectUnselectGroup(sg,1,tp,2,2,s.rescon,1,tp,HINTMSG_ATOHAND)
 		Duel.SendtoHand(tg,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,tg)
 		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_FIELD)
-		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetDescription(aux.Stringid(id,1))
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_CANNOT_ACTIVATE)
 		e1:SetTargetRange(1,0)
 		e1:SetValue(s.aclimit)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 	end
 end
@@ -52,5 +52,5 @@ function s.rescon(sg,e,tp,mg)
 	return sg:FilterCount(s.thfilter,nil)==1 and sg:FilterCount(s.thfilter2,nil)==1
 end
 function s.aclimit(e,re,tp)
-	return re:IsActiveType(TYPE_MONSTER) and not (re:GetHandler():IsAttribute(ATTRIBUTE_WIND) and re:GetHandler():IsRace(RACE_WARRIOR|RACE_BEAST))
+	return re:IsMonsterEffect() and not (re:GetHandler():IsAttribute(ATTRIBUTE_WIND) and re:GetHandler():IsRace(RACE_WARRIOR|RACE_BEAST))
 end

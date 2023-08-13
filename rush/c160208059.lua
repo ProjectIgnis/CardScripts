@@ -32,6 +32,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(3)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,3)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,3,tp,LOCATION_HAND)
 end
 function s.spfilter(c,e,tp)
 	return c:IsLevelAbove(7) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
@@ -44,8 +45,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Draw(tp,3,REASON_EFFECT)<2 then return end
 	local dg=Duel.GetOperatedGroup()
 	Duel.ConfirmCards(1-tp,dg)
-	if dg:FilterCount(s.spfilter,nil,e,tp)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-		local sg=dg:FilterSelect(tp,s.spfilter,1,3,nil,e,tp)
+	local ct=dg:FilterCount(s.spfilter,nil,e,tp)
+	if ct==0 then return end
+	local ft=math.min(ct,Duel.GetMZoneCount(tp))
+	if ft>1 and Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
+	if ft>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+		local sg=dg:FilterSelect(tp,s.spfilter,1,ft,nil,e,tp)
 		if #sg>0 then
 			Duel.BreakEffect()
 			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)

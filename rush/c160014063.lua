@@ -40,8 +40,8 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return ct>0 and Duel.IsMainPhase() and Duel.IsTurnPlayer(1-tp) end
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,ct*300)
 	if e:GetLabel()>0 then
-        Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,0,tp,1)
-    end
+		Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,0,tp,1)
+	end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local dg=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
@@ -58,34 +58,34 @@ function s.filter(c,tp)
 	return c:IsPreviousLocation(LOCATION_DECK) and c:GetOwner()==tp
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
-    --Use the label object of e1 to store the cards
-    local g=e:GetLabelObject():GetLabelObject()
-    g:Merge(eg)
-    e:GetLabelObject():SetLabelObject(g)
-    --Use the label of e1 to see if there were cards from the deck
-    if g:IsExists(s.filter,1,nil,1-tp) then
-        e:GetLabelObject():SetLabel(1)
-    else
-    	e:GetLabelObject():SetLabel(0)
-    end
-    --Raise 1 event per chain
-    if Duel.GetCurrentChain()==0 then
-    	g:Clear()
-    	if Duel.GetFlagEffect(tp,id)==0 then
-        	Duel.RaiseEvent(e:GetHandler(),EVENT_CUSTOM+id,e,0,tp,tp,0)
-        end
-    end
+	--Use the label object of e1 to store the cards
+	local g=e:GetLabelObject():GetLabelObject()
+	g:Merge(eg)
+	e:GetLabelObject():SetLabelObject(g)
+	--Use the label of e1 to see if there were cards from the deck
+	if g:IsExists(s.filter,1,nil,1-tp) then
+		e:GetLabelObject():SetLabel(1)
+	else
+		e:GetLabelObject():SetLabel(0)
+	end
+	--Raise 1 event per chain
+	if Duel.GetCurrentChain()==0 then
+		g:Clear()
+		if Duel.GetFlagEffect(tp,id)==0 then
+			Duel.RaiseEvent(e:GetHandler(),EVENT_CUSTOM+id,e,0,tp,tp,0)
+		end
+	end
 end
 function s.regop2(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsLocation(LOCATION_SZONE) and e:GetHandler():IsFacedown() then --need to check here because face-down Defense Position cards cannot use effects
 		local cg=e:GetLabelObject():GetLabelObject()
 		--Raise 1 event after chain
-	    if Duel.GetFlagEffect(tp,id)==0 and #cg>0 then
-	    	if not cg:IsExists(s.filter,1,nil,1-tp) then -- The following does not apply if a card is sent from the Deck, as in that case, the first copy will trigger the second copy
-	    		cg:Clear() --Must be cleared so multiple copies cannot trigger
-	    	end
-	        Duel.RegisterFlagEffect(tp,id,RESET_CHAIN,0,1)
-	        Duel.RaiseEvent(e:GetHandler(),EVENT_CUSTOM+id,e,0,tp,tp,0)
-	    end
+		if Duel.GetFlagEffect(tp,id)==0 and #cg>0 then
+			if not cg:IsExists(s.filter,1,nil,1-tp) then -- The following does not apply if a card is sent from the Deck, as in that case, the first copy will trigger the second copy
+				cg:Clear() --Must be cleared so multiple copies cannot trigger
+			end
+			Duel.RegisterFlagEffect(tp,id,RESET_CHAIN,0,1)
+			Duel.RaiseEvent(e:GetHandler(),EVENT_CUSTOM+id,e,0,tp,tp,0)
+		end
 	end
 end

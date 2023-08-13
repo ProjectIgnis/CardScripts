@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	--Shuffle 3 monsters from the GYs to deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_TODECK)
+	e1:SetCategory(CATEGORY_TODECK+CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
@@ -22,8 +22,8 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_GRAVE,0,3,nil)
 		and Duel.IsExistingMatchingCard(s.tdfilter,tp,0,LOCATION_GRAVE,3,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,3,tp,LOCATION_GRAVE)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,3,1-tp,LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,3,PLAYER_ALL,LOCATION_GRAVE)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_ATKCHANGE,e:GetHandler(),1,tp,100)
 end
 function s.ogfilter(c)
 	return c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_EARTH) and c:GetOriginalLevel()>0
@@ -31,9 +31,10 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	--Requirement
-	local dg1=Duel.SelectMatchingCard(tp,s.tdfilter,tp,0,LOCATION_GRAVE,3,3,nil)
+	local dg1=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.tdfilter),tp,0,LOCATION_GRAVE,3,3,nil)
 	if #dg1==0 then return end
-	local dg2=Duel.SelectMatchingCard(1-tp,s.tdfilter,tp,LOCATION_GRAVE,0,3,3,nil)
+	local dg2=Duel.SelectMatchingCard(1-tp,aux.NecroValleyFilter(s.tdfilter),tp,LOCATION_GRAVE,0,3,3,nil)
+	if #dg2==0 then return end
 	dg1:Merge(dg2)
 	Duel.HintSelection(dg1,true)
 	Duel.SendtoDeck(dg1,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
@@ -44,7 +45,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(ct*100)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		c:RegisterEffectRush(e1)
 	end
 end

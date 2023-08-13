@@ -7,6 +7,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCost(s.cost)
@@ -23,6 +24,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tg=Duel.GetAttacker()
 	if chk==0 then return tg:IsControler(1-tp) and tg:IsOnField() end
+	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,tg,1,tp,-3000)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
@@ -42,4 +44,3 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

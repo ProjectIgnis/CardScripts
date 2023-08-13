@@ -3,9 +3,10 @@
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Draw
+	--Draw 1 card, then Special Summon 1 non-effect monster from the GY
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_DRAW)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_DRAW+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCost(s.drcost)
@@ -22,6 +23,7 @@ end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,0,tp,LOCATION_GRAVE)
 end
 function s.spfilter(c,e,tp)
 	return (c:IsAttack(2000) or c:IsDefense(2100)) and not c:IsType(TYPE_EFFECT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
@@ -42,4 +44,3 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

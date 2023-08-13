@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_names={CARD_FUSION,37630732,160014007}
+s.listed_names={CARD_FUSION,37630732,160014007} --Power Bond, Jointech Spike Centipede
 function s.tgfilter(c)
 	return c:IsMonster() and c:IsRace(RACE_MACHINE) and c:IsAbleToGraveAsCost() and (c:IsLocation(LOCATION_HAND) or c:IsFaceup())
 end
@@ -28,6 +28,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function s.spfilter(c,e,tp)
 	return c:IsCode(160014007) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)

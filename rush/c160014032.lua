@@ -9,6 +9,7 @@ function s.initial_effect(c)
 	local params={nil,Fusion.OnFieldMat(Card.IsAbleToDeck),s.fextra,Fusion.ShuffleMaterial,Fusion.ForcedHandler,nil,2}
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
@@ -16,6 +17,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation(Fusion.SummonEffTG(table.unpack(params)),Fusion.SummonEffOP(table.unpack(params))))
 	c:RegisterEffect(e2)
 end
+s.listed_names={6368038} --Gaia the Fierce Knight
 function s.otfilter(c)
 	return c:IsLevelAbove(5) and c:IsFaceup()
 end

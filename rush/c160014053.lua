@@ -29,6 +29,7 @@ function s.initial_effect(c)
 	e4:SetLabelObject(e3)
 	c:RegisterEffect(e4)
 end
+s.listed_names={CARD_GAIA_CHAMPION,6368038}--Gaia the Fierce Knight
 function s.filter(e,c)
 	return c:GetBaseDefense()==2100
 end

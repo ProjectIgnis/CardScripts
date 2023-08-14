@@ -664,6 +664,7 @@ FLAG_DOUBLE_TRIB_PSYCHIC=160011122
 FLAG_DOUBLE_TRIB_LEVEL7=160205051 -- Double Twin Dragon
 FLAG_DOUBLE_TRIB_GREYSTORM=160414002 -- Cosmo Predictor
 FLAG_DOUBLE_TRIB_200_DEF=160012015 -- Green-Eyes Star Cat
+FLAG_DOUBLE_TRIB_NORMAL=160319014 -- Light Effigy
 function Card.AddDoubleTribute(c,id,otfilter,eftg,reset,...)
 	for i,flag in ipairs{...} do
 		c:RegisterFlagEffect(flag,reset,0,1)
@@ -775,6 +776,7 @@ end
 function aux.ThreeTributeCondition(otfilter)
 	return function (e,c)
 		if c==nil then return true end
+		if not c:IsLevelAbove(7) then return false end
 		local tp=e:GetHandlerPlayer()
 		local rg1=Duel.GetReleaseGroup(tp)
 		local rg2=Duel.GetMatchingGroup(otfilter,tp,LOCATION_MZONE,0,nil,tp)

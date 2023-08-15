@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e4:SetCategory(CATEGORY_DAMAGE)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e4:SetCode(EVENT_DESTROYED)
+	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e4:SetCondition(function(e) return e:GetHandler():IsReason(REASON_BATTLE|REASON_EFFECT) end)
 	e4:SetTarget(s.damtg)
 	e4:SetOperation(s.damop)
@@ -45,7 +46,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 and Duel.SendtoHand(g,nil,REASON_EFFECT)>0 and g:GetFirst():IsLocation(LOCATION_HAND) then
 		Duel.ConfirmCards(1-tp,g)
 		local c=e:GetHandler()
-		if c:IsDefensePos() then return end
+		if not c:IsRelateToEffect(e) or c:IsDefensePos() then return end
 		Duel.BreakEffect()
 		Duel.ChangePosition(c,POS_FACEUP_DEFENSE)
 	end

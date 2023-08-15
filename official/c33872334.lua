@@ -55,7 +55,7 @@ function s.extratkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetTarget(function(e,c) return c:IsAttribute(ATTRIBUTE_FIRE) or c:IsRace(RACE_WARRIOR) end)
 	e1:SetValue(1)
-	e1:SetReset(RESET_PHASE|PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_BATTLE)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.thcond(e,tp,eg,ep,ev,re,r,rp)

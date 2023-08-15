@@ -1,5 +1,5 @@
 -- 魔頭砲グレンザウルス
--- Grenosaurus the Magic-Head Cannon
+-- Grenosaurus Giga-Cannon
 -- Scripted by Satella
 local s,id=GetID()
 function s.initial_effect(c)
@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_DESTROYED)
+	e2:SetCountLimit(1,id)
 	e2:SetCondition(s.descon)
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)

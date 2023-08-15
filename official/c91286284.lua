@@ -1,4 +1,4 @@
---Japanese name
+--ＧＰ－アウト・オブ・ノーウェア
 --Gold Pride - That Came Out of Nowhere!
 --Scripted by Hatter
 local s,id=GetID()
@@ -32,7 +32,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(Card.IsCanBeSpecialSummoned),1-tp,LOCATION_HAND|LOCATION_GRAVE,0,1,nil,e,0,1-tp,false,false)
 		and Duel.SelectYesNo(1-tp,aux.Stringid(id,1)) then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_SPSUMMON)
 		local tc=Duel.SelectMatchingCard(1-tp,aux.NecroValleyFilter(Card.IsCanBeSpecialSummoned),1-tp,LOCATION_HAND|LOCATION_GRAVE,0,1,1,nil,e,0,1-tp,false,false):GetFirst()
 		if not tc then return end
 		Duel.BreakEffect()

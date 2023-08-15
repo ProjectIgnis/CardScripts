@@ -58,6 +58,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==0 then return end
 	local g=Duel.GetMatchingGroup(Card.IsAttackPos,tp,0,LOCATION_MZONE,nil)
 	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+		Duel.BreakEffect()
 		Duel.Destroy(g,REASON_EFFECT)
 	end
 end

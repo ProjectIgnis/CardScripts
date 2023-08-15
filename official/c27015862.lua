@@ -1,5 +1,5 @@
 -- ヴェーダ＝カーランタ
--- Veda Karantha
+-- Veda Kalantha
 -- Scripted by Satella
 local s,id=GetID()
 function s.initial_effect(c)
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={CARD_VISAS_STARFROST,21570001}
+s.listed_names={CARD_VISAS_STARFROST,21570001} --Clear New World
 function s.spconfilter(c)
 	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsReason(REASON_EFFECT)
 end
@@ -78,6 +78,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)>0 then
 		local c=e:GetHandler()
+		if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
 		--Increase ATK
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.tdop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={71089030,7473735}
+s.listed_names={71089030,7473735} --Earthbound Prison, Harmonic Synchro Fusion
 s.listed_series={SET_EARTHBOUND}
 function s.thfilter(c)
 	return c:IsCode(71089030,7473735) and c:IsAbleToHand()
@@ -71,7 +71,7 @@ function s.spfilter(c,e,tp,tc)
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() and Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0
 		and tc:IsLocation(LOCATION_DECK|LOCATION_EXTRA) then
 		local g=Duel.GetMatchingGroup(s.spfilter,tp,0,LOCATION_EXTRA,nil,e,tp,tc)
 		if #g>0 and Duel.SelectYesNo(1-tp,aux.Stringid(id,2)) then

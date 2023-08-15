@@ -1,5 +1,5 @@
 --星満ちる新世壊
---New World Full of Stars
+--New World Stars
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -56,7 +56,7 @@ function s.tunersyncfilter(c)
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tohand=Duel.IsExistingMatchingCard(s.tunersyncfilter,tp,LOCATION_MZONE,0,1,nil)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and c:IsControler(tp) and s.tdfilter(chkc,tohand) end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.tdfilter(chkc,tohand) end
 	if chk==0 then return Duel.IsExistingTarget(s.tdfilter,tp,LOCATION_GRAVE,0,1,nil,tohand) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil,tohand)

@@ -166,7 +166,7 @@ function Duel.CheckReleaseGroupCost(tp,f,minc,maxc,use_hand,check,ex,...)
 		maxc,use_hand,check,ex=minc,maxc,use_hand,check
 	end
 	if not ex then ex=Group.CreateGroup() end
-	local mg=Duel.GetReleaseGroup(tp,use_hand):Match(f and f or aux.TRUE,ex,table.unpack(params))
+	local mg=Duel.GetReleaseGroup(tp,use_hand):Match(f or aux.TRUE,ex,table.unpack(params))
 	local g,exg=mg:Split(Auxiliary.ReleaseCostFilter,nil,tp)
 	local specialchk=Auxiliary.MakeSpecialCheck(check,tp,exg,table.unpack(params))
 	local mustg=g:Match(function(c,tp)return c:IsHasEffect(EFFECT_EXTRA_RELEASE) and c:IsControler(1-tp)end,nil,tp)
@@ -175,7 +175,7 @@ function Duel.CheckReleaseGroupCost(tp,f,minc,maxc,use_hand,check,ex,...)
 end
 function Duel.SelectReleaseGroupCost(tp,f,minc,maxc,use_hand,check,ex,...)
 	if not ex then ex=Group.CreateGroup() end
-	local mg=Duel.GetReleaseGroup(tp,use_hand):Match(f and f or aux.TRUE,ex,...)
+	local mg=Duel.GetReleaseGroup(tp,use_hand):Match(f or aux.TRUE,ex,...)
 	local g,exg=mg:Split(Auxiliary.ReleaseCostFilter,nil,tp)
 	local specialchk=Auxiliary.MakeSpecialCheck(check,tp,exg,...)
 	local mustg=g:Match(function(c,tp)return c:IsHasEffect(EFFECT_EXTRA_RELEASE) and c:IsControler(1-tp)end,nil,tp)

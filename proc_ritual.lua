@@ -40,7 +40,7 @@ function Ritual.WholeLevelTributeValue(cond)
 	return function(e,c)
 		local lv=e:GetHandler():GetLevel()
 		if cond(c,e) then
-			local clv=Ritual.SummoningLevel and Ritual.SummoningLevel or c:GetLevel()
+			local clv=Ritual.SummoningLevel or c:GetLevel()
 			return (lv<<16)|clv
 		else return lv end
 	end

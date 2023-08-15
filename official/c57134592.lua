@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	-- Add 1 "Salamangreat" card from your Deck to your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_DESTROY)
+	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -60,7 +60,7 @@ end
 function s.cfilter(c,e,tp)
 	return c:IsReason(REASON_BATTLE|REASON_EFFECT) and (c:GetPreviousAttributeOnField()&ATTRIBUTE_FIRE)==ATTRIBUTE_FIRE
 		and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
-		and c:IsCanBeEffectTarget(e)
+		and c:IsCanBeEffectTarget(e) and not c:IsType(TYPE_TOKEN)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return not eg:IsContains(e:GetHandler()) and eg:IsExists(s.cfilter,1,nil,e,tp)
@@ -75,6 +75,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tg=eg:FilterSelect(tp,s.cfilter,1,1,nil,e,tp)
 	Duel.SetTargetCard(tg)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,tp,0)
+	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,c,1,tp,tg:GetFirst():GetAttack())
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

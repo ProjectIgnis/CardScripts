@@ -61,7 +61,7 @@ function s.rescon(mft,exft,ft,ect)
 				local exct=sg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA)
 				local mct=sg:FilterCount(aux.NOT(Card.IsLocation),nil,LOCATION_EXTRA)
 				return (not ect or ect>=exct) and exft>=exct and mft>=mct and ft>=#sg
-					and sg:IsExists(s.spfilterchk,nil,sg,Group.CreateGroup(),43387895,70771599,42160203,96733134)
+					and sg:IsExists(s.spfilterchk,1,nil,sg,Group.CreateGroup(),43387895,70771599,42160203,96733134)
 			end
 end
 function s.spfilter(c,e,tp)

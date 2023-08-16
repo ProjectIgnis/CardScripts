@@ -96,7 +96,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local ec=Duel.GetFirstTarget()
-	if not (ec:IsRelateToEffect() and ec:IsNegatableMonster() and not ec:IsImmuneToEffect(e)) then return end
+	if not (ec:IsRelateToEffect(e) and ec:IsNegatableMonster() and not ec:IsImmuneToEffect(e)) then return end
 	ec:NegateEffects(e:GetHandler())
 	local g=Duel.GetMatchingGroup(nil,tp,0,LOCATION_MZONE,nil)
 	local ct=Duel.Destroy(g,REASON_EFFECT)

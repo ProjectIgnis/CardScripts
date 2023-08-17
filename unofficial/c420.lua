@@ -302,10 +302,6 @@ if not AnimeArchetype then
 	}
 	Card.IsForest=MakeCheck({0x51f},AnimeArchetype.OCGForest)
 
-	-- Gaia the Dragon Champion
-	-- Gaia the Dragon Champion/Sky Galloping Gaia the Dragon Champion
-	Card.IsGaiatheDragonChampion=MakeCheck({0x521},{66889139,2519690})
-
 	-- Gem-Knight Lady ジェムナイトレディ
 	-- Gem-Knight Lady Brilliant Diamond/Gem-Knight Lady Lapis Lazuli
 	Card.IsGemKnightLady=MakeCheck({0x3047},{47611119,19355597})
@@ -1078,4 +1074,24 @@ if not AnimeArchetype then
 	-- 軍蚊 (Army Mosquito)
 	-- Ninjitsu Art of Mosquito Marching
 	Card.IsMosquito=MakeCheck({0x536},{94113093})
+
+-----------------------------------------
+	-- Speed Duel
+
+	-- Gaia the Dragon Champion
+	-- Gaia the Dragon Champion/Sky Galloping Gaia the Dragon Champion
+	Card.IsGaiatheDragonChampion=MakeCheck({0x580},{66889139,2519690})
+
+	-- Ancient Gear Golem
+	-- Ancient Gear Golem/Ancient Gear Golem - Ultimate Pound
+	-- Toon Ancient Gear Golem/Ultimate Ancient Gear Golem
+	Card.IsAncientGearGolem=MakeCheck({0x581},{83104731,95735217,7171149,12652643})
+
+	-- Insect Queen
+	-- Insect Queen/Metamorphosed Insect Queen
+	Card.IsInsectQueen=MakeCheck({0x582},{91512835,41456841})
+
+	-- Fortress Whale
+	-- Fortress Whale/Fortress Whale's Oath/Mega Fortress Whale
+	Card.IsFortressWhale=MakeCheck({0x583},{62337487,77454922,96546575})
 end

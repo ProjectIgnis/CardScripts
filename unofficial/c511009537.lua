@@ -47,21 +47,12 @@ end
 function s.desfilter(c)
 	return c:IsFacedown() or not c:IsCode(13331639)
 end
-function s.spfilterchk(c,g,sg,code,...)
-	if not c:IsCode(code) then return false end
-	if ... then
-		g:AddCard(c)
-		local res=g:IsExists(s.spfilterchk,1,sg,g,sg,...)
-		g:RemoveCard(c)
-		return res
-	else return true end
-end
 function s.rescon(mft,exft,ft,ect)
 	return function(sg,e,tp,mg)
 				local exct=sg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA)
 				local mct=sg:FilterCount(aux.NOT(Card.IsLocation),nil,LOCATION_EXTRA)
 				return (not ect or ect>=exct) and exft>=exct and mft>=mct and ft>=#sg
-					and sg:IsExists(s.spfilterchk,1,nil,sg,Group.CreateGroup(),43387895,70771599,42160203,96733134)
+					and sg:GetClassCount(Card.GetCode)==#sg
 			end
 end
 function s.spfilter(c,e,tp)

@@ -53,14 +53,14 @@ function s.cfilter(tc)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local chain=Duel.GetCurrentChain()
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter1,tp,LOCATION_GRAVE,0,1,nil,e,tp,eg,ep,ev,re,r,rp,chain)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter1,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,e,tp,eg,ep,ev,re,r,rp,chain)
 		and (s.cfilter(Duel.GetFieldCard(tp,LOCATION_FZONE,0)) or s.cfilter(Duel.GetFieldCard(1-tp,LOCATION_FZONE,0))) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local chain=Duel.GetCurrentChain()-1
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
-	if not Duel.IsExistingMatchingCard(s.cfilter1,tp,LOCATION_GRAVE,0,1,nil,e,tp,eg,ep,ev,re,r,rp,chain) then return end
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,eg,ep,ev,re,r,rp,chain)
+	if not Duel.IsExistingMatchingCard(s.cfilter1,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,e,tp,eg,ep,ev,re,r,rp,chain) then return end
+	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,1,nil,e,tp,eg,ep,ev,re,r,rp,chain)
 	if #g>0 then
 		local tc=g:GetFirst()
 		local tpe=tc:GetType()

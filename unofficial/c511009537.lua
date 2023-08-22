@@ -104,7 +104,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 		local spg=aux.SelectUnselectGroup(sg,e,tp,4,4,s.rescon(ft,ftex1,ftex2),1,tp,HINTMSG_SPSUMMON)
 		if #spg<4 then return end
-		if Duel.SpecialSummon(spg,0,tp,tp,false,false,POS_FACEUP)>0 then
+		if Duel.SpecialSummon(spg,0,tp,tp,true,false,POS_FACEUP)>0 then
 			local spog=Duel.GetOperatedGroup()
 			local c=e:GetHandler()
 			for sc in aux.Next(spog) do

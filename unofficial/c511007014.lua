@@ -23,8 +23,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(nil,c:GetControler(),LOCATION_MZONE,LOCATION_MZONE,nil)
-	local tc=g:GetFirst()
-	while tc do
+	for tc in g:Iter() do
 		if tc:IsFaceup() and tc:GetFlagEffect(id)==0 then
 			local e1=Effect.CreateEffect(c)
 			e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
@@ -33,11 +32,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetRange(LOCATION_MZONE)
 			e1:SetLabel(tc:GetAttack())
 			e1:SetOperation(s.op)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e1)
-			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+			tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 		end
-		tc=g:GetNext()
 	end
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
@@ -48,43 +46,43 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	e:SetLabel(c:GetAttack())
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return not Duel.GetAttacker():IsControler(tp)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:GetAttack()~=c:GetBaseAttack()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	--[[local e0=Effect.CreateEffect(e:GetHandler())
+	local c=e:GetHandler()
+	--[[local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_FIELD)
 	e0:SetCode(EFFECT_DISABLE)
 	e0:SetTargetRange(0,LOCATION_MZONE)
 	Duel.RegisterEffect(e0,tp)]]
-	local e0=Effect.CreateEffect(e:GetHandler())
+	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e0:SetCode(id)
+	e0:SetLabelObject(e)
 	e0:SetCondition(s.atkcon)
 	e0:SetOperation(s.atkop)
-	e0:SetReset(RESET_PHASE+PHASE_BATTLE)
+	e0:SetReset(RESET_PHASE|PHASE_BATTLE)
 	Duel.RegisterEffect(e0,tp)
-	local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil)
-	local tc=g:GetFirst()
-	while tc do
+	local tg=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil)
+	for tc in tg:Iter() do
 		if tc:GetAttack()~=tc:GetBaseAttack() then
-			local e1=Effect.CreateEffect(e:GetHandler())
+			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 			e1:SetValue(tc:GetBaseAttack())
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE)
 			tc:RegisterEffect(e1)
 		end
-		tc=g:GetNext()
 	end
 end
 --[[function s.dfilter(c)
 	return c:IsHasEffect(EFFECT_UPDATE_ATTACK) or c:IsHasEffect(EFFECT_SET_ATTACK) or c:IsHasEffect(EFFECT_SET_ATTACK_FINAL) or c:IsHasEffect(EFFECT_SET_BASE_ATTACK)
 end]]
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(Card.IsControler,1,nil,1-tp) and ev~=0
+	return eg:IsExists(Card.IsControler,1,nil,1-tp) and ev~=0 and re~=e:GetLabelObject()
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
@@ -92,7 +90,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE)
 	e1:SetValue(tc:GetAttack()-ev)
 	tc:RegisterEffect(e1)
 end

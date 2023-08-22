@@ -44,15 +44,16 @@ function s.gyspop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.SpecialSummonStep(tc,104,tp,tp,false,false,POS_FACEUP) then
 		tc:NegateEffects(c)
-		if not (c:IsFaceup() and c:IsRelateToEffect(e)) then return end
-		c:SetCardTarget(tc)
-		--Register when this card is about the leave the field
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_LEAVE_FIELD_P)
-		e1:SetOperation(s.regop)
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
-		c:RegisterEffect(e1)
+		if c:IsFaceup() and c:IsRelateToEffect(e) then
+			c:SetCardTarget(tc)
+			--Register when this card is about the leave the field
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+			e1:SetCode(EVENT_LEAVE_FIELD_P)
+			e1:SetOperation(s.regop)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
+			c:RegisterEffect(e1)
+		end
 	end
 	Duel.SpecialSummonComplete()
 end

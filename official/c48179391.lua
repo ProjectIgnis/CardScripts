@@ -7,19 +7,11 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCost(s.actcost)
+	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH+EFFECT_COUNT_CODE_DUEL)
 	e1:SetTarget(s.acttg)
 	e1:SetOperation(s.actop)
 	c:RegisterEffect(e1)
-	--if activation negated, reset state
-	local e1b=Effect.CreateEffect(c)
-	e1b:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1b:SetCode(EVENT_CHAIN_NEGATED)
-	e1b:SetCondition(s.negdcon)
-	e1b:SetOperation(s.negdop)
-	e1b:SetLabelObject(e1)
-	Duel.RegisterEffect(e1b,0)
-	--spsummon limit
+	--You cannot Special Summon monsters from the Extra Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetRange(LOCATION_FZONE)
@@ -28,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetTargetRange(1,0)
 	e2:SetTarget(s.sumlimit)
 	c:RegisterEffect(e2)
-	--
+	--All monsters you control gain 500 ATK
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetRange(LOCATION_FZONE)
@@ -36,7 +28,7 @@ function s.initial_effect(c)
 	e3:SetTargetRange(LOCATION_MZONE,0)
 	e3:SetValue(500)
 	c:RegisterEffect(e3)
-	--
+	--Cannot be destroyed by effects once per turn
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -45,7 +37,7 @@ function s.initial_effect(c)
 	e4:SetCountLimit(1)
 	e4:SetValue(s.valcon)
 	c:RegisterEffect(e4)
-	--atk limit
+	--Monsters with the lowest attacks cannot be targeted by attacks
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_FIELD)
 	e5:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
@@ -57,10 +49,6 @@ function s.initial_effect(c)
 	--clock lizard
 	aux.addContinuousLizardCheck(c,LOCATION_FZONE)
 end
-function s.actcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end
-	Duel.RegisterFlagEffect(tp,id,0,0,0)
-end
 function s.desfilter(c)
 	return c:IsSummonType(SUMMON_TYPE_SPECIAL)
 end
@@ -70,7 +58,6 @@ function s.acttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.actop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE,0,nil)
 	if #g>0 then
 		Duel.Destroy(g,REASON_EFFECT)

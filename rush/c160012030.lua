@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,160425001,CARD_SEVENS_ROAD_MAGICIAN)
+	Fusion.AddProcMix(c,true,true,CARD_TRANSAMU_RAINAC,CARD_SEVENS_ROAD_MAGICIAN)
 	--Special Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

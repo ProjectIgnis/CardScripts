@@ -44,9 +44,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			local dg=g:Select(tp,1,1,nil)
 			dg=dg:AddMaximumCheck()
 			Duel.HintSelection(dg,true)
-			Duel.Destroy(dg,REASON_EFFECT)
+			local ct=Duel.Destroy(dg,REASON_EFFECT)
 			local g2=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_GRAVE,0,nil,e,tp)
-			if tg:GetFirst():GetOriginalLevel()>=7 and #g2>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+			if ct>0 and tg:GetFirst():GetOriginalLevel()>=7 and #g2>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 				Duel.BreakEffect()
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 				local sg=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp):GetFirst()

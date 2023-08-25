@@ -4,14 +4,14 @@ local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop)
 end
-s.listed_series={0x3008}
+s.listed_series={SET_ELEMENTAL_HERO}
 --Fusion Summon Functions
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--condition
 	return aux.CanActivateSkill(tp) and Duel.GetFlagEffect(ep,id)==0 and s.fusTarget(e,tp,eg,ep,ev,re,r,rp,0)
 end
 function s.fusfilter(c,e,tp,m,f,chkf)
-	return c:IsType(TYPE_FUSION) and (not f or f(c)) and c:IsSetCard(0x3008)
+	return c:IsType(TYPE_FUSION) and (not f or f(c)) and c:IsSetCard(SET_ELEMENTAL_HERO)
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial(m,nil,chkf)
 end
 function s.cfilter(c,e,tp)
@@ -93,6 +93,5 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.matfilter(c,e,fc)
-	return c:IsSetCard(0x3008) and not c:IsImmuneToEffect(e) and c:IsCanBeFusionMaterial(fc)
+	return c:IsSetCard(SET_ELEMENTAL_HERO) and not c:IsImmuneToEffect(e) and c:IsCanBeFusionMaterial(fc)
 end
-

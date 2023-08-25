@@ -14,8 +14,8 @@ function s.initial_effect(c)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
 end
-s.listed_names={23299957}
-s.listed_series={0x16}
+s.listed_names={23299957} --Vehicroid Connection Zone"
+s.listed_series={SET_ROID}
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 	Duel.Hint(HINT_CARD,tp,id)
@@ -68,7 +68,7 @@ function s.vczop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterFlagEffect(id,0,0,0)
 		local eff=tc:GetActivateEffect()
 		eff:Reset()
-		tc:RegisterEffect(Fusion.CreateSummonEff(tc,aux.FilterBoolFunction(Card.IsSetCard,0x16),nil,nil,nil,nil,s.stage2))
+		tc:RegisterEffect(Fusion.CreateSummonEff(tc,aux.FilterBoolFunction(Card.IsSetCard,SET_ROID),nil,nil,nil,nil,s.stage2))
 	end
 end
 function s.stage2(e,tc,tp,sg,chk)
@@ -81,7 +81,7 @@ function s.stage2(e,tc,tp,sg,chk)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1,true)
 		--Cannot be negated
 		local e2=Effect.CreateEffect(c)
@@ -89,14 +89,14 @@ function s.stage2(e,tc,tp,sg,chk)
 		e2:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_CANNOT_DISABLE)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e2,true)
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_FIELD)
 		e3:SetCode(EFFECT_CANNOT_DISEFFECT)
 		e3:SetRange(LOCATION_MZONE)
 		e3:SetValue(s.efilter)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e3,true)
 	end
 end
@@ -110,11 +110,11 @@ function s.ntcon(e,c,minc)
 	return minc==0 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
 function s.nttg(e,c)
-	return (c:GetOriginalLevel()==6 or c:GetOriginalLevel()==5)  and c:IsSetCard(0x16)
+	return (c:GetOriginalLevel()==6 or c:GetOriginalLevel()==5)  and c:IsSetCard(SET_ROID)
 end
 --Attack declaration functions
 function s.atkfilter(c)
-	return c:IsSetCard(0x16) and c:IsRace(RACE_MACHINE) and not c:IsType(TYPE_FUSION) and c:GetOriginalLevel()<7
+	return c:IsSetCard(SET_ROID) and c:IsRace(RACE_MACHINE) and not c:IsType(TYPE_FUSION) and c:GetOriginalLevel()<7
 end
 function s.atkcon(e)
 	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and Duel.GetAttackTarget()~=nil
@@ -137,7 +137,7 @@ function s.flipop2(e,tp,eg,ep,ev,re,r,rp)
 	for sc in sg:Iter() do
 		local eff=sc:GetActivateEffect()
 		eff:Reset()
-		sc:RegisterEffect(Fusion.CreateSummonEff(sc,aux.FilterBoolFunction(Card.IsSetCard,0x1016),nil,nil,nil,nil,s.stage2))
+		sc:RegisterEffect(Fusion.CreateSummonEff(sc,aux.FilterBoolFunction(Card.IsSetCard,SET_VEHICROID),nil,nil,nil,nil,s.stage2))
 	end
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(2<<32))
 end

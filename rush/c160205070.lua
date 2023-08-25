@@ -10,7 +10,7 @@ function s.stage2(e,tc,tp,sg,chk)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(tc:GetBaseAttack())
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	tc:RegisterEffect(e1,true)
 	if e:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		local e2=Effect.CreateEffect(e:GetHandler())

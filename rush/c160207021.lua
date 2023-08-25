@@ -31,7 +31,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(500)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 			c:RegisterEffectRush(e1)
 			local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil)
 			if c:IsMaximumMode() and #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then

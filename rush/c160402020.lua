@@ -31,7 +31,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			Duel.HintSelection(tc,true)
 			local opt=Duel.SelectOption(tp,aux.Stringid(id,2),aux.Stringid(id,3))+1
 			Duel.BreakEffect()
-			tc:UpdateLevel(-opt,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,e:GetHandler())
+			tc:UpdateLevel(-opt,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,e:GetHandler())
 		end
 	end
 end

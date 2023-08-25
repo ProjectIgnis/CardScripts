@@ -29,7 +29,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
 end
 function s.thfilter2(c)
-	return c:IsSpell() and c:IsType(TYPE_FIELD) and c:IsAbleToHand()
+	return c:IsFieldSpell() and c:IsAbleToHand()
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement

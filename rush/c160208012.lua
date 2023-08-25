@@ -32,7 +32,7 @@ function s.eqfilter(c)
 	return c:IsFaceup() and c:IsCode(CARD_HARPIE_LADY,160208002) and not c:IsMaximumModeSide()
 end
 function s.eqlimit(e,c)
-    return c:IsFaceup()
+	return c:IsFaceup()
 end
 function s.eftg(e,c)
 	return e:GetHandler():GetEquipTarget()==c

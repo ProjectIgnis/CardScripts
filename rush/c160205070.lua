@@ -18,7 +18,7 @@ function s.stage2(e,tc,tp,sg,chk)
 		e2:SetCode(EVENT_PHASE+PHASE_END)
 		e2:SetCountLimit(1)
 		e2:SetLabel(tc:GetBaseAttack())
-		e2:SetReset(RESET_PHASE+PHASE_END)
+		e2:SetReset(RESET_PHASE|PHASE_END)
 		e2:SetOperation(s.damop)
 		Duel.RegisterEffect(e2,tp)
 	end

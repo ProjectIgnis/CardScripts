@@ -1,10 +1,10 @@
 --鋼機神ミラーイノベイター
---Steeltek Deity Mirror Innovator
-
+--Steel Mech Lord Mirror Innovator
 local s,id=GetID()
 function s.initial_effect(c)
 	--ATK increase
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_TODECK)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -25,9 +25,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	--Effect
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,1,3,nil,c:GetRace())
-		Duel.HintSelection(g)
+		Duel.HintSelection(g,true)
 		local atk=0
 		if #g>0 then
 			local bc=g:GetFirst()

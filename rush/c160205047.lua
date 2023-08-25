@@ -46,7 +46,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 				local tg=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 				if #tg>0 then
-					Duel.HintSelection(tg)
+					Duel.HintSelection(tg,true)
 					Duel.BreakEffect()
 					Duel.SendtoHand(tg,nil,REASON_EFFECT)
 				end

@@ -5,6 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Set from your GY
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_RECOVER+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_names={160011048,160011049}
+s.listed_names={160011048,160011049} --Shadow Flower Sewing, Shadow Flower Duplication
 function s.setfilter(c)
 	return c:IsCode(160011048,160011049) and c:IsSSetable()
 end
@@ -39,7 +40,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g3=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 		if #g3>0 then
-			Duel.HintSelection(g3)
+			Duel.HintSelection(g3,true)
 			Duel.BreakEffect()
 			Duel.SpecialSummon(g3,0,tp,tp,false,false,POS_FACEUP)
 		end

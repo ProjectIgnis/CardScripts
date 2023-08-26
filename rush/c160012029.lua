@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.eqfilter(c,g)
-	return c:IsType(TYPE_EQUIP) and g:IsExists(s.eqcheck,1,nil,c)
+	return c:IsEquipSpell() and g:IsExists(s.eqcheck,1,nil,c)
 end
 function s.eqcheck(c,ec)
 	return Card.CheckEquipTargetRush(ec,c)

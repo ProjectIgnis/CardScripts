@@ -3,7 +3,7 @@
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)
-	--recycle
+	--Place 2/3 Maximum Monsters on top of the Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TODECK)
@@ -15,7 +15,6 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_names={160206045}
 function s.tdcostfilter(c)
 	return c:IsMonster() and c:IsAbleToDeckOrExtraAsCost()
 end
@@ -57,8 +56,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rescon(pg)
-    return function(sg,e,tp,mg)
-        local check=pg:IsExists(aux.TRUE,2,sg)
-        return check,not check
-    end
+	return function(sg,e,tp,mg)
+		local check=pg:IsExists(aux.TRUE,2,sg)
+		return check,not check
+	end
 end

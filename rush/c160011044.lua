@@ -31,7 +31,7 @@ function s.gainop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 		e2:SetTarget(s.eftg)
 		e2:SetLabelObject(e1)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e2)
 	end
 end

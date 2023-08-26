@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,160425001,CARD_SEVENS_ROAD_MAGICIAN)
+	Fusion.AddProcMix(c,true,true,CARD_TRANSAMU_RAINAC,CARD_SEVENS_ROAD_MAGICIAN)
 	--Special Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -46,7 +46,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetCode(EFFECT_UPDATE_ATTACK)
 				e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 				e1:SetValue(ct*300)
-				e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+				e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 				tc:RegisterEffect(e1)
 			end
 		end

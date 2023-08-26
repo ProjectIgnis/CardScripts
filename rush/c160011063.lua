@@ -3,9 +3,10 @@
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)
-	--When your opponent normal/special summons a monster, take damage and shuffle monsters from the GY
+	--Increase the ATK of a monster and shuffle monsters from the GY into the Deck
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_RECOVER+CATEGORY_ATKCHANGE)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_TODECK)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetCondition(s.condition)
@@ -48,15 +49,15 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		e1:SetValue(500)
 		tc:RegisterEffect(e1)
-		local og=Duel.GetMatchingGroup(s.gyfilter,tp,0,LOCATION_GRAVE,nil)
+		local og=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.gyfilter),tp,0,LOCATION_GRAVE,nil)
 		if #og>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 			local sg=og:Select(tp,1,5,nil)
-			Duel.HintSelection(sg)
+			Duel.HintSelection(sg,true)
+			Duel.BreakEffect()
 			Duel.SendtoDeck(sg,1-tp,SEQ_DECKSHUFFLE,REASON_EFFECT)
 		end
 	end

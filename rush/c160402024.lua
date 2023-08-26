@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_names={160425001}
+s.listed_names={CARD_TRANSAMU_RAINAC}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP()
 end
@@ -41,8 +41,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		if #g>0 then
 			Duel.HintSelection(g,true)
 			-- Piercing
-			g:GetFirst():AddPiercing(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,c)
-			if not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,160425001),tp,LOCATION_MZONE,0,1,nil) then return end
+			g:GetFirst():AddPiercing(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,c)
+			if not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_TRANSAMU_RAINAC),tp,LOCATION_MZONE,0,1,nil) then return end
 			local sg=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(s.posfilter),tp,0,LOCATION_MZONE,nil)
 			if #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)

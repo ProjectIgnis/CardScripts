@@ -25,7 +25,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		--Effect
 		if c:IsRelateToEffect(e) and c:IsFaceup() then
 			--Piercing
-			c:AddPiercing(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			c:AddPiercing(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 			local desg=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_MZONE,nil)
 			if #desg>0 and c:IsStatus(STATUS_SPSUMMON_TURN) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)

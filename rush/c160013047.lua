@@ -25,7 +25,7 @@ function s.eqfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_GALAXY) and not c:IsMaximumModeSide()
 end
 function s.eqlimit(e,c)
-    return c:IsFaceup()
+	return c:IsFaceup()
 end
 function s.efilter(e,te)
 	return te:IsTrapEffect() and te:GetOwnerPlayer()~=e:GetHandlerPlayer()

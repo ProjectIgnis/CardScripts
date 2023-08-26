@@ -26,7 +26,7 @@ function s.eqfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_GALAXY) and not c:IsMaximumModeSide()
 end
 function s.eqlimit(e,c)
-    return c:IsFaceup()
+	return c:IsFaceup()
 end
 function s.value(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsSpellTrap,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,nil)*100

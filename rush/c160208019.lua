@@ -1,5 +1,5 @@
 --環幻楽鬼フルオルケストラ
---Full Orchestra  the Music Fiend
+--Full Orchestra the Music Fiend
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)
@@ -40,7 +40,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_PHASE|PHASE_END)
 		e1:SetValue(ct*600)
 		c:RegisterEffectRush(e1)
 	end

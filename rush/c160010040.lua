@@ -37,6 +37,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if tc then
 		Duel.HintSelection(tc,true)
 		--Piercing
-		tc:AddPiercing(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,e:GetHandler())
+		tc:AddPiercing(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,e:GetHandler())
 	end
 end

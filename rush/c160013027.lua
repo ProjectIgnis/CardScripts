@@ -18,9 +18,7 @@ function s.cfilter1(c,tp,code)
 		and Duel.IsExistingMatchingCard(s.cfilter2,tp,LOCATION_GRAVE,0,1,c,tp,c,code)
 end
 function s.cfilter2(c,tp,tc,code)
-	local g=Group.CreateGroup()
-	g:AddCard(c)
-	g:AddCard(tc)
+	local g=Group.FromCards(c,tc)
 	return c:IsMonster() and c:IsRace(RACE_PYRO) and c:IsAbleToDeckOrExtraAsCost()
 		and Duel.IsExistingMatchingCard(s.namefilter,tp,LOCATION_GRAVE,0,1,g,code)
 end
@@ -54,15 +52,15 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CHANGE_CODE)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 			e1:SetValue(g2:GetFirst():GetCode())
 			c:RegisterEffectRush(e1)
 		end
 	end
 end
 function s.rescon(pg)
-    return function(sg,e,tp,mg)
-        local check=pg:IsExists(aux.TRUE,1,sg)
-        return check,not check
-    end
+	return function(sg,e,tp,mg)
+		local check=pg:IsExists(aux.TRUE,1,sg)
+		return check,not check
+	end
 end

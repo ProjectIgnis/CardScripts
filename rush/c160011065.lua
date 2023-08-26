@@ -30,7 +30,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.SelectMatchingCard(tp,Card.IsSpellTrap,tp,LOCATION_ONFIELD,0,1,1,e:GetHandler()):GetFirst()
 	if tc then
 		Duel.HintSelection(tc,true)
-		if Duel.Destroy(tc,REASON_EFFECT)>0 and tc:IsType(TYPE_EQUIP)
+		if Duel.Destroy(tc,REASON_EFFECT)>0 and tc:IsEquipSpell()
 			and eg:IsExists(aux.FaceupFilter(Card.IsLevelBelow,8),1,nil)
 			and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			local sg=eg:FilterSelect(tp,aux.FaceupFilter(Card.IsLevelBelow,8),1,1,nil)

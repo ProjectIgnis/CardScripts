@@ -533,7 +533,10 @@ SET_VISAS                         = 0x199
 SET_COUNTER                       = 0x200
 SET_BATTLIN_BOXING                = 0x201
 SET_TISTINA                       = 0x208
---Currently unreleased in the TCG, the official English name is unknown
+--Currently unreleased in the TCG, the official English name is unconfirmed
+SET_MEMENTO                       = 0x19a
+SET_CENTURION                     = 0x19b
+SET_VALMONICA                     = 0x19c
 SET_VEDA                          = 0x202
 SET_DIABELLESTARR                 = 0x203
 SET_SINFUL_SPOILS                 = 0x204
@@ -541,7 +544,4 @@ SET_SNAKE_EYE                     = 0x205
 SET_PATISSCIEL                    = 0x206
 SET_HEART                         = 0x207
 --Pre-release archetypes
-SET_MEMENTO                       = 0x19a
-SET_CENTURION                     = 0x19b
-SET_VALMONICA                     = 0x19c
 SET_YUBEL                         = 0x19d

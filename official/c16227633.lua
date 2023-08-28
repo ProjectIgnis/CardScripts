@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_MEMENTO}
-s.listed_names={CARD_MEMENTORAL_TECTOLICA}
+s.listed_names={CARD_MEMENTORAL_TECUHTLICA}
 function s.cfilter(c,tp)
 	return c:IsPreviousSetCard(SET_MEMENTO) and c:GetReasonPlayer()==1-tp and c:IsPreviousControler(tp)
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
@@ -40,7 +40,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsCode(CARD_MEMENTORAL_TECTOLICA) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsCode(CARD_MEMENTORAL_TECUHTLICA) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_MEMENTO}
-s.listed_names={CARD_MEMENTORAL_TECTOLICA}
+s.listed_names={CARD_MEMENTORAL_TECUHTLICA}
 function s.atcon(e)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_MEMENTO),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
@@ -48,14 +48,14 @@ function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsMonsterEffect() and (loc&LOCATION_MZONE)~=0 and ep==1-tp and Duel.IsChainDisablable(ev)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsCode(CARD_MEMENTORAL_TECTOLICA)
+	return c:IsFaceup() and c:IsCode(CARD_MEMENTORAL_TECUHTLICA)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() and chkc:IsCode(CARD_MEMENTORAL_TECTOLICA) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() and chkc:IsCode(CARD_MEMENTORAL_TECUHTLICA) end
 	if chk==0 then return not Duel.HasFlagEffect(tp,id)
-		and Duel.IsExistingTarget(aux.FaceupFilter(Card.IsCode,CARD_MEMENTORAL_TECTOLICA),tp,LOCATION_MZONE,0,1,nil) end
+		and Duel.IsExistingTarget(aux.FaceupFilter(Card.IsCode,CARD_MEMENTORAL_TECUHTLICA),tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
-	local g=Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsCode,CARD_MEMENTORAL_TECTOLICA),tp,LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsCode,CARD_MEMENTORAL_TECUHTLICA),tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.RegisterFlagEffect(tp,id,RESET_CHAIN,EFFECT_FLAG_OATH,1)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
 end

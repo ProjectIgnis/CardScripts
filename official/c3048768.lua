@@ -62,7 +62,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge2,0)
 	end)
 end
-s.listed_names={100433032}
+s.listed_names={30432463}
 s.listed_series={SET_VALMONICA}
 s.counter_place_list={COUNTER_RESONANCE}
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
@@ -112,7 +112,7 @@ function s.pzcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD,c)
 end
 function s.pzfilter(c)
-	return c:IsCode(100433032) and not c:IsForbidden()
+	return c:IsCode(30432463) and not c:IsForbidden()
 end
 function s.pztg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLocation(tp,LOCATION_PZONE,0) and Duel.CheckLocation(tp,LOCATION_PZONE,1)

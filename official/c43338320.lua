@@ -1,5 +1,5 @@
 -- 冥骸府－メメントラン
--- Netherskull Temple - Mementoran
+-- Netherskull Temple - Mementolan
 -- Scripted by Satellaa
 local s,id=GetID()
 function s.initial_effect(c)

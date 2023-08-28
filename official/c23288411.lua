@@ -1,5 +1,5 @@
 -- 冥骸合竜－メメントラル・テクトリカ
--- Mementoral Tectolica, the Netherskull Dragon
+-- Mementoral Tecuhtlica, the Netherskull Dragon
 -- Scripted by Satellaa
 local s,id=GetID()
 function s.initial_effect(c)

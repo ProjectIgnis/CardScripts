@@ -27,9 +27,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_MEMENTO}
-s.listed_names={CARD_MEMENTORAL_TECTOLICA,id}
+s.listed_names={CARD_MEMENTORAL_TECUHTLICA,id}
 function s.untgcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsMainPhase() and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_MEMENTORAL_TECTOLICA),tp,LOCATION_ONFIELD,0,1,nil)
+	return Duel.IsMainPhase() and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_MEMENTORAL_TECUHTLICA),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.untgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

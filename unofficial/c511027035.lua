@@ -42,7 +42,7 @@ function s.value(e,c)
 	return c:GetLevel()*400
 end
 function s.lvcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsTurnPlayer(tp) and e:GetHandler():IsLevelAbove(1) and e:GetHandler():IsLevelBelow(11)
+	return Duel.IsTurnPlayer(tp) and e:GetHandler():IsLevelBelow(11)
 end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

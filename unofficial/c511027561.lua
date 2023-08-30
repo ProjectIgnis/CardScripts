@@ -33,10 +33,10 @@ function s.atkfilter(c)
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,0)
-		and Duel.IsExistingMatchingCard(s.atkfilter,tp,LOCATION_GRAVE,0,1,nil) end
+	and Duel.IsExistingMatchingCard(s.atkfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,s.atkfilter,tp,LOCATION_GRAVE,0,1,1,nil)
-    e:SetLabel(g:GetFirst():GetTextAttack())
+        e:SetLabel(g:GetFirst():GetTextAttack())
 	g:AddCard(e:GetHandler())
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
@@ -72,10 +72,10 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end 
 function s.filter(c,tp,fg)
 	return c:IsFacedown() and c:IsDefensePos() and c:IsCanBeLinkMaterial() and c:IsCanChangePosition() 
-    and Duel.IsExistingMatchingCard(s.linkfilter,tp,LOCATION_EXTRA,0,1,nil,c,fg)
+        and Duel.IsExistingMatchingCard(s.linkfilter,tp,LOCATION_EXTRA,0,1,nil,c,fg)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-    local fg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsCanBeLinkMaterial),tp,LOCATION_MZONE,0,nil)
+        local fg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsCanBeLinkMaterial),tp,LOCATION_MZONE,0,nil)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.filter(chkc,chkc:GetControler(),fg) end
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil,tp,fg) and Duel.IsPlayerCanSpecialSummonCount(tp,1) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEDOWNDEFENSE)
@@ -87,18 +87,18 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if tc and tc:IsRelateToEffect(e) and tc:IsFacedown() then
 		if Duel.ChangePosition(tc,POS_FACEUP_DEFENSE)~=0 then
 		    local e1=Effect.CreateEffect(e:GetHandler())
-    		e1:SetType(EFFECT_TYPE_SINGLE)
-   	 	e1:SetCode(EFFECT_CANNOT_TRIGGER)
-	    	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-    		tc:RegisterEffect(e1)
-            local fg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsCanBeLinkMaterial),tp,LOCATION_MZONE,0,nil)
+          	    e1:SetType(EFFECT_TYPE_SINGLE)
+   	 	    e1:SetCode(EFFECT_CANNOT_TRIGGER)
+	            e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+    		    tc:RegisterEffect(e1)
+                    local fg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsCanBeLinkMaterial),tp,LOCATION_MZONE,0,nil)
 		    local tg=Duel.GetMatchingGroup(s.linkfilter,tp,LOCATION_EXTRA,0,nil,tc,fg)
-        	if #tg>0 then
-       		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-       		local sg=tg:Select(tp,1,1,nil)
-       		local sc=sg:GetFirst()
-      	 	Duel.LinkSummon(tp,sc,tc,nil)
-     	end
-      end
+        	    if #tg>0 then
+       		        Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+       		        local sg=tg:Select(tp,1,1,nil)
+       		        local sc=sg:GetFirst()
+      	 	        Duel.LinkSummon(tp,sc,tc,nil)
+     	           end
+             end
 	end
 end

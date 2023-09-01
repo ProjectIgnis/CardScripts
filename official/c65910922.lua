@@ -1,4 +1,4 @@
---Japanese name
+--ゴーティスの大蛇アリオンポス
 --Arionpos, Serpent of the Ghoti
 --scripted by Naim
 local s,id=GetID()

@@ -1,4 +1,4 @@
---Japanese name
+--ＧＰ－Ｎブラスタ
 --Gold Pride - Nytro Blaster
 --scripted by Naim
 local s,id=GetID()

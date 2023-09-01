@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_BATTLE_DESTROY_REDIRECT)
 	e3:SetValue(LOCATION_REMOVED)
 	c:RegisterEffect(e3)
-	--Special Summon  1"Chaos" Synchro Monster
+	--Special Summon 1"Chaos" Synchro Monster
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,0))
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)

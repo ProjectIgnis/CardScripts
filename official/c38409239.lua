@@ -1,4 +1,4 @@
---Japanese name
+--ゴーティス・コスモス
 --Ghoti Cosmos
 --scripted by Naim
 local s,id=GetID()
@@ -35,7 +35,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetTargetRange(LOCATION_MZONE,0)
 		e1:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_FISH))
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		e1:SetValue(1)
 		Duel.RegisterEffect(e1,tp)
 		aux.RegisterClientHint(c,0,tp,1,0,aux.Stringid(id,1))
@@ -51,7 +51,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_CANNOT_INACTIVATE)
 		e1:SetTargetRange(1,0)
 		e1:SetValue(s.effectfilter)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_CANNOT_DISEFFECT)

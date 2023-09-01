@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Pendulum Attributes
 	Pendulum.AddProcedure(c)
-	--Special Summon itself form the Pendulum Zone and change the position of a monster
+	--Special Summon itself from the Pendulum Zone and change the position of a monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_POSITION)

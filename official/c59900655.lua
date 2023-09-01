@@ -1,4 +1,4 @@
---Japanese name
+--ＧＰ－Ｎヘッド
 --Gold Pride - Nytro Head
 --scripted by Naim
 local s,id=GetID()
@@ -73,7 +73,7 @@ function s.tknop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 			e1:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
 			e1:SetValue(1)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			token:RegisterEffect(e1)
 		end
 		Duel.SpecialSummonComplete()

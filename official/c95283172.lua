@@ -1,4 +1,4 @@
---Japanese name
+--ＧＰ－ゴー・ワイルド
 --Gold Pride - The Crowd Goes Wild!
 --scripted by Naim
 local s,id=GetID()

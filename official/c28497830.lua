@@ -1,4 +1,4 @@
---Japanese name
+--ＧＰ－ＰＢ
 --Gold Pride - Pin Baller
 --scripted by Naim
 local s,id=GetID()

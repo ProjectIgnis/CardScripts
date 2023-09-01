@@ -100,7 +100,7 @@ function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsFaceup() and  tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e)
+	if tc:IsFaceup() and tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e)
 		and tc:IsControler(1-tp) and tc:IsControlerCanBeChanged() and Duel.GetControl(tc,tp) then
 		local c=e:GetHandler()
 		-- Cannot activate its effects

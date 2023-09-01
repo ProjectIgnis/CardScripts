@@ -1,4 +1,4 @@
---Japanese name
+--かなり魅湧な受注水産
 --Made to Order Mermaid Outfit Outfitter
 --scripted by Naim
 local s,id=GetID()

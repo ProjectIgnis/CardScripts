@@ -1,4 +1,4 @@
---Japanese name
+--ゴーティスの死棘グオグリム
 --Guoglim, Spear of the Ghoti
 --scripted by Naim
 local s,id=GetID()
@@ -71,7 +71,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,chk)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_CLIENT_HINT)
-			e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+			e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 			e1:SetValue(LOCATION_REMOVED)
 			tc:RegisterEffect(e1,true)
 		end

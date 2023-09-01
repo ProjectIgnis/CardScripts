@@ -1,4 +1,4 @@
---Japanese name
+--ＧＰ－チャリオット・キャリー号
 --Gold Pride - Chariot Carrie
 --scripted by fiftyfour
 local s,id=GetID()
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={96305350}
+s.listed_names={96305350} --Gold Pride - Captain Carrie
 s.listed_series={SET_GOLD_PRIDE}
 function s.thfilter(c)
 	return c:IsSetCard(SET_GOLD_PRIDE) and c:IsSpell() and c:IsAbleToHand()

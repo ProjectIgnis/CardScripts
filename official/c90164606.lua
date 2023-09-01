@@ -1,4 +1,4 @@
--- JP Name
+-- ＧＰ－ネック・アンド・ネック
 -- Gold Pride - It's Neck and Neck!
 -- Scripted by Satella
 local s,id=GetID()

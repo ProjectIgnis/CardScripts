@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.aclimit)
 	e2:SetCondition(function(e) return e:GetHandler():GetEquipTarget() end)
 	c:RegisterEffect(e2)
-	--Add 1 "Destruction Sword" monster form the GY to the hand
+	--Add 1 "Destruction Sword" monster from the GY to the hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TOHAND)

@@ -45,6 +45,7 @@ function s.initial_effect(c)
 	--Save how many materials it had before leaving the field
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e4:SetCode(EVENT_LEAVE_FIELD_P)
 	e4:SetOperation(function(e) e:GetLabelObject():SetLabel(e:GetHandler():GetOverlayCount()) end)
 	e4:SetLabelObject(e3)

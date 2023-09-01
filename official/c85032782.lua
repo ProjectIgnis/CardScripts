@@ -32,7 +32,7 @@ function s.desfilter(c,tp)
 	return c:IsControler(tp) and c:IsMonster()
 end
 function s.rescon(sg,e,tp,mg)
-    return sg:IsExists(s.desfilter,1,nil,tp)
+	return sg:IsExists(s.desfilter,1,nil,tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()

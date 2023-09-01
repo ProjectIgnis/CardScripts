@@ -53,7 +53,7 @@ function s.replaceop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RaiseEvent(c,EVENT_CUSTOM+47408488,e,0,tp,0,0)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetType()==TYPE_SPELL+TYPE_CONTINUOUS
+	return e:GetHandler():IsContinuousSpell()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -70,7 +70,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		--Special Summon as many "Advanced Crystal Beast" monsters as possible
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		local sg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_SZONE,0,nil,e,tp)
-		if  #sg==0 or ft<=0 then return end
+		if #sg==0 or ft<=0 then return end
 		if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
 		if Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

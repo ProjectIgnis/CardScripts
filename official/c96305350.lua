@@ -1,4 +1,4 @@
---Japanese name
+--ＧＰ－キャプテン・キャリー
 --Gold Pride - Captain Carrie
 --scripted by Naim
 local s,id=GetID()

@@ -1,4 +1,4 @@
---Japanese name
+--ゴーティスの兆イグジープ
 --Ixeep, Omen of the Ghoti
 --scripted by Naim
 local s,id=GetID()

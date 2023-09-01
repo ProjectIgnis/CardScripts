@@ -1,4 +1,4 @@
---Japanese name
+--ＧＰ－ＲＢ
 --Gold Pride - Roller Baller
 --scripted by Naim
 local s,id=GetID()

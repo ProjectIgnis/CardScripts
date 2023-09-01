@@ -1,4 +1,4 @@
--- JP Name
+-- ＧＰ－ベター・ラック
 -- Gold Pride - Better Luck Next Time!
 -- Scripted by Satella
 local s,id=GetID()

@@ -1,4 +1,4 @@
---Japanese name
+--ＧＰ－リオン
 --Gold Pride - Leon
 --scripted by Naim
 local s,id=GetID()
@@ -74,7 +74,7 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(function(_,c) return not c:IsSetCard(SET_GOLD_PRIDE) and c:IsLocation(LOCATION_EXTRA) end)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	--Clock Lizard check
 	aux.addTempLizardCheck(e:GetHandler(),tp,function(_,c) return not c:IsOriginalSetCard(SET_GOLD_PRIDE) end)

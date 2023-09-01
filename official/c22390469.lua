@@ -1,4 +1,4 @@
---Japanese name
+--ＧＰ－スター・リオン
 --Gold Pride - Star Leon
 --scripted by Naim
 local s,id=GetID()
@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={23512906}
+s.listed_names={23512906} --Gold Pride - Leon
 function s.cfilter(c)
 	return c:IsFaceup() and c:GetBaseAttack()>0
 end
@@ -45,7 +45,7 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,e:GetHandler(),1,0,g:GetFirst():GetBaseAttack())
 	Duel.SetPossibleOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 	--Register that this effect was activated this turn
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,EFFECT_FLAG_OATH,1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,EFFECT_FLAG_OATH,1)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

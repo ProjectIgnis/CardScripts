@@ -37,8 +37,9 @@ function s.opccost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterFlagEffect(tp,id,RESET_CHAIN,0,1)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-    return re and re:IsActivated() and re:GetHandler():IsSetCard(SET_VANQUISH_SOUL) and r&REASON_COST>0 and rp==tp
-        and eg:IsExists(Card.IsLocation,1,nil,LOCATION_HAND)
+	return re and re:IsActivated() and re:GetHandler():IsSetCard(SET_VANQUISH_SOUL)
+		and r&REASON_COST>0 and rp==tp
+		and eg:IsExists(Card.IsLocation,1,nil,LOCATION_HAND)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

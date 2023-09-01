@@ -1,4 +1,4 @@
---Japanese name
+--ＧＰ－スタート・エンジン
 --Gold Pride - Start Your Engines!
 --scripted by Naim
 local s,id=GetID()

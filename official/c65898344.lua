@@ -41,7 +41,7 @@ function s.rmfilter(c,e,tp)
 		and (c:IsControler(1-tp) or (c:IsFaceup() and c:IsRace(RACE_FISH)))
 end
 function s.rmrescon(sg,e,tp,mg)
-    return sg:FilterCount(Card.IsControler,nil,tp)==1
+	return sg:FilterCount(Card.IsControler,nil,tp)==1
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

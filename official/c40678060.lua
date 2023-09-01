@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_SZONE)
 	e1:SetCountLimit(1)
 	e1:SetCondition(function(e,tp,eg,ep,ev,re,r,rp) return rp==1-tp and re:IsSpellEffect() and Duel.IsChainDisablable(ev) end)
-	e1:SetOperation(function(e,tp,eg,ep,ev,re,r,rp) Duel.NegateEffect(ev)  end)
+	e1:SetOperation(function(e,tp,eg,ep,ev,re,r,rp) Duel.NegateEffect(ev) end)
 	c:RegisterEffect(e1)
 	--Gain 500 LP, then destroy this card
 	local e2=Effect.CreateEffect(c)

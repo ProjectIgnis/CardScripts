@@ -19,7 +19,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_EARTHBOUND}
 function s.cfilter(c,tp)
-	return c:IsSetcard(SET_EARTHBOUND) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
+	return c:IsSetCard(SET_EARTHBOUND) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

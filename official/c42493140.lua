@@ -78,6 +78,13 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0
 		and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
 		Duel.BreakEffect()
-		c:UpdateLevel(4,RESET_EVENT|RESETS_STANDARD_DISABLE)
+		--Increase its Level by 4
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetCode(EFFECT_UPDATE_LEVEL)
+		e1:SetValue(4)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
+		c:RegisterEffect(e1)
 	end
 end

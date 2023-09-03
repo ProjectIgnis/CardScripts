@@ -30,7 +30,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_FACEUP)
 	Duel.SetTargetCard(tg)
 	local self_g,opp_g=g:Split(Card.IsControler,nil,tp)
-	local b1=self_g:IsExists(Card.IsCanChangePosition,2,nil)
+	local b1=tg:IsExists(Card.IsCanChangePosition,2,nil)
 	local b2=opp_g:GetFirst():GetAttack()>0
 	local op=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,1)},
@@ -58,7 +58,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 		--Destroy that monster you control and change the ATK of the other monster to 0
 		local self_c=e:GetLabelObject():GetFirst()
 		local opp_c=g:RemoveCard(self_c):GetFirst()
-		if self_c:IsRelateToEffect(e) and Duel.Destroy(self_c,REASON_EFFECT)>0
+		if self_c:IsRelateToEffect(e) and self_c:IsControler(tp) and Duel.Destroy(self_c,REASON_EFFECT)>0
 			and opp_c and opp_c:IsRelateToEffect(e) and opp_c:IsFaceup() then
 			--Change its ATK to 0
 			local e1=Effect.CreateEffect(e:GetHandler())

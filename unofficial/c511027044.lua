@@ -1,4 +1,4 @@
---薔薇の聖弓手
+--薔薇の聖弓手 (Manga)
 --Rose Archer (Manga)
 local s,id=GetID()
 function s.initial_effect(c)
@@ -15,10 +15,10 @@ function s.initial_effect(c)
 	e1:SetTarget(s.distg)
 	e1:SetOperation(s.disop)
 	c:RegisterEffect(e1)
-	aux.DoubleSnareValidity(c,LOCATION_MZONE)
+	aux.DoubleSnareValidity(c,LOCATION_HAND)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==1-tp and re:IsActiveType(TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
+	return ep==1-tp and re:IsTrapEffect() and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end

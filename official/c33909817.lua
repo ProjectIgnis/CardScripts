@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.cost)
+	e1:SetCost(aux.dxmcostgen(1,1,nil))
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
@@ -30,10 +30,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_SYLVAN}
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,1)
 		and Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,LOCATION_DECK,0,1,nil) end
@@ -41,9 +37,8 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsPlayerCanDiscardDeck(tp,1) then return end
 	Duel.ConfirmDecktop(tp,1)
-	local g=Duel.GetDecktopGroup(tp,1)
-	local tc=g:GetFirst()
-	if tc:IsType(TYPE_SPELL+TYPE_TRAP) and tc:IsAbleToHand() then
+	local tc=Duel.GetDecktopGroup(tp,1):GetFirst()
+	if tc:IsSpellTrap() and tc:IsAbleToHand() then
 		Duel.DisableShuffleCheck()
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 		Duel.ShuffleHand(tp)

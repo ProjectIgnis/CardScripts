@@ -48,7 +48,6 @@ function s.dttg(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_DECK,0,1,nil,SET_GUNKAN) end
 end
 function s.dtop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
 	local tc=Duel.SelectMatchingCard(tp,Card.IsSetCard,tp,LOCATION_DECK,0,1,1,nil,SET_GUNKAN):GetFirst()
 	if tc then
@@ -72,7 +71,6 @@ function s.xyzfilter(c,e,tp)
 		and Duel.GetLocationCountFromEx(tp,tp,nil,c)
 end
 function s.xyzop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local def=0
 	local g=eg:Filter(s.filter,nil,tp)
 	for tc in aux.Next(g) do

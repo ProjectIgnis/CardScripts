@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_INACTIVATE+EFFECT_FLAG_CANNOT_NEGATE)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
-	e1:SetHintTiming(TIMING_STANDBY_PHASE+TIMING_BATTLE_START)
+	e1:SetHintTiming(TIMING_STANDBY_PHASE|TIMING_BATTLE_START)
 	c:RegisterEffect(e1)
 end
 	--Specifically lists "The Winged Dragon of Ra"

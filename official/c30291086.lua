@@ -64,6 +64,6 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 		{b1,aux.Stringid(id,3)},
 		{b2,aux.Stringid(id,4)})
 	if lvop then
-		c:UpdateLevel(lvop==1 and ct or -ct,RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+		c:UpdateLevel(lvop==1 and ct or -ct,RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_PHASE|PHASE_END)
 	end
 end

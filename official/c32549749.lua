@@ -50,7 +50,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==1 then
 		local tc=Duel.GetFirstTarget()
 		if tc:IsFaceup() and tc:IsRelateToEffect(e) then
-			tc:UpdateAttack(800,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,e:GetHandler())
+			tc:UpdateAttack(800,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,e:GetHandler())
 		end
 	else
 		if Duel.GetLocationCount(tp,LOCATION_SZONE)==0 then return end

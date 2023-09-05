@@ -89,7 +89,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 		else
 			e1:SetValue(-lv)
 		end
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 	end
 end

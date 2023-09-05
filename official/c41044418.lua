@@ -68,14 +68,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(id)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetTargetRange(1,0)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	--flag cards summoned by monster reborn
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetOperation(s.regop)
-	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 	--send to gy
 	local e3=Effect.CreateEffect(c)
@@ -83,7 +83,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetCode(EVENT_PHASE+PHASE_END)
 	e3:SetCountLimit(1)
 	e3:SetOperation(s.gyop)
-	e3:SetReset(RESET_PHASE+PHASE_END)
+	e3:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e3,tp)
 end
 function s.regfilter(c,tp,re)
@@ -94,7 +94,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.regfilter,nil,tp,re)
 	if not g or #g==0 then return end
 	for tc in g:Iter() do
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD|RESET_PHASE|PHASE_END,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,3))
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,3))
 	end
 end
 function s.gyfilter(c)

@@ -63,7 +63,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local rc=Duel.SelectMatchingCard(tp,s.rmfilter,tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
 	if not rc then return end
-	local reset=RESET_PHASE+PHASE_END+RESET_OPPO_TURN
+	local reset=RESET_PHASE|PHASE_END|RESET_OPPO_TURN
 	if aux.RemoveUntil(rc,nil,REASON_EFFECT,PHASE_END,id,e,tp,aux.DefaultFieldReturnOp,s.retcon,reset) then
 		local tc=Duel.GetFirstTarget()
 		if not tc:IsRelateToEffect(e) then return end

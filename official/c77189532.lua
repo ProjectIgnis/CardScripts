@@ -74,7 +74,7 @@ function s.extraval1(chk,summon_type,e,...)
 		local sg,sc,tp=...
 		if summon_type&SUMMON_TYPE_LINK == SUMMON_TYPE_LINK and #sg>0 then
 			Duel.Hint(HINT_CARD,tp,id)
-			Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+			Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 		end
 	elseif chk==2 then
 		for _,eff in ipairs(s.flagmap1[c]) do
@@ -110,7 +110,7 @@ function s.extraval2(chk,summon_type,e,...)
 		local sg,sc,tp=...
 		if summon_type&SUMMON_TYPE_LINK==SUMMON_TYPE_LINK and #sg>0 and Duel.GetFlagEffect(tp,id+1)==0 then
 			Duel.Hint(HINT_CARD,tp,id)
-			Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE+PHASE_END,0,1)
+			Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_END,0,1)
 		end
 	elseif chk==2 then
 		if s.flagmap2[c] then

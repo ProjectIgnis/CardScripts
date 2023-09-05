@@ -49,7 +49,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
-		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e1,true)
 	end
@@ -129,7 +129,7 @@ function s.extraval(chk,summon_type,e,...)
 		if summon_type~=SUMMON_TYPE_LINK or not (sc and sc:IsSetCard(SET_EVIL_EYE)) then
 			return Group.CreateGroup()
 		else
-			Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+			Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 			return Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_ONFIELD,0,nil)
 		end
 	elseif chk==2 then

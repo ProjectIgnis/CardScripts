@@ -63,7 +63,7 @@ function s.extraval(chk,summon_type,e,...)
 		local sg,sc,tp=...
 		if summon_type&SUMMON_TYPE_LINK==SUMMON_TYPE_LINK and #sg>0 and Duel.GetFlagEffect(tp,id)==0 then
 			Duel.Hint(HINT_CARD,tp,id)
-			Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+			Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 		end
 	elseif chk==2 then
 		if s.flagmap[c] then

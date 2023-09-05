@@ -56,7 +56,7 @@ function s.matchk(e,c)
 	if not (c and c:IsType(TYPE_LINK)) then return end
 	local g=c:GetMaterial()
 	if g:IsExists(Card.IsSummonCode,1,nil,c,SUMMON_TYPE_LINK,e:GetHandlerPlayer(),67712104) then
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD-RESET_LEAVE-RESET_TEMP_REMOVE,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,0))
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD&~(RESET_TOFIELD|RESET_LEAVE|RESET_TEMP_REMOVE),EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,0))
 	end
 end
 function s.atkval(e,c)

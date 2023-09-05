@@ -57,7 +57,7 @@ function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=e:GetLabelObject():Filter(s.tgfilter2,nil,e)
 	if chkc then return g:IsContains(chkc) and s.tgfilter(chkc,nil) end
 	if chk==0 then return #g>0 end
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 	local tc=nil
 	if #g==1 then
 		tc=g:GetFirst()

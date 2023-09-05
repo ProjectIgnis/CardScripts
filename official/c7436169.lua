@@ -78,7 +78,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if val==0 then return end
 		--Your monster gains half of the original ATK/DEF (whichever is higher)
 		if tc1 and tc1:IsControler(tp) and tc1:IsRelateToEffect(e) and tc1:IsFaceup() then
-			tc1:UpdateAttack(val,RESET_EVENT+RESETS_STANDARD,c)
+			tc1:UpdateAttack(val,RESET_EVENT|RESETS_STANDARD,c)
 		end
 	end
 end

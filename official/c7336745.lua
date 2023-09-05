@@ -52,7 +52,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
 	e1:SetTargetRange(1,0)
 	e1:SetValue(function(e) return Duel.GetLP(e:GetHandlerPlayer())/2 end)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	--Negate the activation and destroy the monster
 	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then

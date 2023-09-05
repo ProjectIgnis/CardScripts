@@ -52,14 +52,14 @@ function s.spcon(e,c)
 	local g=nil
 	local rg1=Duel.GetMatchingGroup(s.costfilter,tp,LOCATION_MZONE|LOCATION_HAND,0,c)
 	local rg2=Duel.GetMatchingGroup(s.costfilter,tp,LOCATION_GRAVE|LOCATION_HAND,0,c)
-	local rg=Duel.IsPlayerAffectedByEffect(tp,69832741) and rg1 or rg2
+	local rg=Duel.IsPlayerAffectedByEffect(tp,CARD_SPIRIT_ELIMINATION) and rg1 or rg2
 	return aux.SelectUnselectGroup(rg,e,tp,3,3,aux.ChkfMMZ(1),0)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
 	local c=e:GetHandler()
 	local rg1=Duel.GetMatchingGroup(s.costfilter,tp,LOCATION_MZONE|LOCATION_HAND,0,c)
 	local rg2=Duel.GetMatchingGroup(s.costfilter,tp,LOCATION_GRAVE|LOCATION_HAND,0,c)
-	local rg=Duel.IsPlayerAffectedByEffect(tp,69832741) and rg1 or rg2
+	local rg=Duel.IsPlayerAffectedByEffect(tp,CARD_SPIRIT_ELIMINATION) and rg1 or rg2
 	local g=aux.SelectUnselectGroup(rg,e,tp,3,3,aux.ChkfMMZ(1),1,tp,HINTMSG_REMOVE,nil,nil,true)
 	if #g>0 then
 		g:KeepAlive()

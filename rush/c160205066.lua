@@ -17,6 +17,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 end
+s.listed_names={80304126}
 function s.cfilter(c,tp)
 	return c:IsSummonPlayer(1-tp) and c:IsFaceup()
 end

@@ -16,6 +16,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 end
+s.listed_names={CARD_SUMMONED_SKULL}
 function s.filter1(c,tp)
 	return c:IsSummonPlayer(1-tp) and c:IsLevelAbove(6) and c:IsFaceup() and c:IsLocation(LOCATION_MZONE)
 end

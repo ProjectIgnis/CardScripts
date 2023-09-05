@@ -56,10 +56,10 @@ function s.spcon(e,c)
 	local ct=Duel.GetMatchingGroupCount(Card.IsAttribute,tp,LOCATION_GRAVE,0,nil,ATTRIBUTE_LIGHT)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and ct>0 and ct==Duel.GetMatchingGroupCount(Card.IsAttribute,tp,LOCATION_GRAVE,0,nil,ATTRIBUTE_DARK)
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,ct,nil,e:GetLabel())
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,ct,nil,e:GetLabel())
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil,e:GetLabel())
+	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil,e:GetLabel())
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 	e:GetLabelObject():SetLabel(e:GetLabel())
 end

@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetTarget(aux.TargetBoolFunction(Card.IsAttribute,ATTRIBUTE_EARTH))
-	e2:SetValue(0x183)
+	e2:SetValue(SET_VERNUSYLPH)
 	c:RegisterEffect(e2)
 	-- "Vernusylph" cost replacement
 	local e3=Effect.CreateEffect(c)

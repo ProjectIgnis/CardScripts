@@ -39,7 +39,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			e1:SetAbsoluteRange(ep,0,1)
 			rc:RegisterEffect(e1,true)
-			rc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+			rc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 		end
 	end
 end

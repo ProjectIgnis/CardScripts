@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP+TIMINGS_CHECK_MONSTER_E+TIMING_MAIN_END)
+	e1:SetHintTiming(TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP|TIMINGS_CHECK_MONSTER_E|TIMING_MAIN_END)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
@@ -78,7 +78,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if val==0 then return end
 		--Your monster gains half of the original ATK/DEF (whichever is higher)
 		if tc1 and tc1:IsControler(tp) and tc1:IsRelateToEffect(e) and tc1:IsFaceup() then
-			tc1:UpdateAttack(val,RESET_EVENT+RESETS_STANDARD,c)
+			tc1:UpdateAttack(val,RESET_EVENT|RESETS_STANDARD,c)
 		end
 	end
 end

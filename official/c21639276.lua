@@ -63,7 +63,7 @@ end
 function s.chainreg(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:GetFlagEffect(id)==0 then
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_CHAIN,0,1)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD&~RESET_TURN_SET|RESET_CHAIN,0,1)
 	end
 end
 function s.rmvcond(e,tp,eg,ep,ev,re,r,rp)

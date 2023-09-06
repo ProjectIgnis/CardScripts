@@ -54,7 +54,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(LOCATION_ONFIELD,0)
 	e1:SetTarget(function(_,c) return c:IsFaceup() and c:IsTrap() end)
 	e1:SetValue(aux.indoval)
-	e1:SetReset(RESET_PHASE+PHASE_END,2)
+	e1:SetReset(RESET_PHASE|PHASE_END,2)
 	Duel.RegisterEffect(e1,tp)
 	aux.RegisterClientHint(c,0,tp,1,0,aux.Stringid(id,3),0,2)
 end

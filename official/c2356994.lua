@@ -29,9 +29,9 @@ function s.skipop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsTurnPlayer(1-tp) then
 		local turn=Duel.GetTurnCount()
 		e1:SetCondition(function() return Duel.GetTurnCount()~=turn end)
-		e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,2)
+		e1:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN,2)
 	else
-		e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,1)
+		e1:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN,1)
 	end
 	Duel.RegisterEffect(e1,tp)
 end

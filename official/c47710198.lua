@@ -80,7 +80,7 @@ end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=e:GetLabelObject():Filter(s.filter,nil,tp,nil)
 	if chk==0 then return #g>0 end
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 	Duel.SetTargetCard(g)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,1200)

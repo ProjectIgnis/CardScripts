@@ -57,7 +57,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.efilter(e,te)
-	return te:IsActiveType(TYPE_TRAP) and te:GetOwnerPlayer()==1-e:GetHandlerPlayer()
+	return te:IsActiveType(TYPE_TRAP) and te:GetOwnerPlayer()~=e:GetOwnerPlayer()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local dg=Duel.GetMatchingGroup(Card.IsSpellTrap,tp,0,LOCATION_ONFIELD,nil)

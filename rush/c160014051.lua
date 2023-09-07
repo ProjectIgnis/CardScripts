@@ -31,7 +31,7 @@ function s.eqlimit(e,c)
 	return c:IsFaceup()
 end
 function s.efilter(e,te)
-	return te:GetOwnerPlayer()~=e:GetHandlerPlayer()
+	return te:GetOwnerPlayer()~=e:GetOwnerPlayer()
 end
 function s.condition(e)
 	return Duel.IsExistingMatchingCard(Card.IsEquipSpell,e:GetHandlerPlayer(),LOCATION_GRAVE,0,1,nil)

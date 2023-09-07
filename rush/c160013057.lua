@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_SZONE)
 	e1:SetTargetRange(LOCATION_ONFIELD,0)
 	e1:SetTarget(s.indtg)
-	e1:SetValue(aux.indoval)
+	e1:SetValue(s.efilter)
 	c:RegisterEffect(e1)
 	--atk up
 	local e2=Effect.CreateEffect(c)
@@ -48,4 +48,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.condition(e)
 	return Duel.IsExistingMatchingCard(Card.IsEquipSpell,e:GetHandlerPlayer(),LOCATION_GRAVE,0,1,nil)
+end
+function s.efilter(e,te)
+	return te:GetOwnerPlayer()~=e:GetOwnerPlayer()
 end

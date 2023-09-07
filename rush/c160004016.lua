@@ -55,5 +55,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e2,true)
 end
 function s.indval(e,re,r,rp)
-	return (r&REASON_EFFECT)~=0 and re:IsTrapEffect() and rp==1-e:GetHandlerPlayer()
+	return (r&REASON_EFFECT)~=0 and re:IsTrapEffect() and re:GetOwnerPlayer()~=e:GetOwnerPlayer()
 end

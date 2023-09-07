@@ -43,5 +43,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.efilter(e,re,rp)
-	return re:IsTrapEffect() and rp==1-e:GetHandlerPlayer()
+	return re:IsTrapEffect() and re:GetOwnerPlayer()~=e:GetOwnerPlayer()
 end

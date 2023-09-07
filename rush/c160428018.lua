@@ -43,5 +43,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.efilter(e,re,rp)
-	return re:IsActiveType(TYPE_TRAP) and re:GetOwnerPlayer()==1-e:GetHandlerPlayer()
+	return re:IsActiveType(TYPE_TRAP) and re:GetOwnerPlayer()~=e:GetOwnerPlayer()
 end

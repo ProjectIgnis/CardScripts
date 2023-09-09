@@ -1,5 +1,5 @@
 --真炎王 ポニクス
---True Fire King Ponix
+--Legendary Fire King Ponix
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

@@ -79,8 +79,11 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	local lsc=Duel.GetFieldCard(tp,LOCATION_PZONE,0):GetLeftScale()
-	local rsc=Duel.GetFieldCard(tp,LOCATION_PZONE,1):GetRightScale()
+	local lc=Duel.GetFieldCard(tp,LOCATION_PZONE,0)
+	local rc=Duel.GetFieldCard(tp,LOCATION_PZONE,1)
+	if not (lc and rc) then return end
+	local lsc=lc:GetLeftScale()
+	local rsc=rc:GetRightScale()
 	if lsc>rsc then lsc,rsc=rsc,lsc end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE|LOCATION_HAND,0,1,1,nil,e,tp,lsc,rsc)

@@ -90,7 +90,7 @@ end
 function s.addcounter(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	c:AddCounter(COUNTER_RESONANCE,1)
-	Duel.RaiseEvent(c,EVENT_CUSTOM+100433035,e,0,tp,tp,1)
+	Duel.RaiseEvent(c,EVENT_CUSTOM+39210885,e,0,tp,tp,1)
 end
 function s.linkfilter(c)
 	return c:IsSetCard(SET_VALMONICA) and c:IsLinkSummonable()

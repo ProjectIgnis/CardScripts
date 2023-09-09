@@ -41,7 +41,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		Duel.SetOperationInfo(0,CATEGORY_POSITION,tg,2,tp,0)
 	elseif op==2 then
 		e:SetCategory(CATEGORY_DESTROY+CATEGORY_ATKCHANGE)
-		e:SetLabelObject(self_g)
+		e:SetLabelObject(self_g:GetFirst())
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,self_g,1,tp,0)
 		Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,opp_g,1,tp,0)
 	end
@@ -56,7 +56,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ChangePosition(g,POS_FACEDOWN_DEFENSE)
 	elseif op==2 then
 		--Destroy that monster you control and change the ATK of the other monster to 0
-		local self_c=e:GetLabelObject():GetFirst()
+		local self_c=e:GetLabelObject()
 		local opp_c=g:RemoveCard(self_c):GetFirst()
 		if self_c:IsRelateToEffect(e) and self_c:IsControler(tp) and Duel.Destroy(self_c,REASON_EFFECT)>0
 			and opp_c and opp_c:IsRelateToEffect(e) and opp_c:IsFaceup() then

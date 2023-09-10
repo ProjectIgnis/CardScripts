@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	c:EnableReviveLimit()
 	-- 2 Level 4 monsters
 	Xyz.AddProcedure(c,nil,4,2)
-	-- Unaffected
+	-- Unaffected by Trap effects and effects of monsters with the same type as its materials
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
-	-- Attach card
+	-- Attach 1 monster to this card
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -66,7 +66,8 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.ovfilter(c,e,xc,tp)
-	return c:IsMonster() and c:IsReason(REASON_EFFECT) and c:GetOwner()==1-tp
+	return c:IsMonster() and c:IsFaceup() and c:IsReason(REASON_EFFECT)
+		and c:GetOwner()==1-tp and c:IsLocation(LOCATION_GRAVE|LOCATION_REMOVED)
 		and not c:IsImmuneToEffect(e) and c:IsCanBeXyzMaterial(xc,tp,REASON_EFFECT)
 end
 function s.ovtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -80,7 +81,7 @@ end
 function s.ovop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or not c:IsType(TYPE_XYZ) or c:IsImmuneToEffect(e) then return end
-	local tg=Duel.GetTargetCards(e)
+	local tg=Duel.GetTargetCards(e):Filter(Card.IsRelateToEffect,nil,e)
 	if #tg==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTACH)
 	local g=tg:FilterSelect(tp,s.ovfilter,1,1,nil,e,c,tp)

@@ -545,3 +545,5 @@ SET_PATISSCIEL                    = 0x206
 SET_HEART                         = 0x207
 --Pre-release archetypes
 SET_YUBEL                         = 0x19d
+SET_SILENFORC                     = 0x19e
+SET_SKULL_GUARDIAN                = 0x19f

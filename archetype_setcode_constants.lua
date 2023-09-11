@@ -136,6 +136,7 @@ SET_STARVING_VENOM                = 0x1050
 SET_GADGET                        = 0x51
 SET_GUARDIAN                      = 0x52
 SET_GATE_GUARDIAN                 = 0x1052
+SET_SKULL_GUARDIAN                = 0x2052
 SET_CONSTELLAR                    = 0x53
 SET_GAGAGA                        = 0x54
 SET_PHOTON                        = 0x55
@@ -546,4 +547,3 @@ SET_HEART                         = 0x207
 --Pre-release archetypes
 SET_YUBEL                         = 0x19d
 SET_SILENFORC                     = 0x19e
-SET_SKULL_GUARDIAN                = 0x19f

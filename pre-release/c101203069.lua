@@ -16,25 +16,24 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_MAJESPECTER}
-function s.spcostfilter(c,e,tp)
+function s.spcostfilter(c,tp)
 	return c:IsAttribute(ATTRIBUTE_WIND) and c:IsRace(RACE_SPELLCASTER) and Duel.GetMZoneCount(tp,c)>0
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_MAJESPECTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local loc=LOCATION_HAND|LOCATION_GRAVE
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local cost_chk=e:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.CheckReleaseGroupCost(tp,s.spcostfilter,1,false,nil,nil,e,tp)
-	if chk==0 then return (cost_chk or ft>0)
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,loc|(cost_chk and LOCATION_DECK or 0),0,1,nil,e,tp)
-	end
-	if cost_chk and (ft<1 or Duel.SelectYesNo(tp,aux.Stringid(id,1))) then
-		local g=Duel.SelectReleaseGroupCost(tp,s.spcostfilter,1,1,false,nil,nil,e,tp)
-		Duel.Release(g,REASON_COST)
-		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,loc|LOCATION_DECK)
+	local hg_chk=Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND|LOCATION_GRAVE,0,1,nil,e,tp)
+	local release_chk=e:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.CheckReleaseGroupCost(tp,s.spcostfilter,1,false,nil,nil,tp)
+	if chk==0 then return (release_chk or ft>0)
+		and (hg_chk or (release_chk and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp))) end
+	if release_chk and (ft<1 or not hg_chk or Duel.SelectYesNo(tp,aux.Stringid(id,1))) then
+		local rg=Duel.SelectReleaseGroupCost(tp,s.spcostfilter,1,1,false,nil,nil,tp)
+		Duel.Release(rg,REASON_COST)
+		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_GRAVE|LOCATION_DECK)
 	else
-		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,loc)
+		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_GRAVE)
 	end
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)

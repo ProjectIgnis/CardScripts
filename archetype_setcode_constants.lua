@@ -547,3 +547,4 @@ SET_HEART                         = 0x207
 --Pre-release archetypes
 SET_YUBEL                         = 0x19d
 SET_SILENFORC                     = 0x19e
+SET_WHITE_AURA                    = 0x119f

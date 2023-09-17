@@ -97,7 +97,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.gyfilter(c)
-	return c:IsOriginalCode(CARD_RA) and c:GetFlagEffect(id)~=0
+	return c:IsOriginalCode(CARD_RA) and c:HasFlagEffect(id)
 end
 function s.gyop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.gyfilter,tp,LOCATION_MZONE,0,nil)

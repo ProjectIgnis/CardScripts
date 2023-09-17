@@ -51,7 +51,7 @@ end
 function s.costtg(e,te,tp)
 	local tc=te:GetHandler()
 	return Duel.GetTurnPlayer()~=e:GetHandlerPlayer()
-		and tc:IsLocation(LOCATION_HAND) and tc:GetFlagEffect(id)>0 and tc:GetFlagEffectLabel(id)==e:GetHandler():GetFieldID()
+		and tc:IsLocation(LOCATION_HAND) and tc:HasFlagEffect(id) and tc:GetFlagEffectLabel(id)==e:GetHandler():GetFieldID()
 end
 function s.costop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)

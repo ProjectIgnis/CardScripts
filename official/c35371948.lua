@@ -111,7 +111,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rcon(e)
-	return e:GetOwner():IsHasCardTarget(e:GetHandler()) and e:GetHandler():GetFlagEffect(id)~=0
+	return e:GetOwner():IsHasCardTarget(e:GetHandler()) and e:GetHandler():HasFlagEffect(id)
 end
 function s.rstcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -50,11 +50,8 @@ s.listed_series={SET_S_FORCE}
 function s.extrafilter(c,tp)
 	return c:IsLocation(LOCATION_MZONE) and c:IsControler(tp)
 end
-function s.flagcheck(c)
-	return c:GetFlagEffect(id)>0
-end
 function s.extracon(c,e,tp,sg,mg,lc,og,chk)
-	return sg:FilterCount(s.flagcheck,nil)<2 and (sg+mg):IsExists(s.extrafilter,1,og,e:GetHandlerPlayer())
+	return sg:FilterCount(Card.HasFlagEffect,nil,id)<2 and (sg+mg):IsExists(s.extrafilter,1,og,e:GetHandlerPlayer())
 end
 function s.extraval(chk,summon_type,e,...)
 	local c=e:GetHandler()

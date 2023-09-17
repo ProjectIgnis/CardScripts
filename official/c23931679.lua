@@ -53,8 +53,8 @@ function s.fidfilter(c,code)
 end
 function s.adjustop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local flag0=c:GetFlagEffect(id)>0
-	local flag1=c:GetFlagEffect(id+1)>0
+	local flag0=c:HasFlagEffect(id)
+	local flag1=c:HasFlagEffect(id+1)
 	if not s.umicon(e,tp,eg,ep,ev,re,r,rp) then
 		if flag0 then c:ResetFlagEffect(id) end
 		if flag1 then c:ResetFlagEffect(id+1) end

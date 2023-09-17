@@ -101,7 +101,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetFlagEffect(id)~=0 and e:GetLabel()~=Duel.GetTurnCount() and Duel.IsTurnPlayer(tp)
+	return e:GetHandler():HasFlagEffect(id) and e:GetLabel()~=Duel.GetTurnCount() and Duel.IsTurnPlayer(tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

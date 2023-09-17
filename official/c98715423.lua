@@ -101,7 +101,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCountLimit(1)
 	e1:SetOperation(s.drawcheck)
 	e1:SetLabel(e:GetLabel())
-	e1:SetReset(RESET_PHASE+PHASE_DRAW)
+	e1:SetReset(RESET_PHASE|PHASE_DRAW)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.drawcheck(e,tp,eg,ep,ev,re,r,rp)
@@ -116,6 +116,6 @@ function s.drawcheck(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetCurrentPhase()==PHASE_DRAW and (r&REASON_RULE)==REASON_RULE then
-		Duel.RegisterFlagEffect(ep,id,RESET_PHASE+PHASE_STANDBY,0,1)
+		Duel.RegisterFlagEffect(ep,id,RESET_PHASE|PHASE_STANDBY,0,1)
 	end
 end

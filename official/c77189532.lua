@@ -55,10 +55,10 @@ function s.extrafilter1(c,tp)
 end
 function s.extracon1(c,e,tp,sg,mg,lc,og,chk)
 	return (sg+mg):Filter(s.extrafilter1,nil,e:GetHandlerPlayer()):IsExists(Card.IsRace,1,og,RACE_CYBERSE) and
-	sg:FilterCount(s.flagcheck1,nil)<2
+	sg:FilterCount(Card.HasFlagEffect,nil,id)<2
 end
 function s.flagcheck1(c)
-	return c:GetFlagEffect(id)>0
+	return c:HasFlagEffect(id)
 end
 function s.extraval1(chk,summon_type,e,...)
 	local c=e:GetHandler()

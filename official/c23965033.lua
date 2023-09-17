@@ -50,7 +50,7 @@ function s.initial_effect(c)
 	e5:SetValue(s.valcheck)
 	c:RegisterEffect(e5)
 end
-s.listed_names={15951532,4591250}
+s.listed_names={15951532,4591250} --Amazoness Queen, Amazoness Empress
 s.listed_series={SET_AMAZONESS}
 s.material_setcode={SET_AMAZONESS}
 function s.matfilter(c,fc,sumtype,tp)
@@ -74,7 +74,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atkcon(e)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_FUSION) and c:GetFlagEffect(id)>0
+	return c:IsSummonType(SUMMON_TYPE_FUSION) and c:HasFlagEffect(id)
 end
 function s.valcheck(e,c)
 	local g=c:GetMaterial()

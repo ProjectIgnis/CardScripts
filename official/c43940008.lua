@@ -89,7 +89,7 @@ function s.desregop(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsTurnPlayer(tp) and Duel.GetTurnCount()~=e:GetLabel() and e:GetHandler():GetFlagEffect(id)>0
+	return Duel.IsTurnPlayer(tp) and Duel.GetTurnCount()~=e:GetLabel() and e:GetHandler():HasFlagEffect(id)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():ResetFlagEffect(id)

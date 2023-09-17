@@ -1,9 +1,10 @@
 -- 火炎
---Blazing Flame
+--Fiery Blaze
 local s,id=GetID()
 function s.initial_effect(c)
 	--damage
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCategory(CATEGORY_DAMAGE+CATEGORY_DESTROY)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -13,8 +14,11 @@ function s.initial_effect(c)
 	e1:SetOperation(s.damop)
 	c:RegisterEffect(e1)
 end
+function s.filter(c)
+	return c:IsFaceup() and c:IsRace(RACE_PYRO) and not c:IsMaximumModeSide()
+end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_PYRO),tp,LOCATION_MZONE,0,2,nil)
+	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,2,nil)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

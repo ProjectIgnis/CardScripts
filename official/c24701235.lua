@@ -30,7 +30,7 @@ function s.initial_effect(c)
 end
 s.listed_card_types={TYPE_SPIRIT}
 function s.nsop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetFlagEffect(tp,id)>0 then return end
+	if Duel.HasFlagEffect(tp,id) then return end
 	local c=e:GetHandler()
 	--Can Normal Summon/Set 1 additional Spirit monster
 	local e1=Effect.CreateEffect(c)

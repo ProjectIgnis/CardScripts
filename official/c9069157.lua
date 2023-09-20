@@ -111,7 +111,7 @@ function s.resetop(e,tp,eg,ep,ev,re,r,rp)
 	e:Reset()
 end
 function s.limop2(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetHandler():GetFlagEffect(id)~=0 then
+	if e:GetHandler():HasFlagEffect(id) then
 		Duel.SetChainLimitTillChainEnd(s.chainlm)
 	end
 	e:GetHandler():ResetFlagEffect(id)

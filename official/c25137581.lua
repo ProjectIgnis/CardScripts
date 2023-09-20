@@ -54,7 +54,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
-	return tc:IsFacedown() and tc:GetFlagEffect(id)>0
+	return tc:IsFacedown() and tc:HasFlagEffect(id)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()

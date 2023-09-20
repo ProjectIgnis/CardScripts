@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={13331639}
+s.listed_names={13331639} --Supreme King Z-ARC
 s.listed_series={SET_PENDULUM_DRAGON,SET_XYZ_DRAGON,SET_SYNCHRO_DRAGON,SET_FUSION_DRAGON}
 local LOCATION_HDEG=LOCATION_HAND|LOCATION_DECK|LOCATION_EXTRA|LOCATION_GRAVE
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -75,7 +75,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
-	if tc:GetFlagEffect(id)>0 then
+	if tc:HasFlagEffect(id) then
 		return Duel.GetTurnCount()==e:GetLabel()
 	else
 		e:Reset()

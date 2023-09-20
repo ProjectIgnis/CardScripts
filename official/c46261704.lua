@@ -55,7 +55,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.BreakEffect()
 		local c=e:GetHandler()
 		local xg=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,e)
-		if Duel.ChangeAttackTarget(g:GetFirst()) and c:GetFlagEffect(id)>0 and c:IsLocation(LOCATION_GRAVE) and aux.nvfilter(c)
+		if Duel.ChangeAttackTarget(g:GetFirst()) and c:HasFlagEffect(id) and c:IsLocation(LOCATION_GRAVE) and aux.nvfilter(c)
 			and #xg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)

@@ -84,7 +84,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local cseq=e:GetLabel()
 	if not re:IsSpellTrapEffect() then return end
 	local rc=re:GetHandler()
-	if rc:GetFlagEffect(id)>0 then return end
+	if rc:HasFlagEffect(id) then return end
 	local p,loc,seq=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_CONTROLER,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_SEQUENCE)
 	if re:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		if loc&LOCATION_SZONE==0 or rc:IsControler(1-p) then

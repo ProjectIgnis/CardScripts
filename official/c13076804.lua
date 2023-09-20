@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCondition(function() return Duel.GetFlagEffect(0,id)>0 end)
+	e1:SetCondition(function() return Duel.HasFlagEffect(0,id) end)
 	e1:SetValue(2000)
 	c:RegisterEffect(e1)
 	--Can attack all monsters

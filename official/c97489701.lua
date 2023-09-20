@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_PHASE+PHASE_END)
 	e4:SetRange(LOCATION_REMOVED)
 	e4:SetCountLimit(1)
-	e4:SetCondition(s.spcon)
+	e4:SetCondition(function(e) return e:GetHandler():HasFlagEffect(id) end)
 	e4:SetTarget(s.sptg)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
@@ -74,9 +74,6 @@ function s.naop(e,tp,eg,ep,ev,re,r,rp,chk)
 	if c:IsRelateToEffect(e) and Duel.Remove(c,POS_FACEUP,REASON_EFFECT)~=0 then
 		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1)
 	end
-end
-function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetFlagEffect(id)~=0
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

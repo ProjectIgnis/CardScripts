@@ -54,7 +54,7 @@ end
 --destroy all
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:GetFlagEffect(id)>0 and c:IsSummonType(SUMMON_TYPE_LINK) and c:GetBattleTarget()
+	return c:HasFlagEffect(id) and c:IsSummonType(SUMMON_TYPE_LINK) and c:GetBattleTarget()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(nil,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end

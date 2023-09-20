@@ -81,7 +81,7 @@ function s.equipop(c,e,tp,tc)
 	c:EquipByEffectAndLimitRegister(e,tp,tc,id)
 end
 function s.eqgfilter(c)
-	return c:IsFaceup() and c:GetFlagEffect(id)>0
+	return c:IsFaceup() and c:HasFlagEffect(id)
 end
 function s.atkval(e,c)
 	local g=c:GetEquipGroup():Match(s.eqgfilter,nil):Match(function(c) return c:GetTextAttack()>0 end,nil)

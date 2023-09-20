@@ -108,7 +108,7 @@ end
 	--Activation legality
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	if e:GetHandler():GetFlagEffect(id)~=0 then
+	if e:GetHandler():HasFlagEffect(id) then
 		e:SetLabel(1)
 		e:GetHandler():ResetFlagEffect(id)
 		Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)

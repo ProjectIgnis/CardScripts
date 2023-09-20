@@ -45,7 +45,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.eqlimit(e,c)
-	return c:HasFlagEffect(id) or c:HasFlagEffect(id+1)~=0
+	return c:HasFlagEffect(id) or c:HasFlagEffect(id+1)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:HasFlagEffect(id)

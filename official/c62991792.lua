@@ -64,7 +64,7 @@ function s.lizfilter(e,c)
 	return not (c:IsOriginalType(TYPE_SYNCHRO) and c:IsOriginalAttribute(ATTRIBUTE_DARK))
 end
 function s.cfilter(c)
-	return c:IsCode(CARD_RED_DRAGON_ARCHFIEND) or (c:IsType(TYPE_SYNCHRO) and c:ListsCode(CARD_RED_DRAGON_ARCHFIEND))
+	return c:IsFaceup() and (c:IsCode(CARD_RED_DRAGON_ARCHFIEND) or (c:IsType(TYPE_SYNCHRO) and c:ListsCode(CARD_RED_DRAGON_ARCHFIEND)))
 end
 function s.repcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil)

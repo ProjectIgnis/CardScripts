@@ -62,7 +62,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.immbttlcon(e)
 	local c=e:GetHandler()
-	return c:GetFlagEffect(id)>0 and c:GetFlagEffectLabel(id)&e:GetLabel()>0
+	return c:HasFlagEffect(id) and c:GetFlagEffectLabel(id)&e:GetLabel()>0
 end
 function s.valcheck(e,c)
 	local attr=c:GetMaterial():GetBitwiseOr(Card.GetOriginalAttribute)&(ATTRIBUTE_LIGHT|ATTRIBUTE_DARK)

@@ -53,9 +53,9 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_SKIP_DP)
 	e1:SetTargetRange(1,0)
 	if Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_DRAW then
-		e1:SetReset(RESET_PHASE+PHASE_DRAW+RESET_SELF_TURN,2)
+		e1:SetReset(RESET_PHASE|PHASE_DRAW|RESET_SELF_TURN,2)
 	else
-		e1:SetReset(RESET_PHASE+PHASE_DRAW+RESET_SELF_TURN)
+		e1:SetReset(RESET_PHASE|PHASE_DRAW|RESET_SELF_TURN)
 	end
 	Duel.RegisterEffect(e1,tp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
@@ -77,7 +77,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
 	e1:SetCondition(s.skpmp1cond)
-	e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,2)
+	e1:SetReset(RESET_PHASE|PHASE_END|RESET_SELF_TURN,2)
 	e1:SetLabel(Duel.GetTurnCount())
 	Duel.RegisterEffect(e1,tp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
@@ -104,9 +104,9 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetTurnPlayer()==tp then
 		e1:SetLabel(Duel.GetTurnCount())
 		e1:SetCondition(s.skipcon)
-		e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,2)
+		e1:SetReset(RESET_PHASE|PHASE_END|RESET_SELF_TURN,2)
 	else
-		e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,1)
+		e1:SetReset(RESET_PHASE|PHASE_END|RESET_SELF_TURN,1)
 	end
 	Duel.RegisterEffect(e1,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTACK)
@@ -115,7 +115,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		e1:SetValue(tc:GetAttack()*2)
 		tc:RegisterEffect(e1)
 	end

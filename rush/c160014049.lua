@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetTargetRange(LOCATION_ONFIELD,0)
 	e2:SetCondition(s.condition2)
 	e2:SetTarget(s.indtg)
-	e2:SetValue(aux.indoval)
+	e2:SetValue(s.efilter)
 	c:RegisterEffect(e2)
 end
 function s.eqfilter(c)
@@ -40,4 +40,7 @@ end
 function s.indtg(e,c)
 	if e:GetHandler():GetEquipTarget():IsMaximumMode() then return c:IsMaximumMode() end
 	return c==e:GetHandler():GetEquipTarget()
+end
+function s.efilter(e,te)
+	return te:GetOwnerPlayer()~=e:GetOwnerPlayer()
 end

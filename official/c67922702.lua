@@ -73,7 +73,7 @@ function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.CheckReleaseGroupCost(tp,Card.IsType,1,false,nil,nil,TYPE_TOKEN) end
 	local g=Duel.SelectReleaseGroupCost(tp,Card.IsType,1,1,false,nil,nil,TYPE_TOKEN)
 	Duel.Release(g,REASON_COST)
-	e:GetHandler():RegisterFlagEffect(id,RESET_PHASE+PHASE_DAMAGE_CAL,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_PHASE|PHASE_DAMAGE_CAL,0,1)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():UpdateAttack(800,RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_PHASE|PHASE_END)

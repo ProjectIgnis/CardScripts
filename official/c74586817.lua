@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER|TIMING_MAIN_END)
 	e1:SetCondition(function() return Duel.IsMainPhase() end)
 	e1:SetTarget(s.rmtg)
 	e1:SetOperation(s.rmop)
@@ -59,9 +59,9 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	if #hg~=1 then return end
 	local rg=hg+c
 	if Duel.Remove(rg,POS_FACEUP,REASON_EFFECT+REASON_TEMPORARY)==0 then return end
-	local retg=c:GetFlagEffect(id)>0 and rg or hg
+	local retg=c:HasFlagEffect(id) and rg or hg
 	retg:Match(Card.IsLocation,nil,LOCATION_REMOVED)
-	aux.DelayedOperation(retg,PHASE_STANDBY,id+1,e,tp,s.retop,s.retcon,RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN)
+	aux.DelayedOperation(retg,PHASE_STANDBY,id+1,e,tp,s.retop,s.retcon,RESET_PHASE|PHASE_STANDBY|RESET_SELF_TURN)
 end
 function s.retop(rg,e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

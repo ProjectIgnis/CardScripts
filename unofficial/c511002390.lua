@@ -7,7 +7,6 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOGRAVE+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
@@ -15,8 +14,8 @@ function s.initial_effect(c)
 end
 function s.filter(c,e,tp)
 	local mg=c:GetMaterial()
-	return c:IsFaceup() and c:IsType(TYPE_PLUS) and c:IsType(TYPE_MINUS) and c:IsAbleToGrave() and #mg>0
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>=#mg+1 and not mg:IsExists(s.mgfilter,1,nil,e,tp,c)
+	return c:IsFaceup() and c:IsType(TYPE_PLUSMINUS) and c:IsAbleToGrave() and #mg>0
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>=#mg+1 and mg:IsExists(s.mgfilter,1,nil,e,tp,c)
 end
 function s.mgfilter(c,e,tp,card)
 	return c:IsControler(tp) and c:IsLocation(LOCATION_GRAVE)
@@ -25,10 +24,14 @@ function s.mgfilter(c,e,tp,card)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end
-	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil,e,tp) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil,e,tp)
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,1,0,0)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil,e,tp) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil,e,tp)
+	local tc=g:GetFirst()
+	local mg=tc:GetMaterial()
+	Duel.SetTargetCard(tc)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,tc,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,mg,#mg,tp,LOCATION_GRAVE)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

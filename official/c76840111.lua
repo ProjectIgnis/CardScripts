@@ -13,8 +13,8 @@ end
 s.listed_names={CARD_ZARC}
 s.listed_series={SET_PENDULUM_DRAGON,SET_FUSION_DRAGON,SET_SYNCHRO_DRAGON,SET_XYZ_DRAGON}
 function s.fextra(e,tp,mg)
-	local loc=LOCATION_DECK|LOCATION_EXTRA 
-	if not Duel.IsPlayerAffectedByEffect(tp,69832741) then
+	local loc=LOCATION_DECK|LOCATION_EXTRA
+	if not Duel.IsPlayerAffectedByEffect(tp,CARD_SPIRIT_ELIMINATION) then
 		loc=loc|LOCATION_GRAVE
 	end
 	return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToRemove),tp,loc,0,nil)

@@ -1,20 +1,17 @@
 --青天の霹靂
 --A Wild Monster Appears!
-
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special summon 1 level 10 or lower monster, that cannot be normal summoned/set, from hand
+	--Special Summon 1 Level 10 or lower monster that cannot be Normal Summoned/Set from your hand
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCondition(s.condition)
+	e1:SetCondition(function(e,tp) return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0 and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0 end)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0 and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
 end
 function s.spfilter(c,e,tp)
 	return c:GetOriginalLevel()<=10 and not c:IsSummonableCard() and c:IsMonster()
@@ -26,44 +23,34 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local c=e:GetHandler()
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
-	local tc=g:GetFirst()
-	if tc and Duel.SpecialSummonStep(tc,0,tp,tp,true,false,POS_FACEUP) then
-		--Unaffected by your card effects
-		local e1=Effect.CreateEffect(c)
-		e1:SetDescription(3105)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CLIENT_HINT)
-		e1:SetRange(LOCATION_MZONE)
-		e1:SetCode(EFFECT_IMMUNE_EFFECT)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e1:SetValue(s.efilter)
-		e1:SetOwnerPlayer(tp)
-		tc:RegisterEffect(e1,true)
-		--Shuffle it into deck during opponent's next end phase
-		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e2:SetCode(EVENT_PHASE+PHASE_END)
-		e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-		e2:SetRange(LOCATION_MZONE)
-		e2:SetCountLimit(1)
-		e2:SetCondition(s.tdcon)
-		e2:SetOperation(s.tdop)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
-		tc:RegisterEffect(e2,true)
-		tc:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,0))
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		local sc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp):GetFirst()
+		if sc and Duel.SpecialSummonStep(sc,0,tp,tp,true,false,POS_FACEUP) then
+			--Unaffected by the effects of your other cards
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+			e1:SetCode(EFFECT_IMMUNE_EFFECT)
+			e1:SetRange(LOCATION_MZONE)
+			e1:SetValue(function(_e,_re) return _re:GetOwnerPlayer()==tp and _e:GetHandler()~=_re:GetHandler() end)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
+			sc:RegisterEffect(e1,true)
+			local reset_ct=(Duel.IsTurnPlayer(tp) or Duel.GetCurrentPhase()==PHASE_END) and 2 or 1
+			--Shuffle it into the Deck during your opponent's next End Phase
+			aux.DelayedOperation(sc,PHASE_END,id,e,tp,function(ag) Duel.SendtoDeck(ag,nil,SEQ_DECKSHUFFLE,REASON_EFFECT) end,function() return Duel.IsTurnPlayer(1-tp) end,nil,reset_ct,aux.Stringid(id,1))
+		end
+		Duel.SpecialSummonComplete()
 	end
-	Duel.SpecialSummonComplete()
-	--You cannot normal summon/set or special summon
+	--Cannot Normal Summon/Set or Special Summon monsters
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,2))
 	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CANNOT_SUMMON)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e1:SetReset(RESET_PHASE+PHASE_END)
 	e1:SetTargetRange(1,0)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_CANNOT_MSET)
@@ -71,27 +58,16 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local e3=e1:Clone()
 	e3:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	Duel.RegisterEffect(e3,tp)
-	--Opponent takes no damage
+	--Your opponent takes no damage
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
-	e4:SetCode(EFFECT_CHANGE_DAMAGE)
 	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e4:SetCode(EFFECT_CHANGE_DAMAGE)
 	e4:SetTargetRange(0,1)
 	e4:SetValue(0)
-	e4:SetReset(RESET_PHASE+PHASE_END)
+	e4:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e4,tp)
 	local e5=e4:Clone()
 	e5:SetCode(EFFECT_NO_EFFECT_DAMAGE)
-	e5:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e5,tp)
-	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,1),nil)
-end
-function s.efilter(e,re)
-	return e:GetOwnerPlayer()==re:GetOwnerPlayer() and e:GetHandler()~=re:GetHandler()
-end
-function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
-end
-function s.tdop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SendtoDeck(e:GetHandler(),nil,2,REASON_EFFECT)
 end

@@ -93,7 +93,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local ct=Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)
 		if ct>0 and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 			--Increase ATK by 500 per card banished
-			tc:UpdateAttack(ct*500,RESET_EVENT+RESETS_STANDARD,e:GetHandler())
+			tc:UpdateAttack(ct*500,RESET_EVENT|RESETS_STANDARD,e:GetHandler())
 		end
 	end
 end

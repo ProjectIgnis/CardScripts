@@ -93,7 +93,7 @@ function s.gyop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetLabelObject():GetFlagEffect(id)~=0
+	return e:GetLabelObject():HasFlagEffect(id)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()

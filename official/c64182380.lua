@@ -1,5 +1,5 @@
 --炎王神 ガルドニクス・エタニティ
---Fire King Deity Garunix Eternity
+--Garunix Eternity, Hyang of the Fire Kings
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

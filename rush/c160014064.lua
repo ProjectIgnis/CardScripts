@@ -26,7 +26,7 @@ function s.spfilter(c,e,tp,atk)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local cg=eg:Filter(s.cfilter,nil,e,tp)
-	return #cg==1
+	return #cg>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
@@ -38,7 +38,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	local atk=eg:Filter(s.cfilter,nil,e,tp):GetFirst():GetAttack()
+	local atk=eg:Filter(s.cfilter,nil,e,tp):GetMaxGroup(Card.GetAttack):GetFirst():GetAttack()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,atk)
 	if #g>0	and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_ATTACK)>0 

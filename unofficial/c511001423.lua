@@ -38,7 +38,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and s.filter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil)
-		and Duel.IsExistingMatchingCard(s.atfilter,tp,LOCATION_REMOVED,0,1,nil) end
+		and Duel.IsExistingMatchingCard(s.atfilter,tp,LOCATION_REMOVED,LOCATION_REMOVED,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)
 end
@@ -46,7 +46,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() and not tc:IsImmuneToEffect(e) then
-		local g=Duel.GetMatchingGroup(s.atfilter,tp,LOCATION_REMOVED,0,nil)
+		local g=Duel.GetMatchingGroup(s.atfilter,tp,LOCATION_REMOVED,LOCATION_REMOVED,nil)
 		if #g>0 then
 			Duel.Overlay(tc,g)
 			local e1=Effect.CreateEffect(c)

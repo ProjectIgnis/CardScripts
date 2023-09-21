@@ -35,5 +35,5 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,id),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.efilter(e,te)
-	return te:IsTrapEffect() and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
+	return te:IsTrapEffect() and te:GetOwnerPlayer()~=e:GetOwnerPlayer()
 end

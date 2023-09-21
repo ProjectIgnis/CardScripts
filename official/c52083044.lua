@@ -58,7 +58,7 @@ function s.bop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetLabelObject():GetFlagEffect(id)>0
+	return e:GetLabelObject():HasFlagEffect(id)
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ReturnToField(e:GetLabelObject())

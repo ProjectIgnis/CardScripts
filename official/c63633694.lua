@@ -62,11 +62,8 @@ function s.eqfilter(c,tp)
 		and not c:IsForbidden()
 end
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
-	local g=e:GetHandler():GetEquipGroup():Filter(s.eqconfilter,nil)
+	local g=e:GetHandler():GetEquipGroup():Filter(Card.HasFlagEffect,nil,id)
 	return #g==0
-end
-function s.eqconfilter(c)
-	return c:GetFlagEffect(id)~=0
 end
 	--Activation legality
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

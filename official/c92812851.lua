@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetHintTiming(0,TIMING_MAIN_END+TIMINGS_CHECK_MONSTER)
+	e3:SetHintTiming(0,TIMING_MAIN_END|TIMINGS_CHECK_MONSTER)
 	e3:SetCountLimit(1,{id,1})
 	e3:SetCondition(function(e,tp) return Duel.IsMainPhase() and Duel.GetFieldCard(tp,LOCATION_PZONE,0) and Duel.GetFieldCard(tp,LOCATION_PZONE,1) end)
 	e3:SetTarget(s.sptg)
@@ -79,8 +79,11 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	local lsc=Duel.GetFieldCard(tp,LOCATION_PZONE,0):GetLeftScale()
-	local rsc=Duel.GetFieldCard(tp,LOCATION_PZONE,1):GetRightScale()
+	local lc=Duel.GetFieldCard(tp,LOCATION_PZONE,0)
+	local rc=Duel.GetFieldCard(tp,LOCATION_PZONE,1)
+	if not (lc and rc) then return end
+	local lsc=lc:GetLeftScale()
+	local rsc=rc:GetRightScale()
 	if lsc>rsc then lsc,rsc=rsc,lsc end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE|LOCATION_HAND,0,1,1,nil,e,tp,lsc,rsc)

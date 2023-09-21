@@ -19,7 +19,7 @@ function s.tgfilter(c,tp,ft)
 	local eq=ft>0 and Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil)
 	local datk=not c:IsHasEffect(EFFECT_DIRECT_ATTACK) and Duel.IsAbleToEnterBP()
 	local dam=Duel.IsAbleToEnterBP()
-	return c:IsFaceup() and c:IsCode(CARD_STARDUST_DRAGON) or (c:ListsCode(CARD_STARDUST_DRAGON) and c:IsType(TYPE_SYNCHRO))
+	return c:IsFaceup() and (c:IsCode(CARD_STARDUST_DRAGON) or (c:ListsCode(CARD_STARDUST_DRAGON) and c:IsType(TYPE_SYNCHRO)))
 		and (eq or datk or dam)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

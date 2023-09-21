@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.xyzop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={57554544}--Fire King Island
+s.listed_names={57554544} --Fire King Island
 s.listed_series={SET_FIRE_KING}
 function s.plfilter(c,tp)
 	return c:IsCode(57554544) and not c:IsForbidden()

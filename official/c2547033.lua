@@ -27,11 +27,11 @@ function s.initial_effect(c)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
 	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_TRAP_ACT_IN_SET_TURN)
 	e3:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
-	e3:SetCondition(s.actcon)
-	e3:SetDescription(aux.Stringid(id,2))
+	e3:SetCondition(function(e) return e:GetHandler():HasFlagEffect(id) end)
 	c:RegisterEffect(e3)
 	aux.DoubleSnareValidity(c,LOCATION_SZONE)
 	aux.GlobalCheck(s,function()
@@ -52,7 +52,6 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_HAND)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_HAND,0,1,1,nil)
 	if #g>0 then Duel.SendtoGrave(g,REASON_EFFECT) end
@@ -77,13 +76,9 @@ function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	if Duel.NegateEffect(ev) and re:GetHandler():IsRelateToEffect(re) then
 		Duel.Destroy(eg,REASON_EFFECT)
 	end
-end
-function s.actcon(e)
-	return e:GetHandler():GetFlagEffect(id)~=0
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not re or not re:GetHandler():IsSetCard(SET_ALTERGEIST) then return end

@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetHintTiming(0,TIMING_MAIN_END+TIMINGS_CHECK_MONSTER)
+	e2:SetHintTiming(0,TIMING_MAIN_END|TIMINGS_CHECK_MONSTER)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(function() return Duel.IsMainPhase() end)
 	e2:SetTarget(s.thtg)
@@ -50,11 +50,8 @@ s.listed_series={SET_S_FORCE}
 function s.extrafilter(c,tp)
 	return c:IsLocation(LOCATION_MZONE) and c:IsControler(tp)
 end
-function s.flagcheck(c)
-	return c:GetFlagEffect(id)>0
-end
 function s.extracon(c,e,tp,sg,mg,lc,og,chk)
-	return sg:FilterCount(s.flagcheck,nil)<2 and (sg+mg):IsExists(s.extrafilter,1,og,e:GetHandlerPlayer())
+	return sg:FilterCount(Card.HasFlagEffect,nil,id)<2 and (sg+mg):IsExists(s.extrafilter,1,og,e:GetHandlerPlayer())
 end
 function s.extraval(chk,summon_type,e,...)
 	local c=e:GetHandler()

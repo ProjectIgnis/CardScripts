@@ -7,72 +7,47 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--
-	local e0=Effect.CreateEffect(c)
-	e0:SetType(EFFECT_TYPE_SINGLE)
-	e0:SetCode(id)
-	e0:SetValue(SUMMON_TYPE_NORMAL)
-	c:RegisterEffect(e0)
-	--summon
+	--Activate 1 of these effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetProperty(EFFECT_FLAG_BOTH_SIDE)
 	e2:SetCategory(CATEGORY_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)
+	e2:SetProperty(EFFECT_FLAG_BOTH_SIDE)
 	e2:SetRange(LOCATION_FZONE)
-	e2:SetTarget(s.target)
-	e2:SetOperation(s.operation)
-	e2:SetLabelObject(e0)
+	e2:SetTarget(s.sumefftg)
+	e2:SetOperation(s.sumeffop)
 	c:RegisterEffect(e2)
+	--Hardcode
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetCode(80921533)
+	e3:SetValue(SUMMON_TYPE_NORMAL)
+	c:RegisterEffect(e3)
+	e2:SetLabelObject(e3)
 end
-function s.filter(c,se)
-	if not c:IsSummonableCard() then return false end
+function s.sumfilter(c,se,ct)
+	if not (c:IsSummonableCard() and c:CanSummonOrSet(false,se)) then return false end
 	local mi,ma=c:GetTributeRequirement()
-	return mi>0 and c:CanSummonOrSet(false,se)
+	return mi==ct or ma==ct
 end
-function s.get_targets(se,tp)
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_HAND,0,nil,se)
-	local minct=5
-	local maxct=0
-	local tc=g:GetFirst()
-	for tc in aux.Next(g) do
-		local mi,ma=tc:GetTributeRequirement()
-		if mi>0 and mi<minct then minct=mi end
-		if ma>maxct then maxct=ma end
-	end
-	return minct,maxct
-end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
+function s.sumefftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local se=e:GetLabelObject()
-	if chk==0 then
-		local mi,ma=s.get_targets(se,tp)
-		if mi==5 then return false end
-		return Duel.CheckLPCost(tp,mi*1000)
-	end
-	local mi,ma=s.get_targets(se,tp)
-	local ac=0
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,3))
-	if mi==ma then ac=Duel.AnnounceNumber(tp,mi*1000)
-	elseif ma>=2 and Duel.CheckLPCost(tp,2000) then ac=Duel.AnnounceNumber(tp,1000,2000)
-	else ac=Duel.AnnounceNumber(tp,1000) end
-	Duel.PayLPCost(tp,ac)
-	e:SetLabel(ac/1000)
-	Duel.SetOperationInfo(0,CATEGORY_SUMMON,nil,1,0,0)
+	local b1=Duel.CheckLPCost(tp,1000) and Duel.IsExistingMatchingCard(s.sumfilter,tp,LOCATION_HAND,0,1,nil,se,1)
+	local b2=Duel.CheckLPCost(tp,2000) and Duel.IsExistingMatchingCard(s.sumfilter,tp,LOCATION_HAND,0,1,nil,se,2)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and (b1 or b2) end
+	local op=Duel.SelectEffect(tp,
+		{b1,aux.Stringid(id,1)},
+		{b2,aux.Stringid(id,2)})
+	Duel.PayLPCost(tp,op*1000)
+	e:SetLabel(op)
+	Duel.SetOperationInfo(0,CATEGORY_SUMMON,nil,1,tp,LOCATION_HAND)
 end
-function s.sfilter(c,se,ct)
-	if not c:IsSummonableCard() then return false end
-	local mi,ma=c:GetTributeRequirement()
-	return (mi==ct or ma==ct) and c:CanSummonOrSet(false,se)
-end
-function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
-	local ct=e:GetLabel()
+function s.sumeffop(e,tp,eg,ep,ev,re,r,rp)
+	local op=e:GetLabel()
 	local se=e:GetLabelObject()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SUMMON)
-	local tc=Duel.SelectMatchingCard(tp,s.sfilter,tp,LOCATION_HAND,0,1,1,nil,se,ct):GetFirst()
-	if tc then
-		Duel.SummonOrSet(tp,tc,false,se)
+	local sc=Duel.SelectMatchingCard(tp,s.sumfilter,tp,LOCATION_HAND,0,1,1,nil,se,op):GetFirst()
+	if sc then
+		Duel.SummonOrSet(tp,sc,false,se)
 	end
 end

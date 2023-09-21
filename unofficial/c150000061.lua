@@ -33,8 +33,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local atk=tc:GetAttack()
 		local batk=tc:GetBaseAttack()
 		if batk==atk then return end
-		local dif=(batk>atk) and (batk-atk) or (atk-batk)
-		local cue=Duel.Recover(tp,dif,REASON_EFFECT)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)

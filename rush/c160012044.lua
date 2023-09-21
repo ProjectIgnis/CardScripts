@@ -47,5 +47,5 @@ function s.condition(e)
 	return e:GetHandler():GetEquipTarget():IsAttribute(ATTRIBUTE_DARK)
 end
 function s.efilter(e,te)
-	return te:IsTrapEffect() and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
+	return te:IsTrapEffect() and te:GetOwnerPlayer()~=e:GetOwnerPlayer()
 end

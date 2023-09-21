@@ -29,5 +29,5 @@ function s.value(e,c)
 	return 400
 end
 function s.efilter(e,te)
-	return te:GetOwnerPlayer()~=e:GetHandlerPlayer()
+	return te:GetOwnerPlayer()~=e:GetOwnerPlayer()
 end

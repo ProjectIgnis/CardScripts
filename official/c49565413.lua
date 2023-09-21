@@ -43,7 +43,7 @@ function s.initial_effect(c)
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_REMOVE)
-		ge1:SetOperation(function() Duel.RegisterFlagEffect(0,id,RESET_PHASE+PHASE_END,0,1) end)
+		ge1:SetOperation(function() Duel.RegisterFlagEffect(0,id,RESET_PHASE|PHASE_END,0,1) end)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end

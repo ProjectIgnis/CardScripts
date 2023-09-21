@@ -23,7 +23,7 @@ function s.matfilter(c)
 	return (c:IsLocation(LOCATION_HAND) and c:IsAbleToGrave()) or (c:IsOnField() and c:IsAbleToRemove())
 end
 function s.checkmat(tp,sg,fc)
-	return fc:IsSetCard(SET_INVOKED) or not sg:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE+LOCATION_ONFIELD)
+	return fc:IsSetCard(SET_INVOKED) or not sg:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE|LOCATION_ONFIELD)
 end
 function s.fextra(e,tp,mg)
 	if not Duel.IsPlayerAffectedByEffect(tp,CARD_SPIRIT_ELIMINATION) then
@@ -32,7 +32,7 @@ function s.fextra(e,tp,mg)
 	return nil,s.checkmat
 end
 function s.extraop(e,tc,tp,sg)
-	local rg=sg:Filter(Card.IsLocation,nil,LOCATION_GRAVE+LOCATION_ONFIELD)
+	local rg=sg:Filter(Card.IsLocation,nil,LOCATION_GRAVE|LOCATION_ONFIELD)
 	if #rg>0 then
 		Duel.Remove(rg,POS_FACEUP,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
 		sg:Sub(rg)
@@ -40,7 +40,7 @@ function s.extraop(e,tc,tp,sg)
 end
 function s.extratg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,nil,0,PLAYER_EITHER,LOCATION_MZONE+LOCATION_GRAVE)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,nil,0,PLAYER_EITHER,LOCATION_MZONE|LOCATION_GRAVE)
 end
 function s.thfilter(c)
 	return c:IsFaceup() and c:IsCode(86120751) and c:IsAbleToHand()

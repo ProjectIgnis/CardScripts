@@ -43,11 +43,8 @@ function s.extrafilter(c,tp)
 	return c:IsLocation(LOCATION_MZONE) and c:IsControler(tp)
 end
 function s.extracon(c,e,tp,sg,mg,lc,og,chk)
-	local ct=sg:FilterCount(s.flagcheck,nil)
+	local ct=sg:FilterCount(Card.HasFlagEffect,nil,id)
 	return ct==0 or ((sg+mg):Filter(s.extrafilter,nil,e:GetHandlerPlayer()):IsExists(Card.IsCode,1,og,id) and ct<2)
-end
-function s.flagcheck(c)
-	return c:GetFlagEffect(id)>0
 end
 function s.extraval(chk,summon_type,e,...)
 	local c=e:GetHandler()
@@ -63,7 +60,7 @@ function s.extraval(chk,summon_type,e,...)
 		local sg,sc,tp=...
 		if summon_type&SUMMON_TYPE_LINK==SUMMON_TYPE_LINK and #sg>0 and Duel.GetFlagEffect(tp,id)==0 then
 			Duel.Hint(HINT_CARD,tp,id)
-			Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+			Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 		end
 	elseif chk==2 then
 		if s.flagmap[c] then

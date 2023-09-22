@@ -3,7 +3,7 @@
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	--Discard 1 card, Special Summon itself and draw 1 card
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_HANDES+CATEGORY_DRAW)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--atk down
+	--Decrease the ATK of all your opponent's monsters by 1000
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_ATKCHANGE)
@@ -48,9 +48,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if #g<1 then return end
 	Duel.ShuffleHand(tp)
 	Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_DISCARD)
-	local tc=g:RandomSelect(1-tp,1,1,nil)
+	local tc=g:RandomSelect(1-tp,1)
 	Duel.BreakEffect()
-	Duel.SendtoGrave(tc,REASON_EFFECT+REASON_DISCARD)
+	Duel.SendtoGrave(tc,REASON_EFFECT|REASON_DISCARD)
 	if not Duel.IsPlayerCanSpecialSummon(tp) or Duel.GetLocationCount(tp,LOCATION_MZONE)==0 then return end
 	if not tc:GetFirst():IsCode(id) then
 		Duel.BreakEffect()
@@ -69,14 +69,13 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
-	local tc=g:GetFirst()
-	for tc in aux.Next(g) do
+	if #g==0 then return end
+	for tc in g:Iter() do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-1000)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end
-

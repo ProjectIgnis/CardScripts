@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--tohand
+	--Return an attacking monster to the hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOHAND)
@@ -20,19 +20,19 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer()
+	return Duel.GetAttacker():IsControler(1-tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
+	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>0 end
 	Duel.SetTargetCard(Duel.GetAttacker())
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)==0
-		or not e:GetHandler():IsRelateToEffect(e) or not Duel.GetAttacker():IsRelateToEffect(e) then return end
-	local g=Duel.GetFieldGroup(tp,LOCATION_HAND,0):RandomSelect(1-tp,1,nil)
+		or not Duel.GetAttacker():IsRelateToEffect(e) then return end
+	local g=Duel.GetFieldGroup(tp,LOCATION_HAND,0):RandomSelect(1-tp,1)
 	local tc=g:GetFirst()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CARDTYPE)
-	local op=Duel.SelectOption(1-tp,70,71,72)
+	local op=Duel.SelectOption(1-tp,DECLTYPE_MONSTER,DECLTYPE_SPELL,DECLTYPE_TRAP)
 	Duel.ConfirmCards(1-tp,tc)
 	Duel.ShuffleHand(tp)
 	if (op~=0 and tc:IsMonster()) or (op~=1 and tc:IsSpell()) or (op~=2 and tc:IsTrap()) then

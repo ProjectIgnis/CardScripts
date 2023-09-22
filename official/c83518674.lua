@@ -3,7 +3,7 @@
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	--Discard 1 card, Special Summon itself and draw 1 card
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_HANDES+CATEGORY_DRAW)
@@ -14,14 +14,14 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--special summon from deck
+	--Send 1 "Danger" card from the Deck to the GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOGRAVE)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_TO_GRAVE)
 	e2:SetCountLimit(1,id)
-	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCondition(s.gycon)
 	e2:SetTarget(s.gytg)
 	e2:SetOperation(s.gyop)
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_REMOVE)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x11e}
+s.listed_series={SET_DANGER}
 s.listed_names={id}
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -49,9 +49,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if #g<1 then return end
 	Duel.ShuffleHand(tp)
 	Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_DISCARD)
-	local tc=g:RandomSelect(1-tp,1,1,nil)
+	local tc=g:RandomSelect(1-tp,1)
 	Duel.BreakEffect()
-	Duel.SendtoGrave(tc,REASON_EFFECT+REASON_DISCARD)
+	Duel.SendtoGrave(tc,REASON_EFFECT|REASON_DISCARD)
 	if not Duel.IsPlayerCanSpecialSummon(tp) or Duel.GetLocationCount(tp,LOCATION_MZONE)==0 then return end
 	if not tc:GetFirst():IsCode(id) then
 		Duel.BreakEffect()
@@ -66,7 +66,7 @@ function s.gycon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetPreviousLocation()==LOCATION_HAND and (r&REASON_DISCARD)~=0
 end
 function s.gyfilter(c)
-	return c:IsSetCard(0x11e) and not c:IsCode(id) and c:IsAbleToGrave()
+	return c:IsSetCard(SET_DANGER) and not c:IsCode(id) and c:IsAbleToGrave()
 end
 function s.gytg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.gyfilter,tp,LOCATION_DECK,0,1,nil) end

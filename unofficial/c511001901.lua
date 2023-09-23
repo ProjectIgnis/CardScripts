@@ -1,8 +1,10 @@
+--シールド・ウォール
 --Shield Wall
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Special Summon 4 "Shield Tokens"
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -23,19 +25,28 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		for i=1,4 do
 			local token=Duel.CreateToken(tp,id+1)
 			Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
+			--Cannot attack
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_UNRELEASABLE_SUM)
+			e1:SetCode(EFFECT_CANNOT_ATTACK)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-			e1:SetValue(1)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			token:RegisterEffect(e1,true)
+			--Cannot be tributed for a Tribute Summon
 			local e2=Effect.CreateEffect(e:GetHandler())
-			e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
-			e2:SetCode(EVENT_CHANGE_POS)
-			e2:SetOperation(s.desop)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-			token:RegisterEffect(e2)
+			e2:SetType(EFFECT_TYPE_SINGLE)
+			e2:SetCode(EFFECT_UNRELEASABLE_SUM)
+			e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+			e2:SetValue(1)
+			e2:SetReset(RESET_EVENT|RESETS_STANDARD)
+			token:RegisterEffect(e2,true)
+			--If changed to Attack Position, destroy it
+			local e3=Effect.CreateEffect(e:GetHandler())
+			e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
+			e3:SetCode(EVENT_CHANGE_POS)
+			e3:SetOperation(s.desop)
+			e3:SetReset(RESET_EVENT|RESETS_STANDARD)
+			token:RegisterEffect(e3)
 		end
 		Duel.SpecialSummonComplete()
 	end

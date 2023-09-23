@@ -32,12 +32,26 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=(g1+g2):Match(s.nlvfilter,nil,lv)
 	local sg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_TARGET)
 	Duel.SetTargetCard(sg)
-	e:SetLabel(lv,sg:GetFirst():GetRace()|sg:GetNext():GetRace())
+	e:SetLabel(lv)
 	Duel.SetOperationInfo(0,CATEGORY_LVCHANGE,sg,#sg,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local lv,races=e:GetLabel()
+	local g=Duel.GetTargetCards(e):Filter(Card.IsFaceup,nil)
+	if #g==0 then return end
 	local c=e:GetHandler()
+	local lv=e:GetLabel()
+	for tc in g:Iter() do
+		if not tc:IsLevel(lv) then
+			--Change level to the declared level
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_CHANGE_LEVEL)
+			e1:SetValue(lv)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
+			tc:RegisterEffect(e1)
+		end
+	end
+	local races=g:GetBitwiseOr(Card.GetRace)
 	--Cannot Special Summon from the Extra Deck, except monster with the same Type as the targets
 	if e:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		local e1=Effect.CreateEffect(c)
@@ -49,17 +63,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetTarget(function(e,c) return c:IsLocation(LOCATION_EXTRA) and not c:IsRace(races) end)
 		e1:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e1,tp)
-	end
-	local g=Duel.GetTargetCards(e):Filter(Card.IsFaceup,nil)
-	if #g==0 then return end
-	for tc in g:Iter() do
-		--Change level to the declared level
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_CHANGE_LEVEL)
-		e1:SetValue(lv)
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
-		tc:RegisterEffect(e1)
 	end
 end
 function s.get_declarable_levels(g1,g2)

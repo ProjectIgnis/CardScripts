@@ -76,8 +76,7 @@ function s.rmcon2(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToRemove()
-		and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,nil) end
+	if chk==0 then return c:IsAbleToRemove() end
 	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,nil)
 	g:AddCard(c)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,0,0)

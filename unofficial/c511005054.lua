@@ -1,5 +1,5 @@
 --プレデション（予言）
---Prediction
+--Prediction 
 --original script by Shad3
 local s,id=GetID()
 function s.initial_effect(c)
@@ -57,7 +57,7 @@ end
 function s.cont_op(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local cde=Duel.AnnounceCard(tp)
-	local act=Duel.SelectOption(tp,aux.Stringid(id,5),aux.Stringid(id,6),aux.Stringid(id,7),aux.Stringid(id,8))
+	local act=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1),aux.Stringid(id,2),aux.Stringid(id,3))
 	e:SetLabel(act)
 	e:GetHandler():SetFlagEffectLabel(id,cde)
 end

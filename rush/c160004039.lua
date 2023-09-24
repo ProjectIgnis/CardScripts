@@ -26,13 +26,14 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ShuffleHand(tp)
 		if Duel.GetMatchingGroupCount(aux.FilterMaximumSideFunctionEx(s.attfilter,tg:GetRace()),tp,LOCATION_MZONE,LOCATION_MZONE,nil,tg:GetAttribute())>0 then
 			local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.attfilter,tg:GetRace()),tp,LOCATION_MZONE,LOCATION_MZONE,1,3,nil,tg:GetAttribute())
-			Duel.HintSelection(g)
+			Duel.HintSelection(g,true)
 			if g and #g>0 then
+				local race=tg:GetRace()
 				for tc in g:Iter() do
 					local e1=Effect.CreateEffect(e:GetHandler())
 					e1:SetType(EFFECT_TYPE_SINGLE)
 					e1:SetCode(EFFECT_CHANGE_RACE)
-					e1:SetValue(tg:GetRace())
+					e1:SetValue(function() return race end)
 					e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 					tc:RegisterEffectRush(e1)
 				end

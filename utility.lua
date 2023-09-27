@@ -1127,6 +1127,8 @@ function Auxiliary.bfgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(c,POS_FACEUP,REASON_COST)
 end
 
+Auxiliary.selfbanishcost=aux.bfgcost
+
 -- "Detach Xyz Material Cost Generator"
 -- Generates a function to be used by Effect.SetCost in order to detach
 -- a number of Xyz Materials from the Effect's handler.

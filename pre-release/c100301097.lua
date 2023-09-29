@@ -40,6 +40,7 @@ function s.tgfilter(c)
 end
 function s.cfilter(c,ct)
 	return c:IsSetCard(SET_INFERNOID) and c:IsMonster() and c:HasLevel() and c:IsLevelBelow(ct)
+		and c:IsAbleToRemoveAsCost()
 end
 function s.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetMatchingGroup(s.tgfilter,tp,LOCATION_DECK,0,nil):GetClassCount(Card.GetCode)

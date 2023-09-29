@@ -1,5 +1,5 @@
 -- スティアラメンツ・クシャトリラ
--- Tearlaments Kshatri-La
+-- Tearlaments Kashtira
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
-	-- Mill 2 cards
+	-- Mill 2 cards from your Deck
 	local e4=e2:Clone()
 	e4:SetDescription(aux.Stringid(id,2))
 	e4:SetCategory(CATEGORY_DECKDES)
@@ -82,7 +82,7 @@ function s.smlop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.tgmltg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,2) end
-	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,3)
+	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,2)
 end
 function s.tgmlop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.DiscardDeck(tp,2,REASON_EFFECT)

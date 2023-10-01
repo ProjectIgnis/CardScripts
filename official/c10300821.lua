@@ -1,5 +1,5 @@
 --ＣＮｏ．７９ ＢＫ 将星のカエサル
---Number C79: Battlin' Boxer Commander Caesar
+--Number C79: Battlin' Boxer General Kaiser
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -67,7 +67,7 @@ function s.tgfilter(c)
 end
 function s.atchtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local _,b=Duel.GetBattleMonster(tp)
-	if chk==0 then return b:IsAbleToChangeControler()
+	if chk==0 then return b:IsAbleToChangeControler() and b:IsCanBeXyzMaterial(e:GetHandler(),tp,REASON_EFFECT)
 		and Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_HAND|LOCATION_DECK)
 end

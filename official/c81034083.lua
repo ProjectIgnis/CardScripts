@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(LOCATION_HAND|LOCATION_MZONE,0)
-	e2:SetTarget(function(e,_c) return c:IsRace(RACE_FIEND) and c:IsAttack(0) and c:IsDefense(0) end)
+	e2:SetTarget(function(e,c) return c:IsRace(RACE_FIEND) and c:IsAttack(0) and c:IsDefense(0) end)
 	c:RegisterEffect(e2)
 end
 s.listed_names={69890967,6007213,32491822,id}

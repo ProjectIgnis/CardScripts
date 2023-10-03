@@ -43,4 +43,3 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.ShuffleDeck(tp)
 end
-

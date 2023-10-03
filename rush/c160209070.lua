@@ -35,6 +35,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Draw(p,d,REASON_EFFECT)>0 then
 		local dg=Duel.GetMatchingGroup(nil,tp,0,LOCATION_ONFIELD,nil)
 		if #dg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 			local sg=dg:Select(tp,1,1,nil)
 			Duel.HintSelection(sg,true)
 			if Duel.Destroy(sg,REASON_EFFECT)>0 then
@@ -44,10 +45,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetCode(EFFECT_CANNOT_ATTACK)
 				e1:SetTargetRange(LOCATION_MZONE,0)
 				e1:SetTarget(function(_,c) return not (c:IsRace(RACE_PSYCHIC) or c:IsRace(RACE_OMEGAPSYCHIC)) end)
-				e1:SetReset(RESET_PHASE+PHASE_END)
+				e1:SetReset(RESET_PHASE|PHASE_END)
 				Duel.RegisterEffect(e1,tp)
 			end
 		end
 	end
 end
-

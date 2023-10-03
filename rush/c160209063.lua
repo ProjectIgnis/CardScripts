@@ -29,6 +29,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,160209059),tp,LOCATION_MZONE,0,1,nil) 
 		and Duel.IsExistingMatchingCard(Card.IsFacedown,tp,0,LOCATION_ONFIELD,1,nil) 
 		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 		local g=Duel.SelectMatchingCard(tp,Card.IsFacedown,tp,0,LOCATION_ONFIELD,1,2,nil)
 		if #g==0 then return end
 		Duel.ConfirmCards(tp,g)

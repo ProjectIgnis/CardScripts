@@ -29,11 +29,13 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
 	if ft>2 then ft=2 end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 	local g=Duel.SelectMatchingCard(tp,s.ssfilter,tp,LOCATION_GRAVE,0,1,ft,nil)
 	if #g==0 then return end
 	if Duel.SSet(tp,g)>0 and g:IsExists(Card.IsCode,1,nil,52097679) 
 		and Duel.IsExistingMatchingCard(Card.IsCanChangePositionRush,tp,LOCATION_MZONE,0,1,nil) 
 		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
 		local g2=Duel.SelectMatchingCard(tp,Card.IsCanChangePositionRush,tp,0,LOCATION_MZONE,1,3,nil)
 		if #g2>0 then
 			Duel.HintSelection(g2,true)

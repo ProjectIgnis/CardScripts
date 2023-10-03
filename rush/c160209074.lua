@@ -45,4 +45,3 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ChangePosition(sc,POS_FACEUP_DEFENSE,POS_FACEDOWN_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)
 	end
 end
-

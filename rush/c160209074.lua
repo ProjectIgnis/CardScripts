@@ -36,7 +36,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetValue(g:GetFirst():GetBaseAttack())
 	c:RegisterEffect(e1)
 	local sg=Duel.GetMatchingGroup(Card.IsCanChangePositionRush,tp,0,LOCATION_MZONE,nil)
-	if Duel.IsExistingMatchingCard(nil,0,LOCATION_FZONE,0,1,nil) and #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+	if Duel.IsExistingMatchingCard(nil,tp,LOCATION_FZONE,0,1,nil) and #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
 		local sc=Group.Select(sg,tp,1,1,nil)
 		if #sc==0 then return end

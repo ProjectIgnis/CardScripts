@@ -48,7 +48,7 @@ end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re)
 		and Duel.IsExistingMatchingCard(s.vsfilter,tp,LOCATION_ONFIELD|LOCATION_GRAVE,0,1,nil)
-		and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+		and re:GetHandler():IsDestructable() and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 		Duel.BreakEffect()
 		Duel.Destroy(eg,REASON_EFFECT)
 	end

@@ -35,15 +35,27 @@ function s.initial_effect(c)
 	--Special Summon 1 banished monster
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
-	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e3:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW)
+	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
-	e3:SetCode(EVENT_REMOVE)
+	e3:SetCode(EVENT_CUSTOM+id)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCountLimit(1)
+	e3:SetCountLimit(1,id)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
+	local g=Group.CreateGroup()
+	g:KeepAlive()
+	e3:SetLabelObject(g)
+	--Keep track of banished monsters
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e4:SetCode(EVENT_REMOVE)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetLabelObject(e3)
+	e4:SetOperation(s.regop)
+	c:RegisterEffect(e4)
 end
 s.synchro_tuner_required=1
 s.synchro_nt_required=2
@@ -76,11 +88,30 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spfilter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,true,false) and c:IsMonster() and c:IsFaceup()
-		and c:IsCanBeEffectTarget(e) and c:IsLocation(LOCATION_REMOVED)
+		and c:IsCanBeEffectTarget(e) and c:IsLocation(LOCATION_REMOVED) and not c:IsType(TYPE_TOKEN)
 end
-function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=eg:Filter(s.spfilter,nil,e,tp)
+function s.regop(e,tp,eg,ep,ev,re,r,rp)
+	local tg=eg:Filter(s.spfilter,nil,e,tp)
+	if #tg>0 then
+		for tc in tg:Iter() do
+			tc:RegisterFlagEffect(id,RESET_CHAIN,0,1)
+		end
+		local g=e:GetLabelObject():GetLabelObject()
+		if Duel.GetCurrentChain()==0 then g:Clear() end
+		g:Merge(tg)
+		g:Remove(function(c) return c:GetFlagEffect(id)==0 end,nil)
+		e:GetLabelObject():SetLabelObject(g)
+		if Duel.GetFlagEffect(tp,id)==0 then
+			Duel.RegisterFlagEffect(tp,id,RESET_CHAIN,0,1)
+			Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+id,e,0,tp,tp,0)
+		end
+	end
+end
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	local g=e:GetLabelObject():Filter(s.spfilter,nil,e,tp)
+	if chkc then return g:IsContains(chkc) and chkc:IsLocation(LOCATION_REMOVED) and s.cfilter(chkc,e,tp) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and #g>0 end
+	Duel.RegisterFlagEffect(tp,id,RESET_CHAIN,0,1)
 	local tc=nil
 	if #g>1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

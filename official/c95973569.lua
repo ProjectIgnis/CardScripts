@@ -35,8 +35,8 @@ function s.initial_effect(c)
 	--Special Summon 1 banished monster
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
-	e3:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW)
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_CUSTOM+id)
 	e3:SetRange(LOCATION_MZONE)
@@ -101,10 +101,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		g:Merge(tg)
 		g:Remove(function(c) return c:GetFlagEffect(id)==0 end,nil)
 		e:GetLabelObject():SetLabelObject(g)
-		if Duel.GetFlagEffect(tp,id)==0 then
-			Duel.RegisterFlagEffect(tp,id,RESET_CHAIN,0,1)
-			Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+id,e,0,tp,tp,0)
-		end
+		Duel.RaiseEvent(e:GetHandler(),EVENT_CUSTOM+id,e,0,tp,tp,0)
 	end
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

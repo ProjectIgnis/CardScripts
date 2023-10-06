@@ -59,6 +59,10 @@ function s.thtdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetTargetCard(sg)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,sg,2,tp,0)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TODECK,sg,2,tp,0)
+	local rg=sg:Filter(Card.IsLocation,nil,LOCATION_GRAVE)
+	if #rg>0 then
+		Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,rg,#rg,0,0)
+	end
 end
 function s.thtdop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)

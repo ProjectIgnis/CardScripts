@@ -60,7 +60,7 @@ end
 function s.cfilter(c,e,tp)
 	return c:IsReason(REASON_BATTLE|REASON_EFFECT) and (c:GetPreviousAttributeOnField()&ATTRIBUTE_FIRE)==ATTRIBUTE_FIRE
 		and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
-		and c:IsCanBeEffectTarget(e) and not c:IsType(TYPE_TOKEN)
+		and c:IsCanBeEffectTarget(e) and c:GetAttack()>0 and not c:IsType(TYPE_TOKEN)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return not eg:IsContains(e:GetHandler()) and eg:IsExists(s.cfilter,1,nil,e,tp)

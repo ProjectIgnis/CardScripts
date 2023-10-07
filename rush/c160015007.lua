@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_names{160015006} --Flap Dragon
+s.listed_names={160015006} --Flap Dragon
 function s.costfilter(c)
 	return c:IsMonster() and c:IsAbleToGraveAsCost() and c:IsRace(RACE_DRAGON)
 end

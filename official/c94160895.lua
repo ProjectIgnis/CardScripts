@@ -31,61 +31,37 @@ end
 function s.desfilter2(c)
 	return c:IsFaceup() and c:GetSequence()<5
 end
-function s.mzfilter(c,tp)
-	return c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5
+function s.rescon(sg,e,tp,mg)
+	return sg:IsExists(Card.IsAttribute,1,nil,ATTRIBUTE_WIND)
+		and (Duel.GetMZoneCount(tp)>0 or sg:IsExists(Card.IsInMainMZone,1,nil,tp))
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local g=nil
-	if ft>-1 then
-		local loc=0
-		if Duel.IsPlayerAffectedByEffect(tp,88581108) then loc=LOCATION_MZONE end
-		g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE|LOCATION_HAND,loc,c)
-	else
-		g=Duel.GetMatchingGroup(s.desfilter2,tp,LOCATION_MZONE,0,c)
-	end
-	if chk==0 then return ft>-2 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and #g>=2 and g:IsExists(Card.IsAttribute,1,nil,ATTRIBUTE_WIND)
-		and (ft~=0 or g:IsExists(s.mzfilter,1,nil,tp)) end
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,2,tp,LOCATION_MZONE)
+	local loc=Duel.IsPlayerAffectedByEffect(tp,88581108) and LOCATION_MZONE or 0
+	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE|LOCATION_HAND,loc,c)
+	if chk==0 then return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and #g>=2 and aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
+	if #g==2 and g:FilterCount(Card.IsLocation,nil,LOCATION_HAND)<=1 then
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,2,0,0)
+	else
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,2,tp,LOCATION_MZONE)
+	end
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local g=nil
-	if ft>-1 then
-		local loc=0
-		if Duel.IsPlayerAffectedByEffect(tp,88581108) then loc=LOCATION_MZONE end
-		g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE|LOCATION_HAND,loc,c)
-	else
-		g=Duel.GetMatchingGroup(s.desfilter2,tp,LOCATION_MZONE,0,c)
-	end
+	local loc=Duel.IsPlayerAffectedByEffect(tp,88581108) and LOCATION_MZONE or 0
+	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE|LOCATION_HAND,loc,c)
 	if #g<2 or not g:IsExists(Card.IsAttribute,1,nil,ATTRIBUTE_WIND) then return end
-	local g1=nil
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	if ft==0 then
-		g1=g:FilterSelect(tp,s.mzfilter,1,1,nil,tp)
-	else
-		g1=g:Select(tp,1,1,nil)
-	end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	if g1:GetFirst():IsAttribute(ATTRIBUTE_WIND) then
-		local g2=g:Select(tp,1,1,g1:GetFirst())
-		g1:Merge(g2)
-	else
-		local g2=g:FilterSelect(tp,Card.IsAttribute,1,1,g1:GetFirst(),ATTRIBUTE_WIND)
-		g1:Merge(g2)
-	end
-	local rm=g1:IsExists(Card.IsAttribute,2,nil,ATTRIBUTE_WIND)
-	if Duel.Destroy(g1,REASON_EFFECT)==2 then
+	local dg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_DESTROY)
+	local bnsh=dg:FilterCount(Card.IsAttribute,nil,ATTRIBUTE_WIND)==2
+	if Duel.Destroy(dg,REASON_EFFECT)==2 then
 		if not c:IsRelateToEffect(e) then return end
 		if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)==0 then
 			return
 		end
 		local rg=Duel.GetDecktopGroup(1-tp,4)
-		if rm and #rg>0 and rg:FilterCount(Card.IsAbleToRemove,nil)==4
+		if bnsh and #rg>0 and rg:FilterCount(Card.IsAbleToRemove,nil)==4
 			and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 			Duel.DisableShuffleCheck()
 			Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)

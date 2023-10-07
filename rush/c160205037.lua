@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-function s.spcfilter(c,tp)
+function s.spcfilter(c)
 	return c:IsMonster() and c:IsLevel(6) and c:IsDefense(500) and not c:IsPublic()
 end
 function s.spcon(e,c)

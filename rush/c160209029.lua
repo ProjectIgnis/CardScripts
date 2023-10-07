@@ -20,7 +20,7 @@ end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) end
 end
-function s.filter(c,tp)
+function s.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_DRAGON)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -54,4 +54,3 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

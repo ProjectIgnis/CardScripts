@@ -44,11 +44,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SendtoGrave(og,REASON_COST)<2 then return end
 	local g=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_MZONE,nil)
 	if Duel.Destroy(g,REASON_EFFECT)>0 then
-		local ct=Duel.GetOperatedGroup():FilterCount(s.damfilter,nil,tp)
+		local ct=Duel.GetOperatedGroup():FilterCount(s.damfilter,nil)
 		Duel.Damage(1-tp,300*ct,REASON_EFFECT)
 	end
 end
-function s.damfilter(c,tp)
+function s.damfilter(c)
 	return not c:WasMaximumModeSide()
 end
 function s.rescon(sg,e,tp,mg)

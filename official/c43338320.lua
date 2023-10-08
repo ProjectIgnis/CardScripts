@@ -51,7 +51,7 @@ function s.actcon(e)
 end
 function s.tcfilter(c,e,tp)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp) and c:IsReason(REASON_BATTLE|REASON_EFFECT)
-		and c:HasLevel() and c:IsCanBeEffectTarget(e)
+		and c:HasLevel() and c:IsCanBeEffectTarget(e) and not c:IsType(TYPE_TOKEN)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND|LOCATION_GRAVE,0,1,nil,e,tp,c:GetLevel())
 end
 function s.spfilter(c,e,tp,lv)

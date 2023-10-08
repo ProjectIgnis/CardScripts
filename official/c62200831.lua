@@ -73,7 +73,7 @@ end
 function s.xyzop(e,tp,eg,ep,ev,re,r,rp)
 	local def=0
 	local g=eg:Filter(s.filter,nil,tp)
-	for tc in aux.Next(g) do
+	for tc in g:Iter() do
 		if tc:GetPreviousDefenseOnField()<0 then def=0 end
 		def=def+tc:GetPreviousDefenseOnField()
 	end

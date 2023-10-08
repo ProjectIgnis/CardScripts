@@ -6,6 +6,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Increase level
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--Destroy replace
+	--Destruction replacement for monsters in the Extra Monster zone
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EFFECT_DESTROY_REPLACE)
@@ -34,6 +35,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil,tp)
+	Duel.SetOperationInfo(0,CATEGORY_LVCHANGE,g:GetFirst(),1,tp,g:GetFirst():GetOriginalLevel())
 end
 	--Performing the effect of increasing levels
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
@@ -49,7 +51,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for your monster in EMZ
 function s.repfilter(c,tp)
-	return c:IsLocation(LOCATION_MZONE) and c:GetSequence()>=5 and c:IsControler(tp)
+	return c:IsLocation(LOCATION_MZONE) and c:IsInExtraMZone(tp)
 		and c:IsReason(REASON_EFFECT+REASON_BATTLE) and not c:IsReason(REASON_REPLACE)
 end
 	--Activation legality

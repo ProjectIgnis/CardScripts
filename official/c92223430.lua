@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e3)
-	--Level 5 or higher WIND  Winged Beast can be summoned for 1 less Tribute
+	--Level 5 or higher WIND Winged Beast can be summoned for 1 less Tribute
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,0))
 	e4:SetType(EFFECT_TYPE_IGNITION)

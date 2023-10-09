@@ -254,6 +254,7 @@ SET_QLI                           = 0xaa
 SET_APOQLIPHORT                   = 0x10aa
 SET_DESKBOT                       = 0xab
 SET_GOBLIN                        = 0xac
+SET_GOBLIN_RIDER                  = 0x10ac
 SET_FRIGHTFUR                     = 0xad
 SET_DARK_CONTRACT                 = 0xae
 SET_DD                            = 0xaf

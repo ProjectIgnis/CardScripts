@@ -1,5 +1,14 @@
 --Utilities to be added to the core
 
+--If a Token Card object isn't on the field anymore then it cannot be targeted by an effect
+Card.IsCanBeEffectTarget=(function()
+	local oldfunc=Card.IsCanBeEffectTarget
+	return function(card,effect,...)
+		if card:IsType(TYPE_TOKEN) and not card:IsOnField() then return false end
+		return oldfunc(card,effect,...)
+	end
+end)()
+
 --Raises the EVENT_CONFIRM event when a card is revealed (used by "Vanquish Soul Jiaolong")
 --Raises the EVENT_TOHAND_CONFIRM event when a card in the hand is revealed (used by "Puppet King" and "Puppet Queen")
 Duel.ConfirmCards=(function()

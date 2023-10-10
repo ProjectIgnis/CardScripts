@@ -1162,7 +1162,7 @@ function Auxiliary.dxmcostgen(min,max,op)
 			return true --NOTE: Does not execute `op`
 		end
 		local m=type(max)=="number" and max or max(e,tp)
-		if c:RemoveOverlayCard(tp,min,m,REASON_COST) and op then
+		if c:RemoveOverlayCard(tp,min,m,REASON_COST)>0 and op then
 			op(e,Duel.GetOperatedGroup())
 		end
 		return true --NOTE: to use with aux.AND

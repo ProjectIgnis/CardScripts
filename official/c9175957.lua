@@ -81,7 +81,7 @@ function s.gthtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.gthop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if not (tc:IsRelateToEffect(e) and tc:RemoveOverlayCard(tp,1,1,REASON_EFFECT)) then return end
+	if not tc:IsRelateToEffect(e) or tc:RemoveOverlayCard(tp,1,1,REASON_EFFECT)<1 then return end
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
 		Duel.SendtoHand(c,nil,REASON_EFFECT)

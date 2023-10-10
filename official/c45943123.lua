@@ -39,7 +39,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:RemoveOverlayCard(tp,1,1,REASON_EFFECT) then
+	if tc:IsRelateToEffect(e) and tc:RemoveOverlayCard(tp,1,1,REASON_EFFECT)>0 then
 		Duel.AdjustInstantly(tc)
 		local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 		local d=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)*400

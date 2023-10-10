@@ -49,7 +49,7 @@ end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsNegatableMonster,tp,0,LOCATION_MZONE,nil)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and c:RemoveOverlayCard(tp,1,1,REASON_EFFECT) and #g>0 then
+	if c:IsRelateToEffect(e) and c:RemoveOverlayCard(tp,1,1,REASON_EFFECT)>0 and #g>0 then
 		for tc in g:Iter() do
 			--Negate effects
 			local e1=Effect.CreateEffect(c)

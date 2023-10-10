@@ -29,12 +29,14 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local ct=tc:GetOverlayCount()
-		tc:RemoveOverlayCard(tp,ct,ct,REASON_EFFECT)
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e1:SetValue(ct*800)
-		tc:RegisterEffect(e1)
+		local total=tc:RemoveOverlayCard(tp,ct,ct,REASON_EFFECT)
+		if total>0 then
+			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_UPDATE_ATTACK)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
+			e1:SetValue(total*800)
+			tc:RegisterEffect(e1)
+		end
 	end
 end

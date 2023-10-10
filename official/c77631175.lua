@@ -23,9 +23,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReason(REASON_BATTLE) and e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_EFFECT) end
-	if Duel.SelectEffectYesNo(tp,e:GetHandler(),96) then
-		local c=e:GetHandler()
+	local c=e:GetHandler()
+	if chk==0 then return c:IsReason(REASON_BATTLE) and c:CheckRemoveOverlayCard(tp,1,REASON_EFFECT) end
+	if Duel.SelectEffectYesNo(tp,c,96) then
 		c:RemoveOverlayCard(tp,1,1,REASON_EFFECT)
 		Duel.RaiseSingleEvent(c,EVENT_CUSTOM+id,e,0,0,0,0)
 		return true

@@ -39,8 +39,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if s.montg(e,tp,eg,ep,ev,re,r,rp,0) then ct=ct+1 end
 	if s.sttg(e,tp,eg,ep,ev,re,r,rp,0) then ct=ct+1 end
 	if chk==0 then return ct>0 and c:CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	c:RemoveOverlayCard(tp,1,ct,REASON_COST)
-	local ft=Duel.GetOperatedGroup():GetCount()
+	local ft=c:RemoveOverlayCard(tp,1,ct,REASON_COST)
 	e:SetLabel(ft)
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -1,9 +1,11 @@
 --紅血鬼
+--Red-Headed Oni
 local s,id=GetID()
 function s.initial_effect(c)
-	--atk
+	--Detach 1 Xyz Material from a monster on the field, increase the level of a monster monster's Level by 1 and its ATK by 300
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_LVCHANGE)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)

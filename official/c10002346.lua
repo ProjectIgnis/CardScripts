@@ -1,5 +1,5 @@
 --ガチガチガンテツ
---c10002346.lua
+--Gachi Gachi Gantetsu
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

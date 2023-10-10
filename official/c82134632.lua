@@ -37,8 +37,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	for tc in aux.Next(dg) do
 		ct=ct+tc:GetOverlayCount()
 	end
-	Duel.RemoveOverlayCard(tp,0,0,1,ct,REASON_COST,dg)
-	local count=#Duel.GetOperatedGroup()
+	local count=Duel.RemoveOverlayCard(tp,0,0,1,ct,REASON_COST,dg)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,1,count,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,#g,0,0)

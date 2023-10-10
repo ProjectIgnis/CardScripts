@@ -27,8 +27,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		return Duel.CheckRemoveOverlayCard(tp,1,0,1,REASON_COST) and ct>0 
 			and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_MZONE,1,nil)
 	end
-	Duel.RemoveOverlayCard(tp,1,0,1,ct,REASON_COST)
-	local oct=#Duel.GetOperatedGroup()
+	local oct=Duel.RemoveOverlayCard(tp,1,0,1,ct,REASON_COST)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_MZONE,nil)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
 	Duel.SetTargetParam(oct)

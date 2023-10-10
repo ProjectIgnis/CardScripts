@@ -53,7 +53,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if Duel.RemoveOverlayCard(tp,LOCATION_MZONE,0,1,1,REASON_EFFECT) and tc:IsRelateToEffect(e) then
+	if Duel.RemoveOverlayCard(tp,LOCATION_MZONE,0,1,1,REASON_EFFECT)>0 and tc:IsRelateToEffect(e) then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end

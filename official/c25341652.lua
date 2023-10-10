@@ -63,9 +63,8 @@ function s.repval(e,c)
 	return s.repfilter(c,e:GetHandlerPlayer())
 end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	local tc=g:GetFirst()
-	for tc in aux.Next(g) do
+	local g=Duel.GetTargetCards(e)
+	for tc g:Iter() do
 		tc:RemoveOverlayCard(tp,1,1,REASON_EFFECT)
 	end
 end

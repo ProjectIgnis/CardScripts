@@ -63,7 +63,7 @@ function s.ctdmgop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==1 then
 		--Detach and place 1 counter
 		local c=e:GetHandler()
-		if c:IsRelateToEffect(e) and c:RemoveOverlayCard(tp,1,1,REASON_EFFECT) then
+		if c:IsRelateToEffect(e) and c:RemoveOverlayCard(tp,1,1,REASON_EFFECT)>0 then
 			local cg=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 			if #cg==0 then return end
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_COUNTER)

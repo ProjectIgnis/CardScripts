@@ -69,9 +69,10 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp,chk)
 	return not e:GetHandler():IsRelateToBattle() and tc:IsFaceup()
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,e:GetHandler():GetOverlayCount(),REASON_COST)
-	e:SetLabel(#Duel.GetOperatedGroup())
+	local c=e:GetHandler()
+	if chk==0 then return c:CheckRemoveOverlayCard(tp,1,REASON_COST) end
+	local ct=c:RemoveOverlayCard(tp,1,c:GetOverlayCount(),REASON_COST)
+	e:SetLabel(ct)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttackTarget()

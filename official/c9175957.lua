@@ -32,7 +32,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	if Duel.CheckRemoveOverlayCard(tp,1,0,1,REASON_COST)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,2))
-		and Duel.RemoveOverlayCard(tp,1,0,1,3,REASON_COST) then
+		and Duel.RemoveOverlayCard(tp,1,0,1,3,REASON_COST)>0 then
 		Duel.SetTargetParam(#Duel.GetOperatedGroup())
 	end
 end

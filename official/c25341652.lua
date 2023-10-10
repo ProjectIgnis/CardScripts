@@ -61,7 +61,7 @@ function s.repval(e,c)
 end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)
-	for tc g:Iter() do
+	for tc in g:Iter() do
 		tc:RemoveOverlayCard(tp,1,1,REASON_EFFECT)
 	end
 end

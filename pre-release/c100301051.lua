@@ -93,9 +93,9 @@ function s.nsop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 end
-function s.gtfilter(c)
-	return c:IsSetCard(SET_GENEX) and c:IsType(TYPE_TUNER)
+function s.gtfilter(c,chk)
+	return c:IsSetCard(SET_GENEX) and (chk or c:IsType(TYPE_TUNER))
 end
 function s.synop(e,tg,ntg,sg,lv,sc,tp)
-	return e:GetHandlerPlayer()==1-tp or sg:IsExists(s.gtfilter,1,nil)
+	return e:GetHandlerPlayer()==1-tp or tg:IsExists(s.gtfilter,1,nil,true) or ntg:IsExists(s.gtfilter,1,nil,false)
 end

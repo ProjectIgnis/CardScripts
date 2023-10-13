@@ -1,5 +1,5 @@
 --異譚の忍法帖
---Novel Ninjitsu Art Book
+--Ninjitsu Art Notebook of Mystery
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -10,7 +10,8 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,id)
-	e1:SetCondition(s.condition)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
+	e1:SetCondition(function(e,tp) return Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)>0 end)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
@@ -27,42 +28,38 @@ function s.initial_effect(c)
 	e2:SetOperation(s.posop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x2b,0x61}
+s.listed_series={SET_NINJA,SET_NINJITSU_ART}
 s.listed_names={id}
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)>0
-end
 function s.ninjitsu(c,zone_chk)
-	return c:IsSetCard(0x61) and c:IsSpellTrap() and c:IsSSetable() and not c:IsCode(id) and (zone_chk or c:IsType(TYPE_FIELD))
+	return c:IsSetCard(SET_NINJITSU_ART) and c:IsSpellTrap() and c:IsSSetable() and not c:IsCode(id) and (zone_chk or c:IsType(TYPE_FIELD))
 end
 function s.ninja(c,e,tp)
-	return c:IsSetCard(0x2b) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE) and not c:IsCode(id)
+	return c:IsSetCard(SET_NINJA) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE) and not c:IsCode(id)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local mzones=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local stzones=Duel.GetLocationCount(tp,LOCATION_SZONE)
 	if e:GetHandler():IsLocation(LOCATION_HAND) then stzones=stzones-1 end
-	if chk==0 then return Duel.IsExistingMatchingCard(s.ninjitsu,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,stzones>0)
-		or (mzones>0 and Duel.IsExistingMatchingCard(s.ninja,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp)) end
-	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.ninjitsu,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,nil,stzones>0)
+		or (mzones>0 and Duel.IsExistingMatchingCard(s.ninja,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,nil,e,tp)) end
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK|LOCATION_GRAVE)
 end
 function s.rescon(sg,e,tp,mg)
-	local res=sg:GetClassCount(Card.GetLocation)==#sg and (sg:FilterCount(s.ninjitsu,nil,true)==1 or sg:FilterCount(s.ninja,nil,e,tp)==1)
-	return res,not res
+	return sg:GetClassCount(Card.GetLocation)==#sg and (sg:FilterCount(s.ninjitsu,nil,true)==1 or sg:FilterCount(s.ninja,nil,e,tp)==1)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local mzones=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local g1=Group.CreateGroup()
 	if mzones>0 then 
-		g1=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.ninja),tp,LOCATION_DECK+LOCATION_GRAVE,0,nil,e,tp)
+		g1=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.ninja),tp,LOCATION_DECK|LOCATION_GRAVE,0,nil,e,tp)
 	end
-	local g2=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.ninjitsu),tp,LOCATION_DECK+LOCATION_GRAVE,0,nil,true)
+	local g2=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.ninjitsu),tp,LOCATION_DECK|LOCATION_GRAVE,0,nil,true)
 	g1:Merge(g2)
 	if #g1==0 then return end
 	local sg=aux.SelectUnselectGroup(g1,e,tp,1,2,s.rescon,1,tp,HINTMSG_TOFIELD)
 	if #sg==0 then return end
 	for tc in sg:Iter() do
-		if tc:IsType(TYPE_SPELL+TYPE_TRAP) then
+		if tc:IsSpellTrap() then
 			Duel.SSet(tp,tc,tp,false)
 		else
 			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)
@@ -74,14 +71,11 @@ function s.poscond(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEDOWN)
 end
-function s.posfilter(c)
-	return c:IsFaceup() and c:IsCanTurnSet()
-end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.posfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.posfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsCanTurnSet() end
+	if chk==0 then return Duel.IsExistingTarget(Card.IsCanTurnSet,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local g=Duel.SelectTarget(tp,s.posfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+	local g=Duel.SelectTarget(tp,Card.IsCanTurnSet,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,1,0,POS_FACEDOWN_DEFENSE)
 end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)

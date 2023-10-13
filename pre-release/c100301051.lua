@@ -88,14 +88,14 @@ function s.nsop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e2:SetCode(EFFECT_SYNCHRO_MATERIAL_CUSTOM)
 	e2:SetTargetRange(LOCATION_MZONE|LOCATION_HAND,0)
-	e2:SetTarget(function(_,_c) return not s.gtfilter(_c) end)
+	e2:SetTarget(function(_,_c) return not (_c:IsSetCard(SET_GENEX) and _c:IsType(TYPE_TUNER)) end)
 	e2:SetOperation(s.synop)
 	e2:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 end
-function s.gtfilter(c,chk)
-	return c:IsSetCard(SET_GENEX) and (chk or c:IsType(TYPE_TUNER))
+function s.gtfilter(c,sc,tp)
+	return c:IsSetCard(SET_GENEX,sc,SUMMON_TYPE_SYNCHRO,tp) and c:IsType(TYPE_TUNER,sc,SUMMON_TYPE_SYNCHRO,tp)
 end
 function s.synop(e,tg,ntg,sg,lv,sc,tp)
-	return e:GetHandlerPlayer()==1-tp or tg:IsExists(s.gtfilter,1,nil,true) or ntg:IsExists(s.gtfilter,1,nil,false)
+	return e:GetHandlerPlayer()==1-tp or tg:IsExists(Card.IsSetCard,1,nil,SET_GENEX,sc,SUMMON_TYPE_SYNCHRO,tp) or ntg:IsExists(s.gtfilter,1,nil,sc,tp)
 end

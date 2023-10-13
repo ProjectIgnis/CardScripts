@@ -514,7 +514,7 @@ function Synchro.CheckP43(tsg,ntsg,sg,lv,sc,tp)
 			local teg={tc:GetCardEffect(EFFECT_SYNCHRO_MATERIAL_CUSTOM)}
 			for _,te in ipairs(teg) do
 				local op=te:GetOperation()
-				local ok,tlvchk=op(te,tg,ntg,sg,lv,sc,tp)
+				local ok,tlvchk=op(te,tsg,ntsg,sg,lv,sc,tp)
 				if not ok then return false end
 				lvchk=lvchk or tlvchk
 			end

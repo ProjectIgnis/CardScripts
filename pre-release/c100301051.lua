@@ -77,7 +77,7 @@ function s.nsop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetTargetRange(1,0)
-	e1:SetTarget(function(_e,_c,_tp,st,pos,target_p,sumeff) return _c:IsLocation(LOCATION_EXTRA) and (st&SUMMON_TYPE_SYNCHRO~=SUMMON_TYPE_SYNCHRO or sumeff:IsActivated()) end)
+	e1:SetTarget(function(_e,_c,_tp,st,pos,target_p,sumeff,proc_eff) return _c:IsLocation(LOCATION_EXTRA) and (st&SUMMON_TYPE_SYNCHRO~=SUMMON_TYPE_SYNCHRO or proc_eff==nil) end)
 	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	--Clock Lizard Check

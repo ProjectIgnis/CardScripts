@@ -1181,9 +1181,11 @@ function Synchro.DarkCondition(f1,f2,plv,nlv,...)
 					local hg=Duel.GetMatchingGroup(Card.IsCanBeSynchroMaterial,tp,LOCATION_HAND+LOCATION_GRAVE,0,c,c)
 					for thc in g:Iter() do
 						local te=thc:GetCardEffect(EFFECT_HAND_SYNCHRO)
-						local val=te:GetValue()
-						local ag=hg:Filter(function(mc) return val(te,mc,c) end,nil) --tuner
-						thg:Merge(ag)
+						if te then
+							local val=te:GetValue()
+							local ag=hg:Filter(function(mc) return val(te,mc,c) end,nil) --tuner
+							thg:Merge(ag)
+						end
 					end
 					g:Merge(thg)
 				end

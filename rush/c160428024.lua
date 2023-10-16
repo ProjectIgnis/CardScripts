@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Fusion Material
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,CARD_PRIMAGUITARRA,160428042)
+	Fusion.AddProcMix(c,true,true,CARD_PRIMA_GUITARNA,160428042)
 	--ATK increase
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

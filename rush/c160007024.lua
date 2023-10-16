@@ -44,5 +44,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		end
 end
 function s.fupfilter(c)
-	return c:IsFaceup() and (c:IsCode(CARD_UMI) or c:IsCode(CARD_BIG_OCEAN))
+	return c:IsFaceup() and (c:IsCode(CARD_UMI) or c:IsCode(CARD_BIG_UMI))
 end

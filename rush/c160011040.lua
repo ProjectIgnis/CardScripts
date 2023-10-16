@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.condition2)
 	c:RegisterEffect(e2)
 end
-s.listed_names={160009002}
+s.listed_names={CARD_GALACTICA_OBLIVION}
 function s.eqfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_GALAXY) and not c:IsMaximumModeSide()
 end
@@ -37,5 +37,5 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.condition2(e)
 	local c=e:GetHandler():GetEquipTarget()
-	return c:IsCode(160009002)
+	return c:IsCode(CARD_GALACTICA_OBLIVION)
 end

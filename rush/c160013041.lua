@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,160013012,160013011)
+	Fusion.AddProcMix(c,true,true,CARD_CELEB_ROSE_MAGICIAN,CARD_CELEB_ROSE_WITCH)
 	--Destroy 1 face-up monster your opponent controls
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DESTROY)

@@ -15,13 +15,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_names={CARD_UMI,CARD_BIG_OCEAN}
+s.listed_names={CARD_UMI,CARD_BIG_UMI}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttackTarget()
 	return tc and tc:IsFaceup() and tc:IsControler(tp) and tc:IsRace(RACE_FISH+RACE_SEASERPENT)
 end
 function s.cfilter(c)
-	return (c:IsCode(CARD_UMI) or c:IsCode(CARD_BIG_OCEAN)) and c:IsAbleToDeckOrExtraAsCost()
+	return (c:IsCode(CARD_UMI) or c:IsCode(CARD_BIG_UMI)) and c:IsAbleToDeckOrExtraAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,nil) end
@@ -53,7 +53,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Draw(tp,1,REASON_EFFECT)==0 then return end
 	local dg=Duel.GetOperatedGroup()
 	Duel.ConfirmCards(1-tp,dg)
-	if dg:FilterCount(Card.IsCode,nil,CARD_UMI,CARD_BIG_OCEAN)>0 then
+	if dg:FilterCount(Card.IsCode,nil,CARD_UMI,CARD_BIG_UMI)>0 then
 		Duel.Damage(1-tp,500,REASON_EFFECT)
 	end
 	Duel.ShuffleHand(tp)

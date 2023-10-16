@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_names={CARD_UMI,CARD_BIG_OCEAN}
+s.listed_names={CARD_UMI,CARD_BIG_UMI}
 	--Check for a monster that can be returned to deck
 function s.filter(c)
 	return c:IsMonster() and c:IsAbleToDeck()
@@ -45,5 +45,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	
 end
 function s.cfilter(c)
-	return (c:IsCode(CARD_UMI) or c:IsCode(CARD_BIG_OCEAN)) and c:IsFaceup()
+	return (c:IsCode(CARD_UMI) or c:IsCode(CARD_BIG_UMI)) and c:IsFaceup()
 end

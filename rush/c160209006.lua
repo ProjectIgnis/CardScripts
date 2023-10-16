@@ -24,7 +24,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_GRAVE,0,1,nil) end
 end
 function s.thfilter(c)
-	return c:IsCode(160002017) and c:IsAbleToHand()
+	return c:IsCode(CARD_LIGHTNING_VOLTCONDOR) and c:IsAbleToHand()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--cost

@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.drop)
 	c:RegisterEffect(e1)
 end
-s.listed_names={160301010}
+s.listed_names={CARD_STRAYNGE_CAT}
 function s.costfilter(c)
 	return c:IsMonster() and c:IsAttack(0) and c:IsAbleToGraveAsCost()
 end
@@ -40,7 +40,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Draw(p,d,REASON_EFFECT)
-	if Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,160301010) 
+	if Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,CARD_STRAYNGE_CAT) 
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) 
 		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		local g2=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)

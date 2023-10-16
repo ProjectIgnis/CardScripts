@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_names={160009002} --Galactica Oblivion
+s.listed_names={CARD_GALACTICA_OBLIVION} --Galactica Oblivion
 function s.costfilter(c)
 	return c:IsTrap() and c:IsAbleToDeckOrExtraAsCost()
 end
@@ -46,7 +46,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		end
 		local g2=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(Card.IsFaceup),tp,0,LOCATION_MZONE,nil)
 		if #g2==0 then return end
-		if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,160009002),tp,LOCATION_MZONE,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+		if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_GALACTICA_OBLIVION),tp,LOCATION_MZONE,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			for tc in g2:Iter() do
 				local e2=Effect.CreateEffect(c)
 				e2:SetType(EFFECT_TYPE_SINGLE)

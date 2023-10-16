@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.drop)
 	c:RegisterEffect(e1)
 end
-s.listed_names={160002017}
+s.listed_names={CARD_LIGHTNING_VOLTCONDOR}
 function s.filter(c)
 	return c:IsFaceup() and c:IsLevel(7) and c:IsAttribute(ATTRIBUTE_LIGHT) and  c:IsRace(RACE_WINGEDBEAST)
 end
@@ -32,7 +32,7 @@ function s.spcon(e,c)
 		and	Duel.IsExistingMatchingCard(s.filter,c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,160002017),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_LIGHTNING_VOLTCONDOR),tp,LOCATION_MZONE,0,1,nil)
 		and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=10
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -1,3 +1,3 @@
 --クリボット
 --Kuribot
-Duel.LoadCardScriptAlias(CARD_KURIBOTT)
+Duel.LoadCardScriptAlias(CARD_KURIBOT)

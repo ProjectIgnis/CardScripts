@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
 end
-s.listed_names={160002017}
+s.listed_names={CARD_LIGHTNING_VOLTCONDOR}
 function s.filter(c)
 	return c:IsFaceup() and c:IsLevel(7) and c:IsAttribute(ATTRIBUTE_LIGHT) and  c:IsRace(RACE_WINGEDBEAST)
 end
@@ -32,7 +32,7 @@ function s.spcon(e,c)
 		and	Duel.IsExistingMatchingCard(s.filter,c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsAbleToEnterBP() and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,160002017),tp,LOCATION_ONFIELD,0,1,nil)
+	return Duel.IsAbleToEnterBP() and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_LIGHTNING_VOLTCONDOR),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) end

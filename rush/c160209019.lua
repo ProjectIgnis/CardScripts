@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.drop)
 	c:RegisterEffect(e1)
 end
-s.listed_names={160301010,160209016}
+s.listed_names={CARD_STRAYNGE_CAT,160209016}
 function s.drcostfilter(c)
 	return c:IsMonster() and c:IsRace(RACE_SPELLCASTER) and c:IsAbleToGraveAsCost()
 end
@@ -31,7 +31,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SendtoGrave(tc,REASON_COST)==1 then 
 		Duel.BreakEffect()
 		Duel.Draw(tp,1,REASON_EFFECT)
-		if Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,2,nil,160301010,160209016) then
+		if Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,2,nil,CARD_STRAYNGE_CAT,160209016) then
 			Duel.BreakEffect()
 			Duel.Draw(tp,1,REASON_EFFECT)
 		end

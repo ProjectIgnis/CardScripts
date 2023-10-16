@@ -73,7 +73,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.GetMatchingGroup(nil,tp,0,LOCATION_ONFIELD,nil)
 		if #g<fc then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-		local dg=sg:Select(tp,fc,fc)
+		local dg=g:Select(tp,fc,fc)
 		if #dg>0 then
 			Duel.Destroy(dg,REASON_EFFECT)
 		end

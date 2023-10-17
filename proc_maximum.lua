@@ -489,7 +489,19 @@ if Duel.IsDuelType(DUEL_INVERTED_QUICK_PRIORITY) then
 				local prop1,prop2=eff:GetProperty()
 				eff:SetProperty(prop1|EFFECT_FLAG_DELAY|EFFECT_FLAG_DAMAGE_STEP,prop2)
 			end
-			return oldfunc(card,eff,...)
+			--Detect if "eff" is a Continuous Effect
+            local eff_type=eff:GetType()
+            if not eff:IsActivated() and eff:GetRange()&LOCATION_MZONE>0 and eff:GetReset()==0
+                and not eff:IsHasProperty(EFFECT_FLAG_CANNOT_DISABLE) then
+                --Mark "card" as a card with a Continuous Effect
+                card:RegisterFlagEffect(FLAG_HAS_CONTINUOUS_EFFECT,0,0,0)
+                --Change the effect's condition to return false if it has the "negation" flag
+                local prev_cond=eff:GetCondition()
+                eff:SetCondition(function(e,...)
+                                    return (prev_cond==nil or prev_cond(e,...)) and not e:GetHandler():HasFlagEffect(FLAG_NEGATE_CONTINUOUS_EFFECT)
+                                end)
+            end
+            return oldfunc(card,eff,...)
 		end
 	end)()
 end
@@ -841,4 +853,25 @@ end
 function Card.GetMaterialCountRush(c)
 	if c:GetSummonType()==SUMMON_TYPE_TRIBUTE+100 then return c:GetMaterialCount()+1 end
 	return c:GetMaterialCount()
+end
+FLAG_HAS_CONTINUOUS_EFFECT=160015036
+FLAG_NEGATE_CONTINUOUS_EFFECT=160015136
+function Card.HasContinuousRushEffect(card)
+    if card:HasFlagEffect(FLAG_HAS_CONTINUOUS_EFFECT) then return true end
+    --If it doesn't have the flag mark then check if it's in Maximum Mode and any of the other pieces has the flag
+    if card:IsMaximumMode() then
+        local maximum_pieces=Duel.GetMatchingGroup(Card.IsMaximumMode,card:GetControler(),LOCATION_MZONE,0,nil)
+        return maximum_pieces:IsExists(Card.HasFlagEffect,1,nil,FLAG_HAS_CONTINUOUS_EFFECT)
+    end
+    return false
+end
+function Card.NegateContinuousRushEffects(card,resets)
+    if card:IsMaximumMode() then
+        local maximum_pieces=Duel.GetMatchingGroup(Card.IsMaximumMode,card:GetControler(),LOCATION_MZONE,0,nil)
+        for tc in maximum_pieces:Iter() do
+            tc:RegisterFlagEffect(FLAG_NEGATE_CONTINUOUS_EFFECT,resets,0,1)
+        end
+    else
+        card:RegisterFlagEffect(FLAG_NEGATE_CONTINUOUS_EFFECT,resets,0,1)
+    end
 end

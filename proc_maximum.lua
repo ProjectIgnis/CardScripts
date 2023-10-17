@@ -476,26 +476,22 @@ if Duel.IsDuelType(DUEL_INVERTED_QUICK_PRIORITY) then
 	traprush1:SetCode(EVENT_CHAINING)
 	traprush1:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
 							local rc=re:GetHandler()
-							if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_TRAP) then
+							if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsTrapEffect() then
 								Duel.SetChainLimit(aux.FALSE)
 							end
 						end)
 	Duel.RegisterEffect(traprush1,0)
 	--Traps cannot miss timing and can be activated in the Damage Step
-	local traprush2=Effect.GlobalEffect()
-	traprush2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	traprush2:SetCode(EVENT_STARTUP)
-	traprush2:SetOperation(function()
-							local g=Duel.GetMatchingGroup(Card.IsTrap,0,0xffffff,0xffffff,nil)
-							for tc in g:Iter() do
-								local effs={tc:GetActivateEffect()}
-								for _,eff in ipairs(effs) do
-									local prop1,prop2=eff:GetProperty()
-									eff:SetProperty(prop1|EFFECT_FLAG_DELAY|EFFECT_FLAG_DAMAGE_STEP,prop2)
-								end
-							end
-						end)
-	Duel.RegisterEffect(traprush2,0)
+	Card.RegisterEffect=(function()
+		local oldfunc=Card.RegisterEffect
+		return function(card,eff,...)
+			if card:IsTrap() and eff:IsHasType(EFFECT_TYPE_ACTIVATE) then
+				local prop1,prop2=eff:GetProperty()
+				eff:SetProperty(prop1|EFFECT_FLAG_DELAY|EFFECT_FLAG_DAMAGE_STEP,prop2)
+			end
+			return oldfunc(card,eff,...)
+		end
+	end)()
 end
 function Card.IsCanChangePositionRush(c)
 	return c:IsCanChangePosition() and not c:IsMaximumMode()

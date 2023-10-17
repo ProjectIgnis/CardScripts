@@ -38,7 +38,7 @@ function s.nscondition(e)
 end
 function s.nstarget(e,tp,eg,ep,ev,re,r,rp,chk,c,minc,zone,relzone,exeff)
 	local mg=Duel.GetTributeGroup(c)
-	local g=aux.SelectUnselectGroup(mg,e,tp,1,3,s.rescon,1,tp,HINTMSG_TRIBUTE,nil,nil,true)
+	local g=aux.SelectUnselectGroup(mg,e,tp,1,3,nil,1,tp,HINTMSG_TRIBUTE,s.rescon,nil,true)
 	if #g>0 then
 		g:KeepAlive()
 		e:SetLabelObject(g)

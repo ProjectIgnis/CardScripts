@@ -645,6 +645,7 @@ end
 
 
 --Double tribute handler
+FLAG_HAS_DOUBLE_TRIBUTE=160015004
 FLAG_TRIPLE_TRIBUTE=160012000
 FLAG_NO_TRIBUTE=160001029
 FLAG_DOUBLE_TRIB=160009052 --Executie up
@@ -665,6 +666,7 @@ function Card.AddDoubleTribute(c,id,otfilter,eftg,reset,...)
 	for i,flag in ipairs{...} do
 		c:RegisterFlagEffect(flag,reset,0,1)
 	end
+	c:RegisterFlagEffect(FLAG_HAS_DOUBLE_TRIBUTE,reset,0,1)
 	local e1=aux.summonproc(c,true,true,1,1,SUMMON_TYPE_TRIBUTE+100,aux.Stringid(id,0),otfilter)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
@@ -774,19 +776,19 @@ function aux.ThreeTributeCondition(otfilter)
 		if c==nil then return true end
 		if not c:IsLevelAbove(7) then return false end
 		local tp=e:GetHandlerPlayer()
-		local rg1=Duel.GetReleaseGroup(tp)
-		local rg2=Duel.GetMatchingGroup(otfilter,tp,LOCATION_MZONE,0,nil,tp)
+		local rg1=Duel.GetTributeGroup(c)
+		local rg2=Duel.GetMatchingGroup(otfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp)
 		return aux.SelectUnselectGroup(rg1,e,tp,2,2,aux.ChkfMMZ(1),0)
 			and aux.SelectUnselectGroup(rg2,e,tp,1,1,aux.ChkfMMZ(1),0)
 	end
 end
 function aux.ThreeTributeTarget(otfilter)
 	return function (e,tp,eg,ep,ev,re,r,rp,c)
-		local rg1=Duel.GetMatchingGroup(otfilter,tp,LOCATION_MZONE,0,nil,tp)
+		local rg1=Duel.GetMatchingGroup(otfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp)
 		local mg1=aux.SelectUnselectGroup(rg1,e,tp,1,1,aux.ChkfMMZ(1),1,tp,HINTMSG_RELEASE,nil,nil,true)
 		if #mg1>0 then
 			local sg=mg1:GetFirst()
-			local rg2=Duel.GetReleaseGroup(tp)
+			local rg2=Duel.GetTributeGroup(e:GetHandler())
 			rg2:RemoveCard(sg)
 			local mg2=aux.SelectUnselectGroup(rg2,e,tp,1,1,aux.ChkfMMZ(1),1,tp,HINTMSG_RELEASE,nil,nil,true)
 			mg1:Merge(mg2)

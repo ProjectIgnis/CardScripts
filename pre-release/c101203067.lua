@@ -41,11 +41,13 @@ function s.initial_effect(c)
 end
 s.listed_names={101203019,id}
 s.listed_series={SET_SILENFORC,SET_SKULL_GUARDIAN}
-function s.cfilter(c)
-	return (c:IsCode(101203019) or (c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRitualMonster())) and c:IsFaceup()
+function s.ritfilter(c)
+	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRitualMonster() and c:IsFaceup()
 end
 function s.effcon(e)
-	return Duel.IsExistingMatchingCard(s.cfilter,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil)
+	local tp=e:GetHandlerPlayer()
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,101203019),tp,LOCATION_ONFIELD,0,1,nil)
+		and Duel.IsExistingMatchingCard(s.ritfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.thfilter(c)
 	return (c:IsSetCard(SET_SILENFORC) or (c:IsSetCard(SET_SKULL_GUARDIAN) and c:IsRitualMonster())) and not c:IsCode(id) and c:IsAbleToHand()

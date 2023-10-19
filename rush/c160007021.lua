@@ -13,12 +13,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.drop)
 	c:RegisterEffect(e1)
 end
-s.listed_names={CARD_UMI,CARD_BIG_OCEAN}
+s.listed_names={CARD_UMI,CARD_BIG_UMI}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_FISH+RACE_SEASERPENT+RACE_THUNDER+RACE_AQUA) and c:IsType(TYPE_NORMAL)
 end
 function s.filter(c)
-	return c:IsFaceup() and (c:IsCode(CARD_UMI) or c:IsCode(CARD_BIG_OCEAN))
+	return c:IsFaceup() and (c:IsCode(CARD_UMI) or c:IsCode(CARD_BIG_UMI))
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return 

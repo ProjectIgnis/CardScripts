@@ -15,9 +15,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_names={CARD_PRIMAGUITARRA,160002025}
+s.listed_names={CARD_PRIMA_GUITARNA,160002025}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsCode(CARD_PRIMAGUITARRA,160002025)
+	return c:IsFaceup() and c:IsCode(CARD_PRIMA_GUITARNA,160002025)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)

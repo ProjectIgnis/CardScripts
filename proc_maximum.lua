@@ -476,26 +476,34 @@ if Duel.IsDuelType(DUEL_INVERTED_QUICK_PRIORITY) then
 	traprush1:SetCode(EVENT_CHAINING)
 	traprush1:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
 							local rc=re:GetHandler()
-							if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_TRAP) then
+							if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsTrapEffect() then
 								Duel.SetChainLimit(aux.FALSE)
 							end
 						end)
 	Duel.RegisterEffect(traprush1,0)
 	--Traps cannot miss timing and can be activated in the Damage Step
-	local traprush2=Effect.GlobalEffect()
-	traprush2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	traprush2:SetCode(EVENT_STARTUP)
-	traprush2:SetOperation(function()
-							local g=Duel.GetMatchingGroup(Card.IsTrap,0,0xffffff,0xffffff,nil)
-							for tc in g:Iter() do
-								local effs={tc:GetActivateEffect()}
-								for _,eff in ipairs(effs) do
-									local prop1,prop2=eff:GetProperty()
-									eff:SetProperty(prop1|EFFECT_FLAG_DELAY|EFFECT_FLAG_DAMAGE_STEP,prop2)
-								end
-							end
-						end)
-	Duel.RegisterEffect(traprush2,0)
+	Card.RegisterEffect=(function()
+		local oldfunc=Card.RegisterEffect
+		return function(card,eff,...)
+			if card:IsTrap() and eff:IsHasType(EFFECT_TYPE_ACTIVATE) then
+				local prop1,prop2=eff:GetProperty()
+				eff:SetProperty(prop1|EFFECT_FLAG_DELAY|EFFECT_FLAG_DAMAGE_STEP,prop2)
+			end
+			--Detect if "eff" is a Continuous Effect
+            local eff_type=eff:GetType()
+            if not eff:IsActivated() and eff:GetRange()&LOCATION_MZONE>0 and eff:GetReset()==0
+                and not eff:IsHasProperty(EFFECT_FLAG_CANNOT_DISABLE) then
+                --Mark "card" as a card with a Continuous Effect
+                card:RegisterFlagEffect(FLAG_HAS_CONTINUOUS_EFFECT,0,0,0)
+                --Change the effect's condition to return false if it has the "negation" flag
+                local prev_cond=eff:GetCondition()
+                eff:SetCondition(function(e,...)
+                                    return (prev_cond==nil or prev_cond(e,...)) and not e:GetHandler():HasFlagEffect(FLAG_NEGATE_CONTINUOUS_EFFECT)
+                                end)
+            end
+            return oldfunc(card,eff,...)
+		end
+	end)()
 end
 function Card.IsCanChangePositionRush(c)
 	return c:IsCanChangePosition() and not c:IsMaximumMode()
@@ -649,6 +657,7 @@ end
 
 
 --Double tribute handler
+FLAG_HAS_DOUBLE_TRIBUTE=160015004
 FLAG_TRIPLE_TRIBUTE=160012000
 FLAG_NO_TRIBUTE=160001029
 FLAG_DOUBLE_TRIB=160009052 --Executie up
@@ -665,10 +674,12 @@ FLAG_DOUBLE_TRIB_LEVEL7=160205051 -- Double Twin Dragon
 FLAG_DOUBLE_TRIB_GREYSTORM=160414002 -- Cosmo Predictor
 FLAG_DOUBLE_TRIB_200_DEF=160012015 -- Green-Eyes Star Cat
 FLAG_DOUBLE_TRIB_NORMAL=160319014 -- Light Effigy
+FLAG_DOUBLE_TRIB_LEVEL8=160015035 -- Darkness Doom Giant
 function Card.AddDoubleTribute(c,id,otfilter,eftg,reset,...)
 	for i,flag in ipairs{...} do
 		c:RegisterFlagEffect(flag,reset,0,1)
 	end
+	c:RegisterFlagEffect(FLAG_HAS_DOUBLE_TRIBUTE,reset,0,1)
 	local e1=aux.summonproc(c,true,true,1,1,SUMMON_TYPE_TRIBUTE+100,aux.Stringid(id,0),otfilter)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
@@ -778,19 +789,19 @@ function aux.ThreeTributeCondition(otfilter)
 		if c==nil then return true end
 		if not c:IsLevelAbove(7) then return false end
 		local tp=e:GetHandlerPlayer()
-		local rg1=Duel.GetReleaseGroup(tp)
-		local rg2=Duel.GetMatchingGroup(otfilter,tp,LOCATION_MZONE,0,nil,tp)
+		local rg1=Duel.GetTributeGroup(c)
+		local rg2=Duel.GetMatchingGroup(otfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp)
 		return aux.SelectUnselectGroup(rg1,e,tp,2,2,aux.ChkfMMZ(1),0)
 			and aux.SelectUnselectGroup(rg2,e,tp,1,1,aux.ChkfMMZ(1),0)
 	end
 end
 function aux.ThreeTributeTarget(otfilter)
 	return function (e,tp,eg,ep,ev,re,r,rp,c)
-		local rg1=Duel.GetMatchingGroup(otfilter,tp,LOCATION_MZONE,0,nil,tp)
+		local rg1=Duel.GetMatchingGroup(otfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp)
 		local mg1=aux.SelectUnselectGroup(rg1,e,tp,1,1,aux.ChkfMMZ(1),1,tp,HINTMSG_RELEASE,nil,nil,true)
 		if #mg1>0 then
 			local sg=mg1:GetFirst()
-			local rg2=Duel.GetReleaseGroup(tp)
+			local rg2=Duel.GetTributeGroup(e:GetHandler())
 			rg2:RemoveCard(sg)
 			local mg2=aux.SelectUnselectGroup(rg2,e,tp,1,1,aux.ChkfMMZ(1),1,tp,HINTMSG_RELEASE,nil,nil,true)
 			mg1:Merge(mg2)
@@ -834,7 +845,7 @@ local LEGEND_LIST={160001000,160205001,160418001,160002000,160421015,160404001,1
 160203018,160203023,160204048,160204049,160205069,160205070,160206025,160310003,160318006,160408003,160411003,
 160417004,160417006,160421017,160428099,160428100,160432003,160202019,160318005,160417005,160418003,160434005,
 160436005,160437001,160206019,160206002,160206008,160206022,160206028,160013020,160440001,160440002,160440003,
-160429002,160208063,160208064,160208065,160014065}
+160429002,160208063,160208064,160208065,160014065,160446002}
 -- Returns if a card is a Legend. Can be updated if a GetOT function is added to the core
 function Card.IsLegend(c)
 	return c:IsOriginalCode(table.unpack(LEGEND_LIST))
@@ -842,4 +853,25 @@ end
 function Card.GetMaterialCountRush(c)
 	if c:GetSummonType()==SUMMON_TYPE_TRIBUTE+100 then return c:GetMaterialCount()+1 end
 	return c:GetMaterialCount()
+end
+FLAG_HAS_CONTINUOUS_EFFECT=160015036
+FLAG_NEGATE_CONTINUOUS_EFFECT=160015136
+function Card.HasContinuousRushEffect(card)
+    if card:HasFlagEffect(FLAG_HAS_CONTINUOUS_EFFECT) then return true end
+    --If it doesn't have the flag mark then check if it's in Maximum Mode and any of the other pieces has the flag
+    if card:IsMaximumMode() then
+        local maximum_pieces=Duel.GetMatchingGroup(Card.IsMaximumMode,card:GetControler(),LOCATION_MZONE,0,nil)
+        return maximum_pieces:IsExists(Card.HasFlagEffect,1,nil,FLAG_HAS_CONTINUOUS_EFFECT)
+    end
+    return false
+end
+function Card.NegateContinuousRushEffects(card,resets)
+    if card:IsMaximumMode() then
+        local maximum_pieces=Duel.GetMatchingGroup(Card.IsMaximumMode,card:GetControler(),LOCATION_MZONE,0,nil)
+        for tc in maximum_pieces:Iter() do
+            tc:RegisterFlagEffect(FLAG_NEGATE_CONTINUOUS_EFFECT,resets,0,1)
+        end
+    else
+        card:RegisterFlagEffect(FLAG_NEGATE_CONTINUOUS_EFFECT,resets,0,1)
+    end
 end

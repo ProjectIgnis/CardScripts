@@ -55,7 +55,7 @@ function s.selfsptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.selfspop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if Duel.RemoveOverlayCard(tp,1,1,1,1,REASON_EFFECT) and c:IsRelateToEffect(e)
+	if Duel.RemoveOverlayCard(tp,1,1,1,1,REASON_EFFECT)>0 and c:IsRelateToEffect(e)
 		and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 then
 		-- Banish it when it leaves the field
 		local e1=Effect.CreateEffect(c)

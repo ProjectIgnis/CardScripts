@@ -3,8 +3,8 @@
 --Logical Nonsense
 local s,id=GetID()
 function s.initial_effect(c)
-	--Synchro Summon
 	c:EnableReviveLimit()
+	--Synchro Summon Procedure
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99,s.matfilter)
 	--Name becomes "Harpie Lady" while on the field or in the GY
 	local e1=Effect.CreateEffect(c)
@@ -29,33 +29,33 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 	--Lists "Harpie" archetype
-s.listed_series={0x64}
+s.listed_series={SET_HARPIE}
 	--Specifically lists itself and "Harpie Lady"
 s.listed_names={id,CARD_HARPIE_LADY}
 	--Can treat a "Harpie" monster as a Tuner
 function s.matfilter(c,scard,sumtype,tp)
-	return c:IsSetCard(0x64,scard,sumtype,tp)
+	return c:IsSetCard(SET_HARPIE,scard,sumtype,tp)
 end
 	--Check for opponent's monster or player's "Harpie" monster
-function s.filter(c,tp)
-	return c:IsAbleToHand() and (c:IsControler(1-tp) or (c:IsSetCard(0x64)))
+function s.thfilter(c,tp)
+	return c:IsAbleToHand() and (c:IsControler(1-tp) or (c:IsSetCard(SET_HARPIE) and c:IsFaceup()))
 end
 	--If a spell/trap card or effect activated
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+	return re:IsSpellTrapEffect()
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc,tp) end
-	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,tp) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.thfilter(chkc,tp) end
+	if chk==0 then return Duel.IsExistingTarget(s.thfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,tp)
+	local g=Duel.SelectTarget(tp,s.thfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,tp)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,#g,0,0)
 end
 	--Return 1 of opponent's monster or player's "Harpie" monster to hand
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end

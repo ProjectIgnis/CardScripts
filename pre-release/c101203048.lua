@@ -51,7 +51,7 @@ function s.dttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SelectTarget(tp,s.stfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil,c,tp)
 end
 function s.dtop(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.RemoveOverlayCard(tp,1,1,2,2,REASON_EFFECT) then return end
+	if Duel.RemoveOverlayCard(tp,1,1,2,2,REASON_EFFECT)==0 then return end
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e)

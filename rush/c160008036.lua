@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,160004020,CARD_VALKYRIAN_SEWKYRIE)
+	Fusion.AddProcMix(c,true,true,160004020,CARD_NEEDLKYRIE)
 	--Special summon Warrior/Fairy monster from GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

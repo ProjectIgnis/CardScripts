@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_names={CARD_PRIMAGUITARRA}
+s.listed_names={CARD_PRIMA_GUITARNA}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsStatus(STATUS_SUMMON_TURN|STATUS_SPSUMMON_TURN)
 end
@@ -26,7 +26,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 	if Duel.DiscardDeck(tp,2,REASON_EFFECT)~=2 then return end
-	if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_PRIMAGUITARRA),tp,LOCATION_MZONE,0,1,nil) 
+	if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_PRIMA_GUITARNA),tp,LOCATION_MZONE,0,1,nil) 
 		and Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(Card.IsFaceup),tp,LOCATION_MZONE,0,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)

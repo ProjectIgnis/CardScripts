@@ -24,7 +24,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if Duel.RemoveOverlayCard(tp,1,1,1,1,REASON_EFFECT) and c:IsRelateToEffect(e) then
+	if Duel.RemoveOverlayCard(tp,1,1,1,1,REASON_EFFECT)>0 and c:IsRelateToEffect(e) then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 	--Cannot Special Summon "Goblin Rider Boon the Machspeed" until the end of the next turn

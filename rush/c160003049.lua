@@ -14,10 +14,10 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_names={CARD_UMI,CARD_BIG_OCEAN}
+s.listed_names={CARD_UMI,CARD_BIG_UMI}
 	--Check for "Umi" or "Great Ocean"
 function s.filter(c)
-	return c:IsFaceup() and (c:IsCode(CARD_UMI) or c:IsCode(CARD_BIG_OCEAN))
+	return c:IsFaceup() and (c:IsCode(CARD_UMI) or c:IsCode(CARD_BIG_UMI))
 end
 	--If you control "Umi" or "Great Ocean"
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

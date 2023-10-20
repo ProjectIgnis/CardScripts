@@ -1,12 +1,12 @@
 --海豚反撃
 --Dolphin Counter
-
 local s,id=GetID()
 function s.initial_effect(c)
-	--Opponent's attacking monster loses 1000 ATK
+	--Destroy a monster with the highest ATK, draw 1 card and inflict 500 damage to the opponent
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCategory(CATEGORY_DESTROY)
+	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_DRAW+CATEGORY_DAMAGE)
 	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCondition(s.condition)
@@ -18,7 +18,7 @@ end
 s.listed_names={CARD_UMI,CARD_BIG_UMI}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttackTarget()
-	return tc and tc:IsFaceup() and tc:IsControler(tp) and tc:IsRace(RACE_FISH+RACE_SEASERPENT)
+	return tc and tc:IsFaceup() and tc:IsControler(tp) and tc:IsRace(RACE_FISH|RACE_SEASERPENT)
 end
 function s.cfilter(c)
 	return (c:IsCode(CARD_UMI) or c:IsCode(CARD_BIG_UMI)) and c:IsAbleToDeckOrExtraAsCost()
@@ -31,6 +31,8 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 	local tg=g:GetMaxGroup(Card.GetAttack)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tg,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,1,tp,1)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_DAMAGE,nil,1,1-tp,500)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
@@ -45,7 +47,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #tg>1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		tg=tg:Select(tp,1,1,nil)
-		Duel.HintSelection(tg)
+		Duel.HintSelection(tg,true)
 	end
 	if #tg>0 then
 		Duel.Destroy(tg:AddMaximumCheck(),REASON_EFFECT)

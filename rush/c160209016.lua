@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Send the top 2 cards of your Deck to the GY
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,3))
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DECKDES+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
@@ -36,9 +36,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 			for tc in sg:Iter() do
 				-- Treat as 2 tributes
-				tc:AddDoubleTribute(id,s.otfilter,s.eftg,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,FLAG_DOUBLE_TRIB)
+				tc:AddDoubleTribute(id,s.otfilter,s.eftg,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,FLAG_DOUBLE_TRIB)
 			end
-			c:AddDoubleTribute(id,s.otfilter,s.eftg,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,FLAG_DOUBLE_TRIB)
+			c:AddDoubleTribute(id,s.otfilter,s.eftg,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,FLAG_DOUBLE_TRIB)
 		end
 	end
 end

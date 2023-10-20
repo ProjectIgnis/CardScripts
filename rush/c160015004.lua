@@ -59,7 +59,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(nil,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,1-tp,LOCATION_ONFIELD)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,e:GetHandler(),1,tp,200)
+	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,e:GetHandler(),1,tp,200)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Effect

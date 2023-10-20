@@ -20,7 +20,7 @@ function s.fupfilter(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
-	return tc and Duel.GetAttackTarget()==nil and Duel.IsExistingMatchingCard(s.fupfilter,tp,LOCATION_ONFIELD,0,1,nil)
+	return at and Duel.GetAttackTarget()==nil and Duel.IsExistingMatchingCard(s.fupfilter,tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsCanChangePositionRush()

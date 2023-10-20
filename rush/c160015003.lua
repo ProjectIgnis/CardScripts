@@ -3,7 +3,7 @@
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)
-	--fusion summon
+	--Fusion Summon 1 DARK monster
 	local params = {aux.FilterBoolFunction(Card.IsAttribute,ATTRIBUTE_DARK),Fusion.OnFieldMat,nil,nil,Fusion.ForcedHandler}
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

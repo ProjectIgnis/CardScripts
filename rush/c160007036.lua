@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetCost(s.cost)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
-	--Change targeted monster's battle position
+	--Change the battle position of a monster on the field
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_POSITION)
@@ -39,7 +39,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,1)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_PHASE|PHASE_END|RESET_OPPO_TURN,1)
 	e1:SetValue(500)
 	c:RegisterEffect(e1)
 	--Summon limit
@@ -51,7 +51,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetTargetRange(1,1)
 	e2:SetTarget(s.tg)
 	e2:SetValue(POS_DEFENSE)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,1)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_PHASE|PHASE_END|RESET_OPPO_TURN,1)
 	c:RegisterEffect(e2)
 end
 function s.tg(e,c,rp,sumtype,pos,tp,re)
@@ -60,24 +60,17 @@ function s.tg(e,c,rp,sumtype,pos,tp,re)
 	end
 	return c:IsLevelBelow(9)
 end
---position
-function s.filter(c)
-	return c:IsCanChangePositionRush()
-end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsCanChangePositionRush,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	--Requirement
 	if Duel.DiscardDeck(tp,1,REASON_COST)<1 then return end
 	--Effect
-	if c:IsRelateToEffect(e) and c:IsFaceup() then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-		local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
-		Duel.HintSelection(g)
-		if #g>0 then
-			Duel.ChangePosition(g,POS_FACEUP_DEFENSE,POS_FACEDOWN_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)
-		end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
+	local g=Duel.SelectMatchingCard(tp,Card.IsCanChangePositionRush,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+	Duel.HintSelection(g,true)
+	if #g>0 then
+		Duel.ChangePosition(g,POS_FACEUP_DEFENSE,POS_FACEDOWN_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)
 	end
 end

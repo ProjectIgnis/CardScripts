@@ -21,6 +21,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
+s.listed_names={87025064} --Silver's Cry
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if re:GetHandler():IsCode(87025064) then
 		Duel.RegisterFlagEffect(rp,id,RESET_PHASE|PHASE_END,0,1)

@@ -14,10 +14,10 @@ function s.initial_effect(c)
 	e1:SetOperation(s.nsoperation)
 	e1:SetValue(SUMMON_TYPE_TRIBUTE+1)
 	c:RegisterEffect(e1)
-	--Destroy
+	--Destroy 1 card your opponent controls
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
-	e2:SetCategory(CATEGORY_DESTROY)
+	e2:SetCategory(CATEGORY_DESTROY+CATEGORY_ATKCHANGE)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
@@ -27,8 +27,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.rescon(sg,e,tp,mg)
-    return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:GetClassCount(Card.GetAttribute,nil)==1
-        and (#sg==3 or (#sg==2 and sg:IsExists(Card.HasFlagEffect,1,nil,FLAG_HAS_DOUBLE_TRIBUTE)) or (#sg==1 and sg:IsExists(Card.HasFlagEffect,1,nil,160015135)))
+	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:GetClassCount(Card.GetAttribute,nil)==1
+		and (#sg==3 or (#sg==2 and sg:IsExists(Card.HasFlagEffect,1,nil,FLAG_HAS_DOUBLE_TRIBUTE)) or (#sg==1 and sg:IsExists(Card.HasFlagEffect,1,nil,160015135)))
 end
 function s.nscondition(e)
 	local c=e:GetHandler()
@@ -59,9 +59,9 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(nil,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,1-tp,LOCATION_ONFIELD)
+	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,e:GetHandler(),1,tp,200)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	--Effect
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local dg=Duel.SelectMatchingCard(tp,nil,tp,0,LOCATION_ONFIELD,1,1,nil)
@@ -69,7 +69,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		dg=dg:AddMaximumCheck()
 		Duel.HintSelection(dg,true)
 		if Duel.Destroy(dg,REASON_EFFECT)>0 and dg:GetFirst():IsMonster() and dg:GetFirst():GetLevel()>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
-			-- Gain ATK
+			local c=e:GetHandler()
+			-- Gain 200 ATK x the level of the destroyed monster
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)

@@ -1,5 +1,5 @@
 --Japanese name
---Gen the Diamond Tiger
+--Ken the Warrior Dragon
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	--Special Summon 1 "Ken the Warrior Dragon" to the opponent's field
+	--Special Summon 1 "Gen the Diamond Tiger" to the opponent's field
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -24,19 +24,20 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--Discard 1 card
+	--Your opponent draws 2 cards then discards 1 card
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
-	e3:SetCategory(CATEGORY_HANDES)
+	e3:SetCategory(CATEGORY_DRAW+CATEGORY_HANDES)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e3:SetCondition(function(_,_,_,_,_,re) return re and re:GetHandler():IsCode(101202081) end)
+	e3:SetCondition(function(_,_,_,_,_,re) return re and re:GetHandler():IsCode(52126602) end)
 	e3:SetCountLimit(1,{id,1})
-	e3:SetTarget(s.hnddestg)
-	e3:SetOperation(s.hnddesop)
+	e3:SetTarget(s.drwtg)
+	e3:SetOperation(s.drwop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={101202081} --Ken the Warrior Dragon
+s.listed_names={52126602} --Gen the Diamond Tiger
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToHand() end
@@ -50,7 +51,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spfilter(c,e,tp)
-	return c:IsCode(101202081) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,1-tp)
+	return c:IsCode(52126602) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,1-tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0
@@ -65,10 +66,18 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,1-tp,false,false,POS_FACEUP_DEFENSE)
 	end
 end
-function s.hnddestg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.drwtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,tp,1)
+	Duel.SetTargetPlayer(1-tp)
+	Duel.SetTargetParam(2)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,1-tp,2)
+	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,1-tp,1)
 end
-function s.hnddesop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT|REASON_DISCARD)
+function s.drwop(e,tp,eg,ep,ev,re,r,rp)
+	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
+	if Duel.Draw(p,d,REASON_EFFECT)>0 then
+		Duel.ShuffleHand(p)
+		Duel.BreakEffect()
+		Duel.DiscardHand(p,nil,1,1,REASON_EFFECT|REASON_DISCARD)
+	end
 end

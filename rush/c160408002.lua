@@ -1,9 +1,10 @@
--- トライアド・ドラゴ
+--トライアド・ドラゴ
 --Triad Drago
 local s,id=GetID()
 function s.initial_effect(c)
 	--Draw 1 card
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DRAW)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
@@ -18,7 +19,7 @@ function s.cfilter(c)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsLevelAbove,7),tp,0,LOCATION_MZONE,1,nil)
-		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,2,nil)
+		and Duel.GetMatchingGroupCountRush(s.cfilter,tp,LOCATION_MZONE,0,nil)==2
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end

@@ -56,7 +56,7 @@ function s.selfspcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.rmvfiler,tp,LOCATION_MZONE|LOCATION_GRAVE,0,e:GetHandler())
 	if chk==0 then return #g>=2 and aux.SelectUnselectGroup(g,e,tp,2,2,aux.ChkfMMZ(1),0) end
 	local rg=aux.SelectUnselectGroup(g,e,tp,2,2,aux.ChkfMMZ(1),1,tp,HINTMSG_REMOVE)
-	Duel.Remove(g,POS_FACEUP,REASON_COST)
+	Duel.Remove(rg,POS_FACEUP,REASON_COST)
 end
 function s.selfsptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

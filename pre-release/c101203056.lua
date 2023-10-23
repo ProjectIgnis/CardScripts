@@ -22,12 +22,11 @@ function s.tgfilter(c,tp)
 	return c:IsType(TYPE_XYZ) and c:IsSetCard(SET_RAIDRAPTOR) and c:IsFaceup() and c:IsCanBeXyzMaterial(nil,tp,REASON_EFFECT)
 end
 function s.rescon(sg,e,tp,mg)
-	if not sg:IsExists(Card.IsLocation,1,nil,LOCATION_MZONE) then return false end
-	return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,sg:GetSum(Card.GetRank))
+	return sg:IsExists(Card.IsLocation,1,nil,LOCATION_MZONE) and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,sg:GetSum(Card.GetRank))
 end
 function s.spfilter(c,e,tp,rk)
-	if not (c:IsType(TYPE_XYZ) and c:IsSetCard(SET_RAIDRAPTOR) and c:IsRank(rk) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)) then return false end
-	return not c.rum_limit or g:IsExists(function(mc) return c.rum_limit(mc,e) end,1,nil) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0	
+	return c:IsType(TYPE_XYZ) and c:IsSetCard(SET_RAIDRAPTOR) and c:IsRank(rk) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
+		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and (not c.rum_limit or g:IsExists(function(mc) return c.rum_limit(mc,e) end,1,nil))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

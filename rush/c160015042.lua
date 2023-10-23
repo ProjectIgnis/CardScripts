@@ -43,6 +43,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		if ct2==1 and Duel.IsExistingMatchingCard(nil,tp,0,LOCATION_ONFIELD,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 			local g=Duel.SelectMatchingCard(tp,nil,tp,0,LOCATION_ONFIELD,1,1,nil)
+			g=g:AddMaximumCheck()
 			Duel.HintSelection(g,true)
 			Duel.BreakEffect()
 			Duel.Destroy(g,REASON_EFFECT)

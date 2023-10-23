@@ -21,5 +21,5 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_REDEYES_B_DRAGON}
 function s.chngcon(scard,sumtype,tp)
-	return (sumtype&MATERIAL_FUSION)~=0
+    return (sumtype&MATERIAL_FUSION)~=0 or (sumtype&SUMMON_TYPE_FUSION)~=0
 end

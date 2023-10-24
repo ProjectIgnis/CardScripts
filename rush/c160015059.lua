@@ -15,7 +15,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c,tp)
-	return c:IsFaceup() and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,c:GetRace()),tp,LOCATION_MZONE,0,1,c)
+	return c:IsFaceup() and Duel.IsExistingMatchingCard(s.cfilter2,tp,LOCATION_MZONE,0,1,c,c) and not c:IsMaximumModeSide()
+end
+function s.cfilter2(c,sc)
+	return c:IsFaceup() and c:IsRace(sc:GetRace()) and not c:IsMaximumModeSide()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil,tp)

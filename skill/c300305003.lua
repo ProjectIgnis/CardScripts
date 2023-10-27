@@ -19,6 +19,7 @@ s.listed_series={SET_ROID}
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 	Duel.Hint(HINT_CARD,tp,id)
+	Duel.RegisterFlagEffect(tp,id+100,0,0,0)
 	Duel.AdjustInstantly()
 	local c=e:GetHandler()
 	--"Vehicroid Connection Zone" can Fusion Summon any 'roid Fusion Monster
@@ -106,8 +107,9 @@ function s.efilter(e,ct)
 end
 --Normal Summon functions
 function s.ntcon(e,c,minc)
+	local tp=e:GetHandlerPlayer()
 	if c==nil then return true end
-	return minc==0 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
+	return Duel.GetFlagEffect(tp,id+100)>0 and minc==0 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
 function s.nttg(e,c)
 	return (c:GetOriginalLevel()==6 or c:GetOriginalLevel()==5)  and c:IsSetCard(SET_ROID)
@@ -117,7 +119,8 @@ function s.atkfilter(c)
 	return c:IsSetCard(SET_ROID) and c:IsRace(RACE_MACHINE) and not c:IsType(TYPE_FUSION) and c:GetOriginalLevel()<7
 end
 function s.atkcon(e)
-	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and Duel.GetAttackTarget()~=nil
+	local tp=e:GetHandlerPlayer()
+	return Duel.GetFlagEffect(tp,id+100)>0 and Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and Duel.GetAttackTarget()~=nil
 end
 function s.atktg(e,c)
 	return s.atkfilter(c) and Duel.GetAttacker()==c
@@ -140,4 +143,5 @@ function s.flipop2(e,tp,eg,ep,ev,re,r,rp)
 		sc:RegisterEffect(Fusion.CreateSummonEff(sc,aux.FilterBoolFunction(Card.IsSetCard,SET_VEHICROID),nil,nil,nil,nil,s.stage2))
 	end
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(2<<32))
+	Duel.ResetFlagEffect(tp,id+100)
 end

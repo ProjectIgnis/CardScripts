@@ -1,5 +1,5 @@
 --熾天の騎士ガイアプロミネンス
---Gaia Prominence, the Kindling Seraph
+--Gaia Prominence, the Fierce Force
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -32,10 +32,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={9709452}
+s.listed_names={9709452} --Gaia Blaze, the Force of the Sun
 s.miracle_synchro_fusion=true
 function s.matfilter(c,fc,sumtype,tp)
-	return c:IsFaceup() and c:IsControler(tp)
+	return c:IsOnField() and c:IsFaceup() and c:IsControler(tp)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local act_loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)

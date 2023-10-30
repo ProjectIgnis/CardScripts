@@ -19,7 +19,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) end
 end
 function s.filter(c)
-	return c:IsFaceup() and c:GetAttack()>0
+	return c:IsFaceup() and not c:IsMaximumModeSide()
 end
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_LIGHT)

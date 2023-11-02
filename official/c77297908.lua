@@ -3,14 +3,15 @@
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--to hand
+	--Search 1 "Abyss Script" Spell
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetCountLimit(1,id)
@@ -18,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
-	--change effect
+	--Change a monster effect to "Destroy 1 Set Spell/Trap your opponent controls"
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EVENT_CHAIN_SOLVING)
@@ -28,16 +29,16 @@ function s.initial_effect(c)
 	e3:SetOperation(s.chop1)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x10ec,0x20ec}
+s.listed_series={SET_ABYSS_ACTOR,SET_ABYSS_SCRIPT}
 function s.cfilter(c)
-	return c:IsSetCard(0x10ec) and c:IsType(TYPE_PENDULUM) and not c:IsPublic()
+	return c:IsSetCard(SET_ABYSS_ACTOR) and c:IsType(TYPE_PENDULUM) and not c:IsPublic()
 end
 function s.cfilter2(c,tp)
-	return c:IsSetCard(0x20ec) and c:IsSpell() and not c:IsPublic()
+	return c:IsSetCard(SET_ABYSS_SCRIPT) and c:IsSpell() and not c:IsPublic()
 		and Duel.IsExistingMatchingCard(s.cfilter3,tp,LOCATION_DECK,0,1,nil,c:GetCode())
 end
 function s.cfilter3(c,code)
-	return c:IsSetCard(0x20ec) and c:IsSpell() and not c:IsCode(code) and c:IsAbleToHand()
+	return c:IsSetCard(SET_ABYSS_SCRIPT) and c:IsSpell() and not c:IsCode(code) and c:IsAbleToHand()
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil)
@@ -63,9 +64,8 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.chcon1(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
-	and Duel.IsExistingMatchingCard(s.confilter,tp,LOCATION_MZONE,0,1,nil)
-	and re:IsActiveType(TYPE_MONSTER)
+	return ep==1-tp and re:IsMonsterEffect()
+		and Duel.IsExistingMatchingCard(s.confilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.chop1(e,tp,eg,ep,ev,re,r,rp)
 	local g=Group.CreateGroup()
@@ -73,7 +73,7 @@ function s.chop1(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChangeChainOperation(ev,s.repop)
 end
 function s.confilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x10ec) and c:IsSummonType(SUMMON_TYPE_PENDULUM)
+	return c:IsFaceup() and c:IsSetCard(SET_ABYSS_ACTOR) and c:IsSummonType(SUMMON_TYPE_PENDULUM)
 end
 function s.desfilter(c)
 	return c:IsFacedown() and c:IsSpellTrap()
@@ -83,7 +83,7 @@ function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectMatchingCard(tp,s.desfilter,tp,0,LOCATION_ONFIELD,1,1,nil)
 	if #g>0 then
-		Duel.HintSelection(g)
+		Duel.HintSelection(g,true)
 		Duel.Destroy(g,REASON_EFFECT)
 	end
 end

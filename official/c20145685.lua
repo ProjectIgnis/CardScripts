@@ -52,8 +52,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=g:GetClassCount(Card.GetCode)
 	local rt=math.min(ct,c:GetOverlayCount(),2)
 	if chk==0 then return rt>0 and c:CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	c:RemoveOverlayCard(tp,1,rt,REASON_COST)
-	local ct=Duel.GetOperatedGroup():GetCount()
+	local ct=c:RemoveOverlayCard(tp,1,rt,REASON_COST)
 	e:SetLabel(ct)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

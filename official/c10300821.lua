@@ -52,7 +52,7 @@ function s.negsumtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.negsumop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and c:RemoveOverlayCard(tp,2,2,REASON_EFFECT) then
+	if c:IsRelateToEffect(e) and c:RemoveOverlayCard(tp,2,2,REASON_EFFECT)==2 then
 		Duel.NegateSummon(eg)
 		Duel.Destroy(eg,REASON_EFFECT)
 	end

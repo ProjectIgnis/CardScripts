@@ -25,7 +25,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=sg:GetFirst()
 	if tc then
 		Duel.HintSelection(sg)
-		if tc:RemoveOverlayCard(tp,1,1,REASON_EFFECT) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
+		if tc:RemoveOverlayCard(tp,1,1,REASON_EFFECT)>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
 			and Duel.IsPlayerCanSpecialSummonMonster(tp,511004125,0,TYPES_TOKEN,300,200,1,RACE_THUNDER,ATTRIBUTE_LIGHT) then
 			local token=Duel.CreateToken(tp,511004125)
 			Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)

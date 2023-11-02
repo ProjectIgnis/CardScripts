@@ -3,8 +3,8 @@
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
-	--Xyz Summon
 	c:EnableReviveLimit()
+	--Xyz Summon Procedure
 	Xyz.AddProcedure(c,nil,7,2)
 	--Attribute change
 	local e1=Effect.CreateEffect(c)
@@ -38,12 +38,8 @@ function s.initial_effect(c)
 end
 s.xyz_number=76
 function s.attval(e,c)
-	local att=0
 	local og=e:GetHandler():GetOverlayGroup()
-	for tc in aux.Next(og) do
-		att=att|tc:GetAttribute()
-	end
-	return att
+	return og:GetBitwiseOr(Card.GetAttribute)
 end
 function s.btindes(e,c)
 	return c:IsAttribute(e:GetHandler():GetAttribute())
@@ -56,14 +52,14 @@ function s.mttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(1-tp) and chkc:IsMonster() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsMonster,tp,0,LOCATION_GRAVE,1,nil)
 		and e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_EFFECT) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTACH)
 	local g=Duel.SelectTarget(tp,Card.IsMonster,tp,0,LOCATION_GRAVE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,1,0,0)
 end
 function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and c:RemoveOverlayCard(tp,1,1,REASON_EFFECT) and tc:IsRelateToEffect(e) then
+	if c:IsRelateToEffect(e) and c:RemoveOverlayCard(tp,1,1,REASON_EFFECT)>0 and tc:IsRelateToEffect(e) then
 		Duel.Overlay(c,tc)
 	end
 end

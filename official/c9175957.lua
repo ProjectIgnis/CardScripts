@@ -1,5 +1,5 @@
 -- タリホー！スプリガンズ！
--- Tallyho! Springans!
+-- Tally-ho! Springans
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -9,8 +9,8 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCountLimit(1,id)
 	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E|TIMING_MAIN_END)
+	e1:SetCountLimit(1,id)
 	e1:SetCost(s.thcost)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
@@ -32,7 +32,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	if Duel.CheckRemoveOverlayCard(tp,1,0,1,REASON_COST)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,2))
-		and Duel.RemoveOverlayCard(tp,1,0,1,3,REASON_COST) then
+		and Duel.RemoveOverlayCard(tp,1,0,1,3,REASON_COST)>0 then
 		Duel.SetTargetParam(#Duel.GetOperatedGroup())
 	end
 end
@@ -81,7 +81,7 @@ function s.gthtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.gthop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if not (tc:IsRelateToEffect(e) and tc:RemoveOverlayCard(tp,1,1,REASON_EFFECT)) then return end
+	if not tc:IsRelateToEffect(e) or tc:RemoveOverlayCard(tp,1,1,REASON_EFFECT)<1 then return end
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
 		Duel.SendtoHand(c,nil,REASON_EFFECT)

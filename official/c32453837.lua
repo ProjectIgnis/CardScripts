@@ -3,10 +3,10 @@
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--Xyz Summon
-	Xyz.AddProcedure(c,nil,2,2,nil,nil,99)
 	c:EnableReviveLimit()
-	--Cannotbe destroyed by battle
+	--Xyz Summon Procedure
+	Xyz.AddProcedure(c,nil,2,2,nil,nil,99)
+	--Cannot be destroyed by battle
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -38,7 +38,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.xyz_number=2
-s.counter_place_list={0x1101} --same as the anime version for now. Or 0x120d, according to CCM
+s.counter_place_list={0x1101} --Hallucination Counter
 function s.hcounter(c)
 	return c:IsFaceup() and c:GetCounter(0x1101)>0 and c:GetAttack()>0
 end
@@ -63,7 +63,7 @@ function s.ctdmgop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==1 then
 		--Detach and place 1 counter
 		local c=e:GetHandler()
-		if c:IsRelateToEffect(e) and c:RemoveOverlayCard(tp,1,1,REASON_EFFECT) then
+		if c:IsRelateToEffect(e) and c:RemoveOverlayCard(tp,1,1,REASON_EFFECT)>0 then
 			local cg=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 			if #cg==0 then return end
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_COUNTER)
@@ -75,7 +75,7 @@ function s.ctdmgop(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetType(EFFECT_TYPE_SINGLE)
 				e1:SetCode(EFFECT_DISABLE)
 				e1:SetCondition(function(e) return e:GetHandler():GetCounter(0x1101)>0 end)
-				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+				e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 				tc:RegisterEffect(e1)
 			end
 		end

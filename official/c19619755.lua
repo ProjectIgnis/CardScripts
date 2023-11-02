@@ -3,9 +3,9 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	Pendulum.AddProcedure(c)
-	--scale
+	--Place itself from the GY in the Pendulum Zone
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_SSET)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.pentg)
 	e1:SetOperation(s.penop)
 	c:RegisterEffect(e1)
-	--splimit
+	--You cannot Pendulum Summon, except from the Extra Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetRange(LOCATION_PZONE)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetTargetRange(1,0)
 	e2:SetTarget(s.splimit)
 	c:RegisterEffect(e2)
-	--prevent attack
+	--Monsters cannot attack
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_CANNOT_ATTACK)
@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e3:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e3:SetTarget(s.atktg)
 	c:RegisterEffect(e3)
-	--act limit
+	--Monsters cannot activate their effects
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
 	e4:SetCode(EFFECT_CANNOT_ACTIVATE)
@@ -40,7 +40,7 @@ function s.initial_effect(c)
 	e4:SetTargetRange(1,1)
 	e4:SetValue(s.limval)
 	c:RegisterEffect(e4)
-	--double atk
+	--Double the ATK of monsters on the field
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_FIELD)
 	e5:SetCode(EFFECT_SET_ATTACK_FINAL)

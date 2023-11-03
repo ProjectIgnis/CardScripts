@@ -40,6 +40,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 		--Effect
 		local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 		local ct2=Duel.Draw(p,ct,REASON_EFFECT)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		local g1=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_HAND,0,ct2,ct2,nil)
 		if #g1<1 then return end
 		Duel.BreakEffect()

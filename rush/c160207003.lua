@@ -30,15 +30,15 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,500)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	-- Requirement
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND,0,1,1,nil)
 	if Duel.SendtoGrave(g,REASON_COST)==0 then return end
 	local og=Duel.GetOperatedGroup():GetFirst()
 	-- Effect
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Damage(p,d,REASON_EFFECT)
-	if c:IsMaximumMode() and og:GetLevel()>0 then
+	if e:GetHandler():IsMaximumMode() and og:GetLevel()>0 then
 		Duel.Damage(1-tp,og:GetLevel()*100,REASON_EFFECT)
 	end
 end

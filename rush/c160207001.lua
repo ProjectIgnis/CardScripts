@@ -28,11 +28,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,3,PLAYER_ALL,LOCATION_GRAVE)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	--Requirement
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local dg1=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,3,3,nil)
 	if #dg1==0 then return end
 	Duel.HintSelection(dg1,true)
+	local c=e:GetHandler()
 	if Duel.SendtoDeck(dg1,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 and c:IsMaximumMode() and c:IsAbleToDeck()
 		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		local g=Group.CreateGroup()

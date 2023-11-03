@@ -1,4 +1,4 @@
---Japanese name
+--ペンデュラム・ペンダント
 --Pendulum Pendant
 --scripted by Naim
 local s,id=GetID()
@@ -72,6 +72,7 @@ end
 function s.scltg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_PZONE) end
 	if chk==0 then return Duel.IsExistingTarget(s.sclfilter,tp,LOCATION_PZONE,LOCATION_PZONE,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	Duel.SelectTarget(tp,s.sclfilter,tp,LOCATION_PZONE,LOCATION_PZONE,1,1,nil)
 end
 function s.sclop(e,tp,eg,ep,ev,re,r,rp)

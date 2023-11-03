@@ -35,6 +35,7 @@ function s.fcheck(tp,sg,fc)
 end
 function s.operation(oldop)
 	return function(e,tp,eg,ep,ev,re,r,rp)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		local td=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 		if Duel.SendtoDeck(td,nil,SEQ_DECKSHUFFLE,REASON_COST)==0 then return end
 		oldop(e,tp,eg,ep,ev,re,r,rp)

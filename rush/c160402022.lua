@@ -37,6 +37,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	-- Requirement
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local td=Duel.SelectMatchingCard(tp,Card.IsAbleToDeckOrExtraAsCost,tp,LOCATION_HAND,0,1,1,nil)
 	if #td>0 and Duel.SendtoDeck(td,nil,SEQ_DECKTOP,REASON_COST)>0 then
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) then

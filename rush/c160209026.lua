@@ -38,6 +38,7 @@ function s.spfilter(c,e,tp)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	-- Requirement
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND,0,1,1,nil)
 	if Duel.SendtoGrave(g,REASON_COST)==0 then return end
 	--Effect
@@ -59,4 +60,3 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

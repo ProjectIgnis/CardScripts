@@ -49,6 +49,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 	tc:RegisterEffectRush(e1)
 	if Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_MZONE,0,1,nil,tc) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_APPLYTO)
 		local sc=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_MZONE,0,1,1,nil,tc):GetFirst()
 		if sc then
 			Duel.HintSelection(sc,true)

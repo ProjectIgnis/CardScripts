@@ -3,7 +3,7 @@
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)
-	--recover fusion
+	--Add 1 "Fusion" to the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND)
@@ -15,6 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
 end
+s.listed_names={CARD_FUSION}
 function s.costfilter(c)
 	return c:IsAbleToGraveAsCost() and not c:IsCode(CARD_FUSION)
 end
@@ -45,6 +46,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.GetMatchingGroup(s.thfilter2,tp,LOCATION_GRAVE,0,nil)
 		if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.BreakEffect()
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 			local g2=Duel.SelectMatchingCard(tp,s.thfilter2,tp,LOCATION_GRAVE,0,1,1,nil)
 			if #g2>0 then
 				Duel.SendtoHand(g2,nil,REASON_EFFECT)

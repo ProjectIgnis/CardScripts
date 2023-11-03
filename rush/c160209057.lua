@@ -3,9 +3,10 @@
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Draw
+	-- Draw 3 cards then place 1 card into the Deck
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_DRAW)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_DRAW+CATEGORY_TODECK)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCost(s.drcost)
@@ -22,6 +23,7 @@ end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,3) end
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,3)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_HAND)
 end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
@@ -32,6 +34,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Draw(tp,3,REASON_EFFECT)==3 then
 		Duel.ShuffleHand(tp)
 		Duel.BreakEffect()
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		local g1=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_HAND,0,1,1,nil)
 		if #g1<1 then return end
 		Duel.SendtoDeck(g1,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)

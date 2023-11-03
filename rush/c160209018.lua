@@ -5,6 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Increase ATK
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -33,6 +34,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.HintSelection(g,true)
 	if #g==0 or Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)==0 then return end
 	--Effect
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)
 	if #g>0 then
 		Duel.HintSelection(g,true)
@@ -44,4 +46,3 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		g:GetFirst():RegisterEffectRush(e1)
 	end
 end
-

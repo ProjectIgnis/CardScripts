@@ -30,15 +30,21 @@ s.listed_series={SET_FIRE_KING}
 function s.desfilter(c,e,tp)
 	return (c:IsControler(1-tp) or (c:IsFaceup() and c:IsSetCard(SET_FIRE_KING))) and c:IsCanBeEffectTarget(e)
 end
-function s.desrescon(sg,e,tp,mg)
-	return sg:FilterCount(Card.IsControler,nil,tp)==sg:FilterCount(Card.IsControler,nil,1-tp)
+function s.desrescon(maxc)
+	return function(sg,e,tp,mg)
+		local ct1=sg:FilterCount(Card.IsControler,nil,tp)
+		local ct2=#sg-ct1
+		return ct1==ct2,ct1>maxc or ct2>maxc
+	end
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	if chk==0 then return Duel.IsExistingTarget(aux.FaceupFilter(Card.IsSetCard,SET_FIRE_KING),tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingTarget(nil,tp,0,LOCATION_ONFIELD,1,nil) end
 	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE,LOCATION_ONFIELD,nil,e,tp)
-	local tg=aux.SelectUnselectGroup(g,e,tp,2,#g,s.desrescon,1,tp,HINTMSG_DESTROY,s.desrescon)
+	local ct=g:FilterCount(Card.IsControler,nil,tp)
+	local rescon=s.desrescon(math.min(ct,#g-ct))
+	local tg=aux.SelectUnselectGroup(g,e,tp,2,#g,rescon,1,tp,HINTMSG_DESTROY,rescon)
 	Duel.SetTargetCard(tg)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tg,#tg,0,0)
 end

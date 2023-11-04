@@ -34,7 +34,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 					e1:SetType(EFFECT_TYPE_SINGLE)
 					e1:SetCode(EFFECT_CHANGE_RACE)
 					e1:SetValue(function() return race end)
-					e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+					e1:SetReset(RESET_EVENT+|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 					tc:RegisterEffectRush(e1)
 				end
 			end

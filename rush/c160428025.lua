@@ -31,7 +31,6 @@ function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetMatchingGroupCount(Card.IsCanChangePositionRush,tp,LOCATION_MZONE,0,nil)==Duel.GetFieldGroupCountRush(tp,LOCATION_MZONE,0) end
 end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
-	--Requirement
 	--Effect
 	local g=Duel.GetMatchingGroup(Card.IsCanChangePositionRush,tp,LOCATION_MZONE,0,nil)
 	if #g>0 and Duel.ChangePosition(g,POS_FACEUP_DEFENSE,POS_FACEDOWN_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)>0
@@ -48,7 +47,7 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(atk)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 			tc:RegisterEffectRush(e1)
 		end
 	end
@@ -59,7 +58,6 @@ function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_GRAVE)
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
-	--Requirement
 	--Effect
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,0,LOCATION_GRAVE,1,7,nil)

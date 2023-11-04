@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(0,1)
 	e2:SetCondition(s.condition2)
-	e2:SetValue(s.actlimit)
+	e2:SetValue(function(e,re,tp) return re:IsMonsterEffect() end)
 	c:RegisterEffect(e2)
 end
 function s.filter(c)
@@ -31,7 +31,4 @@ function s.condition(e)
 end
 function s.condition2(e)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,TYPE_MAXIMUM),e:GetHandlerPlayer(),0,LOCATION_MZONE,1,nil) 
-end
-function s.actlimit(e,re,tp)
-	return re:IsActiveType(TYPE_MONSTER)
 end

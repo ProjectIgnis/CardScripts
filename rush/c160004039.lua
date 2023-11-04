@@ -21,10 +21,11 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.SelectMatchingCard(tp,s.rvfilter,tp,LOCATION_HAND,0,1,1,nil,tp):GetFirst()
-	if not tg the return end
+	if not tg then return end
 	Duel.ConfirmCards(1-tp,tg)
 	Duel.ShuffleHand(tp)
 	if Duel.GetMatchingGroupCount(aux.FilterMaximumSideFunctionEx(s.attfilter,tg:GetRace()),tp,LOCATION_MZONE,LOCATION_MZONE,nil,tg:GetAttribute())>0 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_APPLYTO)
 		local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.attfilter,tg:GetRace()),tp,LOCATION_MZONE,LOCATION_MZONE,1,3,nil,tg:GetAttribute())
 		if #g>0 then
 			Duel.HintSelection(g,true)

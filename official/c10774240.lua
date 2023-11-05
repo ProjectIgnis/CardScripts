@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCondition(function(e) return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,101203019),e:GetHandlerPlayer(),LOCATION_ONFIELD|LOCATION_GRAVE,0,1,nil) end)
+	e1:SetCondition(function(e) return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,25801745),e:GetHandlerPlayer(),LOCATION_ONFIELD|LOCATION_GRAVE,0,1,nil) end)
 	e1:SetValue(2050)
 	c:RegisterEffect(e1)
 	--Search 1 "Sileforc" monster, or 1 Warrior or Dragon Ritual Monster
@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.negop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={101203066,101203019}
+s.listed_names={52472775,25801745}
 s.listed_series={SET_SILENFORC}
 function s.thfilter(c)
 	return ((c:IsSetCard(SET_SILENFORC) and c:IsMonster()) or (c:IsRace(RACE_WARRIOR|RACE_DRAGON) and c:IsRitualMonster())) and c:IsAbleToHand()
@@ -57,7 +57,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==1-tp and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,101203019),tp,LOCATION_ONFIELD,0,1,nil)
+	return rp==1-tp and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,25801745),tp,LOCATION_ONFIELD,0,1,nil)
 		and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)

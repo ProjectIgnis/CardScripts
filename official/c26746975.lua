@@ -46,7 +46,7 @@ function s.initial_effect(c)
 	e4:SetValue(s.immvalue)
 	c:RegisterEffect(e4)
 end
-s.listed_names={25955164,62340868,98434877,101203063}
+s.listed_names={25955164,62340868,98434877,53194323}
 function s.tdfilter(c)
 	return c:IsCode(CARDS_SANGA_KAZEJIN_SUIJIN) and c:IsAbleToDeckAsCost() and (c:IsFaceup() or c:IsLocation(LOCATION_HAND|LOCATION_GRAVE))
 end
@@ -80,7 +80,7 @@ function s.spprocop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	if re:GetHandler():IsCode(101203063) then
+	if re:GetHandler():IsCode(53194323) then
 		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD&~RESET_TEMP_REMOVE,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,1))
 	end
 end

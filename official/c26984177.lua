@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.drop)
 	c:RegisterEffect(e4)
 end
-s.listed_names={CARD_PHARAONIC_SARCOPHAGUS,101203018}
+s.listed_names={CARD_PHARAONIC_SARCOPHAGUS,99307040}
 s.listed_series={SET_HORUS}
 function s.thfilter(c)
 	return c:IsSetCard(SET_HORUS) and c:IsMonster() and c:IsAbleToHand()
@@ -65,7 +65,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local code1,code2=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_CODE,CHAININFO_TRIGGERING_CODE2)
-	return ep==tp and (code1==101203018 or code2==101203018)
+	return ep==tp and (code1==99307040 or code2==99307040)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end

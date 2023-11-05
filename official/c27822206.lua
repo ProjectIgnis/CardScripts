@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_END_PHASE)
-	e1:SetCondition(function(e,tp) return Duel.HasFlagEffect(tp,id) and not Duel.HasFlagEffect(tp,id+100) end)
+	e1:SetCondition(function(e,tp) return Duel.HasFlagEffect(tp,id) and not Duel.HasFlagEffect(tp,id+1) end)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 	--Add this card to your hand
@@ -44,8 +44,8 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.HasFlagEffect(tp,id+100) then return end
-	Duel.RegisterFlagEffect(tp,id+100,RESET_PHASE|PHASE_END,0,1)
+	if Duel.HasFlagEffect(tp,id+1) then return end
+	Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_END,0,1)
 	local turn_ct=Duel.GetTurnCount()
 	local ct=Duel.IsTurnPlayer(tp) and Duel.IsBattlePhase() and 2 or 1
 	--Can conduct your next Battle Phase twice

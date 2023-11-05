@@ -1,5 +1,5 @@
 --嗤う黒山羊
---Rumble Teufel
+--Rumpel Teufel
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

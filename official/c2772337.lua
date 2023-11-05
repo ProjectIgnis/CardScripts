@@ -1,5 +1,5 @@
 --賜炎の咎姫
---Prisoner Princess of Fruitful Flames
+--Promethean Princess, Bestower of Flames
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

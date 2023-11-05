@@ -55,7 +55,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND|LOCATION_DECK|LOCATION_EXTRA,0,1,1,nil,e,tp,Duel.GetLocationCount(tp,LOCATION_MZONE)):GetFirst()
 	if not sc then return end
-	local code_chk=sc:IsCode(101203013) and e:GetHandler():IsCode(id)
+	local code_chk=sc:IsCode(26746975) and e:GetHandler():IsCode(id)
 	if Duel.SpecialSummon(sc,0,tp,tp,true,false,POS_FACEUP)>0 and code_chk then
 		sc:CompleteProcedure()
 	end

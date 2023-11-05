@@ -38,7 +38,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=not Duel.HasFlagEffect(tp,id) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE|LOCATION_REMOVED,0,1,nil,e,tp)
 	--Fusion Summon using monsters from either field as material, including a "Yubel" monster
-	local b2=not Duel.HasFlagEffect(tp,id+100) and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_YUBEL),tp,LOCATION_ONFIELD,0,1,nil)
+	local b2=not Duel.HasFlagEffect(tp,id+1) and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_YUBEL),tp,LOCATION_ONFIELD,0,1,nil)
 		and c:IsAbleToGraveAsCost() and c:IsStatus(STATUS_EFFECT_ENABLED)
 		and Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil)
 		and fustg(e,tp,eg,ep,ev,re,r,rp,0)
@@ -56,7 +56,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD)
 		Duel.SendtoGrave(c,REASON_COST)
 		fustg(e,tp,eg,ep,ev,re,r,rp,1)
-		Duel.RegisterFlagEffect(tp,id+100,RESET_PHASE|PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_END,0,1)
 	end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)

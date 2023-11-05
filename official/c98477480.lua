@@ -39,14 +39,14 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-s.listed_names={101203019,id}
+s.listed_names={25801745,id}
 s.listed_series={SET_SILENFORC,SET_SKULL_GUARDIAN}
 function s.ritfilter(c)
 	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRitualMonster() and c:IsFaceup()
 end
 function s.effcon(e)
 	local tp=e:GetHandlerPlayer()
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,101203019),tp,LOCATION_ONFIELD,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,25801745),tp,LOCATION_ONFIELD,0,1,nil)
 		and Duel.IsExistingMatchingCard(s.ritfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.thfilter(c)

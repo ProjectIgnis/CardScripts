@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-s.listed_names={4810828,56350972,101203037}
+s.listed_names={4810828,56350972,10774240}
 function s.ritmatfilter(c)
 	return c:IsAttribute(ATTRIBUTE_LIGHT)
 end
@@ -33,7 +33,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsCode(4810828,56350972,101203037) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsCode(4810828,56350972,10774240) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

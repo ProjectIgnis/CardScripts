@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--Shuffle monsters into deck
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TODECK)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
@@ -44,6 +44,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local g1=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.tdfilter1),tp,LOCATION_MZONE,0,1,1,nil)
 	if #g1==0 then return end
 	g1=g1:AddMaximumCheck()
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g2=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.tdfilter2),tp,0,LOCATION_MZONE,1,1,nil)
 	if #g2==0 then return end
 	g2=g2:AddMaximumCheck()

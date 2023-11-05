@@ -5,6 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Change the position of an opponent's monster and gain 500 ATK
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_POSITION+CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
@@ -43,7 +44,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_PHASE|PHASE_END)
 			e1:SetValue(500)
 			c:RegisterEffect(e1)
 			if dg:GetFirst():IsMonster() then
@@ -54,12 +55,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 				e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 				e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 				e2:SetValue(s.indval)
-				e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+				e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 				c:RegisterEffect(e2)
 			end
 		end
 	end
 end
 function s.indval(e,re,rp)
-	return re:IsActiveType(TYPE_TRAP) and re:GetOwnerPlayer()~=e:GetOwnerPlayer()
+	return re:IsTrapEffect() and re:GetOwnerPlayer()~=e:GetOwnerPlayer()
 end

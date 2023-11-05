@@ -44,16 +44,17 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local tg=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND,0,2,2,nil)
 	if Duel.SendtoGrave(tg,REASON_COST)==2 then
 		local dg=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_ONFIELD,nil)
 		if #dg>0 then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 			local sg=dg:Select(tp,1,1,nil)
 			sg=sg:AddMaximumCheck()
 			Duel.HintSelection(sg,true)
 			Duel.Destroy(sg,REASON_EFFECT)
-			if c:IsMaximumMode() then
+			if e:GetHandler():IsMaximumMode() then
 				Duel.BreakEffect()
 				local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 				Duel.Draw(p,d,REASON_EFFECT)

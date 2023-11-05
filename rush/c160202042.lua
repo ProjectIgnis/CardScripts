@@ -1,6 +1,5 @@
 --コズミックストリング・ヌードルイダス
 --Cosmic String Noodle-Druidess
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Destroy all level 7 or lower monsters on the field
@@ -35,7 +34,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local tg=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND,0,2,2,nil)
 	if Duel.SendtoGrave(tg,REASON_COST)==2 then
 		local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)

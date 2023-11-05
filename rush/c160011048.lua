@@ -40,6 +40,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--requirement
 	if Duel.DiscardDeck(tp,3,REASON_COST)>2 then
 		--Effect
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
 		local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.filter,tp),tp,0,LOCATION_MZONE,1,1,nil)
 		if #g>0 then
 			g=g:AddMaximumCheck()

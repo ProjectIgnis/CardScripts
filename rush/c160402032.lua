@@ -43,6 +43,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,CARD_STRAYNGE_CAT) 
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) 
 		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_APPLYTO)
 		local g2=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)
 		if #g2>0 then
 			Duel.HintSelection(g2,true)
@@ -60,4 +61,3 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

@@ -18,6 +18,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={CARD_FUSION}
+s.named_material={160015003}
 function s.matfilter(c,scard,sumtype,tp)
 	return c:IsAttribute(ATTRIBUTE_LIGHT|ATTRIBUTE_DARK,scard,sumtype,tp) and c:IsRace(RACE_GALAXY,scard,sumtype,tp)
 end

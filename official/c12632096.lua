@@ -27,7 +27,7 @@ function s.ctcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local rt=math.min(Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsAbleToChangeControler),tp,0,LOCATION_MZONE,nil),Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_CONTROL),c:GetOverlayCount(),3)
 	if chk==0 then return rt>0 and c:CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	local ct=c.RemoveOverlayCard(tp,1,rt,REASON_COST)
+	local ct=c:RemoveOverlayCard(tp,1,rt,REASON_COST)
 	e:SetLabel(ct)
 end
 function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -38,7 +38,7 @@ function s.initial_effect(c)
 end
 s.listed_names={id}
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	local g=eg:Filter(Card.IsCode,nil,id)
+	local g=eg:Filter(Card.IsOriginalCode,nil,id)
 	for tc in g:Iter() do
 		tc:ResetFlagEffect(id)
 		tc:RegisterFlagEffect(511001124,RESET_EVENT|RESETS_STANDARD,0,1)

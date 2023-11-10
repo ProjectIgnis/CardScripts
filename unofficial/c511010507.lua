@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.zarcop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={13331639,41209827,82044279,16195942,16178681}
+s.listed_names={CARD_ZARC,41209827,82044279,16195942,16178681}
 local ZARC_LOC=LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_EXTRA+LOCATION_DECK
 function s.spcfilter(c,e,tp)
 	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD)
@@ -96,7 +96,7 @@ function s.zarccost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.zarcspfilter(c,e,tp,sg)
-	return c:IsCode(13331639) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,sg+e:GetHandler(),c)>0
+	return c:IsCode(CARD_ZARC) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,sg+e:GetHandler(),c)>0
 end
 function s.chk(c,sg,g,code,...)
 	if not c:IsCode(code) then return false end
@@ -129,8 +129,8 @@ function s.zarctg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.zarcop(e,tp,eg,ep,ev,re,r,rp)
 	local rg=Duel.GetMatchingGroup(aux.NecroValleyFilter(Card.IsAbleToRemove),tp,ZARC_LOC,0,nil):Filter(Card.IsCode,nil,41209827,82044279,16195942,16178681)
-	local g=aux.SelectUnselectGroup(rg,e,tp,4,4,s.rescon,1,tp,HINTMSG_REMOVE,nil,nil,true)
-	if Duel.Remove(g,POS_FACEUP,REASON_EFFECT)>3 then
+	local g=aux.SelectUnselectGroup(rg,e,tp,4,4,s.rescon,1,tp,HINTMSG_REMOVE)
+	if Duel.Remove(g,POS_FACEUP,REASON_EFFECT)>=4 and g:FilterCount(aux.AND(Card.IsFaceup,Card.IsLocation),nil,LOCATION_REMOVED)>=4 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local tc=Duel.SelectMatchingCard(tp,s.zarcspfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,g):GetFirst()
 		if tc and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0 and tc:IsOriginalCode(511009441) then

@@ -34,12 +34,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SendtoDeck(dg,nil,0,REASON_EFFECT)==0 then return end
 	local tc=dg:GetFirst()
 	local sp=tc:GetOwner()
-	local named_material_count=tc.min_material_count
-	if tc.named_material then named_material_count=math.min(named_material_count,#tc.named_material) end
-	if Duel.GetLocationCount(sp,LOCATION_MZONE)<named_material_count then return end
+	--cannot summon anything if not all the materials are specifically named
+	if tc.named_material and #tc.named_material~=tc.min_material_count then return end
+	if Duel.GetLocationCount(sp,LOCATION_MZONE)<tc.min_material_count then return end
 	local sg=Duel.GetMatchingGroup(s.sumfilter,sp,LOCATION_GRAVE,0,nil,e,sp,tc)
-	if aux.SelectUnselectGroup(sg,e,sp,named_material_count,named_material_count,s.rescon(tc),0) and Duel.SelectYesNo(sp,aux.Stringid(id,1)) then
-		local spg=aux.SelectUnselectGroup(sg,e,sp,named_material_count,named_material_count,s.rescon(tc),1,sp,HINTMSG_SPSUMMON)
+	if aux.SelectUnselectGroup(sg,e,sp,tc.min_material_count,tc.min_material_count,s.rescon(tc),0) and Duel.SelectYesNo(sp,aux.Stringid(id,1)) then
+		local spg=aux.SelectUnselectGroup(sg,e,sp,tc.min_material_count,tc.max_material_count,s.rescon(tc),1,sp,HINTMSG_SPSUMMON)
 		if #spg>0 then
 			Duel.BreakEffect()
 			Duel.SpecialSummon(spg,0,sp,sp,false,false,POS_FACEUP)

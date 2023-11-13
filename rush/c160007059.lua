@@ -38,7 +38,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local sg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE,0,nil,e,tp)
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-			local sc=sg:Select(1,1,nil):GetFirst()
+			local sc=sg:Select(tp,1,1,nil):GetFirst()
 			if sc then
 				Duel.BreakEffect()
 				Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)

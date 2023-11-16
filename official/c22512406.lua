@@ -1,7 +1,8 @@
 --覆面忍者ヱビス
+--Masked Ninja Ebisu
 local s,id=GetID()
 function s.initial_effect(c)
-	--destroy
+	--Return Spells/Traps your opponent controls to the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND)
@@ -13,39 +14,37 @@ function s.initial_effect(c)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x2b}
-s.listed_names={10236520}
-function s.cfilter1(c)
-	return c:IsFaceup() and c:IsSetCard(0x2b) and c:GetCode()~=id
+s.listed_series={SET_NINJA}
+s.listed_names={id,10236520}
+function s.confilter(c)
+	return c:IsSetCard(SET_NINJA) and c:IsFaceup() and not c:IsCode(id)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.cfilter1,tp,LOCATION_MZONE,0,1,nil)
-end
-function s.filter(c)
-	return c:IsSpellTrap() and c:IsAbleToHand()
+	return Duel.IsExistingMatchingCard(s.confilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then
-		local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0x2b),tp,LOCATION_MZONE,0,nil)
-		local dt=Duel.GetMatchingGroupCount(s.filter,tp,0,LOCATION_ONFIELD,nil)
-		e:SetLabel(ct)
-		return dt>=ct
-	end
-	local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_ONFIELD,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,e:GetLabel(),0,0)
+	local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,SET_NINJA),tp,LOCATION_MZONE,0,nil)
+	if chk==0 then return ct>0 and Duel.IsExistingMatchingCard(aux.AND(Card.IsSpellTrap,Card.IsAbleToHand),tp,0,LOCATION_ONFIELD,ct,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,ct,1-tp,LOCATION_ONFIELD)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0x2b),tp,LOCATION_MZONE,0,nil)
-	local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_ONFIELD,nil)
-	if ct>#g then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-	local sg=g:Select(tp,ct,ct,nil)
-	Duel.SendtoHand(sg,nil,REASON_EFFECT)
-	local e1=Effect.CreateEffect(e:GetHandler())
+	local c=e:GetHandler()
+	--Each of your "Goe Goe the Gallant Ninja" can attack directly this turn
+	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_DIRECT_ATTACK)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetTarget(aux.TargetBoolFunction(Card.IsCode,10236520))
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
+	aux.RegisterClientHint(c,0,tp,1,0,aux.Stringid(id,1))
+	local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,SET_NINJA),tp,LOCATION_MZONE,0,nil)
+	if ct==0 then return end
+	local g=Duel.GetMatchingGroup(aux.AND(Card.IsSpellTrap,Card.IsAbleToHand),tp,0,LOCATION_ONFIELD,nil)
+	if ct>#g then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
+	local sg=g:Select(tp,ct,ct,nil)
+	if #sg==0 then return end
+	Duel.HintSelection(sg,true)
+	Duel.SendtoHand(sg,nil,REASON_EFFECT)
 end

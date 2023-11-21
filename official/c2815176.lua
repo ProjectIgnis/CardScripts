@@ -1,9 +1,10 @@
 --ヴァルモニカの神異－ゼブフェーラ
---Divine Oddity of Valmonica – Zebufera
+--Zebufera, Vaalmonican Hallow Heathen
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
+	--Can only Special Summon "Zebufera, Vaalmonican Hallow Heathen" once per turn
 	c:SetSPSummonOnce(id)
 	--Link Summon procedure
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_EFFECT),1,1)
@@ -13,14 +14,13 @@ function s.initial_effect(c)
 	e0:SetCode(EFFECT_SPSUMMON_COST)
 	e0:SetCost(s.spcost)
 	c:RegisterEffect(e0)
-	--Remove 3 Resonance Counters from your Pendulum Zone instead of destroying this card
+	--Remove 3 Resonance Counters from your Pendulum Zone instead of a card you control being destroyed
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EFFECT_DESTROY_REPLACE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTarget(s.reptg)
-	e1:SetOperation(s.repop)
+	e1:SetValue(function(e,_c) return s.repfilter(_c,e:GetHandlerPlayer()) end)
 	c:RegisterEffect(e1)
 	--Apply the effect of 1 "Valmonica" Normal Spell/Trap that is banished or in your GY
 	local e2=Effect.CreateEffect(c)
@@ -46,14 +46,14 @@ function s.spcost(e,c,tp,st)
 	if (st&SUMMON_TYPE_LINK)~=SUMMON_TYPE_LINK then return true end
 	return Duel.IsExistingMatchingCard(s.spcfilter,tp,LOCATION_PZONE,0,1,nil)
 end
-function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_BATTLE|REASON_EFFECT)
-		and Duel.IsCanRemoveCounter(tp,1,0,COUNTER_RESONANCE,3,REASON_EFFECT) end
-	return Duel.SelectEffectYesNo(tp,c,96)
+function s.repfilter(c,tp)
+	return c:IsControler(tp) and c:IsOnField() and c:IsReason(REASON_BATTLE|REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
 end
-function s.repop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.RemoveCounter(tp,1,0,COUNTER_RESONANCE,3,REASON_EFFECT)
+function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return eg:IsExists(s.repfilter,1,nil,tp) and Duel.IsCanRemoveCounter(tp,1,0,COUNTER_RESONANCE,3,REASON_EFFECT) end
+	if Duel.SelectEffectYesNo(tp,e:GetHandler(),96) then
+		return Duel.RemoveCounter(tp,1,0,COUNTER_RESONANCE,3,REASON_EFFECT)
+	else return false end
 end
 function s.cpfilter(c)
 	return c:IsSetCard(SET_VALMONICA) and (c:IsNormalSpell() or c:IsNormalTrap())

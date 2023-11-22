@@ -84,7 +84,7 @@ function s.fishfilter(c,e,tp)
 		and (c:IsAbleToDeck() or c:IsCanBeSpecialSummoned(e,0,tp,false,false))
 end
 function s.rescon(sg,e,tp,mg)
-	return sg:CheckSameProperty(Card.GetCode) and #sg==2 and sg:IsExists(s.spcheck,1,nil,sg,e,tp)
+	return sg:GetClassCount(Card.GetCode)==1 and #sg==2 and sg:IsExists(s.spcheck,1,nil,sg,e,tp)
 end
 function s.spcheck(c,sg,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and (sg-c):GetFirst():IsAbleToDeck()
@@ -94,7 +94,7 @@ function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.GetMatchingGroup(s.fishfilter,tp,LOCATION_GRAVE,0,nil,e,tp)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and #g>=2 and aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0) end
-	local tg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,s.rescon,tp,HINTMSG_TARGET)
+	local tg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_TARGET)
 	Duel.SetTargetCard(tg)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,tg,1,tp,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,tg,1,tp,0)

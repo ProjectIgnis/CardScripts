@@ -676,6 +676,7 @@ FLAG_DOUBLE_TRIB_200_DEF=160012015 -- Green-Eyes Star Cat
 FLAG_DOUBLE_TRIB_NORMAL=160319014 -- Light Effigy
 FLAG_DOUBLE_TRIB_LEVEL8=160015035 -- Darkness Doom Giant
 FLAG_DOUBLE_TRIB_WYRM=160015011 -- Demolition Soldier Ashiba Bikke
+FLAG_DOUBLE_TRIB_FIEND=160210078 -- Royal Rebel's Guardian
 function Card.AddDoubleTribute(c,id,otfilter,eftg,reset,...)
 	for i,flag in ipairs{...} do
 		c:RegisterFlagEffect(flag,reset,0,1)

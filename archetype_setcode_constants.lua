@@ -549,3 +549,4 @@ SET_HEART                         = 0x207
 SET_YUBEL                         = 0x19d
 SET_SILENFORC                     = 0x19e
 SET_WHITE_AURA                    = 0x119f
+SET_TOY                           = 0x1a0

@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.qpovop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={82105704}
+s.listed_names={82105704} --Purrely Happy Memory
 s.listed_series={SET_PURRELY}
 function s.thfilter(c)
 	return c:IsSetCard(SET_PURRELY) and c:IsAbleToHand()
@@ -64,7 +64,7 @@ end
 function s.qpovcon(e,tp,eg,ep,ev,re,r,rp)
 	if rp==1-tp or not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return false end
 	local rc=re:GetHandler()
-	return rc:IsSetCard(SET_PURRELY) and rc:GetType()==TYPE_SPELL+TYPE_QUICKPLAY
+	return rc:IsSetCard(SET_PURRELY) and rc:IsQuickPlaySpell()
 		and rc:IsOnField() and rc:IsCanBeXyzMaterial(e:GetHandler(),tc,REASON_EFFECT)
 end
 function s.qpovtg(e,tp,eg,ep,ev,re,r,rp,chk)

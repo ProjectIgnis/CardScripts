@@ -56,7 +56,7 @@ function s.matfilter(c,fc,sub,sub2,mg,sg,tp,contact,sumtype)
 	return true
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION) and re and re:IsActiveType(TYPE_SPELL)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION) and re and re:IsSpellEffect()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local hc,fc=table.unpack(e:GetLabelObject())

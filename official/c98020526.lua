@@ -62,7 +62,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		sg=g:Select(tp,1,1,nil,e,tp)
 		if #sg==0 or Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)==0 then return end
 	elseif op==2 then
-		Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_END,0,1)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		sg=Duel.SelectMatchingCard(tp,s.rmfilter,tp,0,LOCATION_GRAVE+LOCATION_MZONE,1,1,nil)
 		if #sg==0 then return end

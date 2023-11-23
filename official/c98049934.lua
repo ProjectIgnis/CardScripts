@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.qpovop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={29599813}
+s.listed_names={29599813} --Purrely Pretty Memory
 s.listed_series={SET_PURRELY}
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:IsHasType(EFFECT_TYPE_QUICK_O)==e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,29599813)
@@ -71,7 +71,7 @@ end
 function s.qpovcon(e,tp,eg,ep,ev,re,r,rp)
 	if rp==1-tp or not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return false end
 	local rc=re:GetHandler()
-	return rc:IsSetCard(SET_PURRELY) and rc:GetType()==TYPE_SPELL+TYPE_QUICKPLAY
+	return rc:IsSetCard(SET_PURRELY) and rc:IsQuickPlaySpell()
 		and rc:IsOnField() and rc:IsCanBeXyzMaterial(e:GetHandler(),tc,REASON_EFFECT)
 end
 function s.qpovtg(e,tp,eg,ep,ev,re,r,rp,chk)

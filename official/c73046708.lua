@@ -37,7 +37,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local eqc=g:Filter(Card.IsLocation,nil,LOCATION_GRAVE):GetFirst()
 	if tc and eqc then
 		if not tc:EquipByEffectAndLimitRegister(e,tp,eqc,nil,true) then return end
-		local atk=eqc:GetTextAttack()
+		local atk=eqc:GetBaseAttack()
 		local att=eqc:GetAttribute()
 		--Equip limit
 		local e0=Effect.CreateEffect(eqc)

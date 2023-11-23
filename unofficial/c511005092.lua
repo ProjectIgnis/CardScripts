@@ -336,6 +336,10 @@ if not SealedDuel then
 				end
 			end
 		end
+		local tck0=Duel.CreateToken(0,946)
+		xyztempg0:AddCard(tck0)
+		local tck1=Duel.CreateToken(1,946)
+		xyztempg1:AddCard(tck1)
 	end
 	finish_setup()
 end

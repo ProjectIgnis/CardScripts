@@ -8,7 +8,6 @@
 	Remove any cards that are unaffected by the currently resolving effect from the group of cards to be attached.
 	If all the cards to be attached are unaffected by the currently resolving effect then return early.
 	Proceed as usual with the attaching otherwise.
---]]
 Duel.Overlay=(function()
 	local oldfunc=Duel.Overlay
 	return function(xyz_monster,xyz_mats,send_to_grave)
@@ -24,6 +23,7 @@ Duel.Overlay=(function()
 		return oldfunc(xyz_monster,xyz_mats,send_to_grave)
 	end
 end)()
+--]]
 
 --If a Token Card object isn't on the field anymore then it cannot be targeted by an effect
 Card.IsCanBeEffectTarget=(function()

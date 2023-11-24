@@ -1,5 +1,30 @@
 --Utilities to be added to the core
 
+--[[
+	If called while an effect isn't resolving (e.g. a regular Xyz Summon or through an effect like "Wonder Xyz") then proceed as usual with the attaching.
+	If called while an effect is resolving treat it as attaching by card effect and handle the relevant rulings.
+	Attaching by card effect is ruled to affect both the Xyz Monster and the cards that are to be attached.
+	Return early if the Xyz Monster is unaffected by the currently resolving effect.
+	Remove any cards that are unaffected by the currently resolving effect from the group of cards to be attached.
+	If all the cards to be attached are unaffected by the currently resolving effect then return early.
+	Proceed as usual with the attaching otherwise.
+--]]
+Duel.Overlay=(function()
+	local oldfunc=Duel.Overlay
+	return function(xyz_monster,xyz_mats,send_to_grave)
+		if not Duel.IsChainSolving() then return oldfunc(xyz_monster,xyz_mats,send_to_grave) end
+		local trig_eff=Duel.GetChainInfo(0,CHAININFO_TRIGGERING_EFFECT)
+		if xyz_monster:IsImmuneToEffect(trig_eff) then return end
+		if type(xyz_mats)=="Group" then
+			xyz_mats:Match(aux.NOT(Card.IsImmuneToEffect),nil,trig_eff)
+			if #xyz_mats==0 then return end
+		elseif type(xyz_mats)=="Card" and xyz_mats:IsImmuneToEffect(trig_eff) then
+			return
+		end
+		return oldfunc(xyz_monster,xyz_mats,send_to_grave)
+	end
+end)()
+
 --If a Token Card object isn't on the field anymore then it cannot be targeted by an effect
 Card.IsCanBeEffectTarget=(function()
 	local oldfunc=Card.IsCanBeEffectTarget

@@ -69,13 +69,17 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		dg=dg:AddMaximumCheck()
 		Duel.HintSelection(dg,true)
 		if Duel.Destroy(dg,REASON_EFFECT)>0 and dg:GetFirst():IsMonster() and dg:GetFirst():GetLevel()>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+			local atk=dg:GetFirst():GetLevel()*200
+			if dg:GetFirst():WasMaximumMode() then
+				atk=dg:Filter(Card.WasMaximumModeCenter,nil):GetFirst():GetLevel()*200
+			end
 			local c=e:GetHandler()
 			-- Gain 200 ATK x the level of the destroyed monster
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_PHASE|PHASE_END)
-			e1:SetValue(dg:GetFirst():GetLevel()*200)
+			e1:SetValue(atk)
 			c:RegisterEffectRush(e1)
 		end
 	end

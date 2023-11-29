@@ -166,6 +166,9 @@ end
 function Card.IsNotMaximumModeSide(c)
 	return not c:HasFlagEffect(FLAG_MAXIMUM_SIDE)
 end
+function Card.WasMaximumModeCenter(c)
+	return c:HasFlagEffect(FLAG_MAXIMUM_CENTER_PREONFIELD)
+end
 function Card.WasMaximumModeSide(c)
 	return c:HasFlagEffect(FLAG_MAXIMUM_SIDE_PREONFIELD)
 end

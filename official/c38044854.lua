@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetCondition(function(e,tp) return Duel.IsMainPhase() or (Duel.IsTurnPlayer(1-tp) and Duel.IsBattlePhase()) end)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 end
 s.listed_series={SET_RAIDRAPTOR}
 function s.tgfilter(c,tp)
@@ -46,6 +46,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tg:GetSum(Card.GetRank)):GetFirst()
 	if sc and Duel.SpecialSummon(sc,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP)>0 then
+		sc:CompleteProcedure()
 		tg=tg:Match(aux.NOT(Card.IsImmuneToEffect),nil,e)
 		if #tg==0 then return end
 		Duel.Overlay(sc,tg)

@@ -28,7 +28,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.damcon(e,re,val,r,rp,rc)
 	local cc=Duel.GetCurrentChain()
-	if cc==0 or bit.band(r,REASON_EFFECT)==0 then return val end
+	if cc==0 or r&REASON_EFFECT==0 then return val end
 	local cid=Duel.GetChainInfo(0,CHAININFO_CHAIN_ID)
 	if cid==e:GetLabel() then return 0 else return val end
 end

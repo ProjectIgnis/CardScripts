@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--Special Summon
+	--Special Summon 1 "Dark Magician" or "Dark Magician Girl" from the GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -25,31 +25,35 @@ function s.initial_effect(c)
 	local g=Group.CreateGroup()
 	g:KeepAlive()
 	e2:SetLabelObject(g)
-	--Mass register
+	--Register the summons of 1 "Dark Magician" or "Dark Magician Girl"
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EVENT_SUMMON_SUCCESS)
 	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e3:SetRange(LOCATION_FZONE)
 	e3:SetLabelObject(e2)
+	e3:SetCondition(s.regcon)
 	e3:SetOperation(s.regop)
 	c:RegisterEffect(e3)
 	local e4=e3:Clone()
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e4)
 end
-s.listed_names={48680970,CARD_DARK_MAGICIAN,CARD_DARK_MAGICIAN_GIRL}
+s.listed_names={48680970,CARD_DARK_MAGICIAN,CARD_DARK_MAGICIAN_GIRL} --Eternal Soul
 function s.filter(c)
 	return c:IsCode(48680970) and c:IsSSetable()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK,0,nil)
 	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 		local sg=g:Select(tp,1,1,nil)
 		Duel.SSet(tp,sg)
 	end
+end
+function s.regcon(e,tp,eg,ep,ev,re,r,rp)
+	local ph=Duel.GetCurrentPhase()
+	return ph<PHASE_DAMAGE or ph>PHASE_DAMAGE_CAL
 end
 function s.spfilter(c,e,tp,code)
 	return c:IsCode(CARD_DARK_MAGICIAN,CARD_DARK_MAGICIAN_GIRL) and not c:IsCode(code)
@@ -63,8 +67,8 @@ end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=eg:Filter(s.cfilter,nil,e,tp)
 	if #tg>0 then
-		for tc in aux.Next(tg) do
-			tc:RegisterFlagEffect(id,RESET_CHAIN+RESET_EVENT+RESETS_STANDARD,0,1)
+		for tc in tg:Iter() do
+			tc:RegisterFlagEffect(id,RESET_CHAIN|RESET_EVENT|RESETS_STANDARD,0,1)
 		end
 		local g=e:GetLabelObject():GetLabelObject()
 		if Duel.GetCurrentChain()==0 then g:Clear() end
@@ -88,7 +92,6 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

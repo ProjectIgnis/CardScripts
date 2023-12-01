@@ -1619,7 +1619,8 @@ function Auxiliary.GetRaceStrings(v)
 		[RACE_DIVINE] = 1041,
 		[RACE_CREATORGOD] = 1042,
 		[RACE_WYRM] = 1043,
-		[RACE_CYBERSE] = 1044
+		[RACE_CYBERSE] = 1044,
+		[RACE_ILLUSION] = 1045
 	}
 	local res={}
 	local ct=0

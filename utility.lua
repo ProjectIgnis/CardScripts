@@ -2041,20 +2041,6 @@ function Duel.ActivateFieldSpell(c,e,tp,eg,ep,ev,re,r,rp,target_p)
 	return false
 end
 
-function Duel.IsMainPhase()
-	local phase=Duel.GetCurrentPhase()
-	return phase==PHASE_MAIN1 or phase==PHASE_MAIN2
-end
-
-function Duel.IsBattlePhase()
-	local phase=Duel.GetCurrentPhase()
-	return phase>=PHASE_BATTLE_START and phase<=PHASE_BATTLE
-end
-
-function Duel.IsTurnPlayer(player)
-	return Duel.GetTurnPlayer()==player
-end
-
 function Duel.GoatConfirm(tp,loc)
 	local dg,hg=Duel.GetFieldGroup(tp,loc&(LOCATION_HAND|LOCATION_DECK),0):Split(Card.IsLocation,nil,LOCATION_DECK)
 	Duel.ConfirmCards(tp,dg)

@@ -39,7 +39,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		and Duel.IsExistingMatchingCard(s.silenforcfilter,tp,LOCATION_DECK,0,1,nil,e,tp,Duel.GetLocationCount(tp,LOCATION_MZONE))
 	local c=e:GetHandler()
 	local ct=Duel.GetMatchingGroupCount(s.cfilter,tp,LOCATION_MZONE,0,nil)
-	local b2=ct>0 and Duel.IsExistingTarget(nil,tp,0,LOCATION_ONFIELD,1,nil) and c:IsStatus(STATUS_EFFECT_ENABLED)
+	local b2=ct>0 and Duel.IsExistingTarget(nil,tp,0,LOCATION_ONFIELD,1,nil)
 	if chk==0 then return b1 or b2 end
 	local op=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,1)},

@@ -8,11 +8,18 @@ s.listed_series={SET_ELEMENTAL_HERO}
 --Fusion Summon Functions
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--condition
-	return aux.CanActivateSkill(tp) and Duel.GetFlagEffect(ep,id)==0 and s.fusTarget(e,tp,eg,ep,ev,re,r,rp,0)
+	return aux.CanActivateSkill(tp) and Duel.GetFlagEffect(tp,id)==0 and s.fusTarget(e,tp,eg,ep,ev,re,r,rp,0)
+end
+function s.listedmatfilter(c,fusc)
+    	return c:IsFaceup() and fusc:ListsCodeAsMaterial(c:GetCode())
 end
 function s.fusfilter(c,e,tp,m,f,chkf)
-	return c:IsType(TYPE_FUSION) and (not f or f(c)) and c:IsSetCard(SET_ELEMENTAL_HERO)
-		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial(m,nil,chkf)
+	if not (c:IsType(TYPE_FUSION) and c:IsSetCard(SET_ELEMENTAL_HERO) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false)) then return false end
+    	if c.min_material_count>2 and Duel.IsExistingMatchingCard(s.listedmatfilter,tp,LOCATION_MZONE,0,2,nil,c) then
+        	local dg=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_DECK,0,nil,e,c)
+        	matg:Merge(dg)
+    	end
+    	return (not f or f(c)) and c:CheckFusionMaterial(matg,nil,chkf)
 end
 function s.cfilter(c,e,tp)
 	if not c:IsDiscardable() then return false end
@@ -41,7 +48,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	--Fusion Summon "Elemental HERO" Fusion monster
 	local g2=s.fusTarget(e,tp,eg,ep,ev,re,r,rp,0)
 	--OPD Register
-	Duel.RegisterFlagEffect(ep,id,0,0,0)
+	Duel.RegisterFlagEffect(tp,id,0,0,0)
 	--Fusion Procedure
 	s.fusTarget(e,tp,eg,ep,ev,re,r,rp,1)
 	local chkf=tp

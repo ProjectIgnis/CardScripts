@@ -68,7 +68,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.desfilter(c,fid)
-	return c:GetFlagEffectLabel(25935625)==fid
+	return c:GetFlagEffectLabel(id)==fid
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetTurnPlayer()~=tp then return end

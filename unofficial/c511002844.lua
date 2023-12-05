@@ -73,6 +73,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	                token:RegisterEffect(e8)
 		end
 	        Duel.SpecialSummonComplete()
+	end
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

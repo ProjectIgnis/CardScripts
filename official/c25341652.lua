@@ -53,6 +53,7 @@ function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if Duel.SelectEffectYesNo(tp,e:GetHandler(),96) then
 		local g=eg:Filter(s.repfilter,nil,tp)
 		e:SetLabelObject(g)
+		g:KeepAlive()
 		return true
 	else return false end
 end
@@ -61,4 +62,5 @@ function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	for tc in g:Iter() do
 		tc:RemoveOverlayCard(tp,1,1,REASON_EFFECT)
 	end
+	g:DeleteGroup()
 end

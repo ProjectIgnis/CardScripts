@@ -1,4 +1,4 @@
---Japanese name
+--ＳＰＹＲＡＬ－ダブルフェイク
 --SPYRAL Double Agent
 --scripted by Naim
 local s,id=GetID()

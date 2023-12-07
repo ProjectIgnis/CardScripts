@@ -1,4 +1,4 @@
---Japanese name
+--クロノダイバー・パワーリザーブ
 --Time Thief Power Reserve
 --scripted by Naim
 local s,id=GetID()

@@ -1,4 +1,4 @@
---Japanese name
+--召煌女クインクエリ
 --Imperial Princess Quinquery
 --scripted by Naim
 local s,id=GetID()

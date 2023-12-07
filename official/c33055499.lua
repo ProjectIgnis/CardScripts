@@ -1,4 +1,4 @@
---Japanese name
+--地雷蜘蛛の餌食
 --Prey of the Jirai Gumo
 --scripted by Naim
 local s,id=GetID()

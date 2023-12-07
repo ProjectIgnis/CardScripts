@@ -1,4 +1,4 @@
---Japanese name
+--ゴーティスの妖精シフ
 --Shif, Fairy of the Ghoti
 --scripted by Naim
 local s,id=GetID()

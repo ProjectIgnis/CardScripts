@@ -1,4 +1,4 @@
---Japanese name
+--聖騎士と聖剣の巨城
 --Camelot, Realm of Noble Knights and Noble Arms
 --scripted by Naim
 local s,id=GetID()

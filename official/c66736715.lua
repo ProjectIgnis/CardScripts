@@ -1,4 +1,4 @@
---Japanese name
+--彗聖の将－ワンモア・ザ・ナイト
 --Moissa Knight, the Comet General
 --scripted by Naim
 local s,id=GetID()

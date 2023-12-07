@@ -1,4 +1,4 @@
---Japanese name
+--ピットナイト・アーリィ
 --Pitknight Earlie
 --scripted by Naim
 local s,id=GetID()

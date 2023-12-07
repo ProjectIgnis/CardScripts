@@ -1,4 +1,4 @@
---Japanese name
+--奇異界開
 --How Did Dai Get Here?
 --scripted by Naim
 local s,id=GetID()

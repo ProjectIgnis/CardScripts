@@ -1,4 +1,4 @@
---Japanese name
+--金雲獣－馬龍
 --Golden Cloud Beast - Malong
 --scripted by Naim
 local s,id=GetID()

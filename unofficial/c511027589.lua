@@ -1,0 +1,18 @@
+--ドラゴン・シールド (anime)
+--Dragon Shield (anime)
+local s,id=GetID()
+function s.initial_effect(c)
+	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsRace,RACE_DRAGON))
+	--indes
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_EQUIP)
+	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+	e1:SetValue(1)
+	c:RegisterEffect(e1)
+	local e2=e1:Clone()
+	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+	c:RegisterEffect(e2)
+	local e3=e1:Clone()
+	e3:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
+	c:RegisterEffect(e3)
+end

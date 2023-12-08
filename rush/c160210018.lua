@@ -28,7 +28,7 @@ end
 function s.filter(c)
 	return c:IsFaceup() and c:IsLevelBelow(8)
 end
-function s.cfilter2(c)
+function s.cfilter(c)
 	return c:IsFaceup() and c:IsCode(CARD_HARPIE_LADY,160208002) and not c:IsMaximumModeSide()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)

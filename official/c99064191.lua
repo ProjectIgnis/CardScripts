@@ -43,7 +43,7 @@ end
 function s.activate1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if e:GetLabel()~=1 or not c:IsRelateToEffect(e) then return end
-	local ct=Duel.GetChainInfo(0,CHAININFO_CHAIN_COUNT)
+	local ct=Duel.GetCurrentChain()
 	local te=Duel.GetChainInfo(ct-1,CHAININFO_TRIGGERING_EFFECT)
 	local tc=te:GetHandler()
 	if Duel.NegateEffect(ct-1) and tc:IsRelateToEffect(te) then

@@ -26,7 +26,6 @@ function s.target1(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(0)
 	local ct=Duel.GetCurrentChain()
 	if ct==1 then return end
-	local ct=Duel.GetCurrentChain()
 	local te=Duel.GetChainInfo(ct-1,CHAININFO_TRIGGERING_EFFECT)
 	local tc=te:GetHandler()
 	if te:GetCode()==EVENT_SUMMON_SUCCESS and te:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ct-1)
@@ -43,7 +42,7 @@ function s.activate1(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()~=1 then return end
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	local ct=Duel.GetChainInfo(0,CHAININFO_CHAIN_COUNT)
+	local ct=Duel.GetCurrentChain()
 	Duel.NegateActivation(ct-1)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Draw(p,d,REASON_EFFECT)

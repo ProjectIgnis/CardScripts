@@ -25,8 +25,11 @@ end
 function s.condition2(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsSpellEffect()
 end
+function s.filter1(c,tp)
+	return c:IsSummonPlayer(1-tp)
+end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return ep==1-tp
+	return eg:IsExists(s.filter1,1,nil,tp)
 end
 function s.costfilter(c)
 	return c:IsRace(RACE_WINGEDBEAST) and c:IsFaceup() and c:IsAbleToGraveAsCost() and not c:IsMaximumModeSide()

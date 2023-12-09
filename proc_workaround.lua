@@ -25,30 +25,6 @@ Duel.Overlay=(function()
 end)()
 --]]
 
---Raises the EVENT_CONFIRM event when a card is revealed (used by "Vanquish Soul Jiaolong")
---Raises the EVENT_TOHAND_CONFIRM event when a card in the hand is revealed (used by "Puppet King" and "Puppet Queen")
-Duel.ConfirmCards=(function()
-	local oldfunc=Duel.ConfirmCards
-	return function(player,reveal_group,reveal_player,reason,...)
-		local res=oldfunc(player,reveal_group,...)
-		reveal_player=reveal_player or 1-player
-		reason=reason or (Duel.IsChainSolving() and REASON_EFFECT or REASON_COST)
-		local triggering_eff=Duel.GetChainInfo(0,CHAININFO_TRIGGERING_EFFECT)
-		if type(reveal_group)=="Card" then reveal_group=Group.FromCards(reveal_group) end
-		for tc in reveal_group:Iter() do
-			Duel.RaiseSingleEvent(tc,EVENT_CONFIRM,triggering_eff,reason,reveal_player,reveal_player,0)
-		end
-		Duel.RaiseEvent(reveal_group,EVENT_CONFIRM,triggering_eff,reason,reveal_player,reveal_player,0)
-		if Duel.CheckEvent(EVENT_TO_HAND) then
-			local handg=Group.CreateGroup():Merge(reveal_group):Match(Card.IsLocation,nil,LOCATION_HAND)
-			if #handg>0 then
-				Duel.RaiseEvent(handg,EVENT_TOHAND_CONFIRM,triggering_eff,reason,reveal_player,reveal_player,0)
-			end
-		end
-		return res
-	end
-end)()
-
 --Remove counter from only 1 card if it is the only card with counter
 local p_rem=Duel.RemoveCounter
 function Duel.RemoveCounter(tp,s,o,counter,...)

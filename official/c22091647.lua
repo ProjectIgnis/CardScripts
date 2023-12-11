@@ -44,14 +44,15 @@ function s.initial_effect(c)
 end
 	--Check for equip spell to banish
 function s.spfilter(c,tp)
-	return c:IsAbleToRemoveAsCost() and c:IsType(TYPE_EQUIP) and c:IsSpell() and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
+	return c:IsAbleToRemoveAsCost() and c:IsEquipSpell() and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
 end
 	--Cost of banishing from field/GY
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetFlagEffect(id)==0
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_SZONE+LOCATION_GRAVE,0,1,nil,tp) end
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
-	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_SZONE+LOCATION_GRAVE,0,1,1,nil,tp)
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_SZONE|LOCATION_GRAVE,0,1,nil,tp) end
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_SZONE|LOCATION_GRAVE,0,1,1,nil,tp)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 	--Activation legality
@@ -67,11 +68,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,1,tp,tp,false,false,POS_FACEUP)
 end
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
-	local g=e:GetHandler():GetEquipGroup():Filter(s.eqconfilter,nil)
+	local g=e:GetHandler():GetEquipGroup():Filter(Card.HasFlagEffect,nil,id)
 	return Duel.GetAttacker()==e:GetHandler() and #g==0
-end
-function s.eqconfilter(c)
-	return c:GetFlagEffect(id)~=0 
 end
 function s.eqfilter(c,tp)
 	return c:IsFaceup() and (c:IsControler(tp) or c:IsAbleToChangeControler()) and c:CheckUniqueOnField(tp) and not c:IsForbidden()
@@ -83,13 +81,13 @@ function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.equipop(c,e,tp,tc)
 	if not c:EquipByEffectAndLimitRegister(e,tp,tc,id) then return end
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_EQUIP)
-	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_OWNER_RELATE)
-	e2:SetCode(EFFECT_UPDATE_ATTACK)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-	e2:SetValue(500)
-	tc:RegisterEffect(e2)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_EQUIP)
+	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_OWNER_RELATE)
+	e1:SetCode(EFFECT_UPDATE_ATTACK)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
+	e1:SetValue(500)
+	tc:RegisterEffect(e1)
 end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -102,7 +100,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Monster effect is activated, and this card isn't about to die
 function s.ngcon(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and re:IsActiveType(TYPE_MONSTER)
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and re:IsMonsterEffect()
 		and Duel.IsChainNegatable(ev)
 end
 	--Check for equip spell
@@ -129,4 +127,3 @@ function s.ngop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(eg,REASON_EFFECT)
 	end
 end
-

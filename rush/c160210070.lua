@@ -21,7 +21,7 @@ function s.filter(c,tp)
 		and (c:IsReason(REASON_EFFECT) or (c:IsReason(REASON_BATTLE) and Duel.GetAttacker():IsControler(1-tp)))
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil,tp)
+	return eg:IsExists(s.filter,1,nil,tp)
 end
 function s.cfilter(c)
 	return c:IsCode(CARD_HARPIE_LADY,160208002) and c:IsAbleToDeckOrExtraAsCost()

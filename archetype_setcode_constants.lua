@@ -545,8 +545,10 @@ SET_SINFUL_SPOILS                 = 0x204
 SET_SNAKE_EYE                     = 0x205
 SET_PATISSCIEL                    = 0x206
 SET_HEART                         = 0x207
---Pre-release archetypes
 SET_YUBEL                         = 0x19d
 SET_SILENFORC                     = 0x19e
 SET_WHITE_AURA                    = 0x119f
+--Pre-release archetypes
 SET_TOY                           = 0x1a0
+SET_TENPAI_DRAGON                 = 0x1a1
+SET_SANGEN                        = 0x1a2

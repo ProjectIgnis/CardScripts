@@ -31,8 +31,8 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetTargetRange(0,1)
-	e3:SetValue(1)
 	e3:SetCondition(s.btlcond)
+	e3:SetValue(1)
 	c:RegisterEffect(e3)
 	--Negate the effects of your opponent's monsters if the equipped monster battles
 	local e4=Effect.CreateEffect(c)
@@ -72,5 +72,5 @@ function s.drwop(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.btlcond(e)
 	local ec=e:GetHandler():GetEquipTarget()
-	return Duel.GetAttacker()==ec or Duel.GetAttackTarget()==ec
+	return ec and (Duel.GetAttacker()==ec or Duel.GetAttackTarget()==ec)
 end

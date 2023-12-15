@@ -1,5 +1,5 @@
 --ＶＳパンテラ
---Vanquish Soul Panthera
+--Vanquish Soul Pantera
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -53,7 +53,7 @@ function s.vsrescon(sg)
 end
 function s.vstg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local cg1=Duel.GetMatchingGroup(s.vscostfilter,tp,LOCATION_HAND,0,nil,ATTRIBUTE_EARTH)
-	local b1=#cg1>0
+	local b1=#cg1>0 and (Duel.IsAbleToEnterBP() or Duel.IsBattlePhase())
 	local cg2=cg1+Duel.GetMatchingGroup(s.vscostfilter,tp,LOCATION_HAND,0,nil,ATTRIBUTE_FIRE)
 	local colg=e:GetHandler():GetColumnGroup():Match(Card.IsSpellTrap,nil)
 	local b2=#colg>0 and aux.SelectUnselectGroup(cg2,e,tp,1,2,s.vsrescon,0)
@@ -81,7 +81,7 @@ function s.vsop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	local op=e:GetLabel()
 	if op==1 and c:IsFaceup() then
-		--Cannot be destroyed by card effects
+		--Cannot be destroyed by battle
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(3000)
 		e1:SetType(EFFECT_TYPE_SINGLE)

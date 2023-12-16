@@ -16,7 +16,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.tgfilter(c,e,tp)
-	return c:IsCanBeEffectTarget(e) and c:IsFaceup() and (c:IsControler(1-tp) or c:IsRace(RACE_REPTILE))
+	return c:IsCanBeEffectTarget(e) and c:IsFaceup()
+		and ((c:IsControler(tp) and c:IsRace(RACE_REPTILE))
+		or (c:IsControler(1-tp) and (c:IsCanTurnSet() or c:GetAttack()>0)))
 end
 function s.rescon(sg,e,tp,mg)
 	if sg:GetClassCount(Card.GetControler)~=2 then return false end
@@ -29,7 +31,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0) end
 	local tg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_FACEUP)
 	Duel.SetTargetCard(tg)
-	local self_g,opp_g=g:Split(Card.IsControler,nil,tp)
+	local self_g,opp_g=tg:Split(Card.IsControler,nil,tp)
 	local b1=tg:IsExists(Card.IsCanChangePosition,2,nil)
 	local b2=opp_g:GetFirst():GetAttack()>0
 	local op=Duel.SelectEffect(tp,

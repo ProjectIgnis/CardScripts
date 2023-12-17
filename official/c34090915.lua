@@ -52,6 +52,8 @@ end
 s.listed_series={SET_BYSTIAL}
 function s.cfilter(c,e)
 	return c:IsAttribute(ATTRIBUTE_DARK|ATTRIBUTE_LIGHT) and c:IsFaceup()
+		and c:GetPreviousTypeOnField()&TYPE_MONSTER>0
+		and c:GetPreviousAttributeOnField()&(ATTRIBUTE_DARK|ATTRIBUTE_LIGHT)>0
 		and c:IsAbleToDeck() and not c:IsType(TYPE_TOKEN) and c:IsCanBeEffectTarget(e)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)

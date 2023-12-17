@@ -4,8 +4,8 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:RegisterFlagEffect(FLAG_TRIPLE_TRIBUTE,0,0,1)
-	--Summon with Darkness Doom Giant
-	local e0=aux.AddNormalSummonProcedure(c,true,true,1,1,SUMMON_TYPE_TRIBUTE+1,aux.Stringid(id,2),s.otfilter)
+	--Summon with 1 Tribute treated as 3
+	local e1=aux.AddNormalSummonProcedure(c,true,true,1,1,SUMMON_TYPE_TRIBUTE+1,aux.Stringid(id,2),s.otfilter)
 	--Summon with 3 tribute
 	local e1=aux.AddNormalSummonProcedure(c,true,true,3,3,SUMMON_TYPE_TRIBUTE+1,aux.Stringid(id,0))
 	--summon/set with 1 tribute
@@ -44,7 +44,13 @@ function s.valcheck(e,c)
 	local atk=0
 	for tc in g:Iter() do
 		local lvl=tc:GetOriginalLevel()
-		atk=atk+lvl*100
+		if #g==1 then
+			atk=atk+lvl*100*3
+		elseif #g==2 and tc:HasFlagEffect(FLAG_HAS_DOUBLE_TRIBUTE) then
+			atk=atk+lvl*100*2
+		else
+			atk=atk+lvl*100
+		end
 	end
 	if e:GetLabel()==1 then
 		local e1=Effect.CreateEffect(c)

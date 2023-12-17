@@ -4,6 +4,8 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:RegisterFlagEffect(FLAG_TRIPLE_TRIBUTE,0,0,1)
+	--Summon with Darkness Doom Giant
+	local e0=aux.AddNormalSummonProcedure(c,true,true,1,1,SUMMON_TYPE_TRIBUTE+1,aux.Stringid(id,2),s.otfilter)
 	--Summon with 3 tribute
 	local e1=aux.AddNormalSummonProcedure(c,true,true,3,3,SUMMON_TYPE_TRIBUTE+1,aux.Stringid(id,0))
 	--summon/set with 1 tribute
@@ -21,6 +23,9 @@ function s.initial_effect(c)
 	e4:SetOperation(s.facechk)
 	e4:SetLabelObject(e3)
 	c:RegisterEffect(e4)
+end
+function s.otfilter(c)
+	return c:HasFlagEffect(160015135) and c:IsFaceup()
 end
 function s.otop(g,e,tp,eg,ep,ev,re,r,rp,c,minc,zone,relzone,exeff)
 	--change base attack

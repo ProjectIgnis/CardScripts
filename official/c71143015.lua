@@ -15,8 +15,11 @@ s.listed_names={CARD_BLUEEYES_W_DRAGON,23995346}
 function s.ffilter(c)
 	return c:ListsCodeAsMaterial(CARD_BLUEEYES_W_DRAGON,23995346)
 end
+function s.fcheck(tp,sg,fc)
+	return sg:IsExists(Card.IsCode,1,nil,CARD_BLUEEYES_W_DRAGON,23995346)
+end
 function s.fextra(e,tp,mg)
-	return Duel.GetMatchingGroup(aux.NecroValleyFilter(Fusion.IsMonsterFilter(Card.IsAbleToDeck)),tp,LOCATION_GRAVE,0,nil)
+	return Duel.GetMatchingGroup(aux.NecroValleyFilter(Fusion.IsMonsterFilter(Card.IsAbleToDeck)),tp,LOCATION_GRAVE,0,nil),s.fcheck
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsMainPhase()
@@ -41,6 +44,6 @@ function s.desop(e,tc,tp,mg,chk)
 end
 function s.extrtarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,0,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,0,tp,LOCATION_HAND|LOCATION_MZONE|LOCATION_GRAVE)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_DESTROY,nil,0,1-tp,LOCATION_ONFIELD)
 end

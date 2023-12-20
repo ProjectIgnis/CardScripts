@@ -66,7 +66,7 @@ end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsMainPhase() and e:GetHandler():IsContinuousTrap()
 end
-function s.costfilter(c,ft,tp)
+function s.costfilter(c,tp)
 	return c:IsSetCard(SET_HERO) and Duel.GetMZoneCount(tp,c)>0
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -51,7 +51,7 @@ function s.initial_effect(c)
 end
 s.curgroup=nil
 function s.closed_sky_filter(c)
-	return not (c:HasFlagEffect(100200249) and #c:GetCardTarget()>0)
+	return not (c:HasFlagEffect(71818935) and #c:GetCardTarget()>0)
 end
 function s.extracon(c,e,tp,sg,mg,lc,og,chk)
 	if not s.curgroup then return true end

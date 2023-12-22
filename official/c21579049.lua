@@ -32,11 +32,11 @@ function s.fishsyncfilter(c)
 end
 function s.desfilter(c,e,tp,fishsync)
 	return c:IsRace(RACE_FISH) and c:IsFaceup()
-		and Duel.IsExistingMatchingCard(s.thspfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c,c:GetCode(),fishsync)
+		and Duel.IsExistingMatchingCard(s.thspfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetCode(),fishsync and Duel.GetMZoneCount(tp,c)>0)
 end
-function s.thspfilter(c,e,tp,des_c,code,fishsync)
+function s.thspfilter(c,e,tp,code,fishsync_mzone)
 	return c:IsCode(code) and c:IsMonster() and (c:IsAbleToHand() or
-		(fishsync and Duel.GetMZoneCount(tp,des_c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
+		(fishsync_mzone and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local fishsync=e:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsExistingMatchingCard(s.fishsyncfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -57,16 +57,15 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local code=tc:GetCode()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsRace(RACE_FISH) and Duel.Destroy(tc,REASON_EFFECT)>0 then
-		local fishsync=e:GetLabel()==1
-		local hint_msg=fishsync and aux.Stringid(id,2) or HINTMSG_ATOHAND
+		local fishsync_mzone=e:GetLabel()==1 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		local hint_msg=fishsync_mzone and aux.Stringid(id,2) or HINTMSG_ATOHAND
 		Duel.Hint(HINT_SELECTMSG,tp,hint_msg)
-		local sc=Duel.SelectMatchingCard(tp,s.thspfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,nil,code,fishsync):GetFirst()
+		local sc=Duel.SelectMatchingCard(tp,s.thspfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,code,fishsync_mzone):GetFirst()
 		if not sc then return end
-		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-		if fishsync and ft>0 and sc:IsCanBeSpecialSummoned(e,0,tp,false,false) then
+		if fishsync_mzone and sc:IsCanBeSpecialSummoned(e,0,tp,false,false) then
 			aux.ToHandOrElse(sc,tp,
 				function(sc)
-					return fishsync and ft>0 and sc:IsCanBeSpecialSummoned(e,0,tp,false,false)
+					return fishsync_mzone and sc:IsCanBeSpecialSummoned(e,0,tp,false,false)
 				end,
 				function(sc)
 					return Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)
@@ -101,7 +100,7 @@ function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)
-	if #g==0 then return end
+	if #g~=2 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local td=g:FilterSelect(tp,Card.IsAbleToDeck,1,1,nil)
 	if #td==0 then return end

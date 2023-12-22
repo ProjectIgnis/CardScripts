@@ -81,7 +81,6 @@ function s.initial_effect(c)
 	e3b:SetOperation(s.stregop)
 	c:RegisterEffect(e3b)
 end
---Gain LP equal to the total original ATK of the destroyed monsters
 function s.lptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local value=e:GetLabelObject():GetSum(Card.GetBaseAttack)
 	if chk==0 then return value>0 end
@@ -111,7 +110,6 @@ function s.atkregop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+id,e,0,tp,tp,0)
 	end
 end
---Increase the ATK of a monster special summoned from the GY by 1000
 function s.atkfilter(c,e,tp)
 	return c:IsFaceup() and c:IsCanBeEffectTarget(e) and c:IsLocation(LOCATION_MZONE)
 		and c:IsSummonLocation(LOCATION_GRAVE) and c:IsPreviousControler(tp)
@@ -156,7 +154,6 @@ function s.regsumop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+id+1,e,0,tp,tp,0)
 	end
 end
---Add 1 discarded Spell/Trap to your hand
 function s.thfilter(c,e,tp)
 	return c:IsSpellTrap() and c:IsCanBeEffectTarget(e) and c:IsLocation(LOCATION_GRAVE)
 		and c:IsAbleToHand() and c:IsControler(tp) and c:IsPreviousControler(tp)

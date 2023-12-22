@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={id,id+100} --"Division", "Machine Token"
+s.listed_names={id,id+1} --"Division", "Machine Token"
 function s.tkncost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsCode,id),tp,LOCATION_MZONE,0,nil)
 	if chk==0 then return #g==g:FilterCount(Card.IsReleasable,nil) and Duel.GetMZoneCount(tp,g)>0 end
@@ -35,19 +35,19 @@ function s.tkncost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(#g*2)
 end
 function s.tkntg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return Duel.IsPlayerCanSpecialSummonMonster(tp,id+100,0,TYPES_TOKEN,200,200,1,RACE_MACHINE,ATTRIBUTE_FIRE) end
+	if chk==0 then return Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,200,200,1,RACE_MACHINE,ATTRIBUTE_FIRE) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 end
 function s.tknop(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.IsPlayerCanSpecialSummonMonster(tp,id+100,0,TYPES_TOKEN,200,200,1,RACE_MACHINE,ATTRIBUTE_FIRE) then return end
+	if not Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,200,200,1,RACE_MACHINE,ATTRIBUTE_FIRE) then return end
 	local ft=math.min(e:GetLabel(),Duel.GetLocationCount(tp,LOCATION_MZONE))
 	if ft==0 then return end
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
 	local c=e:GetHandler()
 	local ct=Duel.AnnounceNumberRange(tp,1,ft)
 	for i=1,ct do
-		local token=Duel.CreateToken(tp,id+100)
+		local token=Duel.CreateToken(tp,id+1)
 		if Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP) then
 			--Inflict 500 damage when the tokens are destroyed
 			local e1=Effect.CreateEffect(c)

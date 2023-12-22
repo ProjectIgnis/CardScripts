@@ -26,9 +26,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.lvop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={100304013} --"Electrode Beast Anion"
+s.listed_names={58680635} --"Electrode Beast Anion"
 function s.thfilter(c)
-	return c:IsCode(100304013) and c:IsAbleToHand()
+	return c:IsCode(58680635) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,nil) end

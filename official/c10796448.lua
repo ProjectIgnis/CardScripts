@@ -40,6 +40,7 @@ function s.initial_effect(c)
 	e4:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	c:RegisterEffect(e4)
 end
+s.listed_names={id}
 function s.matfilter(c)
 	return c:IsPosition(POS_FACEDOWN_DEFENSE) and c:IsLocation(LOCATION_MZONE) and c:IsDefenseBelow(2500)
 end

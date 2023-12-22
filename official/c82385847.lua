@@ -2,11 +2,11 @@
 --Dinowrestler Pankratops
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special summon this card from the hand
+	--Special Summon this card from your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
+	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(s.spcon)
@@ -29,12 +29,18 @@ end
 s.listed_series={SET_DINOWRESTLER}
 function s.spcon(e,c)
 	if c==nil then return true end
-	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
-		and Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,0,nil)<Duel.GetFieldGroupCount(c:GetControler(),0,LOCATION_MZONE,nil)
+	local tp=c:GetControler()
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)<Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)
+end
+function s.descostfilter(c,tp)
+	if not c:IsSetCard(SET_DINOWRESTLER) then return false end
+	local exg=c:GetEquipGroup()+c
+	return Duel.IsExistingTarget(nil,tp,0,LOCATION_ONFIELD,1,exg)
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,nil,SET_DINOWRESTLER) end
-	local sg=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,nil,nil,SET_DINOWRESTLER)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.descostfilter,1,false,nil,nil,tp) end
+	local sg=Duel.SelectReleaseGroupCost(tp,s.descostfilter,1,1,false,nil,nil,tp)
 	Duel.Release(sg,REASON_COST)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

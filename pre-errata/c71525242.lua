@@ -1,5 +1,5 @@
---破滅竜ガンドラＸ
---Gandora-X the Dragon of Demolition
+--破滅竜ガンドラＸ (Pre-Errata)
+--Gandora-X the Dragon of Demolition (Pre-Errata)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Destroy as many other monsters on the field as possible
@@ -39,13 +39,13 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local exc=c:IsRelateToEffect(e) and c or nil
 	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_MZONE,LOCATION_MZONE,exc)
 	if #g==0 or Duel.Destroy(g,REASON_EFFECT)==0 then return end
-	local og=Duel.GetOperatedGroup()
+	local og=Duel.GetOperatedGroup():Match(Card.IsPreviousPosition,nil,POS_FACEUP)
 	if #og==0 then return end
-	local _,atk=og:GetMaxGroup(Card.GetTextAttack)
+	local _,atk=og:GetMaxGroup(Card.GetPreviousAttackOnField)
 	if atk<=0 then return end
 	local dam=Duel.Damage(1-tp,atk,REASON_EFFECT)
 	if dam>0 and c:IsFaceup() and c:IsRelateToEffect(e) then
-		--This card's ATK becomes equal to the damage inflicted
+		--This card's ATK becomes equal to the damage inflicted to your opponent
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)

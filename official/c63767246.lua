@@ -2,11 +2,10 @@
 --Number 38: Hope Harbinger Dragon Titanic Galaxy
 local s,id=GetID()
 function s.initial_effect(c)
-	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
 	--Xyz Summon procedure
 	Xyz.AddProcedure(c,nil,8,2)
-	--Negate the effect of a Spell Card/effect
+	--Negate an activated Spell Card or effect
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DISABLE)
@@ -18,15 +17,15 @@ function s.initial_effect(c)
 	e1:SetTarget(s.distg)
 	e1:SetOperation(s.disop)
 	c:RegisterEffect(e1)
-	--Change attack target to this card
+	--Change the attack target to this card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCondition(s.cbcon)
-	e2:SetCost(s.cbcost)
-	e2:SetOperation(s.cbop)
+	e2:SetCondition(function(e,tp) return Duel.GetAttacker():IsControler(1-tp) and Duel.GetAttackTarget()~=e:GetHandler() end)
+	e2:SetCost(aux.dxmcostgen(1,1,nil))
+	e2:SetOperation(s.chngtgop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 	--Make 1 of your Xyz monsters gain ATK
 	local e3=Effect.CreateEffect(c)
@@ -44,73 +43,56 @@ end
 s.xyz_number=38
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
-	return (loc&LOCATION_SZONE)~=0
-		and re:IsActiveType(TYPE_SPELL) and Duel.IsChainDisablable(ev) and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
+	return (loc&LOCATION_SZONE)>0 and re:IsSpellEffect() and Duel.IsChainDisablable(ev)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsType(TYPE_XYZ) end
+	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
-	if rc:IsNegatableSpellTrap() and Duel.NegateEffect(ev) and c:IsRelateToEffect(e) and rc:IsRelateToEffect(re)
-		and c:IsType(TYPE_XYZ) then
+	if Duel.NegateEffect(ev) and c:IsRelateToEffect(e) and rc:IsRelateToEffect(re) and c:IsType(TYPE_XYZ) then
 		rc:CancelToGrave()
-		Duel.Overlay(c,rc)
+		Duel.Overlay(c,rc,true)
 	end
 end
-function s.cbcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and Duel.GetAttackTarget()~=e:GetHandler()
-end
-function s.cbcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-end
-function s.cbop(e,tp,eg,ep,ev,re,r,rp)
+function s.chngtgop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) then
-		local at=Duel.GetAttacker()
-		if at:CanAttack() and not at:IsImmuneToEffect(e) then
-			Duel.CalculateDamage(at,c)
-		end
+	if not c:IsRelateToEffect(e) then return end
+	local at=Duel.GetAttacker()
+	if at:CanAttack() and not at:IsImmuneToEffect(e) then
+		Duel.CalculateDamage(at,c)
 	end
 end
-function s.atkfilter1(c,tp)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsType(TYPE_XYZ) and c:GetBaseAttack()>0
+function s.atkconfilter(c,tp)
+	return c:IsReason(REASON_BATTLE|REASON_EFFECT) and c:IsType(TYPE_XYZ) and c:GetBaseAttack()>0 and c:IsPreviousPosition(POS_FACEUP)
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.atkfilter1,1,nil,tp)
-end
-function s.atkfilter2(c)
-	return c:IsFaceup() and c:IsType(TYPE_XYZ)
+	return eg:IsExists(s.atkconfilter,1,nil,tp)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.atkfilter2(chkc) end
-	if chk==0 then return eg:IsExists(s.atkfilter1,1,nil,tp)
-		and Duel.IsExistingTarget(s.atkfilter2,tp,LOCATION_MZONE,0,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsType(TYPE_XYZ) and chkc:IsFaceup() end
+	if chk==0 then return eg:IsExists(s.atkconfilter,1,nil,tp)
+		and Duel.IsExistingTarget(aux.FaceupFilter(Card.IsType,TYPE_XYZ),tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
-	Duel.SelectTarget(tp,s.atkfilter2,tp,LOCATION_MZONE,0,1,1,nil)
+	Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsType,TYPE_XYZ),tp,LOCATION_MZONE,0,1,1,nil)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	local g=eg:Filter(s.atkfilter1,nil,tp)
-	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
-		if #g>=2 then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-			g=g:Select(tp,1,1,nil)
-		end
-		if #g==1 then
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetValue(g:GetFirst():GetBaseAttack())
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-			tc:RegisterEffect(e1)
-		end
+	if not (tc:IsFaceup() and tc:IsRelateToEffect(e)) then return end
+	local g=eg:Filter(s.atkconfilter,nil,tp)
+	if #g>=2 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+		g=g:Select(tp,1,1,nil)
 	end
-	g:DeleteGroup()
+	--Gains ATK equal to 1 of those destroyed monster's original ATK
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e1:SetCode(EFFECT_UPDATE_ATTACK)
+	e1:SetValue(g:GetFirst():GetBaseAttack())
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
+	tc:RegisterEffect(e1)
 end

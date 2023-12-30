@@ -74,10 +74,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 --atk change
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and Duel.GetAttacker()==e:GetHandler()
+	return Duel.IsTurnPlayer(tp) and Duel.GetAttacker()==e:GetHandler()
 end
 function s.atkfilter(c,code1,code2)
-	return (c:IsCode(code1) or c:IsCode(code2)) and c:IsMonster()
+	return c:IsCode(code1,code2) and c:IsMonster()
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetFlagEffect(id)==0
@@ -88,21 +88,21 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.GetMatchingGroup(s.atkfilter,tp,LOCATION_MZONE,0,nil,98434877,62340868)
-	local sg=aux.SelectUnselectGroup(g,e,tp,1,2,aux.dncheck,1)
+	local sg=aux.SelectUnselectGroup(g,e,tp,1,2,aux.dncheck,1,tp,HINTMSG_SELECT)
 	if #sg>0 then
 		local atk=(c:GetAttack()+(sg:GetSum(Card.GetAttack)))/2
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-		e1:SetReset(RESET_PHASE+PHASE_DAMAGE_CAL)
+		e1:SetReset(RESET_PHASE|PHASE_DAMAGE_CAL)
 		e1:SetValue(atk)
 		c:RegisterEffect(e1)
-		for tc in aux.Next(sg) do
+		for tc in sg:Iter() do
 			local e0=Effect.CreateEffect(c)
 			e0:SetType(EFFECT_TYPE_SINGLE)
 			e0:SetCode(EFFECT_CANNOT_ATTACK)
 			e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-			e0:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e0:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 			tc:RegisterEffect(e0)
 		end
 	end

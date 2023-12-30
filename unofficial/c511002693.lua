@@ -1,26 +1,31 @@
+--バブル・ブリーダー
 --Bubble Breeder
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	--Special Summon procedure
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
+	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.spcon)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-function s.cfilter(c,tp)
+s.listed_names={id}
+function s.cfilter(c)
 	return c:IsCode(id) and c:IsAbleToGraveAsCost()
 end
 function s.spcon(e,c)
 	if c==nil then return true end
-	local rg=Duel.GetMatchingGroup(s.cfilter,c:GetControler(),LOCATION_HAND,0,e:GetHandler())
+	local tp=c:GetControler()
+	local rg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_HAND,0,c)
 	return aux.SelectUnselectGroup(rg,e,tp,1,1,aux.ChkfMMZ(1),0)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 	local rg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_HAND,0,e:GetHandler())
 	local g=aux.SelectUnselectGroup(rg,e,tp,1,1,aux.ChkfMMZ(1),1,tp,HINTMSG_TOGRAVE,nil,nil,true)
 	if #g>0 then

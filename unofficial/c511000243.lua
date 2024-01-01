@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_IMMUNE_EFFECT)
 	e3:SetValue(s.efilter)
-	c:RegisterEffecnvat(e3)
+	c:RegisterEffect(e3)
 	--Send 1 "Forbidden One" monster from your hand or Deck to the GY when this card attacks
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,0))

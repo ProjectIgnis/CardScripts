@@ -83,7 +83,7 @@ function s.tmprmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,tg,2,tp,0)
 end
 function s.tmprmop(e,tp,eg,ep,ev,re,r,rp)
-	local tg=Duel.GetTargetCards(e)
+	local tg=Duel.GetTargetCards(e):Filter(Card.IsAbleToRemove,nil)
 	if #tg==2 then
 		aux.RemoveUntil(tg,nil,REASON_EFFECT,PHASE_END,id,e,tp,aux.DefaultFieldReturnOp)
 	end

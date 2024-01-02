@@ -71,7 +71,7 @@ function s.immop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.remtg(e,c,rp,r,re)
 	local tp=e:GetHandlerPlayer()
-	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and rp==1-tp and r==REASON_EFFECT
+	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and rp==1-tp and r&REASON_EFFECT~=0
 end
 function s.spconfilter(c,tp)
 	return c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp

@@ -7,20 +7,23 @@ function s.filter(c)
 	return c:IsCode(10000000) and c:IsAbleToHand()
 end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
-	--opt check
-	if Duel.GetFlagEffect(ep,id)>0 then return end
-	--condition
-	return aux.CanActivateSkill(tp)
-	and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) 
-	and Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>0
+	return Duel.GetFlagEffect(ep,id)==0
+		and aux.CanActivateSkill(tp)
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,nil) 
+		and Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) 
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
+	--Flip this card over when it is activated
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 	Duel.Hint(HINT_CARD,tp,id)
-	local ct=Duel.DiscardHand(tp,aux.TRUE,1,60,REASON_EFFECT+REASON_DISCARD)
+	--Once per duel limit
+	Duel.RegisterFlagEffect(ep,id,0,0,0)
+	--Effect
+	local mxct=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
+	local ct=Duel.DiscardHand(tp,Card.IsDiscardable,1,mxct,REASON_EFFECT|REASON_DISCARD)
 	if ct>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
+		local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil)
 		if #g>0 then
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,g)

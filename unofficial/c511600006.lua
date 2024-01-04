@@ -3,7 +3,7 @@
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
-	--Chnage ATK
+	--Change ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -47,21 +47,31 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		tg:Sub(ag)
 		local tc1=ag:GetFirst()
 		local tc2=tg:GetFirst()
-		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetCode(EFFECT_SET_ATTACK_FINAL)
-		e2:SetLabelObject(tc2)
-		e2:SetCondition(s.atkcon)
-		e2:SetValue(3000)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-		tc1:RegisterEffect(e2)
-		local e3=e2:Clone()
-		e3:SetCode(EFFECT_CANNOT_ATTACK)
-		tc2:RegisterEffect(e3)
+		if tc1 then
+			local e2=Effect.CreateEffect(c)
+			e2:SetType(EFFECT_TYPE_SINGLE)
+			e2:SetCode(EFFECT_SET_ATTACK_FINAL)
+			e2:SetLabelObject(tc2)
+			e2:SetCondition(s.atkcon)
+			e2:SetValue(3000)
+			e2:SetReset(RESET_EVENT|RESETS_STANDARD)
+			tc1:RegisterEffect(e2)
+		end
+		if tc2 then
+			local e3=Effect.CreateEffect(c)
+			e3:SetType(EFFECT_TYPE_SINGLE)
+			e3:SetCode(EFFECT_CANNOT_ATTACK)
+			e3:SetLabelObject(tc2)
+			e3:SetCondition(s.atkcon)
+			e3:SetValue(3000)
+			e3:SetReset(RESET_EVENT|RESETS_STANDARD)
+			tc2:RegisterEffect(e3)
+		end
 	end
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetLabelObject() and #e:GetHandler():GetCardTarget()>0 and e:GetHandler():GetCardTarget():IsContains(e:GetLabelObject())
+	return e:GetLabelObject() and #e:GetHandler():GetCardTarget()>0
+		and e:GetHandler():GetCardTarget():IsContains(e:GetLabelObject())
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

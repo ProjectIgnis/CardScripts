@@ -52,14 +52,18 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function s.atchcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_ONFIELD,0,1,e:GetHandler()) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGraveAsCost,tp,LOCATION_ONFIELD,0,1,1,e:GetHandler())
-	Duel.SendtoGrave(g,REASON_COST)
+function s.atchcostfilter(c,tp)
+	return c:IsAbleToGraveAsCost() and Duel.IsExistingTarget(s.atchfilter,tp,0,LOCATION_ONFIELD,1,c:GetEquipGroup()+c)
 end
 function s.atchfilter(c)
 	return not c:IsType(TYPE_TOKEN) and c:IsAbleToChangeControler()
+end
+function s.atchcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return Duel.IsExistingMatchingCard(s.atchcostfilter,tp,LOCATION_ONFIELD,0,1,c,tp) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	local g=Duel.SelectMatchingCard(tp,s.atchcostfilter,tp,LOCATION_ONFIELD,0,1,1,c,tp)
+	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.atchtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and chkc:IsControler(1-tp) and s.atchfilter(chkc) end

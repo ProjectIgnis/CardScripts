@@ -34,7 +34,10 @@ function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SpecialSummon(c,e:GetHandler(),tp,tp,false,false,POS_FACEUP)
+	local c=e:GetHandler()
+	if c:IsRelateToEffect(e) then
+		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
+	end
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -48,6 +51,9 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.damval(e,re,val,r,rp,rc)
-	if r&REASON_EFFECT~=0 then return 0
-	else return val end
+	if r&REASON_EFFECT~=0 then
+		return 0
+	else
+		return val
+	end
 end

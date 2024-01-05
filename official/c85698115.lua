@@ -43,11 +43,14 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_MZONE)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOGRAVE,nil,1,1-tp,LOCATION_REMOVED)
 end
+function s.tgfilter(c)
+	return c:IsMonster() and c:IsAbleToGrave() and c:IsFaceup()
+end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,1-tp,false,false,POS_FACEUP)>0
 		and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_MZONE,1,nil)
-		and Duel.IsExistingMatchingCard(aux.AND(Card.IsMonster,Card.IsAbleToGrave),tp,0,LOCATION_REMOVED,1,nil)
+		and Duel.IsExistingMatchingCard(s.tgfilter,tp,0,LOCATION_REMOVED,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		local rg=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,0,LOCATION_MZONE,1,1,nil)
@@ -56,7 +59,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.BreakEffect()
 		if Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)==0 or not rg:GetFirst():IsLocation(LOCATION_REMOVED) then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local gg=Duel.SelectMatchingCard(tp,aux.AND(Card.IsMonster,Card.IsAbleToGrave),tp,0,LOCATION_REMOVED,1,1,nil)
+		local gg=Duel.SelectMatchingCard(tp,s.tgfilter,tp,0,LOCATION_REMOVED,1,1,nil)
 		if #gg==0 then return end
 		Duel.HintSelection(gg,true)
 		Duel.BreakEffect()

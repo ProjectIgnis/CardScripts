@@ -1,5 +1,5 @@
 -- 裏切りの罪宝－シルウィア
--- Tainted Treasure of Betrayal - Silvia
+-- Sinful Spoils of Betrayal - Silvera
 -- Scripted by Satellaa
 local s,id=GetID()
 function s.initial_effect(c)
@@ -33,7 +33,7 @@ end
 s.listed_series={SET_DIABELLESTARR,SET_SINFUL_SPOILS}
 function s.tgfilter(c,cc)
 	return c:IsMonster() and c:IsSetCard(SET_DIABELLESTARR) and (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsAbleToGraveAsCost()
-		and Duel.IsExistingTarget(Card.IsNegatable,0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,Group.FromCards(c,cc))
+		and Duel.IsExistingTarget(Card.IsNegatable,0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,Group.FromCards(c,cc)+c:GetEquipGroup())
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

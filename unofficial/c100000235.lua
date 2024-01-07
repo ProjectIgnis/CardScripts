@@ -90,6 +90,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	else
 		g=tg
 	end
+	if #g==0 then return end
 	local c=e:GetHandler()
 	local tc=g:GetFirst()
 	for tc in aux.Next(g) do

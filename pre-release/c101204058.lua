@@ -65,7 +65,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.ConfirmCards(1-tp,g)
 			Duel.ShuffleHand(tp)
 			Duel.BreakEffect()
-			Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT)
+			Duel.DiscardHand(tp,nil,1,1,REASON_DISCARD|REASON_EFFECT)
 		end
 	elseif op==2 then
 		--Special Summon 1 of your "Raika" monsters that is banished, or in your hand or GY, in Defense Position

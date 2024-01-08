@@ -552,3 +552,4 @@ SET_WHITE_AURA                    = 0x119f
 SET_TOY                           = 0x1a0
 SET_TENPAI_DRAGON                 = 0x1a1
 SET_SANGEN                        = 0x1a2
+SET_RAIKA                         = 0x1a3

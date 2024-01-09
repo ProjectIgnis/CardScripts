@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Fusion Materials
-	Fusion.AddProcMix(c,true,true,CARD_DARK_MAGICIAN,45231177)
+	Fusion.AddProcMix(c,true,true,CARD_DARK_MAGICIAN,CARD_FLAME_SWORDSMAN)
 	--You take no Battle Damage from battles involving this card
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.material_setcode=SET_DARK_MAGICIAN
-s.listed_names={CARD_DARK_MAGICIAN,45231177,49217579}
+s.listed_names={CARD_DARK_MAGICIAN,CARD_FLAME_SWORDSMAN,49217579} --Mirage Knight
 function s.spfilter(c,e,tp)
 	return c:IsCode(49217579) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end

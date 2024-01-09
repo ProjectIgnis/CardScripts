@@ -29,9 +29,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.tgop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={45231177,id} --Flame Swordsman
+s.listed_names={CARD_FLAME_SWORDSMAN,id}
 function s.thfilter(c)
-	return c:IsSpellTrap() and c:ListsCode(45231177) and c:IsAbleToHand()
+	return c:IsSpellTrap() and c:ListsCode(CARD_FLAME_SWORDSMAN) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -46,7 +46,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tgfilter(c)
-	return (c:IsCode(45231177) or (c:IsMonster() and c:ListsCode(45231177))) and not c:IsCode(id) and c:IsAbleToGrave()
+	return (c:IsCode(CARD_FLAME_SWORDSMAN) or (c:IsMonster() and c:ListsCode(CARD_FLAME_SWORDSMAN))) and not c:IsCode(id) and c:IsAbleToGrave()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK|LOCATION_EXTRA,0,1,nil) end

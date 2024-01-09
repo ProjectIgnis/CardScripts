@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	e3:SetValue(1)
 	c:RegisterEffect(e3)
 end
-s.listed_names={45231177} --Flame Swordsman
+s.listed_names={CARD_FLAME_SWORDSMAN} --Flame Swordsman
 function s.matfilter(c,scard,sumtype,tp)
 	return c:IsAttribute(ATTRIBUTE_FIRE,scard,sumtype,tp) and c:IsRace(RACE_WARRIOR,scard,sumtype,tp)
 end
@@ -65,5 +65,5 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.eqcond(e)
 	local ec=e:GetHandler():GetEquipTarget()
-	return ec:IsCode(45231177) or ec:ListsCode(45231177)
+	return ec:IsCode(CARD_FLAME_SWORDSMAN) or ec:ListsCode(CARD_FLAME_SWORDSMAN)
 end

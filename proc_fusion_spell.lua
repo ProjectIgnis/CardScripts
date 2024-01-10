@@ -555,8 +555,10 @@ function Fusion.BanishMaterial(e,tc,tp,sg)
 end
 function Fusion.ShuffleMaterial(e,tc,tp,sg)
 	local rg=sg:Filter(Card.IsFacedown,nil)
+	local hg=sg:Filter(Card.IsLocation,nil,LOCATION_GRAVE|LOCATION_REMOVED)
 	if #rg>0 then Duel.ConfirmCards(1-tp,rg) end
-	Duel.SendtoDeck(sg,nil,2,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
+	if #hg>0 then Duel.HintSelection(hg,true) end
+	Duel.SendtoDeck(sg,nil,2,REASON_EFFECT|REASON_MATERIAL|REASON_FUSION)
 	sg:Clear()
 end
 function Fusion.OnFieldMat(filter,...)

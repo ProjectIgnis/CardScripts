@@ -39,7 +39,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(1)

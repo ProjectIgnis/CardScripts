@@ -25,7 +25,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.material_setcode={SET_HERO,SET_ELEMENTAL_HERO}
-s.listed_series={SET_HERO,SET_ELEMENTAL_HERO}
 s.listed_names={21844576,58932615}
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

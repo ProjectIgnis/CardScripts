@@ -1,17 +1,18 @@
 --ヘルモスの爪 (Anime)
---Claw of Hermos (Anime)
+--The Claw of Hermos (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_TOGRAVE+CATEGORY_EQUIP)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_TOGRAVE+CATEGORY_EQUIP+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
+	--Treated as an Effect monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetCode(EFFECT_ADD_TYPE)
 	e2:SetType(EFFECT_TYPE_SINGLE)
@@ -20,7 +21,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentChain()==0 and Duel.IsMainPhase() and Duel.GetTurnPlayer()==tp
+	return Duel.GetCurrentChain()==0 and Duel.IsMainPhase() and Duel.IsTurnPlayer(tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>-1

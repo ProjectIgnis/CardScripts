@@ -12,9 +12,6 @@ function s.initial_effect(c)
 	Duel.RegisterEffect(e2,1)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetTurnCount()==1 then
-		Debug.Message("Rule of the Day used")
-	end
 	local f1=Duel.SelectOption(tp,71,72)
 	--If it is a Spell Card add it to the hand
 	if f1==0 then

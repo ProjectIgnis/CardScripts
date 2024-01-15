@@ -23,13 +23,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={160007052}
-function s.filter(c)
+function s.cfilter(c)
 	return c:IsCode(160007052) or (c:IsMonster() and c:IsDefense(2700))
 end
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
-		and	Duel.IsExistingMatchingCard(s.cfilter,c:GetControler(),LOCATION_GRAVE,0,1,nil)
+		and Duel.IsExistingMatchingCard(s.cfilter,c:GetControler(),LOCATION_GRAVE,0,1,nil)
 end
 function s.indtg(e,c)
 	return (c:IsFaceup() and c:IsMonster() and c:IsLevel(7)) or (c:IsFacedown() and c:IsSpellTrap())

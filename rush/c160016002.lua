@@ -24,7 +24,7 @@ function s.posfilter(c)
 	return c:IsLevelAbove(7) and c:IsAttackPos() and c:IsCanTurnSet() and c:IsCanChangePositionRush()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.posfilter,tp,0,LOCATION_MZONE,1,nil) 
+	if chk==0 then return Duel.IsExistingMatchingCard(s.posfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) 
 		and Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)>=3 and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=3 end
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,nil,1,0,0)
 end
@@ -37,7 +37,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ShuffleDeck(tp)
 	--Effect
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local g=Duel.SelectMatchingCard(tp,s.posfilter,tp,0,LOCATION_MZONE,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.posfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 	Duel.HintSelection(g,true)
 	if #g>0 and Duel.ChangePosition(g,POS_FACEDOWN_DEFENSE)>0 then
 		if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=3 then

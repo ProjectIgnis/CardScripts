@@ -1,5 +1,5 @@
 --炎王の結襲
---Solidarity Strike of the Fire Kings
+--Echelon of the Fire Kings
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -32,14 +32,14 @@ function s.spfilter(c,e,tp)
 	return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsRace(RACES_BEAST_BWARRIOR_WINGB)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function s.sprescon(sg)
+function s.rescon(sg,e,tp,mg)
 	return sg:GetClassCount(Card.GetLocation)==3 and sg:GetClassCount(Card.GetRace)==3
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then 
 		local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_DECK|LOCATION_HAND|LOCATION_GRAVE,0,nil,e,tp)
 		return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
-			and Duel.GetLocationCount(tp,LOCATION_MZONE)>=3 and s.sprescon(g)
+			and Duel.GetLocationCount(tp,LOCATION_MZONE)>=3 and aux.SelectUnselectGroup(g,e,tp,3,3,s.rescon,0)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,3,tp,LOCATION_DECK|LOCATION_HAND|LOCATION_GRAVE)
 end
@@ -47,7 +47,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) or Duel.GetLocationCount(tp,LOCATION_MZONE)<3 then return end
 	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_DECK|LOCATION_HAND|LOCATION_GRAVE,0,nil,e,tp)
 	if #g<3 then return end
-	local sg=aux.SelectUnselectGroup(g,e,tp,3,3,s.sprescon,1,tp,HINTMSG_SPSUMMON)
+	local sg=aux.SelectUnselectGroup(g,e,tp,3,3,s.rescon,1,tp,HINTMSG_SPSUMMON)
 	if #sg~=3 then return end
 	local c=e:GetHandler()
 	for sc in sg:Iter() do

@@ -808,7 +808,7 @@ function aux.ThreeTributeTarget(otfilter)
 			local sg=mg1:GetFirst()
 			local rg2=Duel.GetTributeGroup(e:GetHandler())
 			rg2:RemoveCard(sg)
-			local mg2=aux.SelectUnselectGroup(rg2,e,tp,1,1,aux.ChkfMMZ(1),1,tp,HINTMSG_RELEASE,nil,nil,true)
+			local mg2=aux.SelectUnselectGroup(rg2,e,tp,1,1,nil,1,tp,HINTMSG_RELEASE,nil,nil,true)
 			mg1:Merge(mg2)
 		end
 		if #mg1==2 then

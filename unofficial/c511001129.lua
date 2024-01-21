@@ -19,7 +19,7 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
 end
-function s.plfilter(e,tp,eg,ep,ev,re,r,rp)
+function s.plfilter(c)
 	return c:IsSetCard(SET_CRYSTAL_BEAST) and c:IsMonster() and not c:IsForbidden()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

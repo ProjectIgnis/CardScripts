@@ -554,3 +554,4 @@ SET_TENPAI_DRAGON                 = 0x1a1
 SET_SANGEN                        = 0x1a2
 SET_RAIKA                         = 0x1a3
 SET_SALAMANDRA                    = 0x1a4
+SET_ASHENED                       = 0x1a5

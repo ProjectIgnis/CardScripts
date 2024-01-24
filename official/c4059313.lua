@@ -114,12 +114,12 @@ function s.sendcon(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Activation legality
 function s.sendtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(nil,tp,0,LOCATION_MZONE,nil)
 	if chk==0 then return #g>0 end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,#g,0,0,LOCATION_MZONE)
 end
 	--After damage calculation, send all opponent's monsters to GY
 function s.sendop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(nil,tp,0,LOCATION_MZONE,nil)
 	Duel.SendtoGrave(g,REASON_EFFECT)
 end

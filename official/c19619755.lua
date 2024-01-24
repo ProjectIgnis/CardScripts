@@ -79,7 +79,7 @@ end
 function s.limval(e,re,rp)
 	local rc=re:GetHandler()
 	local tp=rc:GetControler()
-	return rc:IsLocation(LOCATION_MZONE) and re:IsActiveType(TYPE_MONSTER)
+	return rc:IsLocation(LOCATION_MZONE) and re:IsMonsterEffect()
 		and Duel.GetMatchingGroupCount(s.countfilter,tp,LOCATION_SZONE,0,nil)==0
 end
 function s.atkcon0(e)

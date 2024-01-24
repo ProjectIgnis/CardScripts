@@ -22,14 +22,14 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c1,c2,c3=Duel.TossCoin(tp,3)
 	local total_heads=Duel.CountHeads(c1,c2,c3)
 	if total_heads==3 then
-		local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_MZONE,nil)
+		local g=Duel.GetMatchingGroup(nil,tp,0,LOCATION_MZONE,nil)
 		Duel.Destroy(g,REASON_EFFECT)
 	elseif total_heads==2 then
 		local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND):RandomSelect(tp,1)
 		Duel.SendtoGrave(g,REASON_EFFECT+REASON_DISCARD)
 	elseif total_heads==1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-		local g=Duel.SelectMatchingCard(tp,aux.TRUE,tp,LOCATION_ONFIELD,0,1,1,nil)
+		local g=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_ONFIELD,0,1,1,nil)
 		Duel.Destroy(g,REASON_EFFECT)
 	elseif Duel.CountTails(c1,c2,c3)==3 then
 		local g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)

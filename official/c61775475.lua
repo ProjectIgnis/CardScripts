@@ -47,7 +47,7 @@ function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 		and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
 end
 function s.negcostfilter(c,tp,att)
-	return (c:GetAttribute()&att&~s.attr_list[tp])>0 and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)  
+	return (c:GetAttribute()&att&~s.attr_list[tp])>0 and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local att=re:GetHandler():GetAttribute()

@@ -60,7 +60,7 @@ function s.efilter(c,tp)
 		and Duel.IsExistingMatchingCard(s.eqfilter,tp,LOCATION_SZONE,0,1,nil,c)
 end
 function s.eqfilter(c,tc)
-	return c:IsFaceup() and c:IsType(TYPE_EQUIP) and c:IsSetCard(SET_PHANTASM_SPIRAL) and c:CheckEquipTarget(tc)
+	return c:IsFaceup() and c:IsEquipSpell() and c:IsSetCard(SET_PHANTASM_SPIRAL) and c:CheckEquipTarget(tc)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.efilter(chkc,tp) end

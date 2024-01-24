@@ -42,7 +42,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
 end
 function s.efilter(e,re)
-	return re:IsActiveType(TYPE_MONSTER) and re:GetOwner()~=e:GetOwner()
+	return re:IsMonsterEffect() and re:GetOwner()~=e:GetOwner()
 end
 function s.cfilter(c,tp)
 	return c:IsTrap() and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_STZONE)

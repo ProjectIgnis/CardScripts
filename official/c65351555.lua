@@ -55,7 +55,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.eqfilter(c)
-	return c:IsSetCard(SET_EVIL_EYE) and c:IsSpell() and c:IsType(TYPE_EQUIP)
+	return c:IsSetCard(SET_EVIL_EYE) and c:IsEquipSpell()
 end
 function s.lnkfilter(c)
 	return c:IsSetCard(SET_EVIL_EYE) and c:IsLinkSummonable()

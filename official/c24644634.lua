@@ -44,14 +44,14 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local sg=g:Select(tp,2,2,nil)
 		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 		local tc=sg:GetFirst()
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0,fid)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,0,fid)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		tc=sg:GetNext()
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0,fid)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,0,fid)
 		local e2=e1:Clone()
 		tc:RegisterEffect(e2)
 		sg:KeepAlive()
@@ -71,7 +71,7 @@ function s.desfilter(c,fid)
 	return c:GetFlagEffectLabel(id)==fid
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetTurnPlayer()~=tp then return end
+	if Duel.IsTurnPlayer(1-tp) then return end
 	local g=e:GetLabelObject()
 	if not g:IsExists(s.desfilter,1,nil,e:GetLabel()) then
 		g:DeleteGroup()

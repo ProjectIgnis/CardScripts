@@ -50,7 +50,7 @@ function s.stplace(c,tp,rc)
 end
 function s.btplop(e,tp,eg,ep,ev,re,r,rp)
 	local bc0,bc1=Duel.GetBattleMonster(tp)
-	if bc0:IsRelateToBattle() and not bc0:IsImmuneToEffect(e) 
+	if bc0 and bc1 and bc0:IsRelateToBattle() and not bc0:IsImmuneToEffect(e) 
 		and bc1:IsRelateToBattle() and not bc1:IsImmuneToEffect(e) 
 		and s.checkzones(bc0,bc1) and s.stplace(bc0,tp,bc0) then
 		s.stplace(bc1,tp,bc0)

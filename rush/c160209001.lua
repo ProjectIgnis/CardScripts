@@ -24,7 +24,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_LIGHTNING_VOLTCONDOR}
 function s.filter(c)
-	return c:IsFaceup() and c:IsLevel(7) and c:IsAttribute(ATTRIBUTE_LIGHT) and  c:IsRace(RACE_WINGEDBEAST)
+	return c:IsFaceup() and c:IsLevel(7) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_WINGEDBEAST)
 end
 function s.spcon(e,c)
 	if c==nil then return true end

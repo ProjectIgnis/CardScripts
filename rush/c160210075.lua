@@ -29,7 +29,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsFaceup() and c:IsRelateToEffect(e) then
 		c:UpdateLevel(2,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,c)
 		if ct:IsAttribute(ATTRIBUTE_LIGHT) and ct:IsRace(RACE_GALAXY) and (not Duel.IsPlayerAffectedByEffect(tp,FLAG_NO_TRIBUTE)) and e:GetHandler():CanBeDoubleTribute(FLAG_DOUBLE_TRIB_LIGHT,FLAG_DOUBLE_TRIB_GALAXY) then
-			c:AddDoubleTribute(id,s.otfilter,s.eftg,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,FLAG_DOUBLE_TRIB_LIGHT+FLAG_DOUBLE_TRIB_GALAXY)
+			c:AddDoubleTribute(id,s.otfilter,s.eftg,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,FLAG_DOUBLE_TRIB_LIGHT+FLAG_DOUBLE_TRIB_GALAXY)
 		end
 	end
 end

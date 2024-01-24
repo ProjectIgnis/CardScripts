@@ -24,11 +24,8 @@ end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,2,nil) end
 end
-function s.posfilter(c)
-	return c:IsFaceup() and c:IsCanChangePositionRush()
-end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.posfilter,tp,0,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsCanChangePositionRush,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,nil,1,1-tp,0)
 end
 function s.operation(fustg,fusop)
@@ -39,10 +36,12 @@ function s.operation(fustg,fusop)
 		Duel.HintSelection(g,true)
 		if Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)<=0 then return end
 		--Effect
-		local g=Duel.SelectMatchingCard(tp,s.posfilter,tp,0,LOCATION_MZONE,1,1,nil)
+		local g=Duel.SelectMatchingCard(tp,Card.IsCanChangePositionRush,tp,0,LOCATION_MZONE,1,1,nil)
 		Duel.HintSelection(g,true)
 		if g:GetFirst():IsAttackPos() then
 			Duel.ChangePosition(g,POS_FACEDOWN_DEFENSE)
+		elseif g:GetFirst():IsFacedown() then
+			Duel.ChangePosition(g,POS_FACEUP_ATTACK)
 		else
 			local op=Duel.SelectOption(tp,aux.Stringid(id,2),aux.Stringid(id,3))
 			if op==0 then

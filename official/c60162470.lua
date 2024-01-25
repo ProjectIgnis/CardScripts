@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddPersistentProcedure(c,0,s.filter)
-	--eff
+	--Activate it by targeting a Link Monster co-linked to a monster in the Extra Monster Zone
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -13,9 +13,9 @@ function s.initial_effect(c)
 	e1:SetTarget(aux.PersistentTargetFilter)
 	e1:SetValue(s.atkval)
 	c:RegisterEffect(e1)
-	--material
+	--A monster summoned with the target gains the same ATK that monster gained via this card
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(47882565,0))
+	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_ATKCHANGE)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -33,9 +33,9 @@ function s.initial_effect(c)
 	e3:SetCondition(s.matcon)
 	e3:SetOperation(s.matop)
 	c:RegisterEffect(e3)
-	--destroy
+	--Destroy this card after damage calculation
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(5851097,0))
+	e4:SetDescription(aux.Stringid(id,0))
 	e4:SetCategory(CATEGORY_DESTROY)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e4:SetCode(EVENT_BATTLED)
@@ -46,7 +46,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.exfilter(c)
-	return c:IsFaceup() and c:IsLinkMonster() and (c:GetSequence()==5 or c:GetSequence()==6)
+	return c:IsFaceup() and c:IsLinkMonster() and c:IsInExtraMZone()
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsLinkMonster() and c:GetMutualLinkedGroup():IsExists(s.exfilter,1,nil)
@@ -60,30 +60,30 @@ function s.atkval(e,c)
 	return val
 end
 function s.atkfilter(c,tc)
-	return c:IsLinkMonster() and c:IsSummonType(SUMMON_TYPE_LINK) and c:GetFlagEffect(id)>0
+	return c:IsLinkMonster() and c:IsSummonType(SUMMON_TYPE_LINK) and c:HasFlagEffect(id)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.atkfilter,1,nil)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=eg:Filter(s.atkfilter,1,nil):GetFirst()
+	local tc=eg:Filter(s.atkfilter,nil):GetFirst()
 	if tc then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(e:GetLabelObject():GetLabel())
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end
 function s.matfilter(c,ec)
-	return ec:IsHasCardTarget(c) and c:IsReason(REASON_MATERIAL+REASON_LINK)
+	return ec:IsHasCardTarget(c) and c:IsReason(REASON_MATERIAL|REASON_LINK)
 end
 function s.matcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.matfilter,1,nil,e:GetHandler())
 end
 function s.matop(e,tp,eg,ep,ev,re,r,rp)
-	eg:Filter(s.matfilter,nil,e:GetHandler()):GetFirst():GetReasonCard():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD,0,1)
+	eg:Filter(s.matfilter,nil,e:GetHandler()):GetFirst():GetReasonCard():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD&~RESET_TOFIELD,0,1)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsHasCardTarget(Duel.GetAttacker())
@@ -93,4 +93,3 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(e:GetHandler(),REASON_EFFECT)
 	end
 end
-

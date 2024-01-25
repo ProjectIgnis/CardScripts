@@ -1,9 +1,9 @@
 --BM-4 ボムスパイダー
---BM-4 Bomb Spider
+--BM-4 Blast Spider
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--Destroy
+	--Destroy 1 DARK Machine monster you control and 1 face-up card your opponent controls
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
-	--damage
+	--Inflict damage equal to half the ATK of a destroyed monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DAMAGE)
@@ -46,8 +46,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g1,2,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	local tg=g:Filter(Card.IsRelateToEffect,nil,e)
+	local tg=Duel.GetTargetCards(e)
 	if #tg>0 then
 		Duel.Destroy(tg,REASON_EFFECT)
 	end
@@ -55,11 +54,12 @@ end
 function s.damcon1(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	local bc=tc:GetBattleTarget()
-	return not tc:IsPreviousControler(tp) and tc:IsLocation(LOCATION_GRAVE)
+	return not tc:IsPreviousControler(tp) and tc:IsLocation(LOCATION_GRAVE) and tc:GetTextAttack()>0
 		and bc:IsControler(tp) and bc:GetOriginalAttribute()==ATTRIBUTE_DARK and bc:GetOriginalRace()==RACE_MACHINE
 end
 function s.damfilter1(c,tp)
-	return c:IsReason(REASON_EFFECT) and c:IsReason(REASON_DESTROY) and c:IsLocation(LOCATION_GRAVE) and not c:IsPreviousControler(tp)
+	return c:IsMonster() and c:GetTextAttack()>0 and c:IsReason(REASON_EFFECT)
+		and c:IsReason(REASON_DESTROY) and c:IsLocation(LOCATION_GRAVE) and not c:IsPreviousControler(tp)
 end
 function s.damcon2(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
@@ -73,16 +73,16 @@ function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,0)
 end
 function s.damfilter2(c,tp)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsReason(REASON_DESTROY) and c:IsLocation(LOCATION_GRAVE) and not c:IsPreviousControler(tp)
+	return c:IsReason(REASON_BATTLE|REASON_EFFECT) and c:IsReason(REASON_DESTROY)
+		and c:GetTextAttack()>0 and c:IsLocation(LOCATION_GRAVE) and not c:IsPreviousControler(tp)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.damfilter2,nil,tp)
 	if #g>0 then
 		if #g>1 then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELECT)
 			g=g:Select(tp,1,1,nil)
 		end
 		Duel.Damage(1-tp,math.ceil(g:GetFirst():GetBaseAttack()/2),REASON_EFFECT)
 	end
 end
-

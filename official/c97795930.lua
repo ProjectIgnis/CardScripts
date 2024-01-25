@@ -60,7 +60,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.winfilter(c)
-	return c:IsSetCard(SET_PHANTASM_SPIRAL) and c:IsType(TYPE_EQUIP)
+	return c:IsSetCard(SET_PHANTASM_SPIRAL) and c:IsEquipSpell()
 end
 function s.wincon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

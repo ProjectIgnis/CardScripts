@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--summon/set with 1 tribute
 	local e0=aux.AddNormalSummonProcedure(c,true,true,1,1,SUMMON_TYPE_TRIBUTE,aux.Stringid(id,0),nil,s.otop)
-	-- Give Piercing damage to a  monster
+	-- Give Piercing damage to a monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetType(EFFECT_TYPE_IGNITION)

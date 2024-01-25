@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_ANCIENT_GEAR),3)
-	--Can make attacks up to the number of  "Ancient Gear Golem" and "Ancient Gear Golem - Ultimate Pound" used for its summon
+	--Can make attacks up to the number of "Ancient Gear Golem" and "Ancient Gear Golem - Ultimate Pound" used for its summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)

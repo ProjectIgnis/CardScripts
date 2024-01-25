@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.bcost)
+	e1:SetCost(aux.selfreleasecost)
 	e1:SetTarget(s.btg)
 	e1:SetOperation(s.bop)
 	c:RegisterEffect(e1)
@@ -29,11 +29,6 @@ function s.initial_effect(c)
 end
 s.listed_names={id}
 s.listed_series={SET_TIME_THIEF}
---tribute + banish
-function s.bcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
-end
 function s.btg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsAbleToRemove() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToRemove,tp,0,LOCATION_MZONE,1,nil) end

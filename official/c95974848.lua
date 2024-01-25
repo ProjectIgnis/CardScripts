@@ -30,7 +30,7 @@ end
 s.listed_series={SET_S_FORCE}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local p,loct=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_PLAYER,CHAININFO_TRIGGERING_LOCATION)
-	return loct==LOCATION_MZONE and re:IsActiveType(TYPE_MONSTER) and p==1-tp
+	return loct==LOCATION_MZONE and re:IsMonsterEffect() and p==1-tp
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return re:GetHandler():IsDestructable() end

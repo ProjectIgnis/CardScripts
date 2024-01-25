@@ -28,7 +28,7 @@ function s.target1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if ct==1 then return end
 	local te=Duel.GetChainInfo(ct-1,CHAININFO_TRIGGERING_EFFECT)
 	local tc=te:GetHandler()
-	if te:GetCode()==EVENT_SUMMON_SUCCESS and te:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ct-1)
+	if te:GetCode()==EVENT_SUMMON_SUCCESS and te:IsMonsterEffect() and Duel.IsChainNegatable(ct-1)
 		and Duel.IsPlayerCanDraw(tc:GetControler(),1) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		e:SetLabel(1)
 		Duel.SetOperationInfo(0,CATEGORY_NEGATE,tc,1,0,0)
@@ -40,15 +40,13 @@ function s.target1(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate1(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()~=1 then return end
-	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
 	local ct=Duel.GetCurrentChain()
 	Duel.NegateActivation(ct-1)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
 function s.condition2(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_MONSTER) and re:GetCode()==EVENT_SUMMON_SUCCESS and Duel.IsChainNegatable(ev)
+	return re:IsMonsterEffect() and re:GetCode()==EVENT_SUMMON_SUCCESS and Duel.IsChainNegatable(ev)
 end
 function s.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(rp,1) end
@@ -58,7 +56,6 @@ function s.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,rp,1)
 end
 function s.activate2(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	if not Duel.NegateActivation(ev) then return end
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Draw(p,d,REASON_EFFECT)

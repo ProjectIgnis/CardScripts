@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Fusion Summon Procedure
-	Fusion.AddProcMix(c,true,true,CARD_FLAME_SWORDSMAN,100434005)
+	Fusion.AddProcMix(c,true,true,CARD_FLAME_SWORDSMAN,36319131)
 	--Destroy 1 monster and inflict damage
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={CARD_FLAME_SWORDSMAN,100434005}
+s.listed_names={CARD_FLAME_SWORDSMAN,36319131}
 function s.quickcon(e,tp,eg,ep,ev,re,r,rp)
 	return #e:GetHandler():GetEquipGroup()>0
 end

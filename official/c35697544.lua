@@ -1,4 +1,4 @@
---
+--Japanese name
 --Fighting Flame Sword
 --scripted by pyrQ
 local s,id=GetID()

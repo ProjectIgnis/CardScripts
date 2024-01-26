@@ -1,4 +1,4 @@
---
+--Japanese name
 --Fighting Flame Dragon
 --scripted by Naim
 local s,id=GetID()
@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	e3:SetValue(1)
 	c:RegisterEffect(e3)
 end
-s.listed_names={CARD_FLAME_SWORDSMAN} --Flame Swordsman
+s.listed_names={CARD_FLAME_SWORDSMAN}
 function s.matfilter(c,scard,sumtype,tp)
 	return c:IsAttribute(ATTRIBUTE_FIRE,scard,sumtype,tp) and c:IsRace(RACE_WARRIOR,scard,sumtype,tp)
 end

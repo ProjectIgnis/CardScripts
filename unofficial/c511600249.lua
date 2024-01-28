@@ -5,7 +5,7 @@ Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	----Fusion Summon 1 Fusion monster, using monsters you control as material, including a "Drone" monster
-	local e1=Fusion.CreateSummonEff({handler=c,extrafil=function() return nil,s.matcheck end,stage2=s.stage2})
+	local e1=Fusion.CreateSummonEff({handler=c,matfilter=Fusion.OnFieldMat,extrafil=function() return nil,s.matcheck end,stage2=s.stage2})
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_NEGATE+EFFECT_FLAG_CANNOT_INACTIVATE)
 	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
 	c:RegisterEffect(e1)

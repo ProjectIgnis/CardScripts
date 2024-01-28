@@ -84,11 +84,10 @@ function s.reeqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	local ec=c:GetPreviousEquipTarget()
 	if chkc then return eg:IsContains(chkc) and s.cfilter(chkc,e,ec) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and eg:IsExists(s.cfilter,1,nil,e,ec) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and eg:IsExists(s.cfilter,1,nil,e,ec) end
 	local tc=nil
 	if #eg>1 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 		tc=eg:FilterSelect(tp,s.cfilter,1,1,nil,e,ec)
 	else
 		tc=eg:GetFirst()

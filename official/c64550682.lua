@@ -1,8 +1,10 @@
 --スクラップ・オルトロス
+--Scrap Orthos
 local s,id=GetID()
 function s.initial_effect(c)
+	--Must be Special Summoned
 	c:EnableReviveLimit()
-	--special summon
+	--Special Summon procedure
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
@@ -11,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.spcon)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	--destroy
+	--Destroy 1 "Scrap" monster if this card is Special Summoned this way
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DESTROY)
@@ -22,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
-	--search
+	--Add 1 "Scrap" monster, except "Scrap Orthos", from GY to hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TOHAND)
@@ -34,9 +36,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x24}
+s.listed_series={SET_SCRAP}
 function s.spfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x24)
+	return c:IsFaceup() and c:IsSetCard(SET_SCRAP)
 end
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -47,7 +49,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1
 end
 function s.desfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x24)
+	return c:IsFaceup() and c:IsSetCard(SET_SCRAP)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.desfilter(chkc) end
@@ -63,17 +65,18 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
+	if not re then return false end
 	local c=e:GetHandler()
-	return (c:GetReason()&0x41)==0x41 and re:GetOwner():IsSetCard(0x24)
+	return (c:GetReason()&(REASON_DESTROY|REASON_EFFECT))==(REASON_DESTROY|REASON_EFFECT) and re:GetHandler():IsSetCard(SET_SCRAP)
 end
-function s.filter(c)
-	return c:IsSetCard(0x24) and c:IsMonster() and c:GetCode()~=id and c:IsAbleToHand()
+function s.thfilter(c)
+	return c:IsSetCard(SET_SCRAP) and c:IsMonster() and c:GetCode()~=id and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(s.thfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,s.thfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)

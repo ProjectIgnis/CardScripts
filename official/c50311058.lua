@@ -53,7 +53,7 @@ function s.xyzop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local xc=Duel.SelectMatchingCard(tp,Card.IsXyzSummonable,tp,LOCATION_EXTRA,0,1,1,nil,nil,mg):GetFirst()
 	if xc then
-		Duel.XyzSummon(tp,xc,nil,mg,2,99)
+		Duel.XyzSummon(tp,xc,nil,mg)
 	end
 end
 function s.gfilter(c)

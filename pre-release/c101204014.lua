@@ -31,7 +31,7 @@ end
 s.listed_series={SET_RAIKA}
 s.listed_names={id}
 function s.selfspcostfilter(c)
-	return c:IsRace(RACE_INSECT|RACE_PLANT|RACE_REPTILE) and c:IsFaceup() and c:IsAbleToDeckOrExtraAsCost()
+	return c:IsRace(RACE_INSECT|RACE_PLANT|RACE_REPTILE) and c:IsFaceup() and c:IsAbleToDeckAsCost()
 end
 function s.selfspcon(e,c)
 	if c==nil then return true end

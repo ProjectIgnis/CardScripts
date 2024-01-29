@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop)
 end
-s.listed_names={62337487,77454922}
+s.listed_names={62337487,77454922} --Fortress Wahle, Fortress Whale's Oath
 s.listed_series={SET_FORTRESS_WHALE}
 function s.thfilter(c)
 	return c:IsCode(62337487,77454922) and c:IsAbleToHand()
@@ -43,7 +43,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
 	e2:SetTargetRange(LOCATION_MZONE,0)
-	e2:SetTarget(function(e,c) return c:IsFaceup() and c:IsMonster() and c:IsSetCard(SET_FORTRESS_WHALE) end)
+	e2:SetTarget(function(e,c) return c:IsFaceup() and c:IsMonster() and c:IsCode(62337487,96546575) end)
 	e2:SetLabelObject(e1)
 	Duel.RegisterEffect(e2,tp)
 end

@@ -38,7 +38,7 @@ function s.xyzfilter(c,xyz,tp)
 	return c:IsAttribute(ATTRIBUTE_LIGHT,xyz,SUMMON_TYPE_XYZ,tp)
 end
 function s.xyzcheck(g,tp,xyz)
-	local mg=g:Filter(function(c) return not c:IsHasEffect(511001175) end,nil)
+	local mg=g:Filter(function(c) return not c:IsHasEffect(EFFECT_EQUIP_SPELL_XYZ_MAT) end,nil)
 	return mg:IsExists(s.xyzfilter,1,nil,xyz,tp)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

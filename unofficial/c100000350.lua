@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	--xyz
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(511001225)
+	e2:SetCode(EFFECT_DOUBLE_XYZ_MATERIAL)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(0x7f,0x7f)
 	e2:SetTarget(aux.TargetBoolFunction(Card.IsAttribute,ATTRIBUTE_WATER))

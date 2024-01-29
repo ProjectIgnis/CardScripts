@@ -97,6 +97,6 @@ function s.reeqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_COUNTER,tc,1,0,COUNTER_VACCINE)
 end
 function s.reeqop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	s.equipop(e,tp,eg,ep,ev,re,r,rp)
 end

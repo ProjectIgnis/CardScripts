@@ -71,25 +71,6 @@ function Xyz.AddProcedure(c,f,lv,ct,alterf,desc,maxct,op,mustbemat,exchk)
 		e2:SetOperation(Xyz.Operation2(alterf,op))
 		c:RegisterEffect(e2)
 	end
-	if not xyztemp then
-		xyztemp=true
-		xyztempg0=Group.CreateGroup()
-		xyztempg0:KeepAlive()
-		xyztempg1=Group.CreateGroup()
-		xyztempg1:KeepAlive()
-		local e3=Effect.CreateEffect(c)
-		e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e3:SetCode(EVENT_STARTUP)
-		e3:SetOperation(Xyz.MatGenerate)
-		Duel.RegisterEffect(e3,0)
-	end
-end
-function Xyz.MatGenerate(e,tp,eg,ep,ev,re,r,rp)
-	local tck0=Duel.CreateToken(0,946)
-	xyztempg0:AddCard(tck0)
-	local tck1=Duel.CreateToken(1,946)
-	xyztempg1:AddCard(tck1)
-	e:Reset()
 end
 --Xyz Summon(normal)
 function Xyz.MatFilter2(c,f,lv,xyz,tp)
@@ -101,9 +82,8 @@ function Xyz.MatFilter(c,f,lv,xyz,tp)
 	return (not f or f(c,xyz,SUMMON_TYPE_XYZ|MATERIAL_XYZ,tp)) and (not lv or c:IsXyzLevel(xyz,lv)) and c:IsCanBeXyzMaterial(xyz,tp)
 		and (c:IsControler(tp) or Xyz.EffectXyzMaterialChk(c,xyz,tp))
 end
-function Xyz.SubMatFilter(c,fil,lv,xg,xyz,tp)
+function Xyz.SubMatFilter(c,lv,xyz,tp)
 	if not lv then return false end
-	--Solid Overlay-type
 	local te=c:GetCardEffect(EFFECT_SPELL_XYZ_MAT)
 	if not te then return false end
 	local f=te:GetValue()
@@ -112,10 +92,7 @@ function Xyz.SubMatFilter(c,fil,lv,xg,xyz,tp)
 	else
 		if f~=lv then return false end
 	end
-	return xg:IsExists(Xyz.SubFilterChk,1,nil,fil,xyz,tp)
-end
-function Xyz.SubFilterChk(c,f,xyz,tp)
-	return (not f or f(c,xyz,SUMMON_TYPE_XYZ|MATERIAL_XYZ,tp))
+	return true
 end
 function Xyz.CheckValidMultiXyzMaterial(c,xyz)
 	local eff={c:GetCardEffect(EFFECT_DOUBLE_XYZ_MATERIAL)}
@@ -392,13 +369,6 @@ function Xyz.Condition(f,lv,minc,maxc,mustbemat,exchk)
 				if c==nil then return true end
 				if c:IsType(TYPE_PENDULUM) and c:IsFaceup() then return false end
 				local tp=c:GetControler()
-				local xg=nil
-				if tp==0 then
-					xg=xyztempg0
-				else
-					xg=xyztempg1
-				end
-				if not xg or #xg==0 then return false end
 				local mg
 				if og then
 					mg=og:Filter(Xyz.MatFilter,nil,f,lv,c,tp)
@@ -411,7 +381,9 @@ function Xyz.Condition(f,lv,minc,maxc,mustbemat,exchk)
 							eqmg:Merge(eq)
 						end
 						mg:Merge(eqmg)
-						mg:Merge(Duel.GetMatchingGroup(Xyz.SubMatFilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil,f,lv,xg,c,tp))
+						if not f then
+							mg:Merge(Duel.GetMatchingGroup(Xyz.SubMatFilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil,lv,c,tp))
+						end
 					end
 				end
 				local mustg=Auxiliary.GetMustBeMaterialGroup(tp,g,tp,c,mg,REASON_XYZ)
@@ -516,12 +488,6 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 					--end of part 1
 				else
 					local cancel=not og and Duel.IsSummonCancelable()
-					local xg=nil
-					if tp==0 then
-						xg=xyztempg0
-					else
-						xg=xyztempg1
-					end
 					local mg
 					if og then
 						mg=og:Filter(Xyz.MatFilter,nil,f,lv,c,tp)
@@ -534,7 +500,9 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 								eqmg:Merge(eq)
 							end
 							mg:Merge(eqmg)
-							mg:Merge(Duel.GetMatchingGroup(Xyz.SubMatFilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil,f,lv,xg,c,tp))
+							if not f then
+								mg:Merge(Duel.GetMatchingGroup(Xyz.SubMatFilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil,lv,c,tp))
+							end
 						end
 					end
 					local mustg=Auxiliary.GetMustBeMaterialGroup(tp,g,tp,c,mg,REASON_XYZ)

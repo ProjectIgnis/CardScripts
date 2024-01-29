@@ -74,13 +74,19 @@ function Xyz.AddProcedure(c,f,lv,ct,alterf,desc,maxct,op,mustbemat,exchk)
 end
 --Xyz Summon(normal)
 function Xyz.MatFilter2(c,f,lv,xyz,tp)
-	if c:IsLocation(LOCATION_GRAVE) and not c:IsHasEffect(EFFECT_XYZ_MAT_FROM_GRAVE) then return false end
-	if c:IsLocation(LOCATION_MZONE) and c:IsFacedown() then return false end
-	return Xyz.MatFilter(c,f,lv,xyz,tp)
+	if f and not f(c,xyz,SUMMON_TYPE_XYZ|MATERIAL_XYZ,tp) then return false end
+	if lv and not c:IsXyzLevel(xyz,lv) then return false end
+	return c:IsCanBeXyzMaterial(xyz,tp)
+end
+function Xyz.GetMaterials(tp,xyz)
+	return Duel.GetMatchingGroup(function(c)
+		if c:IsLocation(LOCATION_GRAVE) and not c:IsHasEffect(EFFECT_XYZ_MAT_FROM_GRAVE) then return false end
+		if c:IsLocation(LOCATION_MZONE) and c:IsFacedown() then return false end
+		return (c:IsControler(tp) or Xyz.EffectXyzMaterialChk(c,xyz,tp))
+	end,tp,LOCATION_MZONE|LOCATION_GRAVE,LOCATION_MZONE,nil)
 end
 function Xyz.MatFilter(c,f,lv,xyz,tp)
-	return (not f or f(c,xyz,SUMMON_TYPE_XYZ|MATERIAL_XYZ,tp)) and (not lv or c:IsXyzLevel(xyz,lv)) and c:IsCanBeXyzMaterial(xyz,tp)
-		and (c:IsControler(tp) or Xyz.EffectXyzMaterialChk(c,xyz,tp))
+	return (c:IsControler(tp) or Xyz.EffectXyzMaterialChk(c,xyz,tp)) and Xyz.MatFilter2(c,f,lv,xyz,tp)
 end
 function Xyz.SubMatFilter(c,lv,xyz,tp)
 	if not lv then return false end
@@ -364,16 +370,19 @@ function Auxiliary.HarmonizingMagFilterXyz(c,e,f)
 	return not f or f(e,c) or c:IsHasEffect(EFFECT_ORICHALCUM_CHAIN) or c:IsHasEffect(EFFECT_EQUIP_SPELL_XYZ_MAT)
 end
 function Xyz.Condition(f,lv,minc,maxc,mustbemat,exchk)
-	--og: use special material
+	--og: use specific material
 	return  function(e,c,must,og,min,max)
 				if c==nil then return true end
 				if c:IsType(TYPE_PENDULUM) and c:IsFaceup() then return false end
 				local tp=c:GetControler()
 				local mg
+				local g
 				if og then
+					g=og
 					mg=og:Filter(Xyz.MatFilter,nil,f,lv,c,tp)
 				else
-					mg=Duel.GetMatchingGroup(Xyz.MatFilter2,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE,nil,f,lv,c,tp)
+					g=Xyz.GetMaterials(tp,c)
+					mg=g:Filter(Xyz.MatFilter2,nil,f,lv,c,tp)
 					if not mustbemat then
 						local eqmg=Group.CreateGroup()
 						for tc in aux.Next(mg) do
@@ -404,17 +413,14 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 	return function(e,tp,eg,ep,ev,re,r,rp,chk,c,must,og,min,max)
 				if og and not min then
 					if (#og>=minc and #og<=maxc) or not og:IsExists(Card.IsHasEffect,1,nil,EFFECT_ORICHALCUM_CHAIN) then
-						local sg=og:Clone()
-						sg:KeepAlive()
-						e:SetLabelObject(sg)
+						e:SetLabelObject(og:Clone():KeepAlive())
 						return true
 					else
 						local tab={}
 						local ct,matct,min,max=0,0,#og,#og
 						local matg=Group.CreateGroup()
 						local sg=Group.CreateGroup()
-						local mg=og:Clone()
-						mg:Merge(Duel.GetMatchingGroup(Card.IsHasEffect,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_REMOVED,0,nil,EFFECT_ORICHALCUM_CHAIN))
+						local mg=og+Duel.GetMatchingGroup(Card.IsHasEffect,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_REMOVED,0,nil,EFFECT_ORICHALCUM_CHAIN)
 						local finish=false
 						while ct<max and matct<maxc do
 							local selg=mg:Filter(Xyz.RecursionChk1,sg,mg,c,tp,min,max,minc,maxc,sg,matg,ct,matct,mustbemat,exchk,f,mustg,lv)
@@ -490,9 +496,11 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 					local cancel=not og and Duel.IsSummonCancelable()
 					local mg
 					if og then
+						g=og
 						mg=og:Filter(Xyz.MatFilter,nil,f,lv,c,tp)
 					else
-						mg=Duel.GetMatchingGroup(Xyz.MatFilter2,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE,nil,f,lv,c,tp)
+						g=Xyz.GetMaterials(tp,c)
+						mg=g:Filter(Xyz.MatFilter2,nil,f,lv,c,tp)
 						if not mustbemat then
 							local eqmg=Group.CreateGroup()
 							for tc in aux.Next(mg) do

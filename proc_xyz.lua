@@ -16,7 +16,7 @@ function Xyz.EffectXyzMaterialChk(c,xyz,tp)
 end
 function Xyz.AlterFilter(c,alterf,xyzc,e,tp,op)
 	if not alterf(c,tp,xyzc) or not c:IsCanBeXyzMaterial(xyzc,tp)
-		or (c:IsControler(1-tp) and not Xyz.EffectXyzMaterialChk(c,xyzc,tp)) 
+		or (c:IsControler(1-tp) and not Xyz.EffectXyzMaterialChk(c,xyzc,tp))
 		or (op and not op(e,tp,0,c)) then return false end
 	if xyzc:IsLocation(LOCATION_EXTRA) then
 		return Duel.GetLocationCountFromEx(tp,tp,c,xyzc)>0
@@ -28,7 +28,7 @@ end
 function Xyz.AddProcedure(c,f,lv,ct,alterf,desc,maxct,op,mustbemat,exchk)
 	--exchk for special xyz, checking other materials
 	--mustbemat for Startime Magician
-	if not maxct then maxct=ct end  
+	if not maxct then maxct=ct end
 	if c.xyz_filter==nil then
 		local mt=c:GetMetatable()
 		mt.xyz_filter=function(mc,ignoretoken,xyz,tp) return mc and (not f or f(mc,xyz,SUMMON_TYPE_XYZ|MATERIAL_XYZ,tp)) and (not lv or mc:IsXyzLevel(c,lv)) and (not mc:IsType(TYPE_TOKEN) or ignoretoken) end
@@ -36,7 +36,7 @@ function Xyz.AddProcedure(c,f,lv,ct,alterf,desc,maxct,op,mustbemat,exchk)
 		mt.minxyzct=ct
 		mt.maxxyzct=maxct
 	end
-	
+
 	local chk1=Effect.CreateEffect(c)
 	chk1:SetType(EFFECT_TYPE_SINGLE)
 	chk1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_SET_AVAILABLE)
@@ -93,18 +93,18 @@ function Xyz.MatGenerate(e,tp,eg,ep,ev,re,r,rp)
 end
 --Xyz Summon(normal)
 function Xyz.MatFilter2(c,f,lv,xyz,tp)
-	if c:IsLocation(LOCATION_GRAVE) and not c:IsHasEffect(511002793) then return false end
+	if c:IsLocation(LOCATION_GRAVE) and not c:IsHasEffect(EFFECT_XYZ_MAT_FROM_GRAVE) then return false end
 	if c:IsLocation(LOCATION_MZONE) and c:IsFacedown() then return false end
 	return Xyz.MatFilter(c,f,lv,xyz,tp)
 end
 function Xyz.MatFilter(c,f,lv,xyz,tp)
-	return (not f or f(c,xyz,SUMMON_TYPE_XYZ|MATERIAL_XYZ,tp)) and (not lv or c:IsXyzLevel(xyz,lv)) and c:IsCanBeXyzMaterial(xyz,tp) 
+	return (not f or f(c,xyz,SUMMON_TYPE_XYZ|MATERIAL_XYZ,tp)) and (not lv or c:IsXyzLevel(xyz,lv)) and c:IsCanBeXyzMaterial(xyz,tp)
 		and (c:IsControler(tp) or Xyz.EffectXyzMaterialChk(c,xyz,tp))
 end
 function Xyz.SubMatFilter(c,fil,lv,xg,xyz,tp)
 	if not lv then return false end
 	--Solid Overlay-type
-	local te=c:GetCardEffect(511000189)
+	local te=c:GetCardEffect(EFFECT_SPELL_XYZ_MAT)
 	if not te then return false end
 	local f=te:GetValue()
 	if type(f)=='function' then
@@ -117,20 +117,19 @@ end
 function Xyz.SubFilterChk(c,f,xyz,tp)
 	return (not f or f(c,xyz,SUMMON_TYPE_XYZ|MATERIAL_XYZ,tp))
 end
-function Xyz.CheckValidMultiXyzMaterial(c,xyz,matg)
-	if not c:IsHasEffect(511001225) then return false end
-	local eff={c:GetCardEffect(511001225)}
-	for i=1,#eff do
+function Xyz.CheckValidMultiXyzMaterial(c,xyz)
+	local eff={c:GetCardEffect(EFFECT_DOUBLE_XYZ_MATERIAL)}
+	for i,te in ipairs(eff) do
 		local te=eff[i]
 		local tgf=te:GetOperation()
-		if not tgf or tgf(te,xyz,matg) then return true end
+		if not tgf or tgf(te,xyz) then return true end
 	end
 	return false
 end
 function Xyz.RecursionChk1(c,mg,xyz,tp,min,max,minc,maxc,sg,matg,ct,matct,mustbemat,exchk,f,mustg,lv)
 	local xct=ct
 	local rg=Group.CreateGroup()
-	if not c:IsHasEffect(511002116) then
+	if not c:IsHasEffect(EFFECT_ORICHALCUM_CHAIN) then
 		xct=xct+1
 	end
 	local xmatct=matct+1
@@ -156,20 +155,20 @@ function Xyz.RecursionChk1(c,mg,xyz,tp,min,max,minc,maxc,sg,matg,ct,matct,mustbe
 				end
 			end
 			tc=g2:GetNext()
-		end 
+		end
 	end
 	if xct>max or xmatct>maxc then mg:Merge(rg) return false end
-	if not c:IsHasEffect(511002116) then
+	if not c:IsHasEffect(EFFECT_ORICHALCUM_CHAIN) then
 		matg:AddCard(c)
 	end
 	sg:AddCard(c)
 	local res=nil
 	if xct>=min and xmatct>=minc then
 		local ok=true
-		if matg:IsExists(Card.IsHasEffect,1,nil,91110378) then
+		if matg:IsExists(Card.IsHasEffect,1,nil,EFFECT_STAR_SERAPH_SOVEREIGNTY) then
 			ok=Xyz.MatNumChkF(matg)
 		end
-		if lv and ok and matg:IsExists(Card.IsHasEffect,1,nil,86466163) then
+		if lv and ok and matg:IsExists(Card.IsHasEffect,1,nil,EFFECT_SATELLARKNIGHT_CAPELLA) then
 			ok=Xyz.MatNumChkF2(matg,lv,xyz)
 		end
 		if ok and exchk then
@@ -186,22 +185,22 @@ function Xyz.RecursionChk1(c,mg,xyz,tp,min,max,minc,maxc,sg,matg,ct,matct,mustbe
 	end
 	local retchknum={0}
 	local retchk={mg:IsExists(Xyz.RecursionChk1,1,sg,mg,xyz,tp,min,max,minc,maxc,sg,matg,xct,xmatct,mustbemat,exchk,f,mustg,lv)}
-	if not res and c:IsHasEffect(511001225) and not mustbemat then
-		local eff={c:GetCardEffect(511001225)}
+	if not res and c:IsHasEffect(EFFECT_DOUBLE_XYZ_MATERIAL) and not mustbemat then
+		local eff={c:GetCardEffect(EFFECT_DOUBLE_XYZ_MATERIAL)}
 		for i,te in ipairs(eff) do
 			local tgf=te:GetOperation()
 			local val=te:GetValue()
 			local redun=false
 			for _,v in ipairs(retchknum) do
 				if v==val then redun=true break end
-			end 
-			if not redun and val>0 and (not tgf or tgf(te,xyz,matg)) then
+			end
+			if not redun and val>0 and (not tgf or tgf(te,xyz)) then
 				if xct>=min and xmatct+val>=minc and xct<=max and xmatct+val<=maxc then
 					local ok=true
-					if matg:IsExists(Card.IsHasEffect,1,nil,91110378) then
+					if matg:IsExists(Card.IsHasEffect,1,nil,EFFECT_STAR_SERAPH_SOVEREIGNTY) then
 						ok=Xyz.MatNumChkF(matg)
 					end
-					if lv and ok and matg:IsExists(Card.IsHasEffect,1,nil,86466163) then
+					if lv and ok and matg:IsExists(Card.IsHasEffect,1,nil,EFFECT_SATELLARKNIGHT_CAPELLA) then
 						ok=Xyz.MatNumChkF2(matg,lv,xyz)
 					end
 					if ok and exchk then
@@ -233,7 +232,7 @@ function Xyz.RecursionChk1(c,mg,xyz,tp,min,max,minc,maxc,sg,matg,ct,matct,mustbe
 end
 function Xyz.RecursionChk2(c,mg,xyz,tp,minc,maxc,sg,matg,ct,mustbemat,exchk,f,mustg,lv)
 	local rg=Group.CreateGroup()
-	if c:IsHasEffect(511001175) and not sg:IsContains(c:GetEquipTarget()) then return false end
+	if c:IsHasEffect(EFFECT_EQUIP_SPELL_XYZ_MAT) and not sg:IsContains(c:GetEquipTarget()) then return false end
 	local xct=ct+1
 	local eff={c:GetCardEffect(EFFECT_XYZ_MAT_RESTRICTION)}
 	for i,f in ipairs(eff) do
@@ -260,17 +259,17 @@ function Xyz.RecursionChk2(c,mg,xyz,tp,minc,maxc,sg,matg,ct,mustbemat,exchk,f,mu
 		end
 	end
 	if xct>maxc then mg:Merge(rg) return false end
-	if not c:IsHasEffect(511001175) and not c:IsHasEffect(511002116) then
+	if not c:IsHasEffect(EFFECT_EQUIP_SPELL_XYZ_MAT) and not c:IsHasEffect(EFFECT_ORICHALCUM_CHAIN) then
 		matg:AddCard(c)
 	end
 	sg:AddCard(c)
 	local res=nil
 	if xct>=minc then
 		local ok=true
-		if matg:IsExists(Card.IsHasEffect,1,nil,91110378) then
+		if matg:IsExists(Card.IsHasEffect,1,nil,EFFECT_STAR_SERAPH_SOVEREIGNTY) then
 			ok=Xyz.MatNumChkF(matg)
 		end
-		if lv and ok and matg:IsExists(Card.IsHasEffect,1,nil,86466163) then
+		if lv and ok and matg:IsExists(Card.IsHasEffect,1,nil,EFFECT_SATELLARKNIGHT_CAPELLA) then
 			ok=Xyz.MatNumChkF2(matg,lv,xyz)
 		end
 		if ok and exchk then
@@ -287,13 +286,13 @@ function Xyz.RecursionChk2(c,mg,xyz,tp,minc,maxc,sg,matg,ct,mustbemat,exchk,f,mu
 	end
 	local eqg=Group.CreateGroup()
 	if not mustbemat then
-		eqg:Merge(c:GetEquipGroup():Filter(Card.IsHasEffect,nil,511001175))
+		eqg:Merge(c:GetEquipGroup():Filter(Card.IsHasEffect,nil,EFFECT_EQUIP_SPELL_XYZ_MAT))
 		mg:Merge(eqg)
 	end
 	local retchknum={0}
 	local retchk={mg:IsExists(Xyz.RecursionChk2,1,sg,mg,xyz,tp,minc,maxc,sg,matg,xct,mustbemat,exchk,f,mustg,lv)}
-	if not res and c:IsHasEffect(511001225) and not mustbemat then
-		local eff={c:GetCardEffect(511001225)}
+	if not res and c:IsHasEffect(EFFECT_DOUBLE_XYZ_MATERIAL) and not mustbemat then
+		local eff={c:GetCardEffect(EFFECT_DOUBLE_XYZ_MATERIAL)}
 		for i,te in ipairs(eff) do
 			local tgf=te:GetOperation()
 			local val=te:GetValue()
@@ -301,13 +300,13 @@ function Xyz.RecursionChk2(c,mg,xyz,tp,minc,maxc,sg,matg,ct,mustbemat,exchk,f,mu
 			for _,v in ipairs(retchknum) do
 				if v==val then redun=true break end
 			end
-			if val>0 and (not tgf or tgf(te,xyz,matg)) and not redun then
+			if val>0 and (not tgf or tgf(te,xyz)) and not redun then
 				if xct+val>=minc and xct+val<=maxc then
 					local ok=true
-					if matg:IsExists(Card.IsHasEffect,1,nil,91110378) then
+					if matg:IsExists(Card.IsHasEffect,1,nil,EFFECT_STAR_SERAPH_SOVEREIGNTY) then
 						ok=Xyz.MatNumChkF(matg)
 					end
-					if lv and ok and matg:IsExists(Card.IsHasEffect,1,nil,86466163) then
+					if lv and ok and matg:IsExists(Card.IsHasEffect,1,nil,EFFECT_SATELLARKNIGHT_CAPELLA) then
 						ok=Xyz.MatNumChkF2(matg,lv,xyz)
 					end
 					if ok and exchk then
@@ -339,9 +338,9 @@ function Xyz.RecursionChk2(c,mg,xyz,tp,minc,maxc,sg,matg,ct,mustbemat,exchk,f,mu
 	return res
 end
 function Xyz.MatNumChkF(tg)
-	local chkg=tg:Filter(Card.IsHasEffect,nil,91110378)
+	local chkg=tg:Filter(Card.IsHasEffect,nil,EFFECT_STAR_SERAPH_SOVEREIGNTY)
 	for chkc in aux.Next(chkg) do
-		for _,te in ipairs({chkc:GetCardEffect(91110378)}) do
+		for _,te in ipairs({chkc:GetCardEffect(EFFECT_STAR_SERAPH_SOVEREIGNTY)}) do
 			local rct=te:GetValue()&0xffff
 			local comp=te:GetValue()>>16
 			if not Xyz.MatNumChk(tg:FilterCount(Card.IsMonster,nil),rct,comp) then return false end
@@ -357,10 +356,10 @@ function Xyz.MatNumChk(matct,ct,comp)
 	return ok
 end
 function Xyz.MatNumChkF2(tg,lv,xyz)
-	local chkg=tg:Filter(Card.IsHasEffect,nil,86466163)
+	local chkg=tg:Filter(Card.IsHasEffect,nil,EFFECT_SATELLARKNIGHT_CAPELLA)
 	for chkc in aux.Next(chkg) do
 		local rev={}
-		for _,te in ipairs({chkc:GetCardEffect(86466163)}) do
+		for _,te in ipairs({chkc:GetCardEffect(EFFECT_SATELLARKNIGHT_CAPELLA)}) do
 			local rct=te:GetValue()&0xffff
 			local comp=te:GetValue()>>16
 			if not Xyz.MatNumChk(tg:FilterCount(Card.IsMonster,nil),rct,comp) then
@@ -385,7 +384,7 @@ function Xyz.MatNumChkF2(tg,lv,xyz)
 	return true
 end
 function Auxiliary.HarmonizingMagFilterXyz(c,e,f)
-	return not f or f(e,c) or c:IsHasEffect(511002116) or c:IsHasEffect(511001175)
+	return not f or f(e,c) or c:IsHasEffect(EFFECT_ORICHALCUM_CHAIN) or c:IsHasEffect(EFFECT_EQUIP_SPELL_XYZ_MAT)
 end
 function Xyz.Condition(f,lv,minc,maxc,mustbemat,exchk)
 	--og: use special material
@@ -401,18 +400,14 @@ function Xyz.Condition(f,lv,minc,maxc,mustbemat,exchk)
 				end
 				if not xg or #xg==0 then return false end
 				local mg
-				local g
 				if og then
-					g=og
 					mg=og:Filter(Xyz.MatFilter,nil,f,lv,c,tp)
 				else
-					g=Duel.GetMatchingGroup(function(cc) return ((cc:IsLocation(LOCATION_GRAVE) and cc:IsHasEffect(511002793)) 
-						or cc:IsFaceup()) and (cc:IsControler(tp) or Xyz.EffectXyzMaterialChk(cc,c,tp)) end,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE,nil)
 					mg=Duel.GetMatchingGroup(Xyz.MatFilter2,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE,nil,f,lv,c,tp)
 					if not mustbemat then
 						local eqmg=Group.CreateGroup()
 						for tc in aux.Next(mg) do
-							local eq=tc:GetEquipGroup():Filter(Card.IsHasEffect,nil,511001175)
+							local eq=tc:GetEquipGroup():Filter(Card.IsHasEffect,nil,EFFECT_EQUIP_SPELL_XYZ_MAT)
 							eqmg:Merge(eq)
 						end
 						mg:Merge(eqmg)
@@ -423,7 +418,7 @@ function Xyz.Condition(f,lv,minc,maxc,mustbemat,exchk)
 				if must then mustg:Merge(must) end
 				if not mg:Includes(mustg) then return false end
 				if not mustbemat then
-					mg:Merge(Duel.GetMatchingGroup(Card.IsHasEffect,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_REMOVED,0,nil,511002116))
+					mg:Merge(Duel.GetMatchingGroup(Card.IsHasEffect,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_REMOVED,0,nil,EFFECT_ORICHALCUM_CHAIN))
 				end
 				if min and min~=99 then
 					return mg:IsExists(Xyz.RecursionChk1,1,nil,mg,c,tp,min,max,minc,maxc,Group.CreateGroup(),Group.CreateGroup(),0,0,mustbemat,exchk,f,mustg,lv)
@@ -436,7 +431,7 @@ end
 function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 	return function(e,tp,eg,ep,ev,re,r,rp,chk,c,must,og,min,max)
 				if og and not min then
-					if (#og>=minc and #og<=maxc) or not og:IsExists(Card.IsHasEffect,1,nil,511002116) then
+					if (#og>=minc and #og<=maxc) or not og:IsExists(Card.IsHasEffect,1,nil,EFFECT_ORICHALCUM_CHAIN) then
 						local sg=og:Clone()
 						sg:KeepAlive()
 						e:SetLabelObject(sg)
@@ -447,7 +442,7 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 						local matg=Group.CreateGroup()
 						local sg=Group.CreateGroup()
 						local mg=og:Clone()
-						mg:Merge(Duel.GetMatchingGroup(Card.IsHasEffect,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_REMOVED,0,nil,511002116))
+						mg:Merge(Duel.GetMatchingGroup(Card.IsHasEffect,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_REMOVED,0,nil,EFFECT_ORICHALCUM_CHAIN))
 						local finish=false
 						while ct<max and matct<maxc do
 							local selg=mg:Filter(Xyz.RecursionChk1,sg,mg,c,tp,min,max,minc,maxc,sg,matg,ct,matct,mustbemat,exchk,f,mustg,lv)
@@ -458,25 +453,25 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 							if ct>=min and matct>=maxc then finish=true end
 							if not sg:IsContains(sc) then
 								sg:AddCard(sc)
-								if sc:IsHasEffect(511002116) then
+								if sc:IsHasEffect(EFFECT_ORICHALCUM_CHAIN) then
 									matct=matct+1
-								elseif sc:IsHasEffect(511001225) then
+								elseif sc:IsHasEffect(EFFECT_DOUBLE_XYZ_MATERIAL) then
 									matg:AddCard(sc)
 									ct=ct+1
-									if not Xyz.CheckValidMultiXyzMaterial(sc,c,matg) or (min>=ct and minc>=matct+1) then
+									if not Xyz.CheckValidMultiXyzMaterial(sc,c) or (min>=ct and minc>=matct+1) then
 										matct=matct+1
 									else
 										local multi={}
 										if mg:IsExists(Xyz.RecursionChk1,1,sg,mg,c,tp,min,max,minc,maxc,sg,matg,ct,matct+1,mustbemat,exchk,f,mustg,lv) then
 											table.insert(multi,1)
 										end
-										local eff={sc:GetCardEffect(511001225)}
+										local eff={sc:GetCardEffect(EFFECT_DOUBLE_XYZ_MATERIAL)}
 										for i=1,#eff do
 											local te=eff[i]
 											local tgf=te:GetOperation()
 											local val=te:GetValue()
-											if val>0 and (not tgf or tgf(te,c,matg)) then
-												if (min>=ct and minc>=matct+1+val) 
+											if val>0 and (not tgf or tgf(te,c)) then
+												if (min>=ct and minc>=matct+1+val)
 													or mg:IsExists(Xyz.RecursionChk1,1,sg,mg,c,tp,min,max,minc,maxc,sg,matg,ct,matct+1+val,mustbemat,exchk,f,mustg,lv) then
 													table.insert(multi,1+val)
 												end
@@ -499,7 +494,7 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 								end
 							else
 								sg:RemoveCard(sc)
-								if sc:IsHasEffect(511002116) then
+								if sc:IsHasEffect(EFFECT_ORICHALCUM_CHAIN) then
 									matct=matct-1
 								else
 									matg:RemoveCard(sc)
@@ -528,18 +523,14 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 						xg=xyztempg1
 					end
 					local mg
-					local g
 					if og then
-						g=og
 						mg=og:Filter(Xyz.MatFilter,nil,f,lv,c,tp)
 					else
-						g=Duel.GetMatchingGroup(function(cc) return ((cc:IsLocation(LOCATION_GRAVE) and cc:IsHasEffect(511002793)) 
-							or cc:IsFaceup()) and (cc:IsControler(tp) or Xyz.EffectXyzMaterialChk(cc,c,tp)) end,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE,nil)
 						mg=Duel.GetMatchingGroup(Xyz.MatFilter2,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE,nil,f,lv,c,tp)
 						if not mustbemat then
 							local eqmg=Group.CreateGroup()
 							for tc in aux.Next(mg) do
-								local eq=tc:GetEquipGroup():Filter(Card.IsHasEffect,nil,511001175)
+								local eq=tc:GetEquipGroup():Filter(Card.IsHasEffect,nil,EFFECT_EQUIP_SPELL_XYZ_MAT)
 								eqmg:Merge(eq)
 							end
 							mg:Merge(eqmg)
@@ -549,7 +540,7 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 					local mustg=Auxiliary.GetMustBeMaterialGroup(tp,g,tp,c,mg,REASON_XYZ)
 					if must then mustg:Merge(must) end
 					if not mustbemat then
-						mg:Merge(Duel.GetMatchingGroup(Card.IsHasEffect,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_REMOVED,0,nil,511002116))
+						mg:Merge(Duel.GetMatchingGroup(Card.IsHasEffect,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_REMOVED,0,nil,EFFECT_ORICHALCUM_CHAIN))
 					end
 					local finish=false
 					if not og or max==99 then
@@ -563,8 +554,8 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 							Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 							local sc=Group.SelectUnselect(tg,sg,tp,finish,cancel)
 							if not sc then
-								if ct<minc or (matg:IsExists(Card.IsHasEffect,1,nil,91110378) and not Xyz.MatNumChkF(matg)) 
-									or (lv and matg:IsExists(Card.IsHasEffect,1,nil,86466163) and not Xyz.MatNumChkF2(matg,lv,c)) then return false end
+								if ct<minc or (matg:IsExists(Card.IsHasEffect,1,nil,EFFECT_STAR_SERAPH_SOVEREIGNTY) and not Xyz.MatNumChkF(matg))
+									or (lv and matg:IsExists(Card.IsHasEffect,1,nil,EFFECT_SATELLARKNIGHT_CAPELLA) and not Xyz.MatNumChkF2(matg,lv,c)) then return false end
 								if not matg:Includes(mustg) then return false end
 								if c:IsLocation(LOCATION_EXTRA) then
 									if Duel.GetLocationCountFromEx(tp,tp,matg,c)<1 then return false end
@@ -575,22 +566,22 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 							end
 							if not sg:IsContains(sc) then
 								sg:AddCard(sc)
-								mg:Merge(sc:GetEquipGroup():Filter(Card.IsHasEffect,nil,511001175))
-								if not sc:IsHasEffect(511002116) then
+								mg:Merge(sc:GetEquipGroup():Filter(Card.IsHasEffect,nil,EFFECT_EQUIP_SPELL_XYZ_MAT))
+								if not sc:IsHasEffect(EFFECT_ORICHALCUM_CHAIN) then
 									matg:AddCard(sc)
 								end
 								ct=ct+1
-								if Xyz.CheckValidMultiXyzMaterial(sc,c,matg) and ct<minc then
+								if Xyz.CheckValidMultiXyzMaterial(sc,c) and ct<minc then
 									local multi={}
 									if mg:IsExists(Xyz.RecursionChk2,1,sg,mg,c,tp,minc,maxc,sg,matg,ct,mustbemat,exchk,f,mustg,lv) then
 										table.insert(multi,1)
 									end
-									local eff={sc:GetCardEffect(511001225)}
+									local eff={sc:GetCardEffect(EFFECT_DOUBLE_XYZ_MATERIAL)}
 									for i=1,#eff do
 										local te=eff[i]
 										local tgf=te:GetOperation()
 										local val=te:GetValue()
-										if val>0 and (not tgf or tgf(te,c,matg)) then
+										if val>0 and (not tgf or tgf(te,c)) then
 											if minc<=ct+val and ct+val<=maxc
 												or mg:IsExists(Xyz.RecursionChk2,1,sg,mg,c,tp,minc,maxc,sg,matg,ct+val,mustbemat,exchk,f,mustg,lv) then
 												table.insert(multi,1+val)
@@ -613,8 +604,8 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 								end
 							else
 								sg:RemoveCard(sc)
-								mg:Sub(sc:GetEquipGroup():Filter(Card.IsHasEffect,nil,511001175))
-								if not sc:IsHasEffect(511002116) then
+								mg:Sub(sc:GetEquipGroup():Filter(Card.IsHasEffect,nil,EFFECT_EQUIP_SPELL_XYZ_MAT))
+								if not sc:IsHasEffect(EFFECT_ORICHALCUM_CHAIN) then
 									matg:RemoveCard(sc)
 								end
 								ct=ct-1
@@ -623,8 +614,8 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 									tab[sc]=nil
 								end
 							end
-							if ct>=minc and (not matg:IsExists(Card.IsHasEffect,1,nil,91110378) or Xyz.MatNumChkF(matg)) 
-								and (not lv or not matg:IsExists(Card.IsHasEffect,1,nil,86466163) or Xyz.MatNumChkF2(matg,lv,c)) and matg:Includes(mustg) then
+							if ct>=minc and (not matg:IsExists(Card.IsHasEffect,1,nil,EFFECT_STAR_SERAPH_SOVEREIGNTY) or Xyz.MatNumChkF(matg))
+								and (not lv or not matg:IsExists(Card.IsHasEffect,1,nil,EFFECT_SATELLARKNIGHT_CAPELLA) or Xyz.MatNumChkF2(matg,lv,c)) and matg:Includes(mustg) then
 								finish=true
 							end
 							cancel=not og and Duel.IsSummonCancelable() and #sg==0
@@ -641,9 +632,9 @@ function Xyz.Operation(f,lv,minc,maxc,mustbemat,exchk)
 	return  function(e,tp,eg,ep,ev,re,r,rp,c,must,og,min,max)
 				local g=e:GetLabelObject()
 				if not g then return end
-				local remg=g:Filter(Card.IsHasEffect,nil,511002116)
+				local remg=g:Filter(Card.IsHasEffect,nil,EFFECT_ORICHALCUM_CHAIN)
 				remg:ForEach(function(c) c:RegisterFlagEffect(511002115,RESET_EVENT+RESETS_STANDARD,0,0) end)
-				g:Remove(Card.IsHasEffect,nil,511002116):Remove(Card.IsHasEffect,nil,511002115)
+				g:Remove(Card.IsHasEffect,nil,EFFECT_ORICHALCUM_CHAIN):Remove(Card.IsHasEffect,nil,511002115)
 				c:SetMaterial(g)
 				Duel.Overlay(c,g,true)
 				g:DeleteGroup()
@@ -704,7 +695,7 @@ function Xyz.Target2(alterf,op)
 					return true
 				end
 			end
-end 
+end
 function Xyz.Operation2(alterf,op)
 	return  function(e,tp,eg,ep,ev,re,r,rp,c,must,og,min,max)
 				local oc=e:GetLabelObject()

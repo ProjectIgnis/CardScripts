@@ -36,6 +36,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local sp=tc:GetOwner()
 	--cannot summon anything if not all the materials are specifically named
 	if tc.named_material and #tc.named_material~=tc.min_material_count then return end
+	if tc.material==nil then return end
 	if Duel.GetLocationCount(sp,LOCATION_MZONE)<tc.min_material_count then return end
 	local sg=Duel.GetMatchingGroup(s.sumfilter,sp,LOCATION_GRAVE,0,nil,e,sp,tc)
 	if aux.SelectUnselectGroup(sg,e,sp,tc.min_material_count,tc.min_material_count,s.rescon(tc),0) and Duel.SelectYesNo(sp,aux.Stringid(id,1)) then

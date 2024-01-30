@@ -2,7 +2,7 @@
 --Goka, the Pyre of Malice
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	----Special Summon procedure (from hand)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.spcon)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	--destroy
+	--Destroy 1 FIRE monster if Special Summoned by above procedure
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DESTROY)
@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
-	--token
+	--Special Summon 1 "Fireball Token" during each of your Standby Phases
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.tktg)
 	e3:SetOperation(s.tkop)
 	c:RegisterEffect(e3)
-	--token
+	--Tribute FIRE monsters to increase ATK by 500 for each Tributed monster
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,2))
 	e4:SetCategory(CATEGORY_ATKCHANGE)
@@ -65,7 +65,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end
@@ -78,7 +78,7 @@ function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 end
 function s.tkop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_FIREBALL,0,TYPES_TOKEN,100,100,1,RACE_PYRO,ATTRIBUTE_FIRE) then
 		local token=Duel.CreateToken(tp,TOKEN_FIREBALL)
 		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
@@ -95,7 +95,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		e1:SetValue(500)
 		c:RegisterEffect(e1)
 	end

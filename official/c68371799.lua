@@ -1,9 +1,8 @@
 --デーモンの将星
 --Archfiend Commander
-
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special summon procedure (from hand)
+	--Special Summon procedure (from hand)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
@@ -14,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	--If summoned this way, destroy 1 of your "Archfiend" cards
+	--If Summoned this way, destroy 1 of your "Archfiend" cards
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DESTROY)
@@ -25,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
-	--When tribute summoned, special summon 1 "Archfiend" monster from GY
+	--When Tribute Summoned, Special Summon 1 Level 6 "Archfiend" monster from GY
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -37,10 +36,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop2)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x45}
-
+s.listed_series={SET_ARCHFIEND}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x45)
+	return c:IsFaceup() and c:IsSetCard(SET_ARCHFIEND)
 end
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -54,14 +52,14 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_ATTACK)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH+EFFECT_FLAG_CLIENT_HINT)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END&-RESET_TOFIELD)
 	c:RegisterEffect(e1)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1
 end
 function s.desfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x45)
+	return c:IsFaceup() and c:IsSetCard(SET_ARCHFIEND)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsOnField() and s.desfilter(chkc) end
@@ -72,7 +70,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end
@@ -80,7 +78,7 @@ function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE)
 end
 function s.spfilter(c,e,tp)
-	return c:GetLevel()==6 and c:IsSetCard(0x45) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:GetLevel()==6 and c:IsSetCard(SET_ARCHFIEND) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.spfilter(chkc,e,tp) end

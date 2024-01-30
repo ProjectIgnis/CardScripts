@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e2:SetCondition(s.descon)
+	e2:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL+1) end)
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
@@ -37,16 +37,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_SCRAP}
-function s.spfilter(c)
-	return c:IsFaceup() and c:IsSetCard(SET_SCRAP)
-end
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.spfilter,c:GetControler(),LOCATION_MZONE,0,1,nil)
-end
-function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_SCRAP),c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function s.desfilter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_SCRAP)
@@ -60,7 +54,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
+	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsControler(tp) then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end
@@ -70,7 +64,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return (c:GetReason()&(REASON_DESTROY|REASON_EFFECT))==(REASON_DESTROY|REASON_EFFECT) and re:GetHandler():IsSetCard(SET_SCRAP)
 end
 function s.thfilter(c)
-	return c:IsSetCard(SET_SCRAP) and c:IsMonster() and c:GetCode()~=id and c:IsAbleToHand()
+	return c:IsSetCard(SET_SCRAP) and c:IsMonster() and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end

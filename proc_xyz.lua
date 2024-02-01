@@ -21,7 +21,7 @@ function Xyz.AlterFilter(c,alterf,xyzc,e,tp,op)
 	if xyzc:IsLocation(LOCATION_EXTRA) then
 		return Duel.GetLocationCountFromEx(tp,tp,c,xyzc)>0
 	else
-		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 or c:GetSequence()<5
+		return Duel.GetMZoneCount(tp,c,tp)>0
 	end
 end
 --Xyz monster, lv k*n
@@ -452,35 +452,29 @@ function Xyz.Condition2(alterf,op)
 end
 function Xyz.Target2(alterf,op)
 	return  function(e,tp,eg,ep,ev,re,r,rp,chk,c,must,og,min,max)
-				local cancel=not og and Duel.IsSummonCancelable()
-				Xyz.ProcCancellable=cancel
-				if og and not min then
-					e:SetLabelObject(og:GetFirst())
-					if op then op(e,tp,1,og:GetFirst()) end
-					return true
+				local cancelable=not og and Duel.IsSummonCancelable()
+				Xyz.ProcCancellable=cancelable
+				local mg=nil
+				if og then
+					mg=og
 				else
-					local mg=nil
-					if og then
-						mg=og
-					else
-						mg=Duel.GetFieldGroup(tp,LOCATION_MZONE,LOCATION_MZONE)
-					end
-					local mustg=Auxiliary.GetMustBeMaterialGroup(tp,og,tp,c,mg,REASON_XYZ)
-					if must then mustg:Merge(must) end
-					local oc
-					if #mustg>0 then
-						oc=mustg:GetFirst()
-					else
-						Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-						oc=mg:Filter(Xyz.AlterFilter,nil,alterf,c,e,tp,op):SelectUnselect(Group.CreateGroup(),tp,false,cancel)
-					end
-					if not oc then return false end
-					local ok=true
-					if op then ok=op(e,tp,1,oc) end
-					if not ok then return false end
-					e:SetLabelObject(oc)
-					return true
+					mg=Duel.GetFieldGroup(tp,LOCATION_MZONE,LOCATION_MZONE)
 				end
+				local mustg=Auxiliary.GetMustBeMaterialGroup(tp,og,tp,c,mg,REASON_XYZ)
+				if must then mustg:Merge(must) end
+				local oc
+				if #mustg>0 then
+					oc=mustg:GetFirst()
+				else
+					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
+					oc=mg:FilterSelect(tp,Xyz.AlterFilter,1,1,cancelable,nil,alterf,c,e,tp,op):GetFirst()
+				end
+				if not oc then return false end
+				local ok=true
+				if op then ok=op(e,tp,1,oc) end
+				if not ok then return false end
+				e:SetLabelObject(oc)
+				return true
 			end
 end
 function Xyz.Operation2(alterf,op)

@@ -5,6 +5,10 @@ end
 if not Xyz then
 	Xyz = aux.XyzProcedure
 end
+-- TODO: Update when we make using '99' deprecated
+-- local infToken={}
+-- Xyz.InfiniteMats=infToken
+Xyz.InfiniteMats=99
 Xyz.ProcCancellable=false
 function Xyz.EffectXyzMaterialChk(c,xyz,tp)
 	local eff_xyzmat={c:GetCardEffect(EFFECT_XYZ_MATERIAL)}
@@ -29,6 +33,12 @@ function Xyz.AddProcedure(c,f,lv,ct,alterf,desc,maxct,op,mustbemat,exchk)
 	--exchk for special xyz, checking other materials
 	--mustbemat for Startime Magician
 	if not maxct then maxct=ct end
+	-- TODO: Update when we make using '99' deprecated
+	--[[if maxct==99 then
+		maxct=Xyz.InfiniteMats
+		Debug.PrintStacktrace()
+		Debug.Message("Using 99 to represent any number of Xyz materials is deprecated, use the value Xyz.InfiniteMats instead")
+	end--]]
 	if c.xyz_filter==nil then
 		local mt=c:GetMetatable()
 		mt.xyz_filter=function(mc,ignoretoken,xyz,tp) return mc and (not f or f(mc,xyz,SUMMON_TYPE_XYZ|MATERIAL_XYZ,tp)) and (not lv or mc:IsXyzLevel(c,lv)) and (not mc:IsType(TYPE_TOKEN) or ignoretoken) end
@@ -155,7 +165,7 @@ function Xyz.RecursionChk(c,mg,xyz,tp,min,max,minc,maxc,sg,matg,ct,matct,mustbem
 			end
 		end
 	end
-	if (max and xct>max) or (xmatct and xmatct>maxc) then mg:Merge(rg) return false end
+	if (max and xct>max) or (maxc~=infToken and xmatct>maxc) then mg:Merge(rg) return false end
 	if addToMatg then
 		matg:AddCard(c)
 	end
@@ -338,7 +348,7 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 					while true do
 						local ct=#matg
 						local matct=ct+extra_mats
-						if not ((not max or #matg<max) and (not maxc or matct<maxc)) then break end
+						if not ((not max or #matg<max) and (maxc==infToken or matct<maxc)) then break end
 						local selg=mg:Filter(Xyz.RecursionChk,sg,mg,c,tp,min,max,minc,maxc,sg,matg,ct,matct,mustbemat,exchk,f,mustg,lv,eqmg,equips_inverse)
 						if #selg==0 then break end
 						Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)

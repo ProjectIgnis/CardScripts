@@ -100,9 +100,8 @@ function Xyz.SubMatFilter(c,lv,xyz,tp)
 	end
 	return true
 end
-function Xyz.CheckValidMultiXyzMaterial(c,xyz)
-	local eff={c:GetCardEffect(EFFECT_DOUBLE_XYZ_MATERIAL)}
-	for i,te in ipairs(eff) do
+function Xyz.CheckValidMultiXyzMaterial(effs,xyz)
+	for i,te in ipairs(effs) do
 		local tgf=te:GetOperation()
 		if not tgf or tgf(te,xyz) then return true end
 	end
@@ -125,69 +124,20 @@ function Xyz.CheckMaterialSet(matg,xyz,tp,exchk,mustg,lv)
 		return Duel.GetMZoneCount(tp,matg,tp)>0
 	end
 end
-function Xyz.RecursionChk1(c,mg,xyz,tp,min,max,minc,maxc,sg,matg,ct,matct,mustbemat,exchk,f,mustg,lv)
+function Xyz.RecursionChk(c,mg,xyz,tp,min,max,minc,maxc,sg,matg,ct,matct,mustbemat,exchk,f,mustg,lv,eqmg,equips_inverse)
+	local addToMatg=true
+	if eqmg and eqmg:IsContains(c) then
+		if not sg:IsContains(c:GetEquipTarget()) then return false end
+		addToMatg=false
+	end
 	local xct=ct
 	local rg=Group.CreateGroup()
 	if not c:IsHasEffect(EFFECT_ORICHALCUM_CHAIN) then
 		xct=xct+1
+	else
+		addToMatg=true
 	end
 	local xmatct=matct+1
-	for i,f in ipairs({c:GetCardEffect(EFFECT_XYZ_MAT_RESTRICTION)}) do
-		if matg:IsExists(Auxiliary.HarmonizingMagFilter,1,c,f,f:GetValue()) then
-			mg:Merge(rg)
-			return false
-		end
-		local sg2=mg:Filter(Auxiliary.HarmonizingMagFilter,nil,f,f:GetValue())
-		rg:Merge(sg2)
-		mg:Sub(sg2)
-	end
-	for tc in matg:Iter() do
-		for i,f in ipairs({tc:GetCardEffect(EFFECT_XYZ_MAT_RESTRICTION)}) do
-			if Auxiliary.HarmonizingMagFilter(c,f,f:GetValue()) then
-				mg:Merge(rg)
-				return false
-			end
-		end
-	end
-	if xct>max or xmatct>maxc then mg:Merge(rg) return false end
-	local addToMatg=not c:IsHasEffect(EFFECT_ORICHALCUM_CHAIN)
-	if addToMatg then
-		matg:AddCard(c)
-	end
-	sg:AddCard(c)
-	local res=(function()
-		if (xct>=min) and (xmatct>=minc) and Xyz.CheckMaterialSet(matg,xyz,tp,exchk,mustg,lv) then return true end
-		if mg:IsExists(Xyz.RecursionChk1,1,sg,mg,xyz,tp,min,max,minc,maxc,sg,matg,xct,xmatct,mustbemat,exchk,f,mustg,lv) then return true end
-		if not mustbemat then
-			local retchknum={}
-			for i,te in ipairs({c:GetCardEffect(EFFECT_DOUBLE_XYZ_MATERIAL)}) do
-				local tgf=te:GetOperation()
-				local val=te:GetValue()
-				if val>0 and not retchknum[val] and (not tgf or tgf(te,xyz)) then
-					local res2=false
-					if xct>=min and xmatct+val>=minc and xct<=max and xmatct+val<=maxc then
-						res2=Xyz.CheckMaterialSet(matg,xyz,tp,exchk,mustg,lv)
-					end
-					if xmatct+val<=maxc then
-						retchknum[val]=true
-						if res2 or mg:IsExists(Xyz.RecursionChk1,1,sg,mg,xyz,tp,min,max,minc,maxc,sg,matg,xct,xmatct+val,mustbemat,exchk,f,mustg,lv) then return true end
-					end
-				end
-			end
-		end
-		return false
-	end)()
-	if addToMatg then
-		matg:RemoveCard(c)
-	end
-	sg:RemoveCard(c)
-	mg:Merge(rg)
-	return res
-end
-function Xyz.RecursionChk2(c,mg,xyz,tp,minc,maxc,sg,matg,ct,mustbemat,exchk,f,mustg,lv)
-	if c:IsHasEffect(EFFECT_EQUIP_SPELL_XYZ_MAT) and not sg:IsContains(c:GetEquipTarget()) then return false end
-	local rg=Group.CreateGroup()
-	local xct=ct+1
 	for i,f in ipairs({c:GetCardEffect(EFFECT_XYZ_MAT_RESTRICTION)}) do
 		if matg:IsExists(Auxiliary.HarmonizingMagFilter,1,c,f,f:GetValue()) then
 			mg:Merge(rg)
@@ -205,8 +155,7 @@ function Xyz.RecursionChk2(c,mg,xyz,tp,minc,maxc,sg,matg,ct,mustbemat,exchk,f,mu
 			end
 		end
 	end
-	if xct>maxc then mg:Merge(rg) return false end
-	local addToMatg=not c:IsHasEffect(EFFECT_EQUIP_SPELL_XYZ_MAT) and not c:IsHasEffect(EFFECT_ORICHALCUM_CHAIN)
+	if (max and xct>max) or (xmatct and xmatct>maxc) then mg:Merge(rg) return false end
 	if addToMatg then
 		matg:AddCard(c)
 	end
@@ -214,24 +163,23 @@ function Xyz.RecursionChk2(c,mg,xyz,tp,minc,maxc,sg,matg,ct,mustbemat,exchk,f,mu
 	local eqg=nil
 	local res=(function()
 		if (xct>=minc) and Xyz.CheckMaterialSet(matg,xyz,tp,exchk,mustg,lv) then return true end
-		if not mustbemat then
-			eqg=c:GetEquipGroup():Filter(Card.IsHasEffect,nil,EFFECT_EQUIP_SPELL_XYZ_MAT)
-			mg:Merge(eqg)
+		if equips_inverse then
+			eqg=equips_inverse[c]
+			if eqg then
+				mg:Merge(eqg)
+			end
 		end
-		if mg:IsExists(Xyz.RecursionChk2,1,sg,mg,xyz,tp,minc,maxc,sg,matg,xct,mustbemat,exchk,f,mustg,lv) then return true end
+		if mg:IsExists(Xyz.RecursionChk,1,sg,mg,xyz,tp,min,max,minc,maxc,sg,matg,xct,xmatct,mustbemat,exchk,f,mustg,lv,eqmg,equips_inverse) then return true end
 		if not mustbemat then
 			local retchknum={}
 			for i,te in ipairs({c:GetCardEffect(EFFECT_DOUBLE_XYZ_MATERIAL)}) do
 				local tgf=te:GetOperation()
 				local val=te:GetValue()
-				if val>0 and (not tgf or tgf(te,xyz)) and not retchknum[val] then
-					local res2=false
-					if xct+val>=minc and xct+val<=maxc then
-						res2=Xyz.CheckMaterialSet(matg,xyz,tp,exchk,mustg,lv)
-					end
-					if xct+val<=maxc then
-						retchknum[val]=true
-						if res2 or mg:IsExists(Xyz.RecursionChk2,1,sg,mg,xyz,tp,minc,maxc,sg,matg,xct+val,mustbemat,exchk,f,mustg,lv) then return true end
+				if val>0 and not retchknum[val] and (not maxc or xmatct+val<=maxc) and (not tgf or tgf(te,xyz)) then
+					retchknum[val]=true
+					if (xct+val>=minc and Xyz.CheckMaterialSet(matg,xyz,tp,exchk,mustg,lv))
+						or mg:IsExists(Xyz.RecursionChk,1,sg,mg,xyz,tp,min,max,minc,maxc,sg,matg,xct,xmatct+val,mustbemat,exchk,f,mustg,lv,eqmg,equips_inverse) then
+						return true
 					end
 				end
 			end
@@ -299,12 +247,14 @@ function Auxiliary.HarmonizingMagFilterXyz(c,e,f)
 end
 function Xyz.Condition(f,lv,minc,maxc,mustbemat,exchk)
 	--og: use specific material
-	return  function(e,c,must,og,min,max)
+	return function(e,c,must,og,min,max)
 				if c==nil then return true end
 				if c:IsType(TYPE_PENDULUM) and c:IsFaceup() then return false end
 				local tp=c:GetControler()
 				local mg
 				local g
+				local eqmg
+				local equips_inverse
 				if og then
 					g=og
 					mg=og:Filter(Xyz.MatFilter,nil,f,lv,c,tp)
@@ -312,12 +262,20 @@ function Xyz.Condition(f,lv,minc,maxc,mustbemat,exchk)
 					g=Xyz.GetMaterials(tp,c)
 					mg=g:Filter(Xyz.MatFilter2,nil,f,lv,c,tp)
 					if not mustbemat then
-						local eqmg=Group.CreateGroup()
 						for tc in aux.Next(mg) do
 							local eq=tc:GetEquipGroup():Filter(Card.IsHasEffect,nil,EFFECT_EQUIP_SPELL_XYZ_MAT)
-							eqmg:Merge(eq)
+							if #eq~=0 then
+								if not equips_inverse then
+									eqmg=Group.CreateGroup()
+									equips_inverse={}
+								end
+								equips_inverse[tc]=eq
+								eqmg:Merge(eq)
+							end
 						end
-						mg:Merge(eqmg)
+						if eqmg then
+							mg:Merge(eqmg)
+						end
 						if not f then
 							mg:Merge(Duel.GetMatchingGroup(Xyz.SubMatFilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil,lv,c,tp))
 						end
@@ -329,207 +287,132 @@ function Xyz.Condition(f,lv,minc,maxc,mustbemat,exchk)
 				if not mustbemat then
 					mg:Merge(Duel.GetMatchingGroup(Card.IsHasEffect,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_REMOVED,0,nil,EFFECT_ORICHALCUM_CHAIN))
 				end
-				if min and min~=99 then
-					return mg:IsExists(Xyz.RecursionChk1,1,nil,mg,c,tp,min,max,minc,maxc,Group.CreateGroup(),Group.CreateGroup(),0,0,mustbemat,exchk,f,mustg,lv)
-				else
-					return mg:IsExists(Xyz.RecursionChk2,1,nil,mg,c,tp,minc,maxc,Group.CreateGroup(),Group.CreateGroup(),0,mustbemat,exchk,f,mustg,lv)
-				end
-				return false
+				min=min or 0
+				return mg:IsExists(Xyz.RecursionChk,1,nil,mg,c,tp,min,max,minc,maxc,Group.CreateGroup(),Group.CreateGroup(),0,0,mustbemat,exchk,f,mustg,lv,eqmg,equips_inverse)
 			end
 end
 function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 	return function(e,tp,eg,ep,ev,re,r,rp,chk,c,must,og,min,max)
-				if og and not min then
-					if (#og>=minc and #og<=maxc) or not og:IsExists(Card.IsHasEffect,1,nil,EFFECT_ORICHALCUM_CHAIN) then
-						e:SetLabelObject(og:Clone():KeepAlive())
-						return true
-					else
-						local tab={}
-						local ct,matct,min,max=0,0,#og,#og
-						local matg=Group.CreateGroup()
-						local sg=Group.CreateGroup()
-						local mg=og+Duel.GetMatchingGroup(Card.IsHasEffect,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_REMOVED,0,nil,EFFECT_ORICHALCUM_CHAIN)
-						local finish=false
-						while ct<max and matct<maxc do
-							local selg=mg:Filter(Xyz.RecursionChk1,sg,mg,c,tp,min,max,minc,maxc,sg,matg,ct,matct,mustbemat,exchk,f,mustg,lv)
-							if #selg<=0 then break end
-							Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-							local sc=Group.SelectUnselect(selg,sg,tp,finish)
-							if not sc then break end
-							if ct>=min and matct>=maxc then finish=true end
-							if not sg:IsContains(sc) then
-								sg:AddCard(sc)
-								if sc:IsHasEffect(EFFECT_ORICHALCUM_CHAIN) then
-									matct=matct+1
-								elseif sc:IsHasEffect(EFFECT_DOUBLE_XYZ_MATERIAL) then
-									matg:AddCard(sc)
-									ct=ct+1
-									if not Xyz.CheckValidMultiXyzMaterial(sc,c) or (min>=ct and minc>=matct+1) then
-										matct=matct+1
-									else
-										local multi={}
-										if mg:IsExists(Xyz.RecursionChk1,1,sg,mg,c,tp,min,max,minc,maxc,sg,matg,ct,matct+1,mustbemat,exchk,f,mustg,lv) then
-											table.insert(multi,1)
-										end
-										local eff={sc:GetCardEffect(EFFECT_DOUBLE_XYZ_MATERIAL)}
-										for i=1,#eff do
-											local te=eff[i]
-											local tgf=te:GetOperation()
-											local val=te:GetValue()
-											if val>0 and (not tgf or tgf(te,c)) then
-												if (min>=ct and minc>=matct+1+val)
-													or mg:IsExists(Xyz.RecursionChk1,1,sg,mg,c,tp,min,max,minc,maxc,sg,matg,ct,matct+1+val,mustbemat,exchk,f,mustg,lv) then
-													table.insert(multi,1+val)
-												end
-											end
-										end
-										if #multi==1 then
-											tab[sc]=multi[1]
-											matct=matct+multi[1]
-										else
-											Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-											local num=Duel.AnnounceNumber(tp,table.unpack(multi))
-											tab[sc]=num
-											matct=matct+num
-										end
-									end
-								else
-									matg:AddCard(sc)
-									ct=ct+1
-									matct=matct+1
-								end
-							else
-								sg:RemoveCard(sc)
-								if sc:IsHasEffect(EFFECT_ORICHALCUM_CHAIN) then
-									matct=matct-1
-								else
-									matg:RemoveCard(sc)
-									ct=ct-1
-									local num=tab[sc]
-									if num then
-										tab[sc]=nil
-										matct=matct-num
-									else
-										matct=matct-1
-									end
-								end
-							end
-						end
-						sg:KeepAlive()
-						e:SetLabelObject(sg)
-						return true
-					end
-					--end of part 1
+				local cancel=not og and Duel.IsSummonCancelable()
+				local mg
+				local eqmg
+				local equips_inverse
+				if og then
+					g=og
+					mg=og:Filter(Xyz.MatFilter,nil,f,lv,c,tp)
 				else
-					local cancel=not og and Duel.IsSummonCancelable()
-					local mg
-					if og then
-						g=og
-						mg=og:Filter(Xyz.MatFilter,nil,f,lv,c,tp)
-					else
-						g=Xyz.GetMaterials(tp,c)
-						mg=g:Filter(Xyz.MatFilter2,nil,f,lv,c,tp)
-						if not mustbemat then
-							local eqmg=Group.CreateGroup()
-							for tc in aux.Next(mg) do
-								local eq=tc:GetEquipGroup():Filter(Card.IsHasEffect,nil,EFFECT_EQUIP_SPELL_XYZ_MAT)
+					g=Xyz.GetMaterials(tp,c)
+					mg=g:Filter(Xyz.MatFilter2,nil,f,lv,c,tp)
+					if not mustbemat then
+						for tc in aux.Next(mg) do
+							local eq=tc:GetEquipGroup():Filter(Card.IsHasEffect,nil,EFFECT_EQUIP_SPELL_XYZ_MAT)
+							if #eq~=0 then
+								if not equips_inverse then
+									eqmg=Group.CreateGroup()
+									equips_inverse={}
+								end
+								equips_inverse[tc]=eq
 								eqmg:Merge(eq)
 							end
+						end
+						if eqmg then
 							mg:Merge(eqmg)
-							if not f then
-								mg:Merge(Duel.GetMatchingGroup(Xyz.SubMatFilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil,lv,c,tp))
-							end
+						end
+						if not f then
+							mg:Merge(Duel.GetMatchingGroup(Xyz.SubMatFilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil,lv,c,tp))
 						end
 					end
-					local mustg=Auxiliary.GetMustBeMaterialGroup(tp,g,tp,c,mg,REASON_XYZ)
-					if must then mustg:Merge(must) end
-					if not mustbemat then
-						mg:Merge(Duel.GetMatchingGroup(Card.IsHasEffect,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_REMOVED,0,nil,EFFECT_ORICHALCUM_CHAIN))
-					end
-					local finish=false
-					if not og or max==99 then
-						local ct=0
-						local matg=Group.CreateGroup()
-						local sg=Group.CreateGroup()
-						local tab={}
-						while ct<maxc do
-							local tg=mg:Filter(Xyz.RecursionChk2,sg,mg,c,tp,minc,maxc,sg,matg,ct,mustbemat,exchk,f,mustg,lv)
-							if #tg==0 then break end
-							Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-							local sc=Group.SelectUnselect(tg,sg,tp,finish,cancel)
-							if not sc then
-								if ct<minc or (matg:IsExists(Card.IsHasEffect,1,nil,EFFECT_STAR_SERAPH_SOVEREIGNTY) and not Xyz.MatNumChkF(matg))
-									or (lv and matg:IsExists(Card.IsHasEffect,1,nil,EFFECT_SATELLARKNIGHT_CAPELLA) and not Xyz.MatNumChkF2(matg,lv,c)) then return false end
-								if not matg:Includes(mustg) then return false end
-								if c:IsLocation(LOCATION_EXTRA) then
-									if Duel.GetLocationCountFromEx(tp,tp,matg,c)<1 then return false end
-								else
-									if Duel.GetMZoneCount(tp,matg,tp)<1 then return false end
-								end
-								break
-							end
-							if not sg:IsContains(sc) then
-								sg:AddCard(sc)
-								mg:Merge(sc:GetEquipGroup():Filter(Card.IsHasEffect,nil,EFFECT_EQUIP_SPELL_XYZ_MAT))
-								if not sc:IsHasEffect(EFFECT_ORICHALCUM_CHAIN) then
-									matg:AddCard(sc)
-								end
-								ct=ct+1
-								if Xyz.CheckValidMultiXyzMaterial(sc,c) and ct<minc then
-									local multi={}
-									if mg:IsExists(Xyz.RecursionChk2,1,sg,mg,c,tp,minc,maxc,sg,matg,ct,mustbemat,exchk,f,mustg,lv) then
-										table.insert(multi,1)
-									end
-									local eff={sc:GetCardEffect(EFFECT_DOUBLE_XYZ_MATERIAL)}
-									for i=1,#eff do
-										local te=eff[i]
-										local tgf=te:GetOperation()
-										local val=te:GetValue()
-										if val>0 and (not tgf or tgf(te,c)) then
-											if minc<=ct+val and ct+val<=maxc
-												or mg:IsExists(Xyz.RecursionChk2,1,sg,mg,c,tp,minc,maxc,sg,matg,ct+val,mustbemat,exchk,f,mustg,lv) then
-												table.insert(multi,1+val)
-											end
-										end
-									end
-									if #multi==1 then
-										if multi[1]>1 then
-											ct=ct+multi[1]-1
-											tab[sc]=multi[1]
-										end
-									else
-										Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-										local num=Duel.AnnounceNumber(tp,table.unpack(multi))
-										if num>1 then
-											ct=ct+num-1
-											tab[sc]=num
-										end
-									end
-								end
-							else
-								sg:RemoveCard(sc)
-								mg:Sub(sc:GetEquipGroup():Filter(Card.IsHasEffect,nil,EFFECT_EQUIP_SPELL_XYZ_MAT))
-								if not sc:IsHasEffect(EFFECT_ORICHALCUM_CHAIN) then
-									matg:RemoveCard(sc)
-								end
-								ct=ct-1
-								if tab[sc] then
-									ct=ct-tab[sc]+1
-									tab[sc]=nil
-								end
-							end
-							if ct>=minc and (not matg:IsExists(Card.IsHasEffect,1,nil,EFFECT_STAR_SERAPH_SOVEREIGNTY) or Xyz.MatNumChkF(matg))
-								and (not lv or not matg:IsExists(Card.IsHasEffect,1,nil,EFFECT_SATELLARKNIGHT_CAPELLA) or Xyz.MatNumChkF2(matg,lv,c)) and matg:Includes(mustg) then
-								finish=true
-							end
-							cancel=not og and Duel.IsSummonCancelable() and #sg==0
-						end
-						sg:KeepAlive()
-						e:SetLabelObject(sg)
-						return true
-					end
-					return false
 				end
+				local mustg=Auxiliary.GetMustBeMaterialGroup(tp,g,tp,c,mg,REASON_XYZ)
+				if must then mustg:Merge(must) end
+				if not mustbemat then
+					mg:Merge(Duel.GetMatchingGroup(Card.IsHasEffect,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_REMOVED,0,nil,EFFECT_ORICHALCUM_CHAIN))
+				end
+				do
+					local extra_mats=0
+					min=min or 0
+					local matg=Group.CreateGroup()
+					local sg=Group.CreateGroup()
+					local tab={}
+					local finishable=false
+					while true do
+						local ct=#matg
+						local matct=ct+extra_mats
+						if not ((not max or #matg<max) and (not maxc or matct<maxc)) then break end
+						local selg=mg:Filter(Xyz.RecursionChk,sg,mg,c,tp,min,max,minc,maxc,sg,matg,ct,matct,mustbemat,exchk,f,mustg,lv,eqmg,equips_inverse)
+						if #selg==0 then break end
+						Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
+						local cancelable=not og and Duel.IsSummonCancelable() and #sg==0
+						local sc=Group.SelectUnselect(selg,sg,tp,finishable,cancelable)
+						if not sc then
+							if not finishable then return false end
+							break
+						end
+						if not sg:IsContains(sc) then
+							sg:AddCard(sc)
+							if equips_inverse and equips_inverse[sc] then
+								mg:Merge(equips_inverse[sc])
+							end
+							local multiXyz={sc:GetCardEffect(EFFECT_DOUBLE_XYZ_MATERIAL)}
+							if #multiXyz>0 and Xyz.CheckValidMultiXyzMaterial(effs,c) and ct<minc then
+								matg:AddCard(sc)
+								local multi={}
+								if mg:IsExists(Xyz.RecursionChk,1,sg,mg,c,tp,minc,maxc,sg,matg,ct,mustbemat,exchk,f,mustg,lv) then
+									table.insert(multi,1)
+								end
+								local eff={sc:GetCardEffect(EFFECT_DOUBLE_XYZ_MATERIAL)}
+								for i=1,#eff do
+									local te=eff[i]
+									local tgf=te:GetOperation()
+									local val=te:GetValue()
+									if val>0 and (not tgf or tgf(te,c)) then
+										if minc<=ct+val and ct+val<=maxc
+											or mg:IsExists(Xyz.RecursionChk,1,sg,mg,c,tp,minc,maxc,sg,matg,ct+val,mustbemat,exchk,f,mustg,lv) then
+											table.insert(multi,1+val)
+										end
+									end
+								end
+								if #multi==1 then
+									if multi[1]>1 then
+										extra_mats=extra_mats+multi[1]
+										tab[sc]=multi[1]
+									end
+								else
+									Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
+									local num=Duel.AnnounceNumber(tp,table.unpack(multi))
+									if num>1 then
+										extra_mats=extra_mats+num
+										tab[sc]=num
+									end
+								end
+							elseif sc:IsHasEffect(EFFECT_ORICHALCUM_CHAIN) then
+								extra_mats=extra_mats+1
+							else
+								matg:AddCard(sc)
+							end
+						else
+							sg:RemoveCard(sc)
+							if equips_inverse and equips_inverse[sc] then
+								mg:Sub(equips_inverse[sc])
+							end
+							if not sc:IsHasEffect(EFFECT_ORICHALCUM_CHAIN) then
+								matg:RemoveCard(sc)
+							end
+							local num=tab[sc]
+							if num then
+								tab[sc]=nil
+								matct=matct-num
+							else
+								matct=matct-1
+							end
+						end
+						finishable=#matg>=minc and Xyz.CheckMaterialSet(matg,c,tp,exchk,mustg,lv)
+					end
+					sg:KeepAlive()
+					e:SetLabelObject(sg)
+					return true
+				end
+				return false
 			end
 end
 function Xyz.Operation(f,lv,minc,maxc,mustbemat,exchk)

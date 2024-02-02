@@ -28,7 +28,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_SHADDOLL}
 function s.rmfilter(c,tp)
-	return c:IsFaceup() and Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_EXTRA,0,1,nil,c:GetAttribute())
+	return c:IsAbleToRemove() and c:IsFaceup() and Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_EXTRA,0,1,nil,c:GetAttribute())
 end
 function s.tgfilter(c,att)
 	return c:IsSetCard(SET_SHADDOLL) and c:IsAbleToGrave() and c:IsAttribute(att)

@@ -1,5 +1,5 @@
 --反逆の罪宝－スネークアイ
---Corrupted Gem of Rebellion - Snake Eye
+--Sinful Spoils of Subversion - Snake-Eye
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -30,8 +30,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e)
-		and Duel.MoveToField(tc,tp,tc:GetOwner(),LOCATION_SZONE,POS_FACEUP,true) then
+	if not (tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e)) then return end
+	if Duel.GetLocationCount(tc:GetOwner(),LOCATION_SZONE)==0 then
+		Duel.SendtoGrave(tc,REASON_RULE,nil,PLAYER_NONE)
+	elseif Duel.MoveToField(tc,tp,tc:GetOwner(),LOCATION_SZONE,POS_FACEUP,true) then
 		--Treated as a Continuous Spell
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

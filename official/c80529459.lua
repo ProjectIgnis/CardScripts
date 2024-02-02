@@ -2,7 +2,7 @@
 --Scrap Raptor
 local s,id=GetID()
 function s.initial_effect(c)
-	--Destroy 1 monster you control, gain 1 additional Normal Summon of a "Scrap" monster
+	--Destroy 1 monster you control
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)
@@ -13,13 +13,13 @@ function s.initial_effect(c)
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
-	--Add 1 "Scrap Factory" or 1 non-Tuner "Scrap" monster from Deck to hand
+	--Add 1 "Scrap Factory" or 1 non-Tuner "Scrap" monster from your Deck to your hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCode(EVENT_TO_GRAVE)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
+	e2:SetCode(EVENT_DESTROYED)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(s.thcon)
 	e2:SetTarget(s.thtg)
@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_SCRAP}
-s.listed_names={28388296} --Scrap Factory
+s.listed_names={28388296,id} --Scrap Factory
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) end
 	if chk==0 then return Duel.IsExistingTarget(nil,tp,LOCATION_MZONE,0,1,nil) end
@@ -52,7 +52,7 @@ end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
 	local c=e:GetHandler()
-	return (c:GetReason()&(REASON_DESTROY|REASON_EFFECT))==(REASON_DESTROY|REASON_EFFECT) and re:GetHandler():IsSetCard(SET_SCRAP)
+	return c:IsReason(REASON_EFFECT) and c:IsLocation(LOCATION_GRAVE) and re:GetHandler():IsSetCard(SET_SCRAP)
 end
 function s.thfilter(c)
 	return (c:IsCode(28388296) or (c:IsSetCard(SET_SCRAP) and c:IsMonster() and not c:IsType(TYPE_TUNER))) and c:IsAbleToHand()

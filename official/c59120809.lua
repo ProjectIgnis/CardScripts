@@ -43,9 +43,14 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_SCARECLAW}
 function s.immval(e,te)
+	if not (te:IsMonsterEffect() and te:IsActivated() and te:GetActivateLocation()==LOCATION_MZONE) then return false end
 	local tc=te:GetHandler()
-	return te:IsMonsterEffect() and te:IsActivated() and te:GetActivateLocation()==LOCATION_MZONE
-		and ((tc:IsDefensePos() and tc:IsRelateToEffect(te)) or (tc:IsPreviousPosition(POS_DEFENSE) and not tc:IsRelateToEffect(te)))
+	if not Duel.IsChainSolving() then return tc:IsDefensePos() end
+	if tc:IsRelateToEffect(te) then
+		return tc:IsDefensePos()
+	else
+		return Duel.GetChainInfo(0,CHAININFO_TRIGGERING_POSITION)==POS_DEFENSE
+	end
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_SCARECLAW) and c:IsLevel(3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

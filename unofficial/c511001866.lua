@@ -40,7 +40,7 @@ end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
-	if chk==0 then return a:GetRank()>0 and d:GetRank()>0 and a:GetRank()~=d:GetRank() end
+	if chk==0 then return a and a:GetRank()>0 and d and d:GetRank()>0 and a:GetRank()~=d:GetRank() end
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()

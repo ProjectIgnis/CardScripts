@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Allow Feather Counters
-	c:EnableCounterPermit(0x10)
+	c:EnableCounterPermit(COUNTER_FEATHER)
 	--Synchro Summon
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
 	c:EnableReviveLimit()
@@ -16,31 +16,31 @@ function s.initial_effect(c)
 	e1:SetTargetRange(1,0)
 	e1:SetValue(s.damval)
 	c:RegisterEffect(e1)
-	local e4=e1:Clone()
-	e4:SetCode(EFFECT_NO_EFFECT_DAMAGE)
-	c:RegisterEffect(e4)
-	--Decrease its own ATK by each Feather Counter
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetCode(EFFECT_UPDATE_ATTACK)
-	e2:SetValue(s.atkval)
+	local e2=e1:Clone()
+	e2:SetCode(EFFECT_NO_EFFECT_DAMAGE)
 	c:RegisterEffect(e2)
-	--Decrease ATK of a monster and inflict damage
+	--Decrease its own ATK by each Feather Counter
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,0))
-	e3:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DAMAGE)
-	e3:SetType(EFFECT_TYPE_IGNITION)
-	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCountLimit(1)
-	e3:SetCost(s.cost)
-	e3:SetTarget(s.target)
-	e3:SetOperation(s.operation)
+	e3:SetCode(EFFECT_UPDATE_ATTACK)
+	e3:SetValue(s.atkval)
 	c:RegisterEffect(e3)
+	--Decrease ATK of a monster and inflict damage
+	local e4=Effect.CreateEffect(c)
+	e4:SetDescription(aux.Stringid(id,0))
+	e4:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DAMAGE)
+	e4:SetType(EFFECT_TYPE_IGNITION)
+	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetCountLimit(1)
+	e4:SetCost(s.cost)
+	e4:SetTarget(s.target)
+	e4:SetOperation(s.operation)
+	c:RegisterEffect(e4)
 end
-s.counter_list={0x10}
+s.counter_list={COUNTER_FEATHER}
 function s.damval(e,re,val,r,rp,rc)
 	if (r&REASON_EFFECT)~=0 then
 		e:GetHandler():AddCounter(0x10,1)
@@ -49,13 +49,13 @@ function s.damval(e,re,val,r,rp,rc)
 	return val
 end
 function s.atkval(e,c)
-	return c:GetCounter(0x10)*-700
+	return c:GetCounter(COUNTER_FEATHER)*-700
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():GetCounter(0x10)>0 end
-	local ct=e:GetHandler():GetCounter(0x10)
-	e:SetLabel(ct*700)
-	e:GetHandler():RemoveCounter(tp,0x10,ct,REASON_COST)
+	if chk==0 then return e:GetHandler():GetCounter(COUNTER_FEATHER)>0 end
+	local ct=e:GetHandler():GetCounter(COUNTER_FEATHER)
+	e:SetLabel(ct*COUNTER_FEATHER)
+	e:GetHandler():RemoveCounter(tp,COUNTER_FEATHER,ct,REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsFaceup() end

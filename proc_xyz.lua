@@ -335,8 +335,14 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 				end
 				local mustg=Auxiliary.GetMustBeMaterialGroup(tp,g,tp,c,mg,REASON_XYZ)
 				if must then mustg:Merge(must) end
+				local orichalcumGroup
 				if not mustbemat then
-					mg:Merge(Duel.GetMatchingGroup(Card.IsHasEffect,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_REMOVED,0,nil,EFFECT_ORICHALCUM_CHAIN))
+					orichalcumGroup=Duel.GetMatchingGroup(Card.IsHasEffect,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_REMOVED,0,nil,EFFECT_ORICHALCUM_CHAIN)
+					mg:Merge(orichalcumGroup)
+				end
+				if (not orichalcumGroup or #orichalcumGroup==0) and (must and #must==min and #must==max) then
+					e:SetLabelObject(mustg:Clone():KeepAlive())
+					return true
 				end
 				do
 					local extra_mats=0
@@ -479,18 +485,22 @@ function Xyz.Target2(alterf,op)
 				local mustg=Auxiliary.GetMustBeMaterialGroup(tp,og,tp,c,mg,REASON_XYZ)
 				if must then mustg:Merge(must) end
 				local oc
-				if #mustg>0 then
+				if must and #must==min and #must==max then
 					oc=mustg:GetFirst()
+				elseif #mustg>0 then
+					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
+					local ocg=mustg:Select(tp,1,1,cancelable,nil)
+					if ocg then
+						oc=ocg:GetFirst()
+					end
 				else
 					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 					local ocg=mg:FilterSelect(tp,Xyz.AlterFilter,1,1,cancelable,nil,alterf,c,e,tp,op)
-					if not ocg then return false end
-					oc=ocg:GetFirst()
+					if ocg then
+						oc=ocg:GetFirst()
+					end
 				end
-				if not oc then return false end
-				local ok=true
-				if op then ok=op(e,tp,1,oc) end
-				if not ok then return false end
+				if not oc or (op and not op(e,tp,1,oc)) then return false end
 				e:SetLabelObject(oc)
 				return true
 			end

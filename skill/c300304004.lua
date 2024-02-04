@@ -9,7 +9,7 @@ s.listed_names={83104731}
 --Fusion Summon Functions
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--condition
-	return aux.CanActivateSkill(tp) and Duel.GetFlagEffect(ep,id)==0 and s.fusTarget(e,tp,eg,ep,ev,re,r,rp,0)
+	return aux.CanActivateSkill(tp) and Duel.GetFlagEffect(tp,id)==0 and s.fusTarget(e,tp,eg,ep,ev,re,r,rp,0)
 end
 function s.fusfilter(c,e,tp,m,f,chkf)
 	return c:IsType(TYPE_FUSION) and (not f or f(c)) and c:IsSetCard(SET_ANCIENT_GEAR)
@@ -19,6 +19,10 @@ function s.cfilter(c,e,tp)
 	if not c:IsDiscardable() then return false end
 	local chkf=tp
 	local mg1=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_MZONE,0,nil,e)
+	if mg1:IsExists(s.aggfilter,1,nil,e) then
+		local g1=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_HAND|LOCATION_DECK,0,nil,e)
+		mg1:Merge(g1)
+	end
 	local res=Duel.IsExistingMatchingCard(s.fusfilter,tp,LOCATION_EXTRA,0,1,c,e,tp,mg1-c,nil,chkf)
 	if not res then
 		local ce=Duel.GetChainMaterial(tp)
@@ -46,19 +50,23 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	ge1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	ge1:SetTargetRange(0,1)
 	ge1:SetValue(0)
-	ge1:SetReset(RESET_PHASE+PHASE_END)
+	ge1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(ge1,tp)
 	local ge2=ge1:Clone()
 	ge2:SetCode(EFFECT_NO_EFFECT_DAMAGE)
-	ge2:SetReset(RESET_PHASE+PHASE_END)
+	ge2:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(ge2,tp)
 	--Fusion Summon "Ancient Gear" Fusion monster
 	local g2=s.fusTarget(e,tp,eg,ep,ev,re,r,rp,0)
 	--OPD Register
-	Duel.RegisterFlagEffect(ep,id,0,0,0)
+	Duel.RegisterFlagEffect(tp,id,0,0,0)
 	s.fusTarget(e,tp,eg,ep,ev,re,r,rp,1)
 	local chkf=tp
 	local mg1=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_MZONE,0,nil,e)
+	if mg1:IsExists(s.aggfilter,1,nil,e) then
+		local g1=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_HAND|LOCATION_DECK,0,nil,e)
+		mg1:Merge(g1)
+	end
 	local sg1=Duel.GetMatchingGroup(s.fusfilter,tp,LOCATION_EXTRA,0,nil,e,tp,mg1,nil,chkf)
 	local mg2,sg2=nil,nil
 	local ce=Duel.GetChainMaterial(tp)
@@ -76,7 +84,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 		local tc=tg:GetFirst()
 		if sg1:IsContains(tc) and (sg2==nil or not sg2:IsContains(tc) or not Duel.SelectYesNo(tp,ce:GetDescription())) then
 			if mg1:IsExists(s.aggfilter,1,nil,e) then
-				local mgd=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_MZONE,0,nil,e)
+				local mgd=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_HAND|LOCATION_DECK|LOCATION_MZONE,0,nil,e)
 				local mat1=aux.SelectUnselectGroup(mgd,e,tp,tc.min_material_count,tc.max_material_count,s.rescon,1,tp,HINTMSG_FMATERIAL)
 				tc:SetMaterial(mat1)
 				Duel.SendtoGrave(mat1,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
@@ -95,7 +103,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 			fop(ce,e,tp,tc,mat2)
 		end
 	tc:CompleteProcedure()
-	--Halve battle damage from that monster
+	--Halve battle damage from that Fusion Summoned monster
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)

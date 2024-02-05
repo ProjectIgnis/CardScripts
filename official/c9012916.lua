@@ -43,7 +43,7 @@ end
 s.counter_list={COUNTER_FEATHER}
 function s.damval(e,re,val,r,rp,rc)
 	if (r&REASON_EFFECT)~=0 then
-		e:GetHandler():AddCounter(0x10,1)
+		e:GetHandler():AddCounter(COUNTER_FEATHER,1)
 		return 0
 	end
 	return val
@@ -54,7 +54,7 @@ end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetCounter(COUNTER_FEATHER)>0 end
 	local ct=e:GetHandler():GetCounter(COUNTER_FEATHER)
-	e:SetLabel(ct*COUNTER_FEATHER)
+	e:SetLabel(ct*700)
 	e:GetHandler():RemoveCounter(tp,COUNTER_FEATHER,ct,REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

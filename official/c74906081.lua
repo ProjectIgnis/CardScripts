@@ -1,5 +1,5 @@
 --睨み統べるスネークアイズ
---The Glaring Ruler Snake-Eyes
+--Startling Stare of the Snake-Eyes
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -58,10 +58,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if not tc:IsRelateToEffect(e) then return end
+	if not tc:IsRelateToEffect(e) or tc:IsImmuneToEffect(e) then return end
 	if e:GetLabel()==1 then
 		--Place it face-up in its owner's Spell & Trap Zone as a Continuous Spell
-		if not tc:IsImmuneToEffect(e) and Duel.MoveToField(tc,tp,tc:GetOwner(),LOCATION_SZONE,POS_FACEUP,true) then
+		if tc:IsLocation(LOCATION_MZONE) and Duel.GetLocationCount(tc:GetOwner(),LOCATION_SZONE)==0 then
+			Duel.SendtoGrave(tc,REASON_RULE,nil,PLAYER_NONE)
+		elseif Duel.MoveToField(tc,tp,tc:GetOwner(),LOCATION_SZONE,POS_FACEUP,true) then
 			--Treat it as a Continuous Spell
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
@@ -71,7 +73,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetReset(RESET_EVENT|(RESETS_STANDARD&~RESET_TURN_SET))
 			tc:RegisterEffect(e1)
 		end
-	else
+	elseif op==2 then
 		--Special Summon it to your field
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end

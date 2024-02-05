@@ -1,9 +1,9 @@
 --重騎兵エメトⅥ
---Centurion Emet VI
+--Centur-Ion Emeth VI
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	--Place 1 "Centurion" monster in the Spell/Trap Zone as Continuous Trap
+	--Place 1 "Centur-Ion" monster in the Spell/Trap Zone as Continuous Trap
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -49,10 +49,22 @@ function s.pltg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.plop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
+	--Cannot Special Summon "Centur-Ion Emeth VI"
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,2))
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	e1:SetTargetRange(1,0)
+	e1:SetTarget(function(_,c) return c:IsCode(id) end)
+	e1:SetReset(RESET_PHASE|PHASE_END)
+	Duel.RegisterEffect(e1,tp)
+	--Place the target in your S/T Zone
 	local tc=Duel.GetFirstTarget()
-	if not tc:IsForbidden() and tc:IsRelateToEffect(e)
-		and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true) then
+	if not tc:IsRelateToEffect(e) or tc:IsImmuneToEffect(e) then return end
+	if Duel.GetLocationCount(tp,LOCATION_SZONE)==0 then
+		Duel.SendtoGrave(tc,REASON_RULE,nil,PLAYER_NONE)
+	elseif Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true) then
 		--Treat as Continuous Trap
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -65,16 +77,6 @@ function s.plop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 		end
 	end
-	--Cannot Special Summon "Centurion Emet VI"
-	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,2))
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
-	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetTargetRange(1,0)
-	e1:SetTarget(function(_,c) return c:IsCode(id) end)
-	e1:SetReset(RESET_PHASE|PHASE_END)
-	Duel.RegisterEffect(e1,tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

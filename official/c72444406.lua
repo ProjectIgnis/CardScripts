@@ -56,8 +56,10 @@ function s.plop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_EFFECT|REASON_DISCARD,nil,REASON_EFFECT)==0 then return end
 	local tc=Duel.GetFirstTarget()
 	local owner_p=tc:GetOwner()
-	if tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) and tc:CheckUniqueOnField(owner_p)
-		and Duel.MoveToField(tc,tp,owner_p,LOCATION_SZONE,POS_FACEUP,true) then
+	if not tc:IsRelateToEffect(e) or tc:IsImmuneToEffect(e) then return end
+	if Duel.GetLocationCount(owner_p,LOCATION_SZONE)==0 then
+		Duel.SendtoGrave(tc,REASON_RULE,nil,PLAYER_NONE)
+	elseif tc:CheckUniqueOnField(owner_p) and Duel.MoveToField(tc,tp,owner_p,LOCATION_SZONE,POS_FACEUP,true) then
 		--Treated as a Continuous Trap
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

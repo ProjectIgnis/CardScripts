@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.setop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={CARD_GOLD_SARC_OF_LIGHT,101204071}
+s.listed_names={CARD_GOLD_SARC_OF_LIGHT,27157727}
 function s.thfilter(c)
 	return (c:IsCode(CARD_GOLD_SARC_OF_LIGHT) or (c:IsSpellTrap() and c:ListsCode(CARD_GOLD_SARC_OF_LIGHT))) and c:IsAbleToHand()
 end
@@ -46,7 +46,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.setfilter(c)
-	return c:IsCode(101204071) and c:IsSSetable()
+	return c:IsCode(27157727) and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK,0,1,nil) end

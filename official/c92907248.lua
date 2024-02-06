@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tgyop)
 	c:RegisterEffect(e2)
 end
-local TOKEN_CENTURION=id+100
+local TOKEN_CENTURION=id+1
 s.listed_series={SET_CENTURION}
 s.listed_names={TOKEN_CENTURION,id}
 function s.cfilter(c)

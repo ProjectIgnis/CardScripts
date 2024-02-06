@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tknop)
 	c:RegisterEffect(e2)
 end
-local GOLD_PRIDE_TOKEN=id+100
+local GOLD_PRIDE_TOKEN=id+1
 s.listed_names={GOLD_PRIDE_TOKEN}
 s.listed_series={SET_GOLD_PRIDE}
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

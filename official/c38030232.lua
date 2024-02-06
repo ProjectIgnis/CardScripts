@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
-s.listed_names={38030233}
+s.listed_names={id+1} --Tenyi Spirit Token
 function s.con(e)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsNonEffectMonster),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
@@ -49,27 +49,27 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.filter(chkc) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x12c,TYPES_TOKEN,-2,0,4,RACE_WYRM,ATTRIBUTE_LIGHT)
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,SET_TENYI,TYPES_TOKEN,-2,0,4,RACE_WYRM,ATTRIBUTE_LIGHT)
 		and Duel.IsExistingTarget(s.filter,tp,0,LOCATION_MZONE,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
-	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,tp,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x12c,TYPES_TOKEN,-2,0,4,RACE_WYRM,ATTRIBUTE_LIGHT) then
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,SET_TENYI,TYPES_TOKEN,-2,0,4,RACE_WYRM,ATTRIBUTE_LIGHT) then
 		local token=Duel.CreateToken(tp,id+1)
+		local atk=tc:IsFaceup() and tc:GetBaseAttack() or 0
 		if Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP) then
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_SET_ATTACK)
-			e1:SetValue(tc:GetBaseAttack())
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetValue(atk)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			token:RegisterEffect(e1)
 		end
 	Duel.SpecialSummonComplete()
 	end
 end
-

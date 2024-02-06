@@ -59,7 +59,8 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) or tc:IsImmuneToEffect(e) then return end
-	if e:GetLabel()==1 then
+	local op=e:GetLabel()
+	if op==1 then
 		--Place it face-up in its owner's Spell & Trap Zone as a Continuous Spell
 		if tc:IsLocation(LOCATION_MZONE) and Duel.GetLocationCount(tc:GetOwner(),LOCATION_SZONE)==0 then
 			Duel.SendtoGrave(tc,REASON_RULE,nil,PLAYER_NONE)

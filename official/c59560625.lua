@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
+	e1:SetCode(EVENT_BE_BATTLE_TARGET)
 	e1:SetCondition(s.condition1)
 	e1:SetTarget(s.target1)
 	e1:SetOperation(s.activate1)
@@ -24,7 +24,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.condition1(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==1-tp
+	local a,d=Duel.GetAttacker(),Duel.GetAttackTarget()
+	return a and d and a:IsControler(1-tp) and d:IsControler(tp)
 end
 function s.filter1(c,e)
 	return c:IsCanBeEffectTarget(e)

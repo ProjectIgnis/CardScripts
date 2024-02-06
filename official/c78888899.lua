@@ -51,32 +51,33 @@ function s.plop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	--Place the target in your S/T Zone
 	local tc=Duel.GetFirstTarget()
-	if not tc:IsRelateToEffect(e) or tc:IsImmuneToEffect(e) then return end
-	if Duel.GetLocationCount(tp,LOCATION_SZONE)==0 then
-		Duel.SendtoGrave(tc,REASON_RULE,nil,PLAYER_NONE)
-	elseif Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true) then
-		--Treat as Continuous Trap
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetCode(EFFECT_CHANGE_TYPE)
-		e1:SetValue(TYPE_TRAP|TYPE_CONTINUOUS)
-		e1:SetReset((RESET_EVENT|RESETS_STANDARD)&~RESET_TURN_SET)
-		tc:RegisterEffect(e1)
-		if c:IsRelateToEffect(e) then
-			Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
+	if tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) then
+		if Duel.GetLocationCount(tp,LOCATION_SZONE)==0 then
+			Duel.SendtoGrave(tc,REASON_RULE,nil,PLAYER_NONE)
+		elseif Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true) then
+			--Treat as Continuous Trap
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+			e1:SetCode(EFFECT_CHANGE_TYPE)
+			e1:SetValue(TYPE_TRAP|TYPE_CONTINUOUS)
+			e1:SetReset((RESET_EVENT|RESETS_STANDARD)&~RESET_TURN_SET)
+			tc:RegisterEffect(e1)
+			if c:IsRelateToEffect(e) then
+				Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
+			end
 		end
 	end
 	--Cannot Special Summon "Centur-Ion Emeth VI"
-	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,2))
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
-	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetTargetRange(1,0)
-	e1:SetTarget(function(_,c) return c:IsCode(id) end)
-	e1:SetReset(RESET_PHASE|PHASE_END)
-	Duel.RegisterEffect(e1,tp)
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,2))
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	e2:SetTargetRange(1,0)
+	e2:SetTarget(function(_,c) return c:IsCode(id) end)
+	e2:SetReset(RESET_PHASE|PHASE_END)
+	Duel.RegisterEffect(e2,tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

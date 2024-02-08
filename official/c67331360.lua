@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.bpop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={75574498,44190146}
+s.listed_names={75574498,44190146}--Princess Cologne, Grandpa Demetto
 function s.tgfilter(c,e)
 	return c:IsType(TYPE_NORMAL) and (c:IsAttack(0) or c:IsDefense(0)) and c:IsCanBeEffectTarget(e)
 end
@@ -56,7 +56,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tg=Duel.GetMatchingGroup(s.tgfilter,tp,LOCATION_GRAVE,0,nil,e)
 	local rescon=s.resconfunc(Duel.GetMatchingGroup(Card.IsCanBeSpecialSummoned,tp,LOCATION_DECK,0,nil,e,0,tp,false,false))
 	if chk==0 then return ft>0 and aux.SelectUnselectGroup(tg,e,tp,1,1,rescon,0) end
-	if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,75574498),tp,LOCATION_MZONE,0,1,nil)
+	if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,75574498),tp,LOCATION_ONFIELD,0,1,nil)
 		and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
 		and aux.SelectUnselectGroup(tg,e,tp,1,2,rescon,0) then
 		ft=math.min(2,ft)
@@ -67,7 +67,6 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
 	local g=Duel.GetTargetCards(e)
 	local gc=#g
 	if gc==0 then return end
@@ -86,13 +85,13 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
 				e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 				e1:SetValue(ATTRIBUTE_DARK)
-				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+				e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 				sc:RegisterEffect(e1,true)
 				local e2=Effect.CreateEffect(c)
 				e2:SetType(EFFECT_TYPE_SINGLE)
 				e2:SetCode(EFFECT_CHANGE_LEVEL)
 				e2:SetValue(6)
-				e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+				e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 				sc:RegisterEffect(e2,true)
 			end
 		end
@@ -100,20 +99,18 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.bpcon(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetAttacker():GetOwner()
+	return Duel.GetAttacker():IsControler(1-tp)
 end
 function s.bptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then
-		return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,75574498),tp,LOCATION_MZONE,0,1,nil)
-			and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,44190146),tp,LOCATION_MZONE,0,1,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,75574498),tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,44190146),tp,LOCATION_ONFIELD,0,1,nil)
 	end
 end
 function s.colfilter(c,e)
 	return c:IsFaceup() and c:IsCode(75574498) and not c:IsImmuneToEffect(e)
 end
 function s.bpop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local mg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsCode,44190146),tp,LOCATION_MZONE,0,nil)
+	local mg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsCode,44190146),tp,LOCATION_ONFIELD,0,nil)
 	local tg=Duel.GetMatchingGroup(s.colfilter,tp,LOCATION_MZONE,0,nil,e)
 	if #mg>0 and #tg>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
@@ -123,7 +120,7 @@ function s.bpop(e,tp,eg,ep,ev,re,r,rp)
 		if mc and tc then
 			Duel.Overlay(tc,mc)
 			Duel.BreakEffect()
-			Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
+			Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE|PHASE_BATTLE_STEP,1)
 		end
 	end
 end

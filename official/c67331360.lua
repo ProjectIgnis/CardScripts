@@ -8,12 +8,12 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	-- Special Summon
+	-- Special Summon 1 monster from your Deck as a Level 6 DARK monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetType(EFFECT_TYPE_IGNITION)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetCountLimit(1,id)
 	e2:SetTarget(s.sptg)
@@ -25,12 +25,12 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e3:SetRange(LOCATION_FZONE)
-	e3:SetCondition(s.bpcon)
+	e3:SetCondition(function(e,tp) return Duel.GetAttacker():IsControler(1-tp) end)
 	e3:SetTarget(s.bptg)
 	e3:SetOperation(s.bpop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={75574498,44190146}--Princess Cologne, Grandpa Demetto
+s.listed_names={75574498,44190146} --Princess Cologne, Grandpa Demetto
 function s.tgfilter(c,e)
 	return c:IsType(TYPE_NORMAL) and (c:IsAttack(0) or c:IsDefense(0)) and c:IsCanBeEffectTarget(e)
 end
@@ -50,11 +50,16 @@ function s.resconfunc(cg)
 		return true
 	end
 end
+function s.spfilter(c,e,tp)
+	c:AssumeProperty(ASSUME_LEVEL,6)
+	c:AssumeProperty(ASSUME_ATTRIBUTE,ATTRIBUTE_DARK)
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local tg=Duel.GetMatchingGroup(s.tgfilter,tp,LOCATION_GRAVE,0,nil,e)
-	local rescon=s.resconfunc(Duel.GetMatchingGroup(Card.IsCanBeSpecialSummoned,tp,LOCATION_DECK,0,nil,e,0,tp,false,false))
+	local rescon=s.resconfunc(Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_DECK,0,nil,e,tp))
 	if chk==0 then return ft>0 and aux.SelectUnselectGroup(tg,e,tp,1,1,rescon,0) end
 	if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,75574498),tp,LOCATION_ONFIELD,0,1,nil)
 		and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
@@ -63,7 +68,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	else ft=1 end
 	local g=aux.SelectUnselectGroup(tg,e,tp,1,ft,rescon,1,tp,HINTMSG_TARGET)
 	Duel.SetTargetCard(g)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,#g,0,LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,#g,tp,LOCATION_DECK)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -71,46 +76,41 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local gc=#g
 	if gc==0 then return end
 	local rescon=s.resconfunc(g)
-	local sg=Duel.GetMatchingGroup(Card.IsCanBeSpecialSummoned,tp,LOCATION_DECK,0,nil,e,0,tp,false,false)
+	local sg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<gc
 		or (gc>1 and Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT))
 		or not aux.SelectUnselectGroup(sg,e,tp,gc,gc,rescon,0) then return end
 	local ssg=aux.SelectUnselectGroup(sg,e,tp,gc,gc,rescon,1,tp,HINTMSG_SPSUMMON)
 	if #g==#ssg then
 		for sc in ssg:Iter() do
-			-- Special summon as Level 6 DARK monster
 			if Duel.SpecialSummonStep(sc,0,tp,tp,false,false,POS_FACEUP) then
+				--Change its Attribute and Level
 				local e1=Effect.CreateEffect(c)
 				e1:SetType(EFFECT_TYPE_SINGLE)
-				e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
 				e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+				e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
 				e1:SetValue(ATTRIBUTE_DARK)
 				e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 				sc:RegisterEffect(e1,true)
-				local e2=Effect.CreateEffect(c)
-				e2:SetType(EFFECT_TYPE_SINGLE)
+				local e2=e1:Clone()
 				e2:SetCode(EFFECT_CHANGE_LEVEL)
 				e2:SetValue(6)
-				e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 				sc:RegisterEffect(e2,true)
 			end
 		end
 		Duel.SpecialSummonComplete()
 	end
 end
-function s.bpcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetAttacker():IsControler(1-tp)
-end
 function s.bptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,75574498),tp,LOCATION_MZONE,0,1,nil)
-		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,44190146),tp,LOCATION_ONFIELD,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,44190146),tp,LOCATION_MZONE,0,1,nil)
 	end
 end
 function s.colfilter(c,e)
 	return c:IsFaceup() and c:IsCode(75574498) and not c:IsImmuneToEffect(e)
 end
 function s.bpop(e,tp,eg,ep,ev,re,r,rp)
-	local mg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsCode,44190146),tp,LOCATION_ONFIELD,0,nil)
+	local mg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsCode,44190146),tp,LOCATION_MZONE,0,nil)
 	local tg=Duel.GetMatchingGroup(s.colfilter,tp,LOCATION_MZONE,0,nil,e)
 	if #mg>0 and #tg>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)

@@ -53,8 +53,8 @@ end
 function s.cfilter(c)
 	return c:IsMonster() and c:IsFaceup() and c:IsRace(RACE_INSECT)
 end
-function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,LOCATION_MZONE)
+function s.atkcon(e)
+	local g=Duel.GetFieldGroup(0,LOCATION_MZONE,LOCATION_MZONE)
 	local fg=g:Filter(s.cfilter,nil)
 	return #g==#fg
 end

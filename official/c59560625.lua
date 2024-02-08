@@ -27,21 +27,18 @@ function s.condition1(e,tp,eg,ep,ev,re,r,rp)
 	local a,d=Duel.GetAttacker(),Duel.GetAttackTarget()
 	return a and d and a:IsControler(1-tp) and d:IsControler(tp)
 end
-function s.filter1(c,e)
-	return c:IsCanBeEffectTarget(e)
-end
 function s.target1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	local ag=eg:GetFirst():GetAttackableTarget()
+	local ag=Duel.GetAttacker():GetAttackableTarget()
 	local at=Duel.GetAttackTarget()
-	if chk==0 then return ag:IsExists(s.filter1,1,at,e) end
+	if chk==0 then return ag:IsExists(Card.IsCanBeEffectTarget,1,at,e) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g=ag:FilterSelect(tp,s.filter1,1,1,at,e)
-	Duel.SetTargetCard(g)
+	local tg=ag:FilterSelect(tp,Card.IsCanBeEffectTarget,1,1,at,e)
+	Duel.SetTargetCard(tg)
 end
 function s.activate1(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and not Duel.GetAttacker():IsImmuneToEffect(e) then
+	if tc:IsRelateToEffect(e) and not Duel.GetAttacker():IsImmuneToEffect(e) then
 		Duel.ChangeAttackTarget(tc)
 	end
 end
@@ -53,18 +50,19 @@ function s.condition2(e,tp,eg,ep,ev,re,r,rp)
 	e:SetLabelObject(tc)
 	return tc:IsControler(tp) and tc:IsLocation(LOCATION_MZONE)
 end
-function s.filter2(c,ct)
+function s.filter(c,ct)
 	return Duel.CheckChainTarget(ct,c)
 end
 function s.target2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc~=e:GetLabelObject() and chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter2(chkc,ev) end
-	if chk==0 then return Duel.IsExistingTarget(s.filter2,tp,LOCATION_MZONE,0,1,e:GetLabelObject(),ev) end
+	local tc=e:GetLabelObject()
+	if chkc then return chkc~=tc and chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc,ev) end
+	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,tc,ev) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	Duel.SelectTarget(tp,s.filter2,tp,LOCATION_MZONE,0,1,1,e:GetLabelObject(),ev)
+	Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,tc,ev)
 end
 function s.activate2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		Duel.ChangeTargetCard(ev,Group.FromCards(tc))
 	end
 end

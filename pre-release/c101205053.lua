@@ -73,7 +73,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	Duel.RegisterEffect(e3,tp)
 	--Shuffle this card into the Deck instead of sending it to the GY
-	if c:IsRelateToEffect(e) and e:IsHasType(EFFECT_TYPE_ACTIVATE) then
+	if c:IsRelateToEffect(e) and e:IsHasType(EFFECT_TYPE_ACTIVATE) and c:IsAbleToDeck()  then
 		c:CancelToGrave()
 		Duel.SendtoDeck(c,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end

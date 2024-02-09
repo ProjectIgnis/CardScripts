@@ -17,13 +17,13 @@ function s.initial_effect(c)
 	e2:SetValue(15259703)
 	c:RegisterEffect(e2)
 	--Destruction replacement for Toon monsters
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-	e4:SetCode(EFFECT_DESTROY_REPLACE)
-	e4:SetRange(LOCATION_SZONE)
-	e4:SetTarget(s.destg)
-	e4:SetValue(s.desval)
-	c:RegisterEffect(e4)
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
+	e3:SetCode(EFFECT_DESTROY_REPLACE)
+	e3:SetRange(LOCATION_SZONE)
+	e3:SetTarget(s.destg)
+	e3:SetValue(s.desval)
+	c:RegisterEffect(e3)
 end
 s.listed_names={15259703}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -38,11 +38,11 @@ function s.dfilter(c,tp)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetDecktopGroup(tp,1)
-	if chk==0 then return eg:IsExists(s.dfilter,1,nil,tp) 
+	if chk==0 then return eg:IsExists(s.dfilter,1,nil,tp)
 		and g:IsExists(Card.IsAbleToRemove,1,nil) end
 	if Duel.SelectEffectYesNo(tp,e:GetHandler(),96) then
 		Duel.DisableShuffleCheck()
-		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
+		Duel.Remove(g,POS_FACEUP,REASON_EFFECT|REASON_REPLACE)
 		return true
 	else return false end
 end

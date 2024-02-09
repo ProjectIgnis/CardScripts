@@ -39,8 +39,7 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	local a=Duel.GetAttacker()
-	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) and a:CanAttack() and a:IsRelateToBattle() and not a:IsImmuneToEffect(e) then
+	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) and not Duel.GetAttacker():IsImmuneToEffect(e) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetCode(EFFECT_SELF_ATTACK)

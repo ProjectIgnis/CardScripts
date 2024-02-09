@@ -70,7 +70,7 @@ function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		tc=eg:GetFirst()
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-		tc=g:Select(tp,1,1,nil):GetFirst()
+		tc=eg:Select(tp,1,1,nil):GetFirst()
 	end
 	Duel.SetTargetCard(tc)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,tc:GetLevel())

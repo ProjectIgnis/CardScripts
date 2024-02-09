@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE|EFFECT_FLAG_CLIENT_HINT)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetValue(aux.indoval)
+	e1:SetValue(1)
 	c:RegisterEffect(e1)
 	--Inflict piercing battle damage
 	local e2=Effect.CreateEffect(c)

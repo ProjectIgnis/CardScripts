@@ -830,7 +830,10 @@ function aux.ThreeTributeOperation()
 end
 --Returns true if a monster can get a piercing effect as per Rush rules
 function Card.CanGetPiercingRush(c)
-    return not (c:IsHasEffect(EFFECT_CANNOT_ATTACK) or c:IsHasEffect(EFFECT_PIERCE))
+	if c:IsHasEffect(EFFECT_CANNOT_ATTACK) then return false end
+	local e=c:IsHasEffect(EFFECT_PIERCE)
+	if e==nil then return true end
+    return e:GetReset()==0
 end
 -- Checks if the monster would be a valid target for the equip card
 -- Needed because Rush cards typically don't need this check after they are equipped

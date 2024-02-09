@@ -38,22 +38,23 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local sg=dg:Select(tp,1,1,nil)
 		Duel.HintSelection(sg,true)
-		Duel.Destroy(sg,REASON_EFFECT)
-		--Increase ATK
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_PHASE|PHASE_END)
-		e1:SetValue(500)
-		c:RegisterEffect(e1)
-		--can attack twice
-		local e2=Effect.CreateEffect(c)
-		e2:SetDescription(3201)
-		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-		e2:SetCode(EFFECT_EXTRA_ATTACK)
-		e2:SetValue(1)
-		e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
-		c:RegisterEffect(e2)
+		if Duel.Destroy(sg,REASON_EFFECT)>0 then
+			--Increase ATK
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_UPDATE_ATTACK)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_PHASE|PHASE_END)
+			e1:SetValue(500)
+			c:RegisterEffect(e1)
+			--can attack twice
+			local e2=Effect.CreateEffect(c)
+			e2:SetDescription(3201)
+			e2:SetType(EFFECT_TYPE_SINGLE)
+			e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
+			e2:SetCode(EFFECT_EXTRA_ATTACK)
+			e2:SetValue(1)
+			e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
+			c:RegisterEffect(e2)
+		end
 	end
 end

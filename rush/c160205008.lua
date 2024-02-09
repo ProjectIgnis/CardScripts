@@ -53,8 +53,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			local sg=dg:Select(tp,1,1,nil)
 			sg=sg:AddMaximumCheck()
 			Duel.HintSelection(sg,true)
-			Duel.Destroy(sg,REASON_EFFECT)
-			if e:GetHandler():IsMaximumMode() then
+			if Duel.Destroy(sg,REASON_EFFECT)>0 and e:GetHandler():IsMaximumMode() then
 				Duel.BreakEffect()
 				local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 				Duel.Draw(p,d,REASON_EFFECT)

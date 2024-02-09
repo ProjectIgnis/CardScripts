@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_FZONE)
 	e3:SetTarget(s.reptg)
 	e3:SetOperation(s.repop)
-	e3:SetValue(function(e,c) return s.repfilter(c,e:GetHandlerPlayer()) end)
+	e3:SetValue(function(e,c) return s.repfilter(c,e:GetHandlerPlayer()) and c:HasFlagEffect(id) end)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_MILLENNIUM}
@@ -69,8 +69,17 @@ function s.repfilter(c,tp)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=eg:Filter(s.repfilter,nil,tp)
-	if chk==0 then return #g>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>=#g end
+	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
+	if chk==0 then return ft>0 and #g>0 end
 	if Duel.SelectEffectYesNo(tp,e:GetHandler(),96) then
+		if #g>1 then
+			local ft=math.min(ft,#g)
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
+			g=g:Select(tp,1,ft,nil)
+		end
+		for sc in g:Iter() do
+			sc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD&~RESET_TOFIELD,0,1)
+		end
 		e:SetLabelObject(g)
 		g:KeepAlive()
 		return true

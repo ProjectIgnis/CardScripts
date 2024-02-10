@@ -34,9 +34,6 @@ end
 function s.atkval(e,c)
 	return c:GetOverlayCount()*1000
 end
-function s.filter(c)
-	return not c:IsType(TYPE_TOKEN)
-end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and Duel.IsPlayerCanDraw(1-tp,1) end
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,PLAYER_ALL,1)
@@ -57,7 +54,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.BreakEffect()
 	for _,p in pairs(ps) do
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTACH)
-		local tc=Duel.SelectMatchingCard(p,s.filter,p,LOCATION_HAND|LOCATION_ONFIELD,0,1,1,c):GetFirst()
+		local tc=Duel.SelectMatchingCard(p,Card.IsCanBeXyzMaterial,p,LOCATION_HAND|LOCATION_ONFIELD,0,1,1,c):GetFirst()
 		if tc then
 			tc:CancelToGrave()
 			Duel.Overlay(c,tc,true)

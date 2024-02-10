@@ -54,7 +54,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.BreakEffect()
 	for _,p in pairs(ps) do
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTACH)
-		local tc=Duel.SelectMatchingCard(p,Card.IsCanBeXyzMaterial,p,LOCATION_HAND|LOCATION_ONFIELD,0,1,1,c,tp,REASON_EFFECT):GetFirst()
+		local tc=Duel.SelectMatchingCard(p,Card.IsCanBeXyzMaterial,p,LOCATION_HAND|LOCATION_ONFIELD,0,1,1,c,c,tp,REASON_EFFECT):GetFirst()
 		if tc then
 			tc:CancelToGrave()
 			Duel.Overlay(c,tc,true)

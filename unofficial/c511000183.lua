@@ -1,21 +1,21 @@
---Number 23: Lancelot, Ghost Knight of the Underworld
+--Ｎｏ．２３ 冥界の霊騎士ランスロット (Anime)
+--Number 23: Lancelot, Ghost Knight of the Underworld (Anime)
 Duel.LoadCardScript("c66547759.lua")
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
-	Xyz.AddProcedure(c,nil,8,2)
 	c:EnableReviveLimit()
-	--direct
+	--Xyz Summon Procedure
+	Xyz.AddProcedure(c,nil,8,2)
+	--Can attack directly
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_DIRECT_ATTACK)
 	c:RegisterEffect(e1)
-	--destroy
+	--Destroy monsters your opponent controls
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCode(EVENT_BATTLE_DAMAGE)
 	e2:SetCondition(s.condition)
 	e2:SetTarget(s.target)
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCode(EVENT_CHAINING)
 	e3:SetCondition(s.negcon)
-	e3:SetCost(s.negcost)
+	e3:SetCost(aux.dxmcostgen(1,1,nil))
 	e3:SetTarget(s.negtg)
 	e3:SetOperation(s.negop)
 	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
@@ -38,7 +38,7 @@ function s.initial_effect(c)
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e4:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
+	e4:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,SET_NUMBER)))
 	c:RegisterEffect(e4)
 	--Double Snare
 	local e5=Effect.CreateEffect(c)
@@ -48,10 +48,10 @@ function s.initial_effect(c)
 	e5:SetCode(3682106)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x48}
+s.listed_series={SET_NUMBER}
 s.xyz_number=23
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and Duel.GetAttackTarget()==nil and e:GetHandler():GetOverlayCount()>0
+	return ep==1-tp and Duel.GetAttackTarget()==nil and e:GetHandler():GetOverlayCount()>0
 end
 function s.filter(c,atk)
 	return c:IsFaceup() and c:GetAttack()<=atk and c:IsDestructable()
@@ -70,12 +70,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp,chk)
 	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
-	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and ep~=tp
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and ep==1-tp
 		and Duel.IsChainDisablable(ev)
-end
-function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return true end

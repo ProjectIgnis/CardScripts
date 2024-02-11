@@ -16,8 +16,8 @@ end
 function s.eqfilter(c)
 	return c:IsType(TYPE_XYZ) and not c:IsForbidden()
 end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chkc then return s.eqfilter(chk) end
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.eqfilter(chkc) end
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
 	if e:GetHandler():IsLocation(LOCATION_HAND) then ft=ft-1 end
 	if chk==0 then return ft>0 and Duel.IsExistingTarget(s.eqfilter,tp,LOCATION_GRAVE,0,1,nil)

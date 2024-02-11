@@ -2,8 +2,9 @@
 --The Suppression Pluto
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Take control of 1 card your opponent controls
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_CONTROL)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
@@ -11,6 +12,9 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
+end
+function s.filter(c,tp)
+	return (c:IsControler(1-tp) and c:IsControlerCanBeChanged()) or not c:IsMonster()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and chkc:IsControler(1-tp) end
@@ -22,9 +26,6 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetTargetParam(ac)
 	Duel.SetOperationInfo(0,CATEGORY_ANNOUNCE,nil,0,tp,ANNOUNCE_CARD)
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,0,1,0,0)
-end
-function s.filter(c,tp)
-	return (c:IsControler(1-tp) and c:IsControlerCanBeChanged()) or not c:IsMonster()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local ac=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)

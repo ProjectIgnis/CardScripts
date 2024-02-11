@@ -2,8 +2,9 @@
 --Miracle Fire
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Apply the effect of an Action card activated this turn
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetTarget(s.thtg)
@@ -20,7 +21,7 @@ end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and rc:IsType(TYPE_ACTION) and not rc:IsType(TYPE_FIELD) then
-		rc:RegisterFlagEffect(id,RESET_PHASE+PHASE_END,0,0)
+		rc:RegisterFlagEffect(id,RESET_PHASE|PHASE_END,0,0)
 	end
 end
 function s.filter(c)
@@ -34,6 +35,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local tg=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,1,nil)
 	if not tg then return end
+	Duel.HintSelection(tg,true)
 	local te=tg:GetFirst():GetActivateEffect()
 	local cost=te:GetCost()
 	local target=te:GetTarget()

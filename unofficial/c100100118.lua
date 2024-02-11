@@ -2,8 +2,9 @@
 --Speed Spell - Dash Pilfer
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Take control of 1 Defense position monster
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_CONTROL)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -28,7 +29,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil)
 	local tc=g:GetFirst()
 	if tc then
-		Duel.HintSelection(g)
+		Duel.HintSelection(g,true)
 		Duel.GetControl(tc,tp,PHASE_END,1)
 	end
 end

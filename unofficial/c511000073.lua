@@ -1,3 +1,4 @@
+--ＴＧ ラッシュ・ライノ (TF5)
 --T.G. Rush Rhino (TF5)
 local s,id=GetID()
 function s.initial_effect(c)
@@ -18,11 +19,10 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetValue(RACE_MACHINE)
 	c:RegisterEffect(e2)
-	--Add to hand
+	--Search 1 "T.G. Rush Rhino"
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
-	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_TO_GRAVE)
 	e3:SetCondition(s.scon)
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.sop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={36687247}
+s.listed_names={36687247}--T.G. Rush Rhino
 function s.atcon(e)
 	local ph=Duel.GetCurrentPhase()
 	return (ph==PHASE_DAMAGE or ph==PHASE_DAMAGE_CAL) and e:GetHandler()==Duel.GetAttacker()

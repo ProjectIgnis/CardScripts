@@ -32,11 +32,10 @@ function s.initial_effect(c)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetValue(RACE_MACHINE)
 	c:RegisterEffect(e4)
-	--Add to hand
+	--Search 1 "T.G. Cyber Magician"
 	local e5=Effect.CreateEffect(c)
-	e5:SetDescription(aux.Stringid(511000072,0))
+	e5:SetDescription(aux.Stringid(id,0))
 	e5:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
-	e5:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e5:SetCode(EVENT_TO_GRAVE)
 	e5:SetCondition(s.scon)
@@ -44,11 +43,11 @@ function s.initial_effect(c)
 	e5:SetOperation(s.sop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x27}
-s.listed_names={64910482}
+s.listed_series={SET_TG}
+s.listed_names={64910482} --T.G. Cyber Magician
 function s.synlimit(e,c)
 	if not c then return false end
-	return not c:IsSetCard(0x27)
+	return not c:IsSetCard(SET_TG)
 end
 function s.synval(e,c,sc)
 	if c:IsLocation(LOCATION_HAND) then

@@ -31,10 +31,11 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_DESTROY,nil,1,tp,LOCATION_MZONE)
 end
 function s.desfilter(c)
-	return c:IsFaceup() and c:IsLevelAbove(7) and c:IsType(TYPE_NORMAL)
+	return c:IsFaceup() and c:IsLevelAbove(7) and c:IsType(TYPE_NORMAL) and c:IsNotMaximumModeSide()
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,chk)
 	--Requirement
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local td=Duel.SelectMatchingCard(tp,Card.IsAbleToDeckOrExtraAsCost,tp,LOCATION_HAND,0,1,1,nil)
 	if Duel.SendtoDeck(td,nil,SEQ_DECKBOTTOM,REASON_COST)~0 then
 		--Effect
@@ -48,8 +49,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,chk)
 			if #g>0 then
 				Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 				local sg=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_MZONE,nil)
-				if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsLevel,5),tp,LOCATION_MZONE,0,1,nil) 
-					and #sg>0 
+				if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsLevel,5),tp,LOCATION_MZONE,0,1,nil)
+					and #sg>0
 					and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 					Duel.BreakEffect()
 					Duel.Destroy(sg,REASON_EFFECT)

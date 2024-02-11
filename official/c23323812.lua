@@ -1,8 +1,10 @@
 --念導力
+--Telepathic Power
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_RECOVER)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -12,28 +14,26 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.filter(c,tp)
-	return c:IsPreviousControler(tp) and c:IsPreviousPosition(POS_FACEUP)
-		and c==Duel.GetAttackTarget() and c:IsRace(RACE_PSYCHIC)
-end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.filter,1,nil,tp)
+function s.condition(e,tp,eg,ep,ev,re,r,rp,chk)
+	local dc=eg:GetFirst()
+	local bc=dc:GetBattleTarget()
+	return dc:IsPreviousControler(tp) and dc:GetPreviousRaceOnField()&RACE_PSYCHIC>0
+		and bc:IsRelateToBattle() and bc:IsControler(1-tp) and bc==Duel.GetAttacker()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local at=Duel.GetAttacker()
-	if chkc then return chkc==at end
-	if chk==0 then return at:IsControler(1-tp) and at:IsRelateToBattle() and at:IsCanBeEffectTarget(e) end
-	Duel.SetTargetCard(at)
-	local atk=at:GetAttack()
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,at,1,0,0)
+	if chkc then return false end
+	local dc=eg:GetFirst()
+	local bc=Duel.GetAttacker()
+	if chk==0 then return bc:IsCanBeEffectTarget(e) end
+	local atk=bc:GetAttack()
+	Duel.SetTargetCard(bc)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,bc,1,tp,0)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,atk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local a=Duel.GetFirstTarget()
-	if a:IsRelateToEffect(e) then
-		local atk=a:GetAttack()
-		if Duel.Destroy(a,REASON_EFFECT)~=0 then
-			Duel.Recover(tp,atk,REASON_EFFECT)
-		end
+	local tc=Duel.GetFirstTarget()
+	if tc:IsRelateToEffect(e) and tc:IsControler(1-tp) and Duel.Destroy(tc,REASON_EFFECT)>0 then
+		local atk=tc:GetPreviousAttackOnField()
+		Duel.Recover(tp,atk,REASON_EFFECT)
 	end
 end

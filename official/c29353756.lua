@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,0,id)
-	--special summon
+	--Special Summon itself from the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.spcon)
 	c:RegisterEffect(e1)
-	--equip
+	--Equip itself to an "Utopia" monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.eqop)
 	c:RegisterEffect(e2)
 	aux.AddZWEquipLimit(c,s.eqcon,function(tc,c,tp) return s.filter(tc) and tc:IsControler(tp) end,s.equipop,e2)
-	--negate
+	--Negate the effect of an opponent's Trap card
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EVENT_CHAIN_SOLVING)
@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	aux.DoubleSnareValidity(c,LOCATION_SZONE)
 end
-s.listed_series={0x107f}
+s.listed_series={SET_UTOPIA}
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
@@ -45,7 +45,7 @@ function s.eqcon(e)
 	return e:GetHandler():CheckUniqueOnField(e:GetHandlerPlayer())
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x107f)
+	return c:IsFaceup() and c:IsSetCard(SET_UTOPIA)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -66,17 +66,18 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.equipop(c,e,tp,tc)
 	if not aux.EquipAndLimitRegister(c,e,tp,tc) then return end
-	--atkup
+	--Increase the ATK of the equipped monster by 2000
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_EQUIP)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(2000)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e1)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)==LOCATION_SZONE
-		and re:IsActiveType(TYPE_TRAP) and Duel.IsChainDisablable(ev) 
+	return rp==1-tp and e:GetHandler():GetEquipTarget()
+		and Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)==LOCATION_SZONE
+		and re:IsTrapEffect() and Duel.IsChainDisablable(ev) 
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)

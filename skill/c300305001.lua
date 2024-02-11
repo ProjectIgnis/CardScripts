@@ -4,15 +4,22 @@ local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop)
 end
-s.listed_series={0x3008}
+s.listed_series={SET_ELEMENTAL_HERO}
 --Fusion Summon Functions
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--condition
-	return aux.CanActivateSkill(tp) and Duel.GetFlagEffect(ep,id)==0 and s.fusTarget(e,tp,eg,ep,ev,re,r,rp,0)
+	return aux.CanActivateSkill(tp) and Duel.GetFlagEffect(tp,id)==0 and s.fusTarget(e,tp,eg,ep,ev,re,r,rp,0)
+end
+function s.listedmatfilter(c,fusc)
+    	return c:IsFaceup() and fusc:ListsCodeAsMaterial(c:GetCode())
 end
 function s.fusfilter(c,e,tp,m,f,chkf)
-	return c:IsType(TYPE_FUSION) and (not f or f(c)) and c:IsSetCard(0x3008)
-		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial(m,nil,chkf)
+	if not (c:IsType(TYPE_FUSION) and c:IsSetCard(SET_ELEMENTAL_HERO) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false)) then return false end
+    	if c.min_material_count>2 and Duel.IsExistingMatchingCard(s.listedmatfilter,tp,LOCATION_MZONE,0,2,nil,c) then
+        	local dg=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_DECK,0,nil,e,c)
+        	matg:Merge(dg)
+    	end
+    	return (not f or f(c)) and c:CheckFusionMaterial(matg,nil,chkf)
 end
 function s.cfilter(c,e,tp)
 	if not c:IsDiscardable() then return false end
@@ -41,7 +48,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	--Fusion Summon "Elemental HERO" Fusion monster
 	local g2=s.fusTarget(e,tp,eg,ep,ev,re,r,rp,0)
 	--OPD Register
-	Duel.RegisterFlagEffect(ep,id,0,0,0)
+	Duel.RegisterFlagEffect(tp,id,0,0,0)
 	--Fusion Procedure
 	s.fusTarget(e,tp,eg,ep,ev,re,r,rp,1)
 	local chkf=tp
@@ -69,7 +76,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 					fusg:AddCard(sc)
 				end
 			end
-			if tc.min_material_count>2 and #fusg==2 then 
+			if tc.min_material_count>2 and #fusg==2 then
 				local dg=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_DECK,0,nil,e,tc)
 				mg1:Merge(dg)
 				local mat1=Duel.SelectFusionMaterial(tp,tc,mg1,nil,chkf)
@@ -93,7 +100,5 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.matfilter(c,e,fc)
-	return c:IsSetCard(0x3008) and not c:IsImmuneToEffect(e) and c:IsCanBeFusionMaterial(fc)
+	return c:IsSetCard(SET_ELEMENTAL_HERO) and not c:IsImmuneToEffect(e) and c:IsCanBeFusionMaterial(fc)
 end
-
-	

@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_BLUETOOTH_B_DRAGON,CARD_REDBOOT_B_DRAGON}
 function s.cfilter(c,tp)
-	return c:GetPreviousRaceOnField()&RACE_DRAGON>0 and c:GetReasonPlayer()==1-tp and c:IsPreviousControler(tp) 
+	return c:GetPreviousRaceOnField()&RACE_DRAGON>0 and c:GetReasonPlayer()==1-tp and c:IsPreviousControler(tp)
 		and c:IsPreviousLocation(LOCATION_MZONE) and (c:IsReason(REASON_EFFECT) or (c:IsReason(REASON_BATTLE) and Duel.GetAttacker():IsControler(1-tp)))
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
@@ -34,7 +34,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 	Duel.DiscardDeck(tp,2,REASON_EFFECT)
 	if #Duel.GetOperatedGroup()~=2 then return end
-	if Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
+	if Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE,0,1,nil,e,tp)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

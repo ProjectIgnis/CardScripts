@@ -1,6 +1,5 @@
 --ＣＮｏ.４３ 魂魄傀儡鬼神カオス・マリオネッター (Anime)
 --Number C43: High Manipulator of Chaos (Anime)
-Duel.LoadScript("rankup_functions.lua")
 Duel.LoadCardScript("c32446630.lua")
 local s,id=GetID()
 function s.initial_effect(c)
@@ -13,7 +12,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e1:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
+	e1:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,SET_NUMBER)))
 	c:RegisterEffect(e1)
 	--indestructable
 	local e2=Effect.CreateEffect(c)
@@ -23,7 +22,6 @@ function s.initial_effect(c)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e2:SetTarget(aux.TargetBoolFunction(Card.IsCode,32446631))
 	e2:SetValue(1)
-	e2:SetLabel(RESET_EVENT+RESETS_STANDARD)
 	--Negates Battle Damage
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -31,7 +29,6 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_PRE_BATTLE_DAMAGE)
 	e3:SetCondition(s.rdcon)
 	e3:SetOperation(s.rdop)
-	e3:SetLabel(RESET_EVENT+RESETS_STANDARD)
 	--atk
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
@@ -40,7 +37,6 @@ function s.initial_effect(c)
 	e4:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e4:SetTarget(aux.TargetBoolFunction(Card.IsCode,32446631))
 	e4:SetValue(s.atkval)
-	e4:SetLabel(RESET_EVENT+RESETS_STANDARD)
 	--token
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,0))
@@ -49,10 +45,9 @@ function s.initial_effect(c)
 	e5:SetRange(LOCATION_MZONE)
 	e5:SetCountLimit(1)
 	e5:SetCondition(s.spcon)
-	e5:SetCost(s.spcost)
+	e5:SetCost(aux.dxmcostgen(1,1,nil))
 	e5:SetTarget(s.sptg)
 	e5:SetOperation(s.spop)
-	e5:SetLabel(RESET_EVENT+RESETS_STANDARD)
 	--
 	local e6=Effect.CreateEffect(c)
 	e6:SetType(EFFECT_TYPE_SINGLE)
@@ -69,7 +64,7 @@ function s.initial_effect(c)
 	e9:SetLabelObject(e5)
 	c:RegisterEffect(e9,false,REGISTER_FLAG_DETACH_XMAT)
 end
-s.listed_series={0x48}
+s.listed_series={SET_NUMBER}
 s.listed_names={56051086,32446631}
 s.xyz_number=43
 function s.cfilter(c,lp)
@@ -77,10 +72,6 @@ function s.cfilter(c,lp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,0,LOCATION_MZONE,1,nil,Duel.GetLP(1-tp))
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

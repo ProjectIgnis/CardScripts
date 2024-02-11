@@ -18,8 +18,8 @@ function s.singleprop(c,d)
 	if c:IsRace(d:GetRace()) then ct=ct+1 end
 	if c:IsAttribute(d:GetAttribute()) then ct=ct+1 end
 	if c:IsLevel(d:GetLevel()) then ct=ct+1 end
-	if c:IsAttack(d:GetAttack()) and d:IsAttack(c:GetAttack()) then ct=ct+1 end
-	if c:IsDefense(d:GetDefense()) and d:IsDefense(c:GetDefense()) then ct=ct+1 end
+	if c:IsAttack(d:GetTextAttack()) and d:IsAttack(c:GetTextAttack()) then ct=ct+1 end
+	if c:IsDefense(d:GetTextDefense()) and d:IsDefense(c:GetTextDefense()) then ct=ct+1 end
 	return ct==1
 end
 function s.thfilter(c,mc)

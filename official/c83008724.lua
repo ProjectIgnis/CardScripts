@@ -84,7 +84,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.lpcond(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousControler(tp) and c:IsReason(REASON_DESTROY) and c:GetReasonPlayer()==1-tp 
+	return c:IsPreviousControler(tp) and c:IsReason(REASON_DESTROY) and c:GetReasonPlayer()==1-tp
 end
 function s.lpop(e,tp,eg,ep,ev,re,r,rp)
 	local value=e:GetLabelObject():GetLabel()*500

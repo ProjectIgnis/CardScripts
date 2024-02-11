@@ -2,18 +2,17 @@
 --Compulsory Circulation Device (manga)
 local s,id=GetID()
 function s.initial_effect(c)
+	--Banish 1 monster your opponent controls for each Xyz material detached
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_REMOVE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCondition(s.condition)
+	e1:SetCondition(function() return Duel.IsBattlePhase() end)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)
@@ -27,10 +26,9 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		return Duel.CheckRemoveOverlayCard(tp,1,0,1,REASON_COST) and ct>0 
 			and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_MZONE,1,nil)
 	end
-	Duel.RemoveOverlayCard(tp,1,0,1,ct,REASON_COST)
-	local oct=#Duel.GetOperatedGroup()
+	local oct=Duel.RemoveOverlayCard(tp,1,0,1,ct,REASON_COST)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_MZONE,nil)
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,math.min(oct,#g),0,0)
 	Duel.SetTargetParam(oct)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -40,16 +38,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		Duel.HintSelection(g)
 		if Duel.Remove(g,0,REASON_EFFECT+REASON_TEMPORARY)>0 then
-			local tc=g:GetFirst()
-			while tc do
-				tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
-				tc=g:GetNext()
-			end
+			g:ForEach(function(tc) tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1) end)
 			g:KeepAlive()
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 			e1:SetCode(EVENT_PHASE+PHASE_BATTLE)
-			e1:SetReset(RESET_PHASE+PHASE_BATTLE)
+			e1:SetReset(RESET_PHASE|PHASE_BATTLE)
 			e1:SetCountLimit(1)
 			e1:SetLabelObject(g)
 			e1:SetOperation(s.retop)
@@ -63,10 +57,6 @@ end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject()
 	local sg=g:Filter(s.retfilter,nil)
+	sg:ForEach(function(tc) Duel.ReturnToField(tc) end)
 	g:DeleteGroup()
-	local tc=sg:GetFirst()
-	while tc do
-		Duel.ReturnToField(tc)
-		tc=sg:GetNext()
-	end
 end

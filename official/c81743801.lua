@@ -1,5 +1,5 @@
 -- 竜王キング・レックス
--- King Rex the Dragon King
+-- Mighty Dino King Rex
 -- Scripted by Satella
 local s,id=GetID()
 function s.initial_effect(c)
@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_BATTLE_DESTROYING)
-	e1:SetCondition(aux.bdocon)
+	e1:SetCondition(s.atkcon)
 	e1:SetTarget(s.atktg)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
@@ -24,6 +24,9 @@ function s.initial_effect(c)
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
+end
+function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetAttacker()==e:GetHandler() and aux.bdocon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

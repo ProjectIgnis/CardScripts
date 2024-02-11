@@ -1,5 +1,5 @@
 -- 六花来々
--- Rikka Arrival
+-- Rikka Konkon
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	-- Replace 1 Plant tribute
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
-	e3:SetCode(CARD_RIKKA_ARRIVAL)
+	e3:SetCode(CARD_RIKKA_KONKON)
 	e3:SetRange(LOCATION_FZONE)
 	e3:SetTargetRange(0,LOCATION_MZONE)
 	c:RegisterEffect(e3)
@@ -31,18 +31,17 @@ function s.initial_effect(c)
 	e3a:SetValue(s.relval)
 	c:RegisterEffect(e3a)
 end
-s.listed_series={0x141}
+s.listed_series={SET_RIKKA}
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x141),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_RIKKA),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.setfilter(c)
-	return c:IsSetCard(0x141) and c:IsSpellTrap() and not c:IsType(TYPE_FIELD) and c:IsSSetable()
+	return c:IsSetCard(SET_RIKKA) and c:IsSpellTrap() and not c:IsType(TYPE_FIELD) and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK,0,1,nil) end
 end
 function s.setop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 	local sg=Duel.SelectMatchingCard(tp,s.setfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if #sg>0 then
@@ -56,9 +55,9 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(function(_,c) return not c:IsRace(RACE_PLANT) end)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.relval(e,re,r,rp)
-	return re and re:IsActivated() and (r&REASON_COST)~=0 and re:GetHandler():IsSetCard(0x141)
+	return re and re:IsActivated() and (r&REASON_COST)~=0 and re:GetHandler():IsSetCard(SET_RIKKA)
 end

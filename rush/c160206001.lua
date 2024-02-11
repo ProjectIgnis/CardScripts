@@ -16,7 +16,9 @@ function s.initial_effect(c)
 	--Cannot be destroyed by battle with monsters with matching attributes
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+	e2:SetRange(LOCATION_MZONE)
 	e2:SetValue(s.indesfilter)
 	c:RegisterEffect(e2)
 end

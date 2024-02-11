@@ -38,7 +38,7 @@ function s.eqfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_GALAXY) and not c:IsMaximumModeSide()
 end
 function s.eqlimit(e,c)
-    return c:IsFaceup()
+	return c:IsFaceup()
 end
 function s.eftg(e,c)
 	return e:GetHandler():GetEquipTarget()==c
@@ -47,5 +47,5 @@ function s.condition(e)
 	return e:GetHandler():GetEquipTarget():IsAttribute(ATTRIBUTE_DARK)
 end
 function s.efilter(e,te)
-	return te:IsTrapEffect() and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
+	return te:IsTrapEffect() and te:GetOwnerPlayer()~=e:GetOwnerPlayer()
 end

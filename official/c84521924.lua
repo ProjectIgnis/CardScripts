@@ -67,7 +67,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and rp==1-tp and Duel.IsChainNegatable(ev)
 end
 function s.spfilter(c,e,tp,zone)
-	return c:IsSetCard(SET_SOLFACHORD) and c:IsOddScale() 
+	return c:IsSetCard(SET_SOLFACHORD) and c:IsOddScale()
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

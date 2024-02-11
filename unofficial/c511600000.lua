@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e1:SetCost(s.descost)
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
-	c:RegisterEffect(e1) 
+	c:RegisterEffect(e1)
 	--Special Summon 1 card from your Pendulum Zone
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
@@ -39,7 +39,7 @@ end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.GetFieldGroup(tp,LOCATION_PZONE,0)
 	local sct=Duel.GetMatchingGroupCount(nil,tp,LOCATION_STZONE,LOCATION_STZONE,g)
-	if chk==0 then return #g==g:FilterCount(Card.IsAbleToRemoveAsCost,nil) and sct>0 
+	if chk==0 then return #g==g:FilterCount(Card.IsAbleToRemoveAsCost,nil) and sct>0
 		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_DECK,0,sct,nil) end
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
@@ -77,7 +77,7 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	local ac=Duel.GetAttacker()
-	if chk==0 then return e:GetHandler():IsType(TYPE_PENDULUM) and ac:IsCanBeEffectTarget(e) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
+	if chk==0 then return e:GetHandler():IsType(TYPE_PENDULUM) and ac:IsCanBeEffectTarget(e) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_PZONE,0,1,nil,e,tp) end
 	Duel.SetTargetCard(ac)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_PZONE)

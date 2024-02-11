@@ -5,6 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Add to hand
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
@@ -14,9 +15,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
 end
-s.listed_names={CARD_UMI,CARD_BIG_OCEAN}
+s.listed_names={CARD_UMI,CARD_BIG_UMI}
 function s.fupfilter(c)
-	return c:IsFaceup() and (c:IsCode(CARD_UMI) or c:IsCode(CARD_BIG_OCEAN))
+	return c:IsFaceup() and c:IsCode(CARD_UMI,CARD_BIG_UMI)
 end
 function s.thcond(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.fupfilter,tp,LOCATION_ONFIELD,0,1,nil)

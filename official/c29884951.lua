@@ -3,7 +3,7 @@
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Destroy itself and an opponent's monster that battles your Wyrm monster 
+	-- Destroy itself and an opponent's monster that battles your Wyrm monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
+	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER|TIMING_MAIN_END)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(function() return Duel.IsMainPhase() end)
 	e2:SetCost(s.spcost)

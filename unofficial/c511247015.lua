@@ -1,9 +1,11 @@
---栄誉の贄
+--栄誉の贄 (Anime)
+--Offering to the Immortals (Anime)
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN+CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
@@ -12,13 +14,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x21}
+s.listed_series={SET_EARTHBOUND_IMMORTAL}
 s.listed_names={56339050}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp) and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
 end
 function s.filter(c)
-	return (c:IsSetCard(0x21) or c:IsCode(56339050)) and c:IsAbleToHand()
+	return (c:IsSetCard(SET_EARTHBOUND_IMMORTAL) or c:IsCode(56339050)) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and Duel.GetLocationCount(tp,LOCATION_MZONE)>1
@@ -30,7 +32,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateAttack() then
-		if not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and Duel.GetLocationCount(tp,LOCATION_MZONE)>1 
+		if not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and Duel.GetLocationCount(tp,LOCATION_MZONE)>1
 			and Duel.IsPlayerCanSpecialSummonMonster(tp,82340057,0,TYPES_TOKEN,0,0,1,RACE_ROCK,ATTRIBUTE_EARTH) then
 			for i=1,2 do
 				local token=Duel.CreateToken(tp,82340057)

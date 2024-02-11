@@ -1,9 +1,9 @@
 --伍世壊＝カラリウム
---Primal Planet Kalarium
+--Peaceful Planet Calarium
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate and add 1 "Manadome" monster or "Visas Starfrost" to the hand
+	--Activate and add 1 "Mannadium" monster or "Visas Starfrost" to the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -47,9 +47,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3b)
 end
 s.listed_names={CARD_VISAS_STARFROST}
-s.listed_series={SET_MANADOME}
+s.listed_series={SET_MANNADIUM}
 function s.thfilter(c)
-	return ((c:IsMonster() and c:IsSetCard(SET_MANADOME)) or c:IsCode(CARD_VISAS_STARFROST)) and c:IsAbleToHand()
+	return ((c:IsMonster() and c:IsSetCard(SET_MANNADIUM)) or c:IsCode(CARD_VISAS_STARFROST)) and c:IsAbleToHand()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil)
@@ -74,7 +74,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=e:GetLabelObject():Filter(s.tgfilter,nil,tp,e)
 	if chkc then return g:IsContains(chkc) and s.tgfilter(chkc,tp,e) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and #g>0 end
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 	local tc=nil
 	if #g==1 then
 		tc=g:GetFirst()

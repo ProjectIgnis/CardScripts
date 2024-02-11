@@ -38,8 +38,8 @@ function s.eftg(e,c)
 end
 function s.eftg2(e,c)
 	if e:GetHandler():GetEquipTarget()==c and c:GetFlagEffect(id)==0 then
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
-		c:AddDoubleTribute(id,s.otfilter,s.eftg,RESET_EVENT+RESETS_STANDARD,FLAG_DOUBLE_TRIB)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,0)
+		c:AddDoubleTribute(id,s.otfilter,s.eftg,RESET_EVENT|RESETS_STANDARD,FLAG_DOUBLE_TRIB)
 		return true
 	end
 	return false

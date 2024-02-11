@@ -39,54 +39,28 @@ function s.initial_effect(c)
 	e3:SetLabelObject(e2)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x168}
+s.listed_series={SET_GUNKAN}
 s.listed_names={CARD_SUSHIP_SHARI,CARD_SUSHIP_UNI}
-
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	return (Duel.IsTurnPlayer(tp) and Duel.IsMainPhase()) or
-	       (Duel.IsTurnPlayer(1-tp) and Duel.IsBattlePhase())
+	return (Duel.IsTurnPlayer(tp) and Duel.IsMainPhase())
+		or (Duel.IsTurnPlayer(1-tp) and Duel.IsBattlePhase())
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x168) and c:IsSummonLocation(LOCATION_EXTRA)
+	return c:IsSetCard(SET_GUNKAN) and c:IsSummonLocation(LOCATION_EXTRA)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then
-		return chkc:IsNegatable() and chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_ONFIELD)
-	end
-	if chk==0 then
-		return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil) and
-		       Duel.IsExistingTarget(Card.IsNegatable,tp,0,LOCATION_ONFIELD,1,nil)
-	end
+	if chkc then return chkc:IsNegatable() and chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_ONFIELD) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingTarget(Card.IsNegatable,tp,0,LOCATION_ONFIELD,1,nil) end
 	local ct=Duel.GetMatchingGroupCount(s.cfilter,tp,LOCATION_MZONE,0,nil)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_NEGATE)
 	local g=Duel.SelectTarget(tp,Card.IsNegatable,tp,0,LOCATION_ONFIELD,1,ct,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)
-	local c=e:GetHandler()
-	for tc in aux.Next(g) do
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		tc:RegisterEffect(e1)
-		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetValue(RESET_TURN_SET)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-		tc:RegisterEffect(e2)
-		if tc:IsType(TYPE_TRAPMONSTER) then
-			local e3=Effect.CreateEffect(c)
-			e3:SetType(EFFECT_TYPE_SINGLE)
-			e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-			e3:SetCode(EFFECT_DISABLE_TRAPMONSTER)
-			e3:SetReset(RESET_EVENT+RESETS_STANDARD)
-			tc:RegisterEffect(e3)
-		end
+	for tc in g:Iter() do
+		tc:NegateEffects(e:GetHandler(),RESET_EVENT|RESETS_STANDARD,true)
 	end
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
@@ -94,8 +68,8 @@ function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.regtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local effs=e:GetLabel()
-	if chk==0 then return (effs&1)==0 or Duel.IsPlayerCanDraw(tp,1) end
-	if (effs&1)~=0 then
+	if chk==0 then return ((effs&1)>0 and Duel.IsPlayerCanDraw(tp,1)) or ((effs&2)>0) end
+	if (effs&1)>0 then
 		e:SetCategory(CATEGORY_DRAW)
 		Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 	else
@@ -106,17 +80,17 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local effs=e:GetLabel()
 	--"Gunkan Suship Shari": Draw 1 card.
-	if (effs&1)~=0 then
+	if (effs&1)>0 then
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end
 	--"Gunkan Suship Uni: This card can attack directly.
-	if (effs&(1<<1))~=0 then
+	if (effs&2)>0 then
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(3205)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_DIRECT_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
 	end
 end
@@ -124,8 +98,8 @@ function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	local effs=0
 	--Check for "Gunkan Suship Shari".
-	if g:IsExists(Card.IsCode,1,nil,CARD_SUSHIP_SHARI) then effs=1 end
+	if g:IsExists(Card.IsCode,1,nil,CARD_SUSHIP_SHARI) then effs=effs|1 end
 	--Check for "Gunkan Suship Uni".
-	if g:IsExists(Card.IsCode,1,nil,CARD_SUSHIP_UNI) then effs=effs|(1<<1) end
+	if g:IsExists(Card.IsCode,1,nil,CARD_SUSHIP_UNI) then effs=effs|2 end
 	e:GetLabelObject():SetLabel(effs)
 end

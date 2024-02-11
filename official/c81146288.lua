@@ -29,7 +29,7 @@ function s.rescon(sg,e,tp,mg)
 		and (sg:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE) or (sg:IsExists(aux.SpElimFilter,1,nil,true)))
 end
 function s.spfilter(c,tp)
-	return c:IsLevelAbove(7) and c:IsRace(RACE_PLANT) and c:IsAbleToRemoveAsCost() 
+	return c:IsLevelAbove(7) and c:IsRace(RACE_PLANT) and c:IsAbleToRemoveAsCost()
 		and (c:IsLocation(LOCATION_HAND) or (aux.SpElimFilter(c,true) and Duel.GetMZoneCount(tp,c)>0))
 end
 function s.spcon(e,c)

@@ -24,7 +24,7 @@ function s.initial_effect(c)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsSpellEffect() then
-		Duel.RegisterFlagEffect(rp,id,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(rp,id,RESET_PHASE|PHASE_END,0,1)
 	end
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -36,7 +36,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e1:SetTargetRange(1,0)
 	e1:SetValue(s.aclimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,1),nil)
 end

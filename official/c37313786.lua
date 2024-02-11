@@ -24,14 +24,14 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.CallCoin(tp) then
 		local gc=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
 		Duel.Draw(tp,5-gc,REASON_EFFECT)
-	else 
+	else
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(aux.Stringid(id,0))
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
-		e1:SetDescription(aux.Stringid(id,0))
 		e1:SetTargetRange(1,0)
 		e1:SetCode(EFFECT_SKIP_TURN)
-		e1:SetReset(RESET_PHASE+PHASE_DRAW+RESET_SELF_TURN)
+		e1:SetReset(RESET_PHASE|PHASE_DRAW|RESET_SELF_TURN)
 		Duel.RegisterEffect(e1,tp)
 	end
 end

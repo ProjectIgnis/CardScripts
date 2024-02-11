@@ -35,7 +35,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetOperatedGroup()
 	local ct=g:GetFirst()
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and ct and ct:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and ct:IsType(TYPE_NORMAL) and ct:IsRace(RACE_GALAXY) and ct:IsAttribute(ATTRIBUTE_LIGHT) and ct:IsLevelBelow(4) 
+		and ct:IsType(TYPE_NORMAL) and ct:IsRace(RACE_GALAXY) and ct:IsAttribute(ATTRIBUTE_LIGHT) and ct:IsLevelBelow(4)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.BreakEffect()
 		Duel.SpecialSummon(ct,0,tp,tp,false,false,POS_FACEUP)

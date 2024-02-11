@@ -32,7 +32,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	return true
 end
 function s.cfilter(c,e,tp,ft)
-	return c:IsType(TYPE_SYNCHRO) and (ft>0 or (c:GetSequence()<5 and c:IsControler(tp))) 
+	return c:IsType(TYPE_SYNCHRO) and (ft>0 or (c:GetSequence()<5 and c:IsControler(tp)))
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,nil,c:GetCode(),e,tp)
 end
 function s.spfilter(c,tcode,e,tp)

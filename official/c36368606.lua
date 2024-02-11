@@ -54,7 +54,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spfilter(c,e,tp)
 	local owner=c:GetOwner()
-	return c:IsRace(RACE_CYBERSE) and c:IsLinkMonster() and c:GetFlagEffect(id)>0
+	return c:IsRace(RACE_CYBERSE) and c:IsLinkMonster() and c:HasFlagEffect(id)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,owner)
 		and Duel.GetLocationCount(owner,LOCATION_MZONE,tp)>0
 end

@@ -1,4 +1,5 @@
---Earthbound God Chacu Challhua
+--地縛神 Ｃｈａｃｕ Ｃｈａｌｌｈｕａ (Anime)
+--Earthbound Immortal Chacu Challhua (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	local e0=Effect.CreateEffect(c)
@@ -63,23 +64,22 @@ function s.initial_effect(c)
 	--Self Destroy During the End Phase
 	local e8=Effect.CreateEffect(c)
 	e8:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e8:SetProperty(CATEGORY_DESTROY)
+	e8:SetCode(EVENT_PHASE+PHASE_END)
 	e8:SetRange(LOCATION_MZONE)
 	e8:SetCountLimit(1)
-	e8:SetCode(EVENT_PHASE+PHASE_END)
 	e8:SetCondition(s.nofieldcon)
 	e8:SetOperation(s.nofieldop)
 	c:RegisterEffect(e8)
 end
-s.listed_series={0x21}
+s.listed_series={SET_EARTHBOUND_IMMORTAL}
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return c:IsSetCard(0x21)
+	return c:IsSetCard(SET_EARTHBOUND_IMMORTAL)
 end
 function s.havefieldcon(e)
 	return Duel.IsExistingMatchingCard(Card.IsFaceup,0,LOCATION_FZONE,LOCATION_FZONE,1,nil)
 end
 function s.unaffectedval(e,te)
-	return (te:IsActiveType(TYPE_SPELL) or te:IsActiveType(TYPE_TRAP)) and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
+	return te:IsSpellTrapEffect() and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
 end
 function s.nobattlephasecon(e)
 	return e:GetHandler():IsPosition(POS_FACEUP_DEFENSE) and Duel.IsExistingMatchingCard(s.havefieldfilter,0,LOCATION_SZONE,LOCATION_SZONE,1,e:GetHandler())
@@ -90,7 +90,7 @@ function s.dmgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_ATTACK)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 	e:GetHandler():RegisterEffect(e1)
 end
 function s.dmgtg(e,tp,eg,ep,ev,re,r,rp,chk)

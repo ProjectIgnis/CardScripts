@@ -1,5 +1,5 @@
 --竜魔導騎士ブラック・マジシャン
---Dark Magician the Magical Knight of Dragons
+--Dark Magician the Knight of Dragon Magic
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -68,7 +68,7 @@ function s.spfilter(c,e,tp)
 	return c:IsCode(CARD_DARK_MAGICIAN,CARD_GAIA_CHAMPION) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.rescon(sg,e,tp,mg)
-	return sg:FilterCount(Card.IsCode,1,nil,CARD_DARK_MAGICIAN)==1
+	return sg:FilterCount(Card.IsCode,nil,CARD_DARK_MAGICIAN)==1
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND_DECK_GRAVE_EXTRA,0,nil,e,tp)

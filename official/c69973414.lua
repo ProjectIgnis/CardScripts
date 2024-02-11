@@ -28,7 +28,7 @@ function s.tdfilter(c)
 	return c:IsSetCard(SET_BLACKWING) and c:HasLevel() and c:IsFaceup() and c:IsAbleToDeckOrExtraAsCost()
 end
 function s.spfilter(c,e,tp,lv)
-	return Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsType(TYPE_SYNCHRO) 
+	return Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsType(TYPE_SYNCHRO)
 		and (c:IsSetCard(SET_BLACKWING) or c:IsCode(CARD_BLACK_WINGED_DRAGON))
 		and c:IsLevel(lv) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SYNCHRO,tp,false,false)
 end

@@ -27,7 +27,7 @@ end
 s.listed_series={SET_HARPIE}
 s.listed_names={CARD_HARPIE_LADY_SISTERS}
 function s.tdfilter(c,e,tp,g)
-	return c:IsCode(CARD_HARPIE_LADY_SISTERS) and c:IsFaceup() and c:IsAbleToDeck() 
+	return c:IsCode(CARD_HARPIE_LADY_SISTERS) and c:IsFaceup() and c:IsAbleToDeck()
 		and Duel.GetMZoneCount(tp,c,tp,LOCATION_REASON_TOFIELD)>=3 and aux.SelectUnselectGroup(g,e,tp,3,3,s.spcheck,0)
 end
 function s.spfilter(c,e,tp)

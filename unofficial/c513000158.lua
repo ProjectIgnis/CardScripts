@@ -29,7 +29,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local c=e:GetHandler()
-	local dg=Duel.GetMatchingGroup(s.filter,c:GetControler(),LOCATION_GRAVE,0,nil,e,tp)	
+	local dg=Duel.GetMatchingGroup(s.filter,c:GetControler(),LOCATION_GRAVE,0,nil,e,tp)
 	Duel.Hint(HINT_SELECTMSG,c:GetControler(),HINTMSG_SPSUMMON)
 	local tc=dg:Select(c:GetControler(),1,1,nil):GetFirst()
 	if tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then

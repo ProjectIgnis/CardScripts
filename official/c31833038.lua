@@ -2,66 +2,58 @@
 --Borreload Dragon
 local s,id=GetID()
 function s.initial_effect(c)
-	--Link Summon
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_EFFECT),3)
 	c:EnableReviveLimit()
-	--cannot be targeted
+	--Link Summon procedure
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_EFFECT),3)
+	--Cannot be targeted by monster effects
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetValue(function(e,re,rp) return re:IsMonsterEffect() end)
+	c:RegisterEffect(e1)
+	--Target monster loses 500 ATK/DEF
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
-	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
+	e2:SetType(EFFECT_TYPE_QUICK_O)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
+	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetValue(s.efilter1)
+	e2:SetHintTiming(TIMING_DAMAGE_STEP|TIMING_END_PHASE)
+	e2:SetCountLimit(1)
+	e2:SetCondition(function() return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated() end)
+	e2:SetTarget(s.atktg)
+	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
-	--reduce ATK/DEF
+	--Take control of an opponent's monster this card attacks
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,0))
-	e3:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
-	e3:SetType(EFFECT_TYPE_QUICK_O)
-	e3:SetCode(EVENT_FREE_CHAIN)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
-	e3:SetHintTiming(TIMING_DAMAGE_STEP+TIMING_END_PHASE)
-	e3:SetCountLimit(1)
-	e3:SetCondition(s.atkcon)
-	e3:SetTarget(s.atktg)
-	e3:SetOperation(s.atkop)
+	e3:SetDescription(aux.Stringid(id,1))
+	e3:SetCategory(CATEGORY_CONTROL)
+	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e3:SetCode(EVENT_BATTLE_START)
+	e3:SetCondition(s.ctcon)
+	e3:SetTarget(s.cttg)
+	e3:SetOperation(s.ctop)
 	c:RegisterEffect(e3)
-	--take control
-	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(id,1))
-	e4:SetCategory(CATEGORY_CONTROL)
-	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e4:SetCode(EVENT_BATTLE_START)
-	e4:SetTarget(s.cttg)
-	e4:SetOperation(s.ctop)
-	c:RegisterEffect(e4)
-end
-function s.efilter1(e,re,rp)
-	return re:IsActiveType(TYPE_MONSTER)
-end
-function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
-	Duel.SetChainLimit(s.chlimit)
-end
-function s.chlimit(e,ep,tp)
-	return tp==ep
+	Duel.SetChainLimit(function(_e,_ep,_tp) return _tp==_ep end)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	local c=e:GetHandler()
-	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
-		local e1=Effect.CreateEffect(c)
+	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
+		--It loses 500 ATK/DEF
+		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetCode(EFFECT_UPDATE_ATTACK)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(-500)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
@@ -69,49 +61,34 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e2)
 	end
 end
-function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetAttackTarget()
-	if chk==0 then
-		local zone=c:GetLinkedZone()&0x1f
-		return Duel.GetAttacker()==c and tc and tc:IsControlerCanBeChanged(false,zone)
-	end
+	local zone=c:GetLinkedZone()&ZONES_MMZ
+	return Duel.GetAttacker()==c and tc and tc:IsControler(1-tp) and tc:IsControlerCanBeChanged(false,zone)
+end
+function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	local tc=Duel.GetAttackTarget()
 	Duel.SetTargetCard(tc)
-	Duel.SetOperationInfo(0,CATEGORY_CONTROL,tc,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_CONTROL,tc,1,tp,0)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local tc=Duel.GetAttackTarget()
-	if not c:IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
-		local zone=c:GetLinkedZone()&0x1f
-		if Duel.GetControl(tc,tp,0,0,zone)~=0 then
-			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,2)
-			for _,eff in ipairs({tc:GetCardEffect(EFFECT_SET_CONTROL)}) do
-				if eff:GetOwner()==c then
-					eff:SetReset((eff:GetReset())|RESET_TEMP_REMOVE)
-				end
-			end
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-			e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-			e1:SetCode(EVENT_PHASE+PHASE_END)
-			e1:SetCondition(s.descon)
-			e1:SetOperation(s.desop)
-			e1:SetReset(RESET_PHASE+PHASE_END,2)
-			e1:SetCountLimit(1)
-			e1:SetLabel(Duel.GetTurnCount())
-			e1:SetLabelObject(tc)
-			Duel.RegisterEffect(e1,tp)
-		end
+	if not (c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and tc:IsControler(1-tp)) then return end
+	local zone=c:GetLinkedZone()&ZONES_MMZ
+	if Duel.GetControl(tc,tp,0,0,zone) then
+		local turn_ct=Duel.GetTurnCount()
+		--Send it to the GY during the End Phase of the next turn
+		aux.DelayedOperation(tc,PHASE_END,id,e,tp,
+			function(ag)
+				Duel.SendtoGrave(ag,REASON_EFFECT)
+			end,
+			function()
+				return Duel.GetTurnCount()==turn_ct+1
+			end,
+			nil,2
+		)
 	end
-end
-function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetLabelObject()
-	return Duel.GetTurnCount()~=e:GetLabel() and tc:GetFlagEffect(id)~=0
-end
-function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetLabelObject()
-	Duel.SendtoGrave(tc,REASON_EFFECT)
 end

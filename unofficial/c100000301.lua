@@ -1,8 +1,8 @@
---Ｔｈｅ ｂｌａｚｉｎｇ ＭＡＲＳ
---The Blazing Mars (manga)
+--Ｔｈｅ ｂｌａｚｉｎｇ ＭＡＲＳ (Manga)
+--The Blazing Mars (Manga)
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	--Special Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
@@ -12,8 +12,9 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--damage
+	--Inflict 500 damage
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DAMAGE)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -28,19 +29,22 @@ function s.spfilter(c)
 end
 function s.spcon(e,c)
 	if c==nil then return true end
+	local eff={c:GetCardEffect(EFFECT_NECRO_VALLEY)}
+	for _,te in ipairs(eff) do
+		local op=te:GetOperation()
+		if not op or op(e,c) then return false end
+	end
 	local tp=c:GetControler()
-	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-3 and #rg>2 and aux.SelectUnselectGroup(rg,e,tp,3,3,aux.ChkfMMZ(1),0)
+	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,e:GetHandler())
+	return aux.SelectUnselectGroup(rg,e,tp,3,3,aux.ChkfMMZ(1),0)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
-	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
-	local g=aux.SelectUnselectGroup(rg,e,tp,3,3,aux.ChkfMMZ(1),1,tp,HINTMSG_REMOVE)
-	if #g>0 then
-		g:KeepAlive()
-		e:SetLabelObject(g)
-		return true
-	end
-	return false
+	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,e:GetHandler())
+	local g=aux.SelectUnselectGroup(rg,e,tp,3,3,aux.ChkfMMZ(1),1,tp,HINTMSG_REMOVE,nil,nil,true)
+	if #g~=3 then return false end
+	g:KeepAlive()
+	e:SetLabelObject(g)
+	return true
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=e:GetLabelObject()

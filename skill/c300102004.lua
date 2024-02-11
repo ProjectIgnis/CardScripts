@@ -63,7 +63,7 @@ function s.repop(isdice,func2,func3)
 			if isdice then
 				table.insert(res,Duel.GetRandomNumber(1,6))
 			else
-				table.insert(res,Duel.GetRandomNumber(0,1)==0 and COIN_TAILS or COIN_HEADS)	
+				table.insert(res,Duel.GetRandomNumber(0,1)==0 and COIN_TAILS or COIN_HEADS)
 			end
 		end
 		func2(table.unpack(res))

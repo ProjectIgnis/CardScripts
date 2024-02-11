@@ -58,7 +58,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 			local label=Duel.GetFlagEffectLabel(0,id)
 			if not label or typ&label==0 then
 				local new_label=label and (typ|label) or typ
-				Duel.RegisterFlagEffect(0,id,RESET_PHASE+PHASE_END,0,1)
+				Duel.RegisterFlagEffect(0,id,RESET_PHASE|PHASE_END,0,1)
 				Duel.SetFlagEffectLabel(0,id,new_label)
 			end
 		end

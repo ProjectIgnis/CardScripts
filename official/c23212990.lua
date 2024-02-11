@@ -1,9 +1,10 @@
 --六武式風雷斬
+--Six Strike - Thunder Blast
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Activate 1 of these effects
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_TOHAND)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -13,28 +14,28 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.counter_list={0x3}
+s.counter_list={COUNTER_BUSHIDO}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,0x3,1,REASON_COST) end
-	Duel.RemoveCounter(tp,1,0,0x3,1,REASON_COST)
+	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,COUNTER_BUSHIDO,1,REASON_COST) end
+	Duel.RemoveCounter(tp,1,0,COUNTER_BUSHIDO,1,REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() end
-	if chk==0 then return Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_MZONE,1,nil)
-		or Duel.IsExistingTarget(Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,1,nil) end
-	local b1=Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_MZONE,1,nil)
+	local label=e:GetLabel()
+	if chkc then return chkc:IsControler(1-tp) and ((label==1 and chkc:IsLocation(LOCATION_MZONE)) or (label==2 and chkc:IsOnField() and chkc:IsAbleToHand())) end
+	local b1=Duel.IsExistingTarget(nil,tp,0,LOCATION_MZONE,1,nil)
 	local b2=Duel.IsExistingTarget(Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,1,nil)
-	local op=0
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EFFECT)
-	if b1 and b2 then op=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))
-	elseif b1 then op=Duel.SelectOption(tp,aux.Stringid(id,0))
-	else op=Duel.SelectOption(tp,aux.Stringid(id,1))+1 end
+	if chk==0 then return b1 or b2 end
+	local op=Duel.SelectEffect(tp,
+		{b1,aux.Stringid(id,1)},
+		{b2,aux.Stringid(id,2)})
 	e:SetLabel(op)
-	if op==0 then
+	if op==1 then
+		e:SetCategory(CATEGORY_DESTROY)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-		local g=Duel.SelectTarget(tp,aux.TRUE,tp,0,LOCATION_MZONE,1,1,nil)
+		local g=Duel.SelectTarget(tp,nil,tp,0,LOCATION_MZONE,1,1,nil)
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 	else
+		e:SetCategory(CATEGORY_TOHAND)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 		local g=Duel.SelectTarget(tp,Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,1,1,nil)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
@@ -42,11 +43,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
-		if e:GetLabel()==0 then
-			Duel.Destroy(tc,REASON_EFFECT)
-		else
-			Duel.SendtoHand(tc,nil,REASON_EFFECT)
-		end
+	if not (tc:IsRelateToEffect(e) and tc:IsControler(1-tp)) then return end
+	if e:GetLabel()==1 then
+		--Destroy 1 monster your opponent controls
+		Duel.Destroy(tc,REASON_EFFECT)
+	else
+		--Return 1 card your opponent controls to the hand
+		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end

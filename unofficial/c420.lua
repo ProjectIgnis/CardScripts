@@ -1,7 +1,7 @@
 --Anime Archtype
 if not AnimeArchetype then
 	AnimeArchetype = {}
-	
+
 	local MakeCheck=function(setcodes,archtable,extrafuncs)
 		return function(c,sc,sumtype,playerid)
 			sumtype=sumtype or 0
@@ -145,7 +145,7 @@ if not AnimeArchetype then
 	Card.IsCelestial=MakeCheck({0x254a},{69865139,25472513})
 
 	-- Cicada
-	-- 蝉 
+	-- 蝉
 	-- せみ
 	-- Number 3: Cicada King, Oily Cicada, Dream Cicada
 	Card.IsCicada=MakeCheck({0x50f},{4997565,79663524,5068132})
@@ -155,7 +155,7 @@ if not AnimeArchetype then
 	-- おうじゃ
 	-- Champion's Vigilance
 	Card.IsChampion=MakeCheck({0x152f},{82382815})
-	
+
 	-- Clear クリアー
 	-- Clear Vice Dragon/Clear World
 	Card.IsClear=MakeCheck({0x510},{97811903,82044279,33900648})
@@ -223,8 +223,7 @@ if not AnimeArchetype then
 		72657739,91939608,85639257,2903036,49563947,82579942,
 		92418590,39806198
 	}
-	Card.IsDoll=MakeCheck({0x517,0x9d},AnimeArchetype.OCGDoll)
-
+	Card.IsDoll=MakeCheck({0x517,0x9d,0x15c},AnimeArchetype.OCGDoll)
 
 	-- Drone
 	-- ドローン
@@ -233,7 +232,6 @@ if not AnimeArchetype then
 		24610207,756652,4474060
 	}
 	Card.IsDrone=MakeCheck({0x581},AnimeArchetype.OCGDrone)
-
 
 	-- Druid ドルイド
 	-- Secret Sect Druid Wid/Secret Sect Druid Dru/Aurkus, Lightsworn Druid
@@ -257,17 +255,7 @@ if not AnimeArchetype then
 		79569173,97169186,26381750,70156997,20590784,77428945,54762426,46918794,95220856,2084239,77754944,
 		7443908,4997565
 	}
-	Card.IsEarth=MakeCheck({0x51a},AnimeArchetype.OCGEarth,{"IsEarthbound","IsHell"})
-
-	-- Earthbound (list to update)
-	-- 地縛
-	-- じばく
-	-- Earthbound Revival/Roar of the Earthbound/Earthbound Whirlwind
-	-- Earthbound Linewalker/Call of the Earthbound
-	AnimeArchetype.OCGEarthbound={
-		64187086,56339050,96907086,67987302,65743242
-	}
-	Card.IsEarthbound=MakeCheck({0x151a,0x21},AnimeArchetype.OCGEarthbound)
+	Card.IsEarth=MakeCheck({0x51a,SET_EARTHBOUND},AnimeArchetype.OCGEarth,{"IsHell"})
 
 	-- Elf エルフ
 	-- Ghost Fairy Elfobia/Wing Egg Elf/Elf's Light
@@ -313,10 +301,6 @@ if not AnimeArchetype then
 		77797992,87624166,14015067,4192696,87430998,46668237,60398723,37322745,36318200,24096499,78010363,42883273,65303664,17733394
 	}
 	Card.IsForest=MakeCheck({0x51f},AnimeArchetype.OCGForest)
-
-	-- Gaia the Dragon Champion
-	-- Gaia the Dragon Champion/Sky Galloping Gaia the Dragon Champion
-	Card.IsGaiatheDragonChampion=MakeCheck({0x521},{66889139,2519690})
 
 	-- Gem-Knight Lady ジェムナイトレディ
 	-- Gem-Knight Lady Brilliant Diamond/Gem-Knight Lady Lapis Lazuli
@@ -656,15 +640,6 @@ if not AnimeArchetype then
 	}
 	Card.IsCN39UtopiaRay=MakeCheck({0x1539},AnimeArchetype.OCGCN39UtopiaRay)
 
-	-- Number S
-	-- ＳＮｏ.
-	-- シャイニングナンバーズ
-	-- Number S39: Utopia the Lightning/Number S39: Utopia the Lightning/Number S0: Utopic ZEXAL
-	AnimeArchetype.OCGNumberS={
-		52653092,56832966,86532744
-	}
-	Card.IsNumberS=MakeCheck({0x2048},AnimeArchetype.OCGNumberS)
-
 	-- Numeronius
 	-- ヌメロニアス
 	-- Number C1000: Numeronius/Number iC1000: Numeronius Numeronia
@@ -806,7 +781,7 @@ if not AnimeArchetype then
 	AnimeArchetype.OCGShining={
 		22061412,88820235,25366484,62829077,53347303,90263923,12927849,21481146,2061963
 	}
-	Card.IsShining=MakeCheck({0x548},AnimeArchetype.OCGShining,{"IsNumberS"})
+	Card.IsShining=MakeCheck({0x548,0x2048},AnimeArchetype.OCGShining)
 
 	-- Skiel
 	-- スキエル
@@ -1012,7 +987,6 @@ if not AnimeArchetype then
 	}
 	Card.IsY=MakeCheck({0x56d,0xc1},AnimeArchetype.OCGY)
 
-
 	-- Yomi 黄泉
 	-- Treeborn Frog
 	-- Yomi Ship
@@ -1021,12 +995,6 @@ if not AnimeArchetype then
 	}
 	Card.IsYomi=MakeCheck({0x563},AnimeArchetype.OCGYomi)
 
-	-- Yubel (archetype) ユベル
-	AnimeArchetype.OCGYubel={
-		-- Yubel, Yubel terror, Yubel nighmare
-		78371393,4779091,31764700
-	}
-	Card.IsYubel=MakeCheck({0x561},AnimeArchetype.OCGYubel)
 
 	--Z
 	AnimeArchetype.OCGZ={
@@ -1106,4 +1074,24 @@ if not AnimeArchetype then
 	-- 軍蚊 (Army Mosquito)
 	-- Ninjitsu Art of Mosquito Marching
 	Card.IsMosquito=MakeCheck({0x536},{94113093})
+
+-----------------------------------------
+	-- Speed Duel
+
+	-- Gaia the Dragon Champion
+	-- Gaia the Dragon Champion/Sky Galloping Gaia the Dragon Champion
+	Card.IsGaiatheDragonChampion=MakeCheck({0x580},{66889139,2519690})
+
+	-- Ancient Gear Golem
+	-- Ancient Gear Golem/Ancient Gear Golem - Ultimate Pound
+	-- Toon Ancient Gear Golem/Ultimate Ancient Gear Golem
+	Card.IsAncientGearGolem=MakeCheck({0x581},{83104731,95735217,7171149,12652643})
+
+	-- Insect Queen
+	-- Insect Queen/Metamorphosed Insect Queen
+	Card.IsInsectQueen=MakeCheck({0x582},{91512835,41456841})
+
+	-- Fortress Whale
+	-- Fortress Whale/Fortress Whale's Oath/Mega Fortress Whale
+	Card.IsFortressWhale=MakeCheck({0x583},{62337487,77454922,96546575})
 end

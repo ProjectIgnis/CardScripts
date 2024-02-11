@@ -1,7 +1,8 @@
 --森羅の隠蜜 スナッフ
+--Sylvan Snapdrassinagon
 local s,id=GetID()
 function s.initial_effect(c)
-	--tograve
+	--Excavate the top card of your Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DECKDES)
@@ -12,10 +13,17 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
+	local e2=e1:Clone()
+	e2:SetCondition(s.condition2)
+	c:RegisterEffect(e2)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_HAND+LOCATION_ONFIELD) or (c:IsPreviousLocation(LOCATION_DECK) and	c:IsReason(REASON_REVEAL))
+	return c:IsPreviousLocation(LOCATION_HAND|LOCATION_ONFIELD)
+end
+function s.condition2(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return c:IsPreviousLocation(LOCATION_DECK) and c:IsReason(REASON_EXCAVATE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,1) end
@@ -27,7 +35,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	if tc:IsRace(RACE_PLANT) then
 		Duel.DisableShuffleCheck()
-		Duel.SendtoGrave(g,REASON_EFFECT+REASON_REVEAL)
+		Duel.SendtoGrave(g,REASON_EFFECT|REASON_EXCAVATE)
 	else
 		Duel.MoveSequence(tc,1)
 	end

@@ -46,7 +46,7 @@ function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x1530)
 end
 function s.coincon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==tp and e:GetHandler():GetFlagEffect(id)==0 
+	return ep==tp and e:GetHandler():GetFlagEffect(id)==0
 		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.coinop(e,tp,eg,ep,ev,re,r,rp)

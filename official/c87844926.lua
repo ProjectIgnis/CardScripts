@@ -1,37 +1,49 @@
 --ソウル・レヴィ
 --Soul Levy
 --scripted by Logical Nonsense
---Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
-	--Only control 1
+	--You can only control 1 "Soul Levy"
 	c:SetUniqueOnField(1,0,id)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,TIMING_SPSUMMON)
+	e1:SetHintTiming(0,TIMING_STANDBY_PHASE)
 	c:RegisterEffect(e1)
-	--Send 3 cards from opponent's deck to GY
+	--Send the top 3 cards of your opponent's Deck to the GY
 	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_DECKDES)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e2:SetRange(LOCATION_SZONE)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e2:SetCondition(s.condition)
-	e2:SetOperation(s.operation)
+	e2:SetRange(LOCATION_SZONE)
+	e2:SetCondition(function(e,tp,eg) return eg:IsExists(Card.IsSummonPlayer,1,nil,1-tp) end)
+	e2:SetOperation(s.tgop)
 	c:RegisterEffect(e2)
 end
-	--Who summoned
-function s.filter(c,tp)
-	return c:GetSummonPlayer()==tp
+s.listed_names={id}
+function s.tgop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if not Duel.IsChainSolving() then
+		s.mill3(e,tp,eg,ep,ev,re,r,rp)
+	else
+		--Send the top 3 cards of your opponent's Deck to the GY at the end of the Chain Link
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e1:SetCode(EVENT_CHAIN_SOLVED)
+		e1:SetRange(LOCATION_SZONE)
+		e1:SetOperation(s.mill3)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_CHAIN)
+		c:RegisterEffect(e1)
+		--Reset "e1" at the end of the Chain Link
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e2:SetCode(EVENT_CHAIN_SOLVED)
+		e2:SetOperation(function() e1:Reset() end)
+		e2:SetReset(RESET_CHAIN)
+		Duel.RegisterEffect(e2,tp)
+	end
 end
-	--If it ever happened
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.filter,1,nil,1-tp)
-end
-	--Send 3 cards from opponent's deck to GY
-function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_CARD,0,id)
+function s.mill3(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_CARD,1-tp,id)
 	Duel.DiscardDeck(1-tp,3,REASON_EFFECT)
 end

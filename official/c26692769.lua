@@ -38,7 +38,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_THE_PHANTOM_KNIGHTS,SET_PHANTOM_KNIGHTS}
 function s.tgfilter(c,tp)
-	return c:IsSetCard(SET_THE_PHANTOM_KNIGHTS) and c:IsMonster() and c:IsAbleToGrave() 
+	return c:IsSetCard(SET_THE_PHANTOM_KNIGHTS) and c:IsMonster() and c:IsAbleToGrave()
 		and Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK,0,1,c)
 end
 function s.setfilter(c)

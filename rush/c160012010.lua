@@ -16,7 +16,7 @@ function s.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_NORMAL)
 end
 function s.filter2(c,tc)
-	return c:IsFaceup() and c:IsType(TYPE_EQUIP) and c:IsSpell() and c:GetEquipTarget()==tc
+	return c:IsFaceup() and c:IsEquipSpell() and c:GetEquipTarget()==tc
 end
 function s.val(e,c)
 	local tp=e:GetHandler():GetControler()

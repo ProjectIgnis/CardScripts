@@ -28,7 +28,7 @@ s.listed_series={SET_WARRIOR,SET_SYNCHRON,SET_STARDUST}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	for tc in eg:Iter() do
 		if tc:IsType(TYPE_SYNCHRO) then
-			Duel.RegisterFlagEffect(tc:GetControler(),id,RESET_PHASE+PHASE_END,0,1)
+			Duel.RegisterFlagEffect(tc:GetControler(),id,RESET_PHASE|PHASE_END,0,1)
 		end
 	end
 end
@@ -56,7 +56,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_EXTRA_ATTACK)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		tc:RegisterEffect(e1)
 		if not s.archetypetest(tc) then return end
 		if Duel.IsExistingMatchingCard(s.atkfilter,tp,LOCATION_GRAVE,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
@@ -65,7 +65,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.HintSelection(atkc,true)
 			--Gain ATK equal to the ATK of the Synchro monster
 			Duel.BreakEffect()
-			tc:UpdateAttack(atkc:GetAttack(),RESET_EVENT+RESETS_STANDARD,c)
+			tc:UpdateAttack(atkc:GetAttack(),RESET_EVENT|RESETS_STANDARD,c)
 		end
 	end
 end

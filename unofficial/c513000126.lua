@@ -36,7 +36,7 @@ function s.arcanareg(c,coin)
 	e1:SetCategory(CATEGORY_CONTROL)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_ADJUST)
-	e1:SetRange(LOCATION_MZONE) 
+	e1:SetRange(LOCATION_MZONE)
 	e1:SetOperation(s.ctop)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e1)
@@ -81,7 +81,7 @@ function s.ctrlop(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(1-tp,LOCATION_MZONE)
     	if ft>=0 then
         	Duel.GetControl(eg,1-tp)
-    	else 
+    	else
         	Duel.Destroy(eg,REASON_EFFECT)
     	end
 end

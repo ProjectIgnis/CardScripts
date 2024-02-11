@@ -21,12 +21,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.filter(c,e,tp)
-	return c:GetLevel()<4 and c:HasLevel() and c:IsAttackPos() 
+	return c:GetLevel()<4 and c:HasLevel() and c:IsAttackPos()
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,c:GetCode(),0,0x21,0,0,1,c:GetRace(),c:GetAttribute())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:IsHasType(EFFECT_TYPE_ACTIVATE) 
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:IsHasType(EFFECT_TYPE_ACTIVATE)
 		and Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTACK)
 	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil,e,tp)

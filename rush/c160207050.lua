@@ -41,7 +41,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		e1:SetValue(1000)
 		tc:RegisterEffect(e1)
 		if tc:IsType(TYPE_MAXIMUM) then
@@ -51,9 +51,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-			e2:SetValue(aux.indoval)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e2:SetValue(s.efilter)
+			e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 			tc:RegisterEffectRush(e2)
 		end
 	end
+end
+function s.efilter(e,te)
+	return te:GetOwnerPlayer()~=e:GetOwnerPlayer()
 end

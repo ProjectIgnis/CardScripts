@@ -27,8 +27,8 @@ function s.condition(e,tp,eg,ev,ep,re,r,rp)
 	local rr=not e1 and e2
 	local ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_DAMAGE)
 	if ex and (cp==tp or cp==PLAYER_ALL) and not rd
-		and not Duel.IsPlayerAffectedByEffect(tp,EFFECT_NO_EFFECT_DAMAGE) and lp<=cv then 
-		return true 
+		and not Duel.IsPlayerAffectedByEffect(tp,EFFECT_NO_EFFECT_DAMAGE) and lp<=cv then
+		return true
 	end
 	ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_RECOVER)
 	return ex and (cp==tp or cp==PLAYER_ALL) and rr

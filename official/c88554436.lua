@@ -1,5 +1,5 @@
 --破械神シュヤーマ
---Unchained Soul Shyama
+--Unchained Soul of Shyama
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -48,7 +48,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.desfilter(c,tp)
-	return (c:IsFacedown() or (c:IsFaceup() and c:IsRace(RACE_FIEND))) and Duel.GetMZoneCount(tp,c)>0
+	return (c:IsFacedown() or (c:IsFaceup() and c:IsMonster() and c:IsRace(RACE_FIEND))) and Duel.GetMZoneCount(tp,c)>0
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()

@@ -1,5 +1,5 @@
 -- 鉄獣式強襲機動兵装改＂ＢｕｃｅｐｈａｌｕｓⅡ＂
--- Tri-Brigade Arms "Bucephalus II"
+-- Tri-Brigade Arms Bucephalus II
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -55,8 +55,7 @@ function s.sucop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToRemove()
-		and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,nil) end
+	if chk==0 then return c:IsAbleToRemove() end
 	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,nil)
 	g:AddCard(c)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,PLAYER_ALL,LOCATION_ONFIELD)

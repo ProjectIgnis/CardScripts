@@ -1,13 +1,12 @@
 --スプリガンズ・シップ エクスブロウラー
 --Springans Ship - Exblowrer
 --Scripted by DyXel
-
 local s,id=GetID()
 function s.initial_effect(c)
+	c:EnableReviveLimit()
 	--Xyz Summon
 	Xyz.AddProcedure(c,nil,8,2,nil,nil,99)
-	c:EnableReviveLimit()
-	--Plus sign destroy
+	--Destroy cards adjacent to the selected zone
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetCategory(CATEGORY_DESTROY)
@@ -23,8 +22,8 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_REMOVE)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetHintTiming(0,TIMING_MAIN_END+TIMING_BATTLE_START+TIMING_BATTLE_END)
 	e2:SetRange(LOCATION_MZONE)
+	e2:SetHintTiming(0,TIMING_MAIN_END+TIMING_BATTLE_START+TIMING_BATTLE_END)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(s.bancon)
 	e2:SetTarget(s.bantg)
@@ -85,7 +84,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_ONFIELD,nil)
 	if chk==0 then return e:GetHandler():GetOverlayCount()>0 and #g>0 end
 	local filter=0
-	for oc in aux.Next(g) do
+	for oc in g:Iter() do
 		filter=filter|adjzone(oc:GetLocation(),oc:GetSequence())
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))
@@ -99,7 +98,7 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=groupfrombit(e:GetLabel()>>16,1-tp)
-	if #g==0 or c:GetOverlayCount()==0 or not c:RemoveOverlayCard(tp,1,#g,REASON_EFFECT) then return end
+	if #g==0 or c:GetOverlayCount()==0 or c:RemoveOverlayCard(tp,1,#g,REASON_EFFECT)<0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local sg=g:Select(tp,1,#Duel.GetOperatedGroup(),false)
 	if #sg>0 then
@@ -108,7 +107,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.bancon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
-	return not e:GetHandler():IsStatus(STATUS_CHAINING) and Duel.GetTurnPlayer()~=tp
+	return not e:GetHandler():IsStatus(STATUS_CHAINING) and Duel.IsTurnPlayer(1-tp)
 		and (Duel.IsMainPhase() or Duel.IsBattlePhase())
 end
 function s.bantg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -121,7 +120,7 @@ function s.banop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		e1:SetLabelObject(c)
 		e1:SetCountLimit(1)
 		e1:SetOperation(s.retop)
@@ -129,5 +128,5 @@ function s.banop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
-    Duel.ReturnToField(e:GetLabelObject())
+	Duel.ReturnToField(e:GetLabelObject())
 end

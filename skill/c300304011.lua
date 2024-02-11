@@ -19,14 +19,14 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,tp,id)
 	--OPD Register
 	Duel.RegisterFlagEffect(ep,id,0,0,0)
-	--Send 1 "LV" monster you control 
+	--Send 1 "LV" monster you control
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_MZONE,0,1,1,nil,e,tp,class)
 	if Duel.SendtoGrave(g,REASON_COST)>0 and g:GetFirst():IsLocation(LOCATION_GRAVE) then
 		local code=g:GetFirst():GetOriginalCode()
 		local class=Duel.GetMetatable(code)
 		if class==nil or class.listed_names==nil then return end
-		--Special Summon monster listed in sent monster's text as if it were Summoned by the effect of that monster   
+		--Special Summon monster listed in sent monster's text as if it were Summoned by the effect of that monster
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,class,e,tp)
 		local tc=sg:GetFirst()

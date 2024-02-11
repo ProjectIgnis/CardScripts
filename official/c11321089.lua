@@ -56,7 +56,7 @@ function s.matfilter(c,fc,sub,sub2,mg,sg,tp,contact,sumtype)
 	return true
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION) and re and re:IsActiveType(TYPE_SPELL)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION) and re and re:IsSpellEffect()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local hc,fc=table.unpack(e:GetLabelObject())
@@ -70,10 +70,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 	local hc,fc=table.unpack(e:GetLabelObject())
 	if Duel.Draw(p,hc,REASON_EFFECT)==hc then
+		local g=Duel.GetMatchingGroup(nil,tp,0,LOCATION_ONFIELD,nil)
+		if #g<fc then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-		local g=Duel.SelectMatchingCard(tp,nil,tp,0,LOCATION_ONFIELD,fc,fc,nil)
-		if #g>0 then
-			Duel.Destroy(g,REASON_EFFECT)
+		local dg=g:Select(tp,fc,fc,nil)
+		if #dg>0 then
+			Duel.Destroy(dg,REASON_EFFECT)
 		end
 	end
 end

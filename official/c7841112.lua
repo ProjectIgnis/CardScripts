@@ -2,10 +2,10 @@
 --Majestic Star Dragon
 local s,id=GetID()
 function s.initial_effect(c)
-	--synchro summon
 	c:EnableReviveLimit()
+	--Synchro Summon Procedure
 	Synchro.AddMajesticProcedure(c,aux.FilterBoolFunction(Card.IsCode,21159309),true,aux.FilterBoolFunction(Card.IsCode,CARD_STARDUST_DRAGON),true,Synchro.NonTuner(nil),false)
-	--Negate
+	--Negate the activation of an opponent's card or effect
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
@@ -14,18 +14,18 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(s.negcon)
-	e1:SetCost(s.negcost)
+	e1:SetCost(aux.selfreleasecost)
 	e1:SetTarget(s.negtg)
 	e1:SetOperation(s.negop)
 	c:RegisterEffect(e1)
-	--negate
+	--Negate the effects of a monster the opponent controls
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DISABLE)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetCountLimit(1)
 	e2:SetRange(LOCATION_MZONE)
+	e2:SetCountLimit(1)
 	e2:SetTarget(s.distg)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
@@ -36,19 +36,19 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetOperation(s.alop)
 	c:RegisterEffect(e3)
-	--to extra & Special summon
+	--Return itself to the Extra Deck and Special Summon 1 "Stardust Dragon"
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,2))
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e4:SetCategory(CATEGORY_TODECK+CATEGORY_SPECIAL_SUMMON)
-	e4:SetRange(LOCATION_MZONE)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e4:SetCountLimit(1)
 	e4:SetCode(EVENT_PHASE+PHASE_END)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetCountLimit(1)
 	e4:SetTarget(s.sptg)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
-	--double tuner check
+	--Multiple tuners
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE)
 	e5:SetCode(EFFECT_MATERIAL_CHECK)
@@ -56,26 +56,22 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.material={21159309,CARD_STARDUST_DRAGON}
-s.listed_names={21159309,CARD_STARDUST_DRAGON}
+s.listed_names={21159309,CARD_STARDUST_DRAGON} --Majestic Dragon
 s.synchro_nt_required=1
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and ep==1-tp and Duel.IsChainNegatable(ev)
 end
-function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
-end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
-	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)
+	local g=Duel.GetMatchingGroup(nil,tp,0,LOCATION_ONFIELD,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateActivation(ev) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:GetHandler():IsRelateToEffect(re) then
 		Duel.SendtoGrave(eg,REASON_EFFECT)
 	end
-	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)
+	local g=Duel.GetMatchingGroup(nil,tp,0,LOCATION_ONFIELD,nil)
 	Duel.Destroy(g,REASON_EFFECT)
 end
 function s.disfilter(c)
@@ -95,12 +91,12 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		tc:RegisterEffect(e2)
 		Duel.MajesticCopy(c,tc)
 	end
@@ -114,7 +110,7 @@ function s.alop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetTargetRange(1,1)
 		e1:SetValue(s.aclimit)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		e:GetHandler():RegisterEffect(e1)
 	end
 end
@@ -146,8 +142,8 @@ function s.valcheck(e,c)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-		e1:SetCode(21142671)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_PHASE+PHASE_END)
+		e1:SetCode(EFFECT_MULTIPLE_TUNERS)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD&~(RESET_TOFIELD)|RESET_PHASE|PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end

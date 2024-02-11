@@ -3,7 +3,7 @@
 --Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--deck check
+	--Excavate cards from your Deck, up to the number of "Valkyrie" monsters you control
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_DECKDES)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special Summon 1 "valkyrie" monster from your Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -25,10 +25,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x122}
+s.listed_series={SET_VALKYRIE}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0x122),tp,LOCATION_MZONE,0,e:GetHandler())
+		local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,SET_VALKYRIE),tp,LOCATION_MZONE,0,e:GetHandler())
 		if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<ct then return false end
 		local g=Duel.GetDecktopGroup(tp,ct)
 		return g:FilterCount(Card.IsAbleToHand,nil)>0
@@ -36,10 +36,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,LOCATION_DECK)
 end
 function s.thfilter(c)
-	return c:GetType()==TYPE_SPELL or c:GetType()==TYPE_TRAP
+	return c:IsNormalSpell() or c:IsNormalTrap()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0x122),tp,LOCATION_MZONE,0,e:GetHandler())
+	local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,SET_VALKYRIE),tp,LOCATION_MZONE,0,e:GetHandler())
 	Duel.ConfirmDecktop(tp,ct)
 	local g=Duel.GetDecktopGroup(tp,ct)
 	if #g>0 then
@@ -55,13 +55,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 					Duel.SendtoGrave(sg,REASON_RULE)
 				end
 			g:Sub(sg)
-			Duel.SendtoGrave(g,REASON_EFFECT+REASON_REVEAL)
+			Duel.SendtoGrave(g,REASON_EFFECT|REASON_EXCAVATE)
 		end
 		Duel.ShuffleDeck(tp)
 	end
 end
 function s.spfilter1(c,e,tp)
-	return c:IsSetCard(0x122) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_VALKYRIE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spcond(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE) and e:GetHandler():IsReason(REASON_BATTLE)

@@ -1,16 +1,17 @@
---火車
-Duel.LoadScript("c419.lua")
+--火車 (Manga)
+--Kasha (Manga)
+Duel.EnableUnofficialRace(RACE_YOKAI)
 local s,id=GetID()
 function s.initial_effect(c)
 	--todeck
-	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(52512994,0))
-	e3:SetCategory(CATEGORY_TODECK)
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e3:SetTarget(s.tdtg)
-	e3:SetOperation(s.tdop)
-	c:RegisterEffect(e3)
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_TODECK)
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e1:SetTarget(s.tdtg)
+	e1:SetOperation(s.tdop)
+	c:RegisterEffect(e1)
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -30,7 +31,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(rt*1000)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 	end
 end

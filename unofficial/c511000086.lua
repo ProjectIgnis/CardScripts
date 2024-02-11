@@ -30,20 +30,21 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) then
-		local tg=false
+	if tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) then
+		local toGrave=false
 		if tc:IsStatus(STATUS_LEAVE_CONFIRMED) then
-			tg=true
+			toGrave=true
 		end
 		local loc=tc:GetLocation()
 		if tc:IsType(TYPE_PENDULUM) then loc=LOCATION_PZONE end
 		if tc:IsType(TYPE_FIELD) then loc=LOCATION_FZONE end
 		if not Duel.MoveToField(tc,tp,tp,loc,POS_FACEUP,true) then return end
+		Duel.ClearTargetCard()
 		for ttc in tc:GetCardTarget():Iter() do
 			tc:CancelCardTarget(ttc)
 		end
 		tc:ResetEffect(RESET_TOFIELD,RESET_EVENT)
-		if tg then
+		if toGrave then
 			tc:CancelToGrave(false)
 		end
 		Duel.Hint(HINT_CARD,0,tc:GetCode())

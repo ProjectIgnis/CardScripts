@@ -51,7 +51,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.disop)
 	c:RegisterEffect(e4)
 end
-s.listed_names={16494704}
+s.listed_names={16494704} --Odd-Eyes Advent
 s.listed_series={SET_ODD_EYES}
 function s.splimit(e,se,sp,st)
 	return (st&SUMMON_TYPE_RITUAL)==SUMMON_TYPE_RITUAL or ((st&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
@@ -103,16 +103,19 @@ function s.spfilter(c,e,tp,mc)
 		and Duel.GetLocationCountFromEx(tp,tp,mc,c)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.CheckPendulumZones(tp) then return end
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
-	local sg=Group.CreateGroup()
-	if c:IsSummonType(SUMMON_TYPE_RITUAL) then sg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_EXTRA,0,nil,e,tp,c) end
-	if Duel.MoveToField(c,tp,tp,LOCATION_PZONE,POS_FACEUP,true) and Duel.NegateEffect(ev)
-		and #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
-		Duel.BreakEffect()
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local sc=sg:Select(tp,1,1,nil):GetFirst()
-		Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)
+	if not c:IsRelateToEffect(e) or c:IsImmuneToEffect(e) then return end
+	if not Duel.CheckPendulumZones(tp) then
+		Duel.SendtoGrave(c,REASON_RULE,nil,PLAYER_NONE)
+	else
+		local sg=Group.CreateGroup()
+		if c:IsSummonType(SUMMON_TYPE_RITUAL) then sg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_EXTRA,0,nil,e,tp,c) end
+		if Duel.MoveToField(c,tp,tp,LOCATION_PZONE,POS_FACEUP,true) and Duel.NegateEffect(ev)
+			and #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+			Duel.BreakEffect()
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+			local sc=sg:Select(tp,1,1,nil):GetFirst()
+			Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)
+		end
 	end
 end

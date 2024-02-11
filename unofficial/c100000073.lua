@@ -1,11 +1,12 @@
 --黒魔族復活の棺 (Anime)
 --Dark Renewal (Anime)
---fixed by Larry126
+--Fixed by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOGRAVE)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_TOGRAVE+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetTarget(s.target)
@@ -30,8 +31,8 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg and eg:IsExists(s.filter,1,nil,tp)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.SetTargetCard(eg)
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,2,0,LOCATION_MZONE)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,2,PLAYER_ALL,LOCATION_MZONE)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
@@ -40,7 +41,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local tg=Duel.SelectMatchingCard(tp,Card.IsAbleToGrave,tp,LOCATION_MZONE,0,1,1,nil)
 		local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_GRAVE,0,nil,e,tp)
-		if Duel.SendtoGrave(tg+tc,REASON_EFFECT)>0 and #g>0 then
+		if Duel.SendtoGrave(tg+tc,REASON_EFFECT)==2 and Duel.GetOperatedGroup():IsExists(Card.IsLocation,2,nil,LOCATION_GRAVE)
+			and #g>0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local sg=g:Select(tp,1,1,nil)
 			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)

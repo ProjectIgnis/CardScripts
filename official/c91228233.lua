@@ -67,7 +67,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
 --Search a Field Spell
-function s.thcon(e,tp,eg,ep,ev,re,r,rp) 
+function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFlagEffect(tp,id)>0
 end
 function s.thfilter(c)

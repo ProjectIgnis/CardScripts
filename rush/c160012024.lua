@@ -41,7 +41,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(atk)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		g:GetFirst():RegisterEffectRush(e1)
 	end
 	--Prevent monsters from attacking
@@ -50,6 +50,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCode(EFFECT_CANNOT_ATTACK)
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetTarget(function(_,c) return not c:IsRace(RACE_CELESTIALWARRIOR|RACE_WARRIOR|RACE_FAIRY) end)
-	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 end

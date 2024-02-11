@@ -35,7 +35,7 @@ function s.filter(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(Card.IsMonster,tp,LOCATION_GRAVE,0,1,nil)
-		and not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil) 
+		and not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,500) end
@@ -48,7 +48,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
-	Duel.PayLPCost(tp,500) 
+	Duel.PayLPCost(tp,500)
 	--Effect
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_APPLYTO)
 	local g=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_MZONE,0,1,1,nil)
@@ -75,7 +75,7 @@ function s.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation2(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
-	Duel.PayLPCost(tp,500) 
+	Duel.PayLPCost(tp,500)
 	--Effect
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.setfilter),tp,LOCATION_GRAVE,0,1,1,nil)

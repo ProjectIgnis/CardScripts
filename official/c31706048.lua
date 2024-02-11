@@ -13,9 +13,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x104,0xfe}
+s.listed_series={SET_KRAWLER,SET_WORLD_LEGACY}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then 
+	if chk==0 then
 		if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<5 then return false end
 		local g=Duel.GetDecktopGroup(tp,5)
 		local result=g:FilterCount(Card.IsAbleToHand,nil)>0
@@ -23,7 +23,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.filter(c)
-	return (c:IsMonster() and c:IsSetCard(0x104)) or c:IsSetCard(0xfe)
+	return (c:IsMonster() and c:IsSetCard(SET_KRAWLER)) or c:IsSetCard(SET_WORLD_LEGACY)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsPlayerCanDiscardDeck(tp,5) then return end
@@ -34,16 +34,17 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if g:IsExists(s.filter,1,nil) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 			local sg=g:FilterSelect(tp,s.filter,1,1,nil)
-			if sg:GetFirst():IsAbleToHand() then 
+			if sg:GetFirst():IsAbleToHand() then
 				Duel.SendtoHand(sg,nil,REASON_EFFECT)
 				Duel.ConfirmCards(1-tp,sg)
 				Duel.ShuffleHand(tp)
 				g:Sub(sg)
-				Duel.SendtoGrave(g,REASON_EFFECT+REASON_REVEAL)
-			else Duel.SendtoGrave(g,REASON_EFFECT+REASON_REVEAL)
+				Duel.SendtoGrave(g,REASON_EFFECT|REASON_EXCAVATE)
+			else
+				Duel.SendtoGrave(g,REASON_EFFECT|REASON_EXCAVATE)
 			end
 		else
-			Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT+REASON_REVEAL)
+			Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT|REASON_EXCAVATE)
 			Duel.ShuffleDeck(tp)
 		end
 	end
@@ -54,7 +55,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	--lizard check
 	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)

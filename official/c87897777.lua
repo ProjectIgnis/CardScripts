@@ -107,7 +107,7 @@ function s.sspop(e,tp,eg,ep,ev,re,r,rp)
 	if dc<2 or dc>5 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=g:Select(tp,1,1,nil):GetFirst()
-	if tc then 
+	if tc then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP,(1<<tc:GetSequence())&ZONES_MMZ)
 	end
 end

@@ -1,5 +1,5 @@
---Cardian - Hagi ni Inoshishi
-Duel.LoadScript("c419.lua")
+--花札衛－萩に猪－ (Anime)
+--Flower Cardian Clover with Boar (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -13,20 +13,20 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_CARDIAN)
 end
-function s.filter(c,ft,tp)
-	local re=c:GetReasonEffect()
-	return (ft>0 or c:GetSequence()<5) and c:GetLevel()==7 and c:IsSetCard(0xe6)
-		and (not c:IsSummonType(SUMMON_TYPE_SPECIAL) or (not re or not re:GetHandler():IsSetCard(0xe6) or not re:GetHandler():IsMonster()))
+function s.filter(c)
+    local re=c:GetReasonEffect()
+    return c:IsLevel(7) and c:IsSetCard(SET_FLOWER_CARDIAN) and (not c:IsSummonType(SUMMON_TYPE_SPECIAL)
+        or (not re or not re:GetHandler():IsSetCard(SET_FLOWER_CARDIAN) or not re:GetHandler():IsMonster()))
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if chk==0 then return ft>-1 and Duel.CheckReleaseGroupCost(tp,s.filter,1,false,nil,nil,ft,tp) end
-	local g=Duel.SelectReleaseGroupCost(tp,s.filter,1,1,false,nil,nil,ft,tp)
-	Duel.Release(g,REASON_COST)
+    if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.filter,1,false,aux.ReleaseCheckMMZ,nil) end
+    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
+    local g=Duel.SelectReleaseGroupCost(tp,s.filter,1,1,false,aux.ReleaseCheckMMZ,nil)
+    Duel.Release(g,REASON_COST)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1 and c:IsCanBeSpecialSummoned(e,0,tp,false,false) 
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsPlayerCanDraw(tp,1) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
@@ -40,7 +40,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Draw(tp,1,REASON_EFFECT)
 		if tc then
 			Duel.ConfirmCards(1-tp,tc)
-			if Cardian.check(tc,tp,eg,ep,ev,re,r,rp) then
+			if Cardian.CheckSpCondition(tc) then
 				Duel.ShuffleHand(tp)
 			else
 				Duel.SendtoGrave(tc,REASON_EFFECT)

@@ -2,7 +2,7 @@
 --Sylvan Hermitree
 local s,id=GetID()
 function s.initial_effect(c)
-	--exacavate and draw
+	--Excavate the top card of your Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DRAW+CATEGORY_DECKDES)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--sort decktop
+	--Sort up to 3 cards from the top of your Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
@@ -31,7 +31,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	if tc:IsRace(RACE_PLANT) then
 		Duel.DisableShuffleCheck()
-		Duel.SendtoGrave(tc,REASON_EFFECT+REASON_REVEAL)
+		Duel.SendtoGrave(tc,REASON_EFFECT|REASON_EXCAVATE)
 		local ccount=Duel.GetOperatedGroup():FilterCount(Card.IsLocation,nil,LOCATION_GRAVE)
 		if ccount>0 then
 			Duel.Draw(tp,1,REASON_EFFECT)
@@ -42,7 +42,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.sdcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_DECK) and c:IsReason(REASON_REVEAL)
+	return c:IsPreviousLocation(LOCATION_DECK) and c:IsReason(REASON_EXCAVATE)
 end
 function s.sdop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=math.min(Duel.GetFieldGroupCount(tp,LOCATION_DECK,0),3)

@@ -41,7 +41,7 @@ function s.filter(c)
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) 
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,1)
 		and Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,3,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE,0,3,3,nil)

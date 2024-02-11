@@ -1,34 +1,21 @@
 --煉獄の零門
 --Zero Gate of the Void
-Duel.LoadScript("c419.lua")
+Duel.EnableUnofficialProc(PROC_EVENT_LP0)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Return
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL+EFFECT_FLAG_DELAY)
-	e1:SetCode(511002521)
+	e1:SetCode(EVENT_LP0)
 	e1:SetRange(LOCATION_GRAVE)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	e1:SetValue(LOCATION_SZONE)
 	c:RegisterEffect(e1)
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e2:SetTargetRange(1,0)
-	e2:SetCode(id)
-	e2:SetLabel(0)
-	e2:SetLabelObject(e1)
-	e2:SetCondition(s.econ)
-	Duel.RegisterEffect(e2,0)
-	local e3=e2:Clone()
-	e3:SetLabel(1)
-	Duel.RegisterEffect(e3,1)
-end
-function s.econ(e)
-	return e:GetLabelObject():IsActivatable(e:GetLabel())
+	aux.LP0ActivationValidity(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_HAND+LOCATION_ONFIELD,0)<=0
@@ -41,7 +28,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 			local op=te:GetOperation()
 			if not op or op(e,c) then return false end
 		end
-		return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
+		return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 			and Duel.IsPlayerCanSpecialSummonMonster(tp,81020646,0,0x2021,3000,3000,8,RACE_DRAGON,ATTRIBUTE_DARK)
 	end
 	local e1=Effect.CreateEffect(c)

@@ -35,27 +35,31 @@ function s.turncount(e,tp,eg,ep,ev,re,r,rp)
 	if tp~=Duel.GetTurnPlayer() then return end
 	e:GetHandler():AddCounter(0x1105,1)
 end
-function s.spfilter(c,e,tp)
-	return c:IsSummonableCard() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+function s.cfilter(c,p,ct)
+	return Duel.GetMZoneCount(p,c)>=ct
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local ct=c:GetCounter(0x1105)
-	if chk==0 then return c:IsReleasable() and Duel.CheckReleaseGroupCost(tp,nil,1,false,nil,nil) 
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>=ct and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,ct,nil,e,tp) end
-	local g=Duel.SelectReleaseGroupCost(tp,nil,1,1,false,nil,nil)
+	if chk==0 then return c:IsReleasable()
+		and Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil,tp,ct) end
+	local g=Duel.SelectReleaseGroupCost(tp,s.cfilter,1,1,false,nil,nil,tp,ct)
 	Duel.Release(g+c,REASON_COST)
 	c:RegisterFlagEffect(id,RESET_CHAIN,0,1,ct)
 end
+function s.spfilter(c,e,tp)
+	return c:IsSummonableCard() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
+	local ct=e:GetHandler():GetCounter(0x1105)
+	if chk==0 then return ct>0 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,ct,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,e:GetHandler():GetFlagEffectLabel(id),tp,LOCATION_HAND)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=e:GetHandler():GetFlagEffectLabel(id)
-	if not ct then return end
+	if not ct or Duel.GetLocationCount(tp,LOCATION_MZONE)<ct then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND,0,ct,ct,nil,e,tp)
-	if #g<=0 or #g>Duel.GetLocationCount(tp,LOCATION_MZONE) then return end
+	if #g==0 then return end
 	Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 end

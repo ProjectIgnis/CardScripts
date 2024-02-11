@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetHintTiming(TIMING_DAMAGE_STEP,TIMING_MAIN_END+TIMINGS_CHECK_MONSTER_E+TIMING_DAMAGE_STEP)
+	e3:SetHintTiming(TIMING_DAMAGE_STEP,TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E|TIMING_DAMAGE_STEP)
 	e3:SetCountLimit(1,{id,1})
 	e3:SetCost(s.opccost)
 	e3:SetTarget(s.vstg)
@@ -98,7 +98,7 @@ function s.vsop(e,tp,eg,ep,ev,re,r,rp)
 		tc:UpdateDefense(-500,RESET_EVENT|RESETS_STANDARD,c)
 	elseif op==2 then
 		local g2=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsDefenseAbove,0),tp,LOCATION_MZONE,LOCATION_MZONE,nil):GetMinGroup(Card.GetDefense)
-		if #g2==0 then return end
+		if not g2 or #g2==0 then return end
 		if #g2>1 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 			g2=g2:FilterSelect(tp,Card.IsAbleToHand,1,1,nil)

@@ -48,8 +48,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		if #ssg>0 then
 			Duel.BreakEffect()
 			local dg=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_MZONE,nil)
-			if Duel.SpecialSummon(ssg,0,tp,tp,false,false,POS_FACEUP_ATTACK)>0 
-				and Duel.GetMatchingGroupCount(Card.IsMonster,tp,LOCATION_GRAVE,0,nil)==0 
+			if Duel.SpecialSummon(ssg,0,tp,tp,false,false,POS_FACEUP_ATTACK)>0
+				and Duel.GetMatchingGroupCount(Card.IsMonster,tp,LOCATION_GRAVE,0,nil)==0
 				and #dg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 				--Destroy 1 face-up Level 8 or lower monster on your opponent's field
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)

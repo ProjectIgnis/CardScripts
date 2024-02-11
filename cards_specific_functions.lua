@@ -496,7 +496,7 @@ function Auxiliary.IceBarrierDiscardCost(f,discard,minc,maxc)
 		if chk==0 then return Duel.IsExistingMatchingCard(fliter,tp,LOCATION_HAND,0,minc,nil) or Duel.IsExistingMatchingCard(Auxiliary.IceBarrierDiscardFilter,tp,LOCATION_GRAVE,0,1,nil,tp) end
 		local g=Duel.GetMatchingGroup(fliter,tp,LOCATION_HAND,0,nil)
 		g:Merge(Duel.GetMatchingGroup(Auxiliary.IceBarrierDiscardFilter,tp,LOCATION_GRAVE,0,nil,tp))
-		local sg=Auxiliary.SelectUnselectGroup(g,e,tp,minc,maxc,rescon,1,tp,Auxiliary.Stringid(CARD_MIRRORMASTER_ICEBARRIER,1))
+		local sg=Auxiliary.SelectUnselectGroup(g,e,tp,minc,maxc,rescon,1,tp,Auxiliary.Stringid(CARD_REVEALER_ICEBARRIER,1))
 		local rm=0
 		if sg:IsExists(Card.IsHasEffect,1,nil,EFFECT_ICEBARRIER_REPLACE,tp) then
 			local te=sg:Filter(Card.IsHasEffect,nil,EFFECT_ICEBARRIER_REPLACE)
@@ -516,12 +516,12 @@ function Auxiliary.IceBarrierDiscardCost(f,discard,minc,maxc)
 	end
 end
 
---Shortcut for "Security Force" archetype's "facing"
---(card in the same column as a security force)
-function Auxiliary.SecurityTarget(e,_c)
-	return _c:GetColumnGroup():IsExists(function(c,tp)
-											return c:IsControler(tp) and c:IsFaceup() and c:IsMonster() and c:IsSetCard(SET_S_FORCE)
-										 end,1,_c,e:GetHandlerPlayer())
+--Function to be used as the target for "S-Force" effects that apply to monsters in the same column as your "S-Force" monsters
+function Auxiliary.SForceTarget(e,cc)
+	local function filter(c,tp)
+		return c:IsControler(tp) and c:IsFaceup() and c:IsMonster() and c:IsSetCard(SET_S_FORCE)
+	end
+	return cc:GetColumnGroup():IsExists(filter,1,cc,e:GetHandlerPlayer())
 end
 
 -- Description: Checks for whether the equip card still has the equip effect once it reaches SZONE
@@ -692,18 +692,18 @@ function Auxiliary.AddAmazementQuickEquipEffect(c,id)
 	e2:SetOperation(AA.qeqeop)
 	c:RegisterEffect(e2)
 end
--- Description: cost for "Security Force" cards that banish a card from the hand, needed for "Security Force Chase" from LIOV
-local SecurityForce={}
-function SecurityForce.CostFilter(c)
+-- Cost for "S-Force" cards that banish a card from the hand, needed for "S-Force Chase" (55049722) from LIOV
+local SForce={}
+function SForce.CostFilter(c)
 	return c:IsSetCard(SET_S_FORCE) and c:IsAbleToRemoveAsCost()
 end
-function SecurityForce.Cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(SecurityForce.CostFilter,tp,LOCATION_HAND,0,1,nil) end
+function SForce.Cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(SForce.CostFilter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local rg=Duel.SelectMatchingCard(tp,SecurityForce.CostFilter,tp,LOCATION_HAND,0,1,1,nil)
+	local rg=Duel.SelectMatchingCard(tp,SForce.CostFilter,tp,LOCATION_HAND,0,1,1,nil)
 	Duel.Remove(rg,POS_FACEUP,REASON_COST)
 end
-Auxiliary.SecurityForceCost=Auxiliary.CostWithReplace(SecurityForce.Cost,CARD_SECURITYFORCE_CHASE)
+Auxiliary.SForceCost=Auxiliary.CostWithReplace(SForce.Cost,CARD_SFORCE_CHASE)
 --Standard functions for the "Ursarctic" Special Summoning Quick Effects
 local Ursarctic={}
 function Ursarctic.spcfilter(c)
@@ -746,7 +746,7 @@ function Auxiliary.CreateUrsarcticSpsummon(c,id)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetHintTiming(0,TIMING_MAIN_END)
 	e1:SetCountLimit(1,id)
-	e1:SetCondition(Duel.IsMainPhase)
+	e1:SetCondition(function() return Duel.IsMainPhase() end)
 	e1:SetCost(Auxiliary.CostWithReplace(Ursarctic.spcost,CARD_URSARCTIC_BIG_DIPPER))
 	e1:SetTarget(Ursarctic.summontarget)
 	e1:SetOperation(Ursarctic.summonoperation(id))
@@ -1081,7 +1081,7 @@ Effect.CreateVernalizerSPEffect=(function()
 		e1:SetCode(EFFECT_CANNOT_ACTIVATE)
 		e1:SetTargetRange(1,0)
 		e1:SetValue(function(e,re) return re:IsMonsterEffect() and re:GetHandler():IsAttributeExcept(ATTRIBUTE_EARTH) end)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 	end
 
@@ -1092,7 +1092,7 @@ Effect.CreateVernalizerSPEffect=(function()
 		e1:SetType(EFFECT_TYPE_IGNITION)
 		e1:SetRange(LOCATION_HAND)
 		e1:SetCountLimit(1,{id,desc})
-		e1:SetCost(aux.CostWithReplace(verncost,CARD_VERNALIZER_FLOWER_CROWN))
+		e1:SetCost(aux.CostWithReplace(verncost,CARD_VERNUSYLPH_COROLLA))
 		e1:SetTarget(function(e,tp,eg,ep,ev,re,r,rp,chk)
 			if chk==0 then return uniquetg(e,tp,eg,ep,ev,re,r,rp,chk) end
 			uniquetg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -1127,7 +1127,7 @@ end
 
 -- checks if `c` can be used as cost by `tp` for "Rikka" cards that tribute Plant monsters
 function Card.IsRikkaReleasable(c,tp)
-	return c:IsRace(RACE_PLANT) or (c:IsControler(1-tp) and c:IsHasEffect(CARD_RIKKA_ARRIVAL))
+	return c:IsRace(RACE_PLANT) or (c:IsControler(1-tp) and c:IsHasEffect(CARD_RIKKA_KONKON))
 end
 
 
@@ -1153,7 +1153,7 @@ end
 Infernoid={}
 local InfernoidInt={}
 function InfernoidInt.spfilter(c)
-	return c:IsSetCard(SET_INFERNOID) and c:IsMonster() and c:IsAbleToRemoveAsCost() 
+	return c:IsSetCard(SET_INFERNOID) and c:IsMonster() and c:IsAbleToRemoveAsCost()
 end
 function InfernoidInt.getLocations(c,tp)
 	local locations=LOCATION_HAND

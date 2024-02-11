@@ -57,7 +57,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local race,lvl,att=e:GetLabel()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND|LOCATION_EXTRA,0,1,1,nil,e,tp,race,lvl,att)
-	if #g>0 then 
+	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

@@ -33,8 +33,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local sg=dg:Select(tp,1,1,nil)
 		Duel.HintSelection(sg,true)
-		Duel.Destroy(sg,REASON_EFFECT)
-		if Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(Card.IsFaceup),tp,0,LOCATION_MZONE,1,nil)
+		if Duel.Destroy(sg,REASON_EFFECT)>0
+			and Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(Card.IsFaceup),tp,0,LOCATION_MZONE,1,nil)
 			and Duel.GetMatchingGroupCountRush(aux.FilterMaximumSideFunctionEx(Card.IsMonster),tp,LOCATION_MZONE,0,nil)==1
 			and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
@@ -45,7 +45,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetType(EFFECT_TYPE_SINGLE)
 				e1:SetCode(EFFECT_UPDATE_ATTACK)
 				e1:SetValue(-1000)
-				e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+				e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 				g:GetFirst():RegisterEffectRush(e1)
 			end
 		end

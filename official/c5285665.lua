@@ -3,13 +3,13 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--cannot special summon
+	--Cannot be Special Summoned, except by its own effect
 	local e1=Effect.CreateEffect(c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special Summon procedure
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_SPSUMMON_PROC)
@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--change code
+	--This card's name becomes "Elemental HERO Bubbleman"
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_CHANGE_CODE)
 	e3:SetValue(79979666)
 	c:RegisterEffect(e3)
-	--destroy
+	--Destroy a monster that battles with this card
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,0))
 	e4:SetCategory(CATEGORY_DESTROY)
@@ -37,6 +37,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 end
+s.listed_names={79979666,46411259} --Elemental HERO Bubbleman, Metamorphosis
 function s.spfilter(c,...)
 	return c:IsCode(...) and c:IsAbleToGraveAsCost()
 end
@@ -53,7 +54,7 @@ function s.spcon(e,c)
 	local g2=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND,0,nil,46411259)
 	local g=g1:Clone()
 	g:Merge(g2)
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1 and #g1>0 and #g2>0 
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1 and #g1>0 and #g2>0
 		and aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)

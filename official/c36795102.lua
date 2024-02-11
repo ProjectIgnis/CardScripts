@@ -1,121 +1,100 @@
 --究極宝玉獣 レインボー・ドラゴン
---Rainbow Dragon, the Zenith Crystal Beast
+--Crystal Beast Rainbow Dragon
 --Logical Nonsense
---Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
-	--Place itself into S/T zone as continuous spell
+	--Place itself in the Spell & Trap Zone as a Continuous Spell
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_TO_GRAVE_REDIRECT_CB)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
+	e1:SetCode(EFFECT_TO_GRAVE_REDIRECT_CB)
 	e1:SetCondition(s.repcon)
 	e1:SetOperation(s.repop)
 	c:RegisterEffect(e1)
-	--When an attack involves a "Crystal Beast", special summon from hand
+	--Special Summon this card from your hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e2:SetRange(LOCATION_HAND)
 	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
+	e2:SetRange(LOCATION_HAND)
 	e2:SetCountLimit(1,id)
-	e2:SetCondition(s.spcon)
-	e2:SetTarget(s.sptg)
-	e2:SetOperation(s.spop)
+	e2:SetCondition(s.selfspcon)
+	e2:SetTarget(s.selfsptg)
+	e2:SetOperation(s.selfspop)
 	c:RegisterEffect(e2)
-	--Special summon "Crystal Beast" monster from deck as negated, and if you do, add an "Ultimate Crystal" monster
+	--Special Summon 1 Level 4 or lower "Crystal Beast" monster from your Deck and search 1 "Ultimate Crystal" monster
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCountLimit(1,{id,1})
-	e3:SetCondition(s.thcon)
+	e3:SetCondition(function(e) return e:GetHandler():IsContinuousSpell() end)
 	e3:SetCost(aux.bfgcost)
-	e3:SetTarget(s.thtg)
-	e3:SetOperation(s.thop)
+	e3:SetTarget(s.spthtg)
+	e3:SetOperation(s.spthop)
 	c:RegisterEffect(e3)
 end
-	--Part of "Crystal Beast" archetype
-s.listed_series={0x1034,0x2034}
-	--Destroyed while face-up in monster zone
+s.listed_series={SET_CRYSTAL_BEAST,SET_ULTIMATE_CRYSTAL}
 function s.repcon(e)
 	local c=e:GetHandler()
 	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsReason(REASON_DESTROY)
 end
-	--Place itself into S/T zone as continuous spell
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
+	--Treated as a Continuous Spell
 	local e1=Effect.CreateEffect(c)
-	e1:SetCode(EFFECT_CHANGE_TYPE)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
-	e1:SetValue(TYPE_SPELL+TYPE_CONTINUOUS)
+	e1:SetCode(EFFECT_CHANGE_TYPE)
+	e1:SetValue(TYPE_SPELL|TYPE_CONTINUOUS)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD&~RESET_TURN_SET)
 	c:RegisterEffect(e1)
 	Duel.RaiseEvent(c,EVENT_CUSTOM+47408488,e,0,tp,0,0)
 end
-	--If an attack is declared, involving a "Crystal Beast" monster
-function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetAttacker()
+function s.selfspcon(e,tp,eg,ep,ev,re,r,rp)
 	local dc=Duel.GetAttackTarget()
-	return tc:IsSetCard(0x1034) or (dc and dc:IsFaceup() and dc:IsSetCard(0x1034))
+	return Duel.GetAttacker():IsSetCard(SET_CRYSTAL_BEAST) or (dc and dc:IsFaceup() and dc:IsSetCard(SET_CRYSTAL_BEAST))
 end
-	--Activation legality
-function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.selfsptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
-	--Special summon from hand
-function s.spop(e,tp,eg,ep,ev,re,r,rp)
+function s.selfspop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
-	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
+	if c:IsRelateToEffect(e) then
+		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
+	end
 end
-	--While treated as continuous spell
-function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetType()&(TYPE_SPELL+TYPE_CONTINUOUS)==(TYPE_SPELL+TYPE_CONTINUOUS)
-end
-	--Check for "Crystal Beast" monster to special summon
-function s.ssfilter(c,e,tp)
-	return c:IsMonster() and c:IsLevelBelow(4) and c:IsSetCard(0x1034) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+function s.spfilter(c,e,tp)
+	return c:IsLevelBelow(4) and c:IsSetCard(SET_CRYSTAL_BEAST) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,c)
 end
-	--Check for "Ultimate Crystal" monster to add to hand
 function s.thfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x2034) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(SET_ULTIMATE_CRYSTAL) and c:IsAbleToHand()
 end
-	--Activation legality
-function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.spthtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.ssfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
-	--Special summon "Crystal Beast" monster from deck as negated, and if you do, add an "Ultimate Crystal" monster
-function s.thop(e,tp,eg,ep,ev,re,r,rp)
+function s.spthop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g1=Duel.SelectMatchingCard(tp,s.ssfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
-	local tc=g1:GetFirst()
-	if tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		tc:RegisterEffect(e1)
-		local e2=Effect.CreateEffect(e:GetHandler())
-		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-		tc:RegisterEffect(e2)
+	local sc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp):GetFirst()
+	if sc and Duel.SpecialSummonStep(sc,0,tp,tp,false,false,POS_FACEUP) then
+		--Negate its effects
+		sc:NegateEffects(e:GetHandler())
 	end
-	Duel.SpecialSummonComplete()
+	if Duel.SpecialSummonComplete()==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g2=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)
-	if #g2>0 then
-		Duel.SendtoHand(g2,tp,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,g2)
+	local hg=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)
+	if #hg>0 then
+		Duel.SendtoHand(hg,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,hg)
 	end
 end

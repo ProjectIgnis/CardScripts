@@ -1,9 +1,18 @@
 --Sin トゥルース・ドラゴン
+--Malefic Truth Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
+	--There can only be 1 "Malefic" monster on the field
 	c:SetUniqueOnField(1,1,aux.MaleficUniqueFilter(c),LOCATION_MZONE)
-	--special summon
+	--Special Summon condition
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
+	e0:SetValue(aux.FALSE)
+	c:RegisterEffect(e0)
+	--Special Summon itself from the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -16,35 +25,29 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--selfdes
-	local e7=Effect.CreateEffect(c)
-	e7:SetType(EFFECT_TYPE_SINGLE)
-	e7:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e7:SetRange(LOCATION_MZONE)
-	e7:SetCode(EFFECT_SELF_DESTROY)
-	e7:SetCondition(s.descon)
-	c:RegisterEffect(e7)
-	--spson
-	local e8=Effect.CreateEffect(c)
-	e8:SetType(EFFECT_TYPE_SINGLE)
-	e8:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e8:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e8:SetValue(aux.FALSE)
-	c:RegisterEffect(e8)
-	--destroy
-	local e9=Effect.CreateEffect(c)
-	e9:SetDescription(aux.Stringid(id,1))
-	e9:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e9:SetCategory(CATEGORY_DESTROY)
-	e9:SetCode(EVENT_BATTLE_DESTROYING)
-	e9:SetCondition(s.decon)
-	e9:SetTarget(s.detg)
-	e9:SetOperation(s.deop)
-	c:RegisterEffect(e9)
+	--Destroy itself if no Field Spell is face-up
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCode(EFFECT_SELF_DESTROY)
+	e2:SetCondition(s.descon)
+	c:RegisterEffect(e2)
+	--Destroy all face-up monsters your opponent controls
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(id,1))
+	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e3:SetCategory(CATEGORY_DESTROY)
+	e3:SetCode(EVENT_BATTLE_DESTROYING)
+	e3:SetCondition(aux.bdocon)
+	e3:SetTarget(s.destg)
+	e3:SetOperation(s.desop)
+	c:RegisterEffect(e3)
 end
+s.listed_series={SET_MALEFIC}
 function s.cfilter(c,tp)
 	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
-		and c:IsPreviousSetCard(0x23) and c:GetPreviousCodeOnField()~=id and not c:IsReason(REASON_RULE)
+		and c:IsPreviousSetCard(SET_MALEFIC) and c:GetPreviousCodeOnField()~=id and not c:IsReason(REASON_RULE)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
@@ -68,19 +71,12 @@ end
 function s.descon(e)
 	return not Duel.IsExistingMatchingCard(Card.IsFaceup,0,LOCATION_FZONE,LOCATION_FZONE,1,nil)
 end
-function s.decon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return c:IsRelateToBattle() and c:GetBattleTarget():IsMonster()
-end
-function s.defilter(c)
-	return c:IsFaceup()
-end
-function s.detg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
-function s.deop(e,tp,eg,ep,ev,re,r,rp)
+function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 	Duel.Destroy(g,REASON_EFFECT)
 end

@@ -54,7 +54,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local mc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,tc):GetFirst()
 	if mc and Duel.SpecialSummonStep(mc,0,tp,tp,false,false,POS_FACEUP) then
-		mc:NegateEffects(e:GetHandler())		
+		mc:NegateEffects(e:GetHandler())
 	end
 	if Duel.SpecialSummonComplete()==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

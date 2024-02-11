@@ -24,7 +24,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local tc=Duel.SelectMatchingCard(tp,Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,1,nil):GetFirst()
 	if Duel.SendtoGrave(tc,REASON_COST)==1 and Duel.Draw(tp,1,REASON_EFFECT)>0
-		and tc:IsLocation(LOCATION_GRAVE) and tc:IsSpell() and Duel.GetLP(tp)<=1000 then 
+		and tc:IsLocation(LOCATION_GRAVE) and tc:IsSpell() and Duel.GetLP(tp)<=1000 then
 		Duel.BreakEffect()
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end

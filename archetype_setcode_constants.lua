@@ -1,7 +1,7 @@
 --[[
 	Archetype setcode constants list (akin to common card names).
 	Includes every archetype that's being used in official card scripts.
-	
+
 	Notes:
 - To be formatted, probably alphabetically while keeping sub-archetypes with the original.
 
@@ -19,6 +19,7 @@ SET_GENEX                         = 0x2
 SET_R_GENEX                       = 0x1002
 SET_GENEX_ALLY                    = 0x2002
 SET_HORUS                         = 0x3
+SET_HORUS_BLACK_FLAME_DRAGON      = 0x1003
 SET_AMAZONESS                     = 0x4
 SET_ARCANA_FORCE                  = 0x5
 SET_DARK_WORLD                    = 0x6
@@ -65,7 +66,8 @@ SET_KOAKI_MEIRU                   = 0x1d
 SET_CHRYSALIS                     = 0x1e
 SET_NEO_SPACIAN                   = 0x1f
 SET_SHIEN                         = 0x20
-SET_EARTHBOUND_IMMORTAL           = 0x21
+SET_EARTHBOUND                    = 0x21
+SET_EARTHBOUND_IMMORTAL           = 0x1021
 SET_JURRAC                        = 0x22
 SET_MALEFIC                       = 0x23
 SET_SCRAP                         = 0x24
@@ -88,7 +90,7 @@ SET_ASSAULT_BLACKWING             = 0x1033
 SET_CRYSTAL                       = 0x34
 SET_CRYSTAL_BEAST                 = 0x1034
 SET_ULTIMATE_CRYSTAL              = 0x2034
-SET_ADVANCED_CRYSTAL_BEAST        = 0x5034	
+SET_ADVANCED_CRYSTAL_BEAST        = 0x5034
 SET_FABLED                        = 0x35
 SET_MACHINA                       = 0x36
 SET_MIST_VALLEY                   = 0x37
@@ -134,6 +136,7 @@ SET_STARVING_VENOM                = 0x1050
 SET_GADGET                        = 0x51
 SET_GUARDIAN                      = 0x52
 SET_GATE_GUARDIAN                 = 0x1052
+SET_SKULL_GUARDIAN                = 0x2052
 SET_CONSTELLAR                    = 0x53
 SET_GAGAGA                        = 0x54
 SET_PHOTON                        = 0x55
@@ -172,6 +175,7 @@ SET_GEARGIANO                     = 0x1072
 SET_XYZ                           = 0x73
 SET_CXYZ                          = 0x1073
 SET_XYZ_DRAGON                    = 0x2073
+SET_ARMORED_XYZ                   = 0x4073
 SET_MERMAIL                       = 0x74
 SET_ABYSS                         = 0x75
 SET_HERALDIC_BEAST                = 0x76
@@ -250,6 +254,7 @@ SET_QLI                           = 0xaa
 SET_APOQLIPHORT                   = 0x10aa
 SET_DESKBOT                       = 0xab
 SET_GOBLIN                        = 0xac
+SET_GOBLIN_RIDER                  = 0x10ac
 SET_FRIGHTFUR                     = 0xad
 SET_DARK_CONTRACT                 = 0xae
 SET_DD                            = 0xaf
@@ -518,6 +523,8 @@ SET_PURRELY                       = 0x18d
 SET_MIKANKO                       = 0x18e
 SET_AQUAMIRROR                    = 0x18f
 SET_FIREWALL                      = 0x190
+SET_MANNADIUM                     = 0x191
+SET_NEMLERIA                      = 0x192
 SET_LABYRINTH_WALL                = 0x194
 SET_FAVORITE                      = 0x195
 SET_VANQUISH_SOUL                 = 0x196
@@ -525,9 +532,28 @@ SET_NOUVELLES                     = 0x197
 SET_RECIPE                        = 0x198
 SET_HELIOS                        = 0x6c
 SET_VISAS                         = 0x199
---Currently unreleased in the TCG, the official English name is unknown
-SET_MANADOME                      = 0x191
-SET_NEMURELIA                     = 0x192
---Beta archetypes
-SET_COUNTER                       = 0x294
-SET_BATTLIN_BOXING                = 0x295
+SET_COUNTER                       = 0x200
+SET_BATTLIN_BOXING                = 0x201
+SET_TISTINA                       = 0x208
+--Currently unreleased in the TCG, the official English name is unconfirmed
+SET_MEMENTO                       = 0x19a
+SET_CENTURION                     = 0x19b
+SET_VALMONICA                     = 0x19c
+SET_VEDA                          = 0x202
+SET_DIABELLESTARR                 = 0x203
+SET_SINFUL_SPOILS                 = 0x204
+SET_SNAKE_EYE                     = 0x205
+SET_PATISSCIEL                    = 0x206
+SET_HEART                         = 0x207
+SET_YUBEL                         = 0x19d
+SET_SILENFORC                     = 0x19e
+SET_WHITE_AURA                    = 0x119f
+--Pre-release archetypes
+SET_TOY                           = 0x1a0
+SET_TENPAI_DRAGON                 = 0x1a1
+SET_SANGEN                        = 0x1a2
+SET_RAIKA                         = 0x1a3
+SET_SALAMANDRA                    = 0x1a4
+SET_ASHENED                       = 0x1a5
+SET_MILLENNIUM                    = 0x1a6
+SET_EXODO                         = 0x1a7

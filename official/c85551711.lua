@@ -51,7 +51,7 @@ end
 function s.costtg(e,te,tp)
 	local tc=te:GetHandler()
 	return Duel.GetTurnPlayer()~=e:GetHandlerPlayer()
-		and tc:IsLocation(LOCATION_HAND) and tc:GetFlagEffect(id)>0 and tc:GetFlagEffectLabel(id)==e:GetHandler():GetFieldID()
+		and tc:IsLocation(LOCATION_HAND) and tc:HasFlagEffect(id) and tc:GetFlagEffectLabel(id)==e:GetHandler():GetFieldID()
 end
 function s.costop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)
@@ -59,7 +59,7 @@ function s.costop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return ((rp==1-tp and c:IsReason(REASON_EFFECT) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)) 
+	return ((rp==1-tp and c:IsReason(REASON_EFFECT) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE))
 		or c:IsReason(REASON_BATTLE)) and c:IsSummonType(SUMMON_TYPE_XYZ)
 end
 function s.spfilter(c,e,tp)
@@ -74,7 +74,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,1,nil,e,tp)
-	local dg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
+	local dg=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	if #g>0 and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)~=0
 		and #dg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.BreakEffect()

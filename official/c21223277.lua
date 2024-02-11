@@ -2,10 +2,10 @@
 --Artorigus, King of the Noble Knights
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
-	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x107a),4,2)
 	c:EnableReviveLimit()
-	--equip
+	--Xyz Summon Procedure
+	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_NOBLE_KNIGHT),4,2)
+	--Equip to itself up to 3 "Noble Arms" Equip Spell Cards from the GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_EQUIP)
@@ -16,24 +16,24 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--destroy
+	--Destroy Spell/Trap cards on the field up to the number of "Noble Arms" Equip Spell Cards you control
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
-	e2:SetCost(s.descost)
+	e2:SetCost(aux.dxmcostgen(1,1,nil))
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 end
-s.listed_series={0x207a,0x107a}
+s.listed_series={SET_NOBLE_ARMS,SET_NOBLE_KNIGHT}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
 end
 function s.filter(c,e,tp,ec)
-	return c:IsSetCard(0x207a) and c:IsCanBeEffectTarget(e) and c:CheckUniqueOnField(tp) and c:CheckEquipTarget(ec)
+	return c:IsSetCard(SET_NOBLE_ARMS) and c:IsCanBeEffectTarget(e) and c:CheckUniqueOnField(tp) and c:CheckEquipTarget(ec)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
@@ -49,33 +49,28 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
 	local g=Duel.GetTargetCards(e)
-	if ft<#g then return end
+	if #g==0 or ft<#g then return end
 	local c=e:GetHandler()
 	if c:IsFacedown() or not c:IsRelateToEffect(e) then return end
-	local tc=g:GetFirst()
-	for tc in aux.Next(g) do
+	for tc in g:Iter() do
 		Duel.Equip(tp,tc,c,true,true)
 	end
 	Duel.EquipComplete()
 end
-function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-end
-function s.desfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+function s.nbarmsfilters(c)
+	return c:IsFaceup() and c:IsEquipSpell() and c:IsSetCard(SET_NOBLE_ARMS)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x207a),tp,LOCATION_SZONE,0,1,nil)
-		and Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
-	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.nbarmsfilters,tp,LOCATION_SZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(Card.IsSpellTrap,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
+	local g=Duel.GetMatchingGroup(Card.IsSpellTrap,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0x207a),tp,LOCATION_SZONE,0,nil)
+	local ct=Duel.GetMatchingGroupCount(s.nbarmsfilters,tp,LOCATION_SZONE,0,nil)
 	if ct==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectMatchingCard(tp,s.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,ct,nil)
+	local g=Duel.SelectMatchingCard(tp,Card.IsSpellTrap,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,ct,nil)
 	if #g>0 then
 		Duel.Destroy(g,REASON_EFFECT)
 	end

@@ -1,96 +1,86 @@
 --タイム・ストリーム
 --Time Stream
 --Logical Nonsense
---Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
-	--Tribute 1 "Fossil" fusion, and if you do, special summon another, 2 levels higher
+	--Tribute 1 "Fossil" Fusion Monster and Special Summon 1 "Fossil" Fusion Monster whose original Level is 2 higher
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_RELEASE+CATEGORY_FUSION_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_RELEASE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--Special summon 1 "Fossil" fusion from GY
+	--Special Summon 1 "Fossil" Fusion Monster from your GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetRange(LOCATION_GRAVE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCondition(aux.exccon)
-	e2:SetCost(s.spcost)
-	e2:SetTarget(s.sptg)
-	e2:SetOperation(s.spop)
+	e2:SetCost(s.gyspcost)
+	e2:SetTarget(s.gysptg)
+	e2:SetOperation(s.gyspop)
 	c:RegisterEffect(e2)
 end
-	--Lists "Fossil" archetype
-s.listed_series={0x14c}
-	--Specifically lists "Fossil Fusion"
+s.listed_series={SET_FOSSIL}
 s.listed_names={CARD_FOSSIL_FUSION}
-	--Check for "Fossil" fusion monster to tribute
-function s.filter(c,e,tp)
-	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:IsSetCard(0x14c) and c:IsReleasableByEffect()
-		and Duel.IsExistingMatchingCard(s.ssfilter,tp,LOCATION_EXTRA,0,1,nil,c:GetOriginalLevel(),e,tp,c)
+function s.trbfilter(c,e,tp)
+	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:IsSetCard(SET_FOSSIL) and c:IsReleasableByEffect()
+		and Duel.IsExistingMatchingCard(s.exspfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c:GetOriginalLevel(),c)
 end
-	--Check for "Fossil" fusion monster with 2 levels higher than one in "filter"
-function s.ssfilter(c,lv,e,tp,mc)
-	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x14c) and c:GetOriginalLevel()==lv+2
-		and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,true,true,POS_FACEUP)
+function s.exspfilter(c,e,tp,lv,mc)
+	return c:IsType(TYPE_FUSION) and c:IsSetCard(SET_FOSSIL) and c:GetOriginalLevel()==lv+2
+		and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,true,true)
 end
-	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc,e,tp) end
-	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil,e,tp) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil,e,tp)
-	Duel.SetOperationInfo(0,CATEGORY_RELEASE,nil,1,0,0)
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.trbfilter(chkc,e,tp) end
+	if chk==0 then return Duel.IsExistingTarget(s.trbfilter,tp,LOCATION_MZONE,0,1,nil,e,tp) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
+	local g=Duel.SelectTarget(tp,s.trbfilter,tp,LOCATION_MZONE,0,1,1,nil,e,tp)
+	Duel.SetOperationInfo(0,CATEGORY_RELEASE,g,1,tp,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
-	--Tribute 1 "Fossil" fusion, and if you do, special summon another, 2 levels higher (treated as a fusion summon)
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) then
-		if Duel.Release(tc,REASON_EFFECT)==0 then return end
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local sg=Duel.SelectMatchingCard(tp,s.ssfilter,tp,LOCATION_EXTRA,0,1,1,nil,tc:GetOriginalLevel(),e,tp,tc)
-		if #sg>0 and Duel.SpecialSummon(sg,SUMMON_TYPE_FUSION,tp,tp,true,true,POS_FACEUP)>0 then
-			sg:GetFirst():CompleteProcedure()
-		end
+	if not (tc:IsRelateToEffect(e) and Duel.Release(tc,REASON_EFFECT)>0) then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local sc=Duel.SelectMatchingCard(tp,s.exspfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tc:GetOriginalLevel()):GetFirst()
+	if not sc then return end
+	sc:SetMaterial(nil)
+	if Duel.SpecialSummon(sc,SUMMON_TYPE_FUSION,tp,tp,true,true,POS_FACEUP)>0 then
+		sc:CompleteProcedure()
 	end
 end
-	--Check for "Fossil" fusion to banish
-function s.cfilter(c,e,tp)
-	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x14c) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
-		and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE,0,1,c,e,tp)
+function s.costfilter(c,e,tp)
+	return c:IsType(TYPE_FUSION) and c:IsSetCard(SET_FOSSIL) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+		and Duel.IsExistingTarget(s.gyspfilter,tp,LOCATION_GRAVE,0,1,c,e,tp)
 end
-	--Check for "Fossil" fusion to special summon
-function s.spfilter(c,e,tp)
-	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x14c) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
+function s.gyspfilter(c,e,tp)
+	return c:IsType(TYPE_FUSION) and c:IsSetCard(SET_FOSSIL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-	--Banish this card and 1 "Fossil" fusion as cost
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost()
-		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,e,tp) end
+function s.gyspcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsAbleToRemoveAsCost()
+		and Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil,e,tp)
-	g:AddCard(e:GetHandler())
-	Duel.Remove(g,POS_FACEUP,REASON_COST)
+	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil,e,tp)
+	Duel.Remove(g+c,POS_FACEUP,REASON_COST)
 end
-	--Activation legality
-function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
+function s.gysptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.gyspfilter(chkc,e,tp) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingTarget(s.gyspfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectTarget(tp,s.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
+	local g=Duel.SelectTarget(tp,s.gyspfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,tp,0)
 end
-	--Special summon 1 "Fossil" fusion from GY
-function s.spop(e,tp,eg,ep,ev,re,r,rp)
+function s.gyspop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

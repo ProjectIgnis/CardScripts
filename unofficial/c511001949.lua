@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_BATTLE_DAMAGE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	e1:SetCondition(s.atcon)
+	e1:SetCondition(function(e,tp,eg,ep,ev,re,r,rp) return ep~=tp end)
 	e1:SetTarget(s.attg)
 	e1:SetOperation(s.atop)
 	c:RegisterEffect(e1)
@@ -55,9 +55,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge2,0)
 	end)
 end
-function s.atcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
-end
+s.synchro_tuner_required=1
 function s.attg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsFaceup() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
@@ -65,13 +63,14 @@ function s.attg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
 end
 function s.atop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
-		local e1=Effect.CreateEffect(e:GetHandler())
+		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-ev)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE)
 		tc:RegisterEffect(e1)
 	end
 end

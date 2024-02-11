@@ -8,22 +8,33 @@ function s.initial_effect(c)
 									 extrafil=s.fextra,extraop=Fusion.ShuffleMaterial,stage2=s.desop,extratg=s.extrtarget})
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetHintTiming(0,TIMING_MAIN_END)
-	e1:SetCondition(s.condition)
+	e1:SetCondition(function() return Duel.IsMainPhase() end)
 	c:RegisterEffect(e1)
 end
-s.listed_names={CARD_BLUEEYES_W_DRAGON,23995346}
+local CARD_BLUEEYES_U_DRAGON=23995346
+s.listed_names={CARD_BLUEEYES_W_DRAGON,CARD_BLUEEYES_U_DRAGON}
 function s.ffilter(c)
-	return c:ListsCodeAsMaterial(CARD_BLUEEYES_W_DRAGON,23995346)
+	return c:ListsCodeAsMaterial(CARD_BLUEEYES_W_DRAGON,CARD_BLUEEYES_U_DRAGON)
 end
-function s.fextra(e,tp,mg)
-	return Duel.GetMatchingGroup(aux.NecroValleyFilter(Fusion.IsMonsterFilter(Card.IsAbleToDeck)),tp,LOCATION_GRAVE,0,nil)
+function s.fextra(e,tp,mg,sumtype)
+	return Duel.GetMatchingGroup(aux.NecroValleyFilter(Fusion.IsMonsterFilter(Card.IsAbleToDeck)),tp,LOCATION_GRAVE,0,nil),s.fcheck
 end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsMainPhase()
+function s.fcheck(tp,sg,fc,sumtype,tp)
+	return sg:IsExists(s.forcedmatfilter,1,nil,fc,sumtype,tp)
+end
+function s.forcedmatfilter(c,fc,sumtype,tp)
+	local mat=fc.material
+	local res=false
+	if mat then
+		for _,code in ipairs(mat) do
+			res=res or (c:IsSummonCode(fc,SUMMON_TYPE_FUSION,PLAYER_NONE,code) and c:IsCode(CARD_BLUEEYES_W_DRAGON,CARD_BLUEEYES_U_DRAGON))
+		end
+	end
+	return res
 end
 function s.desfilter(c)
 	local code=c:GetPreviousCodeOnField()
-	return (code==CARD_BLUEEYES_W_DRAGON or code==23995346) and c:IsPreviousLocation(LOCATION_ONFIELD)
+	return (code==CARD_BLUEEYES_W_DRAGON or code==CARD_BLUEEYES_U_DRAGON) and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.desop(e,tc,tp,mg,chk)
 	if chk==0 then
@@ -41,6 +52,6 @@ function s.desop(e,tc,tp,mg,chk)
 end
 function s.extrtarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,0,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,0,tp,LOCATION_HAND|LOCATION_MZONE|LOCATION_GRAVE)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_DESTROY,nil,0,1-tp,LOCATION_ONFIELD)
 end

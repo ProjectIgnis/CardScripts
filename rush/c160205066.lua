@@ -17,6 +17,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 end
+s.listed_names={80304126}
 function s.cfilter(c,tp)
 	return c:IsSummonPlayer(1-tp) and c:IsFaceup()
 end
@@ -38,7 +39,7 @@ function s.posfilter2(c)
 	return c:IsCode(80304126) and s.posfilter(c)
 end
 function s.rescon(sg,e,tp,mg)
-	return sg:IsExists(Card.IsCode,1,nil,80304126) 
+	return sg:IsExists(Card.IsCode,1,nil,80304126)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
@@ -62,7 +63,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 				e1:SetCondition(s.indcon)
 				e1:SetValue(1)
-				e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+				e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 				tc:RegisterEffectRush(e1)
 			end
 		end

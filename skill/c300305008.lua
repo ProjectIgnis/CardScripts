@@ -4,7 +4,6 @@ local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop)
 end
-s.listed_series={0x3008}
 --Fusion Summon Functions
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--condition
@@ -79,7 +78,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 		e1:SetValue(tc:GetBaseAttack())
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1,true)
 		--Cannot attack directly
 		local e2=Effect.CreateEffect(e:GetHandler())
@@ -87,7 +86,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
 		e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 		e2:SetRange(LOCATION_MZONE)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		tc:RegisterEffect(e2)
 		--Take damage at the End Phase
 		local e3=Effect.CreateEffect(e:GetHandler())
@@ -95,7 +94,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetCode(EVENT_PHASE+PHASE_END)
 		e3:SetCountLimit(1)
 		e3:SetLabel(tc:GetBaseAttack())
-		e3:SetReset(RESET_PHASE+PHASE_END)
+		e3:SetReset(RESET_PHASE|PHASE_END)
 		e3:SetOperation(s.damop)
 		Duel.RegisterEffect(e3,tp)
 	end

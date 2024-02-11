@@ -12,12 +12,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x3a}
+s.listed_series={SET_GISHKI}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,5) end
 end
 function s.filter(c)
-	return c:GetType()==0x82 or (c:IsSetCard(0x3a) and c:IsMonster())
+	return c:IsRitualSpell() or (c:IsSetCard(SET_GISHKI) and c:IsMonster())
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsPlayerCanDiscardDeck(tp,5) then return end
@@ -26,7 +26,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local sg=g:Filter(s.filter,nil)
 	if #sg>0 then
 		Duel.DisableShuffleCheck()
-		Duel.SendtoGrave(sg,REASON_EFFECT+REASON_REVEAL)
+		Duel.SendtoGrave(sg,REASON_EFFECT|REASON_EXCAVATE)
 	end
 	Duel.MoveToDeckBottom(5-#sg,tp)
 	Duel.SortDeckbottom(tp,tp,5-#sg)

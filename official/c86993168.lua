@@ -57,7 +57,7 @@ end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_CONTROL)<1 then return end
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil):GetMinGroup(Card.GetAttack)
-	if #g==0 then return end
+	if not g or #g==0 then return end
 	if #g:Match(Card.IsAbleToChangeControler,nil)<1 then return end
 	if #g>1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
@@ -74,7 +74,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_TRIGGER)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_CONTROL)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_CONTROL)
 		tc:RegisterEffect(e1,true)
 		-- Cannot Special Summon non-Link monsters from Extra Deck
 		local e2=Effect.CreateEffect(c)
@@ -84,11 +84,11 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetRange(LOCATION_MZONE)
 		e2:SetAbsoluteRange(tp,1,0)
 		e2:SetTarget(function(_,c) return c:IsLocation(LOCATION_EXTRA) and not c:IsType(TYPE_LINK) end)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_CONTROL)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_CONTROL)
 		tc:RegisterEffect(e2,true)
 		-- Lizard check
 		local e3=aux.createContinuousLizardCheck(c,LOCATION_MZONE,function(_,c) return c:IsOriginalType(TYPE_LINK) end)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_CONTROL)
+		e3:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_CONTROL)
 		tc:RegisterEffect(e3,true)
 	end
 end

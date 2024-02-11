@@ -1,10 +1,11 @@
 --No.58 炎圧鬼バーナー・バイサー
+--Number 58: Burner Vision
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
 	Xyz.AddProcedure(c,nil,4,2)
+	--Xyz Summon Procedure
 	c:EnableReviveLimit()
-	--equip
+	--Equip itself to an Xyz monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -14,37 +15,49 @@ function s.initial_effect(c)
 	e1:SetTarget(s.eqtg)
 	e1:SetOperation(s.eqop)
 	c:RegisterEffect(e1)
-	--direct
+	--Special summon itself if it is equipped to a monster
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_EQUIP)
-	e2:SetCode(EFFECT_DIRECT_ATTACK)
+	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e2:SetType(EFFECT_TYPE_IGNITION)
+	e2:SetRange(LOCATION_SZONE)
+	e2:SetCondition(function(e) return e:GetHandler():GetEquipTarget() end)
+	e2:SetTarget(s.sptg)
+	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--damage
+	--Equipped monster can attack directly
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,2))
-	e3:SetCategory(CATEGORY_DAMAGE)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_BATTLE_DAMAGE)
-	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e3:SetRange(LOCATION_SZONE)
-	e3:SetCondition(s.damcon)
-	e3:SetCost(s.damcost)
-	e3:SetTarget(s.damtg)
-	e3:SetOperation(s.damop)
+	e3:SetType(EFFECT_TYPE_EQUIP)
+	e3:SetCode(EFFECT_DIRECT_ATTACK)
 	c:RegisterEffect(e3)
+	--Inflict 500 Damage to the opponent
+	local e4=Effect.CreateEffect(c)
+	e4:SetDescription(aux.Stringid(id,2))
+	e4:SetCategory(CATEGORY_DAMAGE)
+	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e4:SetCode(EVENT_BATTLE_DAMAGE)
+	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e4:SetRange(LOCATION_SZONE)
+	e4:SetCondition(s.damcon)
+	e4:SetCost(s.damcost)
+	e4:SetTarget(s.damtg)
+	e4:SetOperation(s.damop)
+	c:RegisterEffect(e4)
 end
 s.xyz_number=58
 function s.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) and chkc~=e:GetHandler() end
-	if chk==0 then return e:GetHandler():GetFlagEffect(id)==0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,e:GetHandler()) end
+	local c=e:GetHandler()
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) and chkc~=c end
+	if chk==0 then return c:GetFlagEffect(id)==0
+		and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+		and Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,e:GetHandler())
+	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,c)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,g,1,0,0)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+0x7e0000+RESET_PHASE+PHASE_END,0,1)
+	c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD&~(RESET_LEAVE|RESET_TOFIELD)|RESET_PHASE|PHASE_END,0,1)
 end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -55,46 +68,36 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 		return
 	end
 	if not Duel.Equip(tp,c,tc,false) then return end
-	--unequip
-	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,1))
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetRange(LOCATION_SZONE)
-	e1:SetTarget(s.sptg)
-	e1:SetOperation(s.spop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-	c:RegisterEffect(e1)
-	--eqlimit
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetCode(EFFECT_EQUIP_LIMIT)
-	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e4:SetValue(s.eqlimit)
-	e4:SetReset(RESET_EVENT+RESETS_STANDARD)
-	e4:SetLabelObject(tc)
-	c:RegisterEffect(e4)
-end
-function s.eqlimit(e,c)
-	return c==e:GetLabelObject()
+	--Equip limit
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetCode(EFFECT_EQUIP_LIMIT)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e0:SetValue(function(e,c) return c==e:GetLabelObject() end)
+	e0:SetLabelObject(tc)
+	e0:SetReset(RESET_EVENT|RESETS_STANDARD)
+	c:RegisterEffect(e0)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():GetFlagEffect(id)==0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,true,false) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+0x7e0000+RESET_PHASE+PHASE_END,0,1)
+	local c=e:GetHandler()
+	if chk==0 then return c:GetFlagEffect(id)==0
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
+	c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD&~(RESET_LEAVE|RESET_TOFIELD)|RESET_PHASE|PHASE_END,0,1)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
-	Duel.SpecialSummon(c,0,tp,tp,true,false,POS_FACEUP_ATTACK)
+	if c:IsRelateToEffect(e) then
+		Duel.SpecialSummon(c,0,tp,tp,true,false,POS_FACEUP_ATTACK)
+	end
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and eg:GetFirst()==e:GetHandler():GetEquipTarget()
+	return ep==1-tp and eg:GetFirst()==e:GetHandler():GetEquipTarget()
 end
 function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

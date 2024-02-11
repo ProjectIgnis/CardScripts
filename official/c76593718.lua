@@ -39,7 +39,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			g:RemoveCard(sg:GetFirst())
 		end
 		if #g>0 then
-			Duel.SendtoGrave(g,REASON_EFFECT|REASON_REVEAL)
+			Duel.SendtoGrave(g,REASON_EFFECT|REASON_EXCAVATE)
 		end
 	end
 	--Send monsters from your Extra Deck to the GY

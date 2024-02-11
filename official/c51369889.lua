@@ -9,8 +9,10 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_END_PHASE)
 	c:RegisterEffect(e1)
-	--destroy
+	--Destroy any number of cards on the field
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetCategory(CATEGORY_DESTROY)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetRange(LOCATION_SZONE)
@@ -21,8 +23,9 @@ function s.initial_effect(c)
 	e2:SetTarget(s.rmtg)
 	e2:SetOperation(s.rmop)
 	c:RegisterEffect(e2)
-	--damage
+	--Inflict damage to the opponent
 	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_DAMAGE)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
@@ -47,21 +50,19 @@ function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then
 		if e:GetLabel()==100 then
 			e:SetLabel(0)
-			return Duel.CheckRemoveOverlayCard(tp,0,0,1,REASON_COST,dg) and Duel.IsExistingTarget(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,e:GetHandler())
+			return Duel.CheckRemoveOverlayCard(tp,0,0,1,REASON_COST,dg) and Duel.IsExistingTarget(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,e:GetHandler())
 		else
 			return false
 		end
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVEXYZ)
 	local rt=Duel.GetTargetCount(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler())
-	Duel.RemoveOverlayCard(tp,0,0,1,rt,REASON_COST,dg)
-	local count=#Duel.GetOperatedGroup()
+	local count=Duel.RemoveOverlayCard(tp,0,0,1,rt,REASON_COST,dg)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESREPLACE)
 	local g=Duel.SelectTarget(tp,nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,count,count,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local g=Duel.GetTargetCards(e)
 	Duel.Destroy(g,REASON_EFFECT)
 end

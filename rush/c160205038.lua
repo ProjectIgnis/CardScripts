@@ -3,8 +3,9 @@
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)
-	--Shuffle 4 monsters into the deck to draw 1
+	--Shuffle 4 monsters into the deck to draw 2 cards
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCategory(CATEGORY_DRAW)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -28,11 +29,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	--Requirement
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_GRAVE,0,nil,e,tp)
 	local sg=aux.SelectUnselectGroup(g,e,tp,4,4,aux.dncheck,1,tp,HINTMSG_TODECK)
-	Duel.HintSelection(sg)
+	Duel.HintSelection(sg,true)
 	if Duel.SendtoDeck(sg,nil,4,REASON_COST)>0 then
 		Duel.ShuffleDeck(tp)
 		--Effect
@@ -44,7 +44,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_OATH)
 		e1:SetTargetRange(LOCATION_MZONE,0)
 		e1:SetTarget(s.ftarget)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 	end
 end

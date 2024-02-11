@@ -1,4 +1,4 @@
---Japanese name
+--共命の翼ガルーラ
 --Garura, Wings of Resonant Life
 --scripted by Naim
 local s,id=GetID()

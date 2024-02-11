@@ -310,8 +310,8 @@ function Card.IsColumn(c,seq,tp,loc)
 	if not c:IsOnField() then return false end
 	local cseq=c:GetSequence()
 	local seq=seq
-	local loc=loc and loc or c:GetLocation()
-	local tp=tp and tp or c:GetControler()
+	local loc=loc or c:GetLocation()
+	local tp=tp or c:GetControler()
 	if c:IsLocation(LOCATION_MZONE) then
 		if cseq==5 then cseq=1 end
 		if cseq==6 then cseq=3 end
@@ -332,9 +332,9 @@ function Card.IsColumn(c,seq,tp,loc)
 end
 
 function Card.UpdateAttack(c,amt,reset,rc)
-	rc=rc and rc or c
+	rc=rc or c
 	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
-	reset=reset and reset or RESET_EVENT+r
+	reset=reset or RESET_EVENT+r
 	local atk=c:GetAttack()
 	if atk>=-amt then --If amt is positive, it would become negative and always be lower than or equal to atk, if amt is negative, it would become postive and if it is too much it would be higher than atk
 		local e1=Effect.CreateEffect(rc)
@@ -352,9 +352,9 @@ function Card.UpdateAttack(c,amt,reset,rc)
 end
 
 function Card.UpdateDefense(c,amt,reset,rc)
-	rc=rc and rc or c
+	rc=rc or c
 	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
-	reset=reset and reset or RESET_EVENT+r
+	reset=reset or RESET_EVENT+r
 	local def=c:GetDefense()
 	if def and def>=-amt then --See Card.UpdateAttack
 		local e1=Effect.CreateEffect(rc)
@@ -372,9 +372,9 @@ function Card.UpdateDefense(c,amt,reset,rc)
 end
 
 function Card.UpdateLevel(c,amt,reset,rc)
-	rc=rc and rc or c
+	rc=rc or c
 	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
-	reset=reset and reset or RESET_EVENT+r
+	reset=reset or RESET_EVENT+r
 	local lv=c:GetLevel()
 	if c:IsLevelBelow(2147483647) then
 		if lv+amt<=0 then amt=-(lv-1) end --Unlike ATK, if amt is too much should reduce as much as possible
@@ -390,9 +390,9 @@ function Card.UpdateLevel(c,amt,reset,rc)
 end
 
 function Card.UpdateRank(c,amt,reset,rc)
-	rc=rc and rc or c
+	rc=rc or c
 	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
-	reset=reset and reset or RESET_EVENT+r
+	reset=reset or RESET_EVENT+r
 	local rk=c:GetRank()
 	if c:IsRankBelow(2147483647) then
 		if rk+amt<=0 then amt=-(rk-1) end --See Card.UpdateLevel
@@ -408,9 +408,9 @@ function Card.UpdateRank(c,amt,reset,rc)
 end
 
 function Card.UpdateLink(c,amt,reset,rc)
-	rc=rc and rc or c
+	rc=rc or c
 	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
-	reset=reset and reset or RESET_EVENT+r
+	reset=reset or RESET_EVENT+r
 	local lk=c:GetLink()
 	if c:IsLinkBelow(2147483647) then
 		if lk+amt<=0 then amt=-(lk-1) end --See Card.UpdateLevel
@@ -426,9 +426,9 @@ function Card.UpdateLink(c,amt,reset,rc)
 end
 
 function Card.UpdateScale(c,amt,reset,rc)
-	rc=rc and rc or c
+	rc=rc or c
 	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
-	reset=reset and reset or RESET_EVENT+r
+	reset=reset or RESET_EVENT+r
 	local scl=c:GetLeftScale()
 	if scl then
 		if scl+amt<=0 then amt = -(scl-1) end --See Card.UpdateLevel
@@ -783,7 +783,7 @@ function Auxiliary.GetExtraMaterials(tp,mustg,sc,summon_type)
 			local eg=te:GetValue()(0,summon_type,te,tp,sc)-mustg
 			eg:KeepAlive()
 			tg=tg+eg
-			local efun=te:GetOperation() and te:GetOperation() or aux.TRUE
+			local efun=te:GetOperation() or aux.TRUE
 			table.insert(t,{eg,efun,te})
 		end
 	end
@@ -1127,6 +1127,8 @@ function Auxiliary.bfgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(c,POS_FACEUP,REASON_COST)
 end
 
+Auxiliary.selfbanishcost=aux.bfgcost
+
 -- "Detach Xyz Material Cost Generator"
 -- Generates a function to be used by Effect.SetCost in order to detach
 -- a number of Xyz Materials from the Effect's handler.
@@ -1160,7 +1162,7 @@ function Auxiliary.dxmcostgen(min,max,op)
 			return true --NOTE: Does not execute `op`
 		end
 		local m=type(max)=="number" and max or max(e,tp)
-		if c:RemoveOverlayCard(tp,min,m,REASON_COST) and op then
+		if c:RemoveOverlayCard(tp,min,m,REASON_COST)>0 and op then
 			op(e,Duel.GetOperatedGroup())
 		end
 		return true --NOTE: to use with aux.AND
@@ -1316,7 +1318,7 @@ function Auxiliary.SelectUnselectGroup(g,e,tp,minc,maxc,rescon,chk,seltp,hintmsg
 		end
 		return false
 	end
-	local hintmsg=hintmsg and hintmsg or 0
+	local hintmsg=hintmsg or 0
 	local sg=Group.CreateGroup()
 	while true do
 		local finishable = #sg>=minc and (not finishcon or finishcon(sg,e,tp,g))
@@ -1543,7 +1545,8 @@ function Duel.MoveToDeckBottom(obj,tp)
 end
 
 function Duel.GetTargetCards(e)
-	return Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
+	return tg and tg:Filter(Card.IsRelateToEffect,nil,e) or nil
 end
 
 --for zone checking (zone is the zone, tp is referencial player)
@@ -1616,7 +1619,8 @@ function Auxiliary.GetRaceStrings(v)
 		[RACE_DIVINE] = 1041,
 		[RACE_CREATORGOD] = 1042,
 		[RACE_WYRM] = 1043,
-		[RACE_CYBERSE] = 1044
+		[RACE_CYBERSE] = 1044,
+		[RACE_ILLUSION] = 1045
 	}
 	local res={}
 	local ct=0
@@ -1635,6 +1639,21 @@ function Auxiliary.GetCoinEffectHintString(coin)
 	elseif coin==COIN_TAILS then
 		return 63
 	end
+end
+function Auxiliary.GetCoinCountFromEv(ev)
+	return ev&0xff
+end
+function Auxiliary.GetCoinHeadsFromEv(ev)
+	return (ev>>8)&0xff
+end
+function Auxiliary.GetCoinTailsFromEv(ev)
+	return (ev>>16)&0xff
+end
+function Auxiliary.GetDiceCountSelfFromEv(ev)
+	return ev&0xffff
+end
+function Auxiliary.GetDiceCountOppoFromEv(ev)
+	return (ev>>16)&0xffff
 end
 
 --Returns the zones, on the specified player's field, pointed by the specified number of Link markers. Includes Extra Monster Zones.
@@ -2022,20 +2041,6 @@ function Duel.ActivateFieldSpell(c,e,tp,eg,ep,ev,re,r,rp,target_p)
 	return false
 end
 
-function Duel.IsMainPhase()
-	local phase=Duel.GetCurrentPhase()
-	return phase==PHASE_MAIN1 or phase==PHASE_MAIN2
-end
-
-function Duel.IsBattlePhase()
-	local phase=Duel.GetCurrentPhase()
-	return phase>=PHASE_BATTLE_START and phase<=PHASE_BATTLE
-end
-
-function Duel.IsTurnPlayer(player)
-	return Duel.GetTurnPlayer()==player
-end
-
 function Duel.GoatConfirm(tp,loc)
 	local dg,hg=Duel.GetFieldGroup(tp,loc&(LOCATION_HAND|LOCATION_DECK),0):Split(Card.IsLocation,nil,LOCATION_DECK)
 	Duel.ConfirmCards(tp,dg)
@@ -2143,8 +2148,9 @@ end
 		int|nil reset_count: how many times the reset value must happen.
 			If not passed, the count will be 1.
 		int|nil hint: a string to show on the affected cards
+		int|nil effect_desc: a string to be used as the description of the delayed effect (useful when the same effect registers multiple different delayed effects)
 --]]
-function Auxiliary.DelayedOperation(card_or_group,phase,flag,e,tp,oper,cond,reset,reset_count,hint)
+function Auxiliary.DelayedOperation(card_or_group,phase,flag,e,tp,oper,cond,reset,reset_count,hint,effect_desc)
 	local g=(type(card_or_group)=="Group" and card_or_group or Group.FromCards(card_or_group))
 	if #g==0 then return end
 	reset=reset or (RESET_PHASE|phase)
@@ -2156,6 +2162,7 @@ function Auxiliary.DelayedOperation(card_or_group,phase,flag,e,tp,oper,cond,rese
 	--Apply operation
 	local c=e:GetHandler()
 	local e1=Effect.CreateEffect(c)
+	if effect_desc then e1:SetDescription(effect_desc) end
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e1:SetCode(EVENT_PHASE|phase)
@@ -2202,11 +2209,12 @@ end
 		int|nil reset_count: how many times the reset value must happen.
 			If not passed, the count will be 1.
 		int|nil hint: a string to show on the affected cards
+		int|nil effect_desc: a string to be used as the description of the delayed effect (useful when the same effect registers multiple different delayed effects)
 --]]
-function Auxiliary.RemoveUntil(card_or_group,pos,reason,phase,flag,e,tp,oper,cond,reset,reset_count,hint)
+function Auxiliary.RemoveUntil(card_or_group,pos,reason,phase,flag,e,tp,oper,cond,reset,reset_count,hint,effect_desc)
 	local g=(type(card_or_group)=="Group" and card_or_group or Group.FromCards(card_or_group))
 	if #g>0 and Duel.Remove(g,pos,reason|REASON_TEMPORARY)>0 and #g:Match(Card.IsLocation,nil,LOCATION_REMOVED)>0 then
-		return aux.DelayedOperation(g,phase,flag,e,tp,oper,cond,reset,reset_count,hint)
+		return aux.DelayedOperation(g,phase,flag,e,tp,oper,cond,reset,reset_count,hint,effect_desc)
 	end
 end
 
@@ -2257,5 +2265,6 @@ Duel.LoadScript("proc_skill.lua")
 Duel.LoadScript("proc_maximum.lua")
 Duel.LoadScript("proc_gemini.lua")
 Duel.LoadScript("proc_spirit.lua")
+Duel.LoadScript("proc_unofficial.lua")
 Duel.LoadScript("deprecated_functions.lua")
 pcall(dofile,"init.lua")

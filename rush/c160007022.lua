@@ -1,12 +1,12 @@
 -- 海星の騎兵
 -- Sea Star Trooper
-
---Substitute ID
+-- Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
 	--Shuffle 1 monsters from opponent's GY to deck
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_TODECK+CATEGORY_RECOVER)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_TODECK)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_names={CARD_UMI,CARD_BIG_OCEAN}
+s.listed_names={CARD_UMI,CARD_BIG_UMI}
 	--Check for a monster that can be returned to deck
 function s.filter(c)
 	return c:IsMonster() and c:IsAbleToDeck()
@@ -35,15 +35,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,0,LOCATION_GRAVE,1,1,nil)
-	Duel.HintSelection(g)
-	if #g>0 then
-		Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
-		if Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil) and Duel.IsPlayerCanDiscardDeck(tp,2) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+	Duel.HintSelection(g,true)
+	if #g>0 and Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0
+		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
+		and Duel.IsPlayerCanDiscardDeck(tp,2) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 			Duel.DiscardDeck(tp,2,REASON_COST)
-		end
 	end
-	
 end
 function s.cfilter(c)
-	return (c:IsCode(CARD_UMI) or c:IsCode(CARD_BIG_OCEAN)) and c:IsFaceup()
+	return (c:IsCode(CARD_UMI) or c:IsCode(CARD_BIG_UMI)) and c:IsFaceup()
 end

@@ -1,4 +1,4 @@
---白の聖女エクレシア 
+--白の聖女エクレシア
 --Incredible Ecclesia, the Virtuous
 local s,id=GetID()
 function s.initial_effect(c)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
+	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER|TIMING_MAIN_END)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(function() return Duel.IsMainPhase() end)
@@ -51,8 +51,8 @@ s.listed_series={SET_SWORDSOUL}
 -- global check
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	for tc in eg:Iter() do
-		if tc:IsType(TYPE_FUSION) then 
-			Duel.RegisterFlagEffect(tc:GetControler(),id,RESET_PHASE+PHASE_END,0,1)
+		if tc:IsType(TYPE_FUSION) then
+			Duel.RegisterFlagEffect(tc:GetControler(),id,RESET_PHASE|PHASE_END,0,1)
 		end
 	end
 end

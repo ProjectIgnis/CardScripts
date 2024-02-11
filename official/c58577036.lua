@@ -12,8 +12,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsPlayerCanSpecialSummon(tp)
-		and Duel.IsExistingMatchingCard(Card.IsSummonableCard,tp,LOCATION_DECK,0,1,nil) and Duel.IsPlayerCanDiscardDeck(tp,1)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsPlayerCanSpecialSummon(tp) and Duel.IsPlayerCanDiscardDeck(tp,1)
+		and Duel.IsExistingMatchingCard(Card.IsSummonableCard,tp,LOCATION_DECK,0,1,nil)
 		and not Duel.IsPlayerAffectedByEffect(tp,CARD_EHERO_BLAZEMAN) end
 	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,1)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
@@ -26,7 +27,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local dcount=Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)
 	local seq=-1
 	local spcard=nil
-	for tc in aux.Next(g) do
+	for tc in g:Iter() do
 		if tc:GetSequence()>seq then
 			seq=tc:GetSequence()
 			spcard=tc
@@ -48,6 +49,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SpecialSummonComplete()
 		end
 	else
-		Duel.DiscardDeck(tp,dcount-seq,REASON_EFFECT+REASON_REVEAL)
+		Duel.DiscardDeck(tp,dcount-seq,REASON_EFFECT|REASON_EXCAVATE)
 	end
 end

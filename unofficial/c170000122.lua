@@ -1,6 +1,5 @@
 --マグネット・フォース・プラス
 --Magnet Force Plus
-Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -17,7 +16,7 @@ function s.initial_effect(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() and not chkc:IsType(TYPE_PLUS) end
-	if chk==0 then return e:IsHasType(EFFECT_TYPE_ACTIVATE) 
+	if chk==0 then return e:IsHasType(EFFECT_TYPE_ACTIVATE)
 		and Duel.IsExistingTarget(aux.FaceupFilter(aux.NOT(Card.IsType),TYPE_PLUS),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	Duel.SelectTarget(tp,aux.FaceupFilter(aux.NOT(Card.IsType),TYPE_PLUS),tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
@@ -77,6 +76,7 @@ function s.nacon(e,tp,eg,ep,ev,re,r,rp)
 	local bc=ec:GetBattleTarget()
 	return bc and bc:IsFaceup() and bc:IsType(TYPE_PLUS)
 		and (Duel.GetCurrentPhase()<PHASE_DAMAGE or Duel.GetCurrentPhase()>PHASE_DAMAGE_CAL)
+		and not Duel.GetAttacker():IsStatus(STATUS_ATTACK_CANCELED)
 end
 function s.naop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,1-tp,id)

@@ -1,8 +1,10 @@
 --魔導雑貨商人
+--Magical Merchant
 local s,id=GetID()
 function s.initial_effect(c)
-	--flip
+	--Excavate cards until you find a Spell/Trap
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_DECKDES)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_FLIP)
 	e1:SetOperation(s.operation)
@@ -20,7 +22,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local seq=-1
 	local spcard=nil
 	for tc in g:Iter() do
-		if tc:GetSequence()>seq then 
+		if tc:GetSequence()>seq then
 			seq=tc:GetSequence()
 			spcard=tc
 		end
@@ -29,10 +31,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if spcard:IsAbleToHand() then
 		Duel.DisableShuffleCheck()
 		Duel.SendtoHand(spcard,nil,REASON_EFFECT)
-		Duel.DiscardDeck(tp,dcount-seq-1,REASON_EFFECT+REASON_REVEAL)
+		Duel.DiscardDeck(tp,dcount-seq-1,REASON_EFFECT|REASON_EXCAVATE)
 		Duel.ConfirmCards(1-tp,spcard)
 		Duel.ShuffleHand(tp)
 	else
-		Duel.DiscardDeck(tp,dcount-seq,REASON_EFFECT+REASON_REVEAL)
+		Duel.DiscardDeck(tp,dcount-seq,REASON_EFFECT|REASON_EXCAVATE)
 	end
 end

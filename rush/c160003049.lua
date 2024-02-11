@@ -1,46 +1,34 @@
 --アクア・ブースト
---Aqua Booster
-
---Substitute ID
+--Aqua Boost
 local s,id=GetID()
 function s.initial_effect(c)
 	--Increase ATK
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCondition(s.condition)
+	e1:SetCondition(function(e,tp) return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_UMI,CARD_BIG_UMI),tp,LOCATION_ONFIELD,0,1,nil) end)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_names={CARD_UMI,CARD_BIG_OCEAN}
-	--Check for "Umi" or "Great Ocean"
-function s.filter(c)
-	return c:IsFaceup() and (c:IsCode(CARD_UMI) or c:IsCode(CARD_BIG_OCEAN))
-end
-	--If you control "Umi" or "Great Ocean"
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_ONFIELD,0,1,nil)
-end
-	--Activation legality
+s.listed_names={CARD_UMI,CARD_BIG_UMI}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_FISH),tp,LOCATION_MZONE,0,1,nil) end
 end
-	--Make 1 fish monster you control gain ATK
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local ct=Duel.GetMatchingGroupCount(Card.IsRace,c:GetControler(),LOCATION_MZONE,0,nil,RACE_FISH)
-	--Effect
-	local g=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsRace,RACE_FISH),tp,LOCATION_MZONE,0,1,1,nil)
-	if #g>0 then
-		Duel.HintSelection(g)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
+	local tc=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsRace,RACE_FISH),tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
+	if tc then
+		Duel.HintSelection(tc,true)
+		local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsRace,RACE_FISH),tp,LOCATION_MZONE,0,nil)
+		--Gains 300 ATK for each face-up Fish monster on your field
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(ct*300)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		g:GetFirst():RegisterEffect(e1)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
+		tc:RegisterEffect(e1)
 	end
 end

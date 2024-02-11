@@ -6,7 +6,7 @@
 --extraop		function called right before sending the monsters to the graveyard as material
 --gc			mandatory card or function returning a group to be used (for effects like Soprano)
 --stage2		function called after the monster has been summoned
---exactcount	
+--exactcount
 --location		location where to summon fusion monsters from (default LOCATION_EXTRA)
 --chkf			FUSPROC flags for the fusion summon
 --desc			summon effect description
@@ -37,7 +37,7 @@ Debug.ReloadFieldBegin=(function()
 				return Fusion.ExtraGroup and Fusion.ExtraGroup:IsContains(c)
 			end)
 			geff:SetValue(aux.TRUE)
-			Duel.RegisterEffect(geff,0)	
+			Duel.RegisterEffect(geff,0)
 		end
 	end
 )()
@@ -271,7 +271,7 @@ function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locati
 								Fusion.CheckAdditional=nil
 								Fusion.ExtraGroup=nil
 							end
-						end		
+						end
 					end
 					Fusion.CheckExact=nil
 					Fusion.CheckMin=nil
@@ -445,7 +445,9 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 					if sel[1]==e then
 						Fusion.ExtraGroup=nil
 						backupmat=mat1:Clone()
-						tc:SetMaterial(mat1)
+						if not notfusion then
+							tc:SetMaterial(mat1)
+						end
 						--Checks for the case that the Fusion Summoning effect has an "extraop"
 						local extra_feff_mg=mat1:Filter(GetExtraMatEff,nil,tc)
 						if #extra_feff_mg>0 and extraop then
@@ -553,8 +555,10 @@ function Fusion.BanishMaterial(e,tc,tp,sg)
 end
 function Fusion.ShuffleMaterial(e,tc,tp,sg)
 	local rg=sg:Filter(Card.IsFacedown,nil)
+	local hg=sg:Filter(Card.IsLocation,nil,LOCATION_GRAVE|LOCATION_REMOVED)
 	if #rg>0 then Duel.ConfirmCards(1-tp,rg) end
-	Duel.SendtoDeck(sg,nil,2,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
+	if #hg>0 then Duel.HintSelection(hg,true) end
+	Duel.SendtoDeck(sg,nil,2,REASON_EFFECT|REASON_MATERIAL|REASON_FUSION)
 	sg:Clear()
 end
 function Fusion.OnFieldMat(filter,...)

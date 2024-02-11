@@ -1,5 +1,5 @@
 --赫ける王の烙印
---Blazing Branded King
+--Brightest, Blazing, Branded King
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetHintTiming(TIMING_END_PHASE,TIMING_END_PHASE)
 	e2:SetCountLimit(1,id)
-	e2:SetCondition(function(_,tp) return Duel.GetFlagEffect(tp,id)>0 and Duel.GetCurrentPhase()==PHASE_END end)
+	e2:SetCondition(function(_,tp) return Duel.HasFlagEffect(tp,id) and Duel.GetCurrentPhase()==PHASE_END end)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
@@ -40,7 +40,7 @@ s.listed_names={CARD_ALBAZ}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	for tc in eg:Iter() do
 		if tc:IsType(TYPE_FUSION) then
-			Duel.RegisterFlagEffect(tc:GetControler(),id,RESET_PHASE+PHASE_END,0,1)
+			Duel.RegisterFlagEffect(tc:GetControler(),id,RESET_PHASE|PHASE_END,0,1)
 		end
 	end
 end
@@ -67,7 +67,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_DISABLE_EFFECT)

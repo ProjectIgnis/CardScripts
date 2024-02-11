@@ -182,7 +182,7 @@ function Link.Target(f,minc,maxc,specialchk)
 					sg:KeepAlive()
 					e:SetLabelObject({sg,filters,emt})
 					return true
-				else 
+				else
 					aux.DeleteExtraMaterialGroups(emt)
 					return false
 				end

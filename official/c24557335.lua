@@ -44,7 +44,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cfilter(c,e,tp)
 	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE)
-		and c:IsPreviousControler(tp) and c:IsPreviousPosition(POS_FACEUP) and not c:IsType(TYPE_TOKEN) 
+		and c:IsPreviousControler(tp) and c:IsPreviousPosition(POS_FACEUP) and not c:IsType(TYPE_TOKEN)
 		and c:IsNonEffectMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and c:IsCanBeEffectTarget(e) and not c:IsLocation(LOCATION_EXTRA)
 end

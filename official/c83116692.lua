@@ -48,15 +48,18 @@ end
 function s.sstg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local c=e:GetHandler()
-	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,c,2,PLAYER_ALL,LOCATION_MZONE+LOCATION_GRAVE)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,c,2,PLAYER_ALL,LOCATION_MZONE|LOCATION_GRAVE)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOGRAVE,c,2,PLAYER_ALL,LOCATION_MZONE)
 end
 function s.ssop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
+	if not c:IsRelateToEffect(e) then return end
 	local ctm=Duel.GetMatchingGroupCount(Card.IsMonster,tp,0,LOCATION_GRAVE,nil)
-	local ctst=Duel.GetMatchingGroupCount(Card.IsType,tp,0,LOCATION_GRAVE,nil,TYPE_SPELL+TYPE_TRAP)
-	local tg=ctm<ctst and Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,0,LOCATION_MZONE,1,nil) and c:IsAbleToGrave()
-	local rem=ctm>ctst and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(s.remfilter),tp,0,LOCATION_GRAVE,1,nil) and c:IsAbleToRemove()
+	local ctst=Duel.GetMatchingGroupCount(Card.IsSpellTrap,tp,0,LOCATION_GRAVE,nil)
+	local tg=ctm<ctst and c:IsAbleToGrave()
+		and Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,0,LOCATION_MZONE,1,nil)
+	local rem=ctm>ctst and c:IsAbleToRemove()
+		and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(s.remfilter),tp,0,LOCATION_GRAVE,1,nil)
 	if not (tg or rem) then return end
 	local tc
 	if rem and Duel.Remove(c,POS_FACEUP,REASON_EFFECT)>0 then

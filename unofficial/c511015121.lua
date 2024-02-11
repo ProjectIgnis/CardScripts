@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	
+
 	aux.GlobalCheck(s,function()
 		--move to fzone
 		local e2=Effect.CreateEffect(c)
@@ -74,7 +74,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		if fc and Duel.GetFlagEffect(c:GetControler(),62765383)>0 then
 			if not Duel.Destroy(fc,REASON_RULE) then Duel.SendtoGrave(fc,REASON_RULE) end
 		end
-	
+
 		Duel.MoveSequence(c,5)
 		c=g:GetNext()
 	end

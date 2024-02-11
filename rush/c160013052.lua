@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.drcostfilter(c)
-	return ((c:IsMonster() and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_SPELLCASTER)) or c:IsEquipSpell()) 
+	return ((c:IsMonster() and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_SPELLCASTER)) or c:IsEquipSpell())
 		and c:IsAbleToGraveAsCost()
 end
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -28,7 +28,7 @@ end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local tc=Duel.SelectMatchingCard(tp,s.drcostfilter,tp,LOCATION_HAND,0,1,1,nil):GetFirst()
-	if Duel.SendtoGrave(tc,REASON_COST)==1 and Duel.Draw(tp,1,REASON_EFFECT)>0 then 
+	if Duel.SendtoGrave(tc,REASON_COST)==1 and Duel.Draw(tp,1,REASON_EFFECT)>0 then
 		local g=Duel.GetMatchingGroup(Card.IsMonster,tp,LOCATION_GRAVE,0,nil)
 		if #g>=4 then
 			Duel.BreakEffect()

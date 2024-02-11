@@ -41,7 +41,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_ADVENTURER,0,TYPES_TOKEN,2000,2000,4,RACE_FAIRY,ATTRIBUTE_EARTH) 
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_ADVENTURER,0,TYPES_TOKEN,2000,2000,4,RACE_FAIRY,ATTRIBUTE_EARTH)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
@@ -54,7 +54,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local token=Duel.CreateToken(tp,TOKEN_ADVENTURER)
 	if Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,39568067),tp,LOCATION_ONFIELD,0,1,nil)
-		and Duel.IsExistingMatchingCard(s.plfilter,tp,LOCATION_DECK,0,1,nil) 
+		and Duel.IsExistingMatchingCard(s.plfilter,tp,LOCATION_DECK,0,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 		local tc=Duel.SelectMatchingCard(tp,s.plfilter,tp,LOCATION_DECK,0,1,1,nil):GetFirst()

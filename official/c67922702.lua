@@ -58,7 +58,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_MECHA_PHANTOM_BEAST,SET_MECHA_PHANTOM_BEAST,TYPES_TOKEN,0,0,3,RACE_MACHINE,ATTRIBUTE_WIND) then
 		local token=Duel.CreateToken(tp,TOKEN_MECHA_PHANTOM_BEAST_TETHERWOLF)
 		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
@@ -73,7 +73,7 @@ function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.CheckReleaseGroupCost(tp,Card.IsType,1,false,nil,nil,TYPE_TOKEN) end
 	local g=Duel.SelectReleaseGroupCost(tp,Card.IsType,1,1,false,nil,nil,TYPE_TOKEN)
 	Duel.Release(g,REASON_COST)
-	e:GetHandler():RegisterFlagEffect(id,RESET_PHASE+PHASE_DAMAGE_CAL,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_PHASE|PHASE_DAMAGE_CAL,0,1)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():UpdateAttack(800,RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_PHASE|PHASE_END)

@@ -38,7 +38,7 @@ function s.lvfilter(c)
 	return c:IsSetCard(SET_PENGUIN) and c:IsLevelAbove(2) and (c:IsFaceup() or c:IsLocation(LOCATION_HAND))
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then 
+	if chk==0 then
 		return Duel.IsExistingMatchingCard(s.lvfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,nil)
 			and Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil,REASON_EFFECT|REASON_DISCARD)
 	end

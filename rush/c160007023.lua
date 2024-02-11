@@ -15,9 +15,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.drop)
 	c:RegisterEffect(e1)
 end
-s.listed_names={CARD_UMI,CARD_BIG_OCEAN}
+s.listed_names={CARD_UMI,CARD_BIG_UMI}
 function s.costfilter(c)
-	return (c:IsCode(CARD_UMI) or c:IsCode(CARD_BIG_OCEAN)) and c:IsAbleToGraveAsCost()
+	return (c:IsCode(CARD_UMI) or c:IsCode(CARD_BIG_UMI)) and c:IsAbleToGraveAsCost()
 end
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end

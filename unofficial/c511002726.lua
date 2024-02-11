@@ -1,14 +1,14 @@
 --BF－隠れ蓑のスチーム (Anime)
 --Blackwing - Steam the Cloaked (Anime)
-Duel.LoadScript("c419.lua")
+Duel.EnableUnofficialProc(PROC_STATS_CHANGED)
 local s,id=GetID()
 function s.initial_effect(c)
 	--token
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(9047460,0))
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_LEAVE_FIELD)
 	e1:SetCondition(s.tkcon)
 	e1:SetTarget(s.tktg)
@@ -20,14 +20,14 @@ function s.tkcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsPreviousPosition(POS_FACEUP) and c:GetLocation()~=LOCATION_DECK
 end
 function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,9047461,0,TYPES_TOKEN,100,100,3,RACE_AQUA,ATTRIBUTE_WIND) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 end
 function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,9047461,0,TYPES_TOKEN,100,100,3,RACE_AQUA,ATTRIBUTE_WIND) then
 		local token=Duel.CreateToken(tp,9047461)
 		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
@@ -36,7 +36,7 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
 		e1:SetOperation(s.desop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		e1:SetCountLimit(1)
 		token:RegisterEffect(e1)
 		local e3=Effect.CreateEffect(c)
@@ -46,7 +46,7 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetCode(511009110)
 		e3:SetCondition(s.atkcon)
 		e3:SetOperation(s.atkop)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 		token:RegisterEffect(e3)
 	end
 end

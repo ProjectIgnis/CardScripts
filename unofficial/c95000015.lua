@@ -27,7 +27,7 @@ function s.filter(c,e,tp)
 	if e:GetHandler():IsLocation(LOCATION_HAND) then
 		ft=ft-1
 	end
-	return c:IsSpell() and c:CheckActivateEffect(false,false,false)~=nil 
+	return c:IsSpell() and c:CheckActivateEffect(false,false,false)~=nil
 		and (ft>0 or c:IsType(TYPE_FIELD))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -81,7 +81,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 		if op then op(te,tp,eg,ep,ev,re,r,rp) end
 		tc:ReleaseEffectRelation(te)
-		if etc then	
+		if etc then
 			etc=g:GetFirst()
 			while etc do
 				etc:ReleaseEffectRelation(te)

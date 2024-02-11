@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 s.toss_coin=true
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then 
+	if chk==0 then
 	return Duel.GetFieldGroupCountRush(tp,0,LOCATION_MZONE)>0
 		and e:GetHandler():GetEffectCount(EFFECT_EXTRA_ATTACK)==0
 		and Duel.IsAbleToEnterBP()

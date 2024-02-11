@@ -44,7 +44,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.thop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x21}
+s.listed_series={SET_EARTHBOUND_IMMORTAL}
 function s.indcon(e)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsLevel,10),0,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
@@ -52,20 +52,19 @@ function s.dttg(e,c)
 	return c:IsType(TYPE_SYNCHRO) and (c:IsControler(e:GetHandlerPlayer() or c:IsFaceup()))
 end
 function s.dtcon(e,c)
-	return c:IsControler(e:GetHandlerPlayer()) and c:IsSetCard(0x21)
+	return c:IsControler(e:GetHandlerPlayer()) and c:IsSetCard(SET_EARTHBOUND_IMMORTAL)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(Card.IsType,1,nil,TYPE_SYNCHRO)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x21) and c:IsSpellTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_EARTHBOUND_IMMORTAL) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if #g>0 then

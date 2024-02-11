@@ -24,7 +24,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local dcount=Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)
 	local seq=-1
 	local spcard=nil
-	for tc in aux.Next(g) do
+	for tc in g:Iter() do
 		if tc:GetSequence()>seq then
 			seq=tc:GetSequence()
 			spcard=tc
@@ -46,6 +46,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SpecialSummonComplete()
 		end
 	else
-		Duel.DiscardDeck(tp,dcount-seq,REASON_EFFECT+REASON_REVEAL)
+		Duel.DiscardDeck(tp,dcount-seq,REASON_EFFECT|REASON_EXCAVATE)
 	end
 end

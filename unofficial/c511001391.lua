@@ -44,16 +44,17 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return not e:GetHandler():IsLocation(LOCATION_DECK) end
-	if not Duel.CheckReleaseGroup(tp,nil,1,nil) then
-		Duel.SetOperationInfo(0,CATEGORY_DESTROY,e:GetHandler(),1,0,0)
+	local c=e:GetHandler()
+	if chk==0 then return not c:IsLocation(LOCATION_DECK) end
+	if not Duel.CheckReleaseGroup(tp,nil,1,c) then
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,c,1,0,0)
 	end
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsFacedown() or not c:IsRelateToEffect(e) then return end
-	if Duel.CheckReleaseGroup(tp,Card.IsReleasableByEffect,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(78371393,2)) then
-		local g=Duel.SelectReleaseGroup(tp,Card.IsReleasableByEffect,1,1,nil)
+	if Duel.CheckReleaseGroup(tp,Card.IsReleasableByEffect,1,c) and Duel.SelectYesNo(tp,aux.Stringid(78371393,2)) then
+		local g=Duel.SelectReleaseGroup(tp,Card.IsReleasableByEffect,1,1,c)
 		Duel.Release(g,REASON_EFFECT)
 	else Duel.Destroy(c,REASON_EFFECT) end
 end
@@ -64,12 +65,12 @@ function s.filter(c,e,tp)
 	return c:IsCode(4779091) and c:IsCanBeSpecialSummoned(e,0,tp,true,true)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE,0,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,e,tp):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil,e,tp):GetFirst()
 	if tc then Duel.SpecialSummon(tc,0,tp,tp,true,true,POS_FACEUP) end
 end

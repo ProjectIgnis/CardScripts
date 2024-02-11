@@ -59,7 +59,7 @@ end
 --Direct Attack Functions
 function s.rdcon(e)
 	local c=Duel.GetAttacker()
-	return c and c:GetControler()==e:GetHandlerPlayer() and Duel.GetAttackTarget()==nil 
+	return c and c:GetControler()==e:GetHandlerPlayer() and Duel.GetAttackTarget()==nil
 		and c:GetEffectCount(EFFECT_DIRECT_ATTACK)<2 and Duel.GetFieldGroupCount(e:GetHandlerPlayer(),0,LOCATION_MZONE)>0
 end
 --Special Summon Functions
@@ -93,5 +93,5 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 			sg1:Merge(sg2)
 			Duel.SpecialSummon(sg1,0,tp,tp,false,false,POS_FACEUP)
 		end
-	end	
+	end
 end

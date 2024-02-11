@@ -3,9 +3,9 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--Xyz Summon
-	Xyz.AddProcedure(c,nil,8,2)
 	c:EnableReviveLimit()
+	--Xyz Summon Procedure
+	Xyz.AddProcedure(c,nil,8,2)
 	--Inflict damage
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -28,23 +28,22 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
+	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER|TIMING_MAIN_END)
 	e2:SetCountLimit(1)
 	e2:SetCondition(function(_,tp) return Duel.IsTurnPlayer(1-tp) and Duel.IsMainPhase() end)
 	e2:SetTarget(s.rmtg)
 	e2:SetOperation(s.rmop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x167}
+s.listed_series={SET_MAGIKEY}
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	if #eg~=1 then return false end
-	local bc=eg:GetFirst()
-	local rc=bc:GetReasonCard()
-	return bc:IsPreviousControler(1-tp) and bc:IsReason(REASON_BATTLE)
-		and (rc:IsType(TYPE_NORMAL) or rc:IsSetCard(0x167)) and rc:IsControler(tp)
+	local rc,bc=Duel.GetBattleMonster(tp)
+	return rc and bc and bc:GetBaseAttack()>0
+		and (rc:IsType(TYPE_NORMAL) or rc:IsSetCard(SET_MAGIKEY)) and rc:IsControler(tp) and bc:IsPreviousControler(1-tp)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local dam=eg:GetFirst():GetBaseAttack()
+	local _,bc=Duel.GetBattleMonster(tp)
+	local dam=bc:GetBaseAttack()
 	if chk==0 then return dam>0 end
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetTargetParam(dam)
@@ -55,14 +54,14 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(p,d,REASON_EFFECT)
 end
 function s.attrfilter(c)
-	return c:IsMonster() and (c:IsType(TYPE_NORMAL) or c:IsSetCard(0x167)) and c:IsFaceup()
+	return c:IsMonster() and (c:IsType(TYPE_NORMAL) or c:IsSetCard(SET_MAGIKEY)) and c:IsFaceup()
 end
 function s.rmfilter(c,ag)
 	if not (c:IsFaceup() and c:IsAbleToRemove()) then return false end
 	return ag:IsExists(Card.IsAttribute,1,nil,c:GetAttribute())
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local ag=Duel.GetMatchingGroup(s.attrfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
+	local ag=Duel.GetMatchingGroup(s.attrfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.rmfilter(chkc,ag) end
 	if chk==0 then return Duel.IsExistingTarget(s.rmfilter,tp,0,LOCATION_MZONE,1,nil,ag)
 		and e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_EFFECT) end
@@ -73,7 +72,7 @@ end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and c:RemoveOverlayCard(tp,1,1,REASON_EFFECT) and tc:IsRelateToEffect(e) then
+	if c:IsRelateToEffect(e) and c:RemoveOverlayCard(tp,1,1,REASON_EFFECT)>0 and tc:IsRelateToEffect(e) then
 		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 	end
 end

@@ -99,7 +99,7 @@ function s.attop(e,tp,eg,ep,ev,re,r,rp)
 		{b2,aux.Stringid(id,5)})
 	local success=false
 	if op==1 then
-		success=c:RemoveOverlayCard(tp,2,2,REASON_EFFECT)
+		success=c:RemoveOverlayCard(tp,2,2,REASON_EFFECT)==2
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local dg=Duel.SelectMatchingCard(tp,s.desfilter,tp,LOCATION_ONFIELD,0,1,1,nil)

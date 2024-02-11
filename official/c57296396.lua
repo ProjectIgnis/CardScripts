@@ -1,9 +1,9 @@
 --ネムレリア・ルーヴ
---Nemurelia Louve
+--Nemleria Louve
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special Summon 1 "Nemurelia" monster or 1 Level 10 Beast from your hand or Deck
+	--Special Summon 1 "Nemleria" monster or 1 Level 10 Beast from your hand or Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -30,9 +30,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.atkdefop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_NEMURELIA}
+s.listed_series={SET_NEMLERIA}
 function s.spfilter(c,e,tp)
-	return (c:IsSetCard(SET_NEMURELIA) or (c:IsLevel(10) and c:IsRace(RACE_BEAST))) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return (c:IsSetCard(SET_NEMLERIA) or (c:IsLevel(10) and c:IsRace(RACE_BEAST))) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

@@ -26,13 +26,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ConfirmDecktop(tp,4)
 	local g=Duel.GetDecktopGroup(tp,4)
 	if #g>0 then
-		if g:GetSum(Card.GetLevel)>=11 and Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_MZONE,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+		if g:GetSum(Card.GetLevel)>=11 and Duel.IsExistingMatchingCard(nil,tp,0,LOCATION_MZONE,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-			local g2=Duel.SelectMatchingCard(tp,aux.TRUE,tp,0,LOCATION_MZONE,1,1,nil)
+			local g2=Duel.SelectMatchingCard(tp,nil,tp,0,LOCATION_MZONE,1,1,nil)
 			g2=g2:AddMaximumCheck()
-			Duel.HintSelection(g2)
+			Duel.HintSelection(g2,true)
 			Duel.Destroy(g2,REASON_EFFECT)
-			Duel.BreakEffect()
 		end
 		Duel.ShuffleDeck(tp)
 	end

@@ -1,21 +1,22 @@
 --森羅の姫芽宮
+--Sylvan Princessprite
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
-	Xyz.AddProcedure(c,nil,1,2)
 	c:EnableReviveLimit()
-	--tohand
+	--Xyz Summon Procedure
+	Xyz.AddProcedure(c,nil,1,2)
+	--Excavate the top card of your Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_DECKDES)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.cost)
+	e1:SetCost(aux.dxmcostgen(1,1,nil))
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
-	--spsummon
+	--Special Summon 1 "Sylvan" monster from the GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -28,44 +29,37 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x90}
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-end
+s.listed_series={SET_SYLVAN}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,1) 
+	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,1)
 		and Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,LOCATION_DECK,0,1,nil) end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsPlayerCanDiscardDeck(tp,1) then return end
 	Duel.ConfirmDecktop(tp,1)
-	local g=Duel.GetDecktopGroup(tp,1)
-	local tc=g:GetFirst()
-	if tc:IsType(TYPE_SPELL+TYPE_TRAP) and tc:IsAbleToHand() then
+	local tc=Duel.GetDecktopGroup(tp,1):GetFirst()
+	if tc:IsSpellTrap() and tc:IsAbleToHand() then
 		Duel.DisableShuffleCheck()
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 		Duel.ShuffleHand(tp)
 	else
 		Duel.DisableShuffleCheck()
-		Duel.SendtoGrave(tc,REASON_EFFECT+REASON_REVEAL)
+		Duel.SendtoGrave(tc,REASON_EFFECT|REASON_EXCAVATE)
 	end
 end
-function s.cfilter(c,ft)
-	return (c:IsFaceup() or c:IsLocation(LOCATION_HAND)) and c:IsRace(RACE_PLANT) and c:IsAbleToGraveAsCost()
-		and (ft>0 or c:GetSequence()<5)
+function s.cfilter(c,tp)
+	return (c:IsFaceup() or c:IsLocation(LOCATION_HAND)) and c:IsRace(RACE_PLANT)
+		and c:IsAbleToGraveAsCost() and Duel.GetMZoneCount(tp,c)>0
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local loc=LOCATION_HAND+LOCATION_MZONE
-	if ft==0 then loc=LOCATION_MZONE end
-	if chk==0 then return ft>-1 and Duel.IsExistingMatchingCard(s.cfilter,tp,loc,0,1,e:GetHandler(),ft) end
+	local c=e:GetHandler()
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,c,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,loc,0,1,1,e:GetHandler(),ft)
+	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,1,c,tp)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x90) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_SYLVAN) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end
@@ -76,7 +70,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

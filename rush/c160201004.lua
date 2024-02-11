@@ -31,6 +31,7 @@ function s.filter(c,e)
 	return c:IsRace(RACE_WARRIOR) and not c:IsImmuneToEffect(e)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local td=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	if Duel.SendtoDeck(td,nil,SEQ_DECKSHUFFLE,REASON_COST)~0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
@@ -42,7 +43,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 			e1:SetCode(EVENT_ATTACK_ANNOUNCE)
 			e1:SetOperation(s.atkop)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 			tc:RegisterEffect(e1)
 		end
 	end
@@ -55,7 +56,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(0,1)
 	e1:SetValue(s.aclimit)
 	e1:SetCondition(s.actcon)
-	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+	e1:SetReset(RESET_CHAIN)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.aclimit(e,re,tp)

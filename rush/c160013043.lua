@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,0,EFFECT_COUNT_CODE_SINGLE)
 	e2:SetCost(s.cost)
+	e2:SetTarget(s.indestg)
 	e2:SetOperation(s.indesop)
 	c:RegisterEffect(e2)
 end
@@ -42,9 +43,12 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(atkval)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_PHASE|PHASE_END)
 		c:RegisterEffect(e1)
 	end
+end
+function s.indestg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return e:GetHandler():GetEffectCount(EFFECT_INDESTRUCTABLE_EFFECT)==0 end
 end
 function s.indesop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -56,8 +60,8 @@ function s.indesop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-		e1:SetValue(function(e,te)return te:GetOwnerPlayer()~=e:GetHandlerPlayer()end)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetValue(function(e,te)return te:GetOwnerPlayer()~=e:GetOwnerPlayer()end)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		c:RegisterEffect(e1)
 		local g=Duel.GetMatchingGroup(nil,tp,LOCATION_STZONE,0,nil)
 		local g2=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(Card.IsFaceup),tp,0,LOCATION_ONFIELD,nil)
@@ -67,6 +71,6 @@ function s.indesop(e,tp,eg,ep,ev,re,r,rp)
 			sg=sg:AddMaximumCheck()
 			Duel.HintSelection(sg,true)
 			Duel.Destroy(sg,REASON_EFFECT)
-		end 
+		end
 	end
 end

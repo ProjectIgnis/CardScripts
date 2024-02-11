@@ -1,4 +1,4 @@
---Japanese name
+--ＧＰ－スター・リオン
 --Gold Pride - Star Leon
 --scripted by Naim
 local s,id=GetID()
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER|TIMING_MAIN_END)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(function() return Duel.IsMainPhase() end)
 	e1:SetTarget(s.atktg)
@@ -28,12 +28,12 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_PHASE+PHASE_END)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
-	e2:SetCondition(function(e) return e:GetHandler():GetFlagEffect(id)>0 end)
+	e2:SetCondition(function(e) return e:GetHandler():HasFlagEffect(id) end)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={23512906}
+s.listed_names={23512906} --Gold Pride - Leon
 function s.cfilter(c)
 	return c:IsFaceup() and c:GetBaseAttack()>0
 end
@@ -45,7 +45,7 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,e:GetHandler(),1,0,g:GetFirst():GetBaseAttack())
 	Duel.SetPossibleOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 	--Register that this effect was activated this turn
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,EFFECT_FLAG_OATH,1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,EFFECT_FLAG_OATH,1)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -53,7 +53,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not (tc:IsRelateToEffect(e) and tc:IsFaceup()) then return end
 	local atk=tc:GetBaseAttack()
-	if c:UpdateAttack(atk,RESET_EVENT+RESETS_STANDARD,c)==atk and Duel.GetLP(tp)<Duel.GetLP(1-tp)
+	if c:UpdateAttack(atk,RESET_EVENT|RESETS_STANDARD,c)==atk and Duel.GetLP(tp)<Duel.GetLP(1-tp)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 		Duel.BreakEffect()
 		Duel.Destroy(tc,REASON_EFFECT)

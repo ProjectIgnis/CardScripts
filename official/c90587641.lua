@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	Pendulum.AddProcedure(c,false)
 	--1 Tuner + 1+ Non-Tuner monsters
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
-	--Special Summon itself form the Pendulum Zone
+	--Special Summon itself from the Pendulum Zone
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_ATKCHANGE+CATEGORY_DISABLE)
@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetHintTiming(0,TIMING_BATTLE_START+TIMING_BATTLE_END)
+	e3:SetHintTiming(0,TIMING_BATTLE_START|TIMING_BATTLE_END)
 	e3:SetCountLimit(1)
 	e3:SetCondition(function(e) return Duel.IsBattlePhase() and e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) end)
 	e3:SetTarget(s.sptg)

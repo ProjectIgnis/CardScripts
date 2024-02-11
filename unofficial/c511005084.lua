@@ -41,14 +41,14 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetActivityCount(tp,ACTIVITY_SUMMON)==0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanSpecialSummonMonster(tp,511005082,0,TYPES_TOKEN,300,300,1,RACE_FIEND,ATTRIBUTE_DARK) 
+	if chk==0 then return Duel.IsPlayerCanSpecialSummonMonster(tp,511005082,0,TYPES_TOKEN,300,300,1,RACE_FIEND,ATTRIBUTE_DARK)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) or not Duel.IsPlayerCanSpecialSummonMonster(tp,511005082,0,TYPES_TOKEN,300,300,1,RACE_FIEND,ATTRIBUTE_DARK) 
+	if not c:IsRelateToEffect(e) or not Duel.IsPlayerCanSpecialSummonMonster(tp,511005082,0,TYPES_TOKEN,300,300,1,RACE_FIEND,ATTRIBUTE_DARK)
 		or Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local tc=Duel.CreateToken(tp,511005082)
 	if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then

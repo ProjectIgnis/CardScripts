@@ -1,14 +1,13 @@
---地縛戒隷ジオクラーケン
---Earthbound Servant Geo Kraken
-Duel.LoadScript("c420.lua")
+--地縛戒隷ジオクラーケン (Anime)
+--Earthbound Servant Geo Kraken (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx2(Card.IsEarthbound),2)
+	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_EARTHBOUND),2)
 	--destroy
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(48009503,0))
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -20,12 +19,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
 end
-s.material_setcode=0x151a
-function s.desfilter(c)
-	return c:IsStatus(STATUS_SPSUMMON_TURN)
-end
+s.material_setcode=SET_EARTHBOUND
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp and eg:IsExists(Card.IsControler,1,nil,1-tp)
+end
+function s.desfilter(c)
+	return c:IsStatus(STATUS_SPSUMMON_TURN)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.desfilter,tp,0,LOCATION_MZONE,1,nil) end

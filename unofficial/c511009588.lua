@@ -117,7 +117,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local atk=0
 	if supr_presence then
 		local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
-		if #g>0 then 
+		if #g>0 then
 			atk=g:GetSum(Card.GetAttack)
 		end
 	else
@@ -141,7 +141,7 @@ function s.distg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsNegatableMonster() end
 	local c=e:GetHandler()
 	local supr_presence=c:IsHasEffect(511009518)
-	if chk==0 then 
+	if chk==0 then
 		local tg=c:GetCardTarget()
 		if supr_presence then
 			return Duel.IsExistingMatchingCard(Card.IsNegatableMonster,tp,0,LOCATION_MZONE,1,tg)
@@ -178,7 +178,7 @@ function s.disop2(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.repfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(SET_ODD_EYES) and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and c:IsReason(REASON_BATTLE) 
+	return c:IsFaceup() and c:IsSetCard(SET_ODD_EYES) and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and c:IsReason(REASON_BATTLE)
 		and not c:IsReason(REASON_REPLACE)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -199,7 +199,7 @@ function s.valcheck(e,c)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-		e1:SetCode(21142671)
+		e1:SetCode(EFFECT_MULTIPLE_TUNERS)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)
 	end

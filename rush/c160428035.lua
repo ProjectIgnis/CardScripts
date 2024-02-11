@@ -31,6 +31,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g1=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,0,5,5,nil)
+	Duel.HintSelection(g1,true)
 	if #g1==0 then return end
 	Duel.SendtoDeck(g1,nil,SEQ_DECKTOP,REASON_EFFECT)
 	local g2=Duel.GetOperatedGroup()
@@ -42,6 +43,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 		--Effect
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		local g3=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(Card.IsAbleToDeck),tp,0,LOCATION_GRAVE,1,2,nil)
+		Duel.HintSelection(g3,true)
 		if #g3==0 then return end
 		if Duel.SendtoDeck(g3,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 then
 			local g4=Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_GRAVE,0,nil,67169062,id)

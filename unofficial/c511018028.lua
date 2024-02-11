@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetCondition(aux.bdocon)
 	e2:SetTarget(s.damtg)
 	e2:SetOperation(s.damop)
-	c:RegisterEffect(e2) 
+	c:RegisterEffect(e2)
 end
 s.material_setcode={SET_HERO,SET_ELEMENTAL_HERO}
 s.listed_series={SET_HERO,SET_ELEMENTAL_HERO}

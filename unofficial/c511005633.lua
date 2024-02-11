@@ -70,7 +70,7 @@ function s.coinop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	c:ResetFlagEffect(id)--reset coin flip description
-	local coin=Duel.TossCoin(tp,1) 
+	local coin=Duel.TossCoin(tp,1)
 	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,coin,aux.GetCoinEffectHintString(coin))-- set hint to the coin flip
 	if coin==COIN_TAILS then
 		c:RegisterFlagEffect(alias,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,0,1+((Duel.GetCurrentPhase()==PHASE_STANDBY and Duel.GetTurnPlayer()==tp) and 1 or 0))

@@ -4,8 +4,9 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
+	--Synchro Summon procedure
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTunerEx(Card.IsAttribute,ATTRIBUTE_WATER),1,99)
-	--damage
+	--Inflict 600 damage to your opponent
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DAMAGE)
@@ -17,10 +18,10 @@ function s.initial_effect(c)
 	e1:SetTarget(s.damtg)
 	e1:SetOperation(s.damop)
 	c:RegisterEffect(e1)
-	--negate
+	--Negate an opponent's card or effect and destroy that card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
-	e2:SetCategory(CATEGORY_NEGATE)
+	e2:SetCategory(CATEGORY_DISABLE+CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_CHAINING)
 	e2:SetRange(LOCATION_MZONE)
@@ -48,18 +49,19 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(p,d,REASON_EFFECT)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(nil,tp,LOCATION_MZONE,0,1,e:GetHandler())
-		and ep==1-tp and Duel.IsBattlePhase() and Duel.IsChainNegatable(ev)
+	return Duel.IsBattlePhase() and ep==1-tp and Duel.IsExistingMatchingCard(nil,tp,LOCATION_MZONE,0,1,e:GetHandler())
+		and Duel.IsChainDisablable(ev)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
-	if re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) then
+	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
+	local rc=re:GetHandler()
+	if rc:IsDestructable() and rc:IsRelateToEffect(re) then
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
 	end
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
+	if Duel.NegateEffect(ev) and re:GetHandler():IsRelateToEffect(re) then
 		Duel.Destroy(eg,REASON_EFFECT)
 	end
 end

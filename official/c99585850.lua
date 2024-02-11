@@ -3,9 +3,9 @@
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
-	--Synchro summon
 	c:EnableReviveLimit()
-	Synchro.AddProcedure(c,nil,3,3,Synchro.NonTuner(Card.IsType,TYPE_SYNCHRO),1,1)
+	--Synchro Summon Procedure
+	Synchro.AddProcedure(c,nil,3,3,Synchro.NonTuner(Card.IsType,TYPE_SYNCHRO),1,99)
 	--Must first be synchro summoned
 	local e0=Effect.CreateEffect(c)
 	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SINGLE_RANGE)
@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-	e2:SetValue(s.indval)
+	e2:SetValue(aux.indoval)
 	c:RegisterEffect(e2)
 	--Banish itself an all cards the opponent controls
 	local e3=Effect.CreateEffect(c)
@@ -64,23 +64,19 @@ function s.initial_effect(c)
 	local e6=Effect.CreateEffect(c)
 	e6:SetType(EFFECT_TYPE_SINGLE)
 	e6:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e6:SetCode(21142671)
+	e6:SetCode(EFFECT_MULTIPLE_TUNERS)
 	c:RegisterEffect(e6)
 end
 s.synchro_nt_required=1
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsType,c:GetControler(),LOCATION_GRAVE,0,nil,TYPE_TUNER)*500
 end
-function s.indval(e,re,rp)
-	return rp==1-e:GetHandlerPlayer()
-end
 function s.rmcon2(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and re:IsMonsterEffect()
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToRemove()
-		and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,nil) end
+	if chk==0 then return c:IsAbleToRemove() end
 	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,nil)
 	g:AddCard(c)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,0,0)
@@ -104,7 +100,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetFlagEffect(id)~=0 and e:GetLabel()~=Duel.GetTurnCount() and Duel.IsTurnPlayer(tp)
+	return e:GetHandler():HasFlagEffect(id) and e:GetLabel()~=Duel.GetTurnCount() and Duel.IsTurnPlayer(tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

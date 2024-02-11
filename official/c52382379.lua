@@ -1,5 +1,5 @@
 --ネムレリアの夢喰い－レヴェイユ
---Nemurelia's Dreameater - Réveil
+--Nemleria's Dreameater - Réveil
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,function(c) return not (c:IsSummonLocation(LOCATION_EXTRA) and not c:IsType(TYPE_PENDULUM)) end)
-	--Set 1 "Nemurelia" Trap from your Deck
+	--Set 1 "Nemleria" Trap from your Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -26,10 +26,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.setop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={CARD_DREAMING_NEMURELIA}
-s.listed_series={SET_NEMURELIA}
+s.listed_names={CARD_DREAMING_NEMLERIA}
+s.listed_series={SET_NEMLERIA}
 function s.rmcfilter(c)
-	return not c:IsCode(CARD_DREAMING_NEMURELIA) and c:IsAbleToRemoveAsCost(POS_FACEDOWN)
+	return not c:IsCode(CARD_DREAMING_NEMLERIA) and c:IsAbleToRemoveAsCost(POS_FACEDOWN)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0
@@ -45,7 +45,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(function(_,c) return c:IsLocation(LOCATION_EXTRA) and not c:IsType(TYPE_PENDULUM) end)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -71,7 +71,7 @@ function s.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.setfilter(c)
-	return c:IsSetCard(SET_NEMURELIA) and c:IsTrap() and c:IsSSetable()
+	return c:IsSetCard(SET_NEMLERIA) and c:IsTrap() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK,0,1,nil) end

@@ -4,7 +4,7 @@
 --updated by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
-	--send to grave
+	--Send 1 card from Deck to GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(41386308,0))
 	e1:SetCategory(CATEGORY_TOGRAVE)
@@ -13,14 +13,12 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--draw
+	--Draw 1 card when destroyed by battle
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(41386308,1))
 	e2:SetCategory(CATEGORY_DRAW)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetCode(EVENT_BATTLE_DESTROYED)
-	e2:SetCondition(s.drcon)
 	e2:SetTarget(s.drtg)
 	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
@@ -35,9 +33,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		Duel.SendtoGrave(g,REASON_EFFECT)
 	end
-end
-function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsReason(REASON_BATTLE)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end

@@ -1,7 +1,8 @@
 --魔サイの戦士
+--Fiendish Rhino Warrior
 local s,id=GetID()
 function s.initial_effect(c)
-	--indes
+	--Other fiend monsters cannot be destroyed by battle or effects
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
@@ -13,10 +14,10 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	c:RegisterEffect(e2)
-	--to grave
+	--Send 1 Fiend monster to the graveyard
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
-	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e3:SetCategory(CATEGORY_TOGRAVE)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_TO_GRAVE)

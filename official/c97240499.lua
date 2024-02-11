@@ -1,4 +1,4 @@
---Japanese name
+--渾然たる闘牛詩－オルフェブル
 --Orphebull the Harmonious Bullfighter Bard
 --Scripted by fiftyfour
 local s,id=GetID()
@@ -69,7 +69,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(hc*1000)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD&~RESET_TOFIELD)
 		c:RegisterEffect(e1)
 	end
 	if gc>0 then
@@ -78,7 +78,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_EXTRA_ATTACK_MONSTER)
 		e2:SetValue(gc-1)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD&~RESET_TOFIELD)
 		c:RegisterEffect(e2)
 	end
 	g:DeleteGroup()

@@ -15,7 +15,7 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.GetFieldCard(tp,LOCATION_FZONE,0) or not Duel.GetFieldCard(1-tp,LOCATION_FZONE,0) then return false end
 	local tc1=Duel.GetFieldCard(tp,LOCATION_FZONE,0):GetCounter(0x91)
 	local tc2=Duel.GetFieldCard(1-tp,LOCATION_FZONE,0):GetCounter(0x91)
-	return tc1-tc2>=7 or tc2-tc1>=7 
+	return tc1-tc2>=7 or tc2-tc1>=7
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

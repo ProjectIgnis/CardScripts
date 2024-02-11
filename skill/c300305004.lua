@@ -23,12 +23,12 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local hg=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	Duel.SendtoDeck(hg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT) 
+	Duel.SendtoDeck(hg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	Duel.BreakEffect()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local tc=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if Duel.SendtoHand(tc,tp,REASON_EFFECT)>0 then
-		Duel.ConfirmCards(1-tp,tc)	
+		Duel.ConfirmCards(1-tp,tc)
 		if Duel.SelectYesNo(tp,aux.Stringid(id,0)) and ft>0 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp) then
 			if ft>1 and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=2 end
 			if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
@@ -81,7 +81,7 @@ function s.thfilter(c)
 	return c:IsLevel(11) and c:IsAbleToHand()
 end
 function s.spfilter(c,e,tp)
-	return c:IsLevel(7) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) 
+	return c:IsLevel(7) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.check(sg,e,tp,mg)
 	return sg:GetClassCount(Card.GetAttribute)==2

@@ -45,46 +45,44 @@ function s.initial_effect(c)
 	e3:SetLabelObject(e2)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x168}
+s.listed_series={SET_GUNKAN}
 s.listed_names={CARD_SUSHIP_SHARI,CARD_SUSHIP_SHIRAUO}
 function s.contcon(e)
 	return Duel.IsExistingMatchingCard(Card.IsFaceup,0,LOCATION_FZONE,LOCATION_FZONE,1,nil)
 end
 function s.conttg(e,c)
-	return c:IsSetCard(0x168) and c:IsSummonLocation(LOCATION_EXTRA)
+	return c:IsSetCard(SET_GUNKAN) and c:IsSummonLocation(LOCATION_EXTRA)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ) and e:GetLabel()>0
 end
 function s.sfilter(c)
-	return c:IsSetCard(0x168) and c:IsType(TYPE_SPELL|TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSetCard(SET_GUNKAN) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.regtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local effs=e:GetLabel()
-	if chk==0 then
-		return ((effs&1)==0 or Duel.IsPlayerCanDraw(tp,1)) and
-		       ((effs&(1<<1))==0 or Duel.IsExistingMatchingCard(s.sfilter,tp,LOCATION_DECK,0,1,nil))
+	if chk==0 then return ((effs&1)>0 and Duel.IsPlayerCanDraw(tp,1))
+		or ((effs&2)>0 and Duel.IsExistingMatchingCard(s.sfilter,tp,LOCATION_DECK,0,1,nil))
 	end
 	local cat=0
-	if (effs&1)~=0 then
+	if (effs&1)>0 then
 		cat=CATEGORY_DRAW
 		Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 	end
-	if (effs&(1<<1))~=0 then
-		cat=cat+CATEGORY_TOHAND+CATEGORY_SEARCH
+	if (effs&2)>0 then
+		cat=cat|CATEGORY_TOHAND|CATEGORY_SEARCH
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 	end
 	e:SetCategory(cat)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	local effs=e:GetLabel()
 	--"Gukan Suship Shari": Draw 1 card.
-	if (effs&1)~=0 then
+	if (effs&1)>0 then
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end
-	--"Gukan Suship Sharauo": Add 1 "Gunkan" Spell/Trap from your Deck to your hand.
-	if (effs&(1<<1))~=0 then
+	--"Gukan Suship Shirauo": Add 1 "Gunkan" Spell/Trap from your Deck to your hand.
+	if (effs&2)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,s.sfilter,tp,LOCATION_DECK,0,1,1,nil)
 		if #g>0 then
@@ -97,8 +95,8 @@ function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	local effs=0
 	--Check for "Gukan Suship Shari":
-	if g:IsExists(Card.IsCode,1,nil,CARD_SUSHIP_SHARI) then effs=1 end
+	if g:IsExists(Card.IsCode,1,nil,CARD_SUSHIP_SHARI) then effs=effs|1 end
 	--Check for "Gukan Suship Shirauo":
-	if g:IsExists(Card.IsCode,1,nil,CARD_SUSHIP_SHIRAUO) then effs=effs|(1<<1) end
+	if g:IsExists(Card.IsCode,1,nil,CARD_SUSHIP_SHIRAUO) then effs=effs|2 end
 	e:GetLabelObject():SetLabel(effs)
 end

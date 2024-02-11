@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_names={160301010}
+s.listed_names={CARD_STRAYNGE_CAT}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==1
 end
@@ -22,7 +22,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
 end
 function s.thfilter(c)
-	return c:IsCode(160301010) and c:IsAbleToHand()
+	return c:IsCode(CARD_STRAYNGE_CAT) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,e:GetHandler()) end
@@ -46,7 +46,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetProperty(EFFECT_FLAG_OATH)
 				e1:SetTargetRange(LOCATION_MZONE,0)
 				e1:SetTarget(s.ftarget)
-				e1:SetReset(RESET_PHASE+PHASE_END)
+				e1:SetReset(RESET_PHASE|PHASE_END)
 				Duel.RegisterEffect(e1,tp)
 			end
 		end

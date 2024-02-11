@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.drwop)
 	c:RegisterEffect(e1)
 end
-s.material_setcode={0x93,0x1093}
+s.material_setcode={SET_CYBER,SET_CYBER_DRAGON}
 function s.drwcond(e,tp,eg,ep,ev,re,r,rp,chk)
 	return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
 end

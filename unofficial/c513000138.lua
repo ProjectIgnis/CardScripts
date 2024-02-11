@@ -4,7 +4,7 @@
 --scripted by MLD
 --credit to TPD & Cybercatman
 --updated by Larry126
-Duel.LoadScript("c421.lua")
+Duel.EnableUnofficialProc(PROC_DIVINE_HIERARCHY)
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon with 3 tribute
@@ -33,7 +33,7 @@ function s.filter(c)
 end
 function s.adval(e,c)
 	local g=Duel.GetMatchingGroup(s.filter,0,LOCATION_MZONE,LOCATION_MZONE,nil)
-	if #g==0 then 
+	if #g==0 then
 		return 1
 	else
 		local tg,val=g:GetMaxGroup(Card.GetAttack)

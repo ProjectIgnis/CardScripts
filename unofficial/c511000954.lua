@@ -60,14 +60,13 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.revcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=1
+	return Duel.IsTurnPlayer(1-tp) and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=1
 end
 function s.revcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end
-	Duel.RegisterFlagEffect(tp,id,RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END,0,0)
+	Duel.RegisterFlagEffect(tp,id,RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_PHASE|PHASE_END,0,0)
 end
 function s.revop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.DisableShuffleCheck()
 	Duel.ConfirmDecktop(1-tp,1)
 	local g=Duel.GetDecktopGroup(1-tp,1)
@@ -80,15 +79,16 @@ function s.revop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.ShuffleHand(1-tp)
 		end
 	elseif tc:IsTrap() then
-		Duel.DiscardDeck(1-tp,1,REASON_EFFECT+REASON_REVEAL+REASON_DISCARD)
+		Duel.DiscardDeck(1-tp,1,REASON_EFFECT|REASON_DISCARD|REASON_EXCAVATE)
 		local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
 		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_DISCARD)
 		local sg=g:Select(1-tp,1,1,nil)
-		Duel.SendtoGrave(sg,REASON_EFFECT+REASON_DISCARD)
+		Duel.SendtoGrave(sg,REASON_EFFECT|REASON_DISCARD)
 	else
 		if tc:IsAbleToHand() then
 			Duel.SendtoHand(tc,nil,REASON_EFFECT)
 			Duel.ConfirmCards(tp,tc)
+			Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_TODECK)
 			local hg=Duel.SelectMatchingCard(1-tp,Card.IsAbleToDeck,1-tp,LOCATION_HAND,0,1,1,tc)
 			Duel.SendtoDeck(hg,nil,0,REASON_EFFECT)
 			Duel.BreakEffect()

@@ -16,7 +16,7 @@ end
 s.listed_names={CARD_NEOS}
 function s.tgfilter(c,tp,ac)
 	return c:IsFaceup() and c:IsCode(CARD_NEOS) and c:IsAbleToDeck()
-		and Duel.IsExistingMatchingCard(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,2,Group.FromCards(c,ac))
+		and Duel.IsExistingMatchingCard(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,Group.FromCards(c,ac))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()

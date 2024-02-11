@@ -30,7 +30,7 @@ function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and
-		Duel.GetMatchingGroupCount(Card.IsType,tp,0,LOCATION_ONFIELD,nil,TYPE_SPELL+TYPE_TRAP)>Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_ONFIELD,0,nil,TYPE_SPELL+TYPE_TRAP)
+		Duel.GetMatchingGroupCount(Card.IsSpellTrap,tp,0,LOCATION_ONFIELD,nil)>Duel.GetMatchingGroupCount(Card.IsSpellTrap,tp,LOCATION_ONFIELD,0,nil)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_JINZO),tp,LOCATION_ONFIELD,0,1,nil)
@@ -48,14 +48,17 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
 	if d:IsRelateToBattle() and d:IsControler(1-tp) and d:IsRelateToEffect(e) and not d:IsImmuneToEffect(e) then
-		if not Duel.MoveToField(d,tp,1-tp,LOCATION_SZONE,POS_FACEUP,true) then return end
-		--Treated as a Continuous Trap
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetCode(EFFECT_CHANGE_TYPE)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
-		e1:SetValue(TYPE_TRAP+TYPE_CONTINUOUS)
-		d:RegisterEffect(e1)
+		if Duel.GetLocationCount(1-tp,LOCATION_SZONE)==0 then
+			Duel.SendtoGrave(d,REASON_RULE,nil,PLAYER_NONE)
+		elseif Duel.MoveToField(d,tp,1-tp,LOCATION_SZONE,POS_FACEUP,true) then
+			--Treated as a Continuous Trap
+			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetCode(EFFECT_CHANGE_TYPE)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD&~RESET_TURN_SET)
+			e1:SetValue(TYPE_TRAP|TYPE_CONTINUOUS)
+			d:RegisterEffect(e1)
+		end
 	end
 end

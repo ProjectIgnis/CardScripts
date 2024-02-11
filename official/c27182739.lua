@@ -20,11 +20,10 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCode(EFFECT_NONTUNER)
-	e2:SetValue(function(_,sc) return sc and sc:IsSetCard(SET_MATHMECH) end)
+	e2:SetValue(function(e,sc) return sc:IsSetCard(SET_MATHMECH) end)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_MATHMECH}
-
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_EMZONE,0)==0
 end

@@ -51,14 +51,14 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.rmvfilter(c,tp)
 	if not (c:IsSetCard({SET_TELLARKNIGHT,SET_CONSTELLAR}) and c:IsAbleToRemoveAsCost()
-		and c:IsHasEffect(id)) then 
+		and c:IsHasEffect(id)) then
 		return false
 	end
 	local eff=c:GetCardEffect(id)
 	local te=eff:GetLabelObject()
 	local con=te:GetCondition()
 	local tg=te:GetTarget()
-	if (not con or con(te,tp,Group.CreateGroup(),PLAYER_NONE,0,eff,REASON_EFFECT,PLAYER_NONE,0)) 
+	if (not con or con(te,tp,Group.CreateGroup(),PLAYER_NONE,0,eff,REASON_EFFECT,PLAYER_NONE,0))
 		and (not tg or tg(te,tp,Group.CreateGroup(),PLAYER_NONE,0,eff,REASON_EFFECT,PLAYER_NONE,0)) then
 		return true
 	end
@@ -71,7 +71,7 @@ function s.applycost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local sc=Duel.SelectMatchingCard(tp,s.rmvfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,1,nil,tp):GetFirst()
 	Duel.Remove(sc,POS_FACEUP,REASON_COST)
-	sc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_CHAIN,0,1)
+	sc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_CHAIN,0,1)
 	e:SetLabelObject(sc:GetCardEffect(id):GetLabelObject())
 	c:RemoveOverlayCard(tp,1,1,REASON_COST)
 end

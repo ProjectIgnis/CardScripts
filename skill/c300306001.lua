@@ -12,7 +12,7 @@ function s.opfilter(c)
 	return c:IsMonster() and c:IsFaceup() and (c:HasNonZeroAttack() or c:HasNonZeroDefense())
 end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
-	return aux.CanActivateSkill(tp) and Duel.GetFlagEffect(tp,id)==0 and Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil) and Duel.IsExistingMatchingCard(s.opfilter,tp,0,LOCATION_MZONE,1,nil) 
+	return aux.CanActivateSkill(tp) and Duel.GetFlagEffect(tp,id)==0 and Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil) and Duel.IsExistingMatchingCard(s.opfilter,tp,0,LOCATION_MZONE,1,nil)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
@@ -46,7 +46,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
  				e1:SetValue(-atk)
  				e1:SetReset(RESET_EVENT|RESETS_STANDARD)
  				tc:RegisterEffect(e1)
- 		
+
  			end
  		end
  	end

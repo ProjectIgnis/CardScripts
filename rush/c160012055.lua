@@ -27,7 +27,7 @@ function s.tdfilter2(c,code)
 	return c:IsAbleToDeck() and c:IsMonster() and not c:IsCode(code)
 end
 function s.tdfilter3(c)
-	return c:IsMonster() and c:IsAbleToDeck() 
+	return c:IsMonster() and c:IsAbleToDeck()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tdfilter,tp,0,LOCATION_GRAVE,1,nil,tp) end
@@ -47,7 +47,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local sg=aux.SelectUnselectGroup(dg,e,tp,2,7,aux.dncheck,1,tp,HINTMSG_TODECK)
 	if #sg==0 then return end
 	Duel.HintSelection(sg,true)
-	if Duel.SendtoDeck(sg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>=6 
+	if Duel.SendtoDeck(sg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>=6
 		and Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.shufflefilter),tp,0,LOCATION_MZONE,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)

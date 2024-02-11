@@ -69,7 +69,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local e4=e1:Clone()
 	e4:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
 	Duel.RegisterEffect(e4,tp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_MECHA_PHANTOM_BEAST,SET_MECHA_PHANTOM_BEAST,TYPES_TOKEN,0,0,3,RACE_MACHINE,ATTRIBUTE_WIND) then
 		local token=Duel.CreateToken(tp,TOKEN_MECHA_PHANTOM_BEAST)
 		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)

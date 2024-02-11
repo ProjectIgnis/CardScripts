@@ -1,4 +1,4 @@
---Japanese name
+--ゴーティスの紅玉ゼップ
 --Zep, Ruby of the Ghoti
 --scripted by Naim
 local s,id=GetID()

@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_PHASE+PHASE_BATTLE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
-	e2:SetCondition(s.grcon)
+	e2:SetCondition(function(e) return e:GetHandler():HasFlagEffect(id) end)
 	e2:SetTarget(s.grtg)
 	e2:SetOperation(s.grop)
 	c:RegisterEffect(e2)
@@ -64,9 +64,6 @@ function s.exop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE,0,1)
-end
-function s.grcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetFlagEffect(id)~=0
 end
 function s.rmfilter(c,tp)
 	return c:IsAbleToRemove(tp,POS_FACEDOWN) and aux.SpElimFilter(c)

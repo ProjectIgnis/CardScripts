@@ -45,15 +45,15 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsTurnPlayer(tp) and Duel.IsBattlePhase() then
 		e1:SetLabel(Duel.GetTurnCount())
 		e1:SetCondition(function(e) return Duel.GetTurnCount()~=e:GetLabel() end)
-		e1:SetReset(RESET_PHASE+PHASE_BATTLE+RESET_SELF_TURN,2)
+		e1:SetReset(RESET_PHASE|PHASE_BATTLE|RESET_SELF_TURN,2)
 	else
-		e1:SetReset(RESET_PHASE+PHASE_BATTLE+RESET_SELF_TURN,1)
+		e1:SetReset(RESET_PHASE|PHASE_BATTLE|RESET_SELF_TURN,1)
 	end
 	Duel.RegisterEffect(e1,tp)
 	--Special Summon itself and end the Battle Phase
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 then
 		Duel.BreakEffect()
-		Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
+		Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE|PHASE_BATTLE_STEP,1)
 	end
 end
 function s.thfilter(c)

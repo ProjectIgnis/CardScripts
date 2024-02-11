@@ -15,7 +15,7 @@ end
 s.listed_names={CARD_SUMMONED_SKULL}
 function s.filter(c,tp)
 	return c:IsFaceup() and (c:IsCode(CARD_SUMMONED_SKULL) or c:IsRace(RACE_THUNDER))
-		and Duel.IsExistingMatchingCard(s.desfilter,tp,0,LOCATION_MZONE,1,nil,c:GetAttack()) 
+		and Duel.IsExistingMatchingCard(s.desfilter,tp,0,LOCATION_MZONE,1,nil,c:GetAttack())
 end
 function s.desfilter(c,atk)
 	return c:IsMonster() and c:IsFaceup() and c:HasDefense() and c:IsDefenseBelow(atk)
@@ -36,6 +36,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
 	e1:SetTargetRange(1,0)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end

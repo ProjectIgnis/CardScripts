@@ -73,13 +73,13 @@ function s.actfilter(c,tp,eg,ep,ev,re,r,rp)
 	local condition=te:GetCondition()
 	local cost=te:GetCost()
 	local target=te:GetTarget()
-	return c:IsSpell() and c:IsType(TYPE_CONTINUOUS) and (not condition or condition(te,tp,eg,ep,ev,re,r,rp)) 
+	return c:IsSpell() and c:IsType(TYPE_CONTINUOUS) and (not condition or condition(te,tp,eg,ep,ev,re,r,rp))
 		and (not cost or cost(te,tp,eg,ep,ev,re,r,rp,0))
 		and (not target or target(te,tp,eg,ep,ev,re,r,rp,0))
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then return chkc:IsLocation(LOCATION_SZONE) and chkc:IsControler(tp) and s.thfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.thfilter,tp,LOCATION_SZONE,0,1,nil) 
+	if chk==0 then return Duel.IsExistingTarget(s.thfilter,tp,LOCATION_SZONE,0,1,nil)
 		and Duel.IsExistingMatchingCard(s.actfilter,tp,LOCATION_HAND,0,1,nil,tp,eg,ep,ev,re,r,rp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectTarget(tp,s.thfilter,tp,LOCATION_SZONE,0,1,1,nil)

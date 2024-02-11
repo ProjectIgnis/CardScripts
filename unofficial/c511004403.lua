@@ -1,7 +1,7 @@
 --ＳＲシュリケーンハリケーン
 --Speedroid Shuriken Hurricane
 --fixed by MLD
-Duel.LoadScript("c419.lua")
+Duel.EnableUnofficialProc(PROC_STATS_CHANGED)
 local s,id=GetID()
 function s.initial_effect(c)
 	--active
@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--damage reflect
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_CHAINING)
 	e2:SetRange(LOCATION_SZONE)
@@ -20,6 +21,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--change damage
 	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_DAMAGE)
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -39,9 +41,9 @@ function s.initial_effect(c)
 	e4:SetCondition(s.descon)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x2016}
+s.listed_series={SET_SPEEDROID}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x2016)
+	return c:IsFaceup() and c:IsSetCard(SET_SPEEDROID)
 end
 function s.descon(e)
 	return not Duel.IsExistingMatchingCard(s.filter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)

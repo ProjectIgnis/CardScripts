@@ -1,4 +1,4 @@
---Japanese name
+--魔風衝撃波
 --Double Attack! Wind and Thunder!!
 --scripted by Naim
 local s,id=GetID()

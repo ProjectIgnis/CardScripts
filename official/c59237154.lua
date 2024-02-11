@@ -2,11 +2,12 @@
 --Shifting Shadows
 local s,id=GetID()
 function s.initial_effect(c)
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--shuffle
+	--Shuffle your face-down monsters
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -25,7 +26,6 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFacedown,tp,LOCATION_MMZONE,0,2,nil) end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local g=Duel.GetMatchingGroup(Card.IsFacedown,tp,LOCATION_MMZONE,0,nil)
 	Duel.ShuffleSetCard(g)
 end

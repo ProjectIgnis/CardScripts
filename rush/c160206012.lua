@@ -28,7 +28,7 @@ function s.filter(c)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
-	 Duel.PayLPCost(tp,700) 
+	 Duel.PayLPCost(tp,700)
 	--Effect
 	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<4 then return end
 	Duel.ConfirmDecktop(tp,4)

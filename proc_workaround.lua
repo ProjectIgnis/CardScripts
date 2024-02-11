@@ -1,16 +1,29 @@
 --Utilities to be added to the core
---Raise the EVENT_TOHAND_CONFIRM event when a card in the hand is revealed (used by "Puppet King" and "Puppet Queen")
-Duel.ConfirmCards=(function()
-	local oldfunc=Duel.ConfirmCards
-	return function(tp,obj,...)
-		local res=oldfunc(tp,obj,...)
-		local handg=Group.CreateGroup():Merge(obj):Match(Card.IsLocation,nil,LOCATION_HAND)
-		if Duel.CheckEvent(EVENT_TO_HAND) and #handg>0 then
-			Duel.RaiseEvent(handg,EVENT_TOHAND_CONFIRM,nil,0,tp,tp,0)
+
+--[[
+	If called while an effect isn't resolving (e.g. a regular Xyz Summon or through an effect like "Wonder Xyz") then proceed as usual with the attaching.
+	If called while an effect is resolving treat it as attaching by card effect and handle the relevant rulings.
+	Attaching by card effect is ruled to affect both the Xyz Monster and the cards that are to be attached.
+	Return early if the Xyz Monster is unaffected by the currently resolving effect.
+	Remove any cards that are unaffected by the currently resolving effect from the group of cards to be attached.
+	If all the cards to be attached are unaffected by the currently resolving effect then return early.
+	Proceed as usual with the attaching otherwise.
+Duel.Overlay=(function()
+	local oldfunc=Duel.Overlay
+	return function(xyz_monster,xyz_mats,send_to_grave)
+		if not Duel.IsChainSolving() then return oldfunc(xyz_monster,xyz_mats,send_to_grave) end
+		local trig_eff=Duel.GetChainInfo(0,CHAININFO_TRIGGERING_EFFECT)
+		if xyz_monster:IsImmuneToEffect(trig_eff) then return end
+		if type(xyz_mats)=="Group" then
+			xyz_mats:Match(aux.NOT(Card.IsImmuneToEffect),nil,trig_eff)
+			if #xyz_mats==0 then return end
+		elseif type(xyz_mats)=="Card" and xyz_mats:IsImmuneToEffect(trig_eff) then
+			return
 		end
-		return res
+		return oldfunc(xyz_monster,xyz_mats,send_to_grave)
 	end
 end)()
+--]]
 
 --Remove counter from only 1 card if it is the only card with counter
 local p_rem=Duel.RemoveCounter
@@ -154,7 +167,7 @@ function Duel.CheckReleaseGroupCost(tp,f,minc,maxc,use_hand,check,ex,...)
 		maxc,use_hand,check,ex=minc,maxc,use_hand,check
 	end
 	if not ex then ex=Group.CreateGroup() end
-	local mg=Duel.GetReleaseGroup(tp,use_hand):Match(f and f or aux.TRUE,ex,table.unpack(params))
+	local mg=Duel.GetReleaseGroup(tp,use_hand):Match(f or aux.TRUE,ex,table.unpack(params))
 	local g,exg=mg:Split(Auxiliary.ReleaseCostFilter,nil,tp)
 	local specialchk=Auxiliary.MakeSpecialCheck(check,tp,exg,table.unpack(params))
 	local mustg=g:Match(function(c,tp)return c:IsHasEffect(EFFECT_EXTRA_RELEASE) and c:IsControler(1-tp)end,nil,tp)
@@ -163,7 +176,7 @@ function Duel.CheckReleaseGroupCost(tp,f,minc,maxc,use_hand,check,ex,...)
 end
 function Duel.SelectReleaseGroupCost(tp,f,minc,maxc,use_hand,check,ex,...)
 	if not ex then ex=Group.CreateGroup() end
-	local mg=Duel.GetReleaseGroup(tp,use_hand):Match(f and f or aux.TRUE,ex,...)
+	local mg=Duel.GetReleaseGroup(tp,use_hand):Match(f or aux.TRUE,ex,...)
 	local g,exg=mg:Split(Auxiliary.ReleaseCostFilter,nil,tp)
 	local specialchk=Auxiliary.MakeSpecialCheck(check,tp,exg,...)
 	local mustg=g:Match(function(c,tp)return c:IsHasEffect(EFFECT_EXTRA_RELEASE) and c:IsControler(1-tp)end,nil,tp)

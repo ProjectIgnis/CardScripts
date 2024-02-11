@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
-	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER|TIMING_MAIN_END)
 	e1:SetTarget(s.immtg)
 	e1:SetOperation(s.immop)
 	c:RegisterEffect(e1)
@@ -71,7 +71,7 @@ function s.immop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.remtg(e,c,rp,r,re)
 	local tp=e:GetHandlerPlayer()
-	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and rp==1-tp and r==REASON_EFFECT
+	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and rp==1-tp and r&REASON_EFFECT~=0
 end
 function s.spconfilter(c,tp)
 	return c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp

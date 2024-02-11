@@ -13,7 +13,7 @@ function s.initial_effect(c)
 		ge2:SetTarget(s.mttg)
 		ge2:SetValue(s.mtval)
 		Duel.RegisterEffect(ge2,0)
-	end)	
+	end)
 end
 s.listed_names={80604091,78010363}
 s.illegal=true

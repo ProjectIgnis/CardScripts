@@ -2,56 +2,53 @@
 --Vylon Omega
 local s,id=GetID()
 function s.initial_effect(c)
-	--synchro summon
 	c:EnableReviveLimit()
-	Synchro.AddProcedure(c,nil,2,2,Synchro.NonTunerEx(Card.IsSetCard,0x30),1,1)
-	--destroy
+	--Synchro Summon Procedure
+	Synchro.AddProcedure(c,nil,2,2,Synchro.NonTunerEx(Card.IsSetCard,SET_VYLON),1,1)
+	--Destroy all Normal Summoned/Set monsters
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_DESTROY)
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e1:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) end)
+	e1:SetTarget(s.destg)
+	e1:SetOperation(s.desop)
+	c:RegisterEffect(e1)
+	--Equip 1 "Vylon" monster to itself
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetCategory(CATEGORY_DESTROY)
-	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e2:SetCondition(s.descon)
-	e2:SetTarget(s.destg)
-	e2:SetOperation(s.desop)
+	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetCategory(CATEGORY_EQUIP)
+	e2:SetType(EFFECT_TYPE_IGNITION)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCountLimit(1)
+	e2:SetTarget(s.eqtg)
+	e2:SetOperation(s.eqop)
 	c:RegisterEffect(e2)
-	--equip
+	aux.AddEREquipLimit(c,nil,s.eqval,s.equipop,e2)
+	--Negate the activation of a monster's effect
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,1))
-	e3:SetCategory(CATEGORY_EQUIP)
-	e3:SetType(EFFECT_TYPE_IGNITION)
+	e3:SetDescription(aux.Stringid(id,2))
+	e3:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
+	e3:SetType(EFFECT_TYPE_QUICK_O)
+	e3:SetCode(EVENT_CHAINING)
+	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCountLimit(1)
-	e3:SetTarget(s.eqtg)
-	e3:SetOperation(s.eqop)
+	e3:SetCondition(s.discon)
+	e3:SetCost(s.discost)
+	e3:SetTarget(s.distg)
+	e3:SetOperation(s.disop)
 	c:RegisterEffect(e3)
-	aux.AddEREquipLimit(c,nil,s.eqval,s.equipop,e3)
-	--negate
-	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(id,2))
-	e4:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
-	e4:SetType(EFFECT_TYPE_QUICK_O)
-	e4:SetCode(EVENT_CHAINING)
-	e4:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
-	e4:SetRange(LOCATION_MZONE)
-	e4:SetCondition(s.discon)
-	e4:SetCost(s.discost)
-	e4:SetTarget(s.distg)
-	e4:SetOperation(s.disop)
-	c:RegisterEffect(e4)
-	--double tuner
+	--Multiple tuners
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE)
 	e5:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e5:SetCode(21142671)
+	e5:SetCode(EFFECT_MULTIPLE_TUNERS)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x30}
+s.listed_series={SET_VYLON}
 function s.eqval(ec,c,tp)
-	return ec:IsControler(tp) and ec:IsSetCard(0x30)
-end
-function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO
+	return ec:IsControler(tp) and ec:IsSetCard(SET_VYLON)
 end
 function s.desfilter(c)
 	return c:IsFaceup() and (c:GetSummonType()&SUMMON_TYPE_NORMAL)~=0
@@ -68,7 +65,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.eqfilter(c)
-	return c:IsSetCard(0x30) and c:IsMonster() and not c:IsForbidden()
+	return c:IsSetCard(SET_VYLON) and c:IsMonster() and not c:IsForbidden()
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
@@ -84,12 +81,12 @@ end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		s.equipop(c,e,tp,tc)
 	end
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and re:IsActiveType(TYPE_MONSTER)
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and re:IsMonsterEffect()
 		and Duel.IsChainNegatable(ev)
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)

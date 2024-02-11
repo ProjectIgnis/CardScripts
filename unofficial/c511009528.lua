@@ -81,7 +81,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local sg=Group.CreateGroup()
-	if Duel.CheckReleaseGroup(tp,s.costfilter,1,nil,tp,sg,c) and e:GetHandler():IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,true) 
+	if Duel.CheckReleaseGroup(tp,s.costfilter,1,nil,tp,sg,c) and e:GetHandler():IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,true)
 		and c:CheckFusionMaterial() and Duel.SelectEffectYesNo(tp,c,aux.Stringid(id,0)) then
 		while #sg<2 do
 			local g=Duel.SelectReleaseGroup(tp,s.costfilter,1,1,sg,tp,sg,c)
@@ -101,7 +101,7 @@ function s.cpcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE|LOCATION_GRAVE) and chkc:IsMonster() end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsMonster,tp,LOCATION_GRAVE|LOCATION_MZONE,LOCATION_GRAVE|LOCATION_MZONE,1,nil) 
+	if chk==0 then return Duel.IsExistingTarget(Card.IsMonster,tp,LOCATION_GRAVE|LOCATION_MZONE,LOCATION_GRAVE|LOCATION_MZONE,1,nil)
 		and e:GetHandler():GetFlagEffect(id+1)==0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,Card.IsMonster,tp,LOCATION_GRAVE|LOCATION_MZONE,LOCATION_GRAVE|LOCATION_MZONE,1,1,nil)

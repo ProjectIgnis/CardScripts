@@ -16,21 +16,14 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCode(EVENT_PHASE+PHASE_END)
 	e2:SetCountLimit(1)
-	e2:SetCondition(s.condition)
-	e2:SetCost(s.cost)
+	e2:SetCondition(function(e) return e:GetHandler():HasFlagEffect(id) end)
+	e2:SetCost(aux.selfreleasecost)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
 function s.sumsuc(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD&~(RESET_TEMP_REMOVE|RESET_TURN_SET)|RESET_PHASE|PHASE_END,0,1)
-end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetFlagEffect(id)~=0
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,5) end
@@ -52,6 +45,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			Duel.ShuffleHand(tp)
 			g:Sub(sg)
 		end
-		Duel.SendtoGrave(g,REASON_EFFECT+REASON_REVEAL)
+		Duel.SendtoGrave(g,REASON_EFFECT|REASON_EXCAVATE)
 	end
 end

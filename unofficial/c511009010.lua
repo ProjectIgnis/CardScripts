@@ -68,7 +68,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(Card.IsFaceup,nil)
 	local tc=g:GetFirst()
 	while tc do
-		tc:AddCounter(0x1109,tc:GetLevel())	
+		tc:AddCounter(0x1109,tc:GetLevel())
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SELF_DESTROY)

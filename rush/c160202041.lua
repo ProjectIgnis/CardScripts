@@ -26,7 +26,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for level 8 or lower attack position monsters
 function s.desfilter(c)
-	return c:IsAttackPos() and c:IsLevelBelow(8)
+	return c:IsAttackPos() and c:IsLevelBelow(8) and c:IsNotMaximumModeSide()
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -39,7 +39,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if #g>0 then
 		ct=Duel.Destroy(g,REASON_EFFECT)
-		if ct>0 then 
+		if ct>0 then
 			Duel.BreakEffect()
 			Duel.DiscardDeck(tp,ct,REASON_EFFECT)
 			Duel.DiscardDeck(1-tp,ct,REASON_EFFECT)

@@ -33,11 +33,11 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_SPRINGANS,SET_THERION}
 function s.ovfilter(c,tp,lc)
-	return c:IsFaceup() and c:IsSetCard(SET_SPRINGANS,lc,SUMMON_TYPE_XYZ,tp)  and c:IsType(TYPE_XYZ,lc,SUMMON_TYPE_XYZ,tp)
+	return c:IsFaceup() and c:IsSetCard(SET_SPRINGANS,lc,SUMMON_TYPE_XYZ,tp) and c:IsType(TYPE_XYZ,lc,SUMMON_TYPE_XYZ,tp)
 end
 function s.xyzop(e,tp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 	return true
 end
 function s.thfilter(c)

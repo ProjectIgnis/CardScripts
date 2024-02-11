@@ -37,7 +37,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ClearTargetCard()
 	if tg then tg(e,tp,eg,ep,ev,re,r,rp,1) end
 	Duel.BreakEffect()
-	if op then op(e,tp,eg,ep,ev,re,r,rp) end 
+	if op then op(e,tp,eg,ep,ev,re,r,rp) end
 	if tc:IsType(TYPE_EQUIP+TYPE_CONTINUOUS) then
 		local code=tc:GetOriginalCode()
 		c:CopyEffect(code,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET,1)

@@ -15,8 +15,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={CARD_SUMMONED_SKULL}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,70781052),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_SUMMONED_SKULL),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.cfilter(c)
 	return c:IsRace(RACE_FIEND) and c:IsAbleToGraveAsCost()
@@ -25,7 +26,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsLevelBelow(8) and c:IsAttackPos()
+	return c:IsFaceup() and c:IsLevelBelow(8) and c:IsAttackPos() and c:IsNotMaximumModeSide()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil) end
@@ -46,7 +47,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_OATH)
 		e1:SetTargetRange(LOCATION_MZONE,0)
 		e1:SetTarget(s.ftarget)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 	end
 end

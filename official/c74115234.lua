@@ -1,30 +1,32 @@
 --八尺勾玉
+--Orb of Yasaka
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsType,TYPE_SPIRIT))
-	--recover
+	--Gain LP equal to the damage the equipped monster inflicts
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+	e1:SetCategory(CATEGORY_RECOVER)
+	e1:SetCode(EVENT_BATTLE_DESTROYING)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetRange(LOCATION_SZONE)
+	e1:SetCondition(s.recon)
+	e1:SetTarget(s.retg)
+	e1:SetOperation(s.reop)
+	c:RegisterEffect(e1)
+	--Return this card to the hand
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e2:SetCategory(CATEGORY_RECOVER)
-	e2:SetCode(EVENT_BATTLE_DESTROYING)
-	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e2:SetRange(LOCATION_SZONE)
-	e2:SetCondition(s.recon)
-	e2:SetTarget(s.retg)
-	e2:SetOperation(s.reop)
+	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e2:SetCategory(CATEGORY_TOHAND)
+	e2:SetCode(EVENT_TO_GRAVE)
+	e2:SetCondition(s.retcon)
+	e2:SetTarget(s.rettg)
+	e2:SetOperation(s.retop)
 	c:RegisterEffect(e2)
-	--tohand
-	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(id,1))
-	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e4:SetCategory(CATEGORY_TOHAND)
-	e4:SetCode(EVENT_TO_GRAVE)
-	e4:SetCondition(s.retcon)
-	e4:SetTarget(s.rettg)
-	e4:SetOperation(s.retop)
-	c:RegisterEffect(e4)
 end
+s.listed_card_types={TYPE_SPIRIT}
 function s.recon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=eg:GetFirst()
 	local bc=ec:GetBattleTarget()
@@ -41,7 +43,6 @@ function s.retg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,v)
 end
 function s.reop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Recover(p,d,REASON_EFFECT)
 end

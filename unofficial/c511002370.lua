@@ -1,10 +1,11 @@
---馬頭鬼
-Duel.LoadScript("c419.lua")
+--馬頭鬼 (Manga)
+--Mezuki (Manga)
+Duel.EnableUnofficialRace(RACE_YOKAI)
 local s,id=GetID()
 function s.initial_effect(c)
-	--revive 
+	--revive
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(92826944,0))
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -29,7 +30,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

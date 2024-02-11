@@ -52,7 +52,9 @@ end
 s.listed_series={SET_BYSTIAL}
 function s.cfilter(c,e)
 	return c:IsAttribute(ATTRIBUTE_DARK|ATTRIBUTE_LIGHT) and c:IsFaceup()
-		and c:IsAbleToDeck() and not c:IsType(TYPE_TOKEN) and c:IsCanBeEffectTarget(e)
+		and (not c:IsPreviousLocation(LOCATION_ONFIELD) or (c:GetPreviousTypeOnField()&TYPE_MONSTER>0
+		and c:GetPreviousAttributeOnField()&(ATTRIBUTE_DARK|ATTRIBUTE_LIGHT)>0))
+		and c:IsAbleToDeck() and c:IsCanBeEffectTarget(e) and c:IsLocation(LOCATION_REMOVED)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=eg:Filter(s.cfilter,nil,e)
@@ -73,8 +75,8 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=e:GetLabelObject():Filter(s.cfilter,nil,e)
-	if chkc then return g:IsContains(chkc) and chkc:IsLocation(LOCATION_REMOVED) and s.cfilter(chkc,e) end
-	if chk==0 then return #g>0 and Duel.IsPlayerCanDraw(tp,1) and Duel.GetFlagEffect(tp,id)==0 end
+	if chkc then return g:IsContains(chkc) and s.cfilter(chkc,e) end
+	if chk==0 then return #g>0 and Duel.IsPlayerCanDraw(tp,1) end
 	Duel.RegisterFlagEffect(tp,id,RESET_CHAIN,0,1)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local tg=g:Select(tp,1,1,nil)

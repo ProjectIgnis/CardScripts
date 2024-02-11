@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
-	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E+TIMING_MAIN_END)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E|TIMING_MAIN_END)
 	e1:SetCondition(function(_,tp) return Duel.GetActivityCount(1-tp,ACTIVITY_SPSUMMON)>0 end)
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
@@ -34,7 +34,7 @@ function s.rmfilter(c)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if not tc:IsRelateToEffect(e) or Duel.Destroy(tc,REASON_EFFECT)==0 
+	if not tc:IsRelateToEffect(e) or Duel.Destroy(tc,REASON_EFFECT)==0
 		or not Duel.IsExistingMatchingCard(s.hlfilter,tp,LOCATION_GRAVE,0,1,nil) then return end
 	local g=Duel.GetMatchingGroup(s.rmfilter,tp,0,LOCATION_MZONE|LOCATION_GRAVE,nil)
 	if #g==0 or not Duel.SelectYesNo(tp,aux.Stringid(id,1)) then return end

@@ -50,7 +50,7 @@ function s.initial_effect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE)
 	e5:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 	e5:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e5:SetCondition(function(e) return e:GetHandler():GetFlagEffect(id)>0 end)
+	e5:SetCondition(function(e) return e:GetHandler():HasFlagEffect(id) end)
 	e5:SetValue(LOCATION_DECKBOT)
 	c:RegisterEffect(e5)
 	local e6=Effect.CreateEffect(c)
@@ -100,7 +100,7 @@ function s.spcon(e,c)
 	local rg2=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil,ATTRIBUTE_DARK)
 	local rg=rg1:Clone()
 	rg:Merge(rg2)
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2 and #rg1>0 and #rg2>0 
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2 and #rg1>0 and #rg2>0
 		and aux.SelectUnselectGroup(rg,e,tp,2,2,s.rescon,0)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)

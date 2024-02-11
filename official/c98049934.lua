@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
+	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER|TIMING_MAIN_END)
 	c:RegisterEffect(e2)
 	-- Attach "Purrely" Quick-Play Spell
 	local e3=Effect.CreateEffect(c)
@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.qpovop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={29599813}
+s.listed_names={29599813} --Purrely Pretty Memory
 s.listed_series={SET_PURRELY}
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:IsHasType(EFFECT_TYPE_QUICK_O)==e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,29599813)
@@ -60,7 +60,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
@@ -71,7 +71,7 @@ end
 function s.qpovcon(e,tp,eg,ep,ev,re,r,rp)
 	if rp==1-tp or not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return false end
 	local rc=re:GetHandler()
-	return rc:IsSetCard(SET_PURRELY) and rc:GetType()==TYPE_SPELL+TYPE_QUICKPLAY
+	return rc:IsSetCard(SET_PURRELY) and rc:IsQuickPlaySpell()
 		and rc:IsOnField() and rc:IsCanBeXyzMaterial(e:GetHandler(),tc,REASON_EFFECT)
 end
 function s.qpovtg(e,tp,eg,ep,ev,re,r,rp,chk)

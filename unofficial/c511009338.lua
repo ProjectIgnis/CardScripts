@@ -42,7 +42,7 @@ function s.acfilter(c,e,tp,eg,ep,ev,re,r,rp,chain)
 		local tc=te2:GetHandler()
 		local g=Group.FromCards(tc)
 		local p=tc:GetControler()
-		return (not condition or condition(te,tp,g,p,chain,te2,REASON_EFFECT,p)) and (not cost or cost(te,tp,g,p,chain,te2,REASON_EFFECT,p,0)) 
+		return (not condition or condition(te,tp,g,p,chain,te2,REASON_EFFECT,p)) and (not cost or cost(te,tp,g,p,chain,te2,REASON_EFFECT,p,0))
 			and (not target or target(te,tp,g,p,chain,te2,REASON_EFFECT,p,0))
 	elseif te:GetCode()==EVENT_FREE_CHAIN then
 		return (not condition or condition(te,tp,eg,ep,ev,re,r,rp)) and (not cost or cost(te,tp,eg,ep,ev,re,r,rp,0))

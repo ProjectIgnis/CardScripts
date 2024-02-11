@@ -17,8 +17,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	local tc=g:GetFirst()
-	for tc in aux.Next(g) do
+	for tc in g:Iter() do
 		tc:AddCounter(0x1015,1)
 	end
 end

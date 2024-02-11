@@ -92,7 +92,7 @@ function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_SZONE,LOCATION_SZONE,1,nil)
 end
 function s.cfilter(c,tp)
-	return c:IsTrap() and c:IsSetCard(0xfb) and not c:IsPublic() and c:IsSSetable() 
+	return c:IsTrap() and c:IsSetCard(0xfb) and not c:IsPublic() and c:IsSSetable()
 		and c:GetFlagEffect(511600044)==0
 end
 function s.setcost(e,tp,eg,ep,ev,re,r,rp,chk)

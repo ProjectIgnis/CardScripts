@@ -52,7 +52,7 @@ function s.spconfilter(c,tp)
 	return c:IsReason(REASON_BATTLE|REASON_EFFECT) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.spconfilter,1,nil,tp) and not eg:IsContains(e:GetHandler()) 
+	return eg:IsExists(s.spconfilter,1,nil,tp) and not eg:IsContains(e:GetHandler())
 end
 function s.spfilter(c,e,tp)
 	return c:IsRace(RACE_FIEND) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

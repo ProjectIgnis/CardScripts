@@ -1,11 +1,11 @@
 --超電導戦士 リニア・マグナム±
 --Conduction Warrior Linear Magnum ±
-Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--special summon
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
@@ -16,6 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--Increase ATK
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_ATKCHANGE)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
@@ -40,7 +41,7 @@ function s.spcon(e,c)
 	local g2=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,nil,TYPE_MINUS)
 	local g=g1:Clone()
 	g:Merge(g2)
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2 and #g1>0 and #g2>0 and #g>1 
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2 and #g1>0 and #g2>0 and #g>1
 		and aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
@@ -76,7 +77,7 @@ end
 function s.atkgop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() and c:IsRelateToEffect(e) and c:IsFaceup() then
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() and c:IsRelateToEffect(e) and c:IsFaceup() then
 		local atk=tc:GetAttack()/2
 		if atk<0 then return end
 		local e1=Effect.CreateEffect(c)

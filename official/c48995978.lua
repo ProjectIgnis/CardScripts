@@ -3,22 +3,22 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x2b)
-	--xyz summon
-	Xyz.AddProcedure(c,nil,8,3)
 	c:EnableReviveLimit()
-	--counter
+	--Xyz Summon Procedure
+	Xyz.AddProcedure(c,nil,8,3)
+	--Place 1 Destiny Counter on this card
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_COUNTER)
 	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetCountLimit(1)
 	e1:SetRange(LOCATION_MZONE)
+	e1:SetCountLimit(1)
 	e1:SetCondition(s.condition)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--win
+	--Win the Duel if 3 Destiny counters are on this card
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_CHAIN_SOLVING)
@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.winop)
 	c:RegisterEffect(e2)
 end
-s.counter_place_list={0x2b}
+s.counter_place_list={0x2b} --Destiny Counter
 s.xyz_number=88
 function s.filter(c)
 	return c:GetSequence()<5
@@ -42,7 +42,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetCode(EFFECT_CANNOT_BP)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
 	e1:SetTargetRange(1,0)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -52,7 +52,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and c:IsFaceup() and c:RemoveOverlayCard(tp,1,1,REASON_EFFECT) then
+	if c:IsRelateToEffect(e) and c:IsFaceup() and c:RemoveOverlayCard(tp,1,1,REASON_EFFECT)>0 then
 		c:AddCounter(0x2b,1)
 	end
 end

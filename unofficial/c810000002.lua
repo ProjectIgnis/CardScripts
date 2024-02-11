@@ -30,7 +30,7 @@ function s.filter(c,e,tp)
 	if e:GetHandler():IsLocation(LOCATION_HAND) then
 		ft=ft-1
 	end
-	return c:IsSpell() and c:CheckActivateEffect(false,false,false)~=nil 
+	return c:IsSpell() and c:CheckActivateEffect(false,false,false)~=nil
 		and (ft>0 or c:IsType(TYPE_FIELD))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -41,7 +41,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and (tc:IsType(TYPE_FIELD) or Duel.GetLocationCount(tp,LOCATION_SZONE)>0) 
+	if tc and tc:IsRelateToEffect(e) and (tc:IsType(TYPE_FIELD) or Duel.GetLocationCount(tp,LOCATION_SZONE)>0)
 		and not tc:IsHasEffect(EFFECT_CANNOT_TRIGGER) then
 		local te=tc:GetActivateEffect()
 		local pre={Duel.GetPlayerEffect(tp,EFFECT_CANNOT_ACTIVATE)}

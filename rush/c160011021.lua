@@ -19,7 +19,7 @@ function s.cfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_PSYCHIC) and not c:IsLevel(3)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsStatus(STATUS_SUMMON_TURN) and Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)<=4 
+	return e:GetHandler():IsStatus(STATUS_SUMMON_TURN) and Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)<=4
 		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,2,nil)
 end
 function s.filter(c)
@@ -37,7 +37,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,0,LOCATION_GRAVE,2,2,nil)
-	Duel.HintSelection(g)
+	Duel.HintSelection(g,true)
 	if #g>0 and Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 then
 		local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 		Duel.ShuffleDeck(1-tp)

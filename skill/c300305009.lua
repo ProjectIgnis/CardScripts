@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop)
-end 
+end
 s.listed_names={25833572,25955164,62340868,98434877}
 function s.cfilter(c)
 	return (c:IsCode(25833572) or c:IsCode(25955164) or c:IsCode(62340868) or c:IsCode(98434877)) and not c:IsPublic()

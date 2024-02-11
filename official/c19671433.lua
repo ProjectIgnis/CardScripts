@@ -1,5 +1,5 @@
 --伍世壊心像
---Manadome Imagining
+--Mannadium Imaginings
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -27,10 +27,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tunerop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_MANADOME}
+s.listed_series={SET_MANNADIUM}
 s.listed_names={CARD_VISAS_STARFROST}
 function s.cfilter(c)
-	return (c:IsCode(CARD_VISAS_STARFROST) or (c:IsSetCard(SET_MANADOME) and c:IsMonster())) and not c:IsPublic()
+	return (c:IsCode(CARD_VISAS_STARFROST) or (c:IsSetCard(SET_MANNADIUM) and c:IsMonster())) and not c:IsPublic()
 end
 function s.drwcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
@@ -75,7 +75,7 @@ function s.tunerop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_ADD_TYPE)
 		e1:SetValue(TYPE_TUNER)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

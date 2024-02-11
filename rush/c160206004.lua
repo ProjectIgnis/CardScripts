@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_MATERIAL_CHECK)
 	e1:SetValue(s.valcheck)
 	c:RegisterEffect(e1)
-	--give atk effect only when  summon
+	--Gain ATK when it is Tribute Summoned
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_SUMMON_COST)
@@ -40,7 +40,7 @@ function s.valcheck(e,c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK)
 		e1:SetValue(atk)
-		e1:SetReset(RESET_EVENT+0xff0000)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD&~RESET_TOFIELD)
 		c:RegisterEffect(e1)
 	end
 end

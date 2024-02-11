@@ -72,8 +72,8 @@ function s.cfilter(c)
 	return c:GetFlagEffect(id+1)>0
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE and Duel.GetTurnPlayer()==tp 
-		and not Duel.GetAttacker() and Duel.GetCurrentChain()==0 
+	return Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE and Duel.GetTurnPlayer()==tp
+		and not Duel.GetAttacker() and Duel.GetCurrentChain()==0
 		and not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.ftarget(e,c)
@@ -100,7 +100,7 @@ function s.disfilter(c)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsExistingMatchingCard(s.disfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c) 
+	if chk==0 then return Duel.IsExistingMatchingCard(s.disfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c)
 		or BPResolvedEffects[c:GetFieldID()] end
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)

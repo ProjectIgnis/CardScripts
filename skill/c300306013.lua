@@ -26,8 +26,8 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Release(tc,REASON_COST)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sc=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp):GetFirst()
-		if sc then 
+		if sc then
 			Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)
 		end
-	end		
+	end
 end

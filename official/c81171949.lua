@@ -42,12 +42,12 @@ function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,e:GetHandler(),1,0,0)
 end
 function s.filter(c)
-	return c:IsCode(id) and c:GetFlagEffect(id)~=0
+	return c:IsCode(id) and c:HasFlagEffect(id)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and not Duel.IsPlayerAffectedByEffect(c:GetControler(),69832741) and Duel.Remove(c,POS_FACEUP,REASON_EFFECT)~=0 then
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
+	if c:IsRelateToEffect(e) and not Duel.IsPlayerAffectedByEffect(c:GetControler(),CARD_SPIRIT_ELIMINATION) and Duel.Remove(c,POS_FACEUP,REASON_EFFECT)~=0 then
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,0)
 		if Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_REMOVED,0,3,nil) then
 			Duel.Win(tp,WIN_REASON_JACKPOT7)
 		end

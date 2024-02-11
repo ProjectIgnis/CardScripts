@@ -18,14 +18,17 @@ end
 function s.descond(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsStatus(STATUS_SUMMON_TURN+STATUS_SPSUMMON_TURN)
 end
+function s.desfilter(c)
+	return c:IsFaceup() and c:IsType(TYPE_NORMAL) and c:IsNotMaximumModeSide()
+end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsType,TYPE_NORMAL),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if chk==0 then return #g>0 end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsType,TYPE_NORMAL),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	g=g:AddMaximumCheck()
 	if Duel.Destroy(g,REASON_EFFECT)>0 and c:IsRelateToEffect(e) and c:IsFaceup() then
 		Duel.BreakEffect()
@@ -33,7 +36,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_PHASE|PHASE_END)
 		e1:SetValue(ct*300)
 		c:RegisterEffect(e1)
 	end
@@ -44,7 +47,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetTarget(s.ftarget)
 	e2:SetLabel(c:GetFieldID())
-	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 end
 function s.ftarget(e,c)

@@ -26,9 +26,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.posop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x11}
+s.listed_series={SET_KARAKURI}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x11) and c:IsCanChangePosition()
+	return c:IsFaceup() and c:IsSetCard(SET_KARAKURI) and c:IsCanChangePosition()
 end
 function s.disfilter(c)
 	return c:IsFaceup() and not c:IsDisabled() and c:IsType(TYPE_EFFECT)
@@ -45,45 +45,42 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g2,1,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local ex1,tg1=Duel.GetOperationInfo(0,CATEGORY_POSITION)
-	local tc1=tg1:GetFirst()
-	local ex2,tg2=Duel.GetOperationInfo(0,CATEGORY_DISABLE)
-	local tc2=tg2:GetFirst()
+	local tg=Duel.GetTargetCards(e)
+	if #tg==0 then return end
+	local tc1=tg:GetFirst()
+	local tc2=tg:GetNext()
+	if tc1:IsControler(1-tp) then tc1,tc2=tc2,tc1 end
 	if tc1 and tc1:IsRelateToEffect(e) and tc1:IsFaceup()
 		and Duel.ChangePosition(tc1,POS_FACEUP_DEFENSE,POS_FACEDOWN_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)>0
 		and tc2 and tc2:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		tc2:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		tc2:RegisterEffect(e2)
 	end
 end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x11)
-end
 function s.poscon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_KARAKURI),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.posfilter(c)
 	return c:IsFaceup() and c:IsCanChangePosition()
 end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.posfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.posfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() and chkc:IsCanChangePosition() end
+	if chk==0 then return Duel.IsExistingTarget(aux.FaceupFilter(Card.IsCanChangePosition),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
-	local g=Duel.SelectTarget(tp,s.posfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+	local g=Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsCanChangePosition),tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,1,0,0)
 end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		Duel.ChangePosition(tc,POS_FACEUP_DEFENSE,POS_FACEDOWN_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)
 	end
 end
-

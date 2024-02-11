@@ -3,10 +3,10 @@
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
-	Xyz.AddProcedure(c,nil,4,3)
 	c:EnableReviveLimit()
-	--atk
+	--Xyz Summon Procedure
+	Xyz.AddProcedure(c,nil,4,3)
+	--Send cards to the GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOGRAVE)
@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.tg)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
-	--destroy replace
+	--Destruction replacement for "Mathmech" cards
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EFFECT_DESTROY_REPLACE)
@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.repval)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x132}
+s.listed_series={SET_MATHMECH}
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
 end
@@ -39,8 +39,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if s.montg(e,tp,eg,ep,ev,re,r,rp,0) then ct=ct+1 end
 	if s.sttg(e,tp,eg,ep,ev,re,r,rp,0) then ct=ct+1 end
 	if chk==0 then return ct>0 and c:CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	c:RemoveOverlayCard(tp,1,ct,REASON_COST)
-	local ft=Duel.GetOperatedGroup():GetCount()
+	local ft=c:RemoveOverlayCard(tp,1,ct,REASON_COST)
 	e:SetLabel(ft)
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -104,6 +103,7 @@ function s.montg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,0,0)
 end
 function s.monop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGrave,tp,0,LOCATION_MZONE,1,1,nil)
 	if #g>0 then
 		Duel.SendtoGrave(g,REASON_EFFECT)
@@ -117,13 +117,14 @@ function s.sttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,0,0)
 end
 function s.stop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,s.stftiler,tp,0,LOCATION_SZONE,1,1,nil)
 	if #g>0 then
 		Duel.SendtoGrave(g,REASON_EFFECT)
 	end
 end
 function s.repfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x132) and c:IsControler(tp) and c:IsLocation(LOCATION_ONFIELD)
+	return c:IsFaceup() and c:IsSetCard(SET_MATHMECH) and c:IsControler(tp) and c:IsLocation(LOCATION_ONFIELD)
 		and c:IsReason(REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)

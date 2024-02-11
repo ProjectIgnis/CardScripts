@@ -114,13 +114,14 @@ function Synchro.Condition(f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
 					--if there is a monster with EFFECT_SYNCHRO_CHECK (Genomix Fighter/Mono Synchron)
 					local g2=g:Clone()
 					if not mgchk then
-						local thg=g2:Filter(Card.IsHasEffect,nil,EFFECT_HAND_SYNCHRO)
 						local hg=Duel.GetMatchingGroup(Card.IsCanBeSynchroMaterial,tp,LOCATION_HAND+LOCATION_GRAVE,0,c,c)
-						for thc in aux.Next(thg) do
+						for thc in g:Iter() do
 							local te=thc:GetCardEffect(EFFECT_HAND_SYNCHRO)
-							local val=te:GetValue()
-							local ag=hg:Filter(function(mc) return val(te,mc,c) end,nil) --tuner
-							g2:Merge(ag)
+							if te then
+								local val=te:GetValue()
+								local ag=hg:Filter(function(mc) return val(te,mc,c) end,nil) --tuner
+								g2:Merge(ag)
+							end
 						end
 					end
 					local res=g2:IsExists(Synchro.CheckP31,1,nil,g2,Group.CreateGroup(),Group.CreateGroup(),Group.CreateGroup(),f1,sub1,f2,sub2,min1,max1,min2,max2,req1,req2,reqm,lv,c,tp,pg,mgchk,min,max)
@@ -162,58 +163,42 @@ end
 function Synchro.CheckP31(c,g,tsg,ntsg,sg,f1,sub1,f2,sub2,min1,max1,min2,max2,req1,req2,reqm,lv,sc,tp,pg,mgchk,min,max)
 	local res
 	local rg=Group.CreateGroup()
-	if c:IsHasEffect(EFFECT_SYNCHRO_CHECK) then
-		local teg={c:GetCardEffect(EFFECT_SYNCHRO_CHECK)}
-		for i=1,#teg do
-			local te=teg[i]
-			local val=te:GetValue()
-			local tg=g:Filter(function(mc) return val(te,mc) end,nil)
-			rg=tg:Filter(function(mc) return not Synchro.TunerFilter(mc,f1,sub1,sc,tp) and not Synchro.NonTunerFilter(mc,f2,sub2,sc,tp) end,nil)
-		end
+	for _,te in ipairs({c:GetCardEffect(EFFECT_SYNCHRO_CHECK)}) do
+		local val=te:GetValue()
+		local tg=g:Filter(function(mc) return val(te,mc) end,nil)
+		rg=tg:Filter(function(mc) return not Synchro.TunerFilter(mc,f1,sub1,sc,tp) and not Synchro.NonTunerFilter(mc,f2,sub2,sc,tp) end,nil)
 	end
 	--c has the synchro limit
-	if c:IsHasEffect(EFFECT_SYNCHRO_MAT_RESTRICTION) then
-		local eff={c:GetCardEffect(EFFECT_SYNCHRO_MAT_RESTRICTION)}
-		for _,f in ipairs(eff) do
-			if sg:IsExists(Auxiliary.HarmonizingMagFilter,1,c,f,f:GetValue()) then return false end
-			local sg1=g:Filter(Auxiliary.HarmonizingMagFilter,nil,f,f:GetValue())
-			rg:Merge(sg1)
-		end
+	for _,f in ipairs({c:GetCardEffect(EFFECT_SYNCHRO_MAT_RESTRICTION)}) do
+		if sg:IsExists(Auxiliary.HarmonizingMagFilter,1,c,f,f:GetValue()) then return false end
+		local sg1=g:Filter(Auxiliary.HarmonizingMagFilter,nil,f,f:GetValue())
+		rg:Merge(sg1)
 	end
 	--A card in the selected group has the synchro lmit
-	local g2=sg:Filter(Card.IsHasEffect,nil,EFFECT_SYNCHRO_MAT_RESTRICTION)
-	for tc in aux.Next(g2) do
-		local eff={tc:GetCardEffect(EFFECT_SYNCHRO_MAT_RESTRICTION)}
-		for _,f in ipairs(eff) do
+	for tc in sg:Iter() do
+		for _,f in ipairs({tc:GetCardEffect(EFFECT_SYNCHRO_MAT_RESTRICTION)}) do
 			if Auxiliary.HarmonizingMagFilter(c,f,f:GetValue()) then return false end
 		end
 	end
 	if not mgchk then
-		if c:IsHasEffect(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK) then
-			local teg={c:GetCardEffect(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK)}
-			local hanchk=false
-			for i=1,#teg do
-				local te=teg[i]
+		do
+			local hanchk=true
+			for _,te in ipairs({c:GetCardEffect(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK)}) do
 				local tgchk=te:GetTarget()
-				local res,trg,ntrg2=tgchk(te,c,sg,g,g,tsg,ntsg)
-				--if not res then return false end
-				if res then
+				local trg,ntrg2
+				hanchk,trg,ntrg2=tgchk(te,c,sg,g,g,tsg,ntsg)
+				if hanchk then
 					rg:Merge(trg)
-					hanchk=true
 					break
 				end
 			end
 			if not hanchk then return false end
 		end
-		g2=sg:Filter(Card.IsHasEffect,nil,EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK)
-		for tc in aux.Next(g2) do
-			local eff={tc:GetCardEffect(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK)}
-			local hanchk=false
-			for _,te in ipairs(eff) do
-				if te:GetTarget()(te,nil,sg,g,g,tsg,ntsg) then
-					hanchk=true
-					break
-				end
+		for tc in sg:Iter() do
+			local hanchk=true
+			for _,te in ipairs({tc:GetCardEffect(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK)}) do
+				hanchk=te:GetTarget()(te,nil,sg,g,g,tsg,ntsg)
+				if hanchk then break end
 			end
 			if not hanchk then return false end
 		end
@@ -225,16 +210,16 @@ function Synchro.CheckP31(c,g,tsg,ntsg,sg,f1,sub1,f2,sub2,min1,max1,min2,max2,re
 	if max and (tsg_count>max or (max-tsg_count)<min2) then
 		res = false
 	elseif max and (max-tsg_count)==min2 then
-		res=tsg:IsExists(Synchro.TunerFilter,tsg_count,nil,f1,sub1,sc,tp) and (not req1 or req1(tsg,sc,tp)) 
+		res=tsg:IsExists(Synchro.TunerFilter,tsg_count,nil,f1,sub1,sc,tp) and (not req1 or req1(tsg,sc,tp))
 			and g:IsExists(Synchro.CheckP32,1,sg,g,tsg,ntsg,sg,f2,sub2,min2,max2,req2,reqm,lv,sc,tp,pg,mgchk,min,max)
 	elseif tsg_count<min1 then
 		res=g:IsExists(Synchro.CheckP31,1,sg,g,tsg,ntsg,sg,f1,sub1,f2,sub2,min1,max1,min2,max2,req1,req2,reqm,lv,sc,tp,pg,mgchk,min,max)
 	elseif tsg_count<max1 then
-		res=g:IsExists(Synchro.CheckP31,1,sg,g,tsg,ntsg,sg,f1,sub1,f2,sub2,min1,max1,min2,max2,req1,req2,reqm,lv,sc,tp,pg,mgchk,min,max) 
-			or (tsg:IsExists(Synchro.TunerFilter,tsg_count,nil,f1,sub1,sc,tp) and (not req1 or req1(tsg,sc,tp)) 
+		res=g:IsExists(Synchro.CheckP31,1,sg,g,tsg,ntsg,sg,f1,sub1,f2,sub2,min1,max1,min2,max2,req1,req2,reqm,lv,sc,tp,pg,mgchk,min,max)
+			or (tsg:IsExists(Synchro.TunerFilter,tsg_count,nil,f1,sub1,sc,tp) and (not req1 or req1(tsg,sc,tp))
 				and g:IsExists(Synchro.CheckP32,1,sg,g,tsg,ntsg,sg,f2,sub2,min2,max2,req2,reqm,lv,sc,tp,pg,mgchk,min,max))
 	else
-		res=tsg:IsExists(Synchro.TunerFilter,tsg_count,nil,f1,sub1,sc,tp) and (not req1 or req1(tsg,sc,tp)) 
+		res=tsg:IsExists(Synchro.TunerFilter,tsg_count,nil,f1,sub1,sc,tp) and (not req1 or req1(tsg,sc,tp))
 			and g:IsExists(Synchro.CheckP32,1,sg,g,tsg,ntsg,sg,f2,sub2,min2,max2,req2,reqm,lv,sc,tp,pg,mgchk,min,max)
 	end
 	g:Merge(rg)
@@ -248,58 +233,42 @@ end
 function Synchro.CheckP32(c,g,tsg,ntsg,sg,f2,sub2,min2,max2,req2,reqm,lv,sc,tp,pg,mgchk,min,max)
 	local res
 	local rg=Group.CreateGroup()
-	if c:IsHasEffect(EFFECT_SYNCHRO_CHECK) then
-		local teg={c:GetCardEffect(EFFECT_SYNCHRO_CHECK)}
-		for i=1,#teg do
-			local te=teg[i]
-			local val=te:GetValue()
-			local tg=g:Filter(function(mc) return val(te,mc) end,nil)
-			rg=tg:Filter(function(mc) return not Synchro.NonTunerFilter(mc,f2,sub2,sc,tp) end,nil)
-		end
+	for _,te in ipairs({c:GetCardEffect(EFFECT_SYNCHRO_CHECK)}) do
+		local val=te:GetValue()
+		local tg=g:Filter(function(mc) return val(te,mc) end,nil)
+		rg=tg:Filter(function(mc) return not Synchro.NonTunerFilter(mc,f2,sub2,sc,tp) end,nil)
 	end
 	--c has the synchro limit
-	if c:IsHasEffect(EFFECT_SYNCHRO_MAT_RESTRICTION) then
-		local eff={c:GetCardEffect(EFFECT_SYNCHRO_MAT_RESTRICTION)}
-		for _,f in ipairs(eff) do
-			if sg:IsExists(Auxiliary.HarmonizingMagFilter,1,c,f,f:GetValue()) then return false end
-			local sg2=g:Filter(Auxiliary.HarmonizingMagFilter,nil,f,f:GetValue())
-			rg:Merge(sg2)
-		end
+	for _,f in ipairs({c:GetCardEffect(EFFECT_SYNCHRO_MAT_RESTRICTION)}) do
+		if sg:IsExists(Auxiliary.HarmonizingMagFilter,1,c,f,f:GetValue()) then return false end
+		local sg2=g:Filter(Auxiliary.HarmonizingMagFilter,nil,f,f:GetValue())
+		rg:Merge(sg2)
 	end
 	--A card in the selected group has the synchro lmit
-	local g2=sg:Filter(Card.IsHasEffect,nil,EFFECT_SYNCHRO_MAT_RESTRICTION)
-	for tc in aux.Next(g2) do
-		local eff={tc:GetCardEffect(EFFECT_SYNCHRO_MAT_RESTRICTION)}
-		for _,f in ipairs(eff) do
+	for tc in sg:Iter() do
+		for _,f in ipairs({tc:GetCardEffect(EFFECT_SYNCHRO_MAT_RESTRICTION)}) do
 			if Auxiliary.HarmonizingMagFilter(c,f,f:GetValue()) then return false end
 		end
 	end
 	if not mgchk then
-		if c:IsHasEffect(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK) then
-			local teg={c:GetCardEffect(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK)}
-			local hanchk=false
-			for i=1,#teg do
-				local te=teg[i]
+		do
+			local hanchk=true
+			for _,te in ipairs({c:GetCardEffect(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK)}) do
 				local tgchk=te:GetTarget()
-				local res,trg2,ntrg2=tgchk(te,c,sg,Group.CreateGroup(),g,tsg,ntsg)
-				--if not res then return false end
-				if res then
+				local trg2,ntrg2
+				hanchk,trg2,ntrg2=tgchk(te,c,sg,Group.CreateGroup(),g,tsg,ntsg)
+				if hanchk then
 					rg:Merge(ntrg2)
-					hanchk=true
 					break
 				end
 			end
 			if not hanchk then return false end
 		end
-		g2=sg:Filter(Card.IsHasEffect,nil,EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK)
-		for tc in aux.Next(g2) do
-			local eff={tc:GetCardEffect(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK)}
-			local hanchk=false
-			for _,te in ipairs(eff) do
-				if te:GetTarget()(te,nil,sg,Group.CreateGroup(),g,tsg,ntsg) then
-					hanchk=true
-					break
-				end
+		for tc in sg:Iter() do
+			local hanchk=true
+			for _,te in ipairs({tc:GetCardEffect(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK)}) do
+				hanchk=te:GetTarget()(te,nil,sg,Group.CreateGroup(),g,tsg,ntsg)
+				if hanchk then break end
 			end
 			if not hanchk then return false end
 		end
@@ -314,12 +283,12 @@ function Synchro.CheckP32(c,g,tsg,ntsg,sg,f2,sub2,min2,max2,req2,reqm,lv,sc,tp,p
 	elseif ntsg_count<min2 then
 		res=g:IsExists(Synchro.CheckP32,1,sg,g,tsg,ntsg,sg,f2,sub2,min2,max2,req2,reqm,lv,sc,tp,pg,mgchk,min,max)
 	elseif ntsg_count<max2 then
-		res=g:IsExists(Synchro.CheckP32,1,sg,g,tsg,ntsg,sg,f2,sub2,min2,max2,req2,reqm,lv,sc,tp,pg,mgchk,min,max) 
-			or ((not min or (tsg_count+ntsg_count)>=min) and (not req2 or req2(ntsg,sc,tp)) and (not reqm or reqm(sg,sc,tp)) 
-				and ntsg:IsExists(Synchro.NonTunerFilter,ntsg_count,nil,f2,sub2,sc,tp) 
+		res=g:IsExists(Synchro.CheckP32,1,sg,g,tsg,ntsg,sg,f2,sub2,min2,max2,req2,reqm,lv,sc,tp,pg,mgchk,min,max)
+			or ((not min or (tsg_count+ntsg_count)>=min) and (not req2 or req2(ntsg,sc,tp)) and (not reqm or reqm(sg,sc,tp))
+				and ntsg:IsExists(Synchro.NonTunerFilter,ntsg_count,nil,f2,sub2,sc,tp)
 				and sg:Includes(pg) and Synchro.CheckP43(tsg,ntsg,sg,lv,sc,tp))
 	else
-		res=(not min or (tsg_count+ntsg_count)>=min) and (not req2 or req2(ntsg,sc,tp)) and (not reqm or reqm(sg,sc,tp)) 
+		res=(not min or (tsg_count+ntsg_count)>=min) and (not req2 or req2(ntsg,sc,tp)) and (not reqm or reqm(sg,sc,tp))
 			and ntsg:IsExists(Synchro.NonTunerFilter,ntsg_count,nil,f2,sub2,sc,tp)
 			and sg:Includes(pg) and Synchro.CheckP43(tsg,ntsg,sg,lv,sc,tp)
 	end
@@ -336,50 +305,39 @@ function Synchro.CheckP41(c,tg,ntg,tsg,ntsg,sg,min1,max1,min2,max2,req1,req2,req
 	local trg=Group.CreateGroup()
 	local ntrg=Group.CreateGroup()
 	--c has the synchro limit
-	if c:IsHasEffect(EFFECT_SYNCHRO_MAT_RESTRICTION) then
-		local eff={c:GetCardEffect(EFFECT_SYNCHRO_MAT_RESTRICTION)}
-		for _,f in ipairs(eff) do
-			if sg:IsExists(Auxiliary.HarmonizingMagFilter,1,c,f,f:GetValue()) then return false end
-			local sg1=tg:Filter(Auxiliary.HarmonizingMagFilter,nil,f,f:GetValue())
-			local sg2=ntg:Filter(Auxiliary.HarmonizingMagFilter,nil,f,f:GetValue())
-			trg:Merge(sg1)
-			ntrg:Merge(sg2)
-		end
+	for _,f in ipairs({c:GetCardEffect(EFFECT_SYNCHRO_MAT_RESTRICTION)}) do
+		if sg:IsExists(Auxiliary.HarmonizingMagFilter,1,c,f,f:GetValue()) then return false end
+		local sg1=tg:Filter(Auxiliary.HarmonizingMagFilter,nil,f,f:GetValue())
+		local sg2=ntg:Filter(Auxiliary.HarmonizingMagFilter,nil,f,f:GetValue())
+		trg:Merge(sg1)
+		ntrg:Merge(sg2)
 	end
 	--A card in the selected group has the synchro lmit
-	local g2=sg:Filter(Card.IsHasEffect,nil,EFFECT_SYNCHRO_MAT_RESTRICTION)
-	for tc in aux.Next(g2) do
-		local eff={tc:GetCardEffect(EFFECT_SYNCHRO_MAT_RESTRICTION)}
-		for _,f in ipairs(eff) do
+	for tc in sg:Iter() do
+		for _,f in ipairs({tc:GetCardEffect(EFFECT_SYNCHRO_MAT_RESTRICTION)}) do
 			if Auxiliary.HarmonizingMagFilter(c,f,f:GetValue()) then return false end
 		end
 	end
 	if not mgchk then
-		if c:IsHasEffect(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK) then
-			local teg={c:GetCardEffect(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK)}
-			local hanchk=false
-			for _,te in ipairs(teg) do
+		do
+			local hanchk=true
+			for _,te in ipairs({c:GetCardEffect(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK)}) do
 				local tgchk=te:GetTarget()
-				local res,trg2,ntrg2=tgchk(te,c,sg,tg,ntg,tsg,ntsg)
-				--if not res then return false end
-				if res then
+				local trg2,ntrg2
+				hanchk,trg2,ntrg2=tgchk(te,c,sg,tg,ntg,tsg,ntsg)
+				if hanchk then
 					trg:Merge(trg2)
 					ntrg:Merge(ntrg2)
-					hanchk=true
 					break
 				end
 			end
 			if not hanchk then return false end
 		end
-		g2=sg:Filter(Card.IsHasEffect,nil,EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK)
-		for tc in aux.Next(g2) do
-		local eff={tc:GetCardEffect(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK)}
-			local hanchk=false
-			for _,te in ipairs(eff) do
-				if te:GetTarget()(te,nil,sg,tg,ntg,tsg,ntsg) then
-					hanchk=true
-					break
-				end
+		for tc in sg:Iter() do
+			local hanchk=true
+			for _,te in ipairs({tc:GetCardEffect(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK)}) do
+				hanchk=te:GetTarget()(te,nil,sg,tg,ntg,tsg,ntsg)
+				if hanchk then break end
 			end
 			if not hanchk then return false end
 		end
@@ -392,15 +350,15 @@ function Synchro.CheckP41(c,tg,ntg,tsg,ntsg,sg,min1,max1,min2,max2,req1,req2,req
 	if max and (tsg_count>max or (max-tsg_count)<min2) then
 		res = false
 	elseif max and (max-tsg_count)==min2 then
-		res=(not req1 or req1(tsg,sc,tp)) 
+		res=(not req1 or req1(tsg,sc,tp))
 			and ntg:IsExists(Synchro.CheckP42,1,sg,ntg,tsg,ntsg,sg,min2,max2,req2,reqm,lv,sc,tp,pg,mgchk,min,max)
 	elseif tsg_count<min1 then
 		res=tg:IsExists(Synchro.CheckP41,1,sg,tg,ntg,tsg,ntsg,sg,min1,max1,min2,max2,req1,req2,reqm,lv,sc,tp,pg,mgchk,min,max)
 	elseif tsg_count<max1 then
-		res=tg:IsExists(Synchro.CheckP41,1,sg,tg,ntg,tsg,ntsg,sg,min1,max1,min2,max2,req1,req2,reqm,lv,sc,tp,pg,mgchk,min,max) 
+		res=tg:IsExists(Synchro.CheckP41,1,sg,tg,ntg,tsg,ntsg,sg,min1,max1,min2,max2,req1,req2,reqm,lv,sc,tp,pg,mgchk,min,max)
 			or ((not req1 or req1(tsg,sc,tp)) and ntg:IsExists(Synchro.CheckP42,1,sg,ntg,tsg,ntsg,sg,min2,max2,req2,reqm,lv,sc,tp,pg,mgchk,min,max))
 	else
-		res=(not req1 or req1(tsg,sc,tp)) 
+		res=(not req1 or req1(tsg,sc,tp))
 			and ntg:IsExists(Synchro.CheckP42,1,sg,ntg,tsg,ntsg,sg,min2,max2,req2,reqm,lv,sc,tp,pg,mgchk,min,max)
 	end
 	tg:Merge(trg)
@@ -413,48 +371,36 @@ function Synchro.CheckP42(c,ntg,tsg,ntsg,sg,min2,max2,req2,reqm,lv,sc,tp,pg,mgch
 	local res
 	local ntrg=Group.CreateGroup()
 	--c has the synchro limit
-	if c:IsHasEffect(EFFECT_SYNCHRO_MAT_RESTRICTION) then
-		local eff={c:GetCardEffect(EFFECT_SYNCHRO_MAT_RESTRICTION)}
-		for _,f in ipairs(eff) do
-			if sg:IsExists(Auxiliary.HarmonizingMagFilter,1,c,f,f:GetValue()) then return false end
-			local sg2=ntg:Filter(Auxiliary.HarmonizingMagFilter,nil,f,f:GetValue())
-			ntrg:Merge(sg2)
-		end
+	for _,f in ipairs({c:GetCardEffect(EFFECT_SYNCHRO_MAT_RESTRICTION)}) do
+		if sg:IsExists(Auxiliary.HarmonizingMagFilter,1,c,f,f:GetValue()) then return false end
+		local sg2=ntg:Filter(Auxiliary.HarmonizingMagFilter,nil,f,f:GetValue())
+		ntrg:Merge(sg2)
 	end
 	--A card in the selected group has the synchro lmit
-	local g2=sg:Filter(Card.IsHasEffect,nil,EFFECT_SYNCHRO_MAT_RESTRICTION)
-	for tc in aux.Next(g2) do
-		local eff={tc:GetCardEffect(EFFECT_SYNCHRO_MAT_RESTRICTION)}
-		for _,f in ipairs(eff) do
+	for tc in sg:Iter() do
+		for _,f in ipairs({tc:GetCardEffect(EFFECT_SYNCHRO_MAT_RESTRICTION)}) do
 			if Auxiliary.HarmonizingMagFilter(c,f,f:GetValue()) then return false end
 		end
 	end
 	if not mgchk then
-		if c:IsHasEffect(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK) then
-			local teg={c:GetCardEffect(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK)}
-			local hanchk=false
-			for i=1,#teg do
-				local te=teg[i]
+		do
+			local hanchk=true
+			for _,te in ipairs({c:GetCardEffect(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK)}) do
 				local tgchk=te:GetTarget()
-				local res,trg2,ntrg2=tgchk(te,c,sg,Group.CreateGroup(),ntg,tsg,ntsg)
-				--if not res then return false end
-				if res then
+				local trg2,ntrg2
+				hanchk,trg2,ntrg2=tgchk(te,c,sg,Group.CreateGroup(),ntg,tsg,ntsg)
+				if hanchk then
 					ntrg:Merge(ntrg2)
-					hanchk=true
 					break
 				end
-				if not hanchk then return false end
 			end
+			if not hanchk then return false end
 		end
-		g2=sg:Filter(Card.IsHasEffect,nil,EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK)
-		for tc in aux.Next(g2) do
-			local eff={tc:GetCardEffect(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK)}
-			local hanchk=false
-			for _,te in ipairs(eff) do
-				if te:GetTarget()(te,nil,sg,Group.CreateGroup(),ntg,tsg,ntsg) then
-					hanchk=true
-					break
-				end
+		for tc in sg:Iter() do
+			local hanchk=true
+			for _,te in ipairs({tc:GetCardEffect(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK)}) do
+				hanchk=te:GetTarget()(te,nil,sg,Group.CreateGroup(),ntg,tsg,ntsg)
+				if hanchk then break end
 			end
 			if not hanchk then return false end
 		end
@@ -469,11 +415,11 @@ function Synchro.CheckP42(c,ntg,tsg,ntsg,sg,min2,max2,req2,reqm,lv,sc,tp,pg,mgch
 	elseif ntsg_count<min2 then
 		res=ntg:IsExists(Synchro.CheckP42,1,sg,ntg,tsg,ntsg,sg,min2,max2,req2,reqm,lv,sc,tp,pg,mgchk,min,max)
 	elseif ntsg_count<max2 then
-		res=ntg:IsExists(Synchro.CheckP42,1,sg,ntg,tsg,ntsg,sg,min2,max2,req2,reqm,lv,sc,tp,pg,mgchk,min,max) 
-			or ((not min or (tsg_count+ntsg_count)>=min) and (not req2 or req2(ntsg,sc,tp)) and (not reqm or reqm(sg,sc,tp)) 
+		res=ntg:IsExists(Synchro.CheckP42,1,sg,ntg,tsg,ntsg,sg,min2,max2,req2,reqm,lv,sc,tp,pg,mgchk,min,max)
+			or ((not min or (tsg_count+ntsg_count)>=min) and (not req2 or req2(ntsg,sc,tp)) and (not reqm or reqm(sg,sc,tp))
 				and sg:Includes(pg) and Synchro.CheckP43(tsg,ntsg,sg,lv,sc,tp))
 	else
-		res=(not min or (tsg_count+ntsg_count)>=min) and (not req2 or req2(ntsg,sc,tp)) and (not reqm or reqm(sg,sc,tp)) 
+		res=(not min or (tsg_count+ntsg_count)>=min) and (not req2 or req2(ntsg,sc,tp)) and (not reqm or reqm(sg,sc,tp))
 			and sg:Includes(pg) and Synchro.CheckP43(tsg,ntsg,sg,lv,sc,tp)
 	end
 	ntg:Merge(ntrg)
@@ -482,11 +428,12 @@ function Synchro.CheckP42(c,ntg,tsg,ntsg,sg,min2,max2,req2,reqm,lv,sc,tp,pg,mgch
 	return res
 end
 function Synchro.CheckLabel(c,label)
-	return c:IsHasEffect(EFFECT_HAND_SYNCHRO) and c:GetCardEffect(EFFECT_HAND_SYNCHRO):GetLabel()==label
+	local eff=c:GetCardEffect(EFFECT_HAND_SYNCHRO)
+	return eff and eff:GetLabel()==label
 end
 function Synchro.CheckHand(c,sg)
-	if not c:IsHasEffect(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK) then return false end
 	local teg={c:GetCardEffect(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK)}
+	if #teg==0 then return false end
 	for _,te in ipairs(teg) do
 		if sg:IsExists(Synchro.CheckLabel,1,c,te:GetLabel()) then return false end
 	end
@@ -494,30 +441,13 @@ function Synchro.CheckHand(c,sg)
 end
 function Synchro.CheckP43(tsg,ntsg,sg,lv,sc,tp)
 	if sg:IsExists(Synchro.CheckHand,1,nil,sg) then return false end
-	--[[for c in aux.Next(sg) do
-		if c:IsHasEffect(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK) then
-			local teg={c:GetCardEffect(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK)}
-			local hanchk=false
-			for _,te in ipairs(teg) do
-				if te:GetTarget()(te,c,sg,Group.CreateGroup(),Group.CreateGroup(),tsg,ntsg) then
-					hanchk=true
-					break
-				end
-			end
-			if not hanchk then return false end
-		end
-	end]]
 	local lvchk=false
-	if sg:IsExists(Card.IsHasEffect,1,nil,EFFECT_SYNCHRO_MATERIAL_CUSTOM) then
-		local g=sg:Filter(Card.IsHasEffect,nil,EFFECT_SYNCHRO_MATERIAL_CUSTOM)
-		for tc in aux.Next(g) do
-			local teg={tc:GetCardEffect(EFFECT_SYNCHRO_MATERIAL_CUSTOM)}
-			for _,te in ipairs(teg) do
-				local op=te:GetOperation()
-				local ok,tlvchk=op(te,tg,ntg,sg,lv,sc,tp)
-				if not ok then return false end
-				lvchk=lvchk or tlvchk
-			end
+	for tc in sg:Iter() do
+		for _,te in ipairs({tc:GetCardEffect(EFFECT_SYNCHRO_MATERIAL_CUSTOM)}) do
+			local op=te:GetOperation()
+			local ok,tlvchk=op(te,tsg,ntsg,sg,lv,sc,tp)
+			if not ok then return false end
+			lvchk=lvchk or tlvchk
 		end
 	end
 	return (not Synchro.CheckAdditional or Synchro.CheckAdditional(tp,sg,sc))
@@ -614,11 +544,10 @@ function Synchro.Target(f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
 								end
 								selectedastuner:AddCard(tc)
 								sg:AddCard(tc)
-								if tc:IsHasEffect(EFFECT_SYNCHRO_CHECK) then
-									local teg={tc:GetCardEffect(EFFECT_SYNCHRO_CHECK)}
-									for i=1,#teg do
-										local te=teg[i]
-										local tg=g:Filter(function(mc) return te:GetValue()(te,mc) end,nil)
+								for _, te in ipairs({tc:GetCardEffect(EFFECT_SYNCHRO_CHECK)}) do
+									local val=te:GetValue()
+									for mc in g:Iter() do
+										val(te,mc)
 									end
 								end
 							else
@@ -633,7 +562,7 @@ function Synchro.Target(f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
 								tune=false
 							end
 						else
-							if (#ntsg>=min2 and (not req2 or req2(ntsg,c,tp)) and (not reqm or reqm(sg,c,tp)) 
+							if (#ntsg>=min2 and (not req2 or req2(ntsg,c,tp)) and (not reqm or reqm(sg,c,tp))
 								and ntsg:IsExists(Synchro.NonTunerFilter,#ntsg,nil,f2,sub2,c,tp)
 								and sg:Includes(pg) and Synchro.CheckP43(tsg,ntsg,sg,lv,c,tp)) then
 									finish=true
@@ -648,7 +577,7 @@ function Synchro.Target(f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
 							Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SMATERIAL)
 							local tc=Group.SelectUnselect(g2,sg,tp,finish,cancel)
 							if not tc then
-								if #ntsg>=min2 and (not req2 or req2(ntsg,c,tp)) and (not reqm or reqm(sg,c,tp)) 
+								if #ntsg>=min2 and (not req2 or req2(ntsg,c,tp)) and (not reqm or reqm(sg,c,tp))
 									and sg:Includes(pg) and Synchro.CheckP43(tsg,ntsg,sg,lv,c,tp) then break end
 								return false
 							end
@@ -656,11 +585,10 @@ function Synchro.Target(f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
 								if not sg:IsContains(tc) then
 									ntsg:AddCard(tc)
 									sg:AddCard(tc)
-									if tc:IsHasEffect(EFFECT_SYNCHRO_CHECK) then
-										local teg={tc:GetCardEffect(EFFECT_SYNCHRO_CHECK)}
-										for i=1,#teg do
-											local te=teg[i]
-											local tg=g:Filter(function(mc) return te:GetValue()(te,mc) end,nil)
+									for _,te in ipairs({tc:GetCardEffect(EFFECT_SYNCHRO_CHECK)}) do
+										local val=te:GetValue()
+										for mc in g:Iter() do
+											val(te,mc)
 										end
 									end
 								else
@@ -791,7 +719,7 @@ function Synchro.Operation(e,tp,eg,ep,ev,re,r,rp,c,smat,mg)
 		local mat_check_op=mat_check_eff:GetOperation()
 		if mat_check_op then mat_check_op(mat_check_eff,c) end
 	end
-	--Use up the count limit of any "EFFECT_SYNCHRO_MAT_FROM_HAND" effect in the material group ("Revolution Synchron") 
+	--Use up the count limit of any "EFFECT_SYNCHRO_MAT_FROM_HAND" effect in the material group ("Revolution Synchron")
 	for mc in g:Iter() do
 		local handmatfilter=mc:IsHasEffect(EFFECT_SYNCHRO_MAT_FROM_HAND)
 		if handmatfilter and handmatfilter:GetValue(handmatfilter,mc,c) then
@@ -846,56 +774,40 @@ end
 function Synchro.MajesticCheck1(c,g,sg,card1,card2,card3,lv,sc,tp,pg,f1,cbt1,f2,cbt2,f3,cbt3,...)
 	local res
 	local rg=Group.CreateGroup()
-	if c:IsHasEffect(EFFECT_SYNCHRO_CHECK) then
-		local teg={c:GetCardEffect(EFFECT_SYNCHRO_CHECK)}
-		for i=1,#teg do
-			local te=teg[i]
-			local val=te:GetValue()
-			local tg=g:Filter(function(mc) return val(te,mc) end,nil)
-		end
+	for _,te in ipairs({c:GetCardEffect(EFFECT_SYNCHRO_CHECK)}) do
+		local val=te:GetValue()
+		local tg=g:Filter(function(mc) return val(te,mc) end,nil)
 	end
 	--c has the synchro limit
-	if c:IsHasEffect(EFFECT_SYNCHRO_MAT_RESTRICTION) then
-		local eff={c:GetCardEffect(EFFECT_SYNCHRO_MAT_RESTRICTION)}
-		for _,f in ipairs(eff) do
-			if sg:IsExists(Auxiliary.HarmonizingMagFilter,1,c,f,f:GetValue()) then return false end
-			local sg1=g:Filter(Auxiliary.HarmonizingMagFilter,nil,f,f:GetValue())
-			rg:Merge(sg1)
-		end
+	for _,f in ipairs({c:GetCardEffect(EFFECT_SYNCHRO_MAT_RESTRICTION)}) do
+		if sg:IsExists(Auxiliary.HarmonizingMagFilter,1,c,f,f:GetValue()) then return false end
+		local sg1=g:Filter(Auxiliary.HarmonizingMagFilter,nil,f,f:GetValue())
+		rg:Merge(sg1)
 	end
 	--A card in the selected group has the synchro lmit
-	local g2=sg:Filter(Card.IsHasEffect,nil,EFFECT_SYNCHRO_MAT_RESTRICTION)
-	for tc in aux.Next(g2) do
-		local eff={tc:GetCardEffect(EFFECT_SYNCHRO_MAT_RESTRICTION)}
-		for _,f in ipairs(eff) do
+	for tc in sg:Iter() do
+		for _,f in ipairs({tc:GetCardEffect(EFFECT_SYNCHRO_MAT_RESTRICTION)}) do
 			if Auxiliary.HarmonizingMagFilter(c,f,f:GetValue()) then return false end
 		end
 	end
-	if c:IsHasEffect(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK) then
-		local teg={c:GetCardEffect(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK)}
-		local hanchk=false
-		for i=1,#teg do
-			local te=teg[i]
+	do
+		local hanchk=true
+		for _,te in ipairs({c:GetCardEffect(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK)}) do
 			local tgchk=te:GetTarget()
-			local res,trg,ntrg2=tgchk(te,c,sg,g,g,sg,sg)
-			--if not res then return false end
-			if res then
+			local trg,ntrg2
+			hanchk,trg,ntrg2=tgchk(te,c,sg,g,g,sg,sg)
+			if hanchk then
 				rg:Merge(trg)
-				hanchk=true
 				break
 			end
 		end
 		if not hanchk then return false end
 	end
-	g2=sg:Filter(Card.IsHasEffect,nil,EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK)
-	for tc in aux.Next(g2) do
-		local eff={tc:GetCardEffect(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK)}
-		local hanchk=false
-		for _,te in ipairs(eff) do
-			if te:GetTarget()(te,nil,sg,g,g,sg,sg) then
-				hanchk=true
-				break
-			end
+	for tc in sg:Iter() do
+		local hanchk=true
+		for _,te in ipairs({tc:GetCardEffect(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK)}) do
+			hanchk=te:GetTarget()(te,nil,sg,g,g,sg,sg)
+			if hanchk then break end
 		end
 		if not hanchk then return false end
 	end
@@ -929,25 +841,6 @@ function Synchro.MajesticCheck1(c,g,sg,card1,card2,card3,lv,sc,tp,pg,f1,cbt1,f2,
 end
 function Synchro.MajesticCheck2(sg,card1,card2,card3,lv,sc,tp,f1,cbt1,f2,cbt2,f3,cbt3,...)
 	if sg:IsExists(Synchro.CheckHand,1,nil,sg) then return false end
-	--[[local c=sg:GetFirst()
-	while c do
-		if c:IsHasEffect(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK) then
-			local teg={c:GetCardEffect(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK)}
-			local hanchk=false
-			for i=1,#teg do
-				local te=teg[i]
-				local tgchk=te:GetTarget()
-				local res=tgchk(te,c,sg,Group.CreateGroup(),Group.CreateGroup(),Group.CreateGroup(),Group.CreateGroup())
-				--if not res then return false end
-				if res then
-					hanchk=true
-					break
-				end
-			end
-			if not hanchk then return false end
-		end
-		c=sg:GetNext()
-	end]]
 	local reqm={...}
 	local tunechk=false
 	if not f1(card1,sc,SUMMON_TYPE_SYNCHRO|MATERIAL_SYNCHRO,tp) or not f2(card2,sc,SUMMON_TYPE_SYNCHRO|MATERIAL_SYNCHRO,tp) or not f3(card3,sc,SUMMON_TYPE_SYNCHRO|MATERIAL_SYNCHRO,tp) then return false end
@@ -959,16 +852,12 @@ function Synchro.MajesticCheck2(sg,card1,card2,card3,lv,sc,tp,f1,cbt1,f2,cbt2,f3
 	for _,reqmat in ipairs(reqm) do
 		if not reqmat(sg,sc,tp) then return false end
 	end
-	if sg:IsExists(Card.IsHasEffect,1,nil,EFFECT_SYNCHRO_MATERIAL_CUSTOM) then
-		local g=sg:Filter(Card.IsHasEffect,nil,EFFECT_SYNCHRO_MATERIAL_CUSTOM)
-		for tc in aux.Next(g) do
-			local teg={tc:GetCardEffect(EFFECT_SYNCHRO_MATERIAL_CUSTOM)}
-			for _,te in ipairs(teg) do
-				local op=te:GetOperation()
-				local ok,tlvchk=op(te,Group.CreateGroup(),Group.CreateGroup(),sg,lv,sc,tp)
-				if not ok then return false end
-				lvchk=lvchk or tlvchk
-			end
+	for tc in sg:Iter() do
+		for _,te in ipairs({tc:GetCardEffect(EFFECT_SYNCHRO_MATERIAL_CUSTOM)}) do
+			local op=te:GetOperation()
+			local ok,tlvchk=op(te,Group.CreateGroup(),Group.CreateGroup(),sg,lv,sc,tp)
+			if not ok then return false end
+			lvchk=lvchk or tlvchk
 		end
 	end
 	if (not lvchk and not sg:CheckWithSumEqual(Card.GetSynchroLevel,lv,#sg,#sg,sc))
@@ -1006,14 +895,17 @@ function Synchro.MajesticCondition(f1,cbt1,f2,cbt2,f3,cbt3,...)
 					g:Merge(smat)
 				end
 				if not mgchk then
-					local thg=g:Filter(Card.IsHasEffect,nil,EFFECT_HAND_SYNCHRO)
 					local hg=Duel.GetMatchingGroup(Card.IsCanBeSynchroMaterial,tp,LOCATION_HAND+LOCATION_GRAVE,0,c,c)
-					for thc in aux.Next(thg) do
+					local thg=Group.CreateGroup()
+					for thc in g:Iter() do
 						local te=thc:GetCardEffect(EFFECT_HAND_SYNCHRO)
-						local val=te:GetValue()
-						local ag=hg:Filter(function(mc) return val(te,mc,c) end,nil) --tuner
-						g:Merge(ag)
+						if te then
+							local val=te:GetValue()
+							local ag=hg:Filter(function(mc) return val(te,mc,c) end,nil) --tuner
+							thg:Merge(ag)
+						end
 					end
+					g:Merge(thg)
 				end
 				local res=g:IsExists(Synchro.MajesticCheck1,1,nil,g,Group.CreateGroup(),card1,card2,card3,lv,c,tp,pg,f1,cbt1,f2,cbt2,f3,cbt3,table.unpack(t))
 				local hg=Duel.GetMatchingGroup(Card.IsHasEffect,tp,LOCATION_HAND+LOCATION_GRAVE,0,nil,EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK)
@@ -1046,14 +938,17 @@ function Synchro.MajesticTarget(f1,cbt1,f2,cbt2,f3,cbt3,...)
 					g:Merge(smat)
 				end
 				if not mgchk then
-					local thg=g:Filter(Card.IsHasEffect,nil,EFFECT_HAND_SYNCHRO)
 					local hg=Duel.GetMatchingGroup(Card.IsCanBeSynchroMaterial,tp,LOCATION_HAND+LOCATION_GRAVE,0,c,c)
-					for thc in aux.Next(thg) do
+					local thg=Group.CreateGroup()
+					for thc in g:Iter() do
 						local te=thc:GetCardEffect(EFFECT_HAND_SYNCHRO)
-						local val=te:GetValue()
-						local ag=hg:Filter(function(mc) return val(te,mc,c) end,nil)
-						g:Merge(ag)
+						if te then
+							local val=te:GetValue()
+							local ag=hg:Filter(function(mc) return val(te,mc,c) end,nil)
+							thg:Merge(ag)
+						end
 					end
+					g:Merge(thg)
 				end
 				local lv=c:GetLevel()
 				local card1=nil
@@ -1067,11 +962,10 @@ function Synchro.MajesticTarget(f1,cbt1,f2,cbt2,f3,cbt3,...)
 					if not tc then return false end
 					if not sg:IsContains(tc) then
 						sg:AddCard(tc)
-						if tc:IsHasEffect(EFFECT_SYNCHRO_CHECK) then
-							local teg={tc:GetCardEffect(EFFECT_SYNCHRO_CHECK)}
-							for i=1,#teg do
-								local te=teg[i]
-								local tg=g:Filter(function(mc) return te:GetValue()(te,mc) end,nil)
+						for _,te in ipairs({tc:GetCardEffect(EFFECT_SYNCHRO_CHECK)}) do
+							local val=te:GetValue()
+							for mc in g:Iter() do
+								val(te,mc)
 							end
 						end
 						if not card1 then
@@ -1135,56 +1029,42 @@ end
 function Synchro.DarkCheck1(c,g,sg,card1,card2,plv,nlv,sc,tp,pg,f1,f2,...)
 	local res
 	local rg=Group.CreateGroup()
-	if c:IsHasEffect(EFFECT_SYNCHRO_CHECK) then
-		local teg={c:GetCardEffect(EFFECT_SYNCHRO_CHECK)}
-		for i=1,#teg do
-			local te=teg[i]
-			local val=te:GetValue()
-			local tg=g:Filter(function(mc) return val(te,mc) end,nil)
+	for _,te in ipairs({c:GetCardEffect(EFFECT_SYNCHRO_CHECK)}) do
+		local val=te:GetValue()
+		for mc in g:Iter() do
+			val(te,mc)
 		end
 	end
 	--c has the synchro limit
-	if c:IsHasEffect(EFFECT_SYNCHRO_MAT_RESTRICTION) then
-		local eff={c:GetCardEffect(EFFECT_SYNCHRO_MAT_RESTRICTION)}
-		for _,f in ipairs(eff) do
-			if sg:IsExists(Auxiliary.HarmonizingMagFilter,1,c,f,f:GetValue()) then return false end
-			local sg1=g:Filter(Auxiliary.HarmonizingMagFilter,nil,f,f:GetValue())
-			rg:Merge(sg1)
-		end
+	for _,f in ipairs({c:GetCardEffect(EFFECT_SYNCHRO_MAT_RESTRICTION)}) do
+		if sg:IsExists(Auxiliary.HarmonizingMagFilter,1,c,f,f:GetValue()) then return false end
+		local sg1=g:Filter(Auxiliary.HarmonizingMagFilter,nil,f,f:GetValue())
+		rg:Merge(sg1)
 	end
 	--A card in the selected group has the synchro lmit
-	local g2=sg:Filter(Card.IsHasEffect,nil,EFFECT_SYNCHRO_MAT_RESTRICTION)
-	for tc in aux.Next(g2) do
-		local eff={tc:GetCardEffect(EFFECT_SYNCHRO_MAT_RESTRICTION)}
-		for _,f in ipairs(eff) do
+	for tc in sg:Iter() do
+		for _,f in ipairs({tc:GetCardEffect(EFFECT_SYNCHRO_MAT_RESTRICTION)}) do
 			if Auxiliary.HarmonizingMagFilter(c,f,f:GetValue()) then return false end
 		end
 	end
-	if c:IsHasEffect(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK) then
-		local teg={c:GetCardEffect(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK)}
-		local hanchk=false
-		for i=1,#teg do
-			local te=teg[i]
+	do
+		local hanchk=true
+		for _,te in ipairs({c:GetCardEffect(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK)}) do
 			local tgchk=te:GetTarget()
-			local res,trg,ntrg2=tgchk(te,c,sg,g,g,sg,sg)
-			--if not res then return false end
-			if res then
+			local trg,ntrg2
+			hanchk,trg,ntrg2=tgchk(te,c,sg,g,g,sg,sg)
+			if hanchk then
 				rg:Merge(trg)
-				hanchk=true
 				break
 			end
 		end
 		if not hanchk then return false end
 	end
-	g2=sg:Filter(Card.IsHasEffect,nil,EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK)
-	for tc in aux.Next(g2) do
-		local eff={tc:GetCardEffect(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK)}
-		local hanchk=false
-		for _,te in ipairs(eff) do
-			if te:GetTarget()(te,nil,sg,g,g,sg,sg) then
-				hanchk=true
-				break
-			end
+	for tc in sg:Iter() do
+		local hanchk=true
+		for _,te in ipairs({tc:GetCardEffect(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK)}) do
+			hanchk=te:GetTarget()(te,nil,sg,g,g,sg,sg)
+			if hanchk then break end
 		end
 		if not hanchk then return false end
 	end
@@ -1214,41 +1094,18 @@ function Synchro.DarkCheck1(c,g,sg,card1,card2,plv,nlv,sc,tp,pg,f1,f2,...)
 end
 function Synchro.DarkCheck2(sg,card1,card2,plv,nlv,sc,tp,f1,f2,...)
 	if sg:IsExists(Synchro.CheckHand,1,nil,sg) then return false end
-	--[[local c=sg:GetFirst()
-	while c do
-		if c:IsHasEffect(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK) then
-			local teg={c:GetCardEffect(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK)}
-			local hanchk=false
-			for i=1,#teg do
-				local te=teg[i]
-				local tgchk=te:GetTarget()
-				local res=tgchk(te,c,sg,Group.CreateGroup(),Group.CreateGroup(),Group.CreateGroup(),Group.CreateGroup())
-				--if not res then return false end
-				if res then
-					hanchk=true
-					break
-				end
-			end
-			if not hanchk then return false end
-		end
-		c=sg:GetNext()
-	end]]
 	local reqm={...}
 	if (f1 and not f1(card1,sc,SUMMON_TYPE_SYNCHRO|MATERIAL_SYNCHRO,tp)) or (f2 and not f2(card2,sc,SUMMON_TYPE_SYNCHRO|MATERIAL_SYNCHRO,tp)) or not card2:IsType(TYPE_TUNER,sc,SUMMON_TYPE_SYNCHRO|MATERIAL_SYNCHRO,tp) or not card2:IsSetCard(0x600) then return false end
 	local lvchk=false
 	for _,reqmat in ipairs(reqm) do
 		if not reqmat(sg,sc,tp) then return false end
 	end
-	if sg:IsExists(Card.IsHasEffect,1,nil,EFFECT_SYNCHRO_MATERIAL_CUSTOM) then
-		local g=sg:Filter(Card.IsHasEffect,nil,EFFECT_SYNCHRO_MATERIAL_CUSTOM)
-		for tc in aux.Next(g) do
-			local teg={tc:GetCardEffect(EFFECT_SYNCHRO_MATERIAL_CUSTOM)}
-			for _,te in ipairs(teg) do
-				local op=te:GetOperation()
-				local ok,tlvchk=op(te,Group.CreateGroup(),Group.CreateGroup(),sg,plv,sc,tp,nlv,card1,card2)
-				if not ok then return false end
-				lvchk=lvchk or tlvchk
-			end
+	for tc in sg:Iter() do
+		for _,te in ipairs({tc:GetCardEffect(EFFECT_SYNCHRO_MATERIAL_CUSTOM)}) do
+			local op=te:GetOperation()
+			local ok,tlvchk=op(te,Group.CreateGroup(),Group.CreateGroup(),sg,plv,sc,tp,nlv,card1,card2)
+			if not ok then return false end
+			lvchk=lvchk or tlvchk
 		end
 	end
 	if Synchro.CheckAdditional and not Synchro.CheckAdditional(tp,sg,sc) then return false end
@@ -1320,14 +1177,17 @@ function Synchro.DarkCondition(f1,f2,plv,nlv,...)
 					g:Merge(smat)
 				end
 				if not mgchk then
-					local thg=g:Filter(Card.IsHasEffect,nil,EFFECT_HAND_SYNCHRO)
+					local thg=Group.CreateGroup()
 					local hg=Duel.GetMatchingGroup(Card.IsCanBeSynchroMaterial,tp,LOCATION_HAND+LOCATION_GRAVE,0,c,c)
-					for thc in aux.Next(thg) do
+					for thc in g:Iter() do
 						local te=thc:GetCardEffect(EFFECT_HAND_SYNCHRO)
-						local val=te:GetValue()
-						local ag=hg:Filter(function(mc) return val(te,mc,c) end,nil) --tuner
-						g:Merge(ag)
+						if te then
+							local val=te:GetValue()
+							local ag=hg:Filter(function(mc) return val(te,mc,c) end,nil) --tuner
+							thg:Merge(ag)
+						end
 					end
+					g:Merge(thg)
 				end
 				local res=g:IsExists(Synchro.DarkCheck1,1,nil,g,Group.CreateGroup(),card1,card2,plv,nlv,c,tp,pg,f1,f2,table.unpack(t))
 				local hg=Duel.GetMatchingGroup(Card.IsHasEffect,tp,LOCATION_HAND+LOCATION_GRAVE,0,nil,EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK)
@@ -1367,14 +1227,17 @@ function Synchro.DarkTarget(f1,f2,plv,nlv,...)
 					g:Merge(smat)
 				end
 				if not mgchk then
-					local thg=g:Filter(Card.IsHasEffect,nil,EFFECT_HAND_SYNCHRO)
+					local thg=Group.CreateGroup()
 					local hg=Duel.GetMatchingGroup(Card.IsCanBeSynchroMaterial,tp,LOCATION_HAND+LOCATION_GRAVE,0,c,c)
-					for thc in aux.Next(thg) do
+					for thc in g:Iter() do
 						local te=thc:GetCardEffect(EFFECT_HAND_SYNCHRO)
-						local val=te:GetValue()
-						local ag=hg:Filter(function(mc) return val(te,mc,c) end,nil)
-						g:Merge(ag)
+						if te then
+							local val=te:GetValue()
+							local ag=hg:Filter(function(mc) return val(te,mc,c) end,nil)
+							thg:Merge(ag)
+						end
 					end
+					g:Merge(thg)
 				end
 				local lv=c:GetLevel()
 				local card1=nil
@@ -1387,11 +1250,10 @@ function Synchro.DarkTarget(f1,f2,plv,nlv,...)
 					if not tc then return false end
 					if not sg:IsContains(tc) then
 						sg:AddCard(tc)
-						if tc:IsHasEffect(EFFECT_SYNCHRO_CHECK) then
-							local teg={tc:GetCardEffect(EFFECT_SYNCHRO_CHECK)}
-							for i=1,#teg do
-								local te=teg[i]
-								local tg=g:Filter(function(mc) return te:GetValue()(te,mc) end,nil)
+						for _,te in ipairs({tc:GetCardEffect(EFFECT_SYNCHRO_CHECK)}) do
+							local val=te:GetValue()
+							for mc in g:Iter() do
+								val(te,mc)
 							end
 						end
 						if not card1 then

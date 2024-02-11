@@ -1,5 +1,5 @@
 -- 星守の騎士団
--- Tellarknight Constellar
+-- Constellar Tellarknights
 -- Scripted by Satella
 local s,id=GetID()
 function s.initial_effect(c)

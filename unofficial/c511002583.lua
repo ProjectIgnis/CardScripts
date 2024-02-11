@@ -21,7 +21,7 @@ function s.filter(c,e,tp)
 	return c:IsRace(RACE_ROCK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.cfilter(c,e,tp)
-	return c:IsRace(RACE_ROCK) and c:IsType(TYPE_XYZ) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true) 
+	return c:IsRace(RACE_ROCK) and c:IsType(TYPE_XYZ) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 		and Duel.GetMZoneCount(tp,c)>0
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,2,c,e,tp)
 end

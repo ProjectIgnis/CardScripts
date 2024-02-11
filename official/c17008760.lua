@@ -23,7 +23,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 	--Detach 1 Xyz material from your monster
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.RemoveOverlayCard(tp,1,0,1,1,REASON_EFFECT) then return end
+	if Duel.RemoveOverlayCard(tp,1,0,1,1,REASON_EFFECT)<1 then return end
 	--Set the detached card
 	local rc=Duel.GetOperatedGroup():GetFirst()
 	if not (rc:IsLocation(LOCATION_GRAVE) and rc:IsControler(tp)) then return end

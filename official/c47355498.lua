@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x2e))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_GRAVEKEEPERS))
 	e2:SetValue(500)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
@@ -62,8 +62,17 @@ function s.initial_effect(c)
 	e10:SetRange(LOCATION_FZONE)
 	e10:SetOperation(s.disop)
 	c:RegisterEffect(e10)
+	--Prevent non-activated effects from Special Summoning from the GY (e.g. unclassified summoning effects or delayed effects)
+	local e11=Effect.CreateEffect(c)
+	e11:SetType(EFFECT_TYPE_FIELD)
+	e11:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e11:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	e11:SetRange(LOCATION_FZONE)
+	e11:SetTargetRange(1,1)
+	e11:SetTarget(s.cannotsptg)
+	c:RegisterEffect(e11)
 end
-s.listed_series={0x2e}
+s.listed_series={SET_GRAVEKEEPERS}
 function s.contp(e)
 	return not Duel.IsPlayerAffectedByEffect(e:GetHandler():GetControler(),EFFECT_NECRO_VALLEY_IM)
 end
@@ -103,4 +112,9 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	if not res and s.discheck(ev,CATEGORY_EQUIP,re,not_im0,not_im1) then res=true end
 	if not res and s.discheck(ev,CATEGORY_LEAVE_GRAVE,re,not_im0,not_im1) then res=true end
 	if res then Duel.NegateEffect(ev) end
+end
+function s.cannotsptg(e,c,sp,sumtype,sumpos,target_p,sumeff)
+	return c:IsLocation(LOCATION_GRAVE) and sumeff and not sumeff:IsActivated() and not sumeff:IsHasProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		and not Duel.IsPlayerAffectedByEffect(c:GetControler(),EFFECT_NECRO_VALLEY_IM) and not c:IsHasEffect(EFFECT_NECRO_VALLEY_IM)
+		and not sumeff:GetHandler():IsHasEffect(EFFECT_NECRO_VALLEY_IM)
 end

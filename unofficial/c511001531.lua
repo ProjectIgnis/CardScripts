@@ -1,9 +1,10 @@
---七皇転生
---Reincarnation of the Seven Emperors
+--七皇転生 (Anime)
+--Reincarnation of the Seventh Emperors (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
-	--
+	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e1:SetCondition(s.condition)
@@ -11,12 +12,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x48}
+s.listed_series={SET_NUMBER}
 function s.cfilter(c)
 	local class=c:GetMetatable(true)
 	if class==nil then return false end
 	local no=class.xyz_number
-	return no and no>=101 and no<=107 and c:IsSetCard(0x48)
+	return no and no>=101 and no<=107 and c:IsSetCard(SET_NUMBER)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
@@ -47,7 +48,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 	local g=Group.CreateGroup()
-	if bc~=Duel.GetAttackTarget() or bc:IsAttackPos() and tco and not tcindes then
+	if (bc~=Duel.GetAttackTarget() or bc:IsAttackPos()) and tco and not tcindes then
 		if bc:IsPosition(POS_FACEUP_DEFENSE) and bc==Duel.GetAttacker() then
 			if bc:IsHasEffect(EFFECT_DEFENSE_ATTACK) then
 				if bc:IsHasEffect(75372290) then
@@ -84,7 +85,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 			end
 		end
 	end
-	if tc~=Duel.GetAttackTarget() or tc:IsAttackPos() and bco and not bcindes then
+	if (tc~=Duel.GetAttackTarget() or tc:IsAttackPos()) and bco and not bcindes then
 		if tc:IsPosition(POS_FACEUP_DEFENSE) and tc==Duel.GetAttacker() then
 			if tc:IsHasEffect(EFFECT_DEFENSE_ATTACK) then
 				if tc:IsHasEffect(75372290) then
@@ -150,20 +151,20 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e1:SetTargetRange(1,0)
-		e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+		e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
 		Duel.RegisterEffect(e1,tp)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e2:SetCode(EVENT_DAMAGE_STEP_END)
 		e2:SetOperation(s.banop)
-		e2:SetReset(RESET_PHASE+PHASE_DAMAGE)
+		e2:SetReset(RESET_PHASE|PHASE_DAMAGE)
 		e2:SetLabelObject(tc)
 		Duel.RegisterEffect(e2,tp)
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e3:SetValue(1)
-		e3:SetReset(RESET_PHASE+PHASE_DAMAGE)
+		e3:SetReset(RESET_PHASE|PHASE_DAMAGE)
 		tc:RegisterEffect(e3,true)
 	end
 end
@@ -173,7 +174,7 @@ function s.banop(e,tp,eg,ep,ev,re,r,rp)
 	g:AddCard(tc)
 	Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 	for tcg in g:Iter() do
-		tcg:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+		tcg:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 	end
 	if Duel.GetLocationCountFromEx(tp)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -183,7 +184,7 @@ function s.banop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 		e1:SetCode(EVENT_PHASE+PHASE_BATTLE)
-		e1:SetReset(RESET_PHASE+PHASE_BATTLE)
+		e1:SetReset(RESET_PHASE|PHASE_BATTLE)
 		e1:SetCountLimit(1)
 		e1:SetLabelObject(g:GetFirst())
 		e1:SetOperation(s.damop2)

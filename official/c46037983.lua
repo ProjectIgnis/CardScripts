@@ -1,4 +1,4 @@
---Japanese name
+--ゴーティスの灯ペイシス
 --Paces, Light of the Ghoti
 --scripted by Naim
 local s,id=GetID()

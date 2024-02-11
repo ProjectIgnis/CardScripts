@@ -1,5 +1,5 @@
 --リチュアの氷魔鏡
---Gishki Icemirror
+--Gishki Nekromirror
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -81,12 +81,12 @@ function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g+c,2,tp,0)
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,SEQ_DECKTOP,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_DECK|LOCATION_EXTRA) then
-		Duel.ConfirmDecktop(tp,1)
-		if c:IsRelateToEffect(e) then
-			Duel.SendtoDeck(c,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
-		end
+	if not (tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,SEQ_DECKTOP,REASON_EFFECT)>0
+		and tc:IsLocation(LOCATION_DECK|LOCATION_EXTRA)) then return end
+	if tc:IsLocation(LOCATION_DECK) then Duel.ConfirmDecktop(tp,1) end
+	local c=e:GetHandler()
+	if c:IsRelateToEffect(e) then
+		Duel.SendtoDeck(c,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 	end
 end

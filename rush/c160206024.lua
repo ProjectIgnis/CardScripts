@@ -34,7 +34,7 @@ function s.stage2(e,tc,tp,mg,chk)
 	e1:SetProperty(EFFECT_FLAG_OATH)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetTarget(s.ftarget)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.ftarget(e,c)

@@ -53,7 +53,7 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.SendtoGrave(tc,REASON_EFFECT)>00 and tc:IsLocation(LOCATION_GRAVE)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsRelateToEffect(e) then
-		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP) 
+		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
 	--Check for level 8 or lower "Valkyrie" monster

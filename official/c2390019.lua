@@ -28,7 +28,7 @@ s.listed_series={SET_OJAMA}
 function s.ffilter(c,e,tp,rg,ft)
 	if not (c.material and c:IsType(TYPE_FUSION)) then return false end
 	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE,0,nil,e,tp,c.material)
-	return #g>0 and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_MACHINE) 
+	return #g>0 and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_MACHINE)
 		and aux.SelectUnselectGroup(rg,e,tp,nil,1,s.rescon1(g,ft),0)
 end
 function s.cfilter(c)

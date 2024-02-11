@@ -27,7 +27,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil)	end
 end
 function s.filter(c)
-	return c:IsAttack(1000) and c:IsDefense(1000) 
+	return c:IsAttack(1000) and c:IsDefense(1000)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
@@ -46,7 +46,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(-ct*300)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 			tc:RegisterEffect(e1)
 		end
 	end

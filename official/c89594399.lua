@@ -20,10 +20,10 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCode(EFFECT_NONTUNER)
-	e2:SetValue(s.ntval)
+	e2:SetValue(function(e,sc) return sc:IsRace(RACE_REPTILE) end)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x3c}
+s.listed_series={SET_REPTILIANNE}
 function s.spconfilter(c)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_DARK) and c:IsRace(RACE_REPTILE)
 end
@@ -37,7 +37,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x3c) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_REPTILIANNE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -53,10 +53,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local ssg=sg:Select(tp,1,ct,nil)
 		if #ssg>0 then
-			Duel.SpecialSummon(ssg,0,tp,tp,false,false,POS_FACEUP) 
+			Duel.SpecialSummon(ssg,0,tp,tp,false,false,POS_FACEUP)
 		end
 	end
-end
-function s.ntval(c,sc,tp)
-	return sc and sc:IsRace(RACE_REPTILE)
 end

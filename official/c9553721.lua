@@ -1,4 +1,5 @@
 --霊魂の拠所
+--Shinobird Power Spot
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -6,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--atk
+	--Spirit monsters gain 500 ATK/DEF
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
@@ -18,7 +19,7 @@ function s.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e3)
-	--search
+	--Search 1 Spirit monster or 1 Ritual Spell
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,0))
 	e4:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -32,6 +33,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
+s.listed_card_types={TYPE_SPIRIT}
 function s.cfilter(c,tp)
 	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
 		and (c:GetPreviousAttributeOnField()&ATTRIBUTE_WIND)~=0
@@ -41,14 +43,13 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.thfilter(c)
-	return (c:IsType(TYPE_SPIRIT) or c:GetType()==0x82) and c:IsAbleToHand()
+	return (c:IsType(TYPE_SPIRIT) or c:IsRitualSpell()) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if #g>0 then

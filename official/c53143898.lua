@@ -37,7 +37,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tgfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(SET_ALTERGEIST) and c:IsAbleToGrave() and Duel.GetMZoneCount(tp,c)>0 
+	return c:IsFaceup() and c:IsSetCard(SET_ALTERGEIST) and c:IsAbleToGrave() and Duel.GetMZoneCount(tp,c)>0
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_ALTERGEIST) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -58,7 +58,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc1,tc2=Duel.GetFirstTarget()
 	if tc1~=e:GetLabelObject() then tc1,tc2=tc2,tc1 end
-	if tc1:IsRelateToEffect(e) and Duel.SendtoGrave(tc1,REASON_EFFECT)>0 and tc1:IsLocation(LOCATION_GRAVE) 
+	if tc1:IsRelateToEffect(e) and Duel.SendtoGrave(tc1,REASON_EFFECT)>0 and tc1:IsLocation(LOCATION_GRAVE)
 		and tc2:IsRelateToEffect(e) and aux.nvfilter(tc2) then
 		Duel.SpecialSummon(tc2,0,tp,tp,false,false,POS_FACEUP)
 	end

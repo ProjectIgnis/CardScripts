@@ -42,16 +42,16 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local tc=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
 	if Duel.Remove(tc,POS_FACEUP,REASON_COST+REASON_TEMPORARY)>0 then
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1)
 		--Return it in the End Phase
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
 		e1:SetLabelObject(tc)
 		e1:SetCountLimit(1)
-		e1:SetCondition(function(e) return e:GetLabelObject():GetFlagEffect(id)>0 end)
+		e1:SetCondition(function(e) return e:GetLabelObject():HasFlagEffect(id) end)
 		e1:SetOperation(function(e) Duel.ReturnToField(e:GetLabelObject()) end)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 	end
 end

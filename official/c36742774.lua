@@ -52,7 +52,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local b1=Duel.IsCanRemoveCounter(tp,1,0,COUNTER_SIGNAL,4,REASON_COST)
 		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.HasLevel),tp,LOCATION_MZONE,0,1,nil)
-	local b2=Duel.IsCanRemoveCounter(tp,1,0,COUNTER_SIGNAL,7,REASON_COST) and ft>0 
+	local b2=Duel.IsCanRemoveCounter(tp,1,0,COUNTER_SIGNAL,7,REASON_COST) and ft>0
 		and Duel.IsExistingMatchingCard(s.tunerspfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
 	local b3=Duel.IsCanRemoveCounter(tp,1,0,COUNTER_SIGNAL,10,REASON_COST) and ft>0
 		and Duel.IsExistingMatchingCard(s.syncspfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
@@ -91,7 +91,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
 		e1:SetValue(lvl)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	elseif op==2 and ft>0 then
 		--Special Summon 1 Tuner from your GY

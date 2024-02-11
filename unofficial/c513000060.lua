@@ -1,7 +1,6 @@
 --Ｎｏ.３９ 希望皇ビヨンド・ザ・ホープ (Anime)
 --Number 39: Utopia Beyond (Anime)
 --Fixed and Cleaned By:TheOnePharaoh
-Duel.LoadScript("rankup_functions.lua")
 Duel.LoadCardScript("c21521304.lua")
 local s,id=GetID()
 function s.initial_effect(c)
@@ -14,7 +13,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e1:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
+	e1:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,SET_NUMBER)))
 	c:RegisterEffect(e1)
 	--Immune
 	local e2=Effect.CreateEffect(c)
@@ -33,7 +32,6 @@ function s.initial_effect(c)
 	e3:SetTargetRange(0,LOCATION_MZONE)
 	e3:SetCondition(s.atkcon)
 	e3:SetValue(0)
-	e3:SetLabel(RESET_EVENT+RESETS_STANDARD)
 	--spsummon
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,0))
@@ -43,10 +41,9 @@ function s.initial_effect(c)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1)
 	e4:SetCondition(s.spcon)
-	e4:SetCost(s.spcost)
+	e4:SetCost(aux.dxmcostgen(1,1,nil))
 	e4:SetTarget(s.sptg)
 	e4:SetOperation(s.spop)
-	e4:SetLabel(RESET_EVENT+RESETS_STANDARD)
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE)
 	e5:SetCode(EFFECT_RANKUP_EFFECT)
@@ -56,7 +53,7 @@ function s.initial_effect(c)
 	e6:SetLabelObject(e4)
 	c:RegisterEffect(e6,false,REGISTER_FLAG_DETACH_XMAT)
 end
-s.listed_series={0x48}
+s.listed_series={SET_NUMBER}
 s.listed_names={84013237}
 s.xyz_number=39
 function s.efilter(e,re)
@@ -67,10 +64,6 @@ function s.atkcon(e)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsBattlePhase()
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.rmfilter(c,e,tp,ft)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsAbleToRemove() and (ft>0 or c:GetSequence()<5)

@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_REMOVE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,TIMING_BATTLE_START+TIMINGS_CHECK_MONSTER_E)
+	e1:SetHintTiming(0,TIMING_BATTLE_START|TIMINGS_CHECK_MONSTER_E)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.rmvcond)
 	e1:SetTarget(s.rmvtg)
@@ -61,7 +61,7 @@ function s.rmvop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c,tp)
-	return c:IsMonster() and c:IsSetCard(SET_KASHTIRA) and c:GetOwner()==tp and c:IsAbleToHand() 
+	return c:IsMonster() and c:IsSetCard(SET_KASHTIRA) and c:GetOwner()==tp and c:IsAbleToHand()
 end
 function s.tgfilter(c,tp)
 	if not (c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(SET_KASHTIRA)) then return false end

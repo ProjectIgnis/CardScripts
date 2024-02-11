@@ -1,5 +1,5 @@
 --破械神シャバラ
---Unchained Soul Sharvara
+--Unchained Soul of Sharvara
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_HAND)
-	e1:SetHintTiming(0,TIMING_MAIN_END+TIMINGS_CHECK_MONSTER)
+	e1:SetHintTiming(0,TIMING_MAIN_END|TIMINGS_CHECK_MONSTER)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(function() return Duel.IsMainPhase() end)
 	e1:SetTarget(s.sptg)
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_UNCHAINED}
 function s.desfilter(c,tp)
-	return (c:IsFacedown() or (c:IsFaceup() and c:IsRace(RACE_FIEND))) and Duel.GetMZoneCount(tp,c)>0
+	return (c:IsFacedown() or (c:IsFaceup() and c:IsMonster() and c:IsRace(RACE_FIEND))) and Duel.GetMZoneCount(tp,c)>0
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()

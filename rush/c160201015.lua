@@ -30,13 +30,16 @@ end
 function s.descond(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsStatus(STATUS_SUMMON_TURN) and e:GetLabelObject():GetLabel()~=0
 end
+function s.desfilter(c)
+	return c:IsFaceup() and c:IsLevelBelow(4) and c:IsNotMaximumModeSide()
+end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsLevelBelow,4),tp,0,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_MZONE,nil)
 	if chk==0 then return #g>0 end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsLevelBelow,4),tp,0,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_MZONE,nil)
 	if #g>0 then
 		Duel.Destroy(g,REASON_EFFECT)
 	end

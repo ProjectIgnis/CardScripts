@@ -1,4 +1,4 @@
---Japanese name
+--魔砲戦機ダルマ・カルマ
 --Destructive Daruma Karma Cannon
 --scripted by Naim
 local s,id=GetID()

@@ -23,7 +23,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function s.filter(c,e,tp)
-	return c:IsMonster() and c:IsRace(RACE_MACHINE) and c:IsLevel(5) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) 
+	return c:IsMonster() and c:IsRace(RACE_MACHINE) and c:IsLevel(5) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<3 then return end

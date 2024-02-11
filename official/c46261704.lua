@@ -31,7 +31,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsDiscardable() end
 	Duel.SendtoGrave(c,REASON_COST+REASON_DISCARD)
-	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_CHAIN,0,1)
+	c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_CHAIN,0,1)
 end
 function s.spfilter(c,e,tp)
 	return c:IsCode(CARD_GALAXYEYES_P_DRAGON) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -55,7 +55,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.BreakEffect()
 		local c=e:GetHandler()
 		local xg=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,e)
-		if Duel.ChangeAttackTarget(g:GetFirst()) and c:GetFlagEffect(id)>0 and c:IsLocation(LOCATION_GRAVE) and aux.nvfilter(c)
+		if Duel.ChangeAttackTarget(g:GetFirst()) and c:HasFlagEffect(id) and c:IsLocation(LOCATION_GRAVE) and aux.nvfilter(c)
 			and #xg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)

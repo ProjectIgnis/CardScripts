@@ -20,7 +20,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.desfilter(c)
-	return c:IsLevelBelow(8) and c:IsFaceup()
+	return c:IsLevelBelow(8) and c:IsFaceup() and c:IsNotMaximumModeSide()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_MZONE,nil)

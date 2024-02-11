@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
+s.listed_card_types={TYPE_SPIRIT}
 function s.spfilter(c,tp)
 	return c:IsType(TYPE_SPIRIT) and c:IsAbleToRemoveAsCost()
 		and aux.SpElimFilter(c,true) and Duel.GetMZoneCount(tp,c)>0
@@ -63,7 +64,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end

@@ -40,7 +40,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.BreakEffect()
 			local g2=Duel.SelectMatchingCard(tp,s.thfilter2,tp,LOCATION_GRAVE,0,1,1,nil)
-			Duel.HintSelection(g2)
+			Duel.HintSelection(g2,true)
 			if #g2>0 then
 				Duel.SendtoHand(g2,nil,REASON_EFFECT)
 				Duel.ConfirmCards(1-tp,g2)

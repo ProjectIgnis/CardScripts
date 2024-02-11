@@ -77,7 +77,7 @@ function s.gyop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.repfilter(c,tp)
-	return c:IsControler(tp) and c:IsLocation(LOCATION_ONFIELD) and c:IsFacedown() 
+	return c:IsControler(tp) and c:IsLocation(LOCATION_ONFIELD) and c:IsFacedown()
 		and not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_EFFECT)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)

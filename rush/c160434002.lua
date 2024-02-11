@@ -28,7 +28,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 	local g=Duel.SelectMatchingCard(tp,s.setfilter,tp,0,LOCATION_GRAVE,1,1,nil)
-	if #g>0 then 
+	if #g>0 then
 		Duel.SSet(1-tp,g)
 		if Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)

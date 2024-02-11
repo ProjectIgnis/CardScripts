@@ -23,7 +23,7 @@ function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
         if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then loc=0 end
         return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,loc,1,nil)
             and Duel.IsExistingMatchingCard(s.sumfilter,tp,LOCATION_DECK,0,1,nil,e,tp)
-			and Duel.GetActivityCount(ep,ACTIVITY_NORMALSUMMON)==0 
+			and Duel.GetActivityCount(ep,ACTIVITY_NORMALSUMMON)==0
 			and Duel.GetActivityCount(ep,ACTIVITY_SPSUMMON)==0
     end
     Duel.SetOperationInfo(0,CATEGORY_RELEASE,nil,1,0,0)
@@ -75,7 +75,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
                 e1:SetOperation(function () Duel.SetChainLimitTillChainEnd(aux.FALSE) end)
                 sg:GetFirst():RegisterEffect(e1)
                 Duel.SpecialSummon(sg,0,tp,tp,true,false,POS_FACEUP)
-                e1:Reset() 
+                e1:Reset()
             end
         end
     elseif (b2 and p==2) or Duel.GetFlagEffect(ep,id)>0 then

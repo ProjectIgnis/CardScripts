@@ -48,7 +48,7 @@ function s.initial_effect(c)
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE)
 	e5:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e5:SetCode(21142671)
+	e5:SetCode(EFFECT_MULTIPLE_TUNERS)
 	c:RegisterEffect(e5)
 end
 s.material={70902743}

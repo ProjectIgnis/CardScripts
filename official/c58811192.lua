@@ -2,9 +2,10 @@
 --Ritual Beast Ulti-Kimunfalcos
 local s,id=GetID()
 function s.initial_effect(c)
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0xb5),2,2)
 	c:EnableReviveLimit()
-	--atk up
+	--Link Summon Procedure
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_RITUAL_BEAST),2,2)
+	--"Ritual Beast" monsters this card points to gain 600 ATK/DEF
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -13,40 +14,39 @@ function s.initial_effect(c)
 	e1:SetTarget(s.tgtg)
 	e1:SetValue(600)
 	c:RegisterEffect(e1)
-	--summon
-	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetCategory(CATEGORY_SUMMON)
-	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1,id)
-	e2:SetCost(s.cost)
-	e2:SetTarget(s.target)
-	e2:SetOperation(s.operation)
+	local e2=e1:Clone()
+	e2:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e2)
-	--special summon
+	--Normal Summon 1 "Ritual Beast" monster
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,1))
-	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e3:SetType(EFFECT_TYPE_QUICK_O)
-	e3:SetCode(EVENT_FREE_CHAIN)
-	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e3:SetDescription(aux.Stringid(id,0))
+	e3:SetCategory(CATEGORY_SUMMON)
+	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCost(s.spcost)
-	e3:SetTarget(s.sptg)
-	e3:SetOperation(s.spop)
+	e3:SetCountLimit(1,id)
+	e3:SetCost(s.cost)
+	e3:SetTarget(s.target)
+	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
-	--def up
-	local e4=e1:Clone()
-	e4:SetCode(EFFECT_UPDATE_DEFENSE)
+	--Special Summon 1 "Ritual Beast Tamer" monster and 1 "Spiritual Beast" monster
+	local e4=Effect.CreateEffect(c)
+	e4:SetDescription(aux.Stringid(id,1))
+	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e4:SetType(EFFECT_TYPE_QUICK_O)
+	e4:SetCode(EVENT_FREE_CHAIN)
+	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetCost(s.spcost)
+	e4:SetTarget(s.sptg)
+	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xb5}
+s.listed_series={SET_RITUAL_BEAST,SET_RITUAL_BEAST_TAMER,SET_SPIRITUAL_BEAST}
 function s.tgtg(e,c)
-	return e:GetHandler():GetLinkedGroup():IsContains(c) and c:IsSetCard(0xb5) 
+	return e:GetHandler():GetLinkedGroup():IsContains(c) and c:IsSetCard(SET_RITUAL_BEAST) 
 end
 function s.cfilter(c)
-	return c:IsSetCard(0xb5) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsSetCard(SET_RITUAL_BEAST) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,e:GetHandler()) end
@@ -55,7 +55,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.filter(c)
-	return c:IsSetCard(0xb5) and c:IsSummonable(true,nil)
+	return c:IsSetCard(SET_RITUAL_BEAST) and c:IsSummonable(true,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -77,7 +77,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spfilter1(c,e,tp,setcode)
 	return c:IsSetCard(setcode) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
-		and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_REMOVED,0,1,c,e,tp,0x20b5)
+		and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_REMOVED,0,1,c,e,tp,SET_SPIRITUAL_BEAST)
 end
 function s.spfilter(c,e,tp,setcode)
 	return c:IsSetCard(setcode) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
@@ -85,12 +85,12 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then return false end
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>1
-		and Duel.IsExistingTarget(s.spfilter1,tp,LOCATION_REMOVED,0,1,nil,e,tp,0x10b5) end
+		and Duel.GetMZoneCount(tp,e:GetHandler())>=2
+		and Duel.IsExistingTarget(s.spfilter1,tp,LOCATION_REMOVED,0,1,nil,e,tp,SET_RITUAL_BEAST_TAMER) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g1=Duel.SelectTarget(tp,s.spfilter1,tp,LOCATION_REMOVED,0,1,1,nil,e,tp,0x10b5)
+	local g1=Duel.SelectTarget(tp,s.spfilter1,tp,LOCATION_REMOVED,0,1,1,nil,e,tp,SET_RITUAL_BEAST_TAMER)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g2=Duel.SelectTarget(tp,s.spfilter,tp,LOCATION_REMOVED,0,1,1,g1:GetFirst(),e,tp,0x20b5)
+	local g2=Duel.SelectTarget(tp,s.spfilter,tp,LOCATION_REMOVED,0,1,1,g1:GetFirst(),e,tp,SET_SPIRITUAL_BEAST)
 	g1:Merge(g2)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g1,2,0,0)
 end
@@ -102,4 +102,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if #g==0 or #g>ft then return end
 	Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 end
-

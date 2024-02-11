@@ -1,16 +1,17 @@
---Destiny HERO - Dystopiaguy
+--Ｄ－ＨＥＲＯ ディストピアガイ (Anime)
+--Destiny HERO - Dystopia (Anime)
 --fixed by MLD
-Duel.LoadScript("c419.lua")
+Duel.EnableUnofficialProc(PROC_STATS_CHANGED)
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0xc008),2)
+	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_DESTINY_HERO),2)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DAMAGE)
-	e1:SetDescription(aux.Stringid(14577226,0))
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetCondition(s.damcon)
@@ -20,7 +21,7 @@ function s.initial_effect(c)
 	--atk change
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_DESTROY)
-	e2:SetDescription(aux.Stringid(276357,0))
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(511001265)
@@ -35,7 +36,7 @@ function s.initial_effect(c)
 	e3:SetCondition(s.descon2)
 	c:RegisterEffect(e3)
 end
-s.material_setcode={0x8,0xc008}
+s.material_setcode={SET_HERO,SET_DESTINY_HERO}
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
 end
@@ -53,7 +54,7 @@ function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		Duel.Damage(1-tp,tc:GetAttack(),REASON_EFFECT)
 	end
 end
@@ -73,7 +74,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end

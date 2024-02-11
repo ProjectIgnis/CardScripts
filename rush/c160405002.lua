@@ -18,12 +18,15 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
+function s.desfilter(c)
+	return c:IsFaceup() and c:IsLevelBelow(6) and c:IsNotMaximumModeSide()
+end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsLevelBelow,6),tp,0,LOCATION_MZONE,1,nil) end
-	local sg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsLevelBelow,6),tp,0,LOCATION_MZONE,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.desfilter,tp,0,LOCATION_MZONE,1,nil) end
+	local sg=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_MZONE,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,sg,#sg,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local sg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsLevelBelow,6),tp,0,LOCATION_MZONE,nil)
+	local sg=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_MZONE,nil)
 	Duel.Destroy(sg,REASON_EFFECT)
 end

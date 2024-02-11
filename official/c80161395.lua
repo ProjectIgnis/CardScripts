@@ -1,12 +1,15 @@
 --神秘の中華なべ
+--Mystik Wok
 local s,id=GetID()
 function s.initial_effect(c)
-	--recover
+	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_RECOVER)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
@@ -16,24 +19,33 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)
 	if chk==0 then return true end
 end
+function s.costfilter(c)
+	return c:GetAttack()>0 or c:GetDefense()>0
+end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if e:GetLabel()~=1 then return false end
 		e:SetLabel(0)
-		return Duel.CheckReleaseGroupCost(tp,nil,1,false,nil,nil) end
-	local sg=Duel.SelectReleaseGroupCost(tp,nil,1,1,false,nil,nil)
-	local tc=sg:GetFirst()
-	local atk=tc:GetAttack()
-	local def=tc:GetDefense()
-	local rec=0
-	Duel.Release(tc,REASON_COST)
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))
-	local sel=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
-	if sel==0 then rec=atk
-	else rec=def end
+		return Duel.CheckReleaseGroupCost(tp,s.costfilter,1,false,nil,nil)
+	end
+	local sc=Duel.SelectReleaseGroupCost(tp,s.costfilter,1,1,false,nil,nil):GetFirst()
+	local atk=sc:GetAttack()
+	local def=sc:GetDefense()
+	Duel.Release(sc,REASON_COST)
+	local op=nil
+	local b1=atk>0
+	local b2=def>0
+	if b1 and b2 then
+		op=Duel.SelectEffect(tp,
+			{b1,aux.Stringid(id,1)},
+			{b2,aux.Stringid(id,2)})
+	else
+		op=b1 and 1 or 2
+	end
+	local val=op==1 and atk or def
 	Duel.SetTargetPlayer(tp)
-	Duel.SetTargetParam(rec)
-	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,rec)
+	Duel.SetTargetParam(val)
+	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,val)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)

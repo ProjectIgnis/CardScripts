@@ -1,47 +1,41 @@
 --フレンドッグ
+--Wroughtweiler
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Add 1 "Elemental HERO" card and 1 "Polymerization" from your GY to your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_BATTLE_DESTROYED)
-	e1:SetCondition(s.condition)
-	e1:SetTarget(s.target)
-	e1:SetOperation(s.activate)
+	e1:SetCondition(function(e) return e:GetHandler():IsLocation(LOCATION_GRAVE) end)
+	e1:SetTarget(s.thtg)
+	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={SET_ELEMENTAL_HERO}
 s.listed_names={CARD_POLYMERIZATION}
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsLocation(LOCATION_GRAVE) and e:GetHandler():IsReason(REASON_BATTLE)
+function s.thfilter(c,e)
+	return (c:IsSetCard(SET_ELEMENTAL_HERO) or c:IsCode(CARD_POLYMERIZATION)) and c:IsAbleToHand() and c:IsCanBeEffectTarget(e)
 end
-function s.filter1(c)
-	return c:IsSetCard(0x3008) and c:IsAbleToHand()
+function s.rescon(sg,e,tp,mg)
+	return sg:IsExists(Card.IsSetCard,1,nil,SET_ELEMENTAL_HERO) and sg:IsExists(Card.IsCode,1,nil,CARD_POLYMERIZATION)
 end
-function s.filter2(c)
-	return c:IsCode(CARD_POLYMERIZATION) and c:IsAbleToHand()
-end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	if chk==0 then return true end
-	if Duel.IsExistingTarget(s.filter1,tp,LOCATION_GRAVE,0,1,nil)
-		and Duel.IsExistingTarget(s.filter2,tp,LOCATION_GRAVE,0,1,nil) then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local g1=Duel.SelectTarget(tp,s.filter1,tp,LOCATION_GRAVE,0,1,1,nil)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local g2=Duel.SelectTarget(tp,s.filter2,tp,LOCATION_GRAVE,0,1,1,nil)
-		g1:Merge(g2)
-		Duel.SetOperationInfo(0,CATEGORY_TOHAND,g1,2,0,0)
+	local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_GRAVE,0,nil,e)
+	local tg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_ATOHAND)
+	if #tg>0 then
+		Duel.SetTargetCard(tg)
+		Duel.SetOperationInfo(0,CATEGORY_TOHAND,tg,2,tp,0)
 	end
 end
-function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	if not g then return end
-	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
-	if #sg==2 then
-		Duel.SendtoHand(sg,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,sg)
+function s.thop(e,tp,eg,ep,ev,re,r,rp)
+	local tg=Duel.GetTargetCards(e)
+	if tg and #tg>0 then
+		Duel.SendtoHand(tg,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,tg)
 	end
 end

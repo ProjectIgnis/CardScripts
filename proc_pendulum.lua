@@ -45,7 +45,7 @@ function Pendulum.Filter(c,e,tp,lscale,rscale,lvchk)
 		and not c:IsForbidden()
 end
 function Pendulum.Condition()
-	return	function(e,c,ischain,re,rp)
+	return	function(e,c,inchain,re,rp)
 				if c==nil then return true end
 				local tp=c:GetControler()
 				local rpz=Duel.GetFieldCard(tp,LOCATION_PZONE,1)

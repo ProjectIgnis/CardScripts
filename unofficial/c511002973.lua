@@ -158,7 +158,7 @@ function s.acfilter(c,tp)
 end
 function s.actg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,0,nil)
-	if chk==0 then return #g>0 and (Duel.GetLocationCount(tp,LOCATION_SZONE)>0 or g:FilterCount(Card.IsLocation,nil,LOCATION_SZONE)>0) 
+	if chk==0 then return #g>0 and (Duel.GetLocationCount(tp,LOCATION_SZONE)>0 or g:FilterCount(Card.IsLocation,nil,LOCATION_SZONE)>0)
 		and Duel.IsExistingMatchingCard(s.acfilter,tp,0x13,0,1,nil,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end

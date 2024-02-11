@@ -40,7 +40,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
-	e3:SetHintTiming(0,TIMING_BATTLE_START+TIMING_BATTLE_END)
+	e3:SetHintTiming(0,TIMING_BATTLE_START|TIMING_BATTLE_END)
 	e3:SetCondition(s.descon)
 	e3:SetTarget(s.destg)
 	e3:SetOperation(s.desop)
@@ -48,7 +48,7 @@ function s.initial_effect(c)
 end
 function s.matfilter(lvl)
 	return function(c,fc,sumtype,tp)
-		return c:IsLevel(lvl) and c:IsRace(RACE_INSECT,fc,sumtype,tp) 
+		return c:IsLevel(lvl) and c:IsRace(RACE_INSECT,fc,sumtype,tp)
 	end
 end
 function s.splimit(e,se,sp,st)

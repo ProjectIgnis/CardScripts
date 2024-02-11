@@ -3,7 +3,7 @@
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
-	--Negate
+	--Negate effects of a Special Summoned monster and inflict damage if it leaves the field this turn
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 end
 function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
+	Duel.SendtoGrave(e:GetHandler(),REASON_COST|REASON_DISCARD)
 end
 function s.negfilter(c,p,eg)
 	return c:IsSummonPlayer(p) and eg:IsContains(c) and (c:HasNonZeroAttack() or c:IsNegatableMonster())
@@ -35,33 +35,30 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		if tc:IsNegatableMonster() then
-			Duel.NegateRelatedChain(tc,RESET_TURN_SET)
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_DISABLE)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			tc:RegisterEffect(e1)
-			local e2=Effect.CreateEffect(c)
-			e2:SetType(EFFECT_TYPE_SINGLE)
-			e2:SetCode(EFFECT_DISABLE_EFFECT)
-			e2:SetValue(RESET_TURN_SET)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			tc:RegisterEffect(e2)
+			tc:NegateEffects(c,RESET_PHASE|PHASE_END)
 		end
 		if tc:IsFaceup() then
-			local e3=Effect.CreateEffect(c)
-			e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-			e3:SetCode(EVENT_LEAVE_FIELD)
-			e3:SetOperation(s.leaveop)
-			e3:SetReset(RESET_EVENT+RESET_MSCHANGE+RESET_OVERLAY+RESET_TURN_SET+RESET_PHASE+PHASE_END)
-			tc:RegisterEffect(e3,true)
+			local fid=c:GetFieldID()
+			tc:RegisterFlagEffect(id,RESET_EVENT|RESET_MSCHANGE|RESET_OVERLAY|RESET_TURN_SET|RESET_PHASE|PHASE_END,0,1,fid)
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+			e1:SetCode(EVENT_LEAVE_FIELD)
+			e1:SetLabel(fid)
+			e1:SetLabelObject(tc)
+			e1:SetOperation(s.leaveop)
+			e1:SetReset(RESET_PHASE|PHASE_END)
+			Duel.RegisterEffect(e1,tp)
 		end
 	end
 end
 function s.leaveop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_CARD,0,id)
-	local c=e:GetHandler()
-	local p=c:GetPreviousControler()
-	Duel.Damage(p,c:GetBaseAttack(),REASON_EFFECT)
-	e:Reset()
+	local tc=e:GetLabelObject()
+	if eg:IsContains(tc) and tc:GetFlagEffectLabel(id)==e:GetLabel() then
+		local p=tc:GetPreviousControler()
+		if Duel.Damage(p,tc:GetBaseAttack(),REASON_EFFECT)>0 then
+			Duel.Hint(HINT_CARD,0,id)
+		end
+		tc:ResetFlagEffect(id)
+		e:Reset()
+	end
 end

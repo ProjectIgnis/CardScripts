@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
-	if chk==0 then return tc and tc:IsCanRemoveCounter(tp,0x91,3,REASON_COST) 
+	if chk==0 then return tc and tc:IsCanRemoveCounter(tp,0x91,3,REASON_COST)
 		and Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,nil) end
 	tc:RemoveCounter(tp,0x91,3,REASON_COST)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)

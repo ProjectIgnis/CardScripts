@@ -19,7 +19,7 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cfilter(c,e,tp,ft)
 	local lv=c:GetLevel()
-	return lv>0 and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5)) and (c:IsControler(tp) or c:IsFaceup()) 
+	return lv>0 and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5)) and (c:IsControler(tp) or c:IsFaceup())
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil,lv,e,tp)
 end
 function s.filter(c,lv,e,tp)

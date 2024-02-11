@@ -1,10 +1,11 @@
+--１０万ガウス！
 --One Hundred Thousand Gauss
-Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_POSITION)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_POSITION+CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCondition(s.condition)
@@ -16,7 +17,7 @@ function s.cfilter(c,tpe)
 	return c:IsFaceup() and c:IsType(tpe)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil,TYPE_PLUS) 
+	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil,TYPE_PLUS)
 		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil,TYPE_MINUS)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -34,7 +35,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local e7=Effect.CreateEffect(e:GetHandler())
 		e7:SetType(EFFECT_TYPE_SINGLE)
 		e7:SetCode(EFFECT_UPDATE_ATTACK)
-		e7:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e7:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e7:SetValue(-800)
 		tc:RegisterEffect(e7)
 	end

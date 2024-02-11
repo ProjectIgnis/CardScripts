@@ -34,12 +34,13 @@ function s.cfilter2(c)
 	return c:IsMonster() and c:IsType(TYPE_NORMAL) and c:IsLevel(5)
 end
 function s.desfilter(c)
-	return c:IsFaceup() and c:IsLevelAbove(7) and c:IsType(TYPE_NORMAL)
+	return c:IsFaceup() and c:IsLevelAbove(7) and c:IsType(TYPE_NORMAL) and c:IsNotMaximumModeSide()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--requirement
 	if Duel.DiscardDeck(tp,3,REASON_COST)>2 then
 		--Effect
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
 		local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.filter,tp),tp,0,LOCATION_MZONE,1,1,nil)
 		if #g>0 then
 			g=g:AddMaximumCheck()
@@ -49,7 +50,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(ct*(-100))
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 			g:GetFirst():RegisterEffectRush(e1)
 			local sg=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_MZONE,nil)
 			if Duel.IsExistingMatchingCard(s.cfilter2,tp,LOCATION_GRAVE,0,1,nil) and #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then

@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_ADJUST)
-	e2:SetRange(LOCATION_SZONE)	
+	e2:SetRange(LOCATION_SZONE)
 	e2:SetOperation(s.banop)
 	c:RegisterEffect(e2)
 end

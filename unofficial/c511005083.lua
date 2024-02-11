@@ -59,7 +59,7 @@ function s.initial_effect(c)
 end
 s.listed_names={511005082}
 function s.cfilter(c,tp)
-	return (c:GetPreviousRaceOnField()&RACE_FIEND)==RACE_FIEND and (c:GetPreviousTypeOnField()&TYPE_XYZ)==TYPE_XYZ 
+	return (c:GetPreviousRaceOnField()&RACE_FIEND)==RACE_FIEND and (c:GetPreviousTypeOnField()&TYPE_XYZ)==TYPE_XYZ
 		and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
@@ -76,7 +76,7 @@ end
 function s.despop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.GetMatchingGroup(function(c) return c:GetFlagEffect(id)==0 end,tp,LOCATION_MZONE,0,nil)
 	if #sg>0 and Duel.Destroy(sg,REASON_EFFECT)>0 then
-		if Duel.GetLocationCount(tp,LOCATION_MZONE)>4 and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) 
+		if Duel.GetLocationCount(tp,LOCATION_MZONE)>4 and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
 			and Duel.IsPlayerCanSpecialSummonMonster(tp,511005082,0,TYPES_TOKEN,300,300,1,RACE_FIEND,ATTRIBUTE_DARK) then
 			for i=1,5 do
 				local token=Duel.CreateToken(tp,511005082)

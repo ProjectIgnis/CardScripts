@@ -1,5 +1,6 @@
+--奇奇怪怪
 --Phantasmagoria
-Duel.LoadScript("c419.lua")
+Duel.EnableUnofficialRace(RACE_YOKAI)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -106,7 +106,7 @@ function Fusion.ConditionMix(insf,sub,...)
 				if contact then mustg:Clear() end
 				if not mg:Includes(mustg) or mustg:IsExists(aux.NOT(Card.IsCanBeFusionMaterial),1,nil,c,sumtype) then return false end
 				if gc then
-					if gc:IsExists(aux.NOT(Card.IsCanBeFusionMaterial),1,nil,c,sumtype) 
+					if gc:IsExists(aux.NOT(Card.IsCanBeFusionMaterial),1,nil,c,sumtype)
 						or gc:IsExists(aux.NOT(Fusion.ConditionFilterMix),1,nil,c,sub,sub,contact,sumtype,matcheck,tp,table.unpack(funs)) then return false end
 					mustg:Merge(gc)
 				end
@@ -329,7 +329,7 @@ function Fusion.ConditionMixRep(insf,sub,fun1,minc,maxc,...)
 				end
 				local sg=Group.CreateGroup()
 				mg:Merge(mustg)
-				return mg:IsExists(Fusion.SelectMixRep,1,nil,tp,mg,sg,mustg,c,sub,sub,contact,sumtype,chkf,fun1,minc,maxc,table.unpack(funs)) 
+				return mg:IsExists(Fusion.SelectMixRep,1,nil,tp,mg,sg,mustg,c,sub,sub,contact,sumtype,chkf,fun1,minc,maxc,table.unpack(funs))
 			end
 end
 function Fusion.OperationMixRep(insf,sub,fun1,minc,maxc,...)

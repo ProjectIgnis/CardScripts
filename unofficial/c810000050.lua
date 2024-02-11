@@ -1,9 +1,17 @@
--- Card Breaker (Anime)
--- scripted by: UnknownGuest
+--カード・ブレイカー (Anime)
+--Card Breaker (Anime)
+--scripted by: UnknownGuest
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
-	-- spsummon proc
+	c:EnableReviveLimit()
+	--Special Summon condition
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
+	c:RegisterEffect(e0)
+	--Special Summon procedure
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)

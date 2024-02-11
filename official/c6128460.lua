@@ -38,7 +38,7 @@ s.listed_names={CARD_SKULL_SERVANT,id}
 
 	--Check for level 3 or lower zombie monsters
 function s.repfilter(c,tp)
-	return c:IsFaceup() and c:IsRace(RACE_ZOMBIE) and c:IsLevelBelow(3) and c:IsControler(tp) 
+	return c:IsFaceup() and c:IsRace(RACE_ZOMBIE) and c:IsLevelBelow(3) and c:IsControler(tp)
 		and not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_EFFECT+REASON_BATTLE)
 end
 	--Activation legality

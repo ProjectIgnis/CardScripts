@@ -45,7 +45,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.rmop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={SET_NEMURELIA}
+s.listed_series={SET_NEMLERIA}
 s.listed_names={id}
 function s.tfcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0 end
@@ -57,15 +57,15 @@ function s.tfcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(function(_,c) return c:IsCode(id) end)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.tffilter(c,tp)
-	return c:IsSetCard(SET_NEMURELIA) and c:IsContinuousSpell() and not c:IsForbidden() and c:CheckUniqueOnField(tp)
+	return c:IsSetCard(SET_NEMLERIA) and c:IsContinuousSpell() and not c:IsForbidden() and c:CheckUniqueOnField(tp)
 end
 function s.tftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToExtra() and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 
+	if chk==0 then return c:IsAbleToExtra() and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and Duel.IsExistingMatchingCard(s.tffilter,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,nil,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_TOEXTRA,c,1,tp,0)
 end

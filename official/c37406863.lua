@@ -1,8 +1,10 @@
 --封神鏡
+--Fengsheng Mirror
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Discard 1 spirit monster from the opponent's hand
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_HANDES)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -11,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_card_types={TYPE_SPIRIT}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetTargetPlayer(tp)
@@ -24,7 +27,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if #tg>0 then
 			Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TOGRAVE)
 			local sg=tg:Select(p,1,1,nil)
-			Duel.SendtoGrave(sg,REASON_DISCARD+REASON_EFFECT)
+			Duel.SendtoGrave(sg,REASON_DISCARD|REASON_EFFECT)
 		end
 		Duel.ShuffleHand(1-p)
 	end

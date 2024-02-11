@@ -5,8 +5,9 @@ function s.initial_effect(c)
 	--Activate
 	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop)
 end
-s.listed_names={48130397,CARD_DARK_FUSION}
-function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
+s.listed_names={CARD_SUPER_POLYMERIZATION,CARD_DARK_FUSION}
+function s.flipcon(e)
+	local tp=e:GetHandlerPlayer()
 	local b1=Duel.GetFlagEffect(tp,id)==0 and Duel.IsExistingMatchingCard(s.cfilter,tp,0,LOCATION_MZONE,1,nil)
 	local b2=Duel.GetFlagEffect(tp,id+100)==0 and Duel.IsExistingMatchingCard(s.dfilter,tp,LOCATION_HAND,0,1,nil,tp)
 	return aux.CanActivateSkill(tp) and (b1 or b2)

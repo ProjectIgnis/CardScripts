@@ -1,5 +1,5 @@
 --ピュアリィ・リリィ
---Purrely Lily
+--Purrelyly
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -51,7 +51,7 @@ function s.qpfilter(c,e,tp,mc)
 end
 function s.spfilter(c,e,tp,mc,sc)
 	return c:IsType(TYPE_XYZ,c,SUMMON_TYPE_XYZ,tp) and c:ListsCode(sc:GetCode())
-		and mc:IsCanBeXyzMaterial(c,tp,REASON_EFFECT) and sc:IsCanBeXyzMaterial(c,tp,REASON_EFFECT)
+		and mc:IsCanBeXyzMaterial(c,tp) and sc:IsCanBeXyzMaterial(c,tp,REASON_EFFECT)
 		and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

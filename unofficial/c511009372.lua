@@ -53,7 +53,7 @@ function s.initial_effect(c)
 	e6:SetType(EFFECT_TYPE_IGNITION)
 	e6:SetRange(LOCATION_MZONE)
 	e6:SetTarget(s.pztg)
-	e6:SetOperation(s.pzop) 
+	e6:SetOperation(s.pzop)
 	c:RegisterEffect(e6)
 	aux.GlobalCheck(s,function()
 		--Keep track of "Spirit Gem" monsters that used their effect

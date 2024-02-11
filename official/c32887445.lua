@@ -23,7 +23,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.filter(c)
-	return c:GetType()&0x7
+	return c:GetType()&(TYPE_MONSTER|TYPE_SPELL|TYPE_TRAP)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetMatchingGroupCount(Card.IsCode,tp,LOCATION_GRAVE,0,nil,id)+3
@@ -38,7 +38,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.ConfirmCards(1-tp,sg)
 			g:RemoveCard(sg:GetFirst())
 		end
-		Duel.SendtoGrave(g,REASON_EFFECT+REASON_REVEAL)
+		Duel.SendtoGrave(g,REASON_EFFECT|REASON_EXCAVATE)
 	else
 		Duel.ShuffleDeck(tp)
 	end

@@ -1,5 +1,5 @@
 --森羅の舞踏娘－ピオネ
---Pione, the Sylvan Dancer
+--Sylvan Dancepione
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -43,9 +43,8 @@ function s.spfilter(c,e,tp)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsPlayerCanDiscardDeck(tp,1) then return end
-	local ct=Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)
+	local ct=math.min(3,Duel.GetFieldGroupCount(tp,LOCATION_DECK,0))
 	if ct==0 then return end
-	if ct>3 then ct=3 end
 	local t={}
 	for i=1,ct do t[i]=i end
 	Duel.Hint(HINTMSG_NUMBER,tp,HINT_NUMBER)
@@ -70,14 +69,14 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 				e1:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
 				e1:SetValue(1)
-				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+				e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 				sc:RegisterEffect(e1,true)
 				g:RemoveCard(sc)
 			end
 		end
 		Duel.SpecialSummonComplete()
 	end
-	Duel.SendtoGrave(g,REASON_EFFECT+REASON_REVEAL)
+	Duel.SendtoGrave(g,REASON_EFFECT|REASON_EXCAVATE)
 end
 function s.lvfilter(c,lg)
 	return c:IsRace(RACE_PLANT) and c:HasLevel() and lg:IsExists(aux.NOT(Card.IsLevel),1,nil,c:GetLevel())
@@ -103,7 +102,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)
 		e1:SetValue(lv)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		lc:RegisterEffect(e1)
 	end
 end

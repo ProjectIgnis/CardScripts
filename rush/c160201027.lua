@@ -20,7 +20,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,2,nil) end
 end
 function s.desfilter(c)
-	return c:IsMonster() and c:IsFaceup() and c:IsLevelBelow(8)
+	return c:IsMonster() and c:IsFaceup() and c:IsLevelBelow(8) and c:IsNotMaximumModeSide()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)

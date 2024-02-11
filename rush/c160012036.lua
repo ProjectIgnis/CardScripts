@@ -5,7 +5,7 @@ function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
 	Fusion.AddProcMix(c,true,true,160012016,160012004)
-	--Decrease ATK 
+	--Decrease ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-end 
+end
 s.listed_names={160012016}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_ONFIELD,0,1,e:GetHandler())end
@@ -37,7 +37,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 	e1:SetValue(-2200)
 	sg:GetFirst():RegisterEffectRush(e1)
 	local e2=e1:Clone()

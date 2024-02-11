@@ -58,7 +58,7 @@ function s.play(e,tp,eg,ep,ev,re,r,rp)
 	end
 	if op then op(te,tp,eg,ep,ev,re,r,rp) end
 	tc:ReleaseEffectRelation(te)
-	if etc then	
+	if etc then
 		etc=g:GetFirst()
 		while etc do
 			etc:ReleaseEffectRelation(te)

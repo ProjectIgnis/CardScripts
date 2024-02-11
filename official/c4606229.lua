@@ -78,7 +78,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local xyz=Duel.SelectMatchingCard(tp,s.xyzfilter,tp,LOCATION_EXTRA,0,1,1,nil,g):GetFirst()
 	if xyz then
 		Duel.XyzSummon(tp,xyz,nil,g)
-		xyz:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD,0,1)
+		xyz:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD&~RESET_TOFIELD,0,1)
 	end
 	if not e:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
 	--Check for a Special Summon from the Extra Deck
@@ -87,7 +87,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e3:SetCondition(s.spcon)
 	e3:SetOperation(s.spop)
-	e3:SetReset(RESET_PHASE+PHASE_END)
+	e3:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e3,tp)
 end
 function s.cfilter(c,tp)
@@ -106,7 +106,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(function(_,c) return c:IsLocation(LOCATION_EXTRA) end)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	--Clock Lizard check
 	aux.addTempLizardCheck(c,tp)

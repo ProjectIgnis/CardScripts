@@ -39,7 +39,7 @@ end
 s.listed_series={SET_EVOLTILE}
 s.listed_names={5338223,24362891} --Evo-Force, Evo-Instant
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(SET_EVOLTILE) and c:IsCanBeSpecialSummoned(e,151,tp,false,false,POS_FACEDOWN_DEFENSE) 
+	return c:IsSetCard(SET_EVOLTILE) and c:IsCanBeSpecialSummoned(e,151,tp,false,false,POS_FACEDOWN_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -78,7 +78,7 @@ function s.cfilter(c,e)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=eg:FilterCount(s.repfilter,nil,tp)
-	if chk==0 then return ct>0 and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil,e)  end
+	if chk==0 then return ct>0 and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil,e) end
 	if Duel.SelectEffectYesNo(tp,e:GetHandler(),96) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESREPLACE)
 		local tg=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE,0,1,1,nil,e)

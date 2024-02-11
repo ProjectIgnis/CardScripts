@@ -1,10 +1,11 @@
 --RR－ブレード・バーナー・ファルコン
+--Raidraptor - Blade Burner Falcon
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
-	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_WINGEDBEAST),4,2)
 	c:EnableReviveLimit()
-	--atkup
+	--Xyz Summon Procedure
+	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_WINGEDBEAST),4,2)
+	--Make this card gain 3000 ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.atkcon)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
-	--destroy
+	--Destroy monsters your opponent controls
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DESTROY)
@@ -36,29 +37,28 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(3000)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 	end
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	local rt=math.min(Duel.GetMatchingGroupCount(aux.TRUE,tp,0,LOCATION_MZONE,nil),c:GetOverlayCount())
-	c:RemoveOverlayCard(tp,1,rt,REASON_COST)
-	local ct=Duel.GetOperatedGroup():GetCount()
+	local rt=math.min(Duel.GetMatchingGroupCount(nil,tp,0,LOCATION_MZONE,nil),c:GetOverlayCount())
+	local ct=c:RemoveOverlayCard(tp,1,rt,REASON_COST)
 	e:SetLabel(ct)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_MZONE,1,nil) end
-	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_MZONE,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(nil,tp,0,LOCATION_MZONE,1,nil) end
+	local g=Duel.GetMatchingGroup(nil,tp,0,LOCATION_MZONE,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,e:GetLabel(),0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=e:GetLabel()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectMatchingCard(tp,aux.TRUE,tp,0,LOCATION_MZONE,ct,ct,nil)
+	local g=Duel.SelectMatchingCard(tp,nil,tp,0,LOCATION_MZONE,ct,ct,nil)
 	if #g>0 then
-		Duel.HintSelection(g)
+		Duel.HintSelection(g,true)
 		Duel.Destroy(g,REASON_EFFECT)
 	end
 end

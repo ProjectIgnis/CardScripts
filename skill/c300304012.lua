@@ -7,7 +7,7 @@ end
 s.listed_series={SET_ANCIENT_GEAR}
 function s.flipcon(e)
 	local tp=e:GetHandlerPlayer()
-	return Duel.GetTurnCount(tp)==1 and Duel.GetTurnPlayer()==tp
+	return Duel.GetTurnCount(tp)==1 and Duel.IsTurnPlayer(tp)
 end
 function s.flipop(e,tp,ep,eg,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -51,7 +51,7 @@ function s.flipop(e,tp,ep,eg,ev,re,r,rp)
 		ge1:SetCode(EFFECT_SUMMON_PROC)
 		ge1:SetTargetRange(LOCATION_HAND,LOCATION_HAND)
 		ge1:SetCondition(s.sumcon)
-		ge1:SetTarget(aux.FieldSummonProcTg(aux.TargetBoolFunction(Card.IsSetCard,0x7),s.sumtg))
+		ge1:SetTarget(aux.FieldSummonProcTg(aux.TargetBoolFunction(Card.IsSetCard,SET_ANCIENT_GEAR),s.sumtg))
 		ge1:SetOperation(s.sumop)
 		ge1:SetValue(SUMMON_TYPE_TRIBUTE)
 		Duel.RegisterEffect(ge1,0)

@@ -18,7 +18,7 @@ function s.cfilter(c)
 	return c:IsMonster() and c:IsLevel(1) and c:IsRace(RACE_MACHINE) and c:IsAbleToGraveAsCost()
 end
 function s.filter(c,e)
-	return c:IsFaceup() and c:IsMonster() and c:IsLevelBelow(4) and c:HasLevel() and c:IsCanBeEffectTarget(e) 
+	return c:IsFaceup() and c:IsMonster() and c:IsLevelBelow(4) and c:HasLevel() and c:IsCanBeEffectTarget(e)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_DECK,0,3,nil) end

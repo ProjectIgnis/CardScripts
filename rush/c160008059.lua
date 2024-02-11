@@ -35,7 +35,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.DiscardDeck(tp,2,REASON_COST)
 end
 function s.indtg(e,c)
-	return c:IsRace(RACE_DINOSAUR) and c:IsFaceup()
+	return c:IsRace(RACE_DINOSAUR) and c:IsFaceup() and not c:IsMaximumModeSide()
 end
 function s.indesval(e,re)
 	return re:GetHandler():IsMonster()

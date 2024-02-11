@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.revcostfilter(c)
-	return c:IsMonster() and c:IsAbleToDeckOrExtraAsCost() 
+	return c:IsMonster() and c:IsAbleToDeckOrExtraAsCost()
 end
 function s.revcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.revcostfilter,tp,LOCATION_GRAVE,0,3,nil) end

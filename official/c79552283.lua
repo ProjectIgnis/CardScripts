@@ -42,6 +42,7 @@ function s.atkfilter(c)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingTarget(s.atkfilter,tp,LOCATION_MZONE,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_APPLYTO)
 	Duel.SelectTarget(tp,s.atkfilter,tp,LOCATION_MZONE,0,1,1,nil)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
@@ -55,7 +56,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(function(_,c) return c:GetAttack()>c:GetDefense() and 0 or 1 end)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 	tc:RegisterEffect(e1)
 end
 function s.cfilter(c)

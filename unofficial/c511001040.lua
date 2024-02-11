@@ -1,7 +1,8 @@
---ドラゴン族・封印の壺
+--ドラゴン族・封印の壺 (Anime)
+--Dragon Capture Jar (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
-	--attach
+	--Attach all Dragon monsters to this card
 	local e1=Effect.CreateEffect(c)
 	e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE+EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -29,7 +30,7 @@ function s.initial_effect(c)
 	local e6=e2:Clone()
 	e6:SetCode(EVENT_CHAIN_SOLVED)
 	c:RegisterEffect(e6)
-	--def
+	--Increase DEF by total DEF of monsters attached
 	local e7=Effect.CreateEffect(c)
 	e7:SetType(EFFECT_TYPE_SINGLE)
 	e7:SetCode(EFFECT_UPDATE_DEFENSE)
@@ -45,13 +46,13 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler())
 end
 function s.filter(c,e,tid)
-	if not c:IsRace(RACE_DRAGON) or c:IsFacedown() or c:IsImmuneToEffect(e) then return false end
+	if not c:IsRace(RACE_DRAGON) or c:IsType(TYPE_TOKEN) or c:IsFacedown() or c:IsImmuneToEffect(e) then return false end
 	return c:GetFlagEffect(id)==0
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:GetFlagEffect(id)==0 then
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD_DISABLE,0,0)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD_DISABLE,0,0)
 	end
 	if not c:IsDisabled() and c:IsFaceup() then
 		local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,e:GetHandler(),e,e:GetHandler():GetFieldID())

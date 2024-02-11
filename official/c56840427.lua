@@ -1,17 +1,18 @@
 --CNo.39 希望皇ホープレイ
+--Number C39:Utopia Ray
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
+	--Xyz Summon
 	c:EnableReviveLimit()
 	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_LIGHT),4,3,s.ovfilter,aux.Stringid(id,1))
-	--attack up
+	--Increase ATK by 1000 for each Xyz Material detached
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(s.condition)
-	e1:SetCost(s.cost)
+	e1:SetCost(aux.dxmcostgen(1,1,nil))
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
@@ -23,10 +24,6 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetLP(tp)<=1000
 end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
@@ -35,7 +32,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(500)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		c:RegisterEffect(e1)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 		local g=Duel.SelectMatchingCard(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
@@ -45,7 +42,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_UPDATE_ATTACK)
 			e2:SetValue(-1000)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 			g:GetFirst():RegisterEffect(e2)
 		end
 	end

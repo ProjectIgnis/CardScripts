@@ -53,39 +53,35 @@ function s.initial_effect(c)
 	--Self Destroy During the End Phase
 	local e7=Effect.CreateEffect(c)
 	e7:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e7:SetProperty(CATEGORY_DESTROY)
+	e7:SetCode(EVENT_PHASE+PHASE_END)
 	e7:SetRange(LOCATION_MZONE)
 	e7:SetCountLimit(1)
-	e7:SetCode(EVENT_PHASE+PHASE_END)
 	e7:SetCondition(s.nofieldcon)
 	e7:SetOperation(s.nofieldop)
 	c:RegisterEffect(e7)
 end
-s.listed_series={0x21}
+s.listed_series={SET_EARTHBOUND_IMMORTAL}
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return c:IsSetCard(0x21)
+	return c:IsSetCard(SET_EARTHBOUND_IMMORTAL)
 end
 function s.unaffectedval(e,te)
-	return (te:IsActiveType(TYPE_SPELL) or te:IsActiveType(TYPE_TRAP)) and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
+	return te:IsSpellTrapEffect() and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsPreviousPosition(POS_FACEUP) and not c:IsLocation(LOCATION_DECK)
 		and Duel.IsExistingMatchingCard(Card.IsFaceup,0,LOCATION_FZONE,LOCATION_FZONE,1,nil)
 end
-function s.desfilter(c)
-	return c:IsFaceup() and c:IsDestructable()
-end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local g=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 	if #g~=0 then
 		Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,#g*800)
 	end
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 	local ct=Duel.Destroy(g,REASON_EFFECT)
 	if ct~=0 then
 		Duel.BreakEffect()

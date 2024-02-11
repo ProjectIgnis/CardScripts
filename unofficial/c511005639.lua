@@ -157,7 +157,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	e:Reset()
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp 
+	return Duel.GetTurnPlayer()==tp
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()

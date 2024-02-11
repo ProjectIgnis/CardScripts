@@ -34,7 +34,7 @@ function s.spcon(e,c)
 end
 function s.spdcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsLocation(LOCATION_GRAVE) and r==REASON_SYNCHRO and c:GetReasonCard():IsHasEffect(id)
+	return c:IsLocation(LOCATION_GRAVE) and r==REASON_SYNCHRO and c:GetReasonCard():IsHasEffect(EFFECT_MULTIPLE_TUNERS)
 end
 function s.filter(c,e,tp)
 	return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsRace(RACE_FIEND)

@@ -34,7 +34,7 @@ function s.pfilter(c)
 end
 function s.value(e,c)
 	local tp=e:GetHandlerPlayer()
-	local g=Duel.GetMatchingGroupCount(s.pfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil) 
+	local g=Duel.GetMatchingGroupCount(s.pfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)
 	return g*900
 end
 --Sarcophagus functions

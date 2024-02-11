@@ -1,9 +1,9 @@
 --伍世壊摘心
---Manadome Abscission
+--Mannadium Abscission
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--Destroy 1 monster and add 1 "Primal Planet Kalarium" or 1 "Manadome" Spell/Trap form Deck to the hand
+	--Destroy 1 monster and search 1 "Peaceful Planet Calarium" or 1 "Mannadium" Spell/Trap
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -26,10 +26,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={id,CARD_VISAS_STARFROST,82460246}
-s.listed_series={SET_MANADOME}
+s.listed_names={id,CARD_VISAS_STARFROST,82460246} --Peaceful Planet Calarium
+s.listed_series={SET_MANNADIUM}
 function s.thfilter(c,alt)
-	return c:IsAbleToHand() and (c:IsCode(82460246) or (alt and c:IsSetCard(SET_MANADOME) and c:IsSpellTrap() and not c:IsCode(id)))
+	return c:IsAbleToHand() and (c:IsCode(82460246) or (alt and c:IsSetCard(SET_MANNADIUM) and c:IsSpellTrap() and not c:IsCode(id)))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) end

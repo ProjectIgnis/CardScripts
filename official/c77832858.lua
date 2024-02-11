@@ -1,5 +1,5 @@
 --邪炎帝王テスタロス
---Thestalos the Shadow Firestorm Monarch
+--Thestalos the Shadowfire Monarch
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -44,29 +44,15 @@ function s.rescon(soul_ex_g,zone)
 					and sg:FilterCount(Card.IsControler,nil,tp)==1
 			end
 end
-function s.adjust_zone_value(exeff,c,zone)
-	if not exeff then return zone end
-	local val=0
-	local ret=exeff:GetValue()
-	if type(ret)=="function" then
-		ret={ret(exeff,c)}
-		if #ret>1 then
-			val=(ret[2]>>16)&0x7f
-		end
-	end
-	return val
-end
 function s.sumcon(e,c,minc,zone,relzone,exeff)
 	if c==nil then return true end
 	if minc>2 or c:IsLevelBelow(6) then return false end
-	zone=s.adjust_zone_value(exeff,c,zone)
 	local tp=c:GetControler()
 	local mg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,relzone,tp)
 	local soul_ex_g=Duel.GetMatchingGroup(Card.IsHasEffect,tp,LOCATION_MZONE,LOCATION_MZONE,nil,EFFECT_EXTRA_RELEASE)
 	return #mg>=2 and aux.SelectUnselectGroup(mg,e,tp,2,2,s.rescon(soul_ex_g,zone),0)
 end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk,c,minc,zone,relzone,exeff)
-	zone=s.adjust_zone_value(exeff,c,zone)
 	local mg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,relzone,tp)
 	local soul_ex_g=Duel.GetMatchingGroup(Card.IsHasEffect,tp,LOCATION_MZONE,LOCATION_MZONE,nil,EFFECT_EXTRA_RELEASE)
 	local g=aux.SelectUnselectGroup(mg,e,tp,2,2,s.rescon(soul_ex_g,zone),1,tp,HINTMSG_RELEASE,nil,nil,true)

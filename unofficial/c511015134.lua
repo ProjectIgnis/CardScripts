@@ -1,10 +1,10 @@
 --ＲＵＭ－千死蛮巧 (Anime)
 --Rank-Up-Magic Admiration of the Thousands (Anime)
-Duel.LoadScript("rankup_functions.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -13,13 +13,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x1048}
+s.listed_series={SET_NUMBER_C}
 function s.filter(c,e)
-	return c:IsSetCard(0x1048) and c:IsType(TYPE_XYZ) and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())
+	return c:IsSetCard(SET_NUMBER_C) and c:IsType(TYPE_XYZ) and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())
 		and (c:GetRank()>0 or c:IsStatus(STATUS_NO_LEVEL)) and c:IsCanBeEffectTarget(e)
 end
 function s.xyzfilter(c,sg,e,tp)
-	if not c:IsSetCard(0x1048) or Duel.GetLocationCountFromEx(tp,tp,sg,c)<=0 then return false end
+	if not c:IsSetCard(SET_NUMBER_C) or Duel.GetLocationCountFromEx(tp,tp,sg,c)<=0 then return false end
 	if c.rum_limit and not sg:IsExists(function(mc) return c.rum_limit(mc,e) end,1,nil) then return false end
 	local se=nil
 	if c.rum_xyzsummon then
@@ -47,7 +47,7 @@ function s.chkfilter(c,g,sg,e,tp)
 		e2:SetReset(RESET_CHAIN)
 		c:RegisterEffect(e2)
 	end
-	local res=Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_EXTRA,0,1,nil,sg,e,tp) 
+	local res=Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_EXTRA,0,1,nil,sg,e,tp)
 		or g:IsExists(s.chkfilter,1,sg,g,sg,e,tp)
 	e1:Reset()
 	if e2 then e2:Reset() end
@@ -131,7 +131,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #xyzg>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
-		aux.RankUpComplete(xyz,aux.Stringid(id,0))
+		aux.RankUpComplete(xyz,aux.Stringid(id,1))
 		Duel.XyzSummon(tp,xyz,nil,g)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

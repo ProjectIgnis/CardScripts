@@ -63,7 +63,7 @@ function s.drfilter(c,tp)
 	return c:IsFaceup() and c:IsType(TYPE_PENDULUM) and c:IsSetCard(SET_PERFORMAPAL) and c:IsControler(tp) and not c:IsCode(id)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.drfilter,1,nil,tp) 
+	return eg:IsExists(s.drfilter,1,nil,tp)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end

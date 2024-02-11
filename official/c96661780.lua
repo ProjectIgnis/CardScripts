@@ -1,4 +1,4 @@
---Japanese name
+--フォース・オブ・ガーディアン
 --Riryoku Guardian
 --scripted by Naim
 local s,id=GetID()

@@ -1,7 +1,6 @@
 --ＣＮｏ.１０６ 溶岩掌ジャイアント・ハンド・レッド (Anime)
 --Number C106: Giant Red Hand (Anime)
 --Fixed by Larry126
-Duel.LoadScript("rankup_functions.lua")
 Duel.LoadCardScript("c55888045.lua")
 local s,id=GetID()
 function s.initial_effect(c)
@@ -14,7 +13,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e1:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
+	e1:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,SET_NUMBER)))
 	c:RegisterEffect(e1)
 	--no effect damage
 	local e2=Effect.CreateEffect(c)
@@ -31,10 +30,9 @@ function s.initial_effect(c)
 	e3:SetCategory(CATEGORY_DISABLE)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCost(s.discost)
+	e3:SetCost(aux.dxmcostgen(1,1,nil))
 	e3:SetTarget(s.distg)
 	e3:SetOperation(s.disop)
-	e3:SetLabel(RESET_EVENT+RESETS_STANDARD)
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetCode(EFFECT_RANKUP_EFFECT)
@@ -42,13 +40,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4,false,REGISTER_FLAG_DETACH_XMAT)
 	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
-s.listed_series={0x48}
+s.listed_series={SET_NUMBER}
 s.xyz_number=106
 s.listed_names={63746411}
-function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-end
 function s.filter(c)
 	return c:IsFaceup() and not c:IsDisabled()
 end

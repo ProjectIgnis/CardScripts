@@ -16,7 +16,10 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_FUSION}
 function s.filter(c,g)
-	return g:IsExists(Card.IsCode,1,c,c:GetCode())
+	return g:IsExists(s.filter2,1,c,c:GetCode())
+end
+function s.filter2(c,code)
+	return c:IsCode(code) and not c:IsMaximumMode()
 end
 function s.condition(e,tp,eg,ev,ep,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)

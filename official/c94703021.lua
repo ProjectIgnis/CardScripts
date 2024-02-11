@@ -68,7 +68,7 @@ function s.tkop2(e,tp,eg,ep,ev,re,r,rp)
 	local ct=math.min(Duel.GetMatchingGroupCount(Card.IsLinkMonster,tp,0,LOCATION_MZONE,nil),Duel.GetLocationCount(tp,LOCATION_MZONE))
 	if ct<1 then return end
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ct=1 end
-	if ct>1 then 
+	if ct>1 then
 		ct=Duel.AnnounceNumberRange(tp,1,ct)
 	end
 	for i=1,ct do

@@ -1,5 +1,6 @@
--- Narrow Tunnel
--- scripted by: UnknownGuest
+--狭小の地下道
+--Narrow Tunnel
+--scripted by UnknownGuest
 local s,id=GetID()
 function s.initial_effect(c)
 	-- Activate
@@ -7,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	-- disable summon
+	--Each player can only Summon and control up to 1 monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetRange(LOCATION_SZONE)
@@ -22,7 +23,7 @@ function s.initial_effect(c)
 	local e4=e2:Clone()
 	e4:SetCode(EFFECT_CANNOT_FLIP_SUMMON)
 	c:RegisterEffect(e4)
-	--destroy monster
+	--Destroy monsters until a player controls only 1
 	local e8=Effect.CreateEffect(c)
 	e8:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e8:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
@@ -40,7 +41,7 @@ function s.initial_effect(c)
 	local e11=e8:Clone()
 	e11:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 	c:RegisterEffect(e11)
-	--adjust
+	--Adjust
 	local e12=Effect.CreateEffect(c)
 	e12:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e12:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
@@ -51,34 +52,23 @@ function s.initial_effect(c)
 	c:RegisterEffect(e12)
 end
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp)
-	--local p=c:GetControler()
-	return Duel.GetActivityCount(targetp,ACTIVITY_SUMMON)>0 or Duel.GetActivityCount(targetp,ACTIVITY_FLIPSUMMON)>0 
-		or Duel.GetActivityCount(targetp,ACTIVITY_SPSUMMON)>0 or Duel.GetActivityCount(targetp,ACTIVITY_NORMALSUMMON)>0
+	local p=targetp or sump
+	return Duel.GetActivityCount(p,ACTIVITY_SUMMON)>0
+		or Duel.GetActivityCount(p,ACTIVITY_SPSUMMON)>0
+		or Duel.GetActivityCount(p,ACTIVITY_FLIPSUMMON)>0
+		or Duel.GetActivityCount(p,ACTIVITY_NORMALSUMMON)>0
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)>=2 or Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>=2
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local ft=Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0,nil)
-	if ft>1 then
-		local ct=ft-1
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-		local g=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_MZONE,0,ct,ct,nil)
-		local tc=g:GetFirst()
-		while tc do
-			Duel.Destroy(tc,REASON_EFFECT)
-			tc=g:GetNext()
-		end
-	end
-	ft=Duel.GetFieldGroupCount(1-tp,LOCATION_MZONE,0,nil)
-	if ft>1 then
-		local ct=ft-1
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-		local g=Duel.SelectMatchingCard(1-tp,nil,1-tp,LOCATION_MZONE,0,ct,ct,nil)
-		local tc=g:GetFirst()
-		while tc do
-			Duel.Destroy(tc,REASON_EFFECT)
-			tc=g:GetNext()
+	for p=0,1 do
+		local ft=Duel.GetFieldGroupCount(p,LOCATION_MZONE,0,nil)
+		if ft>1 then
+			local ct=ft-1
+			Duel.Hint(HINT_SELECTMSG,p,HINTMSG_DESTROY)
+			local g=Duel.SelectMatchingCard(p,nil,p,LOCATION_MZONE,0,ct,ct,nil)
+			Duel.Destroy(g,REASON_EFFECT)
 		end
 	end
 end

@@ -79,7 +79,7 @@ function s.caop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_TRIGGER)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		e1:SetValue(1)
 		tc:RegisterEffect(e1)
 	end
@@ -100,7 +100,7 @@ function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsFaceup() and  tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e)
+	if tc:IsFaceup() and tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e)
 		and tc:IsControler(1-tp) and tc:IsControlerCanBeChanged() and Duel.GetControl(tc,tp) then
 		local c=e:GetHandler()
 		-- Cannot activate its effects

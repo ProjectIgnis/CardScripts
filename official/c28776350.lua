@@ -3,9 +3,9 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--link summon
+	--Link Summon Procedure
 	Link.AddProcedure(c,s.filter,2,nil,s.spcheck)
-	--splimit
+	--Can only be Link Summoned once per turn
 	local e1=Effect.CreateEffect(c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.regcon)
 	e1:SetOperation(s.regop)
 	c:RegisterEffect(e1)
-	--to hand
+	--Return to the hand all monsters this card points to
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOHAND)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
-	--announce
+	--Excavate cards from the top f your Deck
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_DECKDES)
@@ -50,7 +50,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetTarget(s.splimit)
 	Duel.RegisterEffect(e1,tp)
 end
@@ -105,6 +105,6 @@ function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	if #g~=0 then
 		Duel.DisableShuffleCheck()
-		Duel.SendtoGrave(g,REASON_EFFECT+REASON_REVEAL)
+		Duel.SendtoGrave(g,REASON_EFFECT|REASON_EXCAVATE)
 	end
 end

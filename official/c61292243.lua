@@ -37,7 +37,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_RELEASE,nil,1,tp,LOCATION_MZONE|LOCATION_HAND)
 end
 function s.trfilter(c)
-	return c:IsSetCard(SET_RESCUE_ACE) and c:IsReleasableByEffect()
+	return c:IsSetCard(SET_RESCUE_ACE) and c:IsMonster() and c:IsReleasableByEffect()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
@@ -48,7 +48,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.SelectMatchingCard(tp,s.trfilter,tp,LOCATION_MZONE|LOCATION_HAND,0,1,1,nil)
 		if #g>0 then
 			Duel.BreakEffect()
-			Duel.Release(g,REASON_EFFECT) 
+			Duel.Release(g,REASON_EFFECT)
 		end
 	end
 end

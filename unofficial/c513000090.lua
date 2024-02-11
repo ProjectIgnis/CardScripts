@@ -4,6 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DRAW)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_DESTROYED)
@@ -30,7 +31,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(tp,2,REASON_EFFECT)
 	if g:FilterCount(Card.IsLocation,nil,LOCATION_HAND)==2 then
 		for tc in aux.Next(g) do
-			Duel.MoveToField(tc,tp,tp,LOCATION_MZONE,POS_FACEDOWN_DEFENSE,true)
+			Duel.MoveToField(tc,tp,tp,LOCATION_MZONE,POS_FACEUP_DEFENSE,true)
 			tc:SetStatus(STATUS_SUMMON_TURN,true)
 		end
 		Duel.RaiseEvent(g,EVENT_MSET,e,REASON_EFFECT,tp,tp,0)

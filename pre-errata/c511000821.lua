@@ -29,7 +29,7 @@ function s.initial_effect(c)
 end
 s.listed_names={89194033}
 function s.cfilter(c,e,tp)
-	return c:IsFaceup() and c:IsCode(89194033) and c:IsAbleToGraveAsCost() 
+	return c:IsFaceup() and c:IsCode(89194033) and c:IsAbleToGraveAsCost()
 		and Duel.IsExistingMatchingCard(s.filter,tp,0x43,0,1,nil,e,tp,c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

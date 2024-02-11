@@ -78,7 +78,7 @@ end
 function s.target0(e,tp,eg,ev,ep,re,r,rp,chk)
 	local c=e:GetHandler()
 	local mg=c:GetOverlayGroup():Filter(s.spfilter,nil,e,tp)
-	if chk==0 then return c:IsAbleToHand() and mg and #mg>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>#mg 
+	if chk==0 then return c:IsAbleToHand() and mg and #mg>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>#mg
 		and not (Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and #mg>1) end
 	Duel.SetTargetCard(mg)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,c,1,0,0)

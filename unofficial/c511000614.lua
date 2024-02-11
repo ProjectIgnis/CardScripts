@@ -97,7 +97,7 @@ function s.equipop(c,e,tp,tc)
 		e2:SetType(EFFECT_TYPE_EQUIP)
 		e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_OWNER_RELATE)
 		e2:SetCode(EFFECT_UPDATE_ATTACK)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e2:SetValue(atk)
 		tc:RegisterEffect(e2)
 	end
@@ -129,11 +129,11 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local eq=c:GetEquipTarget()
 	local o=e:GetOwner()
 	local code=c:GetOriginalCode()
-	if eq==o and eq:IsFaceup() and eq:GetFlagEffect(code)==0 and not eq:IsDisabled() then
-		local cid=eq:CopyEffect(code,RESET_EVENT+RESETS_STANDARD,1)
-		eq:RegisterFlagEffect(code,RESET_EVENT+RESETS_STANDARD,0,1)
+	if eq==o and eq:IsFaceup() and eq:GetFlagEffect(id+code)==0 and not eq:IsDisabled() then
+		local cid=eq:CopyEffect(code,RESET_EVENT|RESETS_STANDARD,1)
+		eq:RegisterFlagEffect(id+code,RESET_EVENT|RESETS_STANDARD,0,1)
 		e:SetLabel(cid)
-	end 
+	end
 	if not eq or o~=eq or eq:IsDisabled() then
 		local cid=e:GetLabel()
 		o:ResetEffect(cid,RESET_COPY)

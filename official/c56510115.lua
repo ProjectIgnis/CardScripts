@@ -1,5 +1,5 @@
 --ドレミコード・シンフォニア
---Solfachord Symphonia
+--Solfachord Symphony
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -48,7 +48,7 @@ function s.actop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetTarget(s.atktg)
 	e1:SetValue(function(e,c) return c:GetScale()*300 end)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	if ct<5 then return end
 	--Destroy 1 card

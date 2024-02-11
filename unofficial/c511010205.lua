@@ -1,7 +1,6 @@
 --ＣＮｏ.５ 亡朧龍 カオス・キマイラ・ドラゴン (Anime)
 --Number C5: Chaos Chimera Dragon (Anime)
 --fixed by MLD
-Duel.LoadScript("rankup_functions.lua")
 Duel.LoadCardScript("c69757518.lua")
 local s,id=GetID()
 function s.initial_effect(c)
@@ -37,7 +36,7 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_QUICK_O)
 	e4:SetCode(EVENT_FREE_CHAIN)
 	e4:SetRange(LOCATION_MZONE)
-	e4:SetCost(s.atkcost)
+	e4:SetCost(aux.dxmcostgen(1,1,nil))
 	e4:SetCondition(s.atkcon)
 	e4:SetTarget(s.atktg)
 	e4:SetOperation(s.atkop)
@@ -76,7 +75,7 @@ function s.initial_effect(c)
 	local e9=Effect.CreateEffect(c)
 	e9:SetType(EFFECT_TYPE_SINGLE)
 	e9:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e9:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
+	e9:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,SET_NUMBER)))
 	c:RegisterEffect(e9)
 	--material
 	local e10=Effect.CreateEffect(c)
@@ -86,14 +85,13 @@ function s.initial_effect(c)
 	e10:SetCountLimit(1)
 	e10:SetTarget(s.ovtg)
 	e10:SetOperation(s.ovop)
-	e10:SetLabel(RESET_EVENT+RESETS_STANDARD)
 	local e11=Effect.CreateEffect(c)
 	e11:SetType(EFFECT_TYPE_SINGLE)
 	e11:SetCode(EFFECT_RANKUP_EFFECT)
 	e11:SetLabelObject(e10)
 	c:RegisterEffect(e11)
 end
-s.listed_series={0x48}
+s.listed_series={SET_NUMBER}
 s.listed_names={90126061}
 s.xyz_number=5
 function s.atkval(e,c)
@@ -104,10 +102,6 @@ function s.atcon(e)
 end
 function s.atkct(e,c)
 	return e:GetHandler():GetFlagEffect(id)-1
-end
-function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp and Duel.IsBattlePhase() and not e:GetHandler():IsStatus(STATUS_CHAINING)

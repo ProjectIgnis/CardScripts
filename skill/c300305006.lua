@@ -19,14 +19,6 @@ s.listed_series={SET_KOALA,SET_KANGAROO}
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 	Duel.Hint(HINT_CARD,tp,id)
-end
-function s.cfilter(c)
-	return (c:IsSetCard(SET_KOALA) or c:IsSetCard(SET_KANGAROO)) and c:IsMonster() and c:IsFaceup() and c:IsCanChangePosition()
-end
-function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
-	return aux.CanActivateSkill(tp) and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
-end
-function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	--"Kangaroo" and "Koala" monsters can attack while in Defense Position
 	local e1=Effect.CreateEffect(c)
@@ -35,8 +27,16 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetTarget(function(e,c) return c:IsSetCard(SET_KOALA) or c:IsSetCard(SET_KANGAROO) end)
 	e1:SetValue(1)
-	--Change 1 "Koala" or "Kangaroo" monster battle position
 	Duel.RegisterEffect(e1,tp)
+end
+function s.cfilter(c)
+	return (c:IsSetCard(SET_KOALA) or c:IsSetCard(SET_KANGAROO)) and c:IsMonster() and c:IsFaceup() and c:IsCanChangePosition()
+end
+function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
+	return aux.CanActivateSkill(tp) and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
+end
+function s.flipop(e,tp,eg,ep,ev,re,r,rp)
+	--Change 1 "Koala" or "Kangaroo" monster battle position 
 	Duel.Hint(HINT_CARD,0,id)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE,0,1,1,nil)

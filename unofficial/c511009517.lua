@@ -91,7 +91,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetReleaseGroup(tp):Filter(Card.IsSetCard,nil,SET_SUPREME_KING_DRAGON)
 	local pg=aux.GetMustBeMaterialGroup(tp,Group.CreateGroup(),tp,nil,nil,REASON_SYNCHRO)
 	if #pg<=0 and #g>1 and aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0)
-		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SYNCHRO,tp,false,true) 
+		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SYNCHRO,tp,false,true)
 		and Duel.SelectEffectYesNo(tp,c,aux.Stringid(id,0)) then
 		local sg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_RELEASE)
 		Duel.Release(sg,REASON_COST)

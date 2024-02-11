@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.roll_dice=true
-s.listed_series={0x26}
+s.listed_series={SET_MORPHTRONIC}
 function s.target_a(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_DICE,nil,0,tp,1)
@@ -35,7 +35,7 @@ function s.target_a(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function s.spfilter(c,lv,e,tp)
-	return c:IsSetCard(0x26) and c:IsLevelBelow(lv) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_MORPHTRONIC) and c:IsLevelBelow(lv) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.operation_a(e,tp,eg,ep,ev,re,r,rp)
 	local res=Duel.TossDice(tp,1)
@@ -56,7 +56,7 @@ function s.target_d(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
 function s.tgfilter(c)
-	return c:IsSetCard(0x26) and c:IsAbleToGrave()
+	return c:IsSetCard(SET_MORPHTRONIC) and c:IsAbleToGrave()
 end
 function s.operation_d(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)==0 then return end
@@ -69,7 +69,7 @@ function s.operation_d(e,tp,eg,ep,ev,re,r,rp)
 		local tg=dg:FilterSelect(tp,s.tgfilter,1,1,nil)
 		dg:RemoveCard(tg)
 		Duel.DisableShuffleCheck()
-		Duel.SendtoGrave(tg,REASON_EFFECT+REASON_REVEAL)
+		Duel.SendtoGrave(tg,REASON_EFFECT|REASON_EXCAVATE)
 		ct=1
 	end
 	local ac=res-ct

@@ -1,8 +1,10 @@
 --破壊剣－アームズバスターブレード
+--Robot Buster Destruction Sword
 local s,id=GetID()
 function s.initial_effect(c)
-	--equip
+	--Equip itself to a "Buster Blader"
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCategory(CATEGORY_EQUIP)
@@ -10,24 +12,28 @@ function s.initial_effect(c)
 	e1:SetTarget(s.eqtg)
 	e1:SetOperation(s.eqop)
 	c:RegisterEffect(e1)
-	--
+	--Spell/Traps face-up on your opponent's field cannot activate their effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(0,1)
+	e2:SetCondition(function(e) return e:GetHandler():GetEquipTarget() end)
 	e2:SetValue(s.aclimit)
 	c:RegisterEffect(e2)
-	--direct atk
+	--Increase the ATK of the equipped monster by 1000
 	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(id,1))
+	e3:SetCategory(CATEGORY_ATKCHANGE)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_SZONE)
+	e3:SetCondition(function(e) return e:GetHandler():GetEquipTarget() end)
 	e3:SetCost(s.dacost)
 	e3:SetOperation(s.daop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={78193831}
+s.listed_names={78193831} --Buster Blade
 function s.filter(c)
 	return c:IsFaceup() and c:IsCode(78193831)
 end
@@ -51,7 +57,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_EQUIP_LIMIT)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e1:SetValue(s.eqlimit)
 	e1:SetLabelObject(tc)
 	c:RegisterEffect(e1)
@@ -76,7 +82,7 @@ function s.daop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(1000)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

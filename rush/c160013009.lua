@@ -15,9 +15,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_names={160013012,CARD_FUSION,160013053}
+s.listed_names={CARD_CELEB_ROSE_MAGICIAN,CARD_FUSION,160013053}
 function s.cfilter(c)
-	return c:IsCode(160013012) or c:IsEquipSpell()
+	return c:IsCode(CARD_CELEB_ROSE_MAGICIAN) or c:IsEquipSpell()
 end
 function s.condition(e,tp)
 	return e:GetHandler():IsStatus(STATUS_SUMMON_TURN) and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,nil)

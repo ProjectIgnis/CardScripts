@@ -30,7 +30,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return rp==tp and eg:IsExists(s.lffilter,1,nil,tp,re)
 end
 function s.spfilter(c,e,tp)
-	return c:IsFaceup() and c:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsFaceup() and c:IsLocation(LOCATION_GRAVE|LOCATION_REMOVED) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.rmfilter(c)
 	return c:IsAbleToRemove() and c:IsMonster()
@@ -38,17 +38,17 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=eg:Filter(s.lffilter,nil,tp,re):Match(s.spfilter,nil,e,tp)
 	local b1=#g>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.GetFlagEffect(tp,id)==0
-	local b2=Duel.IsExistingMatchingCard(s.rmfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,nil) and Duel.GetFlagEffect(tp,id+1)==0
+	local b2=Duel.IsExistingMatchingCard(s.rmfilter,tp,0,LOCATION_MZONE|LOCATION_GRAVE,1,nil) and Duel.GetFlagEffect(tp,id+1)==0
 	local b3=Duel.GetFlagEffect(tp,id+2)==0
 	if chk==0 then return b1 or b2 or b3 end
 	Duel.SetTargetCard(g)
-	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE+LOCATION_REMOVED)
-	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_MZONE+LOCATION_GRAVE)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE|LOCATION_REMOVED)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_MZONE|LOCATION_GRAVE)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.lffilter,nil,tp,re):Match(s.spfilter,nil,e,tp):Match(Card.IsRelateToEffect,nil,e)
 	local b1=#g>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.GetFlagEffect(tp,id)==0
-	local b2=Duel.IsExistingMatchingCard(s.rmfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,nil) and Duel.GetFlagEffect(tp,id+1)==0
+	local b2=Duel.IsExistingMatchingCard(s.rmfilter,tp,0,LOCATION_MZONE|LOCATION_GRAVE,1,nil) and Duel.GetFlagEffect(tp,id+1)==0
 	local b3=Duel.GetFlagEffect(tp,id+2)==0
 	if not (b1 or b2 or b3) then return end
 	local op=Duel.SelectEffect(tp,
@@ -57,19 +57,19 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		{b3,aux.Stringid(id,3)})
 	local sg=nil
 	if op==1 then
-		Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		sg=g:Select(tp,1,1,nil,e,tp)
 		if #sg==0 or Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)==0 then return end
 	elseif op==2 then
-		Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_END,0,1)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		sg=Duel.SelectMatchingCard(tp,s.remfilter,tp,0,LOCATION_GRAVE+LOCATION_MZONE,1,1,nil)
+		sg=Duel.SelectMatchingCard(tp,s.rmfilter,tp,0,LOCATION_GRAVE+LOCATION_MZONE,1,1,nil)
 		if #sg==0 then return end
 		Duel.HintSelection(sg,true)
 		Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)
 	elseif op==3 then
-		Duel.RegisterFlagEffect(tp,id+2,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id+2,RESET_PHASE|PHASE_END,0,1)
 		--Halve damage
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetDescription(aux.Stringid(id,4))
@@ -78,7 +78,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_CHANGE_DAMAGE)
 		e1:SetTargetRange(1,0)
 		e1:SetValue(function(e,re,ev) return math.floor(ev/2) end)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 	end
 end

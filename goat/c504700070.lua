@@ -2,13 +2,13 @@
 --Bark of Dark Ruler (Goat)
 local s,id=GetID()
 function s.initial_effect(c)
-	--atkdown
+	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCategory(CATEGORY_ATKCHANGE)
-	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(TIMING_DAMAGE_STEP)
+	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_CAL)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetHintTiming(TIMING_DAMAGE_CAL)
 	e1:SetCondition(s.condition)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
@@ -16,8 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local phase=Duel.GetCurrentPhase()
-	if phase~=PHASE_DAMAGE or Duel.IsDamageCalculated() then return false end
+	if Duel.GetCurrentPhase()~=PHASE_DAMAGE_CAL or Duel.IsDamageCalculated() then return false end
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
 	if a:IsControler(tp) then 

@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.costfilter(c)
-	return c:IsMonster() and c:IsAbleToDeckOrExtraAsCost() 
+	return c:IsMonster() and c:IsAbleToDeckOrExtraAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_GRAVE,0,2,nil) end
@@ -37,6 +37,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if tc then
 		Duel.HintSelection(tc,true)
 		--Piercing
-		tc:AddPiercing(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,e:GetHandler())
+		tc:AddPiercing(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,e:GetHandler())
 	end
 end

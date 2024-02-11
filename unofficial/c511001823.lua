@@ -1,7 +1,8 @@
---宝玉獣ルビー・カーバンクル
+--宝玉獣ルビー・カーバンクル (Anime)
+--Crystal Beast Ruby Carbuncle (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
-	--send replace
+	--Place this card in Spell/Trap Zone instead of sending to GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_TO_GRAVE_REDIRECT_CB)
@@ -9,13 +10,14 @@ function s.initial_effect(c)
 	e1:SetCondition(s.repcon)
 	e1:SetOperation(s.repop)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special Summon "Crystal Beast" monsters in Spell/Trap Zones
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(32710364,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e2:SetCondition(s.condition)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
@@ -28,6 +30,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={SET_CRYSTAL_BEAST}
 function s.repcon(e)
 	local c=e:GetHandler()
 	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsReason(REASON_DESTROY)
@@ -44,7 +47,10 @@ function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RaiseEvent(c,47408488,e,0,tp,0,0)
 end
 function s.filter(c,e,sp)
-	return c:IsFaceup() and c:IsSetCard(0x1034) and c:IsCanBeSpecialSummoned(e,0,sp,true,false)
+	return c:IsFaceup() and c:IsSetCard(SET_CRYSTAL_BEAST) and c:IsCanBeSpecialSummoned(e,0,sp,true,false)
+end
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():IsPreviousLocation(LOCATION_SZONE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_SZONE,0,1,nil,e,tp)

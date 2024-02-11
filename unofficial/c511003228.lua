@@ -53,7 +53,7 @@ function s.extrafil_replacement(e,tp,mg)
 end
 function s.fcheck_replacement(tp,sg,fc)
 	return sg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA)<=1
-end 
+end
 function s.extraop(e,tc,tp,sg,chk)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)

@@ -115,7 +115,7 @@ end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsRace,RACE_PLANT),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	local atk=g:GetSum(Card.GetAttack)
-	if chk==0 then return e:GetHandler():IsDestructable(e) and g:FilterCount(Card.IsDestructable,nil,e)==#g 
+	if chk==0 then return e:GetHandler():IsDestructable(e) and g:FilterCount(Card.IsDestructable,nil,e)==#g
 		and Duel.GetMZoneCount(tp,g)>0
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,atk,e,tp) end
 	g:AddCard(e:GetHandler())

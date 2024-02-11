@@ -1,5 +1,5 @@
 --ふわんだりぃずと未知の風
---Flundereeze and the Unknown Wind
+--Floowandereeze and the Unexplored Winds
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--Tribute summon
+	--Tribute Summon by sending 1 of your monsters and 1 opponent's card to the GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_FIELD)
@@ -20,16 +20,19 @@ function s.initial_effect(c)
 	e2:SetOperation(s.otop)
 	e2:SetValue(SUMMON_TYPE_TRIBUTE)
 	c:RegisterEffect(e2)
-	--Draw
-	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,1))
-	e3:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW)
-	e3:SetType(EFFECT_TYPE_IGNITION)
-	e3:SetRange(LOCATION_SZONE)
-	e3:SetCountLimit(1,id)
-	e3:SetTarget(s.drtg)
-	e3:SetOperation(s.drop)
+	local e3=e2:Clone()
+	e3:SetCode(EFFECT_SET_PROC)
 	c:RegisterEffect(e3)
+	--Place up to 2 Winged Beast monsters from your hand on the bottom of your Deck and draw the same number of cards
+	local e4=Effect.CreateEffect(c)
+	e4:SetDescription(aux.Stringid(id,1))
+	e4:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW)
+	e4:SetType(EFFECT_TYPE_IGNITION)
+	e4:SetRange(LOCATION_SZONE)
+	e4:SetCountLimit(1,id)
+	e4:SetTarget(s.drtg)
+	e4:SetOperation(s.drop)
+	c:RegisterEffect(e4)
 end
 function s.tgfilter(c,e)
 	return c:IsAbleToGrave() and not c:IsImmuneToEffect(e)
@@ -78,7 +81,6 @@ function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,s.drfilter,tp,LOCATION_HAND,0,1,2,nil)
 	if #g>0 then

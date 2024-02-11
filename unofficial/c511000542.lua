@@ -17,7 +17,7 @@ function s.filter(c)
 	return c:IsLevelBelow(4) and c:IsMonster() and not c:IsForbidden()
 end
 function s.thfilter(c)
-	return c:IsAbleToHand() and Duel.GetMZoneCount(tp,c)>0
+	return c:IsAbleToHand() and Duel.GetMZoneCount(c:GetControler(),c)>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingTarget(s.thfilter,tp,LOCATION_MZONE,0,1,nil)

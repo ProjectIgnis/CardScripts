@@ -34,7 +34,7 @@ function s.scon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD) and e:GetHandler():IsReason(REASON_DESTROY)
 end
 function s.sfilter(c)
-	return c:IsSetCard(SET_TG) and c:IsMonster() c:IsAbleToHand()
+	return c:IsSetCard(SET_TG) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.stg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.sfilter,tp,LOCATION_DECK,0,1,nil) end

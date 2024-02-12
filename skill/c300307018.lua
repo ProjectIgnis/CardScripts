@@ -24,7 +24,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)>0 and g:IsLocation(LOCATION_DECK) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		local sg=Duel.SelectMatchingCard(tp,Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,1,nil)
-		if Duel.SendtoGrave(sg,REASON_COST)>0 and sg:IsLocation(LOCATION_GRAVE) then
+		if Duel.SendtoGrave(sg,REASON_COST)>0 and sg:GetFirst():IsLocation(LOCATION_GRAVE) then
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_FIELD)
 			e1:SetCode(EFFECT_DRAW_COUNT)

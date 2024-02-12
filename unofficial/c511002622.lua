@@ -1,3 +1,4 @@
+--ブレード・シェード
 --Blade Shade
 local s,id=GetID()
 function s.initial_effect(c)
@@ -27,7 +28,6 @@ function s.initial_effect(c)
 	e3:SetCountLimit(1,0,EFFECT_COUNT_CODE_SINGLE)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCode(EVENT_FREE_CHAIN)
-	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetCondition(s.procon)
 	e3:SetOperation(s.proop)
 	c:RegisterEffect(e3)
@@ -61,8 +61,7 @@ function s.qop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RaiseSingleEvent(c,id,e,0,0,0,0,0)
 end
 function s.procon(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetHandler():GetFirstCardTarget()
-	return tc
+	return e:GetHandler():GetFirstCardTarget()
 end
 function s.proop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -75,7 +74,7 @@ function s.proop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCountLimit(1)
 		e1:SetValue(s.valcon)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		tc:RegisterEffect(e1)
 		Duel.RaiseSingleEvent(c,id,e,0,0,0,0,0)
 	end

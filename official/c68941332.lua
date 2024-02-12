@@ -23,7 +23,7 @@ function s.filter(c)
 end
 function s.cfilter(c,tp)
 	return c:IsRikkaReleasable(tp) and Duel.GetMZoneCount(tp,c,tp,LOCATION_REASON_CONTROL)>0
-		and Duel.IsExistingTarget(aux.AND(s.filter,Card.IsControlerCanBeChanged),tp,0,LOCATION_MZONE,1,c)
+		and Duel.IsExistingTarget(aux.AND(s.filter,Card.IsControlerCanBeChanged),tp,0,LOCATION_MZONE,1,c,true)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local a=Duel.IsExistingTarget(s.filter,tp,0,LOCATION_MZONE,1,nil)
@@ -42,7 +42,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	if e:GetLabel()==1 then
-		local g=Duel.SelectTarget(tp,aux.AND(s.filter,Card.IsControlerCanBeChanged),tp,0,LOCATION_MZONE,1,1,nil)
+		local g=Duel.SelectTarget(tp,aux.AND(s.filter,Card.IsControlerCanBeChanged),tp,0,LOCATION_MZONE,1,1,nil,true)
 		Duel.SetOperationInfo(0,CATEGORY_CONTROL,g,1,0,0)
 	else
 		local g=Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil)

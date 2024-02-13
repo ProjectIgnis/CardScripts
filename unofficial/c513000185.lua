@@ -1,5 +1,5 @@
---Dark Tuner - Dark Goddess Witaka (Anime)
 --ＤＴ 黒の女神ウィタカ
+--Dark Tuner - Dark Goddess Witaka (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetValue(s.synlimit)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special summon (from the hand)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_SPSUMMON_PROC)
@@ -18,12 +18,12 @@ function s.initial_effect(c)
 	e2:SetCondition(s.spcon)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--lvchange
+	--Change this card's level to a Synchro monster's level
 	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_LVCHANGE)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetTarget(s.lvtg)
 	e3:SetOperation(s.lvop)
 	c:RegisterEffect(e3)
@@ -35,31 +35,32 @@ function s.synlimit(e,c)
 end
 function s.spcon(e,c)
 	if c==nil then return true end
-	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0 and Duel.CheckLPCost(c:GetControler(),1000)
+	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
+		and Duel.CheckLPCost(c:GetControler(),1000)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.PayLPCost(tp,1000)
 end
 function s.lvfilter(c,lv)
-	return c:IsFaceup() and c:IsType(TYPE_SYNCHRO) and c:GetLevel()~=lv
+	return c:IsFaceup() and c:IsType(TYPE_SYNCHRO) and not c:IsLevel(lv)
 end
-function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.lvfilter(chkc) end
-	if chk==0 then return Duel.IsExistingMatchingCard(s.lvfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c,c:GetLevel())
-		and c:GetLevel()>0 end
+	if chk==0 then return c:HasLevel() and Duel.IsExistingMatchingCard(s.lvfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c,c:GetLevel()) end
+	Duel.SetOperationInfo(0,CATEGORY_LVCHANGE,c,1,tp,0)
 end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
+	if not (c:IsFaceup() and c:IsRelateToEffect(e)) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local tc=Duel.SelectMatchingCard(tp,s.lvfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,c,c:GetLevel()):GetFirst()
-	if c:IsFaceup() and tc and tc:IsFaceup() then
+	if tc then
 		local e1=Effect.CreateEffect(c)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)
 		e1:SetValue(tc:GetLevel())
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
 	end
 end

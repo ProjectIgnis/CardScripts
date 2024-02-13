@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION) and e:GetLabel()>0 end)
+	e2:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION) and e:GetHandler():HasFlagEffect(id) end)
 	e2:SetCost(aux.selfreleasecost)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
@@ -39,8 +39,7 @@ function s.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_MATERIAL_CHECK)
-	e3:SetValue(function(e,c) e:GetLabelObject():SetLabel(c:GetMaterial():FilterCount(Card.IsType,nil,TYPE_NORMAL)) end)
-	e3:SetLabelObject(e2)
+	e3:SetValue(s.valcheck)
 	c:RegisterEffect(e3)
 end
 s.material_setcode={SET_ELEMENTAL_HERO}
@@ -83,5 +82,11 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK|LOCATION_EXTRA,0,1,1,nil,e,tp,e:GetHandler())
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,true,false,POS_FACEUP)
+	end
+end
+function s.valcheck(e,c)
+	local mg=c:GetMaterial()
+	if mg:IsExists(Card.IsType,1,nil,TYPE_NORMAL) then
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD&~(RESET_TOFIELD|RESET_TEMP_REMOVE|RESET_LEAVE),0,1)
 	end
 end

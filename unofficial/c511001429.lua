@@ -4,18 +4,18 @@
 Duel.LoadCardScript("c67173574.lua")
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
-	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_LIGHT),5,4)
 	c:EnableReviveLimit()
+	--Xyz Summon Procedure
+	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_LIGHT),5,4)
 	--Rank Up Check
 	aux.EnableCheckRankUp(c,nil,nil,49678559)
-	--battle indestructable
+	--Cannot be destroyed by battle with non-"Number" monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e1:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,SET_NUMBER)))
 	c:RegisterEffect(e1)
-	--atk
+	--Negate the effects of 1 face-up monster and change its ATK to 0
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DISABLE)
@@ -62,11 +62,10 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil)
-	Duel.HintSelection(g)
-	local tc=g:GetFirst()
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
 	if tc then
+		Duel.HintSelection(tc,true)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
@@ -149,7 +148,7 @@ function s.indesop(e,tp,eg,ep,ev,re,r,rp)
 		if e:GetCode()==EVENT_PRE_DAMAGE_CALCULATE then
 			e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 			e1:SetValue(1)
-			e1:SetReset(RESET_PHASE|PHSE_DAMAGE)
+			e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
 		else
 			e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 			e1:SetValue(function(e,te) return re==te end)

@@ -21,10 +21,10 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	--Shuffle 1 monster back into Main Deck then send 1 card from hand to GY
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil)
-	if Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)>0 and g:IsLocation(LOCATION_DECK) then
+	if Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)>0 and g:GetFirst():IsLocation(LOCATION_DECK) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		local sg=Duel.SelectMatchingCard(tp,Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,1,nil)
-		if Duel.SendtoGrave(sg,REASON_COST)>0 and sg:IsLocation(LOCATION_GRAVE) then
+		if Duel.SendtoGrave(sg,REASON_COST)>0 and sg:GetFirst():IsLocation(LOCATION_GRAVE) then
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_FIELD)
 			e1:SetCode(EFFECT_DRAW_COUNT)

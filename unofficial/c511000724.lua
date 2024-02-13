@@ -21,23 +21,20 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
-function s.dfilter(c)
-	return c:GetReason()&REASON_EFFECT==REASON_EFFECT
-end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	local dg=eg:Filter(s.dfilter,nil)
+	local dg=eg:Filter(Card.IsReason,nil,REASON_EFFECT)
 	if #dg==0 then return end
 	for tc in dg:Iter() do
-		Duel.RegisterFlagEffect(tc:GetOwner(),id,RESET_PHASE|PHASE_END,0,1)
+		Duel.RegisterFlagEffect(0,id,RESET_PHASE|PHASE_END,0,1)
 	end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ct=Duel.GetFlagEffect(tp,id)+Duel.GetFlagEffect(1-tp,id)
+	local ct=Duel.GetFlagEffect(0,id)
 	if chk==0 then return ct>0 end
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,ct*500)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local ct=Duel.GetFlagEffect(tp,id)+Duel.GetFlagEffect(1-tp,id)
+	local ct=Duel.GetFlagEffect(0,id)
 	Duel.Damage(1-tp,ct*500,REASON_EFFECT)
 end

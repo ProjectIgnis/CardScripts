@@ -1,10 +1,11 @@
+--ＴＧ パワー・グラディエイター (TF5)
 --T.G. Power Gladiator (TF5)
 local s,id=GetID()
 function s.initial_effect(c)
-	--synchro summon
-	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x27),1,1,Synchro.NonTuner(nil),1,99)
 	c:EnableReviveLimit()
-	--pierce
+	--Synchro Summon Procedure
+	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_TG),1,1,Synchro.NonTuner(nil),1,99)
+	--Piercing damage
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_PIERCE)
@@ -17,11 +18,10 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetValue(RACE_MACHINE)
 	c:RegisterEffect(e2)
-	--Add to hand
+	--Search 1 "T.G." monster
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
-	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_TO_GRAVE)
 	e3:SetCondition(s.scon)
@@ -29,11 +29,12 @@ function s.initial_effect(c)
 	e3:SetOperation(s.sop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={SET_TG}
 function s.scon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD) and e:GetHandler():IsReason(REASON_DESTROY)
 end
 function s.sfilter(c)
-	return c:IsSetCard(0x27) and c:IsAbleToHand()
+	return c:IsSetCard(SET_TG) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.stg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.sfilter,tp,LOCATION_DECK,0,1,nil) end

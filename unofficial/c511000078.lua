@@ -1,9 +1,10 @@
+--ＴＧ ワンダー・マジシャン (TF5)
 --T.G. Wonder Magician (TF5)
 local s,id=GetID()
 function s.initial_effect(c)
-	--synchro summon
-	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
 	c:EnableReviveLimit()
+	--Synchro Summon Procedure
+	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
 	--synchro limit
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetValue(s.synlimit)
 	c:RegisterEffect(e1)
-	--synchro effect
+	--Synchro summon during the opponent's Main Phase
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -19,6 +20,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
 	e2:SetRange(LOCATION_MZONE)
+	e2:SetCountLimit(1,0,EFFECT_COUNT_CODE_CHAIN)
 	e2:SetCondition(s.sccon)
 	e2:SetTarget(s.sctg)
 	e2:SetOperation(s.scop)
@@ -31,7 +33,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetValue(RACE_MACHINE)
 	c:RegisterEffect(e3)
-	--Add to hand
+	--Search 1 "T.G." monster
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -43,13 +45,13 @@ function s.initial_effect(c)
 	e4:SetOperation(s.sop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={SET_TG}
 function s.synlimit(e,c)
 	if not c then return false end
-	return not c:IsSetCard(0x27)
+	return not c:IsSetCard(SET_TG)
 end
 function s.sccon(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():IsStatus(STATUS_CHAINING) and Duel.GetTurnPlayer()~=tp
-		and (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)
+	return Duel.IsMainPhase() and Duel.IsTurnPlayer(1-tp)
 end
 function s.sctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsSynchroSummonable,tp,LOCATION_EXTRA,0,1,nil,e:GetHandler()) end
@@ -69,7 +71,7 @@ function s.scon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD) and e:GetHandler():IsReason(REASON_DESTROY)
 end
 function s.sfilter(c)
-	return c:IsSetCard(0x27) and c:IsAbleToHand()
+	return c:IsSetCard(SET_TG) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.stg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.sfilter,tp,LOCATION_DECK,0,1,nil) end

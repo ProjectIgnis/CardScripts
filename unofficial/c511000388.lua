@@ -1,12 +1,12 @@
+--封印獣ボア・ボーラン
 --Forbidden Beast Boa Bolan
 local s,id=GetID()
 function s.initial_effect(c)
-	--destroy
+	--Destroy a monster that battles this card
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_DAMAGE_STEP_END)
 	e1:SetCondition(s.descon)
 	e1:SetTarget(s.destg)

@@ -1,10 +1,11 @@
 --デス・アクセル
+--Des Accelerator 
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Place 1 Speed counter on your card(s) for every 300 Damage you take
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_COUNTER)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_BATTLE_DAMAGE)
 	e1:SetCondition(s.condition)
@@ -21,5 +22,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	tc:RegisterFlagEffect(110000000,RESET_CHAIN,0,1)
 	if (12-tc:GetCounter(0x91))<d then
 		tc:AddCounter(0x91,12-tc:GetCounter(0x91))
-	else tc:AddCounter(0x91,d) end
+	else
+		tc:AddCounter(0x91,d)
+	end
 end

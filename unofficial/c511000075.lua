@@ -1,7 +1,8 @@
---T.G. Warwolf
+--ＴＧ ワーウルフ (VG)
+--T.G. Warwolf (VG)
 local s,id=GetID()
 function s.initial_effect(c)
-	--spsummon
+	--Special summon this card from your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -20,11 +21,10 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetValue(RACE_MACHINE)
 	c:RegisterEffect(e2)
-	--Add to hand
+	--Search 1 "T.G. Warwolf"
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
-	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_TO_GRAVE)
 	e3:SetCondition(s.scon)
@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.sop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={293542}
+s.listed_names={293542} --T.G. Warwolf
 function s.cfilter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLevelBelow(2)
 end

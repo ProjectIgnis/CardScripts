@@ -1,6 +1,7 @@
 --帝王の再覚醒
 --Reawakening of the Emperor
 --scripted by Shad3 and MLD
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--Reactivate 1 Tribute Summoned Level 5 or higher "Monarch" monster on the field

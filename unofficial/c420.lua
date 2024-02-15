@@ -1016,7 +1016,7 @@ if not AnimeArchetype then
 	-- Monarch
 	-- 帝
 	-- てい
-	-- Mobius the Frost Monarch/Strike of the Monarchs/The First Monarch
+	-- Mobius the Frost Monarch/Strike of the Monarchs/The First Monarch/Thestalos the Shadowfire Monarch
 	-- Caius the Shadow Monarch/Granmarg the Mega Monarch/Escalation of the Monarchs
 	-- March of the Monarchs/Pantheism of the Monarchs/Erebus the Underworld Monarch
 	-- Mobius the Mega Monarch/Thestalos the Firestorm Monarch/The Monarchs Awaken
@@ -1038,7 +1038,7 @@ if not AnimeArchetype then
 	-- Odin, Father of the Aesir/Cyber Angel Natasha/Chaos Emperor Dragon - Envoy of the End
 	-- Amazoness Empress/Vampire Kingdom/Susa Soldier/Musician King
 	AnimeArchetype.OCGMonarch={
-	4929256,5795980,8522996,9748752,15545291,18235309,
+	4929256,5795980,8522996,9748752,15545291,18235309,77832858,
 	9870120,22842126,23064604,23689697,26205777,26822796,
 	33609262,48716527,51945556,54241725,57666212,60229110,
 	61466310,65612386,69230391,69327790,73125233,79844764,

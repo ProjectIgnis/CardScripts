@@ -1,5 +1,5 @@
 --ЯＲＵＭ－レイド・ラプターズ・フォース
---Rise-Rank-Up-Magic Raidraptor's Force
+--Rise Rank-Up-Magic Raidraptor's Force
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -41,10 +41,11 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local tg=Duel.GetTargetCards(e):Match(Card.IsFaceup,nil)
-	if #tg==0 then return end
+	local tg=Duel.GetTargetCards(e)
+	local futg=tg:Filter(Card.IsFaceup,nil)
+	if #futg<2 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local sc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tg:GetSum(Card.GetRank)):GetFirst()
+	local sc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,futg:GetSum(Card.GetRank)):GetFirst()
 	if sc and Duel.SpecialSummon(sc,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP)>0 then
 		sc:CompleteProcedure()
 		tg=tg:Match(aux.NOT(Card.IsImmuneToEffect),nil,e)

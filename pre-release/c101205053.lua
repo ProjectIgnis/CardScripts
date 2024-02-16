@@ -36,12 +36,11 @@ function s.tdfilter(c)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local rg=Duel.GetMatchingGroup(s.showfilter,tp,LOCATION_HAND|LOCATION_DECK|LOCATION_ONFIELD,0,nil)
-	local rg_ct=#rg
-	if rg_ct>5 then
+	if #rg>5 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 		rg=Duel.SelectMatchingCard(tp,s.showfilter,tp,LOCATION_HAND|LOCATION_DECK|LOCATION_ONFIELD,0,5,5,nil)
 	end
-	if rg_ct==5 then
+	if #rg==5 then
 		Duel.ConfirmCards(1-tp,rg)
 		if rg:IsExists(Card.IsLocation,1,nil,LOCATION_HAND) then Duel.ShuffleHand(tp) end
 		if rg:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then Duel.ShuffleDeck(tp) end

@@ -1,6 +1,6 @@
--- 三日月の剣豪将軍
--- Kengo Shogun of the Crescent Moon
--- Scripted by Hatter
+--三日月の剣豪将軍
+--Kengo Shogun of the Crescent Moon
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -21,15 +21,15 @@ function s.indescost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.indesop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	-- Requirement
+	--Requirement
 	if Duel.DiscardDeck(tp,1,REASON_COST)>0 and c:IsFaceup() and c:IsRelateToEffect(e) then
-		-- Effect (cannot be destroyed by opponent's trap effects)
+		--Cannot be destroyed by opponent's Trap effects this turn
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(3012)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-		e1:SetValue(function(e,te)return re:IsTrapEffect() and te:GetOwnerPlayer()~=e:GetOwnerPlayer()end)
+		e1:SetValue(function(e,te) return te:IsTrapEffect() and te:GetOwnerPlayer()==1-e:GetOwnerPlayer() end)
 		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		c:RegisterEffect(e1)
 	end

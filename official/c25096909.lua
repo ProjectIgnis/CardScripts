@@ -64,6 +64,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local texg=aux.SelectUnselectGroup(rmtexg,e,tp,2,2,s.texrescon,1,tp,HINTMSG_TODECK)
 	if #texg~=2 then return end
 	Duel.HintSelection(texg,true)
+	Duel.BreakEffect()
 	if Duel.SendtoDeck(texg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)==2 then 
 		Duel.BreakEffect()
 		Duel.Remove(opp_rg,POS_FACEUP,REASON_EFFECT)

@@ -34,7 +34,7 @@ end
 s.listed_names={id}
 function s.cfilter(c,tp)
 	return c:IsReason(REASON_BATTLE|REASON_EFFECT) and c:IsOriginalAttribute(ATTRIBUTE_FIRE) and c:IsPreviousControler(tp)
-		and (c:IsPreviousPosition(POS_FACEUP) or not c:IsPreviousLocation(LOCATION_MZONE))
+		and (not c:IsPreviousLocation(LOCATION_ONFIELD) or (c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousLocation(LOCATION_MZONE)))
 end
 function s.spcond(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

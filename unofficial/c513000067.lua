@@ -89,7 +89,7 @@ function s.atkbop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atkefilter(c,e,re)
 	local rc=e:GetHandler():GetEquipTarget()
-	return c:GetReason&(REASON_DESTROY|REASON_EFFECT)==(REASON_DESTROY|REASON_EFFECT) and re:GetHandler()==rc
+	return c:GetReason()&(REASON_DESTROY|REASON_EFFECT)==(REASON_DESTROY|REASON_EFFECT) and re:GetHandler()==rc
 end
 function s.atkecon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.atkefilter,1,nil,e,re)

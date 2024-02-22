@@ -23,7 +23,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_POSITION,nil,1,tp,0)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_NORMAL) and c:IsCanChangePosition()
+	return c:IsFaceup() and c:IsType(TYPE_NORMAL) and c:IsCanTurnSet() and c:IsCanChangePositionRush()
 end
 function s.szonefilter(c)
 	return c:GetSequence()<5

@@ -19,7 +19,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp,chk)
 	return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>=2
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsLevelBelow(6) and c:IsDefenseBelow(1000) and c:IsCanChangePositionRush()
+	return c:IsFaceup() and c:IsLevelBelow(6) and c:IsDefenseBelow(1000) and c:IsCanTurnSet() and c:IsCanChangePositionRush()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil) end

@@ -22,16 +22,19 @@ function s.poscon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.posconfilter,1,nil,tp)
 end
 function s.posfilter(c)
-	return c:IsFaceup() and c:IsLevelBelow(12) and c:IsCanChangePositionRush()
+	return c:IsFaceup() and c:IsLevelBelow(12) and c:IsCanTurnSet() and c:IsCanChangePositionRush()
 end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.posfilter,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,nil,1,tp,0)
 end
+function s.posfilter2(c)
+	return c:IsCanTurnSet() and c:IsCanChangePositionRush()
+end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	-- Effect
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
-	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsCanChangePositionRush),tp,0,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(s.posfilter2),tp,0,LOCATION_MZONE,nil)
 	if #g>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
 		local sg=aux.SelectUnselectGroup(g,e,tp,1,2,s.rescon,1,tp,HINTMSG_POSCHANGE)

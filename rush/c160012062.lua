@@ -23,7 +23,7 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if #eg~=1 then return false end
 	local tc=eg:GetFirst()
-	return tc:IsFaceup() and tc:IsLevelAbove(7) and tc:IsCanTurnSet() and tc:IsSummonPlayer(1-tp)
+	return tc:IsFaceup() and tc:IsLevelAbove(7) and tc:IsCanTurnSet() and tc:IsCanChangePositionRush() and tc:IsSummonPlayer(1-tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

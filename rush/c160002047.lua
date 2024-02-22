@@ -15,7 +15,7 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if #eg~=1 then return false end
 	local tc=eg:GetFirst()
-	return tc:IsFaceup() and tc:IsLevelBelow(4) and tc:IsCanTurnSet() and tc:IsSummonPlayer(1-tp) and Duel.GetFieldGroupCount(1-tp,LOCATION_MZONE,0)==1
+	return tc:IsFaceup() and tc:IsLevelBelow(4) and tc:IsCanTurnSet() and tc:IsCanChangePositionRush() and tc:IsSummonPlayer(1-tp) and Duel.GetFieldGroupCount(1-tp,LOCATION_MZONE,0)==1
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

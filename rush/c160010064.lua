@@ -22,7 +22,7 @@ function s.poscon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.posconfilter,1,nil,tp)
 end
 function s.posfilter(c)
-	return c:IsFaceup() and c:IsLevelBelow(8) and c:IsCanChangePositionRush()
+	return c:IsFaceup() and c:IsLevelBelow(8) and c:IsCanTurnSet() and c:IsCanChangePositionRush()
 end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.posfilter,tp,0,LOCATION_MZONE,1,nil) end

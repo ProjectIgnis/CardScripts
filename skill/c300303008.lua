@@ -20,7 +20,7 @@ function s.spcond(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	--Special Summon 1 "Masked Beast Des Gradius"
-	if Duel.GetFlagEffect(tp,id)~=0 or Duel.SelectYesNo(tp,aux.Stringid(id,1))==0 then return end
+	if Duel.GetFlagEffect(tp,id)~=0 or Duel.SelectYesNo(tp,aux.Stringid(id,0))==0 then return end
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 	Duel.Hint(HINT_CARD,tp,id)
 	Duel.RegisterFlagEffect(tp,id,0,0,0)
@@ -30,6 +30,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEUP)
 	end
 	--Search 1 "The Masked Beast" and 1 "Curse of the Masked Beast"
+	if Duel.GetFlagEffect(tp,id+1)~=0 then return end
 	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_FREE_CHAIN)
@@ -47,7 +48,7 @@ function s.thcond(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,nil,94377247)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetFlagEffect(tp,id+1)~=0 or Duel.SelectYesNo(tp,aux.Stringid(id,2))==0 then return end
+	if Duel.GetFlagEffect(tp,id+1)~=0 or Duel.SelectYesNo(tp,aux.Stringid(id,1))==0 then return end
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 	Duel.Hint(HINT_CARD,tp,id)
 	Duel.RegisterFlagEffect(tp,id+1,0,0,0)
@@ -64,6 +65,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g1)
 	end
 	--Special Summon 1 "Masked Beast Des Gardius" if "The Masked Beast" is destroyed
+	if Duel.GetFlagEffect(tp,id)~=0 then return end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_DESTROYED)

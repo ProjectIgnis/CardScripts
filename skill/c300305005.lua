@@ -68,7 +68,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	--"Oxygeddon": Destroy 1 face-up monster you opponent controls, then inflict 800 damage to your opponent
 	if g:IsExists(Card.IsCode,1,nil,58071123) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-		local dg=Duel.SelectMatchingCard(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
+		local dg=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsMonster),tp,0,LOCATION_MZONE,1,1,nil)
 		if #dg>0 then
 			Duel.HintSelection(dg,true)
 			if break_chk then Duel.BreakEffect() end

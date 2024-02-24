@@ -1,7 +1,6 @@
 --アームド・ドラゴン LV10-ホワイト
 --Armed Dragon LV10 - White
 --Scripted by ahtelel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -12,7 +11,7 @@ function s.initial_effect(c)
 	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e0:SetValue(0)
 	c:RegisterEffect(e0)
-	--Special summon
+	--Special Summon by banishing "Armed Dragon" monsters whose total levels equal 10
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -23,7 +22,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--No effect damage
+	--You take no effect damage
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -35,7 +34,7 @@ function s.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_NO_EFFECT_DAMAGE)
 	c:RegisterEffect(e3)
-	--Destroy card at start of Damage Step
+	--Destroy 1 card on the field if this card attacks
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_DESTROY)
@@ -47,15 +46,15 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 end
-s.listed_names={49306994}
+s.listed_names={49306994} --White Veil
 s.LVnum=10
-s.LVset=0x111
+s.LVset=SET_ARMED_DRAGON
 function s.rescon(sg,e,tp,mg,c)
 	local sum=sg:GetSum(Card.GetLevel)
 	return aux.ChkfMMZ(1)(sg,nil,tp) and sum==10,sum>10
 end
 function s.cfilter(c)
-	return c:IsAbleToRemoveAsCost() and c:HasLevel() and c:IsSetCard(0x111) and aux.SpElimFilter(c,true,true)
+	return c:IsAbleToRemoveAsCost() and c:HasLevel() and c:IsSetCard(SET_ARMED_DRAGON) and aux.SpElimFilter(c,true,true)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
@@ -86,14 +85,13 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.damval(e,re,val,r,rp,rc)
-	if (r&REASON_EFFECT)~=0 then return 0 end
-	return val
+	return (r&REASON_EFFECT)==0 and val or 0
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker()==e:GetHandler()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
+	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	if chk==0 then return #g>0 end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,PLAYER_ALL,LOCATION_ONFIELD)
 end
@@ -101,7 +99,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 	if #g>0 then
-		Duel.HintSelection(g)
+		Duel.HintSelection(g,true)
 		Duel.Destroy(g,REASON_EFFECT)
 	end
 end

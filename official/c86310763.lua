@@ -1,5 +1,5 @@
 --粛声なる威光
---Silenforcing Authority
+--Radiance of the Voiceless Voice
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -61,13 +61,15 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	end
 end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetLabel()==1 then
+	local op=e:GetLabel()
+	if op==1 then
 		--Shuffle 1 LIGHT Warrior or Dragon Ritual Monster or 1 Ritual Spell from your hand or GY into the Deck
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-		local tdg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.todeckfilter),tp,LOCATION_HAND|LOCATION_GRAVE,0,1,1,nil)
-		if #tdg==0 then return end
-		Duel.HintSelection(tdg,true)
-		if Duel.SendtoDeck(tdg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 then
+		local tdc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.todeckfilter),tp,LOCATION_HAND|LOCATION_GRAVE,0,1,1,nil):GetFirst()
+		if not tdc then return end
+		if tdc:IsLocation(LOCATION_GRAVE) then Duel.HintSelection(tdc,true)
+		else Duel.ConfirmCards(1-tp,tdc) end
+		if Duel.SendtoDeck(tdc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 and tdc:IsLocation(LOCATION_DECK) then
 			local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 			Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,3))
 			local sc=Duel.SelectMatchingCard(tp,s.silenforcfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,ft):GetFirst()
@@ -79,7 +81,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 				)
 			end
 		end
-	elseif e:GetLabel()==2 then
+	elseif op==2 then
 		--Destroy both the targets and this card
 		local c=e:GetHandler()
 		if not c:IsRelateToEffect(e) then return end

@@ -45,7 +45,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,0)
 end
 function s.dmgfilter(c)
-	return c:IsMonster() and c:GetBaseAttack()>0
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:GetBaseAttack()>0
 end
 function s.matfilter(c)
 	return c:IsType(TYPE_XYZ) and c:IsSetCard(SET_RAIDRAPTOR)

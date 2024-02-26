@@ -24,7 +24,6 @@ end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
-		Debug.Message("Someone resolved the effect of Big Inflate Dragon")
 		--Its ATK becomes 10000 until the end of this turn
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

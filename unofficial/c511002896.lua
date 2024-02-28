@@ -39,7 +39,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
-	return Duel.IsTurnPlayer(tp) and Duel.IsBattlePhase() and
+	return Duel.IsTurnPlayer(tp) and Duel.IsBattlePhase()
 		and not (Duel.IsPhase(PHASE_DAMAGE) or Duel.IsDamageCalculated())
 end
 function s.filter(c)

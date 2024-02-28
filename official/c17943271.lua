@@ -1,5 +1,5 @@
 -- メメント・ゴブリン
--- Memento Goblin
+-- Mementotlan Goblin
 -- Scripted by Satellaa
 local s,id=GetID()
 function s.initial_effect(c)
@@ -47,6 +47,7 @@ function s.untgop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetValue(aux.tgoval)
 	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
+	aux.RegisterClientHint(c,nil,tp,1,0,aux.Stringid(id,2))
 end
 function s.tgfilter(c)
 	return c:IsSetCard(SET_MEMENTO) and c:IsAbleToGrave() and not c:IsCode(id)

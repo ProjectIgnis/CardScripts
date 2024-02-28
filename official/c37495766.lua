@@ -1,9 +1,9 @@
 --Ｒ－ＡＣＥタービュランス
---Rescue-ACE Turbulance
+--Rescue-ACE Turbulence
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special Summon this card
+	--Special Summon this card from your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--Set up to 4 "Rescue-ACE" Spells/Traps from the Deck
+	--Set up to 4 "Rescue-ACE" Quick-Play Spells / Normal Traps from your Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--Destroy 1 card on the field
 	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_DESTROY)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
@@ -36,12 +37,12 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x18c}
-function s.spcfilter(c)
-	return c:IsSetCard(0x18c) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+s.listed_series={SET_RESCUE_ACE}
+function s.spcostfilter(c)
+	return c:IsSetCard(SET_RESCUE_ACE) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local rg=Duel.GetMatchingGroup(s.spcfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
+	local rg=Duel.GetMatchingGroup(s.spcostfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil)
 	if chk==0 then return #rg>1 and aux.SelectUnselectGroup(rg,e,tp,2,2,aux.ChkfMMZ(1),0) end
 	local g=aux.SelectUnselectGroup(rg,e,tp,2,2,aux.ChkfMMZ(1),1,tp,HINTMSG_REMOVE)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
@@ -58,25 +59,25 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.setfilter(c)
-	return c:IsSetCard(0x18c) and (c:IsType(TYPE_QUICKPLAY) or c:GetType()==TYPE_TRAP) and c:IsSSetable()
+	return c:IsSetCard(SET_RESCUE_ACE) and (c:IsQuickPlaySpell() or c:IsNormalTrap()) and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK,0,1,nil) end
 end
 function s.setop(e,tp,eg,ep,ev,re,r,rp)
-	local sg=Duel.GetMatchingGroup(s.setfilter,tp,LOCATION_DECK,0,nil)
-	if #sg==0 then return end
+	local g=Duel.GetMatchingGroup(s.setfilter,tp,LOCATION_DECK,0,nil)
+	if #g==0 then return end
 	local ft=math.min(Duel.GetLocationCount(tp,LOCATION_SZONE),4)
-	local rg=aux.SelectUnselectGroup(sg,e,tp,1,ft,aux.dncheck,1,tp,HINTMSG_SET)
-	if #rg>0 then
-		Duel.SSet(tp,rg)
+	local sg=aux.SelectUnselectGroup(g,e,tp,1,ft,aux.dncheck,1,tp,HINTMSG_SET)
+	if #sg>0 then
+		Duel.SSet(tp,sg)
 	end
 end
-function s.cfilter(c,tp)
-	return c:GetReasonPlayer()==1-tp and c:IsReason(REASON_EFFECT) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD)
+function s.desconfilter(c,tp)
+	return c:GetReasonPlayer()==1-tp and c:IsReason(REASON_EFFECT) and c:IsPreviousControler(tp)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,e:GetHandler(),tp)
+	return eg:IsExists(s.desconfilter,1,e:GetHandler(),tp)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() end

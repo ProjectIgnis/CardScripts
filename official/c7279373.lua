@@ -55,13 +55,15 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		fid=tc:GetRealFieldID()
 		--Can make up to 3 attacks on monsters this turn
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(aux.Stringid(id,1))
 		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_EXTRA_ATTACK_MONSTER)
 		e1:SetValue(2)
 		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		tc:RegisterEffect(e1)
 	end
-	--Other monsters you control cannot attack
+	--Other monsters you control cannot attack for the rest of this turn
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_CANNOT_ATTACK)
@@ -69,4 +71,5 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetTarget(function(e,c) return fid==0 or c:GetRealFieldID()~=fid end)
 	e2:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e2,tp)
+	aux.RegisterClientHint(c,nil,tp,1,0,aux.Stringid(id,2))
 end

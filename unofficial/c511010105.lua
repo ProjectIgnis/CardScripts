@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e2:SetHintTiming(TIMING_BATTLE_PHASE)
 	e2:SetCondition(function(e) return Duel.IsBattlePhase() end)
 	e2:SetCost(aux.dxmcostgen(1,1,nil))
+	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 end

@@ -4,62 +4,55 @@
 Duel.LoadCardScript("c59627393.lua")
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
+	--Xyz Summon procedure
 	Xyz.AddProcedure(c,nil,4,3)
 	c:EnableReviveLimit()
-	--attack up
+	--Cannot be destroyed by battle, except with a "Number" monster
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(59627393,0))
-	e1:SetType(EFFECT_TYPE_QUICK_O)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(TIMING_BATTLE_PHASE)
-	e1:SetCondition(s.condition)
-	e1:SetCost(s.cost)
-	e1:SetOperation(s.operation)
-	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
-	--battle indestructable
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e3:SetValue(s.indes)
-	c:RegisterEffect(e3)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+	e1:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,SET_NUMBER)))
+	c:RegisterEffect(e1)
+	--Battle cannot be negated/your opponent takes battle damage
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(59627393,0))
+	e2:SetType(EFFECT_TYPE_QUICK_O)
+	e2:SetCode(EVENT_FREE_CHAIN)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetHintTiming(TIMING_BATTLE_PHASE)
+	e2:SetCondition(function(e) return Duel.IsBattlePhase() end)
+	e2:SetCost(aux.dxmcostgen(1,1,nil))
+	e2:SetOperation(s.operation)
+	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 end
+s.listed_series={SET_NUMBER}
 s.xyz_number=105
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local a=Duel.GetAttacker()
-	local at=Duel.GetAttackTarget()
-	if not at or at:IsControler(tp) then return false end
-	return a and a==e:GetHandler() and at:IsControler(1-tp) and at:GetAttack()>a:GetAttack()
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 and e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_DAMAGE,EFFECT_FLAG_OATH,1)
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return false end
+	local c=e:GetHandler()
+	local tc=c:GetBattleTarget()
+	if chk==0 then return bc and bc:IsOnField() and bc:GetAttack()>c:GetAttack() end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
+	local tc=c:GetBattleTarget()
+	if not (c:IsRelateToBattle() or tc:IsRelateToBattle() or tc:GetAttack()>c:GetAttack()) then return end
 	local a=Duel.GetAttacker()
-	local at=Duel.GetAttackTarget()
-	if not a or a~=c or not at:IsRelateToBattle() or not c:IsRelateToEffect(e) then return end
+	--Cannot be destroyed by this battle
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e1:SetValue(1)
-	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+	e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
 	c:RegisterEffect(e1)
+	--Battle cannot be negated
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_REFLECT_BATTLE_DAMAGE)
-	e2:SetValue(1)
-	e2:SetReset(RESET_PHASE+PHASE_DAMAGE)
-	c:RegisterEffect(e2)
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetCode(EFFECT_UNSTOPPABLE_ATTACK)
-	e3:SetReset(RESET_PHASE+PHASE_DAMAGE)
+	e2:SetCode(EFFECT_UNSTOPPABLE_ATTACK)
+	e2:SetReset(RESET_PHASE|PHASE_DAMAGE)
+	a:RegisterEffect(e2)
+	--Your opponent takes any battle damage you would have taken
+	local e3=e1:Clone()
+	e3:SetCode(EFFECT_REFLECT_BATTLE_DAMAGE)
 	c:RegisterEffect(e3)
-end
-function s.indes(e,c)
-	return not c:IsSetCard(0x48)
 end

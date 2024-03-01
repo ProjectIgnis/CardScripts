@@ -1,4 +1,5 @@
 --賢者の石 サバティエル
+--Sabatiel - The Philosopher's Stone (VG)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -21,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.activate)
 	c:RegisterEffect(e2)
 end
-s.listed_names={57116033}
+s.listed_names={57116033} --Winged Kuriboh
 function s.cfilter(c,tp)
 	return c:IsCode(57116033) and c:IsPreviousControler(tp)
 		and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)
@@ -56,9 +57,9 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 			return Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,0,1,nil)
 		end
 	end
+	ct=ct+1
 	if ct<3 then
 		s.cost(e,tp,eg,ep,ev,re,r,rp,1)
-		ct=ct+1
 		e:GetHandler():SetTurnCounter(ct)
 		e:SetLabel(ct)
 		e:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -98,7 +99,7 @@ function s.activate2(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 		e1:SetValue(tc:GetAttack()*ct)
 		tc:RegisterEffect(e1)
 	end

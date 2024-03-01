@@ -19,14 +19,14 @@ function s.filter(c)
 	return c:IsMonster() and c:IsAbleToDeck()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ct=Duel.GetMatchingGroupCount(Card.IsMonster,tp,0,LOCATION_MZONE,nil)
+	local ct=Duel.GetMatchingGroupCountRush(Card.IsMonster,tp,0,LOCATION_MZONE,nil)
 	if chk==0 then return ct>0 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,ct,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_GRAVE)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 	local c=e:GetHandler()
-	local ct=Duel.GetMatchingGroupCount(Card.IsMonster,tp,0,LOCATION_MZONE,nil)
+	local ct=Duel.GetMatchingGroupCountRush(Card.IsMonster,tp,0,LOCATION_MZONE,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,LOCATION_GRAVE,0,ct,ct,nil)
 	Duel.HintSelection(g,true)

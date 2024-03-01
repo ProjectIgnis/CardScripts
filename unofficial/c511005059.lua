@@ -44,15 +44,14 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateActivation(ev)
-	if re:GetHandler():IsRelateToEffect(re) then
-		Duel.Destroy(re:GetHandler(),REASON_EFFECT)
-	end
-	Duel.BreakEffect()
-	local val=0
-	if Duel.GetAttacker() then val=val+Duel.GetAttacker():GetAttack() end
-	if Duel.GetAttackTarget() then val=val+Duel.GetAttackTarget():GetAttack() end
-	if val>0 then
-		local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
-		Duel.Damage(p,val,REASON_EFFECT)
+	if re:GetHandler():IsRelateToEffect(re) and Duel.Destroy(re:GetHandler(),REASON_EFFECT)>0 then
+		local val=0
+		if Duel.GetAttacker() then val=val+Duel.GetAttacker():GetAttack() end
+		if Duel.GetAttackTarget() then val=val+Duel.GetAttackTarget():GetAttack() end
+		if val>0 then
+			Duel.BreakEffect()
+			local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
+			Duel.Damage(p,val,REASON_EFFECT)
+		end
 	end
 end

@@ -1,9 +1,9 @@
---覇王門無限
---fixed by MLD
+--覇王門無限 (Anime)
+--Supreme King Gate Infinity (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	Pendulum.AddProcedure(c)
-	--selfdes
+	--Destroy this card if you don't have "Supreme King Gate Zero" in your other Pendulum Zone
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -11,19 +11,21 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_PZONE)
 	e1:SetCondition(s.descon)
 	c:RegisterEffect(e1)
-	--LP gain
+	--Gain LP if the effect of "Supreme King Gate Zero" is used to avoid damage
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCategory(CATEGORY_RECOVER)
 	e2:SetCode(96227613)
 	e2:SetRange(LOCATION_PZONE)
+	e2:SetCondition(s.reccon)
 	e2:SetTarget(s.rectg)
 	e2:SetOperation(s.recop)
 	c:RegisterEffect(e2)
-	--tohand
+	--Search 1 "Supreme King Gate Zero"
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(22211622,2))
+	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_DESTROYED)
@@ -33,7 +35,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={96227613}
+s.listed_names={96227613} --Supreme King Gate Zero
 function s.scfilter(c)
 	return c:IsFaceup() and c:IsCode(96227613)
 end
@@ -46,8 +48,10 @@ function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetTargetParam(ev)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,ev)
 end
+function s.reccon(e,tp,eg,ep,ev,re,r,rp)
+	return ep==tp
+end
 function s.recop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Recover(p,d,REASON_EFFECT)
 end

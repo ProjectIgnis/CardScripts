@@ -30,7 +30,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local tc=Duel.SelectMatchingCard(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
 	if tc then
-		Duel.HintSelection(g,true)
+		Duel.HintSelection(tc,true)
 		--Gains ATK equal to the original ATK of a monster your opponent controls
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

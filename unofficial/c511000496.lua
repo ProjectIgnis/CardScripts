@@ -27,7 +27,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
     	if ct==2 then
         	cat=cat|CATEGORY_DESTROY
         	e:SetCategory(cat)
-        	Duel.SetOperationInfo(0,CATEGORY_DESTROY,c,1,tp,nil)
+        	Duel.SetOperationInfo(0,CATEGORY_DESTROY,c,1,tp,0)
     	end
     	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,PLAYER_ALL,LOCATION_DECK)
     	Duel.SetPossibleOperationInfo(0,CATEGORY_TOGRAVE,nil,1,PLAYER_ALL,LOCATION_DECK)

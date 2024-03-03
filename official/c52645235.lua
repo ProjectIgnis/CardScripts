@@ -12,9 +12,16 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_DAMAGE_STEP_END)
+	e1:SetCondition(s.thcon)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
+	-- Track if this card "battled"
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e2:SetCode(EVENT_BATTLED)
+	e2:SetOperation(function(e) e:GetHandler():RegisterFlagEffect(id,RESET_PHASE|PHASE_DAMAGE,0,1) end)
+	c:RegisterEffect(e2)
 	-- Attach "Purrely" Quick-Play Spell
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
@@ -30,6 +37,10 @@ function s.initial_effect(c)
 end
 s.listed_names={82105704} --Purrely Happy Memory
 s.listed_series={SET_PURRELY}
+function s.thcon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return c:HasFlagEffect(id) and (c:IsRelateToBattle() or c:IsReason(REASON_BATTLE))
+end
 function s.thfilter(c)
 	return c:IsSetCard(SET_PURRELY) and c:IsAbleToHand()
 end
@@ -45,7 +56,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 	local c=e:GetHandler()
-	if c:GetOverlayGroup():IsExists(Card.IsCode,1,nil,82105704)
+	if c:IsRelateToEffect(e) and c:GetOverlayGroup():IsExists(Card.IsCode,1,nil,82105704)
 		and Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)

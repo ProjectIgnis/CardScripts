@@ -1,5 +1,14 @@
 --Utilities to be added to the core
 
+--Use the "selected" string by default. Pass "false" as the boolean to use the "targeted" string instead.
+Duel.HintSelection=(function()
+	local oldfunc=Duel.HintSelection
+	return function(card_or_group,log_as_selection,...)
+		if log_as_selection==nil then log_as_selection=true end
+		return oldfunc(card_or_group,log_as_selection,...)
+	end
+end)()
+
 --[[
 	If called while an effect isn't resolving (e.g. a regular Xyz Summon or through an effect like "Wonder Xyz") then proceed as usual with the attaching.
 	If called while an effect is resolving treat it as attaching by card effect and handle the relevant rulings.

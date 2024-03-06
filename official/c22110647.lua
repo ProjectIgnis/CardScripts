@@ -4,9 +4,9 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--Xyz summon procedure
+	--Xyz Summon Procedure
 	Xyz.AddProcedure(c,nil,7,2)
-	--Cannot be destroyed by battle or card effect while you control a token
+	--Cannot be destroyed by battle or card effect while you control a Token
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	c:RegisterEffect(e2)
-	--Special summon 2 tokens to your field
+	--Special Summon 2 "Mecha Phantom Beast" Tokens
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)

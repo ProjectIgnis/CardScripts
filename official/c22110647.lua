@@ -45,7 +45,7 @@ end
 s.listed_names={TOKEN_MECHA_PHANTOM_BEAST}
 s.listed_series={SET_MECHA_PHANTOM_BEAST}
 function s.tknfilter(c)
-	return c:IsType(TYPE_TOKEN)-- or c:IsOriginalType(TYPE_TOKEN)
+	return c:IsType(TYPE_TOKEN) or c:IsOriginalType(TYPE_TOKEN)
 end
 function s.indcon(e)
 	return Duel.IsExistingMatchingCard(s.tknfilter,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil)

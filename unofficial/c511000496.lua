@@ -38,7 +38,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local ct=c:GetFlagEffect(id)
 	local b1=Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,3,nil)
 	local b2=Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_DECK,3,nil)
-	if not (b1 or b2) then return end
+	if not (b1 and b2) then return end
 	c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))
 	local g1=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,3,3,nil)

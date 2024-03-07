@@ -340,9 +340,9 @@ function Card.IsRealFieldID(c,fid)
 	return c:GetRealFieldID()==fid
 end
 
---Returns true if the reason card of "tc" is "c"
-function Card.IsReasonCard(c,tc)
-	return tc:GetReasonCard()==c
+--Returns true if the reason card of "c" is "rc"
+function Card.IsReasonCard(rc,c)
+	return c:GetReasonCard()==rc
 end
 function Card.IsReasonEffect(c,eff)
 	return c:GetReasonEffect()==eff

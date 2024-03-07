@@ -239,18 +239,10 @@ end
 
 Card.IsEquipCard=aux.FilterBoolFunction(Card.IsType,TYPE_EQUIP)
 
-function Card.IsMonsterCard(c)
-	return c:IsOriginalType(TYPE_MONSTER)
-end
-function Card.IsSpellCard(c)
-	return c:IsOriginalType(TYPE_SPELL)
-end
-function Card.IsTrapCard(c)
-	return c:IsOriginalType(TYPE_TRAP)
-end
-function Card.IsSpellTrapCard(c)
-	return c:IsOriginalType(TYPE_SPELL|TYPE_TRAP)
-end
+Card.IsMonsterCard=aux.FilterBoolFunction(Card.IsOriginalType,TYPE_MONSTER)
+Card.IsSpellCard=aux.FilterBoolFunction(Card.IsOriginalType,TYPE_SPELL)
+Card.IsTrapCard=aux.FilterBoolFunction(Card.IsOriginalType,TYPE_TRAP)
+Card.IsSpellTrapCard=aux.FilterBoolFunction(Card.IsOriginalType,TYPE_SPELL|TYPE_TRAP)
 
 function Card.IsNonEffectMonster(c)
 	return c:IsMonster() and not c:IsType(TYPE_EFFECT)

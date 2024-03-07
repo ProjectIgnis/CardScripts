@@ -230,10 +230,126 @@ function Card.IsNormalTrap(c)
 	return c:GetType()==TYPE_TRAP
 end
 
+function Card.IsNormalSpellTrap(c)
+	return c:IsNormalSpell() or c:IsNormalTrap()
+end
+function Card.IsContinuousSpellTrap(c)
+	return c:IsContinuousSpell() or c:IsContinuousTrap()
+end
+
+Card.IsEquipCard=aux.FilterBoolFunction(Card.IsType,TYPE_EQUIP)
+
+function Card.IsMonsterCard(c)
+	return c:IsOriginalType(TYPE_MONSTER)
+end
+function Card.IsSpellCard(c)
+	return c:IsOriginalType(TYPE_SPELL)
+end
+function Card.IsTrapCard(c)
+	return c:IsOriginalType(TYPE_TRAP)
+end
+function Card.IsSpellTrapCard(c)
+	return c:IsOriginalType(TYPE_SPELL|TYPE_TRAP)
+end
+
 function Card.IsNonEffectMonster(c)
 	return c:IsMonster() and not c:IsType(TYPE_EFFECT)
 end
 
+function Card.IsBaseAttack(c,atk)
+	return c:GetBaseAttack()==atk
+end
+function Card.IsTextAttack(c,atk)
+	return c:GetTextAttack()==atk
+end
+function Card.IsPreviousAttackOnField(c,atk)
+	return c:GetPreviousAttackOnField()==atk
+end
+
+function Card.IsBaseDefense(c,def)
+	return c:HasDefense() and c:GetBaseDefense()==def
+end
+function Card.IsTextDefense(c,def)
+	return c:HasDefense() and c:GetTextDefense()==def
+end
+function Card.IsPreviousDefenseOnField(c,def)
+	return c:HasDefense() and c:GetPreviousDefenseOnField()==def
+end
+
+function Card.IsOriginalLevel(c,lvl)
+	return c:HasLevel() and c:GetOriginalLevel()==lvl
+end
+function Card.IsPreviousLevelOnField(c,lvl)
+	return c:HasLevel() and c:GetPreviousLevelOnField()==lvl
+end
+
+function Card.IsOriginalRank(c,rank)
+	return c:HasRank() and c:GetOriginalRank()==rank
+end
+function Card.IsPreviousRankOnField(c,rank)
+	return c:HasRank() and c:GetPreviousRankOnField()==rank
+end
+
+function Card.IsScale(c,scale)
+	return c:GetScale()==scale
+end
+
+function Card.IsPreviousAttributeOnField(c,attr)
+	return c:GetPreviousAttributeOnField()&attr>0
+end
+function Card.IsPreviousRaceOnField(c,race)
+	return c:GetPreviousRaceOnField()&race>0
+end
+function Card.IsPreviousTypeOnField(c,card_type)
+	return c:GetPreviousTypeOnField()&card_type>0
+end
+function Card.IsPreviousCodeOnField(c,code)
+	local code1,code2=c:GetPreviousCodeOnField()
+	return code1==code or code2==code
+end
+function Card.IsPreviousSequence(c,seq)
+	return c:GetPreviousSequence()==seq
+end
+
+function Card.IsOwner(c,player)
+	return c:GetOwner()==player
+end
+
+function Card.IsBattlePosition(c,pos)
+	return c:GetBattlePosition()==pos
+end
+
+function Card.HasCounter(c,counter)
+	return c:GetCounter(counter)>0
+end
+function Card.HasEquipCard(c)
+	return c:GetEquipCount()>0
+end
+
+function Card.IsDestination(c,dest)
+	return c:GetDestination()==dest
+end
+function Card.IsLeaveFieldDest(c,dest)
+	return c:GetLeaveFieldDest()==dest
+end
+
+function Card.IsFieldID(c,fid)
+	return c:GetFieldID()==fid
+end
+function Card.IsRealFieldID(c,fid)
+	return c:GetRealFieldID()==fid
+end
+
+--Returns true if the reason card of "c" is "rc"
+function Card.IsReasonCard(rc,c)
+	return c:GetReasonCard()==rc
+end
+function Card.IsReasonEffect(c,eff)
+	return c:GetReasonEffect()==eff
+end
+function Card.IsReasonPlayer(c,player)
+	return c:GetReasonPlayer()==player
+end
 
 local function setcodecondition(e)
 	local c=e:GetHandler()
@@ -574,6 +690,24 @@ function Card.HasLevel(c)
 			and not c:IsStatus(STATUS_NO_LEVEL)
 	elseif c:IsOriginalType(TYPE_MONSTER) then
 		return not (c:IsOriginalType(TYPE_XYZ+TYPE_LINK) or c:IsStatus(STATUS_NO_LEVEL))
+	end
+	return false
+end
+--Returns true if the card "c" has a Rank
+function Card.HasRank(c)
+	if c:IsMonster() then
+		return c:IsType(TYPE_XYZ) or (c:HasLevel() and (c:IsHasEffect(EFFECT_LEVEL_RANK) or c:IsHasEffect(EFFECT_LEVEL_RANK_S)))
+	elseif c:IsOriginalType(TYPE_MONSTER) then
+		return c:IsOriginalType(TYPE_XYZ)
+	end
+	return false
+end
+--Returns true if the card "c" has DEF
+function Card.HasDefense(c)
+	if c:IsMonster() then
+		return not (c:IsType(TYPE_LINK) or c:IsMaximumMode())
+	elseif c:IsOriginalType(TYPE_MONSTER) then
+		return not c:IsOriginalType(TYPE_LINK)
 	end
 	return false
 end
@@ -1058,6 +1192,153 @@ end
 function Auxiliary.lnklimit(e,se,sp,st)
 	return aux.sumlimit(SUMMON_TYPE_LINK)(e,se,sp,st)
 end
+
+--Registers a "Cannot be Special Summoned" Summoning condition to card "c"
+function Card.AddCannotBeSpecialSummoned(c)
+	--Cannot be Special Summoned
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
+	c:RegisterEffect(e0)
+	return e0
+end
+
+--Registers a "Must be X Summoned" Summoning condition to card "c"
+Card.AddMustBeSpecialSummoned=Card.AddCannotBeSpecialSummoned
+
+function Card.AddMustBeSpecialSummonedByCardEffect(c)
+	--Must be Special Summoned by card effect
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
+	e0:SetValue(function(e,sum_eff,sum_p,sum_type) return sum_eff:IsHasType(EFFECT_TYPE_ACTIONS) end)
+	c:RegisterEffect(e0)
+	return e0
+end
+function Card.AddMustBeRitualSummoned(c)
+	--Must be Ritual Summoned
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
+	e0:SetValue(aux.ritlimit)
+	c:RegisterEffect(e0)
+	return e0
+end
+function Card.AddMustBeFusionSummoned(c)
+	--Must be Fusion Summoned
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
+	e0:SetValue(aux.fuslimit)
+	c:RegisterEffect(e0)
+	return e0
+end
+function Card.AddMustBeSynchroSummoned(c)
+	--Must be Synchro Summoned
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
+	e0:SetValue(aux.synlimit)
+	c:RegisterEffect(e0)
+	return e0
+end
+function Card.AddMustBeXyzSummoned(c)
+	--Must be Xyz Summoned
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
+	e0:SetValue(aux.xyzlimit)
+	c:RegisterEffect(e0)
+	return e0
+end
+function Card.AddMustBePendulumSummoned(c)
+	--Must be Pendulum Summoned
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
+	e0:SetValue(aux.penlimit)
+	c:RegisterEffect(e0)
+	return e0
+end
+function Card.AddMustBeLinkSummoned(c)
+	--Must be Link Summoned
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
+	e0:SetValue(aux.lnklimit)
+	c:RegisterEffect(e0)
+	return e0
+end
+--Registers a "Must first be X Summoned" Summoning condition to card "c"
+function Card.AddMustFirstBeRitualSummoned(c)
+	--Must first be Ritual Summoned
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
+	e0:SetValue(function(e,sum_eff,sum_p,sum_type) return e:GetHandler():IsStatus(STATUS_PROC_COMPLETE) or (sum_type&SUMMON_TYPE_RITUAL)==SUMMON_TYPE_RITUAL end)
+	c:RegisterEffect(e0)
+	return e0
+end
+function Card.AddMustFirstBeFusionSummoned(c)
+	--Must first be Fusion Summoned
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
+	e0:SetValue(function(e,sum_eff,sum_p,sum_type) return not e:GetHandler():IsLocation(LOCATION_EXTRA) or (sum_type&SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION end)
+	c:RegisterEffect(e0)
+	return e0
+end
+function Card.AddMustFirstBeSynchroSummoned(c)
+	--Must first be Synchro Summoned
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
+	e0:SetValue(function(e,sum_eff,sum_p,sum_type) return not e:GetHandler():IsLocation(LOCATION_EXTRA) or (sum_type&SUMMON_TYPE_SYNCHRO)==SUMMON_TYPE_SYNCHRO end)
+	c:RegisterEffect(e0)
+	return e0
+end
+function Card.AddMustFirstBeXyzSummoned(c)
+	--Must first be Xyz Summoned
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
+	e0:SetValue(function(e,sum_eff,sum_p,sum_type) return not e:GetHandler():IsLocation(LOCATION_EXTRA) or (sum_type&SUMMON_TYPE_XYZ)==SUMMON_TYPE_XYZ end)
+	c:RegisterEffect(e0)
+	return e0
+end
+function Card.AddMustFirstBePendulumSummoned(c)
+	--Must first be Pendulum Summoned
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
+	e0:SetValue(function(e,sum_eff,sum_p,sum_type) return e:GetHandler():IsStatus(STATUS_PROC_COMPLETE) or (sum_type&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM end)
+	c:RegisterEffect(e0)
+	return e0
+end
+function Card.AddMustFirstBeLinkSummoned(c)
+	--Must first be Link Summoned
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
+	e0:SetValue(function(e,sum_eff,sum_p,sum_type) return not e:GetHandler():IsLocation(LOCATION_EXTRA) or (sum_type&SUMMON_TYPE_LINK)==SUMMON_TYPE_LINK end)
+	c:RegisterEffect(e0)
+	return e0
+end
+
 --value for EFFECT_CANNOT_BE_MATERIAL
 function Auxiliary.cannotmatfilter(val1,...)
 	local allowed=val1

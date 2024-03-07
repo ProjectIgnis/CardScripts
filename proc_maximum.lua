@@ -351,11 +351,6 @@ function Maximum.sideConGrant(e)
 	local tc=Maximum.GetMaximumCenter(e:GetHandlerPlayer())
 	return tc and e:GetHandler():IsMaximumModeSide()
 end
---function that return false if the monster don't have defense stats
---wait for ruling
-function Card.HasDefense(c)
-	return not (c:IsType(TYPE_LINK) or (c:IsType(TYPE_MAXIMUM) and c:IsMaximumMode()))
-end
 
 --functions to handle counting monsters but without the side Maximum monsters (the L/R max monsters are subtracted from the count)
 function Duel.GetMatchingGroupCountRush(f,tp,LOCP1,LOCP2,exclude,...)

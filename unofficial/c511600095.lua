@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_FRIGHTFUR,SET_FLUFFAL,SET_EDGE_IMP}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	if not (re or re:IsHasProperty(EFFECT_FLAG_CARD_TARGET)) or e==re then return false end
+	if not (re and re:IsHasProperty(EFFECT_FLAG_CARD_TARGET)) or e==re then return false end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	if not g or #g~=1 then return false end
 	return g:GetFirst():IsControler(tp) and g:GetFirst():IsLocation(LOCATION_MZONE)

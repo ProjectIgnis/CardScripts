@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--atk/def
+	--Monsters lose 500 ATK/DEF
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e3)
-	--token
+	--Special Summon 1 "Jurraegg Token"
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,0))
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	local e5=e4:Clone()
 	e5:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e5)
-	--cannot be target
+	--Opponent cannt target monster on the field, except Tokens
 	local e6=Effect.CreateEffect(c)
 	e6:SetType(EFFECT_TYPE_FIELD)
 	e6:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_SET_AVAILABLE)
@@ -60,7 +60,7 @@ function s.initial_effect(c)
 	g:KeepAlive()
 	e7:SetLabelObject(g)
 end
-s.listed_names={17228909}
+s.listed_names={17228909} --"Jurraegg Token"
 function s.tkcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(aux.FaceupFilter(Card.IsRace,RACE_DINOSAUR),1,nil,tp)
 end
@@ -77,12 +77,15 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(token,0,tp,1-tp,false,false,POS_FACEUP_DEFENSE)
 	end
 end
+function s.tknfilter(c)
+	return c:IsType(TYPE_TOKEN) or c:IsOriginalType(TYPE_TOKEN)
+end
 function s.tgcon(e)
-	return Duel.IsExistingMatchingCard(Card.IsType,e:GetHandlerPlayer(),0,LOCATION_ONFIELD,1,nil,TYPE_TOKEN)
+	return Duel.IsExistingMatchingCard(s.tknfilter,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil)
 end
 function s.repfilter(c,tp)
 	return c:IsFaceup() and c:IsType(TYPE_NORMAL) and c:IsLocation(LOCATION_MZONE) and not c:IsReason(REASON_REPLACE)
-		and c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:GetFlagEffect(id)==0
+		and c:IsReason(REASON_BATTLE|REASON_EFFECT) and not c:HasFlagEffect(id)
 end
 function s.desfilter(c,e)
 	return c:IsRace(RACE_DINOSAUR) and c:IsDestructable(e)
@@ -90,16 +93,14 @@ function s.desfilter(c,e)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=eg:FilterCount(s.repfilter,nil,tp)
-	if chk==0 then return ct>0
-		and Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_HAND+LOCATION_DECK,0,ct,nil,e) end
+	if chk==0 then return ct>0 and Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_HAND|LOCATION_DECK,0,ct,nil,e) end
 	if Duel.SelectEffectYesNo(tp,e:GetHandler(),96) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESREPLACE)
-		local tg=Duel.SelectMatchingCard(tp,s.desfilter,tp,LOCATION_HAND+LOCATION_DECK,0,ct,ct,nil,e)
+		local tg=Duel.SelectMatchingCard(tp,s.desfilter,tp,LOCATION_HAND|LOCATION_DECK,0,ct,ct,nil,e)
 		local g=e:GetLabelObject()
 		g:Clear()
-		local tc=tg:GetFirst()
-		for tc in aux.Next(tg) do
-			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_CHAIN,0,1)
+		for tc in tg:Iter() do
+			tc:RegisterFlagEffect(id,RESET_EVENT|(RESETS_STANDARD&~RESET_TURN_SET)|RESET_CHAIN,0,1)
 			tc:SetStatus(STATUS_DESTROY_CONFIRMED,true)
 			g:AddCard(tc)
 		end
@@ -112,9 +113,8 @@ end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,1-tp,id)
 	local tg=e:GetLabelObject()
-	local tc=tg:GetFirst()
-	for tc in aux.Next(tg) do
+	for tc in tg:Iter() do
 		tc:SetStatus(STATUS_DESTROY_CONFIRMED,false)
 	end
-	Duel.Destroy(tg,REASON_EFFECT+REASON_REPLACE)
+	Duel.Destroy(tg,REASON_EFFECT|REASON_REPLACE)
 end

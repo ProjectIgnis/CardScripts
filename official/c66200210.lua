@@ -2,7 +2,7 @@
 --Mecha Phantom Beast Hamstrat
 local s,id=GetID()
 function s.initial_effect(c)
-	--level
+	--Gains the levels of all "Mecha Phantom Beast Token"
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_UPDATE_LEVEL)
 	e1:SetValue(s.lvval)
 	c:RegisterEffect(e1)
-	--
+	--Cannot be destroyed by battle or effects while you control a Token
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	c:RegisterEffect(e3)
-	--token
+	--Special Summon 2 "Mecha Phantom Beast Token"
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,0))
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e4:SetTarget(s.sptg)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
-	--spsummon
+	--Special Summon 1 "Mecha Phantom Beast" monster from the GY
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,1))
 	e5:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -49,8 +49,11 @@ s.listed_names={TOKEN_MECHA_PHANTOM_BEAST}
 function s.lvval(e,c)
 	return Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsCode,TOKEN_MECHA_PHANTOM_BEAST),c:GetControler(),LOCATION_MZONE,0,nil):GetSum(Card.GetLevel)
 end
+function s.tknfilter(c)
+	return c:IsType(TYPE_TOKEN) or c:IsOriginalType(TYPE_TOKEN)
+end
 function s.indcon(e)
-	return Duel.IsExistingMatchingCard(Card.IsType,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil,TYPE_TOKEN)
+	return Duel.IsExistingMatchingCard(s.tknfilter,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -67,23 +70,22 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummonComplete()
 	end
 end
-function s.cfilter(c,ft,tp)
-	return c:IsType(TYPE_TOKEN) and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5))
+function s.cfilter(c,tp)
+	return c:IsType(TYPE_TOKEN) and Duel.GetMZoneCount(tp,c)>0
 end
 function s.spcost2(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if chk==0 then return ft>-1 and Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil,ft,tp) end
-	local g=Duel.SelectReleaseGroupCost(tp,s.cfilter,1,1,false,nil,nil,ft,tp)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil,tp) end
+	local g=Duel.SelectReleaseGroupCost(tp,s.cfilter,1,1,false,nil,nil,tp)
 	Duel.Release(g,REASON_COST)
 end
-function s.filter(c,e,tp)
+function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_MECHA_PHANTOM_BEAST) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc,e,tp) end
-	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.spfilter(chkc,e,tp) end
+	if chk==0 then return Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
+	local g=Duel.SelectTarget(tp,s.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function s.spop2(e,tp,eg,ep,ev,re,r,rp)

@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--target
+	--Your opponent's monsters cannot target "Generaider" Effect Monsters for attacks
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetRange(LOCATION_SZONE)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.atcon)
 	e2:SetValue(s.atlimit)
 	c:RegisterEffect(e2)
-	--draw
+	--Your opponent draws 1 card
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_DRAW)
@@ -31,15 +31,18 @@ function s.initial_effect(c)
 	e3:SetOperation(s.drop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x134}
+s.listed_series={SET_GENERAIDER}
+function s.tknfilter(c)
+	return c:IsType(TYPE_TOKEN) or c:IsOriginalType(TYPE_TOKEN)
+end
 function s.atcon(e)
-	return Duel.IsExistingMatchingCard(Card.IsType,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil,TYPE_TOKEN)
+	return Duel.IsExistingMatchingCard(s.tknfilter,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil)
 end
 function s.atlimit(e,c)
-	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsSetCard(0x134)
+	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsSetCard(SET_GENERAIDER)
 end
 function s.cfilter(c)
-	return c:IsReason(REASON_BATTLE) and c:IsPreviousSetCard(0x134) and c:IsType(TYPE_EFFECT)
+	return c:IsReason(REASON_BATTLE) and c:IsPreviousSetCard(SET_GENERAIDER) and c:IsType(TYPE_EFFECT)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil)
@@ -51,8 +54,6 @@ function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,1-tp,1)
 end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetHandler():IsRelateToEffect(e) then
-		p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-		Duel.Draw(p,d,REASON_EFFECT)
-	end
+	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
+	Duel.Draw(p,d,REASON_EFFECT)
 end

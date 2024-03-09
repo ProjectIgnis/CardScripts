@@ -2,76 +2,68 @@
 --Predaplant Moray Nepenthes
 local s,id=GetID()
 function s.initial_effect(c)
-	--atk
+	--Gains 200 ATK for each Predator Counter on the field
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
-	e1:SetValue(s.atkval)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetValue(function(e,c) return Duel.GetCounter(0,1,1,COUNTER_PREDATOR)*200 end)
 	c:RegisterEffect(e1)
-	--equip
+	--Equip an opponent's monster that was destroyed by battle with this card to this card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_EQUIP)
-	e2:SetCode(EVENT_BATTLE_DESTROYING)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e2:SetCode(EVENT_BATTLE_DESTROYING)
 	e2:SetCondition(aux.bdocon)
 	e2:SetTarget(s.eqtg)
 	e2:SetOperation(s.eqop)
 	c:RegisterEffect(e2)
-	aux.AddEREquipLimit(c,nil,aux.FilterBoolFunction(Card.IsMonster),s.equipop,e2)
-	--destroy + lp gain
+	aux.AddEREquipLimit(c,nil,aux.FilterBoolFunction(Card.IsMonster),function(c,e,tp,bc) c:EquipByEffectAndLimitRegister(e,tp,bc,id) end,e2)
+	--Destroy 1 Monster Card equipped to this card by this card's effect and gain LP equal to its ATK
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_DESTROY+CATEGORY_RECOVER)
-	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetType(EFFECT_TYPE_IGNITION)
+	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
-	e3:SetTarget(s.target)
-	e3:SetOperation(s.operation)
+	e3:SetTarget(s.destg)
+	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
 s.counter_list={COUNTER_PREDATOR}
-function s.atkval(e,c)
-	return Duel.GetCounter(0,1,1,COUNTER_PREDATOR)*200
-end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end
 	local bc=e:GetHandler():GetBattleTarget()
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and bc:IsMonster() and bc:IsFaceup() end
 	Duel.SetTargetCard(bc)
-	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,bc,1,0,0)
-end
-function s.equipop(c,e,tp,tc)
-	c:EquipByEffectAndLimitRegister(e,tp,tc,id)
+	Duel.SetOperationInfo(0,CATEGORY_EQUIP,bc,1,tp,0)
 end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
-		s.equipop(c,e,tp,tc)
+	local bc=Duel.GetFirstTarget()
+	if bc:IsRelateToEffect(e) and bc:IsMonster() and bc:IsFaceup() then
+		e:GetHandler():EquipByEffectAndLimitRegister(e,tp,bc,id)
 	end
 end
 function s.desfilter(c,ec)
-	return c:GetFlagEffect(id)~=0 and c:GetEquipTarget()==ec and (c:GetOriginalType()&TYPE_MONSTER)~=0
+	return c:HasFlagEffect(id) and c:GetEquipTarget()==ec and c:IsMonsterCard()
 end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chkc then return chkc:IsLocation(LOCATION_SZONE) and chkc:IsControler(tp) and s.desfilter(chkc,c) end
 	if chk==0 then return Duel.IsExistingTarget(s.desfilter,tp,LOCATION_SZONE,0,1,nil,c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,s.desfilter,tp,LOCATION_SZONE,0,1,1,nil,c)
 	local atk=g:GetFirst():GetTextAttack()
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,tp,0)
 	if atk>0 then
 		Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,atk)
 	end
 end
-function s.operation(e,tp,eg,ep,ev,re,r,rp)
+function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)~=0 then
-		local atk=tc:GetTextAttack()
-		Duel.Recover(tp,atk,REASON_EFFECT)
+	if tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)>0 then
+		Duel.Recover(tp,tc:GetTextAttack(),REASON_EFFECT)
 	end
 end

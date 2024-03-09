@@ -3,31 +3,32 @@
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--Xyz Summon
-	Xyz.AddProcedure(c,nil,5,2)
 	c:EnableReviveLimit()
-	--Search or to grave
+	--Xyz Summon procedure
+	Xyz.AddProcedure(c,nil,5,2)
+	--Attach an opponent's monster that this card destroyed by battle to this card as material
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_TOGRAVE)
-	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetCountLimit(1,id)
-	e1:SetCost(aux.dxmcostgen(1,1,nil))
-	e1:SetTarget(s.thtg)
-	e1:SetOperation(s.thop)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e1:SetCode(EVENT_BATTLE_DESTROYING)
+	e1:SetCondition(aux.bdocon)
+	e1:SetTarget(s.atchtg)
+	e1:SetOperation(s.atchop)
 	c:RegisterEffect(e1)
-	--Attach destroyed monster
+	--Take 1 EARTH Machine monster from your Deck, and either add it to your hand or send it to the GY
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,2))
-	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCode(EVENT_BATTLE_DESTROYING)
-	e2:SetCondition(aux.bdocon)
-	e2:SetTarget(s.atchtg)
-	e2:SetOperation(s.atchop)
-	c:RegisterEffect(e2)
-	--Special Summon itself from GY by tributing a Machine Link
+	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_TOGRAVE)
+	e2:SetType(EFFECT_TYPE_IGNITION)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCountLimit(1,id)
+	e2:SetCost(aux.dxmcostgen(1,1,nil))
+	e2:SetTarget(s.thtgtg)
+	e2:SetOperation(s.thtgop)
+	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
+	--Special Summon this card from the GY in Defense Position
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,3))
+	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_GRAVE)
@@ -37,43 +38,51 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-function s.thfilter(c)
-	return c:IsMonster() and c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_EARTH) and (c:IsAbleToHand() or c:IsAbleToGrave())
-end
-function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
-end
-function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)
-	aux.ToHandOrElse(g:GetFirst(),tp)
-end
-function s.atchtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local bc=e:GetHandler():GetBattleTarget()
-	if chk==0 then return e:GetHandler():IsType(TYPE_XYZ) and not bc:IsType(TYPE_TOKEN) end
+function s.atchtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	local bc=c:GetBattleTarget()
+	if chk==0 then return c:IsType(TYPE_XYZ) and bc:IsMonster() and bc:IsFaceup()
+		and bc:IsCanBeXyzMaterial(c,tp,REASON_EFFECT) end
 	Duel.SetTargetCard(bc)
-	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,bc,1,0,0)
+	if bc:IsLocation(LOCATION_GRAVE) then
+		Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,bc,1,tp,0)
+	end
 end
 function s.atchop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and c:IsFaceup() and tc and tc:IsRelateToEffect(e) and not tc:IsLocation(LOCATION_DECK) then
-		Duel.Overlay(c,tc,true)
+	local bc=Duel.GetFirstTarget()
+	if c:IsRelateToEffect(e) and c:IsType(TYPE_XYZ) and bc:IsRelateToEffect(e)
+		and bc:IsMonster() and bc:IsFaceup() then
+		Duel.Overlay(c,bc,true)
 	end
 end
-function s.cfilter(c,ft,tp)
-	return c:IsLinkMonster() and c:IsRace(RACE_MACHINE) and c:IsControler(tp)
-		and (ft>0 or c:GetSequence()<5)
+function s.thtgfilter(c)
+	return c:IsAttribute(ATTRIBUTE_EARTH) and c:IsRace(RACE_MACHINE) and (c:IsAbleToHand() or c:IsAbleToGrave())
+end
+function s.thtgtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.thtgfilter,tp,LOCATION_DECK,0,1,nil) end
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
+end
+function s.thtgop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,3))
+	local sc=Duel.SelectMatchingCard(tp,s.thtgfilter,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
+	if sc then
+		aux.ToHandOrElse(sc,tp)
+	end
+end
+function s.spcostfilter(c,tp)
+	return c:IsRace(RACE_MACHINE) and c:IsLinkMonster() and Duel.GetMZoneCount(tp,c)>0
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if chk==0 then return ft>-1 and Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil,ft,tp) end
-	local g=Duel.SelectReleaseGroupCost(tp,s.cfilter,1,1,false,nil,nil,ft,tp)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.spcostfilter,1,false,nil,nil,tp) end
+	local g=Duel.SelectReleaseGroupCost(tp,s.spcostfilter,1,1,false,nil,nil,tp)
 	Duel.Release(g,REASON_COST)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,tp,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

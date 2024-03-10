@@ -19,7 +19,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,1) end
 end
 function s.cfilter(c)
-	return c:IsFaceup() and (c:IsLevelAbove(3) and c:IsLevelBelow(8)) and c:IsType(TYPE_EFFECT)
+	return c:IsFaceup() and c:IsLevelBetween(3,8) and c:IsType(TYPE_EFFECT)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,0,LOCATION_MZONE,1,nil) end

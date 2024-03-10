@@ -19,7 +19,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,PLAYER_ALL,2)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:HasLevel() and c:IsLevelAbove(3) and c:IsLevelBelow(8)
+	return c:IsFaceup() and c:HasLevel() and c:IsLevelBetween(3,8)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.DiscardDeck(tp,2,REASON_EFFECT)>0 and Duel.DiscardDeck(1-tp,2,REASON_EFFECT)>0

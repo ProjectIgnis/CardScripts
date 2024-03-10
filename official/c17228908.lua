@@ -81,7 +81,7 @@ function s.tknfilter(c)
 	return c:IsType(TYPE_TOKEN) or c:IsOriginalType(TYPE_TOKEN)
 end
 function s.tgcon(e)
-	return Duel.IsExistingMatchingCard(s.tknfilter,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil)
+	return Duel.IsExistingMatchingCard(s.tknfilter,e:GetHandlerPlayer(),0,LOCATION_ONFIELD,1,nil)
 end
 function s.repfilter(c,tp)
 	return c:IsFaceup() and c:IsType(TYPE_NORMAL) and c:IsLocation(LOCATION_MZONE) and not c:IsReason(REASON_REPLACE)

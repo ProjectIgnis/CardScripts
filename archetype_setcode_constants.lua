@@ -557,3 +557,4 @@ SET_SALAMANDRA                    = 0x1a4
 SET_ASHENED                       = 0x1a5
 SET_MILLENNIUM                    = 0x1a6
 SET_EXODO                         = 0x1a7
+SET_FIENDSMITH                    = 0x1a8

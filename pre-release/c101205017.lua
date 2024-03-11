@@ -58,16 +58,16 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-function s.tgfilter(c,tp)
+function s.tgfilter(c,tp,e)
 	return (c:IsMonster() or (c:IsSetCard(SET_FIENDSMITH) and c:IsEquipCard() and c:IsFaceup() and c:IsControler(tp)))
-		and c:IsAbleToGrave()
+		and c:IsAbleToGrave() and c:IsCanBeEffectTarget(e)
 end
 function s.rescon(sg,e,tp,mg)
 	return sg:FilterCount(Card.IsEquipCard,nil)==1
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	local g=Duel.GetMatchingGroup(s.tgfilter,tp,LOCATION_ONFIELD,LOCATION_MZONE,nil,tp)
+	local g=Duel.GetMatchingGroup(s.tgfilter,tp,LOCATION_ONFIELD,LOCATION_MZONE,nil,tp,e)
 	if chk==0 then return #g>=2 and aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0) end
 	local tg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_TOGRAVE)
 	Duel.SetTargetCard(tg)

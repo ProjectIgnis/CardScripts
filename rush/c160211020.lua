@@ -12,7 +12,8 @@ function s.ffilter(c)
 	return c:IsAttribute(ATTRIBUTE_LIGHT|ATTRIBUTE_DARK) and c:IsRace(RACE_CYBERSE)
 end
 function s.mfilter(c)
-	return (c:IsLocation(LOCATION_HAND+LOCATION_MZONE) and c:IsAbleToGrave())
+	if c:IsLocation(LOCATION_MZONE) then return c:IsFaceup() and c:IsAbleToGrave() end
+	return c:IsLocation(LOCATION_HAND) and c:IsAbleToGrave()
 end
 function s.checkmat(tp,sg,fc)
 	return sg:GetClassCount(Card.GetLocation)==1

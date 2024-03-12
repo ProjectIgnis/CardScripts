@@ -8,15 +8,19 @@ function s.initial_effect(c)
 	Link.AddProcedure(c,nil,2,2,s.lcheck)
 	-- "fusfilter","matfilter","extrafil","extraop"
 	--Fusion Summon 1 Fiend Fusion Monster by shuffling its materials from your GY into the Deck
-	local params={aux.FilterBoolFunction(Card.IsRace,RACE_FIEND),aux.FALSE,s.fextra,Fusion.ShuffleMaterial}
+	local params={fusfilter=aux.FilterBoolFunction(Card.IsRace,RACE_FIEND),
+					matfilter=aux.FALSE,
+					extrafil=s.fextra,
+					extratg=s.extratg,
+					extraop=Fusion.ShuffleMaterial}
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
-	e1:SetTarget(Fusion.SummonEffTG(table.unpack(params)))
-	e1:SetOperation(Fusion.SummonEffOP(table.unpack(params)))
+	e1:SetTarget(Fusion.SummonEffTG(params))
+	e1:SetOperation(Fusion.SummonEffOP(params))
 	c:RegisterEffect(e1)
 	--Equip this card to 1 non-Link LIGHT Fiend monster you control
 	local e2=Effect.CreateEffect(c)
@@ -38,6 +42,10 @@ function s.lcheck(g,lc,sumtype,tp)
 end
 function s.fextra(e,tp,mg)
 	return Duel.GetMatchingGroup(aux.NecroValleyFilter(Fusion.IsMonsterFilter(Card.IsFaceup,Card.IsAbleToDeck)),tp,LOCATION_GRAVE,0,nil)
+end
+function s.extratg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_GRAVE)
 end
 function s.eqfilter(c)
 	return not c:IsLinkMonster() and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_FIEND) and c:IsFaceup()

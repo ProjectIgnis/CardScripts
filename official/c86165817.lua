@@ -47,10 +47,6 @@ s.material_setcode={SET_HERO,SET_EVIL_HERO}
 s.dark_calling=true
 s.listed_names={CARD_DARK_FUSION}
 s.listed_series={SET_HERO,SET_EVIL_HERO}
-function s.desfilter(c,atk)
-	return c:IsFaceup() and c:IsAttackBelow(atk)
-end
-
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsAttackBelow,e:GetHandler():GetAttack()),tp,0,LOCATION_MZONE,nil)
 	if chk==0 then return #g>0 end

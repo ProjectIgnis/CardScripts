@@ -34,17 +34,16 @@ end
 s.listed_series={SET_RUNICK}
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==tp and re:GetHandler():IsSetCard(SET_RUNICK) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
-		and re:IsSpellEffect() and re:IsActiveType(TYPE_QUICKPLAY)
+		and re:IsSpellEffect() and re:IsQuickPlaySpell()
 end
 function s.tdfilter(c)
 	return c:IsSetCard(SET_RUNICK) and c:IsQuickPlaySpell() and c:IsAbleToDeck()
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.tdfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.tdfilter,tp,LOCATION_GRAVE,0,1,nil) and Duel.IsPlayerCanDraw(tp,1) end
-	local ct=math.min(Duel.GetFieldGroupCount(tp,LOCATION_DECK,0),3)
+	if chk==0 then return Duel.IsExistingTarget(s.tdfilter,tp,LOCATION_GRAVE,0,1,nil) and Duel.IsPlayerCanDraw(tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectTarget(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,ct,nil)
+	local g=Duel.SelectTarget(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,3,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,#g,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,#g)
 end

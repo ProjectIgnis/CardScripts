@@ -34,7 +34,7 @@ end
 s.listed_series={SET_RUNICK}
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==tp and re:GetHandler():IsSetCard(SET_RUNICK) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
-		and re:IsSpellEffect() and re:IsQuickPlaySpell()
+		and re:IsSpellEffect() and re:IsActiveType(TYPE_QUICKPLAY)
 end
 function s.tdfilter(c)
 	return c:IsSetCard(SET_RUNICK) and c:IsQuickPlaySpell() and c:IsAbleToDeck()

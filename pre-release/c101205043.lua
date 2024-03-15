@@ -117,7 +117,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		Duel.SetTargetCard(tc)
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-		tc=g:Select(tp,1,1,nil)
+		tc=g:Select(tp,1,1,nil):GetFirst()
 		Duel.SetTargetCard(tc)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tc,1,tp,0)

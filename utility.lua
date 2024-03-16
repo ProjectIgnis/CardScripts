@@ -268,8 +268,10 @@ function Card.IsPreviousDefenseOnField(c,def)
 	return c:HasDefense() and c:GetPreviousDefenseOnField()==def
 end
 
-function Card.IsLevelBetween(c,low_lvl,up_lvl)
-	return c:IsLevelAbove(low_lvl) and c:IsLevelBelow(up_lvl)
+--Returns true if the Level of "c" is between the 2 provided Levels (inclusive)
+function Card.IsLevelBetween(c,first_lv,second_lv)
+	if first_lv>second_lv then first_lv,second_lv=second_lv,first_lv end
+	return c:IsLevelAbove(first_lv) and c:IsLevelBelow(second_lv)
 end
 
 function Card.IsOriginalLevel(c,lvl)

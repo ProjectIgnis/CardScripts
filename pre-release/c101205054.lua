@@ -73,7 +73,7 @@ function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return ft>0 and #g>0 end
 	if Duel.SelectEffectYesNo(tp,e:GetHandler(),96) then
 		if #g>1 then
-			local ft=math.min(ft,#g)
+			ft=math.min(ft,#g)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 			g=g:Select(tp,1,ft,nil)
 		end

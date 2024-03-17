@@ -19,13 +19,11 @@ function s.tgfilter(c)
 	return c:IsSetCard(SET_VOLCANIC) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToGrave()
 end
 function s.rmfilter(c,tp,ft)
-	if c:IsLocation(LOCATION_SZONE) then ft=ft+1 end
-	return ft>0 and c:IsSetCard(SET_BLAZE_ACCELERATOR) and c:IsAbleToRemove() and c:IsFaceup()
+	return (ft>0 or c:IsLocation(LOCATION_STZONE)) and c:IsSetCard(SET_BLAZE_ACCELERATOR) and c:IsAbleToRemove() and c:IsFaceup()
 		and Duel.IsExistingMatchingCard(s.plfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,nil,tp)
 end
 function s.plfilter(c,tp)
-	return c:IsSetCard(SET_BLAZE_ACCELERATOR) and (c:IsContinuousSpell() or c:IsContinuousTrap())
-		and not c:IsForbidden() and c:CheckUniqueOnField(tp)
+	return c:IsSetCard(SET_BLAZE_ACCELERATOR) and c:IsContinuousSpellTrap() and not c:IsForbidden() and c:CheckUniqueOnField(tp)
 end
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

@@ -2,7 +2,7 @@
 --Trickstar Lycoris
 local s,id=GetID()
 function s.initial_effect(c)
-	--return
+	--Special Summon itself from the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -15,11 +15,10 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--damage
+	--Inflict 200 damage per card added to the hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_TO_HAND)
-	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(s.damcon)
 	e2:SetOperation(s.damop)
@@ -32,7 +31,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.chainsolvedop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xfb}
+s.listed_series={SET_TRICKSTAR}
 s.listed_names={id}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -40,7 +39,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	c:RegisterFlagEffect(id,RESET_CHAIN,0,1)
 end
 function s.filter(c)
-	return c:IsSetCard(0xfb) and c:IsFaceup() and c:IsAbleToHand() and not c:IsCode(id)
+	return c:IsSetCard(SET_TRICKSTAR) and c:IsFaceup() and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end
@@ -50,13 +49,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		and Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,tp,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,tp,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
-	if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
+	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 then
 		local tc=Duel.GetFirstTarget()
 		if tc:IsRelateToEffect(e) then
 			Duel.SendtoHand(tc,nil,REASON_EFFECT)
@@ -68,20 +66,22 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=eg:FilterCount(Card.IsControler,nil,1-tp)
-	if Duel.GetCurrentChain() == 0 then
-		Duel.Hint(HINT_CARD,1-tp,id)
-		Duel.Damage(1-tp,ct*200,REASON_EFFECT)
-	else
-		for i = 1,ct do
+	if Duel.IsChainSolving() then
+		--If a chain link is resolving, register a flag to deal the damage after it
+		for i=1,ct do
 			e:GetHandler():RegisterFlagEffect(id+1,RESET_CHAIN,0,1)
 		end
+	else
+		--If a chain is not resolving, deal the damage right away
+		Duel.Hint(HINT_CARD,1-tp,id)
+		Duel.Damage(1-tp,ct*200,REASON_EFFECT)
 	end
 end
 function s.chainsolvedop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=e:GetHandler():GetFlagEffect(id+1)
-	if ct > 0 then
+	if ct>0 then
 		Duel.Hint(HINT_CARD,1-tp,id)
 		Duel.Damage(1-tp,ct*200,REASON_EFFECT)
-		e:GetHandler():ResetFlagEffect(id + 1)
+		e:GetHandler():ResetFlagEffect(id+1)
 	end
 end

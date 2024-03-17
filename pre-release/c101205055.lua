@@ -72,36 +72,35 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		end
 		Duel.BreakEffect()
 		for ec in eqg:Iter() do
-			s.equipop(e,tp,ec,c)
+			if Duel.Equip(tp,ec,c,true,true) then
+				--The equipped monster gains 2000 ATK
+				local e1=Effect.CreateEffect(ec)
+				e1:SetType(EFFECT_TYPE_EQUIP)
+				e1:SetCode(EFFECT_UPDATE_ATTACK)
+				e1:SetValue(2000)
+				e1:SetReset(RESET_EVENT|RESETS_STANDARD)
+				ec:RegisterEffect(e1)
+				--Equip limit
+				local e2=Effect.CreateEffect(c)
+				e2:SetType(EFFECT_TYPE_SINGLE)
+				e2:SetProperty(EFFECT_FLAG_OWNER_RELATE)
+				e2:SetCode(EFFECT_EQUIP_LIMIT)
+				e2:SetValue(function(e,c) return e:GetOwner()==c end)
+				e2:SetReset(RESET_EVENT|RESETS_STANDARD)
+				ec:RegisterEffect(e2)
+			end
 		end
+		Duel.EquipComplete()
 	end
 	local fid=c:GetFieldID()
 	--You cannot activate cards and effects for the rest of this turn
-	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,3))
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
-	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
-	e1:SetTargetRange(1,0)
-	e1:SetValue(function(_,re) return re:GetHandler()~=c or re:GetHandler():GetFieldID()~=fid end)
-	e1:SetReset(RESET_PHASE|PHASE_END)
-	Duel.RegisterEffect(e1,tp)
-end
-function s.equipop(e,tp,ec,tc)
-	if not tc:EquipByEffectAndLimitRegister(e,tp,ec,nil,true) then return end
-	--The equipped monster gains 2000 ATK
-	local e1=Effect.CreateEffect(ec)
-	e1:SetType(EFFECT_TYPE_EQUIP)
-	e1:SetCode(EFFECT_UPDATE_ATTACK)
-	e1:SetValue(2000)
-	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
-	ec:RegisterEffect(e1)
-	--Equip limit
-	local e2=Effect.CreateEffect(ec)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e2:SetCode(EFFECT_EQUIP_LIMIT)
-	e2:SetValue(1)
-	e2:SetReset(RESET_EVENT|RESETS_STANDARD)
-	ec:RegisterEffect(e2)
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(id,3))
+	e3:SetType(EFFECT_TYPE_FIELD)
+	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e3:SetCode(EFFECT_CANNOT_ACTIVATE)
+	e3:SetTargetRange(1,0)
+	e3:SetValue(function(_,re) return re:GetHandler()~=c or re:GetHandler():GetFieldID()~=fid end)
+	e3:SetReset(RESET_PHASE|PHASE_END)
+	Duel.RegisterEffect(e3,tp)
 end

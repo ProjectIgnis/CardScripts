@@ -1,9 +1,9 @@
---Dimension Magic
---Scripted by Edo9300
---updated by Larry126
+--ディメンション・マジック (Manga)
+--Magical Dimension (Manga)
+--Scripted by Edo9300, updated by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Special Summon 1 Spellcaster monster from your hand and destroy opponent's monster by battle
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -15,11 +15,8 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_SPELLCASTER)
-end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_SPELLCASTER),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.filter(c,e,tp)
 	return c:IsRace(RACE_SPELLCASTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -28,7 +25,7 @@ function s.rfilter(c,fid)
 	return c:IsReleasable() and c:GetFieldID()~=fid
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local tg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil)
+	local tg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsRace,RACE_SPELLCASTER),tp,LOCATION_MZONE,0,nil)
 	if #tg>0 then
 		local tc=tg:GetFirst()
 		while tc do
@@ -42,7 +39,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 		end
 	end
 	if chk==0 then return ch==1 end
-	local g1=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil)
+	local g1=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsRace,RACE_SPELLCASTER),tp,LOCATION_MZONE,0,nil)
 	local ct=#g1
 	if ct>2 then
 		g=Duel.SelectReleaseGroupCost(tp,nil,2,2,false,nil,nil)
@@ -50,7 +47,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 		g=Duel.SelectReleaseGroupCost(tp,nil,2,2,false,nil,g1:GetFirst())
 	elseif ct==2 then
 		g=Duel.SelectReleaseGroupCost(tp,nil,1,1,false,nil,nil)
-		g1=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,g:GetFirst())
+		g1=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsRace,RACE_SPELLCASTER),tp,LOCATION_MZONE,0,g:GetFirst())
 		if #g1==2 then
 			g:AddCard(Duel.SelectReleaseGroupCost(tp,nil,1,1,false,nil,g:GetFirst()):GetFirst())
 		else
@@ -63,7 +60,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil,e,tp) end
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_HAND,0,nil,e,tp)
-	Duel.SetOperationInfo(g,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,tp,LOCATION_HAND)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -76,11 +73,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetCategory(CATEGORY_TOHAND)
 			e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-			e1:SetRange(LOCATION_MZONE)
 			e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			e1:SetCountLimit(1)
 			e1:SetCode(EVENT_PHASE+PHASE_END)
+			e1:SetRange(LOCATION_MZONE)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
+			e1:SetCountLimit(1)
 			e1:SetLabel(fid)
 			e1:SetLabelObject(sg)
 			e1:SetCondition(s.rmcon)

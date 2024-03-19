@@ -1,5 +1,5 @@
 --月朧龍ヴァグナワ
---Moonhaze Dragon Vagnawa
+--Vagnawa the Moon-Eating Dragon
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -37,6 +37,7 @@ function s.othertuner(c,sc,tp)
 end
 function s.valcheck(e,c)
 	local mg=c:GetMaterial()
+	if #mg==0 then return e:SetLabel(0) end
 	local tp=e:GetHandlerPlayer()
 	local pure_tuner_g=mg:Filter(s.puretuner,nil,c,tp)
 	if #pure_tuner_g>0 then
@@ -65,7 +66,7 @@ function s.matop(e,c)
 	e:SetLabel(tunerlv,e:GetHandler():GetLevel()-tunerlv)
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
+	if chk==0 then return e:GetLabelObject():GetLabel()>0 end
 	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,e:GetHandler(),1,tp,300)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,1,1-tp,300)
 end

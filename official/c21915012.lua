@@ -52,6 +52,7 @@ function s.othertuner(c,sc,tp)
 end
 function s.valcheck(e,c)
 	local mg=c:GetMaterial()
+	if #mg==0 then return e:SetLabel(0) end
 	local tp=e:GetHandlerPlayer()
 	local pure_tuner_g=mg:Filter(s.puretuner,nil,c,tp)
 	if #pure_tuner_g>0 then
@@ -77,10 +78,12 @@ function s.matop(e,c)
 	e:SetLabel(tuner:GetSynchroLevel(c))
 end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	local lv=e:GetLabelObject():GetLabel()
+	if lv==0 then return end
+	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
 		local opt=Duel.SelectOption(tp,aux.Stringid(id,2),aux.Stringid(id,3))
+		--Increase or decrease this card's Level
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)

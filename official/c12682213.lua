@@ -1,5 +1,5 @@
 --鉄騎の雷鎚
---Iron Thunderhammer
+--Iron Thunder
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -39,7 +39,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not (Duel.NegateActivation(ev) and rc:IsRelateToEffect(re)) then return end
 	local c=e:GetHandler()
 	local exc=(e:IsHasType(EFFECT_TYPE_ACTIVATE) and c:IsRelateToEffect(e)) and c or nil
-	local colg=rc:GetColumnGroup():RemoveCard(exc)
+	local colg=rc:GetColumnGroup()
+	if exc then colg:RemoveCard(exc) end
 	if Duel.Destroy(eg,REASON_EFFECT)>0 and #colg>0 then
 		Duel.BreakEffect()
 		Duel.Destroy(colg,REASON_EFFECT)

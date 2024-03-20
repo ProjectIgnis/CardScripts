@@ -35,7 +35,8 @@ function s.immval(e,te)
 	return te:GetOwner()~=e:GetHandler() and te:IsActivated() and s.imcon(e) --condition handling for mid-resolution updating
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsLinkMonster() and c:GetLinkedGroup():FilterCount(Card.IsMonster,nil)==0
+	local c=e:GetHandler()
+	return c:IsLinkMonster() and c:GetLinkedGroup():FilterCount(Card.IsMonster,nil)==0
 end
 function s.damfilter(c)
 	return c:IsSetCard(SET_TRICKSTAR) and c:IsMonster()

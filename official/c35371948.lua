@@ -19,19 +19,15 @@ function s.initial_effect(c)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
-	--Inflict 200 Damage to the opponent
+	--Inflict 200 damage to the opponent when a "Trickstar" monster inflicts damage to them
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_DAMAGE)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetRange(LOCATION_FZONE)
-	e3:SetCode(EVENT_BATTLE_DAMAGE)
-	e3:SetCondition(s.damcon1)
+	e3:SetCode(EVENT_DAMAGE)
+	e3:SetCondition(s.damcon)
 	e3:SetOperation(s.damop)
 	c:RegisterEffect(e3)
-	local e4=e3:Clone()
-	e4:SetCode(EVENT_DAMAGE)
-	e4:SetCondition(s.damcon2)
-	c:RegisterEffect(e4)
 end
 s.listed_series={SET_TRICKSTAR}
 function s.thfilter(c)
@@ -46,14 +42,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,sg)
 	end
 end
-function s.cfilter(c)
-	return c:IsFacedown() and c:GetSequence()<5
-end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_SZONE) and s.cfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.cfilter,tp,0,LOCATION_SZONE,1,e:GetHandler()) end
+	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_STZONE) and chkc:IsFacedown() end
+	if chk==0 then return Duel.IsExistingTarget(Card.IsFacedown,tp,0,LOCATION_STZONE,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
-	Duel.SelectTarget(tp,s.cfilter,tp,0,LOCATION_SZONE,1,1,e:GetHandler())
+	Duel.SelectTarget(tp,Card.IsFacedown,tp,0,LOCATION_STZONE,1,1,e:GetHandler())
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -153,12 +146,24 @@ function s.rstop2(e,tp,eg,ep,ev,re,r,rp)
 	tc:ResetFlagEffect(id)
 	if te then te:Reset() end
 end
-function s.damcon1(e,tp,eg,ep,ev,re,r,rp)
-	return ep==1-tp and eg:GetFirst():IsSetCard(SET_TRICKSTAR) and Duel.GetLP(1-tp)>0
-end
-function s.damcon2(e,tp,eg,ep,ev,re,r,rp)
-	return ep==1-tp and r&REASON_BATTLE==0 and re and re:IsMonsterEffect()
-		and re:GetHandler():IsSetCard(SET_TRICKSTAR) and Duel.GetLP(1-tp)>0
+function s.damcon(e,tp,eg,ep,ev,re,r,rp)
+	if not (ep==1-tp and Duel.GetLP(1-tp)>0) then return false end
+	if r&REASON_BATTLE>0 then
+		return eg:GetFirst():IsSetCard(SET_TRICKSTAR)
+	else
+		if not(re and re:IsMonsterEffect()) then return false end
+		local rc=re:GetHandler()
+		if re:IsActivated() and (rc:IsFacedown() or not rc:IsRelateToEffect(re)) then
+			local ch=Duel.GetCurrentChain()
+			local trig_loc,setcodes=Duel.GetChainInfo(ch,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_SETCODES)
+			if trig_loc&LOCATION_MZONE==0 then return false end
+			for _,set in ipairs(setcodes) do
+				if (SET_TRICKSTAR&0xfff)==(set&0xfff) and (SET_TRICKSTAR&set)==SET_TRICKSTAR then return true end
+			end
+		else
+			return rc:IsSetCard(SET_TRICKSTAR)
+		end
+	end
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)

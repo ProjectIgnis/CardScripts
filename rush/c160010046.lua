@@ -35,6 +35,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local tg=Duel.SelectMatchingCard(tp,s.cstfilter,tp,LOCATION_HAND,0,2,2,nil)
 	if Duel.SendtoGrave(tg,REASON_COST)==2 then
 		--Effect

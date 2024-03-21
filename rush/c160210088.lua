@@ -3,7 +3,7 @@
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)
-	--If opponent normal summons
+	--Prevents the activation of the effects of your opponent's monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -34,11 +34,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return ct>0 and Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil,e,tp) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	--Effect
 	local ct=Duel.GetMatchingGroupCount(aux.FilterMaximumSideFunctionEx(s.tgfilter),tp,LOCATION_MZONE,0,nil)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_APPLYTO)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_MZONE,1,ct,nil)
 	Duel.HintSelection(g,true)
+	local c=e:GetHandler()
 	for tc in g:Iter() do
 		--Cannot activate its effects
 		local e1=Effect.CreateEffect(c)
@@ -46,13 +47,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_TRIGGER)
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		--Cannot be Tributed
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_UNRELEASABLE_SUM)
-		e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END|PHASE_END)
 		e2:SetValue(1)
 		tc:RegisterEffect(e2,true)
 	end

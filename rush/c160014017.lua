@@ -28,18 +28,19 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
-	local c=e:GetHandler()
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local tdg=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.HintSelection(tdg,true)
 	if Duel.SendtoDeck(tdg,nil,SEQ_DECKSHUFFLE,REASON_COST)~=1 then return end
 	--Effect
 	local dg=Duel.GetMatchingGroup(Card.IsSpellTrap,tp,0,LOCATION_ONFIELD,nil)
 	if #dg>0 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local sg=dg:Select(tp,1,1,nil)
 		Duel.HintSelection(sg,true)
 		if Duel.Destroy(sg,REASON_EFFECT)>0 then
 			local dg=Duel.GetMatchingGroup(Card.IsSpellTrap,tp,0,LOCATION_ONFIELD,nil)
-			if c:IsMaximumMode() and #dg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+			if e:GetHandler():IsMaximumMode() and #dg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 				local sg=dg:Select(tp,1,1,nil)
 				Duel.HintSelection(sg,true)

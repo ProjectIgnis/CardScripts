@@ -26,15 +26,15 @@ function s.thfilter(c)
 	return c:IsRace(RACE_ROCK) and c:IsType(TYPE_NORMAL) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,e:GetHandler()) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
 end
 function s.operation(fustg,fusop)
 	return function(e,tp,eg,ep,ev,re,r,rp)
 		--Requirement
-		local c=e:GetHandler()
-		if Duel.SendtoGrave(c,REASON_COST)==0 then return end
+		if Duel.SendtoGrave(e:GetHandler(),REASON_COST)==0 then return end
 		--Effect
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_GRAVE,0,1,2,e:GetHandler())
 		if #g>0 then
 			Duel.SendtoHand(g,nil,REASON_EFFECT)

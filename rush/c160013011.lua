@@ -37,6 +37,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not s.sptg(e,tp,eg,ep,ev,re,r,rp,0) then return end
 	-- Requirement
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local tg=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND,0,1,1,nil)
 	if Duel.SendtoGrave(tg,REASON_COST)==1 then
 		--Effect

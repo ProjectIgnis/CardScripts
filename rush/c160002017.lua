@@ -25,6 +25,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	--requirement
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local tc=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_HAND,0,1,1,nil,tp):GetFirst()
 	if Duel.SendtoGrave(tc,REASON_COST)>0 then
 		--effect
@@ -36,7 +37,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 				local e1=Effect.CreateEffect(e:GetHandler())
 				e1:SetType(EFFECT_TYPE_SINGLE)
 				e1:SetCode(EFFECT_UPDATE_ATTACK)
-				e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+				e1:SetReset(RESETS_STANDARD_PHASE_END)
 				e1:SetValue(-lv*300)
 				sc:RegisterEffect(e1)
 				local e2=e1:Clone()

@@ -1,9 +1,9 @@
--- 黒魔女ディアベルスター
--- Diabellestarr the Dark Witch
--- Scripted by Satellaa
+--黒魔女ディアベルスター
+--Diabellstar the Black Witch
+--Scripted by Satellaa
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon itself from the hand
+	--Special Summon this card (from your hand) by sending 1 card from your hand or field to the GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.spproctg)
 	e1:SetOperation(s.spprocop)
 	c:RegisterEffect(e1)
-	-- Set 1 "Tainted Treasure" Spell/Trap directly from your Deck
+	--Set 1 "Sinful Spoils" Spell/Trap directly from your Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
-	-- Special Summon itself from the GY
+	--Send 1 card from your hand or field to the GY, and if you do, Special Summon this card
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,2))
 	e4:SetCategory(CATEGORY_TOGRAVE+CATEGORY_SPECIAL_SUMMON)
@@ -57,8 +57,8 @@ function s.spproccon(e,c)
 	local rg=Duel.GetMatchingGroup(s.tgfilter,tp,LOCATION_HAND|LOCATION_ONFIELD,0,c,tp,false)
 	return #rg>0 and aux.SelectUnselectGroup(rg,e,tp,1,1,nil,0)
 end
-function s.spproctg(e,tp,eg,ep,ev,re,r,rp,c)
-	local rg=Duel.GetMatchingGroup(s.tgfilter,tp,LOCATION_HAND|LOCATION_ONFIELD,0,e:GetHandler(),tp,false)
+function s.spproctg(e,tp,eg,ep,ev,re,r,rp,chk,c)
+	local rg=Duel.GetMatchingGroup(s.tgfilter,tp,LOCATION_HAND|LOCATION_ONFIELD,0,c,tp,false)
 	local g=aux.SelectUnselectGroup(rg,e,tp,1,1,nil,1,tp,HINTMSG_TOGRAVE,nil,nil,true)
 	if #g>0 then
 		g:KeepAlive()
@@ -87,7 +87,8 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spgycon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsPreviousLocation(LOCATION_HAND|LOCATION_ONFIELD) and Duel.IsTurnPlayer(1-tp)
+	local c=e:GetHandler()
+	return c:IsPreviousLocation(LOCATION_HAND|LOCATION_ONFIELD) and c:IsPreviousControler(tp) and Duel.IsTurnPlayer(1-tp)
 end
 function s.spgytg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Special Summon Procedure
+	--Fusion Materials and Special Summon Procedure
 	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_YUBEL),s.fiendfilter)
 	Fusion.AddContactProc(c,s.contactfil,s.contactop,true)
 	--Cannot be used as Fusion Material

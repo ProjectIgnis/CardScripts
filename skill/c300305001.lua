@@ -17,9 +17,9 @@ function s.fusfilter(c,e,tp,m,f,chkf)
 	if not (c:IsType(TYPE_FUSION) and c:IsSetCard(SET_ELEMENTAL_HERO) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false)) then return false end
     	if c.min_material_count>2 and Duel.IsExistingMatchingCard(s.listedmatfilter,tp,LOCATION_MZONE,0,2,nil,c) then
         	local dg=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_DECK,0,nil,e,c)
-        	matg:Merge(dg)
+        	m:Merge(dg)
     	end
-    	return (not f or f(c)) and c:CheckFusionMaterial(matg,nil,chkf)
+    	return (not f or f(c)) and c:CheckFusionMaterial(m,nil,chkf)
 end
 function s.cfilter(c,e,tp)
 	if not c:IsDiscardable() then return false end

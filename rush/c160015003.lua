@@ -21,7 +21,7 @@ function s.cfilter(c,tp)
 end
 function s.sumfilter(c,tp,excludecard)
 	local fmg_all=Duel.GetFusionMaterial(tp)
-	local mg=fmg_all:Filter(Fusion.OnFieldMat,nil,e,tp,0)
+	local mg=fmg_all:Filter(aux.FaceupFilter(Fusion.OnFieldMat),nil,e,tp,0)
 	mg:RemoveCard(excludecard)
 	return c:IsType(TYPE_FUSION) and c:CheckFusionMaterial(mg)
 end

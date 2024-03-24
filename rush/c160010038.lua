@@ -5,6 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Send the top 2 cards from the Deck to the GY
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetCategory(CATEGORY_DECKDES+CATEGORY_POSITION)
 	e1:SetRange(LOCATION_MZONE)
@@ -33,6 +34,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.cfilter),tp,0,LOCATION_MZONE,1,nil)
 		and Duel.IsExistingMatchingCard(s.szonefilter,tp,0,LOCATION_SZONE,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
 		local tc=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.cfilter),tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
 		if tc then
 			Duel.BreakEffect()

@@ -54,6 +54,18 @@ function s.operation(fustg,fusop)
 			and fustg(e,tp,eg,ep,ev,re,r,rp,0) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.BreakEffect()
 			fusop(e,tp,eg,ep,ev,re,r,rp)
+			--Prevent non-Fusion from attacking
+			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetType(EFFECT_TYPE_FIELD)
+			e1:SetCode(EFFECT_CANNOT_ATTACK)
+			e1:SetProperty(EFFECT_FLAG_OATH)
+			e1:SetTargetRange(LOCATION_MZONE,0)
+			e1:SetTarget(s.ftarget)
+			e1:SetReset(RESET_PHASE|PHASE_END)
+			Duel.RegisterEffect(e1,tp)
 		end
 	end
+end
+function s.ftarget(e,c)
+	return not c:IsType(TYPE_FUSION)
 end

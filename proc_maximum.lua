@@ -675,6 +675,7 @@ FLAG_DOUBLE_TRIB_NORMAL=160319014 -- Light Effigy
 FLAG_DOUBLE_TRIB_LEVEL8=160015035 -- Darkness Doom Giant
 FLAG_DOUBLE_TRIB_WYRM=160015011 -- Demolition Soldier Ashiba Bikke
 FLAG_DOUBLE_TRIB_FIEND=160210078 -- Royal Rebel's Guardian
+FLAG_DOUBLE_TRIB_SPELLCASTER=160017008 -- Releaslayer
 function Card.AddDoubleTribute(c,id,otfilter,eftg,reset,...)
 	for i,flag in ipairs{...} do
 		c:RegisterFlagEffect(flag,reset,0,1)

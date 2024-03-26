@@ -1,11 +1,11 @@
---サモン・ソーサレス
---Summon Sorceress
+--サモン・ソーサレス (Pre-Errata)
+--Summon Sorceress (Pre-Errata)
 local s,id=GetID()
 function s.initial_effect(c)
-	--Link summon
-	Link.AddProcedure(c,aux.NOT(aux.FilterBoolFunctionEx(Card.IsType,TYPE_TOKEN)),2,99,s.lcheck)
 	c:EnableReviveLimit()
-	--Special summon when Link Summoned
+	--Link Summon procedure
+	Link.AddProcedure(c,aux.NOT(aux.FilterBoolFunctionEx(Card.IsType,TYPE_TOKEN)),2,3,s.lcheck)
+	--Special Summon 1 monster from your hand in Defense Position
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg1)
 	e1:SetOperation(s.spop1)
 	c:RegisterEffect(e1)
-	--Special summon
+	--Special Summon 1 monster from your Deck in Defense Position
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)

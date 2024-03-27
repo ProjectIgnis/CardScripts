@@ -36,7 +36,7 @@ function Maximum.AddProcedure(c,desc,...)
 	else
 		e1:SetDescription(1079) --to update, it is the pendulum value. 179 seem free?
 	end
-	e1:SetCode(EFFECT_SPSUMMON_PROC_G)
+	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(Maximum.Condition(mats))
@@ -133,9 +133,12 @@ function Maximum.Operation(mats)
 			tc:RegisterFlagEffect(FLAG_MAXIMUM_SIDE,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD,0,1)
 			tc:RegisterFlagEffect(FLAG_MAXIMUM_SIDE_PREONFIELD,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD-RESET_TOGRAVE-RESET_LEAVE,0,1)
 		end
-		sg:Merge((tg+c))
 		g=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
 		Duel.SendtoGrave(g,REASON_RULE)
+		Duel.MoveToField(c,tp,tp,LOCATION_MZONE,POS_FACEUP_ATTACK,true)
+		for tc in aux.Next(tg) do
+			Duel.MoveToField(tc,tp,tp,LOCATION_MZONE,POS_FACEUP_ATTACK,true)
+		end
 	end
 end
 function Maximum.centerCon(e)

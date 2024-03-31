@@ -23,6 +23,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.HintSelection(tg,true)
 		local tc=tg:GetFirst()
 		--Inflict piercing damage
-		tc:AddPiercing(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,e:GetHandler())
+		tc:AddPiercing(RESETS_STANDARD_PHASE_END,e:GetHandler())
 	end
 end

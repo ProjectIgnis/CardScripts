@@ -26,7 +26,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		--Effect
 		local c=e:GetHandler()
 		if c:IsFaceup() and c:IsRelateToEffect(e) then
-			c:UpdateLevel(1,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,c)
+			c:UpdateLevel(1,RESETS_STANDARD_PHASE_END,c)
 		end
 	end
 end

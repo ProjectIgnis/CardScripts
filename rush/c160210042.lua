@@ -55,7 +55,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 			e2:SetValue(aux.indoval)
-			e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,2)
+			e2:SetReset(RESETS_STANDARD_PHASE_END,2)
 			c:RegisterEffect(e2)
 		end
 	end

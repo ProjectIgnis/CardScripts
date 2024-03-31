@@ -25,7 +25,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if ct:IsRace(RACE_SPELLCASTER) and (not Duel.IsPlayerAffectedByEffect(tp,FLAG_NO_TRIBUTE)) and e:GetHandler():CanBeDoubleTribute(FLAG_DOUBLE_TRIB_DARK,FLAG_DOUBLE_TRIB_SPELLCASTER) then
 		--double tribute
 		local c=e:GetHandler()
-		c:AddDoubleTribute(id,s.otfilter,s.eftg,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,FLAG_DOUBLE_TRIB_DARK+FLAG_DOUBLE_TRIB_SPELLCASTER)
+		c:AddDoubleTribute(id,s.otfilter,s.eftg,RESETS_STANDARD_PHASE_END,FLAG_DOUBLE_TRIB_DARK+FLAG_DOUBLE_TRIB_SPELLCASTER)
 	end
 end
 function s.otfilter(c,tp)

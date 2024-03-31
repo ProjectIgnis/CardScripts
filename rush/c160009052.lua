@@ -37,7 +37,7 @@ function s.trop(e,tp,eg,ep,ev,re,r,rp)
 		local c=e:GetHandler()
 		for tc in tg:Iter() do
 			-- Treat as 2 tributes
-			tc:AddDoubleTribute(id,s.otfilter,s.eftg,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,FLAG_DOUBLE_TRIB)
+			tc:AddDoubleTribute(id,s.otfilter,s.eftg,RESETS_STANDARD_PHASE_END,FLAG_DOUBLE_TRIB)
 		end
 	end
 	if Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.damfilter),tp,LOCATION_MZONE,0,1,nil) then

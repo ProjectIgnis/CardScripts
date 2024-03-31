@@ -41,6 +41,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
 		e1:SetValue(400)
 		tc:RegisterEffect(e1)
-		tc:AddPiercing(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		tc:AddPiercing(RESETS_STANDARD_PHASE_END)
 	end
 end

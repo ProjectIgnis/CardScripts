@@ -31,7 +31,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			Duel.HintSelection(g)
 			local tc=g:GetFirst()
 			--decrease level by 2
-			tc:UpdateLevel(-2,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,c)
+			tc:UpdateLevel(-2,RESETS_STANDARD_PHASE_END,c)
 		end
 	end
 end

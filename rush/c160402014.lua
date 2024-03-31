@@ -36,14 +36,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.HintSelection(g1)
 		local c=e:GetHandler()
 		for tc in g1:Iter() do
-			tc:UpdateLevel(2,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,c)
+			tc:UpdateLevel(2,RESETS_STANDARD_PHASE_END,c)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 			e1:SetRange(LOCATION_MZONE)
 			e1:SetValue(500)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
 			tc:RegisterEffect(e1)
 		end
 	end

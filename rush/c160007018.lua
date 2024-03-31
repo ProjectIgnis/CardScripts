@@ -33,7 +33,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 		if #g>0 then
 			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
-			c:UpdateLevel(5,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,c)
+			c:UpdateLevel(5,RESETS_STANDARD_PHASE_END,c)
 		end
 	end
 end

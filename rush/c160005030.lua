@@ -38,7 +38,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_SET_BASE_ATTACK)
 			e1:SetValue(0)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
 			dg:GetFirst():RegisterEffect(e1)
 		end
 	end

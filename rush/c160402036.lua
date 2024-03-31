@@ -33,7 +33,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.HintSelection(g2,true)
 		local c=e:GetHandler()
 		for tc in g2:Iter() do
-			tc:AddPiercing(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,e:GetHandler())
+			tc:AddPiercing(RESETS_STANDARD_PHASE_END,e:GetHandler())
 		end
 		local sg=g2:Filter(Card.IsCode,nil,CARD_TRANSAMU_RAINAC)
 		local dg=Duel.GetMatchingGroup(s.posfilter,tp,0,LOCATION_MZONE,nil)

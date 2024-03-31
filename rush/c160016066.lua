@@ -57,7 +57,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetDescription(3060)
 				e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT+EFFECT_FLAG_SET_AVAILABLE)
 				e1:SetRange(LOCATION_ONFIELD)
-				e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
+				e1:SetReset(RESETS_STANDARD_PHASE_END)
 				e1:SetValue(aux.indoval)
 				tc:RegisterEffect(e1)
 			end

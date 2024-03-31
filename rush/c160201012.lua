@@ -41,6 +41,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Group.FromCards(tc1,tc2)
 	Duel.HintSelection(g,true)
 	for tc in g:Iter() do
-		tc:AddPiercing(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,e:GetHandler())
+		tc:AddPiercing(RESETS_STANDARD_PHASE_END,e:GetHandler())
 	end
 end

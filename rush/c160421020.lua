@@ -56,7 +56,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			local ag=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(Card.IsLevelAbove,5),tp,0,LOCATION_MZONE,nil)
 			if #ag>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 				for tc in ag:Iter() do
-					tc:UpdateLevel(-4,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,c)
+					tc:UpdateLevel(-4,RESETS_STANDARD_PHASE_END,c)
 				end
 			end
 		end

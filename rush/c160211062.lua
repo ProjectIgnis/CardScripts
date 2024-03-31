@@ -38,7 +38,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.HintSelection(g)
 	if #g>0 and Duel.ChangePosition(g,POS_FACEUP_DEFENSE,POS_FACEDOWN_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)>0 then
 		local c=e:GetHandler()
-		c:AddPiercing(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
+		c:AddPiercing(RESETS_STANDARD_PHASE_END)
 		if Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,CARD_SEVENS_ROAD_MAGICIAN) then
 			--Cannot be destroyed by card effects
 			local e1=Effect.CreateEffect(c)
@@ -47,7 +47,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetDescription(3001)
 			e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE|EFFECT_FLAG_CANNOT_DISABLE|EFFECT_FLAG_CLIENT_HINT)
 			e1:SetRange(LOCATION_MZONE)
-			e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
 			e1:SetValue(1)
 			c:RegisterEffect(e1)
 		end

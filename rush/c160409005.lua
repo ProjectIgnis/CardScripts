@@ -35,7 +35,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.HintSelection(g)
 		local tc=g:GetFirst()
 		--decrease level by 3
-		tc:UpdateLevel(-3,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,c)
+		tc:UpdateLevel(-3,RESETS_STANDARD_PHASE_END,c)
 		--Increase ATK
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -48,7 +48,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_CHANGE_CODE)
 			e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-			e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
+			e2:SetReset(RESETS_STANDARD_PHASE_END)
 			e2:SetValue(CARD_TRANSAMU_RAINAC)
 			c:RegisterEffect(e2)
 		end

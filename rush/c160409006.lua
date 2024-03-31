@@ -65,7 +65,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 			e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE|EFFECT_FLAG_CLIENT_HINT)
 			e3:SetValue(s.indval)
-			e3:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
+			e3:SetReset(RESETS_STANDARD_PHASE_END)
 			c:RegisterEffect(e3)
 			--attack twice
 			local e4=Effect.CreateEffect(c)
@@ -74,7 +74,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE|EFFECT_FLAG_CLIENT_HINT)
 			e4:SetCode(EFFECT_EXTRA_ATTACK)
 			e4:SetValue(1)
-			e4:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
+			e4:SetReset(RESETS_STANDARD_PHASE_END)
 			c:RegisterEffect(e4)
 		end
 	end

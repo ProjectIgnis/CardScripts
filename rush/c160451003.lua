@@ -38,7 +38,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(1000)
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		g:GetFirst():RegisterEffect(e1)
 		--Effect
 		local e2=Effect.CreateEffect(c)
@@ -47,7 +47,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e2:SetValue(1)
-		e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		g:GetFirst():RegisterEffect(e2)
 	end
 end

@@ -34,7 +34,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-600)
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e1)
 		local res=Duel.TossCoin(tp,1)
 		if res==COIN_HEADS then
@@ -44,7 +44,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 			e2:SetCode(EFFECT_EXTRA_ATTACK)
 			e2:SetValue(2)
-			e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
+			e2:SetReset(RESETS_STANDARD_PHASE_END)
 			c:RegisterEffect(e2)
 		elseif res==COIN_TAILS then
 			--Can make up to 2 attacks on monsters
@@ -58,7 +58,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e3:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_PHASE|PHASE_END)
 			c:RegisterEffect(e3)
 			--Piercing
-			c:AddPiercing(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
+			c:AddPiercing(RESETS_STANDARD_PHASE_END)
 		end
 	end
 end

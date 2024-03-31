@@ -36,7 +36,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 			e1:SetValue(ct*(-300))
 			e1:SetRange(LOCATION_MZONE)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
 			tc:RegisterEffect(e1)
 		end
 		if Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_STZONE,1,nil)

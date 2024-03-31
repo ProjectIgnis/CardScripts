@@ -47,6 +47,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 		e2:SetValue(aux.indoval)
 		e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,2)
-		c:RegisterEffectRush(e2)
+		c:RegisterEffect(e2)
 	end
 end

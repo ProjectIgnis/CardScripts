@@ -1,5 +1,5 @@
 --魔将気流
---Fiendish Commander Current
+--Ruler's Current
 local s,id=GetID()
 function s.initial_effect(c)
 	--Increase ATK
@@ -40,7 +40,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(g:GetFirst():GetBaseDefense())
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			g:GetFirst():RegisterEffectRush(e1)
+			g:GetFirst():RegisterEffect(e1)
 		end
 	end
 end

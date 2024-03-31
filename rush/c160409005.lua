@@ -32,7 +32,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 	if #g>0 then
-		Duel.HintSelection(g,true)
+		Duel.HintSelection(g)
 		local tc=g:GetFirst()
 		--decrease level by 3
 		tc:UpdateLevel(-3,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,c)
@@ -50,7 +50,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 			e2:SetValue(CARD_TRANSAMU_RAINAC)
-			c:RegisterEffectRush(e2)
+			c:RegisterEffect(e2)
 		end
 	end
 end

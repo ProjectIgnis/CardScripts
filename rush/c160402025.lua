@@ -1,5 +1,5 @@
 --斬奏のプレクトクライム
---Prectclimb of the Deadly Dirge
+--Prectcrime of the Deadly Dirge
 local s,id=GetID()
 function s.initial_effect(c)
 	--Add 1 Equip Spell card to hand
@@ -41,6 +41,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(400)
 		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
-		c:RegisterEffectRush(e1)
+		c:RegisterEffect(e1)
 	end
 end

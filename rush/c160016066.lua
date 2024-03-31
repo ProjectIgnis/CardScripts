@@ -48,7 +48,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_APPLYTO)
 		local g2=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_ONFIELD,0,1,3,c)
 		if #g2>0 then
-			Duel.HintSelection(g2,true)
+			Duel.HintSelection(g2)
 			for tc in g2:Iter() do
 				--Protection
 				local e1=Effect.CreateEffect(c)
@@ -59,7 +59,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetRange(LOCATION_ONFIELD)
 				e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 				e1:SetValue(aux.indoval)
-				tc:RegisterEffectRush(e1)
+				tc:RegisterEffect(e1)
 			end
 		end
 	end

@@ -49,10 +49,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				e3:SetCode(EFFECT_UPDATE_ATTACK)
 				e3:SetValue(d*100)
 				e3:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
-				tc:RegisterEffectRush(e3)
+				tc:RegisterEffect(e3)
 				local e4=e3:Clone()
 				e4:SetCode(EFFECT_UPDATE_DEFENSE)
-				tc:RegisterEffectRush(e4)
+				tc:RegisterEffect(e4)
 			end
 		end
 	end

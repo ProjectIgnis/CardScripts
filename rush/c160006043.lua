@@ -1,4 +1,5 @@
--- アゲインスト・バスター Against Buster
+-- アゲインスト・バスター 
+--Against Buster
 local s,id=GetID()
 function s.initial_effect(c)
 	--Increase ATK
@@ -29,7 +30,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-500)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		tc:RegisterEffectRush(e1)
+		tc:RegisterEffect(e1)
 		if Duel.IsExistingMatchingCard(Card.IsSpellTrap,tp,0,LOCATION_ONFIELD,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)

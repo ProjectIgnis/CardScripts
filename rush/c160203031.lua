@@ -1,5 +1,5 @@
 --幻刃奥義－突陥攻事
---Mythic Sword Secret Technique - High Speed Demolition
+--Constructor Art - Buildestruction
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -32,11 +32,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(600)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		tc:RegisterEffectRush(e1)
+		tc:RegisterEffect(e1)
 	end
 	local g2=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(s.filter2),tp,0,LOCATION_MZONE,nil)
-	if #g2==0 then return end
-	if Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+	if #g2>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		for tc in g2:Iter() do
 		--Decrease ATK
 			local e2=Effect.CreateEffect(c)
@@ -44,7 +43,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetCode(EFFECT_UPDATE_ATTACK)
 			e2:SetValue(-1200)
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			tc:RegisterEffectRush(e2)
+			tc:RegisterEffect(e2)
 		end
 	end
 end

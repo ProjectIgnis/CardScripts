@@ -32,7 +32,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-1000000)
 		e1:SetReset(RESETS_STANDARD_PHASE_END)
-		tc:RegisterEffectRush(e1)
+		tc:RegisterEffect(e1)
 	end
 	if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsDefense,0),tp,LOCATION_MZONE,0,1,nil) and d and d:IsRelateToBattle() and d:IsFaceup() then
 		local e2=Effect.CreateEffect(e:GetHandler())
@@ -40,6 +40,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_UPDATE_ATTACK)
 		e2:SetValue(100)
 		e2:SetReset(RESETS_STANDARD_PHASE_END)
-		d:RegisterEffectRush(e2)
+		d:RegisterEffect(e2)
 	end
 end

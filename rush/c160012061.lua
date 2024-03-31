@@ -37,7 +37,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-200)
 		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
-		a:RegisterEffectRush(e1)
+		a:RegisterEffect(e1)
 		local dg=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_MZONE,nil)
 		local sg=Duel.GetMatchingGroup(s.cfilter2,tp,LOCATION_MZONE,0,nil)
 		if #sg==3 and #dg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then

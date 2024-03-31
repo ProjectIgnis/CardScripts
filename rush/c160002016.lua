@@ -17,8 +17,11 @@ s.listed_names={CARD_SEVENS_ROAD_MAGICIAN}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) end
 end
+function s.filter(c)
+	return c:IsFaceup() and c:IsLevelAbove(7) and c:IsNotMaximumModeSide()
+end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsLevelAbove,7),tp,0,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil) end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -26,7 +29,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.DiscardDeck(tp,1,REASON_COST)>0 then
 		--Effect
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
-		local g=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsLevelAbove,7),tp,0,LOCATION_MZONE,1,1,nil)
+		local g=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil)
 		if #g==0 then return end
 		Duel.HintSelection(g)
 		local tc=g:GetFirst()
@@ -36,7 +39,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(-400)
-		tc:RegisterEffectRush(e1)
+		tc:RegisterEffect(e1)
 		local ct=Duel.GetMatchingGroupCount(Card.IsRace,tp,LOCATION_GRAVE,0,nil,RACE_SPELLCASTER)
 		if ct>0 and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_SEVENS_ROAD_MAGICIAN),tp,LOCATION_MZONE,0,1,nil) then
 			local e2=Effect.CreateEffect(c)
@@ -44,7 +47,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetCode(EFFECT_UPDATE_ATTACK)
 			e2:SetReset(RESETS_STANDARD_PHASE_END)
 			e2:SetValue(-100*ct)
-			tc:RegisterEffectRush(e2)
+			tc:RegisterEffect(e2)
 		end
 	end
 end

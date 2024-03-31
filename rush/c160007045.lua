@@ -1,5 +1,5 @@
--- シェイプ・オブ・アクア
--- Shape of Aqua
+--シェイプ・オブ・アクア
+--Shape of Aqua
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -35,7 +35,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
-		Duel.HintSelection(g)
 		if #g>0 then
 			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 			--lose atk
@@ -46,7 +45,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
 			e1:SetValue(-800)
-			tc:RegisterEffectRush(e1)
+			tc:RegisterEffect(e1)
 		end
 	end
 end

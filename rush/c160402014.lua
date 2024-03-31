@@ -1,5 +1,5 @@
--- 星戦騎ペリュオン
--- Pelion the Star Knight
+--星戦騎ペリュオン
+--Pelion the Star Knight
 local s,id=GetID()
 function s.initial_effect(c)
 	--Increase Level by 2
@@ -33,7 +33,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g2=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.filter),tp,0,LOCATION_MZONE,1,1,nil)
 	g1:Merge(g2)
 	if #g1>0 then
-		Duel.HintSelection(g1,true)
+		Duel.HintSelection(g1)
 		local c=e:GetHandler()
 		for tc in g1:Iter() do
 			tc:UpdateLevel(2,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,c)
@@ -44,7 +44,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetRange(LOCATION_MZONE)
 			e1:SetValue(500)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			tc:RegisterEffectRush(e1)
+			tc:RegisterEffect(e1)
 		end
 	end
 end

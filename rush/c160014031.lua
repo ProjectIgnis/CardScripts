@@ -57,7 +57,7 @@ function s.operation(oldtg,oldop)
 		e1:SetCode(EFFECT_CHANGE_CODE)
 		e1:SetValue(28279543)
 		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
-		c:RegisterEffectRush(e1)
+		c:RegisterEffect(e1)
 		if oldtg(e,tp,eg,ep,ev,re,r,rp,0) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.BreakEffect()
 			oldop(e,tp,eg,ep,ev,re,r,rp)

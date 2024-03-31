@@ -1,12 +1,12 @@
--- メタリオン・キングコブラスター
--- Metallion King Cobrastar
--- Scripted by Hatter
+--メタリオン・キングコブラスター
+--Metallion King Cobrastar
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	-- "Imaginary Actor" + "Snake Clown" 
+	--"Imaginary Actor" + "Snake Clown" 
 	Fusion.AddProcMix(c,true,true,CARD_IMAGINARY_ACTOR,160008002)
-	-- Draw
+	--Draw
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DRAW+CATEGORY_HANDES)
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.drtg)
 	e1:SetOperation(s.drop)
 	c:RegisterEffect(e1)
-	-- Reduce ATK/DEF
+	--Reduce ATK/DEF
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
@@ -78,10 +78,10 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-1000)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		tc:RegisterEffectRush(e1)
+		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UPDATE_DEFENSE)
-		tc:RegisterEffectRush(e2)
+		tc:RegisterEffect(e2)
 	end
 	-- Can attack twice
 	local e1=Effect.CreateEffect(c)
@@ -91,5 +91,5 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_EXTRA_ATTACK)
 	e1:SetValue(1)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-	c:RegisterEffectRush(e1)
+	c:RegisterEffect(e1)
 end

@@ -47,7 +47,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetCode(EFFECT_UPDATE_ATTACK)
 			e2:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_PHASE|PHASE_END)
 			e2:SetValue(ct*100)
-			c:RegisterEffectRush(e2)
+			c:RegisterEffect(e2)
 		end
 	end
 end

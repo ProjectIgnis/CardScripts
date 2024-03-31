@@ -1,5 +1,5 @@
--- Fantasia Strike Dragon Miragiastar F
- -- 朧撃龍ミラギアスターＦ
+--朧撃龍ミラギアスターＦ
+--Fantasia Strike Dragon Miragiastar F
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -51,7 +51,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 					e1:SetCode(EFFECT_UPDATE_ATTACK)
 					e1:SetValue(-1500)
 					e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-					tc:RegisterEffectRush(e1)
+					tc:RegisterEffect(e1)
 				end
 				--Attack up to twice
 				local e2=Effect.CreateEffect(c)

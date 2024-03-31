@@ -28,7 +28,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_APPLYTO)
 	local g=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsRace,RACE_CYBERSE),tp,LOCATION_MZONE,0,1,1,nil)
-	Duel.HintSelection(g,true)
+	Duel.HintSelection(g)
 	local tc=g:GetFirst()
 	--Effect
 	local e1=Effect.CreateEffect(c)
@@ -45,5 +45,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e2:SetValue(aux.indoval)
 	e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
-	tc:RegisterEffectRush(e2)
+	tc:RegisterEffect(e2)
 end

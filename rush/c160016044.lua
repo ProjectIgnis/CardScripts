@@ -38,7 +38,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_PHASE|PHASE_END)
 		e1:SetValue(atk)
-		c:RegisterEffectRush(e1)
+		c:RegisterEffect(e1)
 		if c:GetEquipCount()>0 then
 			--Cannot be destroyed by card effects
 			local e2=Effect.CreateEffect(c)

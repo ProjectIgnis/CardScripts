@@ -17,7 +17,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp,chk)
 	return ep==1-tp
 end
 function s.filter(c)
-	return c:IsType(TYPE_NORMAL) and c:IsRace(RACE_GALAXY) and c:IsFaceup()
+	return c:IsType(TYPE_NORMAL) and c:IsRace(RACE_GALAXY) and c:IsFaceup() and c:IsNotMaximumModeSide()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) end
@@ -34,5 +34,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	e1:SetValue(ct*500)
-	tc:RegisterEffectRush(e1)
+	tc:RegisterEffect(e1)
 end

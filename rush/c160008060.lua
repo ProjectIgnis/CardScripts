@@ -45,18 +45,16 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 			local tc2=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.filter),tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
-			if tc2 then
-				--Increase its ATK/DEF by 500
-				local e1=Effect.CreateEffect(e:GetHandler())
-				e1:SetType(EFFECT_TYPE_SINGLE)
-				e1:SetCode(EFFECT_UPDATE_ATTACK)
-				e1:SetValue(500)
-				e1:SetReset(RESETS_STANDARD_PHASE_END)
-				tc2:RegisterEffectRush(e1)
-				local e2=e1:Clone()
-				e2:SetCode(EFFECT_UPDATE_DEFENSE)
-				tc2:RegisterEffectRush(e2)
-			end
+			--Increase its ATK/DEF by 500
+			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_UPDATE_ATTACK)
+			e1:SetValue(500)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
+			tc2:RegisterEffect(e1)
+			local e2=e1:Clone()
+			e2:SetCode(EFFECT_UPDATE_DEFENSE)
+			tc2:RegisterEffect(e2)
 		end
 	end
 end

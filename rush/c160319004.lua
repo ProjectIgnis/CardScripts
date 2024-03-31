@@ -49,7 +49,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CHANGE_CODE)
 	e1:SetValue(CARD_BLUEEYES_W_DRAGON)
 	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
-	c:RegisterEffectRush(e1)
+	c:RegisterEffect(e1)
 	--Treat as 2 materials for the summon of "Blue-Eyes Ultimate Dragon"
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)

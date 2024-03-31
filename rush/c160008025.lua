@@ -1,4 +1,4 @@
---Zapzap Octospark
+--Zap Zap Octospark
 --バチバチ・オクトスパーク
 local s,id=GetID()
 function s.initial_effect(c)
@@ -22,8 +22,6 @@ function s.thfilter(c)
 	return c:IsCode(160006045) and c:IsAbleToHand()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	-- Requirement
-	
 	-- Effect
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
@@ -33,7 +31,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
 		e1:SetValue(400)
-		c:RegisterEffectRush(e1)
+		c:RegisterEffect(e1)
 		Duel.Damage(1-tp,400,REASON_EFFECT)
 	end
 end

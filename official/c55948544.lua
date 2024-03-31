@@ -30,7 +30,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local op=e:GetLabel()
-		local c=e:GetHandler()
+	local c=e:GetHandler()
 	if op==1 and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,81332143)
 		and not Duel.HasFlagEffect(tp,id) then
 		--If "Yu-Jo Friendship" is in your GY

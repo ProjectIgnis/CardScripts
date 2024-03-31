@@ -1,5 +1,5 @@
 --烙印喪失
---Branded Forfeiture
+--Branded Loss
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -7,8 +7,8 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TODECK+CATEGORY_SPECIAL_SUMMON)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(s.target)
@@ -30,22 +30,22 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return aux.SelectUnselectGroup(rg,e,tp,2,2,s.rescon,0) end
 	local tg=aux.SelectUnselectGroup(rg,e,tp,2,2,s.rescon,1,tp,HINTMSG_TODECK)
 	Duel.SetTargetCard(tg)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,tg,2,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,tg,2,tp,0)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,PLAYER_EITHER,LOCATION_EXTRA)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetTargetCards(e)
 	if #tg>0 then
 		Duel.SendtoDeck(tg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
-	--Each player can Special Summon 1 Fusion that lists "Fallen of Albaz" as material
+	--During the End Phase of this turn, each player can Special Summon 1 Fusion Monster that mentions "Fallen of Albaz" as material from their own Extra Deck
 	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_PHASE+PHASE_END)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.spcon)
 	e1:SetOperation(s.spop)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.spfilter(c,e)
@@ -62,9 +62,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local step=turn_p==0 and 1 or -1
 	for p=turn_p,1-turn_p,step do
 		if g:IsExists(Card.IsControler,1,nil,p) and Duel.SelectYesNo(p,aux.Stringid(id,1)) then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-			local sg=g:Filter(Card.IsControler,nil,p):Select(p,1,1,nil)
-			if #sg>0 then Duel.SpecialSummon(sg,0,p,p,false,false,POS_FACEUP) end
+			Duel.Hint(HINT_SELECTMSG,p,HINTMSG_SPSUMMON)
+			local sc=g:Filter(Card.IsControler,nil,p):Select(p,1,1,nil):GetFirst()
+			if sc then
+				Duel.SpecialSummonStep(sc,0,p,p,false,false,POS_FACEUP)
+			end
 		end
 	end
+	Duel.SpecialSummonComplete()
 end

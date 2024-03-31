@@ -30,7 +30,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.IsExistingMatchingCard(nil,tp,LOCATION_MZONE,LOCATION_MZONE,1,c) end
 	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_MZONE,LOCATION_MZONE,c)
-	local _,atk=g:GetMaxGroup(Card.GetAttack)
+	local _,atk=g:GetMaxGroup(Card.GetTextAttack)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,tp,0)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,atk)
 end
@@ -45,7 +45,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if atk<=0 then return end
 	local dam=Duel.Damage(1-tp,atk,REASON_EFFECT)
 	if dam>0 and c:IsFaceup() and c:IsRelateToEffect(e) then
-		--This card's ATK becomes equal to the damage inflicted
+		--This card's ATK becomes equal to the damage inflicted to your opponent
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)

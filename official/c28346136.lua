@@ -58,7 +58,7 @@ function s.cannottgop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 		e1:SetValue(aux.tgoval)
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,ct)
+		e1:SetReset(RESETS_STANDARD_PHASE_END,ct)
 		tc:RegisterEffect(e1)
 	end
 end

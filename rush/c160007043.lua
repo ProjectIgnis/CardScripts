@@ -1,5 +1,5 @@
---五家の加護 Goka no Kago (Aegis of the Five Houses)
-
+--五家の加護
+--Five Types of Assistance
 local s,id=GetID()
 function s.initial_effect(c)
 	-- activate
@@ -18,7 +18,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.filter(c)
-	return c:IsFaceup() and not c:IsMaximumModeSide()
+	return c:IsFaceup() and c:IsNotMaximumModeSide()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) end
@@ -36,8 +36,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 		e2:SetValue(s.efilter)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		tc:RegisterEffectRush(e2)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
+		tc:RegisterEffect(e2)
 	end
 end
 function s.efilter(e,re,rp)

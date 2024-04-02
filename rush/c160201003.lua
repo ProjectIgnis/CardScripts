@@ -1,6 +1,5 @@
 --ゆるしま仙女
---Forgiving Immortal
-
+--Yurushima Sage
 local s,id=GetID()
 function s.initial_effect(c)
 	--Change 1 of opponent's attack position monsters to defense position
@@ -26,21 +25,18 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	--Requirement
-	if Duel.ChangePosition(e:GetHandler(),POS_FACEUP_DEFENSE,0,POS_FACEUP_ATTACK,0)~=0 then
-		--Effect
-		if c:IsRelateToEffect(e) and c:IsFaceup() then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-			local tc=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
-			Duel.HintSelection(Group.FromCards(tc))
-			if tc then
-				Duel.ChangePosition(tc,POS_FACEUP_DEFENSE)
-				local e1=Effect.CreateEffect(c)
-				e1:SetType(EFFECT_TYPE_SINGLE)
-				e1:SetCode(EFFECT_UPDATE_DEFENSE)
-				e1:SetValue(-600)
-				e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-				tc:RegisterEffectRush(e1)
-			end
-		end
+	if Duel.ChangePosition(e:GetHandler(),POS_FACEUP_DEFENSE,0,POS_FACEUP_ATTACK,0)==0 then return end
+	--Effect
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
+	if tc then
+		Duel.HintSelection(tc)
+		Duel.ChangePosition(tc,POS_FACEUP_DEFENSE)
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_DEFENSE)
+		e1:SetValue(-600)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
+		tc:RegisterEffect(e1)
 	end
 end

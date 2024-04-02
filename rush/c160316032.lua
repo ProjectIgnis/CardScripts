@@ -29,11 +29,14 @@ end
 function s.filter(c)
 	return c:IsLocation(LOCATION_GRAVE) and c:IsRace(RACE_PYRO) and c:IsMonster()
 end
+function s.atkfilter(c)
+	return c:IsFaceup() and c:IsLevelBelow(8) and c:IsNotMaximumModeSide()
+end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 	if Duel.DiscardDeck(tp,3,REASON_EFFECT)~=3 then return end
 	local ct=Duel.GetOperatedGroup():FilterCount(s.filter,nil)
-	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsLevelBelow,8),tp,0,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(s.atkfilter,tp,0,LOCATION_MZONE,nil)
 	if ct>0 and #g>0 then
 		local c=e:GetHandler()
 		for tc in g:Iter() do
@@ -41,8 +44,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(-400*ct)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			tc:RegisterEffectRush(e1)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
+			tc:RegisterEffect(e1)
 		end
 	end
 end

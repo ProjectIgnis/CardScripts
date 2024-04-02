@@ -20,10 +20,6 @@ function s.rvlfilter(c)
 end
 function s.damcst(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.rvlfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
-	local tc=Duel.SelectMatchingCard(tp,s.rvlfilter,tp,LOCATION_HAND,0,1,1,nil)
-	Duel.ConfirmCards(1-tp,tc)
-	Duel.ShuffleHand(tp)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetMatchingGroupCountRush(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)>0 end
@@ -33,9 +29,15 @@ function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,ct*200)
 end
 function s.mfilter(c)
-	return c:IsFaceup() and not c:IsAttribute(ATTRIBUTE_LIGHT)
+	return c:IsFaceup() and not c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsNotMaximumModeSide()
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
+	--Requirement
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
+	local tc=Duel.SelectMatchingCard(tp,s.rvlfilter,tp,LOCATION_HAND,0,1,1,nil)
+	Duel.ConfirmCards(1-tp,tc)
+	Duel.ShuffleHand(tp)
+	--Effect
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 	local ct=Duel.GetMatchingGroupCountRush(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 	Duel.Damage(p,ct*200,REASON_EFFECT)
@@ -49,8 +51,8 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
 			e1:SetValue(ATTRIBUTE_LIGHT)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			g:GetFirst():RegisterEffectRush(e1)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
+			g:GetFirst():RegisterEffect(e1)
 		end
 	end
 end

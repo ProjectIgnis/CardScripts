@@ -23,7 +23,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(Card.IsFaceup),tp,0,LOCATION_MZONE,1,nil) end
 end
 function s.sfilter(c)
 	return c:IsCode(76103675,160301014) and c:IsSSetable()
@@ -39,15 +39,15 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		-- Effect
 		if c:IsRelateToEffect(e) and c:IsFaceup() then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-			local g=Duel.SelectMatchingCard(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
+			local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(Card.IsFaceup),tp,0,LOCATION_MZONE,1,1,nil)
 			if #g>0 then
 				Duel.HintSelection(g)
 				local e1=Effect.CreateEffect(c)
 				e1:SetType(EFFECT_TYPE_SINGLE)
 				e1:SetCode(EFFECT_UPDATE_ATTACK)
 				e1:SetValue(-500)
-				e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-				g:GetFirst():RegisterEffectRush(e1)
+				e1:SetReset(RESETS_STANDARD_PHASE_END)
+				g:GetFirst():RegisterEffect(e1)
 			end
 			-- Set cards
 			local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)

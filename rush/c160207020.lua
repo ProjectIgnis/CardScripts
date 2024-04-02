@@ -43,18 +43,17 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,1,nil)
-	if g and Duel.SendtoGrave(g,REASON_COST)>0 then
-		--Effect
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-		local g=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil)
-		if #g>0 then
-			Duel.HintSelection(g,true)
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetValue(g:GetFirst():GetAttack())
-			e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
-			c:RegisterEffectRush(e1)
-		end
+	if Duel.SendtoGrave(g,REASON_COST)<1 then return end
+	--Effect
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+	local g=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil)
+	if #g>0 then
+		Duel.HintSelection(g)
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_ATTACK)
+		e1:SetValue(g:GetFirst():GetAttack())
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
+		c:RegisterEffect(e1)
 	end
 end

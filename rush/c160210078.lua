@@ -27,9 +27,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.DiscardDeck(tp,1,REASON_COST)<1 then return end
 	--Double tribute
 	local c=e:GetHandler()
-	c:AddDoubleTribute(id,s.otfilter,s.eftg,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,FLAG_DOUBLE_TRIB_FIEND)
+	c:AddDoubleTribute(id,s.otfilter,s.eftg,RESETS_STANDARD_PHASE_END,FLAG_DOUBLE_TRIB_FIEND)
 	if Duel.GetFieldGroupCountRush(tp,0,LOCATION_MZONE)>1 then
-		c:UpdateLevel(1,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,c)
+		c:UpdateLevel(1,RESETS_STANDARD_PHASE_END,c)
 	end
 end
 function s.otfilter(c,tp)

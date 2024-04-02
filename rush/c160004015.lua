@@ -44,7 +44,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			Duel.BreakEffect()
 			local temp=Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 			if temp==1 then
-				c:AddPiercing(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
+				c:AddPiercing(RESETS_STANDARD_PHASE_END)
 			end
 		end
 	end

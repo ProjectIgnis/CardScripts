@@ -22,9 +22,6 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.filter),tp,0,LOCATION_MZONE,1,nil) end
 end
-function s.desfilter(c)
-	return c:GetSequence()<5
-end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
@@ -39,13 +36,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 			e1:SetValue(ct*(-300))
 			e1:SetRange(LOCATION_MZONE)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			tc:RegisterEffectRush(e1)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
+			tc:RegisterEffect(e1)
 		end
-		if Duel.IsExistingMatchingCard(s.desfilter,tp,0,LOCATION_SZONE,1,nil)
+		if Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_STZONE,1,nil)
 			and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-			local g=Duel.SelectMatchingCard(tp,s.desfilter,tp,0,LOCATION_SZONE,1,1,nil)
+			local g=Duel.SelectMatchingCard(tp,aux.TRUE,tp,0,LOCATION_STZONE,1,1,nil)
 			Duel.HintSelection(g)
 			Duel.BreakEffect()
 			Duel.Destroy(g,REASON_EFFECT)

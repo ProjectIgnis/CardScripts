@@ -1,6 +1,6 @@
--- プレデター・ガンレオン
--- Predator Gunleon
--- Scripted by Hatter
+--プレデター・ガンレオン
+--Predator Gunleon
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	-- Increase ATK
@@ -37,6 +37,6 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
 		e1:SetValue(atk)
-		c:RegisterEffectRush(e1)
+		c:RegisterEffect(e1)
 	end
 end

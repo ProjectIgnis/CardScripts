@@ -38,7 +38,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_PHASE|PHASE_END)
 		e1:SetValue(atk)
-		c:RegisterEffectRush(e1)
+		c:RegisterEffect(e1)
 		if c:GetEquipCount()>0 then
 			--Cannot be destroyed by card effects
 			local e2=Effect.CreateEffect(c)
@@ -47,7 +47,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetDescription(3001)
 			e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE|EFFECT_FLAG_CANNOT_DISABLE|EFFECT_FLAG_CLIENT_HINT)
 			e2:SetRange(LOCATION_MZONE)
-			e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
+			e2:SetReset(RESETS_STANDARD_PHASE_END)
 			e2:SetValue(1)
 			c:RegisterEffect(e2)
 			--Can make up to 2 attacks on monsters

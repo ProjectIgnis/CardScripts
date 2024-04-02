@@ -1,5 +1,5 @@
--- 虚鋼演機攻流
--- Imaginary Ark Turbo
+--虚鋼演機攻流
+--Imaginary Arc Turbo
 local s,id=GetID()
 function s.initial_effect(c)
 	--Increase ATK
@@ -26,27 +26,26 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,1,e:GetHandler())
-	if Duel.SendtoGrave(g,REASON_COST)~=0 then
-		--Effect
-		local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.filter),tp,LOCATION_MZONE,0,1,1,nil)
-		if #g>0 then
-			Duel.HintSelection(g)
-			local tc=g:GetFirst()
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetValue(500)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			tc:RegisterEffectRush(e1)
-			local ct=Duel.GetMatchingGroupCount(Card.IsCode,tp,LOCATION_GRAVE,0,nil,CARD_IMAGINARY_ACTOR)
-			if ct>0 then
-				local e1=Effect.CreateEffect(c)
-				e1:SetType(EFFECT_TYPE_SINGLE)
-				e1:SetCode(EFFECT_UPDATE_ATTACK)
-				e1:SetValue(1000)
-				e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-				tc:RegisterEffectRush(e1)
-			end
+	if Duel.SendtoGrave(g,REASON_COST)<1 then return end
+	--Effect
+	local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.filter),tp,LOCATION_MZONE,0,1,1,nil)
+	if #g>0 then
+		Duel.HintSelection(g)
+		local tc=g:GetFirst()
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_ATTACK)
+		e1:SetValue(500)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
+		tc:RegisterEffect(e1)
+		local ct=Duel.GetMatchingGroupCount(Card.IsCode,tp,LOCATION_GRAVE,0,nil,CARD_IMAGINARY_ACTOR)
+		if ct>0 then
+			local e2=Effect.CreateEffect(c)
+			e2:SetType(EFFECT_TYPE_SINGLE)
+			e2:SetCode(EFFECT_UPDATE_ATTACK)
+			e2:SetValue(1000)
+			e2:SetReset(RESETS_STANDARD_PHASE_END)
+			tc:RegisterEffect(e2)
 		end
 	end
 end

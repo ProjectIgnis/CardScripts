@@ -26,7 +26,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,2,nil) end
 end
 function s.filter(c)
-	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsFaceup()
+	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsFaceup() and c:IsNotMaximumModeSide()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) end
@@ -46,9 +46,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(atk)
-		tc:RegisterEffectRush(e1)
+		tc:RegisterEffect(e1)
 		--Cannot be destroyed by opponent's card effects
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetDescription(3060)
@@ -56,8 +56,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 		e2:SetValue(s.efilter)
-		e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
-		tc:RegisterEffectRush(e2)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
+		tc:RegisterEffect(e2)
 	end
 end
 function s.efilter(e,te)

@@ -27,21 +27,19 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.DiscardDeck(tp,1,REASON_EFFECT)
 	local g=Duel.GetOperatedGroup()
 	local ct=g:GetFirst()
-	if ct then
-		--If it was a monster, reduce ATK
-		if ct:IsMonster() and ct:IsLocation(LOCATION_GRAVE) and Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-			local dg=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(Card.IsFaceup),tp,0,LOCATION_MZONE,1,1,nil)
-			if #dg>0 then
-				Duel.HintSelection(dg,true)
-				local c=e:GetHandler()
-				local e1=Effect.CreateEffect(c)
-				e1:SetType(EFFECT_TYPE_SINGLE)
-				e1:SetCode(EFFECT_UPDATE_ATTACK)
-				e1:SetValue(-500)
-				e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-				dg:GetFirst():RegisterEffectRush(e1)
-			end
+	--If it was a monster, reduce ATK
+	if ct and ct:IsMonster() and ct:IsLocation(LOCATION_GRAVE) and Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) 
+		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+		local dg=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(Card.IsFaceup),tp,0,LOCATION_MZONE,1,1,nil)
+		if #dg>0 then
+			Duel.HintSelection(dg)
+			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_UPDATE_ATTACK)
+			e1:SetValue(-500)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
+			dg:GetFirst():RegisterEffect(e1)
 		end
 	end
 end

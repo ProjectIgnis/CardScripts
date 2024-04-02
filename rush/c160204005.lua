@@ -30,27 +30,21 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	--requirement
-	if Duel.DiscardDeck(tp,1,REASON_COST)>0 then
-		--effect
-		if c:IsRelateToEffect(e) and c:IsFaceup() then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-			local g=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil)
-			if #g>0 then
-				Duel.HintSelection(g)
-				local e1=Effect.CreateEffect(c)
-				e1:SetType(EFFECT_TYPE_SINGLE)
-				e1:SetCode(EFFECT_UPDATE_ATTACK)
-				e1:SetValue(-500)
-				e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-				g:GetFirst():RegisterEffectRush(e1)
-				local e2=Effect.CreateEffect(c)
-				e2:SetType(EFFECT_TYPE_SINGLE)
-				e2:SetCode(EFFECT_UPDATE_DEFENSE)
-				e2:SetValue(-500)
-				e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-				g:GetFirst():RegisterEffectRush(e2)
-			end
-		end
+	--Requirement
+	if Duel.DiscardDeck(tp,1,REASON_COST)<1 then return end
+	--Effect
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+	local g=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil)
+	if #g>0 then
+		Duel.HintSelection(g)
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_ATTACK)
+		e1:SetValue(-500)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
+		g:GetFirst():RegisterEffect(e1)
+		local e2=e1:Clone()
+		e2:SetCode(EFFECT_UPDATE_DEFENSE)
+		g:GetFirst():RegisterEffect(e2)
 	end
 end

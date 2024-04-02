@@ -22,7 +22,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_GALAXY|RACE_DRAGON|RACE_MACHINE|RACE_SPELLCASTER) 
-		and c:IsAttackAbove(4000) and c:GetBaseAttack()>=4000 and not c:IsMaximumModeSide()
+		and c:IsAttackAbove(4000) and c:GetBaseAttack()>=4000 and c:IsNotMaximumModeSide()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) end
@@ -34,7 +34,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)
 	if #g>0 then
-		Duel.HintSelection(g,true)
+		Duel.HintSelection(g)
 		local tc=g:GetFirst()
 		--Loses 4000 ATK
 		local c=e:GetHandler()
@@ -42,16 +42,16 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-4000)
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
-		tc:RegisterEffectRush(e1)
-		if Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(aux.TRUE),tp,0,LOCATION_ONFIELD,1,nil)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
+		tc:RegisterEffect(e1)
+		if Duel.IsExistingMatchingCard(Card.IsNotMaximumModeSide,tp,0,LOCATION_ONFIELD,1,nil)
 			and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-			local g=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(aux.TRUE),tp,0,LOCATION_ONFIELD,nil)
+			local g=Duel.GetMatchingGroup(Card.IsNotMaximumModeSide,tp,0,LOCATION_ONFIELD,nil)
 			if #g>0 then
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 				sg=g:Select(tp,1,4,nil)
 				sg=sg:AddMaximumCheck()
-				Duel.HintSelection(sg,true)
+				Duel.HintSelection(sg)
 				Duel.Destroy(sg,REASON_EFFECT)
 			end
 		end

@@ -35,7 +35,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		if #g>0 then
 			Duel.HintSelection(g,true)
 			-- Piercing
-			g:GetFirst():AddPiercing(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,e:GetHandler())
+			g:GetFirst():AddPiercing(RESETS_STANDARD_PHASE_END,e:GetHandler())
 		end
 	end
 end

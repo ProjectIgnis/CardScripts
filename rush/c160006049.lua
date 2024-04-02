@@ -1,5 +1,5 @@
 --Ｂ・Ｂ・Ｑ
---Burning Beast Quality
+--B・B・Q
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -19,7 +19,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_GRAVE,0,1,nil) end
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_FIRE)
+	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_FIRE) and c:IsNotMaximumModeSide()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
@@ -38,8 +38,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(#g*100)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			tc:RegisterEffectRush(e1)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
+			tc:RegisterEffect(e1)
 		end
 	end
 end

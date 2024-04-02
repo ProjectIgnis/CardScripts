@@ -16,14 +16,17 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={160010048}
+function s.filter(c)
+	return c:IsFaceup() and c:IsRace(RACE_AQUA) and c:IsNotMaximumModeSide()
+end
 function s.atkcond(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetMatchingGroupCountRush(aux.FaceupFilter(Card.IsRace,RACE_AQUA),tp,LOCATION_MZONE,0,nil)>=3
+	return Duel.GetMatchingGroupCountRush(s.filter,tp,LOCATION_MZONE,0,nil)>=3
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) end
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsRace,RACE_AQUA),tp,LOCATION_MZONE,0,nil)>0 end
+	if chk==0 then return Duel.GetMatchingGroupCount(s.filter,tp,LOCATION_MZONE,0,nil)>0 end
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
 	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,nil,1,tp,0)
 end
@@ -34,7 +37,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	if Duel.DiscardDeck(tp,1,REASON_COST)<1 then return end
 	--effect
-	local g=Duel.GetMatchingGroupRush(aux.FaceupFilter(Card.IsRace,RACE_AQUA),tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroupRush(s.filter,tp,LOCATION_MZONE,0,nil)
 	if #g==0 then return end
 	local c=e:GetHandler()
 	for tc in g:Iter() do
@@ -42,8 +45,8 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(200)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		tc:RegisterEffectRush(e1)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
+		tc:RegisterEffect(e1)
 	end
 	local thg=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_GRAVE,0,nil)
 	if #thg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then

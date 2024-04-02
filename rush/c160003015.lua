@@ -25,7 +25,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) end
 end
 function s.filter(c)
-	return c:IsFaceup() and (c:GetAttack()>0 or c:GetDefense()>0)
+	return c:IsFaceup() and c:IsNotMaximumModeSide()
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -45,14 +45,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(-200)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			g:GetFirst():RegisterEffectRush(e1)
-			local e2=Effect.CreateEffect(c)
-			e2:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
+			g:GetFirst():RegisterEffect(e1)
+			local e2=e1:Clone()
 			e2:SetCode(EFFECT_UPDATE_DEFENSE)
-			e2:SetValue(-200)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			g:GetFirst():RegisterEffectRush(e2)
+			g:GetFirst():RegisterEffect(e2)
 		end
 	end
 end

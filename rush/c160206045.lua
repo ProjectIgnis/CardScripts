@@ -10,11 +10,11 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_EQUIP)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(s.val)
-	c:RegisterEffectRush(e1)
+	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_UPDATE_DEFENSE)
 	e2:SetValue(200)
-	c:RegisterEffectRush(e2)
+	c:RegisterEffect(e2)
 end
 s.listed_names={160206036}
 function s.eqfilter(c)

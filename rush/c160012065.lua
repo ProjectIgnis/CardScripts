@@ -40,25 +40,25 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_GRAVE,0,2,2,nil)
 	Duel.HintSelection(g,true)
-	if #g>0 and Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)>0 then
-		--Effect
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-		local dg=Duel.SelectMatchingCard(tp,s.desfilter,tp,0,LOCATION_MZONE,1,1,nil)
-		dg=dg:AddMaximumCheck()
-		if #dg>0 then
-			Duel.HintSelection(dg,true)
-			if Duel.Destroy(dg,REASON_EFFECT)>0 and Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-				local sg=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(Card.IsFaceup),tp,0,LOCATION_MZONE,1,1,nil)
-				if #sg>0 then
-					Duel.HintSelection(sg,true)
-					local e1=Effect.CreateEffect(e:GetHandler())
-					e1:SetType(EFFECT_TYPE_SINGLE)
-					e1:SetCode(EFFECT_UPDATE_ATTACK)
-					e1:SetValue(-1000)
-					e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,2)
-					sg:GetFirst():RegisterEffectRush(e1)
-				end
+	if Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)<1 then return end
+	--Effect
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+	local dg=Duel.SelectMatchingCard(tp,s.desfilter,tp,0,LOCATION_MZONE,1,1,nil)
+	dg=dg:AddMaximumCheck()
+	if #dg>0 then
+		Duel.HintSelection(dg)
+		if Duel.Destroy(dg,REASON_EFFECT)>0 and Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(Card.IsFaceup),tp,0,LOCATION_MZONE,1,nil) 
+			and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+			local sg=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(Card.IsFaceup),tp,0,LOCATION_MZONE,1,1,nil)
+			if #sg>0 then
+				Duel.HintSelection(sg)
+				local e1=Effect.CreateEffect(e:GetHandler())
+				e1:SetType(EFFECT_TYPE_SINGLE)
+				e1:SetCode(EFFECT_UPDATE_ATTACK)
+				e1:SetValue(-1000)
+				e1:SetReset(RESETS_STANDARD_PHASE_END,2)
+				sg:GetFirst():RegisterEffect(e1)
 			end
 		end
 	end

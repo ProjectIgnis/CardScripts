@@ -21,7 +21,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetMatchingGroupCountRush(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)>1
 end
 function s.attfilter(c)
-	return c:IsFaceup() and not c:IsAttribute(ATTRIBUTE_LIGHT)
+	return c:IsFaceup() and not c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsNotMaximumModeSide()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.attfilter,tp,0,LOCATION_MZONE,1,e:GetHandler()) end
@@ -39,8 +39,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
 			e1:SetValue(ATTRIBUTE_LIGHT)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			tc:RegisterEffectRush(e1,true)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
+			tc:RegisterEffect(e1,true)
 		end
 	end
 end

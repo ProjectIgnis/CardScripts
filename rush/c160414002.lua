@@ -35,7 +35,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 		--double tribute
 		local c=e:GetHandler()
-		c:AddDoubleTribute(id,s.otfilter,s.eftg,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,FLAG_DOUBLE_TRIB_GREYSTORM)
+		c:AddDoubleTribute(id,s.otfilter,s.eftg,RESETS_STANDARD_PHASE_END,FLAG_DOUBLE_TRIB_GREYSTORM)
 	end
 end
 function s.otfilter(c,tp)

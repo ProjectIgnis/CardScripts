@@ -1,9 +1,9 @@
--- 夢中のパピヨン
--- Delirium Papillon
--- Scripted by Hatter
+--夢中のパピヨン
+--Delirium Papillon
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Change 1 monster's Type to Insect
+	--Change 1 monster's Type to Insect
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DRAW)
@@ -22,7 +22,7 @@ function s.rccost(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.rcfilter(c)
-	return c:IsFaceup() and not c:IsRace(RACE_INSECT)
+	return c:IsFaceup() and not c:IsRace(RACE_INSECT) and c:IsNotMaximumModeSide()
 end
 function s.rctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.rcfilter,tp,0,LOCATION_MZONE,1,nil) end
@@ -30,20 +30,20 @@ function s.rctg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.rcop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	-- Requirement
+	--Requirement
 	if Duel.ChangePosition(c,POS_FACEUP_DEFENSE,0,0,0)<1 then return end
-	-- Effect
+	--Effect
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local tc=Duel.SelectMatchingCard(tp,s.rcfilter,tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
 	if not tc then return end
 	Duel.HintSelection(tc,true)
-	-- Change Type
+	--Change Type
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CHANGE_RACE)
 	e1:SetValue(RACE_INSECT)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-	tc:RegisterEffectRush(e1)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
+	tc:RegisterEffect(e1)
 	if not tc:IsImmuneToEffect(e1)
 		and Duel.IsExistingMatchingCard(Card.IsPosition,tp,LOCATION_MZONE,LOCATION_MZONE,1,c,POS_FACEUP_DEFENSE)
 		and Duel.IsPlayerCanDraw(tp,1) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then

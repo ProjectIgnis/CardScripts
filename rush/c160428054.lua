@@ -1,8 +1,8 @@
--- ハイヒー・プリーステス
--- Lady of Pumps
+--ハイヒー・プリーステス
+--Fashion of Faith
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Draw and increase atk of aqua level 7+
+	--Draw and increase atk of aqua level 7+
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DRAW+CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -38,7 +38,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(400)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		tc:RegisterEffectRush(e1)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
+		tc:RegisterEffect(e1)
 	end
 end

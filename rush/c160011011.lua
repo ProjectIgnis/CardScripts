@@ -40,9 +40,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local tc=Duel.SelectMatchingCard(tp,s.thfilter,tp,0,LOCATION_SZONE,1,1,nil)
 	if #tc>0 then
-		Duel.HintSelection(tc,true)
+		Duel.HintSelection(tc)
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
-		if Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+		if Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.filter),tp,0,LOCATION_MZONE,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 			local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.filter),tp,0,LOCATION_MZONE,1,1,nil)
 			if #g>0 then
@@ -52,8 +52,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetType(EFFECT_TYPE_SINGLE)
 				e1:SetCode(EFFECT_UPDATE_ATTACK)
 				e1:SetValue(-2500)
-				e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
-				g:GetFirst():RegisterEffectRush(e1)
+				e1:SetReset(RESETS_STANDARD_PHASE_END)
+				g:GetFirst():RegisterEffect(e1)
 			end
 		end
 	end

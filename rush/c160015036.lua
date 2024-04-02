@@ -22,7 +22,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) end
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:GetTextAttack()>=100 and not c:IsMaximumModeSide()
+	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:GetTextAttack()>=100 and c:IsNotMaximumModeSide()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil) end
@@ -46,11 +46,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-atk)
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
-		tc:RegisterEffectRush(e1)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
+		tc:RegisterEffect(e1)
 		--Negate Continuous Effect
 		if tc:HasContinuousRushEffect() and not tc:HasFlagEffect(FLAG_NEGATE_CONTINUOUS_EFFECT) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-			tc:NegateContinuousRushEffects(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
+			tc:NegateContinuousRushEffects(RESETS_STANDARD_PHASE_END)
 		end
 	end
 end

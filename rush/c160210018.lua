@@ -41,8 +41,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetCode(EFFECT_CHANGE_CODE)
 	e1:SetValue(CARD_HARPIE_LADY)
-	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END|RESET_OPPO_TURN,1)
-	c:RegisterEffectRush(e1)
+	e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN,1)
+	c:RegisterEffect(e1)
 	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil)
 	local sg=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(Card.IsMonster),tp,0,LOCATION_MZONE,nil)
 	if #g==3 and #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
@@ -50,7 +50,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local tg=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(Card.IsMonster),tp,0,LOCATION_MZONE,1,1,nil)
 		if #tg>0 then 
 			tg=tg:AddMaximumCheck()
-			Duel.HintSelection(tg,true)
+			Duel.HintSelection(tg)
 			Duel.Destroy(tg,REASON_EFFECT) 
 		end
 	end

@@ -33,7 +33,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local c=e:GetHandler()
 		if c:IsFaceup() and c:IsRelateToEffect(e) then
 			local ct=Duel.GetMatchingGroupCountRush(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
-			c:UpdateLevel(ct,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,c)
+			c:UpdateLevel(ct,RESETS_STANDARD_PHASE_END,c)
 		end
 		--Prevent non-fiend from attacking
 		local e1=Effect.CreateEffect(e:GetHandler())

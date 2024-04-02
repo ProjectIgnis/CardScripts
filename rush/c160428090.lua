@@ -31,19 +31,17 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	local c=e:GetHandler()
-	if Duel.SendtoGrave(c,REASON_COST)>0 then
-		--Effect
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
-		local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.atkfilter),tp,0,LOCATION_MZONE,1,1,nil)
-		if #g>0 then
-			Duel.HintSelection(g)
-			local tc=g:GetFirst()
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetValue(-1000)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			tc:RegisterEffectRush(e1)
-		end
+	if Duel.SendtoGrave(c,REASON_COST)<1 then return end
+	--Effect
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
+	local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.atkfilter),tp,0,LOCATION_MZONE,1,1,nil)
+	if #g>0 then
+		Duel.HintSelection(g)
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_ATTACK)
+		e1:SetValue(-1000)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
+		g:GetFirst():RegisterEffect(e1)
 	end
 end

@@ -1,5 +1,5 @@
--- Fantasia Strike Dragon Miragiastar F
- -- 朧撃龍ミラギアスターＦ
+--朧撃龍ミラギアスターＦ
+--Fantasia Strike Dragon Miragiastar F
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -50,8 +50,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 					e1:SetType(EFFECT_TYPE_SINGLE)
 					e1:SetCode(EFFECT_UPDATE_ATTACK)
 					e1:SetValue(-1500)
-					e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-					tc:RegisterEffectRush(e1)
+					e1:SetReset(RESETS_STANDARD_PHASE_END)
+					tc:RegisterEffect(e1)
 				end
 				--Attack up to twice
 				local e2=Effect.CreateEffect(c)
@@ -60,7 +60,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 				e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 				e2:SetCode(EFFECT_EXTRA_ATTACK_MONSTER)
 				e2:SetValue(1)
-				e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+				e2:SetReset(RESETS_STANDARD_PHASE_END)
 				c:RegisterEffect(e2)
 			end
 		end
@@ -81,7 +81,7 @@ function s.dirop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_DIRECT_ATTACK)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
 			c:RegisterEffect(e1)
 		end
 	end

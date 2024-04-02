@@ -44,9 +44,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetDescription(3001)
 			e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 			e1:SetRange(LOCATION_MZONE)
-			e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END|RESET_OPPO_TURN,1)
+			e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN,1)
 			e1:SetValue(1)
-			tc:RegisterEffectRush(e1)
+			tc:RegisterEffect(e1)
 		end
 	end
 end

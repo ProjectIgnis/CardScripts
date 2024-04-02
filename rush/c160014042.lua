@@ -19,7 +19,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) end
 end
 function s.filter(c)
-	return c:IsFaceup() and not c:IsMaximumModeSide()
+	return c:IsFaceup() and c:IsNotMaximumModeSide()
 end
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_LIGHT)
@@ -29,9 +29,6 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,nil,1,tp,-600)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_DRAW,nil,1,tp,-600)
-end
-function s.cfilter2(c)
-	return c:IsFaceup() and not c:IsMaximumModeSide()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -47,9 +44,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(atk*-600)
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
-		g:GetFirst():RegisterEffectRush(e1)
-		local sg=Duel.GetMatchingGroup(s.cfilter2,tp,LOCATION_MZONE,0,nil)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
+		g:GetFirst():RegisterEffect(e1)
+		local sg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)
 		if #sg==3 then
 			Duel.Draw(tp,1,REASON_EFFECT)
 		end

@@ -33,25 +33,24 @@ function s.filter(c)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
-	if Duel.DiscardHand(tp,s.cfilter,3,3,REASON_COST+REASON_DISCARD,nil)>0 then
-		--Effect
-		local sg=Duel.GetMatchingGroup(s.tdfilter,tp,0,LOCATION_MZONE,nil)
-		Duel.SendtoDeck(sg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
-		if Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.filter),tp,LOCATION_MZONE,0,1,nil)
-			and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
-			local tc=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.filter),tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
-			if tc then
-				Duel.HintSelection(tc,true)
-				Duel.BreakEffect()
-				-- Update ATK
-				local e1=Effect.CreateEffect(e:GetHandler())
-				e1:SetType(EFFECT_TYPE_SINGLE)
-				e1:SetCode(EFFECT_UPDATE_ATTACK)
-				e1:SetValue(1000)
-				e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
-				tc:RegisterEffectRush(e1)
-			end
+	if Duel.DiscardHand(tp,s.cfilter,3,3,REASON_COST+REASON_DISCARD,nil)<1 then return end
+	--Effect
+	local sg=Duel.GetMatchingGroup(s.tdfilter,tp,0,LOCATION_MZONE,nil)
+	Duel.SendtoDeck(sg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
+	if Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.filter),tp,LOCATION_MZONE,0,1,nil)
+		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
+		local tc=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.filter),tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
+		if tc then
+			Duel.HintSelection(tc)
+			Duel.BreakEffect()
+			-- Update ATK
+			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_UPDATE_ATTACK)
+			e1:SetValue(1000)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
+			tc:RegisterEffect(e1)
 		end
 	end
 end

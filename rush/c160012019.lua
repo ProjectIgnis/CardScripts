@@ -55,7 +55,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
 			e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_PHASE|PHASE_END)
 			e1:SetValue(atk)
-			c:RegisterEffectRush(e1)
+			c:RegisterEffect(e1)
 			--Other monsters cannot attack
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_FIELD)

@@ -38,14 +38,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)>0 then
 		local tc=g:GetFirst()
 		--Cannot be destroyed by opponent's effect
-		local e2=Effect.CreateEffect(e:GetHandler())
-		e2:SetDescription(3060)
-		e2:SetProperty(EFFECT_FLAG_CLIENT_HINT)
-		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-		e2:SetValue(s.efilter)
-		e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
-		tc:RegisterEffectRush(e2)
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3060)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+		e1:SetValue(s.efilter)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
+		tc:RegisterEffect(e1)
 	end
 end
 function s.efilter(e,te)

@@ -28,7 +28,7 @@ function s.thfilter(c)
 	return c:IsRace(RACE_CYBERSE) and c:IsDefense(0) and not c:IsLevel(8) and c:IsAbleToHand()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	-- Requirement
+	--Requirement
 	if Duel.DiscardDeck(tp,1,REASON_COST)<1 then return end
 	--Effect
 	local c=e:GetHandler()
@@ -38,8 +38,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetCode(EFFECT_CHANGE_CODE)
 	e1:SetValue(160211009)
-	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
-	c:RegisterEffectRush(e1)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
+	c:RegisterEffect(e1)
 	if Duel.IsExistingMatchingCard(aux.NecroValleyFilter(s.thfilter),tp,LOCATION_GRAVE,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_GRAVE,0,1,1,nil)

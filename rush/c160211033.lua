@@ -30,7 +30,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(fustg,fusop)
 	return function(e,tp,eg,ep,ev,re,r,rp)
-		-- Requirement
+		--Requirement
 		if Duel.DiscardDeck(tp,1,REASON_COST)<1 then return end
 		--Effect
 		local c=e:GetHandler()
@@ -39,8 +39,8 @@ function s.operation(fustg,fusop)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_CHANGE_CODE)
 		e1:SetValue(39256679)
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
-		c:RegisterEffectRush(e1)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
+		c:RegisterEffect(e1)
 		if fustg(e,tp,eg,ep,ev,re,r,rp,0) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.BreakEffect()
 			fusop(e,tp,eg,ep,ev,re,r,rp)

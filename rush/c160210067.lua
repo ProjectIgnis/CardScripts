@@ -49,17 +49,17 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
 		local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.atkfilter),tp,0,LOCATION_MZONE,1,3,nil)
 		if #g>0 then
-			Duel.HintSelection(g,true)
+			Duel.HintSelection(g)
 			for tc in g:Iter() do
 				local e1=Effect.CreateEffect(e:GetHandler())
 				e1:SetType(EFFECT_TYPE_SINGLE)
 				e1:SetCode(EFFECT_UPDATE_ATTACK)
 				e1:SetValue(-300)
-				e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
-				tc:RegisterEffectRush(e1)
+				e1:SetReset(RESETS_STANDARD_PHASE_END)
+				tc:RegisterEffect(e1)
 				local e2=e1:Clone()
 				e2:SetCode(EFFECT_UPDATE_DEFENSE)
-				tc:RegisterEffectRush(e2)
+				tc:RegisterEffect(e2)
 			end
 		end
 	end

@@ -41,21 +41,22 @@ end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	if Duel.DiscardDeck(tp,1,REASON_COST)==0 then return end
+	--Effect
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
 	local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.atkfilter),tp,0,LOCATION_MZONE,1,3,nil)
 	if #g==0 then return end
-	Duel.HintSelection(g,true)
+	Duel.HintSelection(g)
 	for tc in g:Iter() do
 		--Original ATK becomes 0
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 		e1:SetRange(LOCATION_MZONE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetCode(EFFECT_SET_BASE_ATTACK)
 		e1:SetValue(0)
-		tc:RegisterEffectRush(e1)
+		tc:RegisterEffect(e1)
 	end
 	--Can make up to 2 attacks on monsters
 	local e2=Effect.CreateEffect(c)
@@ -82,7 +83,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local dg=Duel.SelectMatchingCard(tp,Card.IsSpellTrap,tp,0,LOCATION_ONFIELD,1,1,nil)
 	if #dg==0 then return end
-	Duel.HintSelection(dg,true)
+	Duel.HintSelection(dg)
 	if Duel.Destroy(dg,REASON_EFFECT)>0 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

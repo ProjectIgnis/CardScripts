@@ -27,7 +27,7 @@ function s.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_SEASERPENT)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.filter),tp,LOCATION_MZONE,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,nil,0,tp,1000)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -36,12 +36,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
 	local tc=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.filter),tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
 	if tc then
-		Duel.HintSelection(tc,true)
+		Duel.HintSelection(tc)
 		--Increase ATK
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(1000)
 		tc:RegisterEffect(e1)
 		if tc:IsType(TYPE_MAXIMUM) then
@@ -52,8 +52,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 			e2:SetValue(s.efilter)
-			e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
-			tc:RegisterEffectRush(e2)
+			e2:SetReset(RESETS_STANDARD_PHASE_END)
+			tc:RegisterEffect(e2)
 		end
 	end
 end

@@ -39,7 +39,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetCode(EFFECT_CHANGE_RACE)
 				e1:SetValue(race)
 				e1:SetReset(RESETS_STANDARD_PHASE_END)
-				tc:RegisterEffectRush(e1)
+				tc:RegisterEffect(e1)
 			end
 		end
 	end

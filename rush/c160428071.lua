@@ -35,7 +35,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 and Duel.SendtoGrave(g,REASON_COST)>0 then
 		--Effect
 		local c=e:GetHandler()
-		if c:IsFaceup() and c:IsRelateToEffect(e) and c:UpdateAttack(1000,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)==1000
+		if c:IsFaceup() and c:IsRelateToEffect(e) and c:UpdateAttack(1000,RESETS_STANDARD_PHASE_END)==1000
 			and Duel.IsExistingMatchingCard(s.zmbfilter,tp,LOCATION_GRAVE,0,1,nil) then
 			Duel.BreakEffect()
 			Duel.Damage(1-tp,700,REASON_EFFECT)

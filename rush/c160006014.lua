@@ -22,7 +22,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,e:GetHandler(),e,tp) end
 end
 function s.filter(c,atk)
-	return c:IsFaceup() and c:GetAttack()==atk and c:GetBaseAttack()>0 and c:IsLevelBelow(8) and not c:IsMaximumModeSide()
+	return c:IsFaceup() and c:GetAttack()==atk and c:GetBaseAttack()>0 and c:IsLevelBelow(8) and c:IsNotMaximumModeSide()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil,e:GetHandler():GetAttack()) end
@@ -42,8 +42,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_SET_BASE_ATTACK)
 			e1:SetValue(0)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			dg:GetFirst():RegisterEffectRush(e1)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
+			dg:GetFirst():RegisterEffect(e1)
 			local ct=Duel.GetMatchingGroupCount(Card.IsCode,tp,LOCATION_GRAVE,0,nil,CARD_SEVENS_ROAD_MAGICIAN)
 			if ct>0 and Duel.IsPlayerCanDraw(tp,1) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 				Duel.Draw(tp,1,REASON_EFFECT)

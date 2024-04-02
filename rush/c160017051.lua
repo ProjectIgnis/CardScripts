@@ -34,7 +34,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_APPLYTO)
 	local g=Duel.SelectMatchingCard(tp,Card.IsFaceup,tp,LOCATION_MZONE,0,1,1,nil)
 	if #g>0 then
-		Duel.HintSelection(g,true)
+		Duel.HintSelection(g)
 		local tc=g:GetFirst()
 		local c=e:GetHandler()
 		--Protection
@@ -46,7 +46,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(1)
-		tc:RegisterEffectRush(e1)
+		tc:RegisterEffect(e1)
 		tc:AddPiercing(RESETS_STANDARD_PHASE_END,c)
 	end
 end

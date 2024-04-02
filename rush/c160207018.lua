@@ -37,7 +37,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			if #pg>0 then
 				Duel.ChangePosition(pg,POS_FACEUP_DEFENSE,POS_FACEDOWN_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)
 				if c:IsMaximumMode() then
-					c:AddPiercing(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
+					c:AddPiercing(RESETS_STANDARD_PHASE_END)
 				end
 			end
 		end

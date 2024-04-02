@@ -46,7 +46,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_APPLYTO)
 		local g2=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)
 		if #g2>0 then
-			Duel.HintSelection(g2,true)
+			Duel.HintSelection(g2)
 			local tc=g2:GetFirst()
 			--Protection
 			local e1=Effect.CreateEffect(e:GetHandler())
@@ -55,9 +55,9 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetDescription(3001)
 			e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 			e1:SetRange(LOCATION_MZONE)
-			e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
 			e1:SetValue(1)
-			tc:RegisterEffectRush(e1)
+			tc:RegisterEffect(e1)
 		end
 	end
 end

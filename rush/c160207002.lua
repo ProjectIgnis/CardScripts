@@ -27,28 +27,25 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	--Requirement
-	if Duel.DiscardDeck(tp,1,REASON_COST)>0 then
-		--Effect
-		if c:IsRelateToEffect(e) and c:IsFaceup() then
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetValue(600)
-			e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
-			c:RegisterEffectRush(e1)
-			if c:IsMaximumMode() then
-				--Cannot be destroyed by opponent's card effects
-				local e2=Effect.CreateEffect(c)
-				e2:SetDescription(3060)
-				e2:SetProperty(EFFECT_FLAG_CLIENT_HINT)
-				e2:SetType(EFFECT_TYPE_SINGLE)
-				e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-				e2:SetValue(s.efilter)
-				e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,2)
-				c:AddCenterToSideEffectHandler(e2)
-				c:RegisterEffectRush(e2)
-			end
-		end
+	if Duel.DiscardDeck(tp,1,REASON_COST)<1 then return end
+	--Effect
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_UPDATE_ATTACK)
+	e1:SetValue(600)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
+	c:RegisterEffect(e1)
+	if c:IsMaximumMode() then
+		--Cannot be destroyed by opponent's card effects
+		local e2=Effect.CreateEffect(c)
+		e2:SetDescription(3060)
+		e2:SetProperty(EFFECT_FLAG_CLIENT_HINT)
+		e2:SetType(EFFECT_TYPE_SINGLE)
+		e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+		e2:SetValue(s.efilter)
+		e2:SetReset(RESETS_STANDARD_PHASE_END,2)
+		c:AddCenterToSideEffectHandler(e2)
+		c:RegisterEffect(e2)
 	end
 end
 function s.efilter(e,te)

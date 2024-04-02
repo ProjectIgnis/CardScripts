@@ -51,7 +51,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetReset(RESETS_STANDARD_PHASE_END)
 			e1:SetValue(ct*500)
-			c:RegisterEffectRush(e1)
+			c:RegisterEffect(e1)
 			local g2=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(Card.IsFaceup),tp,0,LOCATION_MZONE,nil)
 			if #g2>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 				for tc in g2:Iter() do
@@ -60,7 +60,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 					e1:SetCode(EFFECT_UPDATE_ATTACK)
 					e1:SetValue(-1000)
 					e1:SetReset(RESETS_STANDARD_PHASE_END)
-					tc:RegisterEffectRush(e1)
+					tc:RegisterEffect(e1)
 				end
 			end
 		end

@@ -30,7 +30,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ShuffleHand(tp)
 	--double tribute
 	local c=e:GetHandler()
-	c:AddDoubleTribute(id,s.otfilter,s.eftg,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,FLAG_DOUBLE_TRIB_WINGEDBEAST)
+	c:AddDoubleTribute(id,s.otfilter,s.eftg,RESETS_STANDARD_PHASE_END,FLAG_DOUBLE_TRIB_WINGEDBEAST)
 end
 function s.otfilter(c,tp)
 	return c:IsDoubleTribute(FLAG_DOUBLE_TRIB_WINGEDBEAST) and (c:IsControler(tp) or c:IsFaceup())

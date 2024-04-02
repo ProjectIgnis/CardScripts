@@ -28,7 +28,7 @@ function s.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_SEASERPENT)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.filter),tp,LOCATION_MZONE,0,1,nil) end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(1000)
 	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,nil,0,tp,1000)
@@ -44,12 +44,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
 	local tc=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.filter),tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
 	if tc then
-		Duel.HintSelection(tc,true)
+		Duel.HintSelection(tc)
 		--Increase ATK
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(1000)
 		tc:RegisterEffect(e1)
 		local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
@@ -62,14 +62,14 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 			e2:SetValue(aux.indoval)
-			e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
-			tc:RegisterEffectRush(e2)
+			e2:SetReset(RESETS_STANDARD_PHASE_END)
+			tc:RegisterEffect(e2)
 			--Cannot be destroyed by battle
 			local e3=e2:Clone()
 			e3:SetDescription(3000)
 			e3:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 			e3:SetValue(1)
-			tc:RegisterEffectRush(e3)
+			tc:RegisterEffect(e3)
 		end
 	end
 end

@@ -27,20 +27,22 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetTargetParam(1)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
+function s.filter(c)
+	return c:IsFaceup() and c:IsLevel(8) and c:IsNotMaximumModeSide()
+end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.HintSelection(g)
-	if Duel.SendtoDeck(g,nil,1,REASON_COST)>0 then
+	if Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)>0 then
 		Duel.ShuffleDeck(tp)
 		--Effect
 		local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-		if Duel.Draw(p,d,REASON_EFFECT)>0
-		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsLevel,8),tp,LOCATION_MZONE,0,1,nil) 
-		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+		if Duel.Draw(p,d,REASON_EFFECT)>0 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) 
+			and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
-			local ag=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsLevel,8),tp,LOCATION_MZONE,0,1,1,nil)
+			local ag=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)
 			if #ag>0 then
 				Duel.BreakEffect()
 				Duel.HintSelection(ag)
@@ -49,8 +51,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetType(EFFECT_TYPE_SINGLE)
 				e1:SetCode(EFFECT_UPDATE_ATTACK)
 				e1:SetValue(800)
-				e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-				ag:GetFirst():RegisterEffectRush(e1)
+				e1:SetReset(RESETS_STANDARD_PHASE_END)
+				ag:GetFirst():RegisterEffect(e1)
 			end
 		end
 	end

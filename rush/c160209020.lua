@@ -29,7 +29,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,0,1,3,nil)
-	Duel.HintSelection(g,true)
+	Duel.HintSelection(g)
 	local tc=g:GetFirst()
 	local ct=Duel.GetFieldGroupCountRush(tp,0,LOCATION_MZONE)
 	for tc in g:Iter() do
@@ -37,14 +37,14 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(ct*1400)
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
-		tc:RegisterEffectRush(e1)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
+		tc:RegisterEffect(e1)
 	end
 	local g3=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.thfilter),tp,LOCATION_GRAVE,0,nil)
 	if #g3>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 		local sg=g3:Select(tp,1,1,nil)
-		Duel.HintSelection(sg,true)
+		Duel.HintSelection(sg)
 		Duel.BreakEffect()
 		Duel.SSet(tp,sg)
 	end

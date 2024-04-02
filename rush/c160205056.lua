@@ -28,21 +28,19 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	--requirement
-	Duel.DiscardDeck(tp,1,REASON_COST)
-	--effect
-	if c:IsRelateToEffect(e) and c:IsFaceup() then
-		local pg=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
-		local og=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(s.filter),tp,0,LOCATION_MZONE,nil)
-		local _,atk=pg:GetMaxGroup(Card.GetDefense)
-		local sub1,_=og:GetMaxGroup(Card.GetAttack)
-		for tc in sub1:Iter() do
-			local e1=Effect.CreateEffect(e:GetHandler())
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetValue(-atk)
-			e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
-			tc:RegisterEffectRush(e1)
-		end
+	--Requirement
+	if Duel.DiscardDeck(tp,1,REASON_COST)<1 then return end
+	--Effect
+	local pg=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
+	local og=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(s.filter),tp,0,LOCATION_MZONE,nil)
+	local _,atk=pg:GetMaxGroup(Card.GetDefense)
+	local sub1,_=og:GetMaxGroup(Card.GetAttack)
+	for tc in sub1:Iter() do
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_ATTACK)
+		e1:SetValue(-atk)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
+		tc:RegisterEffect(e1)
 	end
 end

@@ -26,32 +26,25 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) end
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsLevelAbove(1) and not c:IsMaximumModeSide()
+	return c:IsFaceup() and c:IsLevelAbove(1) and c:IsNotMaximumModeSide()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	--Requirement
-	if Duel.DiscardDeck(tp,1,REASON_COST)>0 then
+	if Duel.DiscardDeck(tp,1,REASON_COST)<1 then return end
 	--Effect
-		if c:IsRelateToEffect(e) and c:IsFaceup() then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-			local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
-			local tc=g:GetFirst()
-			local lv=tc:GetLevel()*100
-			if tc then
-				Duel.HintSelection(g)
-				local e1=Effect.CreateEffect(c)
-				e1:SetType(EFFECT_TYPE_SINGLE)
-				e1:SetCode(EFFECT_UPDATE_ATTACK)
-				e1:SetValue(-lv)
-				e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-				tc:RegisterEffectRush(e1)
-			end
-			Duel.BreakEffect()
-			Duel.Damage(1-tp,lv,REASON_EFFECT)
-		end
-	end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil):GetFirst()
+	local atk=tc:GetLevel()*100
+	Duel.HintSelection(tc)
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_UPDATE_ATTACK)
+	e1:SetValue(-atk)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
+	tc:RegisterEffect(e1)
+	Duel.BreakEffect()
+	Duel.Damage(1-tp,atk,REASON_EFFECT)
 end

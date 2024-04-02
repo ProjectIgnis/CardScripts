@@ -38,14 +38,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetCode(EFFECT_CHANGE_CODE)
 	e1:SetValue(CARD_HARPIE_LADY)
-	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END|RESET_OPPO_TURN,1)
-	c:RegisterEffectRush(e1)
+	e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN,1)
+	c:RegisterEffect(e1)
 	if Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.filter),tp,0,LOCATION_MZONE,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 		local tc=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.filter),tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
 		if not tc then return end
 		Duel.BreakEffect()
-		Duel.HintSelection(tc,true)
+		Duel.HintSelection(tc)
 		--Cannot attack
 		local e2=Effect.CreateEffect(c)
 		e2:SetDescription(3206)
@@ -53,7 +53,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_CANNOT_ATTACK)
 		e2:SetCondition(function(e) return Duel.IsTurnPlayer(1-e:GetOwnerPlayer()) end)
-		e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END|RESET_SELF_TURN,1)
+		e2:SetReset(RESETS_STANDARD_PHASE_END|RESET_SELF_TURN,1)
 		tc:RegisterEffect(e2)
 	end
 end

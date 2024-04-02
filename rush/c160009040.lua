@@ -1,6 +1,6 @@
--- 箒の英雄
--- Hero of the Sweep
--- Scripted by Hatter
+--箒の英雄
+--Hero of the Sweep
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -29,20 +29,21 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.atkfilter),tp,LOCATION_MZONE,0,1,nil) end
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if not (Duel.DiscardDeck(tp,1,REASON_COST)>0 and c:IsRelateToEffect(e) and c:IsFaceup()) then return end
+	--Requirement
+	if Duel.DiscardDeck(tp,1,REASON_COST)<1 then return end
+	--Effect
 	local ct=Duel.GetMatchingGroupCount(aux.FilterMaximumSideFunctionEx(s.atkfilter),tp,LOCATION_MZONE,0,nil)
 	if ct>0 then
-		-- Increase ATK/DEF
-		local e1=Effect.CreateEffect(c)
+		--Increase ATK/DEF
+		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
 		e1:SetValue(ct*200)
-		c:RegisterEffectRush(e1)
+		c:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UPDATE_DEFENSE)
-		c:RegisterEffectRush(e2)
+		c:RegisterEffect(e2)
 	end
 end

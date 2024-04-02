@@ -32,7 +32,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.DiscardDeck(tp,ct,REASON_EFFECT)
 	local ct=Duel.GetOperatedGroup():Filter(Card.IsMonster,nil):GetCount()
 	if ct>=2 and c:CanBeDoubleTribute(FLAG_DOUBLE_TRIB_WYRM) then
-		c:AddDoubleTribute(id,s.otfilter,s.eftg,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,FLAG_DOUBLE_TRIB_WYRM)
+		c:AddDoubleTribute(id,s.otfilter,s.eftg,RESETS_STANDARD_PHASE_END,FLAG_DOUBLE_TRIB_WYRM)
 	end
 end
 function s.otfilter(c,tp)

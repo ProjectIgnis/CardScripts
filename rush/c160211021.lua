@@ -31,7 +31,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetTargetRange(0,1)
 	Duel.RegisterEffect(e1,tp)
-	local g2=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
+	local g2=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(Card.IsFaceup),tp,LOCATION_MZONE,0,nil)
 	for tc in g2:Iter() do
 		--Cannot be destroyed by battle
 		local e2=Effect.CreateEffect(c)
@@ -41,7 +41,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e2:SetValue(1)
 		e2:SetReset(RESETS_STANDARD_PHASE_END)
-		tc:RegisterEffectRush(e2)
+		tc:RegisterEffect(e2)
 	end
 	local ac=Duel.GetAttacker()
 	local dc=Duel.GetAttackTarget()

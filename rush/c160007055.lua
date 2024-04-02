@@ -1,6 +1,6 @@
--- 手札活殺
--- Card Devastation
--- Scripted by Hatter
+--手札活殺
+--Card Devastation
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	-- Send to GY
@@ -32,7 +32,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(#g*300)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		tc:RegisterEffectRush(e1)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
+		tc:RegisterEffect(e1)
 	end
 end

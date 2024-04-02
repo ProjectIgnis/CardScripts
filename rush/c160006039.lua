@@ -1,5 +1,5 @@
 --ロード・マジック－レイズオルター
---Road Magic - Resaltar
+--Road Magic - Uplifter
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -27,7 +27,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_MZONE,0,1,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(Card.IsFaceup),tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil) end
 end
 function s.filter(c)
@@ -39,7 +39,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		--Effect
 		local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil)
 		if #g==0 then return end
-		local sg=Duel.SelectMatchingCard(tp,Card.IsFaceup,tp,LOCATION_MZONE,0,1,1,nil)
+		local sg=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(Card.IsFaceup),tp,LOCATION_MZONE,0,1,1,nil)
 		Duel.HintSelection(sg)
 		local tc=sg:GetFirst()
 		local gc=g:GetMinGroup(Card.GetAttack):GetFirst()
@@ -48,9 +48,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
 			e1:SetValue(atk)
-			tc:RegisterEffectRush(e1)
+			tc:RegisterEffect(e1)
 		end
 	end
 end

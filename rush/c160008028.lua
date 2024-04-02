@@ -1,5 +1,5 @@
--- エミッタ・スタッグ
--- Emitter Stag
+--エミッタ・スタッグ
+--Emitter Stag
 local s,id=GetID()
 function s.initial_effect(c)
 	-- atk change
@@ -25,8 +25,9 @@ function s.filter(c)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	--requirement
+	--Requirement
 	if Duel.DiscardDeck(tp,1,REASON_COST)<1 then return end
+	--Effect
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.filter),tp,LOCATION_MZONE,0,1,1,nil)
 	if #g>0 then
@@ -36,9 +37,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetValue(-4)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		g:GetFirst():RegisterEffectRush(e1)
-		
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
+		g:GetFirst():RegisterEffect(e1)
 		Duel.Damage(1-tp,400,REASON_EFFECT)
 	end
 end

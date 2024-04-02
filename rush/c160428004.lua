@@ -1,5 +1,5 @@
--- 剛撃龍メタギアスターＦ
--- Strong Strike Dragon Metagiastar F
+--剛撃龍メタギアスターＦ
+--Strong Strike Dragon Metagiastar F
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -43,21 +43,19 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(500)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
 			tc:RegisterEffect(e1)
 		end
 	end
-	if c:IsFaceup() and c:IsRelateToEffect(e) then
-		--Attack up to twice
-		local e2=Effect.CreateEffect(c)
-		e2:SetDescription(3201)
-		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-		e2:SetCode(EFFECT_EXTRA_ATTACK_MONSTER)
-		e2:SetValue(1)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		c:RegisterEffect(e2)
-	end
+	--Attack up to twice
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(3201)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
+	e2:SetCode(EFFECT_EXTRA_ATTACK_MONSTER)
+	e2:SetValue(1)
+	e2:SetReset(RESETS_STANDARD_PHASE_END)
+	c:RegisterEffect(e2)
 end
 function s.protectionOp(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -75,27 +73,25 @@ function s.protectionOp(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 			e1:SetValue(s.efilter)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
 			tc:RegisterEffect(e1)
 			--Cannot be destroyed by battle
 			local e2=e1:Clone()
 			e2:SetDescription(3000)
 			e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 			e2:SetValue(1)
-			tc:RegisterEffectRush(e2)
+			tc:RegisterEffect(e2)
 		end
 	end
-	if c:IsFaceup() and c:IsRelateToEffect(e) then
-		--Attack up to twice
-		local e3=Effect.CreateEffect(c)
-		e3:SetDescription(3201)
-		e3:SetType(EFFECT_TYPE_SINGLE)
-		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-		e3:SetCode(EFFECT_EXTRA_ATTACK)
-		e3:SetValue(1)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		c:RegisterEffect(e3)
-	end
+	--Attack up to twice
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(3201)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
+	e3:SetCode(EFFECT_EXTRA_ATTACK)
+	e3:SetValue(1)
+	e3:SetReset(RESETS_STANDARD_PHASE_END)
+	c:RegisterEffect(e3)
 end
 function s.efilter(e,te)
 	return te:IsActiveType(TYPE_TRAP) and te:GetOwnerPlayer()==1-e:GetHandlerPlayer()

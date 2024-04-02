@@ -41,7 +41,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		if #g>0 then
 			Duel.HintSelection(g,true)
 			-- Piercing
-			g:GetFirst():AddPiercing(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,c)
+			g:GetFirst():AddPiercing(RESETS_STANDARD_PHASE_END,c)
 			if not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_TRANSAMU_RAINAC),tp,LOCATION_MZONE,0,1,nil) then return end
 			local sg=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(s.posfilter),tp,0,LOCATION_MZONE,nil)
 			if #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then

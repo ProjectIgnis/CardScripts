@@ -34,9 +34,9 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 			e1:SetCode(EFFECT_EXTRA_ATTACK)
 			e1:SetValue(1)
-			e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
 			c:RegisterEffect(e1)
 		end
-		if heads==3 then c:AddPiercing(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END) end
+		if heads==3 then c:AddPiercing(RESETS_STANDARD_PHASE_END) end
 	end
 end

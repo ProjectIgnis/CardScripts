@@ -1,5 +1,5 @@
 --粛聖のライト・ソーサラー
---Hallowed Light Sorcerer
+--Light Sorcerer of Sanctity
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)
@@ -19,7 +19,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,300) end
 end
 function s.filter(c)
-	return c:IsFaceup() and c:GetAttack()>0
+	return c:IsFaceup() and c:IsNotMaximumModeSide()
 end
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_SPELLCASTER) and c:IsAttribute(ATTRIBUTE_LIGHT)
@@ -42,7 +42,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(atk*-300)
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
-		g:GetFirst():RegisterEffectRush(e1)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
+		g:GetFirst():RegisterEffect(e1)
 	end
 end

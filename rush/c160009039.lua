@@ -1,12 +1,12 @@
--- 花牙乱心メイカ・エトランゼアイズ
--- Meika Etraynzeyes the Shadow Flower Lunatic
--- Scripted by Hatter
+--花牙乱心メイカ・エトランゼアイズ
+--Meika Etraynzeyes the Shadow Flower Lunatic
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	-- "Etraynze the Shadow Flower Ninja" + "Etraynze the Shadow Flower Ninja"
+	--"Etraynze the Shadow Flower Ninja" + "Etraynze the Shadow Flower Ninja"
 	Fusion.AddProcMix(c,true,true,160005029,160005029)
-	-- Reduce ATK/DEF
+	--Reduce ATK/DEF
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
@@ -30,17 +30,17 @@ function s.rdop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
 	local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(Card.IsFaceup),tp,0,LOCATION_MZONE,1,2,nil)
 	if #g<1 then return end
-	Duel.HintSelection(g,true)
+	Duel.HintSelection(g)
 	local c=e:GetHandler()
 	for tc in g:Iter() do
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-730000)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		tc:RegisterEffectRush(e1)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
+		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UPDATE_DEFENSE)
-		tc:RegisterEffectRush(e2)
+		tc:RegisterEffect(e2)
 	end
 end

@@ -53,8 +53,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetType(EFFECT_TYPE_SINGLE)
 				e1:SetCode(EFFECT_UPDATE_ATTACK)
 				e1:SetValue(-1800)
-				e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,1)
-				tc:RegisterEffectRush(e1)
+				e1:SetReset(RESETS_STANDARD_PHASE_END,1)
+				tc:RegisterEffect(e1)
 			end
 		end
 	end

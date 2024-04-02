@@ -1,5 +1,5 @@
--- カオスのジャージ式
--- Black Luster Jersey Ritual
+--カオスのジャージ式
+--Black Luster Jersey Ritual
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -43,9 +43,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
 			e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_PHASE|PHASE_END)
 			e1:SetValue(500)
-			tc:RegisterEffectRush(e1)
+			tc:RegisterEffect(e1)
 			--Piercing
-			tc:AddPiercing(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,c)
+			tc:AddPiercing(RESETS_STANDARD_PHASE_END,c)
 			--Cannot be destroyed by opponent's trap
 			local e2=Effect.CreateEffect(c)
 			e2:SetDescription(3012)

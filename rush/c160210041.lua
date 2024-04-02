@@ -41,30 +41,27 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_GRAVE,0,1,1,nil,tp,code)
-	Duel.HintSelection(g,true)
+	Duel.HintSelection(g)
 	if Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_COST)~=1 then return end
 	--Effect
-	if c:IsFaceup() and c:IsRelateToEffect(e) then
-		--name change
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELECT)
-		local g2=Duel.SelectMatchingCard(tp,s.namefilter,tp,LOCATION_GRAVE,0,1,1,nil,code)
-		if #g2>0 then
-			Duel.HintSelection(g2,true)
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_CHANGE_CODE)
-			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-			e1:SetReset(RESETS_STANDARD_PHASE_END)
-			e1:SetValue(g2:GetFirst():GetCode())
-			c:RegisterEffectRush(e1)
-			local g3=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.setfilter),tp,LOCATION_GRAVE,0,nil)
-			if #g3>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
-				local sg=g3:Select(tp,1,1,nil)
-				Duel.HintSelection(sg,true)
-				Duel.BreakEffect()
-				Duel.SSet(tp,sg)
-			end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELECT)
+	local g2=Duel.SelectMatchingCard(tp,s.namefilter,tp,LOCATION_GRAVE,0,1,1,nil,code)
+	if #g2>0 then
+		Duel.HintSelection(g2)
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_CHANGE_CODE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
+		e1:SetValue(g2:GetFirst():GetCode())
+		c:RegisterEffect(e1)
+		local g3=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.setfilter),tp,LOCATION_GRAVE,0,nil)
+		if #g3>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
+			local sg=g3:Select(tp,1,1,nil)
+			Duel.HintSelection(sg)
+			Duel.BreakEffect()
+			Duel.SSet(tp,sg)
 		end
 	end
 end

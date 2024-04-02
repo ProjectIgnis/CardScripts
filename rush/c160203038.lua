@@ -1,5 +1,5 @@
--- 楽姫奥義－三連虎 
--- Music Maiden Secret Technique - Triple Tiger
+--楽姫奥義－三連虎 
+--Music Princess Art - Triplet
 local s,id=GetID()
 function s.initial_effect(c)
 	--When your opponent normal/special summons a monster, increase atk
@@ -36,7 +36,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(1000)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		tc:RegisterEffectRush(e1)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
+		tc:RegisterEffect(e1)
 	end
 end

@@ -1,6 +1,5 @@
 --ザ☆バリア
 --The☆Barrier
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Opponent's attacking monster loses 400 ATK
@@ -32,17 +31,16 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_GRAVE,0,1,1,nil)
-	Duel.HintSelection(g,true)
-	if #g>0 and Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)>0 then
-		--Effect
-		local tc=Duel.GetAttacker()
-		if tc and tc:IsRelateToBattle() and tc:IsFaceup() then
-			local e1=Effect.CreateEffect(e:GetHandler())
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetValue(-400)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			tc:RegisterEffectRush(e1)
-		end
+	Duel.HintSelection(g)
+	if Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)<0 then return end
+	--Effect
+	local tc=Duel.GetAttacker()
+	if tc and tc:IsRelateToBattle() and tc:IsFaceup() then
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_ATTACK)
+		e1:SetValue(-400)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
+		tc:RegisterEffect(e1)
 	end
 end

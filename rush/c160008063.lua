@@ -1,6 +1,5 @@
 --Sakuretsu Force
 --聖なる装甲 －炸裂フォース－
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Opponent's attacking monster loses 400 ATK
@@ -41,15 +40,14 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(-500)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			tc:RegisterEffectRush(e1)
-			
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
+			tc:RegisterEffect(e1)
 			if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,56120475),tp,LOCATION_GRAVE,0,1,nil)
-			and Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.desfilter),tp,0,LOCATION_MZONE,1,nil)
-			and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+				and Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.desfilter),tp,0,LOCATION_MZONE,1,nil)
+				and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 				local g=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(s.desfilter),tp,0,LOCATION_MZONE,nil)
 				if #g>0 then
-					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 					sg=g:Select(tp,1,2,nil)
 					sg=sg:AddMaximumCheck()
 					Duel.Destroy(sg,REASON_EFFECT)

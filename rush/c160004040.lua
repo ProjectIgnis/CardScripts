@@ -47,8 +47,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 			e2:SetValue(s.efilter)
-			e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
-			tc:RegisterEffectRush(e2)
+			e2:SetReset(RESETS_STANDARD_PHASE_END)
+			tc:RegisterEffect(e2)
 		end
 	end
 end

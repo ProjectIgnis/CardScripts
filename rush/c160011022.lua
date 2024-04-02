@@ -35,7 +35,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		if ct:IsRace(RACE_PSYCHIC) and #dg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 			local tc=dg:Select(tp,1,1,nil):GetFirst()
 			Duel.HintSelection(tc,true)
-			tc:AddDoubleTribute(id,s.otfilter,s.eftg,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,FLAG_DOUBLE_TRIB_WIND+FLAG_DOUBLE_TRIB_PSYCHIC)
+			tc:AddDoubleTribute(id,s.otfilter,s.eftg,RESETS_STANDARD_PHASE_END,FLAG_DOUBLE_TRIB_WIND+FLAG_DOUBLE_TRIB_PSYCHIC)
 		end
 	end
 end

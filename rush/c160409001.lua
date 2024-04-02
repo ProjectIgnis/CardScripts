@@ -1,5 +1,5 @@
--- 零撃竜ゼロギアス
--- Nullstrike Dragon Zerogias
+--零撃竜ゼロギアス
+--Nullstrike Dragon Zerogias
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted monster loses ATK
@@ -36,33 +36,31 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
 	local dg=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.filter),tp,0,LOCATION_MZONE,1,1,nil)
 	if #dg>0 then
-		Duel.HintSelection(dg,true)
+		Duel.HintSelection(dg)
 		--Original ATK becomes 0
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_BASE_ATTACK)
 		e1:SetValue(0)
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
-		dg:GetFirst():RegisterEffectRush(e1)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
+		dg:GetFirst():RegisterEffect(e1)
 	end
-	if c:IsFaceup() and c:IsRelateToEffect(e) then
-		--Attack up to twice
-		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-		e2:SetCode(EFFECT_EXTRA_ATTACK_MONSTER)
-		e2:SetRange(LOCATION_MZONE)
-		e2:SetCondition(function(e) return e:GetHandler():HasFlagEffect(id) end)
-		e2:SetValue(1)
-		e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
-		c:RegisterEffect(e2)
-		local e3=Effect.CreateEffect(c)
-		e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e3:SetCode(EVENT_BATTLED)
-		e3:SetCondition(function(e) return Duel.GetAttacker()==e:GetHandler() and Duel.GetAttackTarget() end)
-		e3:SetOperation(function(e) e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1) end)
-		e3:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
-		c:RegisterEffect(e3)
-	end
+	--Attack up to twice
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e2:SetCode(EFFECT_EXTRA_ATTACK_MONSTER)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCondition(function(e) return e:GetHandler():HasFlagEffect(id) end)
+	e2:SetValue(1)
+	e2:SetReset(RESETS_STANDARD_PHASE_END)
+	c:RegisterEffect(e2)
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e3:SetCode(EVENT_BATTLED)
+	e3:SetCondition(function(e) return Duel.GetAttacker()==e:GetHandler() and Duel.GetAttackTarget() end)
+	e3:SetOperation(function(e) e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1) end)
+	e3:SetReset(RESETS_STANDARD_PHASE_END)
+	c:RegisterEffect(e3)
 end

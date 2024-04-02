@@ -29,7 +29,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		if #g>0 then
 			Duel.HintSelection(g)
 			local tc=g:GetFirst()
-			tc:UpdateLevel(1,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,c)
+			tc:UpdateLevel(1,RESETS_STANDARD_PHASE_END,c)
 		end
 	end
 end

@@ -47,7 +47,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
 				e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
 				e1:SetValue(1500)
-				tc:RegisterEffectRush(e1)
+				tc:RegisterEffect(e1)
 			end
 		end
 	end

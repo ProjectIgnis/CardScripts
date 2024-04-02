@@ -1,6 +1,6 @@
--- 強者の愉悦
--- Joy of the Mighty
--- Scripted by Hatter
+--強者の愉悦
+--Delight of the Mighty
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	-- Increase ATK
@@ -28,16 +28,16 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
 	local ac=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.atkfilter),tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
 	if ac then
-		Duel.HintSelection(ac,true)
+		Duel.HintSelection(ac)
 		local c=e:GetHandler()
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(tc:GetLevel()*100)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		ac:RegisterEffectRush(e1)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
+		ac:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UPDATE_DEFENSE)
-		ac:RegisterEffectRush(e2)
+		ac:RegisterEffect(e2)
 	end
 end

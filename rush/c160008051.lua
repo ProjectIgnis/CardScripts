@@ -1,6 +1,5 @@
 --激鱗解放
---Enraged Scale Liberation
-
+--Release Wrath
 local s,id=GetID()
 function s.initial_effect(c)
 	--Send the top 2 cards of your Deck to the GY
@@ -49,8 +48,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(ct*200)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			tc:RegisterEffectRush(e1)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
+			tc:RegisterEffect(e1)
 		end
 	end
 end

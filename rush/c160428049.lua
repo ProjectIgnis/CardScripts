@@ -26,15 +26,15 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 	local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.filter),tp,LOCATION_MZONE,0,1,1,nil)
 	if #g>0 then
-		Duel.HintSelection(g,true)
+		Duel.HintSelection(g)
 		local c=e:GetHandler()
 		local tc=g:GetFirst()
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(1200)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		tc:RegisterEffectRush(e1)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
+		tc:RegisterEffect(e1)
 		if tc:IsLevel(9) then
 			--Cannot be destroyed by opponent's effect
 			local e2=Effect.CreateEffect(c)
@@ -43,14 +43,14 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 			e2:SetValue(aux.indoval)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			tc:RegisterEffectRush(e2)
+			e2:SetReset(RESETS_STANDARD_PHASE_END)
+			tc:RegisterEffect(e2)
 			--Cannot be destroyed by battle
 			local e3=e2:Clone()
 			e3:SetDescription(3000)
 			e3:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 			e3:SetValue(1)
-			tc:RegisterEffectRush(e3)
+			tc:RegisterEffect(e3)
 		end
 	end
 end

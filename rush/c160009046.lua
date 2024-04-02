@@ -1,7 +1,5 @@
 --秘剣！流麗割撃
---Secret Sword Technique! Refined Ruler Render
-
---Substitute ID
+--Sword Skill - Ruler's Slash
 local s,id=GetID()
 function s.initial_effect(c)
 	--Destroy 1 spell/trap your opponent controls
@@ -43,15 +41,15 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
 		local g=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_MZONE,0,1,1,nil)
 		if #g>0 then
-			Duel.HintSelection(g,true)
+			Duel.HintSelection(g)
 			local tc=g:GetFirst()
 			--Increase ATK
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(2500)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			tc:RegisterEffectRush(e1)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
+			tc:RegisterEffect(e1)
 			--destroy 1 spell/Trap
 			local dg=Duel.GetMatchingGroup(Card.IsSpellTrap,tp,0,LOCATION_ONFIELD,nil)
 			if #dg>0 then
@@ -59,7 +57,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				local sg=dg:Select(tp,1,1,nil)
 				if #sg==0 then return end
 				Duel.BreakEffect()
-				Duel.HintSelection(sg,true)
+				Duel.HintSelection(sg)
 				Duel.Destroy(sg,REASON_EFFECT)
 			end
 		end

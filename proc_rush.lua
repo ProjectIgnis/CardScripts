@@ -72,7 +72,7 @@ function Card.AddPiercing(c,reset,rc,condition,properties)
 	e1:SetCode(EFFECT_PIERCE)
 	if condition then e1:SetCondition(condition) end
 	if reset then e1:SetReset(reset) end
-	c:RegisterEffectRush(e1)
+	c:RegisterEffect(e1)
 end
 
 --Double/Triple tribute handler

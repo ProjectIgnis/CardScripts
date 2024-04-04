@@ -121,7 +121,7 @@ function Maximum.Operation(mats)
 			g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
 		end
 		--select side monsters
-		local tg=aux.SelectUnselectGroup(g,e,tp,ct,ct,Maximum.spcheck(mats),1,tp,HINTMSG_SPSUMMON,nil,nil,true)
+		local tg=aux.SelectUnselectGroup(g,e,tp,ct,ct,Maximum.spcheck(mats),1,tp,HINTMSG_SPSUMMON,nil,nil,false)
 		if #tg==0 then return end
 		--adding the "maximum mode" flag
 		--center

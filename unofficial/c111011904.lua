@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Xyz Summon procedure 
+	--Xyz Summon procedure
 	Xyz.AddProcedure(c,nil,8,2)
 	--Add 1 Spell/Trap from your Deck to your hand
 	local e1=Effect.CreateEffect(c)
@@ -106,9 +106,6 @@ function s.acop(e,tp,eg,ep,ev,re,r,rp,chk)
 			end
 		end
 		Duel.MoveToField(tc,tp,tp,loc,POS_FACEUP,true)
-		if (tpe&TYPE_TRAP+TYPE_FIELD)==TYPE_TRAP+TYPE_FIELD then
-			Duel.MoveSequence(tc,5)
-		end
 		Duel.Hint(HINT_CARD,0,tc:GetCode())
 		tc:CreateEffectRelation(te)
 		if (tpe&TYPE_EQUIP+TYPE_CONTINUOUS+TYPE_FIELD)==0 then

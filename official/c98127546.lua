@@ -46,7 +46,7 @@ function s.initial_effect(c)
 	e3:SetCountLimit(1)
 	e3:SetCondition(s.spnegcon)
 	e3:SetTarget(s.spnegtg)
-	e3:SetOperation(function(_,_,_,_,ev) Duel.NegateActivation(ev) end)
+	e3:SetOperation(function(e,tp,eg,ep,ev) Duel.NegateActivation(ev) end)
 	c:RegisterEffect(e3)
 end
 s.curgroup=nil
@@ -99,11 +99,11 @@ function s.spnegcon(e,tp,eg,ep,ev,re,r,rp)
 		or not Duel.IsChainNegatable(ev) then return false end
 	local ex1,tg1,ct1,p1,loc1=Duel.GetOperationInfo(ev,CATEGORY_SPECIAL_SUMMON)
 	local ex2,tg2,ct2,p2,loc2=Duel.GetPossibleOperationInfo(ev,CATEGORY_SPECIAL_SUMMON)
-	local res1=((loc1 or 0)&LOCATION_GRAVE>0) or (tg1 and tg1:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE))
-	local res2=((loc2 or 0)&LOCATION_GRAVE>0) or (tg2 and tg2:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE))
+	local res1=((loc1 or 0)&LOCATION_GRAVE>0) or (tg1 and tg1:IsExists(function(c) return c:IsLocation(LOCATION_GRAVE) and c:IsMonster() end,1,nil))
+	local res2=((loc2 or 0)&LOCATION_GRAVE>0) or (tg2 and tg2:IsExists(function(c) return c:IsLocation(LOCATION_GRAVE) and c:IsMonster() end,1,nil))
 	return res1 or res2
 end
 function s.spnegtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,tp,0)
 end

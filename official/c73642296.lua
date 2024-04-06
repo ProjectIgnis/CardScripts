@@ -2,7 +2,7 @@
 --Ghost Belle & Haunted Mansion
 local s,id=GetID()
 function s.initial_effect(c)
-	--Negate
+	--Negate the activation of a card or effect that includes adding a card(s) to the hand, Deck, and/or Extra Deck, Special Summoning a Monster Card, or banishing a card(s), from the GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_NEGATE)
@@ -11,10 +11,10 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id)
-	e1:SetCondition(s.discon)
-	e1:SetCost(s.discost)
-	e1:SetTarget(s.distg)
-	e1:SetOperation(s.disop)
+	e1:SetCondition(s.negcon)
+	e1:SetCost(s.negcost)
+	e1:SetTarget(s.negtg)
+	e1:SetOperation(function(e,tp,eg,ep,ev) Duel.NegateActivation(ev) end)
 	c:RegisterEffect(e1)
 end
 function s.check(ev,category)
@@ -24,9 +24,9 @@ function s.check(ev,category)
 	local g=Group.CreateGroup()
 	if g1 then g:Merge(g1) end
 	if g2 then g:Merge(g2) end
-	return (((loc1 or 0)|(loc2 or 0))&LOCATION_GRAVE)~=0 or (#g>0 and g:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE))
+	return (((loc1 or 0)|(loc2 or 0))&LOCATION_GRAVE)>0 or (#g>0 and g:IsExists(function(c) return c:IsLocation(LOCATION_GRAVE) and c:IsMonster() end,1,nil))
 end
-function s.discon(e,tp,eg,ep,ev,re,r,rp)
+function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsChainNegatable(ev) then return false end
 	if (s.check(ev,CATEGORY_SPECIAL_SUMMON)
 		or s.check(ev,CATEGORY_REMOVE)
@@ -35,16 +35,12 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 		or s.check(ev,CATEGORY_TOEXTRA)) then return true end
 	return false
 end
-function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
+function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsDiscardable() end
+	Duel.SendtoGrave(c,REASON_COST|REASON_DISCARD)
 end
-function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
-end
-function s.disop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.NegateActivation(ev) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:GetHandler():IsRelateToEffect(re) then
-		Duel.SendtoGrave(eg,REASON_EFFECT)
-	end
+	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,tp,0)
 end

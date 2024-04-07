@@ -19,7 +19,7 @@ function s.initial_effect(c)
 end
 s.listed_names={160211048}
 function s.otfilter(c)
-	return c:IsAttack(0) and c:IsFaceup()
+	return c:IsAttack(0)
 end
 function s.tdfilter(c)
 	return c:IsMonster() and c:IsAttack(0) and c:IsAbleToDeckOrExtraAsCost()

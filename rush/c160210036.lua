@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.otfilter(c)
-	return c:IsType(TYPE_MAXIMUM) and c:IsFaceup()
+	return c:IsType(TYPE_MAXIMUM)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(Card.IsRace,tp,LOCATION_GRAVE,0,3,nil,RACE_FIEND)

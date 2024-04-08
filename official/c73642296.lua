@@ -24,7 +24,7 @@ function s.check(ev,category)
 	local g=Group.CreateGroup()
 	if g1 then g:Merge(g1) end
 	if g2 then g:Merge(g2) end
-	return (((loc1 or 0)|(loc2 or 0))&LOCATION_GRAVE)>0 or (#g>0 and g:IsExists(function(c) return c:IsLocation(LOCATION_GRAVE) and c:IsMonster() end,1,nil))
+	return (((loc1 or 0)|(loc2 or 0))&LOCATION_GRAVE)>0 or (#g>0 and g:IsExists(function(c) return c:IsLocation(LOCATION_GRAVE) and (category~=CATEGORY_SPECIAL_SUMMON or c:IsMonster()) end,1,nil))
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsChainNegatable(ev) then return false end

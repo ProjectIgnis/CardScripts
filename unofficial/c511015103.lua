@@ -12,11 +12,11 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x10af}
+s.listed_series={SET_DDD}
 s.listed_names={47198668}
 function s.filter(c,e,tp)
-	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(0x10af) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and (c:IsLocation(LOCATION_GRAVE) and c:IsCanBeEffectTarget(e) or (c:IsFaceup() and not c:IsHasEffect(EFFECT_CANNOT_BE_EFFECT_TARGET)))
+	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(SET_DDD) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and (not c:IsLocation(LOCATION_GRAVE) or c:IsCanBeEffectTarget(e))
 end
 function s.xyzfilter(c,sg,e,tp)
 	local ct=#sg
@@ -44,7 +44,7 @@ function s.rescon(mft,exft,ft)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	local mg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_GRAVE+LOCATION_EXTRA,0,nil,e,tp)
+	local mg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_GRAVE|LOCATION_EXTRA,0,nil,e,tp)
 	local ftex=Duel.GetLocationCountFromEx(tp,tp,nil,TYPE_PENDULUM)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local ftt=Duel.GetUsableMZoneCount(tp)
@@ -69,14 +69,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if #sg<=0 then return false end
 		g=sg
 	end
-	if Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)>0 then
-		for tc in aux.Next(g) do
-			if tc:IsLocation(LOCATION_MZONE) then
-				s.disop(tc,e:GetHandler())
-			end
+	if Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)==0 then return end
+	for tc in g:Iter() do
+		if tc:IsLocation(LOCATION_MZONE) then
+			s.disop(tc,e:GetHandler())
 		end
-	else
-		return
 	end
 	Duel.AdjustInstantly(c)
 	local xyzg=Duel.GetMatchingGroup(s.xyzfilter,tp,LOCATION_EXTRA,0,g,g,e,tp)

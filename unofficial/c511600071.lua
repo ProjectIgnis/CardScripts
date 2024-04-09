@@ -61,7 +61,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local xyz=Duel.SelectMatchingCard(tp,Card.IsXyzSummonable,tp,LOCATION_EXTRA,0,1,1,nil,nil,mg,#mg,#mg):GetFirst()
 	if xyz then
-		Duel.XyzSummon(tp,xyz,nil,mg)
+		Duel.XyzSummon(tp,xyz,mg,nil,#mg,#mg)
 		notSg:KeepAlive()
 		notSg:ForEach(function(_c) _c:Level((_c:Level()+1)) end)
 		local e1=Effect.CreateEffect(c)

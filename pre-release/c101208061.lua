@@ -51,7 +51,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local sc=g:Select(tp,1,1,nil):GetFirst()
-			Duel.XyzSummon(tp,sc,nil,mg,2,99)
+			Duel.XyzSummon(tp,sc,nil,mg)
 		end
 	end
 end

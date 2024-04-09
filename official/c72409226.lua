@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Xyz Summon procedure: 2+ Level 3 monsters
-	Xyz.AddProcedure(c,nil,3,2,nil,nil,99)
+	Xyz.AddProcedure(c,nil,3,2,nil,nil,Xyz.InfiniteMats)
 	--Special Summon 1 "Materiactor" monster from your Deck, OR add 1 "Materiactor" Spell/Trap from your Deck to your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

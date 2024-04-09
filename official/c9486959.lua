@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Xyz Summon
-	Xyz.AddProcedure(c,nil,2,2,nil,nil,99)
+	Xyz.AddProcedure(c,nil,2,2,nil,nil,Xyz.InfiniteMats)
 	c:EnableReviveLimit()
 	--Banish until the opponent's End Phase
 	local e1=Effect.CreateEffect(c)

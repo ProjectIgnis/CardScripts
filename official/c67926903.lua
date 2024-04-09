@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Xyz Summon procedure: 3+ Level 7 monsters OR 1 "Number C101" through "Number C107"
-	Xyz.AddProcedure(c,nil,7,3,s.ovfilter,aux.Stringid(id,0),99)
+	Xyz.AddProcedure(c,nil,7,3,s.ovfilter,aux.Stringid(id,0),Xyz.InfiniteMats)
 	--Gains 1000 ATK for each Xyz material it has
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

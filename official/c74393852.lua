@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Xyz Summon Procedure
-	Xyz.AddProcedure(c,nil,4,5,s.ovfilter,aux.Stringid(id,0),99,s.xyzop)
+	Xyz.AddProcedure(c,nil,4,5,s.ovfilter,aux.Stringid(id,0),nil,s.xyzop)
 	c:EnableReviveLimit()
 	--Gain the ATK/DEF of all "Zoodiac" monsters attached to itself
 	local e1=Effect.CreateEffect(c)

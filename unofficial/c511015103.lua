@@ -91,7 +91,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCode(EFFECT_ORICHALCUM_CHAIN)
 			c:RegisterEffect(e1,true)
 		end
-		Duel.XyzSummon(tp,xyz,nil,g)
+		Duel.XyzSummon(tp,xyz,g,nil,#g,#g)
 		if e1 then
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_SINGLE)

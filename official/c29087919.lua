@@ -52,6 +52,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local xyzc=xyzg:Select(tp,1,1,nil):GetFirst()
-		Duel.XyzSummon(tp,xyzc,nil,sg)
+		Duel.XyzSummon(tp,xyzc,g,nil,#g,#g)
 	end
 end

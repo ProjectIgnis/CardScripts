@@ -76,7 +76,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local xyz=Duel.SelectMatchingCard(tp,s.xyzfilter,tp,LOCATION_EXTRA,0,1,1,nil,sg):GetFirst()
 	if xyz then
-		Duel.XyzSummon(tp,xyz,nil,sg)
+		Duel.XyzSummon(tp,xyz,sg,nil,2,2)
 	end
 end
 function s.efcon(e,tp,eg,ep,ev,re,r,rp)

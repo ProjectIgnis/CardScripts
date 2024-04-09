@@ -57,7 +57,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
 		e2:SetOperation(s.regop)
 		xyz:RegisterEffect(e2)
-		Duel.XyzSummon(tp,xyz,nil,Group.FromCards(c,a))
+		Duel.XyzSummon(tp,xyz,Group.FromCards(c,a),nil,2,2)
 	end
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)

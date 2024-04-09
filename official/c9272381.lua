@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
-	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_LIGHT),5,3,s.ovfilter,aux.Stringid(id,0),99)
+	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_LIGHT),5,3,s.ovfilter,aux.Stringid(id,0),Xyz.InfiniteMats)
 	c:EnableReviveLimit()
 	--
 	local e1=Effect.CreateEffect(c)
@@ -46,7 +46,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4,false,REGISTER_FLAG_DETACH_XMAT)
 end
 function s.ovfilter(c,tp,xyzc)
-	return c:IsFaceup() and c:IsSetCard(SET_TELLARKNIGHT,xyzc,SUMMON_TYPE_XYZ,tp) and c:IsType(TYPE_XYZ,xyzc,SUMMON_TYPE_XYZ,tp) 
+	return c:IsFaceup() and c:IsSetCard(SET_TELLARKNIGHT,xyzc,SUMMON_TYPE_XYZ,tp) and c:IsType(TYPE_XYZ,xyzc,SUMMON_TYPE_XYZ,tp)
 		and not c:IsSummonCode(xyzc,SUMMON_TYPE_XYZ,tp,id) and Duel.IsPhase(PHASE_MAIN2)
 end
 function s.effcon(e)

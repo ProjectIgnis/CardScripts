@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	Xyz.AddProcedure(c,nil,4,2,nil,nil,99)
+	Xyz.AddProcedure(c,nil,4,2,nil,nil,Xyz.InfiniteMats)
 	--atk gain
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -38,7 +38,7 @@ function s.atkval(e,c)
 end
 function s.spfilter(c,e,tp,ec)
 	local zone=ec:GetToBeLinkedZone(c,tp)
-	return zone~=0 and c:IsLinkMonster() and c:IsRace(RACE_CYBERSE) and c:GetLink()==4 
+	return zone~=0 and c:IsLinkMonster() and c:IsRace(RACE_CYBERSE) and c:GetLink()==4
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -54,7 +54,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) then
 		local zone=c:GetToBeLinkedZone(tc,tp)
-		if zone~=0 then 
+		if zone~=0 then
 			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP,zone)
 		end
 	end

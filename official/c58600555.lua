@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	Xyz.AddProcedure(c,s.mfilter,5,2,s.ovfilter,aux.Stringid(id,2),99,s.xyzop)
+	Xyz.AddProcedure(c,s.mfilter,5,2,s.ovfilter,aux.Stringid(id,2),Xyz.InfiniteMats,s.xyzop)
 	--Back to Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
@@ -65,7 +65,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsType(TYPE_XYZ) 
+	if chk==0 then return e:GetHandler():IsType(TYPE_XYZ)
 		and Duel.IsExistingMatchingCard(Card.IsRace,tp,LOCATION_GRAVE,0,1,nil,RACE_INSECT) end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)

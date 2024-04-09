@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
 	--Xyz summon procedure
-	Xyz.AddProcedure(c,nil,3,2,nil,nil,99)
+	Xyz.AddProcedure(c,nil,3,2,nil,nil,Xyz.InfiniteMats)
 	--Targeted monster cannot be destroyed by battle
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

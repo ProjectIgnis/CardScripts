@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Xyz Summon procedure: 2+ Level 4 monsters
-	Xyz.AddProcedure(c,nil,4,2,nil,nil,99)
+	Xyz.AddProcedure(c,nil,4,2,nil,nil,Xyz.InfiniteMats)
 	--For each material attached to this card, monsters you control gain 100 ATK and monsters your opponent controls lose 100 ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)

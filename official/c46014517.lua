@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Xyz Summon procedure: 2+ Level 6 monsters
-	Xyz.AddProcedure(c,nil,6,2,nil,nil,99)
+	Xyz.AddProcedure(c,nil,6,2,nil,nil,Xyz.InfiniteMats)
 	--Attach face-up monsters your opponent controls up to the number of "Goblin" monsters you control to this card
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

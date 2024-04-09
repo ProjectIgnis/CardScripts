@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Xyz Summon procedure: 2+ Level 3 monsters
-	Xyz.AddProcedure(c,nil,3,2,nil,nil,99)
+	Xyz.AddProcedure(c,nil,3,2,nil,nil,Xyz.InfiniteMats)
 	--Change the ATK/DEF of a monster whose current ATK and/or DEF is different from its original value to its original ATK/DEF
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

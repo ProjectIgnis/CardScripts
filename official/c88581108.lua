@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Xyz Summon
-	Xyz.AddProcedure(c,nil,9,2,nil,nil,99)
+	Xyz.AddProcedure(c,nil,9,2,nil,nil,Xyz.InfiniteMats)
 	c:EnableReviveLimit()
 	--Attribute change and prevent effect activation
 	local e1=Effect.CreateEffect(c)

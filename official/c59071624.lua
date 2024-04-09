@@ -6,7 +6,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	Xyz.AddProcedure(c,nil,4,2,nil,nil,99)
+	Xyz.AddProcedure(c,nil,4,2,nil,nil,Xyz.InfiniteMats)
 	--Unaffected by trap effects while has material(s) attached
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -82,7 +82,7 @@ end
 	--Detach 1 material as cost
 	--Check for opponent's monster that sent there by your effect
 function s.cfilter(c,tp)
-	return c:IsMonster() and c:GetPreviousControler()==1-tp and c:IsPreviousLocation(LOCATION_MZONE) 
+	return c:IsMonster() and c:GetPreviousControler()==1-tp and c:IsPreviousLocation(LOCATION_MZONE)
 		and c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==tp
 end
 	--Check for opponent's sent monster in GY/banished

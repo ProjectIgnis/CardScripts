@@ -5,7 +5,7 @@ function s.initial_effect(c)
 	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
 	--Xyz summon procedure
-	Xyz.AddProcedure(c,nil,4,2,s.ovfilter,aux.Stringid(id,0),99,s.xyzop)
+	Xyz.AddProcedure(c,nil,4,2,s.ovfilter,aux.Stringid(id,0),Xyz.InfiniteMats,s.xyzop)
 	--Gains ATK/DEF equal to the total ATK/DEF of the "Zoodiac" monsters attached
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

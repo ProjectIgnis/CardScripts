@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	Xyz.AddProcedure(c,nil,9,2,nil,nil,99)
+	Xyz.AddProcedure(c,nil,9,2,nil,nil,Xyz.InfiniteMats)
 	--Send 1 monster from the Extra Deck to the GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -73,7 +73,7 @@ function s.atchop(e,tp,eg,ep,ev,re,r,rp)
 	local oct=#c:GetOverlayGroup()
 	local ct=e:GetLabel()
 	if oct==0 or oct<ct then return end
-	if c:RemoveOverlayCard(tp,ct,ct,REASON_EFFECT) then 
+	if c:RemoveOverlayCard(tp,ct,ct,REASON_EFFECT) then
 		local tg=Duel.GetTargetCards(e)
 		if #tg>0 then
 			Duel.Overlay(c,tg)

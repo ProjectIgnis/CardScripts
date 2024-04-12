@@ -34,7 +34,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
     	local b1=true
     	local b2=Duel.IsExistingMatchingCard(s.efffilter,tp,0,LOCATION_MZONE,1,nil)
     	local tchk,teg=Duel.CheckEvent(EVENT_ATTACK_ANNOUNCE,true)
-    	local b3=tchk and teg:GetFirst():IsControler(1-tp) and not teg:GetFirst():IsCode(0)
+    	local b3=tchk and teg:GetFirst():IsControler(1-tp) and not teg:GetFirst():IsCode(511001375)
     	local op=Duel.SelectEffect(tp,{b1,aux.Stringid(id,1)},{b2,aux.Stringid(id,2)},{b3,aux.Stringid(id,3)})
     	e:SetLabel(op)
     	if op==2 then     

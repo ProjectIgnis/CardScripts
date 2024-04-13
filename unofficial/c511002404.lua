@@ -2,32 +2,29 @@
 --Compensation Mediation
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Place this card and 2 cards from your opponent's GY on their field
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
-	e1:SetCondition(s.condition)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCondition(function() return Duel.IsBattlePhase() end)
 	e1:SetTarget(s.target)
-	e1:SetOperation(s.activate)
+	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and Duel.GetLocationCount(tp,LOCATION_MZONE)>2
-end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(nil,tp,0,LOCATION_GRAVE,2,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(nil,tp,0,LOCATION_GRAVE,2,nil) and Duel.GetLocationCount(1-tp,LOCATION_MZONE)>2 end
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,nil,2,0,0)
 end
-function s.activate(e,tp,eg,ep,ev,re,r,rp)
+function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=2 then return end
 	local g=Duel.GetMatchingGroup(nil,tp,0,LOCATION_GRAVE,nil)
+	if Duel.GetLocationCount(1-tp,LOCATION_MZONE)<=2 or #g<2 then return end
 	if #g>1 then
 		local sg=g:Select(1-tp,2,2,nil)
 		sg:AddCard(c)
 		local tc=sg:GetFirst()
 		while tc do
-			Duel.MoveToField(tc,tp,tp,LOCATION_MZONE,POS_FACEDOWN_ATTACK,true)
+			Duel.MoveToField(tc,tp,1-tp,LOCATION_MZONE,POS_FACEDOWN_ATTACK,true)
 			tc=sg:GetNext()
 		end
 		Duel.ShuffleSetCard(sg)
@@ -35,12 +32,21 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(tp,rsel)
 		Duel.ConfirmCards(1-tp,rsel)
 		if rsel:IsContains(c) then
-			Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
-			sg:RemoveCard(c)
-			Duel.SendtoDeck(sg,nil,0,REASON_EFFECT)
-			Duel.SendtoGrave(c,REASON_EFFECT)
+			if Duel.GetTurnPlayer()==tp then
+				Duel.SkipPhase(tp,PHASE_BATTLE,RESET_PHASE|PHASE_BATTLE_STEP,1)
+				sg:RemoveCard(c)
+				Duel.SendtoDeck(sg,nil,0,REASON_EFFECT)
+				Duel.SendtoGrave(c,REASON_EFFECT)
+			else
+				Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE|PHASE_BATTLE_STEP,1)
+				sg:RemoveCard(c)
+				Duel.SendtoDeck(sg,nil,0,REASON_EFFECT)
+				Duel.SendtoGrave(c,REASON_EFFECT)
+			end
 		else
-			Duel.SendtoGrave(sg,REASON_EFFECT)
+			sg:RemoveCard(rsel+c)
+            		Duel.SendtoGrave(rsel+c,REASON_EFFECT)
+            		Duel.SendtoDeck(sg,nil,SEQ_DECKTOP,REASON_EFFECT)
 		end
 	end
 	

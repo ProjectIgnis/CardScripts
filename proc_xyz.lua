@@ -117,12 +117,55 @@ function Xyz.CheckValidMultiXyzMaterial(effs,xyz)
 	end
 	return false
 end
+function Xyz.MatNumChk(matct,ct,comp)
+	if (comp&0x1)==0x1 and matct>ct then return true end
+	if (comp&0x2)==0x2 and matct==ct then return true end
+	if (comp&0x4)==0x4 and matct<ct then return true end
+	return false
+end
+function Xyz.MatNumChkF(tg)
+	for chkc in tg:Iter() do
+		for _,te in ipairs({chkc:GetCardEffect(EFFECT_STAR_SERAPH_SOVEREIGNTY)}) do
+			local rct=te:GetValue()&0xffff
+			local comp=(te:GetValue()>>16)&0xffff
+			if not Xyz.MatNumChk(tg:FilterCount(Card.IsMonster,nil),rct,comp) then return false end
+		end
+	end
+	return true
+end
+function Xyz.MatNumChkF2(tg,lv,xyz)
+	for chkc in tg:Iter() do
+		local rev={}
+		for _,te in ipairs({chkc:GetCardEffect(EFFECT_SATELLARKNIGHT_CAPELLA)}) do
+			local rct=te:GetValue()&0xffff
+			local comp=(te:GetValue()>>16)&0xffff
+			if not Xyz.MatNumChk(tg:FilterCount(Card.IsMonster,nil),rct,comp) then
+				local con=te:GetLabelObject():GetCondition()
+				if not con then con=aux.TRUE end
+				if not rev[te] then
+					table.insert(rev,te)
+					rev[te]=con
+					te:GetLabelObject():SetCondition(aux.FALSE)
+				end
+			end
+		end
+		if #rev>0 then
+			local islv=chkc:IsXyzLevel(xyz,lv)
+			for _,te in ipairs(rev) do
+				local con=rev[te]
+				te:GetLabelObject():SetCondition(con)
+			end
+			if not islv then return false end
+		end
+	end
+	return true
+end
 function Xyz.CheckMaterialSet(matg,xyz,tp,exchk,mustg,lv)
 	if not matg:Includes(mustg) then return false end
-	if matg:IsExists(Card.IsHasEffect,1,nil,EFFECT_STAR_SERAPH_SOVEREIGNTY) and not Xyz.MatNumChkF(matg) then
+	if not Xyz.MatNumChkF(matg) then
 		return false
 	end
-	if lv and matg:IsExists(Card.IsHasEffect,1,nil,EFFECT_SATELLARKNIGHT_CAPELLA) and not Xyz.MatNumChkF2(matg,lv,xyz) then
+	if lv and not Xyz.MatNumChkF2(matg,lv,xyz) then
 		return false
 	end
 	if exchk and #matg>0 and not exchk(matg,tp,xyz) then
@@ -130,9 +173,8 @@ function Xyz.CheckMaterialSet(matg,xyz,tp,exchk,mustg,lv)
 	end
 	if xyz:IsLocation(LOCATION_EXTRA) then
 		return Duel.GetLocationCountFromEx(tp,tp,matg,xyz)>0
-	else
-		return Duel.GetMZoneCount(tp,matg,tp)>0
 	end
+	return Duel.GetMZoneCount(tp,matg,tp)>0
 end
 function Xyz.RecursionChk(c,mg,xyz,tp,min,max,minc,maxc,sg,matg,ct,matct,mustbemat,exchk,f,mustg,lv,eqmg,equips_inverse)
 	local addToMatg=true
@@ -205,52 +247,6 @@ function Xyz.RecursionChk(c,mg,xyz,tp,min,max,minc,maxc,sg,matg,ct,matct,mustbem
 	end
 	mg:Merge(rg)
 	return res
-end
-function Xyz.MatNumChkF(tg)
-	local chkg=tg:Filter(Card.IsHasEffect,nil,EFFECT_STAR_SERAPH_SOVEREIGNTY)
-	for chkc in aux.Next(chkg) do
-		for _,te in ipairs({chkc:GetCardEffect(EFFECT_STAR_SERAPH_SOVEREIGNTY)}) do
-			local rct=te:GetValue()&0xffff
-			local comp=te:GetValue()>>16
-			if not Xyz.MatNumChk(tg:FilterCount(Card.IsMonster,nil),rct,comp) then return false end
-		end
-	end
-	return true
-end
-function Xyz.MatNumChk(matct,ct,comp)
-	local ok=false
-	if not ok and comp&0x1==0x1 and matct>ct then ok=true end
-	if not ok and comp&0x2==0x2 and matct==ct then ok=true end
-	if not ok and comp&0x4==0x4 and matct<ct then ok=true end
-	return ok
-end
-function Xyz.MatNumChkF2(tg,lv,xyz)
-	local chkg=tg:Filter(Card.IsHasEffect,nil,EFFECT_SATELLARKNIGHT_CAPELLA)
-	for chkc in aux.Next(chkg) do
-		local rev={}
-		for _,te in ipairs({chkc:GetCardEffect(EFFECT_SATELLARKNIGHT_CAPELLA)}) do
-			local rct=te:GetValue()&0xffff
-			local comp=te:GetValue()>>16
-			if not Xyz.MatNumChk(tg:FilterCount(Card.IsMonster,nil),rct,comp) then
-				local con=te:GetLabelObject():GetCondition()
-				if not con then con=aux.TRUE end
-				if not rev[te] then
-					table.insert(rev,te)
-					rev[te]=con
-					te:GetLabelObject():SetCondition(aux.FALSE)
-				end
-			end
-		end
-		if #rev>0 then
-			local islv=chkc:IsXyzLevel(xyz,lv)
-			for _,te in ipairs(rev) do
-				local con=rev[te]
-				te:GetLabelObject():SetCondition(con)
-			end
-			if not islv then return false end
-		end
-	end
-	return true
 end
 function Auxiliary.HarmonizingMagFilterXyz(c,e,f)
 	return not f or f(e,c) or c:IsHasEffect(EFFECT_ORICHALCUM_CHAIN) or c:IsHasEffect(EFFECT_EQUIP_SPELL_XYZ_MAT)

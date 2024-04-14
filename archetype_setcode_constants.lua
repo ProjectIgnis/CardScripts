@@ -561,3 +561,4 @@ SET_FIENDSMITH                    = 0x1a8
 SET_BLUE_TEARS                    = 0x1a9
 SET_WHITE_FOREST                  = 0x1aa
 SET_TACHYON                       = 0x1ab
+SET_MULTCHUMMY                    = 0x1ac

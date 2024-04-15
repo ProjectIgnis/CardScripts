@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_EQUIP)
 	e1:SetCode(EFFECT_IMMUNE_EFFECT)
-	e1:SetCondition(function(e) return e:GetHandler():GetEquipTarget():IsCode(CARD_RED_DRAGON_ARCHFIEND) end)
+	e1:SetCondition(s.immcon)
 	e1:SetValue(function(e,te) return te:GetOwnerPlayer()==1-e:GetHandlerPlayer() and te:IsActivated() end)
 	c:RegisterEffect(e1)
 	--Change the ATK of all monsters your opponent currently controls to the equipped monster's
@@ -39,6 +39,10 @@ end
 s.listed_names={CARD_RED_DRAGON_ARCHFIEND}
 function s.eqfilter(c)
 	return c:IsRace(RACE_DRAGON) and c:IsType(TYPE_SYNCHRO)
+end
+function s.immcon(e)
+	local ec=e:GetHandler():GetEquipTarget()
+	return ec and ec:IsCode(CARD_RED_DRAGON_ARCHFIEND)
 end
 function s.oppatktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

@@ -29,7 +29,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 end
 function s.desfilter(c)
-	return c:IsFaceup() and c:IsLevelBelow(9)
+	return c:IsFaceup() and c:IsLevelBelow(9) and not c:IsMaximumModeSide()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
@@ -51,6 +51,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 			local sg=g2:Select(tp,1,1,nil)
 			if #sg==0 then return end
+			sg=sg:AddMaximumCheck()
 			Duel.HintSelection(sg)
 			Duel.BreakEffect()
 			Duel.Destroy(sg,REASON_EFFECT)

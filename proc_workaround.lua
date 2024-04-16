@@ -10,8 +10,9 @@ Duel.SendtoHand=(function()
 	return function(card_or_group,dest_player,reason,reason_player,...)
 		local res=oldfunc(card_or_group,dest_player,reason,reason_player,...)
 		if res==0 then return res end
-		if type(card_or_group)=="Group" and #(card_or_group:Match(Card.IsLocation,nil,LOCATION_HAND))>0 then
-			for tc in card_or_group:Iter() do
+		if type(card_or_group)=="Group" then
+			local hand_group=card_or_group:Filter(Card.IsLocation,nil,LOCATION_HAND)
+			for tc in hand_group:Iter() do
 				tc:RegisterFlagEffect(30336082,RESET_EVENT|RESETS_STANDARD|RESET_CHAIN,EFFECT_FLAG_CLIENT_HINT,1,0,225)
 			end
 		elseif type(card_or_group)=="Card" and card_or_group:IsLocation(LOCATION_HAND) then

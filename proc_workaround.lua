@@ -1,5 +1,26 @@
 --Utilities to be added to the core
 
+--[[
+	Places a hint that says "Added to the hand by a currently resolving effect" (string 225) on any cards added to the hand for the duration of that Chain's/effect's resolution.
+	Used to differentiate which card(s) were just added to the hand and which ones were already there for cases of multiple copies of the same card being present.
+	The card ID used for the flag effect (30336082) belongs to "Brimming Sangen Manor", the card that initially needed this workaround.
+--]]
+Duel.SendtoHand=(function()
+	local oldfunc=Duel.SendtoHand
+	return function(card_or_group,dest_player,reason,reason_player,...)
+		local res=oldfunc(card_or_group,dest_player,reason,reason_player,...)
+		if res==0 then return res end
+		if type(card_or_group)=="Group" and #(card_or_group:Match(Card.IsLocation,nil,LOCATION_HAND))>0 then
+			for tc in card_or_group:Iter() do
+				tc:RegisterFlagEffect(30336082,RESET_EVENT|RESETS_STANDARD|RESET_CHAIN,EFFECT_FLAG_CLIENT_HINT,1,0,225)
+			end
+		elseif type(card_or_group)=="Card" and card_or_group:IsLocation(LOCATION_HAND) then
+			card_or_group:RegisterFlagEffect(30336082,RESET_EVENT|RESETS_STANDARD|RESET_CHAIN,EFFECT_FLAG_CLIENT_HINT,1,0,225)
+		end
+		return res
+	end
+end)()
+
 --Use the "selected" string by default. Pass "false" as the boolean to use the "targeted" string instead.
 Duel.HintSelection=(function()
 	local oldfunc=Duel.HintSelection

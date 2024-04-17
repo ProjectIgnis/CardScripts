@@ -60,6 +60,8 @@ function s.matcheck(e,c)
 	if #mg==0 then return e:GetLabelObject():SetLabel(0) end
 	if mg:IsExists(s.matfilter,1,nil,c,e:GetHandlerPlayer()) then
 		e:GetLabelObject():SetLabel(1)
+	else
+		e:GetLabelObject():SetLabel(0)
 	end
 end
 function s.spcostfilter(c,e,tp)

@@ -75,5 +75,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return c:IsCode(e:GetLabel())
+	return c:IsOriginalCodeRule(e:GetLabel())
 end

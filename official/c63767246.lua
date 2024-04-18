@@ -78,15 +78,19 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		and Duel.IsExistingTarget(aux.FaceupFilter(Card.IsType,TYPE_XYZ),tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
 	Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsType,TYPE_XYZ),tp,LOCATION_MZONE,0,1,1,nil)
+	local mg=eg:Filter(s.atkconfilter,nil,tp)
+	mg:KeepAlive()
+	e:SetLabelObject(mg)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not (tc:IsFaceup() and tc:IsRelateToEffect(e)) then return end
-	local g=eg:Filter(s.atkconfilter,nil,tp)
+	local g=e:GetLabelObject()
 	if #g>=2 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 		g=g:Select(tp,1,1,nil)
 	end
+	--Duel.HintSelection(g)
 	--Gains ATK equal to 1 of those destroyed monster's original ATK
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)

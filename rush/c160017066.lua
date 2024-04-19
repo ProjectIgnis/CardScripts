@@ -34,6 +34,9 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.ctrlfilter,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,nil,1,0,0)
 end
+function s.tdfilter(c,tp)
+	return c:IsLocation(LOCATION_DECK) and c:IsOwner(tp)
+end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
@@ -41,7 +44,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local td2=Duel.SelectMatchingCard(tp,Card.IsAbleToDeckAsCost,tp,LOCATION_HAND,0,1,1,nil)
 	td:Merge(td2)
 	if Duel.SendtoDeck(td,nil,SEQ_DECKBOTTOM,REASON_COST)<1 then return end
-	local td=Duel.GetOperatedGroup():Filter(Card.IsLocation,nil,LOCATION_DECK)
+	local td=Duel.GetOperatedGroup():Filter(s.tdfilter,nil,tp)
 	if #td>1 then
 		Duel.SortDeckbottom(tp,tp,#td)
 	end

@@ -46,7 +46,6 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tg=te:GetTarget()
 	e:SetProperty(te:GetProperty())
 	if tg then tg(e,tp,ceg,cep,cev,cre,cr,crp,1) end
-	te:SetLabelObject(e:GetLabelObject())
 	e:SetLabelObject(te)
 	Duel.ClearOperationInfo(0)
 end
@@ -82,7 +81,6 @@ function s.gytg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tg=te:GetTarget()
 	e:SetProperty(te:GetProperty())
 	if tg then tg(e,tp,ceg,cep,cev,cre,cr,crp,1) end
-	te:SetLabelObject(e:GetLabelObject())
 	e:SetLabelObject(te)
 	Duel.ClearOperationInfo(0)
 end

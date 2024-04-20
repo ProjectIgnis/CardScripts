@@ -54,8 +54,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.redirectval(e,c,reason)
 	local c=e:GetHandler()
-	if (c:IsLocation(LOCATION_MZONE) and reason==REASON_BATTLE) or
-		(c:IsLocation(LOCATION_DECK|LOCATION_HAND) and reason==REASON_EFFECT) then
+	if (c:IsLocation(LOCATION_MZONE) and (reason&REASON_BATTLE)==REASON_BATTLE) or
+		(c:IsLocation(LOCATION_DECK|LOCATION_HAND) and (reason&REASON_EFFECT)==REASON_EFFECT) then
 		return LOCATION_REMOVED
 	end
 	return 0

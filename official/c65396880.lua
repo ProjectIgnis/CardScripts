@@ -1,8 +1,10 @@
 --大革命
+--Huge Revolution
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_TOGRAVE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -11,27 +13,27 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.cfilter(c,code)
-	return c:IsFaceup() and c:IsCode(code)
-end
+s.listed_names={12143771,58538870,85936485} --"People Running About", "Oppressed People", "United Resistance"
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local ph=Duel.GetCurrentPhase()
-	return Duel.GetTurnPlayer()==tp and (ph==PHASE_MAIN1 or ph==PHASE_MAIN2)
-		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil,58538870)
-		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil,12143771)
-		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil,85936485)
+	return Duel.IsTurnPlayer(tp) and Duel.IsMainPhase()
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,12143771),tp,LOCATION_ONFIELD,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,58538870),tp,LOCATION_ONFIELD,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,85936485),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil)
-		or Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)~=0 end
-	local g1=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)
-	local g2=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g1,#g1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g2,#g2,0,0)
+	local desg=Duel.GetFieldGroup(tp,0,LOCATION_ONFIELD)
+	if chk==0 then return #desg>0 or Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,0,LOCATION_HAND,1,nil) end
+	local hg=Duel.GetMatchingGroup(Card.IsAbleToGrave,tp,0,LOCATION_HAND,nil)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,hg,#hg,tp,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,desg,#desg,tp,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local g1=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)
-	Duel.Destroy(g1,REASON_EFFECT)
-	local g2=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
-	Duel.SendtoGrave(g2,REASON_EFFECT)
+	local hg=Duel.GetMatchingGroup(Card.IsAbleToGrave,tp,0,LOCATION_HAND,nil)
+	if #hg>0 then
+		Duel.SendtoGrave(hg,REASON_EFFECT)
+	end
+	local desg=Duel.GetFieldGroup(tp,0,LOCATION_ONFIELD)
+	if #desg>0 then
+		Duel.Destroy(desg,REASON_EFFECT)
+	end
 end

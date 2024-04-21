@@ -27,8 +27,13 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
-function s.filter(c,e,codechk)
-	return c:IsFaceup() and c:IsAttackBelow(2000) and (not e or c:IsCanBeEffectTarget(e)) and (not codechk or s.mdnamecheck(c))
+function s.filter(c,e,tp)
+	if not (c:IsFaceup() and c:IsAttackBelow(2000) and (not e or c:IsCanBeEffectTarget(e))) then return false end
+	if c:IsControler(tp) then
+		return Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_DECK|LOCATION_HAND,0,1,nil,c:GetCode())
+	else
+		return s.mdnamecheck(c)
+	end
 end
 function s.mdnamecheck(c)
 	if c:IsType(TYPE_TOKEN|TYPE_EXTRA) or c:IsHasEffect(EFFECT_CHANGE_CODE) then
@@ -47,24 +52,28 @@ function s.publicfilter(c,p,...)
 	return c:IsCode(...) and (c:IsPublic() or (c:IsLocation(LOCATION_DECK) and c:GetSequence()==Duel.GetFieldGroupCount(p,LOCATION_DECK,0)-1 and Duel.IsPlayerAffectedByEffect(p,EFFECT_REVERSE_DECK)))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return eg:IsContains(chkc) and s.filter(chkc,nil,true) end
-	if chk==0 then return eg:IsExists(s.filter,1,nil,e,true) end
+	if chkc then return eg:IsContains(chkc) and s.filter(chkc,nil,tp) end
+	if chk==0 then return eg:IsExists(s.filter,1,nil,e,tp) end
 	local tc
 	if #eg==1 then
 		Duel.SetTargetCard(eg)
 		tc=eg:GetFirst()
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-		local g=eg:FilterSelect(tp,s.filter,1,1,nil,e,true)
+		local g=eg:FilterSelect(tp,s.filter,1,1,nil,e,tp)
 		Duel.SetTargetCard(g)
 		tc=g:GetFirst()
 	end
 	local p=tc:GetControler()
-	local public=Duel.GetMatchingGroup(s.publicfilter,p,LOCATION_DECK|LOCATION_HAND,0,nil,p,tc:GetCode())
-	if #public>0 then
-		Duel.SetOperationInfo(0,CATEGORY_DESTROY,public,#public,p,LOCATION_DECK|LOCATION_HAND)
+	if p==tp then
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,p,LOCATION_DECK|LOCATION_HAND)
 	else
-		Duel.SetPossibleOperationInfo(0,CATEGORY_DESTROY,nil,1,p,LOCATION_DECK|LOCATION_HAND)
+		local public=Duel.GetMatchingGroup(s.publicfilter,p,LOCATION_DECK|LOCATION_HAND,0,nil,p,tc:GetCode())
+		if #public>0 then
+			Duel.SetOperationInfo(0,CATEGORY_DESTROY,public,#public,p,LOCATION_DECK|LOCATION_HAND)
+		else
+			Duel.SetPossibleOperationInfo(0,CATEGORY_DESTROY,nil,1,p,LOCATION_DECK|LOCATION_HAND)
+		end
 	end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

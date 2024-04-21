@@ -50,7 +50,7 @@ function s.spfilter(c,e,tp,atk)
 	return c:IsSetCard(SET_MADOLCHE) and c:IsAttackBelow(atk) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	local tg=Duel.GetTargetCards(e):Filter(Card.IsType,nil,TYPE_EFFECT)
+	local tg=Duel.GetTargetCards(e):Filter(aux.FaceupFilter(Card.IsType,TYPE_EFFECT),nil)
 	if #tg==0 then return end
 	local exg,hg=tg:Split(Card.IsType,nil,TYPE_EXTRA)
 	local ct=0
@@ -58,7 +58,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	if #hg>0 then ct=ct+Duel.SendtoHand(hg,nil,REASON_EFFECT) end
 	if ct==0 then return end
 	if hg:IsExists(function(c) return c:IsLocation(LOCATION_HAND) and c:IsControler(tp) end,1,nil) then Duel.ShuffleHand(tp) end
-	local atk=Duel.GetOperatedGroup():Filter(Card.IsLocation,nil,LOCATION_HAND|LOCATION_EXTRA):GetSum(Card.GetBaseAttack)
+	local atk=tg:Filter(Card.IsLocation,nil,LOCATION_HAND|LOCATION_EXTRA):GetSum(Card.GetBaseAttack)
 	if Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND|LOCATION_EXTRA,0,1,nil,e,tp,atk) and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND|LOCATION_EXTRA,0,1,1,nil,e,tp,atk)

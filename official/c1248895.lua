@@ -17,30 +17,22 @@ function s.initial_effect(c)
 	local e3=e1:Clone()
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
-	--Hidden Token to check eligible names when Tokens/Extra Deck Monsters are Summoned
-	aux.GlobalCheck(s,function()
-		local ge1=Effect.CreateEffect(c)
-		ge1:SetType(EFFECT_TYPE_CONTINUOUS|EFFECT_TYPE_FIELD)
-		ge1:SetCode(EVENT_ADJUST)
-		ge1:SetCountLimit(1,id,EFFECT_COUNT_CODE_DUEL)
-		ge1:SetOperation(s.createtoken)
-		Duel.RegisterEffect(ge1,0)
-	end)
 end
 function s.filter(c,e,tp)
-	if not (c:IsFaceup() and c:IsAttackBelow(2000) and (not e or c:IsCanBeEffectTarget(e))) then return false end
-	if c:IsControler(tp) then
+	if not (c:IsFaceup() and c:IsAttackBelow(12000) and (not e or c:IsCanBeEffectTarget(e))) then return false end
+	local p=c:GetControler()
+	if p==tp then
 		return Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_DECK|LOCATION_HAND,0,1,nil,c:GetCode())
 	else
-		return s.mdnamecheck(c)
+		return Duel.GetFieldGroupCount(p,LOCATION_HAND|LOCATION_DECK,0)>0 and s.mdnamecheck(c)
 	end
 end
 function s.mdnamecheck(c)
 	if c:IsType(TYPE_TOKEN|TYPE_EXTRA) or c:IsHasEffect(EFFECT_CHANGE_CODE) then
 		local codes={c:GetCode()}
 		for _,code in ipairs(codes) do
-			s.CheckCodeToken:Recreate(code)
-			if not s.CheckCodeToken:IsType(TYPE_TOKEN|TYPE_EXTRA) then
+			local typ=Duel.GetCardTypeFromCode(code)
+			if typ&(TYPE_TOKEN|TYPE_EXTRA)==0 then
 				return true
 			end
 		end
@@ -81,9 +73,4 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not tc:IsRelateToEffect(e) or not tc:IsFaceup() then return end
 	local dg=Duel.GetMatchingGroup(Card.IsCode,tc:GetControler(),LOCATION_DECK|LOCATION_HAND,0,nil,tc:GetCode())
 	Duel.Destroy(dg,REASON_EFFECT)
-end
-
-function s.createtoken(e)
-	s.CheckCodeToken=Duel.CreateToken(0,0)
-	e:Reset()
 end

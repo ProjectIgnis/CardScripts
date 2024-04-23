@@ -18,8 +18,9 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
+
 function s.filter(c,e,tp)
-	if not (c:IsFaceup() and c:IsAttackBelow(2000) and (not e or c:IsCanBeEffectTarget(e))) then return false end
+	if not (c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsAttackBelow(2000) and (not e or c:IsCanBeEffectTarget(e))) then return false end
 	local p=c:GetControler()
 	if p==tp then
 		return Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_DECK|LOCATION_HAND,0,1,nil,c:GetCode())

@@ -378,6 +378,7 @@ SET_BORREL                        = 0x10f
 SET_RELINQUISHED                  = 0x110
 SET_EYES_RESTRICT                 = 0x1110
 SET_ARMED_DRAGON                  = 0x111
+SET_ARMED_DRAGON_THUNDER          = 0x1111
 SET_KNIGHTMARE                    = 0x112
 SET_ELEMENTAL_LORD                = 0x113
 SET_FUR_HIRE                      = 0x114

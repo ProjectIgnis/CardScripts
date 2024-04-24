@@ -37,8 +37,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.checkfilter,nil)
 	if #g==0 then return end
 	for p=0,1 do
-		if g:IsExists(Card.IsPreviousControler,1,nil,p)
-			and not Duel.HasFlagEffect(p,id) then
+		if g:IsExists(Card.IsPreviousControler,1,nil,p) and not Duel.HasFlagEffect(p,id) then
 			Duel.RegisterFlagEffect(p,id,RESET_PHASE|PHASE_END,0,1)
 		end
 	end

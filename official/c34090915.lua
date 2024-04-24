@@ -17,6 +17,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_CUSTOM+id)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1,id)
+	e2:SetCondition(function() return not Duel.IsPhase(PHASE_DAMAGE) end)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
@@ -57,6 +58,7 @@ function s.cfilter(c,e)
 		and c:IsAbleToDeck() and c:IsCanBeEffectTarget(e) and c:IsLocation(LOCATION_REMOVED)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.IsPhase(PHASE_DAMAGE) then return end
 	local tg=eg:Filter(s.cfilter,nil,e)
 	if #tg>0 then
 		for tc in tg:Iter() do

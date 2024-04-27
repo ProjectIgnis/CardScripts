@@ -244,6 +244,10 @@ Card.IsSpellCard=aux.FilterBoolFunction(Card.IsOriginalType,TYPE_SPELL)
 Card.IsTrapCard=aux.FilterBoolFunction(Card.IsOriginalType,TYPE_TRAP)
 Card.IsSpellTrapCard=aux.FilterBoolFunction(Card.IsOriginalType,TYPE_SPELL|TYPE_TRAP)
 
+function Card.IsTrapMonster(c)
+	return c:IsTrapCard() and (c:GetOriginalLevel()>0 or c:GetOriginalAttribute()>0 or c:GetOriginalRace()>0)
+end
+
 function Card.IsNonEffectMonster(c)
 	return c:IsMonster() and not c:IsType(TYPE_EFFECT)
 end

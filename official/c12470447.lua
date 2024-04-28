@@ -15,14 +15,14 @@ function s.initial_effect(c)
 	--Can only be activated as Spell Speed 1 at the start of a chain during your Standby Phase while set
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetProperty(EFFECT_FLAG_SET_AVAILABLE|EFFECT_FLAG_UNCOPYABLE|EFFECT_FLAG_CANNOT_DISABLE|EFFECT_FLAG_SINGLE_RANGE)
+	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE|EFFECT_FLAG_CANNOT_DISABLE)
 	e2:SetCode(EFFECT_BECOME_QUICK)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCondition(s.condition)
 	c:RegisterEffect(e2)
 end
 function s.condition(e)
-	return Duel.IsTurnPlayer(e:GetHandlerPlayer()) and Duel.IsPhase(PHASE_STANDBY)
+	return Duel.IsTurnPlayer(e:GetHandlerPlayer()) and e:GetHandler():IsLocation(LOCATION_SZONE) and Duel.IsPhase(PHASE_STANDBY)
 		and Duel.GetCurrentChain()==0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

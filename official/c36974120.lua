@@ -39,7 +39,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=not Duel.HasFlagEffect(tp,id) and c:IsLocation(LOCATION_HAND)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-	local b2=not Duel.HasFlagEffect(tp,id+100) and c:IsLocation(LOCATION_MZONE)
+	local b2=not Duel.HasFlagEffect(tp,id+1) and c:IsLocation(LOCATION_MZONE)
 		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,TYPE_EFFECT),tp,0,LOCATION_MZONE,1,nil)
 	if chk==0 then return b1 or b2 end
 	local op=b1 and 1 or 2
@@ -50,7 +50,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,tp,0)
 	elseif op==2 then
 		e:SetCategory(CATEGORY_ATKCHANGE|CATEGORY_DESTROY)
-		Duel.RegisterFlagEffect(tp,id+100,RESET_PHASE|PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_END,0,1)
 		Duel.SetPossibleOperationInfo(0,CATEGORY_DESTROY,nil,1,1-tp,LOCATION_MZONE)
 	end
 end

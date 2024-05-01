@@ -1,4 +1,4 @@
---
+--JP name
 --Aiza the Dragoness of Deranged Devotion
 --Scripted by Hatter
 local s,id=GetID()

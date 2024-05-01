@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.effop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={42233477,78621186}
+s.listed_names={42233477,78621186} --"Battleguard Rage", "Battleguard Howling"
 function s.thfilter(c)
 	return c:IsLevel(5) and c:IsAttribute(ATTRIBUTE_EARTH) and c:IsRace(RACE_WARRIOR) and c:IsAbleToHand()
 end

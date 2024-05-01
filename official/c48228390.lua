@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-local TOKEN_PYRITE=id+100
+local TOKEN_PYRITE=id+1
 s.listed_series={id,TOKEN_PYRITE}
 function s.thfilter(c,tp)
 	return c:IsAttribute(ATTRIBUTE_EARTH|ATTRIBUTE_FIRE) and c:IsRace(RACE_WARRIOR)

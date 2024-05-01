@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCondition(function(e) return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,101204086),0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end)
+	e1:SetCondition(function(e) return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,885016),0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end)
 	e1:SetValue(aux.indoval)
 	c:RegisterEffect(e1)
 	--Special Summon this card from your hand
@@ -38,7 +38,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.tdop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={101204086}
+s.listed_names={885016} --"Multi-Universe"
 function s.spconfilter(c)
 	return c:IsPreviousLocation(LOCATION_FZONE) and c:IsReason(REASON_EFFECT)
 end

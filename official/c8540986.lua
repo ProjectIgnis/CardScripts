@@ -1,4 +1,4 @@
---
+--JP name
 --Veidos the Dragon of Endless Darkness
 --scripted by pyrQ
 local s,id=GetID()

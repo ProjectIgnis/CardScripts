@@ -20,7 +20,7 @@ function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	local tc=g:GetFirst()
 	local atk=0
-	if #g==1 and tc:GetFlagEffect(FLAG_DOUBLE_TRIB)>0 then
+	if #g==1 and (tc:HasFlagEffect(FLAG_DOUBLE_TRIB) or tc:HasFlagEffect(FLAG_DOUBLE_TRIB_DARK+FLAG_DOUBLE_TRIB_FIEND+160017041+160017141)) then
 		atk=tc:GetTextAttack()*2
 		if tc:IsMaximumMode() then
 			atk=tc.MaximumAttack*2

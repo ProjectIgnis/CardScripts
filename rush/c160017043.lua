@@ -49,6 +49,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			atk=atk+dg:GetFirst():GetTextAttack()*2
 			sg:RemoveCard(dg:GetFirst())
 			atk=atk+sg:GetFirst():GetTextAttack()+800
+		elseif #g==1 and #tg==1 then
+			local catk=0
+			catk=tc:GetTextAttack()*2
+			if tc:IsMaximumMode() then
+				catk=tc.MaximumAttack*2
+			end
+			atk=atk+(catk>=0 and catk or 0)
 		else 
 			for tc in sg:Iter() do
 				local catk=0
@@ -87,7 +94,6 @@ function s.valcheck(e,c)
 		if #tg==0 then
 			tg=sg:Filter(Card.HasFlagEffect,nil,FLAG_DOUBLE_TRIB_DARK+FLAG_DOUBLE_TRIB_FIEND+160017041+160017141)
 		end
-		Debug.Message(#tg)
 		tg:KeepAlive()
 		local label_obj=e:GetLabelObject() --this is e0 
 		label_obj:SetLabelObject(tg)

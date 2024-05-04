@@ -1,5 +1,5 @@
 --紅恋の麗傑－ブラダマンテ
---Brave Beauty of Ruby Regard - Bradamante
+--Courageous Crimson Chevalier Bradamante
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -30,6 +30,7 @@ function s.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EVENT_LEAVE_FIELD_P)
+	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e3:SetOperation(s.leavepop)
 	e3:SetLabelObject(e2)
 	c:RegisterEffect(e3)

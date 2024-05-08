@@ -37,7 +37,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.damop)
 	c:RegisterEffect(e4,false,REGISTER_FLAG_DETACH_XMAT)
 end
-s.listed_series={SET_NUMBER)
+s.listed_series={SET_NUMBER}
 s.xyz_number=54
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())

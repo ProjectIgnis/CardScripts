@@ -1,70 +1,51 @@
---No.54 反骨の闘士ライオンハート
+--No.54 反骨の闘士ライオンハート (Amime)
+--Number 54: Lion Heart (Anime)
 Duel.LoadCardScript("c54366836.lua")
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
-	Xyz.AddProcedure(c,nil,1,3)
 	c:EnableReviveLimit()
-	--ind
+	--Xyz Summon Procedure
+	Xyz.AddProcedure(c,nil,1,3)
+	--Cannot be destroyed by battle, except with a "Number" monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e1:SetCondition(s.indcon)
-	e1:SetValue(1)
+	e1:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,SET_NUMBER)))
 	c:RegisterEffect(e1)
-	--damage
+	--Cannot be destroyed by battle while in Attack Position
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
-	e2:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-	e2:SetOperation(s.damop)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+	e2:SetCondition(function(e) return e:GetHandler():IsAttackPos() end)
+	e2:SetValue(1)
 	c:RegisterEffect(e2)
-	--damage
+	--Your opponent also takes battle damage from battles involving this card
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(54366836,0))
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
-	e3:SetCondition(s.damcon)
-	e3:SetCost(s.damcost)
-	e3:SetOperation(s.surop)
-	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
-	--battle indestructable
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetCode(EFFECT_BOTH_BATTLE_DAMAGE)
+	c:RegisterEffect(e3)
+	--If your LP would become 0 from battle damage, make your LP 100
 	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e4:SetValue(s.indes)
-	c:RegisterEffect(e4)
+	e4:SetDescription(aux.Stringid(54366836,0))
+	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e4:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
+	e4:SetCondition(function(e,tp) return Duel.GetBattleDamage(tp)>=Duel.GetLP(tp) end)
+	e4:SetCost(aux.dxmcostgen(1,1,nil))
+	e4:SetOperation(s.damop)
+	c:RegisterEffect(e4,false,REGISTER_FLAG_DETACH_XMAT)
 end
+s.listed_series={SET_NUMBER)
 s.xyz_number=54
-function s.indcon(e)
-	return e:GetHandler():IsPosition(POS_FACEUP_ATTACK)
-end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	if tp==ep then
-		Duel.ChangeBattleDamage(1-ep,ev,false)
-	end
-end
-function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetBattleDamage(tp)>=Duel.GetLP(tp)
-end
-function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	c:RemoveOverlayCard(tp,1,1,REASON_COST)
-end
-function s.surop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-	e1:SetOperation(s.damopx)
-	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+	e1:SetOperation(function(_,tp) Duel.ChangeBattleDamage(tp,0) end)
+	e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
 	Duel.RegisterEffect(e1,tp)
 	Duel.SetLP(tp,100,REASON_EFFECT)
 end
-function s.damopx(e,tp,eg,ep,ev,re,r,rp)
-	Duel.ChangeBattleDamage(tp,0)
-end
-function s.indes(e,c)
-	return not c:IsSetCard(0x48)
-end
+

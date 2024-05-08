@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
 	e2:SetTargetRange(0,1)
-	e2:SetCondition(function() Duel.GetAttackTarget()~=nil end)
+	e2:SetCondition(function() return Duel.GetAttackTarget()~=nil end)
 	e2:SetValue(DOUBLE_DAMAGE)
 	c:RegisterEffect(e2)
 end

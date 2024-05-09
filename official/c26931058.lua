@@ -1,64 +1,70 @@
 --フォーメーション・ユニオン
+--Formation Union
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(s.eftg)
-	e1:SetOperation(s.efop)
+	e1:SetHintTiming(0,TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
+	e1:SetTarget(s.target)
+	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.filter1(c,tp)
-	return c:IsFaceup() and c:IsType(TYPE_UNION)
-		and Duel.IsExistingTarget(s.filter2,tp,LOCATION_MZONE,0,1,c,c)
+s.listed_card_types={TYPE_UNION}
+function s.unioneqfilter(c,tp)
+	return c:IsType(TYPE_UNION) and c:IsFaceup() and Duel.IsExistingTarget(s.eqfilter,tp,LOCATION_MZONE,0,1,c,c)
 end
-function s.filter2(c,ec)
-	return c:IsFaceup() and ec:CheckUnionTarget(c) and aux.CheckUnionEquip(ec,c)
+function s.eqfilter(c,ec)
+	return ec:CheckUnionTarget(c) and aux.CheckUnionEquip(ec,c) and c:IsFaceup()
 end
-function s.filter3(c,e,tp)
-	return c:IsFaceup() and c:IsHasEffect(EFFECT_UNION_STATUS) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+function s.spfilter(c,e,tp)
+	return c:IsHasEffect(EFFECT_UNION_STATUS) and c:IsFaceup() and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK)
 end
-function s.eftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return false end
-	local b1=Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_MZONE,0,1,nil,tp) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-	local b2=Duel.IsExistingMatchingCard(s.filter3,tp,LOCATION_SZONE,0,1,nil,e,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return e:GetLabel()==2 and chkc:IsControler(tp) and chkc:IsLocation(LOCATION_STZONE) and s.spfilter(chkc,e,tp) end
+	local b1=Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+		and Duel.IsExistingTarget(s.unioneqfilter,tp,LOCATION_MZONE,0,1,nil,tp)
+	local b2=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_STZONE,0,1,nil,e,tp)
 	if chk==0 then return b1 or b2 end
-	local op=0
-	if b1 and b2 then
-		op=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
-	elseif b1 then
-		op=Duel.SelectOption(tp,aux.Stringid(id,1))
-	else op=Duel.SelectOption(tp,aux.Stringid(id,2))+1 end
+	local op=Duel.SelectEffect(tp,
+		{b1,aux.Stringid(id,1)},
+		{b2,aux.Stringid(id,2)})
 	e:SetLabel(op)
-	if op==0 then
+	if op==1 then
 		e:SetCategory(CATEGORY_EQUIP)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-		local g1=Duel.SelectTarget(tp,s.filter1,tp,LOCATION_MZONE,0,1,1,nil,tp)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-		local g2=Duel.SelectTarget(tp,s.filter2,tp,LOCATION_MZONE,0,1,1,g1:GetFirst(),g1:GetFirst())
-		e:SetLabelObject(g1:GetFirst())
-	else
+		local ec=Duel.SelectTarget(tp,s.unioneqfilter,tp,LOCATION_MZONE,0,1,1,nil,tp):GetFirst()
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+		Duel.SelectTarget(tp,s.eqfilter,tp,LOCATION_MZONE,0,1,1,ec,ec)
+		e:SetLabelObject(ec)
+		Duel.SetOperationInfo(0,CATEGORY_EQUIP,ec,1,tp,0)
+	elseif op==2 then
 		e:SetCategory(CATEGORY_SPECIAL_SUMMON)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local g=Duel.SelectTarget(tp,s.filter3,tp,LOCATION_SZONE,0,1,1,nil,e,tp)
-		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
+		local g=Duel.SelectTarget(tp,s.spfilter,tp,LOCATION_STZONE,0,1,1,nil,e,tp)
+		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,tp,0)
 	end
 end
-function s.efop(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetLabel()==0 then
-		local tc1=e:GetLabelObject()
-		local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-		local tc2=g:GetFirst()
-		if tc1==tc2 then tc2=g:GetNext() end
-		if tc1:IsFaceup() and tc2:IsFaceup() and tc1:IsRelateToEffect(e) and tc2:IsRelateToEffect(e)
-			and aux.CheckUnionEquip(tc1,tc2) and Duel.Equip(tp,tc1,tc2,false) then
-			aux.SetUnionState(tc1)
+function s.activate(e,tp,eg,ep,ev,re,r,rp)
+	local op=e:GetLabel()
+	if op==1 then
+		--Equip 1 Union monster you control to 1 appropriate monster you control
+		local ec=e:GetLabelObject()
+		if not (ec:IsRelateToEffect(e) and ec:IsControler(tp)) then return end
+		local tc=(Duel.GetTargetCards(e)-ec):GetFirst()
+		if not (tc and tc:IsFaceup() and Duel.GetLocationCount(tp,LOCATION_SZONE)>0) then
+			Duel.SendtoGrave(ec,REASON_RULE,PLAYER_NONE,PLAYER_NONE)
+		elseif aux.CheckUnionEquip(ec,tc) and Duel.Equip(tp,ec,tc) then
+			aux.SetUnionState(ec)
 		end
-	else
+	elseif op==2 then
+		--Special Summon 1 equipped Union Monster Card from your Spell & Trap Zone in Attack Position
 		local tc=Duel.GetFirstTarget()
-		if tc and tc:IsRelateToEffect(e) then
+		if tc:IsRelateToEffect(e) then
 			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_ATTACK)
 		end
 	end

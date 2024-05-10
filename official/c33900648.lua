@@ -3,193 +3,157 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_ACTIVATE)
+	e0:SetCode(EVENT_FREE_CHAIN)
+	c:RegisterEffect(e0)
+	--Maintenance cost: Pay 500 LP or destroy this card
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e1:SetCode(EVENT_PHASE+PHASE_END)
+	e1:SetRange(LOCATION_FZONE)
+	e1:SetCountLimit(1)
+	e1:SetCondition(function(e,tp) return Duel.IsTurnPlayer(tp) end)
+	e1:SetOperation(s.maintop)
 	c:RegisterEffect(e1)
-	--Maintenance cost
+	--● LIGHT: Play with your hand revealed at all times
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e2:SetCode(EVENT_PHASE+PHASE_END)
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetCode(EFFECT_PUBLIC)
 	e2:SetRange(LOCATION_FZONE)
-	e2:SetCountLimit(1)
-	e2:SetCondition(function(_,tp) return Duel.IsTurnPlayer(tp) end)
-	e2:SetOperation(s.mtop)
+	e2:SetTargetRange(LOCATION_HAND,LOCATION_HAND)
+	e2:SetTarget(function(e,c) return s.PlayerIsAffectedByClearWorld(c:GetControler(),ATTRIBUTE_LIGHT) end)
 	c:RegisterEffect(e2)
-	--Adjust
+	--● DARK: If you control 2 or more monsters, you cannot declare an attack
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e3:SetCode(EVENT_ADJUST)
+	e3:SetType(EFFECT_TYPE_FIELD)
+	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e3:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
 	e3:SetRange(LOCATION_FZONE)
-	e3:SetOperation(s.adjustop)
+	e3:SetTargetRange(1,0)
+	e3:SetCondition(s.darkconyou)
 	c:RegisterEffect(e3)
-	--LIGHT monsters: hand must be revealed
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_FIELD)
-	e4:SetCode(EFFECT_PUBLIC)
-	e4:SetRange(LOCATION_FZONE)
-	e4:SetTargetRange(LOCATION_HAND,LOCATION_HAND)
-	e4:SetTarget(s.lighttg)
+	local e4=e3:Clone()
+	e4:SetCondition(s.darkconopp)
+	e4:SetTargetRange(0,1)
 	c:RegisterEffect(e4)
-	--DARK monsters: cannot declare attack
+	--● EARTH: Destroy 1 face-up Defense Position monster you control
 	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_FIELD)
-	e5:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
+	e5:SetDescription(aux.Stringid(id,1))
+	e5:SetCategory(CATEGORY_DESTROY)
+	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+	e5:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_EVENT_PLAYER)
+	e5:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e5:SetRange(LOCATION_FZONE)
-	e5:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e5:SetTargetRange(1,0)
-	e5:SetCondition(s.darkcon1)
+	e5:SetCountLimit(1)
+	e5:SetCondition(function(e,tp) return Duel.IsTurnPlayer(tp) and s.PlayerControlsAttributeOrIsAffectedByClearWall(tp,ATTRIBUTE_EARTH) end)
+	e5:SetTarget(s.destg)
+	e5:SetOperation(s.desop)
 	c:RegisterEffect(e5)
-	local e6=e5:Clone()
-	e6:SetCondition(s.darkcon2)
-	e6:SetTargetRange(0,1)
+	--● WATER: Discard 1 card
+	local e6=Effect.CreateEffect(c)
+	e6:SetDescription(aux.Stringid(id,2))
+	e6:SetCategory(CATEGORY_HANDES)
+	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+	e6:SetProperty(EFFECT_FLAG_EVENT_PLAYER)
+	e6:SetCode(EVENT_PHASE+PHASE_END)
+	e6:SetRange(LOCATION_FZONE)
+	e6:SetCountLimit(1)
+	e6:SetCondition(function(e,tp) return Duel.IsTurnPlayer(tp) and s.PlayerControlsAttributeOrIsAffectedByClearWall(tp,ATTRIBUTE_WATER) end)
+	e6:SetTarget(s.discardtg)
+	e6:SetOperation(s.discardop)
 	c:RegisterEffect(e6)
-	--EARTH monsters: destroy a monster in Defense Position
+	--● FIRE: Take 1000 damage
 	local e7=Effect.CreateEffect(c)
-	e7:SetDescription(aux.Stringid(id,1))
-	e7:SetCategory(CATEGORY_DESTROY)
-	e7:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e7:SetDescription(aux.Stringid(id,3))
+	e7:SetCategory(CATEGORY_DAMAGE)
 	e7:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+	e7:SetProperty(EFFECT_FLAG_EVENT_PLAYER)
+	e7:SetCode(EVENT_PHASE+PHASE_END)
 	e7:SetRange(LOCATION_FZONE)
-	e7:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e7:SetCountLimit(1)
-	e7:SetCondition(s.descon)
-	e7:SetTarget(s.destg)
-	e7:SetOperation(s.desop)
+	e7:SetCondition(function(e,tp) return Duel.IsTurnPlayer(tp) and s.PlayerControlsAttributeOrIsAffectedByClearWall(tp,ATTRIBUTE_FIRE) end)
+	e7:SetTarget(s.damtg)
+	e7:SetOperation(s.damop)
 	c:RegisterEffect(e7)
-	--WATER monsters: discard 1 card
+	--● WIND: You must pay 500 Life Points to activate a Spell Card
 	local e8=Effect.CreateEffect(c)
-	e8:SetDescription(aux.Stringid(id,2))
-	e8:SetCategory(CATEGORY_HANDES)
-	e8:SetCode(EVENT_PHASE+PHASE_END)
-	e8:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+	e8:SetType(EFFECT_TYPE_FIELD)
+	e8:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e8:SetCode(EFFECT_ACTIVATE_COST)
 	e8:SetRange(LOCATION_FZONE)
-	e8:SetCountLimit(1)
-	e8:SetCondition(s.hdcon)
-	e8:SetTarget(s.hdtg)
-	e8:SetOperation(s.hdop)
+	e8:SetTargetRange(1,0)
+	e8:SetCondition(function(e) return s.PlayerIsAffectedByClearWorld(e:GetHandlerPlayer(),ATTRIBUTE_WIND) end)
+	e8:SetTarget(function(e,te,tp) return te:IsSpellEffect() and te:IsHasType(EFFECT_TYPE_ACTIVATE) end)
+	e8:SetCost(function(e,te_or_c,tp) return Duel.CheckLPCost(tp,500) end)
+	e8:SetOperation(function(e,tp) Duel.PayLPCost(tp,500) end)
 	c:RegisterEffect(e8)
-	--FIRE monsters: take 1000 damage
-	local e9=Effect.CreateEffect(c)
-	e9:SetDescription(aux.Stringid(id,3))
-	e9:SetCategory(CATEGORY_DAMAGE)
-	e9:SetCode(EVENT_PHASE+PHASE_END)
-	e9:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e9:SetRange(LOCATION_FZONE)
-	e9:SetCountLimit(1)
-	e9:SetCondition(s.damcon)
-	e9:SetTarget(s.damtg)
-	e9:SetOperation(s.damop)
+	local e9=e8:Clone()
+	e9:SetTargetRange(0,1)
+	e9:SetCondition(function(e) return s.PlayerIsAffectedByClearWorld(1-e:GetHandlerPlayer(),ATTRIBUTE_WIND) end)
 	c:RegisterEffect(e9)
-	--WIND monsters: must pay 500 Lp to activate Spell cards
-	local e10=Effect.CreateEffect(c)
-	e10:SetType(EFFECT_TYPE_FIELD)
-	e10:SetCode(EFFECT_ACTIVATE_COST)
-	e10:SetRange(LOCATION_FZONE)
-	e10:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e10:SetTargetRange(1,0)
-	e10:SetTarget(s.actarget)
-	e10:SetCondition(s.windcon1)
-	e10:SetCost(s.costchk)
-	e10:SetOperation(s.costop)
-	c:RegisterEffect(e10)
-	local e11=e10:Clone()
-	e11:SetTargetRange(0,1)
-	e11:SetCondition(s.windcon2)
-	c:RegisterEffect(e11)
 end
-s[0]=0
-s[1]=0
-local CARD_CLEAR_VICE_DRAGON=97811903
-function s.mtop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.CheckLPCost(tp,500) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+function s.maintop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_CARD,0,id)
+	local b1=Duel.CheckLPCost(tp,500)
+	local b2=true
+	--Pay 500 LP or destroy this card
+	local op=b1 and Duel.SelectEffect(tp,
+		{b1,aux.Stringid(id,4)},
+		{b2,aux.Stringid(id,5)}) or 2
+	if op==1 then
 		Duel.PayLPCost(tp,500)
-	else
+	elseif op==2 then
 		Duel.Destroy(e:GetHandler(),REASON_COST)
 	end
 end
-function s.raccheck(p)
-	s[p]=Duel.GetMatchingGroup(Card.IsFaceup,p,LOCATION_MZONE,0,nil):GetBitwiseOr(Card.GetAttribute)
+function s.PlayerControlsAttributeOrIsAffectedByClearWall(player,attribute)
+	return Duel.IsPlayerAffectedByEffect(1-player,EFFECT_CLEAR_WALL)
+		or Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsAttribute,attribute),player,LOCATION_MZONE,0,1,nil)
 end
-function s.adjustop(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.IsPlayerAffectedByEffect(0,CARD_CLEAR_VICE_DRAGON) then
-		s.raccheck(0)
-	else s[0]=0 end
-	if not Duel.IsPlayerAffectedByEffect(1,CARD_CLEAR_VICE_DRAGON) then
-		s.raccheck(1)
-	else s[1]=0 end
+function s.PlayerIsAffectedByClearWorld(player,attribute)
+	return not Duel.IsPlayerAffectedByEffect(player,EFFECT_CLEAR_WORLD_IMMUNE)
+		and s.PlayerControlsAttributeOrIsAffectedByClearWall(player,attribute)
 end
-function s.lighttg(e,c)
-	return (s[c:GetControler()]&ATTRIBUTE_LIGHT)~=0
+function s.darkconyou(e)
+	local affected_player=e:GetHandlerPlayer()
+	return s.PlayerIsAffectedByClearWorld(affected_player,ATTRIBUTE_DARK) and Duel.GetFieldGroupCount(affected_player,LOCATION_MZONE,0)>=2
 end
-function s.darkcon1(e)
-	return (s[e:GetHandlerPlayer()]&ATTRIBUTE_DARK)~=0
-		and Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_MZONE,0)>=2
-end
-function s.darkcon2(e)
-	return (s[1-e:GetHandlerPlayer()]&ATTRIBUTE_DARK)~=0
-		and Duel.GetFieldGroupCount(e:GetHandlerPlayer(),0,LOCATION_MZONE)>=2
-end
-function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return (s[Duel.GetTurnPlayer()]&ATTRIBUTE_EARTH)~=0
-end
-function s.desfilter(c)
-	return c:IsPosition(POS_FACEUP_DEFENSE)
+function s.darkconopp(e)
+	local affected_player=1-e:GetHandlerPlayer()
+	return s.PlayerIsAffectedByClearWorld(affected_player,ATTRIBUTE_DARK) and Duel.GetFieldGroupCount(affected_player,LOCATION_MZONE,0)>=2
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local turnp=Duel.GetTurnPlayer()
-	if chkc then return chkc:IsControler(turnp) and chkc:IsLocation(LOCATION_MZONE) and s.desfilter(chkc) end
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsPosition(POS_FACEUP_DEFENSE) end
 	if chk==0 then return true end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(turnp,s.desfilter,turnp,LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,Card.IsPosition,tp,LOCATION_MZONE,0,1,1,nil,POS_FACEUP_DEFENSE)
 	if #g>0 then
-		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,tp,0)
 	end
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	if (s[Duel.GetTurnPlayer()]&ATTRIBUTE_EARTH)==0 then return end
+	if not s.PlayerIsAffectedByClearWorld(tp,ATTRIBUTE_EARTH) then return end
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsPosition(POS_FACEUP_DEFENSE) then
+	if tc and tc:IsRelateToEffect(e) and tc:IsControler(tp) and tc:IsPosition(POS_FACEUP_DEFENSE) then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end
-function s.hdcon(e,tp,eg,ep,ev,re,r,rp)
-	return (s[Duel.GetTurnPlayer()]&ATTRIBUTE_WATER)~=0
-end
-function s.hdtg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.discardtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local turnp=Duel.GetTurnPlayer()
-	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,turnp,1)
+	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,tp,1)
 end
-function s.hdop(e,tp,eg,ep,ev,re,r,rp)
-	if (s[Duel.GetTurnPlayer()]&ATTRIBUTE_WATER)==0 then return end
-	Duel.DiscardHand(Duel.GetTurnPlayer(),nil,1,1,REASON_EFFECT|REASON_DISCARD)
-end
-function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return (s[Duel.GetTurnPlayer()]&ATTRIBUTE_FIRE)~=0
+function s.discardop(e,tp,eg,ep,ev,re,r,rp)
+	if not s.PlayerIsAffectedByClearWorld(tp,ATTRIBUTE_WATER) then return end
+	Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT|REASON_DISCARD)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local turnp=Duel.GetTurnPlayer()
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,turnp,1000)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,tp,1000)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	if (s[Duel.GetTurnPlayer()]&ATTRIBUTE_FIRE)==0 then return end
-	Duel.Damage(Duel.GetTurnPlayer(),1000,REASON_EFFECT)
-end
-function s.windcon1(e)
-	return (s[e:GetHandlerPlayer()]&ATTRIBUTE_WIND)~=0
-end
-function s.windcon2(e)
-	return (s[1-e:GetHandlerPlayer()]&ATTRIBUTE_WIND)~=0
-end
-function s.actarget(e,te,tp)
-	return te:IsHasType(EFFECT_TYPE_ACTIVATE) and te:IsSpellEffect()
-end
-function s.costchk(e,te_or_c,tp)
-	return Duel.CheckLPCost(tp,500)
-end
-function s.costop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.PayLPCost(tp,500)
+	if not s.PlayerIsAffectedByClearWorld(tp,ATTRIBUTE_FIRE) then return end
+	Duel.Damage(tp,1000,REASON_EFFECT)
 end

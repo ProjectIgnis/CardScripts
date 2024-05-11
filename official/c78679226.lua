@@ -1,5 +1,5 @@
 --未来への沈黙
---Silence Towards the Future
+--Future Silence
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
@@ -15,16 +15,16 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_names={CARD_GOLD_SARC_OF_LIGHT}
+s.listed_names={CARD_SHINING_SARCOPHAGUS}
 function s.thfilter(c)
-	return c:IsMonster() and c:ListsCode(CARD_GOLD_SARC_OF_LIGHT) and c:IsAbleToHand()
+	return c:IsMonster() and c:ListsCode(CARD_SHINING_SARCOPHAGUS) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local ct1=6-Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
 	local ct2=6-Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)
 	local draw=Duel.IsBattlePhase() and e:IsHasType(EFFECT_TYPE_ACTIVATE)
-		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_GOLD_SARC_OF_LIGHT),tp,LOCATION_ONFIELD,0,1,nil)
-		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.ListsCode,CARD_GOLD_SARC_OF_LIGHT),tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_SHINING_SARCOPHAGUS),tp,LOCATION_ONFIELD,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.ListsCode,CARD_SHINING_SARCOPHAGUS),tp,LOCATION_MZONE,0,1,nil)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil)
 		and (not draw or (ct1>0 and Duel.IsPlayerCanDraw(tp,ct1)
 		and ct2>0 and Duel.IsPlayerCanDraw(1-tp,ct2))) end

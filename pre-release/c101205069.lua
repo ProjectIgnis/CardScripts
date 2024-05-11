@@ -19,14 +19,14 @@ function s.initial_effect(c)
 	e2:SetCondition(s.effcon)
 	c:RegisterEffect(e2)
 end
-s.listed_names={CARD_DARK_MAGICIAN,CARD_GOLD_SARC_OF_LIGHT}
+s.listed_names={CARD_DARK_MAGICIAN,CARD_SHINING_SARCOPHAGUS}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp)
-		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.ListsCode,CARD_GOLD_SARC_OF_LIGHT),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.ListsCode,CARD_SHINING_SARCOPHAGUS),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function s.effcon(e,tp,eg,ep,ev,re,r,rp)
 	if not (rp==1-tp and re:IsMonsterEffect()
-		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.ListsCode,CARD_GOLD_SARC_OF_LIGHT),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)) then return false end
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.ListsCode,CARD_SHINING_SARCOPHAGUS),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)) then return false end
 	local ex,tg,ct=Duel.GetOperationInfo(ev,CATEGORY_DESTROY)
 	return ex and tg~=nil and ct+tg:FilterCount(aux.AND(Card.IsOnField,Card.IsMonster),nil)-#tg>0
 end
@@ -46,12 +46,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 	if not e:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
 	local c=e:GetHandler()
-	--The first time each monster you control that mentions "Gold Sarcophagus of Light" would be destroyerd by battle or card effect, it is not destroyed
+	--The first time each monster you control that mentions "Shining Sarcophagus" would be destroyerd by battle or card effect, it is not destroyed
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetTarget(aux.TargetBoolFunction(Card.ListsCode,CARD_GOLD_SARC_OF_LIGHT))
+	e1:SetTarget(aux.TargetBoolFunction(Card.ListsCode,CARD_SHINING_SARCOPHAGUS))
 	e1:SetValue(function(e,re,r,rp) return r&(REASON_BATTLE|REASON_EFFECT)>0 and 1 or 0 end)
 	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)

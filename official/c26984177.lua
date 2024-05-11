@@ -1,5 +1,5 @@
 --王墓の石壁
---Stone Wall of the Imperial Tombs
+--Walls of the Imperial Tomb
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetCode(EFFECT_CHANGE_CODE)
 	e2:SetRange(LOCATION_FZONE)
-	e2:SetValue(CARD_PHARAONIC_SARCOPHAGUS)
+	e2:SetValue(CARD_KING_SARCOPHAGUS)
 	c:RegisterEffect(e2)
 	--Search 1 "Horus" monster then place 1 card from your hand on the bottom of the Deck
 	local e3=Effect.CreateEffect(c)
@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.drop)
 	c:RegisterEffect(e4)
 end
-s.listed_names={CARD_PHARAONIC_SARCOPHAGUS,99307040}
+s.listed_names={CARD_KING_SARCOPHAGUS,99307040} --Horus the Black Flame Deity
 s.listed_series={SET_HORUS}
 function s.thfilter(c)
 	return c:IsSetCard(SET_HORUS) and c:IsMonster() and c:IsAbleToHand()

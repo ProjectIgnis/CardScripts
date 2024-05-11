@@ -1,9 +1,9 @@
 --トリコロール・ガジェット
---Tricolore Gadget
+--Gadget Trio
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
-	--Search 1 "Gold Sarcophagus of Light", or 1 Spell/Trap that mentions it
+	--Search 1 "Shining Sarcophagus", or 1 Spell/Trap that mentions it
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -29,9 +29,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.setop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={CARD_GOLD_SARC_OF_LIGHT,27157727}
+s.listed_names={CARD_SHINING_SARCOPHAGUS,27157727} --Stronghold the Hidden Fortress
 function s.thfilter(c)
-	return (c:IsCode(CARD_GOLD_SARC_OF_LIGHT) or (c:IsSpellTrap() and c:ListsCode(CARD_GOLD_SARC_OF_LIGHT))) and c:IsAbleToHand()
+	return (c:IsCode(CARD_SHINING_SARCOPHAGUS) or (c:IsSpellTrap() and c:ListsCode(CARD_SHINING_SARCOPHAGUS))) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

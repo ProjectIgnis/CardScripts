@@ -23,13 +23,13 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCondition(function(_,tp)
 		local tc=Duel.GetBattleMonster(tp)
-		return tc and tc:ListsCode(CARD_GOLD_SARC_OF_LIGHT)
+		return tc and tc:ListsCode(CARD_SHINING_SARCOPHAGUS)
 	end)
 	e2:SetCost(aux.selfbanishcost)
 	e2:SetOperation(s.skipop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={CARD_GOLD_SARC_OF_LIGHT}
+s.listed_names={CARD_SHINING_SARCOPHAGUS}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsFaceup() and chkc:HasLevel() end
 	if chk==0 then return Duel.IsExistingTarget(aux.FaceupFilter(Card.HasLevel),tp,LOCATION_MZONE,0,1,nil) end
@@ -38,8 +38,8 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local ch=Duel.GetCurrentChain()-1
 	local trig_p,trig_e=Duel.GetChainInfo(ch,CHAININFO_TRIGGERING_PLAYER,CHAININFO_TRIGGERING_EFFECT)
 	if e:IsHasType(EFFECT_TYPE_ACTIVATE) and ch>0 and trig_p==1-tp and trig_e:IsMonsterEffect() and Duel.IsChainDisablable(ch)
-		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_GOLD_SARC_OF_LIGHT),tp,LOCATION_ONFIELD,0,1,nil)
-		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.ListsCode,CARD_GOLD_SARC_OF_LIGHT),tp,LOCATION_MZONE,0,1,nil) then
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_SHINING_SARCOPHAGUS),tp,LOCATION_ONFIELD,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.ListsCode,CARD_SHINING_SARCOPHAGUS),tp,LOCATION_MZONE,0,1,nil) then
 		e:SetLabel(1)
 	else
 		e:SetLabel(0)

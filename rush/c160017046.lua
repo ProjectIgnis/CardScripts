@@ -49,6 +49,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.BreakEffect()
 		Duel.Damage(1-tp,lvl*100,REASON_EFFECT)
 	end
-	Duel.SortDecktop(tp,tp,2)
-	Duel.SortDecktop(1-tp,1-tp,2)
+	Duel.ShuffleDeck(tp)
+	Duel.ShuffleDeck(1-tp)
 end

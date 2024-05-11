@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetCountLimit(1,{id,0})
-	e2:SetCondition(function() return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_GOLD_SARC_OF_LIGHT),0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end)
+	e2:SetCondition(function() return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_SHINING_SARCOPHAGUS),0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end)
 	e2:SetTarget(s.hsptg)
 	e2:SetOperation(s.hspop)
 	c:RegisterEffect(e2)
@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desspop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={CARD_DARK_MAGICIAN,CARD_GOLD_SARC_OF_LIGHT}
+s.listed_names={CARD_DARK_MAGICIAN,CARD_SHINING_SARCOPHAGUS}
 function s.hsptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

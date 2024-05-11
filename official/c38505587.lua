@@ -1,5 +1,5 @@
 --マシマシュマロン
---Mashimarshmallon
+--Moremarshmallon
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.selfsptg)
 	e3:SetOperation(s.selfspop)
 	c:RegisterEffect(e3)
-	--Special Summon 1 other “Mashimarshmallon” and inflict 1000 damage
+	--Special Summon 1 other "Moremarshmallon" and inflict 1000 damage
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DAMAGE)
@@ -47,10 +47,10 @@ function s.initial_effect(c)
 	e4:SetOperation(s.marshspop)
 	c:RegisterEffect(e4)
 end
-s.listed_names={CARD_GOLD_SARC_OF_LIGHT,id}
+s.listed_names={CARD_SHINING_SARCOPHAGUS,id}
 local LOCATIONS_REMOVED_HAND_DECK_GRAVE=LOCATION_REMOVED|LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE
 function s.goldsarccon(e)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_GOLD_SARC_OF_LIGHT),e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_SHINING_SARCOPHAGUS),e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil)
 end
 function s.selfsptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

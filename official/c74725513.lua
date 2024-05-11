@@ -1,9 +1,9 @@
 --ホルスの加護－ケベンセヌフ
---Qebehsenuef, Aegis of Horus
+--Qebehsenuef, Protection of Horus
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special Summon itself from the GY if you control "Pharaonic Sarcophagus"
+	--Special Summon itself from the GY if you control "King's Sarcophagus"
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.protop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={CARD_PHARAONIC_SARCOPHAGUS}
+s.listed_names={CARD_KING_SARCOPHAGUS}
 s.listed_series={SET_HORUS}
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -35,7 +35,7 @@ function s.spcon(e,c)
 	end
 	local tp=c:GetControler()
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_PHARAONIC_SARCOPHAGUS),tp,LOCATION_ONFIELD,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_KING_SARCOPHAGUS),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.cfilter(c,tp)
 	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousControler(tp)

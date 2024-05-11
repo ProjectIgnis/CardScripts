@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetValue(s.atkval)
 	c:RegisterEffect(e2)
-	--Negate an opponent's effect that targets "Gold Sarcophagus of Light" and/or a monster(s) that mentions it
+	--Negate an opponent's effect that targets "Shining Sarcophagus" or a monster(s) that mentions it
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_NEGATE+CATEGORY_LVCHANGE)
@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.negop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={CARD_GOLD_SARC_OF_LIGHT}
+s.listed_names={CARD_SHINING_SARCOPHAGUS}
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() and c:HasLevel() then
@@ -54,7 +54,7 @@ function s.atkval(e,c)
 	return ct>0 and ct*500
 end
 function s.negconfilter(c,tp)
-	return (c:IsCode(CARD_GOLD_SARC_OF_LIGHT) or (c:ListsCode(CARD_GOLD_SARC_OF_LIGHT) and c:IsMonster()))
+	return (c:IsCode(CARD_SHINING_SARCOPHAGUS) or (c:ListsCode(CARD_SHINING_SARCOPHAGUS) and c:IsMonster()))
 		and c:IsFaceup() and c:IsControler(tp) and c:IsOnField()
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)

@@ -1,9 +1,9 @@
 -- メメント・ボーン・バック
--- Memento Bone Back
+-- Mementotlan Bone Back
 -- Scripted by Satellaa
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon 1 "Mementoral Tectolica, the Netherskull Dragon" from your hand or Deck
+	-- Special Summon 1 "Mementoal Tecuhtlica - Combined Creation" from your hand or Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_MEMENTO}
-s.listed_names={CARD_MEMENTORAL_TECUHTLICA}
+s.listed_names={CARD_MEMENTOAL_TECUHTLICA}
 function s.cfilter(c,tp)
 	return c:IsPreviousSetCard(SET_MEMENTO) and c:GetReasonPlayer()==1-tp and c:IsPreviousControler(tp)
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
@@ -40,7 +40,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsCode(CARD_MEMENTORAL_TECUHTLICA) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsCode(CARD_MEMENTOAL_TECUHTLICA) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

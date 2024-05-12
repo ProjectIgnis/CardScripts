@@ -1,5 +1,5 @@
 --誇りと魂の龍
---Dragon of Soul and Pride
+--Dragon of Pride and Soul
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

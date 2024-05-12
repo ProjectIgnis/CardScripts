@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Fusion Materials
-	Fusion.AddProcMixN(c,true,true,101205017,1,s.matfilter,2)
+	Fusion.AddProcMixN(c,true,true,60764609,1,s.matfilter,2)
 	--Negate the effects of face-up cards on the field
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tgop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={101205017}
+s.listed_names={60764609} --"The Fiendsmith"
 function s.matfilter(c,fc,sumtype,tp)
 	return c:IsAttribute(ATTRIBUTE_LIGHT,fc,sumtype,tp) and c:IsRace(RACE_FIEND,fc,sumtype,tp)
 end

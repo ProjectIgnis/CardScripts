@@ -14,9 +14,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_FORBIDDEN_ONE,SET_EXODIA,SET_MILLENNIUM}
-s.listed_names={101205033} --The Phantom Exodia Incarnate
+s.listed_names={83257450} --"The Phantom Exodia Incarnate"
 function s.spfilter(c,e,tp)
-	return c:IsCode(101205033) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
+	return c:IsCode(83257450) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.showfilter(c)

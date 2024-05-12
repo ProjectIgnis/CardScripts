@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.setop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={id+100}
+s.listed_names={id+1}
 s.listed_seres={SET_FIENDSMITH}
 function s.confilter(c)
 	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_FIEND)
@@ -39,14 +39,14 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+100,SET_FIENDSMITH,TYPES_TOKEN,0,0,1,RACE_FIEND,ATTRIBUTE_LIGHT) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,SET_FIENDSMITH,TYPES_TOKEN,0,0,1,RACE_FIEND,ATTRIBUTE_LIGHT) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+100,SET_FIENDSMITH,TYPES_TOKEN,0,0,1,RACE_FIEND,ATTRIBUTE_LIGHT) then
-		local token=Duel.CreateToken(tp,id+100)
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,SET_FIENDSMITH,TYPES_TOKEN,0,0,1,RACE_FIEND,ATTRIBUTE_LIGHT) then
+		local token=Duel.CreateToken(tp,id+1)
 		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
 	end
 	local c=e:GetHandler()

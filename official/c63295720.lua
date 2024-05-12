@@ -36,10 +36,10 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local b1=not Duel.HasFlagEffect(tp,id) and not dmg_step
 		and Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_HAND,0,1,nil,tp)
 	--Make 1 Dragon monster you control gain ATK equal to its Level x 200
-	local b2=not Duel.HasFlagEffect(tp,id+100) and not (dmg_step and Duel.IsDamageCalculated())
+	local b2=not Duel.HasFlagEffect(tp,id+1) and not (dmg_step and Duel.IsDamageCalculated())
 		and Duel.IsExistingTarget(s.atkfilter,tp,LOCATION_MZONE,0,1,nil)
 	--Negate an effect that targets a Dragon monster(s) you control
-	local b3=not Duel.HasFlagEffect(tp,id+200) and not dmg_step
+	local b3=not Duel.HasFlagEffect(tp,id+2) and not dmg_step
 		and ex and te_re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) and te_tg
 		and te_tg:IsExists(s.disfilter,1,nil,tp) and Duel.IsChainDisablable(ev)
 	if chk==0 then return b1 or b2 or b3 end
@@ -57,13 +57,13 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	elseif op==2 then
 		e:SetCategory(CATEGORY_ATKCHANGE)
 		e:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
-		Duel.RegisterFlagEffect(tp,id+100,RESET_PHASE|PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_END,0,1)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
 		Duel.SelectTarget(tp,s.atkfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	elseif op==3 then
 		e:SetCategory(CATEGORY_DISABLE)
 		e:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
-		Duel.RegisterFlagEffect(tp,id+200,RESET_PHASE|PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id+2,RESET_PHASE|PHASE_END,0,1)
 		Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,tp,0)
 	end
 end

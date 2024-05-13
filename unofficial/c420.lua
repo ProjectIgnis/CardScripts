@@ -119,7 +119,7 @@ if not AnimeArchetype then
 	-- Magicat/Catnipped Kitty/Lunalight Cat Dancer
 	-- Lunalight Blue Cat/Rescue Cat/Lock Cat
 	AnimeArchetype.OCGCat={
-		19963185,74148483,28981598,54191698,70975131,
+		19963185,74148483,28981598,54191698,70975131, 
 		84224627,43352213,88032456,2729285,
 		22953211,32933942,5506791,25531465,
 		96501677,51777272,11439455,14878871,52346240
@@ -133,7 +133,7 @@ if not AnimeArchetype then
 	Card.IsCelestial=MakeCheck({0x254a},{69865139,25472513})
 
 	-- Cicada (Checked 13/05/2024)
-	-- 蝉
+	-- 蝉 
 	-- せみ
 	-- Number 3: Cicada King, Oily Cicada, Dream Cicada
 	Card.IsCicada=MakeCheck({0x50f},{4997565,79663524,5068132})

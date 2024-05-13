@@ -2,13 +2,13 @@
 --Allure Queen LV5
 local s,id=GetID()
 function s.initial_effect(c)
-	--equip
+	--Register if this card is Special Summoned by "Alure Queen LV3"
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetOperation(s.regop)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special summon 1 "Allure Queen LV7" from your hand or Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -19,15 +19,15 @@ function s.initial_effect(c)
 	e2:SetCost(s.spcost)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
-	e2:SetLabelObject(e1)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_ALLURE_LVUP)
 end
-s.listed_names={50140163,87257460}
+s.listed_names={87257460,50140163} --Allure Queen LV3, Allure Queen LV7
 s.LVnum=5
-s.LVset=0x14
+s.LVset=SET_ALLURE_QUEEN
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:GetSummonType()==SUMMON_TYPE_SPECIAL+1 then
+		--Equip a Level 5 or lower monster your opponent controls to this card
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(aux.Stringid(id,0))
 		e1:SetCategory(CATEGORY_EQUIP)
@@ -35,29 +35,35 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetCountLimit(1)
-		e1:SetCondition(s.eqcon)
+		e1:SetCondition(s.eqcon1)
 		e1:SetTarget(s.eqtg)
 		e1:SetOperation(s.eqop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
-		e1:SetLabelObject(e)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
-		aux.AddEREquipLimit(c,s.eqcon,s.eqval,s.equipop,e1,nil,RESET_EVENT+RESETS_STANDARD_DISABLE)
+		aux.AddEREquipLimit(c,s.eqcon1,s.eqval,s.equipop,e1,nil,RESET_EVENT|RESETS_STANDARD_DISABLE)
+		--Quick Effect, if you are affected by "Golden Allure Queen"
+		local e2=e1:Clone()
+		e2:SetType(EFFECT_TYPE_QUICK_O)
+		e2:SetCode(EVENT_FREE_CHAIN)
+		e2:SetHintTiming(0,TIMING_END_PHASE)
+		e2:SetCondition(s.eqcon2)
+		c:RegisterEffect(e2)
+		aux.AddEREquipLimit(c,s.eqcon2,s.eqval,s.equipop,e2,nil,RESET_EVENT|RESETS_STANDARD_DISABLE)
 	end
 end
 function s.eqval(ec,c,tp)
-	local lv=ec:GetLevel()
-	return ec:IsControler(1-tp) and lv>0 and lv<=5
+	return ec:IsControler(1-tp) and c:HasLevel() and c:IsLevelBelow(5)
 end
-function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
-	local g=e:GetHandler():GetEquipGroup():Filter(s.eqfilter,nil)
-	return #g==0
+function s.eqcon1(e,tp,eg,ep,ev,re,r,rp)
+	local g=e:GetHandler():GetEquipGroup():Filter(Card.HasFlagEffect,nil,id)
+	return #g==0 and not Duel.IsPlayerAffectedByEffect(tp,CARD_GOLDEN_ALLURE_QUEEN)
 end
-function s.eqfilter(c)
-	return c:GetFlagEffect(id)~=0 
+function s.eqcon2(e,tp,eg,ep,ev,re,r,rp)
+	local g=e:GetHandler():GetEquipGroup():Filter(Card.HasFlagEffect,nil,id)
+	return #g==0 and Duel.IsPlayerAffectedByEffect(tp,CARD_GOLDEN_ALLURE_QUEEN)
 end
 function s.filter(c)
-	local lv=c:GetLevel()
-	return lv>0 and lv<=5 and c:IsFaceup() and c:IsAbleToChangeControler()
+	return c:HasLevel() and c:IsLevelBelow(5) and c:IsFaceup() and c:IsAbleToChangeControler()
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.filter(chkc) end
@@ -69,13 +75,13 @@ function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.equipop(c,e,tp,tc)
 	if not c:EquipByEffectAndLimitRegister(e,tp,tc,id) then return end
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_EQUIP)
-	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_OWNER_RELATE)
-	e2:SetCode(EFFECT_DESTROY_SUBSTITUTE)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-	e2:SetValue(s.repval)
-	tc:RegisterEffect(e2)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_EQUIP)
+	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_OWNER_RELATE)
+	e1:SetCode(EFFECT_DESTROY_SUBSTITUTE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
+	e1:SetValue(s.repval)
+	tc:RegisterEffect(e1)
 end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -88,8 +94,8 @@ function s.repval(e,re,r,rp)
 	return r&REASON_BATTLE~=0
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	local g=e:GetHandler():GetEquipGroup():Filter(s.eqfilter,nil)
-	return Duel.GetTurnPlayer()==tp and #g==1
+	local g=e:GetHandler():GetEquipGroup():Filter(Card.HasFlagEffect,nil,id)
+	return Duel.IsTurnPlayer(tp) and #g==1
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
@@ -101,13 +107,13 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if e:GetHandler():GetSequence()<5 then ft=ft+1 end
-	if chk==0 then return ft>0 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
+	if chk==0 then return ft>0 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_DECK)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local tc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,1,nil,e,tp):GetFirst()
 	if tc and Duel.SpecialSummon(tc,1,tp,tp,true,false,POS_FACEUP)>0 then
 		tc:CompleteProcedure()
 	end

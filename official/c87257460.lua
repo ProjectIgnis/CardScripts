@@ -43,7 +43,7 @@ function s.eqcon1(e,tp,eg,ep,ev,re,r,rp)
 	return #g==0 and not Duel.IsPlayerAffectedByEffect(tp,CARD_GOLDEN_ALLURE_QUEEN)
 end
 function s.eqval(ec,c,tp)
-	return ec:IsControler(1-tp) and ec:IsLevelBelow(3)
+	return ec:IsControler(1-tp) and c:HasLevel() and ec:IsLevelBelow(3)
 end
 function s.eqcon2(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetHandler():GetEquipGroup():Filter(Card.HasFlagEffect,nil,id)

@@ -23,11 +23,11 @@ if not AnimeArchetype then
 		end
 	end
 
-	-- Alligator
+	-- Alligator (Checked 13/05/2024)
 	-- アリゲーター
-	-- Graydle Alligator/Spawn Alligator/Toon Alligator/Lion Alligator
+	-- Graydle Alligator/Spawn Alligator/Dark Alligator/Toon Alligator/Lion Alligator
 	AnimeArchetype.OCGAlligator={
-		39984786,4611269,59383041,66451379
+		39984786,4611269,34479658,59383041,66451379
 	}
 	Card.IsAlligator=MakeCheck({0x502},AnimeArchetype.OCGAlligator)
 
@@ -51,11 +51,11 @@ if not AnimeArchetype then
 	}
 	Card.IsAngel=MakeCheck({0x154a,0xef},AnimeArchetype.OCGAngel)
 
-	-- Anti アンチ
-	-- Dystopia the Despondent/Delta Crow - Anti Reverse/Anti-Alian
-	Card.IsAnti=MakeCheck({0x503},{52085072,59839761,43583400})
+	-- Anti アンチ (Checked 13/05/2024)
+	-- Dystopia the Despondent/Fortune Fairy Ann/Delta Crow - Anti Reverse/Anti-Alian
+	Card.IsAnti=MakeCheck({0x503},{43583400,31683874,52085072,59839761})
 
-	-- Assassin アサシン
+	-- Assassin アサシン (Checked 13/05/2024)
 	-- Ansatsu/Dark Hunter/Night Assailant
 	-- Night Papilloperative/Gravekeeper's Assailant/Photon Papilloperative
 	-- Raiden, Hand of the Lightsworn
@@ -66,37 +66,21 @@ if not AnimeArchetype then
 	}
 	Card.IsAssassin=MakeCheck({0x504},AnimeArchetype.OCGAssassin)
 
-	-- Astral アストラル
-	-- Astral Barrier/RUM Astral Force/Astral Kuriboh/Astraltopia
-	Card.IsAstral=MakeCheck({0x505},{37053871,45950291,64591429,69852487})
+	-- Astral アストラル (Checked 13/05/2024)
+	-- Astral Kuriboh/Astral Barrier/Astraltopia/RUM Astral Force
+	Card.IsAstral=MakeCheck({0x505},{64591429,37053871,69852487,45950291})
 
-	-- Atlandis アトランタル
+	-- Atlandis アトランタル (Checked 13/05/2024)
 	-- Number C6: Chronomaly Chaos Atlandis/Number 6: Chronomaly Atlandis
 	Card.IsAtlandis=MakeCheck({0x506},{9161357,6387204})
 
-	-- Barian (archetype) バリアン
-	-- CXyz Barian Hope/ Number 71: Rebarian Shark
-	Card.IsBarian=MakeCheck({0x509},{67926903,59479050},{"IsBarians","IsBattleguard"})
-
-	-- Barian's バリアンズ
-	-- Rank-Up-Magic Barian's Force, Rank-Up-Magic Limited Barian's Force
-	Card.IsBarians=MakeCheck({0x1509},{47660516,92365601})
-
-	-- Battleguard バーバリアン
-	AnimeArchetype.OCGBattleguard={
-		-- Battleguard King, Lava Battleguard, Swamp Battleguard
-		-- Battleguard Howling, Battleguard Rage
-		39389320,20394040,40453765,78621186,42233477
-	}
-	Card.IsBattleguard=MakeCheck({0x2509},AnimeArchetype.OCGBattleguard)
-
-	-- Blackwing Tamer
+	-- Blackwing Tamer (Checked 13/05/2024)
 	-- ＢＦＴ
 	-- ブラックフェザーテイマー
 	-- Blackwing Tamer - Obsidian Hawk Joe
 	Card.IsBlackwingTamer=MakeCheck({0x2033},{81983656})
 
-	-- Butterfly
+	-- Butterfly (Checked 13/05/2024)
 	-- 蝶
 	-- ちょう
 	-- Blazewing Butterfly/Flower Cardian Boardefly/Flower Cardian Peony with Butterfly
@@ -106,7 +90,7 @@ if not AnimeArchetype then
 	}
 	Card.IsButterfly=MakeCheck({0x50c},AnimeArchetype.OCGButterfly,{"IsPhantomButterfly"})
 
-	-- Phantom Butterfly
+	-- Phantom Butterfly (Checked 13/05/2024)
 	-- 幻蝶
 	-- げんちょう
 	-- Butterspy Protection
@@ -115,7 +99,7 @@ if not AnimeArchetype then
 	}
 	Card.IsPhantomButterfly=MakeCheck({0x150c,0x6a},AnimeArchetype.OCGPhantomButterfly)
 
-	-- C (archetype)
+	-- C (archetype) (Checked 13/05/2024)
 	-- Ｃ
 	-- カオス
 	-- is "C" or Cxyz or Cnumber
@@ -125,58 +109,62 @@ if not AnimeArchetype then
 	}
 	Card.IsC=MakeCheck({0x1048,0x1073,0x568},AnimeArchetype.OCGC)
 
-	-- Cat キャット (list to update)
+	-- Cat キャット (Checked 13/05/2024)
+	-- Advanced Crystal Beast Amethyst Cat/Infernity Wildcat
 	-- Cat Shark/Nekogal #2/Mimicat
-	-- Fluffal Cat/Crystal Beast Amethyst Cat/Majespecter Cat - Nekomata
+	-- Nine-Lives Cat/Number 29/Watch Cat
+	-- Fluffal Cat/
+	-- Bellcat Fighter
+	-- Crystal Beast Amethyst Cat/Majespecter Cat - Nekomata
 	-- Magicat/Catnipped Kitty/Lunalight Cat Dancer
 	-- Lunalight Blue Cat/Rescue Cat/Lock Cat
-	-- Number 28/Watch Cat
 	AnimeArchetype.OCGCat={
-		84224627,43352213,88032456,2729285,32933942,5506791,
-		25531465,96501677,51777272,11439455,14878871,52346240,
-		54191698,70975131
+		19963185,74148483,28981598,54191698,70975131
+		84224627,43352213,88032456,2729285,
+		22953211,32933942,5506791,25531465,
+		96501677,51777272,11439455,14878871,52346240
 	}
 	Card.IsCat=MakeCheck({0x50e},AnimeArchetype.OCGCat)
 
-	-- Celestial
+	-- Celestial (Checked 13/05/2024)
 	-- 天輪
 	-- てんりん
 	-- Celestial Double Star Shaman/Guiding Light
 	Card.IsCelestial=MakeCheck({0x254a},{69865139,25472513})
 
-	-- Cicada
+	-- Cicada (Checked 13/05/2024)
 	-- 蝉
 	-- せみ
 	-- Number 3: Cicada King, Oily Cicada, Dream Cicada
 	Card.IsCicada=MakeCheck({0x50f},{4997565,79663524,5068132})
 
-	-- Champion
+	-- Champion (Checked 13/05/2024)
 	-- 王者
 	-- おうじゃ
-	-- Champion's Vigilance
-	Card.IsChampion=MakeCheck({0x152f},{82382815})
+	-- Champion's Vigilance, Absolute King - Megaplunder
+	Card.IsChampion=MakeCheck({0x152f},{82382815,27553701})
 
 	-- Clear クリアー
 	-- Clear Vice Dragon/Clear World
 	Card.IsClear=MakeCheck({0x510},{97811903,82044279,33900648})
 
-	-- Comics Hero
+	-- Comics Hero (Checked 13/05/2024)
 	-- ＣＨ
 	-- コミックヒーロー
 	-- CXyz Comics Hero Legend Arthur/Comics Hero King Arthur
 	Card.IsComicsHero=MakeCheck({0x511},{77631175,13030280})
 
-	-- Cubic Seed
+	-- Cubic Seed (Checked 13/05/2024)
 	-- 方界胤
 	-- ほうかいいん
 	-- Vijam the cubic seed
 	Card.IsCubicSeed=MakeCheck({0x10e3},{CARD_VIJAM})
 
-	-- Dart ダーツ
+	-- Dart ダーツ (Checked 13/05/2024)
 	-- Fire Darts
 	Card.IsDart=MakeCheck({0x513},{43061293})
 
-	-- Dice (archetype)
+	-- Dice (archetype) 
 	-- ダイス
 	-- Speedroid Red-Eyed Dice/Speedroid Tri-Eyed Dice/Dice Armadillo
 	-- Dice Try!/Dice Jar/Dice Roll Battle
@@ -187,45 +175,54 @@ if not AnimeArchetype then
 	}
 	Card.IsDice=MakeCheck({0x514},AnimeArchetype.OCGDice)
 
-	-- Darkness  (Last updated on 23rd Apr 2020)
-	-- ダークネス
+	-- Darkness  (Checked 13/05/2024)
+	-- ダークネス 
 	-- Cyberdarkness Dragon/Darkness Metal, the Dragon of Dark Steel/Malevolent Mech - Goku En/Simorgh of Darkness
 	-- Umbral Soul/Darkness Destroyer/Darkness Neosphere/Hunter of Black Feathers
-	-- D/D/D Super Doom King Dark Armageddon/F.A. Dark Dragster/Light and Darkness Dragon/Red-Eyes Darkness Dragon
-	-- Red-Eyes Darkness Metal Dragon
+	-- D/D/D Super Doom King Dark Armageddon/F.A. Dark Dragster/Light and Darkness Dragon/Light and Darkness Dragon Lord
+	-- Red-Eyes Darkness Dragon Red-Eyes Darkness Metal Dragon
 	AnimeArchetype.OCGDarkness={
 		18967507,79266769,31571902,22586618,
 		86229493,93709215,60417395,73018302,
-		18897163,6764709,47297616,96561011,
-		88264978
+		18897163,6764709,47297616,19652159
+		96561011,88264978
 	}
 	Card.IsDarkness=MakeCheck({0x316},AnimeArchetype.OCGDarkness)
 
-	-- Dog ドッグ
+	-- Dog ドッグ (Checked 13/05/2024)
 	-- Assault Dog/Mad Dog of Darkness/Ancient Gear Hunting Hound
 	-- Performapal Bubblebowwow/Alien Dog/Guard Dog
-	-- Kozmo DOG Fighter/Skull Dog Marron/Wind-Up Dog
-	-- Chain Dog/Nin-Ken Dog/Watch Dog
+	-- Kozmo DOG Fighter/G Golem Pebble Dog/Skull Dog Marron/
+	-- S-Force Dog Tag/Wind-Up Dog/Chain Dog
+	-- D/D Dog/Nin-Ken Dog/Watch Dog
 	-- Fluffal Dog/Flamvell Firedog/Wroughtweiler
 	-- Magidog/Mecha-Dog Marron
 	AnimeArchetype.OCGDog={
 		72714226,79182538,42878636,34379489,15475415,57346400,
-		29491334,86652646,12076263,96930127,11987744,86889202,
-		39246582,23297235,6480253,47929865,94667532
+		29491334,25273572,86652646,65479980,12076263,96930127,
+		32349062,11987744,86889202,39246582,23297235,6480253,
+		47929865,94667532
 	}
 	Card.IsDog=MakeCheck({0x516},AnimeArchetype.OCGDog)
 
-	-- Doll ドール
-	-- Aqua Madoor/Tribute Doll/Malice Doll of Demise
-	-- Neo Aqua Madoor/Rogue Doll/Lightray Madoor
-	-- Gimmick Puppet Dreary Doll/Gimmick Puppet Magnet Doll
+	-- Doll ドール (Checked 13/05/2024)
+	-- Aqua Madoor/Tribute Doll/Conquistador of the Golden Land
+	-- Malice Doll of Demise/Gimmick Puppet Chimera Doll/Gimmick Puppet Gigantes Doll
+	-- Gimmick Puppet Dreary Doll/Gimmick Puppet Bisque Doll/Gimmick Puppet Bloody Doll
+	-- Gimmick Puppet Magnet Doll/Tindangle Dholes/Impcantation Candoll
+	-- Neo Aqua Madoor/Glacier Aqua Madoor/Rogue Doll
+	-- Lightray Madoor
 	AnimeArchetype.OCGDoll={
-		72657739,91939608,85639257,2903036,49563947,82579942,
-		92418590,39806198
+		85639257,2903036,20590515,
+		72657739,97520532,7593748,
+		92418590,79086452,63825486,
+		39806198,12678601,53303460,
+		49563947,11449436,91939608,
+		82579942
 	}
 	Card.IsDoll=MakeCheck({0x517,0x9d,0x15c},AnimeArchetype.OCGDoll)
 
-	-- Drone
+	-- Drone (Checked 13/05/2024)
 	-- ドローン
 	--Star Drawing/Doron/SPYRAL GEAR - Drone
 	AnimeArchetype.OCGDrone={
@@ -233,14 +230,14 @@ if not AnimeArchetype then
 	}
 	Card.IsDrone=MakeCheck({0x581},AnimeArchetype.OCGDrone)
 
-	-- Druid ドルイド
-	-- Secret Sect Druid Wid/Secret Sect Druid Dru/Aurkus, Lightsworn Druid
+	-- Druid ドルイド (Checked 13/05/2024)
+	-- Secret Sect Druid Wid/Secret Sect Druid Dru/Bystial Druiswurm/Aurkus, Lightsworn Druid
 	AnimeArchetype.OCGDruid={
-		24062258,97064649,7183277
+		24062258,97064649,6637331,7183277
 	}
 	Card.IsDruid=MakeCheck({0x8c},AnimeArchetype.OCGDruid)
 
-	-- Dyson ダイソン
+	-- Dyson ダイソン (Checked 13/05/2024)
 	-- Number C9: Chaos Dyson Sphere/Number 9: Dyson Sphere
 	Card.IsDyson=MakeCheck({0x519},{1992816,32559361})
 
@@ -270,7 +267,7 @@ if not AnimeArchetype then
 	}
 	Card.IsElf=MakeCheck({0x51b,0xe4},AnimeArchetype.OCGElf)
 
-	-- Emissary of Darkness
+	-- Emissary of Darkness  (Checked 13/05/2024)
 	-- 冥府の使者
 	-- めいふのししゃ
 	-- Gorz the Emissary of Darkness/Emissary of Darkness Token
@@ -302,11 +299,11 @@ if not AnimeArchetype then
 	}
 	Card.IsForest=MakeCheck({0x51f},AnimeArchetype.OCGForest)
 
-	-- Gem-Knight Lady ジェムナイトレディ
-	-- Gem-Knight Lady Brilliant Diamond/Gem-Knight Lady Lapis Lazuli
-	Card.IsGemKnightLady=MakeCheck({0x3047},{47611119,19355597})
+	-- Gem-Knight Lady ジェムナイトレディ (Checked 13/05/2024)
+	-- Gem-Knight Lady Brilliant Diamond/Gem-Knight Lady Lapis Lazuli/Gem-Knight Lady Rose Diamond
+	Card.IsGemKnightLady=MakeCheck({0x3047},{47611119,19355597,55610199})
 
-	-- Gorgonic
+	-- Gorgonic (Checked 13/05/2024)
 	-- ゴルゴニック
 	-- Gorgonic Gargoyle/Gorgonic Guardian/Gorgonic Ghoul
 	-- Gorgonic Cerberus/Gorgonic Golem
@@ -314,7 +311,7 @@ if not AnimeArchetype then
 		64379261,84401683,37984162,37168514,90764875
 	}
 	Card.IsGorgonic=MakeCheck({0x522},AnimeArchetype.OCGGorgonic)
-	-- Goyo ゴヨウ
+	-- Goyo ゴヨウ (Checked 13/05/2024)
 	-- Brotherhood of the Fire Fist - Coyote/Goyo Emperor/Goyo Guardian
 	-- Goyo King/Goyo Chaser/Goyo Defender
 	-- Goyo Predator
@@ -324,7 +321,7 @@ if not AnimeArchetype then
 	}
 	Card.IsGoyo=MakeCheck({0x523},AnimeArchetype.OCGGoyo)
 
-	-- Granel
+	-- Granel (Checked 13/05/2024)
 	-- グランエル
 	Card.IsGranel=MakeCheck({0x524},{2137678,4545683})
 
@@ -343,7 +340,7 @@ if not AnimeArchetype then
 	}
 	Card.IsHand=MakeCheck({0x527},AnimeArchetype.OCGHand)
 
-	-- Heavy Industry
+	-- Heavy Industry  (Checked 13/05/2024)
 	-- 重機
 	-- じゅうき
 	-- Digvorzhak, King of Heavy Industry/Heavy Freight Train Derricrane/Jumbo Drill
@@ -362,7 +359,7 @@ if not AnimeArchetype then
 	}
 	Card.IsHell=MakeCheck({0x567},AnimeArchetype.OCGHell)
 
-	-- Heraldic
+	-- Heraldic (Checked 13/05/2024)
 	-- 紋章
 	-- もんしょう
 	-- Number 18: Heraldry Patriarch/Number 8: Heraldic King Genom-Heritage/Medallion of the Ice Barrier
@@ -391,34 +388,35 @@ if not AnimeArchetype then
 	}
 	Card.IsHunder=MakeCheck({0x565},AnimeArchetype.OCGHunder)
 
-	-- Inu 犬
-	-- Mad Dog of Darkness/Ancient Gear Hunting Hound/Caninetaur
-	-- Skull Dog Marron/Nin-Ken Dog/Watch Dog
+	-- Inu 犬 (Checked 13/05/2024)
+	-- Mad Dog of Darkness/Ancient Gear Hunting Hound/Bownty/Caninetaur
+	-- Skull Dog Marron/Don't Slip, the Dogs of War/Nin-Ken Dog/Watch Dog
 	-- Zombowwow/Doomdog Octhros/Outstanding Dog Marron
-	-- Mecha-Dog Marron/Yokotuner
+	
+	-- Outstanding Dog Mary/Mecha-Dog Marron/Yokotuner
 	AnimeArchetype.OCGInu={
-		79182538,42878636,91754175,
-		86652646,11987744,86889202,
+		79182538,42878636,55351724,91754175
+		86652646,65938950,11987744,86889202,
 		27971137,58616392,11548522,
-		94667532,27750191
+		71583486,94667532,27750191
 	}
 	Card.IsInu=MakeCheck({0x52a},AnimeArchetype.OCGInu)
 
-	-- Ivy アイヴィ
+	-- Ivy アイヴィ (Checked 13/05/2024)
 	-- Wall of Ivy/Ivy Shackles/Ivy Token
 	AnimeArchetype.OCGIvy={
 		30069398,14730606,30069399
 	}
 	Card.IsIvy=MakeCheck({0x52b},AnimeArchetype.OCGIvy)
 
-	-- Jester ジェスター
-	-- Majester Paladin, the Ascending Dracoslayer/Jester Confit/Jester Lord
+	-- Jester ジェスター (Checked 13/05/2024)
+	-- Cluster Congester/Majester Paladin, the Ascending Dracoslayer/Jester Confit/Jester Lord
 	AnimeArchetype.OCGJester={
-		72992744,8487449,88722973,
+		94703021,72992744,8487449,88722973,
 	}
 	Card.IsJester=MakeCheck({0x52c},AnimeArchetype.OCGJester)
 
-	-- Jutte ジュッテ
+	-- Jutte ジュッテ (Checked 13/05/2024)
 	-- Jutte Fighter
 	Card.IsJutte=MakeCheck({0x52d},{60410769})
 
@@ -545,47 +543,45 @@ if not AnimeArchetype then
 	}
 	Card.IsKnight=MakeCheck({0x530,0x1047,0x9c,0xc8},AnimeArchetype.OCGKnight)
 
-	-- Koala コアラ
-	AnimeArchetype.OCGKoala={
-		-- Big Koala, Des Koala, Vampire Koala, Sea Koala, Koalo-Koala, Tree Otter
-		42129512,69579761,1371589,87685879,7243511,71759912,
-	}
-	Card.IsKoala=MakeCheck({0x531},AnimeArchetype.OCGKoala)
-
-	-- Lamp ランプ
-	-- Performapal Trump Witch/Performapal Trump Girl/Mech Mole Zombie
-	-- F.A. Circuit Grand Prix/Ancient Lamp/Mystic Lamp
-	-- Lord of the Lamp/ La Jinn the Mystical Genie of the Lamp
+	-- Lamp ランプ (Checked 13/05/2024, need id to be ordered)
+	-- Epurrely Plump/Performapal Trump Witch/Performapal Trump Girl/Mech Mole Zombie
+	-- Dracoon Lamp/Fish Lamp/F.A. Circuit OFf-road grand Prix
+	-- F.A. Circuit Grand Prix/F.A. City Grand Prix
+	-- Prank-Kids Lampsies /Ancient Lamp/Mystic Lamp
+	-- Lord of the Lamp/La Jinn the Mystical Genie of the Lamp
 	AnimeArchetype.OCGLamp={
-		54912977,97590747,98049915, 39838559,99510761,91584698,
-		42002073,63545455
+		24434049,54912977,97590747,98049915, 
+		42596828,35834119,2144946,
+		39838559,1061200,
+		99510761,91584698,
+		42002073,63545455,18236002
 	}
 	Card.IsLamp=MakeCheck({0x532},AnimeArchetype.OCGLamp)
 
-	-- Landstar ランドスター
+	-- Landstar ランドスター (Checked 13/05/2024)
 	-- Comrade Swordsman of Landstar/Swordsman of Landstar
 	Card.IsLandstar=MakeCheck({0x533},{3573512,83602069})
 
-	-- Line Monster ラインモンスター
+	-- Line Monster ラインモンスター (Checked 13/05/2024)
 	-- Number 72: Shogi Rook/Shogi Knight/Shogi Lance
 	AnimeArchetype.OCGLineMonster={
 		32476434,41493640,75253697
 	}
 	Card.IsLineMonster=MakeCheck({0x564},AnimeArchetype.OCGLineMonster)
 
-	-- Magnet
+	-- Magnet (Checked 13/05/2024)
 	-- 磁石
 	-- マグネット
 	Card.IsMagnet=MakeCheck({0x534,0x2066})
 
-	-- Mantis カマキリ
+	-- Mantis カマキリ (need to be discussed, cards used with it in the manga don't have the mantis string)
 	-- Empress Mantis,Praying Mantis,Guard Mantis
 	AnimeArchetype.OCGMantis={
 		58818411,31600513,53754104
 	}
 	Card.IsMantis=MakeCheck({0x535},AnimeArchetype.OCGMantis)
 
-	-- Mask  (Last updated on 23rd Apr 2020)
+	-- Mask  (Checked 13/05/2024)
 	-- 仮面 (base)
 	-- かめん (ruby)
 	-- Mask of Restrict/Grand Tiki Elder/Masked Clown
@@ -600,23 +596,24 @@ if not AnimeArchetype then
 	}
 	Card.IsMask=MakeCheck({0x583},AnimeArchetype.OCGMask)
 
-	-- Melodious Songstress
+	-- Melodious Songstress (Checked 13/05/2024)
 	-- 幻奏の歌姫
 	-- げんそうのうたひめ
-	-- Soprano the Melodious Songstress/Solo the Melodious Songstress
-	Card.IsMelodiousSongtress=MakeCheck({0x209b},{14763299,62895219})
-
-	-- Motor モーター
-	-- Fiendish Engine Ω/Motor Shell/Motor Frenzy
-	Card.IsMotor=MakeCheck({0x537},{82556058,78394032,77672444})
+	-- Couplet the Melodious Songstress/Soprano the Melodious Songstress/Solo the Melodious Songstress/Refrain the Melodious Songstress
+	Card.IsMelodiousSongtress=MakeCheck({0x209b},{90276649,14763299,62895219,64881644})
+ 
+	-- Motor モーター (Checked 13/05/2024)
+	-- Fiendish Engine Ω/Battlin' Boxer Promoter/Motor Shell/Motor Frenzy
+	Card.IsMotor=MakeCheck({0x537},{82556058,83315222,78394032,77672444})
 
 	-- Neko 猫
 	-- Dark Cat with White Tail/Kinka-byo/Black Cat-astrophe
-	-- Ghostrick Nekomusume/Watch Cat/A Cat of Ill Omen/
-	-- Lunalight Cat Dancer/Lunalight Blue Cat/Quantum Cat
+	-- Ghostrick Nekomusume/Nine-Lives Cat/Watch Cat/A Cat of Ill Omen/
+	-- Lunalight Cat Dancer/Lunalight Blue Cat/Quantum Cat/Shamisen Samsara Sorrowcat
 	AnimeArchetype.OCGNeko={
-		8634636,45452224,67381587,24101897,70975131,24140059,
-		51777272,11439455,87772572
+		8634636,45452224,67381587,
+		24101897,28981598,70975131,24140059,
+		51777272,11439455,87772572,46057733
 	}
 	Card.IsNeko=MakeCheck({0x538},AnimeArchetype.OCGNeko)
 
@@ -624,10 +621,10 @@ if not AnimeArchetype then
 	-- Ｎｏ．３９ 希望皇ホープ
 	-- ナンバーズ３９ きぼうおうホープ
 	-- Number S39: Utopia the Lightning/Number S39: Utopia Prime/Number 39: Utopia
-	-- Number 39: Utopia Roots
+	-- Number 39: Utopia Double/Number 39: Utopia Rising/Number 39: Utopia Roots
 	AnimeArchetype.OCGN39Utopia={
 		56832966,86532744,84013237,
-		84124261
+		62517849,93777634,84124261
 	}
 	Card.IsN39Utopia=MakeCheck({0x539},AnimeArchetype.OCGN39Utopia,{"IsCN39UtopiaRay"})
 
@@ -640,19 +637,12 @@ if not AnimeArchetype then
 	}
 	Card.IsCN39UtopiaRay=MakeCheck({0x1539},AnimeArchetype.OCGCN39UtopiaRay)
 
-	-- Numeronius
-	-- ヌメロニアス
-	-- Number C1000: Numeronius/Number iC1000: Numeronius Numeronia
-	AnimeArchetype.OCGNumeronius={
-		100275101,100275102
-	}
-	Card.IsNumeronius=MakeCheck({0x53b},AnimeArchetype.OCGNumeronius)
-
-	-- Papillon パピヨン
+	-- Papillon パピヨン (Checked 13/05/2024)
+	-- Starlit Papillon/Seraphim Papillon
 	-- Moonlit Papillon/Rose Papillon
-	Card.IsPapillon=MakeCheck({0x53c},{16366944,8910240})
+	Card.IsPapillon=MakeCheck({0x53c},{92341815,91140491,16366944,8910240})
 
-	-- Parasite パラサイト
+	-- Parasite パラサイト (Checked 13/05/2024)
 	-- Graydle Parasite/Fusion Parasite
 	Card.IsParasite=MakeCheck({0x53d},{49966595,6205579})
 
@@ -672,25 +662,18 @@ if not AnimeArchetype then
 	}
 	Card.IsPixie=MakeCheck({0x53e},AnimeArchetype.OCGPixie)
 
-	-- Priestess
+	-- Priestess (Checked 13/05/2024,id to order)
 	-- 巫女
 	-- みこ
 	-- Priestess with Eyes of Blue/Maiden of the Aqua/Winda, Priestess of Gusto
 	-- Time Maiden/Star Grail-Bearing Priestess/Ariel, Priestess of the Nekroz/
-	-- Gravekeeper's Priestess
+	-- Gravekeeper's Priestess/Shinonome the Vaylantz Priestess
 	AnimeArchetype.OCGPriestess={
-		95511642,56827051,3381441,27107590,36734924,54455435,
-		17214465
+		95511642,56827051,3381441,
+		27107590,36734924,54455435,
+		17214465,49131917
 	}
 	Card.IsPriestess=MakeCheck({0x53f},AnimeArchetype.OCGPriestess)
-
-	-- Puppet パペット
-	-- Puppet Master/Junk Puppet/Puppet Ritual
-	-- Puppet King/Puppet Plant/Puppet Queen
-	AnimeArchetype.OCGPuppet={
-		67968069,3167573,41442341,51119924,1969506,15001619
-	}
-	Card.IsPuppet=MakeCheck({0x540,0x83,0x152c},AnimeArchetype.OCGPuppet)
 
 	-- Raccoon (not finished) 狸
 	-- Baby Raccoon Tantan/Baby Raccoon Ponpoko/Turtle Raccoon
@@ -728,7 +711,7 @@ if not AnimeArchetype then
 	}
 	Card.IsRed=MakeCheck({0x543,0x3b,0x1045},AnimeArchetype.OCGRed)
 
-	-- Seal
+	-- Seal (Checked 13/05/2024)
 	-- 封じ
 	-- ふうじ
 	-- Mask of Restrict/Block Attack/Stop Defense
@@ -738,13 +721,13 @@ if not AnimeArchetype then
 	}
 	Card.IsSeal=MakeCheck({0x545},AnimeArchetype.OCGSeal)
 
-	-- Shaman シャーマン
-	-- Elemental HERO Necroid Shaman/Sylvan Sagequoia/The Legendary Fisherman
+	-- Shaman シャーマン (Checked 13/05/2024)
+	-- Amazoness Spiritualist/Elemental HERO Necroid Shaman/Sylvan Sagequoia/The Legendary Fisherman
 	-- The Legendary Fisherman III/The Legendary Fisherman II/Lumina, Twilightsworn Shaman
-	-- Neo Flamvell Shaman
+	-- Neo Flamvell Shaman/Rose Shaman
 	AnimeArchetype.OCGShaman={
-		81003500,10530913,3643300,44968687,19801646,56166150,
-		39761138
+		97870394,81003500,10530913,3643300,44968687,19801646,56166150,
+		39761138,2752099
 	}
 	Card.IsShaman=MakeCheck({0x546},AnimeArchetype.OCGShaman)
 
@@ -783,7 +766,7 @@ if not AnimeArchetype then
 	}
 	Card.IsShining=MakeCheck({0x548,0x2048},AnimeArchetype.OCGShining)
 
-	-- Skiel
+	-- Skiel (Checked 13/05/2024)
 	-- スキエル
 	Card.IsSkiel=MakeCheck({0x549},{31930787,75733063})
 
@@ -846,31 +829,31 @@ if not AnimeArchetype then
 	}
 	Card.IsSphere=MakeCheck({0x54c},AnimeArchetype.OCGSphere)
 
-	--- Spirit (archetype)
+	--- Spirit (archetype) (Checked 13/05/2024)
 	--- 精霊
 	--- スピリット
 	--- Blue-Eyes Spirit Dragon
 	Card.IsSpirit=MakeCheck({0x54e},{CARD_BLUEEYES_SPIRIT})
 
-	-- Starship スターシップ
+	-- Starship スターシップ (Checked 13/05/2024)
 	-- Starship Spy Plane
 	-- Number 42: Galaxy Tomahawk
 	Card.IsStarship=MakeCheck({0x54f},{15458892,10389142})
 
-	-- Starving Venemy
+	-- Starving Venemy (Checked 13/05/2024)
 	-- スターヴ・ヴェネミー
 	-- Starving Venemy Lethal Dose Dragon/Starving Venemy Dragon
 	Card.IsStarvingVenemy=MakeCheck({0x576},{22070401,93729065})
 
-	-- Statue スタチュー
-	-- Tiki Curse/Guardian Statue/Tiki Soul
+	-- Statue スタチュー (Checked 13/05/2024)
+	-- Angel Statue - Azurune/Tiki Curse/Guardian Statue/Tiki Soul
 	-- Dragon Statue
 	AnimeArchetype.OCGStatue={
-		75209824,3129635,49514333,9197735
+		44822037,75209824,3129635,49514333,9197735
 	}
 	Card.IsStatue=MakeCheck({0x550},AnimeArchetype.OCGStatue)
 
-	-- Stone (list to do)
+	-- Stone (Checked 13/05/2024)
 	-- 岩石
 	-- がんせき
 	-- Boulder Tortoise/Giant Soldier of Stone/Rock Spirit/Sentry Soldier of Stone
@@ -911,7 +894,7 @@ if not AnimeArchetype then
 	}
 	Card.IsToy=MakeCheck({0x559},AnimeArchetype.OCGToy)
 
-	-- Toy (ARC-V archetype) トーイ
+	-- Toy (ARC-V archetype) トーイ (Checked 13/05/2024)
 	Card.IsToyArcV=MakeCheck({0x558,0xad})
 
 	--V (GX Archetype)
@@ -966,10 +949,10 @@ if not AnimeArchetype then
 	}
 	Card.IsWhite=MakeCheck({0x55d},AnimeArchetype.OCGWhite)
 
-	-- Wisel
+	-- Wisel (Checked 13/05/2024)
 	-- ワイゼル
-	-- Meklord Emperor Wisel/Meklord Army of Wisel
-	Card.IsWisel=MakeCheck({0x560},{68140974,39648965})
+	-- Meklord Emperor Wisel/Meklord Emperor Wisel - Synchro Absorption/Meklord Army of Wisel
+	Card.IsWisel=MakeCheck({0x560},{68140974,30221870,39648965})
 
 	--X
 	AnimeArchetype.OCGX={
@@ -987,7 +970,7 @@ if not AnimeArchetype then
 	}
 	Card.IsY=MakeCheck({0x56d,0xc1},AnimeArchetype.OCGY)
 
-	-- Yomi 黄泉
+	-- Yomi 黄泉 (Checked 13/05/2024)
 	-- Treeborn Frog
 	-- Yomi Ship
 	AnimeArchetype.OCGYomi={
@@ -1007,9 +990,9 @@ if not AnimeArchetype then
 	-- ∞
 	-- インフィニティ
 	-- Meklord Astro Mekanikle/Meklord Emperor Granel/Meklord Emperor Skiel/
-	-- Meklord Emperor Wisel
+	-- Meklord Emperor Wisel/Meklord Emperor Wisel - Synchro Absorption
 	AnimeArchetype.OCGInfinity={
-		63468625,4545683,31930787,68140974
+		63468625,4545683,31930787,68140974,30221870
 	}
 	Card.IsInfinity=MakeCheck({0x562},AnimeArchetype.OCGInfinity)
 
@@ -1070,7 +1053,7 @@ if not AnimeArchetype then
 	-- Fossil Dragon Skullgios/Fossil Machine Skull Convoy/Fossil Warrior Skull King
 	Card.IsPaleozoic=MakeCheck({0x57e},{21225115,57157964,96897184})
 
-	-- Mosquito
+	-- Mosquito  (Checked 13/05/2024)
 	-- 軍蚊 (Army Mosquito)
 	-- Ninjitsu Art of Mosquito Marching
 	Card.IsMosquito=MakeCheck({0x536},{94113093})

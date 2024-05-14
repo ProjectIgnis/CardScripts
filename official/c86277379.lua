@@ -1,5 +1,5 @@
 --ガスタ・ヴェズル
---Gusto Vether
+--Gusto Vedir
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -35,17 +35,17 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x10}
+s.listed_series={SET_GUSTO}
 function s.spcfilter1(c)
-	return c:IsPreviousSetCard(0x10) and c:IsPreviousLocation(LOCATION_MZONE)
+	return c:IsPreviousSetCard(SET_GUSTO) and c:IsPreviousLocation(LOCATION_MZONE)
 		and c:IsPreviousPosition(POS_FACEUP) and c:IsReason(REASON_BATTLE)
 end
 function s.spcon1(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.spcfilter1,1,nil)
 end
-function s.spcfilter2(c)
-	return c:IsPreviousSetCard(0x10) and c:IsPreviousLocation(LOCATION_MZONE)
-		and c:IsPreviousPosition(POS_FACEUP) and not c:IsReason(REASON_BATTLE)
+function s.spcfilter2(c,tp)
+	return c:IsPreviousSetCard(SET_GUSTO) and c:IsPreviousLocation(LOCATION_MZONE)
+		and c:IsPreviousPosition(POS_FACEUP) and not c:IsReason(REASON_BATTLE) and c:IsControler(tp)
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.spcfilter2,1,nil,tp)
@@ -63,14 +63,14 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tgfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x10) and c:IsAbleToGrave()
+	return c:IsMonster() and c:IsSetCard(SET_GUSTO) and c:IsAbleToGrave()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x10) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_GUSTO) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)

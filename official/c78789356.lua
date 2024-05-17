@@ -1,5 +1,5 @@
 --黎溟界闢
---Ogdoadic Dawn of Creation
+--Ogdoadic Daybreak
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 end
 s.listed_names={23837055} --Ogdoadic Token
 function s.cfilter(c,tp)
-	return c:IsRace(RACE_REPTILE) and c:HasLevel() and Duel.GetMZoneCount(tp,c)>0
+	return c:IsRace(RACE_REPTILE) and c:HasLevel() and c:IsLevelAbove(2) and Duel.GetMZoneCount(tp,c)>0
 end
 function s.tkncost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(-100)

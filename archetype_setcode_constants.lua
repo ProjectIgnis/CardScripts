@@ -564,3 +564,5 @@ SET_WHITE_FOREST                  = 0x1aa
 SET_TACHYON                       = 0x1ab
 SET_MULTCHUMMY                    = 0x1ac
 SET_EMBLEMA                       = 0x1ad
+SET_SHARK                         = 0x1ae
+SET_SHARK_DRAKE                   = 0x11ae

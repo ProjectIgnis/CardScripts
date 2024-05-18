@@ -34,12 +34,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp,angle_or_delvin)
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_COUNTER)
 		local tc=Duel.SelectMatchingCard(tp,Card.IsCanAddCounter,tp,LOCATION_PZONE,0,1,1,nil,COUNTER_RESONANCE,1):GetFirst()
-		if tc and tc:AddCounter(COUNTER_RESONANCE,1) then
-			Duel.RaiseEvent(tc,EVENT_CUSTOM+39210885,e,0,tp,tp,1)
-		end
+		if not (tc and tc:AddCounter(COUNTER_RESONANCE,1)) then return end
+		Duel.RaiseEvent(tc,EVENT_CUSTOM+39210885,e,0,tp,tp,1)
 		op=Duel.SelectEffect(tp,
 			{true,aux.Stringid(id,1)},
 			{true,aux.Stringid(id,2)})
+		Duel.BreakEffect()
 	end
 	if op==1 then
 		--Gain 500 LP, then you can add 1 of your banished "Vaalmonica" cards to your hand

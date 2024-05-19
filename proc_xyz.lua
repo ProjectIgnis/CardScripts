@@ -106,10 +106,10 @@ function Xyz.SubMatFilter(c,lv,xyz,tp)
 	end
 	return true
 end
-function Xyz.CheckValidMultiXyzMaterial(effs,xyz)
+function Xyz.CheckValidMultiXyzMaterial(effs,xyz,matg)
 	for i,te in ipairs(effs) do
 		local tgf=te:GetOperation()
-		if not tgf or tgf(te,xyz) then return true end
+		if not tgf or tgf(te,xyz,matg) then return true end
 	end
 	return false
 end
@@ -223,7 +223,7 @@ function Xyz.RecursionChk(c,mg,xyz,tp,min,max,minc,maxc,sg,matg,ct,matct,mustbem
 			for i,te in ipairs({c:GetCardEffect(EFFECT_DOUBLE_XYZ_MATERIAL)}) do
 				local tgf=te:GetOperation()
 				local val=te:GetValue()
-				if val>0 and not retchknum[val] and (not maxc or xmatct+val<=maxc) and (not tgf or tgf(te,xyz)) then
+				if val>0 and not retchknum[val] and (not maxc or xmatct+val<=maxc) and (not tgf or tgf(te,xyz,matg)) then
 					retchknum[val]=true
 					if (xct+val>=min and xmatct+val>=minc and Xyz.CheckMaterialSet(matg,xyz,tp,exchk,mustg,lv))
 						or mg:IsExists(Xyz.RecursionChk,1,sg,mg,xyz,tp,min,max,minc,maxc,sg,matg,xct,xmatct+val,mustbemat,exchk,f,mustg,lv,eqmg,equips_inverse) then
@@ -362,7 +362,7 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 								mg:Merge(equips_inverse[sc])
 							end
 							local multiXyz={sc:GetCardEffect(EFFECT_DOUBLE_XYZ_MATERIAL)}
-							if #multiXyz>0 and Xyz.CheckValidMultiXyzMaterial(multiXyz,c) and ct<minc then
+							if #multiXyz>0 and Xyz.CheckValidMultiXyzMaterial(multiXyz,c,matg) and ct<minc then
 								matg:AddCard(sc)
 								local multi={}
 								if mg:IsExists(Xyz.RecursionChk,1,sg,mg,c,tp,min,max,minc,maxc,sg,matg,ct,matct,mustbemat,exchk,f,mustg,lv,eqmg,equips_inverse) then
@@ -373,7 +373,7 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 									local te=eff[i]
 									local tgf=te:GetOperation()
 									local val=te:GetValue()
-									if val>0 and (not tgf or tgf(te,c)) then
+									if val>0 and (not tgf or tgf(te,c,matg)) then
 										local newCount=matct+1+val
 										if (minc<=newCount and newCount<=maxc)
 											or mg:IsExists(Xyz.RecursionChk,1,sg,mg,c,tp,min,max,minc,maxc,sg,matg,ct,newCount,mustbemat,exchk,f,mustg,lv,eqmg,equips_inverse) then

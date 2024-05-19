@@ -110,10 +110,10 @@ function Xyz.SubMatFilter(c,lv,xyz,tp)
 	end
 	return true
 end
-function Xyz.CheckValidMultiXyzMaterial(effs,xyz)
+function Xyz.CheckValidMultiXyzMaterial(effs,xyz,matg)
 	for i,te in ipairs(effs) do
 		local tgf=te:GetOperation()
-		if not tgf or tgf(te,xyz) then return true end
+		if not tgf or tgf(te,xyz,matg) then return true end
 	end
 	return false
 end
@@ -224,15 +224,16 @@ function Xyz.RecursionChk(c,mg,xyz,tp,min,max,minc,maxc,sg,matg,ct,matct,mustbem
 		if mg:IsExists(Xyz.RecursionChk,1,sg,mg,xyz,tp,min,max,minc,maxc,sg,matg,xct,xmatct,mustbemat,exchk,f,mustg,lv,eqmg,equips_inverse) then return true end
 		if not mustbemat then
 			local retchknum={}
-			for i,te in ipairs({c:GetCardEffect(EFFECT_DOUBLE_XYZ_MATERIAL)}) do
+			for i,te in ipairs({c:IsHasEffect(EFFECT_DOUBLE_XYZ_MATERIAL,tp)}) do
 				local tgf=te:GetOperation()
 				local val=te:GetValue()
-				if val>0 and not retchknum[val] and (not maxc or xmatct+val<=maxc) and (not tgf or tgf(te,xyz)) then
+				if val>0 and not retchknum[val] and (not maxc or xmatct+val<=maxc) and (not tgf or tgf(te,xyz,matg)) then
 					retchknum[val]=true
-					if (xct+val>=min and xmatct+val>=minc and Xyz.CheckMaterialSet(matg,xyz,tp,exchk,mustg,lv))
-						or mg:IsExists(Xyz.RecursionChk,1,sg,mg,xyz,tp,min,max,minc,maxc,sg,matg,xct,xmatct+val,mustbemat,exchk,f,mustg,lv,eqmg,equips_inverse) then
-						return true
-					end
+					te:UseCountLimit(tp)
+					local chk=(xct+val>=min and xmatct+val>=minc and Xyz.CheckMaterialSet(matg,xyz,tp,exchk,mustg,lv))
+								or mg:IsExists(Xyz.RecursionChk,1,sg,mg,xyz,tp,min,max,minc,maxc,sg,matg,xct,xmatct+val,mustbemat,exchk,f,mustg,lv,eqmg,equips_inverse)
+					te:RestoreCountLimit(tp)
+					if chk then return true end
 				end
 			end
 		end
@@ -345,7 +346,7 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 					min=min or 0
 					local matg=Group.CreateGroup()
 					local sg=Group.CreateGroup()
-					local tab={}
+					local multiXyzSelectedCards={}
 					local finishable=false
 					while true do
 						local ct=#matg
@@ -365,37 +366,46 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 							if equips_inverse and equips_inverse[sc] then
 								mg:Merge(equips_inverse[sc])
 							end
-							local multiXyz={sc:GetCardEffect(EFFECT_DOUBLE_XYZ_MATERIAL)}
-							if #multiXyz>0 and Xyz.CheckValidMultiXyzMaterial(multiXyz,c) and ct<minc then
+							local multiXyz={sc:IsHasEffect(EFFECT_DOUBLE_XYZ_MATERIAL,tp)}
+							if #multiXyz>0 and Xyz.CheckValidMultiXyzMaterial(multiXyz,c,matg) and ct<minc then
 								matg:AddCard(sc)
 								local multi={}
-								if mg:IsExists(Xyz.RecursionChk,1,sg,mg,c,tp,min,max,minc,maxc,sg,matg,ct,matct,mustbemat,exchk,f,mustg,lv,eqmg,equips_inverse) then
-									table.insert(multi,1)
+								if mg:IsExists(Xyz.RecursionChk,1,sg,mg,c,tp,min,max,minc,maxc,sg,matg,ct+1,matct+1,mustbemat,exchk,f,mustg,lv,eqmg,equips_inverse) then
+									multi[1]={}
 								end
-								local eff={sc:GetCardEffect(EFFECT_DOUBLE_XYZ_MATERIAL)}
-								for i=1,#eff do
-									local te=eff[i]
+								for i=1,#multiXyz do
+									local te=multiXyz[i]
 									local tgf=te:GetOperation()
 									local val=te:GetValue()
-									if val>0 and (not tgf or tgf(te,c)) then
+									if val>0 and (not tgf or tgf(te,c,matg)) then
 										local newCount=matct+1+val
-										if (minc<=newCount and newCount<=maxc)
-											or mg:IsExists(Xyz.RecursionChk,1,sg,mg,c,tp,min,max,minc,maxc,sg,matg,ct,newCount,mustbemat,exchk,f,mustg,lv,eqmg,equips_inverse) then
-											table.insert(multi,1+val)
+										te:UseCountLimit(tp)
+										local chk=(minc<=newCount and newCount<=maxc)
+													or mg:IsExists(Xyz.RecursionChk,1,sg,mg,c,tp,min,max,minc,maxc,sg,matg,ct+1,newCount,mustbemat,exchk,f,mustg,lv,eqmg,equips_inverse)
+										if chk then
+											if not multi[1+val] then
+												multi[1+val]={}
+											end
+											table.insert(multi[1+val],te)
 										end
+										te:RestoreCountLimit(tp)
 									end
 								end
-								if #multi==1 then
-									if multi[1]>1 then
-										extra_mats=extra_mats+multi[1]-1
-										tab[sc]=multi[1]
+								local availableNumbers={}
+								for k in ipairs(multi) do
+									table.insert(availableNumbers,k)
+								end
+								if #availableNumbers>0 then
+									local chosen=availableNumbers[1]
+									if #availableNumbers~=1 then
+										Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
+										chosen=Duel.AnnounceNumber(tp,availableNumbers)
 									end
-								else
-									Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-									local num=Duel.AnnounceNumber(tp,table.unpack(multi))
-									if num>1 then
-										extra_mats=extra_mats+num-1
-										tab[sc]=num
+									if chosen>1 then
+										local eff=multi[chosen][1]
+										extra_mats=extra_mats+chosen-1
+										eff:UseCountLimit(tp)
+										multiXyzSelectedCards[sc]={eff,chosen}
 									end
 								end
 							elseif sc:IsHasEffect(EFFECT_ORICHALCUM_CHAIN) then
@@ -416,9 +426,11 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 								extra_mats=extra_mats-1
 							else
 								matg:RemoveCard(sc)
-								local num=tab[sc]
-								if num then
-									tab[sc]=nil
+								local multiXyzSelection=multiXyzSelectedCards[sc]
+								if multiXyzSelection then
+									multiXyzSelectedCards[sc]=nil
+									local eff,num=table.unpack(multiXyzSelection)
+									eff:RestoreCountLimit(tp)
 									extra_mats=extra_mats-(num-1)
 								end
 							end

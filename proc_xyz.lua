@@ -109,7 +109,7 @@ end
 function Xyz.CheckValidMultiXyzMaterial(effs,xyz,matg,tp)
 	for i,te in ipairs(effs) do
 		local tgf=te:GetOperation()
-		if not tgf or tgf(te,xyz,matg) then return te:CheckCountLimit(tp) end
+		if not tgf or tgf(te,xyz,matg) then return true end
 	end
 	return false
 end
@@ -362,7 +362,7 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 							if equips_inverse and equips_inverse[sc] then
 								mg:Merge(equips_inverse[sc])
 							end
-							local multiXyz={c:IsHasEffect(EFFECT_DOUBLE_XYZ_MATERIAL,tp)}
+							local multiXyz={sc:IsHasEffect(EFFECT_DOUBLE_XYZ_MATERIAL,tp)}
 							if #multiXyz>0 and Xyz.CheckValidMultiXyzMaterial(multiXyz,c,matg,tp) and ct<minc then
 								matg:AddCard(sc)
 								local multi={}

@@ -1,6 +1,24 @@
 --Utilities to be added to the core
 
 --[[
+	A monster that is temporarily banished shouldn't be treated as a monster that was Normal, Flip, or Special Summoned that turn, or as a monster that has already changed its battle position, after it returns to the field.
+	Manually sets the relevant statuses to "false" before returning the monster to the field.
+--]]
+Duel.ReturnToField=(function()
+	local oldfunc=Duel.ReturnToField
+	return function(card,pos,zone,...)
+		if not card:IsReason(REASON_TEMPORARY) then return false end
+		card:SetStatus(STATUS_FORM_CHANGED,false)
+		card:SetStatus(STATUS_SUMMON_TURN,false)
+		card:SetStatus(STATUS_FLIP_SUMMON_TURN,false)
+		card:SetStatus(STATUS_SPSUMMON_TURN,false)
+		pos=pos or card:GetPreviousPosition()
+		zone=zone or 0xff
+		return oldfunc(card,pos,zone,...)
+	end
+end)()
+
+--[[
 	Places a hint that says "Added to the hand by a currently resolving effect" (string 225) on any cards added to the hand for the duration of that Chain's/effect's resolution.
 	Used to differentiate which card(s) were just added to the hand and which ones were already there for cases of multiple copies of the same card being present.
 	The card ID used for the flag effect (30336082) belongs to "Brimming Sangen Manor", the card that initially needed this workaround.

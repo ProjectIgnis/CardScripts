@@ -1161,7 +1161,7 @@ function Auxiliary.sumreg(e,tp,eg,ep,ev,re,r,rp)
 	local code=e:GetLabel()
 	for tc in aux.Next(eg) do
 		if tc:GetOriginalCode()==code then
-			tc:RegisterFlagEffect(code,RESET_EVENT|RESETS_STANDARD&~(RESET_TEMP_REMOVE|RESET_TURN_SET)|RESET_PHASE|PHASE_END,0,1)
+			tc:RegisterFlagEffect(code,RESETS_STANDARD_PHASE_END,0,1)
 		end
 	end
 end

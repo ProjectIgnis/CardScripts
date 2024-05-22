@@ -59,7 +59,7 @@ function s.rmvtg(filter)
 end
 function s.rmvop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT|REASON_TEMPORARY)>0 and tc:IsLocation(LOCATION_REMOVED)
+	if tc:IsRelateToEffect(e) and Duel.Remove(tc,nil,REASON_EFFECT|REASON_TEMPORARY)>0 and tc:IsLocation(LOCATION_REMOVED)
 		and not tc:IsReason(REASON_REDIRECT) then
 		Duel.BreakEffect()
 		Duel.ReturnToField(tc)

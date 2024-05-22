@@ -31,7 +31,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_MEMENTO}
 function s.checkfilter(c)
-	return c:IsPreviousLocation(LOCATION_MZONE) or (c:IsMonster() and not c:IsPreviousLocation(LOCATION_ONFIELD))
+	return (c:IsPreviousLocation(LOCATION_MZONE) or (c:IsMonster() and not c:IsPreviousLocation(LOCATION_ONFIELD))) and c:IsReason(REASON_EFFECT)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.checkfilter,nil)

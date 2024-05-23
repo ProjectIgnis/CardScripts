@@ -1,17 +1,19 @@
+--虹クリボー (Anime)
 --Rainbow Kuriboh (Anime)
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
-	--Equip
+	--Equip this card to an opponent's attacking Xyz monster
 	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_EQUIP)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e1:SetRange(LOCATION_HAND)
-	e1:SetCondition(s.con)
-	e1:SetTarget(s.tg)
-	e1:SetOperation(s.op)
+	e1:SetCondition(s.eqcon)
+	e1:SetTarget(s.eqtg)
+	e1:SetOperation(s.eqop)
 	c:RegisterEffect(e1)
-	--spsummon
+	--Special Summon this card from your GY if an opponent's monster attacks directly
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -22,18 +24,18 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-function s.con(e,tp,eg,ep,ev,re,r,rp)
+function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
 	return at:GetControler()~=tp and at:IsType(TYPE_XYZ)
 end
-function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end
 	Duel.ConfirmCards(1-tp,c)
 	Duel.ShuffleHand(tp)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,c,1,0,0)
 end
-function s.op(e,tp,eg,ep,ev,re,r,rp)
+function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local a=Duel.GetAttacker()
 	if c:IsRelateToEffect(e) and a and a:IsRelateToBattle() then
@@ -44,13 +46,14 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)
 		e1:SetLabelObject(a)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(s.eqlimit)
 		c:RegisterEffect(e1)
+		--Equipped monster cannot attack
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_EQUIP)
 		e2:SetCode(EFFECT_CANNOT_ATTACK)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e2)
 	end
 end
@@ -73,11 +76,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
-		e1:SetCondition(s.dcon)
+		e1:SetCondition(function(e) return e:GetHandler():IsReason(REASON_DESTROY) end)
 		e1:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e1,true)
 	end
 end
-function s.dcon(e)
-	return e:GetHandler():GetReason(REASON_DESTROY)
-end
+

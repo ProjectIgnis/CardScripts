@@ -63,8 +63,9 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
-		local g=Duel.GetMatchingGroup(Card.IsCode,tc:GetControler(),LOCATION_HAND|LOCATION_DECK,0,nil,tc:GetCode())
+	if not (tc:IsRelateToEffect(e) and tc:IsFaceup()) then return end
+	local g=Duel.GetMatchingGroup(Card.IsCode,tc:GetControler(),LOCATION_HAND|LOCATION_DECK,0,nil,tc:GetCode())
+	if #g>0 then
 		Duel.Destroy(g,REASON_EFFECT)
 	end
 end

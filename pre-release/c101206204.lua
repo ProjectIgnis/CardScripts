@@ -33,6 +33,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_PIERCE)
 	c:RegisterEffect(e3)
 end
+s.xyz_number=32
 s.listed_series={SET_SHARK_DRAKE}
 function s.altmatfilter(c,tp,xyzc)
 	return c:IsRank(4) and c:IsSetCard(SET_SHARK_DRAKE,xyzc,SUMMON_TYPE_XYZ,tp) and c:IsType(TYPE_XYZ,xyzc,SUMMON_TYPE_XYZ,tp) and c:IsFaceup()

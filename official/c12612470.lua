@@ -1,5 +1,5 @@
 --童妖 茶壺
---Douyou Chatsubou
+--Procession of the Tea Jar
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -49,15 +49,18 @@ function s.poscon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsLocation(LOCATION_MZONE) and c:IsPreviousLocation(LOCATION_MZONE)
 end
+function s.posfilter(c)
+	return c:IsCanTurnSet() and c:IsLocation(LOCATION_MZONE)
+end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local g=e:GetHandler():GetColumnGroup():Filter(Card.IsCanTurnSet,nil)
+	local g=e:GetHandler():GetColumnGroup():Filter(s.posfilter,nil)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,#g,0,0)
 end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	local g=c:GetColumnGroup():Filter(Card.IsCanTurnSet,nil)
+	local g=c:GetColumnGroup():Filter(s.posfilter,nil)
 	if #g>0 then
 		Duel.ChangePosition(g,POS_FACEDOWN_DEFENSE)
 	end

@@ -16,7 +16,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e1:SetCondition(s.damcon)
-	e1:SetOperation(function(_,tp) Duel.Damage(1-tp,Duel.GetAttacker():GetRank()*200,REASON_EFFECT) end
+	e1:SetOperation(function(_,tp) Duel.Damage(1-tp,Duel.GetAttacker():GetRank()*200,REASON_EFFECT) end)
 	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	--Draw 1 card at the end of the Battle Phase

@@ -3,12 +3,13 @@
 local s,id=GetID()
 local LOCATION_HDG=LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE
 function s.initial_effect(c)
-	--spsummon condition
+	c:EnableReviveLimit()
+	--Must be Special Summoned with "Infinite Light"
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e1:SetValue(function(_,se) return se:GetHandler():IsCode(72883039) end)
+	e1:SetValue(function(s.splimit)
 	c:RegisterEffect(e1)
 	--Special Summon as many "Timelord" monsters as possible from your hand, Deck, and/or Graveyard
 	local e2=Effect.CreateEffect(c)
@@ -54,6 +55,9 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_TIMELORD}
 s.listed_names={72883039,8967776}
+function s.splimit(e,se,sp,st)
+	return se:GetHandler():IsCode(72883039) or Duel.GetChainInfo(0,CHAININFO_TRIGGERING_CODE)==72883039
+end
 function s.filter(c,e,tp)
 	return c:IsSetCard(SET_TIMELORD) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e1:SetValue(function(s.splimit)
+	e1:SetValue(s.splimit)
 	c:RegisterEffect(e1)
 	--Special Summon as many "Timelord" monsters as possible from your hand, Deck, and/or Graveyard
 	local e2=Effect.CreateEffect(c)

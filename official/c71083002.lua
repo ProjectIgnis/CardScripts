@@ -37,10 +37,10 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		and Duel.IsExistingMatchingCard(s.desfilter,tp,0,LOCATION_ONFIELD,1,nil)
 		and not Duel.HasFlagEffect(tp,id)
 	local b2=Duel.IsExistingTarget(s.thfilter,tp,LOCATION_GRAVE,0,1,nil)
-		and not Duel.HasFlagEffect(tp,id+100)
+		and not Duel.HasFlagEffect(tp,id+1)
 	local b3=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
-		and not Duel.HasFlagEffect(tp,id+200)
+		and not Duel.HasFlagEffect(tp,id+2)
 	if chk==0 then return b1 or b2 or b3 end
 	local op=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,1)},
@@ -54,14 +54,14 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		local g=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_ONFIELD,nil)
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,tp,0)
 	elseif op==2 then
-		Duel.RegisterFlagEffect(tp,id+100,RESET_PHASE|PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_END,0,1)
 		e:SetCategory(CATEGORY_TOHAND)
 		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectTarget(tp,s.thfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,tp,0)
 	elseif op==3 then
-		Duel.RegisterFlagEffect(tp,id+200,RESET_PHASE|PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id+2,RESET_PHASE|PHASE_END,0,1)
 		e:SetCategory(CATEGORY_SPECIAL_SUMMON)
 		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

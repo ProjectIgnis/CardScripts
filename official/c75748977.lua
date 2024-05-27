@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Fusion Materials
-	Fusion.AddProcMix(c,true,true,100437019,100437020,100437021)
+	Fusion.AddProcMix(c,true,true,70860415,6355563,33744268)
 	Fusion.AddContactProc(c,s.contactfil,s.contactop,s.splimit)
 	--Destroy 1 card your opponent controls
 	local e1=Effect.CreateEffect(c)
@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={100437019,100437020,100437021} --"X-Cross Cannon", "Y-Dragon Yearhead", "Z-Zillion Tank"
+s.listed_names={70860415,6355563,33744268} --"X-Cross Cannon", "Y-Dragon Yearhead", "Z-Zillion Tank"
 function s.splimit(e,se,sp,st)
 	return not e:GetHandler():IsLocation(LOCATION_EXTRA)
 end

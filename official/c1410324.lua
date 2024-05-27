@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_TRICKSTAR}
-s.listed_names={88693151,100437055} --Trickstar Fusion, Trickstar Diffusion
+s.listed_names={88693151,63181559} --"Trickstar Fusion", "Trickstar Diffusion"
 function s.spconfilter(c)
 	return c:IsSetCard(SET_TRICKSTAR) and c:IsType(TYPE_FUSION|TYPE_LINK) and c:IsFaceup()
 end
@@ -52,7 +52,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsLocation(LOCATION_GRAVE) and r&REASON_LINK>0 and c:GetReasonCard():IsSetCard(SET_TRICKSTAR)
 end
 function s.thfilter(c)
-	return c:IsCode(88693151,100437055) and c:IsAbleToHand()
+	return c:IsCode(88693151,63181559) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

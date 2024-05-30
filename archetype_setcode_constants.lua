@@ -566,3 +566,4 @@ SET_MULTCHUMMY                    = 0x1ac
 SET_EMBLEMA                       = 0x1ad
 SET_SHARK                         = 0x1ae
 SET_SHARK_DRAKE                   = 0x11ae
+SET_WEDJU                         = 0x1af

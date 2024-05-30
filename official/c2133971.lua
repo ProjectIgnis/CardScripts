@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Fusion Materials
+	--Fusion Materials: 1 LIGHT Machine monster + "Y-Dragon Yearhead" or "Z-Zillion Tank"
 	Fusion.AddProcMix(c,true,true,s.matfilter,{6355563,33744268})
 	Fusion.AddContactProc(c,s.contactfil,s.contactop,s.splimit)
 	--Add 1 Spell/Trap from your Deck to your hand that mentions "Union monster" in its text
@@ -32,7 +32,7 @@ function s.initial_effect(c)
 end
 s.listed_names={6355563,33744268} --"Y-Dragon Yearhead", "Z-Zillion Tank"
 function s.matfilter(c,fc,sumtype,tp)
-	return c:IsAttribute(ATTRIBUTE_LIGHT,fc,sumtype,tp) and c:IsRace(RACE_MACHINE,fc,sumtype,tp)
+	return c:IsAttribute(ATTRIBUTE_LIGHT,fc,sumtype,tp) and c:IsRace(RACE_MACHINE,fc,sumtype,tp) and c:IsMonster()
 end
 function s.splimit(e,se,sp,st)
 	return not e:GetHandler():IsLocation(LOCATION_EXTRA)

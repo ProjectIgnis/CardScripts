@@ -47,5 +47,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			g:RemoveCard(tg)
 		end
 	end
-	Duel.ShuffleDeck(tp)
+	local ct=#g
+	if ct>0 then
+		Duel.MoveToDeckBottom(ct,tp)
+		Duel.SortDeckbottom(tp,tp,ct)
+	end
 end

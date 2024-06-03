@@ -3,7 +3,7 @@
 --Scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)
-	--Add to the hand 1 Sea Serpent with 800 ATK/0 DEF from the GY
+	--Add to the hand 1 "Dice Key Nel" from the GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND)
@@ -42,7 +42,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			if #sc==0 then return end
 			Duel.HintSelection(sc)
 			Duel.BreakEffect()
-			Duel.SendtoDeck(sg,nil,SEQ_DECKTOP,REASON_EFFECT)
+			Duel.SendtoDeck(sc,nil,SEQ_DECKTOP,REASON_EFFECT)
 		end
 	end
 end

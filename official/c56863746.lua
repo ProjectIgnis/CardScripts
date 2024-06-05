@@ -47,9 +47,14 @@ end
 function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local atk=re:GetHandler():GetBaseAttack()
 	local g=Duel.GetMatchingGroup(s.negcostfilter,tp,LOCATION_GRAVE,0,nil)
-	if chk==0 then return atk>0 and #g>0 and g:CheckWithSumGreater(Card.GetAttack,atk) end
+	if chk==0 then return #g>0 and g:CheckWithSumGreater(Card.GetAttack,atk) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local rg=g:SelectWithSumGreater(tp,Card.GetAttack,atk)
+	local rg=Group.CreateGroup()
+	if atk>0 then
+		rg=g:SelectWithSumGreater(tp,Card.GetAttack,atk)
+	else
+		rg=g:Select(tp,1,1,nil)
+	end
 	Duel.Remove(rg,POS_FACEUP,REASON_COST)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)

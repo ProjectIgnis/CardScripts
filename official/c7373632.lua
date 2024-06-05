@@ -52,7 +52,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e4:SetCode(EFFECT_CANNOT_DISEFFECT)
 		tc:RegisterEffect(e4)
 		--Make the opponent send 1 monster to the GY
-		local e5=Effect.CreateEffect(c)
+		local e5=Effect.CreateEffect(rc)
 		e5:SetCategory(CATEGORY_TOGRAVE)
 		e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 		e5:SetCode(EVENT_ATTACK_ANNOUNCE)
@@ -60,6 +60,14 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e5:SetOperation(s.tgop)
 		e5:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e5)
+		if not tc:IsType(TYPE_EFFECT) then
+			local e6=Effect.CreateEffect(c)
+			e6:SetType(EFFECT_TYPE_SINGLE)
+			e6:SetCode(EFFECT_ADD_TYPE)
+			e6:SetValue(TYPE_EFFECT)
+			e6:SetReset(RESET_EVENT|RESETS_STANDARD)
+			tc:RegisterEffect(e6)
+		end
 		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 	end
 end

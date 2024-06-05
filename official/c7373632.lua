@@ -52,7 +52,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e4:SetCode(EFFECT_CANNOT_DISEFFECT)
 		tc:RegisterEffect(e4)
 		--Make the opponent send 1 monster to the GY
-		local e5=Effect.CreateEffect(rc)
+		local e5=Effect.CreateEffect(tc)
 		e5:SetCategory(CATEGORY_TOGRAVE)
 		e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 		e5:SetCode(EVENT_ATTACK_ANNOUNCE)

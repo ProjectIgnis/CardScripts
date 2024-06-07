@@ -35,7 +35,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ConfirmCards(1-tp,tc)
 	Duel.ShuffleExtra(tp)
 	--Effect
-	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<5 then return end
+	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<4 then return end
 	Duel.ConfirmDecktop(tp,4)
 	local g=Duel.GetDecktopGroup(tp,4)
 	if g:IsExists(s.thfilter,1,nil,tc) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then

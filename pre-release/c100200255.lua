@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
 end
+s.miracle_synchro_fusion=true
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local ac=Duel.GetAttacker()
 	if chkc then return chkc==ac end

@@ -64,7 +64,7 @@ end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject()
 	local dg=g:Filter(Card.HasFlagEffect,nil,id)
-	if #g==#dg then
+	if #dg>0 then
 		return Duel.GetTurnCount()==e:GetLabel()
 	else
 		e:Reset()

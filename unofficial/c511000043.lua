@@ -65,7 +65,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject()
 	local dg=g:Filter(Card.HasFlagEffect,nil,id)
 	if #g==#dg then
-		return Duel.GetTurnCount()==e:GetLabel
+		return Duel.GetTurnCount()==e:GetLabel()
 	else
 		e:Reset()
 		g:DeleteGroup()

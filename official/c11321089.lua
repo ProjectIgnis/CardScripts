@@ -38,10 +38,12 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_POLYMERIZATION}
 function s.ffilter1(c,fc,sumtype,tp,sub,mg,sg)
-    return c:IsLocation(LOCATION_HAND) and (not sg or not sg:IsExists(s.fusfilter,1,c,c:GetCode(fc,sumtype,tp),fc,sumtype,tp))
+	return (sumtype==MATERIAL_FUSION or c:IsLocation(LOCATION_HAND))
+		and (not sg or not sg:IsExists(s.fusfilter,1,c,c:GetCode(fc,sumtype,tp),fc,sumtype,tp))
 end
 function s.ffilter2(c,fc,sumtype,tp,sub,mg,sg)
-    return c:IsLocation(LOCATION_ONFIELD) and (not sg or not sg:IsExists(s.fusfilter,1,c,c:GetCode(fc,sumtype,tp),fc,sumtype,tp))
+	return (sumtype==MATERIAL_FUSION or c:IsLocation(LOCATION_ONFIELD))
+		and (not sg or not sg:IsExists(s.fusfilter,1,c,c:GetCode(fc,sumtype,tp),fc,sumtype,tp))
 end
 function s.ffilter3(c,fc,sumtype,tp,sub,mg,sg)
     return (not sg or not sg:IsExists(s.fusfilter,1,c,c:GetCode(fc,sumtype,tp),fc,sumtype,tp))

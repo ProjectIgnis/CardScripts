@@ -44,13 +44,12 @@ function s.reflectcond(e)
 	return c:GetOverlayCount()>c:GetFlagEffect(id)
 end
 function s.reflectvalue(e,re,val,r,rp,rc)
-	local c=e:GetHandler()
-	if (r&REASON_EFFECT)>0 and rp==1-c:GetControler() then
-		c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
-		return 1
-	else
-		return 0
+	if (r&REASON_EFFECT)>0 then
+		Duel.Hint(HINT_CARD,rp,id)
+		e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
+		return true
 	end
+	return false
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -1,5 +1,5 @@
---Ｅｍヒグルミ
---Performage Plushfire
+--Ｅｍヒグルミ (Pre-Errata)
+--Performage Plushfire (Pre-Errata)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Pendulum Summon procedure
@@ -24,7 +24,6 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_DESTROYED)
-	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(function(e,tp,eg,ep,ev,re,r,rp) return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD) and (r&REASON_BATTLE|REASON_EFFECT)>0 end)
 	e2:SetTarget(s.hdsptg)
 	e2:SetOperation(s.hdspop)

@@ -25,7 +25,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.confilter,1,nil,tp)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToDeckOrExtraAsCost,tp,LOCATION_MZONE,0,1,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(Card.IsAbleToDeckOrExtraAsCost),tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingMatchingCard(Card.IsAbleToDeckAsCost,tp,LOCATION_HAND,0,1,nil) end
 end
 function s.ctrlfilter(c)
@@ -41,7 +41,8 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local td=Duel.SelectMatchingCard(tp,Card.IsAbleToDeckOrExtraAsCost,tp,LOCATION_MZONE,0,1,1,nil)
+	local td=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(Card.IsAbleToDeckOrExtraAsCost),tp,LOCATION_MZONE,0,1,1,nil)
+	td=td:AddMaximumCheck()
 	local td2=Duel.SelectMatchingCard(tp,Card.IsAbleToDeckAsCost,tp,LOCATION_HAND,0,1,1,nil)
 	td:Merge(td2)
 	if Duel.SendtoDeck(td,nil,SEQ_DECKBOTTOM,REASON_COST)<1 then return end

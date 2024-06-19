@@ -567,3 +567,7 @@ SET_EMBLEMA                       = 0x1ad
 SET_SHARK                         = 0x1ae
 SET_SHARK_DRAKE                   = 0x11ae
 SET_WEDJU                         = 0x1af
+SET_PRIMOREDIAL                   = 0x1b0
+SET_SIX_STRIKE                    = 0x1b1
+SET_METALMORPH                    = 0x1b2
+SET_MORGANITE                     = 0x1b3

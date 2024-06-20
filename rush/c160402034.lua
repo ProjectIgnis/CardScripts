@@ -10,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.spcon)
+	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 	--Atk
@@ -31,9 +32,18 @@ function s.spcon(e,c)
 	local rg=Duel.GetMatchingGroup(s.spcfilter,tp,LOCATION_HAND,0,e:GetHandler())
 	return #rg>0 and aux.SelectUnselectGroup(rg,e,tp,1,1,aux.ChkfMMZ(1),0)
 end
-function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
 	local rg=Duel.GetMatchingGroup(s.spcfilter,tp,LOCATION_HAND,0,e:GetHandler())
 	local g=aux.SelectUnselectGroup(rg,e,tp,1,1,aux.ChkfMMZ(1),1,tp,HINTMSG_CONFIRM,nil,nil,true)
+	if #g>0 then
+		g:KeepAlive()
+		e:SetLabelObject(g)
+		return true
+	end
+	return false
+end
+function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
+	local g=e:GetLabelObject()
 	if not g then return end
 	Duel.ConfirmCards(1-tp,g)
 	Duel.ShuffleHand(tp)

@@ -1,33 +1,34 @@
 --竜剣士ラスターP
+--Luster Pendulum, The Dracoslayer
 local s,id=GetID()
 function s.initial_effect(c)
-	--pendulum summon
+	--Pendulum procedure
 	Pendulum.AddProcedure(c)
-	--to hand
+	--Destroy a card in your Pendulum Zone and add 1 card with the same name from your Deck to your hand
+	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e1:SetType(EFFECT_TYPE_IGNITION)
+	e1:SetRange(LOCATION_PZONE)
+	e1:SetCountLimit(1)
+	e1:SetCondition(s.thcon)
+	e1:SetTarget(s.thtg)
+	e1:SetOperation(s.thop)
+	c:RegisterEffect(e1)
+	--Cannot be Fusion, Synchro or Xyz material
 	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
-	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetRange(LOCATION_PZONE)
-	e2:SetCountLimit(1)
-	e2:SetCondition(s.thcon)
-	e2:SetTarget(s.thtg)
-	e2:SetOperation(s.thop)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e2:SetCode(EFFECT_CANNOT_BE_FUSION_MATERIAL)
+	e2:SetValue(s.splimit)
 	c:RegisterEffect(e2)
-	--cannot be material
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e3:SetCode(EFFECT_CANNOT_BE_FUSION_MATERIAL)
-	e3:SetValue(s.splimit)
+	local e3=e2:Clone()
+	e3:SetCode(EFFECT_CANNOT_BE_SYNCHRO_MATERIAL)
 	c:RegisterEffect(e3)
-	local e4=e3:Clone()
-	e4:SetCode(EFFECT_CANNOT_BE_SYNCHRO_MATERIAL)
+	local e4=e2:Clone()
+	e4:SetCode(EFFECT_CANNOT_BE_XYZ_MATERIAL)
 	c:RegisterEffect(e4)
-	local e5=e3:Clone()
-	e5:SetCode(EFFECT_CANNOT_BE_XYZ_MATERIAL)
-	c:RegisterEffect(e5)
 end
-s.listed_series={0xc7}
+s.listed_series={SET_DRACOSLAYER}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(nil,tp,LOCATION_PZONE,0,1,e:GetHandler())
 end
@@ -36,17 +37,16 @@ function s.thfilter(c,code)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local sc=Duel.GetFirstMatchingCard(nil,tp,LOCATION_PZONE,0,e:GetHandler())
-	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,sc:GetOriginalCode()) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,sc:GetCode()) end
 	Duel.SetTargetCard(sc)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,sc,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)~=0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil,tc:GetOriginalCode())
+		local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil,tc:GetCode())
 		if #g>0 then
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,g)
@@ -55,5 +55,5 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.splimit(e,c)
 	if not c then return false end
-	return not c:IsSetCard(0xc7)
+	return not c:IsSetCard(SET_DRACOSLAYER)
 end

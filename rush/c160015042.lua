@@ -37,7 +37,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(ct*500)
-		e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN,1)
+		e1:SetReset(RESETS_STANDARD_PHASE_END,2)
 		c:RegisterEffect(e1)
 		local ct2=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
 		if ct2==1 and Duel.IsExistingMatchingCard(nil,tp,0,LOCATION_ONFIELD,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then

@@ -29,7 +29,7 @@ function s.valcheck(e,c)
 	e:SetLabel(flag)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetLabelObject():GetLabel()~=0
+	return e:GetHandler():IsStatus(STATUS_SUMMON_TURN) and e:GetLabelObject():GetLabel()~=0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,LOCATION_HAND,0,1,nil) end

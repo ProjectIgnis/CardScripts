@@ -18,10 +18,10 @@ end
 s.material_setcode=0x2021
 s.miracle_synchro_fusion=true
 function s.fusfilter1(c,fc,sumtype,tp)
-	return c:IsSetCard(0x2021) and c:IsType(TYPE_FUSION,fc,sumtype,tp)
+	return c:IsEarthboundServant() and c:IsType(TYPE_FUSION,fc,sumtype,tp)
 end
 function s.fusfilter2(c,fc,sumtype,tp)
-	return c:IsSetCard(0x2021) and c:IsType(TYPE_SYNCHRO,fc,sumtype,tp)
+	return c:IsEarthboundServant() and c:IsType(TYPE_SYNCHRO,fc,sumtype,tp)
 end
 function s.cfilter(tc)
 	return tc and tc:IsFaceup()
@@ -39,6 +39,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(0)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		bc:RegisterEffect(e1)
 	end
 end

@@ -1,5 +1,5 @@
 --サクリファイス・Ｄ・ロータス
---Samsara Regenerating Lotus
+--Samsara D Lotus
 --Ashaki
 local s,id=GetID()
 function s.initial_effect(c)
@@ -86,6 +86,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)) or c:IsAbleToHand() end
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,tp,0)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,c,1,tp,0)
+	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,c,1,tp,0)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp) 
 	local c=e:GetHandler()

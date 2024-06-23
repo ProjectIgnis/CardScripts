@@ -119,7 +119,7 @@ if not AnimeArchetype then
 	-- Magicat/Catnipped Kitty/Lunalight Cat Dancer
 	-- Lunalight Blue Cat/Rescue Cat/Lock Cat
 	AnimeArchetype.OCGCat={
-		19963185,74148483,28981598,54191698,70975131, 
+		19963185,74148483,28981598,54191698,70975131,
 		84224627,43352213,88032456,2729285,
 		22953211,32933942,5506791,25531465,
 		96501677,51777272,11439455,14878871,52346240
@@ -133,7 +133,7 @@ if not AnimeArchetype then
 	Card.IsCelestial=MakeCheck({0x254a},{69865139,25472513})
 
 	-- Cicada (Checked 13/05/2024)
-	-- 蝉 
+	-- 蝉
 	-- せみ
 	-- Number 3: Cicada King, Oily Cicada, Dream Cicada
 	Card.IsCicada=MakeCheck({0x50f},{4997565,79663524,5068132})
@@ -164,7 +164,7 @@ if not AnimeArchetype then
 	-- Fire Darts
 	Card.IsDart=MakeCheck({0x513},{43061293})
 
-	-- Dice (archetype) 
+	-- Dice (archetype)
 	-- ダイス
 	-- Speedroid Red-Eyed Dice/Speedroid Tri-Eyed Dice/Dice Armadillo
 	-- Dice Try!/Dice Jar/Dice Roll Battle
@@ -176,7 +176,7 @@ if not AnimeArchetype then
 	Card.IsDice=MakeCheck({0x514},AnimeArchetype.OCGDice)
 
 	-- Darkness  (Checked 13/05/2024)
-	-- ダークネス 
+	-- ダークネス
 	-- Cyberdarkness Dragon/Darkness Metal, the Dragon of Dark Steel/Malevolent Mech - Goku En/Simorgh of Darkness
 	-- Umbral Soul/Darkness Destroyer/Darkness Neosphere/Hunter of Black Feathers
 	-- D/D/D Super Doom King Dark Armageddon/F.A. Dark Dragster/Light and Darkness Dragon/Light and Darkness Dragon Lord
@@ -253,6 +253,14 @@ if not AnimeArchetype then
 		7443908,4997565
 	}
 	Card.IsEarth=MakeCheck({0x51a,SET_EARTHBOUND},AnimeArchetype.OCGEarth,{"IsHell"})
+
+	--Earthbound Servant 地縛戒隷
+	--Earthbound Servant Geo Gremlina/Earthbound Servant Geo Gremlina/Earthbound Servant Geo Gryphon/Earthbound Servant Geo Kraken
+	--Earthbound Servant Geo Grasha
+	AnimeArchetype.OCGEarthboundServant={
+		8690387,33202303,44094981,45716579,71101678
+	}
+	Card.IsEarthboundServant=MakeCheck({0x2021},AnimeArchetype.OCGEarthboundServant)
 
 	-- Elf エルフ
 	-- Ghost Fairy Elfobia/Wing Egg Elf/Elf's Light
@@ -392,7 +400,7 @@ if not AnimeArchetype then
 	-- Mad Dog of Darkness/Ancient Gear Hunting Hound/Bownty/Caninetaur
 	-- Skull Dog Marron/Don't Slip, the Dogs of War/Nin-Ken Dog/Watch Dog
 	-- Zombowwow/Doomdog Octhros/Outstanding Dog Marron
-	
+
 	-- Outstanding Dog Mary/Mecha-Dog Marron/Yokotuner
 	AnimeArchetype.OCGInu={
 		79182538,42878636,55351724,91754175,
@@ -550,7 +558,7 @@ if not AnimeArchetype then
 	-- Prank-Kids Lampsies /Ancient Lamp/Mystic Lamp
 	-- Lord of the Lamp/La Jinn the Mystical Genie of the Lamp
 	AnimeArchetype.OCGLamp={
-		24434049,54912977,97590747,98049915, 
+		24434049,54912977,97590747,98049915,
 		42596828,35834119,2144946,
 		39838559,1061200,
 		99510761,91584698,
@@ -601,7 +609,7 @@ if not AnimeArchetype then
 	-- げんそうのうたひめ
 	-- Couplet the Melodious Songstress/Soprano the Melodious Songstress/Solo the Melodious Songstress/Refrain the Melodious Songstress
 	Card.IsMelodiousSongtress=MakeCheck({0x209b},{90276649,14763299,62895219,64881644})
- 
+
 	-- Motor モーター (Checked 13/05/2024)
 	-- Fiendish Engine Ω/Battlin' Boxer Promoter/Motor Shell/Motor Frenzy
 	Card.IsMotor=MakeCheck({0x537},{82556058,83315222,78394032,77672444})

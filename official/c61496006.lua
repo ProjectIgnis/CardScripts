@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-s.listed_series={0x48}
+s.listed_series={SET_NUMBER}
 function s.cfilter(c)
 	return not (c:IsFaceup() and c:IsAttribute(ATTRIBUTE_WATER))
 end
@@ -57,11 +57,11 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	--Next battle damage your opponent takes from your "Number" monster is doubled
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(EFFECT_CHANGE_DAMAGE)
+	e2:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetTargetRange(0,1)
 	e2:SetCondition(s.damcon)
-	e2:SetValue(s.damval)
+	e2:SetValue(DOUBLE_DAMAGE)
 	e2:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 	if not c:IsRelateToEffect(e) or Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
@@ -79,19 +79,14 @@ end
 function s.damcon(e)
 	local tp=e:GetHandlerPlayer()
 	local bc0,bc1=Duel.GetBattleMonster(tp)
-	if bc0 and bc1 and bc0:IsSetCard(0x48) and Duel.GetFlagEffect(tp,id)==0 then
-		Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	if Duel.GetFlagEffect(tp,id)==0 and bc0 and bc1 and bc0:IsSetCard(SET_NUMBER) and bc0:IsStatus(STATUS_OPPO_BATTLE) then
+		Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 		return true
 	end
 	return false
 end
-function s.damval(e,re,dam,r,rp,rc)
-	if r&(REASON_BATTLE)~=0 then
-		return dam*2
-	else return dam end
-end
 function s.xyzlv(e,c,rc)
-	if rc:IsSetCard(0x48) then
+	if rc:IsSetCard(SET_NUMBER) then
 		return 4,3,e:GetHandler():GetLevel()
 	else
 		return e:GetHandler():GetLevel()

@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCode(EFFECT_BOTH_BATTLE_DAMAGE)
+	e3:SetCondition(function(e) return Duel.GetBattleDamage(e:GetHandlerPlayer())>0 end)
 	c:RegisterEffect(e3)
 	--If your LP would become 0 from battle damage, make your LP 100
 	local e4=Effect.CreateEffect(c)

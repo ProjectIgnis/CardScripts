@@ -2,21 +2,21 @@
 --Performage Magic Tactician
 local s,id=GetID()
 function s.initial_effect(c)
-	--Pendulum summon
+	--Pendulum Summon procedure
 	Pendulum.AddProcedure(c)
-	--Negate effect that targets Spell/Trap cards
+	--Negate effect that targets Spell/Trap cards in your Spell/Trap Zones
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(63251695,0))
 	e1:SetCategory(CATEGORY_DISABLE)
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_QUICK_O)
+	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetRange(LOCATION_PZONE)
 	e1:SetCondition(s.discon)
 	e1:SetCost(s.discost)
 	e1:SetTarget(s.distg)
-	e1:SetOperation(s.disop)
+	e1:SetOperation(function(e,tp,eg,ep,ev,re,r,rp) Duel.NegateEffect(ev) end)
 	c:RegisterEffect(e1)
-	--Target redirect
+	--Change target of an effect to another monster you control
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(21501505,0))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_QUICK_O)
@@ -28,13 +28,8 @@ function s.initial_effect(c)
 	e2:SetTarget(s.reptg)
 	e2:SetOperation(s.repop)
 	c:RegisterEffect(e2)
-	--Double Snare
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SINGLE_RANGE)
-	e3:SetRange(LOCATION_PZONE)
-	e3:SetCode(3682106)
-	c:RegisterEffect(e3)
+	--Double Snare check
+	aux.DoubleSnareValidity(c,LOCATION_PZONE)
 end
 function s.tgfilter(c,tp)
 	return c:IsLocation(LOCATION_SZONE) and c:IsControler(tp) and c:GetSequence()<5
@@ -45,20 +40,13 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return tg and tg:IsExists(s.tgfilter,1,nil,tp) and Duel.IsChainDisablable(ev)
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local lc=Duel.GetFieldCard(tp,LOCATION_PZONE,0)
-	local rc=Duel.GetFieldCard(tp,LOCATION_PZONE,1)
-	if chk==0 then return (lc and lc:IsDestructable()) or (rc and rc:IsDestructable()) end
-	local g=Group.CreateGroup()
-	if lc then g:Add(lc) end
-	if rc then g:Add(rc) end
+	local g=Duel.GetFieldGroup(tp,LOCATION_PZONE,0)
+	if chk==0 then return g:FilterCount(Card.IsDestructable,nil)==#g end
 	Duel.Destroy(g,REASON_COST)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
-end
-function s.disop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.NegateEffect(ev)
 end
 function s.repcon(e,tp,eg,ep,ev,re,r,rp)
 	if e==re or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end

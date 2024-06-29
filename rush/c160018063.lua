@@ -27,7 +27,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp) and Duel.IsExistingMatchingCard(s.cfilter2,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.desfilter(c)
-	return c:IsMonster() and c:IsFaceup() and c:IsNotMaximumModeSide() and not (c:IsRace(RACE_AQUA) and c:GetBaseDefense()==500)
+	return c:IsMonster() and c:IsFaceup() and c:IsNotMaximumModeSide() and c:GetBaseDefense()~=500
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)

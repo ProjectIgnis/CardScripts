@@ -295,3 +295,18 @@ function Card.NegateContinuousRushEffects(card,resets)
         card:RegisterFlagEffect(FLAG_NEGATE_CONTINUOUS_EFFECT,resets,0,1)
     end
 end
+function Duel.ChangeToFaceupAttackOrFacedownDefense(card,tp)
+	if not card:IsCanChangePosition() then return end
+	if card:IsAttackPos() then
+		Duel.ChangePosition(card,POS_FACEDOWN_DEFENSE)
+	elseif card:IsFacedown() then
+		Duel.ChangePosition(card,POS_FACEUP_ATTACK)
+	else
+		local op=Duel.SelectOption(tp,aux.Stringid(160018023,2),aux.Stringid(160018023,3))
+		if op==0 then
+			Duel.ChangePosition(card,0,0,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)
+		else
+			Duel.ChangePosition(card,POS_FACEDOWN_DEFENSE)
+		end
+	end
+end

@@ -37,19 +37,8 @@ function s.operation(fustg,fusop)
 		if Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)<=0 then return end
 		--Effect
 		local g=Duel.SelectMatchingCard(tp,Card.IsCanChangePositionRush,tp,0,LOCATION_MZONE,1,1,nil)
-		Duel.HintSelection(g,true)
-		if g:GetFirst():IsAttackPos() then
-			Duel.ChangePosition(g,POS_FACEDOWN_DEFENSE)
-		elseif g:GetFirst():IsFacedown() then
-			Duel.ChangePosition(g,POS_FACEUP_ATTACK)
-		else
-			local op=Duel.SelectOption(tp,aux.Stringid(id,2),aux.Stringid(id,3))
-			if op==0 then
-				Duel.ChangePosition(g,0,0,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)
-			else
-				Duel.ChangePosition(g,POS_FACEDOWN_DEFENSE)
-			end
-		end
+		Duel.HintSelection(g)
+		Duel.ChangeToFaceupAttackOrFacedownDefense(g:GetFirst(),tp)
 		if fustg(e,tp,eg,ep,ev,re,r,rp,0) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.BreakEffect()
 			fusop(e,tp,eg,ep,ev,re,r,rp)

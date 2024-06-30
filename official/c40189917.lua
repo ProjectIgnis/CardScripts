@@ -2,14 +2,14 @@
 --Flamvell Commando
 local s,id=GetID()
 function s.initial_effect(c)
-	--cannot special summon
+	--Cannot be Special Summoned
 	local e1=Effect.CreateEffect(c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e1:SetValue(aux.FALSE)
 	c:RegisterEffect(e1)
-	--summon
+	--Requires 1 "Flamvell" monster Tribute to Normal Summon face-up
 	local e2=Effect.CreateEffect(c)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e2:SetType(EFFECT_TYPE_SINGLE)
@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.sumop)
 	e2:SetValue(SUMMON_TYPE_TRIBUTE)
 	c:RegisterEffect(e2)
-	--damage
+	--Inflict Damage to the opponent equal to the ATK of a monster banished
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_DAMAGE)
@@ -32,9 +32,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.damop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x2c}
+s.listed_series={SET_FLAMVELL}
 function s.mfilter(c,tp)
-	return c:IsSetCard(0x2c) and (c:IsControler(tp) or c:IsFaceup())
+	return c:IsSetCard(SET_FLAMVELL) and (c:IsControler(tp) or c:IsFaceup())
 end
 function s.sumcon(e,c)
 	if c==nil then return true end
@@ -58,7 +58,8 @@ end
 function s.sumop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=e:GetLabelObject()
 	if not g then return end
-	Duel.Release(g,REASON_COST)
+	c:SetMaterial(g)
+	Duel.Release(g,REASON_COST|REASON_SUMMON|REASON_MATERIAL)
 	g:DeleteGroup()
 end
 function s.cfilter(c)

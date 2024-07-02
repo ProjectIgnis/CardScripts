@@ -18,46 +18,31 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetLP(tp)<=1000
 end
-function s.filter(c,g,tp)
-	local mg=g:Filter(Card.IsCode,nil,c:GetCode())
-	return Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_EXTRA,0,1,nil,mg)
-end
-function s.mfilter(c,g,tg,ct,tp)
-	local mg=g:Filter(Card.IsCode,nil,c:GetCode())
-	local xct=ct+1
-	mg:RemoveCard(c)
-	tg:AddCard(c)
-	local res=false
-	if xct==3 then
-		local res=Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_EXTRA,0,1,nil,tg)
-	else
-		local res=mg:IsExists(s.mfilter,1,c,mg,tg,xct,tp)
-	end
-	tg:RemoveCard(c)
-	return res
-end
 function s.xyzfilter(c,g)
 	return c:IsXyzSummonable(nil,g,3,3)
 end
-function s.matcond(sg,e,tp)
-	return sg:GetClassCount(Card.GetCode)==1 and Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_EXTRA,0,1,nil,sg)
+function s.rescon(exg)
+	return function(sg)
+		if sg:CheckDifferentProperty(Card.GetCode) then return false,false end
+		return #sg==3 and exg:IsExists(Card.IsXyzSummonable,1,nil,nil,sg,3,3)
+	end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(s.xyzmatfilter,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,nil)
-	if chk==0 then return g:IsExists(s.filter,1,nil,g,tp) and
-		Duel.GetLocationCountFromEx(tp,tp,g:Filter(Card.IsLocation,nil,LOCATION_MZONE))>0 end
+	local mg=Duel.GetMatchingGroup(s.xyzmatfilter,tp,LOCATION_HAND|LOCATION_MZONE|LOCATION_GRAVE,0,nil)
+	local exg=Duel.GetMatchingGroup(s.xyzfilter,tp,LOCATION_EXTRA,0,nil,mg)
+	if chk==0 then return aux.SelectUnselectGroup(mg,e,tp,3,3,s.rescon(exg),0) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(s.xyzmatfilter,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,nil)
-	local mg=g:Filter(s.filter,nil,g,tp)
-	if #mg<3 then return end
-	local matg=aux.SelectUnselectGroup(mg,e,tp,3,3,s.matcond,1,tp,HINTMSG_XMATERIAL)
+	local mg=Duel.GetMatchingGroup(s.xyzmatfilter,tp,LOCATION_HAND|LOCATION_MZONE|LOCATION_GRAVE,0,nil)
+	local exg=Duel.GetMatchingGroup(s.xyzfilter,tp,LOCATION_EXTRA,0,nil,mg)
+	if #exg==0 then return end
+	local matg=aux.SelectUnselectGroup(mg,e,tp,3,3,s.rescon(exg),1,tp,HINTMSG_XMATERIAL1)
+	if #matg~=3 then return end
 	local xyzg=Duel.GetMatchingGroup(s.xyzfilter,tp,LOCATION_EXTRA,0,nil,matg)
 	if #xyzg>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
-		matg:KeepAlive()
-		Duel.XyzSummon(tp,xyz,nil,matg)
+		Duel.XyzSummon(tp,xyz,matg,matg,3,3)
 	end
 end

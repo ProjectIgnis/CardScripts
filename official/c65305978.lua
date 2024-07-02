@@ -1,5 +1,5 @@
 --炎王の聖域
---Sanctuary of the Fire Kings
+--Fire King Sanctuary
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -95,6 +95,6 @@ function s.xyzop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sc=g:Select(tp,1,1,nil):GetFirst()
-		Duel.XyzSummon(tp,sc,nil,mg,2,99)
+		Duel.XyzSummon(tp,sc,nil,mg)
 	end
 end

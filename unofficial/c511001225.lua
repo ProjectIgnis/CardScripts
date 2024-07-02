@@ -5,7 +5,7 @@ function s.initial_effect(c)
 	--double xyz material
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
-	e2:SetCode(id)
+	e2:SetCode(EFFECT_DOUBLE_XYZ_MATERIAL)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
 	local e5=Effect.CreateEffect(c)

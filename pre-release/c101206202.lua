@@ -1,7 +1,6 @@
 --ドレイク・シャーク
 --Drake Shark
 --scripted by Naim
-local EFFECT_DOUBLE_XYZ_MATERIAL=511001225 --to be removed when the procedure is updated
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon this card if it is added to the hand, except by drawing it
@@ -21,8 +20,8 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_DOUBLE_XYZ_MATERIAL)
 	e2:SetValue(1)
-	e2:SetCondition(function(e) return not Duel.HasFlagEffect(e:GetHandlerPlayer(),id) end)
-	e2:SetOperation(function(e,c,matg) return c:IsAttribute(ATTRIBUTE_WATER) and c.minxyzct and c.minxyzct>=3 and matg:FilterCount(s.drakesharkhoptfilter,nil)<2 end)
+	e2:SetCountLimit(1,{id,1})
+	e2:SetOperation(function(e,c) return c.minxyzct and c.minxyzct>=3 and c:IsAttribute(ATTRIBUTE_WATER) end)
 	c:RegisterEffect(e2)
 	--Provide an effect to a "Shark Drake" Xyz Monster that this card as Xyz material
 	local e3=Effect.CreateEffect(c)
@@ -35,27 +34,8 @@ function s.initial_effect(c)
 	e3:SetTarget(s.attachtg)
 	e3:SetOperation(s.attachop)
 	c:RegisterEffect(e3)
-	--HOPT workaround for having already used the double material effect earlier in that turn
-	aux.GlobalCheck(s,function()
-		local ge1=Effect.CreateEffect(c)
-		ge1:SetType(EFFECT_TYPE_FIELD)
-		ge1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_SET_AVAILABLE+EFFECT_FLAG_IGNORE_RANGE)
-		ge1:SetCode(EFFECT_MATERIAL_CHECK)
-		ge1:SetValue(s.valcheck)
-		Duel.RegisterEffect(ge1,0)
-	end)
 end
 s.listed_series={SET_SHARK_DRAKE}
-function s.drakesharkhoptfilter(c)
-	return c:IsCode(id) and c:IsHasEffect(EFFECT_DOUBLE_XYZ_MATERIAL)
-end
-function s.valcheck(e,c)
-	if not (c:IsType(TYPE_XYZ) and c:IsAttribute(ATTRIBUTE_WATER) and c.minxyzct and c.minxyzct>=3) then return end
-	local g=c:GetMaterial()
-	if #g<c.minxyzct and g:IsExists(s.drakesharkhoptfilter,1,nil) then
-		Duel.RegisterFlagEffect(c:GetControler(),id,RESET_PHASE|PHASE_END,0,1)
-	end
-end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

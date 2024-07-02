@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Change Position and Fusion Summon
-	local params={aux.FilterBoolFunction(s.fusfilter)}
+	local params={aux.FilterBoolFunction(s.fusfilter),s.matfilter}
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_POSITION)
@@ -17,6 +17,9 @@ function s.initial_effect(c)
 end
 function s.fusfilter(c)
 	return c:IsAttribute(ATTRIBUTE_EARTH|ATTRIBUTE_DARK) and c:IsRace(RACE_MACHINE) and c:IsLevelBelow(9)
+end
+function s.matfilter(c)
+	return c:IsLocation(LOCATION_HAND|LOCATION_MZONE) and c:IsAbleToGrave()
 end
 function s.cfilter(c)
 	return c:IsMonster() and c:IsAbleToDeckOrExtraAsCost()

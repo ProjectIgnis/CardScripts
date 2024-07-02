@@ -2,7 +2,7 @@
 --Power Bond (Rush)
 local s,id=GetID()
 function s.initial_effect(c)
-	c:RegisterEffect(Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsRace,RACE_MACHINE),nil,nil,nil,nil,s.stage2))
+	c:RegisterEffect(Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsRace,RACE_MACHINE),s.matfilter,nil,nil,nil,s.stage2))
 end
 function s.stage2(e,tc,tp,sg,chk)
 	if chk~=1 then return end
@@ -22,6 +22,9 @@ function s.stage2(e,tc,tp,sg,chk)
 		e2:SetOperation(s.damop)
 		Duel.RegisterEffect(e2,tp)
 	end
+end
+function s.matfilter(c)
+	return c:IsLocation(LOCATION_HAND|LOCATION_MZONE) and c:IsAbleToGrave()
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(tp,e:GetLabel(),REASON_EFFECT)

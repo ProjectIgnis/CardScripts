@@ -205,7 +205,6 @@ function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locati
 									if repl_function[2] then
 										ret[1]:Match(repl_function[2],nil,e,tp)
 										efmg:Match(repl_function[2],nil,e,tp)
-										mg1:Match(repl_function[2],nil,e,tp)
 									end
 									Fusion.ExtraGroup=ret[1]:Filter(Card.IsCanBeFusionMaterial,nil,nil,value):Match(aux.NOT(Card.IsImmuneToEffect),nil,e)
 									mg1:Merge(ret[1])
@@ -346,7 +345,6 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 								if repl_function[2] then
 									ret[1]:Match(repl_function[2],nil,e,tp)
 									efmg:Match(repl_function[2],nil,e,tp)
-									mg1:Match(repl_function[2],nil,e,tp)
 								end
 								Fusion.ExtraGroup=ret[1]:Filter(Card.IsCanBeFusionMaterial,nil,nil,value):Match(aux.NOT(Card.IsImmuneToEffect),nil,e)
 								mg1:Merge(ret[1])

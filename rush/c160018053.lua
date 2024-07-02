@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetTargetRange(LOCATION_GRAVE,LOCATION_GRAVE)
 	e2:SetOperation(Fusion.ShuffleMaterial)
 	e2:SetLabelObject({s.extrafil_replacement,s.extramat})
-	e2:SetValue(function(e,c) return c and c:IsControler(e:GetHandlerPlayer()) end)
+	e2:SetValue(1)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c,tp)

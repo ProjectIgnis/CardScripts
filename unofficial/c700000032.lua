@@ -1,49 +1,65 @@
---Scripted by Eerie Code
+--茨の戒人－ズーマ
 --Thorn Observer - Zuma
+--Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--synchro summon
-	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTunerEx(Card.IsSetCard,0x556),1,1)
 	c:EnableReviveLimit()
-	--Place Counter
+	--Synchro Summon procedure
+	Synchro.AddProcedure(c,nil,1,1,aux.FilterBoolFunctionEx(Card.IsSetCard,0x556),1,1)
+	--Place Thorn Counters on monsters 
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_COUNTER)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e1:SetCondition(s.pccon)
+	e1:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) end)
 	e1:SetTarget(s.pctg)
 	e1:SetOperation(s.pcop)
 	c:RegisterEffect(e1)
-	--atk limit
+	--Monsters with Thorn Counters cannot attack
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_CANNOT_ATTACK)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e2:SetTarget(s.atktg)
+	e2:SetTarget(function(e,c) return c:GetCounter(0x1104)~=0 end)
 	c:RegisterEffect(e2)
-	--damage
+	--Turn player takes 400 damage for each Thorn Counter on their field
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+	e3:SetCode(EVENT_PHASE+PHASE_END)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e3:SetCountLimit(1)
+	e3:SetTarget(s.damtg)
+	e3:SetOperation(s.damop)
+	c:RegisterEffect(e3)
+	--Take no battle damage and Special Summon this card along with its Synchro Materials
 	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e4:SetCode(EVENT_PHASE+PHASE_END)
-	e4:SetRange(LOCATION_MZONE)
-	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e4:SetCountLimit(1)
-	e4:SetTarget(s.damtg)
-	e4:SetOperation(s.damop)
+	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e4:SetCode(EVENT_BE_BATTLE_TARGET)
+	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e4:SetCost(s.nbcost)
+	e4:SetTarget(s.nbtg)
+	e4:SetOperation(s.nbop)
 	c:RegisterEffect(e4)
-	--No battle damage
+	--Multiple Tuners
 	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e5:SetCode(EVENT_BE_BATTLE_TARGET)
-	e5:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e5:SetCost(s.nbcost)
-	e5:SetTarget(s.nbtg)
-	e5:SetOperation(s.nbop)
+	e5:SetType(EFFECT_TYPE_SINGLE)
+	e5:SetCode(EFFECT_MATERIAL_CHECK)
+	e5:SetValue(s.valcheck)
 	c:RegisterEffect(e5)
 end
-function s.pccon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+function s.valcheck(e,c)
+	local g=c:GetMaterial()
+	if g:IsExists(Card.IsType,2,nil,TYPE_TUNER) then
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+		e1:SetCode(EFFECT_MULTIPLE_TUNERS)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD&~(RESET_TOFIELD)|RESET_PHASE|PHASE_END)
+		c:RegisterEffect(e1)
+	end
 end
 function s.pctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
@@ -55,9 +71,6 @@ function s.pcop(e,tp,eg,ep,ev,re,r,rp)
 		tc:AddCounter(0x1104,1)
 		tc=g:GetNext()
 	end
-end
-function s.atktg(e,c)
-	return c:GetCounter(0x1104)~=0
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -100,7 +113,7 @@ function s.nbop(e,tp,eg,ep,ev,re,r,rp)
 	local fid=c:GetFieldID()
 	local tc=g:GetFirst()
 	while tc do
-		tc:RegisterFlagEffect(70000032,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,fid)
+		tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1,fid)
 		tc=g:GetNext()
 	end
 	g:KeepAlive()
@@ -108,7 +121,7 @@ function s.nbop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_PRE_BATTLE_DAMAGE)
 	e1:SetOperation(s.damop2)
-	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+	e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
 	Duel.RegisterEffect(e1,tp)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -117,14 +130,14 @@ function s.nbop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetLabelObject(g)
 	e2:SetLabel(#g)
 	e2:SetValue(fid)
-	e2:SetReset(RESET_PHASE+PHASE_DAMAGE)
+	e2:SetReset(RESET_PHASE|PHASE_DAMAGE)
 	Duel.RegisterEffect(e2,tp)
 end
 function s.damop2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChangeBattleDamage(tp,0)
 end
 function s.spfilter(c,fid)
-	return c:GetFlagEffectLabel(70000032)==fid
+	return c:GetFlagEffectLabel(id)==fid
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

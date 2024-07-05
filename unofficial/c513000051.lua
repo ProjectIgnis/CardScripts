@@ -1,15 +1,16 @@
 --無限光アイン・ソフ・オウル (Anime)
 --Infinite Light (Anime)
 local s,id=GetID()
+local LOCATION_HDG=LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE
 function s.initial_effect(c)
-	--activate
+	--Activate by sending 1 "Endless Emptiness" from your field to the GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_END_PHASE)
 	e1:SetCost(s.cost)
 	c:RegisterEffect(e1)
-	--special summon
+	--You can Special Summon Level 10 or higher monsters from your hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(102380,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -21,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--cannot trigger
+	--"Timelord" monsters you control cannot activate their effects in the Standby Phase
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -31,14 +32,15 @@ function s.initial_effect(c)
 	e3:SetCondition(s.accon)
 	e3:SetValue(s.aclimit)
 	c:RegisterEffect(e3)
+	--Allows you to control more than 1 "Timelord" monster
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetCode(513000047)
 	e4:SetTargetRange(LOCATION_MZONE,0)
-	e4:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x4a))
+	e4:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_TIMELORD))
 	c:RegisterEffect(e4)
-	--sp summon sephylon
+	--Special Summon "Sephylon, the Ultimate Timelord" from your hand, Deck or GY
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(2407147,0))
 	e5:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -50,6 +52,7 @@ function s.initial_effect(c)
 	e5:SetTarget(s.sephtg)
 	e5:SetOperation(s.sephop)
 	c:RegisterEffect(e5)
+	--"Timelord" monster Summon register
 	aux.GlobalCheck(s,function()
 		s[0]=0
 		s[1]=0
@@ -68,7 +71,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge3,0)
 	end)
 end
-s.listed_series={0x4a}
+s.listed_series={SET_TIMELORD}
 s.listed_names={36894320,8967776}
 function s.costfilter(c)
 	return c:IsFaceup() and c:IsCode(36894320) and c:IsAbleToGraveAsCost()
@@ -83,7 +86,8 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_CHAINING)
 end
 function s.spfilter(c,e,tp)
-	return c:IsLevelAbove(10) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevelAbove(10) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) or 
+		(c:IsOriginalCode(513000052) and c:IsLevelAbove(10) and c:IsCanBeSpecialSummoned(e,0,tp,true,false))
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
@@ -92,11 +96,23 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if not e:GetHandler():IsRelateToEffect(e) or ft<=0 then return end
+	if ft<=0 then return end
+	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND,0,1,ft,nil,e,tp)
 	if #g>0 then
-		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+		if g:IsExists(Card.IsOriginalCode,1,nil,513000052) then
+			local g1,g2=g:Split(Card.IsOriginalCode,nil,513000052)
+			for tc in g1:Iter() do
+				Duel.SpecialSummonStep(tc,0,tp,tp,true,false,POS_FACEUP)
+			end
+			for sc in g2:Iter() do
+				Duel.SpecialSummonStep(sc,0,tp,tp,false,false,POS_FACEUP)
+			end
+			Duel.SpecialSummonComplete()
+		else
+			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+		end
 	end
 end
 function s.accon(e)
@@ -104,10 +120,10 @@ function s.accon(e)
 end
 function s.aclimit(e,re,tp)
 	local rc=re:GetHandler()
-	return re:GetActivateLocation()==LOCATION_MZONE and rc:IsSetCard(0x4a) and not rc:IsImmuneToEffect(e)
+	return re:GetActivateLocation()==LOCATION_MZONE and rc:IsSetCard(SET_TIMELORD) and not rc:IsImmuneToEffect(e)
 end
 function s.cfilter(c,tp)
-	return c:IsSetCard(0x4a) and c:IsFaceup() and c:IsSummonPlayer(tp)
+	return c:IsSetCard(SET_TIMELORD) and c:IsFaceup() and c:IsSummonPlayer(tp)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local g1=eg:Filter(s.cfilter,nil,tp)
@@ -157,19 +173,18 @@ function s.sephcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
-function s.filter(c,e,tp)
+function s.sephspfilter(c,e,tp)
 	return c:IsCode(8967776) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) 
-		and not c:IsHasEffect(EFFECT_NECRO_VALLEY)
 end
 function s.sephtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
-		and Duel.IsExistingMatchingCard(s.filter,tp,0x13,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0x13)
+		and Duel.IsExistingMatchingCard(s.sephspfilter,tp,LOCATION_HDG,0,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HDG)
 end
 function s.sephop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,0x13,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.sephspfilter),tp,LOCATION_HDG,0,1,1,nil,e,tp)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,true,false,POS_FACEUP)
 	end

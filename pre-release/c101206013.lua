@@ -63,7 +63,8 @@ end
 function s.selfnssumop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=e:GetLabelObject()
 	if not g then return end
-	Duel.Release(g,REASON_COST|REASON_MATERIAL)
+	c:SetMaterial(g)
+	Duel.Release(g,REASON_SUMMON|REASON_COST|REASON_MATERIAL)
 	g:DeleteGroup()
 end
 function s.sumcost(e,tp,eg,ep,ev,re,r,rp,chk)

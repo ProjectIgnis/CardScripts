@@ -3,7 +3,7 @@
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special Summon itself from the hand if a fish monster is banished
+	--Special Summon itself from the hand if a Fish monster is banished
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -31,7 +31,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_GHOTI}
 function s.spcfilter(c)
-	return c:IsFaceup() and c:IsMonster() and c:IsRace(RACE_FISH)
+	return c:IsFaceup() and c:IsMonster() and c:IsRace(RACE_FISH) and not c:IsType(TYPE_TOKEN)
 		and (not c:IsPreviousLocation(LOCATION_ONFIELD) or c:GetPreviousRaceOnField()&RACE_FISH>0)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

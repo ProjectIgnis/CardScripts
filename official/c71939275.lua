@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.effop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={id+100} --"Doppelganger Token"
+s.listed_names={id+1} --"Doppelganger Token"
 function s.eqfilter(c)
 	return c:IsLevelAbove(5) and c:IsRace(RACE_FIEND|RACE_ZOMBIE)
 end
@@ -62,7 +62,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ec=e:GetHandler():GetEquipTarget()
 	local b1=Fusion.SummonEffTG()(e,tp,eg,ep,ev,re,r,rp,0)
 	local b2=ec and Duel.GetLocationCount(tp,LOCATION_MZONE)
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+100,0,TYPES_TOKEN,ec:GetAttack(),0,5,ec:GetRace(),ec:GetAttribute())
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,ec:GetAttack(),0,5,ec:GetRace(),ec:GetAttribute())
 	if chk==0 then return b1 or b2 end
 	local op=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,2)},
@@ -86,8 +86,8 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 		--Special Summon 1 "Doppelganger Token" with the same Type, Attribute, and ATK as the equipped monster
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		local ec=e:GetHandler():GetEquipTarget()
-		if not (ft>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,id+100,0,TYPES_TOKEN,ec:GetAttack(),0,5,ec:GetRace(),ec:GetAttribute())) then return end
-		local token=Duel.CreateToken(tp,id+100)
+		if not (ft>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,ec:GetAttack(),0,5,ec:GetRace(),ec:GetAttribute())) then return end
+		local token=Duel.CreateToken(tp,id+1)
 		--Set the Token's printed Type and Attribute
 		token:Race(ec:GetRace())
 		token:Attribute(ec:GetAttribute())

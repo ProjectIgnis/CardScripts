@@ -34,9 +34,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_ALLURE_QUEEN}
-s.listed_names={100305028} --"Allure Palace"
+s.listed_names={31322640} --"Allure Palace"
 function s.thfilter(c)
-	return (c:IsCode(100305028) or (c:IsMonster() and c:IsSetCard(SET_ALLURE_QUEEN))) and c:IsAbleToHand()
+	return (c:IsCode(31322640) or (c:IsMonster() and c:IsSetCard(SET_ALLURE_QUEEN))) and c:IsAbleToHand()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil)

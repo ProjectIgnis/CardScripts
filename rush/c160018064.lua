@@ -29,6 +29,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 	local d=Duel.GetAttackTarget()
 	local a=Duel.GetAttacker()
-	Duel.SendtoHand(d,nil,REASON_EFFECT)
-	Duel.SendtoHand(a,nil,REASON_EFFECT)
+	local tg=Group.CreateGroup()
+	tg:AddCard(d)
+	tg:AddCard(a)
+	tg=tg:AddMaximumCheck()
+	Duel.SendtoHand(tg,nil,REASON_EFFECT)
 end

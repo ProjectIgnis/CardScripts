@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
 	Fusion.AddProcMix(c,true,true,160010025,160018001)
-	Fusion.AddContactProc(c,s.contactfil,s.contactop,nil,nil,nil,nil,false)
+	Fusion.AddContactProc(c,s.contactfil,s.contactop,nil,nil,SUMMON_TYPE_FUSION,nil,false)
 	--Change the position of an opponent's monster and gain 1300 ATK and piercing
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

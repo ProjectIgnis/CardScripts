@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
 	Fusion.AddProcMix(c,true,true,160018006,160018003)
-	Fusion.AddContactProc(c,s.contactfil,s.contactop,nil,nil,nil,nil,false)
+	Fusion.AddContactProc(c,s.contactfil,s.contactop,nil,nil,SUMMON_TYPE_FUSION,nil,false)
 	--Destroy 2 face-down cards
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

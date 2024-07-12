@@ -63,9 +63,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.attachfilter(c,tp)
-	return Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_MZONE,0,1,c,c)
+	return Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_MZONE,0,1,c,c,tp)
 end
-function s.xyzfilter(c,mc)
+function s.xyzfilter(c,mc,tp)
 	return c:IsSetCard(SET_GOBLIN) and c:IsType(TYPE_XYZ) and c:IsFaceup() and mc:IsCanBeXyzMaterial(c,tp,REASON_EFFECT)
 end
 function s.attachtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -78,7 +78,7 @@ function s.attachop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELF)
-		local xyzc=Duel.SelectMatchingCard(tp,s.xyzfilter,tp,LOCATION_MZONE,0,1,1,nil,tc):GetFirst()
+		local xyzc=Duel.SelectMatchingCard(tp,s.xyzfilter,tp,LOCATION_MZONE,0,1,1,tc,tc,tp):GetFirst()
 		if not xyzc then return end
 		Duel.HintSelection(xyzc)
 		if xyzc:IsImmuneToEffect(e) or tc:IsImmuneToEffect(e) then return end

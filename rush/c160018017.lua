@@ -40,4 +40,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Damage(1-tp,500,REASON_EFFECT)
 		end
 	end
+	Duel.ShuffleHand(1-tp)
 end

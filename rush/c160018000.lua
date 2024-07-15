@@ -27,3 +27,15 @@ end
 function s.atkup(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsRace,c:GetControler(),LOCATION_GRAVE,0,nil,RACE_WARRIOR)*300
 end
+function s.damop(e,tp,eg,ep,ev,re,r,rp)
+	local bc=e:GetHandler():GetBattleTarget()
+	if bc and bc:IsLocation(LOCATION_GRAVE) then
+		local atk=bc:GetTextAttack()
+		if bc:WasMaximumMode() then
+			atk=bc:GetMaximumAttack()
+		end
+		if atk>0 then
+			Duel.Damage(1-tp,atk,REASON_EFFECT)
+		end
+	end
+end

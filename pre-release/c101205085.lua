@@ -30,7 +30,7 @@ function s.fiendmatfilter(c,fc,sumtype,tp)
 	return c:IsMonsterCard() and c:IsRace(RACE_FIEND,fc,sumtype,tp)
 end
 function s.effconfilter(c)
-	return c:IsMonster() and c:IsReason(REASON_COST)
+	return c:IsMonster() and c:IsReason(REASON_COST) and c:IsPreviousLocation(LOCATION_HAND)
 end
 function s.effcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.effconfilter,1,nil) and re:IsActivated()

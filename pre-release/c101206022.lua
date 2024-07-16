@@ -30,7 +30,7 @@ function s.equnionfilter(c,tp)
 		and Duel.IsExistingMatchingCard(s.eqtargetfilter,tp,LOCATION_MZONE,0,1,nil,c)
 end
 function s.eqtargetfilter(c,ec)
-	return c:CheckUnionTarget(ec) and aux.CheckUnionEquip(c,ec)
+	return ec:CheckUnionTarget(c) and aux.CheckUnionEquip(ec,c)
 end
 function s.spfilter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false)

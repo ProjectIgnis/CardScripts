@@ -32,9 +32,25 @@ function s.initial_effect(c)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
+	--Keep track of monsters that were equipped to another monster by that other monster's effect
+	aux.GlobalCheck(s,function()
+		local ge1=Effect.CreateEffect(c)
+		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		ge1:SetCode(EVENT_EQUIP)
+		ge1:SetOperation(s.checkop)
+		Duel.RegisterEffect(ge1,0)
+	end)
 end
 s.listed_series={SET_ALLURE_QUEEN}
 s.listed_names={31322640} --"Allure Palace"
+function s.checkop(e,tp,eg,ep,ev,re,r,rp)
+	local rc=re:GetHandler()
+	for tc in eg:Iter() do
+		if tc:GetEquipTarget()==rc then
+			tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
+		end
+	end
+end
 function s.thfilter(c)
 	return (c:IsCode(31322640) or (c:IsMonster() and c:IsSetCard(SET_ALLURE_QUEEN))) and c:IsAbleToHand()
 end
@@ -47,11 +63,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,sg)
 	end
 end
-function s.eqfilter(c,flag_id)
-	return c:HasFlagEffect(flag_id) and c:IsFaceup() and c:IsMonsterCard()
+function s.eqfilter(c)
+	return c:HasFlagEffect(id) and c:IsFaceup() and c:IsMonsterCard()
 end
 function s.atkvalue(e,c)
-	return c:GetEquipGroup():Filter(s.eqfilter,nil,c:GetCode()):GetSum(Card.GetAttack)
+	return c:GetEquipGroup():Filter(s.eqfilter,nil):GetSum(Card.GetAttack)
 end
 function s.spcostfilter(c,tp)
 	return c:IsSpellTrap() and c:IsAbleToGraveAsCost() and Duel.GetMZoneCount(tp,c)>0

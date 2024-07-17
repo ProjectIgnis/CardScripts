@@ -48,8 +48,24 @@ function s.initial_effect(c)
 	e5:SetTarget(function(e,c) return c:IsSetCard(SET_ALLURE_QUEEN) and c:IsType(TYPE_EFFECT) end)
 	e5:SetLabelObject(e4)
 	c:RegisterEffect(e5)
+	--Keep track of monsters that were equipped to another monster by that other monster's effect
+	aux.GlobalCheck(s,function()
+		local ge1=Effect.CreateEffect(c)
+		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		ge1:SetCode(EVENT_EQUIP)
+		ge1:SetOperation(s.checkop)
+		Duel.RegisterEffect(ge1,0)
+	end)
 end
 s.listed_series={SET_ALLURE_QUEEN}
+function s.checkop(e,tp,eg,ep,ev,re,r,rp)
+	local rc=re:GetHandler()
+	for tc in eg:Iter() do
+		if tc:GetEquipTarget()==rc then
+			tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
+		end
+	end
+end
 function s.thspcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
@@ -85,7 +101,7 @@ end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToGraveAsCost() and Duel.GetMZoneCount(tp,c)>0
-		and c:GetEquipGroup():FilterCount(Card.HasFlagEffect,nil,c:GetCode())>0 end
+		and c:GetEquipGroup():IsExists(Card.HasFlagEffect,1,nil,id) end
 	Duel.SendtoGrave(c,REASON_COST)
 end
 function s.spfilter(c,e,tp)

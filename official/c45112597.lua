@@ -40,16 +40,21 @@ function s.rmsptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spfilter(c,e,tp)
 	return c:IsFaceup() and c:IsLocation(LOCATION_REMOVED) and not c:IsReason(REASON_REDIRECT)
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP|POS_FACEDOWN_DEFENSE,c:GetOwner())
+		and (c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,c:GetOwner())
+		or c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE,c:GetOwner()))
 end
 function s.rmspop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if #g>0 and Duel.Remove(g,POS_FACEUP,REASON_EFFECT)>0 then
 		local og=Duel.GetOperatedGroup()
 		local sg=og:Filter(s.spfilter,nil,e,tp)
+		Debug.Message(#sg)
 		if #sg==0 then return end
 		for sc in sg:Iter() do
-			Duel.SpecialSummonStep(sc,0,tp,sc:GetOwner(),false,false,POS_FACEUP|POS_FACEDOWN_DEFENSE)
+			local sump=0
+			if sc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,sc:GetOwner()) then sump=sump|POS_FACEUP end
+			if sc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE,sc:GetOwner()) then sump=sump|POS_FACEDOWN_DEFENSE end
+			Duel.SpecialSummonStep(sc,0,tp,sc:GetOwner(),false,false,sump)
 		end
 		local fdg=sg:Filter(Card.IsFacedown,nil)
 		if #fdg>0 then

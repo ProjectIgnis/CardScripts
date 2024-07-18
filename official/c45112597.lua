@@ -48,7 +48,6 @@ function s.rmspop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 and Duel.Remove(g,POS_FACEUP,REASON_EFFECT)>0 then
 		local og=Duel.GetOperatedGroup()
 		local sg=og:Filter(s.spfilter,nil,e,tp)
-		Debug.Message(#sg)
 		if #sg==0 then return end
 		for sc in sg:Iter() do
 			local sump=0

@@ -101,7 +101,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if #xyzg>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
-		Duel.XyzSummon(tp,xyz,sg,sg)
+		Duel.XyzSummon(tp,xyz,sg,nil,2,2)
 	end
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)

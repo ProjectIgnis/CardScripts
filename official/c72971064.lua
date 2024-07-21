@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	--Must be properly SSd before reviving
 	c:EnableReviveLimit()
 	--Xyz Procedure
-	Xyz.AddProcedure(c,nil,1,2,nil,nil,99)
+	Xyz.AddProcedure(c,nil,1,2,nil,nil,Xyz.InfiniteMats)
 	--ATK Up
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

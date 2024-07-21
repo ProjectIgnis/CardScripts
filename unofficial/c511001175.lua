@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e4:SetCode(id)
+	e4:SetCode(EFFECT_EQUIP_SPELL_XYZ_MAT)
 	e4:SetRange(LOCATION_SZONE)
 	c:RegisterEffect(e4)
 end

@@ -97,7 +97,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.lvfilter(chkc) end
 	local c=e:GetHandler()
-	if chk==0 then return e:IsHasType(EFFECT_TYPE_ACTIVATE) 
+	if chk==0 then return e:IsHasType(EFFECT_TYPE_ACTIVATE)
 		and Duel.IsExistingTarget(s.filter,tp,0,LOCATION_MZONE,1,nil,c,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil,c,tp)
@@ -193,7 +193,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			c:CancelToGrave()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
-			Duel.XyzSummon(tp,xyz,nil,sg)
+			Duel.XyzSummon(tp,xyz,sg,sg,2,2)
 			local fid=c:GetFieldID()
 			xyz:RegisterFlagEffect(51103051,RESET_EVENT+RESETS_STANDARD,0,1,fid)
 			local e16=Effect.CreateEffect(e:GetHandler())

@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
-	Xyz.AddProcedure(c,s.matfilter,3,2,nil,nil,99)
+	Xyz.AddProcedure(c,s.matfilter,3,2,nil,nil,Xyz.InfiniteMats)
 	c:EnableReviveLimit()
 	--Position+Negate
 	local e1=Effect.CreateEffect(c)

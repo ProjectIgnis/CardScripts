@@ -26,8 +26,8 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local c=e:GetHandler()
-	local rc=c:AnnounceAnotherRace(tp)
-	local att=c:AnnounceAnotherAttribute(tp)
+	local rc=Duel.AnnounceRace(tp,1,RACE_ALL)
+	local att=c:IsDifferentRace(rc) and Duel.AnnounceAttribute(tp,1,ATTRIBUTE_ALL) or c:AnnounceAnotherAttribute(tp)
 	e:SetLabel(rc,att)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)

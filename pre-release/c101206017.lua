@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_ATLANTEAN,SET_MERMAIL}
-function s.thspcostfilter(c,tp)
+function s.thspcostfilter(c,e,tp)
 	return c:IsSetCard(s.listed_series) and (c:IsFaceup() or c:IsControler(tp))
 		and Duel.IsExistingMatchingCard(s.thspfilter,tp,LOCATION_DECK,0,1,nil,e,tp,Duel.GetMZoneCount(tp,c)>0)
 end
@@ -41,9 +41,9 @@ end
 function s.thspcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)
 	local c=e:GetHandler()
-	if chk==0 then return c:IsReleasable() and Duel.CheckReleaseGroupCost(tp,s.thspcostfilter,1,true,nil,c,tp) end
+	if chk==0 then return c:IsReleasable() and Duel.CheckReleaseGroupCost(tp,s.thspcostfilter,1,true,nil,c,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local rg=Duel.SelectReleaseGroupCost(tp,s.thspcostfilter,1,1,true,nil,c,tp)
+	local rg=Duel.SelectReleaseGroupCost(tp,s.thspcostfilter,1,1,true,nil,c,e,tp)
 	rg:AddCard(c)
 	Duel.Release(rg,REASON_COST)
 end

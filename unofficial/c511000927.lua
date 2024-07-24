@@ -1,7 +1,8 @@
---Rose Blizzard
+--ローズ・ブリザード (Anime)
+--Rose Blizzard (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Change attacking monster to Defense Position and negate attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_POSITION)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -12,15 +13,18 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	
 	local d=Duel.GetAttackTarget()
-	return d and d:IsControler(tp)
+	return d and d:IsControler(tp) and a and a:IsCanChangePosition() and not a:IsDefensePos()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_POSITION,Duel.GetAttacker(),1,0,0)
+	local tc=Duel.GetAttacker()
+	if chk==0 then return tc and tc:IsCanChangePosition() and not tc:IsDefensePos()  end
+	Duel.SetOperationInfo(0,CATEGORY_POSITION,tc,1,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
-	Duel.ChangePosition(tc,POS_FACEUP_DEFENSE,POS_FACEDOWN_DEFENSE,0,0)
-	Duel.NegateAttack()
+	if Duel.ChangePosition(tc,POS_FACEUP_DEFENSE,POS_FACEDOWN_DEFENSE,0,0)>0 then
+		Duel.NegateAttack()
+	end
 end

@@ -84,7 +84,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=e:GetLabelObject()
 	local ct=#g
 	local sg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_EXTRA|LOCATION_GRAVE,0,e:GetHandler(),e,tp)
-	if chk==0 then return ct>0 and (not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) or ct<=1) 
+	if chk==0 then return #sg>=ct and (not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) or ct<=1) 
 		and aux.SelectUnselectGroup(sg,e,tp,nil,nil,s.rescon(aux.CheckSummonGate(tp)),0) end
 	Duel.SetTargetCard(g)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,ct,tp,LOCATION_EXTRA|LOCATION_GRAVE)
@@ -92,8 +92,8 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local mg=Duel.GetTargetCards(e)
 	local ct=#mg
-	if ct<=0 or (Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and ct>1) then return end
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_EXTRA|LOCATION_GRAVE,0,e:GetHandler(),e,tp)
+	if ct<=0 or (Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and ct>1) or #g<ct or then return end
 	local sg=aux.SelectUnselectGroup(g,e,tp,ct,ct,s.rescon(aux.CheckSummonGate(tp)),1,tp,HINTMSG_SPSUMMON)
 	if #sg<=0 then return end
 	if Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)>0 then

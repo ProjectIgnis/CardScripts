@@ -13,9 +13,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	
 	local d=Duel.GetAttackTarget()
-	return d and d:IsControler(tp) and a and a:IsCanChangePosition() and not a:IsDefensePos()
+	return d and d:IsControler(tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=Duel.GetAttacker()

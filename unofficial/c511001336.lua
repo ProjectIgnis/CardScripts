@@ -36,6 +36,7 @@ function s.initial_effect(c)
 	--Track its Xyz Materials on the field
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e4:SetCode(EVENT_LEAVE_FIELD_P)
 	e4:SetOperation(s.matregop)
 	e4:SetLabelObject(e3)

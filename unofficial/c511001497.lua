@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_DESTROY_REPLACE)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTarget(s.reptg)
-	e2:SetValue(function(e,c) return s.repfilter(c,e:GetHandlerPlayer) end)
+	e2:SetValue(function(e,c) return s.repfilter(c,e:GetHandlerPlayer()) end)
 	e2:SetOperation(function(e) Duel.Destroy(e:GetHandler(),REASON_EFFECT|REASON_REPLACE) end)
 	c:RegisterEffect(e2)
 end

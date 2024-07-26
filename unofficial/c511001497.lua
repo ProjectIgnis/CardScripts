@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	--Equipped monster gains 300 DEF
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_EQUIP)
-	e2:SetCode(EFFECT_UPDATE_DEFENSE)
+	e1:SetCode(EFFECT_UPDATE_DEFENSE)
 	e1:SetValue(300)
 	c:RegisterEffect(e1)
 	--If a "Guardian" monster you control would be destroyed by battle, destroy this card instead

@@ -1,5 +1,5 @@
 --選律のヴァルモニカ
---Valmonica of the Selecting Melody
+--Vaalmonica Chosen Melody
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -52,7 +52,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp,angle_or_delvin) --Additional paramete
 		--Gain 500 LP and apply the targeting procetion effect
 		if Duel.Recover(tp,500,REASON_EFFECT)>0 and not Duel.HasFlagEffect(tp,id) then
 			break_chk=true
-			Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
+			Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,EFFECT_FLAG_CLIENT_HINT,1,aux.Stringid(id,4))
 			--Your opponent cannot target "Valmonica" Monster Cards you control with card effects
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_FIELD)
@@ -69,7 +69,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp,angle_or_delvin) --Additional paramete
 		--Take 500 damage and negate the effects of 1 opponent's Effect Monster
 		local g=Duel.GetMatchingGroup(s.disfilter,tp,0,LOCATION_MZONE,nil)
 		if break_chk then Duel.BreakEffect() end
-		if Duel.Damage(tp,500,REASON_EFFECT)>0 and #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,4)) then
+		if Duel.Damage(tp,500,REASON_EFFECT)>0 and #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,5)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_NEGATE)
 			local nc=g:Select(tp,1,1,nil):GetFirst()
 			Duel.HintSelection(nc,true)

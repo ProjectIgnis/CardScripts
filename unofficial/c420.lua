@@ -144,9 +144,14 @@ if not AnimeArchetype then
 	-- Champion's Vigilance, Absolute King - Megaplunder
 	Card.IsChampion=MakeCheck({0x152f},{82382815,27553701})
 
-	-- Clear クリアー
-	-- Clear Vice Dragon/Clear World
-	Card.IsClear=MakeCheck({0x510},{97811903,82044279,33900648})
+	-- Clear クリアー (checked 07/29/2024)
+	-- Clear Vice Dragon/Clear World/Clear Wall
+	-- Clear Cube/Clear Phantom/Clear Rage Golem/Clear Vicious Knight
+	AnimeArchetype.OCGClear={
+		97811903,82044279,33900648,6089145,33506331,
+		70717628,7102732,70095046
+	}
+	Card.IsClear=MakeCheck({0x510},AnimeArchetype.OCGClear)
 
 	-- Comics Hero (Checked 13/05/2024)
 	-- ＣＨ

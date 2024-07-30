@@ -574,3 +574,4 @@ SET_MORGANITE                     = 0x1b3
 SET_AZAMINA                       = 0x1b4
 SET_MIMIGHOUL                     = 0x1b5
 SET_RAIZEOL                       = 0x1b6
+SET_SCHOOLWORK_SUCCESS            = 0x1b7

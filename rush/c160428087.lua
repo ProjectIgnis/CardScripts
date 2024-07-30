@@ -40,6 +40,6 @@ end
 function s.atklimit(e,c)
 	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.HasLevel),e:GetHandlerPlayer(),LOCATION_MZONE,0,nil)
 	if #g==0 then return end
-	local maxg,lv=g:GetMaxGroup(Card.GetLevel)
-	return c:IsFaceup() and (not c:HasLevel() or (#g~=#maxg and c:IsLevelAbove(lv)))
+	local maxg,lv=g:GetMinGroup(Card.GetLevel)
+	return c:IsFaceup() and (not c:HasLevel() or c:GetLevel()~=lv)
 end

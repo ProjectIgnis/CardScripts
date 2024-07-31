@@ -1,5 +1,5 @@
 --折々の紙神
---Oriori no Kamigami
+--Origami Goddess
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EVENT_TOSS_COIN)
 	e3:SetRange(LOCATION_MZONE)
+	e3:SetCondition(s.coincon)
 	e3:SetOperation(s.coinop)
 	c:RegisterEffect(e3)
 	local e4=Effect.CreateEffect(c)
@@ -67,6 +68,9 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 	end
+end
+function s.coincon(e,tp,eg,ep,ev,re,r,rp)
+	return re:GetCode()~=EVENT_TOSS_COIN_NEGATE
 end
 function s.coinop(e,tp,eg,ep,ev,re,r,rp)
 	local heads_ct=aux.GetCoinHeadsFromEv(ev)

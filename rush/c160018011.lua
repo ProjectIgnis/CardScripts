@@ -42,7 +42,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,r,rp)
-	return Duel.IsExistingMatchingCard(aux.TRUE,0,LOCATION_FZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(nil,tp,LOCATION_FZONE,0,1,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,1) end

@@ -1,7 +1,8 @@
+--セラフィムセイバー
 --Seraphim Saber
 local s,id=GetID()
 function s.initial_effect(c)
-	--atk
+	--Gains 300 ATK for each other Fairy monster on the field
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -10,9 +11,6 @@ function s.initial_effect(c)
 	e1:SetValue(s.val)
 	c:RegisterEffect(e1)
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsRace(RACE_FAIRY)
-end
 function s.val(e,c)
-	return Duel.GetMatchingGroupCount(s.filter,c:GetControler(),LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())*300
+	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsRace,RACE_FAIRY),c:GetControler(),LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())*300
 end

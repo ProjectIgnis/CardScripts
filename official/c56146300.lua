@@ -2,7 +2,7 @@
 --Battlewasp - Rapier the Furious
 local s,id=GetID()
 function s.initial_effect(c)
-	--Place 1 "Battlewasp Wind" from your Deck face-up in your Spell & Trap Zone
+	--Place 1 "Battlewasp - Wind" from your Deck face-up in your Spell & Trap Zone
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.lvop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={101206052} --"Battlewasp Wind"
+s.listed_names={67441879} --"Battlewasp - Wind"
 function s.plcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
 	return #g==0 or g:FilterCount(Card.IsRace,nil,RACE_INSECT)==#g
@@ -40,7 +40,7 @@ function s.plcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.DiscardHand(tp,s.plcostfilter,1,1,REASON_COST|REASON_DISCARD,c)
 end
 function s.plfilter(c,tp)
-	return c:IsCode(101206052) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
+	return c:IsCode(67441879) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
 end
 function s.pltg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

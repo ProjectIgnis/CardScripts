@@ -70,11 +70,11 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local eff=e:GetLabelObject()
 	local tg=eg:Filter(s.spfilter,nil,eff,tp)
 	if #tg>0 then
-		tg:ForEach(Card.RegisterFlagEffect,id+100,RESET_CHAIN,0,1)
+		tg:ForEach(Card.RegisterFlagEffect,id+1,RESET_CHAIN,0,1)
 		local g=eff:GetLabelObject()
 		if Duel.GetCurrentChain()==0 then g:Clear() end
 		g:Merge(tg)
-		g:Remove(function(c) return not c:HasFlagEffect(id+100) end,nil)
+		g:Remove(function(c) return not c:HasFlagEffect(id+1) end,nil)
 		eff:SetLabelObject(g)
 		Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+id,e,0,tp,tp,0)
 	end

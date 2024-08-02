@@ -2,7 +2,7 @@
 --Token Alliance
 --scripted by Naim
 local s,id=GetID()
-local TOKEN_ALLIANCE=id+100
+local TOKEN_ALLIANCE=id+1
 function s.initial_effect(c)
 	--Activate
 	local e0=Effect.CreateEffect(c)

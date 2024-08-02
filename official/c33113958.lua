@@ -27,9 +27,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.effop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={id,101206208} --"Virtue Stream"
+s.listed_names={id,80534031} --"Virtue Stream"
 function s.thfilter(c)
-	return c:IsCode(101206208) and c:IsAbleToHand()
+	return c:IsCode(80534031) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

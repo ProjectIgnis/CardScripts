@@ -57,7 +57,7 @@ end
 function s.cfilter(c,tp)
 	local val=0
 	if c:GetFlagEffect(584)>0 then val=c:GetFlagEffectLabel(584) end
-	return c:GetLevel()>val and c:IsFaceup() and c:IsSetCard(SET_FORTUNE_LADY) and c:IsControler(tp)
+	return c:GetLevel()>val and c:IsFaceup() and c:IsSetCard(SET_FORTUNE_LADY) and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

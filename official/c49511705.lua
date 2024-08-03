@@ -47,7 +47,9 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCode(EVENT_CHAIN_SOLVED)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1)
+	e2:SetCondition(s.effcond)
 	e2:SetOperation(s.effop)
+	e2:SetLabelObject(re)
 	c:RegisterEffect(e2)
 end
 function s.coinregop(e,tp,eg,ep,ev,re,r,rp)
@@ -56,6 +58,9 @@ function s.coinregop(e,tp,eg,ep,ev,re,r,rp)
 		--Register a flag for every head
 		e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 	end
+end
+function s.effcond(e,tp,eg,ep,ev,re,r,rp)
+	return re==e:GetLabelObject()
 end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	--Card hint (the effect always applies, even with no heads in the results)

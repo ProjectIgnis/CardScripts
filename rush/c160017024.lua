@@ -3,7 +3,7 @@
 --Scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special Summon 1 "Soleil the Skysavior Angel" or "Lua the Skysavior Angel"from GY
+	--Special Summon 1 revealed monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -15,7 +15,6 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_names={CARD_FUSION,160012052,CARD_SKYSAVIOR_SOLEIL,CARD_SKYSAVIOR_LUA}
 function s.cfilter(c,e,tp)
 	return c:IsRace(RACE_GALAXY) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsLevelBelow(5) and c:IsDefense(1300)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK|POS_FACEDOWN_DEFENSE) and not c:IsPublic()

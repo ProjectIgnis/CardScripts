@@ -60,12 +60,13 @@ end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return not eg:IsContains(e:GetHandler()) and eg:IsExists(s.spconfilter,1,nil)
 end
-function s.tributefilter(c,tp)
-	return c:IsLevel(10) and c:IsSetCard(SET_APODRAKOSIS) and c:IsReleasableByEffect() and Duel.GetMZoneCount(tp,c)>0
+function s.tributefilter(c,e,tp)
+	return c:IsLevel(10) and c:IsSetCard(SET_APODRAKOSIS) and c:IsReleasableByEffect()
+		and Duel.GetLocationCountFromEx(tp,tp,c,e:GetHandler())>0
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsExistingMatchingCard(s.tributefilter,tp,LOCATION_MZONE,0,1,nil,tp)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.tributefilter,tp,LOCATION_MZONE,0,1,nil,e,tp)
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,true,true) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,tp,0)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_DESTROY,nil,1,tp,LOCATION_ONFIELD)
@@ -78,7 +79,7 @@ function s.tfcheck(sg,e,tp)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local rg=Duel.SelectMatchingCard(tp,s.tributefilter,tp,LOCATION_MZONE,0,1,1,nil,tp)
+	local rg=Duel.SelectMatchingCard(tp,s.tributefilter,tp,LOCATION_MZONE,0,1,1,nil,e,tp)
 	if #rg==0 or Duel.Release(rg,REASON_EFFECT)==0 then return end
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,SUMMON_TYPE_RITUAL,tp,tp,true,true,POS_FACEUP)>0 then

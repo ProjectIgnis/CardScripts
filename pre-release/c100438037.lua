@@ -53,7 +53,7 @@ end
 s.listed_series={SET_APODRAKOSIS}
 s.listed_names={id}
 function s.efftg(e,c)
-	return (c:IsSetCard(SET_APODRAKOSIS) and c:IsType(TYPE_PENDULUM)) or (c:IsLevel(10) and c:IsOriginalRace(RACE_DINOSAUR))
+	return (c:IsSetCard(SET_APODRAKOSIS) and c:IsType(TYPE_PENDULUM)) or (c:IsLevelAbove(10) and c:IsOriginalRace(RACE_DINOSAUR))
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	local trig_loc,trig_typ,trig_atk=Duel.GetChainInfo(0,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_TYPE,CHAININFO_TRIGGERING_ATTACK)

@@ -56,7 +56,7 @@ end
 s.listed_series={SET_APODRAKOSIS}
 s.listed_names={id}
 function s.efftg(e,c)
-	return (c:IsSetCard(SET_APODRAKOSIS) and c:IsType(TYPE_PENDULUM)) or (c:IsLevel(10) and c:IsOriginalRace(RACE_WYRM))
+	return (c:IsSetCard(SET_APODRAKOSIS) and c:IsType(TYPE_PENDULUM)) or (c:IsLevelAbove(10) and c:IsOriginalRace(RACE_WYRM))
 end
 function s.costfilter(c)
 	return c:IsSetCard(SET_APODRAKOSIS) and c:IsContinuousSpell() and c:IsFaceup() and c:IsAbleToDeckAsCost()

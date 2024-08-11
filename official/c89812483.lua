@@ -22,10 +22,9 @@ function s.costfilter(c,e,tp)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE,0,1,nil,e,tp,c:GetLevel(),c:GetRace())
 end
 function s.spfilter(c,e,tp,cost_lv,cost_race)
-	if not (c:IsMonster() and not c:IsSummonableCard() and c:ListsCode(CARD_ENHANCED_METALMORPH)
-		and c:IsCanBeSpecialSummoned(e,0,tp,true,true)) then return false end
-	if c.enhaced_metalmorph_stats==nil then return true end
-	if not (cost_lv and cost_race) then return false end
+	if not (c:IsMonster() and not c:IsSummonableCard() and c:ListsCode(CARD_ENHANCED_METALMORPH)) then return false end
+	if c:IsCanBeSpecialSummoned(e,0,tp,false,false) or c.enhaced_metalmorph_stats==nil then return true end
+	if not (c:IsCanBeSpecialSummoned(e,0,tp,true,true) and cost_lv and cost_race) then return false end
 	local lv,race=table.unpack(c.enhaced_metalmorph_stats)
 	return cost_lv>=lv and cost_race&race>0
 end

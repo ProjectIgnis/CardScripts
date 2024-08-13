@@ -54,7 +54,7 @@ function s.plop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 	local plc=Duel.SelectMatchingCard(tp,s.plfilter,tp,LOCATION_REMOVED|LOCATION_GRAVE,0,1,1,nil):GetFirst()
 	if not plc then return end
-	local fc=Duel.GetFieldCard(1-tp,LOCATION_FZONE,0)
+	local fc=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
 	if fc then
 		Duel.SendtoGrave(fc,REASON_RULE)
 		Duel.BreakEffect()

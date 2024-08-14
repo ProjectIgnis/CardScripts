@@ -1,5 +1,5 @@
 --伝説の剣闘士 カオス・ソルジャー
---The Legendary Swordmaster Black Luster Soldier
+--Black Luster Soldier - Legendary Swordsman
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -42,7 +42,7 @@ function s.initial_effect(c)
 	--Shuffle all cards the opponent controls to the Deck
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,1))
-	e2:SetCategory(CATEGORY_TODECK)
+	e5:SetCategory(CATEGORY_TODECK)
 	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e5:SetCode(EVENT_BATTLE_DESTROYING)
 	e5:SetCondition(s.tdcon)

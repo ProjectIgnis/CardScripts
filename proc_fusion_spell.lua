@@ -147,10 +147,8 @@ function Fusion.SummonEffFilter(c,fusfilter,e,tp,mg,gc,chkf,value,sumlimit,nosum
 	--Attempt to fix the interaction between an EFFECT_EXTRA_FUSION_MATERIAL effect
 	--and Fusion Summoning effects that normally allow you to only use a single location
 	--(e.g. with "Flash Fusion" you can normally only use monsters on your field).
-	if efmg and #efmg>0 then
-		if #(efmg:Match(GetExtraMatEff,nil,c))>0 then
-			mg:Merge(efmg)
-		end
+	if efmg then
+		mg:Merge(efmg:Filter(GetExtraMatEff,nil,c))
 	end
 	return c:IsType(TYPE_FUSION) and (not fusfilter or fusfilter(c,tp)) and (nosummoncheck or c:IsCanBeSpecialSummoned(e,value,tp,sumlimit,false,sumpos))
 			and c:CheckFusionMaterial(mg,gc,chkf)

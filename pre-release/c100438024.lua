@@ -48,7 +48,7 @@ function s.spcostfilter(c,loc,e,tp)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,loc,0,1,nil,e,tp,c)
 end
 function s.spfilter(c,e,tp,mc,ignore_zone_chk)
-	if not (c:IsSetCard(SET_MALICE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)) then return false end
+	if not (c:IsMonster() and c:IsSetCard(SET_MALICE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)) then return false end
 	if mc or not ignore_zone_chk then
 		if c:IsLocation(LOCATION_EXTRA) then
 			return c:IsType(TYPE_LINK) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0

@@ -201,8 +201,12 @@ function Ritual.Check(sc,lv,forcedselection,_type,requirementfunc)
 		return res,stop
 	end
 end
-function Ritual.Finishcon(sc,lv,requirementfunc,_type)
+function Ritual.Finishcon(sc,lv,forcedselection,requirementfunc,_type)
 	return function(sg,e,tp,mg)
+		if forcedselection then
+			local ret=forcedselection(e,tp,sg,sc)
+			if not ret[1] then return false end
+		end
 		if _type==RITPROC_EQUAL then
 			return sg:CheckWithSumEqual(requirementfunc or Card.GetRitualLevel,lv,#sg,#sg,sc)
 		else
@@ -273,7 +277,7 @@ function(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselect
 								mat=mg:SelectWithSumGreater(tp,requirementfunc or Card.GetRitualLevel,lv,tc)
 							end
 						else
-							mat=aux.SelectUnselectGroup(mg,e,tp,1,lv,Ritual.Check(tc,lv,WrapTableReturn(func),_type,requirementfunc),1,tp,HINTMSG_RELEASE,Ritual.Finishcon(tc,lv,requirementfunc,_type))
+							mat=aux.SelectUnselectGroup(mg,e,tp,1,lv,Ritual.Check(tc,lv,WrapTableReturn(func),_type,requirementfunc),1,tp,HINTMSG_RELEASE,Ritual.Finishcon(tc,lv,WrapTableReturn(func),requirementfunc,_type))
 						end
 					end
 					--check if a card from an "once per turn" EFFECT_EXTRA_RITUAL_MATERIAL effect was selected

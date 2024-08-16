@@ -34,19 +34,20 @@ function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local mg=c:GetMaterial():Filter(aux.NecroValleyFilter(s.mgfilter),nil,e,tp,c)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if c:GetSequence()<5 then ft=ft+1 end
-	if chk==0 then return not (c:IsReason(REASON_REPLACE) or Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)) and c:IsOnField() and c:IsFaceup() and c:IsAbleToExtra() 
-		and #mg>0 and ft>-#mg and sumtype==SUMMON_TYPE_SYNCHRO end
-	if #mg>0 and ft>-#mg then
-		e:SetLabelObject(mg)
+	if chk==0 then return not (c:IsReason(REASON_REPLACE) or Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)) and c:IsFaceup() 
+		and c:IsAbleToExtra() and #mg>0 and #mg<=ft and sumtype==SUMMON_TYPE_SYNCHRO end
+	if #mg>0 then 
 		return true
-	else return false
+	else 
+		return false 
 	end
 end
 function s.desrepop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local sumtype=c:GetSummonType()
-	local mg=e:GetLabelObject()
+	local mg=c:GetMaterial():Filter(aux.NecroValleyFilter(s.mgfilter),nil,e,tp,c)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	Duel.Hint(HINT_CARD,tp,id)
 	if Duel.SendtoDeck(c,nil,0,REASON_EFFECT|REASON_REPLACE)>0 
 		and sumtype==SUMMON_TYPE_SYNCHRO and #mg>0 
 		and #mg<=ft then

@@ -33,7 +33,7 @@ function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local sumtype=c:GetSummonType()
 	local mg=c:GetMaterial():Filter(aux.NecroValleyFilter(s.mgfilter),nil,e,tp,c)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if c:GetSequence()<5 then ft=ft+1
+	if c:GetSequence()<5 then ft=ft+1 end
 	if chk==0 then return not (c:IsReason(REASON_REPLACE) or Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)) and c:IsOnField() and c:IsFaceup() and c:IsAbleToExtra() 
 		and #mg>0 and ft>-#mg and sumtype==SUMMON_TYPE_SYNCHRO end
 	if #mg>0 and ft>-#mg then
@@ -42,7 +42,6 @@ function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	else return false
 	end
 end
-
 function s.desrepop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local sumtype=c:GetSummonType()

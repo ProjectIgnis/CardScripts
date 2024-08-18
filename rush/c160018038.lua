@@ -40,14 +40,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local sg=g:Select(tp,2,2,nil)
 		Duel.HintSelection(sg)
-		if Duel.Destroy(sg,REASON_EFFECT)>0 then
-			local c=e:GetHandler()
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetValue(2000)
-			e1:SetReset(RESETS_STANDARD_PHASE_END)
-			c:RegisterEffect(e1)
-		end
+		Duel.Destroy(sg,REASON_EFFECT)
+		local c=e:GetHandler()
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_ATTACK)
+		e1:SetValue(2000)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
+		c:RegisterEffect(e1)
 	end
 end

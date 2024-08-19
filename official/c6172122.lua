@@ -1,16 +1,15 @@
 --真紅眼融合
 --Red-Eyes Fusion
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
-	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.ListsArchetypeAsMaterial,0x3b),nil,s.fextra,nil,nil,s.stage2,nil,nil,nil,nil,nil,nil,nil,s.extratg)
+	local e1=Fusion.CreateSummonEff({handler=c,fusfilter=aux.FilterBoolFunction(Card.ListsArchetypeAsMaterial,SET_RED_EYES),
+									 extrafil=s.fextra,stage2=s.stage2,extratg=s.extratg})
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCost(s.cost)
 	c:RegisterEffect(e1)
 end
 s.listed_names={CARD_REDEYES_B_DRAGON}
-
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetActivityCount(tp,ACTIVITY_SUMMON)==0 and Duel.GetActivityCount(tp,ACTIVITY_SPSUMMON)==0 end
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -52,17 +51,5 @@ function s.fcheck(tp,sg,fc,sumtype,tp)
 	return sg:IsExists(s.ffilter,1,nil,fc,sumtype,tp)
 end
 function s.ffilter(c,fc,sumtype,tp)
-	local mat=fc.material
-	local set=fc.material_setcode
-	local res
-	if mat then
-		for _,code in ipairs(mat) do
-			res=res or (c:IsSummonCode(nil,SUMMON_TYPE_FUSION,PLAYER_NONE,code) and c:IsSetCard(0x3b,fc,sumtype,tp))
-		end
-	elseif set then
-		res=res or (c:IsSetCard(0x3b,fc,sumtype,tp) and fc:ListsArchetypeAsMaterial(0x3b))
-	else
-		return false
-	end
-	return res
+	return c:IsSetCard(SET_RED_EYES,fc,sumtype,tp) and (not fc.material or c:IsSummonCode(fc,sumtype,tp,fc.material))
 end

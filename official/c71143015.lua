@@ -23,14 +23,7 @@ function s.fcheck(tp,sg,fc,sumtype,tp)
 	return sg:IsExists(s.forcedmatfilter,1,nil,fc,sumtype,tp)
 end
 function s.forcedmatfilter(c,fc,sumtype,tp)
-	local mat=fc.material
-	local res=false
-	if mat then
-		for _,code in ipairs(mat) do
-			res=res or (c:IsSummonCode(fc,SUMMON_TYPE_FUSION,PLAYER_NONE,code) and c:IsCode(CARD_BLUEEYES_W_DRAGON,CARD_BLUEEYES_U_DRAGON))
-		end
-	end
-	return res
+	return c:IsCode(CARD_BLUEEYES_W_DRAGON,CARD_BLUEEYES_U_DRAGON) and c:IsSummonCode(fc,sumtype,tp,fc.material)
 end
 function s.desfilter(c)
 	local code=c:GetPreviousCodeOnField()

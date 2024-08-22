@@ -30,7 +30,7 @@ end
 s.listed_names={96470883} --Queen Angel of Roses
 s.listed_series={0x218} -- "Angel" archetype
 function s.spfilter(c,ft)
-	return c:IsFaceup() and c:IsCode(96470883) and c:IsAbleToHandAsCost() and
+	return c:IsFaceup() and c:IsCode(96470883) and c:IsAbleToHandAsCost()
 		and (ft>0 or c:GetSequence()<5)
 end
 function s.spcon(e,c)

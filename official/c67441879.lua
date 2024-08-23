@@ -67,7 +67,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		e:GetLabelObject():SetLabelObject(g)
 		if #g>0 and not Duel.HasFlagEffect(tp,id) then
 			Duel.RegisterFlagEffect(tp,id,RESET_CHAIN,0,1)
-			Duel.RaiseEvent(g,EVENT_CUSTOM+id,re,r,rp,ep,ev)
+			Duel.RaiseEvent(g,EVENT_CUSTOM+id,re,r,tp,ep,ev)
 		end
 	end
 end
@@ -77,7 +77,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then
 		Duel.ResetFlagEffect(tp,id)
 		for tc in g:Iter() do tc:ResetFlagEffect(id) end
-		return #g>0 and not e:GetHandler():HasFlagEffect(id)
+		return rp==tp and #g>0 and not e:GetHandler():HasFlagEffect(id)
 	end
 	e:GetHandler():RegisterFlagEffect(id,RESET_CHAIN,0,1)
 	if #g==1 then

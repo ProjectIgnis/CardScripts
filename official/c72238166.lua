@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.gyspop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_RAIZEOL}
+s.listed_series={SET_RYZEAL}
 s.listed_names={id}
 function s.selfspcon(e,c)
 	if c==nil then return true end
@@ -60,7 +60,7 @@ function s.gyspcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.gyspfilter(c,e,tp)
-	return c:IsSetCard(SET_RAIZEOL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) and not c:IsCode(id)
+	return c:IsSetCard(SET_RYZEAL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) and not c:IsCode(id)
 end
 function s.gysptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.gyspfilter(chkc,e,tp) end

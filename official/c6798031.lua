@@ -38,13 +38,13 @@ function s.initial_effect(c)
 	e3:SetOperation(s.negop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_RAIZEOL}
+s.listed_series={SET_RYZEAL}
 s.listed_names={id}
 function s.xyzlimit(e,c,sump,sumtyp)
 	return (sumtyp&SUMMON_TYPE_XYZ)==SUMMON_TYPE_XYZ and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,c:GetCode()),sump,LOCATION_ONFIELD,0,1,nil)
 end
 function s.tdfilter(c)
-	return c:IsSetCard(SET_RAIZEOL) and c:IsAbleToDeck() and not c:IsCode(id)
+	return c:IsSetCard(SET_RYZEAL) and c:IsAbleToDeck() and not c:IsCode(id)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -69,7 +69,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.xyzfilter(c)
-	return c:IsSetCard(SET_RAIZEOL) and c:IsType(TYPE_XYZ) and c:GetOverlayCount()>0 and c:IsFaceup()
+	return c:IsSetCard(SET_RYZEAL) and c:IsType(TYPE_XYZ) and c:GetOverlayCount()>0 and c:IsFaceup()
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.xyzfilter,tp,LOCATION_MZONE,0,nil)

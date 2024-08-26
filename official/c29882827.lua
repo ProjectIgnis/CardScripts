@@ -27,9 +27,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_APODRAKOSIS}
+s.listed_series={SET_RYU_GE}
 function s.thfilter(c)
-	return c:IsSetCard(SET_APODRAKOSIS) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_RYU_GE) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -37,7 +37,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOEXTRA,nil,1,tp,LOCATION_HAND)
 end
 function s.tedfilter(c)
-	return c:IsSetCard(SET_APODRAKOSIS) and c:IsType(TYPE_PENDULUM)
+	return c:IsSetCard(SET_RYU_GE) and c:IsType(TYPE_PENDULUM)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
@@ -56,17 +56,17 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spconfilter(c)
-	return c:IsSetCard(SET_APODRAKOSIS) and c:IsOriginalType(TYPE_PENDULUM) and c:IsFaceup()
+	return c:IsSetCard(SET_RYU_GE) and c:IsOriginalType(TYPE_PENDULUM) and c:IsFaceup()
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.spconfilter,tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.spcostfilter(c,e,tp)
-	return c:IsSetCard(SET_APODRAKOSIS) and c:IsMonster() and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(SET_RYU_GE) and c:IsMonster() and c:IsAbleToRemoveAsCost()
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetOriginalRace())
 end
 function s.spfilter(c,e,tp,race)
-	return c:IsSetCard(SET_APODRAKOSIS) and c:IsOriginalRace(race) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_RYU_GE) and c:IsOriginalRace(race) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

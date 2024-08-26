@@ -26,9 +26,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	e1:SetLabelObject(e2)
 end
-s.listed_series={SET_MALICE}
+s.listed_series={SET_MALISS}
 function s.thcostfilter(c)
-	return c:IsFaceup() and c:IsSetCard(SET_MALICE) and c:IsAbleToRemove()
+	return c:IsFaceup() and c:IsSetCard(SET_MALISS) and c:IsAbleToRemove()
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local label_obj=e:GetLabelObject()
@@ -41,7 +41,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.thfilter(c)
-	return c:IsSetCard(SET_MALICE) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_MALISS) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -49,7 +49,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,nil,1,PLAYER_EITHER,LOCATION_ONFIELD)
 end
 function s.linkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(SET_MALICE) and c:IsType(TYPE_LINK)
+	return c:IsFaceup() and c:IsSetCard(SET_MALISS) and c:IsType(TYPE_LINK)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)

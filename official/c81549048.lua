@@ -29,9 +29,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_APODRAKOSIS}
+s.listed_series={SET_RYU_GE}
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(SET_APODRAKOSIS) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_RYU_GE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -49,7 +49,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tdfilter(c)
-	return c:IsSetCard(SET_APODRAKOSIS) and c:IsContinuousSpell() and c:IsAbleToDeck() and c:IsFaceup()
+	return c:IsSetCard(SET_RYU_GE) and c:IsContinuousSpell() and c:IsAbleToDeck() and c:IsFaceup()
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_ONFIELD|LOCATION_GRAVE|LOCATION_REMOVED) and chkc:IsControler(tp) and s.tdfilter(chkc) end

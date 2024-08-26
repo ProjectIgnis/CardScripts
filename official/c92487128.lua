@@ -33,10 +33,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_APODRAKOSIS}
+s.listed_series={SET_RYU_GE}
 s.listed_names={id}
 function s.thfilter(c)
-	return c:IsSetCard(SET_APODRAKOSIS) and not c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
+	return c:IsSetCard(SET_RYU_GE) and not c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -61,7 +61,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return not eg:IsContains(e:GetHandler()) and eg:IsExists(s.spconfilter,1,nil)
 end
 function s.tributefilter(c,e,tp)
-	return c:IsLevel(10) and c:IsSetCard(SET_APODRAKOSIS) and c:IsReleasableByEffect()
+	return c:IsLevel(10) and c:IsSetCard(SET_RYU_GE) and c:IsReleasableByEffect()
 		and Duel.GetLocationCountFromEx(tp,tp,c,e:GetHandler())>0
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -72,7 +72,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_DESTROY,nil,1,tp,LOCATION_ONFIELD)
 end
 function s.plfilter(c)
-	return c:IsSetCard(SET_APODRAKOSIS) and c:IsContinuousSpell() and not c:IsForbidden()
+	return c:IsSetCard(SET_RYU_GE) and c:IsContinuousSpell() and not c:IsForbidden()
 end
 function s.tfcheck(sg,e,tp)
 	return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 or sg:IsExists(Card.IsLocation,1,nil,LOCATION_STZONE)

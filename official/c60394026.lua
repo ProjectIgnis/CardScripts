@@ -16,9 +16,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={SET_RAIZEOL}
+s.listed_series={SET_RYZEAL}
 function s.spfilter(c,e,tp)
-	return (c:IsType(TYPE_XYZ) or c:IsSetCard(SET_RAIZEOL)) and c:IsFaceup()
+	return (c:IsType(TYPE_XYZ) or c:IsSetCard(SET_RYZEAL)) and c:IsFaceup()
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -30,7 +30,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,tp,0)
 end
 function s.attachfilter(c,tp)
-	return c:IsSetCard(SET_RAIZEOL) and Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_MZONE,0,1,nil,c,tp)
+	return c:IsSetCard(SET_RYZEAL) and Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_MZONE,0,1,nil,c,tp)
 end
 function s.xyzfilter(c,mc,tp)
 	return c:IsType(TYPE_XYZ) and c:IsRank(4) and c:IsFaceup() and mc:IsCanBeXyzMaterial(c,tp,REASON_EFFECT)

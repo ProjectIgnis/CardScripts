@@ -39,15 +39,15 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_APODRAKOSIS}
-s.listed_names={100438039,id} --"Apodrakosis Ascension Gate of Wyrmhaze"
+s.listed_series={SET_RYU_GE}
+s.listed_names={55154344,id} --"Apodrakosis Ascension Gate of Wyrmhaze"
 function s.thgatecost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToRemoveAsCost() end
 	Duel.Remove(c,POS_FACEUP,REASON_COST)
 end
 function s.thgatefilter(c)
-	return c:IsCode(100438039) and c:IsAbleToHand()
+	return c:IsCode(55154344) and c:IsAbleToHand()
 end
 function s.thgatetg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thgatefilter,tp,LOCATION_DECK,0,1,nil) end
@@ -78,7 +78,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tdfilter(c)
-	return c:IsCode(100438039) and c:IsFaceup() and c:IsAbleToDeckAsCost()
+	return c:IsCode(55154344) and c:IsFaceup() and c:IsAbleToDeckAsCost()
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -89,7 +89,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_COST)
 end
 function s.thfilter(c)
-	return c:IsSetCard(SET_APODRAKOSIS) and c:IsAbleToHand() and not c:IsCode(id)
+	return c:IsSetCard(SET_RYU_GE) and c:IsAbleToHand() and not c:IsCode(id)
 		and (c:IsFaceup() or not c:IsLocation(LOCATION_REMOVED))
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

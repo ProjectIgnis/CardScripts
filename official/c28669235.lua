@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e1:SetRange(LOCATION_SZONE)
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_APODRAKOSIS))
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_RYU_GE))
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
 	--Return a card on the field to the hand
@@ -51,13 +51,13 @@ function s.initial_effect(c)
 	e4:SetValue(TYPE_EFFECT)
 	c:RegisterEffect(e4)
 end
-s.listed_series={SET_APODRAKOSIS}
+s.listed_series={SET_RYU_GE}
 s.listed_names={id}
 function s.efftg(e,c)
-	return (c:IsSetCard(SET_APODRAKOSIS) and c:IsType(TYPE_PENDULUM)) or (c:IsLevelAbove(10) and c:IsOriginalRace(RACE_SEASERPENT))
+	return (c:IsSetCard(SET_RYU_GE) and c:IsType(TYPE_PENDULUM)) or (c:IsLevelAbove(10) and c:IsOriginalRace(RACE_SEASERPENT))
 end
 function s.costfilter(c)
-	return c:IsSetCard(SET_APODRAKOSIS) and c:IsContinuousSpell() and c:IsFaceup() and c:IsAbleToDeckAsCost()
+	return c:IsSetCard(SET_RYU_GE) and c:IsContinuousSpell() and c:IsFaceup() and c:IsAbleToDeckAsCost()
 		and Duel.IsExistingTarget(Card.IsAbleToHand,0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)

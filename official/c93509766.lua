@@ -48,7 +48,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={100438037} --"Apodrakosis Ascension Gate of Dinocrag"
+s.listed_names={82661630} --"Apodrakosis Ascension Gate of Dinocrag"
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	for ct=1,#eg do
 		Duel.RegisterFlagEffect(0,id,RESET_PHASE|PHASE_END,0,1)
@@ -60,7 +60,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoDeck(c,nil,SEQ_DECKSHUFFLE,REASON_COST)
 end
 function s.thfilter(c)
-	return c:IsCode(100438037) and c:IsAbleToHand()
+	return c:IsCode(82661630) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -87,7 +87,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tdfilter(c,ec)
-	return c:IsCode(100438037) and c:IsFaceup() and c:IsAbleToDeckAsCost()
+	return c:IsCode(82661630) and c:IsFaceup() and c:IsAbleToDeckAsCost()
 		and Duel.IsExistingTarget(nil,0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,Group.FromCards(c,ec))
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)

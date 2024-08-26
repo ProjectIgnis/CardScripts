@@ -40,9 +40,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_MALICE}
+s.listed_series={SET_MALISS}
 function s.lcheck(g,lc,sumtype,tp)
-	return g:IsExists(Card.IsSetCard,1,nil,SET_MALICE,lc,sumtype,tp)
+	return g:IsExists(Card.IsSetCard,1,nil,SET_MALISS,lc,sumtype,tp)
 end
 function s.rmfilter(c,tp)
 	return c:IsAbleToRemove() and (c:IsControler(1-tp) or aux.SpElimFilter(c,true))
@@ -61,7 +61,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.setfilter(c)
-	return c:IsSetCard(SET_MALICE) and c:IsTrap() and c:IsSSetable()
+	return c:IsSetCard(SET_MALISS) and c:IsTrap() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil) end

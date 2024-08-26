@@ -44,12 +44,12 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_MALICE}
+s.listed_series={SET_MALISS}
 function s.lcheck(g,lc,sumtype,tp)
-	return g:IsExists(Card.IsSetCard,1,nil,SET_MALICE,lc,sumtype,tp)
+	return g:IsExists(Card.IsSetCard,1,nil,SET_MALISS,lc,sumtype,tp)
 end
 function s.tdfilter(c)
-	return c:IsSetCard(SET_MALICE) and c:IsFaceup() and c:IsAbleToDeck()
+	return c:IsSetCard(SET_MALISS) and c:IsFaceup() and c:IsAbleToDeck()
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_REMOVED) and s.tdfilter(chkc) end

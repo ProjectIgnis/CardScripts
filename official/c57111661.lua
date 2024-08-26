@@ -42,13 +42,13 @@ function s.initial_effect(c)
 	e3:SetValue(function(e,te) return te:GetCode()==EFFECT_TRAP_ACT_IN_SET_TURN and te~=e2 end)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_MALICE}
+s.listed_series={SET_MALISS}
 function s.spcostfilter(c,loc,e,tp)
-	return c:IsFaceup() and c:IsSetCard(SET_MALICE) and c:IsAbleToRemove()
+	return c:IsFaceup() and c:IsSetCard(SET_MALISS) and c:IsAbleToRemove()
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,loc,0,1,nil,e,tp,c)
 end
 function s.spfilter(c,e,tp,mc,ignore_zone_chk)
-	if not (c:IsMonster() and c:IsSetCard(SET_MALICE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)) then return false end
+	if not (c:IsMonster() and c:IsSetCard(SET_MALISS) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)) then return false end
 	if mc or not ignore_zone_chk then
 		if c:IsLocation(LOCATION_EXTRA) then
 			return c:IsType(TYPE_LINK) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0

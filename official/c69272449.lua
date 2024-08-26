@@ -39,9 +39,9 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={SET_MALICE}
+s.listed_series={SET_MALISS}
 function s.linkfilter(c,hc)
-	return c and c:IsSetCard(SET_MALICE) and c:IsType(TYPE_LINK) and c:GetLinkedGroup():IsContains(hc)
+	return c and c:IsSetCard(SET_MALISS) and c:IsType(TYPE_LINK) and c:GetLinkedGroup():IsContains(hc)
 end
 function s.bdcon(e)
 	local c=e:GetHandler()
@@ -50,7 +50,7 @@ function s.bdcon(e)
 	return s.linkfilter(attacker,c) or s.linkfilter(attack_target,c)
 end
 function s.setfilter(c,tp)
-	return c:IsSetCard(SET_MALICE) and c:IsTrap() and c:IsSSetable()
+	return c:IsSetCard(SET_MALISS) and c:IsTrap() and c:IsSSetable()
 		and not Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,c:GetCode())
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)

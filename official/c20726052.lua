@@ -34,9 +34,9 @@ function s.initial_effect(c)
 	e3:SetValue(function(e,te) return te:GetCode()==EFFECT_TRAP_ACT_IN_SET_TURN and te~=e2 end)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_MALICE}
+s.listed_series={SET_MALISS}
 function s.spcostfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(SET_MALICE) and c:IsAbleToRemove() and Duel.GetMZoneCount(tp,c)>0
+	return c:IsFaceup() and c:IsSetCard(SET_MALISS) and c:IsAbleToRemove() and Duel.GetMZoneCount(tp,c)>0
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100)
@@ -50,7 +50,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.spfilter(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(SET_MALICE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsFaceup() and c:IsSetCard(SET_MALISS) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -65,7 +65,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,0)
 end
 function s.linkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(SET_MALICE) and c:IsType(TYPE_LINK)
+	return c:IsFaceup() and c:IsSetCard(SET_MALISS) and c:IsType(TYPE_LINK)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

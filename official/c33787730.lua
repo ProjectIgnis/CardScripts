@@ -29,9 +29,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.xyzop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_RAIZEOL}
+s.listed_series={SET_RYZEAL}
 function s.desconfilter(c)
-	return c:IsSetCard(SET_RAIZEOL) and c:IsType(TYPE_XYZ) and c:IsFaceup()
+	return c:IsSetCard(SET_RYZEAL) and c:IsType(TYPE_XYZ) and c:IsFaceup()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
@@ -44,7 +44,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_LEAVE_GRAVE,nil,1,tp,0)
 end
 function s.attachfilter(c,tp)
-	return c:IsSetCard(SET_RAIZEOL) and Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_MZONE,0,1,nil,c,tp)
+	return c:IsSetCard(SET_RYZEAL) and Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_MZONE,0,1,nil,c,tp)
 end
 function s.xyzfilter(c,mc,tp)
 	return c:IsType(TYPE_XYZ) and c:IsRank(4) and c:IsFaceup() and mc:IsCanBeXyzMaterial(c,tp,REASON_EFFECT)
@@ -66,7 +66,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.raizeolmatfilter(c,tp)
-	return c:IsSetCard(SET_RAIZEOL) and c:IsFaceup() and Duel.IsExistingMatchingCard(Card.IsXyzSummonable,tp,LOCATION_EXTRA,0,1,nil,c)
+	return c:IsSetCard(SET_RYZEAL) and c:IsFaceup() and Duel.IsExistingMatchingCard(Card.IsXyzSummonable,tp,LOCATION_EXTRA,0,1,nil,c)
 end
 function s.xyztg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.raizeolmatfilter,tp,LOCATION_MZONE,0,1,nil,tp) end

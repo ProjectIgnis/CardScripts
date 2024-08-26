@@ -39,12 +39,12 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_MALICE}
+s.listed_series={SET_MALISS}
 function s.lcheck(g,lc,sumtype,tp)
-	return g:IsExists(Card.IsSetCard,1,nil,SET_MALICE,lc,sumtype,tp)
+	return g:IsExists(Card.IsSetCard,1,nil,SET_MALISS,lc,sumtype,tp)
 end
 function s.thfilter(c)
-	return c:IsSetCard(SET_MALICE) and c:IsSpell() and c:IsAbleToHand()
+	return c:IsSetCard(SET_MALISS) and c:IsSpell() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

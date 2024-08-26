@@ -45,7 +45,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.rmop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={100438038,id} --"Apodrakosis Ascension Gate of Serpentfall"
+s.listed_names={28669235,id} --"Apodrakosis Ascension Gate of Serpentfall"
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	for tc in eg:Iter() do
 		if tc:IsMonster() and tc:IsPreviousLocation(LOCATION_HAND|LOCATION_DECK) and not tc:IsCode(id) then
@@ -59,7 +59,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(c,REASON_COST|REASON_DISCARD)
 end
 function s.thfilter(c)
-	return c:IsCode(100438038) and c:IsAbleToHand()
+	return c:IsCode(28669235) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -86,7 +86,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tdfilter(c)
-	return c:IsCode(100438038) and c:IsFaceup() and c:IsAbleToDeckAsCost()
+	return c:IsCode(28669235) and c:IsFaceup() and c:IsAbleToDeckAsCost()
 end
 function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_ONFIELD,0,1,nil) end

@@ -36,9 +36,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_RAIZEOL}
+s.listed_series={SET_RYZEAL}
 function s.attachfilter(c,xyzc,tp)
-	return c:IsSetCard(SET_RAIZEOL) and c:IsMonster() and c:IsCanBeXyzMaterial(xyzc,tp,REASON_EFFECT)
+	return c:IsSetCard(SET_RYZEAL) and c:IsMonster() and c:IsCanBeXyzMaterial(xyzc,tp,REASON_EFFECT)
 end
 function s.attachtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.attachfilter,tp,LOCATION_GRAVE,0,1,nil,e:GetHandler(),tp) end
@@ -55,7 +55,7 @@ function s.attachop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return c:IsSetCard(SET_RAIZEOL) and c:IsAbleToHand()
+	return c:IsSetCard(SET_RYZEAL) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

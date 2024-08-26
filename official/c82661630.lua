@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetRange(LOCATION_SZONE)
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_APODRAKOSIS))
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_RYU_GE))
 	e1:SetValue(300)
 	c:RegisterEffect(e1)
 	--Negate the activation of a monster effect
@@ -50,17 +50,17 @@ function s.initial_effect(c)
 	e4:SetValue(TYPE_EFFECT)
 	c:RegisterEffect(e4)
 end
-s.listed_series={SET_APODRAKOSIS}
+s.listed_series={SET_RYU_GE}
 s.listed_names={id}
 function s.efftg(e,c)
-	return (c:IsSetCard(SET_APODRAKOSIS) and c:IsType(TYPE_PENDULUM)) or (c:IsLevelAbove(10) and c:IsOriginalRace(RACE_DINOSAUR))
+	return (c:IsSetCard(SET_RYU_GE) and c:IsType(TYPE_PENDULUM)) or (c:IsLevelAbove(10) and c:IsOriginalRace(RACE_DINOSAUR))
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	local trig_loc,trig_typ,trig_atk=Duel.GetChainInfo(0,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_TYPE,CHAININFO_TRIGGERING_ATTACK)
 	return trig_loc&LOCATION_MZONE>0 and trig_typ&TYPE_MONSTER>0 and e:GetHandler():GetAttack()>trig_atk
 end
 function s.costfilter(c)
-	return c:IsSetCard(SET_APODRAKOSIS) and c:IsContinuousSpell() and c:IsFaceup() and c:IsAbleToDeckAsCost()
+	return c:IsSetCard(SET_RYU_GE) and c:IsContinuousSpell() and c:IsFaceup() and c:IsAbleToDeckAsCost()
 end
 function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_ONFIELD,0,1,nil) end

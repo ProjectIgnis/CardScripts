@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Xyz Summon Procedure: 2+ Level 4 "Raizeol" monsters
-	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_RAIZEOL),4,2,nil,nil,99)
+	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_RYZEAL),4,2,nil,nil,99)
 	--Destroy 1 card on the field
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	e3:SetValue(function(e,c) return s.repfilter(c,e:GetHandlerPlayer()) end)
 	c:RegisterEffect(e3)
 end
-s.lsisted_series={SET_RAIZEOL}
+s.lsisted_series={SET_RYZEAL}
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() end
 	if chk==0 then return Duel.IsExistingTarget(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end

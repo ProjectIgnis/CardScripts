@@ -20,13 +20,13 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCondition(function(e,tp) return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,100438034),tp,LOCATION_EXTRA,0,1,nil) end)
+	e2:SetCondition(function(e,tp) return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,92487128),tp,LOCATION_EXTRA,0,1,nil) end)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={100438034} --"Guangba, Luminous Apodrakosis of Starforge"
-s.listed_series={SET_APODRAKOSIS}
+s.listed_names={92487128} --"Guangba, Luminous Apodrakosis of Starforge"
+s.listed_series={SET_RYU_GE}
 function s.thfilter(c)
 	return c:IsRace(RACE_DINOSAUR|RACE_SEASERPENT|RACE_WYRM) and (c:IsAbleToHand() or c:IsAbleToRemove() or c:IsAbleToGrave())
 end
@@ -74,7 +74,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(SET_APODRAKOSIS) and (c:IsFaceup() or not c:IsLocation(LOCATION_REMOVED)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_RYU_GE) and (c:IsFaceup() or not c:IsLocation(LOCATION_REMOVED)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spcheck(sg,e,tp)
 	return sg:CheckDifferentProperty(Card.GetLocation) and sg:CheckDifferentProperty(Card.GetRace)

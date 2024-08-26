@@ -33,13 +33,13 @@ function s.initial_effect(c)
 	e3:SetValue(function(e,c) return not s.atkfilter(c) end)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_MALICE}
+s.listed_series={SET_MALISS}
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE)
 end
 function s.rmfilter(c)
-	return c:IsSetCard(SET_MALICE) and c:IsAbleToRemove()
+	return c:IsSetCard(SET_MALISS) and c:IsAbleToRemove()
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.rmfilter),tp,LOCATION_DECK|LOCATION_HAND|LOCATION_GRAVE,0,nil)
@@ -52,10 +52,10 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atkfilter(c)
-	return c:IsSetCard(SET_MALICE) and c:IsType(TYPE_LINK) and c:IsFaceup()
+	return c:IsSetCard(SET_MALISS) and c:IsType(TYPE_LINK) and c:IsFaceup()
 end
 function s.atkupconfilter(c)
-	return c:IsSetCard(SET_MALICE) and c:IsTrap() and c:IsFaceup()
+	return c:IsSetCard(SET_MALISS) and c:IsTrap() and c:IsFaceup()
 end
 function s.atkupcon(e)
 	local g=Duel.GetMatchingGroup(s.atkupconfilter,e:GetHandlerPlayer(),LOCATION_REMOVED,0,nil)

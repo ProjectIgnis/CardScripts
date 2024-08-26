@@ -38,9 +38,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_RAIZEOL}
+s.listed_series={SET_RYZEAL}
 function s.spconfilter(c)
-	return c:IsSetCard(SET_RAIZEOL) and c:IsMonster() and c:IsAbleToDeckOrExtraAsCost()
+	return c:IsSetCard(SET_RYZEAL) and c:IsMonster() and c:IsAbleToDeckOrExtraAsCost()
 end
 function s.spcon(e,c)
 	if c==nil then return true end

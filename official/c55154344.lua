@@ -53,13 +53,13 @@ function s.initial_effect(c)
 	e4:SetValue(TYPE_EFFECT)
 	c:RegisterEffect(e4)
 end
-s.listed_series={SET_APODRAKOSIS}
+s.listed_series={SET_RYU_GE}
 s.listed_names={id}
 function s.efftg(e,c)
-	return (c:IsSetCard(SET_APODRAKOSIS) and c:IsType(TYPE_PENDULUM)) or (c:IsLevelAbove(10) and c:IsOriginalRace(RACE_WYRM))
+	return (c:IsSetCard(SET_RYU_GE) and c:IsType(TYPE_PENDULUM)) or (c:IsLevelAbove(10) and c:IsOriginalRace(RACE_WYRM))
 end
 function s.costfilter(c)
-	return c:IsSetCard(SET_APODRAKOSIS) and c:IsContinuousSpell() and c:IsFaceup() and c:IsAbleToDeckAsCost()
+	return c:IsSetCard(SET_RYU_GE) and c:IsContinuousSpell() and c:IsFaceup() and c:IsAbleToDeckAsCost()
 		and Duel.IsExistingTarget(Card.HasNonZeroAttack,0,LOCATION_MZONE,LOCATION_MZONE,1,c)
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)

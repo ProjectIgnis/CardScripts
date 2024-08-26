@@ -1,22 +1,21 @@
---Ｍ∀ＬＩＣＥ＜Ｐ＞Ｃｈｅｓｈｉｒｅ Ｃａｔ
---M∀LICE <Pawn> Cheshire Cat
+--Ｍ∀ＬＩＣＥ＜Ｐ＞Ｄｏｒｍｏｕｓｅ
+--M∀LICE <Pawn> Dormouse
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	--Any monster destroyed by battle with a "M∀LICE" Link Monster that points to this card is banished
+	--"M∀LICE" Link Monsters that point to this card cannot be destroyed by card effects
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-	e1:SetCode(EFFECT_BATTLE_DESTROY_REDIRECT)
+	e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e1:SetValue(LOCATION_REMOVED)
 	e1:SetTarget(s.linkfilter)
+	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	--Banish 1 "M∀LICE" card from your hand
+	--Banish 1 "M∀LICE" monster from your Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetCategory(CATEGORY_REMOVE+CATEGORY_DRAW)
+	e2:SetCategory(CATEGORY_REMOVE+CATEGORY_ATKCHANGE)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,id)
@@ -36,26 +35,34 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_MALICE}
+s.listed_series={SET_MALISS}
 function s.linkfilter(e,c)
-	return c:IsSetCard(SET_MALICE) and c:IsType(TYPE_LINK) and c:GetLinkedGroup():IsContains(e:GetHandler())
+	return c:IsSetCard(SET_MALISS) and c:IsType(TYPE_LINK) and c:GetLinkedGroup():IsContains(e:GetHandler())
 end
 function s.rmfilter(c)
-	return c:IsSetCard(SET_MALICE) and c:IsAbleToRemove()
+	return c:IsSetCard(SET_MALISS) and c:IsMonster() and c:IsAbleToRemove()
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.rmfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_HAND)
-	Duel.SetPossibleOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.rmfilter,tp,LOCATION_DECK,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_DECK)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.rmfilter,tp,LOCATION_HAND,0,1,1,nil)
-	if #g>0 and Duel.Remove(g,POS_FACEUP,REASON_EFFECT)>0 and Duel.IsPlayerCanDraw(tp,2)
-		and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
-		Duel.BreakEffect()
-		Duel.Draw(tp,2,REASON_EFFECT)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	local g=Duel.SelectMatchingCard(tp,s.rmfilter,tp,LOCATION_DECK,0,1,1,nil)
+	if #g>0 then
+		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 	end
+	local c=e:GetHandler()
+	--"M∀LICE" monsters you control will gain 600 ATK this turn
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_UPDATE_ATTACK)
+	e1:SetTargetRange(LOCATION_MZONE,0)
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_MALISS))
+	e1:SetValue(600)
+	e1:SetReset(RESET_PHASE|PHASE_END)
+	Duel.RegisterEffect(e1,tp)
+	aux.RegisterClientHint(c,0,tp,1,0,aux.Stringid(id,2))
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,300) end

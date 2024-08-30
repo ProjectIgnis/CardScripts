@@ -47,6 +47,7 @@ function s.desrepop(e,tp,eg,ep,ev,re,r,rp)
 	local sumtype=c:GetSummonType()
 	local mg=c:GetMaterial():Filter(aux.NecroValleyFilter(s.mgfilter),nil,e,tp,c)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	if c:GetSequence()<5 then ft=ft+1 end
 	Duel.Hint(HINT_CARD,tp,id)
 	if Duel.SendtoDeck(c,nil,0,REASON_EFFECT|REASON_REPLACE)>0 
 		and sumtype==SUMMON_TYPE_SYNCHRO and #mg>0 

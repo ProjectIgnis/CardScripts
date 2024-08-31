@@ -37,7 +37,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetMatchingGroupCount(s.filter,tp,LOCATION_GRAVE,0,nil)>4 and
 		#sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.BreakEffect()
-		local tg=aux.SelectUnselectGroup(sg,1,tp,1,ft,s.rescon,1,tp)
+		local tg=aux.SelectUnselectGroup(sg,1,tp,1,2,s.rescon,1,tp)
 		Duel.SendtoHand(tg,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,tg)
 	end

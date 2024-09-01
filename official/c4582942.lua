@@ -1,5 +1,5 @@
 --律導のヴァルモニカ
---Valmonica of the Guiding Rhythm
+--Vaalmonica Followed Rhythm
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -33,10 +33,11 @@ end
 function s.linkfilter(c)
 	return c:IsSetCard(SET_VALMONICA) and c:IsFaceup() and c:IsLinkMonster()
 end
-function s.activate(e,tp,eg,ep,ev,re,r,rp,angle_or_delvin) --Additional parameter used by "Angelo Valmonica" and "Demone Valmonica"
+function s.activate(e,tp,eg,ep,ev,re,r,rp,angelo_or_dimonno) --Additional parameter used by "Angello Vaalmonica" and "Dimonno Vaalmonica"
+	if not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil) then return end
 	local op=nil
-	if angle_or_delvin then
-		op=angle_or_delvin
+	if angelo_or_dimonno then
+		op=angelo_or_dimonno
 	else
 		local both=Duel.IsExistingMatchingCard(s.linkfilter,tp,LOCATION_MZONE,0,1,nil)
 		op=Duel.SelectEffect(tp,

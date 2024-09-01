@@ -21,13 +21,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.effop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={SET_SILENFORC}
+s.listed_series={SET_VOICELESS_VOICE}
 function s.todeckfilter(c)
 	return c:IsAbleToDeck() and (c:IsRitualSpell() or
 		(c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_WARRIOR|RACE_DRAGON) and c:IsRitualMonster()))
 end
 function s.silenforcfilter(c,e,tp,ft)
-	return c:IsSetCard(SET_SILENFORC) and c:IsMonster() and (c:IsAbleToHand() or (ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
+	return c:IsSetCard(SET_VOICELESS_VOICE) and c:IsMonster() and (c:IsAbleToHand() or (ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
 end
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_WARRIOR|RACE_DRAGON) and c:IsRitualMonster() 

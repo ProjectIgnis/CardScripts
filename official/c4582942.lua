@@ -16,9 +16,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={SET_VALMONICA}
+s.listed_series={SET_VAALMONICA}
 function s.cfilter(c)
-	return c:IsSetCard(SET_VALMONICA) and c:IsFaceup() and c:IsOriginalType(TYPE_MONSTER)
+	return c:IsSetCard(SET_VAALMONICA) and c:IsFaceup() and c:IsOriginalType(TYPE_MONSTER)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
@@ -31,13 +31,13 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,PLAYER_EITHER,LOCATION_MZONE)
 end
 function s.linkfilter(c)
-	return c:IsSetCard(SET_VALMONICA) and c:IsFaceup() and c:IsLinkMonster()
+	return c:IsSetCard(SET_VAALMONICA) and c:IsFaceup() and c:IsLinkMonster()
 end
-function s.activate(e,tp,eg,ep,ev,re,r,rp,angelo_or_dimonno) --Additional parameter used by "Angello Vaalmonica" and "Dimonno Vaalmonica"
+function s.activate(e,tp,eg,ep,ev,re,r,rp,angello_or_dimonno) --Additional parameter used by "Angello Vaalmonica" and "Dimonno Vaalmonica"
 	if not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil) then return end
 	local op=nil
-	if angelo_or_dimonno then
-		op=angelo_or_dimonno
+	if angello_or_dimonno then
+		op=angello_or_dimonno
 	else
 		local both=Duel.IsExistingMatchingCard(s.linkfilter,tp,LOCATION_MZONE,0,1,nil)
 		op=Duel.SelectEffect(tp,

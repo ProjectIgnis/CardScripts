@@ -1,5 +1,5 @@
 --ヴァルモニカ・シェルタ
---Valmonica Scelta
+--Vaalmonica Scelta
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={SET_VALMONICA}
+s.listed_series={SET_VAALMONICA}
 s.listed_names={id}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -25,14 +25,14 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.thfilter(c)
-	return c:IsSetCard(SET_VALMONICA) and c:IsSpellTrap() and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_VAALMONICA) and c:IsSpellTrap() and not c:IsCode(id) and c:IsAbleToHand()
 end
-function s.activate(e,tp,eg,ep,ev,re,r,rp,angle_or_delvin) --Additional parameter used by "Angelo Valmonica" and "Demone Valmonica"
+function s.activate(e,tp,eg,ep,ev,re,r,rp,angello_or_dimonno) --Additional parameter used by "Angello Vaalmonica" and "Dimonno Vaalmonica"
 	local op=nil
-	if angle_or_delvin then
-		op=angle_or_delvin
+	if angello_or_dimonno then
+		op=angello_or_dimonno
 	else
-		local sel_player=Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_PZONE,0,1,nil,SET_VALMONICA) and tp or 1-tp
+		local sel_player=Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_PZONE,0,1,nil,SET_VAALMONICA) and tp or 1-tp
 		local offset=sel_player==1-tp and 2 or 0
 		op=Duel.SelectEffect(sel_player,
 			{true,aux.Stringid(id,1+offset)},

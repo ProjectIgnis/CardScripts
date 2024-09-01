@@ -1,5 +1,5 @@
 --ヴァルモニカの異神－ジュラルメ
---Odd Deity of Valmonica - Giurarme
+--Duralume, Vaalmonican Heathen Hallow
 --Ashaki
 local s,id=GetID()
 function s.initial_effect(c)
@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tripleatkop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_VALMONICA}
+s.listed_series={SET_VAALMONICA}
 s.counter_list={COUNTER_RESONANCE}
 s.listed_names={id}
 function s.spcfilter(c)
@@ -84,7 +84,7 @@ function s.tripleatkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_EXTRA_ATTACK)
 		e1:SetValue(2)
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end

@@ -1,5 +1,5 @@
 --天魔の聲選器－『ヴァルモニカ』
---Angelic-Demonic Selector - "Valmonica"
+--Vaalmonica, the Agathokakological Voice
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -26,10 +26,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.ctrlop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_VALMONICA}
+s.listed_series={SET_VAALMONICA}
 s.counter_list={COUNTER_RESONANCE}
 function s.thfilter(c)
-	return c:IsMonster() and c:IsSetCard(SET_VALMONICA) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(SET_VAALMONICA) and c:IsAbleToHand()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil)

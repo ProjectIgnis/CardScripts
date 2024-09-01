@@ -1,5 +1,5 @@
 --悪魔の聲
---Demone Valmonica
+--Dimonno Vaalmonica
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetTargetRange(0,LOCATION_MZONE)
 	e2:SetValue(function(e) return Duel.GetCounter(e:GetHandlerPlayer(),LOCATION_ONFIELD,0,COUNTER_RESONANCE)*-100 end)
 	c:RegisterEffect(e2)
-	--Place both this card and 1 "Angelo Valmonica" from your Deck in your Pendulum Zone
+	--Place both this card and 1 "Angello Vaalmonica" from your Deck in your Pendulum Zone
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetType(EFFECT_TYPE_IGNITION)
@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.pztg)
 	e3:SetOperation(s.pzop)
 	c:RegisterEffect(e3)
-	--Apply the damage-inflicting effect of 1 "Valmonica" Normal Spell/Trap
+	--Apply the damage-inflicting effect of 1 "Vaalmonica" Normal Spell/Trap
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetType(EFFECT_TYPE_IGNITION)
@@ -58,8 +58,8 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge2,0)
 	end)
 end
-s.listed_names={3048768}
-s.listed_series={SET_VALMONICA}
+s.listed_names={3048768} --"Angello Vaalmonica"
+s.listed_series={SET_VAALMONICA}
 s.counter_place_list={COUNTER_RESONANCE}
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -114,7 +114,7 @@ function s.cpcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	return true
 end
 function s.cpfilter(c)
-	return c:IsSetCard(SET_VALMONICA) and (c:IsNormalSpell() or c:IsNormalTrap()) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(SET_VAALMONICA) and (c:IsNormalSpell() or c:IsNormalTrap()) and c:IsAbleToRemoveAsCost()
 		-- and c:CheckActivateEffect(false,true,false)
 end
 function s.cptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -133,6 +133,6 @@ function s.cpop(e,tp,eg,ep,ev,re,r,rp)
 	if not tc then return end
 	local eff=tc:GetActivateEffect()
 	local op=eff:GetOperation()
-	--Additional parameter checked in the script of "Valmonica" Normal Spells/Traps to correctly apply the damage-inflicting effect
+	--Additional parameter checked in the script of "Vaalmonica" Normal Spells/Traps to correctly apply the damage-inflicting effect
 	if op then op(e,tp,eg,ep,ev,re,r,rp,2) end
 end

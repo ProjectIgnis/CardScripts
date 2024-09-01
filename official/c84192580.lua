@@ -1,5 +1,5 @@
 --マルチャミー・プルリア
---Multchummy Purulia
+--Mulcharmy Purulia
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -16,15 +16,15 @@ function s.initial_effect(c)
 	e1:SetTarget(s.efftg)
 	e1:SetOperation(s.effop)
 	c:RegisterEffect(e1)
-	--Keep track of the activations of a "Multchummy" monster's effect
-	Duel.AddCustomActivityCounter(id,ACTIVITY_CHAIN,function(re) return not (re:GetHandler():IsSetCard(SET_MULTCHUMMY) and re:IsMonsterEffect()) end)
+	--Keep track of the activations of a "Mulcharmy" monster's effect
+	Duel.AddCustomActivityCounter(id,ACTIVITY_CHAIN,function(re) return not (re:GetHandler():IsSetCard(SET_MULCHARMY) and re:IsMonsterEffect()) end)
 end
-s.listed_series={SET_MULTCHUMMY}
+s.listed_series={SET_MULCHARMY}
 function s.effcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsDiscardable() and Duel.GetCustomActivityCount(id,tp,ACTIVITY_CHAIN)<2 end
 	Duel.SendtoGrave(c,REASON_COST|REASON_DISCARD)
-	--You can only activate the effects of other "Multchummy" monsters once the turn you activate this effect
+	--You can only activate the effects of other "Mulcharmy" monsters once the turn you activate this effect
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -32,7 +32,7 @@ function s.effcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e1:SetTargetRange(1,0)
 	e1:SetCondition(function(e) return Duel.GetCustomActivityCount(id,e:GetHandlerPlayer(),ACTIVITY_CHAIN)>=2 end)
-	e1:SetValue(function(e,re,tp) return re:GetHandler():IsSetCard(SET_MULTCHUMMY) and re:IsMonsterEffect() end)
+	e1:SetValue(function(e,re,tp) return re:GetHandler():IsSetCard(SET_MULCHARMY) and re:IsMonsterEffect() end)
 	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end

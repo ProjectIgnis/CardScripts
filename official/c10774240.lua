@@ -1,10 +1,10 @@
 --粛声なる守護者ローガーディアン
---Skull Guardian, the Silenforcing Protector
+--Skull Guardian, Protector of the Voiceless Voice
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Gains ATK while "Novox, the Silenforcer Disciple" is on your field or in your GY
+	--Gains ATK while "Lo, the Prayers of the Voiceless Voice" is on your field or in your GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetCondition(function(e) return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,25801745),e:GetHandlerPlayer(),LOCATION_ONFIELD|LOCATION_GRAVE,0,1,nil) end)
 	e1:SetValue(2050)
 	c:RegisterEffect(e1)
-	--Search 1 "Sileforc" monster, or 1 Warrior or Dragon Ritual Monster
+	--Search 1 "Voiceless Voice" monster, or 1 Warrior or Dragon Ritual Monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -39,10 +39,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.negop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={52472775,25801745}
-s.listed_series={SET_SILENFORC}
+s.listed_names={52472775,25801745} --"Prayers of the Voiceless Voice", "Lo, the Prayers of the Voiceless Voice"
+s.listed_series={SET_VOICELESS_VOICE}
 function s.thfilter(c)
-	return ((c:IsSetCard(SET_SILENFORC) and c:IsMonster()) or (c:IsRace(RACE_WARRIOR|RACE_DRAGON) and c:IsRitualMonster())) and c:IsAbleToHand()
+	return ((c:IsSetCard(SET_VOICELESS_VOICE) and c:IsMonster()) or (c:IsRace(RACE_WARRIOR|RACE_DRAGON) and c:IsRitualMonster())) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

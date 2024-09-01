@@ -1,11 +1,11 @@
 --粛声の祈り手ロー
---Novox, the Silenforcer Disciple
+--Lo, the Prayers of the Voiceless Voice
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
 	--Can be used as the entire requirement for the Ritual Summon of a LIGHT Warrior or Dragon Ritual Monster
 	Ritual.AddWholeLevelTribute(c,function(rit_c) return rit_c:IsAttribute(ATTRIBUTE_LIGHT) and rit_c:IsRace(RACE_WARRIOR|RACE_DRAGON) end)
-	--Place 1 "Silenforc" Continuous Spell/Trap from your Deck face-up in your Spell & Trap Zone
+	--Place 1 "Voiceless Voice" Continuous Spell/Trap from your Deck face-up in your Spell & Trap Zone
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -32,9 +32,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_SILENFORC}
+s.listed_series={SET_VOICELESS_VOICE}
 function s.plfilter(c,tp)
-	return c:IsSetCard(SET_SILENFORC) and (c:IsContinuousSpell() or c:IsContinuousTrap()) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
+	return c:IsSetCard(SET_VOICELESS_VOICE) and (c:IsContinuousSpell() or c:IsContinuousTrap()) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
 end
 function s.pltg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0

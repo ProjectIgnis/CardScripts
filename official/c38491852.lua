@@ -14,15 +14,15 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={SET_VALMONICA}
+s.listed_series={SET_VAALMONICA}
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(SET_VALMONICA) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_VAALMONICA) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.nonpendfilter(c)
-	return c:IsFaceup() and c:IsSetCard(SET_VALMONICA) and not c:IsType(TYPE_PENDULUM)
+	return c:IsFaceup() and c:IsSetCard(SET_VAALMONICA) and not c:IsType(TYPE_PENDULUM)
 end
 function s.cfilter(c)
-	return c:IsSetCard(SET_VALMONICA) and c:IsMonster() and c:IsType(TYPE_PENDULUM)
+	return c:IsSetCard(SET_VAALMONICA) and c:IsMonster() and c:IsType(TYPE_PENDULUM)
 		and (c:IsAbleToHand() or not c:IsForbidden())
 end
 function s.extrachk(c,sg)
@@ -88,5 +88,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.actfilter(e,re,tp)
 	local rc=re:GetHandler()
-	return re:IsMonsterEffect() and rc:IsOnField() and not rc:IsSetCard(SET_VALMONICA)
+	return re:IsMonsterEffect() and rc:IsOnField() and not rc:IsSetCard(SET_VAALMONICA)
 end

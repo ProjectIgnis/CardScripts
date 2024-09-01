@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={SET_VALMONICA}
+s.listed_series={SET_VAALMONICA}
 s.listed_names={id}
 s.counter_place_list={COUNTER_RESONANCE}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -25,12 +25,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE|LOCATION_REMOVED)
 end
 function s.thfilter(c)
-	return c:IsSetCard(SET_VALMONICA) and not c:IsCode(id) and c:IsFaceup() and c:IsAbleToHand()
+	return c:IsSetCard(SET_VAALMONICA) and not c:IsCode(id) and c:IsFaceup() and c:IsAbleToHand()
 end
-function s.activate(e,tp,eg,ep,ev,re,r,rp,angle_or_delvin)
+function s.activate(e,tp,eg,ep,ev,re,r,rp,angello_or_dimonno) --Additional parameter used by "Angello Vaalmonica" and "Dimonno Vaalmonica"
 	local op=nil
-	if angle_or_delvin then
-		op=angle_or_delvin
+	if angello_or_dimonno then
+		op=angello_or_dimonno
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_COUNTER)
 		local tc=Duel.SelectMatchingCard(tp,Card.IsCanAddCounter,tp,LOCATION_PZONE,0,1,1,nil,COUNTER_RESONANCE,1):GetFirst()

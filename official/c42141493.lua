@@ -16,9 +16,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.effop)
 	c:RegisterEffect(e1)
 	--Keep track of the activations of a "Mulcharmy" monster's effect
-	Duel.AddCustomActivityCounter(id,ACTIVITY_CHAIN,function(re) return not (re:GetHandler():IsSetCard(SET_MULTCHUMMY) and re:IsMonsterEffect()) end)
+	Duel.AddCustomActivityCounter(id,ACTIVITY_CHAIN,function(re) return not (re:GetHandler():IsSetCard(SET_MULCHARMY) and re:IsMonsterEffect()) end)
 end
-s.listed_series={SET_MULTCHUMMY}
+s.listed_series={SET_MULCHARMY}
 function s.effcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsDiscardable() and Duel.GetCustomActivityCount(id,tp,ACTIVITY_CHAIN)<2 end
@@ -31,7 +31,7 @@ function s.effcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e1:SetTargetRange(1,0)
 	e1:SetCondition(function(e) return Duel.GetCustomActivityCount(id,e:GetHandlerPlayer(),ACTIVITY_CHAIN)>=2 end)
-	e1:SetValue(function(e,re,tp) return re:GetHandler():IsSetCard(SET_MULTCHUMMY) and re:IsMonsterEffect() end)
+	e1:SetValue(function(e,re,tp) return re:GetHandler():IsSetCard(SET_MULCHARMY) and re:IsMonsterEffect() end)
 	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end

@@ -1,5 +1,5 @@
 --天使の聲
---Angelo Valmonica
+--Angello Vaalmonica
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetCondition(function(e,tp,eg,ep,ev,re,r,rp) return ep==tp and Duel.IsExistingMatchingCard(Card.IsOriginalRace,tp,LOCATION_PZONE,0,1,e:GetHandler(),RACE_FIEND) end)
 	e1:SetOperation(s.ctop)
 	c:RegisterEffect(e1)
-	--Link Summon 1 "Valmonica" monster
+	--Link Summon 1 "Vaalmonica" monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.linksptg)
 	e2:SetOperation(s.linkspop)
 	c:RegisterEffect(e2)
-	--Place both this card and 1 "Demone Valmonica" from your Deck in your Pendulum Zone
+	--Place both this card and 1 "Dimonno Vaalmonica" from your Deck in your Pendulum Zone
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetType(EFFECT_TYPE_IGNITION)
@@ -37,7 +37,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.pztg)
 	e3:SetOperation(s.pzop)
 	c:RegisterEffect(e3)
-	--Apply the LP gain effect of 1 "Valmonica" Normal Spell/Trap
+	--Apply the LP gain effect of 1 "Vaalmonica" Normal Spell/Trap
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,2))
 	e4:SetType(EFFECT_TYPE_IGNITION)
@@ -62,8 +62,8 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge2,0)
 	end)
 end
-s.listed_names={30432463}
-s.listed_series={SET_VALMONICA}
+s.listed_names={30432463} --"Dimonno Vaalmonica"
+s.listed_series={SET_VAALMONICA}
 s.counter_place_list={COUNTER_RESONANCE}
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -93,7 +93,7 @@ function s.addcounter(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RaiseEvent(c,EVENT_CUSTOM+39210885,e,0,tp,tp,1)
 end
 function s.linkfilter(c)
-	return c:IsSetCard(SET_VALMONICA) and c:IsLinkSummonable()
+	return c:IsSetCard(SET_VAALMONICA) and c:IsLinkSummonable()
 end
 function s.linksptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.linkfilter,tp,LOCATION_EXTRA,0,1,nil) end
@@ -132,7 +132,7 @@ function s.cpcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	return true
 end
 function s.cpfilter(c)
-	return c:IsSetCard(SET_VALMONICA) and (c:IsNormalSpell() or c:IsNormalTrap()) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(SET_VAALMONICA) and (c:IsNormalSpell() or c:IsNormalTrap()) and c:IsAbleToRemoveAsCost()
 		-- and c:CheckActivateEffect(false,true,false)
 end
 function s.cptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -151,6 +151,6 @@ function s.cpop(e,tp,eg,ep,ev,re,r,rp)
 	if not tc then return end
 	local eff=tc:GetActivateEffect()
 	local op=eff:GetOperation()
-	--Additional parameter checked in the script of "Valmonica" Normal Spells/Traps to correctly apply the LP gain effect
+	--Additional parameter checked in the script of "Vaalmonica" Normal Spells/Traps to correctly apply the LP gain effect
 	if op then op(e,tp,eg,ep,ev,re,r,rp,1) end
 end

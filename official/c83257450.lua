@@ -1,5 +1,5 @@
 --幻の召喚神エクゾディア
---The Phantom Exodia Incarnate
+--The Unstoppable Exodia Incarnate
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -40,7 +40,7 @@ function s.initial_effect(c)
 	e3:SetOperation(function(e,tp,eg,ep,ev,re,r,rp) Duel.NegateActivation(ev) end)
 	c:RegisterEffect(e3)
 	aux.DoubleSnareValidity(c,LOCATION_MZONE)
-	--Set 1 "Exodo" Spell/Trap or 1 "Obliterate!!!" from your Deck
+	--Set 1 "Exodd" Spell/Trap or 1 "Obliterate!!!" from your Deck
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,2))
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -63,7 +63,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.material_setcode=SET_FORBIDDEN_ONE
-s.listed_series={SET_FORBIDDEN_ONE,SET_EXODO}
+s.listed_series={SET_FORBIDDEN_ONE,SET_EXODD}
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,e:GetHandler(),1,tp,Duel.GetLP(tp))
@@ -85,7 +85,7 @@ function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,tp,0)
 end
 function s.setfilter(c)
-	return c:IsSetCard(SET_EXODO) and c:IsSpellTrap() and c:IsSSetable()
+	return c:IsSetCard(SET_EXODD) and c:IsSpellTrap() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK,0,1,nil) end

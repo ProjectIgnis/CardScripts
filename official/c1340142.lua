@@ -36,10 +36,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.negsumop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_VALMONICA}
+s.listed_series={SET_VAALMONICA}
 s.counter_list={COUNTER_RESONANCE}
 function s.matfilter(c,lc,sumtype,tp)
-	return c:IsSetCard(SET_VALMONICA,lc,sumtype,tp) and c:IsType(TYPE_LINK,lc,sumtype,tp)
+	return c:IsSetCard(SET_VAALMONICA,lc,sumtype,tp) and c:IsType(TYPE_LINK,lc,sumtype,tp)
 end
 function s.matcheck(g,lc,sumtype,tp)
 	return g:IsExists(s.matfilter,1,nil,lc,sumtype,tp)
@@ -48,15 +48,15 @@ function s.immval(e,te)
 	local tc=te:GetHandler()
 	local trig_loc,trig_setcodes=Duel.GetChainInfo(0,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_SETCODES)
 	if not Duel.IsChainSolving() or (tc:IsRelateToEffect(te) and tc:IsFaceup() and tc:IsLocation(trig_loc)) then
-		return not tc:IsSetCard(SET_VALMONICA)
+		return not tc:IsSetCard(SET_VAALMONICA)
 	end
 	for _,setcode in ipairs(trig_setcodes) do
-		if (SET_VALMONICA&0xfff)==(setcode&0xfff) and (SET_VALMONICA&setcode)==SET_VALMONICA then return false end
+		if (SET_VAALMONICA&0xfff)==(setcode&0xfff) and (SET_VAALMONICA&setcode)==SET_VAALMONICA then return false end
 	end
 	return true
 end
 function s.atkfilter(c)
-	return c:IsLevel(4) and c:IsSetCard(SET_VALMONICA) and c:IsFaceup()
+	return c:IsLevel(4) and c:IsSetCard(SET_VAALMONICA) and c:IsFaceup()
 end
 function s.atkval(e)
 	return Duel.GetMatchingGroupCount(s.atkfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,nil)

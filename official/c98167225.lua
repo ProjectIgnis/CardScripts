@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetRange(LOCATION_SZONE)
 	e1:SetCondition(function(e) return Duel.GetCounter(e:GetHandlerPlayer(),1,0,COUNTER_RESONANCE)>=6 end)
-	e1:SetTarget(function(e,c) return c:IsSetCard(SET_VALMONICA) and c:IsLinkMonster() end)
+	e1:SetTarget(function(e,c) return c:IsSetCard(SET_VAALMONICA) and c:IsLinkMonster() end)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetValue(1200)
 	c:RegisterEffect(e1)
@@ -44,10 +44,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.ctop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_VALMONICA}
+s.listed_series={SET_VAALMONICA}
 s.counter_place_list={COUNTER_RESONANCE}
 function s.lkfilter(c)
-	return c:IsSetCard(SET_VALMONICA) and c:IsLinkSummonable()
+	return c:IsSetCard(SET_VAALMONICA) and c:IsLinkSummonable()
 end
 function s.lktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.lkfilter,tp,LOCATION_EXTRA,0,1,nil) end

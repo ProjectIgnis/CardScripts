@@ -29,10 +29,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-s.listed_series={SET_VALMONICA}
+s.listed_series={SET_VAALMONICA}
 s.counter_list={COUNTER_RESONANCE}
 function s.negconfilter(c)
-	return c:IsFaceup() and c:IsSetCard(SET_VALMONICA) and c:IsLinkMonster()
+	return c:IsFaceup() and c:IsSetCard(SET_VAALMONICA) and c:IsLinkMonster()
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.negconfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -52,7 +52,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tdfilter(c)
-	return c:IsFaceup() and c:IsSetCard(SET_VALMONICA) and not c:IsCode(id) and c:IsAbleToDeck()
+	return c:IsFaceup() and c:IsSetCard(SET_VAALMONICA) and not c:IsCode(id) and c:IsAbleToDeck()
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCounter(tp,1,0,COUNTER_RESONANCE)>0

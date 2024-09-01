@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.cpop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_VALMONICA}
+s.listed_series={SET_VAALMONICA}
 s.counter_list={COUNTER_RESONANCE}
 s.listed_names={id}
 function s.spcfilter(c)
@@ -56,7 +56,7 @@ function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	else return false end
 end
 function s.cpfilter(c)
-	return c:IsSetCard(SET_VALMONICA) and (c:IsNormalSpell() or c:IsNormalTrap())
+	return c:IsSetCard(SET_VAALMONICA) and (c:IsNormalSpell() or c:IsNormalTrap())
 		and c:IsFaceup() and c:CheckActivateEffect(false,true,false)
 end
 function s.cptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

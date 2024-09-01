@@ -40,7 +40,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_names={id}
-s.listed_series={SET_VALMONICA}
+s.listed_series={SET_VAALMONICA}
 function s.cfilter(c)
 	return c:IsFaceup() and not c:IsCode(id)
 end
@@ -48,7 +48,7 @@ function s.con(e)
 	return Duel.IsExistingMatchingCard(s.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.thfilter(c)
-	return c:IsSetCard(SET_VALMONICA) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_VAALMONICA) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -65,7 +65,7 @@ end
 function s.selfthtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToHand()
-		and Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_PZONE,0,2,nil,SET_VALMONICA) end
+		and Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_PZONE,0,2,nil,SET_VAALMONICA) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,c,1,tp,0)
 end
 function s.selfthop(e,tp,eg,ep,ev,re,r,rp)

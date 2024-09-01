@@ -26,10 +26,10 @@ end
 function s.tgfilter(c)
 	return c:IsSetCard(SET_VAALMONICA) and not c:IsCode(id) and c:IsAbleToGrave()
 end
-function s.activate(e,tp,eg,ep,ev,re,r,rp,angelo_or_dimonno) --Additional parameter used by "Angello Vaalmonica" and "Dimonno Vaalmonica"
+function s.activate(e,tp,eg,ep,ev,re,r,rp,angello_or_dimonno) --Additional parameter used by "Angello Vaalmonica" and "Dimonno Vaalmonica"
 	local op=nil
-	if angelo_or_dimonno then
-		op=angelo_or_dimonno
+	if angello_or_dimonno then
+		op=angello_or_dimonno
 	else
 		local sel_player=Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_PZONE,0,1,nil,SET_VAALMONICA) and tp or 1-tp
 		local offset=sel_player==1-tp and 2 or 0

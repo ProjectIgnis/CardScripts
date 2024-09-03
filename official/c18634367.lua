@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_PHASE+PHASE_END)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCountLimit(1)
-	e3:SetCondition(s.mtcon)
+	e3:SetCondition(function(e,tp) return Duel.IsTurnPlayer(tp) end)
 	e3:SetOperation(s.mtop)
 	c:RegisterEffect(e3)
 	--Special Summon 1 Level 1 Tuner monster from your Graveyard
@@ -47,7 +47,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc,e,tp) end
 	if chk==0 then return true end
-	if Duel.IsExistingMatchingCard(aux.FaceupFilter(CARD_RED_DRAGON_ARCHFIEND),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
+	if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_RED_DRAGON_ARCHFIEND),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 		and c:IsDestructable() and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
 		and Duel.SelectYesNo(tp,94) then
@@ -63,9 +63,6 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		e:SetProperty(0)
 		e:SetLabel(0)
 	end
-end
-function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsTurnPlayer(tp)
 end
 function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.CheckLPCost(tp,1000) then

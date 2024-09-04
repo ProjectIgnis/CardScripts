@@ -1,5 +1,5 @@
 --Ｍ∀ＬＩＣＥ＜Ｑ＞ＨＥＡＲＴＳ ＯＦ ＣＲＹＰＴＥＲ
---M∀LICE <QUEEN> HEARTS OF CRYPTER
+--Maliss <Q> HEARTS OF CRYPTER
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -88,13 +88,14 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 then
+	if c:IsRelateToEffect(e) and Duel.SpecialSummonStep(c,0,tp,tp,false,false,POS_FACEUP) then
 		--Its ATK becomes doubled
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(c:GetAttack()*2)
 		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
-		c:RegisterEffect(e1)
+		c:RegisterEffect(e1,true)
 	end
+	Duel.SpecialSummonComplete()
 end

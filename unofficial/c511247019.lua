@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e3:SetCountLimit(1)
 	e3:SetCondition(s.controlxyzdamcon)
 	e3:SetOperation(s.controlxyzdamop)
-	c:RegisterEffect(e2)
+	c:RegisterEffect(e3)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	local d1=false
@@ -63,15 +63,15 @@ function s.spsummonxyzdamop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local d=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
 	if ep==PLAYER_ALL then
-		if not Duel.IsPlayerAffectedByEffect(tp,37511832)
+		if not Duel.IsPlayerAffectedByEffect(tp,37511832) then
 			Duel.Damage(tp,d,REASON_EFFECT,true)
 		end
-		if not Duel.IsPlayerAffectedByEffect(1-tp,37511832)
+		if not Duel.IsPlayerAffectedByEffect(1-tp,37511832) then
 			Duel.Damage(1-tp,d,REASON_EFFECT,true)
 		end
 		Duel.RDComplete()
 	else
-		if not Duel.IsPlayerAffectedByEffect(ep,37511832)
+		if not Duel.IsPlayerAffectedByEffect(ep,37511832) then
 			Duel.Damage(ep,d,REASON_EFFECT,true)
 		end
 	end

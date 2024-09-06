@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE+EFFECT_FLAG_IGNORE_IMMUNE)
 	e1:SetRange(LOCATION_EXTRA)
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetTarget(function(e,c) return c:HasLevel() and c:GetOwner~=e:GetHandlerPlayer() end)
+	e1:SetTarget(function(e,c) return c:HasLevel() and c:GetOwner()~=e:GetHandlerPlayer() end)
 	e1:SetValue(s.lvval)
 	c:RegisterEffect(e1)
 	--Send 1 card your opponent controls to the GY

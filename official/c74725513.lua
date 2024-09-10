@@ -53,7 +53,7 @@ function s.protop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
 	e1:SetTargetRange(0,LOCATION_MZONE)
-	e1:SetValue(aux.TargetBoolFunction(Card.IsSetCard,SET_HORUS))
+	e1:SetValue(function(e,c) return c:IsSetCard(SET_HORUS) and c:IsFaceup() end)
 	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	--"Horus" monsters on the field cannot be targeted by your opponent's effects

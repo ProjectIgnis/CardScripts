@@ -1,4 +1,4 @@
---Japanese name
+--エレキック・ファイティング・ポーター
 --Wattsychic Fighting Porter
 --scripted by Naim
 local s,id=GetID()

@@ -18,14 +18,14 @@ function s.initial_effect(c)
 end
 function s.sccon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_CHAINING) and Duel.IsTurnPlayer(1-tp)
-		and Duel.IsMainPhase() or Duel.IsBattlePhase()
+		and (Duel.IsMainPhase() or Duel.IsBattlePhase())
 end
 function s.scfilter1(c,e,tp,mc)
 	local mg=Group.FromCards(c,mc)
 	return not c:IsType(TYPE_TUNER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and Duel.IsExistingMatchingCard(s.scfilter2,tp,LOCATION_EXTRA,0,1,nil,mg)
+		and Duel.IsExistingMatchingCard(s.syncfilter,tp,LOCATION_EXTRA,0,1,nil,mg)
 end
-function s.scfilter2(c,mg)
+function s.syncfilter(c,mg)
 	return c:IsRace(RACE_MACHINE) and c:IsSynchroSummonable(nil,mg)
 end
 function s.sctg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -52,7 +52,7 @@ function s.scop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummonComplete()
 	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
 	local mg=Group.FromCards(c,tc)
-	local g=Duel.GetMatchingGroup(s.scfilter2,tp,LOCATION_EXTRA,0,nil,mg)
+	local g=Duel.GetMatchingGroup(s.syncfilter,tp,LOCATION_EXTRA,0,nil,mg)
 	if #g>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=g:Select(tp,1,1,nil)

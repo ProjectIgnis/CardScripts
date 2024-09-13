@@ -102,5 +102,6 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 		end
 		Duel.Overlay(attachxyz,attach_group)
 		Duel.RaiseSingleEvent(detachxyz,EVENT_DETACH_MATERIAL,e,0,0,0,0)
+		Duel.RaiseEvent(detachxyz,EVENT_DETACH_MATERIAL,e,REASON_EFFECT,tp,tp,0)
 	end
 end

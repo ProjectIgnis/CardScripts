@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--Add counter
+	--Place 1 Spellstone Counter each time a monster effect is activated
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -24,28 +24,30 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetOperation(s.ctop)
 	c:RegisterEffect(e2)
-	--negate
+	--Monsters on the field cannot activate their effects
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_CANNOT_TRIGGER)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e3:SetCondition(s.discon)
+	e3:SetCondition(function(e) return e:GetHandler():GetCounter(0x16)==2 end)
 	c:RegisterEffect(e3)
+	--Negate the effects of all monsters on the field
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
 	e4:SetCode(EFFECT_DISABLE)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e4:SetCondition(s.discon)
-	e4:SetTarget(s.distg)
+	e4:SetCondition(function(e) return e:GetHandler():GetCounter(0x16)==2 end)
+	e4:SetTarget(function(e,c) return c:IsType(TYPE_EFFECT) end)
 	c:RegisterEffect(e4)
-	--remove counter
+	--Remove all Spellstone Counters from this card during the End Phase
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e5:SetCode(EVENT_PHASE+PHASE_END)
 	e5:SetRange(LOCATION_SZONE)
-	e5:SetCondition(s.rmcon)
+	e5:SetCountLimit(1)
+	e5:SetCondition(function(e) return e:GetHandler():GetCounter(0x16)>0 end)
 	e5:SetOperation(s.rmop)
 	c:RegisterEffect(e5)
 end
@@ -54,15 +56,6 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	if re:IsActiveType(TYPE_MONSTER) and e:GetHandler():GetFlagEffect(1)>0 then
 		e:GetHandler():AddCounter(0x16,1)
 	end
-end
-function s.discon(e)
-	return e:GetHandler():GetCounter(0x16)==2
-end
-function s.distg(e,c)
-	return c:IsType(TYPE_EFFECT)
-end
-function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetCounter(0x16)>0
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RemoveCounter(tp,0x16,e:GetHandler():GetCounter(0x16),REASON_EFFECT)

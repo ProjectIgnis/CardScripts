@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableUnsummonable()
-	--Must be Special Summoned by a Wyrm monster effect
+	--Must be Special Summoned by a Wyrm monster's effect
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
 	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--Banish two card if it is Special Summoned
+	--Banish two cards if it this card is Special Summoned
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_REMOVE)
@@ -37,7 +37,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.splimit(e,se,sp,st)
-	return se:IsMonsterEffect() and se:GetHandler():IsRace(RACE_WYRM)
+	if not se:IsMonsterEffect() then return false end
+	local rc=se:GetHandler()
+	return rc:IsRelateToEffect(se) and rc:IsRace(RACE_WYRM) or rc:GetPreviousRaceOnField()&RACE_WYRM>0
 end
 function s.spcfilter(c)
 	return c:IsReason(REASON_EFFECT) and c:IsFaceup() and c:IsMonster()

@@ -22,23 +22,23 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,3,nil) end
 end
 function s.desfilter(c)
-	return c:IsFaceup() and c:IsPosition(POS_FACEUP_ATTACK)
+	return c:IsFaceup() and c:IsAttackPos() and not c:IsMaximumModeSide()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,3,3,nil)
 	if #g==0 then return end
-	Duel.HintSelection(g,true)
+	Duel.HintSelection(g)
 	if Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)==0 then return end
 	--Effect
-	local g=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(Card.IsAttackPos),tp,0,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_MZONE,nil)
 	if #g>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local sg=g:Select(tp,1,3,nil)
 		sg=sg:AddMaximumCheck()
 		if #sg>0 then
-			Duel.HintSelection(sg,true)
+			Duel.HintSelection(sg)
 			Duel.Destroy(sg,REASON_EFFECT)
 		end
 	end

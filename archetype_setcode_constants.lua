@@ -578,3 +578,4 @@ SET_RYZEAL                        = 0x1b6
 SET_SCHOOLWORK_SUCCESS            = 0x1b7
 SET_RYU_GE                        = 0x1b8
 SET_MALISS                        = 0x1b9
+SET_ARGOSTARS                     = 0x1ba

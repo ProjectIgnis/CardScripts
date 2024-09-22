@@ -1,5 +1,5 @@
 --ギミック・パペット－ブラッディ・ドール
---Gimmick Puppet Bloody Doll
+--Gimmick Puppet Rouge Doll
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -66,7 +66,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) or Duel.GetLocationCount(tp,LOCATION_MZONE)<2 then return end
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
+	if not (c:IsRelateToEffect(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)) then return end
 	local rank=e:GetLabel()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,rank)

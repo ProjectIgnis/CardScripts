@@ -1,4 +1,5 @@
---パワー・ウォール
+--パワー・ウォール (VG)
+--Power Wall (VG)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -49,11 +50,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EVENT_PRE_BATTLE_DAMAGE)
 	e1:SetOperation(s.damop)
 	e1:SetLabel(Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM))
-	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+	e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	local dam=ev-e:GetLabel()
+	local dam=Duel.GetBattleDamage(tp)-e:GetLabel()
 	if dam<0 then dam=0 end
 	Duel.ChangeBattleDamage(tp,dam)
 end

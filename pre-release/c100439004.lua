@@ -6,7 +6,6 @@ function s.initial_effect(c)
 	--Set 1 "Fabled" Spell/Trap from your Deck
 	local e0=Effect.CreateEffect(c)
 	e0:SetDescription(aux.Stringid(id,0))
-	e0:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e0:SetType(EFFECT_TYPE_ACTIVATE)
 	e0:SetCode(EVENT_FREE_CHAIN)
 	e0:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)

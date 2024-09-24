@@ -205,7 +205,6 @@ function Fusion.CheckMixGoal(tp,sg,fc,sub,sub2,contact,sumtype,chkf,...)
 	local g=Group.CreateGroup()
 	return sg:IsExists(Fusion.CheckMix,1,nil,sg,g,fc,sub,sub2,contact,sumtype,tp,...) and
 		(chkf==PLAYER_NONE or (fc:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp,sg,fc) or Duel.GetMZoneCount(tp,sg,tp))>0)
-		and (not Fusion.CheckAdditional or Fusion.CheckAdditional(tp,sg,fc,sumtype,tp))
 end
 function Fusion.SelectMix(c,tp,mg,sg,mustg,fc,sub,sub2,contact,sumtype,chkf,...)
 	local res
@@ -246,7 +245,9 @@ function Fusion.SelectMix(c,tp,mg,sg,mustg,fc,sub,sub2,contact,sumtype,chkf,...)
 	end
 	-- mg2:Sub(rg)
 	sg:AddCard(c)
-	if #sg<totalcount then
+	if Fusion.CheckAdditional and not Fusion.CheckAdditional(tp,sg,fc,sumtype,tp) then
+		res=false
+	elseif #sg<totalcount then
 		res=mg2:IsExists(Fusion.SelectMix,1,sg,tp,mg2,sg,mustg-sg,fc,sub,sub2,contact,sumtype,chkf,...)
 	else
 		res=Fusion.CheckMixGoal(tp,sg,fc,sub,sub2,contact,sumtype,chkf,...)
@@ -409,7 +410,6 @@ function Fusion.CheckMixRepGoal(tp,sg,mustg,fc,sub,sub2,contact,sumtype,chkf,fun
 	if #sg<minc+#{...} or #sg>maxc+#{...} then return false end
 	local g=Group.CreateGroup()
 	return Fusion.CheckMixRep(sg,g,fc,sub,sub2,contact,sumtype,chkf,tp,fun1,minc,maxc,...) and (chkf==PLAYER_NONE or Duel.GetLocationCountFromEx(tp,tp,sg,fc)>0)
-		and (not Fusion.CheckAdditional or Fusion.CheckAdditional(tp,sg,fc,sumtype,tp))
 end
 function Fusion.CheckMixRepTemplate(c,cond,tp,mg,sg,mustg,g,fc,sub,sub2,contact,sumtype,chkf,fun1,minc,maxc,...)
 	for i,f in ipairs({...}) do
@@ -445,7 +445,6 @@ function Fusion.CheckMixRepSelected(c,...)
 	return Fusion.CheckMixRepTemplate(c,Fusion.CheckMixRepSelectedCond,...)
 end
 function Fusion.CheckSelectMixRep(tp,mg,sg,mustg,g,fc,sub,sub2,contact,sumtype,chkf,fun1,minc,maxc,...)
-	if Fusion.CheckAdditional and not Fusion.CheckAdditional(tp,g,fc,sumtype,tp) then return false end
 	if chkf==PLAYER_NONE or Duel.GetLocationCountFromEx(tp,tp,g,fc)>0 then
 		if minc<=0 and #{...}==0 and g:Includes(mustg) then return true end
 		return mg:IsExists(Fusion.CheckSelectMixRepAll,1,g,tp,mg,sg,mustg,g,fc,sub,sub2,contact,sumtype,chkf,fun1,minc,maxc,...)
@@ -730,7 +729,6 @@ function Fusion.CheckMixRepUnfixSelected(c,...)
 	return Fusion.CheckMixRepUnfixTemplate(c,Fusion.CheckMixRepUnfixSelectedCond,...)
 end
 function Fusion.CheckSelectMixRepUnfix(tp,mg,sg,mustg,g,fc,sub,sub2,chkf,minc,maxc,...)
-	if Fusion.CheckAdditional and not Fusion.CheckAdditional(tp,g,fc,sumtype,tp) then return false end
 	if chkf==PLAYER_NONE or Duel.GetLocationCountFromEx(tp,tp,g,fc)>0 then
 		if minc<=0 and g:Includes(mustg) then return true end
 		return mg:IsExists(Fusion.CheckSelectMixRepUnfixAll,1,g,tp,mg,sg,mustg,g,fc,sub,sub2,chkf,minc,maxc,...)

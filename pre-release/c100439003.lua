@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
 	e1:SetHintTiming(0,TIMING_MAIN_END|TIMINGS_CHECK_MONSTER)
-	e1:SetTarget(function() return Duel.IsMainPhase() end)
+	e1:SetCondition(function() return Duel.IsMainPhase() end)
 	e1:SetTarget(s.cttg)
 	e1:SetOperation(s.ctop)
 	c:RegisterEffect(e1)
@@ -37,7 +37,7 @@ function s.rlfilter(c,tp,chk)
 		and (chk==1 or Duel.GetMZoneCount(tp,c,tp,LOCATION_REASON_CONTROL)>0)
 end
 function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.rlfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,tp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.rlfilter,tp,LOCATION_MZONE,0,1,nil,tp,chk)
 		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsAbleToChangeControler),tp,0,LOCATION_MZONE,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_RELEASE,nil,1,tp,LOCATION_MZONE)
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,nil,1,1-tp,LOCATION_MZONE)
@@ -48,7 +48,7 @@ end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local cg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsAbleToChangeControler),tp,0,LOCATION_MZONE,nil)
 	if #cg==0 then return end
-	local rg=Duel.GetMatchingGroup(s.rlfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp,1)
+	local rg=Duel.GetMatchingGroup(s.rlfilter,tp,LOCATION_MZONE,0,nil,tp,1)
 	if #rg==0 then return end
 	local g=aux.SelectUnselectGroup(rg,e,tp,1,#cg,s.rlrescon,1,tp,HINTMSG_RELEASE)
 	if #g==0 or Duel.Release(g,REASON_EFFECT)==0 then return end

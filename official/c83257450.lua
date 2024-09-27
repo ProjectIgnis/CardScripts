@@ -4,9 +4,9 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Fusion Summon Procedure
+	--Fusion Materials: 5 "Forbidden One" monsters
 	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_FORBIDDEN_ONE),5)
-	--Cannot be destroyed by your opponent's card effects
+	--Cannot be destroyed by an opponent's card effects
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -14,15 +14,13 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(aux.indoval)
 	c:RegisterEffect(e1)
-	--Make this card gain ATK equal to your current LP
+	--Make this card gain ATK equal to your LP
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_ATKCHANGE)
-	e2:SetType(EFFECT_TYPE_QUICK_O)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
-	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
-	e2:SetCondition(function(e) return e:GetHandler():IsRelateToBattle() end)
 	e2:SetTarget(s.atktg)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
@@ -40,7 +38,7 @@ function s.initial_effect(c)
 	e3:SetOperation(function(e,tp,eg,ep,ev,re,r,rp) Duel.NegateActivation(ev) end)
 	c:RegisterEffect(e3)
 	aux.DoubleSnareValidity(c,LOCATION_MZONE)
-	--Set 1 "Exodd" Spell/Trap or 1 "Obliterate!!!" from your Deck
+	--Set 1 "Exodd" or "Obliterate!!!" Spell/Trap from your Deck
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,2))
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -58,8 +56,8 @@ function s.initial_effect(c)
 	e5:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e5:SetRange(LOCATION_MZONE)
 	e5:SetCountLimit(1)
-	e5:SetCondition(function(_,tp) return Duel.IsTurnPlayer(tp) end)
-	e5:SetOperation(function(_,tp) Duel.SetLP(tp,Duel.GetLP(tp)-1000) end)
+	e5:SetCondition(function(e,tp) return Duel.IsTurnPlayer(tp) end)
+	e5:SetOperation(function(e,tp) Duel.SetLP(tp,Duel.GetLP(tp)-1000) end)
 	c:RegisterEffect(e5)
 end
 s.material_setcode=SET_FORBIDDEN_ONE

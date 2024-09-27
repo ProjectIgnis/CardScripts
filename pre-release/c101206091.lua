@@ -52,7 +52,8 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.aclimit(e,re,tp)
 	local rc=re:GetHandler()
-	return re:IsMonsterEffect() and rc:IsOnField() and rc:IsSummonLocation(LOCATION_HAND) and rc:IsPreviousControler(tp)
+	return re:IsMonsterEffect() and rc:IsOnField() and rc:IsSummonType(SUMMON_TYPE_SPECIAL)
+		and rc:IsSummonLocation(LOCATION_HAND) and rc:IsPreviousControler(tp)
 end
 function s.selfsptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

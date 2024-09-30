@@ -27,25 +27,25 @@ function s.initial_effect(c)
 	e2:SetOperation(s.setop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_RAIKA}
+s.listed_series={SET_RAGNARAIKA}
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,SET_RAIKA,TYPE_MONSTER|TYPE_NORMAL,1600,0,4,RACE_PLANT,ATTRIBUTE_DARK) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,SET_RAGNARAIKA,TYPE_MONSTER|TYPE_NORMAL,1600,0,4,RACE_PLANT,ATTRIBUTE_DARK) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,tp,0)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_GRAVE)
 end
-function s.raikafilter(c)
-	return c:IsSetCard(SET_RAIKA) and c:IsLinkMonster() and c:IsFaceup()
+function s.ragnaraikafilter(c)
+	return c:IsSetCard(SET_RAGNARAIKA) and c:IsLinkMonster() and c:IsFaceup()
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not (c:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,SET_RAIKA,TYPE_MONSTER|TYPE_NORMAL,1600,0,4,RACE_PLANT,ATTRIBUTE_DARK)) then return end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,SET_RAGNARAIKA,TYPE_MONSTER|TYPE_NORMAL,1600,0,4,RACE_PLANT,ATTRIBUTE_DARK)) then return end
 	c:AddMonsterAttribute(TYPE_NORMAL|TYPE_TRAP)
 	Duel.SpecialSummonStep(c,1,tp,tp,true,false,POS_FACEUP)
 	c:AddMonsterAttributeComplete()
 	if Duel.SpecialSummonComplete()==0 then return end
-	if Duel.IsExistingMatchingCard(s.raikafilter,tp,LOCATION_MZONE,0,1,nil)
+	if Duel.IsExistingMatchingCard(s.ragnaraikafilter,tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_GRAVE,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)

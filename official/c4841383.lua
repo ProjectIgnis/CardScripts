@@ -1,5 +1,5 @@
 --蕾禍繚乱狂咲
---Raika Ryouran Kuruisaki
+--Ragnaraika Bloom
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -29,12 +29,12 @@ function s.initial_effect(c)
 	e3:SetOperation(s.effop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_RAIKA}
+s.listed_series={SET_RAGNARAIKA}
 function s.thfilter(c)
-	return c:IsSetCard(SET_RAIKA) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_RAGNARAIKA) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(SET_RAIKA) and (c:IsFaceup() or not c:IsLocation(LOCATION_REMOVED))
+	return c:IsSetCard(SET_RAGNARAIKA) and (c:IsFaceup() or not c:IsLocation(LOCATION_REMOVED))
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -58,7 +58,7 @@ end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	local  op=e:GetLabel()
 	if op==1 then
-		--Add 1 "Raika" monster from your Deck to your hand, then discard 1 card
+		--Add 1 "Ragnaraika" monster from your Deck to your hand, then discard 1 card
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 		if #g>0 and Duel.SendtoHand(g,nil,REASON_EFFECT)>0 then
@@ -68,7 +68,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.DiscardHand(tp,nil,1,1,REASON_DISCARD|REASON_EFFECT)
 		end
 	elseif op==2 then
-		--Special Summon 1 of your "Raika" monsters that is banished, or in your hand or GY, in Defense Position
+		--Special Summon 1 of your "Ragnaraika" monsters that is banished, or in your hand or GY, in Defense Position
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_REMOVED|LOCATION_HAND|LOCATION_GRAVE,0,1,1,nil,e,tp)

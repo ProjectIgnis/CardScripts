@@ -1,5 +1,5 @@
 --蕾禍ノ姫邪眼
---Raika no Himejanome
+--Ragnaraika Wicked Butterfly
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

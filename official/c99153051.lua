@@ -1,5 +1,5 @@
 --蕾禍ノ毬首
---Raika no Marikoube
+--Ragnaraika the Evil Seed
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--Add to your hand up to 2 of your "Raika" cards that are banished and/or in your Deck
+	--Add to your hand up to 2 of your "Ragnaraika" cards that are banished and/or in your Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_REMOVE)
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_RAIKA}
+s.listed_series={SET_RAGNARAIKA}
 s.listed_names={id}
 function s.spcostfilter(c)
 	return c:IsRace(RACE_INSECT|RACE_PLANT|RACE_REPTILE) and c:IsAbleToGraveAsCost()
@@ -58,7 +58,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 function s.thfilter(c)
-	return c:IsSetCard(SET_RAIKA) and (c:IsLocation(LOCATION_DECK) or c:IsFaceup()) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_RAGNARAIKA) and (c:IsLocation(LOCATION_DECK) or c:IsFaceup()) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanRemove(tp)

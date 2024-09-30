@@ -1,12 +1,12 @@
 --蕾禍ノ御拝神主
---Raika no Oogaminushi
+--Ragnaraika Mantis Monk
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Link Summon procedure
 	Link.AddProcedure(c,nil,2,3,s.lcheck)
-	--Add 1 "Raika" Trap from your Deck to your hand
+	--Add 1 "Ragnaraika" Trap from your Deck to your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.selfspop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_RAIKA}
+s.listed_series={SET_RAGNARAIKA}
 function s.lcheck(g,lc,sumtype,tp)
 	return g:IsExists(Card.IsRace,1,nil,RACE_INSECT|RACE_PLANT|RACE_REPTILE,lc,sumtype,tp)
 end
@@ -43,7 +43,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.thfilter(c)
-	return c:IsSetCard(SET_RAIKA) and c:IsTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_RAGNARAIKA) and c:IsTrap() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

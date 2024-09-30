@@ -1,5 +1,5 @@
 --蕾禍ノ矢筈天牛
---Raika no Yahazu Kamikiri
+--Ragnaraika Samurai Beetle
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.gyspop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_RAIKA}
+s.listed_series={SET_RAGNARAIKA}
 s.listed_names={id}
 function s.selfspcostfilter(c)
 	return c:IsRace(RACE_INSECT|RACE_PLANT|RACE_REPTILE) and c:IsFaceup() and c:IsAbleToDeckAsCost()
@@ -58,7 +58,7 @@ function s.selfspop(e,tp,eg,ep,ev,re,r,rp,c)
 end
 function s.gyspcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsLocation(LOCATION_GRAVE) and r==REASON_LINK and c:GetReasonCard():IsSetCard(SET_RAIKA)
+	return c:IsLocation(LOCATION_GRAVE) and r==REASON_LINK and c:GetReasonCard():IsSetCard(SET_RAGNARAIKA)
 end
 function s.gyspfilter(c,e,tp)
 	return c:IsRace(RACE_INSECT|RACE_PLANT|RACE_REPTILE) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)

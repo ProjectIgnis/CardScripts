@@ -1,12 +1,12 @@
 --蕾禍ノ武者髑髏
---Raika no Musha Dokuro
+--Ragnaraika Skeletal Soldier
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Link Summon procedure
 	Link.AddProcedure(c,nil,2,2,s.lcheck)
-	--Special Summon 1 "Raika" monster from your GY in Defense Position
+	--Special Summon 1 "Ragnaraika" monster from your GY in Defense Position
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,function(c) return c:IsRace(RACE_INSECT|RACE_PLANT|RACE_REPTILE) end)
 end
-s.listed_series={SET_RAIKA}
+s.listed_series={SET_RAGNARAIKA}
 function s.lcheck(g,lc,sumtype,tp)
 	return g:IsExists(Card.IsRace,1,nil,RACE_INSECT|RACE_PLANT|RACE_REPTILE,lc,sumtype,tp)
 end
@@ -50,7 +50,7 @@ function s.effcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.gyspfilter(c,e,tp)
-	return c:IsSetCard(SET_RAIKA) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(SET_RAGNARAIKA) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.gysptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.gyspfilter(chkc,e,tp) end

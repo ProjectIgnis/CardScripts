@@ -1,5 +1,5 @@
 --蕾禍ノ大王鬼牙
---Raika no Daiouga
+--Ragnaraika Stag Sovereign
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --蕾禍ノ玄神憑月
---Raika no Kurokamitsuki
+--Ragnaraika Selene Snapper
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --蕾禍ノ鎧石竜
---Raika no Yoroi Tokage
+--Ragnaraika Armored Lizard
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

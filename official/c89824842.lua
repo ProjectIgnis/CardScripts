@@ -1,5 +1,5 @@
 --蕾禍大輪首狩舞
---Raika Dairin Kubikarimai
+--Ragnaraika Hunting Dance
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

@@ -2,7 +2,7 @@
 --Archfiend Emperor, the First Lord of Horror
 local s,id=GetID()
 function s.initial_effect(c)
-	--Can be Normal Summoned without Tributing
+	--You can Normal Summon/Set this card without Tributing
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)

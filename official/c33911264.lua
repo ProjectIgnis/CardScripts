@@ -2,7 +2,7 @@
 --Solar Wind Jammer
 local s,id=GetID()
 function s.initial_effect(c)
-	--There can only be 1 "Solar Wind Jammer" on the field.
+	--There can only be 1 "Solar Wind Jammer" on the field
 	c:SetUniqueOnField(1,1,id)
 	--Special Summon this card (from your hand)
 	local e1=Effect.CreateEffect(c)

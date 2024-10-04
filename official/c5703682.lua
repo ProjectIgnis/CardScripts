@@ -52,7 +52,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e3,tp)
 end
 function s.dfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_NORMAL) and and c:IsLevel(2)
+	return c:IsFaceup() and c:IsType(TYPE_NORMAL) and c:IsLevel(2)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.dfilter,tp,LOCATION_MZONE,0,1,nil)

@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--Place 1 Gearspring Counters on itself
+	--During each of your Standby Phases, place 1 Gearspring Counter on this card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -41,16 +41,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
 		c:AddCounter(GEARSPRING_COUNTER,2)
-		Duel.RaiseEvent(c,id+1,e,REASON_EFFECT,tp,tp,GEARSPRING_COUNTER)
+		Duel.RaiseEvent(c,511002905,e,REASON_EFFECT,tp,tp,GEARSPRING_COUNTER)
 	end
-end
-function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	c:AddCounter(GEARSPRING_COUNTER,1)
-	Duel.RaiseSingleEvent(c,id+1,e,0,0,tp,0)
+	Duel.RaiseEvent(c,511002905,e,REASON_EFFECT,tp,tp,GEARSPRING_COUNTER)
 end
 function s.plcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
@@ -74,6 +71,6 @@ function s.plop(e,tp,eg,ep,ev,re,r,rp)
 	if tc then
 		Duel.HintSelection(g,true)
 		tc:AddCounter(GEARSPRING_COUNTER,ct)
-		Duel.RaiseEvent(tc,id+1,e,REASON_EFFECT,tp,tp,GEARSPRING_COUNTER)
+		Duel.RaiseEvent(c,511002905,e,REASON_EFFECT,tp,tp,GEARSPRING_COUNTER)
 	end
 end

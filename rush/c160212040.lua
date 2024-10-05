@@ -32,12 +32,14 @@ function s.desfilter(c)
 	return c:IsFaceup() and c:IsLevelBelow(8) and not c:IsMaximumModeSide()
 end
 function s.stage2(e,tc,tp,mg,chk)
-	if Duel.IsExistingMatchingCard(s.desfilter,tp,0,LOCATION_MZONE,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-		local dg=Duel.SelectMatchingCard(tp,s.desfilter,tp,0,LOCATION_MZONE,1,1,nil)
-		dg=dg:AddMaximumCheck()
-		Duel.HintSelection(dg)
-		Duel.BreakEffect()
-		Duel.Destroy(dg,REASON_EFFECT)
+	if chk==1 then
+		if Duel.IsExistingMatchingCard(s.desfilter,tp,0,LOCATION_MZONE,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+			local dg=Duel.SelectMatchingCard(tp,s.desfilter,tp,0,LOCATION_MZONE,1,1,nil)
+			dg=dg:AddMaximumCheck()
+			Duel.HintSelection(dg)
+			Duel.BreakEffect()
+			Duel.Destroy(dg,REASON_EFFECT)
+		end
 	end
 end

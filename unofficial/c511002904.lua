@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1)
-	e2:SetCondition(s.ctcon)
+	e2:SetCondition(function(e,tp) return Duel.GetTurnPlayer()==tp end)
 	e2:SetOperation(s.ctop)
 	c:RegisterEffect(e2)
 	--Place Gearspring Counters on another card

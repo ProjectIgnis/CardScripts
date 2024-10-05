@@ -2,7 +2,7 @@
 --Psi-Beast
 local s,id=GetID()
 function s.initial_effect(c)
-	--Banish 1 Psychic monster to change this card's Level
+	--Banish 1 Psychic monster from your Deck to change this card's Level
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_REMOVE)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.rmop)
 	c:RegisterEffect(e1)
 end
-function s.rmfilter(c,lv)
+function s.rmfilter(c)
 	return c:IsRace(RACE_PSYCHIC) and c:IsAbleToRemove()
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)

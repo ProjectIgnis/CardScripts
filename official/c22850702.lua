@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetLabel(ATTRIBUTE_LIGHT)
 	e2:SetCondition(s.immbttlcon)
 	e2:SetTarget(function(_,c) return c:IsType(TYPE_SYNCHRO) end)
-	e2:SetValue(function(e,te) return te:GetOwnerPlayer()==1-e:GetHandlerPlayer() and te:IsActivated() and te:IsMonsterEffect() end)
+	e2:SetValue(s.immval)
 	c:RegisterEffect(e2)
 	--DARK: Your monsters cannot be destroyed by battle
 	local e3=Effect.CreateEffect(c)
@@ -46,6 +46,11 @@ function s.initial_effect(c)
 end
 function s.exmatfilter(c,scard,sumtype,tp)
 	return c:IsAttribute(ATTRIBUTE_LIGHT|ATTRIBUTE_DARK,scard,sumtype,tp)
+end
+function s.immval(e,te)
+	if not te:IsActivated() then return false end
+	local trig_p,trig_typ=Duel.GetChainInfo(0,CHAININFO_TRIGGERING_PLAYER,CHAININFO_TRIGGERING_TYPE)
+	return trig_p==1-e:GetHandlerPlayer() and trig_typ&TYPE_MONSTER>0
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsAbleToRemove() end

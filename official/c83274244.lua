@@ -1,7 +1,8 @@
 --ドドドウォリアー
+--Dododo Warrior
 local s,id=GetID()
 function s.initial_effect(c)
-	--summon with no tribute
+	--You can Normal Summon this card without Tributing
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
@@ -10,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.ntcon)
 	e1:SetOperation(s.ntop)
 	c:RegisterEffect(e1)
-	--negate
+	--Negate all card effects that activate in the opponent's Graveyard
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
@@ -22,11 +23,9 @@ function s.ntcon(e,c,minc)
 	return minc==0 and c:GetLevel()>4 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
 function s.ntop(e,tp,eg,ep,ev,re,r,rp,c)
-	--change base attack
+	--Its original ATK becomes 1800.
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e1:SetRange(LOCATION_MZONE)
 	e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE&~RESET_TOFIELD)
 	e1:SetCode(EFFECT_SET_BASE_ATTACK)
 	e1:SetValue(1800)
@@ -38,12 +37,12 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EVENT_CHAIN_SOLVING)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetOperation(s.negop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_DAMAGE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_PHASE|PHASE_DAMAGE)
 	e:GetHandler():RegisterEffect(e1)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
-	if ep~=tp and loc==LOCATION_GRAVE then
+	if ep==1-tp and loc==LOCATION_GRAVE then
 		Duel.NegateEffect(ev)
 	end
 end

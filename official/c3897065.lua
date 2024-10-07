@@ -2,10 +2,10 @@
 --Super Vehicroid - Stealth Union
 local s,id=GetID()
 function s.initial_effect(c)
-	--fusion material
 	c:EnableReviveLimit()
+	--Fusion materials: "Truckroid" + "Expressroid" + "Drillroid" + "Stealthroid"
 	Fusion.AddProcMix(c,true,true,61538782,98049038,71218746,984114)
-	--equip
+	--Equip 1 non-Machine monster to this card
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_EQUIP)
@@ -17,26 +17,26 @@ function s.initial_effect(c)
 	e1:SetOperation(s.eqop)
 	c:RegisterEffect(e1)
 	aux.AddEREquipLimit(c,nil,aux.NOT(aux.FilterBoolFunction(Card.IsRace,RACE_MACHINE)),s.equipop,e1)
-	--attack all
+	--Can attack all monsters your opponent controls
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_ATTACK_ALL)
 	e2:SetCondition(s.atcon)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
-	--pierce
+	--Inflict piercing battle damage
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_PIERCE)
 	c:RegisterEffect(e3)
-	--atk
+	--Its original ATK is halved until the end of the Damage Step
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e4:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e4:SetOperation(s.atkop)
 	c:RegisterEffect(e4)
 end
-s.material_setcode=0x16
+s.material_setcode=SET_ROID
 function s.eqfilter(c,tp)
 	return c:IsFaceup() and not c:IsRace(RACE_MACHINE) and (c:IsControler(tp) or c:IsAbleToChangeControler())
 end
@@ -50,12 +50,12 @@ function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.equipop(c,e,tp,tc)
 	if not c:EquipByEffectAndLimitRegister(e,tp,tc) then return end
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_EQUIP)
-	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-	e2:SetCode(id)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-	tc:RegisterEffect(e2)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_EQUIP)
+	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+	e1:SetCode(id)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
+	tc:RegisterEffect(e1)
 end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -72,8 +72,8 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local atk=c:GetBaseAttack()
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_SET_BASE_ATTACK)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE)
+	e1:SetCode(EFFECT_SET_BASE_ATTACK_FINAL)
 	e1:SetValue(atk/2)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE)
 	c:RegisterEffect(e1)
 end

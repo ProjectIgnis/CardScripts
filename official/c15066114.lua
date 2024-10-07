@@ -2,7 +2,7 @@
 --Segmental Dragon
 local s,id=GetID()
 function s.initial_effect(c)
-	--summon & set with no tribute
+	--You can Normal Summon/Set this card without Tributing
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_SET_PROC)
 	c:RegisterEffect(e2)
-	--destroy
+	--Destroy all monsters in the Main Monster Zones with ATK less than or equal to the ATK this card had on the field
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetType(EFFECT_TYPE_QUICK_O)
@@ -33,13 +33,12 @@ function s.ntcon(e,c,minc)
 	return minc==0 and c:GetLevel()>4 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
 function s.ntop(e,tp,eg,ep,ev,re,r,rp,c)
+	--ATK and DEF become halved
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetCode(EFFECT_SET_BASE_ATTACK)
-	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(1300)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_DISABLE)
+	e1:SetReset(RESET_EVENT|(RESETS_STANDARD&~RESET_TOFIELD)|RESET_DISABLE)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_SET_BASE_DEFENSE)
@@ -50,20 +49,20 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_NORMAL)
 end
 function s.desfilter(c,atk)
-	return c:IsFaceup() and c:IsAttackBelow(atk) and c:GetSequence()<5
+	return c:IsFaceup() and c:IsAttackBelow(atk) and c:IsInMainMZone()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c,c:GetAttack()) end
 	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,c,c:GetAttack())
 	g:AddCard(c)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,tp,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
 		local atk=c:GetAttack()
-		if Duel.Destroy(c,REASON_EFFECT)~=0 then
+		if Duel.Destroy(c,REASON_EFFECT)>0 then
 			local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,atk)
 			Duel.Destroy(g,REASON_EFFECT)
 		end

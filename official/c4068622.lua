@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--special summon
+	--Special Summoned by banishing 1 "Blackwing" Tuner and 1 non-Tuner
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
@@ -13,10 +13,10 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--special summon
+	--Banish 1 1 "Blackwing" Synchro Monster from your Extra Deck and this card's name and ATK/effect becomes the same as that monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetCategory(CATEGORY_REMOVE)
+	e2:SetCategory(CATEGORY_REMOVE+CATEGORY_ATKCHANGE)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e3:SetValue(aux.FALSE)
 	c:RegisterEffect(e3)
 end
+s.listed_series={SET_BLACKWING}
 function s.rescon(sg,e,tp,mg)
 	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:IsExists(s.spfilter1,1,nil,sg) and sg:IsExists(s.spfilter2,1,nil,sg)
 end
@@ -38,7 +39,7 @@ function s.spfilter1(c,tp)
 	return not c:IsType(TYPE_TUNER)
 end
 function s.spfilter2(c,tp)
-	return c:IsSetCard(0x33) and c:IsType(TYPE_TUNER)
+	return c:IsSetCard(SET_BLACKWING) and c:IsType(TYPE_TUNER)
 end
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -48,8 +49,7 @@ function s.spcon(e,c)
 	local g2=rg:Filter(s.spfilter2,nil)
 	local g=g1:Clone()
 	g:Merge(g2)
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2 and #g1>0 and #g2>0 and #g>1 
-		and aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0)
+	return #g1>0 and #g2>0 and #g>1 and aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
 	local rg=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
@@ -71,11 +71,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 function s.filter(c)
-	return c:IsSetCard(0x33) and c:IsAbleToRemove()
+	return c:IsSetCard(SET_BLACKWING) and c:IsAbleToRemove()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,0,tp,LOCATION_EXTRA)
+	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,e:GetHandler(),0,tp,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
@@ -85,20 +86,19 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if tc and c:IsFaceup() and c:IsRelateToEffect(e) and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)>0 then
 		local code=tc:GetOriginalCode()
 		local ba=tc:GetBaseAttack()
-		local reset_flag=RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END
-		c:CopyEffect(code, reset_flag, 1)
+		c:CopyEffect(code,RESETS_STANDARD_PHASE_END,1)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(reset_flag)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetCode(EFFECT_CHANGE_CODE)
 		e1:SetValue(code)
 		c:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e2:SetReset(reset_flag)
-		e2:SetCode(EFFECT_SET_BASE_ATTACK)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
+		e2:SetCode(EFFECT_SET_BASE_ATTACK_FINAL)
 		e2:SetValue(ba)
 		c:RegisterEffect(e2)
 	end

@@ -1,10 +1,11 @@
 -- 機怪獣ダレトン
--- Mechabeast Dareton
+-- Darton the Mechanical Monstrosity
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	-- Change original ATK
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
@@ -25,14 +26,14 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.atkfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if #g<1 then return end
 	local sum=0
-	for tc in aux.Next(g) do
+	for tc in g:Iter() do
 		sum=sum+(math.abs(tc:GetBaseAttack()-tc:GetAttack()))
 	end
-	-- Change original ATK
+	--Change original ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_SET_BASE_ATTACK)
+	e1:SetCode(EFFECT_SET_BASE_ATTACK_FINAL)
 	e1:SetValue(sum)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,1)
+	e1:SetReset(RESETS_STANDARD_PHASE_END,Duel.IsTurnPlayer(tp) and 1 or 2)
 	c:RegisterEffect(e1)
 end

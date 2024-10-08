@@ -82,6 +82,6 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		local sg=dg:Select(tp,1,1,nil)
 		sg=sg:AddMaximumCheck()
 		Duel.HintSelection(sg)
-		Duel.Destroy(sg,REASON_EFFECT)
+		Duel.Destroy(dg,REASON_EFFECT)
 	end
 end

@@ -1,5 +1,5 @@
 --悪魔獣デビルゾア
---Fiend Beast Zoa
+--Zoa the Fiendish Beast
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.setop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={CARD_ENHANCED_METALMORPH}
+s.listed_names={CARD_MAX_METALMORPH}
 s.listed_series={SET_METALMORPH}
 function s.nscon(e,c,minc)
 	if c==nil then return true end
@@ -52,7 +52,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP_DEFENSE)>0
-		and not Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,CARD_ENHANCED_METALMORPH)
+		and not Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,CARD_MAX_METALMORPH)
 		and Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(s.spfilter,1-tp,LOCATION_HAND,0,1,nil,e,1-tp)
 		and Duel.SelectYesNo(1-tp,aux.Stringid(id,3)) then

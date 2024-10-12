@@ -29,8 +29,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-s.enhaced_metalmorph_stats={5,RACE_FIEND}
-s.listed_names={CARD_ENHANCED_METALMORPH}
+s.max_metalmorph_stats={5,RACE_FIEND}
+s.listed_names={CARD_MAX_METALMORPH}
 s.listed_series={SET_METALMORPH}
 function s.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

@@ -1,9 +1,9 @@
 --メタル化・強化反射装甲
---Enhanced Metalmorph
+--Max Metalmorph
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special Summon 1 monster that cannot be Normal Summoned/Set and mentions "Enhanced Metalmorph" from your hand/Deck/GY
+	--Special Summon 1 monster that cannot be Normal Summoned/Set and mentions "Max Metalmorph" from your hand/Deck/GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_EQUIP)
@@ -16,16 +16,16 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_names={CARD_ENHANCED_METALMORPH}
+s.listed_names={CARD_MAX_METALMORPH}
 function s.costfilter(c,e,tp)
 	return c:IsFaceup() and Duel.GetMZoneCount(tp,c)>0
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE,0,1,nil,e,tp,c:GetLevel(),c:GetRace())
 end
 function s.spfilter(c,e,tp,cost_lv,cost_race)
-	if not (c:IsMonster() and not c:IsSummonableCard() and c:ListsCode(CARD_ENHANCED_METALMORPH)) then return false end
-	if c:IsCanBeSpecialSummoned(e,0,tp,false,false) or c.enhaced_metalmorph_stats==nil then return true end
+	if not (c:IsMonster() and not c:IsSummonableCard() and c:ListsCode(CARD_MAX_METALMORPH)) then return false end
+	if c:IsCanBeSpecialSummoned(e,0,tp,false,false) or c.max_metalmorph_stats==nil then return true end
 	if not (c:IsCanBeSpecialSummoned(e,0,tp,true,true) and cost_lv and cost_race) then return false end
-	local lv,race=table.unpack(c.enhaced_metalmorph_stats)
+	local lv,race=table.unpack(c.max_metalmorph_stats)
 	return cost_lv>=lv and cost_race&race>0
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

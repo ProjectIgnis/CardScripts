@@ -54,6 +54,7 @@ function s.excop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.DisableShuffleCheck()
 			Duel.SendtoHand(sg,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,sg)
+			Duel.ShuffleHand(tp)
 			ct=ct-1
 		end
 	end
@@ -67,6 +68,7 @@ function s.excop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.BreakEffect()
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,g)
+			Duel.ShuffleHand(tp)
 		end
 	end
 end

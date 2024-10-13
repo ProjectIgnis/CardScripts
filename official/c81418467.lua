@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.effop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_PRIMOREDIAL}
+s.listed_series={SET_PRIMITE}
 function s.rescon(sg,e,tp,mg)
 	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:IsExists(s.tributefilter,1,nil,tp)
 end
@@ -74,7 +74,7 @@ function s.sumcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.ShuffleHand(tp)
 end
 function s.sumfilter(c)
-	return c:IsSetCard(SET_PRIMOREDIAL) and c:IsSummonable(true,nil)
+	return c:IsSetCard(SET_PRIMITE) and c:IsSummonable(true,nil)
 end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.sumfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,nil) end

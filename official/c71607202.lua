@@ -50,7 +50,7 @@ function s.trbfilter(c,e)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(s.repfilter,1,nil,tp)
-		and Duel.IsExistingMatchingCard(s.trbfilter,tp,LOCATION_MZONE,0,1,eg,e)  end
+		and Duel.IsExistingMatchingCard(s.trbfilter,tp,LOCATION_MZONE,0,1,eg,e) end
 	if Duel.SelectEffectYesNo(tp,e:GetHandler(),96) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESREPLACE)
 		local tg=Duel.SelectMatchingCard(tp,s.trbfilter,tp,LOCATION_MZONE,0,1,1,eg,e)

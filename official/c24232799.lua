@@ -1,4 +1,4 @@
---Japanese name
+--脚納母艦ブラキオーバー
 --Storagepod
 --scripted by Naim
 local s,id=GetID()

@@ -1,4 +1,4 @@
---Japanese name
+--大電脳兵廠
 --Psychic Arsenal
 --scripted by Naim
 local s,id=GetID()

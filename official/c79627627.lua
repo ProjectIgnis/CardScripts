@@ -1,4 +1,4 @@
---Japanese name
+--半纏鳥官－コンバード
 --Conbirdable
 --scripted by Naim
 local s,id=GetID()

@@ -1,4 +1,4 @@
---Japanese name
+--マインド・キャスリン
 --Mind Castlin
 --Scripted by Eerie Code
 local s,id=GetID()

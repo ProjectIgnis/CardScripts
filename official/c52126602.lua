@@ -1,4 +1,4 @@
---Japanese name
+--虎菱之玄
 --Gen the Diamond Tiger
 --scripted by Naim
 local s,id=GetID()

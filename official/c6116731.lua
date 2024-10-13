@@ -1,4 +1,4 @@
---Japanese name
+--ムカデの進軍
 --Swarm of Centipedes
 --scripted by Naim
 local s,id=GetID()

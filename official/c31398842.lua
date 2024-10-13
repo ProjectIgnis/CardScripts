@@ -1,4 +1,4 @@
---Japanese name
+--エクシーズ・フォース
 --Xyz Force
 --scripted by Naim
 local s,id=GetID()

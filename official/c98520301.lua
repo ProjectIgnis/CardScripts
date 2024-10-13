@@ -1,4 +1,4 @@
---Japanese name
+--アセット・マウンティス
 --Asset Mountis
 --scripted by Naim
 local s,id=GetID()

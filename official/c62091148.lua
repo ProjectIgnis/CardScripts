@@ -1,4 +1,4 @@
---Japanese name
+--鎖付き飛龍炎刃
 --Salamandra with Chain
 --scripted by Naim
 local s,id=GetID()

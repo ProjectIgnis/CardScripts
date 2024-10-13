@@ -1,4 +1,4 @@
---Japanese name
+--炎の剣域
 --Flame Swordsrealm
 --scripted by Naim
 local s,id=GetID()

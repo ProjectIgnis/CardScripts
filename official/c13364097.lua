@@ -66,7 +66,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.lvrnkfilter(c)
-	return c:IsSetCard(SET_VIRTUAL_WORLD) and c:IsFaceup() and  (c:HasLevel() or c:HasRank())
+	return c:IsSetCard(SET_VIRTUAL_WORLD) and c:IsFaceup() and (c:HasLevel() or c:HasRank())
 end
 function s.lvrnktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.lvrnkfilter(chkc) end

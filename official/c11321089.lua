@@ -49,7 +49,7 @@ function s.ffilter2(c,fc,sumtype,tp,sub,mg,sg)
 		and (not sg or not sg:IsExists(s.fusfilter,1,c,c:GetCode(fc,sumtype,tp),fc,sumtype,tp))
 end
 function s.ffilter3(c,fc,sumtype,tp,sub,mg,sg)
-    return (not sg or not sg:IsExists(s.fusfilter,1,c,c:GetCode(fc,sumtype,tp),fc,sumtype,tp))
+	return (not sg or not sg:IsExists(s.fusfilter,1,c,c:GetCode(fc,sumtype,tp),fc,sumtype,tp))
 end
 function s.fusfilter(c,code,fc,tp)
 	return c:IsSummonCode(fc,SUMMON_TYPE_FUSION,tp,code) and not c:IsHasEffect(511002961)

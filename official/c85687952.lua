@@ -1,4 +1,4 @@
---Japanese name
+-- 原始生命態ティア
 --Theia, the Primal Being
 --scripted by Naim
 local s,id=GetID()

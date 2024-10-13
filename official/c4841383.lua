@@ -56,7 +56,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
-	local  op=e:GetLabel()
+	local op=e:GetLabel()
 	if op==1 then
 		--Add 1 "Ragnaraika" monster from your Deck to your hand, then discard 1 card
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)

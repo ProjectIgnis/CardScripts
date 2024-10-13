@@ -1,4 +1,4 @@
---Japanese name
+--飛龍炎サラマンドラ
 --Salamandra, the Flying Flame Dragon
 --scripted by Naim
 local s,id=GetID()

@@ -1,4 +1,4 @@
---Japanese name
+--帯刃龍 カイベルト
 --Kuibelt the Blade Dragon
 --scripted by Naim
 local s,id=GetID()

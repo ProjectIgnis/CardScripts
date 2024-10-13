@@ -42,17 +42,17 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
 	local g=Group.CreateGroup()
-    	g:KeepAlive()
-    	e3:SetLabelObject(g)
+	g:KeepAlive()
+	e3:SetLabelObject(g)
 	--Keep track of monsters sent to your opponent's GY
 	local e3a=Effect.CreateEffect(c)
-    	e3a:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-    	e3a:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-    	e3a:SetCode(EVENT_TO_GRAVE)
-    	e3a:SetRange(LOCATION_MZONE)
-    	e3a:SetLabelObject(e3)
-    	e3a:SetOperation(s.regop)
-    	c:RegisterEffect(e3a)
+	e3a:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e3a:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e3a:SetCode(EVENT_TO_GRAVE)
+	e3a:SetRange(LOCATION_MZONE)
+	e3a:SetLabelObject(e3)
+	e3a:SetOperation(s.regop)
+	c:RegisterEffect(e3a)
 end
 function s.lvval(e,c,rc)
 	local lv=c:GetLevel()
@@ -86,29 +86,29 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-    	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-    	local g=e:GetLabelObject()
-    	if #g==0 or Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-    	local sg=g:FilterSelect(tp,s.spfilter,1,1,nil,e,tp)
-    	if #sg>0 then
-		Duel.HintSelection(sg)
-        	Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
-    	end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local g=e:GetLabelObject()
+	if #g==0 or Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	local sg=g:FilterSelect(tp,s.spfilter,1,1,nil,e,tp)
+	if #sg>0 then
+	Duel.HintSelection(sg)
+		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
+	end
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=eg:Filter(s.spfilter,nil,e,tp)
 	if #tg>0 then
 		for tc in tg:Iter() do
-        		tc:RegisterFlagEffect(id,RESET_CHAIN,0,1)
-        	end
-        	local g=e:GetLabelObject():GetLabelObject()
-        	if Duel.GetCurrentChain()==0 then g:Clear() end
-        	g:Merge(tg)
-        	g:Remove(function(c) return c:GetFlagEffect(id)==0 end,nil)
-        	e:GetLabelObject():SetLabelObject(g)
-        	if #g>0 and not Duel.HasFlagEffect(tp,id) then
-        		Duel.RegisterFlagEffect(tp,id,RESET_CHAIN,0,1)
-        		Duel.RaiseEvent(g,EVENT_CUSTOM+id,re,r,tp,ep,ev)
+				tc:RegisterFlagEffect(id,RESET_CHAIN,0,1)
+			end
+			local g=e:GetLabelObject():GetLabelObject()
+			if Duel.GetCurrentChain()==0 then g:Clear() end
+			g:Merge(tg)
+			g:Remove(function(c) return c:GetFlagEffect(id)==0 end,nil)
+			e:GetLabelObject():SetLabelObject(g)
+			if #g>0 and not Duel.HasFlagEffect(tp,id) then
+				Duel.RegisterFlagEffect(tp,id,RESET_CHAIN,0,1)
+				Duel.RaiseEvent(g,EVENT_CUSTOM+id,re,r,tp,ep,ev)
 		end
 	end
 end

@@ -1,4 +1,4 @@
---Japanese name
+--極炎の剣士
 --Ultimate Flame Swordsman
 --scripted by Naim
 local s,id=GetID()

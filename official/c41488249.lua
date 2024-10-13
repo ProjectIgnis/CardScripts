@@ -1,5 +1,5 @@
 --原石の号咆
---Primoredial Opener
+--Primite Howl
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -41,14 +41,14 @@ function s.spfilter(c,e,tp,code)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local code=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
-	--You take no damage from battles involving your Normal Monsters with the declared name or "Primoredial" monsters this turn
+	--You take no damage from battles involving your Normal Monsters with the declared name or "Primite" monsters this turn
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetDescription(aux.Stringid(id,2))
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
 	e1:SetTargetRange(1,0)
-	e1:SetTarget(function(e,c) return c:IsSetCard(SET_PRIMOREDIAL) or (c:IsCode(code) and c:IsType(TYPE_NORMAL)) end)
+	e1:SetTarget(function(e,c) return c:IsSetCard(SET_PRIMITE) or (c:IsCode(code) and c:IsType(TYPE_NORMAL)) end)
 	e1:SetValue(1)
 	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)

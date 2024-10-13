@@ -1,5 +1,5 @@
 --原石の鳴獰
---Primoredial Tremors
+--Primite Roar
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.rmvop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_PRIMOREDIAL}
+s.listed_series={SET_PRIMITE}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,2000) end
 	Duel.PayLPCost(tp,2000)
@@ -47,12 +47,12 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local code=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
-	--Your Normal Monsters with the declared name and "Primoredial" monsters cannot be destroyed by battle
+	--Your Normal Monsters with the declared name and "Primite" monsters cannot be destroyed by battle
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetTarget(function(e,c) return c:IsSetCard(SET_PRIMOREDIAL) or (c:IsCode(code) and c:IsType(TYPE_NORMAL)) end)
+	e1:SetTarget(function(e,c) return c:IsSetCard(SET_PRIMITE) or (c:IsCode(code) and c:IsType(TYPE_NORMAL)) end)
 	e1:SetValue(1)
 	e1:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN)
 	Duel.RegisterEffect(e1,tp)

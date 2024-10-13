@@ -1,5 +1,5 @@
 --原石竜インペリアル・ドラゴン
---Imperial Dragon the Primoredial Dragon
+--Primite Imperial Dragon
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

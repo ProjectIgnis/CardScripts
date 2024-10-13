@@ -1,5 +1,5 @@
 --原石の穿光
---Primoredial Schiller
+--Primite Drillbeam
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -22,18 +22,18 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCondition(function(e,tp) return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_PRIMOREDIAL),tp,LOCATION_MZONE,0,1,nil) end)
+	e2:SetCondition(function(e,tp) return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_PRIMITE),tp,LOCATION_MZONE,0,1,nil) end)
 	e2:SetTarget(s.settg)
 	e2:SetOperation(s.setop)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-s.listed_series={SET_PRIMOREDIAL}
+s.listed_series={SET_PRIMITE}
 function s.costfilter(c)
-	return (c:IsSetCard(SET_PRIMOREDIAL) or (c:IsMonster() and c:IsType(TYPE_NORMAL))) and not (c:IsPublic() or c:IsCode(id))
+	return (c:IsSetCard(SET_PRIMITE) or (c:IsMonster() and c:IsType(TYPE_NORMAL))) and not (c:IsPublic() or c:IsCode(id))
 end
 function s.nocostfilter(c)
-	return (c:IsType(TYPE_NORMAL) or (c:IsSetCard(SET_PRIMOREDIAL) and c:IsLevelAbove(5))) and c:IsFaceup() and not c:IsType(TYPE_TOKEN)
+	return (c:IsType(TYPE_NORMAL) or (c:IsSetCard(SET_PRIMITE) and c:IsLevelAbove(5))) and c:IsFaceup() and not c:IsType(TYPE_TOKEN)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,e:GetHandler())

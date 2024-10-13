@@ -1,5 +1,5 @@
 --原石の皇脈
---Primoredial Imperialode
+--Primite Lordly Lode
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -23,20 +23,20 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--Normal Monsters and "Primoredial" monsters you control gain 300 ATK for each Normal Monster in your GY with different names
+	--Normal Monsters and "Primite" monsters you control gain 300 ATK for each Normal Monster in your GY with different names
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_UPDATE_ATTACK)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetTargetRange(LOCATION_MZONE,0)
-	e3:SetTarget(function(e,c) return c:IsType(TYPE_NORMAL) or c:IsSetCard(SET_PRIMOREDIAL) end)
+	e3:SetTarget(function(e,c) return c:IsType(TYPE_NORMAL) or c:IsSetCard(SET_PRIMITE) end)
 	e3:SetValue(function(e,c) return 300*Duel.GetMatchingGroup(Card.IsType,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil,TYPE_NORMAL):GetClassCount(Card.GetCode) end)
 	c:RegisterEffect(e3)
 end
 s.listed_names={id}
-s.listed_series={SET_PRIMOREDIAL}
+s.listed_series={SET_PRIMITE}
 function s.thfilter(c)
-	return c:IsSetCard(SET_PRIMOREDIAL) and c:IsAbleToHand() and not c:IsCode(id)
+	return c:IsSetCard(SET_PRIMITE) and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

@@ -91,5 +91,7 @@ function s.regop2(e,tp,eg,ep,ev,re,r,rp)
 			Duel.RegisterFlagEffect(ep,id,RESET_CHAIN,0,1)
 			Duel.RaiseEvent(e:GetHandler(),EVENT_CUSTOM+id,e,0,ep,ep,0)
 		end
+	elseif #e:GetLabelObject():GetLabelObject()>0 then --if the card has seen a card but is not face-down in the S/T zone anymore, it should forget about it
+		e:GetLabelObject():GetLabelObject():Clear()
 	end
 end

@@ -25,7 +25,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_HAND,0,1,nil) end
 end
 function s.thfilter(c)
-	return c:IsFaceup() and c:IsLevelBelow(4) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsLevelBelow(4) and c:IsAbleToHand() and not c:IsMaximumModeSide()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,0,LOCATION_MZONE,1,nil) end
@@ -41,7 +41,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.SelectMatchingCard(tp,s.thfilter,tp,0,LOCATION_MZONE,1,2,nil)
 	if #tc>0 then
 		tc=tc:AddMaximumCheck()
-		Duel.HintSelection(tc,true)
+		Duel.HintSelection(tc)
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end

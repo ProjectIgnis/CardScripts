@@ -189,7 +189,7 @@ function Card.AddMaximumAtkHandler(c)
 end
 --function that return the value of the "maximum atk" of the monster
 function Card.GetMaximumAttack(c)
-	local m=c:GetMetatable(true)
+	local m=c:GetMetatable(false)
 	if not m then return 0 end
 	return m.MaximumAttack
 end

@@ -190,7 +190,7 @@ end
 --function that return the value of the "maximum atk" of the monster
 function Card.GetMaximumAttack(c)
 	local m=c:GetMetatable(true)
-	if not m then return false end
+	if not m then return 0 end
 	return m.MaximumAttack
 end
 --function that provide effects of the center piece to the side (mainly used for protection effects)

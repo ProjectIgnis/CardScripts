@@ -81,8 +81,8 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 		local c=e:GetHandler()
 		Duel.BreakEffect()
 		for tc in g:Iter() do
-			--Gains 1000 ATK
-			tc:UpdateAttack(1000,0,c)
+			--"Gem-Knight" monsters you currently control gain 1000 ATK
+			tc:UpdateAttack(1000,RESET_EVENT|RESETS_STANDARD,c)
 		end
 	end
 end

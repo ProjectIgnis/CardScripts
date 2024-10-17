@@ -1,10 +1,9 @@
 --スレイブパンサー
 --Test Panther
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
-	--Link summon procedure
+	--Link Summon procedure: 2 monsters, including a "Gladiator Beast" monster
 	Link.AddProcedure(c,nil,2,2,s.lcheck)
 	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
@@ -32,16 +31,15 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x19}
-
+s.listed_series={SET_GLADIATOR_BEAST}
 function s.lcheck(g,lc,sumtype,tp)
-	return g:IsExists(Card.IsSetCard,1,nil,0x19,lc,sumtype,tp)
+	return g:IsExists(Card.IsSetCard,1,nil,SET_GLADIATOR_BEAST,lc,sumtype,tp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x19) and c:IsAbleToHand()
+	return c:IsSetCard(SET_GLADIATOR_BEAST) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -56,11 +54,11 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tgfilter(c,e,tp,ft)
-	return c:IsFaceup() and c:IsSetCard(0x19) and c:IsAbleToDeck() and (ft>-1 or c:GetSequence()<5)
+	return c:IsFaceup() and c:IsSetCard(SET_GLADIATOR_BEAST) and c:IsAbleToDeck() and (ft>-1 or c:GetSequence()<5)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetOriginalCodeRule())
 end
 function s.spfilter(c,e,tp,code)
-	return c:IsSetCard(0x19) and not c:IsOriginalCodeRule(code) and c:IsCanBeSpecialSummoned(e,130,tp,false,false)
+	return c:IsSetCard(SET_GLADIATOR_BEAST) and not c:IsOriginalCodeRule(code) and c:IsCanBeSpecialSummoned(e,130,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)

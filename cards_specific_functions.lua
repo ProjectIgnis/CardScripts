@@ -1153,10 +1153,10 @@ end
 
 
 Arcana={}
--- checks if the card is affected by the effect of light barrier, in which case it doens't perform the coin toss
+-- checks if the player is affected by the effect of light barrier, in which case it doens't perform the coin toss
 -- but lets the player choose, otherwise it performs a normal coin toss
 function Arcana.TossCoin(c,tp)
-	if not c:IsHasEffect(CARD_LIGHT_BARRIER) then return Duel.TossCoin(tp,1) end
+	if not Duel.IsPlayerAffectedByEffect(tp,CARD_LIGHT_BARRIER) then return Duel.TossCoin(tp,1) end
 	local op=Duel.SelectOption(tp,aux.GetCoinEffectHintString(COIN_HEADS),aux.GetCoinEffectHintString(COIN_TAILS))
 	if op==0 then return COIN_HEADS end
 	return COIN_TAILS

@@ -1,10 +1,10 @@
 --火器の祝台
---Slapdash Summer Schoolwork Success
+--Summer Schoolwork Successful!
 --Scripted by Hatter
 local s,id=GetID()
-local COUNTER_SUCCESS=0x213
+local COUNTER_SCHOOLWORK=0x213
 function s.initial_effect(c)
-	c:EnableCounterPermit(COUNTER_SUCCESS)
+	c:EnableCounterPermit(COUNTER_SCHOOLWORK)
 	--Activate this card by placing 5 Success Counters on it
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_COUNTER)
@@ -29,11 +29,11 @@ function s.initial_effect(c)
 	e3:SetCondition(function(e,tp,eg,ep,ev,re) return re and re:IsSpellTrapEffect() and eg:IsExists(Card.IsPreviousLocation,1,nil,LOCATION_DECK) end)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_SCHOOLWORK_SUCCESS}
+s.listed_series={SET_SCHOOLWORK}
 function s.actg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsCanAddCounter(tp,COUNTER_SUCCESS,5,c) end
-	c:AddCounter(COUNTER_SUCCESS,5)
+	if chk==0 then return Duel.IsCanAddCounter(tp,COUNTER_SCHOOLWORK,5,c) end
+	c:AddCounter(COUNTER_SCHOOLWORK,5)
 end
 function s.rcttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -42,11 +42,11 @@ function s.rcttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_LEAVE_GRAVE,nil,1,tp,LOCATION_GRAVE)
 end
 function s.setfilter(c)
-	return c:IsSetCard(SET_SCHOOLWORK_SUCCESS) and c:IsTrap() and c:IsSSetable()
+	return c:IsSetCard(SET_SCHOOLWORK) and c:IsTrap() and c:IsSSetable()
 end
 function s.rctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not (c:IsRelateToEffect(e) and c:RemoveCounter(tp,COUNTER_SUCCESS,1,REASON_EFFECT) and not c:HasCounter(COUNTER_SUCCESS)) then return end
+	if not (c:IsRelateToEffect(e) and c:RemoveCounter(tp,COUNTER_SCHOOLWORK,1,REASON_EFFECT) and not c:HasCounter(COUNTER_SCHOOLWORK)) then return end
 	Duel.BreakEffect()
 	if Duel.Destroy(c,REASON_EFFECT)==0 or Duel.Recover(tp,4000,REASON_EFFECT)==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)

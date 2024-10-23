@@ -80,8 +80,12 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local dg=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_MZONE,nil)
 	if #dg>0 then
 		local sg=dg:Select(tp,1,1,nil)
-		sg=sg:AddMaximumCheck()
-		Duel.HintSelection(sg)
-		Duel.Destroy(dg,REASON_EFFECT)
+		if sg:GetFirst():IsMaximumMode() then
+			sg=sg:AddMaximumCheck()
+			Duel.HintSelection(sg)
+			Duel.Destroy(dg,REASON_EFFECT)
+		else
+			Duel.Destroy(sg,REASON_EFFECT)
+		end
 	end
 end

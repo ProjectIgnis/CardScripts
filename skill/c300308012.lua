@@ -10,7 +10,7 @@ function s.thfilter(c)
 end
 function s.flipcon(e)
 	local tp=e:GetHandlerPlayer()
-	local ft=Duel.GetLocationCount(tp,LOCATION_STZONE)
+	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
 	return aux.CanActivateSkill(tp) and Duel.GetFlagEffect(tp,id)==0 and ft>0
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)

@@ -83,8 +83,10 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetTargetCards(e)
 	if #tg==0 then return end
 	local field_tc=tg:Filter(Card.IsLocation,nil,LOCATION_MZONE):GetFirst()
-	local gy_tc=(tg-field_tc):GetFirst()
-	if field_tc and Duel.Destroy(field_tc,REASON_EFFECT)>0 and gy_tc then
-		Duel.SpecialSummon(gy_tc,0,tp,tp,false,false,POS_FACEUP)
+	if field_tc and Duel.Destroy(field_tc,REASON_EFFECT)>0 then
+		local gy_tc=(tg-field_tc):GetFirst()
+		if gy_tc then
+			Duel.SpecialSummon(gy_tc,0,tp,tp,false,false,POS_FACEUP)
+		end
 	end
 end

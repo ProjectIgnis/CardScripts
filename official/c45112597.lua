@@ -58,7 +58,6 @@ function s.rmspop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			opp_sg=opp_sg:Select(tp,opp_ft,opp_ft,nil)
 		end
-		local tograve_sg=sg-your_sg-opp_sg
 		sg=your_sg+opp_sg
 		for sc in sg:Iter() do
 			local sump=0
@@ -73,7 +72,6 @@ function s.rmspop(e,tp,eg,ep,ev,re,r,rp)
 		end
 		Duel.BreakEffect()
 		Duel.SpecialSummonComplete()
-		if #tograve_sg>0 then Duel.SendtoGrave(tograve_sg,REASON_RULE) end
 	end
 end
 function s.desctfilter(c)

@@ -20,6 +20,10 @@ end
 function s.fextrafilter(c)
 	return not c:IsRace(RACE_ROCK) and c:IsSetCard(SET_GEM_KNIGHT) and c:IsMonster() and c:IsAbleToGrave()
 end
+function s.extratg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOGRAVE,nil,0,tp,LOCATION_DECK|LOCATION_EXTRA)
+end
 function s.fextra(e,tp,mg)
 	if Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,1264319) then
 		local eg=Duel.GetMatchingGroup(s.fextrafilter,tp,LOCATION_DECK|LOCATION_EXTRA,0,nil)
@@ -34,7 +38,7 @@ function s.thfilter(c)
 		and c:IsAbleToHand()
 end
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local params={fusfilter=aux.FilterBoolFunction(Card.IsSetCard,SET_GEM_KNIGHT),extrafil=s.fextra}
+	local params={fusfilter=aux.FilterBoolFunction(Card.IsSetCard,SET_GEM_KNIGHT),extrafil=s.fextra,extratg=s.extratg}
 	--Fusion Summon 1 "Gem-Knight" Fusion Monster from your Extra Deck, using monsters from your hand or field as material
 	local b1=not Duel.HasFlagEffect(tp,id)
 		and Fusion.SummonEffTG(params)(e,tp,eg,ep,ev,re,r,rp,0)

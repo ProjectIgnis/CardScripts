@@ -66,8 +66,7 @@ function s.cttg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.ctop2(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetTargetCards(e)
-	local c1,c2=tg:GetFirst(),tg:GetNext()
-	if c1:IsRelateToEffect(e) and c2:IsRelateToEffect(e) then
-		Duel.SwapControl(c1,c2)
+	if #tg==2 then
+		Duel.SwapControl(tg:GetFirst(),tg:GetNext())
 	end
 end

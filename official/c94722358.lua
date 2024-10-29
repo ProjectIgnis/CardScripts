@@ -1,9 +1,9 @@
 --Ｍ∀ＬＩＣＥ＜Ｃ＞ＭＴＰ－０７
---M∀LICE <CODE> MTP-07
+--Maliss <C> MTP-07
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	--Add 1 "M∀LICE" monster from your Deck to your hand
+	--Add 1 "Maliss" monster from your Deck to your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_REMOVE)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	--Can be activated the turn it was Set by banishing 1 face-up "M∀LICE" monster you control
+	--Can be activated the turn it was Set by banishing 1 face-up "Maliss" monster you control
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_SINGLE)
@@ -57,7 +57,9 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	if #g==0 or Duel.SendtoHand(g,nil,REASON_EFFECT)==0 or not g:GetFirst():IsLocation(LOCATION_HAND) then return end
 	Duel.ConfirmCards(1-tp,g)
 	Duel.ShuffleHand(tp)
-	local rg=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler())
+	local c=e:GetHandler()
+	local exc=c:IsRelateToEffect(e) and c or nil
+	local rg=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,exc)
 	if #rg>0 and Duel.IsExistingMatchingCard(s.linkfilter,tp,LOCATION_MZONE,0,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)

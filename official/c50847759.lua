@@ -1,9 +1,10 @@
--- ネフティスの希望
---Hope of Nephthys
+--ネフティスの希望
+--Last Hope of Nephthys
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Destroy 1 other "Nephthys" card you control and 1 card your opponent controls
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -13,26 +14,21 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x11f}
-function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x11f)
+s.listed_series={SET_NEPHTHYS}
+function s.desfilter(c,e,tp)
+	return ((c:IsSetCard(SET_NEPHTHYS) and c:IsFaceup()) or c:IsControler(1-tp)) and c:IsCanBeEffectTarget(e)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_ONFIELD,0,1,e:GetHandler())
-		and Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g1=Duel.SelectTarget(tp,s.filter,tp,LOCATION_ONFIELD,0,1,1,e:GetHandler())
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g2=Duel.SelectTarget(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,1,nil)
-	g1:Merge(g2)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g1,2,0,0)
+	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler(),e,tp)
+	if chk==0 then return aux.SelectUnselectGroup(g,e,tp,2,2,aux.dpcheck(Card.GetControler),0) end
+	local tg=aux.SelectUnselectGroup(g,e,tp,2,2,aux.dpcheck(Card.GetControler),1,tp,HINTMSG_DESTROY)
+	Duel.SetTargetCard(tg)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tg,2,tp,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	local tg=g:Filter(Card.IsRelateToEffect,nil,e)
+	local tg=Duel.GetTargetCards(e)
 	if #tg>0 then
 		Duel.Destroy(tg,REASON_EFFECT)
 	end
 end
-

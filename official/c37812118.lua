@@ -20,6 +20,8 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local coin=Duel.TossCoin(tp,1)
-	local player=coin==COIN_HEADS and tp or 1-tp
-	Duel.Draw(player,2,REASON_EFFECT)
+	local player=(coin==COIN_HEADS and tp) or (coin==COIN_TAILS and 1-tp) or nil
+	if player then
+		Duel.Draw(player,2,REASON_EFFECT)
+	end
 end

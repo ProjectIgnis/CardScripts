@@ -49,7 +49,8 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rmvfiler(c)
-	return c:IsRace(RACE_FIEND) and c:IsLevelAbove(6) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true) and not c:IsCode(id) 
+	return c:IsRace(RACE_FIEND) and c:IsLevelAbove(6) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+		and not c:IsCode(id)
 end
 function s.rescon(sg,e,tp,mg)
 	return sg:GetClassCount(Card.GetAttribute)==1

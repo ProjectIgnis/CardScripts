@@ -25,12 +25,12 @@ function s.fextra(exc)
 		return Duel.GetMatchingGroup(Card.IsAbleToGrave,tp,LOCATION_HAND|LOCATION_MZONE|LOCATION_DECK,0,nil),s.fcheck(exc)
 	end
 end
-function s.fcheckmatfilter(c)
-	return c:IsLocation(LOCATION_MZONE) and c:IsCode(11460577,97023549)
+function s.fcheckmatfilter(c,fc,tp)
+	return c:IsLocation(LOCATION_MZONE) and c:IsSummonCode(fc,SUMMON_TYPE_FUSION,tp,11460577,97023549)
 end
 function s.fcheck(exc)
 	return function(tp,sg,fc)
-		return not (exc and sg:IsContains(exc)) and sg:IsExists(s.fcheckmatfilter,1,nil)
+		return not (exc and sg:IsContains(exc)) and sg:IsExists(s.fcheckmatfilter,1,nil,fc,tp)
 	end
 end
 function s.stage2(e,tc,tp,sg,chk)

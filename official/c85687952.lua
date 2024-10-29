@@ -1,4 +1,4 @@
--- 原始生命態ティア
+--原始生命態ティア
 --Theia, the Primal Being
 --scripted by Naim
 local s,id=GetID()
@@ -52,7 +52,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e6)
 end
 function s.spcheck(sg,tp)
-	return aux.ReleaseCheckMMZ(sg,tp) and sg:CheckWithSumGreater(Card.GetLevel,11,1,99)
+	return aux.ReleaseCheckMMZ(sg,tp) and not sg:IsExists(Card.IsLevelBelow,1,nil,sg:GetSum(Card.GetLevel)-11)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.HasLevel,1,99,false,s.spcheck,nil) end

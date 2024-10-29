@@ -3,7 +3,7 @@
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special Summon itself from the hand
+	--Special Summon this card from your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -14,18 +14,18 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--Change the position of monsters and the attributes of insect monsters
+	--Change the battle positions of all monsters on the field, also make all other Insect monsters on the field become the same Attribute and Level as this card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_POSITION+CATEGORY_LVCHANGE)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCondition(function(e,tp) return Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>Duel.GetFieldGroupCount(tp,0,LOCATION_HAND) end)
 	e2:SetCountLimit(1,{id,1})
+	e2:SetCondition(function(e,tp) return Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>Duel.GetFieldGroupCount(tp,0,LOCATION_HAND) end)
 	e2:SetTarget(s.postg)
 	e2:SetOperation(s.posop)
 	c:RegisterEffect(e2)
-	--Search 1 Level 8 or higher Insect monster
+	--Add 1 Level 8 or higher Insect monster from your Deck to your hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -41,7 +41,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,tp,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -49,55 +49,57 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-function s.insectfilter(c,att,lv)
-	return c:IsFaceup() and c:IsRace(RACE_INSECT) and (not c:IsAttribute(att) or not c:IsLevel(lv))
-end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
 	local posg=Duel.GetMatchingGroup(Card.IsCanChangePosition,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	if chk==0 then return c:HasLevel() and #posg>0
-		and Duel.IsExistingMatchingCard(s.insectfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c,c:GetAttribute(),c:GetLevel()) end
+	if chk==0 then return #posg>0 end
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,posg,#posg,tp,0)
 end
+function s.insectfilter(c,attr,lv)
+	return c:IsRace(RACE_INSECT) and c:IsFaceup() and not (c:IsAttribute(attr) and c:IsLevel(lv))
+end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	--Cannot Special Summon for the rest of this turn, except Insect monsters
-	local e0=Effect.CreateEffect(c)
-	e0:SetDescription(aux.Stringid(id,3))
-	e0:SetType(EFFECT_TYPE_FIELD)
-	e0:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
-	e0:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e0:SetTargetRange(1,0)
-	e0:SetTarget(function(_,c) return not c:IsRace(RACE_INSECT) end)
-	e0:SetReset(RESET_PHASE|PHASE_END)
-	Duel.RegisterEffect(e0,tp)
 	local posg=Duel.GetMatchingGroup(Card.IsCanChangePosition,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	Duel.ChangePosition(posg,POS_FACEUP_DEFENSE,POS_FACEDOWN_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)
-	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
-	local att=c:GetAttribute()
-	local lv=c:HasLevel() and c:GetLevel() or 0
-	local insg=Duel.GetMatchingGroup(s.insectfilter,tp,LOCATION_MZONE,LOCATION_MZONE,c,att,lv)
-	if #insg==0 then return end
-	for tc in insg:Iter() do
-		if not tc:IsAttribute(att) then
-			--Attribute becomes the same as this card's
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
-			e1:SetValue(att)
-			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
-			tc:RegisterEffect(e1)
-		end
-		if not tc:IsLevel(lv) then
-			--Level becomes the same as this card's
-			local e2=Effect.CreateEffect(c)
-			e2:SetType(EFFECT_TYPE_SINGLE)
-			e2:SetCode(EFFECT_CHANGE_LEVEL_FINAL)
-			e2:SetValue(lv)
-			e2:SetReset(RESET_EVENT|RESETS_STANDARD)
-			tc:RegisterEffect(e2)
+	if #posg>0 then
+		Duel.ChangePosition(posg,POS_FACEUP_DEFENSE,POS_FACEDOWN_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)
+	end
+	local c=e:GetHandler()
+	if c:IsRelateToEffect(e) and c:IsFaceup() then
+		local attr=c:GetAttribute()
+		local lv=c:GetLevel()
+		local insg=Duel.GetMatchingGroup(s.insectfilter,tp,LOCATION_MZONE,LOCATION_MZONE,c,attr,lv)
+		for tc in insg:Iter() do
+			if not tc:IsAttribute(attr) then
+				--Its Attribute becomes the same as this card's
+				local e1=Effect.CreateEffect(c)
+				e1:SetType(EFFECT_TYPE_SINGLE)
+				e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+				e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
+				e1:SetValue(attr)
+				e1:SetReset(RESET_EVENT|RESETS_STANDARD)
+				tc:RegisterEffect(e1)
+			end
+			if c:HasLevel() and tc:HasLevel() and not tc:IsLevel(lv) then
+				--Its Level becomes the same as this card's
+				local e2=Effect.CreateEffect(c)
+				e2:SetType(EFFECT_TYPE_SINGLE)
+				e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+				e2:SetCode(EFFECT_CHANGE_LEVEL_FINAL)
+				e2:SetValue(lv)
+				e2:SetReset(RESET_EVENT|RESETS_STANDARD)
+				tc:RegisterEffect(e2)
+			end
 		end
 	end
+	--You cannot Special Summon monsters for the rest of this turn, except Insect monsters
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(id,3))
+	e3:SetType(EFFECT_TYPE_FIELD)
+	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e3:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	e3:SetTargetRange(1,0)
+	e3:SetTarget(function(e,c) return not c:IsRace(RACE_INSECT) end)
+	e3:SetReset(RESET_PHASE|PHASE_END)
+	Duel.RegisterEffect(e3,tp)
 end
 function s.thfilter(c)
 	return c:IsLevelAbove(8) and c:IsRace(RACE_INSECT) and c:IsAbleToHand()

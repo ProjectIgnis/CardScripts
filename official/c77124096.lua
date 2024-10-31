@@ -32,7 +32,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=not Duel.HasFlagEffect(tp,id)
 		and Fusion.SummonEffTG(params)(e,tp,eg,ep,ev,re,r,rp,0)
 	--Add 1 "Supreme King's Castle" or "Dark Fusion" from your Deck to your hand
-	local b2=not Duel.HasFlagEffect(tp,id+100)
+	local b2=not Duel.HasFlagEffect(tp,id+1)
 		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil)
 	if chk==0 then return b1 or b2 end
 	local op=Duel.SelectEffect(tp,
@@ -46,7 +46,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 	elseif op==2 then
 		e:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
-		Duel.RegisterFlagEffect(tp,id+100,RESET_PHASE|PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_END,0,1)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 	end
 end

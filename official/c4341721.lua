@@ -3,7 +3,7 @@
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--Add 1 "Hallo the Great Spirit of Tricks" or "Ween the Great Spirit of Treats" from your Deck or GY to your hand
+	--Add 1 "Hallo, the Spirit of Tricks" or "Ween, the Spirit of Treats" from your Deck or GY to your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -13,9 +13,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_names={101207026,101207027} --"Hallo the Great Spirit of Tricks", "Ween the Great Spirit of Treats"
+s.listed_names={54611591,81005500} --"Hallo, the Spirit of Tricks", "Ween, the Spirit of Treats"
 function s.thfilter(c)
-	return c:IsCode(101207026,101207027) and c:IsAbleToHand()
+	return c:IsCode(54611591,81005500) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,nil) end

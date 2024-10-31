@@ -1,5 +1,5 @@
 --アビスチーム
---Abyss-Team
+--Abyss-team
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

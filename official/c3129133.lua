@@ -2,7 +2,7 @@
 --Delta of Temptation
 --scripted by pyrQ
 local s,id=GetID()
-local TOKEN_DELTA=id+100
+local TOKEN_DELTA=id+1
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

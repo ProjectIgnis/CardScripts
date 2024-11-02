@@ -33,7 +33,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not (tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e)) then return end
 	if Duel.GetLocationCount(tc:GetOwner(),LOCATION_SZONE)==0 then
 		Duel.SendtoGrave(tc,REASON_RULE,nil,PLAYER_NONE)
-	elseif Duel.MoveToField(tc,tp,tc:GetOwner(),LOCATION_SZONE,POS_FACEUP,true) then
+	elseif Duel.MoveToField(tc,tp,tc:GetOwner(),LOCATION_SZONE,POS_FACEUP,tc:IsMonsterCard()) then
 		--Treated as a Continuous Spell
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

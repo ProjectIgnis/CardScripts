@@ -67,7 +67,7 @@ function s.plop(e,tp,eg,ep,ev,re,r,rp)
 	local p=tc:GetOwner()
 	if Duel.GetLocationCount(p,LOCATION_SZONE)==0 then
 		Duel.SendtoGrave(tc,REASON_RULE,nil,PLAYER_NONE)
-	elseif tc:CheckUniqueOnField(p) and Duel.MoveToField(tc,tp,p,LOCATION_SZONE,POS_FACEUP,true) then
+	elseif tc:CheckUniqueOnField(p) and Duel.MoveToField(tc,tp,p,LOCATION_SZONE,POS_FACEUP,tc:IsMonsterCard()) then
 		--Treated as a Continuous Spell
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

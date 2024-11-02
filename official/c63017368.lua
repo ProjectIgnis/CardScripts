@@ -1,5 +1,5 @@
 --石板の神殿
---Shrine of Wedju
+--Wedju Temple
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -90,7 +90,7 @@ function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=e:GetLabelObject()
 	for tc in g:Iter() do
-		if Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true) then
+		if Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,tc:IsMonsterCard()) then
 			--Treated as a Continuous Spell
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)

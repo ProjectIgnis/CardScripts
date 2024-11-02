@@ -60,7 +60,7 @@ function s.plop(e,tp,eg,ep,ev,re,r,rp)
 	if not tc:IsRelateToEffect(e) or tc:IsImmuneToEffect(e) then return end
 	if tc:IsLocation(LOCATION_MZONE) and Duel.GetLocationCount(tc:GetOwner(),LOCATION_SZONE)==0 then
 		Duel.SendtoGrave(tc,REASON_RULE,nil,PLAYER_NONE)
-	elseif Duel.MoveToField(tc,tp,tc:GetOwner(),LOCATION_SZONE,POS_FACEUP,true) then
+	elseif Duel.MoveToField(tc,tp,tc:GetOwner(),LOCATION_SZONE,POS_FACEUP,tc:IsMonsterCard()) then
 		--Treat it as a Continuous Spell
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -72,7 +72,7 @@ function s.plop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spfilter(c,e,tp)
-	return c:IsFaceup() and c:IsOriginalType(TYPE_MONSTER) and c:IsContinuousSpell()
+	return c:IsFaceup() and c:IsMonsterCard() and c:IsContinuousSpell()
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

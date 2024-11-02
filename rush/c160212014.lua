@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_FZONE)
 	e3:SetTargetRange(LOCATION_HAND,LOCATION_HAND)
 	e3:SetTarget(s.tribtg)
-	e3:SetValue(0x1)
+	e3:SetValue(s.val)
 	c:RegisterEffect(e3)
 end
 function s.tg(e,c)
@@ -32,4 +32,8 @@ function s.tg(e,c)
 end
 function s.tribtg(e,c)
 	return s.tg(e,c) and c:GetAttack()==c:GetDefense()
+end
+function s.val(e,c)
+	local tp=e:GetHandlerPlayer()
+	return Duel.GetMatchingGroupCount(Card.IsOriginalCode,tp,LOCATION_FZONE,LOCATION_FZONE,nil,160212014)
 end

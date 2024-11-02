@@ -59,7 +59,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
-	local op==e:GetLabel()
+	local op=e:GetLabel()
 	if op==1 then
 		--Special Summon this card to your Main Monster Zone in its same column
 		local c=e:GetHandler()

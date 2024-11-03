@@ -35,5 +35,5 @@ function s.tribtg(e,c)
 end
 function s.val(e,c)
 	local tp=e:GetHandlerPlayer()
-	return Duel.GetMatchingGroupCount(Card.IsOriginalCode,tp,LOCATION_FZONE,LOCATION_FZONE,nil,160212014)
+	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsOriginalCode,160212014),tp,LOCATION_FZONE,LOCATION_FZONE,nil)
 end

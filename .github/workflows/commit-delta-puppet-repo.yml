@@ -16,7 +16,7 @@ jobs:
     - name: Clone destination repository
       run: |
         cd $HOME
-        git clone https://${{ secrets.DEPLOY_TOKEN }}@github.com/$REMOTE
+        git clone https://${{ secrets.GITHUB_TOKEN }}@github.com/$REMOTE
         mkdir -p $DESTINATION
     - name: Copy new or changed files
       id: copy

@@ -47,12 +47,12 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_EXTRA_ATTACK)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end
 function s.efftgfilter(c,tp)
-	return not c:IsSummonableCard() and c:IsSetCard(SET_GUARDIAN) and (c:IsAbleToHand()
+	return c:IsMonster() and not c:IsSummonableCard() and c:IsSetCard(SET_GUARDIAN) and (c:IsAbleToHand()
 		or Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,nil,c))
 end
 function s.thfilter(c,tc)
@@ -60,7 +60,7 @@ function s.thfilter(c,tc)
 end
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then
-		if not (chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp)
+		if not (chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and chkc:IsMonster()
 			and not chkc:IsSummonableCard() and chkc:IsSetCard(SET_GUARDIAN)) then return false end
 		local label=e:GetLabel()
 		return (label==1 and chkc:IsAbleToHand())

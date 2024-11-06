@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(aux.selfbanishcost)
+	e2:SetCost(aux.SelfBanishCost)
 	e2:SetLabel(2)
 	c:RegisterEffect(e2)
 end

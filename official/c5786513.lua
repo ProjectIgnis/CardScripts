@@ -25,7 +25,7 @@ function s.initial_effect(c)
 		local tc=Duel.GetBattleMonster(tp)
 		return tc and tc:ListsCode(CARD_SHINING_SARCOPHAGUS)
 	end)
-	e2:SetCost(aux.selfbanishcost)
+	e2:SetCost(aux.SelfBanishCost)
 	e2:SetOperation(s.skipop)
 	c:RegisterEffect(e2)
 end

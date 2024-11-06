@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
-	e2:SetCost(aux.selfbanishcost)
+	e2:SetCost(aux.SelfBanishCost)
 	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_BLUEEYES_W_DRAGON}

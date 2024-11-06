@@ -300,7 +300,7 @@ function Card.IsNormalSummoned(c)
 	return c:IsSummonType(SUMMON_TYPE_NORMAL)
 end
 function Card.IsTributeSummoned(c)
-	return c:IsSummonType(SUMMON_TYPE_ADVANCE)
+	return c:IsSummonType(SUMMON_TYPE_TRIBUTE)
 end
 function Card.IsFlipSummoned(c)
 	return c:IsSummonType(SUMMON_TYPE_FLIP)

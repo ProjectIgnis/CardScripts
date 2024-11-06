@@ -296,6 +296,40 @@ function Card.IsScale(c,scale)
 	return c:GetScale()==scale
 end
 
+function Card.IsNormalSummoned(c)
+	return c:IsSummonType(SUMMON_TYPE_NORMAL)
+end
+function Card.IsTributeSummoned(c)
+	return c:IsSummonType(SUMMON_TYPE_ADVANCE)
+end
+function Card.IsFlipSummoned(c)
+	return c:IsSummonType(SUMMON_TYPE_FLIP)
+end
+function Card.IsGeminiSummoned(c)
+	return c:IsSummonType(SUMMON_TYPE_GEMINI)
+end
+function Card.IsSpecialSummoned(c)
+	return c:IsSummonType(SUMMON_TYPE_SPECIAL)
+end
+function Card.IsRitualSummoned(c)
+	return c:IsSummonType(SUMMON_TYPE_RITUAL)
+end
+function Card.IsFusionSummoned(c)
+	return c:IsSummonType(SUMMON_TYPE_FUSION)
+end
+function Card.IsSynchroSummoned(c)
+	return c:IsSummonType(SUMMON_TYPE_SYNCHRO)
+end
+function Card.IsXyzSummoned(c)
+	return c:IsSummonType(SUMMON_TYPE_XYZ)
+end
+function Card.IsPendulumSummoned(c)
+	return c:IsSummonType(SUMMON_TYPE_PENDULUM)
+end
+function Card.IsLinkSummoned(c)
+	return c:IsSummonType(SUMMON_TYPE_LINK)
+end
+
 function Card.IsPreviousAttributeOnField(c,attr)
 	return c:GetPreviousAttributeOnField()&attr>0
 end
@@ -1411,6 +1445,75 @@ function Auxiliary.bfgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 
 Auxiliary.selfbanishcost=aux.bfgcost
+Auxiliary.SelfBanishCost=aux.bfgcost
+Auxiliary.SelfReleaseCost=aux.selfreleasecost
+Auxiliary.SelfTributeCost=aux.selfreleasecost
+
+function Auxiliary.SelfToGraveCost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsAbleToGraveAsCost() end
+	Duel.SendtoGrave(c,REASON_COST)
+end
+function Auxiliary.SelfToHandCost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsAbleToHandAsCost() end
+	Duel.SendtoHand(c,nil,REASON_COST)
+end
+function Auxiliary.SelfToDeckCost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsAbleToDeckAsCost() end
+	Duel.SendtoDeck(c,nil,SEQ_DECKSHUFFLE,REASON_COST)
+end
+function Auxiliary.SelfToExtraCost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsAbleToExtraAsCost() end
+	Duel.SendtoDeck(c,nil,SEQ_DECKSHUFFLE,REASON_COST)
+end
+function Auxiliary.SelfDiscardCost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsDiscardable() end
+	Duel.SendtoGrave(c,REASON_DISCARD|REASON_COST)
+end
+function Auxiliary.SelfDiscardToGraveCost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsDiscardable() and c:IsAbleToGraveAsCost() end
+	Duel.SendtoGrave(c,REASON_DISCARD|REASON_COST)
+end
+
+function Auxiliary.PayLPCost(lp_value,pay_until)
+	if not pay_until then
+		if lp_value>=1 then
+			--Pay X LP, where X is any number equal to or higher than 1
+			return function(e,tp,eg,ep,ev,re,r,rp,chk)
+				if chk==0 then return Duel.CheckLPCost(tp,lp_value) end
+				Duel.PayLPCost(tp,lp_value)
+			end
+		else
+			--Pay a fraction of your LP (half, one third, etc)
+			return function(e,tp,eg,ep,ev,re,r,rp,chk)
+				if chk==0 then return true end
+				Duel.PayLPCost(tp,math.floor(Duel.GetLP(tp)*lp_value))
+			end
+		end
+	else
+		--Pay LP so that you have X left
+		return function(e,tp,eg,ep,ev,re,r,rp,chk)
+			local pay_lp_value=math.floor(Duel.GetLP(tp)-lp_value)
+			if chk==0 then return pay_lp_value>0 and Duel.CheckLPCost(tp,pay_lp_value) end
+			Duel.PayLPCost(tp,pay_lp_value)
+		end
+	end
+end
+
+function Auxiliary.DiscardCost(filter,other,count)
+	count=count or 1
+	filter=filter and aux.AND(filter,Card.IsDiscardable) or Card.IsDiscardable
+	return function(e,tp,eg,ep,ev,re,r,rp,chk)
+		local exclude=other and e:GetHandler() or nil
+		if chk==0 then return Duel.IsExistingMatchingCard(filter,tp,LOCATION_HAND,0,count,exclude) end
+		Duel.DiscardHand(tp,filter,count,count,REASON_COST|REASON_DISCARD,exclude)
+	end
+end
 
 -- "Detach Xyz Material Cost Generator"
 -- Generates a function to be used by Effect.SetCost in order to detach

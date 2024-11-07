@@ -1,5 +1,5 @@
---ファンタズム・マスクマスター
---Phantasm Mask Master
+--Ｅ・ＨＥＲＯ プリズマー
+--Elemental HERO Prisma
 --Scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.revealfilter(c)
-	return c:IsRace(RACE_CYBORG) and c:IsLevel(9) and c:IsType(TYPE_FUSION) and c.material and not c:IsPublic()
+	return c:IsType(TYPE_FUSION) and c.material and not c:IsPublic()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.revealfilter,tp,LOCATION_EXTRA,0,1,nil) end

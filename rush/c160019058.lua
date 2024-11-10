@@ -31,7 +31,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local maxg=Duel.GetMatchingGroup(s.maxfilter,tc:GetPreviousControler(),LOCATION_GRAVE,0,nil,tc)
 		for maxc in aux.Next(maxg) do
 			local zone=0x8
-			if maxc:IsMaximumModeLeft() then zone=0x2 end
+			if maxc.MaximumSide=="Left" then zone=0x2 end
 			maxc:RegisterFlagEffect(FLAG_MAXIMUM_SIDE,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD,0,1)
 			Duel.MoveToField(maxc,tc:GetPreviousControler(),tc:GetPreviousControler(),LOCATION_MZONE,POS_FACEUP_ATTACK,true,zone)
 		end

@@ -22,7 +22,7 @@ end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local ct1=Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD|LOCATION_HAND,0)
 	local ct2=Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD|LOCATION_HAND)
-	return ct2>=ct1 and (Duel.IsTurnPlayer(tp) and Duel.IsMainPhase() or Duel.IsBattlePhase())
+	return ct2>ct1 and (Duel.IsTurnPlayer(tp) and Duel.IsMainPhase() or Duel.IsBattlePhase())
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler())

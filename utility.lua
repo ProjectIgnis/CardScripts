@@ -1555,6 +1555,25 @@ function Auxiliary.dxmcostgen(min,max,op)
 	end
 end
 
+Cost={}
+
+function Cost.AND(...)
+	local fns={...}
+	return function(e,tp,eg,ep,ev,re,r,rp,chk)
+		--when checking, stop at the first falsy value
+		if chk==0 then
+			for _,fn in ipairs(fns) do
+				if not fn(e,tp,eg,ep,ev,re,r,rp,0) then return false end
+			end
+			return true
+		end
+		--when executing, run all functions regardless of what they return
+		for _,fn in ipairs(fns) do
+			fn(e,tp,eg,ep,ev,re,r,rp,1)
+		end
+	end
+end
+
 function Card.EquipByEffectLimit(e,c)
 	if e:GetOwner()~=c then return false end
 	local eff={c:GetCardEffect(89785779+EFFECT_EQUIP_LIMIT)}

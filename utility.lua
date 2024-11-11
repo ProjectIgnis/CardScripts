@@ -1558,6 +1558,20 @@ end
 
 Cost={}
 
+Cost.SelfBanish=aux.bfgcost
+Cost.SelfRelease=aux.selfreleasecost
+Cost.SelfTribute=aux.selfreleasecost
+Cost.SelfToGrave=aux.SelfToGraveCost
+Cost.SelfToHand=aux.SelfToHandCost
+Cost.SelfToDeck=aux.SelfToDeckCost
+Cost.SelfToExtra=aux.SelfToExtraCost
+Cost.SelfDiscard=aux.SelfDiscardCost
+Cost.SelfDiscardToGrave=aux.SelfDiscardToGraveCost
+
+Cost.Detach=aux.dxmcostgen
+Cost.Discard=aux.DiscardCost
+Cost.PayLP=aux.PayLPCost
+
 function Cost.AND(...)
 	local fns={...}
 	return function(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -1574,9 +1588,6 @@ function Cost.AND(...)
 		end
 	end
 end
-
-Cost.Detach=aux.dxmcostgen
-
 
 function Card.EquipByEffectLimit(e,c)
 	if e:GetOwner()~=c then return false end

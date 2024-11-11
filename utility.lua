@@ -1572,6 +1572,14 @@ Cost.Detach=aux.dxmcostgen
 Cost.Discard=aux.DiscardCost
 Cost.PayLP=aux.PayLPCost
 
+function Cost.OncePerChain(flag)
+	return function(e,tp,eg,ep,ev,re,r,rp,chk)
+		local c=e:GetHandler()
+		if chk==0 then return not c:HasFlagEffect(flag) end
+		c:RegisterFlagEffect(flag,RESET_CHAIN,0,1)
+	end
+end
+
 function Cost.AND(...)
 	local fns={...}
 	return function(e,tp,eg,ep,ev,re,r,rp,chk)

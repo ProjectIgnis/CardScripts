@@ -1525,6 +1525,7 @@ end
 -- group of just detached materials in order to do some additional handling with
 -- them.
 function Auxiliary.dxmcostgen(min,max,op)
+	max=max or min
 	do --Perform some sanity checks, simplifies debugging
 		local max_type=type(max)
 		local op_type=type(op)
@@ -1544,16 +1545,16 @@ function Auxiliary.dxmcostgen(min,max,op)
 		local crm=c:CheckRemoveOverlayCard(tp,min,REASON_COST)
 		if chk==0 then return (nn and c:IsLocation(LOCATION_MZONE)) or crm end
 		if nn and (not crm or Duel.SelectYesNo(tp,aux.Stringid(CARD_NUMERON_NETWORK,1))) then
-			Duel.Hint(HINT_CARD,tp,CARD_NUMERON_NETWORK)
-			return true --NOTE: Does not execute `op`
+			--Do not execute `op`, hint at "Numeron Network" being applied
+			return Duel.Hint(HINT_CARD,tp,CARD_NUMERON_NETWORK)
 		end
 		local m=type(max)=="number" and max or max(e,tp)
 		if c:RemoveOverlayCard(tp,min,m,REASON_COST)>0 and op then
 			op(e,Duel.GetOperatedGroup())
 		end
-		return true --NOTE: to use with aux.AND
 	end
 end
+
 
 Cost={}
 
@@ -1573,6 +1574,9 @@ function Cost.AND(...)
 		end
 	end
 end
+
+Cost.Detach=aux.dxmcostgen
+
 
 function Card.EquipByEffectLimit(e,c)
 	if e:GetOwner()~=c then return false end

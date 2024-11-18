@@ -46,4 +46,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetValue(function(e,te)return te:GetOwnerPlayer()~=e:GetOwnerPlayer()end)
 	e1:SetReset(RESETS_STANDARD_PHASE_END,2)
 	c:RegisterEffect(e1)
+	c:AddCenterToSideEffectHandler(e1)
 end

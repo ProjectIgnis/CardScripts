@@ -3,7 +3,7 @@
 --Scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)
-	c:RegisterEffect(Fusion.CreateSummonEff(c,s.ffilter,Fusion.OnFieldMat,s.fextra,nil,nil,s.stage2))
+	c:RegisterEffect(Fusion.CreateSummonEff(c,s.ffilter,Fusion.OnFieldMat(Card.IsFaceup),s.fextra,nil,nil,s.stage2))
 end
 function s.ffilter(c)
 	return c:IsRace(RACE_INSECT) and c:IsAttribute(ATTRIBUTE_LIGHT)

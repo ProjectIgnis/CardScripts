@@ -1479,6 +1479,12 @@ function Auxiliary.SelfDiscardToGraveCost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return c:IsDiscardable() and c:IsAbleToGraveAsCost() end
 	Duel.SendtoGrave(c,REASON_DISCARD|REASON_COST)
 end
+function Auxiliary.SelfRevealCost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return not c:IsPublic() end
+	Duel.ConfirmCards(1-tp,c)
+	Duel.ShuffleHand(tp)
+end
 
 function Auxiliary.PayLPCost(lp_value,pay_until)
 	if not pay_until then

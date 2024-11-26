@@ -24,7 +24,6 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,0,EFFECT_COUNT_CODE_SINGLE)
 	e2:SetCost(s.cost)
-	e2:SetTarget(s.indestg)
 	e2:SetOperation(s.indesop)
 	c:RegisterEffect(e2)
 end
@@ -46,9 +45,6 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_PHASE|PHASE_END)
 		c:RegisterEffect(e1)
 	end
-end
-function s.indestg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():GetEffectCount(EFFECT_INDESTRUCTABLE_EFFECT)==0 end
 end
 function s.indesop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

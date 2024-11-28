@@ -1,4 +1,4 @@
---
+--バーニング・ウィンド
 --Burning Wind
 --Scripted by YoshiDuels
 local s,id=GetID()
@@ -17,7 +17,7 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
 	local tc=Duel.GetAttackTarget()
-	return at and tc and at:IsControler(1-tp)
+	return at and tc and at:IsControler(1-tp) and at:IsLevelAbove(5)
 end
 function s.atkfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_WARRIOR) and not c:IsMaximumModeSide()
@@ -55,8 +55,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				end
 			end
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTACKTARGET)
-			local g=ag:Select(tp,1,1,at)
-			local tc=g:GetFirst()
+			local tc=ag:Select(tp,1,1,at):GetFirst()
 			if tc then
 				Duel.ChangeAttackTarget(tc)
 			end

@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.pltg)
 	e2:SetOperation(s.plop)
 	c:RegisterEffect(e2)
-	--Destruction replacement for "Millennium" monsters
+	--Place "Millennium" monsters that are destroyed in the S/T zone instead of sending them to the GY
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EFFECT_DESTROY_REPLACE)
@@ -70,7 +70,7 @@ end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=eg:Filter(s.repfilter,nil,tp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
-	if chk==0 then return ft>0 and #g>0 end
+	if chk==0 then return ft>0 and #g>0 and not e:GetHandler():IsStatus(STATUS_DESTROY_CONFIRMED) end
 	if Duel.SelectEffectYesNo(tp,e:GetHandler(),96) then
 		if #g>1 then
 			ft=math.min(ft,#g)

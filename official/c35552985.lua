@@ -1,5 +1,5 @@
 --刻まれし魔の讃聖
---Fiendsmith Sanctus
+--Fiendsmith's Sanct
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id+1}
-s.listed_seres={SET_FIENDSMITH}
+s.listed_series={SET_FIENDSMITH}
 function s.confilter(c)
 	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_FIEND)
 end

@@ -14,7 +14,7 @@ function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	return aux.CanActivateSkill(tp)
 		and Duel.GetActivityCount(tp,ACTIVITY_NORMALSUMMON)==0
 		and Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil)
-		and Duel.IsExistingMatchingCard(s.fusfilter,tp,0,LOCATION_EXTRA,1,nil,e,tp)
+		and Duel.IsExistingMatchingCard(s.fusfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))

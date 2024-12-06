@@ -38,9 +38,9 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	for tc in eg:Iter() do
-	if tc:IsCode(4796100) and tc:IsSummonType(SUMMON_TYPE_FUSION) then
-		local p=tc:GetSummonPlayer()
-		s[p]=s[p]+1
+		if tc:IsCode(4796100) and tc:IsSummonType(SUMMON_TYPE_FUSION) then
+			local p=tc:GetSummonPlayer()
+			s[p]=s[p]+1
 		end
 	end
 end

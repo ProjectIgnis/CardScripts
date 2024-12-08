@@ -119,7 +119,7 @@ function s.costfilter(c,e,tp,eg,ep,ev,re,r,rp)
 	return Fusion.SummonEffTG(params)(e,tp,eg,ep,ev,re,r,rp,0)
 end
 function s.fuscost(e,tp,eg,ep,ev,re,r,rp,chk)
-`	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil,e,tp,eg,ep,ev,re,r,rp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil,e,tp,eg,ep,ev,re,r,rp) end
 	Duel.DiscardHand(tp,s.costfilter,1,1,REASON_COST|REASON_DISCARD,nil,e,tp,eg,ep,ev,re,r,rp)
 end
 function s.matfilter(c)

@@ -32,7 +32,7 @@ end
 function s.fcheck(exc)
 	return function(tp,sg,fc)
 		if sg:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then
-			local matgg=Duel.GetFusionMaterial(tp):Filter(s.matfilter,nil,fc)
+			local matg=Duel.GetFusionMaterial(tp):Filter(s.matfilter,nil,fc)
 			return #matg>1 and fc.min_material_count>2 
 		end
 		return not (exc and sg:IsContains(exc)) 

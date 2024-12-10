@@ -7,98 +7,50 @@ end
 s.listed_series={SET_ELEMENTAL_HERO}
 --Fusion Summon Functions
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
-	--condition
-	return aux.CanActivateSkill(tp) and Duel.GetFlagEffect(tp,id)==0 and s.fusTarget(e,tp,eg,ep,ev,re,r,rp,0)
+	return aux.CanActivateSkill(tp) and s.cost(e,tp,eg,ep,ev,re,r,rp,0) and not Duel.HasFlagEffect(tp,id)
 end
-function s.listedmatfilter(c,fusc)
-    	return c:IsFaceup() and fusc:ListsCodeAsMaterial(c:GetCode())
-end
-function s.fusfilter(c,e,tp,m,f,chkf)
-	if not (c:IsType(TYPE_FUSION) and c:IsSetCard(SET_ELEMENTAL_HERO) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false)) then return false end
-    	if c.min_material_count>2 and Duel.IsExistingMatchingCard(s.listedmatfilter,tp,LOCATION_MZONE,0,2,nil,c) then
-        	local dg=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_DECK,0,nil,e,c)
-        	m:Merge(dg)
-    	end
-    	return (not f or f(c)) and c:CheckFusionMaterial(m,nil,chkf)
-end
-function s.cfilter(c,e,tp)
+function s.costfilter(c,e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsDiscardable() then return false end
-	local chkf=tp
-	local mg1=Duel.GetFusionMaterial(tp):Filter(aux.NOT(Card.IsImmuneToEffect),nil,e)
-	local res=Duel.IsExistingMatchingCard(s.fusfilter,tp,LOCATION_EXTRA,0,1,c,e,tp,mg1-c,nil,chkf)
-	if not res then
-		local ce=Duel.GetChainMaterial(tp)
-		if ce~=nil then
-			local fgroup=ce:GetTarget()
-			local mg2=fgroup(ce,e,tp)
-			local mf=ce:GetValue()
-			res=Duel.IsExistingMatchingCard(s.fusfilter,tp,LOCATION_EXTRA,0,1,c,e,tp,mg2-c,mf,chkf)
+	local params={fusfilter=aux.FilterBoolFunction(Card.IsSetCard,SET_ELEMENTAL_HERO),extrafil=s.fextra(c)}
+	return Fusion.SummonEffTG(params)(e,tp,eg,ep,ev,re,r,rp,0)
+end
+function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil,e,tp,eg,ep,ev,re,r,rp) end
+	Duel.DiscardHand(tp,s.costfilter,1,1,REASON_COST|REASON_DISCARD,nil,e,tp,eg,ep,ev,re,r,rp)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOGRAVE,nil,0,tp,LOCATION_DECK)
+end
+function s.fextra(exc)
+	return function(e,tp,mg)
+		if mg:IsExists(Card.IsLocation,1,nil,LOCATION_MZONE) then
+			local eg=Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToGrave),tp,LOCATION_DECK,0,nil)
+			if eg and #eg>0 then
+				return eg,s.fcheck(exc)
+			end
 		end
 	end
-	return res
 end
-function s.fusTarget(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil,e,tp) end
-	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST+REASON_DISCARD,nil,e,tp)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
+function s.fcheck(exc)
+	return function(tp,sg,fc)
+		if sg:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then
+			local matgg=Duel.GetFusionMaterial(tp):Filter(s.matfilter,nil,fc)
+			return #matg>1 and fc.min_material_count>2 
+		end
+		return not (exc and sg:IsContains(exc)) 
+	end
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 	Duel.Hint(HINT_CARD,tp,id)
-	--Fusion Summon "Elemental HERO" Fusion monster
-	local g2=s.fusTarget(e,tp,eg,ep,ev,re,r,rp,0)
-	--OPD Register
+	local params={fusfilter=aux.FilterBoolFunction(Card.IsSetCard,SET_ELEMENTAL_HERO),extrafil=s.fextra(c)}
+	--You can only apply this effect once per Duel
 	Duel.RegisterFlagEffect(tp,id,0,0,0)
-	--Fusion Procedure
-	s.fusTarget(e,tp,eg,ep,ev,re,r,rp,1)
-	local chkf=tp
-	local mg1=Duel.GetFusionMaterial(tp):Filter(aux.NOT(Card.IsImmuneToEffect),nil,e)
-	local sg1=Duel.GetMatchingGroup(s.fusfilter,tp,LOCATION_EXTRA,0,nil,e,tp,mg1,nil,chkf)
-	local mg2,sg2=nil,nil
-	local ce=Duel.GetChainMaterial(tp)
-	if ce~=nil then
-		local fgroup=ce:GetTarget()
-		mg2=fgroup(ce,e,tp)
-		local mf=ce:GetValue()
-		sg2=Duel.GetMatchingGroup(s.fusfilter,tp,LOCATION_EXTRA,0,nil,e,tp,mg2,mf,chkf)
-	end
-	if sg1:GetCount()>0 or (sg2~=nil and sg2:GetCount()>0) then
-		local sg=sg1:Clone()
-		if sg2 then sg:Merge(sg2) end
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local tg=sg:Select(tp,1,1,nil)
-		local tc=tg:GetFirst()
-		if sg1:IsContains(tc) and (sg2==nil or not sg2:IsContains(tc) or not Duel.SelectYesNo(tp,ce:GetDescription())) then
-			local fusg=Group.CreateGroup()
-			local fg=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_MZONE,0,nil,e,tc)
-			for sc in fg:Iter() do
-				if tc:ListsCodeAsMaterial(sc:GetCode()) then
-					fusg:AddCard(sc)
-				end
-			end
-			if tc.min_material_count>2 and #fusg==2 then
-				local dg=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_DECK,0,nil,e,tc)
-				mg1:Merge(dg)
-				local mat1=Duel.SelectFusionMaterial(tp,tc,mg1,nil,chkf)
-				tc:SetMaterial(mat1)
-				Duel.SendtoGrave(mat1,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
-				Duel.BreakEffect()
-				Duel.SpecialSummon(tc,SUMMON_TYPE_FUSION,tp,tp,false,false,POS_FACEUP)
-			else
-				local mat1=Duel.SelectFusionMaterial(tp,tc,mg1,nil,chkf)
-				tc:SetMaterial(mat1)
-				Duel.SendtoGrave(mat1,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
-				Duel.BreakEffect()
-				Duel.SpecialSummon(tc,SUMMON_TYPE_FUSION,tp,tp,false,false,POS_FACEUP)
-			end
-		else
-			local mat2=Duel.SelectFusionMaterial(tp,tc,mg2,nil,chkf)
-			local fop=ce:GetOperation()
-			fop(ce,e,tp,tc,mat2)
-		end
-		tc:CompleteProcedure()
-	end
+	--Discard 1 card
+	s.cost(e,tp,eg,ep,ev,re,r,rp,1)
+	--Fusion Summon 1 "Elemental HERO"" Fusion monster, using monsters from your hand or field as material
+	--OR use monsters from your Deck if the Fusion Monster requires 3+ materials and you control 2 "Elemental HERO" monsters listed on it as material
+	Fusion.SummonEffTG(params)(e,tp,eg,ep,ev,re,r,rp,1)
+	Fusion.SummonEffOP(params)(e,tp,eg,ep,ev,re,r,rp)
 end
-function s.matfilter(c,e,fc)
-	return c:IsSetCard(SET_ELEMENTAL_HERO) and not c:IsImmuneToEffect(e) and c:IsCanBeFusionMaterial(fc)
+function s.matfilter(c,fc)
+	return c:IsCanBeFusionMaterial(fc) and fc:ListsCodeAsMaterial(c:GetCode()) and c:IsLocation(LOCATION_MZONE)
 end

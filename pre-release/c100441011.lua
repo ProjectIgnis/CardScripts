@@ -36,6 +36,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
 end
 s.listed_names={63767246} --"Number 38: Hope Harbinger Dragon Titanic Galaxy"
+s.xyz_number=38
 function s.ovfilter(c,tp,lc)
 	return c:IsSummonCode(lc,SUMMON_TYPE_XYZ,tp,63767246) and c:IsFaceup()
 end

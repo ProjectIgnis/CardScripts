@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={37279508} --"Number 37: Hope Woven Dragon Spider Shark"
+s.xyz_number=37
 function s.ovfilter(c,tp,lc)
 	return c:IsSummonCode(lc,SUMMON_TYPE_XYZ,tp,37279508) and c:IsFaceup()
 end

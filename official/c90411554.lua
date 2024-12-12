@@ -1,18 +1,19 @@
 --巌征竜－レドックス
+--Redox, Dragon Ruler of Boulders
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	--Special Summon this card from the hand or GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetRange(LOCATION_HAND+LOCATION_GRAVE)
+	e1:SetRange(LOCATION_HAND|LOCATION_GRAVE)
 	e1:SetCountLimit(1,id)
 	e1:SetCost(s.hspcost)
 	e1:SetTarget(s.hsptg)
 	e1:SetOperation(s.hspop)
 	c:RegisterEffect(e1)
-	--return
+	--Return this card to the hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND)
@@ -24,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.rettg)
 	e2:SetOperation(s.retop)
 	c:RegisterEffect(e2)
-	--spsummon
+	--Special Summon 1 monster from the GY
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -35,14 +36,14 @@ function s.initial_effect(c)
 	e3:SetCost(s.spcost)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
-	c:RegisterEffect(e3)
-	--search
+	c:RegisterEffect(e3,false,REGISTER_FLAG_DRAGON_RULER)
+	--Add 1 EARTH Dragon-Type monster from your Deck to your hand
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,3))
 	e4:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e4:SetProperty(EFFECT_FLAG_DELAY)
 	e4:SetCode(EVENT_REMOVE)
-	e4:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 	e4:SetCountLimit(1,id)
 	e4:SetTarget(s.thtg)
 	e4:SetOperation(s.thop)
@@ -53,15 +54,15 @@ function s.rfilter(c)
 		and (c:IsLocation(LOCATION_HAND) or aux.SpElimFilter(c,true))
 end
 function s.hspcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local rg=Duel.GetMatchingGroup(s.rfilter,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,e:GetHandler())
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2 and #rg>1 
-		and aux.SelectUnselectGroup(rg,e,tp,2,2,aux.ChkfMMZ(1),0) end
+	local rg=Duel.GetMatchingGroup(s.rfilter,tp,LOCATION_HAND|LOCATION_MZONE|LOCATION_GRAVE,0,e:GetHandler())
+	if chk==0 then return #rg>1 and aux.SelectUnselectGroup(rg,e,tp,2,2,aux.ChkfMMZ(1),0) end
 	local g=aux.SelectUnselectGroup(rg,e,tp,2,2,aux.ChkfMMZ(1),1,tp,HINTMSG_REMOVE)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.hsptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,tp,0)
 end
 function s.hspop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -70,12 +71,11 @@ function s.hspop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
-		and (e:GetHandler():GetSummonType()&SUMMON_TYPE_SPECIAL)==SUMMON_TYPE_SPECIAL
+	return Duel.IsTurnPlayer(1-tp) and e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL)
 end
 function s.rettg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,e:GetHandler(),1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,e:GetHandler(),1,tp,0)
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -87,12 +87,13 @@ function s.dfilter(c)
 	return c:IsAttribute(ATTRIBUTE_EARTH) and c:IsDiscardable() and c:IsAbleToGraveAsCost()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() and e:GetHandler():IsAbleToGraveAsCost()
-		and Duel.IsExistingMatchingCard(s.dfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
+	local c=e:GetHandler()
+	if chk==0 then return c:IsDiscardable() and c:IsAbleToGraveAsCost()
+		and Duel.IsExistingMatchingCard(s.dfilter,tp,LOCATION_HAND,0,1,c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
-	local g=Duel.SelectMatchingCard(tp,s.dfilter,tp,LOCATION_HAND,0,1,1,e:GetHandler())
+	local g=Duel.SelectMatchingCard(tp,s.dfilter,tp,LOCATION_HAND,0,1,1,c)
 	g:AddCard(e:GetHandler())
-	Duel.SendtoGrave(g,REASON_COST+REASON_DISCARD)
+	Duel.SendtoGrave(g,REASON_COST|REASON_DISCARD)
 end
 function s.spfilter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -103,11 +104,11 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,s.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,tp,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

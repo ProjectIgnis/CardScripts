@@ -1,6 +1,5 @@
 --地征竜－リアクタン
 --Reactan, Dragon Ruler of Pebbles
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 "Redox, Dragon Ruler of Boulders" from deck
@@ -13,10 +12,9 @@ function s.initial_effect(c)
 	e1:SetCost(s.spcost)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
-	c:RegisterEffect(e1)
+	c:RegisterEffect(e1,false,REGISTER_FLAG_DRAGON_RULER)
 end
-s.listed_names={90411554}
-
+s.listed_names={90411554} --"Redox, Dragon Ruler of Boulders" 
 function s.costfilter(c)
 	return (c:IsRace(RACE_DRAGON) or c:IsAttribute(ATTRIBUTE_EARTH)) and c:IsDiscardable()
 end
@@ -27,7 +25,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND,0,1,1,c)
 	g:AddCard(c)
-	Duel.SendtoGrave(g,REASON_COST+REASON_DISCARD)
+	Duel.SendtoGrave(g,REASON_COST|REASON_DISCARD)
 end
 function s.spfilter(c,e,tp)
 	return c:IsCode(90411554) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -47,7 +45,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 	Duel.SpecialSummonComplete()

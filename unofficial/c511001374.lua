@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 end
 s.listed_series={SET_NUMBER}
+s.listed_names={CARD_UNKNOWN}
 s.xyz_number=8
 function s.efffilter(c)
 	return c:IsNegatableMonster() and c:IsAttackPos()
@@ -72,7 +73,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CHANGE_CODE)
-			e1:SetValue(511001375) --"Unknown"
+			e1:SetValue(CARD_UNKNOWN)
 			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			a:RegisterEffect(e1)
 			if c:IsFaceup() and c:IsRelateToEffect(e) then

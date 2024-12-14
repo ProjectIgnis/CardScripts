@@ -94,7 +94,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsReason(REASON_BATTLE) or (rp==1-tp and c:IsReason(REASON_EFFECT) and c:IsPreviousControler(tp))
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(SET_DRAGON_RULER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsFaceup()
+	return c:IsSetCard(SET_DRAGON_RULER) and c:IsLevel(7) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsFaceup()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

@@ -19,7 +19,7 @@ function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	local g1=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
 	local g2=Duel.GetFieldGroup(tp,0,LOCATION_MZONE):Filter(Card.IsMonster,nil)
 	return aux.CanActivateSkill(tp) and #g1==1 and #g2>#g1
-		and Duel.GetFlagEffect(tp,id)==0 and Duel.GetCustomActivityCount(id+100,tp,ACTIVITY_SUMMON)==0
+		and Duel.GetFlagEffect(tp,id)==0 and Duel.GetCustomActivityCount(id+100,tp,ACTIVITY_NORMALSUMMON)==0
         	and Duel.GetCustomActivityCount(id+200,tp,ACTIVITY_SPSUMMON)==0 and Duel.GetCustomActivityCount(id+300,tp,ACTIVITY_FLIPSUMMON)==0
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil,e,tp)
 end

@@ -52,7 +52,7 @@ function s.spop(water)
 		local g=Duel.SelectMatchingCard(tp,s.desfilter,tc:GetOwner(),LOCATION_MZONE,0,1,1,nil,water)
 		if #g==0 then return end
 		Duel.HintSelection(g)
-		if Duel.Destroy(g,REASON_DESTROY)>0 then
+		if Duel.Destroy(g,REASON_EFFECT)>0 then
 			Duel.SpecialSummon(tc,0,tp,tc:GetControler(),false,false,POS_FACEUP_DEFENSE)
 		end
 	end

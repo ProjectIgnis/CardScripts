@@ -2,10 +2,10 @@
 --Number 18: Heraldry Patriarch
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
+	--Xyz Summon procedure: 2 Level 4 monsters
 	Xyz.AddProcedure(c,nil,4,2)
 	c:EnableReviveLimit()
-	--destroy
+	--Destroy monsters on the field
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)
@@ -13,13 +13,14 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCost(s.cost)
+	e1:SetCountLimit(1,0,EFFECT_COUNT_CODE_CHAIN)
+	e1:SetCost(aux.dxmcostgen(1,1,nil))
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
-	--to grave
+	--Send 2 "Heraldic Beast" monsters from your Deck to the Graveyard.
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,2))
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOGRAVE)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
@@ -28,14 +29,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tgop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x76}
+s.listed_series={SET_HERALDIC_BEAST}
 s.xyz_number=18
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:CheckRemoveOverlayCard(tp,1,REASON_COST) and c:GetFlagEffect(id)==0 end
-	c:RemoveOverlayCard(tp,1,1,REASON_COST)
-	c:RegisterFlagEffect(id,RESET_CHAIN,0,1)
-end
 function s.cfilter(c)
 	return c:IsFaceup() and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,c:GetCode()),0,LOCATION_MZONE,LOCATION_MZONE,1,c)
 end
@@ -46,9 +41,8 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
-	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
-	local tc=g:GetFirst()
+	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
+	local tc=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil):GetFirst()
 	if tc then
 		local dg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsCode,tc:GetCode()),tp,LOCATION_MZONE,LOCATION_MZONE,tc)
 		Duel.Destroy(dg,REASON_EFFECT)
@@ -58,9 +52,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 		e1:SetTargetRange(0,1)
-		e1:SetTarget(s.splimit)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		e1:SetLabel(tc:GetCode())
+		e1:SetTarget(function(e,c) return c:IsCode(e:GetLabel()) end)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_CANNOT_SUMMON)
@@ -70,11 +64,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e3)
 	end
 end
-function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return c:IsCode(e:GetLabel())
-end
 function s.tgfilter(c)
-	return c:IsSetCard(0x76) and c:IsMonster() and c:IsAbleToGrave()
+	return c:IsSetCard(SET_HERALDIC_BEAST) and c:IsMonster() and c:IsAbleToGrave()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,2,nil) end

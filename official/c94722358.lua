@@ -22,13 +22,13 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
 	e2:SetCode(EFFECT_TRAP_ACT_IN_SET_TURN)
 	e2:SetValue(function(e) e:SetLabel(1) end)
-	e2:SetCondition(function(e) return Duel.IsExistingMatchingCard(s.thcostfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil) end)
+	e2:SetCondition(function(e) return Duel.IsExistingMatchingCard(s.thcostfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil,e:GetHandlerPlayer()) end)
 	c:RegisterEffect(e2)
 	e1:SetLabelObject(e2)
 end
 s.listed_series={SET_MALISS}
-function s.thcostfilter(c)
-	return c:IsFaceup() and c:IsSetCard(SET_MALISS) and c:IsAbleToRemove()
+function s.thcostfilter(c,tp)
+	return c:IsFaceup() and c:IsSetCard(SET_MALISS) and c:IsAbleToRemove(tp)
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local label_obj=e:GetLabelObject()
@@ -36,7 +36,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if label_obj:GetLabel()>0 then
 		label_obj:SetLabel(0)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local g=Duel.SelectMatchingCard(tp,s.thcostfilter,tp,LOCATION_MZONE,0,1,1,nil)
+		local g=Duel.SelectMatchingCard(tp,s.thcostfilter,tp,LOCATION_MZONE,0,1,1,nil,tp)
 		Duel.Remove(g,POS_FACEUP,REASON_COST)
 	end
 end

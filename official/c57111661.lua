@@ -44,7 +44,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_MALISS}
 function s.spcostfilter(c,loc,e,tp)
-	return c:IsFaceup() and c:IsSetCard(SET_MALISS) and c:IsAbleToRemove()
+	return c:IsFaceup() and c:IsSetCard(SET_MALISS) and c:IsAbleToRemove(tp)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,loc,0,1,nil,e,tp,c)
 end
 function s.spfilter(c,e,tp,mc,ignore_zone_chk)

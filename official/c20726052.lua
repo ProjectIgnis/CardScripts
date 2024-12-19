@@ -36,7 +36,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_MALISS}
 function s.spcostfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(SET_MALISS) and c:IsAbleToRemove() and Duel.GetMZoneCount(tp,c)>0
+	return c:IsFaceup() and c:IsSetCard(SET_MALISS) and c:IsAbleToRemove(tp) and Duel.GetMZoneCount(tp,c)>0
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100)

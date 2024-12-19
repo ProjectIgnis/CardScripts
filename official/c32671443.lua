@@ -55,7 +55,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			return tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and ft>0 end,
 		function(c)
 			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP) end,
-		aux.Stringid(id,0))
+		aux.Stringid(id,2))
 	end
 end
 function s.atkfilter1(c,tp)
@@ -76,7 +76,7 @@ end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e):Filter(Card.IsFaceup,nil)
 	if #g~=2 then return end
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
+	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,3))
 	local tg=g:Select(tp,1,1,nil)
 	Duel.HintSelection(tg)
 	local hc=tg:GetFirst()

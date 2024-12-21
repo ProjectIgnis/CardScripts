@@ -583,3 +583,4 @@ SET_MALISS                        = 0x1b9
 SET_ARGOSTARS                     = 0x1ba
 SET_AQUA_JET                      = 0x1bb
 SET_DRAGON_RULER                  = 0x1bc
+SET_MITSURUGI                     = 0x1bd

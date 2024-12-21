@@ -107,6 +107,5 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.babeltgcond(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return Duel.IsPlayerAffectedByEffect(tp,CARD_ORCUSTRATED_BABEL) and Duel.IsMainPhase()
-		and c:IsPreviousLocation(LOCATION_EMZONE) and c:GetTurnID()==Duel.GetTurnCount()
+	return Duel.IsPlayerAffectedByEffect(tp,CARD_ORCUSTRATED_BABEL) and c:IsPreviousLocation(LOCATION_EMZONE) and c:GetTurnID()==Duel.GetTurnCount()
 end

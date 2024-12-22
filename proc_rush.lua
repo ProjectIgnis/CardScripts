@@ -105,6 +105,8 @@ FLAG_DOUBLE_TRIB_0_DEF=160017141
 FLAG_DOUBLE_TRIB_EFFECT=160017241
 FLAG_DOUBLE_TRIB_LEGEND=160212047 -- Legend Scout
 FLAG_DOUBLE_TRIB_FAIRY=160019009 -- Dice Key Lilith
+FLAG_DOUBLE_TRIB_OBLIVION=160020004 -- Chaos Coolstars
+FLAG_DOUBLE_TRIB_REQUIEM=160020104
 function Card.AddDoubleTribute(c,id,otfilter,eftg,reset,...)
 	for i,flag in ipairs{...} do
 		c:RegisterFlagEffect(flag,reset,0,1)

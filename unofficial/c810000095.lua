@@ -56,7 +56,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp):GetFirst()
 	if tc then
-		local mi,ma=c:GetTributeRequirement()
+		local mi,ma=tc:GetTributeRequirement()
 		if mi>0 then
 			local g=Duel.SelectTribute(tp,tc,mi,ma)
 			Duel.Release(g,REASON_EFFECT)

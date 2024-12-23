@@ -26,7 +26,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.SelectMatchingCard(tp,s.revealfilter,tp,LOCATION_EXTRA,0,1,1,nil):GetFirst()
 	Duel.ConfirmCards(1-tp,tc)
 	Duel.ShuffleExtra(tp)
-	--Effect	
+	--Effect
 	local announceFilter={}
 	for _,name in pairs(tc.material) do
 		if #announceFilter==0 then
@@ -48,7 +48,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetOperation(s.chngcon)
 	c:RegisterEffect(e1)
 end
-function s.chngcon(scard,sumtype,tp,reqcard)
-	if nil==reqcard then return true end
-	return reqcard:IsCode(CARD_FUSION) and ((sumtype&MATERIAL_FUSION)~=0 or (sumtype&SUMMON_TYPE_FUSION)~=0)
+function s.chngcon(scard,sumtype,tp)
+	return Fusion.SummonEffect and Fusion.SummonEffect:GetHandler():IsCode(CARD_FUSION) and ((sumtype&MATERIAL_FUSION)~=0 or (sumtype&SUMMON_TYPE_FUSION)~=0)
 end

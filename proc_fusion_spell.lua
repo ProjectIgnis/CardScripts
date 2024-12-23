@@ -150,17 +150,6 @@ function Fusion.SummonEffFilter(c,fusfilter,e,tp,mg,gc,chkf,value,sumlimit,nosum
 	if efmg then
 		mg:Merge(efmg:Filter(GetExtraMatEff,nil,c))
 	end
-	local correctFusionEffect=true
-	for tc in mg:Iter() do
-		local addCodeEffs={tc:IsHasEffect(EFFECT_ADD_CODE)}
-		for _,eff in ipairs(addCodeEffs) do
-			local addCodeOp=eff:GetOperation()
-			if addCodeOp and not addCodeOp(c,SUMMON_TYPE_FUSION|MATERIAL_FUSION,tp,e:GetHandler()) then
-				correctFusionEffect=false
-			end
-		end
-	end
-	if not correctFusionEffect then return end
 	return c:IsType(TYPE_FUSION) and (not fusfilter or fusfilter(c,tp)) and (nosummoncheck or c:IsCanBeSpecialSummoned(e,value,tp,sumlimit,false,sumpos))
 			and c:CheckFusionMaterial(mg,gc,chkf)
 end

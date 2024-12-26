@@ -1,9 +1,9 @@
--- 超重武者バイ－Ｑ
--- Superheavy Samurai Bike
--- Scripted by Satella
+--超重武者バイ－Ｑ
+--Superheavy Samurai Motorbike
+--Scripted by Satella
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Add 1 "Superheavy Samurai" from the Deck to the hand
+	--Add 1 "Superheavy Samurai" from the Deck to the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	-- Increase the level of a Machine monster by 2
+	--Increase the level of a Machine monster by 2
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_LVCHANGE)

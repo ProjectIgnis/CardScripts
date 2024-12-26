@@ -1,5 +1,5 @@
 --武の賢者－アーカス
---War Magus - Aakas
+--Sage of Strength - Akash
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --彷徨える幽霊船
---Flying Mary
+--Flying Mary, the Wandering Ghost Ship
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

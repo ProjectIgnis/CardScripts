@@ -1,5 +1,5 @@
 --ポワレティス・ド・ヌーベルズ
---Poêlétis de Nouvelles
+--Poeltis de Nouvelles
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

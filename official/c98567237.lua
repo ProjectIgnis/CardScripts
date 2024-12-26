@@ -1,5 +1,5 @@
 --刻まれし魔の詠聖
---Fiendsmith Tractus
+--Fiendsmith's Tract
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,9 +1,9 @@
--- ＢＦ－無頼のヴァータ
--- Blackwing - Vata the Knave
--- Scripted by Hatter
+--ＢＦ－無頼のヴァータ
+--Blackwing - Vata the Emblem of Wandering
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon this card
+	--Special Summon this card
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(s.spcon)
 	c:RegisterEffect(e1)
-	-- Send this card and "Blackwing" non-tuners to the GY
+	--Send this card and "Blackwing" non-tuners to the GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOGRAVE+CATEGORY_SPECIAL_SUMMON)

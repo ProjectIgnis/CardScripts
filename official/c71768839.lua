@@ -1,5 +1,5 @@
 --侵略的外来種－Ｉ．Ａ．Ｓ
---Invasive Alien Species - I.A.S
+--I.A.S. -Invasive Alien Species-
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

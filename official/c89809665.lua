@@ -1,5 +1,5 @@
 --焔聖騎士－テュルパン
---Infernoble Knight - Turpin
+--Infernoble Knight Turpin
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)

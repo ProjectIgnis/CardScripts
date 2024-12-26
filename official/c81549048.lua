@@ -1,9 +1,9 @@
 --竜華三界流転
---Apodrakosis Eternal Recurrence of Trailokya
+--Ryu-Ge Rivalry
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special Summon 1 "Apodrakosis" monster from your hand, Deck, or GY, but return it to the hand during the End Phase
+	--Special Summon 1 "Ryu-Ge" monster from your hand, Deck, or GY, but return it to the hand during the End Phase
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOHAND)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--Place 1 "Apodrakosis" Continuous Spell you control or in your GY or banishment on the bottom of the Deck, then draw 1 card
+	--Place 1 "Ryu-Ge" Continuous Spell you control or in your GY or banishment on the bottom of the Deck, then draw 1 card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW)

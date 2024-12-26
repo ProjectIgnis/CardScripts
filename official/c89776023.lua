@@ -1,5 +1,5 @@
 --エヴォルド・フォリス
---Evoltile Phoris
+--Evoltile Pholis
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

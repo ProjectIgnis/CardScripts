@@ -1,5 +1,5 @@
 --登竜華転生門
---Apodrakosis Ascension Crest of Transmigration
+--Ryu-Ge Warm Zone
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--Special Summon 3 "Apodrakosis" monsters with different Types, 1 each from your Deck, GY, and banishment
+	--Special Summon 3 "Ryu-Ge" monsters with different Types, 1 each from your Deck, GY, and banishment
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={92487128} --"Guangba, Luminous Apodrakosis of Starforge"
+s.listed_names={92487128} --"Sosei Ryu-Ge Mistva"
 s.listed_series={SET_RYU_GE}
 function s.thfilter(c)
 	return c:IsRace(RACE_DINOSAUR|RACE_SEASERPENT|RACE_WYRM) and (c:IsAbleToHand() or c:IsAbleToRemove() or c:IsAbleToGrave())

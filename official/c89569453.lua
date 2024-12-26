@@ -1,5 +1,5 @@
 --断絶の落とし穴
---Wipeout Trap Hole
+--Banishing Trap Hole
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

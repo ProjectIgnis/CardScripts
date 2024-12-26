@@ -1,5 +1,5 @@
 --白き森の魔性ルシエラ
---Rciela, Wicked of the White Forest
+--Rciela, Sinister Soul of the White Forest
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,16 +1,16 @@
 --幻朧竜華-覇巴
---Baba, Champion Apodrakosis of Wyrmhaze
+--Genro Ryu-Ge Hakva
 --Scripted by Satellaa
 local s,id=GetID()
 function s.initial_effect(c)
-	--Add 1 "Apodrakosis Ascension Gate of Wyrmhaze" from your Deck to your hand
+	--Add 1 "Ryu-Ge Realm - Wyrm Winds" from your Deck to your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.thgatecost)
+	e1:SetCost(aux.SelfBanishCost)
 	e1:SetTarget(s.thgatetg)
 	e1:SetOperation(s.thgateop)
 	c:RegisterEffect(e1)
@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--Add 1 "Apodrakosis" card from your Deck, GY, or banishment to your hand
+	--Add 1 "Ryu-Ge" card from your Deck, GY, or banishment to your hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -40,12 +40,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_RYU_GE}
-s.listed_names={55154344,id} --"Apodrakosis Ascension Gate of Wyrmhaze"
-function s.thgatecost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToRemoveAsCost() end
-	Duel.Remove(c,POS_FACEUP,REASON_COST)
-end
+s.listed_names={55154344,id} --"Ryu-Ge Realm - Wyrms Winds"
 function s.thgatefilter(c)
 	return c:IsCode(55154344) and c:IsAbleToHand()
 end

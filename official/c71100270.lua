@@ -1,5 +1,5 @@
 --百鬼羅刹の大饕獣
---Goblins' Crazy Beast
+--Goblin's Crazy Beast
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

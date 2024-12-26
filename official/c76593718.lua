@@ -1,5 +1,5 @@
 --強欲なポッド
---Pod of Greed
+--Greed Jar
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

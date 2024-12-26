@@ -1,5 +1,5 @@
 --幻奏の華歌神フラワリング・エトワール
---Flowering Etoile the Melodious Grand Choir
+--Flowering Etoile the Melodious Magnificat
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)

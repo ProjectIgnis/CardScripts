@@ -1,16 +1,16 @@
 --登竜華海巄門
---Apodrakosis Ascension Gate of Serpentfall
+--Ryu-Ge Realm - Sea Spires
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--You can only control 1 "Apodrakosis Ascension Gate of Serpentfall"
+	--You can only control 1 "Ryu-Ge Realm - Sea Spires"
 	c:SetUniqueOnField(1,0,id)
 	--Activate
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_ACTIVATE)
 	e0:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e0)
-	--Your "Apodrakosis" monsters cannot be destroyed by battle
+	--Your "Ryu-Ge" monsters cannot be destroyed by battle
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e2:SetCost(s.thcost)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
-	--Grant the above effect to "Apodrakosis" Pendulum Monsters and Level 10 or higher monsters whose original Type is Sea Serpent you control
+	--Grant the above effect to "Ryu-Ge" Pendulum Monsters and Level 10 or higher monsters whose original Type is Sea Serpent you control
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
 	e3:SetRange(LOCATION_SZONE)

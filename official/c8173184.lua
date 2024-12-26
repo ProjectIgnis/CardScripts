@@ -1,5 +1,5 @@
 --リペア・ジェネクス・コントローラー
---Repaired Genex Controller
+--Repair Genex Controller
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

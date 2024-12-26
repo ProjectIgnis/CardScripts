@@ -1,5 +1,5 @@
 -- 甲虫合体ゼクスタッガー
--- Beetle Amalgamaton Zekstagger
+--Humongous Hive Hegemon - Zexstagger
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

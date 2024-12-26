@@ -1,5 +1,5 @@
 --祈りの女王－コスモクイーン
---Cosmo Queen, the Queen of Prayers
+--Cosmo Queen the Queen of Prayers
 --Scripted by The Razgriz
 local s,id=GetID()
 function s.initial_effect(c)

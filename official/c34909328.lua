@@ -1,10 +1,10 @@
 --ライゼオル・デッドネーダー
---Raizeol Deadnader
+--Ryzeal Detonator
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Xyz Summon Procedure: 2+ Level 4 "Raizeol" monsters
+	--Xyz Summon Procedure: 2+ Level 4 "Ryzeal" monsters
 	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_RYZEAL),4,2,nil,nil,99)
 	--Destroy 1 card on the field
 	local e1=Effect.CreateEffect(c)

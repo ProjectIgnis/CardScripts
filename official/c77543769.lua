@@ -1,5 +1,5 @@
 --騎士皇爆誕
---Truth Centurion
+--Centur-Ion True Awakening
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

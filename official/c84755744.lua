@@ -1,5 +1,5 @@
 --転生炎獣ティガー
---Salamangreat Teeger
+--Salamangreat Tiger
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

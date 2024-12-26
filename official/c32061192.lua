@@ -1,9 +1,9 @@
 --Ｍ∀ＬＩＣＥ＜Ｐ＞Ｄｏｒｍｏｕｓｅ
---M∀LICE <Pawn> Dormouse
+--Maliss <P> Dormouse
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	--"M∀LICE" Link Monsters that point to this card cannot be destroyed by card effects
+	--"Maliss" Link Monsters that point to this card cannot be destroyed by card effects
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.linkfilter)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	--Banish 1 "M∀LICE" monster from your Deck
+	--Banish 1 "Maliss" monster from your Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_REMOVE+CATEGORY_ATKCHANGE)
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_REMOVE)
 	e3:SetCountLimit(1,{id,1})
-	e3:SetCost(s.spcost)
+	e3:SetCost(aux.PayLPCost(300))
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
@@ -53,7 +53,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 	end
 	local c=e:GetHandler()
-	--"M∀LICE" monsters you control will gain 600 ATK this turn
+	--"Maliss" monsters you control will gain 600 ATK this turn
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -63,10 +63,6 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	aux.RegisterClientHint(c,0,tp,1,0,aux.Stringid(id,2))
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,300) end
-	Duel.PayLPCost(tp,300)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

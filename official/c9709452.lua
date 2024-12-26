@@ -1,5 +1,5 @@
 --烈日の騎士ガイアブレイズ
---Gaiablaze the Force of Blazing Sun
+--Gaia Blaze, the Force of the Sun
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

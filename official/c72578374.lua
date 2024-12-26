@@ -1,5 +1,5 @@
 --空隙の原星竜
---Protostar Dragon of the Void
+--Khaos Starsource Dragon
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

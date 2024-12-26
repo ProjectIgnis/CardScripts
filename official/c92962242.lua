@@ -1,5 +1,5 @@
 -- 重の忍者－磁翁
--- Jio the Gravity Ninja
+--Jioh the Gravity Ninja
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

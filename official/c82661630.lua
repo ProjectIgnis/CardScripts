@@ -1,16 +1,16 @@
 --登竜華恐巄門
---Apodrakosis Ascension Gate of Dinocrag
+--Ryu-Ge Realm - Dino Domains
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--You can only control 1 "Apodrakosis Ascension Gate of Dinocrag"
+	--You can only control 1 "Ryu-Ge Realm - Dino Domains"
 	c:SetUniqueOnField(1,0,id)
 	--Activate
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_ACTIVATE)
 	e0:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e0)
-	--"Apodrakosis" monsters you control gain 300 ATK
+	--"Ryu-Ge" monsters you control gain 300 ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	e2:SetCost(s.negcost)
 	e2:SetTarget(s.negtg)
 	e2:SetOperation(function(e,tp,eg,ep,ev) Duel.NegateActivation(ev) end)
-	--Grant the above effect to "Apodrakosis" Pendulum Monsters and Level 10 or higher monsters whose original Type is Dinosaur you control
+	--Grant the above effect to "Ryu-Ge" Pendulum Monsters and Level 10 or higher monsters whose original Type is Dinosaur you control
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
 	e3:SetRange(LOCATION_SZONE)

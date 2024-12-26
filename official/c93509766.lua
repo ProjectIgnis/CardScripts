@@ -1,16 +1,16 @@
 --恐巄竜華-㟴巴
---Kuaiba, Rugged Apodrakosis of Dinocrag
+--Kyoro Ryu-Ge Kaiva
 --Scripted by Satellaa
 local s,id=GetID()
 function s.initial_effect(c)
-	--Add 1 "Apodrakosis Ascension Gate of Dinocrag" from your Deck to your hand
+	--Add 1 "Ryu-Ge Realm - Dino Domains" from your Deck to your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.thcost)
+	e1:SetCost(aux.SelfToDeckCost)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
@@ -48,7 +48,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={82661630} --"Apodrakosis Ascension Gate of Dinocrag"
+s.listed_names={82661630} --"Ryu-Ge Realm - Dino Domains"
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	for ct=1,#eg do
 		Duel.RegisterFlagEffect(0,id,RESET_PHASE|PHASE_END,0,1)

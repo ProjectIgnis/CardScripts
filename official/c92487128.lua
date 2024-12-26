@@ -1,5 +1,5 @@
 --創星竜華－光巴
---Guangba, Luminous Apodrakosis of Starforge
+--Sosei Ryu-Ge Mistva
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -8,9 +8,9 @@ function s.initial_effect(c)
 	Pendulum.AddProcedure(c)
 	--Must be Special Summoned by its own effect
 	c:AddMustBeSpecialSummoned()
-	--You can only Special Summon "Guangba, Luminous Apodrakosis of Starforge(s)" once per turn
+	--You can only Special Summon "Sosei Ryu-Ge Mistva(s)" once per turn
 	c:SetSPSummonOnce(id)
-	--Add 1 "Apodrakosis" card from your Deck to your hand, except a Pendulum Monster, then destroy this card
+	--Add 1 "Ryu-Ge" card from your Deck to your hand, except a Pendulum Monster, then destroy this card
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_DESTROY)
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	--Tribute 1 Level 10 "Apodrakosis" monster, and if you do, Special Summon this card
+	--Tribute 1 Level 10 "Ryu-Ge" monster, and if you do, Special Summon this card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_RELEASE+CATEGORY_SPECIAL_SUMMON+CATEGORY_DESTROY)

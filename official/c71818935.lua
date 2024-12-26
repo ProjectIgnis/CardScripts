@@ -1,5 +1,5 @@
 --閉ザサレシ天ノ月
---Moon of the Closed Sky
+--Moon of the Closed Heaven
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)

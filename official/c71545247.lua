@@ -1,5 +1,5 @@
 --離世召人形
---Hanayome Ningyo
+--Cursed Bride Doll
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

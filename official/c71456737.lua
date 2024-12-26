@@ -1,5 +1,5 @@
 --Ｂ・Ｆ－神事弓のサチ
---Battlewasp - Sachi the Ritual Bow
+--Battlewasp - Sachi the Ceremonial Bow
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

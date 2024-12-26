@@ -1,5 +1,5 @@
 --蕾禍ノ曝藤
---Ragnaraika Bleached Wisteria
+--Ragnaraika Wisteria of Woe
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

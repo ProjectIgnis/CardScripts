@@ -1,10 +1,10 @@
 --Ｍ∀ＬＩＣＥ＜Ｑ＞ＲＥＤ ＲＡＮＳＯＭ
---M∀LICE <QUEEN> RED RANSOM
+--Maliss <Q> Red Ransom
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Link materials: 2+ monsters, including a "M∀LICE" monster
+	--Link materials: 2+ monsters, including a "Maliss" monster
 	Link.AddProcedure(c,nil,2,3,s.lcheck)
 	--While this card points to a monster, switch the original ATK and DEF of all Effect Monsters your opponent controls
 	local e1=Effect.CreateEffect(c)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetCondition(function(e) return e:GetHandler():GetLinkedGroupCount()>0 end)
 	e1:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_EFFECT))
 	c:RegisterEffect(e1)
-	--Add 1 "M∀LICE" Spell from your Deck to your hand
+	--Add 1 "Maliss" Spell from your Deck to your hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_REMOVE)
 	e3:SetCountLimit(1,{id,1})
-	e3:SetCost(s.spcost)
+	e3:SetCost(aux.PayLPCost(900))
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
@@ -57,10 +57,6 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,900) end
-	Duel.PayLPCost(tp,900)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

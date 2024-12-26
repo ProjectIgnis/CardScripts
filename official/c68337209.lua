@@ -1,5 +1,5 @@
 --Ｍ∀ＬＩＣＥ ＩＮ ＵＮＤＥＲＧＲＯＵＮＤ
---M∀LICE IN UNDERGROUND
+--Maliss In underground
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.rmtg)
 	e1:SetOperation(s.rmop)
 	c:RegisterEffect(e1)
-	--While you have 3 or more banished "M∀LICE" Traps with different names, "M∀LICE" Link Monsters you control gain 3000 ATK
+	--While you have 3 or more banished "Maliss" Traps with different names, "Maliss" Link Monsters you control gain 3000 ATK
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetTarget(function(e,c) return s.atkfilter(c) end)
 	e2:SetValue(3000)
 	c:RegisterEffect(e2)
-	--While you control any "M∀LICE" Link Monsters, your opponent's monsters can only target those monsters for attacks
+	--While you control any "Maliss" Link Monsters, your opponent's monsters can only target those monsters for attacks
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)

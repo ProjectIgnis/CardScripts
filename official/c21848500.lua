@@ -1,12 +1,12 @@
 --Ｍ∀ＬＩＣＥ＜Ｑ＞ＨＥＡＲＴＳ ＯＦ ＣＲＹＰＴＥＲ
---Maliss <Q> HEARTS OF CRYPTER
+--Maliss <Q> Hearts Crypter
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Link materials: 3 monsters, including a "M∀LICE" monster
+	--Link materials: 3 monsters, including a "Maliss" monster
 	Link.AddProcedure(c,nil,3,3,s.lcheck)
-	--Shuffle 1 of your banished "M∀LICE" monsters into the Deck, and if you do, banish 1 card on the field
+	--Shuffle 1 of your banished "Maliss" monsters into the Deck, and if you do, banish 1 card on the field
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TODECK+CATEGORY_REMOVE)
@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_REMOVE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(s.spcost)
+	e2:SetCost(aux.PayLPCost(900))
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
@@ -75,10 +75,6 @@ end
 function s.inactfilter(e,ct)
 	local te=Duel.GetChainInfo(ct,CHAININFO_TRIGGERING_EFFECT)
 	return te:GetLabel()==id and te:GetHandler():GetLinkedGroupCount()>0
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,900) end
-	Duel.PayLPCost(tp,900)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

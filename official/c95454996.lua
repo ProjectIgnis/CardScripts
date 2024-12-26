@@ -1,10 +1,10 @@
 --Ｍ∀ＬＩＣＥ＜Ｑ＞ＷＨＩＴＥ ＢＩＮＤＥＲ
---M∀LICE <QUEEN> WHITE BINDER
+--Maliss <Q> White Binder
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Link Summon procedure: 2+ monsters, including a "M∀LICE" monster
+	--Link Summon procedure: 2+ monsters, including a "Maliss" monster
 	Link.AddProcedure(c,nil,2,3,s.lcheck)
 	--Banish up to 3 cards from either GY
 	local e1=Effect.CreateEffect(c)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.rmtg)
 	e1:SetOperation(s.rmop)
 	c:RegisterEffect(e1)
-	--Set 1 "M∀LICE" Trap from your Deck or GY
+	--Set 1 "Maliss" Trap from your Deck or GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_LEAVE_GRAVE)
@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_REMOVE)
 	e3:SetCountLimit(1,{id,2})
-	e3:SetCost(s.spcost)
+	e3:SetCost(aux.PayLPCost(900))
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
@@ -73,10 +73,6 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		Duel.SSet(tp,g)
 	end
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,900) end
-	Duel.PayLPCost(tp,900)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

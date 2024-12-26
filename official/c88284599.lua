@@ -1,5 +1,5 @@
 --粛声の竜賢聖サウラヴィス
---Sauravis, the Sagely Silenforcer Dragon
+--Sauravis, Dragon Sage of the Voiceless Voice
 --Ashaki
 local s,id=GetID()
 function s.initial_effect(c)

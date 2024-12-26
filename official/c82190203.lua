@@ -1,5 +1,5 @@
 --光翼の竜
---The Light-Winged Dragon
+--Wings of Light
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 -- メメント・ボーン・パーティー
--- Memento Bone Party
+--Mementotlan Bone Party
 -- Scripted by Satellaa
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --原罪宝－スネークアイ
---The Original Tainted Treasure - Snake-Eye
+--Original Sinful Spoils - Snake-Eye
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

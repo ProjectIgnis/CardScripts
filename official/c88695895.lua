@@ -1,5 +1,5 @@
 --罪宝の咎人
---Sinful Spoils Offenders
+--Guilt of the Sinful Spoils
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

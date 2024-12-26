@@ -1,6 +1,6 @@
--- 完全態・グレート・インセクト
--- Perfect Great Insect
--- Scripted by Hatter
+--完全態・グレート・インセクト
+--Ultimate Great Insect
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

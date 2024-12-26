@@ -1,5 +1,5 @@
 --幻蝋館の使者
---Envoy of the Wax State
+--Emissary from the House of Wax
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 -- 狂惑の落とし穴
--- Delusion Trap Hole
+--Terrifying Trap Hole Nightmare
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

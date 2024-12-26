@@ -1,5 +1,5 @@
 -- スカーレッド・デーモン
--- Scar-Red Dragon Archfiend
+--Scarred Dragon Archfiend
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

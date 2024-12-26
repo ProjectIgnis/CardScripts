@@ -1,5 +1,5 @@
 --アビスティング－トリアイナ
---Abyss-sting of Triaina
+--Abyss-sting Triaina
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

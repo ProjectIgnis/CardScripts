@@ -1,5 +1,5 @@
 --ＣＮｏ．３２ 海咬龍シャーク・ドレイク・リバイス
---Number C32: Shark Drake Leviathan
+--Number C32: Shark Drake LeVeiss
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

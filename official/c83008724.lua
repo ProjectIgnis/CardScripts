@@ -1,5 +1,5 @@
 --おすすめ軍貫握り
---Gunkan Suship Chef's Choice
+--Gunkan Suship Catch-of-the-Day
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --ギミック・パペット－ファンタジクス・マキナ
---Gimmick Puppet Fantasix Makina
+--Gimmick Puppet Fantasix Machinix
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

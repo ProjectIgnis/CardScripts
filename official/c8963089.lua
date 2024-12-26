@@ -1,5 +1,5 @@
 --黎銘機ヘオスヴァローグ
---Eosvarog, Forger of the Dawn
+--Heosvarog the Mechanical Dawn
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --冷える火
---Freezing Fire
+--Cooling Embers
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

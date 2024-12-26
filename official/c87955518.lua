@@ -1,5 +1,5 @@
 --Ｒｅｃｅｔｔｅ ｄｅ Ｓｐéｃｉａｌｉｔé～料理長自慢のレシピ～
---Recette de Spécialité - Chef's Specialty Recipe
+--Chef's Special Recipe
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

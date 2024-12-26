@@ -1,5 +1,5 @@
 --ライゼオル・クロス
---Raizeol Cross
+--Ryzeal Cross
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.xyzlimit)
 	c:RegisterEffect(e1)
-	--Place 2 "Raizeol" cards from your GY on the bottom of the Deck then draw 1 card
+	--Place 2 "Ryzeal" cards from your GY on the bottom of the Deck then draw 1 card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW)
@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.drtg)
 	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
-	--Detach 1 material from a "Raizeol" Xyz Monster you control, and if you do, negate an opponent's activated monster effect when it resolves
+	--Detach 1 material from a "Ryzeal" Xyz Monster you control, and if you do, negate an opponent's activated monster effect when it resolves
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

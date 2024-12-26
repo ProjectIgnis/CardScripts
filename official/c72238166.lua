@@ -1,5 +1,5 @@
 --ノード・ライゼオル
---Node Raizeol
+--Node Ryzeal
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.selfspcon)
 	e1:SetOperation(s.selfspop)
 	c:RegisterEffect(e1)
-	--Special Summon 1 "Raizeol" monster from your GY
+	--Special Summon 1 "Ryzeal" monster from your GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)

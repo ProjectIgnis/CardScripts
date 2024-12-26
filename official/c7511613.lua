@@ -1,5 +1,5 @@
 --ライゼオル・デュオドライブ
---Raizeol Duodrive
+--Ryzeal Duo Drive
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e1:SetValue(function(e,c) return (c:IsControler(e:GetHandlerPlayer()) and 100 or -100)*e:GetHandler():GetOverlayCount() end)
 	c:RegisterEffect(e1)
-	--Attach 1 "Raizeol" monster from your GY to this card as material
+	--Attach 1 "Ryzeal" monster from your GY to this card as material
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_LEAVE_GRAVE)
@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.attachtg)
 	e2:SetOperation(s.attachop)
 	c:RegisterEffect(e2)
-	--Detach 2 materials from monster(s) you control, and if you do, add 2 "Raizeol" cards with different names from your Deck to your hand
+	--Detach 2 materials from monster(s) you control, and if you do, add 2 "Ryzeal" cards with different names from your Deck to your hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)

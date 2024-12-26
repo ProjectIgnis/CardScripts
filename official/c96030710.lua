@@ -1,5 +1,5 @@
 --竜騎士アトリィ
---Centur-Ion Atry
+--Centur-Ion Atrii
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --スネークアイ・エクセル
---Snake-Eye Excel
+--Snake-Eye Ash
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 -- 天地晦冥
--- A World Shrouded in Darkness
+--Tenchi Kaimei
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --銀翼のＡＸＥ－サリー
---Sari of the Silverwinge Axe
+--Sari of the Silverwing Axe
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

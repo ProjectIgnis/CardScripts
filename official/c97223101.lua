@@ -1,5 +1,5 @@
 --ＢＢＳ
---BBS - Be Back Site
+--That's 10!
 --scripted by pyrQ
 local s,id=GetID()
 local COUNTER_ACCESS=0x212

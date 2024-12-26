@@ -1,5 +1,5 @@
 --刻まれし魔の楽園
---Fiendsmith in Paradisum
+--Fiendsmith in Paradise
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

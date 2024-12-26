@@ -1,5 +1,5 @@
 --流星連打－シロクロイド
---Meteorush - Blackwhiteroid
+--Meteor Rush - Monochroid
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

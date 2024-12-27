@@ -46,7 +46,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
 end
 function s.thfilter(c)
-	return c:IsSetCard(SET_CYBER) and c:IsSpellTrap() and c:IsAbleToHand()
+	return c:IsSetCard({SET_CYBER,SET_CYBERNETIC}) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

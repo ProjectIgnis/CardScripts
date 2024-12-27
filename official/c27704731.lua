@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.thcost)
+	e1:SetCost(aux.SelfRevealCost)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
@@ -34,12 +34,6 @@ function s.initial_effect(c)
 end
 s.max_metalmorph_stats={5,RACE_WARRIOR}
 s.listed_names={CARD_MAX_METALMORPH,id}
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return not c:IsPublic() end
-	Duel.ConfirmCards(1-tp,c)
-	Duel.ShuffleHand(tp)
-end
 function s.thfilter(c)
 	return c:ListsCode(CARD_MAX_METALMORPH) and not c:IsCode(id) and c:IsAbleToHand()
 end

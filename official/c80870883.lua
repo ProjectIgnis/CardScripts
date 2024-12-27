@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.setcost)
+	e1:SetCost(aux.SelfRevealCost)
 	e1:SetTarget(s.settg)
 	e1:SetOperation(s.setop)
 	c:RegisterEffect(e1)
@@ -32,12 +32,6 @@ end
 s.max_metalmorph_stats={5,RACE_DRAGON}
 s.listed_names={CARD_MAX_METALMORPH}
 s.listed_series={SET_METALMORPH}
-function s.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return not c:IsPublic() end
-	Duel.ConfirmCards(1-tp,c)
-	Duel.ShuffleHand(tp)
-end
 function s.setfilter(c)
 	return c:IsSetCard(SET_METALMORPH) and c:IsTrap() and c:IsSSetable()
 end

@@ -1,5 +1,5 @@
 --幻禄の天盃龍
---Tenpai Dragon of Genroku
+--Tenpai Dragon Genroku
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --昆虫機甲鎧
---Bio Insect Armor
+--Bio-Insect Armor
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

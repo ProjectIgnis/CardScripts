@@ -1,9 +1,9 @@
--- レッドアローズ
--- Red Arrows
--- Scripted by Hatter
+--レッドアローズ
+--Red Arrows
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Banish up to 2 monsters in the Extra Monster Zone
+	--Banish up to 2 monsters in the Extra Monster Zone
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_REMOVE)

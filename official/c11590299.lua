@@ -1,5 +1,5 @@
 --ドラ・ドラ
---Dora Draco
+--Dora Dora
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,6 +1,6 @@
--- 千六百七十七万工房
--- Rainbowlution Lab
--- Scripted by Satella
+--千六百七十七万工房
+--RGB Rainbowlution
+--Scripted by Satella
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

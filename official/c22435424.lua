@@ -1,5 +1,5 @@
 --竜輝巧－νＩＩ
---Drytron Nu2
+--Drytron Nu II
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

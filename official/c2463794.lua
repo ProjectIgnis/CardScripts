@@ -1,5 +1,5 @@
 --刻まれし魔の鎮魂棺
---Fiendsmith Requiem
+--Fiendsmith's Requiem
 --Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

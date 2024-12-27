@@ -3,7 +3,7 @@
 --Scripted by Satella
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon itself from your hand
+	--Special Summon itself from your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(s.spproccon)
 	c:RegisterEffect(e1)
-	-- Special Summon 1 "Mannadium Fearless" from your Deck
+	--Special Summon 1 "Mannadium Fearless" from your Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -44,7 +44,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	-- Increase the ATK of Synchro Monsters
+	--Increase the ATK of Synchro Monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)

@@ -1,5 +1,5 @@
 --厄災の星ティ・フォン
---Stellar Nemesis T-PHON - Doomsday Star
+--Super Starslayer TY-PHON - Sky Crisis
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

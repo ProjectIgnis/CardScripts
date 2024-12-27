@@ -1,9 +1,9 @@
--- 甲虫合体ゼクスタッガー
+--甲虫合体ゼクスタッガー
 --Humongous Hive Hegemon - Zexstagger
--- Scripted by Hatter
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Gain 300 ATK for every other Insect monster
+	--Gain 300 ATK for every other Insect monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(s.atkval)
 	c:RegisterEffect(e1)
-	-- Special Summon this card
+	--Special Summon this card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.hsptg)
 	e2:SetOperation(s.hspop)
 	c:RegisterEffect(e2)
-	-- Each player can summon 1 Insect monster
+	--Each player can summon 1 Insect monster
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -68,7 +68,7 @@ function s.insectsp(e,p)
 	Duel.Hint(HINT_SELECTMSG,p,HINTMSG_SPSUMMON)
 	local tc=g:Select(p,1,1,nil):GetFirst()
 	if tc and Duel.SpecialSummonStep(tc,0,p,p,false,false,POS_FACEUP) then
-		-- Negate its effects
+		--Negate its effects
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)

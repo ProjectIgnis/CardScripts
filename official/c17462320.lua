@@ -1,5 +1,5 @@
 --世壊挽歌
---Planetary Elegy
+--Realm Elegy
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

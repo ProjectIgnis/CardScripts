@@ -1,5 +1,5 @@
 --災誕の呪眼
---Evil Eye Unleashed
+--Evil Eyes Unleashed
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --超重神将シャナ－Ｏ
---Superheavy Samurai General Shanao
+--Superheavy Samurai Commander Shanawo
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

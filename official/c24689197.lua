@@ -1,5 +1,5 @@
 --アロマリリス－ロザリーナ
---Aromalylith Rosalina
+--Aromalilith Rosalina
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --愉怪な燐のきつねびゆらら
---Yukai na Rin no Kitsunebi Yurara
+--Kitsuni Kitsunebi
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,9 +1,9 @@
--- 百鬼羅刹 特攻ダグ
--- Goblin Rider Dug the Assaulter
--- Scripted by Satellaa
+--百鬼羅刹 特攻ダグ
+--Goblin Biker Dugg Charger
+--Scripted by Satellaa
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon itself from the hand
+	--Special Summon itself from the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	-- Search 1 "Goblin Rider" Spell/Trap
+	--Search 1 "Goblin Rider" Spell/Trap
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)

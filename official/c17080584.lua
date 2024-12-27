@@ -1,5 +1,5 @@
 --海皇精 アビスライン
---Abyssrhine the Atlantean Spirit
+--Abyssrhine, the Atlantean Spirit
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

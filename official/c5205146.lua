@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_REMOVE)
 	e2:SetLabel(1)
 	c:RegisterEffect(e2)
-	-- If attached to a Machine Xyz monster, monsters your opponent controls are changed to Defense Position
+	--If attached to a Machine Xyz monster, monsters your opponent controls are changed to Defense Position
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_XMATERIAL+EFFECT_TYPE_FIELD)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e3:SetTarget(function(_,c) return c:IsFaceup() end)
 	e3:SetValue(POS_FACEUP_DEFENSE)
 	c:RegisterEffect(e3)
-	-- If attached to a Machine Xyz monster, monsters your opponent controls lose 1000 DEF
+	--If attached to a Machine Xyz monster, monsters your opponent controls lose 1000 DEF
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_XMATERIAL+EFFECT_TYPE_FIELD)
 	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)

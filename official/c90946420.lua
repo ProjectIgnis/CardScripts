@@ -1,5 +1,5 @@
 --百鬼羅刹大重畳
---Goblin Biker Pile-Up
+--Goblin Biker Grand Pileup
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

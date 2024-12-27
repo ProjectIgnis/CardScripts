@@ -1,5 +1,5 @@
 --迫りくる機械
---Incoming Machine
+--Incoming Machine!
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

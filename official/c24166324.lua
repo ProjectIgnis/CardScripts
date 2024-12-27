@@ -1,5 +1,5 @@
 --流星極輝巧群
---Meteoaurora Drytron
+--Meteoroa Drytron
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

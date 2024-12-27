@@ -1,5 +1,5 @@
 --獣累々
---Heaps of Beasts
+--Bunch of Beast Bodies
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

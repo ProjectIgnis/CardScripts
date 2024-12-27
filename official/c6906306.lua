@@ -1,5 +1,5 @@
 --至鋼の玉 ルーベサフィルス
---Rubisapphirus the Jewel of Maximum Mohs
+--Rubysapphirus, the Adamant Jewel
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

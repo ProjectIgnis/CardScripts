@@ -1,5 +1,5 @@
 --Ｎｏ．１ インフェクション・バアル・ゼブル
---Number 1: Infection Buzz King
+--Number 1: Infection Buzzking
 --scripted by pyrQ, adapted from the anime script
 local s,id=GetID()
 function s.initial_effect(c)

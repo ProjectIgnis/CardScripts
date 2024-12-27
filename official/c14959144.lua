@@ -1,5 +1,5 @@
 --天極輝士－熊斗竜巧α
---Ultimate Knight Alpha Ursatron
+--Ultimate Bright Knight Ursatron Alpha
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

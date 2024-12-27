@@ -1,5 +1,5 @@
 --ＲＲ－グロリアス・ブライト
---Raidraptor - Barrage
+--Raidraptor - Glorious Bright
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

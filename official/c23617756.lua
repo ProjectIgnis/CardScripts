@@ -1,5 +1,5 @@
 --怒りの業火 エクゾード・フレイム
---Raging Hellfire - Exodo Flame
+--Exxod Fires of Rage
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

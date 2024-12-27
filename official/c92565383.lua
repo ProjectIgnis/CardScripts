@@ -1,5 +1,5 @@
 --コーンフィールド コアトル
---Cornfield Koator
+--Cornfield Coatl
 --Scripted by Marbele
 local s,id=GetID()
 function s.initial_effect(c)

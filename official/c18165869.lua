@@ -1,5 +1,5 @@
 --メメント・ダークソード
---Memento Dark Blade
+--Mementotlan Dark Blade
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

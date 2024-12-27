@@ -1,5 +1,5 @@
 --覇王龍の魂
---The Supreme King's Soul
+--Soul of the Supreme King
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

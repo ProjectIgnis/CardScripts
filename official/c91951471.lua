@@ -1,5 +1,5 @@
 --ＶＳ螺旋流辻風
---Vanquish Soul - Dust Devil
+--Vanquish Soul Dust Devil
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)

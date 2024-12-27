@@ -1,5 +1,5 @@
 --ヘルグレイブ・スクワーマー
---Infernal Grave Squirmer
+--Gruesome Grave Squirmer
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

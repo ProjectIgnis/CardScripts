@@ -1,5 +1,5 @@
 --星逢の神籬
---The Himorogi where Stars Align
+--Stars Align Above the Shrine
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

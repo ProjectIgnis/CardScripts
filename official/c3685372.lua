@@ -1,5 +1,5 @@
 --ＣＸ ギミック・パペット－ファナティクス・マキナ
---CXyz Gimmick Puppet Fanatix Makina
+--CXyz Gimmick Puppet Fanatix Machinix
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

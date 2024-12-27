@@ -1,9 +1,9 @@
--- 絶望と希望の逆転
--- Exchange of Despair and Hope
--- Scripted by Hatter
+--絶望と希望の逆転
+--Exchange of Despair and Hope
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Send all monsters to the GY
+	--Send all monsters to the GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOGRAVE+CATEGORY_SPECIAL_SUMMON)
@@ -57,7 +57,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 		if #g<1 then return end
 		Duel.BreakEffect()
 		if Duel.SSet(tp,g)>0 then
-			-- Set Trap can be activated this turn
+			--Set Trap can be activated this turn
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetDescription(aux.Stringid(id,3))
 			e1:SetType(EFFECT_TYPE_SINGLE)

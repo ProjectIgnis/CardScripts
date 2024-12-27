@@ -1,5 +1,5 @@
 --アマゾネス女帝王
---Amazoness Kaiserin
+--Amazoness Augusta
 --Scripted by The Razgriz
 local s,id=GetID()
 function s.initial_effect(c)

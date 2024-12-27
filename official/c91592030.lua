@@ -1,9 +1,9 @@
--- 威迫鉱石－サモナイト
--- Threatening Ore - Summonite
--- Scripted by Hatter
+--威迫鉱石－サモナイト
+--Intimidating Ore - Summonite
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon monster(s)
+	--Special Summon monster(s)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)

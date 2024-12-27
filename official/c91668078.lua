@@ -1,5 +1,5 @@
 --雪沓の 跡追うひとつ またひとつ
---One by One We Walk, Frosty Forest Frolicking, Treading in the Tracks
+--In Papa's Footsteps
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

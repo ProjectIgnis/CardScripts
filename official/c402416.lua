@@ -1,5 +1,5 @@
 --魔神火焔砲
---Exodo Blaze
+--Obliterate!!! Blaze
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

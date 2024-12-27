@@ -1,5 +1,5 @@
 --武装蜂起
---Armament Swarm
+--Armed Rebeellion
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

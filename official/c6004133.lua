@@ -3,7 +3,7 @@
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Add Add 1 "Abyss Actor" card and 1 "Abyss Script" Spell to the hand
+	--Add Add 1 "Abyss Actor" card and 1 "Abyss Script" Spell to the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)

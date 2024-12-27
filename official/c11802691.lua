@@ -1,5 +1,5 @@
 --シャルルの叙事詩
---The Epic Poem of Charles
+--The Continuing Epic of Charles
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)

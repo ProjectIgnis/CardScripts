@@ -1,5 +1,5 @@
 --仇すれば通図
---Where There's a Will, There's a Way Out
+--Way Where There's a Will
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

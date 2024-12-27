@@ -1,5 +1,5 @@
 --暗黒界の混沌王 カラレス
---Colorless, Chaos King of Dark World
+--Clorless, Chaos King of Dark World
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

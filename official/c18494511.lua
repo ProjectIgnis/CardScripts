@@ -1,5 +1,5 @@
 --氷水帝エジル・ラーン
---Icejade Aegirine Rahn
+--Icejade Ran Aegirine
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

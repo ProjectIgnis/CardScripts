@@ -1,5 +1,5 @@
 --怒小児様
---Tantrum-Throwing Tyke
+--Tantrum Toddler
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

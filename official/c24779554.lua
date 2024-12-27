@@ -1,5 +1,5 @@
 --白き森のルシア
---Rcia of the White Forest
+--Rucia of the White Forest
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

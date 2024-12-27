@@ -1,9 +1,9 @@
--- 超重武者オン－３２
--- Superheavy Samurai Stealthy
--- Scripted by Satella
+--超重武者オン－３２
+--Superheavy Samurai Stealthy
+--Scripted by Satella
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon itself from the hand
+	--Special Summon itself from the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(s.spcon)
 	c:RegisterEffect(e1)
-	-- Set 1 Spell/Trap frm the opponent's GY to your field
+	--Set 1 Spell/Trap frm the opponent's GY to your field
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_LEAVE_GRAVE)
@@ -50,7 +50,7 @@ end
 function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsSSetable() and Duel.SSet(tp,tc)>0 then
-		-- Banish it when it leaves the field
+		--Banish it when it leaves the field
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetDescription(3300)
 		e1:SetType(EFFECT_TYPE_SINGLE)

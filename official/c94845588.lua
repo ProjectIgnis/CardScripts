@@ -1,5 +1,5 @@
 --聖なる薊花
---Sacred Azamina
+--The Hallowed Azamina
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

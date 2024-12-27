@@ -1,5 +1,5 @@
 --ヴァルモニカの神奏－ヴァーラル
---Valar, Vaalmonican Hallow Hymn
+--Varar, Vaalmonican Concord
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

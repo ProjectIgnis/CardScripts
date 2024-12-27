@@ -1,9 +1,9 @@
--- メメント・ゴブリン
--- Mementotlan Goblin
--- Scripted by Satellaa
+--メメント・ゴブリン
+--Mementotlan Goblin
+--Scripted by Satellaa
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Make your opponent cannot target "Memento" monsters
+	--Make your opponent cannot target "Memento" monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_QUICK_O)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetCost(s.untgcost)
 	e1:SetOperation(s.untgop)
 	c:RegisterEffect(e1)
-	-- Send up to 2 "Memento" cards with different names from your Deck to the GY
+	--Send up to 2 "Memento" cards with different names from your Deck to the GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DESTROY+CATEGORY_TOGRAVE)

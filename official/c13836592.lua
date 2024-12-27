@@ -1,5 +1,5 @@
 --百戦王 ベヒーモス
---Behemoth the King of All Wars
+--Behemoth the King of a Hundred Battles
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

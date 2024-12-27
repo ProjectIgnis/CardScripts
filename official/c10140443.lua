@@ -1,13 +1,13 @@
--- 転生炎獣バースト・グリフォン
--- Salamangreat Burst Gryphon
--- Scripted by Satella
+--転生炎獣バースト・グリフォン
+--Salamangreat Burst Gryphon
+--Scripted by Satella
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	aux.EnableCheckReincarnation(c)
-	-- Synchro Summon procedure
+	--Synchro Summon procedure: 1 Tuner + 1+ non-Tuner monsters
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
-	-- Special Summon 1 monster from your GY during the next Standby Phase
+	--Special Summon 1 monster from your GY during the next Standby Phase
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.efftg)
 	e1:SetOperation(s.effop)
 	c:RegisterEffect(e1)
-	-- Special Summon 1 Level 7 or lower FIRE monster from your GY
+	--Special Summon 1 Level 7 or lower FIRE monster from your GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_LVCHANGE)
@@ -34,7 +34,7 @@ end
 s.listed_names={id}
 function s.effcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReincarnationSummoned() and c:IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return c:IsReincarnationSummoned() and c:IsSynchoSummoned()
 end
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return true end
@@ -42,7 +42,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	-- Special Summon 1 monster from your GY during the next Standby Phase
+	--Special Summon 1 monster from your GY during the next Standby Phase
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_PHASE|PHASE_STANDBY)

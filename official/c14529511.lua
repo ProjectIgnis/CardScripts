@@ -1,5 +1,5 @@
 --冥骸王－メメントラン・テクトリカ
---Mementomictlan Tecuhtlica - Combined Conqueror
+--Mementomictlan Tecuhtlica - Creation King
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

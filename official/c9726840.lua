@@ -1,9 +1,9 @@
--- 閃刀起動－リンケージ
--- Sky Striker Mobilize - Linkage!
--- Scripted by Hatter
+--閃刀起動－リンケージ
+--Sky Striker Mobilize - Linkage!
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Send 1 card to the GY
+	--Send 1 card to the GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOGRAVE+CATEGORY_SPECIAL_SUMMON)
@@ -56,7 +56,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	if sc and Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP,ZONES_EMZ)>0
 		and Duel.IsExistingMatchingCard(s.attfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil,ATTRIBUTE_DARK)
 		and Duel.IsExistingMatchingCard(s.attfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil,ATTRIBUTE_LIGHT) then
-		-- Gain ATK
+		--Gain ATK
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)

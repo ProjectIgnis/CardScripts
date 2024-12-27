@@ -1,5 +1,5 @@
 --渦巻く海炎
---Turmoil of Sea and Flames
+--Firestorms Over Atlantis
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --星宵竜転
---Seishou Ruten
+--Starry Dragon's Cycle
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

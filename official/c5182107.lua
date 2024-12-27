@@ -1,5 +1,5 @@
 --超重武者ドウＣ－Ｎ
---Superheavy Samurai Constable
+--Superheavy Samurai Security
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --究極竜魔導師
---Dragon Magia Master
+--Dragon Master Magia
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

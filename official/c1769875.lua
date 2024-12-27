@@ -1,5 +1,5 @@
 --幻獣王キマイラ
---Chimera the Phantom Beast King
+--Chimera the King of Phantom Beasts
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

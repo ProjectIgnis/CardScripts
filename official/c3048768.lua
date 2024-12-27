@@ -48,7 +48,7 @@ function s.initial_effect(c)
 	e4:SetTarget(s.cptg)
 	e4:SetOperation(s.cpop)
 	c:RegisterEffect(e4)
-	-- Register flag on summon
+	--Register flag on summon
 	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

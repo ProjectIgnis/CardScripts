@@ -1,5 +1,5 @@
 --影法師トップハットヘア
---Top Hat Hare the Silhouette Magician
+--Silhouhatte Rabbit
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

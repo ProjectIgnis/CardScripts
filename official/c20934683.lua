@@ -1,5 +1,5 @@
 --アザミナ・オフェイレーテス
---Azamina Ofeiletis
+--Azamina Debtors
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

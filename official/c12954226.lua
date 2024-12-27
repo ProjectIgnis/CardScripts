@@ -1,5 +1,5 @@
 --サークル・オブ・フェアリー
---Circle of Faerie
+--Circle of the Fairies
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

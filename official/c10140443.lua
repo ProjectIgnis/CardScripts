@@ -34,7 +34,7 @@ end
 s.listed_names={id}
 function s.effcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReincarnationSummoned() and c:IsSynchoSummoned()
+	return c:IsReincarnationSummoned() and c:IsSynchroSummoned()
 end
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return true end

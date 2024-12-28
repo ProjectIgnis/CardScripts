@@ -24,9 +24,10 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_SZONE)
+	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e2:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER)
 	e2:SetCountLimit(1,0,EFFECT_COUNT_CODE_CHAIN)
-	e2:SetCondition(function(e,tp) return Duel.GetFlagEffect(tp,id)<Duel.GetMatchingGroupCount(s.afdfilter,tp,LOCATION_ONFIELD,0,nil) end)   
+	e2:SetCondition(s.discond)
 	e2:SetTarget(s.distg)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
@@ -37,6 +38,10 @@ function s.afdfilter(c)
 end
 function s.defval(e,c)
 	return Duel.GetMatchingGroupCount(s.afdfilter,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,nil)*500
+end
+function s.discond(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetFlagEffect(tp,id)<Duel.GetMatchingGroupCount(s.afdfilter,tp,LOCATION_ONFIELD,0,nil)
+		and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsFaceup() end

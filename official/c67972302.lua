@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetCountLimit(1,id)
-	e2:SetCost(s.nscost)
+	e2:SetCost(aux.SelfRevealCost)
 	e2:SetTarget(s.nstg)
 	e2:SetOperation(s.nsop)
 	c:RegisterEffect(e2)
@@ -34,12 +34,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_card_types={TYPE_SPIRIT}
-function s.nscost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return not c:IsPublic() end
-	Duel.ConfirmCards(1-tp,c)
-	Duel.ShuffleHand(tp)
-end
 function s.sumfilter(c)
 	return c:IsType(TYPE_SPIRIT) and c:IsSummonable(true,nil)
 end

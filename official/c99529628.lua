@@ -1,5 +1,5 @@
 --ゴーティスの朧キーフ
---Kiif, Haze of the Ghoti
+--Keaf, Murk of the Ghoti
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

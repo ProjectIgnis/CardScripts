@@ -1,5 +1,5 @@
 --六世壊＝パライゾス
---Prime Planet Paraisos
+--Pressured Planet Wraitsoth
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

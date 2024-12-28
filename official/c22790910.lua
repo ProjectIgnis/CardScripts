@@ -1,5 +1,5 @@
 --智の賢者－ヒンメル
---Wisdom Magus - Himmel
+--Sage of Wisdom - Himmel
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

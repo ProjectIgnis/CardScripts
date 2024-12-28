@@ -1,5 +1,5 @@
 --円喚妖精キクロス
---Kyklos the Circular Fairy
+--Cyclos the Circular Sprite
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

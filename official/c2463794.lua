@@ -1,5 +1,5 @@
 --刻まれし魔の鎮魂棺
---Fiendsmith Requiem
+--Fiendsmith's Requiem
 --Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetHintTiming(0,TIMING_MAIN_END)
 	e1:SetCondition(function() return Duel.IsMainPhase() end)
-	e1:SetCost(aux.selfreleasecost)
+	e1:SetCost(aux.SelfTributeCost)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)

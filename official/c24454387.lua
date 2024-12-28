@@ -1,4 +1,4 @@
---Japanese name
+--ズットモザウルス
 --Zuttomozaurus
 --scripted by Naim
 local s,id=GetID()

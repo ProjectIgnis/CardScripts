@@ -1,4 +1,4 @@
---Japanese name
+--響魔従トライコーン
 --Tricorn the Cacophonous Concert
 --scripted by Naim
 local s,id=GetID()

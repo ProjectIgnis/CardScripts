@@ -1,4 +1,4 @@
---Japanese name
+--闘気炎斬龍
 --Fighting Flame Dragon
 --scripted by Naim
 local s,id=GetID()

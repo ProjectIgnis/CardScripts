@@ -1,5 +1,5 @@
 --百鬼羅刹大参上
---Grand Arrival of the Goblin Riders
+--Goblin Biker Grand Entrance
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

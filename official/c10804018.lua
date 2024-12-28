@@ -1,5 +1,5 @@
 --粛声なる竜神サフィラ
---Saffira, the Silenforcing Deity of Dragons
+--Saffira, Divine Dragon of the Voiceless Voice
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

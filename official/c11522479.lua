@@ -1,9 +1,9 @@
--- ＢＫ アッパーカッター
--- Battlin’ Boxer Uppercutter
--- Scripted by Satella
+--ＢＫ アッパーカッター
+--Battlin' Boxer Uppercutter
+--Scripted by Satella
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Add 1 "Battlin Boxer" monster or 1 "Counter" Counter Trap from your Deck to your hand
+	--Add 1 "Battlin Boxer" monster or 1 "Counter" Counter Trap from your Deck to your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
-	-- Activate 1 of these effects
+	--Activate 1 of these effects
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -70,7 +70,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==1 then
-		-- Special Summon 1 "Battlin' Boxer" monster from your GY
+		--Special Summon 1 "Battlin' Boxer" monster from your GY
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
@@ -78,7 +78,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 		end
 	else
-		-- Set 1 "Counter" Counter Trap from your GY
+		--Set 1 "Counter" Counter Trap from your GY
 		if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 		local g=Duel.SelectMatchingCard(tp,s.setfilter,tp,LOCATION_GRAVE,0,1,1,nil)

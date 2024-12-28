@@ -1,4 +1,4 @@
---Japanese name
+--シンクロ・フォースバック
 --Synchro Forceback
 --scripted by Naim
 local s,id=GetID()

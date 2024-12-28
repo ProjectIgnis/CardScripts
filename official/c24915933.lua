@@ -1,12 +1,12 @@
--- 赫焉竜グランギニョル
--- Granguignol the Dusk Dragon
--- Scripted by Hatter
+--赫焉竜グランギニョル
+--Granguignol the Dusk Dragon
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	-- "Blazing Cartesia, the Virtuous" + 1 LIGHT or DARK monster
+	--"Blazing Cartesia, the Virtuous" + 1 LIGHT or DARK monster
 	Fusion.AddProcMix(c,true,true,95515789,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_LIGHT|ATTRIBUTE_DARK))
-	-- Send 1 Level 6 or higher LIGHT or DARK monster to the GY
+	--Send 1 Level 6 or higher LIGHT or DARK monster to the GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOGRAVE)
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.tgtg)
 	e1:SetOperation(s.tgop)
 	c:RegisterEffect(e1)
-	-- Special Summon 1 "Dogmatika" or "Despia" monster
+	--Special Summon 1 "Dogmatika" or "Despia" monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)

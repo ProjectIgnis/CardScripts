@@ -1,5 +1,5 @@
 --白き森のあくま
---The Fiend of the White Forest
+--Scourge of the White Forest
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

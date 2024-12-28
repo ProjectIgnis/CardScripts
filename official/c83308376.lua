@@ -1,5 +1,5 @@
 --赫聖の相剣
---Swordsoul of Blazing Awakening
+--Swordsoul Punishment
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

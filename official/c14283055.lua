@@ -1,5 +1,5 @@
 --Ｃｏｎｃｏｕｒｓ ｄｅ Ｃｕｉｓｉｎｅ～菓冷なる料理対決～
---Concours de Cuisine (Confectionery Contest)
+--Concours de Cuisine (Culinary Confrontation)
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

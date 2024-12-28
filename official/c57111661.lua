@@ -1,9 +1,9 @@
 --Ｍ∀ＬＩＣＥ＜Ｃ＞ＴＢ－１１
---M∀LICE <CODE> TB-11
+--Maliss <C> TB-11
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special Summon 1 "M∀LICE" monster from your Deck
+	--Special Summon 1 "Maliss" monster from your Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--Can be activated the turn it was Set by banishing 1 face-up "M∀LICE" monster you control
+	--Can be activated the turn it was Set by banishing 1 face-up "Maliss" monster you control
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_SINGLE)
@@ -44,7 +44,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_MALISS}
 function s.spcostfilter(c,loc,e,tp)
-	return c:IsFaceup() and c:IsSetCard(SET_MALISS) and c:IsAbleToRemove()
+	return c:IsFaceup() and c:IsSetCard(SET_MALISS) and c:IsAbleToRemove(tp)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,loc,0,1,nil,e,tp,c)
 end
 function s.spfilter(c,e,tp,mc,ignore_zone_chk)

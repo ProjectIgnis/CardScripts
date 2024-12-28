@@ -1,5 +1,5 @@
 --百鬼羅刹大重畳
---Goblin Biker Pile-Up
+--Goblin Biker Grand Pileup
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
-	e2:SetCost(aux.selfbanishcost)
+	e2:SetCost(aux.SelfBanishCost)
 	e2:SetTarget(s.mattg)
 	e2:SetOperation(s.matop)
 	c:RegisterEffect(e2)

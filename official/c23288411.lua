@@ -1,16 +1,16 @@
--- 冥骸合竜－メメントラル・テクトリカ
--- Mementoral Tecuhtlica, the Netherskull Dragon
--- Scripted by Satellaa
+--冥骸合竜－メメントラル・テクトリカ
+--Mementoal Tecuhtlica - Combined Creation
+--Scripted by Satellaa
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	-- Cannot Special Summon
+	--Cannot Special Summon
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
 	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e0)
-	-- Special Summon itself from the hand or GY
+	--Special Summon itself from the hand or GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -21,14 +21,14 @@ function s.initial_effect(c)
 	e1:SetTarget(s.spproctg)
 	e1:SetOperation(s.spprocop)
 	c:RegisterEffect(e1)
-	-- Can attack all monsters your opponent controls
+	--Can attack all monsters your opponent controls
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_ATTACK_ALL)
 	e2:SetValue(1)
 	e2:SetCondition(function(e) return Duel.GetMatchingGroupCount(nil,e:GetHandlerPlayer(),LOCATION_MZONE,0,e:GetHandler())==0 end)
 	c:RegisterEffect(e2)
-	-- Special Summon 1 "Memento" monster from your hand or GY
+	--Special Summon 1 "Memento" monster from your hand or GY
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)

@@ -1,5 +1,5 @@
 --鋼鉄の幻想師
---Metal Copycat
+--Metal Illusionist
 --Scripted by The Razgriz
 local s,id=GetID()
 function s.initial_effect(c)
@@ -37,7 +37,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={SET_METALMORPH}
-s.listed_names={CARD_ENHANCED_METALMORPH}
+s.listed_names={CARD_MAX_METALMORPH}
 function s.setfilter(c)
 	return c:IsSetCard(SET_METALMORPH) and c:IsTrap() and c:IsSSetable()
 end
@@ -48,7 +48,7 @@ end
 function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 	local g=Duel.SelectMatchingCard(tp,s.setfilter,tp,LOCATION_DECK,0,1,1,nil)
-	if #g>0 and Duel.SSet(tp,g)>0 and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,CARD_ENHANCED_METALMORPH)
+	if #g>0 and Duel.SSet(tp,g)>0 and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,CARD_MAX_METALMORPH)
 		and Duel.IsPlayerCanDraw(tp,1) then
 		Duel.ShuffleDeck(tp)
 		if Duel.SelectYesNo(tp,aux.Stringid(id,2)) then

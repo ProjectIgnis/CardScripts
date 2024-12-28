@@ -1,5 +1,5 @@
 --混沌なる魅惑の女王
---Chaotic Allure Queen
+--Chaos Allure Queen
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -58,10 +58,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.eqconignition(e,tp,eg,ep,ev,re,r,rp)
-	return not (e:GetHandler():IsOriginalSetCard(SET_ALLURE_QUEEN) and Duel.IsPlayerAffectedByEffect(tp,EFFECT_GOLDEN_ALLURE_QUEEN))
+	return not (e:GetHandler():IsOriginalSetCard(SET_ALLURE_QUEEN) and Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),EFFECT_GOLDEN_ALLURE_QUEEN))
 end
 function s.eqconquick(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsOriginalSetCard(SET_ALLURE_QUEEN) and Duel.IsPlayerAffectedByEffect(tp,EFFECT_GOLDEN_ALLURE_QUEEN)
+	return e:GetHandler():IsOriginalSetCard(SET_ALLURE_QUEEN) and Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),EFFECT_GOLDEN_ALLURE_QUEEN)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsMonster() end
@@ -81,18 +81,19 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) and c:IsRelateToEffect(e) and c:IsFaceup()
 		and s.equipop(c,e,tp,tc) then
 		local code=tc:GetCode()
-		if c:IsCode(code) then return end
-		--This card's name becomes that monster's until the End Phase
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetCode(EFFECT_CHANGE_CODE)
-		e1:SetValue(code)
-		e1:SetReset(RESETS_STANDARD_PHASE_END)
-		c:RegisterEffect(e1)
+		if not c:IsCode(code) then
+			--This card's name becomes that monster's until the End Phase
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+			e1:SetCode(EFFECT_CHANGE_CODE)
+			e1:SetValue(code)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
+			c:RegisterEffect(e1)
+		end
+		if not (tc:IsAttribute(ATTRIBUTE_LIGHT|ATTRIBUTE_DARK) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0) then return end
 		local sg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_DECK|LOCATION_GRAVE,0,nil,e,tp)
-		if tc:IsAttribute(ATTRIBUTE_LIGHT|ATTRIBUTE_DARK) and #sg>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-			and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+		if #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 			Duel.AdjustInstantly(c)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil,e,tp)

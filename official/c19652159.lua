@@ -1,5 +1,5 @@
 --光と闇の竜王
---Light and Darkness Dragon Lord
+--Light and Darkness Dragonlord
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

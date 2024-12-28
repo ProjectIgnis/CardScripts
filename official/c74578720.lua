@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetHintTiming(0,TIMING_BATTLE_START)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(function(e,tp) return Duel.IsBattlePhase() and Duel.IsTurnPlayer(1-tp) end)
-	e1:SetCost(aux.selfreleasecost)
+	e1:SetCost(aux.SelfTributeCost)
 	e1:SetOperation(s.reflectdamop)
 	c:RegisterEffect(e1)
 	--Special Summon this card

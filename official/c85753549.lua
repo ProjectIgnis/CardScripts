@@ -1,5 +1,5 @@
 --月牙龍－クレセント・ドラゴン
---Crescent Dragon - Mikazukinoyaiba
+--Mikazukinoyaiba, the Moon Fang Dragon
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

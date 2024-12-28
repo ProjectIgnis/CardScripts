@@ -1,5 +1,5 @@
 --刻まれし魔の楽園
---Fiendsmith in Paradisum
+--Fiendsmith in Paradise
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(function(e,tp,eg) return eg:IsExists(Card.IsSummonPlayer,1,nil,1-tp) end)
-	e2:SetCost(aux.selfbanishcost)
+	e2:SetCost(aux.SelfBanishCost)
 	e2:SetTarget(s.tgtg)
 	e2:SetOperation(s.tgop)
 	c:RegisterEffect(e2)

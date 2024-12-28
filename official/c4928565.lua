@@ -1,9 +1,9 @@
--- スティアラメンツ・クシャトリラ
--- Tearlaments Kashtira
--- Scripted by Hatter
+--スティアラメンツ・クシャトリラ
+--Tearlaments Kashtira
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon this card
+	--Special Summon this card
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_REMOVE)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	-- Mill 3 cards from either Deck
+	--Mill 3 cards from either Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DECKDES)
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
-	-- Mill 2 cards from your Deck
+	--Mill 2 cards from your Deck
 	local e4=e2:Clone()
 	e4:SetDescription(aux.Stringid(id,2))
 	e4:SetCategory(CATEGORY_DECKDES)

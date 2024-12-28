@@ -1,5 +1,5 @@
 --クシャトリラ・プリペア
---Kshatri-La Prepare
+--Kashtira Preparations
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

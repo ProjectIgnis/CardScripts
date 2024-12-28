@@ -23,7 +23,7 @@ function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) and Duel.IsPlayerCanDiscardDeck(tp,2) end
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and Duel.GetMatchingGroupCountRush(nil,tp,LOCATION_DECK,0,nil)>2 end
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and Duel.GetMatchingGroupCountRush(aux.TRUE,tp,LOCATION_DECK,0,nil)>2 end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(1)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)

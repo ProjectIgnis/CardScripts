@@ -37,7 +37,7 @@ function s.btplcon(e,tp,eg,ep,ev,re,r,rp)
 	return bc0 and bc1 and bc0==e:GetHandler() and s.checkzones(bc0,bc1)
 end
 function s.stplace(c,tp,rc)
-	if not Duel.MoveToField(c,tp,c:GetOwner(),LOCATION_SZONE,POS_FACEUP,true) then return end
+	if not Duel.MoveToField(c,tp,c:GetOwner(),LOCATION_SZONE,POS_FACEUP,c:IsMonsterCard()) then return end
 	--Treated as a Continuous Spell
 	local e1=Effect.CreateEffect(rc)
 	e1:SetType(EFFECT_TYPE_SINGLE)

@@ -1,4 +1,4 @@
---Japanese name
+--多層融合
 --Heavy Polymerization
 --Scripted by Naim
 local s,id=GetID()

@@ -1,9 +1,9 @@
 --Ｍ∀ＬＩＣＥ＜Ｐ＞Ｗｈｉｔｅ Ｒａｂｂｉｔ
---M∀LICE <Pawn> White Rabbit
+--Maliss <P> White Rabbit
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	--You take no battle damage from battles involving "M∀LICE" Link Monsters that point to this card
+	--You take no battle damage from battles involving "Maliss" Link Monsters that point to this card
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.bdcon)
 	e1:SetValue(0)
 	c:RegisterEffect(e1)
-	--Set 1 "M∀LICE" Trap from your Deck with a different name from the cards in your GY
+	--Set 1 "Maliss" Trap from your Deck with a different name from the cards in your GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	e4:SetProperty(EFFECT_FLAG_DELAY)
 	e4:SetCode(EVENT_REMOVE)
 	e4:SetCountLimit(1,{id,1})
-	e4:SetCost(s.spcost)
+	e4:SetCost(aux.PayLPCost(300))
 	e4:SetTarget(s.sptg)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
@@ -62,10 +62,6 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		Duel.SSet(tp,g)
 	end
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,300) end
-	Duel.PayLPCost(tp,300)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

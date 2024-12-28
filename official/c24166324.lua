@@ -1,5 +1,5 @@
 --流星極輝巧群
---Meteoaurora Drytron
+--Meteoroa Drytron
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -45,7 +45,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(g,REASON_COST)
 end
 function s.thfilter(c)
-	return c:IsSetCard(SET_DRYTRON)  and c:IsFaceup() and c:IsAbleToHand()
+	return c:IsSetCard(SET_DRYTRON) and c:IsFaceup() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_REMOVED) and s.thfilter(chkc) end

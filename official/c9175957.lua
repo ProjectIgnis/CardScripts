@@ -1,9 +1,9 @@
--- タリホー！スプリガンズ！
--- Tally-ho! Springans
--- Scripted by Hatter
+--タリホー！スプリガンズ！
+--Tally-ho! Springans
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Search 1 "Springans" monster
+	--Search 1 "Springans" monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_SPECIAL_SUMMON)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	-- Add this card to your hand
+	--Add this card to your hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND)

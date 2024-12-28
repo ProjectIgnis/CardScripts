@@ -1,5 +1,5 @@
 --騎士皇レガーティア
---Centurion Legatia
+--Centur-Ion Legatia
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

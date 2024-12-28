@@ -1,5 +1,5 @@
 -- 影の王 レイヴァーテイン
--- Laevateinn, Generaider Boss of Shadows
+--Laevatein, Generaider Boss of Shadows
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --アビスティング－トリアイナ
---Abyss-sting of Triaina
+--Abyss-sting Triaina
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCountLimit(1,{id,1})
-	e3:SetCost(aux.selfbanishcost)
+	e3:SetCost(aux.SelfBanishCost)
 	e3:SetTarget(s.tdtg)
 	e3:SetOperation(s.tdop)
 	c:RegisterEffect(e3)

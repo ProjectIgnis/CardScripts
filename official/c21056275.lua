@@ -1,5 +1,5 @@
 --武装蜂起
---Armament Swarm
+--Armed Rebeellion
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_DESTROYED)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCondition(s.thcon)
-	e2:SetCost(aux.selfbanishcost)
+	e2:SetCost(aux.SelfBanishCost)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)

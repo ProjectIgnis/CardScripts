@@ -1,9 +1,9 @@
 --ライゼオル・プラグイン
---Raizeol Plug-In
+--Ryzeal Plugin
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special Summon 1 Xyz Monster or "Raizeol" monster from your GY or banishment
+	--Special Summon 1 Xyz Monster or "Ryzeal" monster from your GY or banishment
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)

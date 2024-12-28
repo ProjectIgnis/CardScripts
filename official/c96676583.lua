@@ -1,9 +1,9 @@
 --Ｍ∀ＬＩＣＥ＜Ｐ＞Ｃｈｅｓｈｉｒｅ Ｃａｔ
---M∀LICE <Pawn> Cheshire Cat
+--Maliss <P> Chessy Cat
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	--Any monster destroyed by battle with a "M∀LICE" Link Monster that points to this card is banished
+	--Any monster destroyed by battle with a "Maliss" Link Monster that points to this card is banished
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetValue(LOCATION_REMOVED)
 	e1:SetTarget(s.linkfilter)
 	c:RegisterEffect(e1)
-	--Banish 1 "M∀LICE" card from your hand
+	--Banish 1 "Maliss" card from your hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_REMOVE+CATEGORY_DRAW)
@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_REMOVE)
 	e3:SetCountLimit(1,{id,1})
-	e3:SetCost(s.spcost)
+	e3:SetCost(aux.PayLPCost(300))
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
@@ -56,10 +56,6 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.BreakEffect()
 		Duel.Draw(tp,2,REASON_EFFECT)
 	end
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,300) end
-	Duel.PayLPCost(tp,300)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

@@ -1,5 +1,5 @@
 --白き森の妖魔ディアベル
---Diabell, Fiendess of the White Forest
+--Diabell, Queen of the White Forest
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

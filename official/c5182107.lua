@@ -1,5 +1,5 @@
 --超重武者ドウＣ－Ｎ
---Superheavy Samurai Constable
+--Superheavy Samurai Security
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,{id,1})
 	e3:SetCondition(s.spcond)
-	e3:SetCost(aux.selfreleasecost)
+	e3:SetCost(aux.SelfTributeCost)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)

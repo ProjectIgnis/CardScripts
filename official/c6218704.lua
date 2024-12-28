@@ -1,5 +1,5 @@
 --覇王天龍オッドアイズ・アークレイ・ドラゴン
---Supreme Celestial King Odd-Eyes Arc-Ray Dragon
+--Odd-Eyes Arcray Dragon
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --星騎士 リュラ
---Tellarknight Lyra
+--Tellarknight Lyran
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

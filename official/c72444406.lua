@@ -59,7 +59,7 @@ function s.plop(e,tp,eg,ep,ev,re,r,rp)
 	if not tc:IsRelateToEffect(e) or tc:IsImmuneToEffect(e) then return end
 	if Duel.GetLocationCount(owner_p,LOCATION_SZONE)==0 then
 		Duel.SendtoGrave(tc,REASON_RULE,nil,PLAYER_NONE)
-	elseif tc:CheckUniqueOnField(owner_p) and Duel.MoveToField(tc,tp,owner_p,LOCATION_SZONE,POS_FACEUP,true) then
+	elseif tc:CheckUniqueOnField(owner_p) and Duel.MoveToField(tc,tp,owner_p,LOCATION_SZONE,POS_FACEUP,tc:IsMonsterCard()) then
 		--Treated as a Continuous Trap
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

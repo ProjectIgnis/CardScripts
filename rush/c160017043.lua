@@ -92,7 +92,7 @@ function s.valcheck(e,c)
 		local sg=g:Filter(Card.IsType,nil,TYPE_EFFECT)
 		local tg=sg:Filter(Card.HasFlagEffect,nil,FLAG_DOUBLE_TRIB)
 		if #tg==0 then
-			tg=sg:Filter(Card.HasFlagEffect,nil,FLAG_DOUBLE_TRIB_DARK+FLAG_DOUBLE_TRIB_FIEND+160017041+160017141)
+			tg=sg:Filter(Card.HasFlagEffect,nil,FLAG_DOUBLE_TRIB_DARK+FLAG_DOUBLE_TRIB_FIEND+FLAG_DOUBLE_TRIB_0_ATK+FLAG_DOUBLE_TRIB_0_DEF+FLAG_DOUBLE_TRIB_EFFECT)
 		end
 		tg:KeepAlive()
 		local label_obj=e:GetLabelObject() --this is e0 

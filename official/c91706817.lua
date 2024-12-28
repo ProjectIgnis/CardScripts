@@ -1,5 +1,5 @@
 --青い涙の天使
---Angel with Blue Tears
+--Angel of Blue Tears
 --Logical Nonsense
 --Substitute ID
 local s,id=GetID()

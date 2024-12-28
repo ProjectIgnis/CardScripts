@@ -1,5 +1,5 @@
 --連慄砲固定式
---Equation System Cannon
+--Simultaneous Equation Cannons
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

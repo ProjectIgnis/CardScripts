@@ -1,5 +1,5 @@
 --インフェルニティ・サプレッション
---Infernity Supression
+--Infernity Suppression
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)

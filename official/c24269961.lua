@@ -1,5 +1,5 @@
 --破械神王ヤマ
---Unchained Soul King Yama
+--Unchained Soul Lord of Yama
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

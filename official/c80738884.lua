@@ -1,5 +1,5 @@
 --ＶＳ龍帝ノ槍
---Vanquish Soul - Calamity Kaiser
+--Vanquish Soul Calamity Caesar
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)

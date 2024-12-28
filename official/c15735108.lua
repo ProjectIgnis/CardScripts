@@ -1,5 +1,5 @@
 --マジックカード「クロス・ソウル」
---Spell Card: "Soul Exchange"
+--Spell Card "Soul Exchange"
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

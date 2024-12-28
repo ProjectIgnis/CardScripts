@@ -1,4 +1,4 @@
---Japanese name
+--スワローズ・カウリー
 --Swallow's Cowrie
 --scripted by Naim
 local s,id=GetID()

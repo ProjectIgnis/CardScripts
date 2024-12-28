@@ -1,6 +1,6 @@
--- 星守の騎士団
--- Constellar Tellarknights
--- Scripted by Satella
+--星守の騎士団
+--Constellar Tellarknights
+--Scripted by Satella
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate and (you can) Special Summon from the hand or GY
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	-- Special Summon 1 "tellarknight" or "Constellar" Xyz Monster
+	--Special Summon 1 "tellarknight" or "Constellar" Xyz Monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)

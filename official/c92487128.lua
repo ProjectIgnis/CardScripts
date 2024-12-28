@@ -1,16 +1,16 @@
 --創星竜華－光巴
---Guangba, Luminous Apodrakosis of Starforge
+--Sosei Ryu-Ge Mistva
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Pendulum procedure
+	--Pendulum Summon procedure
 	Pendulum.AddProcedure(c)
 	--Must be Special Summoned by its own effect
 	c:AddMustBeSpecialSummoned()
-	--You can only Special Summon "Guangba, Luminous Apodrakosis of Starforge(s)" once per turn
+	--You can only Special Summon "Sosei Ryu-Ge Mistva(s)" once per turn
 	c:SetSPSummonOnce(id)
-	--Add 1 "Apodrakosis" card from your Deck to your hand, except a Pendulum Monster, then destroy this card
+	--Add 1 "Ryu-Ge" card from your Deck to your hand, except a Pendulum Monster, then destroy this card
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_DESTROY)
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	--Tribute 1 Level 10 "Apodrakosis" monster, and if you do, Special Summon this card
+	--Tribute 1 Level 10 "Ryu-Ge" monster, and if you do, Special Summon this card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_RELEASE+CATEGORY_SPECIAL_SUMMON+CATEGORY_DESTROY)
@@ -60,13 +60,13 @@ end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return not eg:IsContains(e:GetHandler()) and eg:IsExists(s.spconfilter,1,nil)
 end
-function s.tributefilter(c,e,tp)
+function s.tributefilter(c,e,tp,hc)
 	return c:IsLevel(10) and c:IsSetCard(SET_RYU_GE) and c:IsReleasableByEffect()
-		and Duel.GetLocationCountFromEx(tp,tp,c,e:GetHandler())>0
+		and Duel.GetLocationCountFromEx(tp,tp,c,hc)>0
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsExistingMatchingCard(s.tributefilter,tp,LOCATION_MZONE,0,1,nil,e,tp)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.tributefilter,tp,LOCATION_MZONE,0,1,nil,e,tp,c)
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,true,true) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,tp,0)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_DESTROY,nil,1,tp,LOCATION_ONFIELD)
@@ -78,10 +78,10 @@ function s.tfcheck(sg,e,tp)
 	return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 or sg:IsExists(Card.IsLocation,1,nil,LOCATION_STZONE)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local rg=Duel.SelectMatchingCard(tp,s.tributefilter,tp,LOCATION_MZONE,0,1,1,nil,e,tp)
-	if #rg==0 or Duel.Release(rg,REASON_EFFECT)==0 then return end
 	local c=e:GetHandler()
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
+	local rg=Duel.SelectMatchingCard(tp,s.tributefilter,tp,LOCATION_MZONE,0,1,1,nil,e,tp,c)
+	if #rg==0 or Duel.Release(rg,REASON_EFFECT)==0 then return end
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,SUMMON_TYPE_RITUAL,tp,tp,true,true,POS_FACEUP)>0 then
 		c:CompleteProcedure()
 		local fg=Duel.GetFieldGroup(tp,LOCATION_ONFIELD,0)

@@ -1,5 +1,5 @@
 --犀子の王様
---Dienos Stacking
+--Royal Rhino with Deceitful Dice
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

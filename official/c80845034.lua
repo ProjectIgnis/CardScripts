@@ -1,5 +1,5 @@
 -- ＂罪宝狩りの悪魔＂
--- "The Tainted Treasure Hunter Fiend"
+--WANTED: Seeker of Sinful Spoils
 -- Scripted by Satellaa
 local s,id=GetID()
 function s.initial_effect(c)

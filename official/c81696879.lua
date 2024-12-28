@@ -1,5 +1,5 @@
 --影騎士シメーリア
---Centur-Ion Cimelia
+--Centur-Ion Chimerea
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -46,7 +46,7 @@ function s.plop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(p,LOCATION_SZONE)==0 then return end
 	Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TOFIELD)
 	local tc=Duel.SelectMatchingCard(p,aux.NecroValleyFilter(s.plfilter),p,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil,tp):GetFirst()
-	if tc and Duel.MoveToField(tc,p,p,LOCATION_SZONE,POS_FACEUP,true) then
+	if tc and Duel.MoveToField(tc,p,p,LOCATION_SZONE,POS_FACEUP,tc:IsMonsterCard()) then
 		--Treat it as a Continuous Trap
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -59,7 +59,7 @@ function s.plop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.chop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChangeChainOperation(ev,s.plop)
-	--Cannot Special Summon "Centur-Ion Cimelia" for the rest of this turn
+	--Cannot Special Summon "Centur-Ion Chimerea" for the rest of this turn
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetDescription(aux.Stringid(id,2))
 	e1:SetType(EFFECT_TYPE_FIELD)

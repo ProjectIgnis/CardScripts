@@ -1,5 +1,5 @@
 --燦幻昇龍バイデント・ドラギオン
---Sangen Risedragon Bident Dragion
+--Sangenpai Bident Dragion
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

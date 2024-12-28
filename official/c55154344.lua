@@ -1,9 +1,9 @@
 --登竜華幻巄門
---Apodrakosis Ascension Gate of Wyrmhaze
+--Ryu-Ge Realm - Wyrm Winds
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--You can only control 1 "Apodrakosis Ascension Gate of Wyrmhaze"
+	--You can only control 1 "Ryu-Ge Realm - Wyrm Winds"
 	c:SetUniqueOnField(1,0,id)
 	--Activate
 	local e0=Effect.CreateEffect(c)
@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	e2:SetCost(s.atkcost)
 	e2:SetTarget(s.atktg)
 	e2:SetOperation(s.atkop)
-	--Grant the above effect to "Apodrakosis" Pendulum Monsters and Level 10 or higher monsters whose original Type is Wyrm you control
+	--Grant the above effect to "Ryu-Ge" Pendulum Monsters and Level 10 or higher monsters whose original Type is Wyrm you control
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
 	e3:SetRange(LOCATION_SZONE)

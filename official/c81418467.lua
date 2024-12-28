@@ -1,5 +1,5 @@
 --原石竜インペリアル・ドラゴン
---Imperial Dragon the Primoredial Dragon
+--Primite Imperial Dragon
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER|TIMING_MAIN_END)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(function(e,tp) return Duel.IsTurnPlayer(1-tp) and Duel.IsMainPhase() end)
-	e1:SetCost(s.sumcost)
+	e1:SetCost(aux.SelfRevealCost)
 	e1:SetTarget(s.sumtg)
 	e1:SetOperation(s.sumop)
 	c:RegisterEffect(e1)
@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.effop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_PRIMOREDIAL}
+s.listed_series={SET_PRIMITE}
 function s.rescon(sg,e,tp,mg)
 	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:IsExists(s.tributefilter,1,nil,tp)
 end
@@ -67,14 +67,8 @@ function s.selfnssumop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Release(g,REASON_SUMMON|REASON_COST|REASON_MATERIAL)
 	g:DeleteGroup()
 end
-function s.sumcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return not c:IsPublic() end
-	Duel.ConfirmCards(1-tp,c)
-	Duel.ShuffleHand(tp)
-end
 function s.sumfilter(c)
-	return c:IsSetCard(SET_PRIMOREDIAL) and c:IsSummonable(true,nil)
+	return c:IsSetCard(SET_PRIMITE) and c:IsSummonable(true,nil)
 end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.sumfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,nil) end

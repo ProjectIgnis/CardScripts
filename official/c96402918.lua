@@ -1,5 +1,5 @@
 --氷霊山の龍祖 ランセア
---Lancea, Dragonic Ancestor of the Ice Spirit Mountain
+--Lancea, Ancestral Dragon of the Ice Mountain
 --Scripted by fiftyfour
 local s,id=GetID()
 function s.initial_effect(c)

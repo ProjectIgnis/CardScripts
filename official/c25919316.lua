@@ -1,4 +1,4 @@
---Japanese name
+--ピットナイト・フィル
 --Pitknight Filly
 --scripted by Naim
 local s,id=GetID()

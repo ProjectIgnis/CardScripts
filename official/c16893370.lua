@@ -1,5 +1,5 @@
 --夢現の眠姫－ネムレリア・レアリゼ
---Nemleria Réaliser, the Dreamaterializer Sleeping Princess
+--Dreaming Reality of Nemleria, Realized
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

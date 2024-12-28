@@ -1,12 +1,12 @@
 --法典の守護者アイワス
---Magistus Saint Aiwass
+--Aiwass, the Magistus Spell Spirit
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
-	--Fusion Material
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x152),aux.FilterBoolFunctionEx(Card.IsRace,RACE_SPELLCASTER))
-	--Equip to other monster
+	--Fusion Materials: 1 "Magistus" monster + 1 Spellcaster monster
+	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_MAGISTUS),aux.FilterBoolFunctionEx(Card.IsRace,RACE_SPELLCASTER))
+	--Equip this card from to another monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_EQUIP)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
-	e1:SetCondition(s.eqcon)
+	e1:SetCondition(function() return Duel.IsMainPhase() end)
 	e1:SetTarget(s.eqtg)
 	e1:SetOperation(s.eqop)
 	c:RegisterEffect(e1)
@@ -30,10 +30,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x152}
-function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsMainPhase()
-end
+s.listed_series={SET_MAGISTUS}
 function s.eqfilter(c,tp,ft,mmz)
 	return c:IsFaceup() and (ft>0 or c:IsControler(tp) or mmz)
 end
@@ -46,7 +43,7 @@ function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		and Duel.IsExistingTarget(s.eqfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c,tp,ft,mmz) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	Duel.SelectTarget(tp,s.eqfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,c,tp,ft,mmz)
-	Duel.SetOperationInfo(0,CATEGORY_EQUIP,c,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_EQUIP,c,1,tp,0)
 end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -69,11 +66,13 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_EQUIP)
 		e2:SetCode(EFFECT_CANNOT_TRIGGER)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e2)
 		--Take control of equipped monster
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_EQUIP)
 		e3:SetCode(EFFECT_SET_CONTROL)
+		e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e3:SetValue(s.ctval)
 		c:RegisterEffect(e3)
 	end

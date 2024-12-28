@@ -1,5 +1,5 @@
 --ゴブリン降下部隊
---Goblin Paratrooper Squad
+--Goblin Freefall Squad
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

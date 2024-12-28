@@ -1,25 +1,25 @@
--- 鉄獣式強襲機動兵装改＂ＢｕｃｅｐｈａｌｕｓⅡ＂
--- Tri-Brigade Arms Bucephalus II
--- Scripted by Hatter
+--鉄獣式強襲機動兵装改＂ＢｕｃｅｐｈａｌｕｓⅡ＂
+--Tri-Brigade Arms Bucephalus II
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	-- 3+ Beast, Beast-Warrior, and/or Winged Beast monsters
+	--Link Summon Procedure: 3+ Beast, Beast-Warrior, and/or Winged Beast monsters
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACES_BEAST_BWARRIOR_WINGB),3,5)
-	-- Special Summon restriction
+	--Special Summon restriction
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
 	e0:SetCode(EFFECT_SPSUMMON_COST)
 	e0:SetCost(s.spcost)
 	c:RegisterEffect(e0)
-	-- Opponent cannot activate cards or effects on Special Summon
+	--Opponent cannot activate cards or effects on Special Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetOperation(s.sucop)
 	c:RegisterEffect(e1)
-	-- Banish cards
+	--Banish cards
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_REMOVE)
@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.rmtg)
 	e2:SetOperation(s.rmop)
 	c:RegisterEffect(e2)
-	-- Send 1 Beast, Beast-Warrior, or Winged Beast monster to the GY
+	--Send 1 Beast, Beast-Warrior, or Winged Beast monster to the GY
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TOGRAVE)

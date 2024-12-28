@@ -1,5 +1,5 @@
 --炎王神天焼
---Fire King Sacred Immolation
+--Fire King Sky Burn
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

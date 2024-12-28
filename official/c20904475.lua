@@ -1,16 +1,16 @@
 --海瀧竜華－淵巴
---Yuanba, Abyssal Apodrakosis of Serpentfall
+--Kairo Ryu-Ge Emva
 --Scripted by Satellaa
 local s,id=GetID()
 function s.initial_effect(c)
-	--Add 1 "Apodrakosis Ascension Gate of Serpentfall" from your Deck to your hand
+	--Add 1 "Ryu-Ge Realm - Sea Spires" from your Deck to your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.thcost)
+	e1:SetCost(aux.SelfDiscardCost)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
@@ -45,18 +45,13 @@ function s.initial_effect(c)
 	e3:SetOperation(s.rmop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={28669235,id} --"Apodrakosis Ascension Gate of Serpentfall"
+s.listed_names={28669235,id} --"Ryu-Ge Realm - Sea Spires"
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	for tc in eg:Iter() do
 		if tc:IsMonster() and tc:IsPreviousLocation(LOCATION_HAND|LOCATION_DECK) and not tc:IsCode(id) then
 			Duel.RegisterFlagEffect(0,id,RESET_PHASE|PHASE_END,0,1)
 		end
 	end
-end
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsDiscardable() end
-	Duel.SendtoGrave(c,REASON_COST|REASON_DISCARD)
 end
 function s.thfilter(c)
 	return c:IsCode(28669235) and c:IsAbleToHand()

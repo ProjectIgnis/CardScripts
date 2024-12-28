@@ -1,5 +1,5 @@
 --刻まれし魔ディエスイレ
---Fiendsmith Dies Irae
+--Fiendsmith's Desirae
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

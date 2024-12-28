@@ -1,5 +1,5 @@
 --不死武士の悼み
---Lament of the Immortal Bushi
+--The Immortal Bushi Mourns the Mortal Body
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

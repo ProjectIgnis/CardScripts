@@ -1,5 +1,5 @@
 --Ａ★スペキュレーション
---A★Speculation
+--Ace★Spades Speculation
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

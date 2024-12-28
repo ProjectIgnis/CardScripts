@@ -1,5 +1,5 @@
 --最後の希望
---Last Hope Numbers
+--Numbers Last Hope
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

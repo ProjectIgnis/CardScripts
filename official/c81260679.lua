@@ -1,31 +1,31 @@
--- オオヒメの御巫
--- Ohime the Manifested Mikanko
--- Scripted by Hatter
+--オオヒメの御巫
+--Ohime the Manifested Mikanko
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	-- Cannot be destroyed by battle
+	--Cannot be destroyed by battle
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	-- Reflect battle damage
+	--Reflect battle damage
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_REFLECT_BATTLE_DAMAGE)
 	c:RegisterEffect(e2)
-	-- Search 1 "Mikanko" card
+	--Search 1 "Mikanko" card
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_HANDES)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_HAND)
 	e3:SetCountLimit(1,id)
-	e3:SetCost(s.thcost)
+	e3:SetCost(aux.SelfRevealCost)
 	e3:SetTarget(s.thtg)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
-	-- Equip 1 Equip Spell
+	--Equip 1 Equip Spell
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_EQUIP)
@@ -39,13 +39,8 @@ function s.initial_effect(c)
 	e4:SetOperation(s.eqop)
 	c:RegisterEffect(e4)
 end
-s.listed_names={16310544,id}
+s.listed_names={16310544,id} --"Mikanko Kagura"
 s.listed_series={SET_MIKANKO}
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return not c:IsPublic() end
-	Duel.ConfirmCards(1-tp,c)
-end
 function s.thfilter(c)
 	return c:IsSetCard(SET_MIKANKO) and c:IsAbleToHand() and not c:IsCode(id)
 end

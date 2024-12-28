@@ -1,5 +1,5 @@
 --冥骸王－メメントラン・テクトリカ
---Mementomictlan Tecuhtlica - Combined Conqueror
+--Mementomictlan Tecuhtlica - Creation King
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_GRAVE)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(aux.selfbanishcost)
+	e1:SetCost(aux.SelfBanishCost)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)

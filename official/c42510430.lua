@@ -1,4 +1,4 @@
---Japanese name
+--サンセット・ビート
 --Sunset Beat
 --scripted by Naim
 local s,id=GetID()

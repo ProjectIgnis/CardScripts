@@ -1,5 +1,5 @@
 --超越進化薬β
---Transcendental Evolution Pill Beta
+--Beta Evolution Pill - Ultranscendance
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

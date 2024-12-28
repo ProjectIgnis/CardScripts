@@ -1,5 +1,5 @@
 --マジェスペクター・ドラコ
---Majespecter Draco
+--Majespecter Draco - Ryu
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --黒き魔術師－ブラック・マジシャン
---Dark Magician the Ebon Sorcerer
+--Dark Magician the Magician of Black Magic
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,4 +1,4 @@
---Japanese name
+--サラマンドラ・フュージョン
 --Salamandra Fusion
 --scripted by Naim
 local s,id=GetID()

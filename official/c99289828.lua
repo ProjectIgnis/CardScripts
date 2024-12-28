@@ -1,5 +1,5 @@
 --白き森のいいつたえ
---Legend of the White Forest
+--Tales of the White Forest
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

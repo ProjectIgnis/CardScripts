@@ -1,12 +1,12 @@
--- シトリスの蟲惑魔
--- Traptrix Pinguicula
--- Scripted by Hatter
+--シトリスの蟲惑魔
+--Traptrix Pinguicula
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	-- 2 Level 4 monsters
+	--Xyz Summon procedure: 2 Level 4 monsters
 	Xyz.AddProcedure(c,nil,4,2)
-	-- Unaffected by Trap effects and effects of monsters with the same type as its materials
+	--Unaffected by Trap effects and effects of monsters with the same type as its materials
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetCondition(function(e) return e:GetHandler():GetOverlayCount()>0 end)
 	e1:SetValue(s.immval)
 	c:RegisterEffect(e1)
-	-- Search 1 "Traptrix" monster
+	--Search 1 "Traptrix" monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
-	-- Attach 1 monster to this card
+	--Attach 1 monster to this card
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)

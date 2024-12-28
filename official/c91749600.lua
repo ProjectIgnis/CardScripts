@@ -1,5 +1,5 @@
 -- 王の呪 ヴァラ
--- Vara, Seidhr of the Generaider Bosses
+--Vala, Seidhr of the Generaider Bosses
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

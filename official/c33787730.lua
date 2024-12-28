@@ -1,9 +1,9 @@
 --ライゼオル・ホールスラスター
---Raizeol Hole Thruster
+--Ryzeal Plasma Hole
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--Destroy face-up cards your opponent controls up to the number of "Raizeol" Xyz monsters you control
+	--Destroy face-up cards your opponent controls up to the number of "Ryzeal" Xyz monsters you control
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_LEAVE_GRAVE)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
-	--Xyz Summon using monsters you control, including a "Raizeol" monster
+	--Xyz Summon using monsters you control, including a "Ryzeal" monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetHintTiming(0,TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(aux.selfbanishcost)
+	e2:SetCost(aux.SelfBanishCost)
 	e2:SetTarget(s.xyztg)
 	e2:SetOperation(s.xyzop)
 	c:RegisterEffect(e2)

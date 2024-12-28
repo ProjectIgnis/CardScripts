@@ -1,4 +1,4 @@
---Japanese name
+--炎の剣舞
 --Flame Swordsdance
 --scripted by Naim
 local s,id=GetID()

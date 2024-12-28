@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(function(e,tp) return Duel.IsMainPhase() and Duel.IsTurnPlayer(tp) end)
-	e2:SetCost(aux.selfbanishcost)
+	e2:SetCost(aux.SelfBanishCost)
 	e2:SetTarget(s.lvrnktg)
 	e2:SetOperation(s.lvrnkop)
 	c:RegisterEffect(e2)
@@ -66,7 +66,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.lvrnkfilter(c)
-	return c:IsSetCard(SET_VIRTUAL_WORLD) and c:IsFaceup() and  (c:HasLevel() or c:HasRank())
+	return c:IsSetCard(SET_VIRTUAL_WORLD) and c:IsFaceup() and (c:HasLevel() or c:HasRank())
 end
 function s.lvrnktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.lvrnkfilter(chkc) end

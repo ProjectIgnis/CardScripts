@@ -1,5 +1,5 @@
 --騎士皇アークシーラ
---Centur-Ion Arkcoela
+--Centur-Ion Auxila
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

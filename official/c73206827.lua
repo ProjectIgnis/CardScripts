@@ -19,13 +19,13 @@ function s.initial_effect(c)
 	e2:SetTarget(s.cointg)
 	e2:SetOperation(s.coinop)
 	c:RegisterEffect(e2)
-	--Apply effect to "Arcana Force" monsters
+	--Apply the "Light Barrier" effect to the player
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
+	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e3:SetCode(CARD_LIGHT_BARRIER)
 	e3:SetRange(LOCATION_FZONE)
-	e3:SetTargetRange(LOCATION_MZONE,0)
-	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_ARCANA_FORCE))
+	e3:SetTargetRange(1,0)
 	e3:SetCondition(s.effectcon)
 	c:RegisterEffect(e3)
 	--Gain LP equal to the ATK of the destroyed monster

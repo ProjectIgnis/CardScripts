@@ -86,7 +86,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Destroy(dc,REASON_RULE)
 		end
 		if Duel.CheckLocation(1-tp,LOCATION_SZONE,seq)
-			and Duel.MoveToField(tc,tp,1-tp,LOCATION_SZONE,POS_FACEUP,true,1<<seq) then
+			and Duel.MoveToField(tc,tp,1-tp,LOCATION_SZONE,POS_FACEUP,tc:IsMonsterCard(),1<<seq) then
 			--Treat it as a Continuous Spell
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)

@@ -71,14 +71,14 @@ function s.plop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(dc,REASON_RULE)
 	end
 	if Duel.CheckLocation(1-tp,LOCATION_SZONE,seq)
-		and Duel.MoveToField(tc,tp,1-tp,LOCATION_SZONE,POS_FACEUP,true,1<<seq) then
-		-- Treat as Continuous Spell
+		and Duel.MoveToField(tc,tp,1-tp,LOCATION_SZONE,POS_FACEUP,tc:IsMonsterCard(),1<<seq) then
+		--Treated as a Continuous Spell
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_CHANGE_TYPE)
 		e1:SetReset(RESET_EVENT|RESETS_STANDARD&~RESET_TURN_SET)
-		e1:SetValue(TYPE_SPELL+TYPE_CONTINUOUS)
+		e1:SetValue(TYPE_SPELL|TYPE_CONTINUOUS)
 		tc:RegisterEffect(e1)
 	end
 end

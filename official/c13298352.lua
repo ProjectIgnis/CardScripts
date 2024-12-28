@@ -1,13 +1,13 @@
--- 鎧の忍者－櫓丸
--- Yaguramaru the Armor Ninja
--- Scripted by Hatter
+--鎧の忍者－櫓丸
+--Yaguramaru the Armor Ninja
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	-- 2 "Ninja" monsters with different Types
+	--Fusion Summon procedure: 2 "Ninja" monsters with different Types
 	Fusion.AddProcMixN(c,true,true,s.ffilter,2)
 	Fusion.AddContactProc(c,s.contactfil,s.contactop,s.splimit,nil,nil,nil,false)
-	-- Banish 1 card
+	--Banish 1 card
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_REMOVE)
@@ -32,7 +32,7 @@ function s.contactfil(tp)
 	return Duel.GetReleaseGroup(tp)
 end
 function s.contactop(g)
-	Duel.Release(g,REASON_COST+REASON_MATERIAL)
+	Duel.Release(g,REASON_COST|REASON_MATERIAL)
 end
 function s.splimit(e,se,sp,st)
 	return (st&SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION or not e:GetHandler():IsLocation(LOCATION_EXTRA)

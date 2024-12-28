@@ -1,5 +1,5 @@
 --Ｒｅｃｅｔｔｅ ｄｅ Ｐｏｉｓｓｏｎ～魚料理のレシピ～
---Recette de Poisson - Fish Recipe
+--Recette de Poisson (Fish Recipe)
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

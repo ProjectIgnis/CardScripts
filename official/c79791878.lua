@@ -1,5 +1,5 @@
 --光の黄金櫃
---Gold Sarcophagus of Light
+--Shining Sarcophagus
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetValue(function(_,re) return re:IsMonsterEffect() end)
 	c:RegisterEffect(e2)
-	--Search 1 card that mentions "Gold Sarcophagus of Light"
+	--Search 1 card that mentions "Shining Sarcophagus"
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)

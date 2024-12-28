@@ -3,7 +3,10 @@
 --Scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)
-	Fusion.AddProcMixN(c,true,true,160211009,3)
+	local e0=Fusion.AddProcMixN(c,true,true,160211009,3)[1]
+	e0:SetDescription(aux.Stringid(id,0))
+	local e4=Fusion.AddProcMix(c,true,true,160211009,s.ffilter)[1]
+	e4:SetDescription(aux.Stringid(id,1))
 	--Cannot be destroyed
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(3001)
@@ -27,4 +30,7 @@ function s.initial_effect(c)
 	e3:SetTarget(aux.TargetBoolFunction(Card.IsLevelAbove,7))
 	e3:SetValue(-1000)
 	c:RegisterEffect(e3)
+end
+function s.ffilter(c,fc,sumtype,tp)
+	return c:IsCode(160211009) and c:IsHasEffect(160019011)
 end

@@ -1,12 +1,12 @@
--- エピュアリィ・プランプ
--- Epurrely Plump
--- Scripted by Hatter
+--エピュアリィ・プランプ
+--Epurrely Plump
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	-- 2 Level 2 monsters
+	--Xyz Summon procedure: 2 Level 2 monsters
 	Xyz.AddProcedure(c,nil,2,2)
-	-- Attach 2 Spell/Trap cards
+	--Attach 2 Spell/Trap cards
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_LEAVE_GRAVE)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetHintTiming(0,TIMING_END_PHASE)
 	c:RegisterEffect(e2)
-	-- Attach "Purrely" Quick-Play Spell
+	--Attach "Purrely" Quick-Play Spell
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_REMOVE)

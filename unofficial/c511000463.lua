@@ -1,7 +1,8 @@
+--ダメージ・インタレスト
 --Damage Interest
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Inflict damage to your opponent equal to double the battle damage you took
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DAMAGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:GetFirst():IsControler(1-tp) and ep==tp and Duel.GetAttackTarget()==nil
+	return eg:GetFirst():IsControler(1-tp) and ep==tp
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

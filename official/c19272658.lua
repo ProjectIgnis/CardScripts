@@ -1,9 +1,9 @@
--- エクシーズ弁当
--- Xyz Bento
--- Scripted by Hatter
+--エクシーズ弁当
+--Xyz Bento
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Attach 1 monster from your opponent's GY to your Xyz monster 
+	--Attach 1 monster from your opponent's GY to your Xyz monster 
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_LEAVE_GRAVE)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_TO_GRAVE)
 	c:RegisterEffect(e2)
-	-- Change battle position of 1 monster Special Summoned from the Extra Deck 
+	--Change battle position of 1 monster Special Summoned from the Extra Deck 
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_POSITION)

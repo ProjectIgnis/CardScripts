@@ -5,6 +5,7 @@ FLAG_MAXIMUM_CENTER=170000000 --flag for center card maximum mode
 FLAG_MAXIMUM_SIDE=170000001 --flag for Left/right maximum card
 FLAG_MAXIMUM_CENTER_PREONFIELD=170000002 --those two flag are used to check is the card was a maximum monster while on the field (handling to improve later)
 FLAG_MAXIMUM_SIDE_PREONFIELD=170000004
+FLAG_MAXIMUM_SIDE_RELATION=180000000 --flag to check the related side pieces of a maximum monster
 if not aux.MaximumProcedure then
 	aux.MaximumProcedure = {}
 	Maximum = aux.MaximumProcedure
@@ -132,6 +133,7 @@ function Maximum.Operation(mats)
 		for tc in aux.Next(tg) do
 			tc:RegisterFlagEffect(FLAG_MAXIMUM_SIDE,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD,0,1)
 			tc:RegisterFlagEffect(FLAG_MAXIMUM_SIDE_PREONFIELD,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD-RESET_TOGRAVE-RESET_LEAVE,0,1)
+			tc:RegisterFlagEffect(FLAG_MAXIMUM_SIDE_RELATION+c:GetCardID(),RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD-RESET_TOGRAVE-RESET_LEAVE,0,1)
 		end
 		g=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
 		Duel.SendtoGrave(g,REASON_RULE)
@@ -189,8 +191,8 @@ function Card.AddMaximumAtkHandler(c)
 end
 --function that return the value of the "maximum atk" of the monster
 function Card.GetMaximumAttack(c)
-	local m=c:GetMetatable(true)
-	if not m then return false end
+	local m=c:GetMetatable(false)
+	if not m then return 0 end
 	return m.MaximumAttack
 end
 --function that provide effects of the center piece to the side (mainly used for protection effects)

@@ -1,4 +1,4 @@
---Japanese name
+--毘龍之謙
 --Ken the Warrior Dragon
 --scripted by Naim
 local s,id=GetID()

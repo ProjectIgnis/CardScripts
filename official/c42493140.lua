@@ -37,7 +37,7 @@ function s.pltg(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.IsExistingMatchingCard(s.plfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,nil) end
 end
 function s.move_to_stzone(c,hc,tp)
-	if not Duel.MoveToField(c,tp,tp,LOCATION_SZONE,POS_FACEUP,true) then return end
+	if not Duel.MoveToField(c,tp,tp,LOCATION_SZONE,POS_FACEUP,c:IsMonsterCard()) then return end
 	--Treat as Continuous Trap
 	local e1=Effect.CreateEffect(hc)
 	e1:SetType(EFFECT_TYPE_SINGLE)

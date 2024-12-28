@@ -1,5 +1,5 @@
 --ヘルグレイブ・スクワーマー
---Infernal Grave Squirmer
+--Gruesome Grave Squirmer
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(aux.selfbanishcost)
+	e2:SetCost(aux.SelfBanishCost)
 	e2:SetTarget(s.hgysptg)
 	e2:SetOperation(s.hgyspop)
 	c:RegisterEffect(e2)

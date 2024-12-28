@@ -1,5 +1,5 @@
 --ＴＧ — クローズ
---T.G. - Close
+--T.G. Close
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)

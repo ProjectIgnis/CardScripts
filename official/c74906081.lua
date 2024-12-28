@@ -64,8 +64,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		--Place it face-up in its owner's Spell & Trap Zone as a Continuous Spell
 		if tc:IsLocation(LOCATION_MZONE) and Duel.GetLocationCount(tc:GetOwner(),LOCATION_SZONE)==0 then
 			Duel.SendtoGrave(tc,REASON_RULE,nil,PLAYER_NONE)
-		elseif Duel.MoveToField(tc,tp,tc:GetOwner(),LOCATION_SZONE,POS_FACEUP,true) then
-			--Treat it as a Continuous Spell
+		elseif Duel.MoveToField(tc,tp,tc:GetOwner(),LOCATION_SZONE,POS_FACEUP,tc:IsMonsterCard()) then
+			--Treated as a Continuous Spell
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)

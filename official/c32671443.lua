@@ -3,8 +3,9 @@
 --Scripted by The Razgriz
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Add to your hand or Special Summon 1 "Destiny HERO" monster from your GY
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -12,30 +13,31 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--Change ATK
+	--Make the ATK of a "Destiny Hero" monster becomes the ATK of another "Destiny Hero"
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_ATKCHANGE)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(aux.SelfBanishCost)
 	e2:SetTarget(s.atktg)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xc008}
+s.listed_series={SET_DESTINY_HERO}
 function s.costfilter(c,e,tp,ft)
-	return c:IsSetCard(0xc008) and c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsSetCard(SET_DESTINY_HERO) and c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,c,e,tp,ft)
 end
 function s.filter(c,e,tp,ft)
-	return (c:IsSetCard(0xc008) and c:IsMonster()) and (c:IsAbleToHand() or (ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
+	return (c:IsSetCard(SET_DESTINY_HERO) and c:IsMonster()) and (c:IsAbleToHand() or (ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,e,tp,ft) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil,e,tp,ft) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil,e,tp,ft)
+	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil,e,tp,ft)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -53,15 +55,15 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			return tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and ft>0 end,
 		function(c)
 			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP) end,
-		aux.Stringid(id,0))
+		aux.Stringid(id,2))
 	end
 end
 function s.atkfilter1(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0xc008) and c:IsMonster()
+	return c:IsFaceup() and c:IsSetCard(SET_DESTINY_HERO) and c:IsMonster()
 		and Duel.IsExistingTarget(s.atkfilter2,tp,LOCATION_MZONE,0,1,c,c:GetAttack())
 end
 function s.atkfilter2(c,atk)
-	return c:IsFaceup() and c:IsSetCard(0xc008) and c:IsMonster() and not c:IsAttack(atk)
+	return c:IsFaceup() and c:IsSetCard(SET_DESTINY_HERO) and c:IsMonster() and not c:IsAttack(atk)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -74,7 +76,7 @@ end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e):Filter(Card.IsFaceup,nil)
 	if #g~=2 then return end
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
+	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,3))
 	local tg=g:Select(tp,1,1,nil)
 	Duel.HintSelection(tg)
 	local hc=tg:GetFirst()
@@ -86,7 +88,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(atk)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		hc:RegisterEffect(e1) 
 	end
 end

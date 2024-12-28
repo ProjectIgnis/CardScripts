@@ -1,17 +1,17 @@
--- 混沌核
--- Core of Chaos
--- Scripted by Hatter
+--混沌核
+--Core of Chaos
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableUnsummonable()
-	-- Must be Special Summoned by a card effect
+	--Must be Special Summoned by a card effect
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e1:SetValue(function(_,se) return se:IsHasType(EFFECT_TYPE_ACTIONS) end)
 	c:RegisterEffect(e1)
-	-- Banish this card if it would leave the field
+	--Banish this card if it would leave the field
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetCondition(function(e) return e:GetHandler():IsFaceup() end)
 	e2:SetValue(LOCATION_REMOVED)
 	c:RegisterEffect(e2)
-	-- Special Summon this card
+	--Special Summon this card
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.hsptg)
 	e3:SetOperation(s.hspop)
 	c:RegisterEffect(e3)
-	-- Special Summon 1 banished "Core of Chaos"
+	--Special Summon 1 banished "Core of Chaos"
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -65,7 +65,7 @@ function s.hspop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
-	-- Cannot Special Summon monsters from the Extra Deck, except LIGHT or DARK Synchro monsters
+	--Cannot Special Summon monsters from the Extra Deck, except LIGHT or DARK Synchro monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,2))
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -75,7 +75,7 @@ function s.hspop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
 	Duel.RegisterEffect(e1,tp)
-	-- Clock Lizard check
+	--Clock Lizard check
 	aux.addTempLizardCheck(c,tp,s.lizfilter)
 end
 function s.splimit(e,c)

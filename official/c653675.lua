@@ -1,5 +1,5 @@
 --シンクロ・オーバートップ
---Synchro Over Top
+--Synchro Overtop
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

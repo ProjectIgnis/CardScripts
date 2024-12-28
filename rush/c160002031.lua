@@ -49,9 +49,9 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 			sg=sg:Select(tp,1,1,nil)
 		end
-		sg=sg:AddMaximumCheck()
+		local dg=sg:AddMaximumCheck()
 		if #sg>0 then
-			Duel.HintSelection(sg)
+			Duel.HintSelection(dg)
 			local tc=sg:GetFirst()
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)

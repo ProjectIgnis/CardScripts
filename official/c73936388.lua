@@ -1,4 +1,4 @@
---Japanese name
+--幻炎の剣士－ミラージュ・ソードマン－
 --Mirage Swordsman
 --scripted by Naim
 local s,id=GetID()

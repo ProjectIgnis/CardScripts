@@ -27,7 +27,7 @@ end
 function Link.ConditionFilter(c,f,lc,tp)
 	local res1=c:IsCanBeLinkMaterial(lc,tp) and (not f or f(c,lc,SUMMON_TYPE_LINK|MATERIAL_LINK,tp))
 	local res2=false
-	local formud_eff=c:IsHasEffect(50366775)
+	local formud_eff=c:IsHasEffect(EFFECT_FORMUD_SKIPPER)
 	if formud_eff then
 		local label={formud_eff:GetLabel()}
 		for i=1,#label-1,2 do
@@ -200,7 +200,7 @@ function Link.Operation(f,minc,maxc,specialchk)
 					end
 				end
 				for tc in g:Iter() do
-					local formud_eff=tc:IsHasEffect(50366775)
+					local formud_eff=tc:IsHasEffect(EFFECT_FORMUD_SKIPPER)
 					if formud_eff then
 						local res1=tc:IsCanBeLinkMaterial(c,tp) and (not f or f(tc,c,SUMMON_TYPE_LINK|MATERIAL_LINK,tp))
 						local label={formud_eff:GetLabel()}

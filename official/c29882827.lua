@@ -1,9 +1,9 @@
 --竜華界闢
---Apodrakosis World Creation
+--Ryu-Ge Rising
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--Add 1 "Apodrakosis" monster from your Deck to your hand, then you can add 1 "Apodrakosis" Pendulum Monster from your hand to your Extra Deck
+	--Add 1 "Ryu-Ge" monster from your Deck to your hand, then you can add 1 "Ryu-Ge" Pendulum Monster from your hand to your Extra Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_TOEXTRA)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	--Special Summon 1 "Apodrakosis" monster from your Deck
+	--Special Summon 1 "Ryu-Ge" monster from your Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)

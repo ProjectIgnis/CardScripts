@@ -32,7 +32,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local td=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_TODECK)
 	Duel.HintSelection(td)
 	if Duel.SendtoDeck(td,nil,SEQ_DECKBOTTOM,REASON_COST)<=0 then return end
-	Duel.SortDeckbottom(tp,tp,#td)
+	local g2=Duel.GetOperatedGroup():Filter(Card.IsLocation,nil,LOCATION_DECK)
+	if #g2>1 then
+		Duel.SortDeckbottom(tp,tp,#g2)
+	end
 	--Effect
 	local sg=Duel.GetMatchingGroup(s.sfilter,tp,LOCATION_GRAVE,0,nil)
 	if #sg>0 then

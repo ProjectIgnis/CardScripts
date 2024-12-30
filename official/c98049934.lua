@@ -1,12 +1,12 @@
--- エピュアリィ・ビューティ
--- Epurrely Beauty
--- Scripted by Hatter
+--エピュアリィ・ビューティ
+--Epurrely Beauty
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	-- 2 Level 2 monsters
+	--Xyz Summon procedure: 2 Level 2 monsters
 	Xyz.AddProcedure(c,nil,2,2)
-	-- Negate 1 monster's effects
+	--Negate 1 monster's effects
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DISABLE)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER|TIMING_MAIN_END)
 	c:RegisterEffect(e2)
-	-- Attach "Purrely" Quick-Play Spell
+	--Attach "Purrely" Quick-Play Spell
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_POSITION)
@@ -55,7 +55,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		local c=e:GetHandler()
-		-- Negate its effects
+		--Negate its effects
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

@@ -66,10 +66,10 @@ function s.valcheck(e,c)
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_SYNCHRO) and not c:HasFlagEffect(id,e:GetLabel())
+	return c:IsSynchroSummoned() and not c:HasFlagEffect(id,e:GetLabel())
 end
 function s.rmfilter(c)
-	return c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:IsSummonLocation(LOCATION_EXTRA) and c:IsAbleToRemove()
+	return c:IsSpecialSummoned() and c:IsSummonLocation(LOCATION_EXTRA) and c:IsAbleToRemove()
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.rmfilter(chkc) end

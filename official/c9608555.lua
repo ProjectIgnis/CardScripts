@@ -75,7 +75,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReincarnationSummoned() and c:IsSummonType(SUMMON_TYPE_XYZ)
+	return c:IsReincarnationSummoned() and c:IsXyzSummoned()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(nil,tp,0,LOCATION_MZONE,nil)

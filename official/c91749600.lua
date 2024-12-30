@@ -1,10 +1,10 @@
--- 王の呪 ヴァラ
+--王の呪 ヴァラ
 --Vala, Seidhr of the Generaider Bosses
--- Scripted by Hatter
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,0,id)
-	-- Special Summon this card from the hand or GY
+	--Special Summon this card from the hand or GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.hsptg)
 	e1:SetOperation(s.hspop)
 	c:RegisterEffect(e1)
-	-- Special Summon 1 "Generaider" monster
+	--Special Summon 1 "Generaider" monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)

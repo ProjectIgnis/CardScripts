@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id)
 	e1:SetValue(s.synval)
 	c:RegisterEffect(e1)
-	-- Send the top card from your Deck to the GY and Special Summon itself from the GY
+	--Send the top card from your Deck to the GY and Special Summon itself from the GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DECKDES+CATEGORY_SPECIAL_SUMMON)

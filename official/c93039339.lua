@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTargetRange(1,1)
-	e1:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ) end)
+	e1:SetCondition(function(e) return e:GetHandler():IsXyzSummoned() end)
 	e1:SetValue(function(e,re,tp) return re:IsMonsterEffect() and re:GetHandler():IsAttackAbove(3000) end)
 	c:RegisterEffect(e1)
 	--Return 1 monster on the field to the hand

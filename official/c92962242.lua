@@ -1,9 +1,9 @@
--- 重の忍者－磁翁
+--重の忍者－磁翁
 --Jioh the Gravity Ninja
--- Scripted by Hatter
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Flip up to 2 monsters face-down
+	--Flip up to 2 monsters face-down
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_POSITION)
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetCode(EVENT_FLIP)
 	c:RegisterEffect(e3)
-	-- Destroy 1 monster
+	--Destroy 1 monster
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,4))
 	e4:SetCategory(CATEGORY_DESTROY)
@@ -47,7 +47,7 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	g:Match(Card.IsControler,nil,1-tp)
 	for tc in g:Match(Card.IsPosition,nil,POS_FACEDOWN_DEFENSE):Iter() do
-		-- Cannot change its battle position
+		--Cannot change its battle position
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(3313)
 		e1:SetType(EFFECT_TYPE_SINGLE)

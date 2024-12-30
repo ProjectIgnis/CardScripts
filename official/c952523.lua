@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetCode(EFFECT_IMMUNE_EFFECT)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK) end)
+	e1:SetCondition(function(e) return e:GetHandler():IsLinkSummoned() end)
 	e1:SetValue(function(e,te) return te:IsTrapEffect() end)
 	c:RegisterEffect(e1)
 	--Set 1 activated "Hole" Normal Trap instead of sending it to the GY

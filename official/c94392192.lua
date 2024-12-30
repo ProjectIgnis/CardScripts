@@ -1,9 +1,9 @@
--- クシャトリラ・オーガ
--- Kashtira Ogre
--- Scripted by Hatter
+--クシャトリラ・オーガ
+--Kashtira Ogre
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon itself from the hand if you control no monsters
+	--Special Summon itself from the hand if you control no monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.spcon)
 	c:RegisterEffect(e1)
-	-- Add 1 "Kashtira" Trap from the Deck to the hand
+	--Add 1 "Kashtira" Trap from the Deck to the hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
-	-- Excavate the opponent's Deck and banish 1 card, face-down
+	--Excavate the opponent's Deck and banish 1 card, face-down
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_REMOVE)

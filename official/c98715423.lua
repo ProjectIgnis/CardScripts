@@ -1,14 +1,14 @@
--- 墓守の罠
--- Gravekeeper's Trap
--- Scripted by Hatter
+--墓守の罠
+--Gravekeeper's Trap
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	-- Cannot activate effects or Special Summon from the GY
+	--Cannot activate effects or Special Summon from the GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e3:SetTarget(function(_,c) return c:IsLocation(LOCATION_GRAVE) end)
 	c:RegisterEffect(e3)
-	-- Search 1 "Gravekeeper's" or EARTH Fairy monster
+	--Search 1 "Gravekeeper's" or EARTH Fairy monster
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,0))
 	e4:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e4:SetTarget(s.thtg)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
-	-- Declare card name
+	--Declare card name
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,1))
 	e5:SetCategory(CATEGORY_TOGRAVE)
@@ -48,7 +48,7 @@ function s.initial_effect(c)
 	e5:SetTarget(s.tgtg)
 	e5:SetOperation(s.tgop)
 	c:RegisterEffect(e5)
-	-- Check if normal draw has happened
+	--Check if normal draw has happened
 	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

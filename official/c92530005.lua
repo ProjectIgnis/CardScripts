@@ -89,7 +89,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.gyspcon(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
-	return at:IsControler(1-tp) and at:IsSummonType(SUMMON_TYPE_SPECIAL) and Duel.GetAttackTarget()==nil
+	return at:IsControler(1-tp) and at:IsSpecialSummoned() and Duel.GetAttackTarget()==nil
 end
 function s.tedfilter(c)
 	return c:IsSetCard(SET_PERFORMAGE) and c:IsType(TYPE_PENDULUM)

@@ -82,7 +82,7 @@ function s.penop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcfilter(c,tp)
-	return c:IsSummonType(SUMMON_TYPE_PENDULUM) and c:HasLevel() and c:IsSummonPlayer(tp) and c:IsFaceup()
+	return c:IsPendulumSummoned() and c:HasLevel() and c:IsSummonPlayer(tp) and c:IsFaceup()
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local sg=eg:Filter(s.spcfilter,nil,tp)

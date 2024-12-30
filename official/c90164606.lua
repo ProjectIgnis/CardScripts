@@ -1,9 +1,9 @@
--- ＧＰ－ネック・アンド・ネック
--- Gold Pride - It's Neck and Neck!
--- Scripted by Satella
+--ＧＰ－ネック・アンド・ネック
+--Gold Pride - It's Neck and Neck!
+--Scripted by Satella
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	-- Special Summon 1 "Gold Pride" monster from your Extra Deck
+	--Special Summon 1 "Gold Pride" monster from your Extra Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)

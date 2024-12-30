@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetCost(function(_,_,tp) return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0 end)
 	e2:SetOperation(s.spcostop)
 	c:RegisterEffect(e2)
-	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,function(c) return not c:IsSummonType(SUMMON_TYPE_SYNCHRO) end)
+	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,function(c) return not c:IsSynchroSummoned() end)
 end
 function s.spcon(e,c)
 	if c==nil then return true end

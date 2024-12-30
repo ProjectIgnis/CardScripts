@@ -55,7 +55,7 @@ function s.tgconfilter(c)
 	return c:IsType(TYPE_FUSION) and c:ListsCodeAsMaterial(CARD_ALBAZ)
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION) then return false end
+	if not e:GetHandler():IsFusionSummoned() then return false end
 	local g=Duel.GetMatchingGroup(s.tgconfilter,tp,LOCATION_GRAVE,0,nil)
 	return g:GetClassCount(Card.GetCode)>=6
 end

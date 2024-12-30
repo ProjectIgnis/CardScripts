@@ -1,9 +1,9 @@
--- ビッグウェルカム・ラビュリンス
--- Big Welcome Labrynth
--- Scripted by Hatter
+--ビッグウェルカム・ラビュリンス
+--Big Welcome Labrynth
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon 1 "Labrynth" monster
+	--Special Summon 1 "Labrynth" monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOHAND)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	-- Return 1 Fiend monster to the hand
+	--Return 1 Fiend monster to the hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND)

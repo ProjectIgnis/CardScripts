@@ -43,7 +43,7 @@ end
 s.listed_names={89907228} --"Divine Dragon Token"
 s.synchro_tuner_required=1
 function s.tkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsTurnPlayer(tp) and e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return Duel.IsTurnPlayer(tp) and e:GetHandler():IsSynchroSummoned()
 end
 function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

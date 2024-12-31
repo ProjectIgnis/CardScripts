@@ -17,6 +17,15 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
+	--destroy monsters
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e2:SetCode(EVENT_CHAIN_END)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetLabelObject(e1)
+	e2:SetCondition(s.accon)
+	e2:SetOperation(s.acop)
+	c:RegisterEffect(e2)
 end
 s.named_material={CARD_GALACTICA_OBLIVION}
 function s.ffilter(c,fc,sumtype,tp)
@@ -53,9 +62,18 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetValue(700)
 	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	c:RegisterEffect(e1)
+	e:SetLabel(1)
+end
+function s.cfilter(c)
+	return (c:GetPreviousPosition()&POS_FACEDOWN)~=0 and (c:GetPosition()&POS_FACEUP)~=0
+end
+function s.accon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetLabelObject():GetLabel()==1
+end
+function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	local g2=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_MZONE,nil)
 	if #g2>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-		Duel.BreakEffect()
 		Duel.Destroy(g2,REASON_EFFECT)
 	end
+	e:GetLabelObject():SetLabel(0)
 end

@@ -1,8 +1,8 @@
--- ＴＧ ロケット・サラマンダー
--- T.G. Rocket Salamander
+--ＴＧ ロケット・サラマンダー
+--T.G. Rocket Salamander
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon 1 "T.G." monster from your Deck
+	--Special Summon 1 "T.G." monster from your Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.dsptg)
 	e1:SetOperation(s.dspop)
 	c:RegisterEffect(e1)
-	-- Special Summon 1 Level 4 or lower "T.G." monster from your GY
+	--Special Summon 1 Level 4 or lower "T.G." monster from your GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)

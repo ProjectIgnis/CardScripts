@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(0,1)
-	e3:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE) end)
+	e3:SetCondition(function(e) return e:GetHandler():IsTributeSummoned() end)
 	e3:SetValue(s.actlimval)
 	c:RegisterEffect(e3)
 end
@@ -40,6 +40,6 @@ function s.atkval(e,c)
 end
 function s.actlimval(e,re,rp)
 	local rc=re:GetHandler()
-	return re:IsMonsterEffect() and rc:IsSummonType(SUMMON_TYPE_SPECIAL) and rc:GetAttack()<e:GetHandler():GetAttack() and rc:IsFaceup()
+	return re:IsMonsterEffect() and rc:IsSpecialSummoned() and rc:GetAttack()<e:GetHandler():GetAttack() and rc:IsFaceup()
 		and rc:IsLocation(LOCATION_MZONE)
 end

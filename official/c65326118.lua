@@ -1,5 +1,5 @@
 --天盃龍ファドラ
---Tenpai Dragon Fadora
+--Tenpai Dragon Fadra
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

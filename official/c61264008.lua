@@ -1,9 +1,9 @@
--- 土地ころがし
--- Land Flipping
--- Scripted by Hatter
+--土地ころがし
+--Land Flipping
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Banish 1 Field Spell
+	--Banish 1 Field Spell
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_REMOVE+CATEGORY_LEAVE_GRAVE)

@@ -1,5 +1,5 @@
 --リンカーネイト・アンヴェイル・メイル
---Reincarnate Unveil Mail
+--Reincarnation Unveiling Mail
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

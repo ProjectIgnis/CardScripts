@@ -1,4 +1,4 @@
---Japanese name
+--魔溶生物ゾル
 --Magicolloidal Sol
 --Scripted by Hatter
 local s,id=GetID()

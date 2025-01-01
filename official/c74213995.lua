@@ -1,4 +1,4 @@
---JP name
+--バーバリアン・エコーズ
 --Battleguard Echoes
 --Scripted by Hatter
 local s,id=GetID()

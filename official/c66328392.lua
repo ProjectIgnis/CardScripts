@@ -1,5 +1,5 @@
 --罪宝の欺き
---Sinful Spoils Deception
+--Deception of the Sinful Spoils
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

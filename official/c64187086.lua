@@ -1,5 +1,5 @@
 --地縛神の復活
---Earthbound Revival
+--Earthbound Immortal Revival
 local s,id=GetID()
 function s.initial_effect(c)
 	--Add 1 "Earthbound Immortal" monster and 1 Field Spell to the hand

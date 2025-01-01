@@ -1,9 +1,9 @@
--- メメント・メイス
--- Mementotlan Mace
--- Scripted by Satellaa
+--メメント・メイス
+--Mementotlan Mace
+--Scripted by Satellaa
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Take control of 1 face-up monster your opponent controls
+	--Take control of 1 face-up monster your opponent controls
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_CONTROL)
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.cttg)
 	e1:SetOperation(s.ctop)
 	c:RegisterEffect(e1)
-	-- Add 1 "Memento" card from your Deck to your hand
+	--Add 1 "Memento" card from your Deck to your hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DESTROY+CATEGORY_TOHAND+CATEGORY_SEARCH)

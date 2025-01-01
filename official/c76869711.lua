@@ -1,14 +1,14 @@
--- 六花来々
--- Rikka Konkon
--- Scripted by Hatter
+--六花来々
+--Rikka Konkon
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	-- Set 1 "Rikka" Spell/Trap from the Deck
+	--Set 1 "Rikka" Spell/Trap from the Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.settg)
 	e2:SetOperation(s.setop)
 	c:RegisterEffect(e2)
-	-- Replace 1 Plant tribute
+	--Replace 1 Plant tribute
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(CARD_RIKKA_KONKON)
@@ -47,7 +47,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	if #sg>0 then
 		Duel.SSet(tp,sg)
 	end
-	-- Cannot Special Summon, except Plant monsters
+	--Cannot Special Summon, except Plant monsters
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetType(EFFECT_TYPE_FIELD)

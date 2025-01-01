@@ -1,9 +1,9 @@
--- 氷水大剣現
--- Great Icejade Sword Appearance
--- Scripted by Hatter
+--氷水大剣現
+--Icejade Manifestation
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon, or send to the GY, 1 "Icejade" monster
+	--Special Summon, or send to the GY, 1 "Icejade" monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOGRAVE+CATEGORY_SPECIAL_SUMMON)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.tgsptg)
 	e1:SetOperation(s.tgspop)
 	c:RegisterEffect(e1)
-	-- Banish 1 card
+	--Banish 1 card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_REMOVE)

@@ -1,4 +1,4 @@
---JP name
+--密林に潜む者
 --Jungle Dweller
 --Scripted by Hatter
 local s,id=GetID()

@@ -1,4 +1,4 @@
---JP name
+--果てなき灰滅
 --Ashened to Endlessness
 --scripted by pyrQ
 local s,id=GetID()

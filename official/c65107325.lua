@@ -1,10 +1,10 @@
--- 赤酢の踏切
--- Red Vinegar Crossing
--- Scripted by Hatter
+--赤酢の踏切
+--Sour Scheduling - Red Vinegar Vamoose
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,0,id)
-	-- Activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.acttg)
 	e1:SetOperation(s.actop)
 	c:RegisterEffect(e1)
-	-- Zones in the same column cannot be used
+	--Zones in the same column cannot be used
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_DISABLE_FIELD)

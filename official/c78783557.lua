@@ -1,4 +1,4 @@
---JP name
+--滅亡龍 ヴェイドス
 --Veidos the Eruption Dragon of Extinction
 --scripted by pyrQ
 local s,id=GetID()

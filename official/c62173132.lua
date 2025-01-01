@@ -1,5 +1,5 @@
 --罪宝の囁き
---Whispers of the Sinful Spoils
+--Susurrus of the Sinful Spoils
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

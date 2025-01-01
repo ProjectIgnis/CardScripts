@@ -1,5 +1,5 @@
 --夢見るネムレリア
---Dreaming Nemurelia
+--Dreaming Nemleria
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

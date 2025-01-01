@@ -1,12 +1,12 @@
--- エクスピュアリィ・ノアール
--- Expurrely Noir
--- Scripted by Hatter
+--エクスピュアリィ・ノアール
+--Expurrely Noir
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	-- 2 Level 7 monsters, or 1 Rank 2 monster with 5+ Xyz materials
+	--Xyz Summon procedure: 2 Level 7 monsters, or 1 Rank 2 monster with 5+ Xyz materials
 	Xyz.AddProcedure(c,nil,7,2,s.ovfilter,aux.Stringid(id,0))
-	-- Unaffected by opponent's activated effects
+	--Unaffected by opponent's activated effects
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetCondition(function(e) return e:GetHandler():GetOverlayCount()>=5 end)
 	e1:SetValue(function(e,te) return te:IsActivated() and e:GetOwnerPlayer()~=te:GetOwnerPlayer() end)
 	c:RegisterEffect(e1)
-	-- Place 1 card to the bottom of the Deck
+	--Place 1 card to the bottom of the Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TODECK)

@@ -1,9 +1,9 @@
--- 七皇覚醒
--- Seventh Force
--- Scripted by Satella
+--七皇覚醒
+--Seventh Force
+--Scripted by Satella
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon 1 "Number C" monster from your Extra Deck
+	--Special Summon 1 "Number C" monster from your Extra Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_SEARCH+CATEGORY_TOHAND)

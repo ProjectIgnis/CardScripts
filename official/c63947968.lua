@@ -1,5 +1,5 @@
 --ミレニアム・アブソリューター
---Millennium Fiend Reflection
+--Fiend Reflection of the Millennium
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

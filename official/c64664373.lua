@@ -1,5 +1,5 @@
 --共界神淵体
---Metaltronios
+--Metaltronus
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --終戒超獸－ヴァルドラス
---Technalogue - Valdrath
+--Varudras, the Final Bringer of the End Times
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -88,5 +88,5 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.xyzdescon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_XYZ)
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsXyzSummoned()
 end

@@ -1,5 +1,5 @@
 --超越竜ギガントザウラー
---Transcendrake Gigantozowler
+--Transcendosaurus Gigantozowler
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

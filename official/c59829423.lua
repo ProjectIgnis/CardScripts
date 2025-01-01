@@ -1,5 +1,5 @@
 --至天の魔王ミッシング・バロウズ
---Missing Burroughs, the Dark Ruler of the Highest Heaven
+--Lord of the Missing Barrows
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

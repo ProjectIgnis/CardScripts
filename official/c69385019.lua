@@ -1,5 +1,5 @@
 --皇たる水精鱗－ネプトアビス
---Neptabyss the Royal Mermail
+--Mermail King - Neptabyss
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

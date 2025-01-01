@@ -77,7 +77,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		local atk=0
 		if tc:IsFaceup() then atk=tc:GetAttack()/2 end
 		local c=e:GetHandler()
-		if Duel.Destroy(tc,REASON_EFFECT)>0 and c:IsRelateToEffect(e) and c:IsSummonType(SUMMON_TYPE_TRIBUTE) and c:IsFaceup()
+		if Duel.Destroy(tc,REASON_EFFECT)>0 and c:IsRelateToEffect(e) and c:IsTributeSummoned() and c:IsFaceup()
 			and e:GetLabel()==1 and atk>0 then
 			Duel.BreakEffect()
 			--Increase ATK

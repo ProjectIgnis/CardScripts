@@ -1,10 +1,10 @@
--- 魔界劇団－リバティ・ドラマチスト
--- Abyss Actor - Liberty Dramatist
--- Scripted by Hatter
+--魔界劇団－リバティ・ドラマチスト
+--Abyss Actor - Liberty Dramatist
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	Pendulum.AddProcedure(c)
-	-- Special Summon this card
+	--Special Summon this card
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	-- Reveal 3 "Abyss Script" Spells
+	--Reveal 3 "Abyss Script" Spells
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetCondition(function(e) return e:GetHandler():IsSummonLocation(LOCATION_PZONE) end)
 	e2:SetOperation(s.revop)
 	c:RegisterEffect(e2)
-	-- Shuffle 1 "Abyss Script" Spell to the Deck
+	--Shuffle 1 "Abyss Script" Spell to the Deck
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_TODECK)

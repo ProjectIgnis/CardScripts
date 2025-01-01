@@ -1,5 +1,5 @@
 --爆撃獣ファイヤ・ボンバー
---Bombing Beast Fire Bomber
+--Blazing Bombardment Beast
 --Scripted by The Razgriz
 local s,id=GetID()
 function s.initial_effect(c)

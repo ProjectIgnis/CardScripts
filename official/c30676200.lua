@@ -1,4 +1,4 @@
---JP name
+--灰滅せし都の英雄
 --Hero of the Ashened City
 --scripted by pyrQ
 local s,id=GetID()

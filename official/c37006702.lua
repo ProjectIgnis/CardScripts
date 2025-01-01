@@ -1,4 +1,4 @@
---JP name
+--クリシュナード・ウィッチ
 --Krishnerd Witch
 --Scripted by Hatter
 local s,id=GetID()

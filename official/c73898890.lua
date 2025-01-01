@@ -1,5 +1,5 @@
 --大儺主水
---Dyna Mond
+--Dyna Mondo
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

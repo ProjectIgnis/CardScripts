@@ -41,7 +41,7 @@ function s.immtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.immop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	-- Monsters cannot be destroyed or banished opponent's effects
+	--Monsters cannot be destroyed or banished opponent's effects
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)

@@ -1,4 +1,4 @@
---JP name
+--灰滅せし都の先懸
 --Spearhead of the Ashened City
 --scripted by pyrQ
 local s,id=GetID()

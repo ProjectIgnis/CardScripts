@@ -1,4 +1,4 @@
---JP name
+--灰滅の憤怒
 --Extinguishing the Ashened
 --scripted by pyrQ
 local s,id=GetID()

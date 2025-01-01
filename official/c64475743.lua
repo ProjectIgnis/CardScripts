@@ -1,9 +1,9 @@
--- 遊戯王ラッシュデュエル
--- Kittytail, Mystical Beast of the Forest
--- Scripted by Hatter
+--遊戯王ラッシュデュエル
+--Kittytail, Mystical Beast of the Forest
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Send 1 Beast, Beast-Warrior, Winged-Beast, Insect or Plant monster to the GY
+	--Send 1 Beast, Beast-Warrior, Winged-Beast, Insect or Plant monster to the GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOGRAVE)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
-	-- Search 1 Beast, Beast-Warrior, Winged Beast, Insect, or Plant monster
+	--Search 1 Beast, Beast-Warrior, Winged Beast, Insect, or Plant monster
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)

@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetCountLimit(1,id)
-	e2:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) end)
+	e2:SetCondition(function(e) return e:GetHandler():IsSynchroSummoned() end)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
@@ -43,7 +43,7 @@ s.listed_names={id}
 s.listed_series={SET_EMBLEMA,SET_CENTURION}
 function s.indescon(e)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_SPECIAL) and not c:IsSummonLocation(LOCATION_EXTRA)
+	return c:IsSpecialSummoned() and not c:IsSummonLocation(LOCATION_EXTRA)
 end
 function s.thfilter(c)
 	return c:IsSetCard(SET_EMBLEMA) and c:IsAbleToHand()

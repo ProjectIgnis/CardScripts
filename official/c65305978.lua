@@ -1,5 +1,5 @@
 --炎王の聖域
---Sanctuary of the Fire Kings
+--Fire King Sanctuary
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

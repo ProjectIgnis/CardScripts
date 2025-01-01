@@ -1,9 +1,9 @@
--- ピュアリィープ！？
--- Purrelyeap!?
--- Scripted by Hatter
+--ピュアリィープ！？
+--Purrelyeap!?
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon 1 "Purrely" Xyz monster
+	--Special Summon 1 "Purrely" Xyz monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	-- Shuffle 3 "Purrely" monsters to the deck
+	--Shuffle 3 "Purrely" monsters to the deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TODECK)
@@ -57,7 +57,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Overlay(sc,tc)
 	if Duel.SpecialSummonStep(sc,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP) then
 		local turn_ct=Duel.GetTurnCount()
-		-- Return it to the Extra Deck during the End Phase of the next turn
+		--Return it to the Extra Deck during the End Phase of the next turn
 		aux.DelayedOperation(sc,PHASE_END,id,e,tp,function(ag) Duel.SendtoDeck(ag,nil,SEQ_DECKSHUFFLE,REASON_EFFECT) end,function(ag) return Duel.GetTurnCount()==turn_ct+1 end,nil,2,aux.Stringid(id,2))
 	end
 	if Duel.SpecialSummonComplete()==0 then return end

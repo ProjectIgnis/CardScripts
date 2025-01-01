@@ -1,9 +1,9 @@
--- 迷犬メリー
--- Outstanding Dog Mary
--- Scripted by Hatter
+--迷犬メリー
+--Outstanding Dog Mary
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Activate 1 of these effects
+	--Activate 1 of these effects
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -39,10 +39,10 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local op=e:GetLabel()
 	if op==1 and c:IsRelateToEffect(e) then
-		-- Place this card on the bottom of your Deck
+		--Place this card on the bottom of your Deck
 		Duel.SendtoDeck(c,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 	elseif op==2 then
-		-- Search 1 "Outstanding Dog Marron" and place this card on top of your Deck
+		--Search 1 "Outstanding Dog Marron" and place this card on top of your Deck
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 		if #g>0 and Duel.SendtoHand(g,nil,REASON_EFFECT)>0 then

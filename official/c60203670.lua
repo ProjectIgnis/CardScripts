@@ -1,5 +1,5 @@
 --ＧＰ－アサシネーター
---Gold Pride - Assassinator
+--Gold Pride - Eliminator
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --ペンデュラムーン
---Pendulumoon
+--PenduLuMoon
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -63,7 +63,7 @@ function s.thtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.thop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	-- Cannot activate monster effects
+	--Cannot activate monster effects
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,2))
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -73,14 +73,14 @@ function s.thop2(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetValue(function(_,re) return re:IsMonsterEffect() end)
 	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-	-- Pendulum effects are negated
+	--Pendulum effects are negated
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_DISABLE)
 	e2:SetTargetRange(LOCATION_PZONE,0)
 	e2:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e2,tp)
-	-- Reset restrictions if the player Pendulum Summons
+	--Reset restrictions if the player Pendulum Summons
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -103,7 +103,7 @@ function s.thop2(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.psfilter(c,tp)
-	return c:IsSummonPlayer(tp) and c:IsSummonType(SUMMON_TYPE_PENDULUM)
+	return c:IsSummonPlayer(tp) and c:IsPendulumSummoned()
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local ef=e:GetLabelObject()

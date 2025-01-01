@@ -24,7 +24,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_EARTHBOUND_IMMORTAL}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(SET_EARTHBOUND_IMMORTAL) and c:IsSummonType(SUMMON_TYPE_NORMAL)
+	return c:IsFaceup() and c:IsSetCard(SET_EARTHBOUND_IMMORTAL) and c:IsNormalSummoned()
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)

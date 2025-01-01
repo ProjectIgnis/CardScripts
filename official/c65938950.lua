@@ -1,5 +1,5 @@
 --綱引犬会
---Yoko-Tuner-Tug-of-War
+--Don't Slip, the Dogs of War
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

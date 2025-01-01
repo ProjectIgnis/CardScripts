@@ -1,5 +1,5 @@
 --ＦＡ－ダーク・ナイト・ランサー
---Full Armored DARK Lancer
+--Full Armored Dark Knight Lancer
 --Sripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)

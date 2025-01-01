@@ -1,9 +1,9 @@
--- 地縛囚人ストーン・スィーパー
--- Earthbound Prisoner Stone Sweeper
--- Scripted by Satella
+--地縛囚人ストーン・スィーパー
+--Earthbound Prisoner Stone Sweeper
+--Scripted by Satella
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon itself
+	--Special Summon itself
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(s.spcon)
 	c:RegisterEffect(e1)
-	-- Add 1 Level 3 or lower Fiend Tuner monster from your Deck to your hand
+	--Add 1 Level 3 or lower Fiend Tuner monster from your Deck to your hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)

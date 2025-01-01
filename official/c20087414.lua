@@ -1,4 +1,4 @@
---Japanese name
+--久延毘古
 --Kuebiko
 --Scripted by Hatter
 local s,id=GetID()

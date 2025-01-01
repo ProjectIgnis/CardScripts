@@ -49,7 +49,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.desconfilter(c,tp)
-	return c:IsFaceup() and c:IsRitualMonster() and c:IsControler(tp) and c:IsSummonType(SUMMON_TYPE_RITUAL)
+	return c:IsFaceup() and c:IsRitualMonster() and c:IsControler(tp) and c:IsRitualSummoned()
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.desconfilter,1,nil,tp)

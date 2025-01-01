@@ -1,13 +1,13 @@
--- 閃刀姫ーカメリア
--- Sky Striker Ace - Camellia
--- Scripted by Satella
+--閃刀姫ーカメリア
+--Sky Striker Ace - Camellia
+--Scripted by Satella
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	c:SetSPSummonOnce(id)
-	-- Link Summon procedure
+	--Link Summon procedure
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_EFFECT),2,2)
-	-- Must first be Link Summoned
+	--Must first be Link Summoned
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
 	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SINGLE_RANGE)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e0:SetRange(LOCATION_EXTRA)
 	e0:SetValue(aux.lnklimit)
 	c:RegisterEffect(e0)
-	-- Send 1 "Sky Striker" card from your Deck to the GY
+	--Send 1 "Sky Striker" card from your Deck to the GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOGRAVE)
@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.tgtg)
 	e1:SetOperation(s.tgop)
 	c:RegisterEffect(e1)
-	-- Special Summon itself from the GY
+	--Special Summon itself from the GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOGRAVE)
@@ -70,7 +70,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,1-tp,false,false,POS_FACEUP)>0 then
-		-- Shift control of this card during the End Phase
+		--Shift control of this card during the End Phase
 		aux.DelayedOperation(c,PHASE_END,id,e,tp,s.retop,nil)
 		local tc=Duel.GetFirstTarget()
 		if tc:IsRelateToEffect(e) then

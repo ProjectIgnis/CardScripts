@@ -1,5 +1,5 @@
 --百鬼羅刹大集会
---Grand Meeting of the Goblin Riders
+--Goblin Biker Grand Bash
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

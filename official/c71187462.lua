@@ -73,7 +73,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 			end
 		end
 	end
-	-- Cannot Special Summon monsters from Extra Deck, except DARK monsters
+	--Cannot Special Summon monsters from Extra Deck, except DARK monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,2))
 	e1:SetType(EFFECT_TYPE_FIELD)

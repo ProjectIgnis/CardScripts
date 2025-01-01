@@ -1,5 +1,5 @@
 --罪宝合戦
---Battle of the Sinful Spoils
+--Sinful Spoils Struggle
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

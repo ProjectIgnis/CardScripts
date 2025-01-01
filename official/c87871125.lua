@@ -72,7 +72,7 @@ function s.thop1(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.thcon2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReincarnationSummoned() and c:IsSummonType(SUMMON_TYPE_LINK)
+	return c:IsReincarnationSummoned() and c:IsLinkSummoned()
 end
 function s.thfilter2(c)
 	return c:IsSetCard(SET_SALAMANGREAT) and c:IsSpellTrap() and c:IsAbleToHand()

@@ -1,4 +1,4 @@
---JP name
+--多元宇宙
 --Multi-Universe
 --Scripted by Hatter
 local s,id=GetID()

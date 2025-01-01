@@ -1,15 +1,15 @@
--- メメント・クレニアム・バースト
--- Mementotlan Cranium Burst
--- Scripted by Satellaa
+--メメント・クレニアム・バースト
+--Mementotlan Cranium Burst
+--Scripted by Satellaa
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Activate
+	--Activate
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_ACTIVATE)
 	e0:SetCode(EVENT_FREE_CHAIN)
 	e0:SetHintTiming(TIMING_ATTACK,TIMINGS_CHECK_MONSTER_E|TIMING_ATTACK)
 	c:RegisterEffect(e0)
-	-- Opponent's monsters must attack your "Memento" monster with the highest ATK
+	--Opponent's monsters must attack your "Memento" monster with the highest ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_MUST_ATTACK)
@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_MUST_ATTACK_MONSTER)
 	e2:SetValue(s.atlimit)
 	c:RegisterEffect(e2)
-	-- Negate a monster effect activated in your opponent's field
+	--Negate a monster effect activated in your opponent's field
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE+CATEGORY_DISABLE)

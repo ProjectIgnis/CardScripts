@@ -1,4 +1,4 @@
---JP name
+--滅亡き闇 ヴェイドス
 --Veidos the Dragon of Endless Darkness
 --scripted by pyrQ
 local s,id=GetID()
@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e3:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION) end)
+	e3:SetCondition(function(e) return e:GetHandler():IsFusionSummoned() end)
 	e3:SetTarget(s.stdestg)
 	e3:SetOperation(s.stdesop)
 	c:RegisterEffect(e3)

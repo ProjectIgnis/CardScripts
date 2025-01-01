@@ -1,4 +1,4 @@
---JP name
+--ラビリンス・ウォール・シャドウ
 --Labyrinth Wall Shadow
 --Scripted by Eerie Code
 local s,id=GetID()

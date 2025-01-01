@@ -1,9 +1,9 @@
--- 竜王キング・レックス
--- Mighty Dino King Rex
--- Scripted by Satella
+--竜王キング・レックス
+--Mighty Dino King Rex
+--Scripted by Satella
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Make it be able to make a second attack
+	--Make it be able to make a second attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.atktg)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
-	-- Destroy up to 2 monsters your opponent controls
+	--Destroy up to 2 monsters your opponent controls
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DESTROY)
@@ -35,7 +35,7 @@ end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not (c:IsRelateToBattle() and c:IsRelateToEffect(e) and c:IsFaceup()) then return end
-	-- Can make a second attack
+	--Can make a second attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(3201)
 	e1:SetType(EFFECT_TYPE_SINGLE)

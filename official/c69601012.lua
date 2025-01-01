@@ -1,5 +1,5 @@
 --幻獣魔王バフォメット
---Berfomet the Phantom Beast Dark Ruler
+--Berfomet the Mythical King of Phantom Beasts
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetCountLimit(1,id)
-	e2:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION) end)
+	e2:SetCondition(function(e) return e:GetHandler():IsFusionSummoned() end)
 	e2:SetTarget(s.tgtg)
 	e2:SetOperation(s.tgop)
 	c:RegisterEffect(e2)

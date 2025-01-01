@@ -1,4 +1,4 @@
---JP name
+--想定ＧＵＹＳ
 --Double Dai
 --scripted by pyrQ
 local s,id=GetID()

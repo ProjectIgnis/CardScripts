@@ -1,13 +1,13 @@
--- 海造賊－荘重のヨルズ号
--- Plunder Patrollship Jord
--- Scripted by Hatter
+--海造賊－荘重のヨルズ号
+--Plunder Patrollship Jord
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	Pendulum.AddProcedure(c,false)
-	-- 1 Tuner + 1+ Non-Tuner monsters
+	--1 Tuner + 1+ Non-Tuner monsters
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
-	-- Return this card to the Extra Deck
+	--Return this card to the Extra Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TODECK+CATEGORY_TOKEN+CATEGORY_SPECIAL_SUMMON)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.tdtg)
 	e1:SetOperation(s.tdop)
 	c:RegisterEffect(e1)
-	-- Search 1 "Plunder Patroll" card
+	--Search 1 "Plunder Patroll" card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_SPECIAL_SUMMON)
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.dthtg)
 	e2:SetOperation(s.dthop)
 	c:RegisterEffect(e2)
-	-- Add 1 "Plunder Patroll" card from the GY to the hand
+	--Add 1 "Plunder Patroll" card from the GY to the hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_TOHAND)

@@ -1,5 +1,5 @@
 --熾動する煉獄
---Void Blaze-Up
+--Void Reignition
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

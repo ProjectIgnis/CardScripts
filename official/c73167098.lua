@@ -1,5 +1,5 @@
 --アロマリリス－マグノリア
---Aromalylith Magnolia
+--Aromalilith Magnolia
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

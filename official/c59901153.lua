@@ -1,4 +1,4 @@
---Japanese name
+--胡蝶姉妹
 --Phalaenop Sisters
 --scripted by pyrQ
 local s,id=GetID()

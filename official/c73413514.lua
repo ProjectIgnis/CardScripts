@@ -1,5 +1,5 @@
 --夢幻吸収体
---Dream Absorber
+--Neverending Nightmare Absorber
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

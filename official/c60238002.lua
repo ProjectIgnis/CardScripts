@@ -1,5 +1,5 @@
 --亜空間物質回送装置
---Interdimensional Matter Translocator
+--Interdimensional Matter Forwarder
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

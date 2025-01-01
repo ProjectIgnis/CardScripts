@@ -43,6 +43,6 @@ end
 function s.actcon(e)
 	local res,teg,tep,tev,tre,tr,trp=Duel.CheckEvent(EVENT_SPSUMMON_SUCCESS,true)
 	if res then
-		return #teg==1 and teg:GetFirst():IsSummonType(SUMMON_TYPE_XYZ)
+		return #teg==1 and teg:GetFirst():IsXyzSummoned()
 	end
 end

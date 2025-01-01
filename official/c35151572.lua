@@ -1,4 +1,4 @@
---JP name
+--灰滅せし都の呪術師
 --Shaman of the Ashened City
 --scripted by pyrQ
 local s,id=GetID()

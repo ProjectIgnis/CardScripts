@@ -1,4 +1,4 @@
---JP name
+--ヴェイドスの目覚め
 --Awakening of Veidos
 --scripted by pyrQ
 local s,id=GetID()

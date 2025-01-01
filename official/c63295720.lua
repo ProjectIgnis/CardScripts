@@ -1,5 +1,5 @@
 --竜の影光
---Dragon's Glory of Light and Dark
+--Dragon's Light and Darkness
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

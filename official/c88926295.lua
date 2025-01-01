@@ -1,27 +1,27 @@
--- イビリチュア・ネーレイマナス
--- Evigishki Neremanas
--- Scripted by Hatter
+--イビリチュア・ネーレイマナス
+--Evigishki Neremanas
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	-- Special Summon 1 WATER monster
+	--Special Summon 1 WATER monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e1:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_RITUAL) end)
+	e1:SetCondition(function(e) return e:GetHandler():IsRitualSummoned() end)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	-- Cannot be destroyed by battle
+	--Cannot be destroyed by battle
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e2:SetValue(function(e,c) return c:IsSummonLocation(LOCATION_EXTRA) end)
 	c:RegisterEffect(e2)
-	-- Return 1 "Gishki" Ritual Monster to the hand
+	--Return 1 "Gishki" Ritual Monster to the hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_NEGATE+CATEGORY_TODECK)

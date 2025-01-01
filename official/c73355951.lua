@@ -1,9 +1,9 @@
--- 魔法名－「解体し統合せよ」
--- Alpha Summon
--- Scripted by Hatter
+--魔法名－「解体し統合せよ」
+--Alpha Summon
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon monsters
+	--Special Summon monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)

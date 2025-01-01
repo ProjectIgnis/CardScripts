@@ -75,7 +75,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.lnkfilter(c,tp)
-	return c:IsSummonType(SUMMON_TYPE_LINK) and c:IsSetCard(SET_EVIL_EYE) and c:IsSummonPlayer(tp)
+	return c:IsLinkSummoned() and c:IsSetCard(SET_EVIL_EYE) and c:IsSummonPlayer(tp)
 end
 function s.eqpcond(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.lnkfilter,1,nil,tp)

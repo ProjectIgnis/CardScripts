@@ -1,4 +1,4 @@
---JP name
+--灰滅の都 オブシディム
 --Obsidim, the Ashened City
 --scripted by pyrQ
 local s,id=GetID()
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_FZONE)
 	e1:SetTargetRange(0,LOCATION_MZONE)
 	e1:SetCondition(function(e) return Duel.IsTurnPlayer(e:GetHandlerPlayer()) end)
-	e1:SetTarget(function(e,c) return c:IsSummonType(SUMMON_TYPE_SPECIAL) end)
+	e1:SetTarget(function(e,c) return c:IsSpecialSummoned() end)
 	e1:SetValue(RACE_PYRO)
 	c:RegisterEffect(e1)
 	--Place 1 "Obsidim, the Ashened City" from your GY on the bottom of your Deck, then draw 1 card

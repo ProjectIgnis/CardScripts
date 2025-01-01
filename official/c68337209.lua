@@ -1,5 +1,5 @@
 --Ｍ∀ＬＩＣＥ ＩＮ ＵＮＤＥＲＧＲＯＵＮＤ
---Maliss In underground
+--Maliss in Underground
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

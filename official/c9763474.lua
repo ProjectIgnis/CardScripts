@@ -1,4 +1,4 @@
---JP name
+--盛悴のリザルドーズ
 --Haggard Lizardose
 --Scripted by Hatter
 local s,id=GetID()

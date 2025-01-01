@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e2:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) end)
+	e2:SetCondition(function(e) return e:GetHandler():IsSynchroSummoned() end)
 	c:RegisterEffect(e2)
 	--Special Summon 1 Monster Card from your Spell & Trap Zone
 	local e3=Effect.CreateEffect(c)

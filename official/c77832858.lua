@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_SUMMON_SUCCESS)
-	e3:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE) end)
+	e3:SetCondition(function(e) return e:GetHandler():IsTributeSummoned() end)
 	e3:SetTarget(s.rmtg)
 	e3:SetOperation(s.rmop)
 	c:RegisterEffect(e3)
@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.cfilter(c,relzone,tp)
-	return aux.IsZone(c,relzone,tp) and c:IsReleasable() and (c:IsSummonType(SUMMON_TYPE_TRIBUTE) or c:IsControler(1-tp))
+	return aux.IsZone(c,relzone,tp) and c:IsReleasable() and (c:IsTributeSummoned() or c:IsControler(1-tp))
 end
 function s.rescon(soul_ex_g,zone)
 	return	function(sg,e,tp,mg)
@@ -96,7 +96,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.valfilter(c)
-	return c:IsLevelAbove(8) and c:IsSummonType(SUMMON_TYPE_TRIBUTE)
+	return c:IsLevelAbove(8) and c:IsTributeSummoned()
 end
 function s.valcheck(e,c)
 	local g=c:GetMaterial()

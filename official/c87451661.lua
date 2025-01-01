@@ -1,11 +1,11 @@
--- スカーレッド・デーモン
+--スカーレッド・デーモン
 --Scarred Dragon Archfiend
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	-- Synchro Summon procedure
+	--Synchro Summon procedure
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTunerEx(Card.IsAttribute,ATTRIBUTE_DARK),1,99)
-	-- Name becomes "Red Dragon Archfiend" while on the field on in the GY
+	--Name becomes "Red Dragon Archfiend" while on the field on in the GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE|LOCATION_GRAVE)
 	e1:SetValue(CARD_RED_DRAGON_ARCHFIEND)
 	c:RegisterEffect(e1)
-	-- Special Summon 1 "Red Dragon Archfiend" from your Extra Deck
+	--Special Summon 1 "Red Dragon Archfiend" from your Extra Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DESTROY)
@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	-- Check if this card was used as Synchro Material for the successful Synchro Summon of a DARK Dragon Synchro Monster
+	--Check if this card was used as Synchro Material for the successful Synchro Summon of a DARK Dragon Synchro Monster
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EVENT_BE_MATERIAL)

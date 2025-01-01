@@ -1,22 +1,22 @@
--- JP Name
--- Labyrinth Heavy Tank
--- Scripted by Satella
+--迷宮の重魔戦車
+--Labyrinth Heavy Tank
+--Scripted by Satella
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Normal Summon without Tributing
+	--Normal Summon without Tributing
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SUMMON_PROC)
 	e1:SetCondition(s.ntcon)
 	c:RegisterEffect(e1)
-	-- Cannot attack the turn it is Normal Summoned
+	--Cannot attack the turn it is Normal Summoned
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_SUMMON_SUCCESS)
 	e2:SetOperation(s.disatt)
 	c:RegisterEffect(e2)
-	-- Place 1 Sanga, Kazejin, or Suijin face-up in your S&T Zone as a Continuous Spell
+	--Place 1 Sanga, Kazejin, or Suijin face-up in your S&T Zone as a Continuous Spell
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_DESTROY)

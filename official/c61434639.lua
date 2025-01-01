@@ -1,4 +1,4 @@
---JP name
+--灰滅の復燃
 --Rekindling the Ashened
 --scripted by pyrQ
 local s,id=GetID()

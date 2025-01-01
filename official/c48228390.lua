@@ -1,4 +1,4 @@
---JP name
+--黄鉄の愚騎士
 --Pyrite Knight
 --Scripted by Hatter
 local s,id=GetID()

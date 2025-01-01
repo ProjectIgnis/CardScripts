@@ -1,5 +1,5 @@
 --白き森のリゼット
---Risette of the White Forest
+--Elzette of the White Forest
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

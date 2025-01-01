@@ -1,5 +1,5 @@
 --百鬼羅刹 冷血ミアンダ
---Goblin Rider Mianda the Coldblooded
+--Goblin Biker Mean Merciless
 --Ashaki
 local s,id=GetID()
 function s.initial_effect(c)
@@ -57,7 +57,7 @@ function s.selfspop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if Duel.RemoveOverlayCard(tp,1,1,1,1,REASON_EFFECT)>0 and c:IsRelateToEffect(e)
 		and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 then
-		-- Banish it when it leaves the field
+		--Banish it when it leaves the field
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(3300)
 		e1:SetType(EFFECT_TYPE_SINGLE)

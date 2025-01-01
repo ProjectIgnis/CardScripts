@@ -1,4 +1,4 @@
---JP Name
+--水雷魔神－ゲート・ガーディアン
 --Gate Guardian of Water and Thunder
 --Scripted by The Razgriz
 local s,id=GetID()

@@ -1,13 +1,13 @@
--- 影の王 レイヴァーテイン
+--影の王 レイヴァーテイン
 --Laevatein, Generaider Boss of Shadows
--- Scripted by Hatter
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	c:SetUniqueOnField(1,0,id)
-	-- 2+ Level 9 monsters
+	--Xyz Summon procedure: 2+ Level 9 monsters
 	Xyz.AddProcedure(c,nil,9,2,nil,nil,99)
-	-- Decrease ATK/DEF
+	--Decrease ATK/DEF
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e2)
-	-- Special Summon 1 non-Fairy "Generaider" Xyz Monster
+	--Special Summon 1 non-Fairy "Generaider" Xyz Monster
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E|TIMING_MAIN_END)
-	e3:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ) end)
+	e3:SetCondition(function(e) return e:GetHandler():IsXyzSummoned() end)
 	e3:SetCost(s.spcost)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)

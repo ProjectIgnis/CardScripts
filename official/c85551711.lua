@@ -54,7 +54,7 @@ function s.costop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not (c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_XYZ)) then return false end
+	if not (c:IsPreviousLocation(LOCATION_MZONE) and c:IsXyzSummoned()) then return false end
 	return c:IsReason(REASON_BATTLE) or (rp==1-tp and c:IsReason(REASON_EFFECT) and c:IsPreviousControler(tp))
 end
 function s.spfilter(c,e,tp)

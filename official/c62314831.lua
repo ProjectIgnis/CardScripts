@@ -1,5 +1,5 @@
 --新世壊＝アムリターラ
---Pristine Planets Amritara
+--New World - Amritara
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)

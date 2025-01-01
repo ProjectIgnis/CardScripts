@@ -1,9 +1,9 @@
--- 狂惑の落とし穴
+--狂惑の落とし穴
 --Terrifying Trap Hole Nightmare
--- Scripted by Hatter
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Destroy 1 monster with 2000 or more ATK
+	--Destroy 1 monster with 2000 or more ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_REMOVE)

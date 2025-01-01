@@ -1,5 +1,5 @@
 --アクアの輪唱
---Aqua Round
+--Aqua Chorus Round
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

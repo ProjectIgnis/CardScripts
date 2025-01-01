@@ -1,4 +1,4 @@
---Japanese name
+--聖竜ヴルミナ像
 --Vulmina, Statue of the Sacred Dragon
 --Scripted by Hatter
 local s,id=GetID()

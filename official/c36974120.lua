@@ -1,4 +1,4 @@
---JP name
+--竜葬主－ヴィブリアル
 --Vouiburial, the Dragon Undertaker
 --Scripted by Eerie Code
 local s,id=GetID()

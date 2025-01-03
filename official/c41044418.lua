@@ -93,7 +93,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.regfilter,nil,tp,re)
 	if not g or #g==0 then return end
 	for tc in g:Iter() do
-		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,3))
+		tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,3))
 	end
 end
 function s.gyfilter(c)

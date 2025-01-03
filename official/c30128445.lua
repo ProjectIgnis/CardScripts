@@ -1,10 +1,10 @@
 --超越竜ドリルグナトゥス
---Transcendrake Drillgnathus
+--Transcendosaurus Drillygnathus
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	-- Xyz Summon procedure
+	--Xyz Summon procedure
 	Xyz.AddProcedure(c,nil,6,2)
 	--Double damage when it doesn't have Xyz materials
 	local e1=Effect.CreateEffect(c)

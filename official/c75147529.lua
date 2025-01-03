@@ -59,12 +59,12 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCountLimit(1)
 		e1:SetLabel(Duel.GetTurnCount())
 		e1:SetLabelObject(tc)
-		if Duel.GetCurrentPhase()==PHASE_END and Duel.IsTurnPlayer(1-tp) then
+		if Duel.IsPhase(PHASE_END) and Duel.IsTurnPlayer(1-tp) then
 			e1:SetLabel(Duel.GetTurnCount())
-			e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END|RESET_OPPO_TURN,2)
+			e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN,2)
 		else
 			e1:SetLabel(0)
-			e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END|RESET_OPPO_TURN)
+			e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN)
 		end
 		e1:SetCondition(s.retcon)
 		e1:SetOperation(s.retop)

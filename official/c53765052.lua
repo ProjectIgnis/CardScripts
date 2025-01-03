@@ -1,5 +1,5 @@
 --原罪のディアベルゼ
---Diabellze of the Original Sin
+--Diabellze the Original Sinkeeper
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

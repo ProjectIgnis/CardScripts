@@ -1,5 +1,5 @@
 --闘神の虚像
---Rock of Vanquisher
+--Rock of the Vanquisher
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)

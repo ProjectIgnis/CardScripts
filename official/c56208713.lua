@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_DISEFFECT)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION) end)
+	e1:SetCondition(function(e) return e:GetHandler():IsFusionSummoned() end)
 	e1:SetValue(s.effval)
 	c:RegisterEffect(e1)
 	--Special Summon 1 "Melodious" monster from your Deck

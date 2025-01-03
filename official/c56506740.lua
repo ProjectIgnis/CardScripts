@@ -85,7 +85,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e1:SetTargetRange(1,0)
-	e1:SetValue(function(e,re,tp) return re:IsMonsterEffect() and re:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL) and re:GetHandler():IsLocation(LOCATION_MZONE) end)
+	e1:SetValue(function(e,re,tp) return re:IsMonsterEffect() and re:GetHandler():IsSpecialSummoned() and re:GetHandler():IsLocation(LOCATION_MZONE) end)
 	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end

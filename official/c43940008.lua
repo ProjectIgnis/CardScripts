@@ -1,14 +1,14 @@
--- 決闘塔アルカトラズ
--- Duel Tower
--- Scripted by Hatter
+--決闘塔アルカトラズ
+--Duel Tower
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Activate
+	--Activate
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_ACTIVATE)
 	e0:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e0)
-	-- Reveal monsters from the Deck and Special Summon 1 monster from the hand
+	--Reveal monsters from the Deck and Special Summon 1 monster from the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_REMOVE+CATEGORY_SPECIAL_SUMMON)
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1)
 	e1:SetOperation(s.rvop)
 	c:RegisterEffect(e1)
-	-- Destroy all cards during the next End Phase
+	--Destroy all cards during the next End Phase
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -34,7 +34,7 @@ end
 function s.rvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local players={Duel.GetTurnPlayer(),1-Duel.GetTurnPlayer()}
-	-- Each player can choose to reveal
+	--Each player can choose to reveal
 	local rv={}
 	for _,p in ipairs(players) do
 		if Duel.IsExistingMatchingCard(s.rvfilter,p,LOCATION_DECK,0,1,nil,tp)
@@ -43,7 +43,7 @@ function s.rvop(e,tp,eg,ep,ev,re,r,rp)
 			rv[p]=Duel.SelectMatchingCard(p,s.rvfilter,p,LOCATION_DECK,0,1,1,nil,tp)
 		end
 	end
-	-- Reveal later so player B doesn't know what player A chose
+	--Reveal later so player B doesn't know what player A chose
 	local atk={}
 	for _,p in ipairs(players) do
 		local g=rv[p]
@@ -53,7 +53,7 @@ function s.rvop(e,tp,eg,ep,ev,re,r,rp)
 			atk[p]=g:GetFirst():GetAttack()
 		else atk[p]=-1 end
 	end
-	-- The player that revealed the highest ATK can Special Summon
+	--The player that revealed the highest ATK can Special Summon
 	if atk[tp]==atk[1-tp] then return end
 	local p=(atk[tp]>atk[1-tp]) and tp or 1-tp
 	if not Duel.IsExistingMatchingCard(Card.IsCanBeSpecialSummoned,p,LOCATION_HAND,0,1,nil,e,0,p,false,false)
@@ -62,7 +62,7 @@ function s.rvop(e,tp,eg,ep,ev,re,r,rp)
 	local sc=Duel.SelectMatchingCard(p,Card.IsCanBeSpecialSummoned,p,LOCATION_HAND,0,1,1,nil,e,0,p,false,false):GetFirst()
 	if not sc then return end
 	if Duel.SpecialSummonStep(sc,0,p,p,false,false,POS_FACEUP) then
-		-- Can attack directly
+		--Can attack directly
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(3205)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
@@ -75,7 +75,7 @@ function s.rvop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.desregop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	-- Destroy all cards
+	--Destroy all cards
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

@@ -1,5 +1,5 @@
 --氷結界に至る晶域
---Frozen Domain Leading to the Ice Barrier
+--Frozen Domain of the Ice Barrier
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

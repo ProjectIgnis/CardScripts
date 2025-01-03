@@ -1,5 +1,5 @@
 --百鬼羅刹 グリアーレ三傑
---Goblin Biker Grialle Trio
+--Goblin Biker Troika Griare
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

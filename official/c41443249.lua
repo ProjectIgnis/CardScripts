@@ -1,5 +1,5 @@
 --Ｒ－ＡＣＥプリベンター
---Rescue-Ace Preventer
+--Rescue-ACE Preventer
 --scripted by fiftyfour
 local s,id=GetID()
 function s.initial_effect(c)

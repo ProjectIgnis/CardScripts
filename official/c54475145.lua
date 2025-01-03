@@ -1,5 +1,5 @@
 --心宿りし青眼竜
---Blue-Eyes of the Heart
+--Heart of the Blue-Eyes
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

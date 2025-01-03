@@ -1,9 +1,9 @@
--- スウィートルームメイド
--- Sweet Room-Maid
--- Scripted by Hatter
+--スウィートルームメイド
+--Sweet Roommaid
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Shuffle 1 card from either GY into the Deck
+	--Shuffle 1 card from either GY into the Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TODECK)

@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetCode(EFFECT_CHANGE_LEVEL)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_NORMAL) end)
+	e1:SetCondition(function(e) return e:GetHandler():IsNormalSummoned() end)
 	e1:SetValue(10)
 	c:RegisterEffect(e1)
 	--"Tistina" monster can make a second attack
@@ -78,7 +78,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_EXTRA_ATTACK)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 	--Can only attack with 1 monster this turn

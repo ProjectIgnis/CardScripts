@@ -1,5 +1,5 @@
 --ＴＧ — ブレイクリミッター
---T.G. - Break Limiter
+--T.G. Limiter Removal
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)

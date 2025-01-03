@@ -1,5 +1,5 @@
 --Ｂ・Ｆ－革命のグラン・パルチザン
---Battlewasp - Gran Partisan the Revolution
+--Battlewasp - Grand Partisan the Revolution
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

@@ -1,5 +1,5 @@
 --調和の宝札
---Traptrix Allure
+--Traptantalizing Tune
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

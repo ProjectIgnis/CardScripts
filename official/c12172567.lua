@@ -53,7 +53,7 @@ function s.ctop1(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSynchroSummoned()
 end
 function s.cttg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

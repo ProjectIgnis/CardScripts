@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e1:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION) and e:GetLabel()>0 end)
+	e1:SetCondition(function(e) return e:GetHandler():IsFusionSummoned() and e:GetLabel()>0 end)
 	e1:SetTarget(s.sumtg)
 	e1:SetOperation(s.sumop)
 	c:RegisterEffect(e1)
@@ -99,5 +99,5 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.zeroatkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReincarnationSummoned() and c:IsSummonType(SUMMON_TYPE_FUSION) and Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL
+	return c:IsReincarnationSummoned() and c:IsFusionSummoned() and Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL
 end

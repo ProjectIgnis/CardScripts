@@ -1,9 +1,9 @@
--- ＧＰ－ベター・ラック
--- Gold Pride - Better Luck Next Time!
--- Scripted by Satella
+--ＧＰ－ベター・ラック
+--Gold Pride - Better Luck Next Time!
+--Scripted by Satella
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Add 1 "Gold Pride" monster from your Deck to your hand
+	--Add 1 "Gold Pride" monster from your Deck to your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	-- Draw 1 card
+	--Draw 1 card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DRAW)

@@ -1,12 +1,12 @@
--- エピュアリィ・ハピネス
--- Epurrely Happiness
--- Scripted by Hatter
+--エピュアリィ・ハピネス
+--Epurrely Happiness
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	-- 2 Level 2 monsters
+	--2 Level 2 monsters
 	Xyz.AddProcedure(c,nil,2,2)
-	-- Search 1 "Purrely" card
+	--Search 1 "Purrely" card
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_ATKCHANGE)
@@ -16,13 +16,13 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	-- Track if this card "battled"
+	--Track if this card "battled"
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_BATTLED)
 	e2:SetOperation(function(e) e:GetHandler():RegisterFlagEffect(id,RESET_PHASE|PHASE_DAMAGE,0,1) end)
 	c:RegisterEffect(e2)
-	-- Attach "Purrely" Quick-Play Spell
+	--Attach "Purrely" Quick-Play Spell
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TOHAND)
@@ -63,7 +63,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		local tc=Duel.SelectMatchingCard(tp,Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil):GetFirst()
 		if not tc then return end
 		Duel.HintSelection(tc,true)
-		-- Halve ATK
+		--Halve ATK
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)

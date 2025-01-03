@@ -1,5 +1,5 @@
 --氷結界の剣士 ゲオルギアス
---Georgius, Swordsman of the Ice Barrier
+--Georgius, Swordman of the Ice Barrier
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

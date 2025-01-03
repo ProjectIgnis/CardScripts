@@ -1,9 +1,9 @@
--- 裏切りの罪宝－シルウィア
--- Sinful Spoils of Betrayal - Silvera
--- Scripted by Satellaa
+--裏切りの罪宝－シルウィア
+--Sinful Spoils of Betrayal - Silvera
+--Scripted by Satellaa
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Negate the effects of 1 face-up card on the field
+	--Negate the effects of 1 face-up card on the field
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DISABLE)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.distg)
 	e1:SetOperation(s.disop)
 	c:RegisterEffect(e1)
-	-- Negate the opponent's effect
+	--Negate the opponent's effect
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DISABLE)

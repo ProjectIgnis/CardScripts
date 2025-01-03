@@ -1,5 +1,5 @@
 --世壊賛歌
---Planetary Eulogy
+--Realm Eulogy
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

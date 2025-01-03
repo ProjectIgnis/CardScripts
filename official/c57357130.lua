@@ -1,5 +1,5 @@
 --転生炎獣ウィーゼル
---Salamangreat Wheesel
+--Salamangreat Weasel
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

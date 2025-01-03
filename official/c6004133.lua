@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_ABYSS_ACTOR,SET_ABYSS_SCRIPT}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1 and not Duel.CheckPhaseActivity()
+	return Duel.IsPhase(PHASE_MAIN1) and not Duel.CheckPhaseActivity()
 end
 function s.thfilter(c)
 	return c:IsAbleToHand() and (c:IsSetCard(SET_ABYSS_ACTOR) or (c:IsSpell() and c:IsSetCard(SET_ABYSS_SCRIPT)))

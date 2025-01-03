@@ -1,5 +1,5 @@
 --Ｓ：Ｐリトルナイト
---S:P Little Night
+--S:P Little Knight
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetCountLimit(1,id)
-	e1:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK) and e:GetLabel()==1 end)
+	e1:SetCondition(function(e) return e:GetHandler():IsLinkSummoned() and e:GetLabel()==1 end)
 	e1:SetTarget(s.rmtg)
 	e1:SetOperation(s.rmop)
 	c:RegisterEffect(e1)

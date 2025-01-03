@@ -51,7 +51,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_NORMAL) or (c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:HasFlagEffect(id))
+	return c:IsSummonType(SUMMON_TYPE_NORMAL) or (c:IsSpecialSummoned() and c:HasFlagEffect(id))
 end
 function s.tgfilter(c)
 	return c:IsMonster() and c:IsAttribute(ATTRIBUTE_FIRE) and c:IsRace(RACE_REPTILE|RACE_DINOSAUR) and c:IsAbleToGrave()

@@ -55,7 +55,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) and Duel.SpecialSummonStep(c,0,tp,tp,false,false,POS_FACEUP) then
 		local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsMonster),tp,LOCATION_REMOVED,0,nil)
 		if ct>0 then
-			c:UpdateAttack(ct*100,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
+			c:UpdateAttack(ct*100,RESETS_STANDARD_PHASE_END)
 		end
 	end
 	Duel.SpecialSummonComplete()

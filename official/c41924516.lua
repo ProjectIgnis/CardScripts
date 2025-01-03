@@ -1,5 +1,5 @@
 --白き森の魔狼シルウィア
---Silvera, Witchwolf of the White Forest
+--Silvera, Wolf Tamer of the White Forest
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

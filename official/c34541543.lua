@@ -1,5 +1,5 @@
 --大陰陽師 タオ
---Tao the Great Chanter
+--Master Tao the Chanter
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)

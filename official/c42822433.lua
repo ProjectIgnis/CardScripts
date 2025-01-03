@@ -1,9 +1,9 @@
--- 星騎士 アルテア
--- Tellarknight Altairan
--- Scripted by Satella
+--星騎士 アルテア
+--Tellarknight Altairan
+--Scripted by Satella
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Destroy cards on the field
+	--Destroy cards on the field
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	local e3=e1:Clone()
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
-	-- Special Summon itself from the GY
+	--Special Summon itself from the GY
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)

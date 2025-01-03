@@ -1,5 +1,5 @@
 --焔聖騎士－リッチャルデット
---Infernoble Knight - Ricciardetto
+--Infernoble Knight Ricciardetto
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

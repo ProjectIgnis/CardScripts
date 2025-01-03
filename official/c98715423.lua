@@ -105,7 +105,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.drawcheck(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetCurrentPhase()==PHASE_DRAW and (r&REASON_RULE)==REASON_RULE and #eg>0 then
+	if Duel.IsPhase(PHASE_DRAW) and (r&REASON_RULE)==REASON_RULE and #eg>0 then
 		Duel.ConfirmCards(tp,eg)
 		local dg=eg:Filter(Card.IsCode,nil,e:GetLabel())
 		if #dg>0 then
@@ -115,7 +115,7 @@ function s.drawcheck(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetCurrentPhase()==PHASE_DRAW and (r&REASON_RULE)==REASON_RULE then
+	if Duel.IsPhase(PHASE_DRAW) and (r&REASON_RULE)==REASON_RULE then
 		Duel.RegisterFlagEffect(ep,id,RESET_PHASE|PHASE_STANDBY,0,1)
 	end
 end

@@ -1,5 +1,5 @@
 --背信聖徒シルヴィア
---Azamina Rhea Silvera
+--Azamina Ilia Silvia
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

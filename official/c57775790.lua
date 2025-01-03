@@ -1,5 +1,5 @@
 --魔轟神界の復活
---Fablem Realm Resurrection
+--Fabled Realm Resurrection
 --Scripted by The Razgriz
 local s,id=GetID()
 function s.initial_effect(c)
@@ -51,7 +51,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.sumfilter(c,tp)
-	return c:IsSetCard(SET_FABLED) and c:IsType(TYPE_SYNCHRO) and c:IsSummonType(SUMMON_TYPE_SYNCHRO) and c:IsSummonPlayer(tp)
+	return c:IsSetCard(SET_FABLED) and c:IsType(TYPE_SYNCHRO) and c:IsSynchroSummoned() and c:IsSummonPlayer(tp)
 end
 function s.limcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.sumfilter,1,nil,tp)

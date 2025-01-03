@@ -55,7 +55,7 @@ function s.matcheck(e,c)
 end
 function s.matcon(e)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_RITUAL) and c:HasFlagEffect(id)
+	return c:IsRitualSummoned() and c:HasFlagEffect(id)
 end
 function s.chainop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterFlagEffect(id+1,RESET_EVENT|RESETS_STANDARD|RESET_CHAIN|RESET_TURN_SET,0,1)

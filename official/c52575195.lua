@@ -57,7 +57,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetRange(LOCATION_REMOVED)
 		e1:SetCountLimit(1)
 		if Duel.GetTurnPlayer()==tp then
-			if Duel.GetCurrentPhase()==PHASE_DRAW then
+			if Duel.IsPhase(PHASE_DRAW) then
 				e1:SetLabel(Duel.GetTurnCount())
 			else
 				e1:SetLabel(Duel.GetTurnCount()+2)

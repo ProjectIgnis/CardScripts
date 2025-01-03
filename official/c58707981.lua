@@ -1,5 +1,5 @@
 --無孔砲塔－ディセイブラスター
---Deceiveblaster the Matchless Turret
+--Disablaster the Negation Fortress
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

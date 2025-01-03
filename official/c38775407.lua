@@ -1,5 +1,5 @@
 --千年の眠りから覚めし原人
---The Caveman that Awoke after a Millennium
+--Sengenjin Wakes from a Millennium
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

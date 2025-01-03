@@ -1,12 +1,12 @@
--- クシャトリラ・アライズハート
--- Kashtira Arise-Heart
--- Scripted by Hatter
+--クシャトリラ・アライズハート
+--Kashtira Arise-Heart
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	-- 3 Level 7 monsters
+	--3 Level 7 monsters
 	Xyz.AddProcedure(c,nil,7,3,s.xyzfilter,aux.Stringid(id,0),nil,s.xyzop)
-	-- Cards sent to the GY are banished instead
+	--Cards sent to the GY are banished instead
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE+EFFECT_FLAG_IGNORE_RANGE+EFFECT_FLAG_IGNORE_IMMUNE)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTargetRange(LOCATION_ALL,LOCATION_ALL)
 	e1:SetValue(LOCATION_REMOVED)
 	c:RegisterEffect(e1)
-	-- Attach 1 banished card
+	--Attach 1 banished card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetCost(s.ovcost)
 	e2:SetOperation(s.ovop)
 	c:RegisterEffect(e2)
-	-- Banish 1 card
+	--Banish 1 card
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_REMOVE)

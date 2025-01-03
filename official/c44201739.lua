@@ -1,5 +1,5 @@
 --ミラァと燐寸之仔
---Mirah and Matchnoko
+--Mira Match
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

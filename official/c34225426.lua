@@ -1,5 +1,5 @@
 --嫋々たる漣歌姫の壱世壊
---Tearlaments Perlregia
+--Tearlaments Perlegia
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

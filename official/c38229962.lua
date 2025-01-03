@@ -43,7 +43,7 @@ end
 s.listed_series={SET_BEETROOPER}
 function s.protcon(e)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_LINK) and c:IsAttackBelow(3000)
+	return c:IsLinkSummoned() and c:IsAttackBelow(3000)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_BEETROOPER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

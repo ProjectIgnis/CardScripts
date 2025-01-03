@@ -54,7 +54,7 @@ end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetTargetCards(e)
 	if #tg~=2 then return end
-	local reset_count=(Duel.IsTurnPlayer(tp) and Duel.GetCurrentPhase()==PHASE_STANDBY) and 2 or 1
+	local reset_count=(Duel.IsTurnPlayer(tp) and Duel.IsPhase(PHASE_STANDBY)) and 2 or 1
 	local turn_chk=Duel.GetTurnCount()
 	aux.RemoveUntil(tg,nil,REASON_EFFECT,PHASE_STANDBY,id,e,tp,
 		aux.DefaultFieldReturnOp,
@@ -88,7 +88,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(atk)
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

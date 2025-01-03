@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetHintTiming(0,TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
-	e3:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) end)
+	e3:SetCondition(function(e) return e:GetHandler():IsSynchroSummoned() end)
 	e3:SetCost(aux.bfgcost)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
@@ -46,7 +46,7 @@ function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsNegatable() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsNegatable,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
 	local c=e:GetHandler()
-	local ct=c:IsSummonType(SUMMON_TYPE_SYNCHRO) and c:GetMaterialCount() or 0
+	local ct=c:IsSynchroSummoned() and c:GetMaterialCount() or 0
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_NEGATE)
 	local g=Duel.SelectTarget(tp,Card.IsNegatable,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,ct+1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)

@@ -51,7 +51,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 			fc=fg:Select(tp,1,1,nil)
 		end
 		Duel.Hint(HINT_CARD,0,fc:GetCode())
-		fc:RegisterFlagEffect(CARD_ELEMENTAL_PLACE,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,0)
+		fc:RegisterFlagEffect(CARD_ELEMENTAL_PLACE,RESETS_STANDARD_PHASE_END,0,0)
 	end
 	local flag=0
 	if g:IsExists(s.regfilter,1,nil,ATTRIBUTE_EARTH|ATTRIBUTE_WIND) then flag=flag|0x1 end

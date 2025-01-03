@@ -74,6 +74,6 @@ end
 function s.disop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) and not tc:IsDisabled() then
-		tc:NegateEffects(e:GetHandler(),RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
+		tc:NegateEffects(e:GetHandler(),RESETS_STANDARD_PHASE_END)
 	end
 end

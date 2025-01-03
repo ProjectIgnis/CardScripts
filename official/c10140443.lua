@@ -48,7 +48,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	local reset,reset_ct=RESET_PHASE|PHASE_STANDBY,1
 	local turn_ct=0
-	if Duel.GetCurrentPhase()==PHASE_STANDBY then
+	if Duel.IsPhase(PHASE_STANDBY) then
 		reset_ct=2
 		turn_ct=Duel.GetTurnCount()
 	end

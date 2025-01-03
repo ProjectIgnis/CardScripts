@@ -133,7 +133,7 @@ function s.cpcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.cpfilter(c)
 	return c:IsSetCard(SET_VAALMONICA) and (c:IsNormalSpell() or c:IsNormalTrap()) and c:IsAbleToRemoveAsCost()
-		-- and c:CheckActivateEffect(false,true,false)
+		--and c:CheckActivateEffect(false,true,false)
 end
 function s.cptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

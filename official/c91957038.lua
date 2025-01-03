@@ -63,7 +63,7 @@ function s.damcon(e)
 end
 function s.damval(e,re,val,r,rp,rc)
 	if r&(REASON_BATTLE|REASON_EFFECT)>0 then
-		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1)
+		e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 		Duel.Hint(HINT_CARD,0,id)
 		return 0
 	end

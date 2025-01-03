@@ -51,7 +51,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP,zone)>0 then
 		if c:GetAttackAnnouncedCount()>0 then
-			tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1)
+			tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 		end
 		tc:CreateRelation(c,RESET_EVENT|RESETS_STANDARD)
 		--The Special Summoned monster cannot attack
@@ -70,7 +70,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EVENT_ATTACK_ANNOUNCE)
 		e2:SetLabelObject(tc)
 		e2:SetCondition(function(e) return e:GetLabelObject():IsRelateToCard(e:GetHandler()) end)
-		e2:SetOperation(function(e) e:GetLabelObject():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1) end)
+		e2:SetOperation(function(e) e:GetLabelObject():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1) end)
 		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e2)
 	end

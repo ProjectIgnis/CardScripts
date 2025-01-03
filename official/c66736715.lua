@@ -91,9 +91,9 @@ function s.checkop(e,tp)
 		e2:SetCondition(s.pencon2)
 		e2:SetOperation(s.penop2)
 		e2:SetValue(SUMMON_TYPE_PENDULUM)
-		e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		olpz:RegisterEffect(e2)
-		olpz:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1)
+		olpz:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 	end
 end
 function s.pencon1(e,c,og)

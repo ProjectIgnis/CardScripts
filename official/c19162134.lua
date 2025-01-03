@@ -101,11 +101,11 @@ function s.tossop(e,tp,eg,ep,ev,re,r,rp)
 	local count=aux.GetCoinCountFromEv(ev)
 	local flag_id=id+(ep==tp and 1 or 2)
 	for i=1,count do
-		c:RegisterFlagEffect(flag_id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1)
+		c:RegisterFlagEffect(flag_id,RESETS_STANDARD_PHASE_END,0,1)
 	end
 	if c:GetFlagEffect(flag_id)>=5 and c:GetFlagEffect(flag_id+2)==0 then
 		s.draw(ep)
-		c:RegisterFlagEffect(flag_id+2,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1)
+		c:RegisterFlagEffect(flag_id+2,RESETS_STANDARD_PHASE_END,0,1)
 	end
 end
 function s.diceop(e,tp,eg,ep,ev,re,r,rp)
@@ -114,26 +114,26 @@ function s.diceop(e,tp,eg,ep,ev,re,r,rp)
 	local ct2=aux.GetDiceCountOppoFromEv(ev)
 	if ep==tp then
 		for i=1,ct1 do
-			c:RegisterFlagEffect(id+1,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1)
+			c:RegisterFlagEffect(id+1,RESETS_STANDARD_PHASE_END,0,1)
 		end
 		for i=1,ct2 do
-			c:RegisterFlagEffect(id+2,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1)
+			c:RegisterFlagEffect(id+2,RESETS_STANDARD_PHASE_END,0,1)
 		end
 	else
 		for i=1,ct2 do
-			c:RegisterFlagEffect(id+1,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1)
+			c:RegisterFlagEffect(id+1,RESETS_STANDARD_PHASE_END,0,1)
 		end
 		for i=1,ct1 do
-			c:RegisterFlagEffect(id+2,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1)
+			c:RegisterFlagEffect(id+2,RESETS_STANDARD_PHASE_END,0,1)
 		end
 	end
 	if c:GetFlagEffect(id+1)>=5 and c:GetFlagEffect(id+3)==0 then
 		s.draw(tp~0)
-		c:RegisterFlagEffect(id+3,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1)
+		c:RegisterFlagEffect(id+3,RESETS_STANDARD_PHASE_END,0,1)
 	end
 	if c:GetFlagEffect(id+2)>=5 and c:GetFlagEffect(id+4)==0 then
 		s.draw(tp~1)
-		c:RegisterFlagEffect(id+4,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1)
+		c:RegisterFlagEffect(id+4,RESETS_STANDARD_PHASE_END,0,1)
 	end
 end
 function s.damcon(p)

@@ -1,5 +1,5 @@
 --百鬼羅刹大暴走
---Goblin Rider Stampede
+--Goblin Biker Grand Stampede
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

@@ -41,7 +41,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.HintSelection(sc,true)
 	local code=sc:GetCode()
 	if Duel.SendtoGrave(sc,REASON_RULE,PLAYER_NONE,1-tp)>0 then
-		sc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1)
+		sc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 		--Cannot activate the monster effects of that monster or monsters with that name
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD)

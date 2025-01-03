@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e2a:SetCode(EVENT_BATTLE_DESTROYING)
 	e2a:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e2a:SetCondition(aux.bdcon)
-	e2a:SetOperation(function(e) e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1) end)
+	e2a:SetOperation(function(e) e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1) end)
 	c:RegisterEffect(e2a)
 end
 function s.abdcon(e,tp,eg,ep,ev,re,r,rp)

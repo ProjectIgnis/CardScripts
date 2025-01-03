@@ -1,5 +1,5 @@
 --識無辺世壊
---World of Boundless Consciousness
+--A Shattered, Colorless Realm
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

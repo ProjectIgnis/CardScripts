@@ -1,5 +1,5 @@
 --世壊同心
---The Worlds as One
+--Realm Resonance
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

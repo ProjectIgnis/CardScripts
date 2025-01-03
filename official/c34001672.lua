@@ -1,5 +1,5 @@
 --百鬼羅刹 巨魁ガボンガ
---Goblin Rider Big-Head Gabonga
+--Goblin Biker Big Gabonga
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetCountLimit(1,id)
-	e1:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ) end)
+	e1:SetCondition(function(e) return e:GetHandler():IsXyzSummoned() end)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)

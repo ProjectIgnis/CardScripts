@@ -1,9 +1,9 @@
--- 台貫計量
--- Weighbridge
--- Scripted by Hatter
+--台貫計量
+--Weighbridge
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Make opponent send monsters to the GY
+	--Make opponent send monsters to the GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOGRAVE)

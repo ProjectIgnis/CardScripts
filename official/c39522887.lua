@@ -1,5 +1,5 @@
 --ゴーティスの陰影スノーピオス
---Snopios, Shadow of the Ghoti
+--Snopios, Shade of the Ghoti
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -70,7 +70,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
-		-- Banish it if it leaves the field
+		--Banish it if it leaves the field
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetDescription(3300)
 		e1:SetType(EFFECT_TYPE_SINGLE)

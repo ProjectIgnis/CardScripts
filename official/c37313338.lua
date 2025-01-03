@@ -91,7 +91,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetLabelObject(sg)
 	e1:SetCondition(s.thcon)
 	e1:SetOperation(s.thop)
-	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,2)
+	e1:SetReset(RESETS_STANDARD_PHASE_END,2)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.thcfilter(c,fid)

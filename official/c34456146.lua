@@ -1,5 +1,5 @@
 --慈愛の賢者－シエラ
---Love Magus - Ciela
+--Sage of Benevolence - Ciela
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

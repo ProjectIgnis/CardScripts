@@ -1,5 +1,5 @@
 --深淵の獣ルベリオン
---The Byssted Lubellion
+--The Bystial Lubellion
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

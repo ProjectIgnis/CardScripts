@@ -1,5 +1,5 @@
 --共闘闘君
---Token Alliance
+--Token Support
 --scripted by Naim
 local s,id=GetID()
 local TOKEN_ALLIANCE=id+1

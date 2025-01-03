@@ -1,9 +1,9 @@
--- メメント・エンウィッチ
--- Memento Fairwitch
--- Scripted by Satellaa
+--メメント・エンウィッチ
+--Mementotlan Angwitch
+--Scripted by Satellaa
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Add 1 "Memento" monster from your Deck to your hand
+	--Add 1 "Memento" monster from your Deck to your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
-	-- Special Summon 1 Level 2 or lower "Memento" monster from your GY
+	--Special Summon 1 Level 2 or lower "Memento" monster from your GY
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DESTROY)

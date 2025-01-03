@@ -1,5 +1,5 @@
--- ＴＧ マイティ・ストライカー
--- T.G. Mighty Striker
+--ＴＧ マイティ・ストライカー
+--T.G. Mighty Striker
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetCountLimit(1,id)
-	e2:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) end)
+	e2:SetCondition(function(e) return e:GetHandler():IsSynchroSummoned() end)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)

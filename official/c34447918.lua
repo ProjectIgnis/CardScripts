@@ -1,5 +1,5 @@
 --六世壊他化自在天
---Kshatri-La Papiyas
+--Kashtiratheosis
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

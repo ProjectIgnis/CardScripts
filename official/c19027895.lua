@@ -71,6 +71,6 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local atkc=g:Filter(Card.IsLocation,nil,LOCATION_MZONE):GetFirst()
 	if tc and Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0
 		and atkc and atkc:IsFaceup() and atkc:IsControler(tp) then
-		atkc:UpdateAttack(atkc:GetBaseAttack(),RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,e:GetHandler())
+		atkc:UpdateAttack(atkc:GetBaseAttack(),RESETS_STANDARD_PHASE_END,e:GetHandler())
 	end
 end

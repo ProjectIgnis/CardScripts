@@ -1,5 +1,5 @@
 --幻想魔獣キマイラ
---Chimera the Illusion Magical Beast
+--Chimera the Illusion Beast
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

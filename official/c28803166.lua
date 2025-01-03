@@ -1,5 +1,5 @@
 --紅涙の魔ラクリモーサ
---Lacrima the Scarlet Sorrow
+--Lacrima the Crimson Tears
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

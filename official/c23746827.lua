@@ -42,7 +42,7 @@ function s.skop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET|EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_SKIP_M1)
 		e1:SetTargetRange(0,1)
-		if Duel.IsTurnPlayer(1-tp) and Duel.GetCurrentPhase()==PHASE_MAIN1 then
+		if Duel.IsTurnPlayer(1-tp) and Duel.IsPhase(PHASE_MAIN1) then
 			local turn=Duel.GetTurnCount()
 			e1:SetCondition(function() return Duel.GetTurnCount()~=turn end)
 			e1:SetReset(RESET_PHASE|PHASE_MAIN1|RESET_OPPO_TURN,2)

@@ -1,5 +1,5 @@
 --ライディング・デュエル！アクセラレーション！
---Ready! Set! Duel!
+--On Your Mark, Get Set, DUEL!
 local s,id=GetID()
 function s.initial_effect(c)
 	--Search 1 "Synchron" monster

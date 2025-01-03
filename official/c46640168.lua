@@ -1,5 +1,5 @@
 --刻まれし魔ラクリモーサ
---Fiendsmith Lacrimosa
+--Fiendsmith's Lacrima
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetCountLimit(1,id)
-	e2:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION) end)
+	e2:SetCondition(function(e) return e:GetHandler():IsFusionSummoned() end)
 	e2:SetTarget(s.thsptg)
 	e2:SetOperation(s.thspop)
 	c:RegisterEffect(e2)

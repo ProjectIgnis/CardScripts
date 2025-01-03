@@ -1,5 +1,5 @@
 --騎士魔防陣
---Centurion Phalanx
+--Centur-Ion Phalanx
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

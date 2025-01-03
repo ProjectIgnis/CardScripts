@@ -56,7 +56,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if not (re and re:GetHandler():IsSetCard(SET_RESCUE_ACE)) then return end
 	local sg=eg:Filter(Card.IsType,nil,TYPE_QUICKPLAY|TYPE_TRAP)
 	for ec in sg:Iter() do
-		ec:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1)
+		ec:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 	end
 end
 function s.cfilter(c)

@@ -1,5 +1,5 @@
 --蛇眼神殿スネークアイ
---The Shrine of Serpentine Sight - Snake-Eye
+--Divine Temple of the Snake-Eye
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

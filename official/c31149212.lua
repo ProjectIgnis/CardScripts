@@ -1,9 +1,9 @@
--- クシャトリラ・ライズハート
--- Kshatri-La Riseheart
--- Scripted by Hatter
+--クシャトリラ・ライズハート
+--Kashtira Riseheart
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon this card
+	--Special Summon this card
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	-- Banish top 3 cards of opponent's Deck
+	--Banish top 3 cards of opponent's Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_REMOVE+CATEGORY_LVCHANGE)
@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.rmtg)
 	e2:SetOperation(s.rmop)
 	c:RegisterEffect(e2)
-	-- Register flag on summon
+	--Register flag on summon
 	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -56,7 +56,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
-	-- Cannot Special Summon from the Extra Deck, except Xyz Monsters
+	--Cannot Special Summon from the Extra Deck, except Xyz Monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,2))
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -66,7 +66,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTarget(function(_,c) return not c:IsType(TYPE_XYZ) and c:IsLocation(LOCATION_EXTRA) end)
 	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-	-- Clock Lizard check
+	--Clock Lizard check
 	aux.addTempLizardCheck(c,tp,function(_,c) return not c:IsOriginalType(TYPE_XYZ) end)
 end
 function s.rmcostfilter(c)
@@ -93,7 +93,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.DisableShuffleCheck()
 	if Duel.Remove(g,POS_FACEDOWN,REASON_EFFECT)>0 and Duel.GetOperatedGroup():IsExists(s.rmfilter,1,nil) then
 		local c=e:GetHandler()
-		-- Level becomes 7
+		--Level becomes 7
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)

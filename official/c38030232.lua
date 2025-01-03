@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.tg)
 	e2:SetValue(aux.tgoval)
 	c:RegisterEffect(e2)
-	--Special Summon
+	--Special Summon 1 "Tenyi Spirit Token"
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)

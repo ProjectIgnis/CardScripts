@@ -2,19 +2,19 @@
 --Dragonecro Nethersoul Dragon
 local s,id=GetID()
 function s.initial_effect(c)
-	c:SetUniqueOnField(1,0,id)
-	--fusion material
 	c:EnableReviveLimit()
+	--You can only control 1 "Dragonecro Nethersoul Dragon".
+	c:SetUniqueOnField(1,0,id)
+	--Fusion materials: 2 Zombie monsters
 	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsRace,RACE_ZOMBIE),2)
-	--spsummon condition
+	--Must first be Fusion Summoned
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SINGLE_RANGE)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e1:SetRange(LOCATION_EXTRA)
-	e1:SetValue(s.splimit)
+	e1:SetValue(aux.fuslimit)
 	c:RegisterEffect(e1)
-	--battle
+	--Change the ATK of a monster that battles this cards to 0 and Special Summon 1 "Dark Soul Token"
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.attg)
 	e2:SetOperation(s.atop)
 	c:RegisterEffect(e2)
-	--indes
+	--Monsters cannot be destroyed by battle with this card
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
@@ -33,14 +33,11 @@ function s.initial_effect(c)
 	e3:SetValue(1)
 	c:RegisterEffect(e3)
 end
-s.listed_names={8198621}
-function s.splimit(e,se,sp,st)
-	return not e:GetHandler():IsLocation(LOCATION_EXTRA) or st&SUMMON_TYPE_FUSION==SUMMON_TYPE_FUSION
-end
+s.listed_names={8198621} --"Dark Soul Token"
 function s.attg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local bc=e:GetHandler():GetBattleTarget()
 	if chk==0 then return bc and bc:IsRelateToBattle() end
-	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,tp,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 end
 function s.atop(e,tp,eg,ep,ev,re,r,rp)
@@ -53,7 +50,7 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(0)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		bc:RegisterEffect(e1)
 		local lv=bc:GetOriginalLevel()
 		if lv>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -62,9 +59,9 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_SET_BASE_ATTACK)
+			e1:SetCode(EFFECT_SET_ATTACK)
 			e1:SetValue(atk)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			token:RegisterEffect(e1)
 			local e2=e1:Clone()
 			e2:SetCode(EFFECT_CHANGE_LEVEL)

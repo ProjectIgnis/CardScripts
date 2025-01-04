@@ -57,7 +57,7 @@ function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.rescon(lv)
 	return function(sg,e,tp,mg)
-		return sg:GetSum(Card.GetLevel)<=lv and sg:GetClassCount(Card.GetCode)==#sg
+		return sg:GetSum(Card.GetLevel)<=lv and sg:GetClassCount(Card.GetCode)==#sg,sg:GetClassCount(Card.GetCode)~=#sg
 	end
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
@@ -66,7 +66,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	if tc and Duel.Destroy(tc,REASON_EFFECT)>0 then
 		local lv=tc:GetOriginalLevel()
 		local g=Duel.GetMatchingGroup(s.tgfilter,tp,LOCATION_DECK,0,nil,lv)
-		local sg=aux.SelectUnselectGroup(g,e,tp,1,lv,s.rescon(lv),1,tp,HINTMSG_TOGRAVE)
+		local sg=aux.SelectUnselectGroup(g,e,tp,1,lv,s.rescon(lv),1,tp,HINTMSG_TOGRAVE,s.rescon(lv))
 		if #sg>0 then
 			Duel.SendtoGrave(sg,REASON_EFFECT)
 		end

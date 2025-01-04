@@ -1,5 +1,5 @@
 --四獣層ウォンキー
---Quartet Wonky
+--Wonky Quartet
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_CONTROL+CATEGORY_DAMAGE+CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e2:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ) end)
+	e2:SetCondition(function(e) return e:GetHandler():IsXyzSummoned() end)
 	e2:SetTarget(s.atchtg)
 	e2:SetOperation(s.atchop)
 	c:RegisterEffect(e2)

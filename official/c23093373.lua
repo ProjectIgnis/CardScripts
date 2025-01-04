@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e3:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_PENDULUM) end)
+	e3:SetCondition(function(e) return e:GetHandler():IsPendulumSummoned() end)
 	c:RegisterEffect(e3)
 	--Add itself to the hand
 	local e4=Effect.CreateEffect(c)

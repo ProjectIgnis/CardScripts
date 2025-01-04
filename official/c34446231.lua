@@ -84,7 +84,7 @@ function s.rmvop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return rp==1-tp and c:IsSummonType(SUMMON_TYPE_LINK)
+	return rp==1-tp and c:IsLinkSummoned()
 		and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function s.spfilter(c,e,tp)

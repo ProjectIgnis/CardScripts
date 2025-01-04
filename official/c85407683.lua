@@ -45,7 +45,7 @@ function s.indesval(e,re,r,rp)
 	end
 end
 function s.tdcond(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsTurnPlayer(tp) and Duel.GetCurrentPhase()==PHASE_END
+	return Duel.IsTurnPlayer(tp) and Duel.IsPhase(PHASE_END)
 		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_VISAS_STARFROST),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.tdfilter(c,tohand)

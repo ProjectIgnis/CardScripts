@@ -1,5 +1,5 @@
 --刻まれし魔の大聖棺
---Fiendsmith Sequentia
+--Fiendsmith's Sequence
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

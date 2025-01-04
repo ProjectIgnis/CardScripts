@@ -1,5 +1,5 @@
 --冥府の合わせ鏡
---Opposing Mirrors of the Underworld
+--Split Mirror of the Underworld
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

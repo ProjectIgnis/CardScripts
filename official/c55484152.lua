@@ -1,5 +1,5 @@
 --燦幻封炉
---Sangen Fuuro
+--Sangen Furo
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

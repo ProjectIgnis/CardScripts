@@ -77,7 +77,7 @@ function s.threg(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsLocation(LOCATION_GRAVE) then return end
 	local turn_ct=Duel.GetTurnCount()
-	local ct=Duel.GetCurrentPhase()==PHASE_STANDBY and 2 or 1
+	local ct=Duel.IsPhase(PHASE_STANDBY) and 2 or 1
 	--Add this card from your GY to your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,2))

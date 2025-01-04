@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e4:SetCode(EFFECT_IMMUNE_EFFECT)
 	e4:SetRange(LOCATION_MZONE)
-	e4:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_NORMAL) end)
+	e4:SetCondition(function(e) return e:GetHandler():IsNormalSummoned() end)
 	e4:SetValue(s.imnval)
 	c:RegisterEffect(e4)
 	--Gain 700 ATK
@@ -62,7 +62,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.imnval(e,te)
-	return te:IsMonsterEffect() and te:IsActivated() and te:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL)
+	return te:IsMonsterEffect() and te:IsActivated() and te:GetHandler():IsSpecialSummoned()
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

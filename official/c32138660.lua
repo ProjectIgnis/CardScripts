@@ -1,5 +1,5 @@
--- レプティレス・メルジーヌ
--- Reptilianne Melusine
+--レプティレス・メルジーヌ
+--Reptilianne Melusine
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -56,7 +56,7 @@ function s.matcheck(e,c)
 end
 function s.indcon(e)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_SYNCHRO) and c:HasFlagEffect(id)
+	return c:IsSynchroSummoned() and c:HasFlagEffect(id)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and re:IsMonsterEffect()
@@ -85,7 +85,7 @@ end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return rp==1-tp and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
-		and c:IsSummonType(SUMMON_TYPE_SYNCHRO)
+		and c:IsSynchroSummoned()
 end
 function s.thfilter(c)
 	return c:IsRace(RACE_REPTILE) and c:IsAbleToHand()

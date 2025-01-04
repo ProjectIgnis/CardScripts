@@ -1,5 +1,5 @@
 --盃満ちる燦幻荘
---Brimming Sangen Manor
+--Sangen Summoning
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

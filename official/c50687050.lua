@@ -1,5 +1,5 @@
 --針淵のヴァリアンツ－アルクトスⅫ
---Vaylantz of the Wireframe Abyss - Arctus XII
+--Arktos XII - Chronochasm Vaylantz
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	Pendulum.AddProcedure(c,false)
 	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(s.ffilter),2)
 	Fusion.AddContactProc(c,s.contactfil,s.contactop,s.splimit)
-	-- Special Summon self or move 1 "Valiants" monster
+	--Special Summon self or move 1 "Valiants" monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,{id,0})
 	e1:SetTarget(s.spmvtg)
 	c:RegisterEffect(e1)
-	-- Switch the locations of 2 monsters
+	--Switch the locations of 2 monsters
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_QUICK_O)
@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.chtg)
 	e2:SetOperation(s.chop)
 	c:RegisterEffect(e2)
-	-- Destroy 1 card on the field
+	--Destroy 1 card on the field
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_DESTROY)

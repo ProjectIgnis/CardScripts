@@ -1,5 +1,5 @@
 --セベクの魔導士
---Sebek's Sorcerer
+--Sorcerer of Sebek
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

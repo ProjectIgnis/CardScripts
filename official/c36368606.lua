@@ -39,7 +39,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 and Duel.Destroy(g,REASON_EFFECT)>0 then
 		local og=Duel.GetOperatedGroup()
 		for tc in og:Iter() do
-			tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1)
+			tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 		end
 		--Special Summon destroyed Cyberse Link Monsters during the End Phase
 		local e1=Effect.CreateEffect(e:GetHandler())
@@ -97,7 +97,7 @@ function s.immop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_IMMUNE_EFFECT)
 		e1:SetValue(function(e,re) return e:GetHandler()~=re:GetOwner() end)
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

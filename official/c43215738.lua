@@ -1,9 +1,9 @@
--- メメント・フラクチャー・ダンス
--- Mementotlan Fracture Dance
--- Scripted by Satellaa
+--メメント・フラクチャー・ダンス
+--Mementotlan Fracture Dance
+--Scripted by Satellaa
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Destroy 1 card on the field
+	--Destroy 1 card on the field
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
-	-- Make all face-up monsters your opponent currently controls lose 1000 ATK
+	--Make all face-up monsters your opponent currently controls lose 1000 ATK
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_ATKCHANGE)
@@ -72,7 +72,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-1000)
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

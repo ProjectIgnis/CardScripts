@@ -1,13 +1,13 @@
--- 転生炎獣レイジング・フェニックス
--- Salamangreat Raging Phoenix
--- Scripted by Satella
+--転生炎獣レイジング・フェニックス
+--Salamangreat Raging Phoenix
+--Scripted by Satella
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	aux.EnableCheckReincarnation(c)
-	-- Link Summon procedure
+	--Link Summon procedure
 	Link.AddProcedure(c,s.matfilter,2)
-	-- Add 1 "Salamangreat" card from your Deck to your hand
+	--Add 1 "Salamangreat" card from your Deck to your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	-- Special Summon itself
+	--Special Summon itself
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_ATKCHANGE)
@@ -40,7 +40,7 @@ function s.matfilter(c,scard,sumtype,tp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReincarnationSummoned() and c:IsSummonType(SUMMON_TYPE_LINK)
+	return c:IsReincarnationSummoned() and c:IsLinkSummoned()
 end
 function s.thfilter(c)
 	return c:IsSetCard(SET_SALAMANGREAT) and c:IsAbleToHand()
@@ -82,7 +82,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 then
 		local tc=Duel.GetFirstTarget()
 		if tc:IsRelateToEffect(e) then
-			-- Increase ATK
+			--Increase ATK
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)

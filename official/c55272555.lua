@@ -1,9 +1,9 @@
--- メメント・ホーン・ドラゴン
--- Memento Horn Dragon
--- Scripted by Satellaa
+--メメント・ホーン・ドラゴン
+--Mementotlan-Horned Dragon
+--Scripted by Satellaa
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon itself from the hand
+	--Special Summon itself from the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(s.spcon)
 	c:RegisterEffect(e1)
-	-- Destroy 3 face-up cards on the field
+	--Destroy 3 face-up cards on the field
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DESTROY)

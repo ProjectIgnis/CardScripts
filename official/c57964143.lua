@@ -1,5 +1,5 @@
 --白の仲裁
---White Arbitration
+--Arbitration of White
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -69,7 +69,7 @@ function s.tunerop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_ADD_TYPE)
 		e1:SetValue(TYPE_TUNER)
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

@@ -64,7 +64,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	e:GetLabelObject():SetLabel(e:GetLabel())
 end
 function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetCurrentPhase()==PHASE_MAIN1 end
+	if chk==0 then return Duel.IsPhase(PHASE_MAIN1) end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_BP)

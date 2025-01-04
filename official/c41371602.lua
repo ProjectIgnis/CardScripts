@@ -1,5 +1,5 @@
 --スタンドアップ・センチュリオン！
---Stand-Up Centurion!
+--Stand Up Centur-Ion!
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -45,7 +45,7 @@ end
 s.listed_series={SET_CENTURION}
 function s.reg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,EFFECT_FLAG_OATH,1)
+	e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,EFFECT_FLAG_OATH,1)
 end
 function s.indfilter(c)
 	return c:IsFaceup() and c:IsOriginalType(TYPE_MONSTER) and c:IsSetCard(SET_CENTURION)

@@ -49,12 +49,12 @@ function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
-		if Duel.GetCurrentPhase()==PHASE_STANDBY then e1:SetLabel(Duel.GetTurnCount()) end
+		if Duel.IsPhase(PHASE_STANDBY) then e1:SetLabel(Duel.GetTurnCount()) end
 		e1:SetLabelObject(g)
 		e1:SetCountLimit(1)
 		e1:SetCondition(s.retcon)
 		e1:SetOperation(s.retop)
-		if Duel.IsTurnPlayer(tp) and Duel.GetCurrentPhase()==PHASE_STANDBY then
+		if Duel.IsTurnPlayer(tp) and Duel.IsPhase(PHASE_STANDBY) then
 			e1:SetReset(RESET_PHASE|PHASE_STANDBY|RESET_SELF_TURN,2)
 		else
 			e1:SetReset(RESET_PHASE|PHASE_STANDBY|RESET_SELF_TURN)
@@ -86,7 +86,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(e:GetLabelObject():GetSum(Card.GetLink)*300)
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

@@ -1,5 +1,5 @@
 --天上天下百鬼羅刹
---Bad-Ass Goblin Bikers
+--Goblin Bikers Gone Wild
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

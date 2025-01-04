@@ -20,7 +20,7 @@ function s.initial_effect(c)
 end
 function s.spcond(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_NORMAL) and not c:IsAttack(0)
+	return c:IsNormalSummoned() and not c:IsAttack(0)
 		and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
 end
 function s.spfilter(c,e,tp)

@@ -1,10 +1,10 @@
--- ブエリヤベース・ド・ヌーベルズ
--- Buerillabaisse de Nouvelles
--- Scripted by Satella
+--ブエリヤベース・ド・ヌーベルズ
+--Buerillabaisse de Nouvelles
+--Scripted by Satella
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	-- Excavate the top 5 cards of your Deck
+	--Excavate the top 5 cards of your Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	-- Special Summon 1 Level 2 or 3 "Nouvelles" Ritual Monster
+	--Special Summon 1 Level 2 or 3 "Nouvelles" Ritual Monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_RELEASE+CATEGORY_SPECIAL_SUMMON)

@@ -1,9 +1,9 @@
--- メンタル・チューナー
--- Mind Tuner
--- Scripted by Hatter
+--メンタル・チューナー
+--Mental Tuner
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Change this card's level
+	--Change this card's level
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)

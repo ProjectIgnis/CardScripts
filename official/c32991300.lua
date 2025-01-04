@@ -1,5 +1,5 @@
 --刻まれし魔の神聖棺
---Fiendsmith's Agnusdei
+--Fiendsmith's Agnumday
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

@@ -70,7 +70,7 @@ function s.distg(e,c)
 	local bc=c:GetBattleTarget()
 	if c:IsRelateToBattle() and bc and bc:IsControler(e:GetHandlerPlayer())
 		and bc:IsFaceup() and bc:IsSetCard({SET_SCARECLAW,SET_KASHTIRA}) then
-		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1,fid)
+		c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1,fid)
 		return true
 	end
 	return false

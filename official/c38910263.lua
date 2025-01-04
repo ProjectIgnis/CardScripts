@@ -1,5 +1,5 @@
 --炎王獣ハヌマーン
---Fire King Avatar Hanuman
+--Fire King Avatar Rangbali
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

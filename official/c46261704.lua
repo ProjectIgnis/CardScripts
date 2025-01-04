@@ -1,5 +1,5 @@
 --ギャラクリボー
---Galactickuriboh
+--Galactikuriboh
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)

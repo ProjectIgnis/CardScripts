@@ -1,5 +1,5 @@
 --Ｖｏｉｃｉ ｌａ Ｃａｒｔｅ～メニューはこちら～
---Voici la Carte - Here is the Menu
+--Voici la Carte (Today's Menu)
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

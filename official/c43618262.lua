@@ -1,5 +1,5 @@
 --初買い
---First Purchase of the Year
+--Hatsugai
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

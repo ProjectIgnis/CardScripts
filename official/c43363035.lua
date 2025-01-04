@@ -1,5 +1,5 @@
 --地下牢の徊神
---Transient Titan of Tartarus
+--Wandering Titan of Tartarus
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

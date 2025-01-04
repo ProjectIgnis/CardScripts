@@ -83,6 +83,6 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not re or not re:GetHandler():IsSetCard(SET_ALTERGEIST) then return end
 	for ec in eg:Iter() do
-		ec:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1)
+		ec:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 	end
 end

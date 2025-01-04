@@ -39,7 +39,7 @@ function s.excvtop(e,tp,eg,ep,ev,re,r,rp)
 		local tc=g:FilterSelect(tp,s.setfilter,1,1,nil):GetFirst()
 		if tc and Duel.SSet(tp,tc) then
 			local fid=tc:GetFieldID()
-			tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,2,fid)
+			tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,2,fid)
 			--Send it to the GY during the next End Phase
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

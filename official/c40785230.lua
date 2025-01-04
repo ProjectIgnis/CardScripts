@@ -1,5 +1,5 @@
 --ヴェーダ＝ウパニシャッド
---Veda Upanishad
+--Veda Kalarcanum
 --Scripted by Eerie Code
 local s,id=GetID()
 local COUNTER_VEDA=0x210

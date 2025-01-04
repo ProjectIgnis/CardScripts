@@ -39,7 +39,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 	e1:SetValue(d1*700)
-	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,2)
+	e1:SetReset(RESETS_STANDARD_PHASE_END,2)
 	c:RegisterEffect(e1)
 	if d1+d2~=7 then return end
 	--If the total roll is exactly 7, apply 1 effect

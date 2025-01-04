@@ -1,8 +1,8 @@
--- ボーン・デーモン
--- Bone Archfiend
+--ボーン・デーモン
+--Bone Archfiend
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon this card from your hand or GY
+	--Special Summon this card from your hand or GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	-- Increase or decrease a monster's Level by 1
+	--Increase or decrease a monster's Level by 1
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOGRAVE+CATEGORY_LVCHANGE)
@@ -46,7 +46,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 	local c=e:GetHandler()
-	-- Cannot Special Summon from the Extra Deck, except DARK Dragon Synchro Monsters
+	--Cannot Special Summon from the Extra Deck, except DARK Dragon Synchro Monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,2))
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -56,7 +56,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTarget(s.splimit)
 	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-	-- Clock Lizard check
+	--Clock Lizard check
 	aux.addTempLizardCheck(c,tp,s.lizfilter)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp)
@@ -89,7 +89,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 			{b2,aux.Stringid(id,4)})
 		if not op then return end
 		local val=op==1 and 1 or -1
-		-- Increase or decrease its Level by 1
+		--Increase or decrease its Level by 1
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)

@@ -1,11 +1,11 @@
--- グリム・リチュア
--- Grim Gishki
--- Scripted by Hatter
+--グリム・リチュア
+--Gishki Grimness
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Treat as entire tribute requirement
+	--Treat as entire tribute requirement
 	Ritual.AddWholeLevelTribute(c,aux.FilterBoolFunction(Card.IsAttribute,ATTRIBUTE_WATER))
-	-- Special Summon 1 "Gishki" monster
+	--Special Summon 1 "Gishki" monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -32,7 +32,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	-- Cannot declare attacks, except with Ritual Monsters
+	--Cannot declare attacks, except with Ritual Monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
@@ -42,7 +42,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	aux.RegisterClientHint(c,nil,tp,1,0,aux.Stringid(id,1),nil)
-	-- Special Summon 1 "Gishki" monster from the deck
+	--Special Summon 1 "Gishki" monster from the deck
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)

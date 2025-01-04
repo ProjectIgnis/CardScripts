@@ -1,5 +1,5 @@
 --ＧＰ－アニヒレーター
---Gold Pride - Annihilator
+--Gold Pride - Eradicator
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -42,7 +42,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsType,TYPE_EXTRA),tp,LOCATION_MZONE,LOCATION_MZONE,1,ct,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 	--Register that this effect was activated this turn
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,EFFECT_FLAG_OATH,1)
+	e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,EFFECT_FLAG_OATH,1)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)

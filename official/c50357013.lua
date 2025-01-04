@@ -1,5 +1,5 @@
 --十種神鏡陣
---Mirror Formation of the Ten Sacred Treasures
+--Tokusano Shinkyojin
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)

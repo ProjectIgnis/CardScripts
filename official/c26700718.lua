@@ -1,9 +1,9 @@
--- スネークアイ追走劇
--- Snake-Eye Dramatic Chase
--- Scripted by Satellaa
+--スネークアイ追走劇
+--Dramatic Snake-Eye Chase
+--Scripted by Satellaa
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Place 1 "Diabellestar" monster in its owner's Spell/Trap Zone
+	--Place 1 "Diabellestar" monster in its owner's Spell/Trap Zone
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_LEAVE_GRAVE)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.pltg)
 	e1:SetOperation(s.plop)
 	c:RegisterEffect(e1)
-	-- Special Summon 1 monster that is treated as a Continuous Spell
+	--Special Summon 1 monster that is treated as a Continuous Spell
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)

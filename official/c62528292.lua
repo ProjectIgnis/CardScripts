@@ -87,7 +87,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EVENT_ATTACK_ANNOUNCE)
 		e2:SetTarget(s.destg)
 		e2:SetOperation(s.desop)
-		e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e2)
 	end
 end

@@ -1,5 +1,5 @@
 --水精鱗の深影隊
---Mermail Shadow Bodyguards
+--Mermail Shadow Squad
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

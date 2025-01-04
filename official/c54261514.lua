@@ -1,5 +1,5 @@
 --超獸の咆哮
---Final Bringer's Bellow
+--Final Bringer of the End Times
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

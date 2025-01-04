@@ -71,7 +71,7 @@ function s.hspop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsTurnPlayer(1-tp) and e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL)
+	return Duel.IsTurnPlayer(1-tp) and e:GetHandler():IsSpecialSummoned()
 end
 function s.rettg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -42,7 +42,7 @@ function s.cfilter(c)
 	return c:IsRace(RACE_ZOMBIE) and not c:IsCode(id)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsTurnPlayer(tp) and Duel.GetCurrentPhase()==PHASE_MAIN1 and not Duel.CheckPhaseActivity()
+	return Duel.IsTurnPlayer(tp) and Duel.IsPhase(PHASE_MAIN1) and not Duel.CheckPhaseActivity()
 		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,2,nil)
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)

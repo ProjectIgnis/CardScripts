@@ -1,5 +1,5 @@
 --粛声なる祈り
---Silenforcing Prayer
+--Prayers of the Voiceless Voice
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

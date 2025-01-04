@@ -45,7 +45,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tc=Duel.SelectTarget(tp,nil,tp,0,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tc,1,0,0)
 	--Register that this effect was activated this turn
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,EFFECT_FLAG_OATH,1)
+	e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,EFFECT_FLAG_OATH,1)
 end
 function s.cfilter(c,tc,seq)
 	if c:IsLocation(LOCATION_SZONE) then

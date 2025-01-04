@@ -68,7 +68,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tdcond(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsTurnPlayer(1-tp) and Duel.GetCurrentPhase()==PHASE_END
+	return Duel.IsTurnPlayer(1-tp) and Duel.IsPhase(PHASE_END)
 end
 function s.tdfilter(c)
 	return c:IsSetCard(SET_VOLCANIC) and c:IsMonster() and c:IsFaceup() and c:IsAbleToDeck()

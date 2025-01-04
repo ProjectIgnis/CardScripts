@@ -1,5 +1,5 @@
 --Ｂ・Ｆ－猛撃のレイピア
---Battlewasp - Rapier the Furious
+--Battlewasp - Rapier the Onslaught
 local s,id=GetID()
 function s.initial_effect(c)
 	--Place 1 "Battlewasp - Wind" from your Deck face-up in your Spell & Trap Zone

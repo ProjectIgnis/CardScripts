@@ -1,5 +1,5 @@
 --従騎士トゥルーデア
---Centurion Trudea
+--Centur-Ion Trudea
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

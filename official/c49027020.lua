@@ -55,7 +55,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rmfilter(c)
-	return c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:IsAbleToRemove()
+	return c:IsSpecialSummoned() and c:IsAbleToRemove()
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.rmfilter(chkc) end
@@ -77,7 +77,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	local reset,reset_ct=RESET_PHASE|PHASE_STANDBY,1
 	local turn_ct=0
-	if Duel.GetCurrentPhase()==PHASE_STANDBY then
+	if Duel.IsPhase(PHASE_STANDBY) then
 		reset_ct=2
 		turn_ct=Duel.GetTurnCount()
 	end

@@ -1,5 +1,5 @@
 --分裂するマザー・スパイダー
---Fissioning Mother Spider
+--Mother Spider Splitter
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

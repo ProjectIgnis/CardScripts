@@ -1,5 +1,5 @@
 --異星戦隊 ビッグ・バン
---Estranger Big Bang
+--E Stranger Big Bang
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --三位一体
---Three as One
+--Three in One
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,9 +1,9 @@
--- ロイヤル・ストレート
--- Royal Straight
--- Scripted by Hatter
+--ロイヤル・ストレート
+--Royal Straight
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Send "Jack's Knight", "Queen's Knight", and "King's Knight" to the GY
+	--Send "Jack's Knight", "Queen's Knight", and "King's Knight" to the GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOGRAVE+CATEGORY_SPECIAL_SUMMON)

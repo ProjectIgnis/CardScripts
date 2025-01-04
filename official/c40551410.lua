@@ -1,5 +1,5 @@
 --Ｒｅｃｅｔｔｅ ｄｅ Ｐｅｒｓｏｎｎｅｌ～賄いのレシピ～
---Recette de Personnel - Cook's Recipe
+--Recette de Personnel (Staff Recipe)
 --scripted by Raye
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --魔鍵憑神－アシュタルトゥ
---Magikey Avatar - Astartu
+--Magikey Deity - Ashtartu
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

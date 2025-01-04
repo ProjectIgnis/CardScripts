@@ -1,5 +1,5 @@
 --Ｌマジマージ
---Lil' Maji Mage
+--L Magi Mergy
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

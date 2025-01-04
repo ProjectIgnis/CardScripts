@@ -1,5 +1,5 @@
 --百鬼羅刹大収監
---Goblin Biker Grand Imprisonment
+--Goblin Biker Grand Breakout
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

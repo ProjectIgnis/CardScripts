@@ -1,5 +1,5 @@
 --天盃龍パイドラ
---Tenpai Dragon Baidora
+--Tenpai Dragon Paidra
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --鳴いて時鳥
---Singing Cuckoo
+--The Cuckoo Commanded to Croon
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

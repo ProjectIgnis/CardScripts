@@ -1,5 +1,5 @@
 --千年の十字
---Millennium Cross
+--Millennium Ankh
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

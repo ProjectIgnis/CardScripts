@@ -1,5 +1,5 @@
 --マルチャミー・フワロス
---Mulcharmy Fuwaross
+--Mulcharmy Fuwalos
 local s,id=GetID()
 function s.initial_effect(c)
 	--Apply effects for the rest of the turn

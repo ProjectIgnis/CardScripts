@@ -1,9 +1,9 @@
--- ダンディ・ホワイトライオン
--- Dandy White Lion
--- Scripted by Satella
+--ダンディ・ホワイトライオン
+--Dandy Whitelion
+--Scripted by Satella
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon 3 "White Fluff Token"
+	--Special Summon 3 "White Fluff Token"
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -21,7 +21,7 @@ end
 s.listed_names={36629636}
 function s.tkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0 end
-	-- Cannot Special Summon monsters from the Extra Deck
+	--Cannot Special Summon monsters from the Extra Deck
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetType(EFFECT_TYPE_FIELD)

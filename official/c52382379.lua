@@ -1,5 +1,5 @@
 --ネムレリアの夢喰い－レヴェイユ
---Nemleria's Dreameater - Réveil
+--Nemleria Dream Devourer - Reveil
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

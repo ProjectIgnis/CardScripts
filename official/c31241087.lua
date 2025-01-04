@@ -1,17 +1,17 @@
--- 超越竜メテオロス
--- Transcendrake Meteoros
--- Scripted by Satella
+--超越竜メテオロス
+--Transcendosaurus Meteorus
+--Scripted by Satella
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableUnsummonable()
-	-- Must be Special Summoned by a card effect
+	--Must be Special Summoned by a card effect
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e1:SetValue(function(_,se) return se:IsHasType(EFFECT_TYPE_ACTIONS) end)
 	c:RegisterEffect(e1)
-	-- Special Summon this card from your hand
+	--Special Summon this card from your hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DESTROY)
@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	-- Send 1 Dinosaur monster from Deck to the GY
+	--Send 1 Dinosaur monster from Deck to the GY
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TOGRAVE)
@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.tgtg)
 	e3:SetOperation(s.tgop)
 	c:RegisterEffect(e3)
-	-- Shuffle 1 Normal Monster from your GY into the Deck and Special Summon this card
+	--Shuffle 1 Normal Monster from your GY into the Deck and Special Summon this card
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,2))
 	e4:SetCategory(CATEGORY_TODECK+CATEGORY_SPECIAL_SUMMON)

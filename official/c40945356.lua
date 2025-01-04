@@ -68,7 +68,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 			e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e3:SetCode(EFFECT_UPDATE_ATTACK)
 			e3:SetValue(1000)
-			e3:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
+			e3:SetReset(RESETS_STANDARD_PHASE_END)
 			tc:RegisterEffect(e3)
 		end
 	end

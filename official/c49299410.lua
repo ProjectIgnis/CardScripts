@@ -1,5 +1,5 @@
 --嗤う黒山羊
---Rumpel Teufel
+--The Black Goat Laughs
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

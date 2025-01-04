@@ -1,5 +1,5 @@
 --地獄人形の館
---Mansion of the Underworld Dolls
+--Mansion of the Dreadful Dolls
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --竜儀巧－メテオニス＝ＤＡＤ
---Drytron Meteonis Alpha Draconids
+--Drytron Meteonis DA Draconids
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -77,7 +77,7 @@ end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return rp==1-tp and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
-		and c:IsSummonType(SUMMON_TYPE_RITUAL)
+		and c:IsRitualSummoned()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

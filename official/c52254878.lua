@@ -1,5 +1,5 @@
 --次元同異体ヴァリス
---Dimensional Isoallotope Varis
+--Dimensional Allotrope Varis
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -35,7 +35,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if (not c:IsFaceup() and c:IsRelateToEffect(e)) then return end
 	local rc,att=e:GetLabel()
 	if c:IsDifferentRace(rc) then
-		-- Change monster type
+		--Change monster type
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_RACE)
@@ -45,7 +45,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 	end
 	if c:IsAttributeExcept(att) then
-		-- Change Attribute
+		--Change Attribute
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_CHANGE_ATTRIBUTE)

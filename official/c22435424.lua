@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
-	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,function(c) return not c:IsSummonType(SUMMON_TYPE_RITUAL) or c:IsRace(RACE_MACHINE) end)
+	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,function(c) return not c:IsRitualSummoned() or c:IsRace(RACE_MACHINE) end)
 end
 s.listed_series={SET_DRYTRON}
 s.listed_names={id}

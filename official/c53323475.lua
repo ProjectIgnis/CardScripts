@@ -1,5 +1,5 @@
 --傀儡流儀－パペット・シャーク
---Puppet Shark Style
+--Puppet Shark
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

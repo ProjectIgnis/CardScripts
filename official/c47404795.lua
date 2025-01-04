@@ -1,12 +1,12 @@
--- 魔界劇団－スーパー・プロデューサー
--- Abyss Actor - Super Producer
--- Scripted by Hatter
+--魔界劇団－スーパー・プロデューサー
+--Abyss Actor - Super Producer
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	-- Link Summon procedure
+	--Link Summon procedure
 	Link.AddProcedure(c,nil,2,2,s.lcheck)
-	-- Destroy 1 face-up card
+	--Destroy 1 face-up card
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)

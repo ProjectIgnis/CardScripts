@@ -1,10 +1,10 @@
--- コンフィラス・ド・ヌーベルズ
--- Confitras de Nouvelles
--- Scripted by Satella
+--コンフィラス・ド・ヌーベルズ
+--Confiras de Nouvelles
+--Scripted by Satella
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	-- Destroy 1 Spell/Trap on the field
+	--Destroy 1 Spell/Trap on the field
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
-	-- Special Summon 1 Level 3 or 4 "Nouvelles" Ritual Monster
+	--Special Summon 1 Level 3 or 4 "Nouvelles" Ritual Monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_RELEASE+CATEGORY_SPECIAL_SUMMON)

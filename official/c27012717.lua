@@ -1,5 +1,5 @@
 --猛虎モンフー
---Fierce Tiger Menghu
+--Fierce Tiger Monghu
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

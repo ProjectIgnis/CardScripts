@@ -1,5 +1,5 @@
 --真炎竜アルビオン
---Albion the Incandescent Dragon
+--Albion the Sanctifire Dragon
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

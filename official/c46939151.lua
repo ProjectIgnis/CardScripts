@@ -1,9 +1,9 @@
--- 地縛囚人グランド・キーパー
--- Earthbound Prisoner Ground Keeper
--- Scripted by Satella
+--地縛囚人グランド・キーパー
+--Earthbound Prisoner Ground Keeper
+--Scripted by Satella
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon 1 Level 5 or lower "Earthbound" monster from your Deck or GY
+	--Special Summon 1 Level 5 or lower "Earthbound" monster from your Deck or GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
-	-- "Earthbound" monsters you control cannot be destroyed by battle or card effects
+	--"Earthbound" monsters you control cannot be destroyed by battle or card effects
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)

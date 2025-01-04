@@ -1,5 +1,5 @@
 --粛声の竜賢姫サフィラ
---Saffira, the Wise Silenforcer Queen
+--Saffira, Dragon Queen of the Voiceless Voice
 --Ashaki
 local s,id=GetID()
 function s.initial_effect(c)

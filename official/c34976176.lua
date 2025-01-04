@@ -1,9 +1,9 @@
--- ＢＦ－雪撃のチヌーク
--- Blackwing - Chinook the Snowstrike
--- Scripted by Hatter
+--ＢＦ－雪撃のチヌーク
+--Blackwing - Chinook the Snow Blast
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Send 1 "Blackwing" Synchro Monster or "Black-Winged Dragon" to the GY
+	--Send 1 "Blackwing" Synchro Monster or "Black-Winged Dragon" to the GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOGRAVE+CATEGORY_ATKCHANGE+CATEGORY_DISABLE)
@@ -49,18 +49,18 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	if #g<1 or Duel.SendtoGrave(g,REASON_EFFECT)<1 or not g:GetFirst():IsLocation(LOCATION_GRAVE) then return end
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
-		-- Negate effects
+		--Negate effects
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetValue(RESET_TURN_SET)
 		tc:RegisterEffect(e2)
-		-- Reduce ATK
+		--Reduce ATK
 		local e3=e1:Clone()
 		e3:SetCode(EFFECT_UPDATE_ATTACK)
 		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)

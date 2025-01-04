@@ -1,5 +1,5 @@
 --幻惑のバリア －ミラージュフォース－
---Mirage Force
+--Mirage Mirror Force
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

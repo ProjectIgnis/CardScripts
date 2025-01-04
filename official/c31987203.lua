@@ -27,9 +27,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e3:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_PENDULUM) end)
+	e3:SetCondition(function(e) return e:GetHandler():IsPendulumSummoned() end)
 	c:RegisterEffect(e3)
-	-- Place itself in Pendulum Zone if it is tributed
+	--Place itself in Pendulum Zone if it is tributed
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,2))
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)

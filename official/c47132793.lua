@@ -1,5 +1,5 @@
 --征覇竜－ブレイズ
---Blaze, Supreme Ruler of Dragons
+--Blaze, Supreme Ruler of all Dragons
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

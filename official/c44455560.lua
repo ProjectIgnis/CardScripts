@@ -1,5 +1,5 @@
 --炎王妃 ウルカニクス
---Fire King Consort Ulkanix
+--Fire King Courtier Ulcanix
 --Scripted by DyXel
 local s,id=GetID()
 function s.initial_effect(c)

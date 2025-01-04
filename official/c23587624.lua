@@ -37,7 +37,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetValue(function(_e,_re) return _re:GetOwnerPlayer()==tp and _e:GetHandler()~=_re:GetHandler() end)
 			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			sc:RegisterEffect(e1,true)
-			local reset_ct=(Duel.IsTurnPlayer(tp) or Duel.GetCurrentPhase()==PHASE_END) and 2 or 1
+			local reset_ct=(Duel.IsTurnPlayer(tp) or Duel.IsPhase(PHASE_END)) and 2 or 1
 			--Shuffle it into the Deck during your opponent's next End Phase
 			aux.DelayedOperation(sc,PHASE_END,id,e,tp,function(ag) Duel.SendtoDeck(ag,nil,SEQ_DECKSHUFFLE,REASON_EFFECT) end,function() return Duel.IsTurnPlayer(1-tp) end,nil,reset_ct,aux.Stringid(id,1))
 		end

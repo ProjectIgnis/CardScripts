@@ -1,9 +1,9 @@
--- カオス・ウィッチ－混沌の魔女
--- Chaos Witch
--- Scripted by Hatter
+--カオス・ウィッチ－混沌の魔女
+--Chaos Witch
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon 2 "Black Beast Tokens"
+	--Special Summon 2 "Black Beast Tokens"
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.tktg)
 	e1:SetOperation(s.tkop)
 	c:RegisterEffect(e1)
-	-- Special Summon 2 "White Beast Tokens"
+	--Special Summon 2 "White Beast Tokens"
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.tktg)
 	e2:SetOperation(s.tkop)
 	c:RegisterEffect(e2)
-	-- Count Special Summoned monsters
+	--Count Special Summoned monsters
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.ctfilter)
 end
 s.listed_names={id+1,id+2}
@@ -47,7 +47,7 @@ function s.tkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 		return not blk or c:IsReleasable()
 	end
 	if blk then Duel.Release(c,REASON_COST) end
-	-- Cannot Special Summon monsters from the Extra Deck, except LIGHT or DARK Synchro monsters
+	--Cannot Special Summon monsters from the Extra Deck, except LIGHT or DARK Synchro monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,2))
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -57,7 +57,7 @@ function s.tkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(function(_,c) return c:IsLocation(LOCATION_EXTRA) and not s.synfilter(c) end)
 	Duel.RegisterEffect(e1,tp)
-	-- Clock Lizard check
+	--Clock Lizard check
 	aux.addTempLizardCheck(c,tp,s.lizfilter)
 end
 function s.lizfilter(e,c)

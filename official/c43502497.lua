@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	local e2a=e2:Clone()
 	e2a:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e2a:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_PENDULUM) end)
+	e2a:SetCondition(function(e) return e:GetHandler():IsPendulumSummoned() end)
 	c:RegisterEffect(e2a)
 	--Place this card in the Pendulum Zone
 	local e3=Effect.CreateEffect(c)

@@ -1,5 +1,5 @@
 --百鬼羅刹 神速ブーン
---Goblin Rider Boon the Machspeed
+--Goblin Biker Boom Mach
 --Ashaki
 local s,id=GetID()
 function s.initial_effect(c)

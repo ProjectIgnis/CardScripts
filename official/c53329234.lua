@@ -1,5 +1,5 @@
 --微睡の罪宝－モーリアン
---Sinful Spoils of Dozing - Morrighan
+--Sinful Spoils of Slumber - Morrian
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.posfilter(c)
-	return c:IsFaceup() and c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:IsCanTurnSet()
+	return c:IsFaceup() and c:IsSpecialSummoned() and c:IsCanTurnSet()
 end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.posfilter(chkc) end

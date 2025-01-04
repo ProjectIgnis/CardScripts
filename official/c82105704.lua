@@ -44,7 +44,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
 	e1:SetCountLimit(1)
 	e1:SetValue(s.indesval)
-	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,2)
+	e1:SetReset(RESETS_STANDARD_PHASE_END,2)
 	tc:RegisterEffect(e1)
 	--Discard 1 card and Special Summon 1 "Purrely" monster from the Deck
 	if Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil)

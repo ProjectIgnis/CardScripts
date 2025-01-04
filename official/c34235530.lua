@@ -1,5 +1,5 @@
 --真魔六武衆－シエン
---Legendary Klesha Six Samurai - Shi En
+--Legendary Lord Six Samurai - Shi En
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetCountLimit(1,id)
-	e1:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) end)
+	e1:SetCondition(function(e) return e:GetHandler():IsSynchroSummoned() end)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)

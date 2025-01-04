@@ -50,7 +50,7 @@ function s.exctop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ConfirmDecktop(tp,ct)
 	--Register a flag if 9+ cards were excavated
 	if ct>=9 then
-		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1)
+		e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 	end
 	local thg=Duel.GetDecktopGroup(tp,ct)
 	local decrease=0

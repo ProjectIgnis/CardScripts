@@ -1,5 +1,5 @@
 --ポワソニエル・ド・ヌーベルズ
---Poissoniere de Nouvelles
+--Poissonniere de Nouvelles
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

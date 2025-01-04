@@ -1,21 +1,21 @@
--- アティプスの蟲惑魔
--- Traptrix Atypus
--- Scripted by Hatter
+--アティプスの蟲惑魔
+--Traptrix Atypus
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	-- 2+ monsters, including a Plant or Insect monster
+	--2+ monsters, including a Plant or Insect monster
 	Link.AddProcedure(c,nil,2,3,s.lcheck)
-	-- Unaffected by Trap effects
+	--Unaffected by Trap effects
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetCode(EFFECT_IMMUNE_EFFECT)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK) end)
+	e1:SetCondition(function(e) return e:GetHandler():IsLinkSummoned() end)
 	e1:SetValue(function(_,te) return te:IsTrapEffect() end)
 	c:RegisterEffect(e1)
-	-- "Traptrix" monsters gain 1000 ATK
+	--"Traptrix" monsters gain 1000 ATK
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_TRAPTRIX))
 	e2:SetValue(1000)
 	c:RegisterEffect(e2)
-	-- Negate effects of face-up cards
+	--Negate effects of face-up cards
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_DISABLE+CATEGORY_REMOVE+CATEGORY_DESTROY)
@@ -64,11 +64,11 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	for tc in g:Iter() do
 		if tc:IsCanBeDisabledByEffect(e) then neg_chk=true end
-		-- Negate effects
+		--Negate effects
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_DISABLE_EFFECT)

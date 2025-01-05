@@ -2,7 +2,7 @@
 --Evoltile Gephyro
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	--Special Summon 1 "Evolsaur" monster from your GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -14,23 +14,23 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x604e}
+s.listed_series={SET_EVOLSAUR}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE) and e:GetHandler():IsReason(REASON_BATTLE)
 end
-function s.filter(c,e,tp)
-	return c:IsSetCard(0x604e) and c:IsCanBeSpecialSummoned(e,150,tp,false,false)
+function s.spfilter(c,e,tp)
+	return c:IsSetCard(SET_EVOLSAUR) and c:IsCanBeSpecialSummoned(e,SUMMON_BY_EVOLTILE,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
+		and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
+	local g=Duel.SelectTarget(tp,s.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
-		Duel.SpecialSummon(tc,150,tp,tp,false,false,POS_FACEUP)
+		Duel.SpecialSummon(tc,SUMMON_BY_EVOLTILE,tp,tp,false,false,POS_FACEUP)
 	end
 end

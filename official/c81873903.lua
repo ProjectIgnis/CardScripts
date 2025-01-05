@@ -2,7 +2,7 @@
 --Evoltile Westlo
 local s,id=GetID()
 function s.initial_effect(c)
-	--search
+	--Special Summon 1 "Evolsaur" monster from your Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -11,9 +11,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x604e}
+s.listed_series={SET_EVOLSAUR}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x604e) and c:IsCanBeSpecialSummoned(e,151,tp,false,false)
+	return c:IsSetCard(SET_EVOLSAUR) and c:IsCanBeSpecialSummoned(e,SUMMON_BY_EVOLTILE,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -24,6 +24,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	if #g>0 then
-		Duel.SpecialSummon(g,151,tp,tp,false,false,POS_FACEUP)
+		Duel.SpecialSummon(g,SUMMON_BY_EVOLTILE,tp,tp,false,false,POS_FACEUP)
 	end
 end

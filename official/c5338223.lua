@@ -2,8 +2,9 @@
 --Evo-Force
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Special Summon 1 "Evolsaur" monster and treat it as summoned by the effect of an "Evoltile" monster
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -12,24 +13,19 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x304e,0x604e}
-function s.cfilter(c,ft,tp)
-	return c:IsSetCard(0x304e)
-		and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5)) and (c:IsControler(tp) or c:IsFaceup())
-end
+s.listed_series={SET_EVOLTILE,SET_EVOLSAUR}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	e:SetLabel(1)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if chk==0 then return ft>-1 and Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil,ft,tp) end
-	local rg=Duel.SelectReleaseGroupCost(tp,s.cfilter,1,1,false,nil,nil,ft,tp)
+	e:SetLabel(100)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,aux.ReleaseCheckMMZ,nil,SET_EVOLTILE) end
+	local rg=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,aux.ReleaseCheckMMZ,nil,SET_EVOLTILE)
 	Duel.Release(rg,REASON_COST)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x604e) and c:IsCanBeSpecialSummoned(e,170,tp,false,false)
+	return c:IsSetCard(SET_EVOLSAUR) and c:IsCanBeSpecialSummoned(e,SUMMON_BY_EVOLTILE,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		if e:GetLabel()==1 then
+		if e:GetLabel()==100 then
 			e:SetLabel(0)
 			return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp)
 		else
@@ -45,6 +41,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	if #g>0 then
-		Duel.SpecialSummon(g,170,tp,tp,false,false,POS_FACEUP)
+		Duel.SpecialSummon(g,SUMMON_BY_EVOLTILE,tp,tp,false,false,POS_FACEUP)
 	end
 end

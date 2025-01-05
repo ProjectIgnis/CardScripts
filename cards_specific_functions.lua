@@ -24,24 +24,32 @@ function Auxiliary.NecroValleyFilter(f)
 			end
 end
 
---sp_summon condition for "Gladiator Beast" monsters
-function Auxiliary.gbspcon(e,tp,eg,ep,ev,re,r,rp)
-	local st=e:GetHandler():GetSummonType()
-	return st>=(SUMMON_TYPE_SPECIAL+100) and st<(SUMMON_TYPE_SPECIAL+150)
+--Checks if Card c was Special Summoned by the effect of a "Gladiator Beast" monster
+function Card.IsGladiatorBeastSummoned(c)
+	return c:IsSummonType(SUMMON_BY_GLADIATOR_BEAST)
 end
 
---sp_summon condition for "Evolsaur" monsters
-function Auxiliary.evospcon(e,tp,eg,ep,ev,re,r,rp)
-	local st=e:GetHandler():GetSummonType()
-	return st>=(SUMMON_TYPE_SPECIAL+150) and st<(SUMMON_TYPE_SPECIAL+180)
+--Checks if Card c was Special Summoned by the effect of an "Evoltile" monster
+function Card.IsEvoltileSummoned(c)
+	return c:IsSummonType(SUMMON_BY_EVOLTILE)
 end
 
---return if Card c was special summoned by the effect of a "Nouvelles" monster
+--Checks if Card c was Special Summoned by the effect of a "Nouvelles" monster
 function Card.IsNouvellesSummoned(c)
 	return c:IsSummonType(SUMMON_BY_NOUVELLES)
 end
 
---sp_summon condition for "Nouvellez" monsters
+--Special Summon condition for cards that require a summon by the effect of a "Gladiator Beast" monster
+function Auxiliary.gbspcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():IsSummonType(SUMMON_BY_GLADIATOR_BEAST)
+end
+
+--Special Summon condition for cards that require a summon by the effect of an "Evoltile" monster
+function Auxiliary.evospcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():IsEvoltileSummoned()
+end
+
+--Special Summon condition for cards that require a summon by the effect of a "Nouvelles" monsters
 function Auxiliary.nouvspcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsNouvellesSummoned()
 end

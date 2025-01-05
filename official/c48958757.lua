@@ -81,7 +81,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local spfilter=op==1 and s.deckspfilter or s.extraspfilter
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=Duel.SelectMatchingCard(tp,spfilter,tp,sum_loc,0,1,1,nil,e,tp):GetFirst()
-	if #g>0 then
+	if tc then
 		Duel.SpecialSummon(tc,100,tp,tp,op==2,false,POS_FACEUP)
 		tc:RegisterFlagEffect(tc:GetOriginalCode(),RESET_EVENT|RESETS_STANDARD_DISABLE,0,0)
 	end

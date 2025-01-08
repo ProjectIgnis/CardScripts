@@ -32,24 +32,23 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.rescon(ct)
 	return function(sg,e,tp,mg)
-		local ct1=sg:FilterCount(Card.IsLocation,nil,LOCATION_HAND)
-		local ct2=sg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA)
-		if ct==1 then
-			return ct1==ct or ct2//6==ct,ct1>0 and ct2>0
-		end
-		if ct2>0 then
-			return ct2>=6 and ct2%6==0 and ct==ct1+(ct2//6)
-		else
-			return ct==ct1
-		end
+		local count=sg:FilterCount(Card.IsLocation,nil,LOCATION_HAND)
+		local remaining=ct-count
+		if remaining<0 then return false,true end
+		local extracnt=sg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA)
+		local extra_needed=remaining*6
+		if extracnt>extra_needed then return false,true end
+		return extracnt==extra_needed,extracnt>extra_needed
 	end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetTargetCards(e)
 	local ct=#tg
 	if ct==0 then return end
-	local rg=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_HAND|LOCATION_EXTRA,0,nil,tp,POS_FACEDOWN)
-	if #rg<ct then return end
+	local g1=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_HAND,0,nil,tp,POS_FACEDOWN)
+	local g2=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_EXTRA,0,nil,tp,POS_FACEDOWN)
+	if (#g1+#g2//6)<ct then return end
+	local rg=g1+g2
 	local sg=aux.SelectUnselectGroup(rg,e,tp,1,#rg,s.rescon(ct),1,tp,HINTMSG_REMOVE,s.rescon(ct),s.rescon(ct))
 	if Duel.Remove(sg,POS_FACEDOWN,REASON_EFFECT)>0 then
 		Duel.BreakEffect()

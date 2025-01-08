@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_HERO}
-s.listes_names={CARD_DARK_FUSION}
+s.listed_names={CARD_DARK_FUSION}
 function s.handsptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() and c:IsSetCard(SET_HERO) end
 	local c=e:GetHandler()

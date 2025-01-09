@@ -1,9 +1,9 @@
 --ＬＬ－セレスト・ワグテイル
---Lyrilusc - Celeste Wagtail
+--Lyrilusc - Celestine Wagtail
 --Scripted by The Razgriz
 local s,id=GetID()
 function s.initial_effect(c)
-	--Add 1 LL S/T from Deck to hand
+	--Add 1 "Lyrilusc" Spell/Trap from your Deck to your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	--Attach to 1 LL Xyz monster from GY
+	--Attach this card from your GY to 1 "Lyrilusc" Xyz monster you control
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_LEAVE_GRAVE)
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -25,9 +25,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.atchop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xf7}
+s.listed_series={SET_LYRILUSC}
 function s.thfilter(c)
-	return c:IsSetCard(0xf7) and c:IsSpellTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_LYRILUSC) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -41,13 +41,14 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0xf7) and c:IsType(TYPE_XYZ)
+function s.atchfilter(c)
+	return c:IsFaceup() and c:IsSetCard(SET_LYRILUSC) and c:IsType(TYPE_XYZ)
 end
 function s.atchtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.atchfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(s.atchfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)
+	Duel.SelectTarget(tp,s.atchfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,e:GetHandler(),1,0,0)
 end
 function s.atchop(e,tp,eg,ep,ev,re,r,rp)

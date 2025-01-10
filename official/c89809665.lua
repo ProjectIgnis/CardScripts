@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	--The equipped monster can be treated as a Tuner if used as Synchro Material
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_EQUIP)
-	e3:SetCode(30765615)
+	e3:SetCode(EFFECT_CAN_BE_TUNER)
 	c:RegisterEffect(e3)
 end
 function s.spcfilter(c)

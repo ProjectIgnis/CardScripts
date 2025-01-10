@@ -48,7 +48,7 @@ function s.puretuner(c,sc,tp)
 	return not c:IsHasEffect(EFFECT_NONTUNER) and c:IsType(TYPE_TUNER,sc,SUMMON_TYPE_SYNCHRO|MATERIAL_SYNCHRO,tp)
 end
 function s.othertuner(c,sc,tp)
-	return (c:IsHasEffect(EFFECT_NONTUNER) and c:IsType(TYPE_TUNER,sc,SUMMON_TYPE_SYNCHRO|MATERIAL_SYNCHRO,tp)) or c:IsHasEffect(30765615)
+	return (c:IsHasEffect(EFFECT_NONTUNER) and c:IsType(TYPE_TUNER,sc,SUMMON_TYPE_SYNCHRO|MATERIAL_SYNCHRO,tp)) or c:IsHasEffect(EFFECT_CAN_BE_TUNER)
 end
 function s.valcheck(e,c)
 	local mg=c:GetMaterial()

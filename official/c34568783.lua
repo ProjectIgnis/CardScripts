@@ -56,7 +56,7 @@ function s.attrop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetDescription(aux.Stringid(id,2))
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-	e2:SetCode(30765615)
+	e2:SetCode(EFFECT_CAN_BE_TUNER)
 	e2:SetReset(RESETS_STANDARD_PHASE_END)
 	c:RegisterEffect(e2)
 end

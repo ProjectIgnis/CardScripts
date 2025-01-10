@@ -100,7 +100,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tunertgfilter(c)
-	return c:IsRace(RACE_INSECT) and c:HasLevel() and not c:IsType(TYPE_TUNER) and not c:IsHasEffect(30765615)
+	return c:IsRace(RACE_INSECT) and c:HasLevel() and not c:IsType(TYPE_TUNER) and not c:IsHasEffect(EFFECT_CAN_BE_TUNER)
 		and c:IsFaceup()
 end
 function s.tunertg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -117,7 +117,7 @@ function s.tunerop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetDescription(aux.Stringid(id,2))
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-		e1:SetCode(30765615)
+		e1:SetCode(EFFECT_CAN_BE_TUNER)
 		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end

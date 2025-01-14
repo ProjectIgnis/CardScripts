@@ -392,12 +392,13 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 									end
 								end
 								local availableNumbers={}
-								for k in ipairs(multi) do
+								for k in pairs(multi) do
 									table.insert(availableNumbers,k)
 								end
 								if #availableNumbers>0 then
 									local chosen=availableNumbers[1]
 									if #availableNumbers~=1 then
+										table.sort(availableNumbers)
 										Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 										chosen=Duel.AnnounceNumber(tp,availableNumbers)
 									end

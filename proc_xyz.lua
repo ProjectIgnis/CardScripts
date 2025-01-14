@@ -380,7 +380,7 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 									if val>0 and (not tgf or tgf(te,c,matg)) then
 										local newCount=matct+1+val
 										te:UseCountLimit(tp)
-										local chk=(minc<=newCount and newCount<=maxc)
+										local chk=(minc<=newCount and newCount<=maxc and sg:Includes(mustg))
 													or mg:IsExists(Xyz.RecursionChk,1,sg,mg,c,tp,min,max,minc,maxc,sg,matg,ct+1,newCount,mustbemat,exchk,f,mustg,lv,eqmg,equips_inverse)
 										if chk then
 											if not multi[1+val] then

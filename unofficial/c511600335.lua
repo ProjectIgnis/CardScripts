@@ -31,28 +31,27 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
-s.listed_series={0x119}
-s.listed_names={}
+s.listed_series={SET_SALAMANGREAT}
+s.listed_names={id}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	for ec in aux.Next(eg) do
 		if ec:GetPreviousTypeOnField()&TYPE_LINK>0
-			and ec:IsPreviousSetCard(0x119) and REASON_EFFECT&ec:GetReason()>0
+			and ec:IsPreviousSetCard(SET_SALAMANGREAT) and REASON_EFFECT&ec:GetReason()>0
 			and ec:GetPreviousControler()~=ec:GetReasonEffect():GetHandlerPlayer() then
 			Duel.RegisterFlagEffect(ec:GetPreviousControler(),id,RESET_PHASE+PHASE_END,0,1)
 		end
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	local ph=Duel.GetCurrentPhase()
-	return Duel.GetFlagEffect(tp,id)>0 and ph>=PHASE_MAIN1 and ph<=PHASE_MAIN2
+	return Duel.GetFlagEffect(tp,id)>0 and (Duel.IsMainPhase() or Duel.IsBattlePhase())
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x119) and c:IsLevelBelow(4) and not c:IsCode(id)
+	return c:IsSetCard(SET_SALAMANGREAT) and c:IsLevelBelow(4) and not c:IsCode(id)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_EXTRA,0,1,nil,Group.FromCards(c,e:GetHandler()))
 end
 function s.xyzfilter(c,mg)
-	return c:IsSetCard(0x119) and c:IsType(TYPE_XYZ) and c:IsXyzSummonable(nil,mg,2,2)
+	return c:IsSetCard(SET_SALAMANGREAT) and c:IsType(TYPE_XYZ) and c:IsXyzSummonable(nil,mg,2,2)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -90,7 +89,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if #xyzg>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
-		Duel.XyzSummon(tp,xyz,nil,g)
+		Duel.XyzSummon(tp,xyz,g,nil,2,2)
 	end
 end
 function s.efcon(e,tp,eg,ep,ev,re,r,rp)

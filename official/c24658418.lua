@@ -2,7 +2,7 @@
 --Galaxy Tyranno
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon itself
+	--When a "Galaxy" monster you control is targeted by an attack, Special Summon itself
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--xyz summon
+	--If Summoned by its own effect, Xyz Summon 1 "Galaxy" monster using "Galaxy" monsters you control
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -24,10 +24,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x7b}
+s.listed_series={SET_GALAXY}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttackTarget()
-	return at:IsFaceup() and at:IsControler(tp) and at:IsSetCard(0x7b)
+	return at:IsFaceup() and at:IsControler(tp) and at:IsSetCard(SET_GALAXY)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -43,10 +43,10 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1
 end
 function s.mfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x7b) and not c:IsType(TYPE_TOKEN)
+	return c:IsFaceup() and c:IsSetCard(SET_GALAXY) and not c:IsType(TYPE_TOKEN)
 end
 function s.xyzfilter(c,mg)
-	return c:IsSetCard(0x7b) and c:IsXyzSummonable(nil,mg)
+	return c:IsSetCard(SET_GALAXY) and c:IsXyzSummonable(nil,mg)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -61,6 +61,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if #xyzg>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
-		Duel.XyzSummon(tp,xyz,nil,g,1,99)
+		Duel.XyzSummon(tp,xyz,nil,g)
 	end
 end

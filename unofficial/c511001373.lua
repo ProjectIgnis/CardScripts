@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	--Treat the equipped monster as 2 Xyz Materials
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_EQUIP)
-	e1:SetCode(511001225)
+	e1:SetCode(EFFECT_DOUBLE_XYZ_MATERIAL)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
 	--Attach this card to an Xyz monster Summoned using the attached monster as material

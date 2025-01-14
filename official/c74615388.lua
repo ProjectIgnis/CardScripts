@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	c:EnableReviveLimit()
 	c:SetUniqueOnField(1,0,id)
 	--Xyz Summon procedure: 2+ Level 9 monsters
-	Xyz.AddProcedure(c,nil,9,2,nil,nil,99)
+	Xyz.AddProcedure(c,nil,9,2,nil,nil,Xyz.InfiniteMats)
 	--Decrease ATK/DEF
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)

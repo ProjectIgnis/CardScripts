@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Xyz Summon procedure: 2+ Level 6 monsters
-	Xyz.AddProcedure(c,nil,6,2,nil,nil,99)
+	Xyz.AddProcedure(c,nil,6,2,nil,nil,Xyz.InfiniteMats)
 	--Treat 1 monster you control with a Level owned by your opponent as Level 6 for Xyz Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -76,8 +76,8 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spfilter(c,e,tp)
-	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsLocation(LOCATION_GRAVE) 
-		and c:IsControler(1-tp) and c:IsReason(REASON_BATTLE|REASON_EFFECT) 
+	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsLocation(LOCATION_GRAVE)
+		and c:IsControler(1-tp) and c:IsReason(REASON_BATTLE|REASON_EFFECT)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

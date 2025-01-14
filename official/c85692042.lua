@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
-	Xyz.AddProcedure(c,nil,4,2,nil,nil,99)
+	Xyz.AddProcedure(c,nil,4,2,nil,nil,Xyz.InfiniteMats)
 	c:EnableReviveLimit()
 	--search
 	local e1=Effect.CreateEffect(c)
@@ -62,7 +62,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.Hint(HINT_OPSELECTED,1-tp,aux.Stringid(id,1))
 	elseif sel==3 then
 		Duel.Hint(HINT_OPSELECTED,1-tp,aux.Stringid(id,2))
-	else 
+	else
 		Duel.Hint(HINT_OPSELECTED,1-tp,aux.Stringid(id,3))
 	end
 	e:SetLabel(sel)
@@ -74,7 +74,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 		s.mmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	elseif sel==3 then
 		s.l4tg(e,tp,eg,ep,ev,re,r,rp,chk)
-	else 
+	else
 		s.sttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
@@ -84,7 +84,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		s.mmop(e,tp,eg,ep,ev,re,r,rp)
 	elseif sel==3 then
 		s.l4op(e,tp,eg,ep,ev,re,r,rp)
-	else 
+	else
 		s.stop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end

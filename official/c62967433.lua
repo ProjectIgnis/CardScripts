@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Xyz Summon procedure
-	Xyz.AddProcedure(c,nil,4,2,nil,nil,99)
+	Xyz.AddProcedure(c,nil,4,2,nil,nil,Xyz.InfiniteMats)
 	--Place 1 Normal Trap in your GY on the bottom of the Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

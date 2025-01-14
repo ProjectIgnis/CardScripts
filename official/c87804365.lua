@@ -19,10 +19,10 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetTarget(s.target(TYPE_XYZ,Card.IsXyzSummonable))
-	e2:SetOperation(s.operation(TYPE_XYZ,Card.IsXyzSummonable,function(sc,g,tp) Duel.XyzSummon(tp,sc,nil,g) end))
+	e2:SetOperation(s.operation(TYPE_XYZ,Card.IsXyzSummonable,function(sc,g,tp) Duel.XyzSummon(tp,sc,g,nil,#g,#g) end))
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x132}
+s.listed_series={SET_MATHMECH}
 function s.announcecost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
@@ -31,11 +31,11 @@ function s.relfilter(c,e,tp)
 	return c:IsRelateToEffect(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.matfilter(c,e,tp)
-	return c:IsSetCard(0x132) and c:IsCanBeEffectTarget(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_MATHMECH) and c:IsCanBeEffectTarget(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.filter(montype,chkfun)
 	return function(c,mg,tp,chk)
-		return c:IsSetCard(0x132) and c:IsType(montype) and (not chk or Duel.GetLocationCountFromEx(tp,tp,mg,c)>0) and (not mg or chkfun(c,nil,mg,#mg,#mg))
+		return c:IsSetCard(SET_MATHMECH) and c:IsType(montype) and (not chk or Duel.GetLocationCountFromEx(tp,tp,mg,c)>0) and (not mg or chkfun(c,nil,mg,#mg,#mg))
 	end
 end
 function s.rescon(exg,chkfun)
@@ -48,9 +48,9 @@ function s.target(montype,chkfun)
 	return function(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		local exg=Duel.GetMatchingGroup(s.filter(montype,chkfun),tp,LOCATION_EXTRA,0,nil,nil,tp)
 		local cancelcon=s.rescon(exg,chkfun)
-		if chkc then return chkc:IsControler(tp) and c:IsLocation(LOCATION_GRAVE) and c:IsSetCard(0x132) and chkc:IsCanBeSpecialSummoned(e,0,tp,false,false) and cancelcon(Group.FromCards(chkc)) end
+		if chkc then return chkc:IsControler(tp) and c:IsLocation(LOCATION_GRAVE) and c:IsSetCard(SET_MATHMECH) and chkc:IsCanBeSpecialSummoned(e,0,tp,false,false) and cancelcon(Group.FromCards(chkc)) end
 		local mg=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_GRAVE,0,nil,e,tp)
-		local min=math.min(math.min(Duel.GetLocationCount(tp,LOCATION_MZONE),Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and 1 or 99),1)
+		local min=math.min(Duel.GetLocationCount(tp,LOCATION_MZONE),Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and 1 or #mg,1)
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		if ft>3 then ft=3 end
 		if chk==0 then return min>0 and Duel.IsPlayerCanSpecialSummonCount(tp,2)

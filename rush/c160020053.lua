@@ -18,7 +18,7 @@ function s.cfilter(c)
 	return c:IsMonster() and (c:IsType(TYPE_NORMAL) or (c:IsRace(RACE_INSECT) and c:IsLevelBelow(4))) and c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,e:GetHandler()) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
 end
 function s.filter(c,e,tp)
 	return c:IsLevelBetween(5,8) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsRace(RACE_INSECT) and c:IsDefense(400)

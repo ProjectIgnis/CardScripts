@@ -18,8 +18,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_RAIDRAPTOR}
-function s.tgfilter(c,tp)
-	return c:IsType(TYPE_XYZ) and c:IsSetCard(SET_RAIDRAPTOR) and c:IsFaceup() and c:IsCanBeXyzMaterial(nil,tp,REASON_EFFECT)
+function s.tgfilter(c,e,tp)
+	return c:IsType(TYPE_XYZ) and c:IsSetCard(SET_RAIDRAPTOR) and c:IsFaceup()
+		and c:IsCanBeXyzMaterial(nil,tp,REASON_EFFECT) and c:IsCanBeEffectTarget(e)
 end
 function s.rescon(sg,e,tp,mg)
 	return sg:IsExists(Card.IsLocation,1,nil,LOCATION_MZONE) and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,sg:GetSum(Card.GetRank))
@@ -30,7 +31,7 @@ function s.spfilter(c,e,tp,rk)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	local g=Duel.GetMatchingGroup(s.tgfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil,tp)
+	local g=Duel.GetMatchingGroup(s.tgfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil,e,tp)
 	if chk==0 then return #g>=2 and aux.SelectUnselectGroup(g,e,tp,2,#g,s.rescon,0) end
 	local tg=aux.SelectUnselectGroup(g,e,tp,2,#g,s.rescon,1,tp,HINTMSG_XMATERIAL,s.rescon)
 	Duel.SetTargetCard(tg)

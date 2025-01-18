@@ -21,7 +21,9 @@ function s.initial_effect(c)
 end
 function s.atkcon(e)
 	local ec=e:GetHandler():GetEquipTarget()
-	return ec and (Duel.GetAttacker()==ec or Duel.GetAttackTarget()==ec)
+	local ac=Duel.GetAttacker()
+	local dc=Duel.GetAttackTarget()
+	return ec and ac~=nil and dc~nil and (ac==ec or dc==ec)
 end
 function s.atkval(e,c)
 	local eq=e:GetHandler():GetEquipTarget()

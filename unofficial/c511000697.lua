@@ -23,7 +23,7 @@ function s.atkcon(e)
 	local ec=e:GetHandler():GetEquipTarget()
 	local ac=Duel.GetAttacker()
 	local dc=Duel.GetAttackTarget()
-	return ec and ac~=nil and dc~nil and (ac==ec or dc==ec)
+	return ec and ac~=nil and dc~=nil and (ac==ec or dc==ec)
 end
 function s.atkval(e,c)
 	local eq=e:GetHandler():GetEquipTarget()

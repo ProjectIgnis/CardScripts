@@ -32,6 +32,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Group.CreateGroup()
 	sg:AddCard(g)
 	sg:AddCard(g2)
+	local og=nil
 	if sg:IsExists(s.filter,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local dg=sg:FilterSelect(tp,s.filter,1,2,nil)
@@ -43,22 +44,22 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			end
 		end
 		Duel.SendtoGrave(dg,REASON_EFFECT)
-		local og=Duel.GetOperatedGroup()
+		og=Duel.GetOperatedGroup()
 		Duel.BreakEffect()
-		--Place on bottom of the Deck
-		local ct1=#g
-		if ct1>0 then
-			Duel.MoveToDeckBottom(ct1,tp)
-			Duel.SortDeckbottom(tp,tp,ct1)
-		end
-		local ct2=#g2
-		if ct2>0 then
-			Duel.MoveToDeckBottom(ct2,1-tp)
-			Duel.SortDeckbottom(1-tp,1-tp,ct2)
-		end
-		--Draw 1 card
-		if og:FilterCount(Card.IsTrap,nil)>0 then
-			Duel.Draw(tp,1,REASON_EFFECT)
-		end
+	end
+	--Place on bottom of the Deck
+	local ct1=#g
+	if ct1>0 then
+		Duel.MoveToDeckBottom(ct1,tp)
+		Duel.SortDeckbottom(tp,tp,ct1)
+	end
+	local ct2=#g2
+	if ct2>0 then
+		Duel.MoveToDeckBottom(ct2,1-tp)
+		Duel.SortDeckbottom(1-tp,1-tp,ct2)
+	end
+	--Draw 1 card
+	if og and og:FilterCount(Card.IsTrap,nil)>0 then
+		Duel.Draw(tp,1,REASON_EFFECT)
 	end
 end

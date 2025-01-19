@@ -1,10 +1,10 @@
 --魔鍵銃－バトスバスター
---Magikey Blaster - Batosbuster
+--Magikey Mechmusket - Batosbuster
 --Scripted by The Razgriz
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Add 1 Magikey card from Deck to hand
+	--Add 1 "Magikey" card from your Deck to hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -12,11 +12,11 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetCountLimit(1,id)
-	e1:SetCondition(s.thcon)
+	e1:SetCondition(function(e) return e:GetHandler():IsRitualSummoned() end)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	--Place cards on bottom of Deck to negate monster effect on battle
+	--Place cards on bottom of Deck to negate effects of attacking monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TODECK+CATEGORY_DISABLE+CATEGORY_DRAW)
@@ -29,13 +29,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={99426088}
-s.listed_series={0x167}
-function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_RITUAL)
-end
+s.listed_series={SET_MAGIKEY}
 function s.thfilter(c)
-	return c:IsSetCard(0x167) and c:IsAbleToHand()
+	return c:IsSetCard(SET_MAGIKEY) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -50,14 +46,15 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atkfilter(c)
-	return c:IsMonster() and (c:IsType(TYPE_NORMAL) or c:IsSetCard(0x167))
+	return c:IsMonster() and (c:IsType(TYPE_NORMAL) or c:IsSetCard(SET_MAGIKEY))
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
+	local g=Duel.GetMatchingGroup(s.atkfilter,tp,LOCATION_GRAVE,0,nil)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
 	if bc and bc:IsFaceup() then
 		local att=0
-		for gc in aux.Next(Duel.GetMatchingGroup(s.atkfilter,tp,LOCATION_GRAVE,0,nil)) do
+		for gc in g:Iter() do
 			att=att|gc:GetAttribute()
 		end
 		return not bc:IsStatus(STATUS_DISABLED) and bc:GetAttribute()&att~=0
@@ -73,19 +70,15 @@ end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=c:GetBattleTarget()
-	local hg=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
-	if hg==0 then return end
+	local hg=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
+	if #hg==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_HAND,0,1,hg,nil)
-	if #g>0 and Duel.SendtoDeck(g,tp,SEQ_DECKBOTTOM,REASON_EFFECT)>0
+	if #g>0 and Duel.SendtoDeck(g,tp,SEQ_DECKBOTTOM,REASON_EFFECT)>0 and g:FilterCount(Card.IsLocation,LOCATION_DECK)==#g
 		and tc and tc:IsRelateToBattle() and tc:IsFaceup() and tc:IsControler(1-tp)
 		and not tc:IsImmuneToEffect(e) and not tc:IsStatus(STATUS_DISABLED) then
-		--Negate its effects
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		tc:RegisterEffect(e1,true)   
+		--Negate its effects, then draw cards equal to the number of cards placed under the Deck
+		tc:NegateEffects(c,RESETS_STANDARD_PHASE_END)
 		Duel.BreakEffect()
 		Duel.Draw(tp,#g,REASON_EFFECT)
 	end 

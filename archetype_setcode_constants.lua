@@ -584,3 +584,5 @@ SET_ARGOSTARS                     = 0x1ba
 SET_AQUA_JET                      = 0x1bb
 SET_DRAGON_RULER                  = 0x1bc
 SET_MITSURUGI                     = 0x1bd
+SET_REGENESIS                     = 0x1be
+SET_DOMINUS                       = 0x1bf

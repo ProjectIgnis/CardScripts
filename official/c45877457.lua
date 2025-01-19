@@ -44,16 +44,13 @@ function s.atkval(e,c)
 end
 --Negate the activation of an opponent's monster effect
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(Card.IsMonster,tp,LOCATION_GRAVE,0,nil)
-	local c,rc,att=e:GetHandler(),re:GetHandler(),0
+	local c=e:GetHandler()
+	if not c:IsRitualSummoned() then return false end
 	local mat=c:GetMaterial()
-	if re:IsMonsterEffect() and rp==1-tp and not c:IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)
-		and c:IsRitualSummoned() and mat:GetClassCount(Card.GetAttribute)>1 then
-		for tc in g:Iter() do
-			att=att|tc:GetAttribute()
-		end
-		return rc:GetAttribute()&att>0
-	end
+	if not (mat:GetBinClassCount(Card.GetAttribute)>=2 and Duel.IsChainNegatable(ev) and rp==1-tp and not c:IsStatus(STATUS_BATTLE_DESTROYED)) then return false end
+	local trig_typ,trig_att=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_TYPE,CHAININFO_TRIGGERING_ATTRIBUTE)
+	local g=Duel.GetMatchingGroup(Card.IsMonster,tp,LOCATION_GRAVE,0,nil)
+	return #g>0 and trig_typ&TYPE_MONSTER>0 and g:IsExists(Card.IsAttribute,1,nil,trig_att)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -84,7 +81,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if #g>0 then
-		Duel.SendtoHand(tc,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,tc)
+		Duel.SendtoHand(g,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,g)
 	end
 end

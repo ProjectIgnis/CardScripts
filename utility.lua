@@ -248,6 +248,11 @@ function Card.IsTrapMonster(c)
 	return c:IsTrapCard() and (c:GetOriginalLevel()>0 or c:GetOriginalAttribute()>0 or c:GetOriginalRace()>0)
 end
 
+function Card.GetMainCardType(c)
+	return c:GetType()&(TYPE_MONSTER|TYPE_SPELL|TYPE_TRAP)
+end
+
+
 function Card.IsNonEffectMonster(c)
 	return c:IsMonster() and not c:IsType(TYPE_EFFECT)
 end

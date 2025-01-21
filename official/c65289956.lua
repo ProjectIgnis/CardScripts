@@ -34,15 +34,19 @@ end
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return re and re:IsActivated() and eg:IsExists(s.setconfilter,1,nil)
 end
-function s.setfilter(c)
-	return c:IsSpellTrap() and c:IsSSetable()
+function s.setfilter(c,ft)
+	return c:IsSpellTrap() and c:IsSSetable() and (ft>0 or c:IsFieldSpell())
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_HAND|LOCATION_GRAVE,0,1,nil) end
+	local c=e:GetHandler()
+	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
+	if c:IsLocation(LOCATION_HAND) then ft=ft-1 end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_HAND|LOCATION_GRAVE,0,1,c,ft) end
 end
 function s.setop(e,tp,eg,ep,ev,re,r,rp)
+	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
-	local sc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.setfilter),tp,LOCATION_HAND|LOCATION_GRAVE,0,1,1,nil):GetFirst()
+	local sc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.setfilter),tp,LOCATION_HAND|LOCATION_GRAVE,0,1,1,nil,ft):GetFirst()
 	if sc and Duel.SSet(tp,sc,tp,false)>0 then
 		--It cannot be activated this turn
 		local e1=Effect.CreateEffect(e:GetHandler())

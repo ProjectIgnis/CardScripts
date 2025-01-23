@@ -40,7 +40,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,function(c) return c:IsAttribute(ATTRIBUTE_WATER) end)
 end
-s.listed_names={100441006} --"Ice Doll Mirror"
+s.listed_names={65569724} --"Ice Doll Mirror"
 function s.wateronlycost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0 end
 	--Cannot Special Summon the turn you activate this effect, except WATER monsters
@@ -76,7 +76,7 @@ function s.waterthfilter(c)
 	return c:IsAttribute(ATTRIBUTE_WATER) and c:IsRace(RACE_SPELLCASTER) and c:IsAbleToHand()
 end
 function s.mirrorthfilter(c)
-	return c:IsCode(100441006) and c:IsAbleToHand()
+	return c:IsCode(65569724) and c:IsAbleToHand()
 end
 function s.thtg(thfilter)
 	return function(e,tp,eg,ep,ev,re,r,rp,chk)

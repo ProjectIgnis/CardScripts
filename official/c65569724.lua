@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={100441004} --"Ice Doll"
+s.listed_names={97476032} --"Ice Doll"
 function s.spcostfilter(c,e,tp)
 	return c:IsAttribute(ATTRIBUTE_WATER) and c:IsAbleToGraveAsCost() and Duel.GetMZoneCount(tp,c)>0
 		and (c:IsFaceup() or c:IsLocation(LOCATION_HAND))
@@ -75,7 +75,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.thfilter(c)
-	return c:IsCode(100441004) and c:IsAbleToHand()
+	return c:IsCode(97476032) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,nil) end

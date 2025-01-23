@@ -2,7 +2,7 @@
 --Twin Pillars of Ice
 --Scripted by The Razgriz
 local s,id=GetID()
-local TOKEN_ICE_PILLAR=id+100
+local TOKEN_ICE_PILLAR=id+1
 function s.initial_effect(c)
 	--Special Summon 2 "Ice Pillar Tokens" in Defense Position
 	local e1=Effect.CreateEffect(c)

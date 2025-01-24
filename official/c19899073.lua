@@ -40,7 +40,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_MITSURUGI}
-s.listed_names={id,101207095} --"Mitsurugi Ritual"
+s.listed_names={id,81560239} --"Mitsurugi Ritual"
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(nil,tp,0,LOCATION_MZONE,nil)
 	if chk==0 then return #g>0 end

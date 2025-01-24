@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_MITSURUGI}
-s.listed_names={id,101207095} --"Mitsurugi Ritual"
+s.listed_names={id,81560239} --"Mitsurugi Ritual"
 function s.spfilter(c,e,tp)
 	return c:IsRace(RACE_REPTILE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(id)
 end

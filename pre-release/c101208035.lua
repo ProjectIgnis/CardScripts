@@ -55,8 +55,9 @@ end
 s.miracle_synchro_fusion=true
 s.material_setcode={SET_AZAMINA}
 s.listed_names={65033975,85065943} --"Queen of the Azamina", "St. Azamina"
-function s.selfspcostfilter(c,tp)
-	return (c:IsCode(85065943) or c:IsControler(1-tp)) and c:IsReleasable() and (c:IsControler(tp) or c:IsFaceup())
+function s.selfspcostfilter(c,tp,fc)
+	return ((c:IsCode(85065943) or c:IsSummonCode(fc,MATERIAL_FUSION,tp,85065943)) or c:IsControler(1-tp)) and c:IsReleasable()
+		and c:IsCanBeFusionMaterial(fc,MATERIAL_FUSION) and (c:IsControler(tp) or c:IsFaceup())
 end
 function s.rescon(sg,e,tp,mg)
 	return Duel.GetLocationCountFromEx(tp,tp,sg,e:GetHandler())>0
@@ -65,11 +66,11 @@ end
 function s.selfspcon(e,c)
 	if not c then return true end
 	local tp=c:GetControler()
-	local mg=Duel.GetMatchingGroup(s.selfspcostfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp)
+	local mg=Duel.GetMatchingGroup(s.selfspcostfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp,e:GetHandler())
 	return #mg>=2 and aux.SelectUnselectGroup(mg,e,tp,2,2,s.rescon,0)
 end
 function s.selfsptg(e,tp,eg,ep,ev,re,r,rp,chk,c)
-	local mg=Duel.GetMatchingGroup(s.selfspcostfilter,tp,LOCATION_ONFIELD,LOCATION_MZONE,nil,tp)
+	local mg=Duel.GetMatchingGroup(s.selfspcostfilter,tp,LOCATION_ONFIELD,LOCATION_MZONE,nil,tp,e:GetHandler())
 	local g=aux.SelectUnselectGroup(mg,e,tp,2,2,s.rescon,1,tp,HINTMSG_RELEASE,nil,nil,true)
 	if #g>0 then
 		g:KeepAlive()

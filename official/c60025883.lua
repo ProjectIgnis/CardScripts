@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Link Summon procedure
+	--Link Summon procedure: 2+ monsters, including a Synchro monster
 	Link.AddProcedure(c,nil,2,4,s.lcheck)
 	--Special Summon 1 "Duel Dragon Token"
 	local e1=Effect.CreateEffect(c)
@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_POWER_TOOL}
-s.listed_names={60025884}
+s.listed_names={60025884} --"Duel Dragon Token"
 function s.lcheck(g,lc,sumtype,tp)
 	return g:IsExists(Card.IsType,1,nil,TYPE_SYNCHRO,lc,sumtype,tp)
 end
@@ -46,7 +46,7 @@ function s.tkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.cfilter(c,e,tp,zone)
 	local lv=c:GetLevel()
-	return (c:IsSetCard(SET_POWER_TOOL) or ((c:GetLevel()==7 or c:GetLevel()==8) and c:IsRace(RACE_DRAGON)))
+	return (c:IsSetCard(SET_POWER_TOOL) or (c:IsLevel(7,8) and c:IsRace(RACE_DRAGON)))
 		and c:IsType(TYPE_SYNCHRO) and lv>0 and c:IsAbleToRemoveAsCost()
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,c:GetAttack(),c:GetDefense(),lv,c:GetRace(),c:GetAttribute()) and Duel.GetMZoneCount(tp,nil,tp,LOCATION_REASON_TOFIELD,zone)>0
 end
@@ -72,14 +72,15 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
 	if Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,tc:GetAttack(),tc:GetDefense(),tc:GetLevel(),tc:GetRace(),tc:GetAttribute()) and Duel.GetMZoneCount(tp,nil,tp,LOCATION_REASON_TOFIELD,zone)>0 then
 		local token=Duel.CreateToken(tp,id+1)
+		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP,zone)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_SET_BASE_ATTACK)
+		e1:SetCode(EFFECT_SET_ATTACK)
 		e1:SetValue(tc:GetAttack())
 		e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		token:RegisterEffect(e1)
 		local e2=e1:Clone()
-		e2:SetCode(EFFECT_SET_BASE_DEFENSE)
+		e2:SetCode(EFFECT_SET_DEFENSE)
 		e2:SetValue(tc:GetDefense())
 		token:RegisterEffect(e2)
 		local e3=e1:Clone()
@@ -94,7 +95,7 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 		e5:SetCode(EFFECT_CHANGE_ATTRIBUTE)
 		e5:SetValue(tc:GetAttribute())
 		token:RegisterEffect(e5)
-		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP,zone)
+		Duel.SpecialSummonComplete()
 	end
 end
 function s.tgcon(e)

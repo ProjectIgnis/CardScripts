@@ -36,10 +36,13 @@ function s.initial_effect(c)
 end
 s.named_material={160208002}
 function s.matfilter(c,scard,sumtype,tp)
-	return c:IsAttribute(ATTRIBUTE_WIND,scard,sumtype,tp) and c:IsRace(RACE_WINGEDBEAST,scard,sumtype,tp)
+	return c:IsAttribute(ATTRIBUTE_WIND,scard,sumtype,tp) and c:IsRace(RACE_WINGEDBEAST,scard,sumtype,tp) and not c:IsMaximumModeSide()
+end
+function s.filter(c)
+	return c:IsFaceup() and c:IsAbleToDeckOrExtraAsCost() and not c:IsHasEffect(EFFECT_CANNOT_BE_FUSION_MATERIAL)
 end
 function s.contactfil(tp)
-	return Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsAbleToDeckOrExtraAsCost),tp,LOCATION_ONFIELD,0,nil)
+	return Duel.GetMatchingGroup(s.filter,tp,LOCATION_ONFIELD,0,nil)
 end
 function s.contactop(g,tp)
 	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST+REASON_MATERIAL)

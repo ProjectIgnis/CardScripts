@@ -72,7 +72,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EVENT_CHAINING)
 		e2:SetCountLimit(1)
 		e2:SetCondition(function(e,tp,eg,ep,ev,re,r,rp) return re:GetHandler()==tc end)
-		e2:SetOperation(function(e,tp,eg,ep,ev,re,r,rp) e1:Reset() e:Reset() end)
+		e2:SetOperation(function(e,tp,eg,ep,ev,re,r,rp) if e1 then e1:Reset() end e:Reset() end)
 		Duel.RegisterEffect(e2,tp)
 	end
 end

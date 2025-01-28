@@ -1,5 +1,5 @@
 --叛逆者エト
---Liberator Etho
+--Liberator Eto
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --ＡＲＧ☆Ｓ－栄冠のアドラ
---ARG☆S - Adra the Laurels
+--Argostars - Glorious Adra
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

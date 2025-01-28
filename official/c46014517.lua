@@ -1,5 +1,5 @@
 --百鬼羅刹唯我独尊
---Kick-Ass Goblin Bikers
+--Goblin Bikers Gone Bonkers
 --scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

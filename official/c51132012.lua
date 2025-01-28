@@ -1,5 +1,5 @@
 --大紅蓮魔闘士
---Great Knight of the Red Lotus
+--Grand Knight of the Red Lotus
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

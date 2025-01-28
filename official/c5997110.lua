@@ -46,7 +46,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_DD,SET_DDD}
 function s.tributeconfilter(c,tp)
-	return c:IsSummonType(SUMMON_TYPE_PENDULUM) and c:IsSummonPlayer(tp) and c:IsSetCard(SET_DDD)
+	return c:IsPendulumSummoned() and c:IsSummonPlayer(tp) and c:IsSetCard(SET_DDD)
 end
 function s.tributecon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.tributeconfilter,1,nil,tp)

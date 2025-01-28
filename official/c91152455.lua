@@ -1,5 +1,5 @@
 --メタル化・鋼炎装甲
---Flame Metalmorph
+--Flame Coating Metalmorph
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

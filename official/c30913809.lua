@@ -1,5 +1,5 @@
 --光の波動
---The Wave of Light
+--Light Force
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --表裏の女神
---Goddess of Duality
+--Goddess of the Two Sides
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

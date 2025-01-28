@@ -1,5 +1,5 @@
 --蛇眼の原罪龍
---Snake-Eyes Damned Dragon
+--Snake-Eyes Doomed Dragon
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

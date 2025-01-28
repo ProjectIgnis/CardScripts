@@ -1,5 +1,5 @@
 --天威無窮の境地
---Eternal Perfection of the Tenyi
+--Tenyinfinity
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

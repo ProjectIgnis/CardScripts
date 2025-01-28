@@ -1,5 +1,5 @@
 --Ｅ－ＨＥＲＯ インフェルノ・ウィング－ヘルバック・ファイア
---Evil HERO Inferno Wing - Infernal Backlash
+--Evil HERO Inferno Wing - Backfire
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

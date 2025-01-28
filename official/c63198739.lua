@@ -1,5 +1,5 @@
 --原石竜アナザー・ベリル
---Primite Another Beryl
+--Primite Dragon Ether Beryl
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

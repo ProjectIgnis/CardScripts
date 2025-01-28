@@ -1,5 +1,5 @@
 --Ｔｒｉｃｋ ｏｒ Ｔｒｅａｔ！
---Trick or Treat!
+--Hallo-Ween!
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

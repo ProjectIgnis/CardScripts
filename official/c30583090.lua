@@ -1,5 +1,5 @@
 --Ｅ－ＨＥＲＯ デス・プリズン
---Evil HERO Doom Prison
+--Evil HERO Dead-End Prison
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

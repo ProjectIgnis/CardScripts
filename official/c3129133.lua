@@ -1,5 +1,5 @@
 --誘いのΔ
---Delta of Temptation
+--Delta of Invitation
 --scripted by pyrQ
 local s,id=GetID()
 local TOKEN_DELTA=id+1

@@ -1,5 +1,5 @@
 --水晶機巧－トリスタロス
---Crystron Tristalos
+--Crystron Tristaros
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

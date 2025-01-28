@@ -1,5 +1,5 @@
 --鋼炎の剣士
---Metal Flame Swordsman
+--Metalflame Swordsman
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

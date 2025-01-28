@@ -1,5 +1,5 @@
 --剣闘獣ギステル
---Gladiator Beast Magister
+--Gladiator Beast Gistel
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

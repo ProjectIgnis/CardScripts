@@ -1,5 +1,5 @@
 --聖アザミナ
---St. Azamina
+--Saint Azamina
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -43,7 +43,7 @@ function s.initial_effect(c)
 	e3a:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e3a:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e3a:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e3a:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION) end)
+	e3a:SetCondition(function(e) return e:GetHandler():IsFusionSummoned() end)
 	e3a:SetOperation(function(e) e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1) end)
 	c:RegisterEffect(e3a)
 end

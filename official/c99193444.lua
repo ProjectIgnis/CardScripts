@@ -1,5 +1,5 @@
 --轟海皇 ポセイドラ
---Poseidra, the Rumbling Atlantean
+--Poseidra, the Storming Atlantean
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

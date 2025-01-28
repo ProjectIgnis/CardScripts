@@ -1,5 +1,5 @@
 --ＡＲＧ☆Ｓ－屠龍のエテオ
---ARG☆S - Eteo the Dragon Slayer
+--Argostars - Slayer Eteo
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

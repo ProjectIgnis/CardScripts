@@ -1,5 +1,5 @@
 --マルチャミー・ニャルス
---Mulcharmy Nyalus
+--Mulcharmy Meowls
 local s,id=GetID()
 function s.initial_effect(c)
 	--Apply effects for the rest of the turn

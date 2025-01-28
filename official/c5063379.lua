@@ -1,5 +1,5 @@
 --剣闘獣の闘技場－フラヴィス
---Flavius - Arena of the Gladiator Beasts
+--Flavian - Colosseum of the Gladiator Beasts
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -53,7 +53,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_GLADIATOR_BEAST,SET_GLADIATOR}
 function s.setconfilter(c)
-	return c:IsSetCard(SET_GLADIATOR_BEAST) and c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:IsSummonLocation(LOCATION_DECK) and c:IsFaceup()
+	return c:IsSetCard(SET_GLADIATOR_BEAST) and c:IsSpecialSummoned() and c:IsSummonLocation(LOCATION_DECK) and c:IsFaceup()
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=eg:Filter(s.setconfilter,nil)

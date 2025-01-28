@@ -1,5 +1,5 @@
 --六武式真伝天魔六段衝
---Six Strike - Legendary Lord's Sextuple Impact
+--Six Strike - Sextuple Barrage
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

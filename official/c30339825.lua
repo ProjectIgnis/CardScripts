@@ -1,5 +1,5 @@
 --万物の始源－「水」
---He Arkho - "Hudor"
+--Hydor, the Base of All Things
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

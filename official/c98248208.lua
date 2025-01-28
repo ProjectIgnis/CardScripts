@@ -1,5 +1,5 @@
 --暗黒海龍－ドライアグル
---Dark Sea Serpent - Dryagle
+--Driangle, Dragon of the Dark Deep
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

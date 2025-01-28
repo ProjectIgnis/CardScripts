@@ -1,5 +1,5 @@
 --光なき影 ア＝バオ・ア・クゥー
---A-Bao A Qu, the Lightless Shadow
+--A Bao A Qu, the Lightless Shadow
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

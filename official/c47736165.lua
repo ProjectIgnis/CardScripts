@@ -1,5 +1,5 @@
 --水晶機巧－エレスケルタス
---Crystron Eleskeletas
+--Crystron Eleskeletus
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e3:SetCountLimit(1,id)
-	e3:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) end)
+	e3:SetCondition(function(e) return e:GetHandler():IsSynchroSummoned() end)
 	e3:SetTarget(s.thtg)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
@@ -61,7 +61,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_SYNCHRO) and c:IsReason(REASON_BATTLE|REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE)
+	return c:IsSynchroSummoned() and c:IsReason(REASON_BATTLE|REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_CRYSTRON) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

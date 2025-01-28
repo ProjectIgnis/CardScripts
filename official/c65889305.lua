@@ -1,5 +1,5 @@
 --ＡＲＧ☆Ｓ－紫電のテュデル
---ARG☆S - Tydel the Purple Lightning
+--Argostars - Lightning Tydeu
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

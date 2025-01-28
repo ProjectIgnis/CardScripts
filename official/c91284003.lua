@@ -1,5 +1,5 @@
 --ＡＲＧ☆Ｓ－飛燕のカパネ
---ARG☆S - Capane the Flying Swallow
+--Argostars - Swift Capane
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

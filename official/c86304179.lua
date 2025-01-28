@@ -1,5 +1,5 @@
 --運否の天賦羅－ＥＢＩ
---Tempura of Chance - EBI
+--Tempura of Fortune - EBI
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

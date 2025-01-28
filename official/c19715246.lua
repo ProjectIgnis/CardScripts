@@ -4,7 +4,6 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableUnsummonable()
-	--Must be Special Summoned by a card effect
 	c:AddMustBeSpecialSummonedByCardEffect()
 	--Special Summon this card from your hand, then take 1 "Cyber Dragon" from your Deck, and either Special Summon it or equip it to this card
 	local e1=Effect.CreateEffect(c)

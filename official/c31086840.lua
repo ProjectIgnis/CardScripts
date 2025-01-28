@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.xyz_number=69
-s.listed_series={2407234,101208046} --"Number 69: Heraldry Crest", "Number 69: Heraldry Crest - Dark Matter Demolition"
+s.listed_series={2407234,77571454} --"Number 69: Heraldry Crest", "Number 69: Heraldry Crest - Dark Matter Demolition"
 function s.ovfilter(c,tp,xyzc)
 	return c:IsFaceup() and c:IsOriginalCodeRule(2407234)
 end
@@ -33,7 +33,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return ttype&TYPE_MONSTER>0 and tloc&LOCATION_ONFIELD>0 and tplayer==1-tp
 end
 function s.xyzfilter(c,e,tp,mc)
-	return c:IsCode(101208046) and mc:IsCanBeXyzMaterial(c,tp,REASON_EFFECT)
+	return c:IsCode(77571454) and mc:IsCanBeXyzMaterial(c,tp,REASON_EFFECT)
 		and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

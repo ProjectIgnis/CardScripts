@@ -28,12 +28,12 @@ function s.initial_effect(c)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
 end
-s.listed_names={101208055,101208071,CARD_ANCIENT_FAIRY_DRAGON} --"The World of Spirits", "Eternal Sunshine"
+s.listed_names={5414777,28903523,CARD_ANCIENT_FAIRY_DRAGON} --"The World of Spirits", "Eternal Sunshine"
 function s.thfilter(c)
-	return ((c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_BEAST|RACE_PLANT|RACE_FAIRY)) or c:IsCode(101208071)) and c:IsAbleToHand()
+	return ((c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_BEAST|RACE_PLANT|RACE_FAIRY)) or c:IsCode(28903523)) and c:IsAbleToHand()
 end
 function s.drthtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local world_of_spirits_chk=Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,101208055),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
+	local world_of_spirits_chk=Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,5414777),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 	local b1=not world_of_spirits_chk and Duel.IsPlayerCanDraw(tp,1)
 	local b2=world_of_spirits_chk and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil)
 	if chk==0 then return b1 or b2 end
@@ -46,7 +46,7 @@ function s.drthtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.drthop(e,tp,eg,ep,ev,re,r,rp)
-	local world_of_spirits_chk=Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,101208055),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
+	local world_of_spirits_chk=Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,5414777),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 	if not world_of_spirits_chk then
 		Duel.Draw(tp,1,REASON_EFFECT)
 	else

@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_DRAGON_RULER}
-s.listed_names={id,101208047} --"Chasmatis, Dragon Ruler of Auroras"
+s.listed_names={id,4965193} --"Chasmatis, Dragon Ruler of Auroras"
 function s.thcostfilter(c)
 	return (c:IsAttribute(ATTRIBUTE_LIGHT) or c:IsRace(RACE_DRAGON)) and c:IsDiscardable()
 end
@@ -60,7 +60,7 @@ function s.spcostfilter(c,e,tp)
 		and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE,0,1,c,e,tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsCode(101208047) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsCode(4965193) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

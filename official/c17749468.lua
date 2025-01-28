@@ -4,10 +4,10 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Fusion Materials: 1 "Queen of the Azamina" + 1 Fusion or Synchro Monster
+	--Fusion Materials: 1 "Queen Azamina" + 1 Fusion or Synchro Monster
 	Fusion.AddProcMix(c,true,true,65033975,aux.FilterBoolFunctionEx(Card.IsType,TYPE_FUSION|TYPE_SYNCHRO))
 	c:AddMustFirstBeFusionSummoned()
-	--Special Summon this card (from your Extra Deck) by Tributing 1 "St. Azamina" you control and 1 face-up monster your opponent controls
+	--Special Summon this card (from your Extra Deck) by Tributing 1 "Saint Azamina" you control and 1 face-up monster your opponent controls
 	local e0=Effect.CreateEffect(c)
 	e0:SetDescription(aux.Stringid(id,0))
 	e0:SetType(EFFECT_TYPE_FIELD)
@@ -54,7 +54,7 @@ function s.initial_effect(c)
 end
 s.miracle_synchro_fusion=true
 s.material_setcode={SET_AZAMINA}
-s.listed_names={65033975,85065943} --"Queen of the Azamina", "St. Azamina"
+s.listed_names={65033975,85065943} --"Queen Azamina", "Saint Azamina"
 function s.selfspcostfilter(c,tp,fc)
 	return ((c:IsCode(85065943) or c:IsSummonCode(fc,MATERIAL_FUSION,tp,85065943)) or c:IsControler(1-tp)) and c:IsReleasable()
 		and c:IsCanBeFusionMaterial(fc,MATERIAL_FUSION) and (c:IsControler(tp) or c:IsFaceup())

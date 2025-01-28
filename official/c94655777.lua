@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_DRAGON_RULER}
-s.listed_names={id,101208048} --"Eclepsis, Dragon Ruler of Woes"
+s.listed_names={id,30350202} --"Eclepsis, Dragon Ruler of Woes"
 function s.rmcostfilter(c)
 	return (c:IsAttribute(ATTRIBUTE_DARK) or c:IsRace(RACE_DRAGON)) and c:IsDiscardable()
 end
@@ -85,7 +85,7 @@ function s.gyspcostfilter(c,e,tp)
 		and Duel.IsExistingTarget(s.gyspfilter,tp,LOCATION_GRAVE,0,1,c,e,tp)
 end
 function s.gyspfilter(c,e,tp)
-	return c:IsCode(101208048) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsCode(30350202) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.gyspcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

@@ -1000,12 +1000,12 @@ end
 Card.RegisterEffect=(function()
 	local oldf=Card.RegisterEffect
 	local function map_to_effect_code(val)
-		if val==1 then return 511002571	end -- access to effects that activate that detach an Xyz Material as cost
+		if val==1 then return 511002571 end -- access to effects that activate that detach an Xyz Material as cost
 		if val==2 then return 511001692 end -- access to Cardian Summoning conditions/effects
 		if val==4 then return  12081875 end -- access to Thunder Dragon effects that activate by discarding
-		if val==8 then return 511310036	end -- access to Allure Queen effects that activate by sending themselves to GY
+		if val==8 then return 511310036 end -- access to Allure Queen effects that activate by sending themselves to GY
 		if val==16 then return 58858807 end -- access to tellarknights/constellar effects that activate when Normal Summoned
-		if val==32 then return 101208047 end -- access to Dragon Ruler effects that activate by discarding
+		if val==32 then return 4965193 end -- access to Dragon Ruler effects that activate by discarding
 		return nil
 	end
 	return function(c,e,forced,...)

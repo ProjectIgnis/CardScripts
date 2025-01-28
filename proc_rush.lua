@@ -52,7 +52,7 @@ if Duel.IsDuelType(DUEL_INVERTED_QUICK_PRIORITY) then
 	end)()
 end
 function Card.IsCanChangePositionRush(c)
-	return c:IsCanChangePosition() and not c:IsMaximumMode()
+	return c:IsCanChangePosition() and not c:IsMaximumMode() and not c:IsHasEffect(EFFECT_CANNOT_CHANGE_POS_E)
 end
 
 --Add function to simplify some effect

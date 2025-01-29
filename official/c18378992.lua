@@ -33,7 +33,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		if e:GetLabel()~=100 then return false end
+		if e:GetLabel()~=100 then e:SetLabel(0) return false end
 		local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_GRAVE|LOCATION_MZONE,0,nil,tp)
 		return #g>=2 and aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0)
 	end

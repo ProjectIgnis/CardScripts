@@ -1,40 +1,38 @@
+--ヘル・ガントレット
 --Infernal Gauntlet
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c)
-	--Double attack
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_QUICK_O)
-	e3:SetCode(EVENT_FREE_CHAIN)
-	e3:SetRange(LOCATION_SZONE)
-	e3:SetCondition(s.dacon)
-	e3:SetCost(s.dacost)
-	e3:SetOperation(s.daop)
-	c:RegisterEffect(e3)
+	--Grant the equipped monster an additional attack (on monsters)
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetType(EFFECT_TYPE_QUICK_O)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetRange(LOCATION_SZONE)
+	e1:SetCondition(function(e,tp) return Duel.IsTurnPlayer(tp) and Duel.IsBattlePhase() and not Duel.IsPhase(PHASE_BATTLE) and Duel.GetCurrentChain()==0 end)
+	e1:SetCost(s.exatkcost)
+	e1:SetOperation(s.exatkop)
+	c:RegisterEffect(e1)
 end
-function s.dacon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE
-end
-function s.dacost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local eq=e:GetHandler():GetEquipTarget()
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,nil,1,false,nil,eq) end
-	local g=Duel.SelectReleaseGroupCost(tp,nil,1,1,false,nil,eq)
+function s.exatkcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local eqc=e:GetHandler():GetEquipTarget()
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,nil,1,false,nil,eqc) end
+	local g=Duel.SelectReleaseGroupCost(tp,nil,1,1,false,nil,eqc)
 	Duel.Release(g,REASON_COST)
 end
-function s.daop(e,tp,eg,ep,ev,re,r,rp)
+function s.exatkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local eq=c:GetEquipTarget()
-	if eq and eq:IsFaceup() then
-		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_EQUIP)
-		e2:SetCode(EFFECT_EXTRA_ATTACK)
-		e2:SetValue(1)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		c:RegisterEffect(e2)
-		local e4=Effect.CreateEffect(c)
-		e4:SetType(EFFECT_TYPE_EQUIP)
-		e4:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
-		e4:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		c:RegisterEffect(e4)
+	local eqc=c:GetEquipTarget()
+	if eqc then
+		local atk_announce_ct=eqc:GetAttackAnnouncedCount()
+		local extra_atk_ct=atk_announce_ct==0 and 1 or atk_announce_ct
+		--The equipped monster gains an additional attack in addition to its normal attack, but if it attacks using this effect, it cannot attack your opponent directly
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetCode(EFFECT_EXTRA_ATTACK_MONSTER)
+		e1:SetValue(extra_atk_ct)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
+		eqc:RegisterEffect(e1)
 	end
 end

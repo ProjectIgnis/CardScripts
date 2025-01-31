@@ -4,9 +4,9 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Pendulum procedure
+	--Pendulum Summon procedure
 	Pendulum.AddProcedure(c,false)
-	--Synchro Summon procedure
+	--Synchro Summon procedure: 1 Tuner + 1+ non-Tuner DARK Pendulum Monsters
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTunerEx(s.matfilter),1,99)
 	--Special Summon this card from the Pendulum Zone
 	local e1=Effect.CreateEffect(c)
@@ -73,9 +73,6 @@ function s.selfspop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
-end
-function s.spfilter(c,e,tp)
-	return c:IsSetCard(SET_SUPREME_KING_DRAGON) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local bc=e:GetHandler():GetBattleTarget()

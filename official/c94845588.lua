@@ -28,29 +28,34 @@ s.listed_series={SET_AZAMINA,SET_SINFUL_SPOILS}
 function s.sinfilter(c)
 	return c:IsSetCard(SET_SINFUL_SPOILS) and c:IsAbleToGrave()
 end
-function s.spfilter(c,e,tp,lv)
+function s.spfilter(c,e,tp,lv,g)
 	return c:IsSetCard(SET_AZAMINA) and c:IsType(TYPE_FUSION) and c:IsLevelAbove(4) and c:IsLevelBelow(lv) and not c:IsPublic()
-		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:CheckFusionMaterial()
+		and Duel.GetLocationCountFromEx(tp,tp,g,c)>0 and c:CheckFusionMaterial()
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) 
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		local ct=Duel.GetMatchingGroupCount(s.sinfilter,tp,LOCATION_ONFIELD|LOCATION_HAND,0,nil)
-		return ct>0 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,ct*4+3)
+		local g=Duel.GetMatchingGroup(s.sinfilter,tp,LOCATION_ONFIELD|LOCATION_HAND,0,nil)
+		local ct=#g
+		return ct>0 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,ct*4+3,g)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_ONFIELD|LOCATION_HAND)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
+end
+function s.rescon(fusc)
+	return function(sg,e,tp,mg)
+		return Duel.GetLocationCountFromEx(tp,tp,sg,fusc)>0
+	end
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.GetMatchingGroup(s.sinfilter,tp,LOCATION_ONFIELD|LOCATION_HAND,0,nil)
 	if #sg<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local tc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,#sg*4+3):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,#sg*4+3,sg):GetFirst()
 	if not tc then return end
 	Duel.ConfirmCards(1-tp,tc)
 	local ct=tc:GetLevel()//4
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local ssg=sg:Select(tp,ct,ct,nil)
+	local ssg=aux.SelectUnselectGroup(sg,e,tp,ct,ct,s.rescon(tc),1,tp,HINTMSG_TOGRAVE)
 	if #ssg==0 then return end
 	local fdg=ssg:Filter(aux.AND(Card.IsFacedown,Card.IsOnField),nil)
 	if #fdg>0 then

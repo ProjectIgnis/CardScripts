@@ -4,9 +4,9 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Link Summon procedure
+	--Link Summon procedure: 2+ Effect Monsters
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_EFFECT),2)
-	--Cannot Special Summon, except FIRE monsters
+	--You cannot Special Summon, except FIRE monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -72,7 +72,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,tp,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local tg=Duel.GetTargetCards(e)
+	local tg=Duel.GetTargetCards(e):Match(Card.IsMonster,nil)
 	if #tg==0 or Duel.Destroy(tg,REASON_EFFECT)==0 then return end
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then

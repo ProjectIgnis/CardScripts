@@ -1,74 +1,69 @@
---RUM－七皇の剣 (Anime)
+--ＲＵＭ－七皇の剣 (Anime)
 --Rank-Up-Magic - The Seventh One (Anime)
 Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x48}
-function s.filter1(c,e,tp)
-	local m = c:GetMetatable(true)
-	if not m then return false end
-	local no, rk=tonumber(m.xyz_number), c:GetRank()
-	if not no or no < 101 or no > 107 or not c:IsSetCard(0x48) or rk <= 0 then return false end
-	return (c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsCanBeEffectTarget(e))
-		or (c:IsLocation(LOCATION_GRAVE|LOCATION_EXTRA) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
-		and ((c:IsLocation(LOCATION_GRAVE) and Duel.GetLocationCount(tp,LOCATION_MZONE) > 0)
-		or (c:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp,nil,c) > 0)))
-end
-function s.filter2(c,e,tp,mc,rk)
-	return c:IsC() and mc:IsCanBeXyzMaterial(c) and c:IsRank(rk)
-		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,mc,c) > 0
+s.listed_series={SET_NUMBER}
+function s.tgfilter(c,e,tp,mmzone_chk)
+	local no=c.xyz_number
+	if not (no and no>=101 and no<=107 and c:IsSetCard(SET_NUMBER) and c:IsType(TYPE_XYZ)) then return false end
+	if c:IsLocation(LOCATION_MZONE) then
+		return c:IsFaceup() and c:IsCanBeEffectTarget(e)
+	elseif c:IsLocation(LOCATION_GRAVE) then
+		return mmzone_chk>0 and c:IsCanBeEffectTarget(e) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	elseif c:IsLocation(LOCATION_EXTRA) then
+		return Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE|LOCATION_GRAVE|LOCATION_EXTRA) and s.filter1(chkc,e,tp) end
-	if chk == 0 then return Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_MZONE|LOCATION_GRAVE|LOCATION_EXTRA,0,1,nil,e,tp) end
+	local mmzone_chk=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE|LOCATION_GRAVE|LOCATION_EXTRA) and s.tgfilter(chkc,e,tp,mmzone_chk) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_MZONE|LOCATION_GRAVE|LOCATION_EXTRA,0,1,nil,e,tp,mmzone_chk) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local tc = Duel.SelectMatchingCard(tp,s.filter1,tp,LOCATION_MZONE|LOCATION_GRAVE|LOCATION_EXTRA,0,1,1,nil,e,tp):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_MZONE|LOCATION_GRAVE|LOCATION_EXTRA,0,1,1,nil,e,tp,mmzone_chk):GetFirst()
 	Duel.SetTargetCard(tc)
-	if not tc:IsLocation(LOCATION_MZONE) then
-		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,e:GetHandler():GetLocation())
-	end
+	local target_not_in_mzone=not tc:IsLocation(LOCATION_MZONE)
+	local g=target_not_in_mzone and tc or nil
+	local ct=target_not_in_mzone and 2 or 1
+	local loc=target_not_in_mzone and tc:GetLocation()|LOCATION_EXTRA or LOCATION_EXTRA
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,ct,tp,LOCATION_EXTRA)
+end
+function s.exspfilter(c,e,tp,mc,rk)
+	return c:IsC() and mc:IsCanBeXyzMaterial(c) and c:IsRank(rk) and c:IsType(TYPE_XYZ) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
+		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if not tc then return end
-	if tc and tc:IsRelateToEffect(e) and tc:IsLocation(LOCATION_GRAVE|LOCATION_EXTRA) then
-		if (tc:IsLocation(LOCATION_GRAVE) and Duel.GetLocationCount(tp,LOCATION_MZONE) > 0 and not tc:IsHasEffect(EFFECT_NECRO_VALLEY))
-			or (tc:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp,nil,tc) > 0)then
-			if Duel.SpecialSummonStep(tc,0,tp,tp,true,false,POS_FACEUP) then
-				local e1=Effect.CreateEffect(e:GetHandler())
-				e1:SetType(EFFECT_TYPE_SINGLE)
-				e1:SetCode(EFFECT_DISABLE)
-				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-				tc:RegisterEffect(e1)
-				local e2=Effect.CreateEffect(e:GetHandler())
-				e2:SetType(EFFECT_TYPE_SINGLE)
-				e2:SetCode(EFFECT_DISABLE_EFFECT)
-				e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-				tc:RegisterEffect(e2)
-				Duel.SpecialSummonComplete()
-			end
-		end
-		if not Duel.IsPlayerCanSpecialSummonCount(tp,2) then return end
+	if not tc:IsRelateToEffect(e) then return end
+	if tc:IsLocation(LOCATION_MZONE) and (tc:IsFacedown() or tc:IsControler(1-tp)) then return end
+	if tc:IsLocation(LOCATION_GRAVE|LOCATION_EXTRA) and Duel.SpecialSummonStep(tc,0,tp,tp,true,false,POS_FACEUP) then
+		--Negate its effects
+		tc:NegateEffects(e:GetHandler())
+		if Duel.SpecialSummonComplete()==0 then return end
 	end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local sg=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_EXTRA,0,tc,e,tp,tc,tc:GetRank()+1)
-	if #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(58988903,0)) then
-		local sc=sg:Select(tp,1,1,nil):GetFirst()
-		if tc:IsLocation(LOCATION_MZONE) then
-			Duel.Overlay(sc,tc)
-		end
+	local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(tc),tp,nil,nil,REASON_XYZ)
+	if #pg>1 or (#pg==1 and not pg:IsContains(tc)) then return end
+	local g=Duel.GetMatchingGroup(s.exspfilter,tp,LOCATION_EXTRA,0,nil,e,tp,tc,tc:GetRank()+1)
+	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		local sc=g:Select(tp,1,1,nil):GetFirst()
+		if not sc then return end
+		Duel.BreakEffect()
 		sc:SetMaterial(tc)
-		Duel.SpecialSummon(sc,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP)
-		sc:CompleteProcedure()
+		Duel.Overlay(sc,tc)
+		if Duel.SpecialSummon(sc,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP)>0 then
+			sc:CompleteProcedure()
+		end
 	end
 end

@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	--Destroy this card during the End Phase
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
+	e3:SetCategory(CATEGORY_DESTROY)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e3:SetCode(EVENT_PHASE+PHASE_END)
 	e3:SetRange(LOCATION_MZONE)
@@ -74,7 +75,7 @@ function s.selfdestg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.selfdesop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and c:IsFaceup() then
+	if c:IsRelateToEffect(e) then
 		Duel.Destroy(c,REASON_EFFECT)
 	end
 end

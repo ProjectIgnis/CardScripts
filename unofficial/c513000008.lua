@@ -21,7 +21,7 @@ function s.tgfilter(c,e,tp,mmzone_chk)
 	if c:IsLocation(LOCATION_MZONE) then
 		return c:IsFaceup() and c:IsCanBeEffectTarget(e)
 	elseif c:IsLocation(LOCATION_GRAVE) then
-		return mmzone_chk>0 and c:IsCanBeEffectTarget(e) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+		return mmzone_chk and c:IsCanBeEffectTarget(e) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 	elseif c:IsLocation(LOCATION_EXTRA) then
 		return Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 	end

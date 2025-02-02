@@ -9,6 +9,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
+	e1:SetCost(s.effcost)
 	e1:SetTarget(s.efftg)
 	e1:SetOperation(s.effop)
 	c:RegisterEffect(e1)
@@ -20,7 +21,8 @@ end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard({SET_MAGISTUS,SET_WITCHCRAFTER}) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.effcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	e:SetLabel(-100)
 	local b1=not Duel.HasFlagEffect(tp,id)
 		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,{SET_MAGISTUS,SET_WITCHCRAFTER}),tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil)
@@ -29,17 +31,29 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,nil,e,tp)
 		and event_chaining and event_player==1-tp
 	if chk==0 then return b1 or b2 end
+end
+function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local cost_skip=e:GetLabel()~=-100
+	local b1=(cost_skip or (not Duel.HasFlagEffect(tp,id)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,{SET_MAGISTUS,SET_WITCHCRAFTER}),tp,LOCATION_MZONE,0,1,nil)))
+		and Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil)
+	local event_chaining,_,event_player=Duel.CheckEvent(EVENT_CHAINING,true)
+	local b2=(cost_skip or not Duel.HasFlagEffect(tp,id+1))
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,nil,e,tp)
+		and event_chaining and event_player==1-tp
+	if chk==0 then e:SetLabel(0) return b1 or b2 end
 	local op=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,1)},
 		{b2,aux.Stringid(id,2)})
 	e:SetLabel(op)
 	if op==1 then
 		e:SetCategory(CATEGORY_TOGRAVE)
-		Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
+		if not cost_skip then Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1) end
 		Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 	elseif op==2 then
 		e:SetCategory(CATEGORY_SPECIAL_SUMMON)
-		Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_END,0,1)
+		if not cost_skip then Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_END,0,1) end
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_DECK)
 	end
 end

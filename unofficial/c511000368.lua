@@ -72,7 +72,7 @@ function s.initial_effect(c)
 	e7:SetRange(LOCATION_MZONE)
 	e7:SetCode(EFFECT_UPDATE_ATTACK)
 	e7:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL+1) end)
-	e7:SetValue(function(e,c) return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_REMOVED,LOCATION_REMOVED)*1000)
+	e7:SetValue(function(e,c) return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_REMOVED,LOCATION_REMOVED)*1000 end)
 	c:RegisterEffect(e7)
 end
 s.xyz_number=92

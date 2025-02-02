@@ -38,10 +38,10 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,{SET_MAGISTUS,SET_WITCHCRAFTER}),tp,LOCATION_MZONE,0,1,nil)))
 		and Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil)
 	local event_chaining,_,event_player=Duel.CheckEvent(EVENT_CHAINING,true)
-	local b2=(cost_skip or not Duel.HasFlagEffect(tp,id+1))
+	local b2=(cost_skip or (not Duel.HasFlagEffect(tp,id+1)
+		and event_chaining and event_player==1-tp))
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,nil,e,tp)
-		and event_chaining and event_player==1-tp
 	if chk==0 then e:SetLabel(0) return b1 or b2 end
 	local op=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,1)},

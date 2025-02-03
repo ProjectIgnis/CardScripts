@@ -29,10 +29,20 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
-	e3:SetCondition(function(e,tp) return Duel.GetTurnPlayer()~=tp end)
 	e3:SetTarget(s.rmtg)
 	e3:SetOperation(s.rmop)
 	c:RegisterEffect(e3)
+	--Register cards placed on your opponent's the field
+    	aux.GlobalCheck(s,function()
+        	local ge1=Effect.CreateEffect(c)
+        	ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+        	ge1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_CANNOT_DISABLE)
+        	ge1:SetCode(EVENT_MOVE)
+        	ge1:SetRange(LOCATION_MZONE)
+        	ge1:SetCondition(s.chkcon)
+        	ge1:SetOperation(s.chkop)
+        	Duel.RegisterEffect(ge1,0)
+    	end)
 	--Battle damage from battles involving this card becomes 0
     	local e4=Effect.CreateEffect(c)
     	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
@@ -97,16 +107,28 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
         	end
     	end
 end
+function s.chkfilter(c,tp)
+    	return c:IsControler(tp) and c:IsLocation(LOCATION_ONFIELD)
+end
+function s.chkcon(e,tp,eg,ep,ev,re,r,rp)
+    	return e:GetHandler():IsSpecialSummoned() and eg:IsExists(s.chkfilter,1,nil,1-tp)
+end
+function s.chkop(e,tp,eg,ep,ev,re,r,rp)
+    	local g=eg:Filter(s.chkfilter,nil,1-tp)
+    	for tc in g:Iter() do
+        	tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD&~RESET_TOFIELD,0,1)
+    	end
+end
 function s.rmfilter(c,turn)
-    	return c:IsAbleToRemove() and c:GetTurnID()~=turn
+    	return c:IsAbleToRemove() and c:HasFlagEffect(id,1)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
-    	if chk==0 then return Duel.IsExistingMatchingCard(s.rmfilter,tp,0,LOCATION_ONFIELD,1,nil,Duel.GetTurnCount()) end
-    	local g=Duel.GetMatchingGroup(s.rmfilter,tp,0,LOCATION_ONFIELD,nil,Duel.GetTurnCount())
+    	if chk==0 then return Duel.IsExistingMatchingCard(s.rmfilter,tp,0,LOCATION_ONFIELD,1,nil) end
+    	local g=Duel.GetMatchingGroup(s.rmfilter,tp,0,LOCATION_ONFIELD,nil)
     	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,0,0)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
-    	local g=Duel.GetMatchingGroup(s.rmfilter,tp,0,LOCATION_ONFIELD,nil,Duel.GetTurnCount())
+    	local g=Duel.GetMatchingGroup(s.rmfilter,tp,0,LOCATION_ONFIELD,nil)
     	if #g>0 then
         	Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
     	end

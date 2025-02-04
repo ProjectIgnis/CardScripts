@@ -8,13 +8,10 @@ end
 s.listed_names={83965310} --"Destiny HERO - Plasma"
 function s.flipcon(e)
 	local tp=e:GetHandlerPlayer()
-	return aux.CanActivateSkill(tp) and not Duel.HasFlagEffect(tp,id)
-		and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+	return aux.CanActivateSkill(tp) and not Duel.HasFlagEffect(tp,id) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	-- Duel.Hint(HINT_SKILL_FLIP,tp,id|1<<32)
-	-- Duel.Hint(HINT_CARD,tp,id)
 	Duel.MoveToField(c,tp,tp,LOCATION_SZONE,POS_FACEDOWN,true)
 	Duel.Hint(HINT_SKILL_REMOVE,tp,c:GetOriginalCode())
 	Duel.RegisterFlagEffect(tp,id,0,0,0)

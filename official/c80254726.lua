@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_BLACKWING}
-s.listed_names={9012916}
+s.listed_names={CARD_BLACK_WINGED_DRAGON}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local p,loct=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_PLAYER,CHAININFO_TRIGGERING_LOCATION)
 	return loct==LOCATION_MZONE and re:IsMonsterEffect() and p~=tp and Duel.IsChainNegatable(ev)
@@ -44,7 +44,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.spfilter(c,e,tp)
-	return c:IsCode(9012916) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsCode(CARD_BLACK_WINGED_DRAGON) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.NegateActivation(ev) then return end
@@ -59,7 +59,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c)
-	return c:IsFaceup() and (c:IsCode(9012916) or (c:IsSetCard(SET_BLACKWING) and c:IsType(TYPE_SYNCHRO)))
+	return c:IsFaceup() and (c:IsCode(CARD_BLACK_WINGED_DRAGON) or (c:IsSetCard(SET_BLACKWING) and c:IsType(TYPE_SYNCHRO)))
 end
 function s.handcon(e)
 	return Duel.IsExistingMatchingCard(s.filter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)

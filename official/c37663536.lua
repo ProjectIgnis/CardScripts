@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e1:SetCondition(s.condition)
+	e1:SetCondition(function(e) return e:GetHandler():IsFusionSummoned() end)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
@@ -44,10 +44,7 @@ end
 s.listed_series={SET_ANCIENT_GEAR}
 s.listed_names={12652643,95735217,CARD_ANCIENT_GEAR_GOLEM} --Ultimate Ancient Gear Golem, Ancient Gear Golem - Ultimate Pound
 function s.valcheck(e,c)
-	e:GetLabelObject():SetLabel(c:GetMaterial():FilterCount(Card.IsCode,nil,83104731,95735217))
-end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
+	e:GetLabelObject():SetLabel(c:GetMaterial():FilterCount(Card.IsCode,nil,CARD_ANCIENT_GEAR_GOLEM,95735217))
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -1,6 +1,7 @@
 --闇の守護神－ダーク・ガーディアン
 --Dark Guardian
 --scripted by pyrQ
+local CARD_DARK_ELEMENT=53194323
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -46,15 +47,15 @@ function s.initial_effect(c)
 	e4:SetValue(s.immvalue)
 	c:RegisterEffect(e4)
 end
-s.listed_names={25955164,62340868,98434877,53194323}
+s.listed_names={CARD_SANGA_OF_THE_THUNDER,CARD_KAZEJIN,CARD_SUIJIN,CARD_DARK_ELEMENT}
 function s.tdfilter(c)
 	return c:IsCode(CARDS_SANGA_KAZEJIN_SUIJIN) and c:IsAbleToDeckAsCost() and (c:IsFaceup() or c:IsLocation(LOCATION_HAND|LOCATION_GRAVE))
 end
 function s.rescon(sg,e,tp,mg)
 	return Duel.GetMZoneCount(tp,sg)>0
-		and sg:IsExists(Card.IsCode,1,nil,25955164)
-		and sg:IsExists(Card.IsCode,1,nil,62340868)
-		and sg:IsExists(Card.IsCode,1,nil,98434877)
+		and sg:IsExists(Card.IsCode,1,nil,CARD_SANGA_OF_THE_THUNDER)
+		and sg:IsExists(Card.IsCode,1,nil,CARD_KAZEJIN)
+		and sg:IsExists(Card.IsCode,1,nil,CARD_SUIJIN)
 end
 function s.spproccon(e,c)
 	if c==nil then return true end
@@ -80,7 +81,7 @@ function s.spprocop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	if re:GetHandler():IsCode(53194323) then
+	if re:GetHandler():IsCode(CARD_DARK_ELEMENT) then
 		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD&~RESET_TEMP_REMOVE,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,1))
 	end
 end

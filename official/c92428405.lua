@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={13331639} --Supreme King Z-ARC
+s.listed_names={CARD_ZARC} --Supreme King Z-ARC
 s.listed_series={SET_PENDULUM_DRAGON,SET_XYZ_DRAGON,SET_SYNCHRO_DRAGON,SET_FUSION_DRAGON}
 local LOCATION_HDEG=LOCATION_HAND|LOCATION_DECK|LOCATION_EXTRA|LOCATION_GRAVE
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -35,7 +35,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,math.floor(Duel.GetLP(tp)/2))
 end
 function s.filter(c,e,tp)
-	return c:IsCode(13331639) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
+	return c:IsCode(CARD_ZARC) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
@@ -90,7 +90,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and re:IsSpellEffect()
 end
 function s.spcfilter(c,e,tp)
-	return c:IsFaceup() and c:IsCode(13331639) and c:IsAbleToRemoveAsCost()
+	return c:IsFaceup() and c:IsCode(CARD_ZARC) and c:IsAbleToRemoveAsCost()
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HDEG,0,1,nil,e,tp,c)
 end
 function s.spfilter(c,e,tp,rmc)

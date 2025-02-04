@@ -33,9 +33,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.daop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={78193831} --Buster Blade
+s.listed_names={CARD_BUSTER_BLADER}
 function s.filter(c)
-	return c:IsFaceup() and c:IsCode(78193831)
+	return c:IsFaceup() and c:IsCode(CARD_BUSTER_BLADER)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end

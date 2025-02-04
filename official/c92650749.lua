@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_YUBEL}
-s.listed_names={CARD_YUBEL,48130397} --Super Polymerization
+s.listed_names={CARD_YUBEL,CARD_SUPER_POLYMERIZATION}
 s.counter_place_list={0x25}
 function s.yubelfilter(c)
 	return c:IsFaceup() and (c:IsSetCard(SET_YUBEL) or c:ListsCode(CARD_YUBEL))
@@ -62,7 +62,7 @@ function s.spfilter(c,e,tp)
 	return c:IsCode(CARD_YUBEL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.superpolyfilter(c)
-	return c:IsCode(48130397) and c:IsAbleToHand()
+	return c:IsCode(CARD_SUPER_POLYMERIZATION) and c:IsAbleToHand()
 end
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	--Special Summon 1 "Yubel" from your GY

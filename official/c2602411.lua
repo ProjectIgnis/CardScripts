@@ -29,15 +29,15 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_SZONE)
-	e3:SetCost(s.thcost)
+	e3:SetCost(aux.SelfToGraveCost)
 	e3:SetTarget(s.thtg)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_DESTRUCTION_SWORD}
-s.listed_names={78193831} --Buster Blader
+s.listed_names={CARD_BUSTER_BLADER}
 function s.filter(c)
-	return c:IsFaceup() and c:IsCode(78193831)
+	return c:IsFaceup() and c:IsCode(CARD_BUSTER_BLADER)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -71,10 +71,6 @@ end
 function s.aclimit(e,re,tp)
 	local loc=re:GetActivateLocation()
 	return loc==LOCATION_GRAVE and re:IsMonsterEffect()
-end
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.thfilter(c)
 	return c:IsSetCard(SET_DESTRUCTION_SWORD) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()

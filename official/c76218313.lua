@@ -36,9 +36,9 @@ function s.initial_effect(c)
 	e4:SetCondition(function(e) return e:GetHandler():GetEquipTarget() end)
 	c:RegisterEffect(e4)
 end
-s.listed_names={78193831} --"Buster Blader"
+s.listed_names={CARD_BUSTER_BLADER}
 function s.filter(c)
-	return c:IsFaceup() and c:IsCode(78193831)
+	return c:IsFaceup() and c:IsCode(CARD_BUSTER_BLADER)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -70,9 +70,10 @@ function s.eqlimit(e,c)
 	return c==e:GetLabelObject()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,tp,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

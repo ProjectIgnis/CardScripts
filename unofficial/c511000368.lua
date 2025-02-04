@@ -38,7 +38,7 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e4:SetOperation(s.regop)
 	c:RegisterEffect(e4)
-	--Banish all cards placed on your opponent's field during the Standby Phase of the next turn after this card was Special Summoned
+	--Any card placed on your opponent's field after this card was Special Summoned is banished during the Standby Phase of the next turn
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,1))
 	e5:SetCategory(CATEGORY_REMOVE)
@@ -46,7 +46,7 @@ function s.initial_effect(c)
 	e5:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e5:SetRange(LOCATION_MZONE)
 	e5:SetCountLimit(1)
-	e5:SetCondition(function(e) return e:GetHandler():HasFlagEffect(id) and e:GetHandler():GetTurnID()~=Duel.GetTurnCount() end)
+	e5:SetCondition(function(e) return e:GetHandler():HasFlagEffect(id) end)
 	e5:SetTarget(s.rmtg)
 	e5:SetOperation(s.rmop)
 	c:RegisterEffect(e5)
@@ -113,8 +113,7 @@ function s.damval(e,re,val,r,rp,rc)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local reset_ct=Duel.GetCurrentPhase()<=PHASE_STANDBY and 2 or 1
-	c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_STANDBY,0,reset_ct)
+	c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 	--Keep track of cards placed on your opponent's fiel after this card's Special Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -129,19 +128,19 @@ function s.trackop(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(Card.IsControler,nil,1-tp)
 	local reset_ct=Duel.GetCurrentPhase()<=PHASE_STANDBY and 2 or 1
 	for tc in g:Iter() do
-		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_STANDBY,0,reset_ct)
+		tc:RegisterFlagEffect(id+1,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_STANDBY,0,reset_ct,Duel.GetTurnCount()+1)
 	end
 end
-function s.rmfilter(c,turn)
-	return c:IsAbleToRemove() and c:HasFlagEffect(id)
+function s.rmfilter(c,turn_ct)
+	return c:IsAbleToRemove() and c:HasFlagEffect(id+1) and c:GetFlagEffectLabel(id+1)==turn_ct
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler())
+	local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,Duel.GetTurnCount())
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,tp,0)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler())
+	local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,Duel.GetTurnCount())
 	if #g>0 then
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 	end
@@ -152,10 +151,10 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return not c:HasFlagEffect(id+1)
+	if chk==0 then return not c:HasFlagEffect(id+2)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
-	c:RegisterFlagEffect(id+1,(RESET_EVENT|RESETS_STANDARD|RESET_MSCHANGE)&~(RESET_TOFIELD|RESET_TOGRAVE|RESET_LEAVE|RESET_TURN_SET),EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,3))
+	c:RegisterFlagEffect(id+2,(RESET_EVENT|RESETS_STANDARD|RESET_MSCHANGE)&~(RESET_TOFIELD|RESET_TOGRAVE|RESET_LEAVE|RESET_TURN_SET),EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,3))
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,tp,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)

@@ -3,10 +3,10 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
-	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.ListsCodeAsMaterial,78193831),nil,s.fextra)
+	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.ListsCodeAsMaterial,CARD_BUSTER_BLADER),nil,s.fextra)
 	e1:SetCountLimit(1,id)
 	c:RegisterEffect(e1)
-	--tohand
+	--Add this card to your hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND)
@@ -19,10 +19,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.fcheck(tp,sg,fc)
-	return sg:IsExists(aux.FilterBoolFunction(Card.IsSummonCode,fc,SUMMON_TYPE_FUSION,tp,78193831),1,nil)
+	return sg:IsExists(aux.FilterBoolFunction(Card.IsSummonCode,fc,SUMMON_TYPE_FUSION,tp,CARD_BUSTER_BLADER),1,nil)
 end
 function s.fextra(e,tp,mg)
-	return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToGrave),tp,0,LOCATION_MZONE,nil),s.fcheck
+	return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(aux.FaceupFilter(Card.IsAbleToGrave)),tp,0,LOCATION_MZONE,nil),s.fcheck
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,nil) end
@@ -30,7 +30,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToHand() end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,e:GetHandler(),1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,e:GetHandler(),1,tp,0)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsRelateToEffect(e) then

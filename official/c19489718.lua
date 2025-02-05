@@ -74,7 +74,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if #hg==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_HAND,0,1,#hg,nil)
-	if #g>0 and Duel.SendtoDeck(g,tp,SEQ_DECKBOTTOM,REASON_EFFECT)>0 and g:FilterCount(Card.IsLocation,LOCATION_DECK)==#g
+	if #g>0 and Duel.SendtoDeck(g,tp,SEQ_DECKBOTTOM,REASON_EFFECT)>0 and g:FilterCount(Card.IsLocation,nil,LOCATION_DECK)==#g
 		and tc and tc:IsRelateToBattle() and tc:IsFaceup() and tc:IsControler(1-tp)
 		and not tc:IsImmuneToEffect(e) and not tc:IsStatus(STATUS_DISABLED) then
 		--Negate its effects, then draw cards equal to the number of cards placed under the Deck

@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--special summon
+	--Special Summon this card (from your hand) by banishing 2 monsters you control and 1 monster from your GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--equip
+	--Equip a face-up monster your opponent controls to this card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_EQUIP)
@@ -36,7 +36,7 @@ function s.spcon(e,c)
 	local rg1=Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_MZONE,0,nil)
 	local rg2=Duel.GetMatchingGroup(s.gfilter,tp,LOCATION_GRAVE,0,nil)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=-2 then return false end
-	if Duel.IsPlayerAffectedByEffect(tp,69832741) then
+	if Duel.IsPlayerAffectedByEffect(tp,CARD_SPIRIT_ELIMINATION) then
 		return aux.SelectUnselectGroup(rg1,e,tp,3,3,aux.ChkfMMZ(1),0)
 	else
 		return aux.SelectUnselectGroup(rg1,e,tp,2,2,aux.ChkfMMZ(1),0)
@@ -47,7 +47,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
 	local rg1=Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_MZONE,0,nil)
 	local rg2=Duel.GetMatchingGroup(s.gfilter,tp,LOCATION_GRAVE,0,nil)
 	local g1
-	if Duel.IsPlayerAffectedByEffect(tp,69832741) then
+	if Duel.IsPlayerAffectedByEffect(tp,CARD_SPIRIT_ELIMINATION) then
 		g1=aux.SelectUnselectGroup(rg1,e,tp,3,3,aux.ChkfMMZ(1),1,tp,HINTMSG_REMOVE,nil,nil,true)
 	else
 		g1=aux.SelectUnselectGroup(rg1,e,tp,2,2,aux.ChkfMMZ(1),1,tp,HINTMSG_REMOVE,nil,nil,true)
@@ -70,8 +70,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	g1:DeleteGroup()
 end
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
-	local g=e:GetHandler():GetEquipGroup():Filter(s.eqfilter,nil)
-	return #g==0
+	return #e:GetHandler():GetEquipGroup():Filter(s.eqfilter,nil)==0
 end
 function s.eqfilter(c)
 	return c:GetFlagEffect(id)~=0 
@@ -85,7 +84,7 @@ function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		and Duel.IsExistingTarget(s.filter,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	local g=Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_EQUIP,g,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_EQUIP,g,1,tp,0)
 end
 function s.equipop(c,e,tp,tc)
 	local atk=tc:GetTextAttack()
@@ -94,22 +93,22 @@ function s.equipop(c,e,tp,tc)
 	if def<0 then def=0 end
 	if not c:EquipByEffectAndLimitRegister(e,tp,tc,id) then return end
 	if atk>0 then
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_EQUIP)
+		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_OWNER_RELATE)
+		e1:SetCode(EFFECT_UPDATE_ATTACK)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
+		e1:SetValue(atk)
+		tc:RegisterEffect(e1)
+	end
+	if def>0 then
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_EQUIP)
 		e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_OWNER_RELATE)
-		e2:SetCode(EFFECT_UPDATE_ATTACK)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e2:SetValue(atk)
+		e2:SetCode(EFFECT_UPDATE_DEFENSE)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
+		e2:SetValue(def)
 		tc:RegisterEffect(e2)
-	end
-	if def>0 then
-		local e3=Effect.CreateEffect(c)
-		e3:SetType(EFFECT_TYPE_EQUIP)
-		e3:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_OWNER_RELATE)
-		e3:SetCode(EFFECT_UPDATE_DEFENSE)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e3:SetValue(def)
-		tc:RegisterEffect(e3)
 	end
 end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)

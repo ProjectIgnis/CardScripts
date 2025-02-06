@@ -1436,6 +1436,10 @@ function Auxiliary.PuzzleOp(e,tp)
 end
 
 
+function Auxiliary.StatChangeDamageStepCondition()
+	return not (Duel.IsPhase(PHASE_DAMAGE) and Duel.IsDamageCalculated())
+end
+
 --Default cost function for "You can Tribute this card; .."
 function Auxiliary.selfreleasecost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Xyz Summon Procedure
+	--Xyz Summon procedure: 2+ Level 3 monsters
 	Xyz.AddProcedure(c,nil,3,2,nil,nil,99)
 	--Change the ATK/DEF of a monster whose current ATK and/or DEF is different from its original value to its original ATK/DEF
 	local e1=Effect.CreateEffect(c)
@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
-	e2:SetCondition(s.gainatkcon)
+	e2:SetCondition(function(e,tp,eg,ep,ev,re,r,rp) return not eg:IsContains(e:GetHandler()) and eg:IsExists(aux.FaceupFilter(Card.IsControler,tp),1,nil) end)
 	e2:SetTarget(s.gainatktg)
 	e2:SetOperation(s.gainatkop)
 	c:RegisterEffect(e2)
@@ -77,10 +77,6 @@ function s.changeatkdefop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e4)
 	end
 end
-function s.gainatkcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return not eg:IsContains(c) and eg:IsExists(aux.FaceupFilter(Card.IsControler,tp),1,nil)
-end
 function s.gainatktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=eg:Filter(aux.FaceupFilter(Card.IsControler,tp),nil):Match(Card.IsLocation,nil,LOCATION_MZONE)
 	if chk==0 then return e:GetHandler():GetOverlayCount()>=3 and #g>0 end
@@ -91,7 +87,7 @@ function s.gainatkop(e,tp,eg,ep,ev,re,r,rp)
 	if #g==0 then return end
 	local c=e:GetHandler()
 	for tc in g:Iter() do
-		--Gains 900 ATK
+		--That monster(s) gains 900 ATK
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)

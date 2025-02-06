@@ -125,22 +125,25 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e1)
 end
 function s.trackop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local g=eg:Filter(Card.IsControler,nil,1-tp)
 	local reset_ct=Duel.GetCurrentPhase()<=PHASE_STANDBY and 2 or 1
 	for tc in g:Iter() do
+		c:CreateRelation(tc,RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterFlagEffect(id+1,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_STANDBY,0,reset_ct,Duel.GetTurnCount()+1)
 	end
 end
-function s.rmfilter(c,turn_ct)
-	return c:IsAbleToRemove() and c:HasFlagEffect(id+1) and c:GetFlagEffectLabel(id+1)==turn_ct
+function s.rmfilter(c,hc,turn_ct)
+	return hc:IsRelateToCard(c) and c:HasFlagEffect(id+1) and c:GetFlagEffectLabel(id+1)==turn_ct
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,Duel.GetTurnCount())
+	local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,e:GetHandler(),Duel.GetTurnCount())
+	Duel.SetTargetCard(g)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,tp,0)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,Duel.GetTurnCount())
+	local g=Duel.GetTargetCards(e):Match(Card.HasFlagEffect,nil,id+1)
 	if #g>0 then
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 	end

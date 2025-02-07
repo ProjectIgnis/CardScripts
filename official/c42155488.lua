@@ -2,7 +2,7 @@
 --Genomix Fighter
 local s,id=GetID()
 function s.initial_effect(c)
-	--summon with no tribute
+	--You can Normal Summon/Set this card without Tributing
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.ntcon)
 	e1:SetOperation(s.ntop)
 	c:RegisterEffect(e1)
-	--declear
+	--Treat this card as another monster type if it is used for a Synchro Summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -26,15 +26,14 @@ function s.ntcon(e,c,minc)
 	return minc==0 and c:GetLevel()>4 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
 function s.ntop(e,tp,eg,ep,ev,re,r,rp,c)
-	--change base attack
+	--Its original ATK is halved
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e1:SetRange(LOCATION_MZONE)
 	e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE&~RESET_TOFIELD)
 	e1:SetCode(EFFECT_SET_BASE_ATTACK)
 	e1:SetValue(1100)
 	c:RegisterEffect(e1)
+	--Its Level becomes 3
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_CHANGE_LEVEL)
 	e2:SetValue(3)
@@ -51,8 +50,8 @@ function s.dectg(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.sumlimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
 	e1:SetLabel(rc)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
@@ -72,7 +71,7 @@ function s.decop(e,tp,eg,ep,ev,re,r,rp,chk)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SYNCHRO_CHECK)
 		e1:SetValue(s.syncheck)
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetLabel(rc)
 		c:RegisterEffect(e1)
 	end

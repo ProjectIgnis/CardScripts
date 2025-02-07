@@ -3,7 +3,7 @@
 --scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	--normal summon
+	--You can Normal Summon/Set this card without Tributing
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
@@ -12,10 +12,10 @@ function s.initial_effect(c)
 	e1:SetCondition(s.ntcon)
 	e1:SetOperation(s.ntop)
 	c:RegisterEffect(e1)
-	--to hand
+	--Reveal 3 EARTH Machine monsters from your Deck, then your opponent randomly adds 1 of them to your hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
-	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_DECKDES)
+	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e2:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_SUMMON_SUCCESS)
@@ -32,12 +32,10 @@ function s.ntcon(e,c,minc)
 	return minc==0 and c:IsLevelAbove(5) and not Duel.IsExistingMatchingCard(Card.IsFaceup,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil)
 end
 function s.ntop(e,tp,eg,ep,ev,re,r,rp,c)
-	--change base attack
+	--Its original ATK becomes 1800
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_DISABLE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE&~RESET_TOFIELD)
 	e1:SetCode(EFFECT_SET_BASE_ATTACK)
 	e1:SetValue(1800)
 	c:RegisterEffect(e1)

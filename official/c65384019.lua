@@ -1,4 +1,5 @@
 --アルケミー・サイクル
+--Alchemy Cycle
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -20,24 +21,26 @@ function s.filter(c)
 	return c:IsFaceup() and c:GetBaseAttack()~=0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) end
+	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)
+	if chk==0 then return #g>0 end
+	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,g,#g,tp,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)
 	local c=e:GetHandler()
 	local fid=c:GetFieldID()
-	local tc=g:GetFirst()
-	for tc in aux.Next(g) do
+	for tc in g:Iter() do
 		if not tc:IsImmuneToEffect(e) then
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_SET_BASE_ATTACK)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetCode(EFFECT_SET_BASE_ATTACK_FINAL)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
 			e1:SetValue(0)
 			tc:RegisterEffect(e1)
-			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD_EXC_GRAVE+RESET_PHASE+PHASE_END,0,1,fid)
+			tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD_EXC_GRAVE|RESET_PHASE|PHASE_END,0,1,fid)
 		end
 	end
+	--Draw 1 card each time a monster affected by this effect is destroyed by battle and sent to the GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DRAW)
@@ -47,8 +50,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCondition(s.drcon)
 	e2:SetTarget(s.drtg)
 	e2:SetOperation(s.drop)
-	e2:SetReset(RESET_PHASE+PHASE_END)
 	e2:SetLabel(fid)
+	e2:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 end
 function s.drfilter(c,fid)

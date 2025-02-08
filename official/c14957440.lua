@@ -5,16 +5,16 @@ local COUNTER_OTOSHIDAMASHI=0x59
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(COUNTER_OTOSHIDAMASHI,LOCATION_MZONE)
-	--Your opponent's monster cannot target this card for attacks
+	--Your opponent's monster cannot target this card for attacks while you control a non-Tuner monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EFFECT_CANNOT_BE_BATTLE_TARGET)
+	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(s.atklm)
 	e1:SetValue(aux.imval2)
 	c:RegisterEffect(e1)
-	--Special Summon "Otoshidamashi Tokens"
+	--Special Summon "Otoshidamashi Tokens" equal to the number of "Otoshidamashi Counters" on this card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_COUNTER+CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
@@ -35,7 +35,7 @@ function s.atklm(e)
 	return Duel.IsExistingMatchingCard(s.atkfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.cfilter(c,tp)
-	return c:GetPreviousControler()==1-tp and c:IsMonster() and c:IsPreviousLocation(LOCATION_MZONE)
+	return c:IsPreviousControler(1-tp) and c:IsMonster() and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function s.tkcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
@@ -47,7 +47,7 @@ end
 function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if e:GetHandler():AddCounter(COUNTER_OTOSHIDAMASHI,1)>0 and ft>0
+	if c:AddCounter(COUNTER_OTOSHIDAMASHI,1) and ft>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,0,0,1,RACE_BEAST,ATTRIBUTE_EARTH) then
 		Duel.BreakEffect()
 		if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end

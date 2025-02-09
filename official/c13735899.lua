@@ -80,10 +80,10 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.HasFlagEffect(tp,id) then return end
+	local c=e:GetHandler()
+	if Duel.HasFlagEffect(tp,id) or eg:IsContains(c) then return end
 	local rc=re:GetHandler()
 	if not (re and re:IsActivated() and re:IsMonsterEffect() and rc) then return end
-	local c=e:GetHandler()
 	local tg=eg:Filter(s.tgfilter,nil,rc)
 	if #tg>0 then
 		for tc in tg:Iter() do

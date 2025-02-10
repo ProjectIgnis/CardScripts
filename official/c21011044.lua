@@ -3,7 +3,7 @@
 --scripted by Naim and edo9300
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -39,6 +39,7 @@ function s.sstage2(e,tc,tp,sg,chk)
 		local att=tc:GetAttribute()
 		if Duel.IsExistingMatchingCard(s.sameatt,tp,0,LOCATION_MZONE,1,nil,att) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.BreakEffect()
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 			local tg=Duel.SelectMatchingCard(tp,s.sameatt,tp,0,LOCATION_MZONE,1,1,nil,att)
 			if #tg>0 then
 				Duel.HintSelection(tg)

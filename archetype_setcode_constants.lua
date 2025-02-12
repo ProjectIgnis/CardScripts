@@ -587,3 +587,4 @@ SET_MITSURUGI                     = 0x1bd
 SET_REGENESIS                     = 0x1be
 SET_DOMINUS                       = 0x1bf
 SET_DRAGONTAIL                    = 0x1c0
+SET_YUMMY                         = 0x1c1

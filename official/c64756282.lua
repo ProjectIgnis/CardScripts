@@ -54,7 +54,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToRemoveAsCost() and Duel.IsExistingMatchingCard(s.copyfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local sc=Duel.SelectTarget(tp,s.copyfilter,tp,LOCATION_GRAVE,0,1,1,nil):GetFirst()
+	local sc=Duel.SelectMatchingCard(tp,s.copyfilter,tp,LOCATION_GRAVE,0,1,1,nil):GetFirst()
 	Duel.Remove(Group.FromCards(sc,c),POS_FACEUP,REASON_COST)
 	local te,ceg,cep,cev,cre,cr,crp=sc:CheckActivateEffect(true,true,true)
 	Duel.ClearTargetCard()

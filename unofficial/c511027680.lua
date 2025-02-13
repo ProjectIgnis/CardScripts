@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.changecon)
 	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_DD))
 	e2:SetValue(0x20af)
-	c:RegisterEffect(e2)
+	--c:RegisterEffect(e2)
 end
 s.listed_series={SET_DD,0x20af}
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e0:SetRange(LOCATION_EXTRA)
 	e0:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e0:SetTarget(function(e,c) return c:IsLink(1) end)
-	e0:SetValue(function(e,sc) return sc:IsSetCard(SET_YUMMY) and 1 or 0 end)
+	e0:SetValue(function(e,sc) return sc:IsSetCard(SET_YUMMY) and 1 or -1 end)
 	c:RegisterEffect(e0)
 	--Special Summon 2 "Yummy" monsters from GY but negate their effects
 	local e1=Effect.CreateEffect(c)

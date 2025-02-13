@@ -10,8 +10,9 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetValue(s.synlimit)
 	c:RegisterEffect(e1)
-	--Special Summon
+	--Special Summon this card from your hand, then you can reduce its Level by 1 or 2.
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_LVCHANGE)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
@@ -28,10 +29,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	local e4=e2:Clone()
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e4:SetCondition(s.spcon2)
+	e4:SetCondition(s.spcon3)
 	c:RegisterEffect(e4)
 	--Change Position
 	local e5=Effect.CreateEffect(c)
+	e5:SetDescription(aux.Stringid(id,1))
 	e5:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e5:SetType(EFFECT_TYPE_IGNITION)
 	e5:SetRange(LOCATION_MZONE)
@@ -40,7 +42,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.posop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x5a}
+s.listed_series={SET_PENGUIN}
 function s.synlimit(e,c)
 	if not c then return false end
 	return not c:IsAttribute(ATTRIBUTE_WATER)
@@ -56,6 +58,12 @@ function s.filter2(c,tp)
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.filter2,1,nil,tp)
+end
+function s.filter3(c,tp)
+	return c:IsFacedown() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
+end
+function s.spcon3(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(s.filter3,1,nil,tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -73,7 +81,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(-lv)
 		c:RegisterEffect(e1)
 	end
@@ -90,19 +98,8 @@ end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and Duel.ChangePosition(tc,POS_FACEUP_DEFENSE)>0 then
-		if tc:IsFaceup() and not tc:IsSetCard(0x5a) then
-			--Negate its effects
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_DISABLE)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-			tc:RegisterEffect(e1)
-			local e2=Effect.CreateEffect(c)
-			e2:SetType(EFFECT_TYPE_SINGLE)
-			e2:SetCode(EFFECT_DISABLE_EFFECT)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-			tc:RegisterEffect(e2)
-		end
+	if tc:IsRelateToEffect(e) and Duel.ChangePosition(tc,POS_FACEUP_DEFENSE)>0 and tc:IsFaceup() and not tc:IsSetCard(SET_PENGUIN) then
+		--Negate its effects
+		tc:NegateEffects(c,RESET_EVENT|RESETS_STANDARD)
 	end
 end

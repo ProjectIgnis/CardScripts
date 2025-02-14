@@ -37,11 +37,26 @@ function s.initial_effect(c)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local seq,p,loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_SEQUENCE,CHAININFO_TRIGGERING_CONTROLER,CHAININFO_TRIGGERING_LOCATION)
-	if loc&LOCATION_MZONE>0 then
-		if seq==5 then seq=1 elseif seq==6 then seq=3 end
-	elseif loc&LOCATION_SZONE==0 then return end
-	if p==1-tp then seq=4-seq end
-	if e:GetHandler():IsSequence(seq) then
+	if loc&(LOCATION_MZONE|LOCATION_SZONE)==0 then return end --triggering outside the field or in the Field Zone
+	if (seq==5 or seq==6) then --First, correct effects triggering in the Extra Monster Zone
+		if seq==5 then
+			seq=1
+		elseif seq==6 then
+			seq=3
+		end
+	end
+	if p==1-tp then --Then correct effects triggering in the opponent's (main) sequences, by mirroring them to your sequences
+		seq=4-seq
+	end
+	local dis_seq=e:GetHandler():GetSequence()
+	if (dis_seq==5 or dis_seq==6) then --Then correct this card's sequence, if it is in the EMZ
+		if dis_seq==5 then
+			dis_seq=1
+		elseif dis_seq==6 then
+			dis_seq=3
+		end
+	end
+	if dis_seq==seq then
 		Duel.NegateEffect(ev)
 	end
 end

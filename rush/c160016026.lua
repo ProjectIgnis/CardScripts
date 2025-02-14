@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():CanAttack()
+	return not e:GetHandler():IsHasEffect(EFFECT_DIRECT_ATTACK)
 end
 function s.cfilter(c)
 	return c:IsMonster() and c:IsAbleToDeckOrExtraAsCost()

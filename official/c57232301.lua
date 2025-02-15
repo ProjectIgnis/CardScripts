@@ -48,12 +48,13 @@ function s.regfilter(c)
 	return c:IsFaceup() and c:IsPreviousLocation(LOCATION_HAND|LOCATION_ONFIELD) and c:IsReason(REASON_COST)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetLabelObject():CheckCountLimit(tp) then return end
 	if not (re and re:IsActivated() and re:IsMonsterEffect()) then return false end
 	local og=eg:Filter(s.regfilter,nil)
 	if #og>0 then
 		local types=0
 		for tc in og:Iter() do
-			types=types|tc:GetType()&(TYPE_MONSTER|TYPE_SPELL|TYPE_TRAP)
+			types=types|tc:GetMainCardType()
 		end
 		local label=e:GetLabel()
 		e:SetLabel(label|types)

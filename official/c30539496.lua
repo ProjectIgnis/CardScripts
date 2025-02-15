@@ -1,5 +1,6 @@
 --真竜皇リトスアジムD
 --True King Lithosagym, the Disaster
+local CARD_TRUE_KING_CALAMITIES=88581108
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon itself from hand
@@ -31,67 +32,38 @@ end
 function s.locfilter(c,tp)
 	return c:IsLocation(LOCATION_MZONE) and c:IsControler(tp)
 end
+function s.rescon(sg,e,tp,mg)
+	return sg:IsExists(Card.IsAttribute,1,nil,ATTRIBUTE_EARTH) and Duel.GetMZoneCount(tp,sg)>0
+end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local loc=LOCATION_MZONE|LOCATION_HAND
-	if ft<0 then loc=LOCATION_MZONE end
-	local loc2=0
-	if Duel.IsPlayerAffectedByEffect(tp,88581108) then loc2=LOCATION_MZONE end
-	local g=Duel.GetMatchingGroup(s.desfilter,tp,loc,loc2,c)
+	local opp_mzone=Duel.IsPlayerAffectedByEffect(tp,CARD_TRUE_KING_CALAMITIES) and LOCATION_MZONE or 0 --True King of All Calamities
+	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE|LOCATION_HAND,opp_mzone,c)
 	if chk==0 then return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and #g>=2 and g:IsExists(Card.IsAttribute,1,nil,ATTRIBUTE_EARTH)
-		and (ft>0 or g:IsExists(s.locfilter,-ft+1,nil,tp)) end
+		and #g>=2 and aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0) end
 	if (#g==2 and g:FilterCount(Card.IsLocation,nil,LOCATION_HAND)==1) or not g:IsExists(Card.IsLocation,1,nil,LOCATION_HAND) then
-		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,2,0,0)
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,2,tp,0)
 	else
-		Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,2,tp,loc)
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,2,tp,LOCATION_MZONE|LOCATION_HAND)
 	end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,tp,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local loc=LOCATION_MZONE|LOCATION_HAND
-	if ft<0 then loc=LOCATION_MZONE end
-	local loc2=0
-	if Duel.IsPlayerAffectedByEffect(tp,88581108) then loc2=LOCATION_MZONE end
-	local g=Duel.GetMatchingGroup(s.desfilter,tp,loc,loc2,c)
+	local opp_mzone=Duel.IsPlayerAffectedByEffect(tp,CARD_TRUE_KING_CALAMITIES) and LOCATION_MZONE or 0 --True King of All Calamities
+	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE|LOCATION_HAND,opp_mzone,c)
 	if #g<2 or not g:IsExists(Card.IsAttribute,1,nil,ATTRIBUTE_EARTH) then return end
-	local g1=nil local g2=nil
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	if ft<1 then
-		g1=g:FilterSelect(tp,s.locfilter,1,1,nil,tp)
-	else
-		g1=g:Select(tp,1,1,nil)
-	end
-	g:RemoveCard(g1:GetFirst())
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	if g1:GetFirst():IsAttribute(ATTRIBUTE_EARTH) then
-		g2=g:Select(tp,1,1,nil)
-	else
-		g2=g:FilterSelect(tp,Card.IsAttribute,1,1,nil,ATTRIBUTE_EARTH)
-	end
-	g1:Merge(g2)
-	local rm=g1:IsExists(Card.IsAttribute,2,nil,ATTRIBUTE_EARTH)
-	if Duel.Destroy(g1,REASON_EFFECT)==2 then
-		if not c:IsRelateToEffect(e) then return end
-		if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)==0 then
-			return
-		end
+	local dg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_DESTROY)
+	if #dg<2 then return end
+	local rmv_chk=dg:FilterCount(Card.IsAttribute,nil,ATTRIBUTE_EARTH)==2 and true or false
+	if Duel.Destroy(dg,REASON_EFFECT)==2 and c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 and rmv_chk then
 		local rg=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_EXTRA,nil)
-		if rm and #rg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+		if rmv_chk and #rg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 			Duel.ConfirmCards(tp,rg)
-			local tg=Group.CreateGroup()
-			local i=3
-			repeat
-				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-				local tc=rg:Select(tp,1,1,nil):GetFirst()
-				rg:Remove(Card.IsCode,nil,tc:GetCode())
-				tg:AddCard(tc)
-				i=i-1
-			until i<1 or #rg==0 or not Duel.SelectYesNo(tp,aux.Stringid(id,3))
-			Duel.Remove(tg,POS_FACEUP,REASON_EFFECT)
+			local rmv_g=aux.SelectUnselectGroup(rg,e,tp,1,3,aux.dncheck,1,tp,HINTMSG_REMOVE)
+			if #rmv_g>0 then
+				Duel.Remove(rmv_g,POS_FACEUP,REASON_EFFECT)
+			end
 			Duel.ShuffleExtra(1-tp)
 		end
 	end

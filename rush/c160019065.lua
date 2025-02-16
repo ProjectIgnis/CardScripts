@@ -37,6 +37,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			table.insert(announceFilter,OPCODE_ISCODE)
 			table.insert(announceFilter,OPCODE_OR)
 		end
+		table.insert(announceFilter,OPCODE_ALLOW_ALIASES)
 	end
 	local code=Duel.AnnounceCard(tp,announceFilter)
 	local e1=Effect.CreateEffect(c)

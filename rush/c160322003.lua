@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_names={CARD_HARPIE_LADY,27927359}
+s.named_material={27927359}
 function s.ffilter(c,fc,sumtype,tp)
 	return c:IsRace(RACE_WINGEDBEAST,fc,sumtype,tp) and c:IsLevelBelow(4)
 end

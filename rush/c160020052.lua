@@ -31,17 +31,19 @@ function s.matfilter(c)
 end
 function s.atklimit(e,sc,tp,sg,chk)
 	if chk==0 then
-		--Register a flag to the summoned monster
-		sc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 		--Monsters other than the summoned monster cannot attack this turn
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetCode(EFFECT_CANNOT_ATTACK)
 		e1:SetTargetRange(LOCATION_MZONE,0)
-		e1:SetTarget(function(e,c) return not c:HasFlagEffect(id) end)
-		e1:SetReset(RESET_PHASE|PHASE_END)
+		e1:SetTarget(s.ftarget)
+		e1:SetLabel(sc:GetFieldID())
+		e1:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 	end
+end
+function s.ftarget(e,c)
+	return e:GetLabel()~=c:GetFieldID()
 end
 function s.costfilter(c,e,tp,eg,ep,ev,re,r,rp)
 	if not (c:IsAttribute(ATTRIBUTE_DARK) and c:IsRace(RACE_GALAXY) and c:IsType(TYPE_NORMAL)) then return false end

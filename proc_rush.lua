@@ -52,7 +52,37 @@ if Duel.IsDuelType(DUEL_INVERTED_QUICK_PRIORITY) then
 	end)()
 end
 function Card.IsCanChangePositionRush(c)
-	return c:IsCanChangePosition() and not c:IsMaximumMode() and not c:IsHasEffect(EFFECT_CANNOT_CHANGE_POS_E)
+	return c:IsCanChangePosition() and not c:IsMaximumMode()
+end
+function Card.CanChangeIntoTypeRush(c,type,turnvalue)
+	if c:IsOriginalRace(type) then return false end
+	if not c:IsRace(type) then return true end
+	if not c:IsHasEffect(EFFECT_CHANGE_RACE) then return true end
+	if nil==turnvalue then turnvalue=1 end
+	eff={c:GetCardEffect(EFFECT_CHANGE_RACE)}
+	for _,te in ipairs(eff) do
+		local effType=te:GetType()
+		if effType~=EFFECT_TYPE_FIELD and eff_type~=EFFECT_TYPE_EQUIP then
+			local _,effectvalue=te:GetReset()
+			if effectvalue>=turnvalue then return false end
+		end
+	end
+	return true
+end
+function Card.CanChangeIntoAttributeRush(c,attribute,turnvalue)
+	if c:IsOriginalAttribute(attribute) then return false end
+	if not c:IsAttribute(attribute) then return true end
+	if not c:IsHasEffect(EFFECT_CHANGE_ATTRIBUTE) then return true end
+	if nil==turnvalue then turnvalue=1 end
+	eff={c:GetCardEffect(EFFECT_CHANGE_ATTRIBUTE)}
+	for _,te in ipairs(eff) do
+		local effType=te:GetType()
+		if effType~=EFFECT_TYPE_FIELD and eff_type~=EFFECT_TYPE_EQUIP then
+			local _,effectvalue=te:GetReset()
+			if effectvalue>=turnvalue then return false end
+		end
+	end
+	return true
 end
 
 --Add function to simplify some effect

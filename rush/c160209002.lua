@@ -27,7 +27,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,0,tp,LOCATION_GRAVE)
 end
 function s.attfilter(c)
-	return c:IsFaceup() and not c:IsAttribute(ATTRIBUTE_LIGHT)
+	return c:IsFaceup() and c:CanChangeIntoAttributeRush(ATTRIBUTE_LIGHT)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end

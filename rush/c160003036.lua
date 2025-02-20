@@ -21,7 +21,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetMatchingGroupCountRush(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)>1
 end
 function s.attfilter(c)
-	return c:IsFaceup() and not c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsNotMaximumModeSide()
+	return c:IsFaceup() and c:CanChangeIntoAttributeRush(ATTRIBUTE_LIGHT) and c:IsNotMaximumModeSide()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.attfilter,tp,0,LOCATION_MZONE,1,e:GetHandler()) end

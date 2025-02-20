@@ -25,7 +25,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,400)
 end
 function s.racefilter(c)
-	return c:IsFaceup() and not c:IsRace(RACE_SPELLCASTER) and c:IsNotMaximumModeSide()
+	return c:IsFaceup() and c:CanChangeIntoTypeRush(RACE_SPELLCASTER) and c:IsNotMaximumModeSide()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement

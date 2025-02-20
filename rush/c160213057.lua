@@ -31,7 +31,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil) end
 end
 function s.insectfilter(c)
-	return s.filter(c) and not c:IsRace(RACE_INSECT)
+	return s.filter(c) and c:CanChangeIntoTypeRush(RACE_INSECT,2)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement

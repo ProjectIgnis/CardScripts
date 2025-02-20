@@ -22,7 +22,7 @@ function s.rccost(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.rcfilter(c)
-	return c:IsFaceup() and not c:IsRace(RACE_INSECT) and c:IsNotMaximumModeSide()
+	return c:IsFaceup() and c:CanChangeIntoTypeRush(RACE_INSECT) and c:IsNotMaximumModeSide()
 end
 function s.rctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.rcfilter,tp,0,LOCATION_MZONE,1,nil) end

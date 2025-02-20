@@ -28,7 +28,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsCanChangePositionRush,tp,0,LOCATION_MZONE,1,e:GetHandler()) end
 end
 function s.insectfilter(c)
-	return c:IsFaceup() and c:IsNotMaximumModeSide() and not c:IsRace(RACE_INSECT)
+	return c:IsFaceup() and c:IsNotMaximumModeSide() and c:CanChangeIntoTypeRush(RACE_INSECT,2)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement

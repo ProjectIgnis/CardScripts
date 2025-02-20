@@ -29,7 +29,7 @@ function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,ct*200)
 end
 function s.mfilter(c)
-	return c:IsFaceup() and not c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsNotMaximumModeSide()
+	return c:IsFaceup() and c:CanChangeIntoAttributeRush(ATTRIBUTE_LIGHT) and c:IsNotMaximumModeSide()
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement

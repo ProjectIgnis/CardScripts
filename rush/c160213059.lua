@@ -29,7 +29,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,2)
 end
 function s.insectfilter(c)
-	return c:IsFaceup() and c:IsNotMaximumModeSide() and not c:IsRace(RACE_INSECT)
+	return c:IsFaceup() and c:IsNotMaximumModeSide() and c:CanChangeIntoTypeRush(RACE_INSECT,2)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement

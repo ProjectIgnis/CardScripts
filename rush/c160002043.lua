@@ -17,7 +17,7 @@ function s.rvfilter(c,tp)
 		and Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.attfilter,c:GetAttribute()),tp,0,LOCATION_MZONE,1,nil,c:GetAttribute())
 end
 function s.attfilter(c,att)
-	return c:IsFaceup() and c:IsMonster() and not c:IsAttribute(att)
+	return c:IsFaceup() and c:IsMonster() and c:CanChangeIntoAttributeRush(att)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.rvfilter,tp,LOCATION_HAND,0,1,nil,tp) end

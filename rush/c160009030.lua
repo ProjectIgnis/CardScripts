@@ -42,7 +42,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(-300)
 		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
-		if not tc:IsRace(RACE_INSECT) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+		if tc:CanChangeIntoTypeRush(RACE_INSECT) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 			Duel.BreakEffect()
 			--Change type to Insect
 			local e2=Effect.CreateEffect(c)

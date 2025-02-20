@@ -59,7 +59,7 @@ function Card.CanChangeIntoTypeRush(c,type,turnvalue)
 	if not c:IsRace(type) then return true end
 	if not c:IsHasEffect(EFFECT_CHANGE_RACE) then return true end
 	if nil==turnvalue then turnvalue=1 end
-	eff={c:GetCardEffect(EFFECT_CHANGE_RACE)}
+	local eff={c:GetCardEffect(EFFECT_CHANGE_RACE)}
 	for _,te in ipairs(eff) do
 		local effType=te:GetType()
 		if effType~=EFFECT_TYPE_FIELD and eff_type~=EFFECT_TYPE_EQUIP then
@@ -74,7 +74,7 @@ function Card.CanChangeIntoAttributeRush(c,attribute,turnvalue)
 	if not c:IsAttribute(attribute) then return true end
 	if not c:IsHasEffect(EFFECT_CHANGE_ATTRIBUTE) then return true end
 	if nil==turnvalue then turnvalue=1 end
-	eff={c:GetCardEffect(EFFECT_CHANGE_ATTRIBUTE)}
+	local eff={c:GetCardEffect(EFFECT_CHANGE_ATTRIBUTE)}
 	for _,te in ipairs(eff) do
 		local effType=te:GetType()
 		if effType~=EFFECT_TYPE_FIELD and eff_type~=EFFECT_TYPE_EQUIP then

@@ -81,6 +81,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) and c:IsRelateToEffect(e) and c:IsFaceup()
 		and s.equipop(c,e,tp,tc) then
 		local code=tc:GetCode()
+		local attr_chk=tc:IsAttribute(ATTRIBUTE_LIGHT|ATTRIBUTE_DARK)
 		if not c:IsCode(code) then
 			--This card's name becomes that monster's until the End Phase
 			local e1=Effect.CreateEffect(c)
@@ -90,11 +91,11 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetValue(code)
 			e1:SetReset(RESETS_STANDARD_PHASE_END)
 			c:RegisterEffect(e1)
+			Duel.AdjustInstantly(c)
 		end
-		if not (tc:IsAttribute(ATTRIBUTE_LIGHT|ATTRIBUTE_DARK) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0) then return end
+		if not (attr_chk and Duel.GetLocationCount(tp,LOCATION_MZONE)>0) then return end
 		local sg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_DECK|LOCATION_GRAVE,0,nil,e,tp)
 		if #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
-			Duel.AdjustInstantly(c)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil,e,tp)
 			if #g==0 then return end

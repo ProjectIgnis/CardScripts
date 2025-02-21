@@ -1479,6 +1479,12 @@ function Auxiliary.SelfDiscardToGraveCost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return c:IsDiscardable() and c:IsAbleToGraveAsCost() end
 	Duel.SendtoGrave(c,REASON_DISCARD|REASON_COST)
 end
+function Auxiliary.SelfRevealCost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return not c:IsPublic() end
+	Duel.ConfirmCards(1-tp,c)
+	Duel.ShuffleHand(tp)
+end
 
 function Auxiliary.PayLPCost(lp_value,pay_until)
 	if not pay_until then
@@ -1567,16 +1573,24 @@ Cost.SelfToDeck=aux.SelfToDeckCost
 Cost.SelfToExtra=aux.SelfToExtraCost
 Cost.SelfDiscard=aux.SelfDiscardCost
 Cost.SelfDiscardToGrave=aux.SelfDiscardToGraveCost
+Cost.SelfRevealCost=aux.SelfRevealCost
 
 Cost.Detach=aux.dxmcostgen
 Cost.Discard=aux.DiscardCost
 Cost.PayLP=aux.PayLPCost
 
-function Cost.OncePerChain(flag)
+function Cost.SoftOncePerChain(flag)
 	return function(e,tp,eg,ep,ev,re,r,rp,chk)
 		local c=e:GetHandler()
 		if chk==0 then return not c:HasFlagEffect(flag) end
-		c:RegisterFlagEffect(flag,RESET_CHAIN,0,1)
+		c:RegisterFlagEffect(flag,RESET_EVENT|RESETS_STANDARD|RESET_CHAIN,0,1)
+	end
+end
+
+function Cost.HardOncePerChain(flag)
+	return function(e,tp,eg,ep,ev,re,r,rp,chk)
+		if chk==0 then return not Duel.HasFlagEffect(tp,id) end
+		Duel.RegisterFlagEffect(tp,id,RESET_CHAIN,0,1)
 	end
 end
 

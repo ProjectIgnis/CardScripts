@@ -12,33 +12,35 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetHintTiming(TIMING_SPSUMMON,TIMING_BATTLE_START)
+	e1:SetHintTiming(TIMING_SPSUMMON,TIMING_BATTLE_START|TIMING_BATTLE_END)
+	e1:SetCountLimit(1,0,EFFECT_COUNT_CODE_CHAIN)
 	e1:SetCondition(s.descon)
-	e1:SetCost(Cost.AND(Cost.Detach(1),Cost.OncePerChain(id)))
+	e1:SetCost(Cost.Detach(1))
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	local ct1=Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD|LOCATION_HAND,0)
-	local ct2=Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD|LOCATION_HAND)
-	return ct2>ct1 and (Duel.IsTurnPlayer(tp) and Duel.IsMainPhase() or Duel.IsBattlePhase())
+	if not (Duel.IsTurnPlayer(tp) and Duel.IsMainPhase()) or (Duel.IsTurnPlayer(1-tp) and Duel.IsBattlePhase()) then return false end
+	return Duel.GetFieldGroupCount(tp,0,LOCATION_HAND|LOCATION_ONFIELD)>Duel.GetFieldGroupCount(tp,LOCATION_HAND|LOCATION_ONFIELD,0)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler())
 	if chk==0 then return #g>0 end
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,tp,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,c)
+	local exc=c:IsRelateToEffect(e) and c or nil
+	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,exc)
 	if #g>0 then
 		Duel.Destroy(g,REASON_EFFECT)
 	end
-	--Opponent takes no further damage this turn
+	--Your opponent takes no damage for the rest of this turn
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CHANGE_DAMAGE)
 	e1:SetTargetRange(0,1)
 	e1:SetValue(0)

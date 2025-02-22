@@ -25,7 +25,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	local tc=Duel.SelectMatchingCard(tp,s.rtdfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,1,nil)
 	Duel.HintSelection(tc)
-	if Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0then
+	if Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0 then
 		local g=Duel.GetMatchingGroup(s.thfilter,tp,0,LOCATION_MZONE,nil)
 		if Duel.GetFieldGroupCount(e:GetHandlerPlayer(),0,LOCATION_HAND)==0 and #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)

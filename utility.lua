@@ -1541,6 +1541,7 @@ end
 -- group of just detached materials in order to do some additional handling with
 -- them.
 function Auxiliary.dxmcostgen(min,max,op)
+	max=max or min
 	do --Perform some sanity checks, simplifies debugging
 		local max_type=type(max)
 		local op_type=type(op)
@@ -1560,14 +1561,63 @@ function Auxiliary.dxmcostgen(min,max,op)
 		local crm=c:CheckRemoveOverlayCard(tp,min,REASON_COST)
 		if chk==0 then return (nn and c:IsLocation(LOCATION_MZONE)) or crm end
 		if nn and (not crm or Duel.SelectYesNo(tp,aux.Stringid(CARD_NUMERON_NETWORK,1))) then
-			Duel.Hint(HINT_CARD,tp,CARD_NUMERON_NETWORK)
-			return true --NOTE: Does not execute `op`
+			--Do not execute `op`, hint at "Numeron Network" being applied
+			return Duel.Hint(HINT_CARD,tp,CARD_NUMERON_NETWORK)
 		end
 		local m=type(max)=="number" and max or max(e,tp)
 		if c:RemoveOverlayCard(tp,min,m,REASON_COST)>0 and op then
 			op(e,Duel.GetOperatedGroup())
 		end
-		return true --NOTE: to use with aux.AND
+	end
+end
+
+
+Cost={}
+
+Cost.SelfBanish=aux.bfgcost
+Cost.SelfRelease=aux.selfreleasecost
+Cost.SelfTribute=aux.selfreleasecost
+Cost.SelfToGrave=aux.SelfToGraveCost
+Cost.SelfToHand=aux.SelfToHandCost
+Cost.SelfToDeck=aux.SelfToDeckCost
+Cost.SelfToExtra=aux.SelfToExtraCost
+Cost.SelfDiscard=aux.SelfDiscardCost
+Cost.SelfDiscardToGrave=aux.SelfDiscardToGraveCost
+Cost.SelfRevealCost=aux.SelfRevealCost
+
+Cost.Detach=aux.dxmcostgen
+Cost.Discard=aux.DiscardCost
+Cost.PayLP=aux.PayLPCost
+
+function Cost.SoftOncePerChain(flag)
+	return function(e,tp,eg,ep,ev,re,r,rp,chk)
+		local c=e:GetHandler()
+		if chk==0 then return not c:HasFlagEffect(flag) end
+		c:RegisterFlagEffect(flag,RESET_EVENT|RESETS_STANDARD|RESET_CHAIN,0,1)
+	end
+end
+
+function Cost.HardOncePerChain(flag)
+	return function(e,tp,eg,ep,ev,re,r,rp,chk)
+		if chk==0 then return not Duel.HasFlagEffect(tp,id) end
+		Duel.RegisterFlagEffect(tp,id,RESET_CHAIN,0,1)
+	end
+end
+
+function Cost.AND(...)
+	local fns={...}
+	return function(e,tp,eg,ep,ev,re,r,rp,chk)
+		--when checking, stop at the first falsy value
+		if chk==0 then
+			for _,fn in ipairs(fns) do
+				if not fn(e,tp,eg,ep,ev,re,r,rp,0) then return false end
+			end
+			return true
+		end
+		--when executing, run all functions regardless of what they return
+		for _,fn in ipairs(fns) do
+			fn(e,tp,eg,ep,ev,re,r,rp,1)
+		end
 	end
 end
 

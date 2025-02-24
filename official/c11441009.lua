@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.drcost)
+	e1:SetCost(Cost.AND(Cost.PayLP(600),Cost.Detach(1)))
 	e1:SetTarget(s.drtg)
 	e1:SetOperation(s.drop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
@@ -43,13 +43,6 @@ function s.xyzop(e,tp,chk)
 	if chk==0 then return not Duel.HasFlagEffect(tp,id) end
 	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,EFFECT_FLAG_OATH,1)
 	return true
-end
-function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local pay=aux.PayLPCost(600)
-	local detach=aux.dxmcostgen(1,1)
-	if chk==0 then return pay(e,tp,eg,ep,ev,re,r,rp,chk) and detach(e,tp,eg,ep,ev,re,r,rp,chk) end
-	pay(e,tp,eg,ep,ev,re,r,rp,chk)
-	detach(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end

@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	e2:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(function(e,tp) return Duel.IsTurnPlayer(1-tp) end)
-	e2:SetCost(s.descost)
+	e2:SetCost(Cost.AND(Cost.PayLP(1500),Cost.SelfTribute))
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
@@ -42,12 +42,6 @@ function s.lpop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_CARD,0,id)
 		Duel.Recover(tp,300,REASON_EFFECT)
 	end
-end
-function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return Duel.CheckLPCost(tp,1500) and c:IsReleasable() end
-	Duel.PayLPCost(tp,1500)
-	Duel.Release(c,REASON_COST)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g1=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
@@ -65,11 +59,13 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local op=e:GetLabel()
 	if op==1 then
+		--Destroy all face-up monsters your opponent controls
 		local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 		if #g>0 then
 			Duel.Destroy(g,REASON_EFFECT)
 		end
 	elseif op==2 then
+		--Destroy all face-up Spells/Traps your opponent controls
 		local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSpellTrap),tp,0,LOCATION_ONFIELD,nil)
 		if #g>0 then
 			Duel.Destroy(g,REASON_EFFECT)

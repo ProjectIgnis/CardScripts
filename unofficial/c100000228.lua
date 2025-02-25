@@ -1,10 +1,12 @@
 --フラッシュ・エフェクト
+--Flash Effect
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_NEGATE)
+	e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DISABLE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
@@ -12,38 +14,29 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local ph=Duel.GetCurrentPhase()
-	return ph>=0x08 and ph<=0x20 and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
+	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
+    	return Duel.IsBattlePhase() and loc==LOCATION_MZONE and re:IsMonsterEffect() and Duel.IsChainDisablable(ev)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end
-	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
-end
-function s.filter2(c)
-	return c:IsFaceup() and c:IsType(TYPE_EFFECT)
+	local rc=re:GetHandler()
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() and chkc==rc end
+	if chk==0 then return rc:IsLocation(LOCATION_MZONE) and rc:IsCanBeEffectTarget(e) end
+	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,rc,1,0,800)
+	Duel.SetOperationInfo(0,CATEGORY_DISABLE,nil,1,PLAYER_ALL,LOCATION_MZONE)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateActivation(ev)
 	local c=e:GetHandler()
-	local tc=re:GetHandler()
-	if tc:IsRelateToEffect(re) and tc:IsFaceup() then
+	local rc=re:GetHandler()
+	if  then return end
+	if rc and not rc:IsImmuneToEffect(e) and rc:IsLocation(LOCATION_MZONE) and rc:IsRelateToEffect(re) and rc:IsFaceup() then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE)
 		e1:SetValue(800)
-		tc:RegisterEffect(e1)
+		rc:RegisterEffect(e1)
 	end
-	local g=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	local sg=g:GetFirst()
-	while sg do
-		--disable
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		sg:RegisterEffect(e1)
-		sg=g:GetNext()
-	end
+	local g=Duel.GetMatchingGroup(Card.IsNegatableMonster,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	g:ForEach(function(tc) tc:NegateEffects(c,RESET_PHASE|PHASE_BATTLE,true) end)
 end

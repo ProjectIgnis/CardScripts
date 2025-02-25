@@ -28,7 +28,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateActivation(ev)
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
-	if  then return end
 	if rc and not rc:IsImmuneToEffect(e) and rc:IsLocation(LOCATION_MZONE) and rc:IsRelateToEffect(re) and rc:IsFaceup() then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

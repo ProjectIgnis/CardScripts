@@ -157,6 +157,6 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.leaveop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	c:Recreate(1520000030)
+	c:Recreate(511015118)
 	Duel.AdjustInstantly(c)
 end

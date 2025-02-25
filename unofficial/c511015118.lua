@@ -61,7 +61,7 @@ function s.initial_effect(c)
 	e7:SetCountLimit(1)
 	e7:SetRange(LOCATION_MZONE)
 	e7:SetCondition(function(e) return e:GetHandler():HasFlagEffect(id) end)
-	e7:SetOperation(function(e,tp,eg,ep,ev,re,r,rp) e:GetHandler():Recreate(1520000030) end)
+	e7:SetOperation(function(e,tp,eg,ep,ev,re,r,rp) e:GetHandler():Recreate(511015118) end)
 	c:RegisterEffect(e7)
 	local e8=Effect.CreateEffect(c)
 	e8:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
@@ -74,11 +74,6 @@ end
 s.listed_series={SET_NUMBER}
 s.listed_names={1426715} --"Phantom Token"
 s.xyz_number=48
-function s.rmvtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return (r&REASON_EFFECT)>0 and re and re:GetHandlerPlayer()==1-c:GetControler() and c:GetDestination()==LOCATION_REMOVED end
-	return true
-end
 function s.mvfilter(c)
 	return c:HasFlagEffect(id) and c:GetSequence()<5
 end

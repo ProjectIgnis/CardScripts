@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	end)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	if re:IsSpellEffect() then
+	if re:IsSpellEffect() and re:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		re:GetHandler():RegisterFlagEffect(id+1,RESETS_STANDARD_PHASE_END&~(RESET_TOGRAVE|RESET_LEAVE),0,1)
 	end
 end

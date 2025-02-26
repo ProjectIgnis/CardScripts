@@ -28,6 +28,7 @@ function s.nobattledmgcon(e)
 	local c=e:GetHandler()
 	if c:IsHasEffect(EFFECT_INDESTRUCTABLE_BATTLE) or c:IsHasEffect(EFFECT_INDESTRUCTABLE) then return false end
 	local bc=c:GetBattleTarget()
+	if not bc then return false end
 	if c==Duel.GetAttacker() then
 		return bc:IsAttackPos() and bc:IsAttackAbove(1) and bc:IsAttackAbove(c:GetAttack())
 	else

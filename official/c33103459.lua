@@ -1,7 +1,8 @@
 --EMコン
+--Performapal Corn
 local s,id=GetID()
 function s.initial_effect(c)
-	--to hand
+	--Change both it this card and a "Perfomapal" monster you control to Defense Position, and if you do, add 1 "Odd-Eyes" monster from your Deck to your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -9,18 +10,18 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	e1:SetCondition(s.thcon)
+	e1:SetCondition(function(e) return e:GeHandler():HasFlagEffect(id) end)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	--lp recover
+	--Gain 500 LP
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_RECOVER)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCondition(s.lpcon)
+	e2:SetCondition(function(e,tp) return Duel.IsTurnPlayer(1-tp) end)
 	e2:SetCost(s.lpcost)
 	e2:SetTarget(s.lptg)
 	e2:SetOperation(s.lpop)
@@ -39,23 +40,21 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge2,0)
 	end)
 end
-s.listed_series={0x9f,0x99}
+s.listed_series={SET_PERFORMAPAL,SET_ODD_EYES}
 s.listed_names={id}
-function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetFlagEffect(id)~=0
-end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x9f) and c:IsAttackBelow(1000)
+	return c:IsFaceup() and c:IsSetCard(SET_PERFORMAPAL) and c:IsAttackBelow(1000)
 		and c:IsPosition(POS_FACEUP_ATTACK) and c:IsCanChangePosition()
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x99) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_ODD_EYES) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) and chkc~=e:GetHandler() end
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil)
 		and e:GetHandler():IsPosition(POS_FACEUP_ATTACK)
 		and Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,e:GetHandler()) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
 	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
@@ -74,10 +73,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x9f) and c:IsMonster() and c:IsAbleToRemoveAsCost() and not c:IsCode(id)
-end
-function s.lpcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return c:IsSetCard(SET_PERFORMAPAL) and c:IsMonster() and c:IsAbleToRemoveAsCost() and not c:IsCode(id)
 end
 function s.lpcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,0)

@@ -1,10 +1,9 @@
 --優麗なる霊鏡
 --Necroquip Prism
 --Scripted by Naim
-
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special 1 monster from hand
+	--Special Summon 1 monster from hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_EQUIP+CATEGORY_SPECIAL_SUMMON)
@@ -30,6 +29,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local ft2=Duel.GetLocationCount(tp,LOCATION_SZONE)
 	if not e:GetHandler():IsLocation(LOCATION_SZONE) then ft2=ft2-1 end
 	if chk==0 then return ft1>0 and ft2>0 and Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	e:SetLabel(g:GetFirst():GetLevel())
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
@@ -51,7 +51,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_EQUIP_LIMIT)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			e1:SetValue(s.eqlimit)
 			e1:SetLabelObject(tc)
 			tg:RegisterEffect(e1)
@@ -61,7 +61,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_EQUIP)
 			e2:SetCode(EFFECT_UPDATE_ATTACK)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 			e2:SetValue(atk)
 			tg:RegisterEffect(e2)
 			--Cannot activate cards/effects with the same name
@@ -72,7 +72,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e3:SetTargetRange(1,0)
 			e3:SetValue(s.aclimit)
 			e3:SetLabelObject(tg)
-			e3:SetReset(RESET_PHASE+PHASE_END)
+			e3:SetReset(RESET_PHASE|PHASE_END)
 			Duel.RegisterEffect(e3,tp)
 		end
 	end

@@ -1,8 +1,10 @@
 --融合死円舞曲
+--Fusion Fright Waltz
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -11,9 +13,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xad}
+s.listed_series={SET_FRIGHTFUR}
 function s.filter1(c,tp)
-	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:IsSetCard(0xad)
+	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:IsSetCard(SET_FRIGHTFUR)
 		and Duel.IsExistingTarget(s.filter2,tp,0,LOCATION_MZONE,1,nil,tp,c)
 end
 function s.filter2(c,tp,tc)
@@ -27,7 +29,9 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	if chk==0 then return Duel.IsExistingTarget(s.filter1,tp,LOCATION_MZONE,0,1,nil,tp) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local g1=Duel.SelectTarget(tp,s.filter1,tp,LOCATION_MZONE,0,1,1,nil,tp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local g2=Duel.SelectTarget(tp,s.filter2,tp,0,LOCATION_MZONE,1,1,nil,tp,g1:GetFirst())
 	g1:Merge(g2)
 	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,g1)

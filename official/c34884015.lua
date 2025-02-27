@@ -1,15 +1,16 @@
 --魂のペンデュラム
 --Soul Pendulum
 --scripted started by andré
+local COUNTER_SOUL_PENDULUM=0x200
 local s,id=GetID()
 function s.initial_effect(c)
-	c:EnableCounterPermit(0x200)
-	--activate
+	c:EnableCounterPermit(COUNTER_SOUL_PENDULUM)
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--target
+	--Change each Pendulum Scale by 1
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -19,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.cpsoperation)
 	e2:SetCountLimit(1,id)
 	c:RegisterEffect(e2)
-	--add counter
+	--Place 1 counter on this card
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -27,7 +28,7 @@ function s.initial_effect(c)
 	e3:SetCondition(s.acotccondition)
 	e3:SetOperation(s.acotcoperation)
 	c:RegisterEffect(e3)
-	--increase atk bassed on this card counter
+	--Pendulum Monsters on the field gain 300 ATK for each counter on this card
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
 	e4:SetCode(EFFECT_UPDATE_ATTACK)
@@ -36,7 +37,7 @@ function s.initial_effect(c)
 	e4:SetTarget(s.iatarget)
 	e4:SetValue(s.iavalue)
 	c:RegisterEffect(e4)
-	--additional pendulum summon
+	--You can conduct 1 Pendulum Summon of a monster(s) in addition to your Pendulum Summon
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,3))
 	e5:SetType(EFFECT_TYPE_IGNITION)
@@ -49,10 +50,11 @@ end
 function s.cpstarget(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	if chk==0 then return Duel.IsExistingTarget(aux.TRUE,tp,LOCATION_PZONE,0,2,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	Duel.SelectTarget(tp,aux.TRUE,tp,LOCATION_PZONE,0,2,2,nil)
 end
 function s.getscale(c)
-	if c == Duel.GetFieldCard(0,LOCATION_PZONE,0) or c == Duel.GetFieldCard(1,LOCATION_PZONE,0) then
+	if c==Duel.GetFieldCard(0,LOCATION_PZONE,0) or c==Duel.GetFieldCard(1,LOCATION_PZONE,0) then
 		return c:GetLeftScale()
 	else
 		return c:GetRightScale()
@@ -75,12 +77,8 @@ function s.cpsoperation(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LSCALE)
-		if opt == 0 then
-			e1:SetValue(1)
-		else
-			e1:SetValue(-1)
-		end
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetValue((opt==0) and 1 or -1)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UPDATE_RSCALE)
@@ -88,26 +86,26 @@ function s.cpsoperation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.acotcfilter(c,tp)
-	return c:IsType(TYPE_PENDULUM) and c:GetSummonPlayer() == tp and c:IsSummonType(SUMMON_TYPE_PENDULUM)
+	return c:IsType(TYPE_PENDULUM) and c:IsSummonPlayer(tp) and c:IsPendulumSummoned()
 end
 function s.acotccondition(e,tp,eg,ep,ev,re,r,rp)
 	return eg and eg:IsExists(s.acotcfilter,1,nil,tp)
 end
 function s.acotcoperation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	c:AddCounter(0x200,1)
+	c:AddCounter(COUNTER_SOUL_PENDULUM,1)
 end
 function s.iatarget(e,c)
 	return c:IsMonster() and c:IsType(TYPE_PENDULUM)
 end
 function s.iavalue(e,c)
 	local oc=e:GetHandler()
-	return oc:GetCounter(0x200)*300
+	return oc:GetCounter(COUNTER_SOUL_PENDULUM)*300
 end
 function s.apscost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:IsCanRemoveCounter(tp,0x200,3,REASON_COST) end
-	c:RemoveCounter(tp,0x200,3,REASON_COST)
+	if chk==0 then return c:IsCanRemoveCounter(tp,COUNTER_SOUL_PENDULUM,3,REASON_COST) end
+	c:RemoveCounter(tp,COUNTER_SOUL_PENDULUM,3,REASON_COST)
 end
 function s.apscondition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFlagEffect(tp,29432356)==0
@@ -118,7 +116,7 @@ function s.apsoperation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e1:SetCode(EVENT_ADJUST)
 	e1:SetOperation(s.checkop)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.checkop(e,tp)
@@ -133,9 +131,9 @@ function s.checkop(e,tp)
 		e1:SetCondition(s.pencon)
 		e1:SetOperation(s.penop)
 		e1:SetValue(SUMMON_TYPE_PENDULUM)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		lpz:RegisterEffect(e1)
-		lpz:RegisterFlagEffect(id,RESET_PHASE+PHASE_END,0,1)
+		lpz:RegisterFlagEffect(id,RESET_PHASE|PHASE_END,0,1)
 	end
 end
 function s.pencon(e,c,og)
@@ -217,7 +215,7 @@ function s.penop(e,tp,eg,ep,ev,re,r,rp,c,sg,og)
 	end
 	if #sg>0 then
 		Duel.Hint(HINT_CARD,0,id)
-		Duel.RegisterFlagEffect(tp,29432356,RESET_PHASE+PHASE_END+RESET_SELF_TURN,0,1)
+		Duel.RegisterFlagEffect(tp,29432356,RESET_PHASE|PHASE_END|RESET_SELF_TURN,0,1)
 		Duel.HintSelection(Group.FromCards(c))
 		Duel.HintSelection(Group.FromCards(rpz))
 	end

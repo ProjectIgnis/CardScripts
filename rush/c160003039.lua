@@ -1,6 +1,5 @@
 --サバイバル・ソードフィッシュ
 --Survival Swordfish
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -39,6 +38,7 @@ end
 	--Make up to 2 fish monsters gain 500 ATK
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local td=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.HintSelection(td)
 	if Duel.SendtoDeck(td,nil,SEQ_DECKBOTTOM,REASON_COST)~0 then

@@ -3,7 +3,7 @@
 --scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- atk/def change
+	--1 face-up monster your opponent controls loses ATK/DEF equal to the number of cards sent to the GY x 1000
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
@@ -17,7 +17,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-
 	return Duel.GetFieldGroupCountRush(tp,LOCATION_SZONE,0)==Duel.GetMatchingGroupCountRush(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -27,14 +26,15 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(Card.IsFaceup),tp,0,LOCATION_MZONE,1,nil) end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	--requirement
+	--Requirement
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local tg=Duel.SelectMatchingCard(tp,Card.IsAbleToGraveAsCost,tp,LOCATION_SZONE,0,1,3,nil)
 	local sent=Duel.SendtoGrave(tg,REASON_COST)
 	if sent>0 then
-		--effect
+		--Effect
+		local c=e:GetHandler()
 		if c:IsRelateToEffect(e) and c:IsFaceup() then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
 			local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(Card.IsFaceup),tp,0,LOCATION_MZONE,1,1,nil)
 			if #g>0 then
 				Duel.HintSelection(g)

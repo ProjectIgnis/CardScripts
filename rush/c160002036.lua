@@ -2,8 +2,9 @@
 --Road Magic - Tectonic Shift
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--1 face-up monster on your opponent's field loses ATK equal to the ATK of the monster with the highest ATK in your Graveyard
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -36,6 +37,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 	local g=Duel.GetMatchingGroup(Card.IsMonster,tp,LOCATION_GRAVE,0,nil)
 	if #g==0 then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
 	local tc=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(Card.IsFaceup),tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
 	Duel.HintSelection(tc)
 	local gc=g:GetMaxGroup(Card.GetAttack):GetFirst()

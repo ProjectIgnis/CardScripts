@@ -1,10 +1,10 @@
 --守護の竜魔導士
 --Defender of Dragon Sorcerers
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Make 1 of your monsters unable to be destroyed by opponent's card effects
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
@@ -29,9 +29,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND,0,1,1,nil)
 	Duel.SendtoGrave(g,REASON_COST)
 	--Effect
-	local tc=Duel.SelectMatchingCard(tp,aux.TRUE,tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_APPLYTO)
+	local tc=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
 	if tc then
-		Duel.HintSelection(Group.FromCards(tc))
+		Duel.HintSelection(tc)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetDescription(3060)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)

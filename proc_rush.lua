@@ -55,8 +55,8 @@ function Card.IsCanChangePositionRush(c)
 	return c:IsCanChangePosition() and not c:IsMaximumMode()
 end
 function Card.CanChangeIntoTypeRush(c,type,turnvalue)
-	if c:IsOriginalRace(type) then return false end
 	if not c:IsRace(type) then return true end
+	if c:IsOriginalRace(type) then return false end
 	if not c:IsHasEffect(EFFECT_CHANGE_RACE) then return true end
 	if nil==turnvalue then turnvalue=1 end
 	local eff={c:GetCardEffect(EFFECT_CHANGE_RACE)}
@@ -70,8 +70,8 @@ function Card.CanChangeIntoTypeRush(c,type,turnvalue)
 	return true
 end
 function Card.CanChangeIntoAttributeRush(c,attribute,turnvalue)
-	if c:IsOriginalAttribute(attribute) then return false end
 	if not c:IsAttribute(attribute) then return true end
+	if c:IsOriginalAttribute(attribute) then return false end
 	if not c:IsHasEffect(EFFECT_CHANGE_ATTRIBUTE) then return true end
 	if nil==turnvalue then turnvalue=1 end
 	local eff={c:GetCardEffect(EFFECT_CHANGE_ATTRIBUTE)}

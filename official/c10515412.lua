@@ -74,5 +74,14 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCondition(function(e,tp,eg,ep,ev,re,r,rp) return re:GetHandler()==tc end)
 		e2:SetOperation(function(e,tp,eg,ep,ev,re,r,rp) if e1 then e1:Reset() end e:Reset() end)
 		Duel.RegisterEffect(e2,tp)
+		--Reset e2 if the card leaves the field without being activated
+		local e3=Effect.CreateEffect(e:GetHandler())
+		e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+		e3:SetCode(EVENT_LEAVE_FIELD_P)
+		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e3:SetReset(RESET_EVENT|RESETS_STANDARD)
+		e3:SetOperation(function(e) if e:GetLabelObject() then e:GetLabelObject():Reset() end end)
+		e3:SetLabelObject(e2)
+		tc:RegisterEffect(e3)
 	end
 end

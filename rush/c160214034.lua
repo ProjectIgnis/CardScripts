@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_CAN_D,CARD_FUSION}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,1000) end
+	if chk==0 then return Duel.CheckLPCost(tp,100) end
 end
 function s.filter(c,code)
 	return c:IsMonster() and c:IsRace(RACE_PSYCHIC) and not c:IsCode(code)
@@ -33,7 +33,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	--Requirement
-	Duel.PayLPCost(tp,1000)
+	Duel.PayLPCost(tp,100)
 	--Effect
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil,c:GetCode())
 	if #g>0 then

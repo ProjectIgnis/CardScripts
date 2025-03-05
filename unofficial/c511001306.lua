@@ -1,3 +1,4 @@
+--封魂の聖杯
 --Cup of Sealed Soul
 local s,id=GetID()
 function s.initial_effect(c)
@@ -6,12 +7,12 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--remain field
+	--This card remains on the field
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_REMAIN_FIELD)
 	c:RegisterEffect(e2)
-	--sp summon
+	--Once while on the field, Special Summon "Mystical Beast of Serket" ignoring Summoning conditions
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
@@ -22,38 +23,31 @@ function s.initial_effect(c)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
-	--indestructable
+	--"Mystical Beast of Serket" cannot be destroyed by card effects while this card and "Seal of Serket" are on the field
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
-	e4:SetCode(EFFECT_INDESTRUCTABLE)
+	e4:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetTargetRange(LOCATION_ONFIELD,LOCATION_ONFIELD)
-	e4:SetCondition(s.incon)
-	e4:SetTarget(s.infilter)
+	e4:SetCondition(function(e) return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,511001305),e:GetHandlerPlayer(),LOCATION_SZONE,0,1,nil) end)
+	e4:SetTarget(function(e,c) return c:IsFaceup() and c:IsCode(89194033) end)
+	e4:SetValue(1)
 	c:RegisterEffect(e4)
 end
-function s.cfilter(c,code)
-	return c:IsFaceup() and c:IsCode(code)
-end
+s.listed_names={511001305,CARD_TEMPLE_OF_THE_KINGS,89194033} --"Seal of Serket, Mystical Beast of Serket"
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_SZONE,0,1,nil,511001305)
-		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_SZONE,0,1,nil,29762407)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,511001305),tp,LOCATION_SZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_TEMPLE_OF_THE_KINGS),tp,LOCATION_SZONE,0,1,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,89194033,0,0x21,2500,2000,6,RACE_FAIRY,ATTRIBUTE_EARTH) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,89194033,0,TYPE_MONSTER|TYPE_EFFECT,2500,2000,6,RACE_FAIRY,ATTRIBUTE_EARTH) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 
-		or not Duel.IsPlayerCanSpecialSummonMonster(tp,89194033,0,0x21,2500,2000,6,RACE_FAIRY,ATTRIBUTE_EARTH) then return end
+		or not Duel.IsPlayerCanSpecialSummonMonster(tp,89194033,0,TYPE_MONSTER|TYPE_EFFECT,2500,2000,6,RACE_FAIRY,ATTRIBUTE_EARTH) then return end
 	local token=Duel.CreateToken(tp,89194033)
 	Duel.SpecialSummon(token,0,tp,tp,true,false,POS_FACEUP)
-end
-function s.incon(e)
-	return Duel.IsExistingMatchingCard(s.cfilter,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil,511001305)
-end
-function s.infilter(e,c)
-	return c:GetCode()==89194033
 end

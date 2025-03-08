@@ -28,8 +28,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local dg=Duel.GetMatchingGroup(Card.IsNotMaximumModeSide,tp,0,LOCATION_MZONE,nil)
 	if #dg>0 then
 		local sg=dg:Select(tp,1,1,nil)
-		sg=sg:AddMaximumCheck()
-		Duel.HintSelection(sg)
+		local sg2=sg:AddMaximumCheck()
+		Duel.HintSelection(sg2)
 		if Duel.Destroy(sg,REASON_EFFECT)>0 and Duel.IsPlayerCanDraw(tp,1) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.BreakEffect()
 			Duel.Draw(tp,1,REASON_EFFECT)

@@ -54,6 +54,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESET_CHAIN|RESETS_STANDARD&~RESET_TURN_SET,0,1)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
+	if not (re:IsMonsterEffect() and re:GetHandlerPlayer()==1-tp) then return end
 	Duel.Hint(HINT_CARD,0,id)
 	local c=e:GetHandler()
 	--This card gains 500 ATK

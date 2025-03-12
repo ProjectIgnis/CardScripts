@@ -591,3 +591,4 @@ SET_YUMMY                         = 0x1c1
 SET_APOPHIS                       = 0x1c2
 SET_SERKET                        = 0x1c3
 SET_K9                            = 0x1c4
+SET_TELEPORT                      = 0x1c5

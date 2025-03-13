@@ -34,7 +34,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) and not tc:IsDisabled() then
-		tc:NegateEffects(c,RESET_PHASE|PHASE_END,true)
+		tc:NegateEffects(c,RESET_PHASE|PHASE_END)
 		Duel.AdjustInstantly(tc)
 		if Duel.GetMatchingGroupCount(Card.IsSpell,tp,LOCATION_GRAVE,0,nil)>=3 and tc:IsControlerCanBeChanged()
 			and tc:IsControler(1-tp) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then

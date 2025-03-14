@@ -767,6 +767,8 @@ end
 function Card.NegateEffects(tc,c,reset,negates_cards,ct)
 	if not reset then reset=RESET_EVENT|RESETS_STANDARD end
 	reset=reset|(RESET_EVENT|RESETS_STANDARD)
+	local trap_monster_chk=negates_cards and tc:IsType(TYPE_TRAPMONSTER)
+	if trap_monster_chk then reset=reset&~(RESET_TOFIELD|RESET_LEAVE|RESET_TURN_SET) end
 	if not ct then ct=1 end
 	Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 	--Negate its effects
@@ -780,7 +782,7 @@ function Card.NegateEffects(tc,c,reset,negates_cards,ct)
 	e2:SetCode(EFFECT_DISABLE_EFFECT)
 	e2:SetValue(RESET_TURN_SET)
 	tc:RegisterEffect(e2)
-	if negates_cards and tc:IsType(TYPE_TRAPMONSTER) then
+	if trap_monster_chk then
 		local e3=e1:Clone()
 		e3:SetCode(EFFECT_DISABLE_TRAPMONSTER)
 		tc:RegisterEffect(e3)

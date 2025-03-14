@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
-	e3:SetCondition(s.descon2)
+	e3:SetCondition(s.quickeffcond)
 	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
 	--Attach 1 "Super Quantum" monster from your hand or field to this card
 	local e4=Effect.CreateEffect(c)

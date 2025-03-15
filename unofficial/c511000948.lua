@@ -1,103 +1,69 @@
+--主従の覚悟
 --Master and Servant's Resolve
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_ACTIVATE)
+	e0:SetCode(EVENT_FREE_CHAIN)
+	c:RegisterEffect(e0)
+	--During the Battle Phase, when a monster is destroyed by an Effect Monster's effect, the destroyed monster's controller takes damage equal to its ATK
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,TIMING_BATTLE_START)
-	e1:SetTarget(s.tg)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_DAMAGE)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetCode(EVENT_DESTROYED)
+	e1:SetRange(LOCATION_SZONE)
+	e1:SetCondition(function(e,tp,eg,ep,ev,re,r,rp) return Duel.IsBattlePhase() and re and re:IsMonsterEffect() and eg:IsExists(Card.IsMonster,1,nil) end)
+	e1:SetTarget(s.damtg)
+	e1:SetOperation(s.damop)
 	c:RegisterEffect(e1)
-	--damage
+	--During each of your Standby Phases, take 1000 damage or destroy this card
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetCategory(CATEGORY_DAMAGE)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e2:SetCode(EVENT_LEAVE_FIELD)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e2:SetCondition(s.damcon)
-	e2:SetTarget(s.damtg)
-	e2:SetOperation(s.damop)
+	e2:SetCountLimit(1)
+	e2:SetCondition(function(e,tp) return Duel.IsTurnPlayer(tp) end)
+	e2:SetOperation(s.maintop)
 	c:RegisterEffect(e2)
-	--maintain
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
-	e3:SetRange(LOCATION_SZONE)
-	e3:SetCountLimit(1)
-	e3:SetOperation(s.mtop)
-	c:RegisterEffect(e3)
-end
-function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	local res,teg,tep,tev,tre,tr,trp=Duel.CheckEvent(EVENT_LEAVE_FIELD,true)
-	if res and s.damcon(e,tp,teg,tep,tev,tre,tr,trp) and s.damtg(e,tp,teg,tep,tev,tre,tr,trp,0) then
-		e:SetOperation(s.damop)
-		s.damtg(e,tp,teg,tep,tev,tre,tr,trp,1)
-		e:SetCategory(CATEGORY_DAMAGE)
-		e:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	else
-		e:SetOperation(nil)
-		e:SetCategory(0)
-		e:SetProperty(0)
-	end
-end
-function s.cfilter(c,re)
-	return c:IsPreviousLocation(LOCATION_MZONE) and (c:GetReason()&0x41)==0x41 and re:IsActiveType(TYPE_EFFECT)
-end
-function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	local ph=Duel.GetCurrentPhase()
-	e:SetLabelObject(re)
-	return eg:IsExists(s.cfilter,1,nil,re) and 
-		(Duel.IsBattlePhase() or (ph==PHASE_DAMAGE and not Duel.IsDamageCalculated()))
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local g=eg:Filter(s.cfilter,nil,e:GetLabelObject())
-	local tc=g:GetFirst()
-	local chp=0
-	while tc do
-		if tc:GetControler()==tp and chp~=1 and chp~=3 then
-			chp=chp+1
-		elseif tc:GetControler()~=tp and chp~=2 and chp~=3 then
-			chp=chp+2
-		end
-		tc=g:GetNext()
-	end
-	local p=0
-	if chp==1 then
-		p=tp
-	elseif chp==2 then
-		p=1-tp
-	elseif chp==3 then
-		p=PLAYER_ALL
-	end
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,nil,0)
-end
-function s.cfilter2(c,tp,re)
-	return c:IsPreviousLocation(LOCATION_MZONE) and (c:GetReason()&0x41)==0x41 
-		and re:IsActiveType(TYPE_EFFECT) and c:IsPreviousControler(tp)
+	local g=eg:Filter(Card.IsMonster,nil)
+	local g1,g2=g:Split(Card.IsPreviousControler,nil,tp)
+	local dam1,dam2=g1:GetSum(Card.GetPreviousAttackOnField),g2:GetSum(Card.GetPreviousAttackOnField)
+	local self_chk=dam1>0 and #g1>0
+	local opp_chk=dam2>0 and #g2>0
+	local player=(self_chk and opp_chk and PLAYER_ALL)
+		or (self_chk and tp)
+		or (opp_chk and 1-tp)
+	local chain_link=Duel.GetCurrentChain()
+	s[chain_link]={dam1,dam2}
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,player,dam1+dam2)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local g1=eg:Filter(s.cfilter2,nil,tp,e:GetLabelObject())
-	local g2=eg:Filter(s.cfilter2,nil,1-tp,e:GetLabelObject())
-	if #g1>0 then
-		local sum=g1:GetSum(Card.GetAttack)
-		Duel.Damage(tp,sum,REASON_EFFECT)
+	local chain_link=Duel.GetCurrentChain()
+	local dam1,dam2=table.unpack(s[chain_link])
+	if dam1>0 then
+		Duel.Damage(tp,dam1,REASON_EFFECT,true)
 	end
-	if #g2>0 then
-		local sum=g2:GetSum(Card.GetAttack)
-		Duel.Damage(1-tp,sum,REASON_EFFECT)
+	if dam2>0 then
+		Duel.Damage(1-tp,dam2,REASON_EFFECT,true)
 	end
+	Duel.RDComplete()
 end
-function s.mtop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetTurnPlayer()~=tp then return end
-	if Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+function s.maintop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_CARD,0,id)
+	--Take 1000 damage or destroy this card
+	local op=Duel.SelectEffect(tp,
+		{true,aux.Stringid(id,1)},
+		{true,aux.Stringid(id,2)}) or 2
+	if op==1 then
 		Duel.Damage(tp,1000,REASON_COST)
-	else
-		Duel.Destroy(e:GetHandler(),REASON_RULE)
+	elseif op==2 then
+		Duel.Destroy(e:GetHandler(),REASON_COST)
 	end
 end

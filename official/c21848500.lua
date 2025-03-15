@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Link materials: 3 monsters, including a "Maliss" monster
+	--Link Summon procedure: 3 monsters, including a "Maliss" monster
 	Link.AddProcedure(c,nil,3,3,s.lcheck)
 	--Shuffle 1 of your banished "Maliss" monsters into the Deck, and if you do, banish 1 card on the field
 	local e1=Effect.CreateEffect(c)
@@ -31,7 +31,7 @@ function s.initial_effect(c)
 		ge2:SetCode(EFFECT_CANNOT_DISEFFECT)
 		Duel.RegisterEffect(ge2,0)
 	end)
-	--Special Summon this card
+	--Special Summon this card and double its ATK
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_ATKCHANGE)
@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_REMOVE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(aux.PayLPCost(900))
+	e2:SetCost(Cost.PayLP(900))
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
@@ -84,17 +84,14 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) then
-		local atk=c:GetAttack()*2
-		if Duel.SpecialSummonStep(c,0,tp,tp,false,false,POS_FACEUP) then
-			--Its ATK becomes doubled
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_SET_ATTACK)
-			e1:SetValue(atk)
-			e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
-			c:RegisterEffect(e1,true)
-			end
-		Duel.SpecialSummonComplete()
+	if c:IsRelateToEffect(e) and Duel.SpecialSummonStep(c,0,tp,tp,false,false,POS_FACEUP) then
+		--Its ATK becomes doubled
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_SET_ATTACK)
+		e1:SetValue(c:GetAttack()*2)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
+		c:RegisterEffect(e1,true)
 	end
+	Duel.SpecialSummonComplete()
 end

@@ -1,68 +1,61 @@
+--アタッチメント・ドラゴン
 --Attachment Dragon
 local s,id=GetID()
 function s.initial_effect(c)
-	--lv change
+	--Equip this card as an Equip Card to a monster your opponent controls
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_EQUIP)
-	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetTarget(s.eqtg)
 	e1:SetOperation(s.eqop)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
-	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
+	e2:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 	local e3=e1:Clone()
-	e3:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
+	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
-	--pos
-	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(98649372,1))
-	e4:SetCategory(CATEGORY_POSITION)
-	e4:SetType(EFFECT_TYPE_IGNITION)
-	e4:SetRange(LOCATION_SZONE)
-	e4:SetCountLimit(1)
-	e4:SetTarget(s.postg)
-	e4:SetOperation(s.posop)
-	c:RegisterEffect(e4)
 end
-function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,0,0)
-end
-function s.eqlimit(e,c)
-	return e:GetOwner()==c
+function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsFaceup() end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+		and Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+	Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,tp,0)
 end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 or not c:IsRelateToEffect(e) then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	local g=Duel.SelectMatchingCard(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
-	local tc=g:GetFirst()
-	if tc then
-		Duel.HintSelection(g)
-		Duel.Equip(tp,c,tc,true)
-		--Add Equip limit
-		local e1=Effect.CreateEffect(tc)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_EQUIP_LIMIT)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e1:SetValue(s.eqlimit)
-		c:RegisterEffect(e1)
+	if not c:IsRelateToEffect(e) then return end
+	local tc=Duel.GetFirstTarget()
+	if not (tc:IsFaceup() and tc:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0) then
+		return Duel.SendtoGrave(c,REASON_RULE)
 	end
-end
-function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local eq=e:GetHandler():GetEquipTarget()
-	if chk==0 then return eq end
-	Duel.SetOperationInfo(0,CATEGORY_POSITION,eq,1,0,0)
-end
-function s.posop(e,tp,eg,ep,ev,re,r,rp)
-	local eq=e:GetHandler():GetEquipTarget()
-	if not e:GetHandler():IsRelateToEffect(e) then return end
-	if eq then
-		Duel.ChangePosition(eq,POS_FACEUP_DEFENSE,POS_FACEDOWN_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)
+	if Duel.Equip(tp,c,tc) then
+		--Equip limit
+		local e0=Effect.CreateEffect(c)
+		e0:SetType(EFFECT_TYPE_SINGLE)
+		e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e0:SetCode(EFFECT_EQUIP_LIMIT)
+		e0:SetValue(function(e,c) return c==tc end)
+		e0:SetReset(RESET_EVENT|RESETS_STANDARD)
+		c:RegisterEffect(e0)
+		if tc:IsCanChangePosition() then
+			local pos=Duel.SelectPosition(tp,tc,POS_FACEUP_ATTACK|POS_FACEUP_DEFENSE)
+			if pos~=tc:GetPosition() then
+				Duel.BreakEffect()
+				Duel.ChangePosition(tc,pos)
+			end
+		end
+		--The equipped monster cannot change its battle position
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_EQUIP)
+		e1:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
+		e1:SetValue(1)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
+		c:RegisterEffect(e1)
 	end
 end

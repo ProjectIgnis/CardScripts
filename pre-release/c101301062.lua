@@ -40,7 +40,7 @@ function s.rescon(sg,e,tp,mg)
 end
 function s.thtgop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.revfilter,tp,LOCATION_DECK,0,nil)
-	if #g>=3 then
+	if #g>=3 and g:IsExists(Card.IsAbleToHand,1,nil) then
 		local rg=aux.SelectUnselectGroup(g,e,tp,3,3,s.rescon,1,tp,HINTMSG_CONFIRM)
 		Duel.ConfirmCards(1-tp,rg)
 		Duel.Hint(HINT_SELECTMSG,1-tp,aux.Stringid(id,2))

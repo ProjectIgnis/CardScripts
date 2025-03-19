@@ -45,7 +45,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 			{ct>0,aux.Stringid(id,3)})
 	if op==1 then
 		--This card gains 800 ATK for each Zombie monster in your GY
-		c:UpdateAttack(ct*800,RESETS_STANDARD_DISABLE)
+		c:UpdateAttack(ct*800)
 	elseif op==2 then
 		--Inflict 500 damage to your opponent for each Zombie monster in your GY
 		Duel.Damage(1-tp,ct*500,REASON_EFFECT)

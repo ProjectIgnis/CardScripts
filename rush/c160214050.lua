@@ -23,7 +23,7 @@ function s.initial_effect(c)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsMainPhase() then
-		Duel.RegisterFlagEffect(rp,id,RESET_PHASE|PHASE_END,0,1)
+		Duel.RegisterFlagEffect(ep,id,RESET_PHASE|PHASE_END,0,1)
 	end
 end
 function s.cfilter(c)

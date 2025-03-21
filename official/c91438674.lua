@@ -9,9 +9,10 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetRange(LOCATION_HAND)
-	e1:SetHintTiming(0,TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
-	e1:SetCondition(function(e,tp) return Duel.IsTurnPlayer(1-tp) and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsContinuousTrap),tp,LOCATION_ONFIELD,0,1,nil) end)
+	e1:SetHintTiming(0,TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E|TIMING_DAMAGE_STEP)
+	e1:SetCondition(s.atkcond)
 	e1:SetCost(aux.SelfBanishCost)
 	e1:SetTarget(s.atktg)
 	e1:SetOperation(s.atkop)
@@ -35,6 +36,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_ARGOSTARS}
+function s.atkcond(e,tp,eg,ep,ev,re,r,rp,chk)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsContinuousTrap),tp,LOCATION_ONFIELD,0,1,nil)
+		and Duel.IsTurnPlayer(1-tp) and aux.StatChangeDamageStepCondition()
+end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsAttackAbove,1),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,nil,1,PLAYER_EITHER,LOCATION_MZONE)

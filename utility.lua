@@ -191,7 +191,7 @@ function Auxiliary.CostWithReplace(base,replacecode,extracon,alwaysexecute)
 			elseif cost_chk and not Duel.SelectEffectYesNo(tp,eff:GetHandler()) then
 				return base(e,tp,eg,ep,ev,re,r,rp,1)
 			end
-			local res={eff:GetOperation()(eff,e,tp,eg,ep,ev,re,r,rp,chk)}
+			local res={eff:GetOperation()(eff,e,tp,eg,ep,ev,re,r,rp,chk,extracon)}
 			eff:UseCountLimit(tp)
 			return table.unpack(res)
 		end

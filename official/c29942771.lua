@@ -1,9 +1,9 @@
--- ナチュル・カメリア
--- Naturia Camellia
--- Scripted by Hatter
+--ナチュル・カメリア
+--Naturia Camellia
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Send 1 "Naturia" card to the GY
+	--Send 1 "Naturia" card from your Deck to the GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOGRAVE)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
-	-- "Naturia" tribute replacement
+	--If you would Tribute a monster(s) to activate a "Naturia" monster's effect, you can send the top 2 cards of your Deck to the GY instead
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetType(EFFECT_TYPE_FIELD)
@@ -26,11 +26,11 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(1,0)
 	e3:SetCountLimit(1,{id,1})
-	e3:SetCondition(s.repcon)
+	e3:SetCondition(function(e) return Duel.IsPlayerCanDiscardDeckAsCost(e:GetHandlerPlayer(),2) end)
 	e3:SetValue(s.repval)
 	e3:SetOperation(s.repop)
 	c:RegisterEffect(e3)
-	-- Special Summon 1 "Naturia" monster
+	--Special Summon 1 "Naturia" monster from your GY
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,2))
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_SUMMON_SUCCESS)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1,{id,2})
-	e4:SetCondition(s.spcon)
+	e4:SetCondition(function(e,tp,eg) return eg:IsExists(Card.IsSummonPlayer,1,nil,1-tp) end)
 	e4:SetTarget(s.sptg)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
@@ -47,9 +47,9 @@ function s.initial_effect(c)
 	e5:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x2a}
+s.listed_series={SET_NATURIA}
 function s.tgfilter(c)
-	return c:IsSetCard(0x2a) and c:IsAbleToGrave()
+	return c:IsSetCard(SET_NATURIA) and c:IsAbleToGrave()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -62,22 +62,16 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(g,REASON_EFFECT)
 	end
 end
-function s.repcon(e)
-	return Duel.IsPlayerCanDiscardDeckAsCost(e:GetHandlerPlayer(),2)
-end
 function s.repval(base,e,tp,eg,ep,ev,re,r,rp,chk,extracon)
 	local c=e:GetHandler()
-	return c:IsMonster() and c:IsSetCard(0x2a)
+	return c:IsSetCard(SET_NATURIA) and c:IsMonster() and (extracon==nil or extracon(base,e,tp,eg,ep,ev,re,r,rp))
 end
 function s.repop(base,e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)
 	Duel.DiscardDeck(tp,2,REASON_COST)
 end
-function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(Card.IsSummonPlayer,1,nil,1-tp)
-end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x2a) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_NATURIA) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

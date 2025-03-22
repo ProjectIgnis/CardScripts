@@ -2,45 +2,39 @@
 --Ursarctic Polari
 local s,id=GetID()
 function s.initial_effect(c)
-	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--Must be Special Summoned by its own method
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
-	c:RegisterEffect(e1)
-	--Special Summon procedure (from the Extra Deck)
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(EFFECT_SPSUMMON_PROC)
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e2:SetRange(LOCATION_EXTRA)
-	e2:SetCondition(s.sprcon)
-	e2:SetTarget(s.sprtg)
-	e2:SetOperation(s.sprop)
-	c:RegisterEffect(e2)
+	c:AddMustBeSpecialSummoned()
+	--Must be Special Summoned (from your Extra Deck) by sending 2 monsters you control with a Level difference of 1 to the GY (1 Tuner and 1 non-Tuner)
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_FIELD)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetCode(EFFECT_SPSUMMON_PROC)
+	e0:SetRange(LOCATION_EXTRA)
+	e0:SetCondition(s.sprcon)
+	e0:SetTarget(s.sprtg)
+	e0:SetOperation(s.sprop)
+	c:RegisterEffect(e0)
 	--Activate 1 "Ursarctic Big Dipper" from your Deck
-	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,0))
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e3:SetProperty(EFFECT_FLAG_DELAY)
-	e3:SetCountLimit(1,id)
-	e3:SetCondition(s.accon)
-	e3:SetOperation(s.acop)
-	c:RegisterEffect(e3)
-	--Add to hand or Special Summon 1 "Ursarctic" monster from the GY
-	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(id,1))
-	e4:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOHAND)
-	e4:SetType(EFFECT_TYPE_IGNITION)
-	e4:SetRange(LOCATION_MZONE)
-	e4:SetCountLimit(1,{id,1})
-	e4:SetCost(aux.CostWithReplace(s.cost,CARD_URSARCTIC_BIG_DIPPER,s.extracon))
-	e4:SetTarget(s.target)
-	e4:SetOperation(s.operation)
-	c:RegisterEffect(e4)
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e1:SetProperty(EFFECT_FLAG_DELAY)
+	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e1:SetCountLimit(1,id)
+	e1:SetTarget(s.acttg)
+	e1:SetOperation(s.actop)
+	c:RegisterEffect(e1)
+	--Add to your hand, or Special Summon, 1 "Ursarctic" monster from your GY
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON)
+	e2:SetType(EFFECT_TYPE_IGNITION)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCountLimit(1,{id,1})
+	e2:SetCost(aux.CostWithReplace(s.thspcost,CARD_URSARCTIC_BIG_DIPPER,s.extracon))
+	e2:SetTarget(s.thsptg)
+	e2:SetOperation(s.thspop)
+	c:RegisterEffect(e2)
 end
 s.listed_series={SET_URSARCTIC}
 s.listed_names={CARD_URSARCTIC_BIG_DIPPER}
@@ -83,50 +77,51 @@ function s.sprop(e,tp,eg,ep,ev,re,r,rp,c)
 	if not g then return end
 	Duel.SendtoGrave(g,REASON_COST)
 end
-function s.fieldfilter(c,tp)
+function s.actfilter(c,tp)
 	return c:IsCode(CARD_URSARCTIC_BIG_DIPPER) and c:GetActivateEffect() and c:GetActivateEffect():IsActivatable(tp,true,true)
 end
-function s.accon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.fieldfilter,tp,LOCATION_DECK,0,1,nil,tp)
+function s.acttg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.actfilter,tp,LOCATION_DECK,0,1,nil,tp) end
 end
-function s.acop(e,tp,eg,ep,ev,re,r,rp)
+function s.actop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
-	local tc=Duel.SelectMatchingCard(tp,s.fieldfilter,tp,LOCATION_DECK,0,1,1,nil,tp):GetFirst()
-	Duel.ActivateFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsLevelAbove,1,false,nil,nil,7) end
-	local sg=Duel.SelectReleaseGroupCost(tp,Card.IsLevelAbove,1,1,false,nil,nil,7)
-	Duel.Release(sg,REASON_COST)
-end
-function s.extracon(base,c,e,tp)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,c,ft,base,tp)
-end
-function s.filter(c,ft,e,tp)
-	return (c:IsSetCard(SET_URSARCTIC) and c:IsMonster()) and (c:IsAbleToHand() or (ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
-end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then
-		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-		return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil,ft,e,tp)
+	local sc=Duel.SelectMatchingCard(tp,s.actfilter,tp,LOCATION_DECK,0,1,1,nil,tp):GetFirst()
+	if sc then
+		Duel.ActivateFieldSpell(sc,e,tp,eg,ep,ev,re,r,rp)
 	end
+end
+function s.thspcostfilter(c,e,tp)
+	return c:IsLevelAbove(7) and Duel.IsExistingMatchingCard(s.thspfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,Duel.GetMZoneCount(tp,c)>0)
+end
+function s.thspfilter(c,e,tp,mmz_chk)
+	return (c:IsSetCard(SET_URSARCTIC) and c:IsMonster()) and (c:IsAbleToHand() or (mmz_chk and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
+end
+function s.thspcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.thspcostfilter,1,false,nil,nil,e,tp) end
+	local g=Duel.SelectReleaseGroupCost(tp,s.thspcostfilter,1,1,false,nil,nil,e,tp)
+	Duel.Release(g,REASON_COST)
+end
+function s.thsptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,nil,1,tp,0)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
-function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELF)
-	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil,ft,e,tp):GetFirst()
-	if tc then
-		aux.ToHandOrElse(tc,tp,
-		function(tc)
-			return ft>0 and tc:IsCanBeSpecialSummoned(e,0,tp,false,false)
+function s.thspop(e,tp,eg,ep,ev,re,r,rp)
+	local mmz_chk=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
+	local sc=Duel.SelectMatchingCard(tp,s.thspfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,mmz_chk):GetFirst()
+	if not sc then return end
+	aux.ToHandOrElse(sc,tp,
+		function()
+			return mmz_chk and sc:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		end,
-		function(tc)
-			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+		function()
+			Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)
 		end,
-		aux.Stringid(id,1))
-	end
+		aux.Stringid(id,3)
+	)
+end
+function s.extracon(base,e,tp,eg,ep,ev,re,r,rp,c)
+	return Duel.IsExistingMatchingCard(s.thspfilter,tp,LOCATION_GRAVE,0,1,c,e,tp,Duel.GetLocationCount(tp,LOCATION_MZONE)>0)
 end

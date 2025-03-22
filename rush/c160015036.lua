@@ -22,11 +22,14 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) end
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:GetTextAttack()>=100 and c:IsNotMaximumModeSide()
+	if c:IsMaximumModeSide() then return false end
+	local atk=c:GetBaseAttack()
+	if c:IsMaximumMode() then atk=c:GetMaximumAttack() end
+	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and atk>=100 and c:IsNotMaximumModeSide()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,nil,1,tp,-600)
+	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,nil,1,tp,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -36,9 +39,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil)
 	if #g>0 then
-		Duel.HintSelection(g,true)
+		Duel.HintSelection(g)
 		local tc=g:GetFirst()
-		local atk=tc:GetTextAttack()
+		local atk=tc:GetBaseAttack()
 		if tc:IsMaximumMode() then
 			atk=tc:GetMaximumAttack()
 		end

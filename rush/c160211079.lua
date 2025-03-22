@@ -47,9 +47,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,2,nil)
 	if #g>0 then
-		Duel.HintSelection(g,true)
-		if Duel.ChangePosition(g,POS_FACEDOWN_DEFENSE,0,POS_FACEDOWN_DEFENSE,0)>0
-			and g:FilterCount(s.lpfilter,nil,tp)>0 then
+		Duel.HintSelection(g)
+		local ct=g:FilterCount(s.lpfilter,nil,tp)
+		if Duel.ChangePosition(g,POS_FACEDOWN_DEFENSE,0,POS_FACEDOWN_DEFENSE,0)>0 and ct >0 then
 			Duel.Recover(tp,1500,REASON_EFFECT)
 		end
 	end

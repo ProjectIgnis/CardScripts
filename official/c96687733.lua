@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={CARD_TEMPLE_OF_THE_KINGS,100410008} -- "Dangers of the Divine"
+s.listed_names={CARD_TEMPLE_OF_THE_KINGS,22082432} -- "Dangers of the Divine"
 function s.filterchk(c,tp)
 	return c:ListsCode(CARD_TEMPLE_OF_THE_KINGS) and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp)
 end
@@ -38,7 +38,7 @@ function s.fextra(e,tp,mg)
 	return nil
 end
 function s.thfilter(c)
-	return c:IsCode(100410008) and c:IsAbleToHand()
+	return c:IsCode(22082432) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

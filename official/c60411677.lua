@@ -40,7 +40,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={CARD_TEMPLE_OF_THE_KINGS,100410001} --"The Man with the Mark"
+s.listed_names={CARD_TEMPLE_OF_THE_KINGS,97522863} --"The Man with the Mark"
 function s.tdfilter(c)
 	return c:IsCode(CARD_TEMPLE_OF_THE_KINGS) or c:IsTrap()
 end
@@ -71,7 +71,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.SortDeckbottom(tp,tp,2)
 end
 function s.thfilter(c)
-	return c:IsCode(100410001) and c:IsAbleToHand()
+	return c:IsCode(97522863) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

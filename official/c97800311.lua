@@ -87,7 +87,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 		local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
 		if #g>ft then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
-			g=g:Select(tp,ft,ft)
+			g=g:Select(tp,ft,ft,nil)
 		end
 		Duel.SSet(tp,g)
 	end

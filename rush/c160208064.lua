@@ -33,6 +33,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		sg=sg:AddMaximumCheck()
 		Duel.HintSelection(sg,true)
 		Duel.SendtoDeck(sg,nil,SEQ_DECKTOP,REASON_EFFECT)
+		if #sg>1 then
+			Duel.SortDecktop(1-tp,1-tp,#sg)
+		end
 	end
 end
 

@@ -30,7 +30,7 @@ function s.aclimit(e,re,tp)
 	return not c:IsLocation(LOCATION_SZONE) or c:GetFlagEffect(id)>0
 end
 function s.aclimset(e,tp,eg,ep,ev,re,r,rp)
-	for tc in eg:Iter()
+	for tc in eg:Iter() do
 		tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN,0,1)
 	end
 end

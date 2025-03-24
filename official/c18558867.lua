@@ -78,7 +78,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_UPDATE_ATTACK)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e2:SetReset(RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN))
+		e2:SetReset(RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN)
 		e2:SetValue(200)
 		tc:RegisterEffect(e2)
 	end

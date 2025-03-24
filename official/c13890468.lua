@@ -1,4 +1,5 @@
 --精霊獣 ペトルフィン
+--Spiritual Beast Pettlephin
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetSPSummonOnce(id)

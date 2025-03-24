@@ -1,4 +1,5 @@
 --コア濃度圧縮
+--Core Compression
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

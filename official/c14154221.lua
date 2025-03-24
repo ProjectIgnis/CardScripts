@@ -1,4 +1,5 @@
 --進化の代償
+--Evo-Price
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate

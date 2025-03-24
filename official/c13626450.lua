@@ -1,4 +1,5 @@
 --邪気退散
+--Malice Dispersion
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

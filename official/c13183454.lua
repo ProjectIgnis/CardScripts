@@ -1,4 +1,5 @@
 --零鳥姫リオート・ハルピュイア
+--Ice Princess Zereort
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon

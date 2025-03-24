@@ -1,4 +1,5 @@
 --魔轟神アシェンヴェイル
+--Fabled Ashenveil
 local s,id=GetID()
 function s.initial_effect(c)
 	--attack up

@@ -1,4 +1,5 @@
 --月光輪廻舞踊
+--Lunalight Reincarnation Dance
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

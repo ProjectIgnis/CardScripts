@@ -1,4 +1,5 @@
 --BF－漆黒のエルフェン
+--Blackwing - Elphin the Raven
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon with no tribute

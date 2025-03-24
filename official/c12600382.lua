@@ -1,4 +1,5 @@
 --エクゾディア・ネクロス
+--Exodia Necross
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

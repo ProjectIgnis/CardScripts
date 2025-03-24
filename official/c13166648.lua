@@ -1,4 +1,5 @@
 --双龍降臨
+--Double Dragon Descent
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

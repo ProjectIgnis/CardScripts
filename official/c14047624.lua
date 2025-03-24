@@ -1,4 +1,5 @@
 --ラヴァルロード・ジャッジメント
+--Laval Judgment Lord
 local s,id=GetID()
 function s.initial_effect(c)
 	--damage

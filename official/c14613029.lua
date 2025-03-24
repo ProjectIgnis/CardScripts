@@ -1,4 +1,5 @@
 --ブレンD
+--Morphtronic Mix-up
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x26}
+s.listed_series={SET_MORPHTRONIC}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_MORPHTRONIC),tp,LOCATION_MZONE,0,2,nil)
 end

@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xb}
+s.listed_series={SET_INFERNITY}
 function s.filter(c)
 	return c:IsSetCard(SET_INFERNITY) and c:IsAbleToGrave()
 end

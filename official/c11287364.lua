@@ -1,4 +1,5 @@
 --クイック・スパナイト
+--Quick-Span Knight
 local s,id=GetID()
 function s.initial_effect(c)
 	--atk change

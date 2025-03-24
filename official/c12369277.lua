@@ -1,4 +1,5 @@
 --超量士ブルーレイヤー
+--Super Quantum Blue Layer
 local s,id=GetID()
 function s.initial_effect(c)
 	--search

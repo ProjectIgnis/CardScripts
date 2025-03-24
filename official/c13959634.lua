@@ -1,4 +1,5 @@
 --氷霊神ムーラングレイス
+--Moulinglacia the Elemental Lord
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

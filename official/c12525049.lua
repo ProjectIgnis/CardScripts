@@ -1,4 +1,5 @@
 --音響戦士ギータス
+--Symphonic Warrior Guitaar
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon

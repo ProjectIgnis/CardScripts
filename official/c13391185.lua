@@ -1,4 +1,5 @@
 --聖騎士ガラハド
+--Noble Knight Gwalchavad
 local s,id=GetID()
 function s.initial_effect(c)
 	--Normal monster

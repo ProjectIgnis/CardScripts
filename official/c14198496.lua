@@ -1,4 +1,5 @@
 --ミスティック・パイパー
+--Mystic Piper
 local s,id=GetID()
 function s.initial_effect(c)
 	--draw

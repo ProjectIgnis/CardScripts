@@ -1,4 +1,5 @@
 --機動砦 ストロング・ホールド
+--Stronghold the Moving Fortress
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

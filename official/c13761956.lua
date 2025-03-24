@@ -1,4 +1,5 @@
 --フレムベル・ベビー
+--Flamvell Baby
 local s,id=GetID()
 function s.initial_effect(c)
 	--atkup

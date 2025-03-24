@@ -1,4 +1,5 @@
 --召喚獣プルガトリオ
+--Invoked Purgatrio
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material

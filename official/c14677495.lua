@@ -1,4 +1,5 @@
 --極星獣タングニョースト
+--Tanngnjostr of the Nordic Beasts
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon(hand)
@@ -25,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop2)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x6042}
+s.listed_series={SET_NORDIC_BEAST}
 function s.cfilter(c,tp)
 	return c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_BATTLE) and c:IsPreviousControler(tp)
 end

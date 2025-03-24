@@ -1,4 +1,5 @@
 --星遺物からの目醒め
+--World Legacy Awakens
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

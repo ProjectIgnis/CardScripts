@@ -1,4 +1,5 @@
 --魔導戦士 フォルス
+--Strength of Prophecy
 local s,id=GetID()
 function s.initial_effect(c)
 	--atk/lv up

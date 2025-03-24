@@ -1,4 +1,5 @@
 --狩猟本能
+--Hunting Instinct
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

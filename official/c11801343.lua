@@ -1,4 +1,5 @@
 --ガベージコレクター
+--Garbage Collector
 local s,id=GetID()
 function s.initial_effect(c)
 	--bounce and summon

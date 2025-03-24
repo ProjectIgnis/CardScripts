@@ -1,4 +1,5 @@
 --ゴブリン穴埋め部隊
+--Goblin Pothole Squad
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon success

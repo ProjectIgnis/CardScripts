@@ -1,4 +1,5 @@
 --武神器－マフツ
+--Bujingi Raven
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy

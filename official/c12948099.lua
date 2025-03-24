@@ -1,4 +1,5 @@
 --古神クトグア
+--Old Entity Cthugua
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon

@@ -1,4 +1,5 @@
 --超戦士の儀式
+--Super Soldier Ritual
 local s,id=GetID()
 function s.initial_effect(c)
 	Ritual.AddProcEqual(c,aux.FilterBoolFunction(Card.IsSetCard,SET_BLACK_LUSTER_SOLDIER),8)

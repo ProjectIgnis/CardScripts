@@ -1,4 +1,5 @@
 --世界の平定
+--World Suppression
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate

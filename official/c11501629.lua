@@ -1,4 +1,5 @@
 --キックファイア
+--Kickfire
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x2d)

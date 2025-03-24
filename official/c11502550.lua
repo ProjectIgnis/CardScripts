@@ -1,4 +1,5 @@
 --E・HERO エアー・ネオス
+--Elemental HERO Air Neos
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material

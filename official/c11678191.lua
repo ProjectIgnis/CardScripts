@@ -1,4 +1,5 @@
 --守護霊 アイリン
+--Protective Soul Ailin
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddUnionProcedure(c,aux.FilterBoolFunction(Card.IsCode,84173492),true)

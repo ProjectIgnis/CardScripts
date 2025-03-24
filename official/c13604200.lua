@@ -1,4 +1,5 @@
 --賢者の宝石
+--Sage's Stone
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

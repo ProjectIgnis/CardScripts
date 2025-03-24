@@ -1,4 +1,5 @@
 --黄昏の忍者－シンゲツ
+--Twilight Ninja Shingetsu
 local s,id=GetID()
 function s.initial_effect(c)
 	--untargetable
@@ -30,7 +31,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x2b}
+s.listed_series={SET_NINJA}
 s.listed_names={id}
 function s.atlimit(e,c)
 	return c:IsFaceup() and c:IsSetCard(SET_NINJA) and c~=e:GetHandler()

@@ -1,4 +1,5 @@
 --勝利の導き手フレイヤ
+--Freya, Spirit of Victory
 local s,id=GetID()
 function s.initial_effect(c)
 	--atk def

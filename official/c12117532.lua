@@ -1,4 +1,5 @@
 --罅割れゆく斧
+--Shattered Axe
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddPersistentProcedure(c,nil,aux.FilterBoolFunction(Card.IsFaceup),CATEGORY_DISABLE,nil,nil,TIMING_END_PHASE,nil,nil,s.target)

@@ -1,4 +1,5 @@
 --惑星からの物体A
+--Interplanetary Invader "A"
 local s,id=GetID()
 function s.initial_effect(c)
 	--return to hand
@@ -16,13 +17,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetDescription(aux.Stringid(id,0))
 		e1:SetCategory(CATEGORY_CONTROL)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-		e1:SetCode(EVENT_PHASE+PHASE_BATTLE)
+		e1:SetCode(EVENT_PHASE|PHASE_BATTLE)
 		e1:SetCountLimit(1)
 		e1:SetTarget(s.cttg)
 		e1:SetOperation(s.ctop)
 		e1:SetLabelObject(a)
 		e1:SetLabel(a:GetRealFieldID())
-		e1:SetReset(RESET_PHASE+PHASE_BATTLE)
+		e1:SetReset(RESET_PHASE|PHASE_BATTLE)
 		Duel.RegisterEffect(e1,tp)
 	end
 end

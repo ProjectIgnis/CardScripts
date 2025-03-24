@@ -1,4 +1,5 @@
 --CNo.69 紋章死神カオス・オブ・アームズ
+--Number C69: Heraldry Crest of Horror
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon

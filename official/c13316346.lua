@@ -1,4 +1,5 @@
 --起動兵士デッドリボルバー
+--Boot-Up Soldier - Dread Dynamo
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon condition

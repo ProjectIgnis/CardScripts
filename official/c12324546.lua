@@ -1,4 +1,5 @@
 --漆黒の名馬
+--Legendary Ebon Steed
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,SET_SIX_SAMURAI))

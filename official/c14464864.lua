@@ -1,4 +1,5 @@
 --神の桎梏グレイプニル
+--Gleipnir, the Fetters of Fenrir
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x42}
+s.listed_series={SET_NORDIC}
 function s.filter(c)
 	return c:IsSetCard(SET_NORDIC) and c:IsMonster() and c:IsAbleToHand()
 end

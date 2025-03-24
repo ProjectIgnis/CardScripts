@@ -62,7 +62,7 @@ function s.filter1(c,e,tp)
 		and Duel.GetMZoneCount(tp,c)>0
 end
 function s.filter2(c,e,tp,att)
-	return c:IsSetCard(0x400d) and c:GetOriginalAttribute()~=att and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_ELEMENTSABER) and c:GetOriginalAttribute()~=att and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -90,7 +90,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(c,REASON_COST)
 end
 function s.thfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x113) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(SET_ELEMENTAL_LORD) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local hg=Duel.GetFieldGroup(tp,LOCATION_HAND,0)

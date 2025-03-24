@@ -22,10 +22,10 @@ function s.initial_effect(c)
 end
 s.listed_series={0x9f,0x99}
 function s.ptg(e,c)
-	return c:IsSetCard(0x9f) or c:IsSetCard(0x99)
+	return c:IsSetCard(SET_PERFORMAPAL) or c:IsSetCard(SET_ODD_EYES)
 end
 function s.atkfilter(c)
-	return c:IsFaceup() and (c:IsSetCard(0x9f) or c:IsSetCard(0x99))
+	return c:IsFaceup() and (c:IsSetCard(SET_PERFORMAPAL) or c:IsSetCard(SET_ODD_EYES))
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()

@@ -1,5 +1,5 @@
 --L・G・D
---Link God Dragon
+--Five-Headed Link Dragon
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -66,7 +66,7 @@ function s.valcheck(e,c)
 	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK) and e:GetLabel()==1
+	return e:GetHandler():IsLinkSummoned() and e:GetLabel()==1
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_ONFIELD)
@@ -106,4 +106,3 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

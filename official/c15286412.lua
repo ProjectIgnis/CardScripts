@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x42,0x4b}
 function s.cfilter(c)
-	return c:IsFaceup() and (c:IsSetCard(0x42) or c:IsSetCard(0x4b)) and c:IsAbleToRemoveAsCost()
+	return c:IsFaceup() and (c:IsSetCard(SET_NORDIC) or c:IsSetCard(SET_AESIR)) and c:IsAbleToRemoveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)

@@ -17,7 +17,7 @@ end
 s.listed_series={0x39}
 s.listed_names={id}
 function s.cfilter(c)
-	return c:IsSetCard(0x39) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsSetCard(SET_LAVAL) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.cfilter2(c)
 	return c:IsCode(id) and c:GetAttackAnnouncedCount()>0

@@ -68,10 +68,10 @@ function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.otfilter(c,tp)
-	return c:IsSetCard(0x1d) and (c:IsControler(tp) or c:IsFaceup())
+	return c:IsSetCard(SET_KOAKI_MEIRU) and (c:IsControler(tp) or c:IsFaceup())
 end
 function s.dfilter(c)
-	return c:IsSetCard(0x1d) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsSetCard(SET_KOAKI_MEIRU) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.dfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) end

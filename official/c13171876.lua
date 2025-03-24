@@ -1,8 +1,8 @@
 --ドラゴンメイド・ラドリー
---Dragon Maid Laudry
+--Laundry Dragonmaid
 local s,id=GetID()
 function s.initial_effect(c)
-	-- mill
+	--mill
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DECKDES)
@@ -36,7 +36,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.DiscardDeck(tp,3,REASON_EFFECT)
 end
 function s.spfilter(c,e,tp)
-	return c:GetLevel()==7 and c:IsSetCard(0x133) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:GetLevel()==7 and c:IsSetCard(SET_DRAGONMAID) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

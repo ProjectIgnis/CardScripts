@@ -1,6 +1,6 @@
--- ＢＦ－魔風のボレアース
--- Blackwing - Boreas the Evil Wind
--- scripted by Cybercatman
+--ＢＦ－魔風のボレアース
+--Blackwing - Boreastorm the Wicked Wind
+--scripted by Cybercatman
 local s,id=GetID()
 function s.initial_effect(c)
 	--Synchro Summon procedure
@@ -33,10 +33,10 @@ function s.initial_effect(c)
 end
 s.listed_series={0x33}
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return e:GetHandler():IsSynchroSummoned()
 end
 function s.filter(c)
-	return c:IsSetCard(0x33) and c:IsMonster() and c:IsAbleToGrave()
+	return c:IsSetCard(SET_BLACKWING) and c:IsMonster() and c:IsAbleToGrave()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
@@ -60,7 +60,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 end
 --special summon monster destroyed by battle
 function s.costfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x33) and c:IsMonster() and c:IsAbleToRemoveAsCost()
+	return c:IsFaceup() and c:IsSetCard(SET_BLACKWING) and c:IsMonster() and c:IsAbleToRemoveAsCost()
 		and Duel.GetMZoneCount(tp,c)>0
 end
 function s.atcost(e,tp,eg,ep,ev,re,r,rp,chk)

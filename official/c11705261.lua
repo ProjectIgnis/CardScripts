@@ -24,7 +24,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x107f}
 function s.filter(c,tp)
-	return c:IsSetCard(0x107f) and c:IsControler(tp) and c:IsSummonType(SUMMON_TYPE_XYZ)
+	return c:IsSetCard(SET_UTOPIA) and c:IsControler(tp) and c:IsXyzSummoned()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.filter,1,nil,tp)

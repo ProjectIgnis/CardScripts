@@ -1,5 +1,5 @@
 --ユニゾン・チューン
---Uni-song Tuning
+--Uni-Song Tuning
 --scripted Logical Nonsense
 local s,id=GetID()
 function s.initial_effect(c)
@@ -53,4 +53,3 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 		tc2:RegisterEffect(e2)
 	end
 end
-

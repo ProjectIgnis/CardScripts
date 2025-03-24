@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x29}
 function s.cfilter(c)
-	return c:IsSetCard(0x29) and c:IsRace(RACE_DRAGON)
+	return c:IsSetCard(SET_DRAGUNITY) and c:IsRace(RACE_DRAGON)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)

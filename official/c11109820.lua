@@ -23,7 +23,7 @@ function s.filter2(c,e,tp,mc,rk)
 end
 function s.spfilter(c,e,tp,rk,sg)
 	local crk=c:GetRank()
-	return (crk==rk or crk==rk-1) and not c:IsSetCard(0x48) and Duel.GetLocationCountFromEx(tp,tp,sg,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return (crk==rk or crk==rk-1) and not c:IsSetCard(SET_NUMBER) and Duel.GetLocationCountFromEx(tp,tp,sg,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

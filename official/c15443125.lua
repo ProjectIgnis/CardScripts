@@ -1,5 +1,5 @@
 --スプライト・スターター
---Splight Starter
+--Spright Starter
 --Scripted by Zefile
 local s,id=GetID()
 function s.initial_effect(c)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x181}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x181) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_SPRIGHT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

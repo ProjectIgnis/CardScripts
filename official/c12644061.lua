@@ -46,7 +46,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x1034,0x2034}
 function s.tg(e,c)
-	if not c:IsSetCard(0x1034) then return false end
+	if not c:IsSetCard(SET_CRYSTAL_BEAST) then return false end
 	if c:GetFlagEffect(1)==0 then
 		c:RegisterFlagEffect(1,0,0,0)
 		local eff
@@ -64,13 +64,13 @@ function s.tg(e,c)
 	return true
 end
 function s.val(e,c,re,chk)
-	if chk==0 then return c:IsSetCard(0x1034) end
+	if chk==0 then return c:IsSetCard(SET_CRYSTAL_BEAST) end
 	return ATTRIBUTE_DARK
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local at=Duel.GetAttackTarget()
-	return at and a:IsSetCard(0x2034)
+	return at and a:IsSetCard(SET_ULTIMATE_CRYSTAL)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -92,10 +92,10 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local at=Duel.GetAttackTarget()
 	return Duel.GetBattleDamage(tp)>0
-		and ((a:IsControler(tp) and a:IsSetCard(0x1034)) or (at and at:IsControler(tp) and at:IsSetCard(0x1034)))
+		and ((a:IsControler(tp) and a:IsSetCard(SET_CRYSTAL_BEAST)) or (at and at:IsControler(tp) and at:IsSetCard(SET_CRYSTAL_BEAST)))
 end
 function s.dfilter(c)
-	return c:IsSetCard(0x1034) and c:IsMonster() and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_CRYSTAL_BEAST) and c:IsMonster() and c:IsAbleToGraveAsCost()
 end
 function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.dfilter,tp,LOCATION_DECK,0,1,nil) end

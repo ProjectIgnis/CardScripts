@@ -28,7 +28,7 @@ end
 s.listed_series={0x135,0x136}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttackTarget()
-	return tc and tc:IsControler(tp) and tc:IsSetCard(0x135) and Duel.GetBattleDamage(tp)>0
+	return tc and tc:IsControler(tp) and tc:IsSetCard(SET_IGNISTER) and Duel.GetBattleDamage(tp)>0
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 		if chk==0 then return e:GetHandler():IsDiscardable() end
@@ -45,7 +45,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	if not ((re:IsActiveType(TYPE_MONSTER) and rc:IsSetCard(0x135)) or (re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and rc:IsSetCard(0x136))) then return false end
+	if not ((re:IsActiveType(TYPE_MONSTER) and rc:IsSetCard(SET_IGNISTER)) or (re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and rc:IsSetCard(SET_AI))) then return false end
 	local p=1-tp
 	local e1=Duel.IsPlayerAffectedByEffect(p,EFFECT_REVERSE_DAMAGE)
 	local e2=Duel.IsPlayerAffectedByEffect(p,EFFECT_REVERSE_RECOVER)

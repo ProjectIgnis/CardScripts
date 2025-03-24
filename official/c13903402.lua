@@ -1,5 +1,5 @@
 --光の王 マルデル
---Mardoll, Generaid of Light
+--Mardel, Generaider Boss of Light
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -22,7 +22,7 @@ end
 s.listed_names={id}
 s.listed_series={0x134}
 function s.thfilter(c)
-	return not c:IsCode(id) and (c:IsRace(RACE_PLANT) or c:IsSetCard(0x134)) and c:IsAbleToHand()
+	return not c:IsCode(id) and (c:IsRace(RACE_PLANT) or c:IsSetCard(SET_GENERAIDER)) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

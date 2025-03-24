@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xab))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_DESKBOT))
 	e2:SetValue(500)
 	c:RegisterEffect(e2)
 	--defup
@@ -45,7 +45,7 @@ end
 s.listed_names={id}
 s.listed_series={0xab}
 function s.filter(c)
-	return c:IsSetCard(0xab) and c:IsAbleToDeck() and not c:IsPublic()
+	return c:IsSetCard(SET_DESKBOT) and c:IsAbleToDeck() and not c:IsPublic()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp)
@@ -68,7 +68,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c)
-	return c:IsSetCard(0xab) and c:IsAbleToRemoveAsCost() and not c:IsCode(id)
+	return c:IsSetCard(SET_DESKBOT) and c:IsAbleToRemoveAsCost() and not c:IsCode(id)
 		and (c:IsLocation(LOCATION_SZONE) or aux.SpElimFilter(c,true,true))
 end
 function s.cost2(e,tp,eg,ep,ev,re,r,rp,chk)

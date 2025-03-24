@@ -1,5 +1,5 @@
--- 炎斬機マグマ
--- En Zan-Ki Magma
+--炎斬機マグマ
+--Geomathmech Magma
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -49,7 +49,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return ( c:IsReason(REASON_BATTLE) or (c:IsReason(REASON_EFFECT) and rp==1-tp) ) 
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x132) and c:IsSpellTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_MATHMECH) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

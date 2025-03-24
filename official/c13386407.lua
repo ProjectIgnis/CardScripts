@@ -18,13 +18,13 @@ end
 s.listed_series={0x106}
 s.listed_names={29348048}
 function s.ritualfil(c)
-	return c:IsSetCard(0x106) and c:IsRitualMonster()
+	return c:IsSetCard(SET_VENDREAD) and c:IsRitualMonster()
 end
 function s.matfilter(c,e,tp)
 	return (Duel.IsPlayerCanRelease(tp,c) and c:IsLocation(LOCATION_MZONE)) or s.extramatfil(c,e,tp)
 end
 function s.extramatfil(c,e,tp)
-	return c:IsSetCard(0x106) and not c:IsCode(29348048) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
+	return c:IsSetCard(SET_VENDREAD) and not c:IsCode(29348048) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
 end
 function s.extrafil(e,tp,mg)
 	if not Duel.IsPlayerCanRelease(tp) then return nil end

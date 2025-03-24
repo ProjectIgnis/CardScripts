@@ -17,7 +17,7 @@ end
 s.listed_series={0x13}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	return #g==2 and g:GetFirst():IsSetCard(0x13) and g:GetNext():IsSetCard(0x13)
+	return #g==2 and g:GetFirst():IsSetCard(SET_MEKLORD) and g:GetNext():IsSetCard(SET_MEKLORD)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCurrentPhase()==PHASE_MAIN1 end

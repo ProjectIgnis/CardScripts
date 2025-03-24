@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x39}
 function s.cfilter(c)
-	return c:IsSetCard(0x39) and c:GetCode()~=id
+	return c:IsSetCard(SET_LAVAL) and c:GetCode()~=id
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,nil)
@@ -35,7 +35,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.DiscardDeck(tp,ac,REASON_COST)
 	end
 	local g=Duel.GetOperatedGroup()
-	e:SetLabel(g:FilterCount(Card.IsSetCard,nil,0x39)*200)
+	e:SetLabel(g:FilterCount(Card.IsSetCard,nil,SET_LAVAL)*200)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

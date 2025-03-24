@@ -1,5 +1,5 @@
 --阿吽の呼吸
---Perfect Sync - A-un
+--Perfect Sync - A-Un
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -27,7 +27,7 @@ end
 s.listed_series={0x14e}
 s.listed_names={TOKEN_DUAL_AVATAR_SPIRIT}
 function s.thfilter(c)
-	return c:IsSetCard(0x14e) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_DUAL_AVATAR) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -40,7 +40,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x14e) and c:IsType(TYPE_EFFECT)
+	return c:IsFaceup() and c:IsSetCard(SET_DUAL_AVATAR) and c:IsType(TYPE_EFFECT)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)

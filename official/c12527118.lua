@@ -69,7 +69,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:IsSummonType(SUMMON_TYPE_NORMAL) and c:IsReleasable() end
+	if chk==0 then return c:IsNormalSummoned() and c:IsReleasable() end
 	Duel.Release(c,REASON_COST)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)

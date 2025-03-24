@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x207f}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x207f) and c:IsType(TYPE_XYZ)
+	return c:IsFaceup() and c:IsSetCard(SET_UTOPIC_FUTURE) and c:IsType(TYPE_XYZ)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end

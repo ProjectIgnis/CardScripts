@@ -72,11 +72,11 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.thcfilter(c,e,tp)
 	local code=c:GetCode()
-	return c:IsSetCard(0x137) and c:IsSummonPlayer(tp) and c:IsLocation(LOCATION_MZONE) and c:IsCanBeEffectTarget(e)
+	return c:IsSetCard(SET_ANCIENT_WARRIORS) and c:IsSummonPlayer(tp) and c:IsLocation(LOCATION_MZONE) and c:IsCanBeEffectTarget(e)
 		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,code)
 end
 function s.thfilter(c,code)
-	return c:IsSetCard(0x137) and c:IsMonster() and c:IsAbleToHand() and not c:IsCode(code)
+	return c:IsSetCard(SET_ANCIENT_WARRIORS) and c:IsMonster() and c:IsAbleToHand() and not c:IsCode(code)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return eg:IsContains(chkc) and s.thcfilter(chkc,e,tp) end
@@ -105,7 +105,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x137) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_ANCIENT_WARRIORS) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_SZONE)

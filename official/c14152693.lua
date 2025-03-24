@@ -33,7 +33,7 @@ end
 s.listed_names={id}
 s.listed_series={0xdf}
 function s.drfilter(c)
-	return c:IsSetCard(0xdf) and c:IsDiscardable(REASON_EFFECT)
+	return c:IsSetCard(SET_LUNALIGHT) and c:IsDiscardable(REASON_EFFECT)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1)
@@ -53,7 +53,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spfilter(c,e,tp)
 	return (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())
-		and c:IsLevelBelow(4) and c:IsSetCard(0xdf) and not c:IsCode(id)
+		and c:IsLevelBelow(4) and c:IsSetCard(SET_LUNALIGHT) and not c:IsCode(id)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

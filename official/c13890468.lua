@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0xb5}
 function s.filter(c)
-	return c:IsSetCard(0xb5) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(SET_RITUAL_BEAST) and c:IsAbleToRemoveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil) end

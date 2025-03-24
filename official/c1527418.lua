@@ -1,5 +1,5 @@
 --空牙団の叡智 ウィズ
---Wiz, Sage of the Skyfang Brigade
+--Wiz, Sage Fur Hire
 local s,id=GetID()
 function s.initial_effect(c)
 	--Recover
@@ -32,7 +32,7 @@ end
 s.listed_series={0x114}
 s.listed_names={id}
 function s.recfilter(c)
-	return not c:IsCode(id) and c:IsFaceup() and c:IsSetCard(0x114)
+	return not c:IsCode(id) and c:IsFaceup() and c:IsSetCard(SET_FUR_HIRE)
 end
 function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.recfilter,tp,LOCATION_MZONE,0,1,nil) end
@@ -50,7 +50,7 @@ function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 		and ep==1-tp and re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and Duel.IsChainNegatable(ev)
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x114) and c:IsDiscardable()
+	return c:IsSetCard(SET_FUR_HIRE) and c:IsDiscardable()
 end
 function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end

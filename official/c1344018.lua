@@ -37,7 +37,7 @@ function s.evalue(e,re,rp)
 	return re:IsActiveType(TYPE_TRAP) and rp==1-e:GetHandlerPlayer()
 end
 function s.desfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x98) and c:IsType(TYPE_PENDULUM)
+	return c:IsFaceup() and c:IsSetCard(SET_MAGICIAN) and c:IsType(TYPE_PENDULUM)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

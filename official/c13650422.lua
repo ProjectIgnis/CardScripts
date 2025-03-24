@@ -1,5 +1,5 @@
 --E-HERO アダスター・ゴールド
---Evil HERO Aduster Gold
+--Evil HERO Adusted Gold
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)

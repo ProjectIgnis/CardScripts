@@ -26,7 +26,7 @@ end
 s.listed_series={0x96}
 
 function s.cfilter(c)
-	return c:IsFacedown() or not c:IsSetCard(0x96)
+	return c:IsFacedown() or not c:IsSetCard(SET_FISHBORG)
 end
 function s.sdcon(e)
 	return Duel.IsExistingMatchingCard(s.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)

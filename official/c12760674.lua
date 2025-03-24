@@ -1,5 +1,5 @@
 --モルトシュラーク
---Mortschlag
+--Mordschlag
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.immval(e,te)
-	return te:GetOwnerPlayer()~=e:GetHandlerPlayer() and te:IsActiveType(TYPE_MONSTER) and te:IsActivated() and te:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL)
+	return te:GetOwnerPlayer()~=e:GetHandlerPlayer() and te:IsActiveType(TYPE_MONSTER) and te:IsActivated() and te:GetHandler():IsSpecialSummoned()
 end
 function s.adcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler():GetEquipTarget()
@@ -45,4 +45,3 @@ function s.adop(e,tp,eg,ep,ev,re,r,rp)
 		bc:RegisterEffect(e2)
 	end
 end
-

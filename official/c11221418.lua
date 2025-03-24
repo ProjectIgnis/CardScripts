@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x88}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x88) and c:IsType(TYPE_XYZ) and c:IsAbleToRemove()
+	return c:IsFaceup() and c:IsSetCard(SET_BUJIN) and c:IsType(TYPE_XYZ) and c:IsAbleToRemove()
 		and Duel.IsExistingMatchingCard(Card.IsAbleToHand,0,LOCATION_MZONE,LOCATION_MZONE,1,c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -110,7 +110,7 @@ function s.spresetcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsTurnPlayer(tp) and e:GetLabel()==Duel.GetTurnCount(tp)
 end
 function s.mfilter(c)
-	return c:IsSetCard(0x88) and c:IsMonster()
+	return c:IsSetCard(SET_BUJIN) and c:IsMonster()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.mfilter(chkc) end

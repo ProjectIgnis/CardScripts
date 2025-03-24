@@ -1,5 +1,5 @@
---Waboku
 --和睦の使者
+--Waboku
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

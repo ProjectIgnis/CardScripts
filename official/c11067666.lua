@@ -39,5 +39,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.rmcon(e)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_PENDULUM) and c:IsReason(REASON_MATERIAL) and c:IsReason(REASON_SYNCHRO)
+	return c:IsPendulumSummoned() and c:IsReason(REASON_MATERIAL) and c:IsReason(REASON_SYNCHRO)
 end

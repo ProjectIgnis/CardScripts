@@ -30,7 +30,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0xf1}
 function s.ovfilter(c,tp,lc)
-	return c:IsFaceup() and c:IsSetCard(0xf1,lc,SUMMON_TYPE_XYZ,tp) and not c:IsSummonCode(lc,SUMMON_TYPE_XYZ,tp,id)
+	return c:IsFaceup() and c:IsSetCard(SET_ZOODIAC,lc,SUMMON_TYPE_XYZ,tp) and not c:IsSummonCode(lc,SUMMON_TYPE_XYZ,tp,id)
 end
 function s.xyzop(e,tp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end
@@ -38,14 +38,14 @@ function s.xyzop(e,tp,chk)
 	return true
 end
 function s.atkfilter(c)
-	return c:IsSetCard(0xf1) and c:GetAttack()>=0
+	return c:IsSetCard(SET_ZOODIAC) and c:GetAttack()>=0
 end
 function s.atkval(e,c)
 	local g=e:GetHandler():GetOverlayGroup():Filter(s.atkfilter,nil)
 	return g:GetSum(Card.GetAttack)
 end
 function s.deffilter(c)
-	return c:IsSetCard(0xf1) and c:GetDefense()>=0
+	return c:IsSetCard(SET_ZOODIAC) and c:GetDefense()>=0
 end
 function s.defval(e,c)
 	local g=e:GetHandler():GetOverlayGroup():Filter(s.deffilter,nil)
@@ -56,7 +56,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.filter2(c)
-	return c:IsSetCard(0xf1) and c:IsMonster()
+	return c:IsSetCard(SET_ZOODIAC) and c:IsMonster()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

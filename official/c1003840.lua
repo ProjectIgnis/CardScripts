@@ -39,7 +39,7 @@ function s.cfilter(c,e,tp,ft)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,lv)
 end
 function s.spfilter(c,e,tp,lv)
-	return c:IsSetCard(0x1017) and c:GetLevel()~=lv and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_SYNCHRON) and c:GetLevel()~=lv and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)

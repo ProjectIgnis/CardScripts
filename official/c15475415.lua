@@ -26,7 +26,7 @@ end
 s.listed_series={0xc}
 s.counter_place_list={COUNTER_A}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==tp and eg:GetFirst():IsSetCard(0xc)
+	return ep==tp and eg:GetFirst():IsSetCard(SET_ALIEN)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x1150,0x150}
 function s.tffilter(c,tp)
-	return c:IsSpellTrap() and c:IsSetCard(0x1150) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
+	return c:IsSpellTrap() and c:IsSetCard(SET_VIRTUAL_WORLD_GATE) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
 end
 function s.tftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
@@ -29,7 +29,7 @@ function s.tfop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 	local tc=Duel.SelectMatchingCard(tp,s.tffilter,tp,LOCATION_DECK,0,1,1,nil,tp):GetFirst()
 	if tc and Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true) then
-		local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0x1150),tp,LOCATION_ONFIELD,0,nil)
+		local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,SET_VIRTUAL_WORLD_GATE),tp,LOCATION_ONFIELD,0,nil)
 		if ct>=2 then
 			Duel.BreakEffect()
 			local c=e:GetHandler()
@@ -38,7 +38,7 @@ function s.tfop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetTargetRange(LOCATION_MZONE,0)
 			e1:SetValue(200)
-			e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x150))
+			e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_VIRTUAL_WORLD))
 			e1:SetReset(RESET_PHASE+PHASE_END)
 			Duel.RegisterEffect(e1,tp)
 		end
@@ -67,7 +67,7 @@ function s.tfop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x150) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_VIRTUAL_WORLD) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.exfilter1(c)
 	return c:IsFacedown() and c:IsType(TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ)

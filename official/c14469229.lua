@@ -25,7 +25,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x1034,0x2034}
 function s.indtg(e,c)
-	return c:IsSetCard(0x1034) or (c:IsLocation(LOCATION_MZONE) and c:IsSetCard(0x2034))
+	return c:IsSetCard(SET_CRYSTAL_BEAST) or (c:IsLocation(LOCATION_MZONE) and c:IsSetCard(SET_ULTIMATE_CRYSTAL))
 end
 function s.indval(e,re,r,rp)
 	if (r&REASON_EFFECT)~=0 then
@@ -40,7 +40,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
 	if a:IsControler(1-tp) then a=d end
-	if chk==0 then return d and a:IsSetCard(0x1034) end
+	if chk==0 then return d and a:IsSetCard(SET_CRYSTAL_BEAST) end
 	e:SetLabelObject(a)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)

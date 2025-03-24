@@ -29,7 +29,7 @@ function s.valcheck(e,c)
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE) and e:GetLabel()==1
+	return e:GetHandler():IsTributeSummoned() and e:GetLabel()==1
 end
 function s.filter(c)
 	return c:IsFacedown() and c:GetSequence()~=5

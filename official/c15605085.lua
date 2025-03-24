@@ -18,10 +18,10 @@ function s.initial_effect(c)
 end
 s.listed_series={0x2}
 function s.otfilter(c,tp)
-	return c:IsSetCard(0x2) and (c:IsControler(tp) or c:IsFaceup())
+	return c:IsSetCard(SET_GENEX) and (c:IsControler(tp) or c:IsFaceup())
 end
 function s.cfilter(c,tp)
-	return c:IsSetCard(0x2) and c:IsPreviousControler(tp) and c:GetPreviousLocation()==LOCATION_MZONE
+	return c:IsSetCard(SET_GENEX) and c:IsPreviousControler(tp) and c:GetPreviousLocation()==LOCATION_MZONE
 		and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)

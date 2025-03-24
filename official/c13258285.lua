@@ -1,10 +1,10 @@
--- Ｕｋ－Ｐ.Ｕ.Ｎ.Ｋ.娑楽斎
--- Ukiyoe P.U.N.K. Sharakusai
--- Scripted by Hatter
+--Ｕｋ－Ｐ.Ｕ.Ｎ.Ｋ.娑楽斎
+--Ukiyoe-P.U.N.K. Sharakusai
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Fusion Summon
-	local fusparam=aux.FilterBoolFunction(Card.IsSetCard,0x173)
+	--Fusion Summon
+	local fusparam=aux.FilterBoolFunction(Card.IsSetCard,SET_PUNK)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(Fusion.SummonEffTG(fusparam))
 	e1:SetOperation(Fusion.SummonEffOP(fusparam))
 	c:RegisterEffect(e1)
-	-- Synchro Summon
+	--Synchro Summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -36,7 +36,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,600)
 end
 function s.scfilter(c)
-	return c:IsSetCard(0x173) and c:IsSynchroSummonable(nil)
+	return c:IsSetCard(SET_PUNK) and c:IsSynchroSummonable(nil)
 end
 function s.sctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.scfilter,tp,LOCATION_EXTRA,0,1,nil) end

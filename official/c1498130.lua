@@ -19,7 +19,7 @@ function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	if not g or #g~=1 then return false end
 	local tc=g:GetFirst()
 	local c=e:GetHandler()
-	if tc==c or tc:GetControler()~=tp or tc:IsFacedown() or not tc:IsLocation(LOCATION_MZONE) or not tc:IsSetCard(0x3d) then return false end
+	if tc==c or tc:GetControler()~=tp or tc:IsFacedown() or not tc:IsLocation(LOCATION_MZONE) or not tc:IsSetCard(SET_SIX_SAMURAI) then return false end
 	return Duel.CheckChainTarget(ev,c)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)

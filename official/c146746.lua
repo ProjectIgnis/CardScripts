@@ -1,5 +1,5 @@
 --機関重連アンガー・ナックル
---Double Header Anger Knuckle
+--Double Headed Anger Knuckle
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)

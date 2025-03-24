@@ -22,7 +22,7 @@ end
 s.listed_names={16178681}
 s.material_setcode={0x99,0xf2,0x10f2}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
+	return e:GetHandler():IsFusionSummoned()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -59,7 +59,7 @@ function s.lvfilter(c,fc)
 	return c:IsCode(16178681) or c:CheckFusionSubstitute(fc)
 end
 function s.imfilter(c)
-	return c:IsLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_PENDULUM)
+	return c:IsLocation(LOCATION_MZONE) and c:IsPendulumSummoned()
 end
 function s.valcheck(e,c)
 	local g=c:GetMaterial()

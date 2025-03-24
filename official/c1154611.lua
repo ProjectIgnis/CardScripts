@@ -1,6 +1,5 @@
 --バージェストマ・レアンコイリア
---Paleozoic Leancholia
-
+--Paleozoic Leanchoilia
 local s,id=GetID()
 function s.initial_effect(c)
 	--Return 1 banished card to GY

@@ -23,10 +23,10 @@ end
 s.listed_series={0x2}
 function s.synlimit(e,c)
 	if not c then return false end
-	return not c:IsSetCard(0x2)
+	return not c:IsSetCard(SET_GENEX)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return (r&REASON_EFFECT)>0 and re:GetHandler():IsSetCard(0x2)
+	return (r&REASON_EFFECT)>0 and re:GetHandler():IsSetCard(SET_GENEX)
 		and e:GetHandler():GetPreviousLocation()==LOCATION_DECK and e:GetHandler():IsPreviousControler(tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -1,5 +1,5 @@
 --鉄獣戦線 ナーベル
---Tribrigade Navel
+--Tri-Brigade Nervall
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -85,7 +85,7 @@ function s.sumlimit(e,c)
 	return c:IsControler(e:GetHandlerPlayer())
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x14f) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_TRI_BRIGADE) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x88}
 function s.cfilter(c,tp)
-	return c:IsSetCard(0x88) and c:IsControler(tp) and c:IsPreviousControler(tp)
+	return c:IsSetCard(SET_BUJIN) and c:IsControler(tp) and c:IsPreviousControler(tp)
 		and c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_BATTLE)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)

@@ -53,7 +53,7 @@ function s.select(e,tp,b1,b2)
 	end
 end
 function s.eqfilter1(c)
-	return c:IsFaceup() and c:IsSetCard(0x4093) and c:IsType(TYPE_EFFECT) 
+	return c:IsFaceup() and c:IsSetCard(SET_CYBERDARK) and c:IsType(TYPE_EFFECT) 
 		and Duel.IsExistingMatchingCard(s.eqfilter2,0,LOCATION_GRAVE,LOCATION_GRAVE,1,nil)
 end
 function s.eqfilter2(c)

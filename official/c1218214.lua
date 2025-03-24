@@ -44,10 +44,10 @@ function s.initial_effect(c)
 end
 s.listed_series={0xe3}
 function s.efilter(e,c)
-	return c:IsSetCard(0xe3)
+	return c:IsSetCard(SET_CUBIC)
 end
 function s.disfilter(c)
-	return c:IsSetCard(0xe3)
+	return c:IsSetCard(SET_CUBIC)
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1)
@@ -65,7 +65,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xe3) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_CUBIC) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end

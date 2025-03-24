@@ -26,7 +26,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0xd2}
 function s.tdtg(e,c)
-	return c:IsSetCard(0xd2)
+	return c:IsSetCard(SET_KOZMO)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -42,7 +42,7 @@ function s.valcon(e,re,r,rp,rc)
 	if (r&REASON_BATTLE)~=0 then
 		local tp=e:GetHandlerPlayer()
 		local bc=rc:GetBattleTarget()
-		if bc and bc:IsSetCard(0xd2) and bc:IsControler(tp)
+		if bc and bc:IsSetCard(SET_KOZMO) and bc:IsControler(tp)
 			and Duel.GetFlagEffect(tp,id)==0 then
 			Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 			return true

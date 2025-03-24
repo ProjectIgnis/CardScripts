@@ -36,7 +36,7 @@ end
 s.listed_series={0xf0}
 
 function s.damfil(c)
-	return c:IsMonster() and c:IsSetCard(0xf0) and c:IsLevelAbove(1)
+	return c:IsMonster() and c:IsSetCard(SET_WINDWITCH) and c:IsLevelAbove(1)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.damfil(chkc) end
@@ -60,7 +60,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
 end
 function s.spfil1(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0xf0) and Duel.IsExistingMatchingCard(s.spfil2,tp,LOCATION_HAND,0,1,nil,e,tp,c:GetLevel())
+	return c:IsFaceup() and c:IsSetCard(SET_WINDWITCH) and Duel.IsExistingMatchingCard(s.spfil2,tp,LOCATION_HAND,0,1,nil,e,tp,c:GetLevel())
 end
 function s.spfil2(c,e,tp,lv)
 	return c:IsLevelBelow(lv) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

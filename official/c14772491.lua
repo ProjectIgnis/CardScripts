@@ -21,7 +21,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x1f}
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x1f) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_NEO_SPACIAN) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.filter(c)
 	return c:IsFaceup() and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0

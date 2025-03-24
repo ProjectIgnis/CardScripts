@@ -26,10 +26,10 @@ function s.initial_effect(c)
 end
 s.listed_series={0x10ec,0x20ec}
 function s.cfilter(c)
-	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsSetCard(0x10ec)
+	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsSetCard(SET_ABYSS_ACTOR)
 end
 function s.lmfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x10ec) and c:IsLevelAbove(7)
+	return c:IsFaceup() and c:IsSetCard(SET_ABYSS_ACTOR) and c:IsLevelAbove(7)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsFaceup() end
@@ -52,7 +52,7 @@ function s.chainlm(e,rp,tp)
 	return tp==rp
 end
 function s.filter2(c)
-	return c:IsSetCard(0x10ec) and c:IsFaceup() and c:IsType(TYPE_PENDULUM)
+	return c:IsSetCard(SET_ABYSS_ACTOR) and c:IsFaceup() and c:IsType(TYPE_PENDULUM)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -61,7 +61,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil)
 end
 function s.thfilter(c)
-	return (c:IsSetCard(0x10ec) or (c:IsSetCard(0x20ec) and c:IsSpell())) and c:IsAbleToHand()
+	return (c:IsSetCard(SET_ABYSS_ACTOR) or (c:IsSetCard(SET_ABYSS_SCRIPT) and c:IsSpell())) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

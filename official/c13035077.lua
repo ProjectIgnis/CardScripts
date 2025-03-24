@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xf9))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_TRUE_DRACO_KING))
 	e2:SetValue(300)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
@@ -40,7 +40,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0xf9}
 function s.indtg(e,c)
-	return c:IsSummonType(SUMMON_TYPE_TRIBUTE) and c:IsSetCard(0xf9)
+	return c:IsTributeSummoned() and c:IsSetCard(SET_TRUE_DRACO_KING)
 end
 function s.indct(e,re,r,rp)
 	if (r&REASON_BATTLE)~=0 then
@@ -48,7 +48,7 @@ function s.indct(e,re,r,rp)
 	else return 0 end
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xf9) and c:IsAbleToHand()
+	return c:IsSetCard(SET_TRUE_DRACO_KING) and c:IsAbleToHand()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(nil,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,e:GetHandler())

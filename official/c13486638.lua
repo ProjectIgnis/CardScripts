@@ -32,7 +32,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return #g>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVEXYZ)
 	local sc=g:Select(tp,1,1,nil):GetFirst()
-	if sc:IsSetCard(0x2073) or sc:IsSetCard(0x10db) or sc:IsSetCard(0xba) then
+	if sc:IsSetCard(SET_XYZ_DRAGON) or sc:IsSetCard(SET_THE_PHANTOM_KNIGHTS) or sc:IsSetCard(SET_RAIDRAPTOR) then
 		e:SetLabel(1)
 	else
 		e:SetLabel(0)
@@ -48,7 +48,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xba) and c:IsType(TYPE_XYZ)
+	return c:IsFaceup() and c:IsSetCard(SET_RAIDRAPTOR) and c:IsType(TYPE_XYZ)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re)

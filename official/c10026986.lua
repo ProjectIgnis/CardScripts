@@ -17,7 +17,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x3e}
 function s.cfilter(c,tp)
-	return c:IsSetCard(0x3e) and c:IsRace(RACE_REPTILE) and (c:IsControler(tp) or c:IsFaceup())
+	return c:IsSetCard(SET_WORM) and c:IsRace(RACE_REPTILE) and (c:IsControler(tp) or c:IsFaceup())
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroup(tp,s.cfilter,1,nil,tp) end

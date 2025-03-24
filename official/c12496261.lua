@@ -1,9 +1,9 @@
 --ドラグニティナイト－ハールーン
---Dragunity Knight – Luin
+--Dragunity Knight - Luin
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
-	Synchro.AddProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x29),1,1,Synchro.NonTuner(nil),1,99)
+	Synchro.AddProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,SET_DRAGUNITY),1,1,Synchro.NonTuner(nil),1,99)
 	c:EnableReviveLimit()
 	--equip
 	local e1=Effect.CreateEffect(c)
@@ -31,10 +31,10 @@ function s.initial_effect(c)
 end
 s.listed_series={0x29}
 function s.eqval(ec,c,tp)
-	return ec:IsControler(tp) and ec:IsSetCard(0x29) 
+	return ec:IsControler(tp) and ec:IsSetCard(SET_DRAGUNITY) 
 end
 function s.filter(c)
-	return c:IsSetCard(0x29) and c:IsMonster() and not c:IsForbidden()
+	return c:IsSetCard(SET_DRAGUNITY) and c:IsMonster() and not c:IsForbidden()
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -60,7 +60,7 @@ function s.eqcheck(e,tp,eg,ep,ev,re,r,rp)
 	e:SetLabelObject(g)
 end
 function s.eqfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x29)
+	return c:IsFaceup() and c:IsSetCard(SET_DRAGUNITY)
 end
 function s.eqtg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.eqfilter(chkc) end

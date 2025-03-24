@@ -1,5 +1,5 @@
 --竜輝巧－ファフμβ’
---Drytron Mu-beta Fafnir
+--Drytron Mu Beta Fafnir
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -45,10 +45,10 @@ function s.mttg(e,c)
 	return e:GetHandler():GetOverlayGroup():IsContains(c)
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
+	return e:GetHandler():IsXyzSummoned()
 end
 function s.tgfilter(c)
-	return c:IsSetCard(0x151) and c:IsAbleToGrave()
+	return c:IsSetCard(SET_DRYTRON) and c:IsAbleToGrave()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end

@@ -1,5 +1,5 @@
 --スプリガンズ・ブラスト！
---Sprigguns Blast!
+--Springans Blast!
 --scripted by aforaverage.46
 local s,id=GetID()
 function s.initial_effect(c)
@@ -17,7 +17,7 @@ end
 s.listed_series={0x158}
 s.listed_names={CARD_ALBAZ}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x158),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_SPRINGANS),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.bonusfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:ListsCodeAsMaterial(CARD_ALBAZ)

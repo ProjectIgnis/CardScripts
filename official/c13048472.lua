@@ -1,5 +1,5 @@
 --儀式の下準備
---Pre-Preparations of Rites
+--Pre-Preparation of Rites
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -42,7 +42,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return not c:IsSetCard(0xba) and c:IsLocation(LOCATION_EXTRA)
+	return not c:IsSetCard(SET_RAIDRAPTOR) and c:IsLocation(LOCATION_EXTRA)
 end
 function s.lizfilter(e,c)
 	return not c:IsOriginalSetCard(0xba)

@@ -30,7 +30,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x103d,0x3d}
 function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsSummonPlayer(tp) and c:IsSetCard(0x103d)
+	return c:IsFaceup() and c:IsSummonPlayer(tp) and c:IsSetCard(SET_SECRET_SIX_SAMURAI)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
@@ -47,7 +47,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c)
-	return c:IsLevelBelow(4) and c:IsSetCard(0x3d) and c:IsAbleToRemoveAsCost()
+	return c:IsLevelBelow(4) and c:IsSetCard(SET_SIX_SAMURAI) and c:IsAbleToRemoveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil) end

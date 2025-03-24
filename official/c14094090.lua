@@ -1,7 +1,7 @@
 --超戦士の儀式
 local s,id=GetID()
 function s.initial_effect(c)
-	Ritual.AddProcEqual(c,aux.FilterBoolFunction(Card.IsSetCard,0x10cf),8)
+	Ritual.AddProcEqual(c,aux.FilterBoolFunction(Card.IsSetCard,SET_BLACK_LUSTER_SOLDIER),8)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -31,7 +31,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(g1,POS_FACEUP,REASON_COST)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x10cf) and c:IsType(TYPE_RITUAL) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsSetCard(SET_BLACK_LUSTER_SOLDIER) and c:IsType(TYPE_RITUAL) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

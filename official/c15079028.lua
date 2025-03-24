@@ -1,5 +1,5 @@
 --地久神－カルボン
---Chikyuujin - Carbon
+--World Soul - Carbon
 --scripted by Rundas
 local s,id=GetID()
 function s.initial_effect(c)

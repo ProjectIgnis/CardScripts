@@ -38,11 +38,11 @@ function s.spcost1(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spfilter1(c,e,tp)
 	local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(c),tp,nil,nil,REASON_XYZ)
-	return #pg<=1 and c:IsFaceup() and c:IsSetCard(0x10dc)
+	return #pg<=1 and c:IsFaceup() and c:IsSetCard(SET_SUPER_QUANTUM)
 		and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,c,c:GetAttribute(),pg)
 end
 function s.spfilter2(c,e,tp,mc,att,pg)
-	return c:IsType(TYPE_XYZ) and c:IsSetCard(0x20dc) and c:IsAttribute(att) and mc:IsCanBeXyzMaterial(c,tp)
+	return c:IsType(TYPE_XYZ) and c:IsSetCard(SET_SUPER_QUANTAL_MECH_BEAST) and c:IsAttribute(att) and mc:IsCanBeXyzMaterial(c,tp)
 		and (#pg<=0 or pg:IsContains(mc)) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
 end
 function s.sptg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -68,7 +68,7 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spfilter3(c,e)
-	return (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and c:IsSetCard(0x20dc) and c:IsType(TYPE_XYZ) and c:IsCanBeEffectTarget(e)
+	return (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and c:IsSetCard(SET_SUPER_QUANTAL_MECH_BEAST) and c:IsType(TYPE_XYZ) and c:IsCanBeEffectTarget(e)
 end
 function s.spfilter4(c,e,tp,rp)
 	return c:IsCode(84025439) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCountFromEx(tp,rp,nil,c)>0

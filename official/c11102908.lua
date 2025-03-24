@@ -20,7 +20,7 @@ end
 s.listed_series={0x3d}
 function s.atkcon(e)
 	local d=Duel.GetAttackTarget()
-	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and d and d:IsSetCard(0x3d)
+	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and d and d:IsSetCard(SET_SIX_SAMURAI)
 end
 function s.atktg(e,c)
 	return c==Duel.GetAttacker()

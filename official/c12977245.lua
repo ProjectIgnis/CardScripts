@@ -24,6 +24,5 @@ end
 s.listed_series={0x103}
 s.listed_names={id}
 function s.imtg(e,c)
-	return c:IsFaceup() and c:IsSetCard(0x103) and not c:IsCode(id)
+	return c:IsFaceup() and c:IsSetCard(SET_ALTERGEIST) and not c:IsCode(id)
 end
-

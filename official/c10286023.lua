@@ -29,7 +29,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x140}
 function s.dtcon(e,tp,eg,ep,ev,re,r,rp)
-	return re and re:GetHandler():IsSetCard(0x140)
+	return re and re:GetHandler():IsSetCard(SET_ADAMANCIPATOR)
 end
 function s.dttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end

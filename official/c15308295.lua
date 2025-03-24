@@ -46,7 +46,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end	
 function s.ctfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x10ec) and c:IsType(TYPE_PENDULUM) and c:IsAbleToChangeControler()
+	return c:IsFaceup() and c:IsSetCard(SET_ABYSS_ACTOR) and c:IsType(TYPE_PENDULUM) and c:IsAbleToChangeControler()
 end
 s.listed_series={0x10ec,0x20ec}
 function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -85,7 +85,7 @@ function s.ctop2(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.desfilter(c)
-	return c:IsFacedown() and c:IsSpell() and c:IsSetCard(0x20ec)
+	return c:IsFacedown() and c:IsSpell() and c:IsSetCard(SET_ABYSS_SCRIPT)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

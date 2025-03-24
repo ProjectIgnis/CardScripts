@@ -1,5 +1,5 @@
 --未界域の歓待
---You are in Danger!
+--You're in Danger!
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x11e}
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x11e) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsPublic()
+	return c:IsSetCard(SET_DANGER) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsPublic()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rvg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_DECK,0,nil,e,tp)

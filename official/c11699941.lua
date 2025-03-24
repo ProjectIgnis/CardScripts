@@ -1,5 +1,5 @@
 --カラクリ蝦蟇油
---Karakuri Toad Oil
+--Karakuri Gama Oil
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -29,7 +29,7 @@ function s.eqlimit(e,c)
 	return e:GetLabelObject()==c
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x11) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_KARAKURI) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end
@@ -59,7 +59,7 @@ end
 function s.cfilter(c,tp)
 	local np=c:GetPosition()
 	local pp=c:GetPreviousPosition()
-	return c:IsSetCard(0x11) and pp&POS_FACEUP>0 and np&POS_FACEUP>0 and np~=pp and c:IsControler(tp)
+	return c:IsSetCard(SET_KARAKURI) and pp&POS_FACEUP>0 and np&POS_FACEUP>0 and np~=pp and c:IsControler(tp)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
@@ -72,4 +72,3 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		ec:UpdateDefense(500,nil,c)
 	end
 end
-

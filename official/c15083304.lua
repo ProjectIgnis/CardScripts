@@ -22,7 +22,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,3)
 end
 function s.rescon(sg,e,tp,mg)
-	return sg:IsExists(Card.IsSetCard,1,nil,0x11e)
+	return sg:IsExists(Card.IsSetCard,1,nil,SET_DANGER)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
@@ -30,7 +30,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ShuffleHand(p)
 		Duel.BreakEffect()
 		local g=Duel.GetFieldGroup(p,LOCATION_HAND,0)
-		if g:IsExists(Card.IsSetCard,1,nil,0x11e) then
+		if g:IsExists(Card.IsSetCard,1,nil,SET_DANGER) then
 			local sg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_DISCARD)
 			Duel.SendtoGrave(sg,REASON_EFFECT+REASON_DISCARD)
 		else

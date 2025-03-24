@@ -1,9 +1,9 @@
--- 氷水艇エーギロカシス
--- Icejade Creation Aegirocassis
--- Scripted by Hatter
+--氷水艇エーギロカシス
+--Icejade Creation Aegirocassis
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Equipped monster gains ATK/DEF
+	--Equipped monster gains ATK/DEF
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_EQUIP)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e2)
-	-- Equip this card to 1 "Icejade" monster
+	--Equip this card to 1 "Icejade" monster
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_EQUIP)
@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.eqtg)
 	e3:SetOperation(s.eqop)
 	c:RegisterEffect(e3)
-	-- Special Summon this card while it is equipped to a monster
+	--Special Summon this card while it is equipped to a monster
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -60,7 +60,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and tc:IsFaceup() and tc:IsRelateToEffect(e)
 		and tc:IsControler(tp) and Duel.Equip(tp,c,tc) then
-		-- Equip limit
+		--Equip limit
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)

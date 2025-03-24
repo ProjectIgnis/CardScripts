@@ -1,5 +1,5 @@
 --やぶ蛇
---Shrub Serpent
+--Waking the Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -37,4 +37,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-

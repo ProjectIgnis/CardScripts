@@ -43,7 +43,7 @@ s.counter_place_list={0x37}
 s.listed_series={0xd3}
 s.listed_names={id}
 function s.cfilter(c)
-	return c:IsSetCard(0xd3) and c:IsPreviousLocation(LOCATION_HAND+LOCATION_GRAVE)
+	return c:IsSetCard(SET_KAIJU) and c:IsPreviousLocation(LOCATION_HAND+LOCATION_GRAVE)
 end
 function s.counter(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(s.cfilter,1,nil) then
@@ -51,15 +51,15 @@ function s.counter(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0xd3)
+	return c:IsFaceup() and c:IsSetCard(SET_KAIJU)
 		and Duel.IsExistingMatchingCard(s.chkfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetControler(),c:GetOriginalCode())
 end
 function s.chkfilter(c,e,tp,cc,code)
-	return c:IsSetCard(0xd3) and c:GetOriginalCode()~=code and
+	return c:IsSetCard(SET_KAIJU) and c:GetOriginalCode()~=code and
 		not c:IsHasEffect(EFFECT_REVIVE_LIMIT) and Duel.IsPlayerCanSpecialSummon(tp,0,POS_FACEUP,cc,c)
 end
 function s.spfilter(c,e,tp,cc,code)
-	return c:IsSetCard(0xd3) and not c:IsOriginalCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,cc)
+	return c:IsSetCard(SET_KAIJU) and not c:IsOriginalCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,cc)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc,e,tp) end
@@ -97,7 +97,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xd3) and c:IsSpellTrap() and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_KAIJU) and c:IsSpellTrap() and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

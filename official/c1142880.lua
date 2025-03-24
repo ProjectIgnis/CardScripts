@@ -1,5 +1,5 @@
 --サイバー・ドラゴン・ネクステア
---Cyber Dragon Nächster
+--Cyber Dragon Nachster
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)

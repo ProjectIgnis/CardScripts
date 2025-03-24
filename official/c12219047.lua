@@ -27,7 +27,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x10db}
 function s.condition1(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():GetOverlayGroup():IsExists(Card.IsSetCard,1,nil,0x10db)
+	return not e:GetHandler():GetOverlayGroup():IsExists(Card.IsSetCard,1,nil,SET_THE_PHANTOM_KNIGHTS)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
@@ -77,6 +77,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.condition2(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsSetCard,1,nil,0x10db)
+	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsSetCard,1,nil,SET_THE_PHANTOM_KNIGHTS)
 		and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
 end

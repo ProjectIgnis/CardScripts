@@ -1,5 +1,5 @@
 --心の架け橋
---Bridge of the Heart
+--Rainbow Bridge of the Heart
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_SZONE)
 	e1:SetCountLimit(1,id)
 	e1:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x1034))
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_CRYSTAL_BEAST))
 	c:RegisterEffect(e1)
 	--Destroy 1 "Crystal Beast" monster and add 1 "Crystal" S/T to the hand
 	local e2=Effect.CreateEffect(c)
@@ -44,10 +44,10 @@ function s.initial_effect(c)
 end
 s.listed_series={0x34,0x1034}
 function s.desfilter(c)
-	return c:IsSetCard(0x1034) and (c:IsFaceup() or c:IsLocation(LOCATION_HAND))
+	return c:IsSetCard(SET_CRYSTAL_BEAST) and (c:IsFaceup() or c:IsLocation(LOCATION_HAND))
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x34) and c:IsSpellTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_CRYSTAL) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,nil)
@@ -69,7 +69,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x1034) and c:IsLocation(LOCATION_SZONE) and not c:IsPreviousLocation(LOCATION_SZONE)
+	return c:IsFaceup() and c:IsSetCard(SET_CRYSTAL_BEAST) and c:IsLocation(LOCATION_SZONE) and not c:IsPreviousLocation(LOCATION_SZONE)
 		and c:IsControler(tp) and c:GetSequence()<5
 end
 function s.thcond(e,tp,eg,ep,ev,re,r,rp)

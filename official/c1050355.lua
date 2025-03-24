@@ -45,7 +45,7 @@ function s.tfop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ActivateFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
 end
 function s.damfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x131) and c:IsAttribute(ATTRIBUTE_DARK)
+	return c:IsFaceup() and c:IsSetCard(SET_DREAM_MIRROR) and c:IsAttribute(ATTRIBUTE_DARK)
 end
 function s.cfilter(c,tp)
 	return c:GetSummonPlayer()==tp

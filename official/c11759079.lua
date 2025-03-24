@@ -1,5 +1,5 @@
 --双天脚の鴻鵠
---Koukoku of the Souten Kicks
+--Dual Avatar Feet - Kokoku
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -35,7 +35,7 @@ s.listed_series={0x14e}
 s.listed_names={id}
 function s.spfilter(c,tp)
 	return c:IsReason(REASON_BATTLE+REASON_EFFECT)
-		and c:IsSetCard(0x14e) and c:IsMonster() and not c:IsCode(id)
+		and c:IsSetCard(SET_DUAL_AVATAR) and c:IsMonster() and not c:IsCode(id)
 		and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -47,10 +47,10 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function s.desfilter(c,e)
-	return c:IsSetCard(0x14e) and c:IsFaceup() and c:IsDestructable(e)
+	return c:IsSetCard(SET_DUAL_AVATAR) and c:IsFaceup() and c:IsDestructable(e)
 end
 function s.fusfilter(c,e,tp)
-	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x14e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsType(TYPE_FUSION) and c:IsSetCard(SET_DUAL_AVATAR) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -73,7 +73,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c)
-	return c:IsSetCard(0x14e) and c:IsTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_DUAL_AVATAR) and c:IsTrap() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
-	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,0x11a),Fusion.OnFieldMat,nil,nil,nil,s.stage2)
+	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,SET_DINOWRESTLER),Fusion.OnFieldMat,nil,nil,nil,s.stage2)
 	e1:SetHintTiming(0,TIMING_END_PHASE)
 	c:RegisterEffect(e1)
 end
@@ -30,4 +30,3 @@ function s.valcon(e,re,r,rp)
 		return false
 	end
 end
-

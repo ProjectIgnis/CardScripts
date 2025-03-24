@@ -34,7 +34,7 @@ function s.bpcon(e,tp,eg,ep,ev,re,r,rp)
 	if a and b then
 		local dif=b:GetAttack()-a:GetAttack()
 		return a:GetControler()~=b:GetControler() and a~=e:GetHandler()
-		and a:IsSetCard(0x11a) and a:IsRelateToBattle()
+		and a:IsSetCard(SET_DINOWRESTLER) and a:IsRelateToBattle()
 		and Duel.GetAttackTarget()~=nil and dif>=0
 	else return false end
 end

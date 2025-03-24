@@ -1,9 +1,9 @@
--- ＶＶ～始まりの地～
--- Valiants' Var - The Land of Beginning
--- Scripted by Hatter
+--ＶＶ～始まりの地～
+--Vaylantz Wars - The Place of Beginning
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Search 1 "Valiants" Field Spell
+	--Search 1 "Valiants" Field Spell
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_DESTROY)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	-- Place 1 "Valiants" monster in the Pendulum Zone
+	--Place 1 "Valiants" monster in the Pendulum Zone
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -28,7 +28,7 @@ end
 s.listed_names={63394872}
 s.listed_series={0x17e}
 function s.thfilter(c)
-	return c:IsType(TYPE_FIELD) and c:IsSpell() and c:IsSetCard(0x17e) and c:IsAbleToHand()
+	return c:IsType(TYPE_FIELD) and c:IsSpell() and c:IsSetCard(SET_VAYLANTZ) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -65,7 +65,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.pzfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x17e) and not c:IsForbidden()
+	return c:IsFaceup() and c:IsSetCard(SET_VAYLANTZ) and not c:IsForbidden()
 end
 function s.pztg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.pzfilter,tp,LOCATION_EXTRA,0,1,nil)

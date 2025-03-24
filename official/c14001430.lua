@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x71))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_MADOLCHE))
 	e2:SetValue(500)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
@@ -35,7 +35,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x71}
 function s.tdfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x71) and c:IsAbleToDeck()
+	return c:IsMonster() and c:IsSetCard(SET_MADOLCHE) and c:IsAbleToDeck()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -55,7 +55,7 @@ function s.repfilter(c,tp)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return (r&REASON_EFFECT)~=0 and re and re:IsActiveType(TYPE_MONSTER)
-		and re:GetHandler():IsSetCard(0x71) and eg:IsExists(s.repfilter,1,nil,tp) end
+		and re:GetHandler():IsSetCard(SET_MADOLCHE) and eg:IsExists(s.repfilter,1,nil,tp) end
 	if Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		local c=e:GetHandler()
 		local g=eg:Filter(s.repfilter,nil,tp)

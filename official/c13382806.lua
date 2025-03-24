@@ -1,5 +1,5 @@
 --マタタビ仙狸
---Catnip Li Hua
+--Silvervine Senri
 --Scripted by FiftyFour
 local s,id=GetID()
 function s.initial_effect(c)

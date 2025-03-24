@@ -30,17 +30,17 @@ end
 s.listed_series={0x107a,0x207a}
 function s.eqcon1(e)
 	local eg=e:GetHandler():GetEquipGroup()
-	return not eg or not eg:IsExists(Card.IsSetCard,1,nil,0x207a)
+	return not eg or not eg:IsExists(Card.IsSetCard,1,nil,SET_NOBLE_ARMS)
 end
 function s.eqcon2(e)
 	local eg=e:GetHandler():GetEquipGroup()
-	return eg and eg:IsExists(Card.IsSetCard,1,nil,0x207a)
+	return eg and eg:IsExists(Card.IsSetCard,1,nil,SET_NOBLE_ARMS)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return s.eqcon2(e)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x107a) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_NOBLE_KNIGHT) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end
@@ -50,7 +50,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 end
 function s.desfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x207a) and c:IsType(TYPE_EQUIP)
+	return c:IsFaceup() and c:IsSetCard(SET_NOBLE_ARMS) and c:IsType(TYPE_EQUIP)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

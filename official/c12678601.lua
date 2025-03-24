@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={}
-s.listed_series={0x10b}
+s.listed_series={SET_TINDANGLE}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsPreviousLocation(LOCATION_DECK) or c:IsPreviousLocation(LOCATION_HAND)
@@ -83,6 +83,6 @@ function s.lkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_EXTRA_ATTACK)
 	e1:SetValue(2)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	rc:RegisterEffect(e1)
 end

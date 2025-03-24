@@ -45,7 +45,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetLabelObject(e)
 		e1:SetLabel(0)
 		e1:SetOwnerPlayer(tp)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		e:GetLabelObject():AddCard(tc)
 	end

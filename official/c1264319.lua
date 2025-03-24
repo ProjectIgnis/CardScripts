@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x1047}
+s.listed_series={SET_GEM_KNIGHT}
 function s.thfilter(c)
 	return c:IsSetCard(SET_GEM_KNIGHT) and c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end

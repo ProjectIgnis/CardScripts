@@ -1,4 +1,5 @@
 --武神器－イオツミ
+--Bujingi Pavo
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon

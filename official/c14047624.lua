@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.damop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x39}
+s.listed_series={SET_LAVAL}
 s.listed_names={id}
 function s.cfilter(c)
 	return c:IsSetCard(SET_LAVAL) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
@@ -23,10 +23,10 @@ function s.cfilter2(c)
 	return c:IsCode(id) and c:GetAttackAnnouncedCount()>0
 end
 function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil)
 		and not Duel.IsExistingMatchingCard(s.cfilter2,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -34,7 +34,7 @@ function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetProperty(EFFECT_FLAG_OATH)
 	e1:SetTarget(aux.TargetBoolFunction(Card.IsCode,id))
 	e1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)

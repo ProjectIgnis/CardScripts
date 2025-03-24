@@ -1,4 +1,5 @@
 --始祖竜ワイアーム
+--First of the Dragons
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,0,id)

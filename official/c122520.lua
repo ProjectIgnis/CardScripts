@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x9f}
+s.listed_series={SET_PERFORMAPAL}
 function s.spcfilter(c,ft)
 	return c:IsFaceup() and c:IsSetCard(SET_PERFORMAPAL) and c:IsLevelAbove(5) and c:IsAbleToHandAsCost() and (ft>0 or c:GetSequence()<5)
 end

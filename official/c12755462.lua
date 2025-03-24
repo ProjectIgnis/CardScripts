@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.cedop2)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x4c}
+s.listed_series={SET_TRAP_HOLE}
 function s.sumsuc(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SetChainLimitTillChainEnd(s.chlimit1)
 end

@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.retop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x2b}
+s.listed_series={SET_NINJA}
 function s.cfilter(c)
 	return c:IsSetCard(SET_NINJA)
 end
@@ -57,7 +57,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetLabel(seq)
 		e1:SetCondition(s.discon)
 		e1:SetOperation(s.disop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
 	end
 end

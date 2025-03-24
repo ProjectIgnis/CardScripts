@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x107a,0x207a}
+s.listed_series={SET_NOBLE_KNIGHT,SET_NOBLE_ARMS}
 function s.eqcon1(e)
 	local eg=e:GetHandler():GetEquipGroup()
 	return not eg or not eg:IsExists(Card.IsSetCard,1,nil,SET_NOBLE_ARMS)

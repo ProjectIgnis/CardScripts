@@ -1,4 +1,5 @@
 --世紀の大泥棒
+--Great Phantom Thief
 local s,id=GetID()
 function s.initial_effect(c)
 	--handes

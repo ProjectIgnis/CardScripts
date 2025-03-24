@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e4:SetValue(s.repval)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x71}
+s.listed_series={SET_MADOLCHE}
 function s.tdfilter(c)
 	return c:IsMonster() and c:IsSetCard(SET_MADOLCHE) and c:IsAbleToDeck()
 end
@@ -70,9 +70,9 @@ function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 			e1:SetCode(EFFECT_TO_DECK_REDIRECT)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e1:SetValue(LOCATION_HAND)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
 			tc:RegisterEffect(e1)
-			tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD&~RESET_TOHAND+RESET_PHASE+PHASE_END,0,1)
+			tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD&~RESET_TOHAND|RESET_PHASE|PHASE_END,0,1)
 		end
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
@@ -80,7 +80,7 @@ function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		e1:SetCountLimit(1)
 		e1:SetCondition(s.thcon)
 		e1:SetOperation(s.thop)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 		return true
 	else return false end

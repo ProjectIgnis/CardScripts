@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.tdop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xdc}
+s.listed_series={SET_SUPER_QUANT}
 s.listed_names={id}
 function s.thfilter(c)
 	return c:IsSetCard(SET_SUPER_QUANT) and not c:IsCode(id) and c:IsAbleToHand()

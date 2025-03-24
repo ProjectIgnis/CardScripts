@@ -1,4 +1,5 @@
 --古代の機械獣
+--Ancient Gear Beast
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot special summon

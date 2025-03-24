@@ -1,4 +1,5 @@
 --ヴァイロン・スティグマ
+--Vylon Stigma
 local s,id=GetID()
 function s.initial_effect(c)
 	--equip

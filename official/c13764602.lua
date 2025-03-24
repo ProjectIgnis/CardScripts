@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x14e}
+s.listed_series={SET_DUAL_AVATAR}
 s.listed_names={TOKEN_DUAL_AVATAR_SPIRIT}
 function s.thfilter(c)
 	return c:IsSetCard(SET_DUAL_AVATAR) and c:IsMonster() and c:IsAbleToHand()
@@ -60,7 +60,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	ge1:SetDescription(aux.Stringid(id,2))
 	ge1:SetTargetRange(1,0)
 	ge1:SetTarget(s.splimit)
-	ge1:SetReset(RESET_PHASE+PHASE_END)
+	ge1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(ge1,tp)
 	--lizard check
 	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)

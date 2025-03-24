@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x13}
+s.listed_series={SET_MEKLORD}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	return #g==2 and g:GetFirst():IsSetCard(SET_MEKLORD) and g:GetNext():IsSetCard(SET_MEKLORD)
@@ -26,7 +26,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetCode(EFFECT_CANNOT_BP)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
 	e1:SetTargetRange(1,0)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,1),nil)
 end

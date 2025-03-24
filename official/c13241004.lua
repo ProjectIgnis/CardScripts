@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xa9,0xad}
+s.listed_series={SET_FLUFFAL,SET_FRIGHTFUR}
 s.listed_names={id}
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_FLUFFAL) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

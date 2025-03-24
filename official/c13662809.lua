@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x10ec,0x20ec}
+s.listed_series={SET_ABYSS_ACTOR,SET_ABYSS_SCRIPT}
 function s.cfilter(c)
 	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsSetCard(SET_ABYSS_ACTOR)
 end

@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_DAMAGE)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e2:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
 	e2:SetCondition(s.damcon)
@@ -37,11 +37,11 @@ function s.initial_effect(c)
 	end)
 end
 s.listed_names={12958920}
-s.listed_series={0x49}
+s.listed_series={SET_SKYBLASTER}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	if tc:IsSetCard(SET_SKYBLASTER) then
-		Duel.RegisterFlagEffect(tc:GetControler(),id,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tc:GetControler(),id,RESET_PHASE|PHASE_END,0,1)
 	end
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -77,7 +77,7 @@ function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetProperty(EFFECT_FLAG_OATH)
 	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_SKYBLASTER))
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)

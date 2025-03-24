@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x146}
+s.listed_series={SET_DOGMATIKA}
 s.listed_names={id}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(Card.IsType,1,nil,TYPE_EXTRA)
@@ -91,7 +91,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(500)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 end

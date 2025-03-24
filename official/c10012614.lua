@@ -1,4 +1,5 @@
 --勇気の旗印
+--Banner of Courage
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate

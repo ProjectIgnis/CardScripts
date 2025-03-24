@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xb5}
+s.listed_series={SET_RITUAL_BEAST}
 function s.filter(c)
 	return c:IsSetCard(SET_RITUAL_BEAST) and c:IsAbleToRemoveAsCost()
 end

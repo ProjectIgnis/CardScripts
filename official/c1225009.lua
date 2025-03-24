@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={id}
-s.listed_series={0x17f}
+s.listed_series={SET_LABRYNTH}
 --Search a "Labrynth" card
 function s.filter(c)
 	return c:IsSetCard(SET_LABRYNTH) and not c:IsCode(id) and c:IsAbleToHand()

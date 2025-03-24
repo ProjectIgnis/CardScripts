@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xaf}
+s.listed_series={SET_DD}
 function s.filter1(c)
 	return c:IsSetCard(SET_DD) and c:IsMonster() and c:IsAbleToHand()
 end

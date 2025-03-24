@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x100d}
+s.listed_series={SET_X_SABER}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_X_SABER),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end

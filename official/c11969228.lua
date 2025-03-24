@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x29}
+s.listed_series={SET_DRAGUNITY}
 s.listed_names={62265044}
 
 function s.matfilter(c,sc,st,tp)
@@ -82,12 +82,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1,true)
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e2,true)
 		--Cannot be used as link material
 		local e3=Effect.CreateEffect(e:GetHandler())
@@ -96,7 +96,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
 		e3:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CLIENT_HINT)
 		e3:SetValue(1)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e3:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e3,true)
 	end
 	Duel.SpecialSummonComplete()

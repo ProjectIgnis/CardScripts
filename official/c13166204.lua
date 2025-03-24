@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x54}
+s.listed_series={SET_GAGAGA}
 function s.filter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsSetCard(SET_GAGAGA)
 end

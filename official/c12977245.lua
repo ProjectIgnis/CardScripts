@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetValue(aux.tgoval)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x103}
+s.listed_series={SET_ALTERGEIST}
 s.listed_names={id}
 function s.imtg(e,c)
 	return c:IsFaceup() and c:IsSetCard(SET_ALTERGEIST) and not c:IsCode(id)

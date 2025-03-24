@@ -1,4 +1,5 @@
 --仮面魔道士
+--Masked Sorcerer
 local s,id=GetID()
 function s.initial_effect(c)
 	--draw

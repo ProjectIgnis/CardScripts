@@ -1,4 +1,5 @@
 --エクシーズ・ユニバース
+--Xyz Universe
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon

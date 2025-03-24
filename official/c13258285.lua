@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.scop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x173}
+s.listed_series={SET_PUNK}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,600) end
 	Duel.PayLPCost(tp,600)

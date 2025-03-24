@@ -20,13 +20,13 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(aux.exccon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.pztg)
 	e2:SetOperation(s.pzop)
 	c:RegisterEffect(e2)
 end
 s.listed_names={63394872}
-s.listed_series={0x17e}
+s.listed_series={SET_VAYLANTZ}
 function s.thfilter(c)
 	return c:IsType(TYPE_FIELD) and c:IsSpell() and c:IsSetCard(SET_VAYLANTZ) and c:IsAbleToHand()
 end

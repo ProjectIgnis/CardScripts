@@ -38,7 +38,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={CARD_POLYMERIZATION}
-s.listed_series={0x3008}
+s.listed_series={SET_ELEMENTAL_HERO}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp)
 end
@@ -59,7 +59,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
 	end
 end
@@ -92,7 +92,7 @@ end
 function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.SendtoDeck(c,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0
-		and c:IsLocation(LOCATION_DECK+LOCATION_EXTRA) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+		and c:IsLocation(LOCATION_DECK|LOCATION_EXTRA) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 		if #g>0 then

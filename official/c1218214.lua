@@ -37,12 +37,12 @@ function s.initial_effect(c)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e4:SetRange(LOCATION_GRAVE)
 	e4:SetCountLimit(1,{id,1})
-	e4:SetCost(aux.bfgcost)
+	e4:SetCost(Cost.SelfBanish)
 	e4:SetTarget(s.thtg)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xe3}
+s.listed_series={SET_CUBIC}
 function s.efilter(e,c)
 	return c:IsSetCard(SET_CUBIC)
 end

@@ -25,15 +25,15 @@ function s.initial_effect(c)
 	--to defense
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e4:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e4:SetCode(EVENT_PHASE|PHASE_BATTLE)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1)
 	e4:SetCondition(s.poscon)
 	e4:SetOperation(s.posop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x1047}
-s.material_setcode={0x47,0x1047}
+s.listed_series={SET_GEM_KNIGHT}
+s.material_setcode={SET_GEM,SET_GEM_KNIGHT}
 function s.splimit(e,se,sp,st)
 	return not e:GetHandler():IsLocation(LOCATION_EXTRA) or (st&SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
 end

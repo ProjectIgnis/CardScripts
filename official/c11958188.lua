@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x88}
+s.listed_series={SET_BUJIN}
 function s.cfilter(c,tp)
 	return c:IsSetCard(SET_BUJIN) and c:IsControler(tp) and c:IsPreviousControler(tp)
 		and c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_BATTLE)

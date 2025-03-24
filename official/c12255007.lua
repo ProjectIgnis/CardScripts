@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x9f,0x99}
+s.listed_series={SET_PERFORMAPAL,SET_ODD_EYES}
 function s.aclimit(e,re,tp)
 	return not re:GetHandler():IsImmuneToEffect(e) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
@@ -44,6 +44,6 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsRelateToEffect(e) and Duel.NegateAttack() then
-		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
+		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE|PHASE_BATTLE_STEP,1)
 	end
 end

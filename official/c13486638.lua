@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x2073,0x10db,0xba}
+s.listed_series={SET_XYZ_DRAGON,SET_THE_PHANTOM_KNIGHTS,SET_RAIDRAPTOR}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
 end
@@ -63,7 +63,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(atk)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			sc:RegisterEffect(e1)
 		end
 	end

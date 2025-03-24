@@ -20,7 +20,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCountLimit(1)
 	e1:SetTarget(s.thtg1)
 	e1:SetOperation(s.thop1)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET|RESET_PHASE|PHASE_END)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
@@ -33,10 +33,10 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetTarget(s.thtg2)
 	e2:SetOperation(s.thop2)
 	e2:SetLabel(Duel.GetTurnCount())
-	if Duel.GetTurnPlayer()==tp then
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_PHASE+PHASE_END+RESET_SELF_TURN,2)
+	if Duel.IsTurnPlayer(tp) then
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET|RESET_PHASE|PHASE_END|RESET_SELF_TURN,2)
 	else
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_PHASE+PHASE_END+RESET_SELF_TURN)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET|RESET_PHASE|PHASE_END|RESET_SELF_TURN)
 	end
 	c:RegisterEffect(e2)
 end
@@ -56,7 +56,7 @@ function s.thop1(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and Duel.GetTurnCount()~=e:GetLabel()
+	return Duel.IsTurnPlayer(tp) and Duel.GetTurnCount()~=e:GetLabel()
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end

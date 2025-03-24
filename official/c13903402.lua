@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-s.listed_series={0x134}
+s.listed_series={SET_GENERAIDER}
 function s.thfilter(c)
 	return not c:IsCode(id) and (c:IsRace(RACE_PLANT) or c:IsSetCard(SET_GENERAIDER)) and c:IsAbleToHand()
 end

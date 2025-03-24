@@ -1,4 +1,5 @@
 --覚醒戦士 クーフーリン
+--Cú Chulainn the Awakened
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

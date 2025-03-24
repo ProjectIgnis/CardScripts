@@ -1,4 +1,5 @@
 --E・HERO ワイルドジャギーマン
+--Elemental HERO Wildedge
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material

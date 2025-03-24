@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_VISAS_STARFROST}
-s.listed_series={0x182}
+s.listed_series={SET_TEARLAMENTS}
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE)) and Duel.IsChainNegatable(ev)
 		and (Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_VISAS_STARFROST),tp,LOCATION_ONFIELD,0,1,nil)
@@ -46,7 +46,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	if not Duel.NegateActivation(ev) or not rc:IsRelateToEffect(re) then return end
 	rc:CancelToGrave()
-	if Duel.SendtoDeck(rc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)<1 or not rc:IsLocation(LOCATION_DECK+LOCATION_EXTRA) then return end
+	if Duel.SendtoDeck(rc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)<1 or not rc:IsLocation(LOCATION_DECK|LOCATION_EXTRA) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,aux.AND(Card.IsMonster,Card.IsAbleToGrave),tp,LOCATION_HAND,0,1,1,nil)
 	if #g>0 then

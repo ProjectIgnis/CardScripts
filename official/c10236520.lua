@@ -1,4 +1,5 @@
 --忍者義賊ゴエゴエ
+--Goe Goe the Gallant Ninja
 local s,id=GetID()
 function s.initial_effect(c)
 	--handes

@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x150}
+s.listed_series={SET_VIRTUAL_WORLD}
 s.listed_names={id}
 local key=TYPE_MONSTER+TYPE_SPELL+TYPE_TRAP
 function s.tgtfilter(c,tp)
@@ -44,7 +44,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e0:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e0:SetTargetRange(1,0)
 	e0:SetTarget(s.splimit)
-	e0:SetReset(RESET_PHASE+PHASE_END)
+	e0:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e0,tp)
 	aux.RegisterClientHint(c,EFFECT_FLAG_OATH,tp,1,0,aux.Stringid(id,1),nil)
 	local tc=Duel.GetFirstTarget()
@@ -60,7 +60,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetCountLimit(1)
 				e1:SetCondition(s.thcon)
 				e1:SetOperation(s.thop)
-				e1:SetReset(RESET_PHASE+PHASE_END)
+				e1:SetReset(RESET_PHASE|PHASE_END)
 				Duel.RegisterEffect(e1,tp)
 			end
 		end

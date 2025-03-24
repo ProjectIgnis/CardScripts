@@ -1,4 +1,5 @@
 --湖の乙女ヴィヴィアン
+--Lady of the Lake
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro limit

@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.negop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xd2}
+s.listed_series={SET_KOZMO}
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)

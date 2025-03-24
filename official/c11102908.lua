@@ -1,4 +1,5 @@
 --紫炎の霞城
+--Shien's Castle of Mist
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

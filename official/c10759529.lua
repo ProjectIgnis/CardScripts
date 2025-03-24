@@ -1,4 +1,5 @@
 --キッズ・ガード
+--Kid Guard
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,4 +1,5 @@
 --神竜－エクセリオン
+--Divine Dragon - Excelion
 local s,id=GetID()
 function s.initial_effect(c)
 	--to defense

@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	--atkdown
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e3:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCountLimit(1)
 	e3:SetCondition(s.atkcon)
@@ -42,12 +42,12 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(e:GetHandler(),REASON_EFFECT)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and e:GetHandler():GetFirstCardTarget()~=nil
+	return Duel.IsTurnPlayer(tp) and e:GetHandler():GetFirstCardTarget()~=nil
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetFirstCardTarget()
 	if tc then
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,0)
 	end
 end
 function s.val(e,c)

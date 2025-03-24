@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x102}
+s.listed_series={SET_ROKKET}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp and (r&REASON_EFFECT)~=0
 end

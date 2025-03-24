@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.repval)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x11c}
+s.listed_series={SET_THUNDER_DRAGON}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLinkSummoned()
 end
@@ -47,10 +47,10 @@ function s.filter(c,e,tp)
 	return false
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end
-	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil,e,tp) end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE|LOCATION_REMOVED) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end
+	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE|LOCATION_REMOVED,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil,e,tp)
+	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE|LOCATION_REMOVED,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,tp,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)

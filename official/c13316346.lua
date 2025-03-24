@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetValue(2000)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x51}
+s.listed_series={SET_GADGET}
 function s.atkcon(e)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_GADGET),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end

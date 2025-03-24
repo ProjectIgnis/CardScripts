@@ -26,7 +26,7 @@ function s.eqfilter(c)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetPreviousEquipTarget()
-	return e:GetHandler():IsReason(REASON_LOST_TARGET) and not ec:IsLocation(LOCATION_ONFIELD+LOCATION_OVERLAY)
+	return e:GetHandler():IsReason(REASON_LOST_TARGET) and not ec:IsLocation(LOCATION_ONFIELD|LOCATION_OVERLAY)
 end
 function s.spfilter(c,e,tp)
 	return c:IsCode(CARD_NEOS) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

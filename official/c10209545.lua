@@ -1,4 +1,5 @@
 --朽ち果てた武将
+--Decayed Commander
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon

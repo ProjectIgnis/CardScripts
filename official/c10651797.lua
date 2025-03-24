@@ -1,4 +1,5 @@
 --ツバメ返し
+--Swallow Flip
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -47,7 +47,7 @@ function s.indop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetValue(1)
-		e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+		e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
 		c:RegisterEffect(e1)
 	end
 end

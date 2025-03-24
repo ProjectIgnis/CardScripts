@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x1d}
+s.listed_series={SET_KOAKI_MEIRU}
 s.listed_names={36623431}
 function s.cfilter1(c)
 	return c:IsCode(36623431) and not c:IsPublic()

@@ -1,4 +1,5 @@
 --エンシェント・シャーク ハイパー・メガロドン
+--Hyper-Ancient Shark Megalodon
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy

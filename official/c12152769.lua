@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xac}
+s.listed_series={SET_GOBLIN}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp
 end

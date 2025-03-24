@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.eqop2)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x29}
+s.listed_series={SET_DRAGUNITY}
 function s.eqval(ec,c,tp)
 	return ec:IsControler(tp) and ec:IsSetCard(SET_DRAGUNITY) 
 end
@@ -82,13 +82,13 @@ function s.eqop2(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetValue(true)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
 		--equip effect
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_EQUIP)
 		e2:SetCode(EFFECT_UPDATE_ATTACK)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e2:SetValue(1000)
 		c:RegisterEffect(e2)
 		local e3=e2:Clone()

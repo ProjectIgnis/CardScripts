@@ -32,7 +32,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(3000)
 	e1:SetCondition(s.atkcon)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e1,true)
 	Duel.SpecialSummonComplete()
 end

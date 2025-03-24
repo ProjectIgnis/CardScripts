@@ -43,7 +43,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.listed_names={id}
-s.listed_series={0xab}
+s.listed_series={SET_DESKBOT}
 function s.filter(c)
 	return c:IsSetCard(SET_DESKBOT) and c:IsAbleToDeck() and not c:IsPublic()
 end
@@ -72,19 +72,19 @@ function s.cfilter(c)
 		and (c:IsLocation(LOCATION_SZONE) or aux.SpElimFilter(c,true,true))
 end
 function s.cost2(e,tp,eg,ep,ev,re,r,rp,chk)
-	local rg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_GRAVE+LOCATION_ONFIELD,0,nil)
+	local rg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_GRAVE|LOCATION_ONFIELD,0,nil)
 	if chk==0 then return aux.SelectUnselectGroup(rg,e,tp,9,9,aux.dncheck,0) end
 	local gp=aux.SelectUnselectGroup(rg,e,tp,9,9,aux.dncheck,1,tp,HINTMSG_REMOVE)
 	Duel.Remove(gp,POS_FACEUP,REASON_COST)
 end
 function s.target2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToDeck,tp,0,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,1,nil) end
-	local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,0,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToDeck,tp,0,LOCATION_HAND|LOCATION_ONFIELD|LOCATION_GRAVE,1,nil) end
+	local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,0,LOCATION_HAND|LOCATION_ONFIELD|LOCATION_GRAVE,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,#g,0,0)
 end
 function s.operation2(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_HAND,nil)
+	local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD|LOCATION_GRAVE|LOCATION_HAND,nil)
 	if #g>0 then
 		Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end

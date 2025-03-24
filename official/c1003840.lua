@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x1017}
+s.listed_series={SET_SYNCHRON}
 function s.cfilter(c,e,tp,ft)
 	local lv=c:GetLevel()
 	return lv>0 and c:IsType(TYPE_TUNER)

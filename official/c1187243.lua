@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x10}
+s.listed_series={SET_GUSTO}
 function s.thcfilter(c)
 	return c:IsAttribute(ATTRIBUTE_WIND) and c:IsMonster() and c:IsDiscardable()
 end

@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x100d}
+s.listed_series={SET_X_SABER}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsAttackPos() and c:IsSetCard(SET_X_SABER)
 end

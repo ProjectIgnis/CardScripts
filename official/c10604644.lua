@@ -44,7 +44,7 @@ function s.initial_effect(c)
 	e4:SetLabelObject(e2)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x17b}
+s.listed_series={SET_THERION}
 function s.eqfilter(c)
 	return c:IsMonster() and (c:IsSetCard(SET_THERION) or c:IsRace(RACE_MACHINE))
 end
@@ -82,10 +82,10 @@ function s.discostfilter(c)
 		and (c:IsFaceup() or c:IsLocation(LOCATION_HAND))
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.discostfilter,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.discostfilter,tp,LOCATION_ONFIELD|LOCATION_HAND,0,1,nil) end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.discostfilter,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.discostfilter,tp,LOCATION_ONFIELD|LOCATION_HAND,0,1,1,nil)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)

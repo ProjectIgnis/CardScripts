@@ -38,7 +38,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x2b}
+s.listed_series={SET_NINJA}
 function s.ffilter(c,fc,sumtype,sp,sub,mg,sg)
 	return c:IsSetCard(SET_NINJA,fc,sumtype,sp) and (not sg or sg:FilterCount(aux.TRUE,c)==0 or not sg:IsExists(Card.IsRace,1,c,c:GetRace(),fc,sumtype,sp))
 end

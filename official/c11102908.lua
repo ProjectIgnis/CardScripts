@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetValue(-500)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x3d}
+s.listed_series={SET_SIX_SAMURAI}
 function s.atkcon(e)
 	local d=Duel.GetAttackTarget()
 	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and d and d:IsSetCard(SET_SIX_SAMURAI)

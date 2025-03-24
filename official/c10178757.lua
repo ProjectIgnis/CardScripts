@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.synlimit)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x2}
+s.listed_series={SET_GENEX}
 function s.synlimit(e,c)
 	if not c then return false end
 	return not c:IsSetCard(SET_GENEX)

@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-s.listed_series={0xb2}
+s.listed_series={SET_UA}
 function s.spfilter(c,ft)
 	return c:IsFaceup() and c:IsSetCard(SET_UA) and not c:IsCode(id) and c:IsAbleToHandAsCost()
 		and (ft>0 or c:GetSequence()<5)
@@ -62,7 +62,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==1-tp and Duel.IsMainPhase()
+	return Duel.IsTurnPlayer(1-tp) and Duel.IsMainPhase()
 end
 function s.tdfilter(c,e,tp)
 	return c:IsSetCard(SET_UA) and c:IsLevelAbove(5) and c:IsAbleToDeck()

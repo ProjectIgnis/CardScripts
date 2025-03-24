@@ -47,7 +47,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.spop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0xab}
+s.listed_series={SET_DESKBOT}
 function s.splimit(e,c,tp,sumtp,sumpos)
 	return not c:IsSetCard(SET_DESKBOT) and (sumtp&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end

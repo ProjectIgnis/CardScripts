@@ -40,7 +40,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.negop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x151}
+s.listed_series={SET_DRYTRON}
 function s.mttg(e,c)
 	return e:GetHandler():GetOverlayGroup():IsContains(c)
 end

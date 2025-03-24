@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xdf}
+s.listed_series={SET_LUNALIGHT}
 s.listed_names={id}
 function s.atkfilter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_LUNALIGHT) and not c:IsCode(id)
@@ -43,7 +43,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e2:SetValue(tc:GetBaseAttack()*2)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e2)
 	end
 end

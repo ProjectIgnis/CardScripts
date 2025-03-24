@@ -18,12 +18,12 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,id)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.xtg)
 	e2:SetOperation(s.xop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x126}
+s.listed_series={SET_TIME_THIEF}
 function s.filter(c,e,tp)
 	return c:IsSetCard(SET_TIME_THIEF) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

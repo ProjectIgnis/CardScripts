@@ -2,8 +2,8 @@
 --The Kaiju Files
 local s,id=GetID()
 function s.initial_effect(c)
-	c:EnableCounterPermit(0x37)
-	c:SetCounterLimit(0x37,5)
+	c:EnableCounterPermit(COUNTER_KAIJU)
+	c:SetCounterLimit(COUNTER_KAIJU,5)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -39,15 +39,15 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-s.counter_place_list={0x37}
-s.listed_series={0xd3}
+s.counter_place_list={COUNTER_KAIJU}
+s.listed_series={SET_KAIJU}
 s.listed_names={id}
 function s.cfilter(c)
-	return c:IsSetCard(SET_KAIJU) and c:IsPreviousLocation(LOCATION_HAND+LOCATION_GRAVE)
+	return c:IsSetCard(SET_KAIJU) and c:IsPreviousLocation(LOCATION_HAND|LOCATION_GRAVE)
 end
 function s.counter(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(s.cfilter,1,nil) then
-		e:GetHandler():AddCounter(0x37,1)
+		e:GetHandler():AddCounter(COUNTER_KAIJU,1)
 	end
 end
 function s.filter(c,e,tp)
@@ -90,7 +90,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetCounter(0x37)>=3
+	return e:GetHandler():GetCounter(COUNTER_KAIJU)>=3
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end

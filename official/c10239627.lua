@@ -2,7 +2,7 @@
 --Magical Abductor
 local s,id=GetID()
 function s.initial_effect(c)
-	c:EnableCounterPermit(COUNTER_SPELL,LOCATION_PZONE+LOCATION_MZONE)
+	c:EnableCounterPermit(COUNTER_SPELL,LOCATION_PZONE|LOCATION_MZONE)
 	--pendulum summon
 	Pendulum.AddProcedure(c)
 	--add counter
@@ -10,13 +10,13 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e2:SetCode(EVENT_CHAINING)
-	e2:SetRange(LOCATION_PZONE+LOCATION_MZONE)
+	e2:SetRange(LOCATION_PZONE|LOCATION_MZONE)
 	e2:SetOperation(aux.chainreg)
 	c:RegisterEffect(e2)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e3:SetCode(EVENT_CHAIN_SOLVED)
-	e3:SetRange(LOCATION_PZONE+LOCATION_MZONE)
+	e3:SetRange(LOCATION_PZONE|LOCATION_MZONE)
 	e3:SetOperation(s.acop)
 	c:RegisterEffect(e3)
 	--to hand

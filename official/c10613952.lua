@@ -40,7 +40,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x207a,0x107a}
+s.listed_series={SET_NOBLE_ARMS,SET_NOBLE_KNIGHT}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsXyzSummoned()
 end

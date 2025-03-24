@@ -1,8 +1,8 @@
---F.A. City Grand Prix
+--Ｆ．Ａ．シティＧＰ
 --F.A. City Grand Prix
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -39,11 +39,10 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x107}
+s.listed_series={SET_FA}
 s.listed_names={id}
 function s.lvcon(e)
-	local ph=Duel.GetCurrentPhase()
-	return ph==PHASE_MAIN1 or ph==PHASE_MAIN2 or (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE)
+	return Duel.IsMainPhase() or Duel.IsBattlePhase()
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

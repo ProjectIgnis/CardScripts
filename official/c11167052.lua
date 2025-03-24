@@ -48,7 +48,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.thop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x400d,0x113}
+s.listed_series={SET_ELEMENTSABER,SET_ELEMENTAL_LORD}
 s.listed_names={61557074}
 function s.intg(e,c)
 	return c:IsFaceup() and c:IsCode(61557074)

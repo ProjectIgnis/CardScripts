@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x3e}
+s.listed_series={SET_WORM}
 function s.cfilter(c,tp)
 	return c:IsSetCard(SET_WORM) and c:IsRace(RACE_REPTILE) and (c:IsControler(tp) or c:IsFaceup())
 end

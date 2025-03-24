@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.atlimit)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x4}
+s.listed_series={SET_AMAZONESS}
 function s.val(e,c)
 	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,SET_AMAZONESS),c:GetControler(),LOCATION_MZONE,0,nil)*400
 end

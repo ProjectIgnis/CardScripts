@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x3e}
+s.listed_series={SET_WORM}
 s.listed_names={47111934}
 function s.tgfilter(c)
 	return c:IsSetCard(SET_WORM) and c:IsRace(RACE_REPTILE) and c:IsAbleToGrave()

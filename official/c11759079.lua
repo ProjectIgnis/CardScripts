@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x14e}
+s.listed_series={SET_DUAL_AVATAR}
 s.listed_names={id}
 function s.spfilter(c,tp)
 	return c:IsReason(REASON_BATTLE+REASON_EFFECT)
@@ -39,7 +39,7 @@ function s.spfilter(c,tp)
 		and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.spfilter,1,nil,tp) and Duel.GetTurnPlayer()==1-tp
+	return eg:IsExists(s.spfilter,1,nil,tp) and Duel.IsTurnPlayer(1-tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xfc}
+s.listed_series={SET_GOUKI}
 function s.econ(e)
 	return e:GetHandler():IsLinkSummoned()
 end

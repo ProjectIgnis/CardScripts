@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x104}
+s.listed_series={SET_KRAWLER}
 s.listed_names={id}
 function s.filter(c)
 	return c:IsSetCard(SET_KRAWLER) and c:IsMonster() and c:IsAbleToHand()

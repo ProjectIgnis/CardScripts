@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DICE+CATEGORY_ATKCHANGE)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCode(EVENT_PHASE+PHASE_BATTLE_START)
+	e2:SetCode(EVENT_PHASE|PHASE_BATTLE_START)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetCountLimit(1)
 	e2:SetTarget(s.dicetg)
@@ -69,7 +69,7 @@ function s.atkchange(tc,opt,c)
 		else
 			e1:SetValue(tc:GetAttack()*2) --6: double the current aTK
 		end
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	else  --for other atk increase/decrease
 		local e1=Effect.CreateEffect(c)
@@ -84,7 +84,7 @@ function s.atkchange(tc,opt,c)
 		elseif opt==4 then
 			e1:SetValue(500) --4: gain 500 ATK
 		end
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

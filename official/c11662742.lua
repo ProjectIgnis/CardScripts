@@ -58,9 +58,9 @@ function s.dmop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:GetControler()~=ep then return end
 	if (r&REASON_BATTLE)~=0 then
-		c:RegisterFlagEffect(id,RESET_PHASE+PHASE_DAMAGE,0,1)
+		c:RegisterFlagEffect(id,RESET_PHASE|PHASE_DAMAGE,0,1)
 	elseif Duel.GetCurrentPhase()==PHASE_DAMAGE and not Duel.IsDamageCalculated() then
-		c:RegisterFlagEffect(id+1,RESET_PHASE+PHASE_DAMAGE,0,1)
+		c:RegisterFlagEffect(id+1,RESET_PHASE|PHASE_DAMAGE,0,1)
 	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)

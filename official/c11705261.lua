@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x107f}
+s.listed_series={SET_UTOPIA}
 function s.filter(c,tp)
 	return c:IsSetCard(SET_UTOPIA) and c:IsControler(tp) and c:IsXyzSummoned()
 end

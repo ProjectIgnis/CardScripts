@@ -1,5 +1,5 @@
 --Beetrooper Fly & Sting
---Scripted by fiftyfour
+--Beetrooper Fly & Sting
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -27,9 +27,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.setop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x172}
+s.listed_series={SET_BEETROOPER}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x172)
+	return c:IsFaceup() and c:IsSetCard(SET_BEETROOPER)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil) then return false end

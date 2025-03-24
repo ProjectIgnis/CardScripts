@@ -1,4 +1,5 @@
 --白い泥棒
+--White Magical Hat
 local s,id=GetID()
 function s.initial_effect(c)
 	--handes

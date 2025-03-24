@@ -1,4 +1,5 @@
 --ロード・オブ・ドラゴン－ドラゴンの支配者－
+--Lord of D.
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot be target

@@ -1,5 +1,5 @@
 --満天禍コルドー
---Cataclysmic Bellowing Colder
+--Cataclysmic Cryonic Coldo
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

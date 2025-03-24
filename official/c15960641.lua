@@ -1,4 +1,5 @@
 --ミラージュ・ドラゴン
+--Mirage Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--act limit
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 end
 function s.con(e)
 	local ph=Duel.GetCurrentPhase()
-	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
+	return Duel.IsBattlePhase()
 end
 function s.aclimit(e,re,tp)
 	return re:GetHandler():IsTrap() and re:IsHasType(EFFECT_TYPE_ACTIVATE)

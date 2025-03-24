@@ -1,4 +1,5 @@
 --ウォーム・ワーム
+--Warm Worm
 local s,id=GetID()
 function s.initial_effect(c)
 	--deckdes

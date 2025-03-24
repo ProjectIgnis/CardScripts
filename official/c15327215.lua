@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x103d,0x3d}
+s.listed_series={SET_SECRET_SIX_SAMURAI,SET_SIX_SAMURAI}
 function s.cfilter(c,tp)
 	return c:IsFaceup() and c:IsSummonPlayer(tp) and c:IsSetCard(SET_SECRET_SIX_SAMURAI)
 end
@@ -68,7 +68,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL_FINAL)
 		e1:SetValue(lv)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 		c:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_CHANGE_ATTRIBUTE)

@@ -1,4 +1,5 @@
 --ソーラー・ジェネクス
+--Genex Solar
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon with 1 tribute
@@ -16,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x2}
+s.listed_series={SET_GENEX}
 function s.otfilter(c,tp)
 	return c:IsSetCard(SET_GENEX) and (c:IsControler(tp) or c:IsFaceup())
 end

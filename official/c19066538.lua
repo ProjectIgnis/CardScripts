@@ -1,4 +1,5 @@
 --轟きの大海蛇
+--Roaring Ocean Snake
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material

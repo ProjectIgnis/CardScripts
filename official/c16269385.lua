@@ -1,5 +1,5 @@
 --プランキッズ・ハウス
---Prankids House
+--Prank-Kids Place
 --
 local s,id=GetID()
 function s.initial_effect(c)
@@ -38,9 +38,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.atkop2)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x120}
+s.listed_series={SET_PRANK_KIDS}
 function s.thfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x120) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(SET_PRANK_KIDS) and c:IsAbleToHand()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -53,7 +53,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,tp,sumt)
-	return c:IsFaceup() and c:IsSetCard(0x120) and c:IsSummonType(sumt) and c:IsSummonPlayer(tp)
+	return c:IsFaceup() and c:IsSetCard(SET_PRANK_KIDS) and c:IsSummonType(sumt) and c:IsSummonPlayer(tp)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp,SUMMON_TYPE_FUSION)
@@ -69,7 +69,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(500)
 		tc:RegisterEffect(e1)
 	end
@@ -88,7 +88,7 @@ function s.atkop2(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(-500)
 		tc:RegisterEffect(e1)
 	end

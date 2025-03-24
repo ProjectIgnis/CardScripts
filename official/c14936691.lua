@@ -1,4 +1,5 @@
 --ワーム・イーロキン
+--Worm Erokin
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot special summon
@@ -19,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.posop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x3e}
+s.listed_series={SET_WORM}
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_WORM) and c:IsRace(RACE_REPTILE) and c:IsCanTurnSet()
 end

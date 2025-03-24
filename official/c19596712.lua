@@ -2,7 +2,7 @@
 --Abyss-scale of Cetus
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,0x74))
+	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,SET_MERMAIL))
 	--ATK increase
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_EQUIP)
@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	aux.DoubleSnareValidity(c,LOCATION_SZONE)
 end
-s.listed_series={0x74}
+s.listed_series={SET_MERMAIL}
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)==LOCATION_SZONE
 		and re:IsActiveType(TYPE_TRAP) and Duel.IsChainDisablable(ev)

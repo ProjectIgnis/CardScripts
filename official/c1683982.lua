@@ -1,14 +1,14 @@
--- 毒蛇の怨念
--- Viper's Grudge
--- Scripted by Hatter
+--毒蛇の怨念
+--Viper's Grudge
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Activate
+	--Activate
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_ACTIVATE)
 	e0:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e0)
-	-- Non-Reptiles cannot attack or activate their effects
+	--Non-Reptiles cannot attack or activate their effects
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_TRIGGER)
@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
 	c:RegisterEffect(e2)
-	-- Special Summon Reptile from Deck
+	--Special Summon Reptile from Deck
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -40,7 +40,7 @@ function s.initial_effect(c)
 	local e4a=e4:Clone()
 	e4a:SetCode(EVENT_BE_MATERIAL)
 	c:RegisterEffect(e4a)
-	-- Return banished Reptiles to GY
+	--Return banished Reptiles to GY
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,1))
 	e5:SetCategory(CATEGORY_TOGRAVE)

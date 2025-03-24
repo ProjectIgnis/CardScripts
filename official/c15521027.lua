@@ -37,7 +37,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.roll_dice=true
-s.listed_series={0x26}
+s.listed_series={SET_MORPHTRONIC}
 function s.spfilter(c,tp)
 	return c:IsSetCard(SET_MORPHTRONIC) and c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 		and (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 or (c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5))

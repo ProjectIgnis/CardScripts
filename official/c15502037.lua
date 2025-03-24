@@ -1,4 +1,5 @@
 --電磁石の戦士γ
+--Gamma The Electromagnet Warrior
 local s,id=GetID()
 function s.initial_effect(c)
 	--to hand
@@ -29,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x2066}
+s.listed_series={SET_MAGNET_WARRIOR}
 s.listed_names={id}
 function s.filter(c,e,tp)
 	return c:IsSetCard(SET_MAGNET_WARRIOR) and not c:IsCode(id) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

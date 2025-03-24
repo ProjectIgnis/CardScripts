@@ -1,4 +1,5 @@
 --現世と冥界の逆転
+--Exchange of the Spirit
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

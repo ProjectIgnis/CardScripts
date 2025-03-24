@@ -35,7 +35,7 @@ function s.valcheck(e,c)
 	e:SetLabel(att)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-		return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+		return e:GetHandler():IsSynchroSummoned()
 		and e:GetLabelObject():GetLabel()~=0
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
@@ -50,9 +50,9 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCost(s.cost)
 		e1:SetTarget(s.target1)
 		e1:SetOperation(s.operation1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
-		c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,3))
+		c:RegisterFlagEffect(0,RESET_EVENT|RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,3))
 	end
 	if (att&ATTRIBUTE_WATER)~=0 then
 		local e1=Effect.CreateEffect(c)
@@ -65,9 +65,9 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCost(s.cost)
 		e1:SetTarget(s.target2)
 		e1:SetOperation(s.operation2)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
-		c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,4))
+		c:RegisterFlagEffect(0,RESET_EVENT|RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,4))
 	end
 	if (att&ATTRIBUTE_DARK)~=0 then
 		local e1=Effect.CreateEffect(c)
@@ -80,9 +80,9 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCost(s.cost)
 		e1:SetTarget(s.target3)
 		e1:SetOperation(s.operation3)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
-		c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,5))
+		c:RegisterFlagEffect(0,RESET_EVENT|RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,5))
 	end
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

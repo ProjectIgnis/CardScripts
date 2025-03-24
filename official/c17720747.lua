@@ -1,4 +1,5 @@
 --黒薔薇の魔女
+--Witch of the Black Rose
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot special summon

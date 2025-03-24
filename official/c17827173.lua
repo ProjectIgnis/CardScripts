@@ -1,5 +1,5 @@
 --ふわんだりぃず×とっかん
---Flundereeze x Toccan
+--Floowandereeze & Toccan
 --Logical Nonsense
 --Substitute ID
 local s,id=GetID()
@@ -40,7 +40,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 	--Lists "Flundereeze" archetype
-s.listed_series={0x16f}
+s.listed_series={SET_FLOOWANDEREEZE}
 
 	--Cannot special summon the turn you activate e1 or e3
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -49,19 +49,19 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetTargetRange(1,0)
 	Duel.RegisterEffect(e1,tp)
 	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e2:SetDescription(aux.Stringid(id,2))
-	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetReset(RESET_PHASE|PHASE_END)
 	e2:SetTargetRange(1,0)
 	Duel.RegisterEffect(e2,tp)
 end
 	--Check for a card to banish
 function s.addfilter(c)
-	return c:IsSetCard(0x16f) and c:IsFaceup() and c:IsAbleToHand()
+	return c:IsSetCard(SET_FLOOWANDEREEZE) and c:IsFaceup() and c:IsAbleToHand()
 end
 	--Activation legality
 function s.nstg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -81,7 +81,7 @@ function s.nsop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 		if not tc:IsLocation(LOCATION_HAND) then return end
 		--Normal summon 1 winged beast monster
-		local sg1=Duel.GetMatchingGroup(s.sumfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,nil)
+		local sg1=Duel.GetMatchingGroup(s.sumfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,nil)
 		if #sg1>0 and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
 			Duel.BreakEffect()
 			Duel.ShuffleHand(tp)

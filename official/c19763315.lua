@@ -1,4 +1,5 @@
 --不運なリポート
+--An Unfortunate Report
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -17,9 +18,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetTurnPlayer()~=tp and (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE) then
 		e1:SetLabel(Duel.GetTurnCount())
 		e1:SetCondition(s.bpcon)
-		e1:SetReset(RESET_PHASE+PHASE_BATTLE+RESET_OPPO_TURN,2)
+		e1:SetReset(RESET_PHASE|PHASE_BATTLE|RESET_OPPO_TURN),2)
 	else
-		e1:SetReset(RESET_PHASE+PHASE_BATTLE+RESET_OPPO_TURN,1)
+		e1:SetReset(RESET_PHASE|PHASE_BATTLE|RESET_OPPO_TURN),1)
 	end
 	Duel.RegisterEffect(e1,tp)
 end

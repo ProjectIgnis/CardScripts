@@ -1,4 +1,5 @@
 --融合回収
+--Fusion Recovery
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

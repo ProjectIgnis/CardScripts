@@ -1,4 +1,5 @@
 --聖剣ガラティーン
+--Noble Arms - Gallatin
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,0,id)
@@ -21,7 +22,7 @@ function s.initial_effect(c)
 	--atkdown
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e4:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e4:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetCountLimit(1)
 	e4:SetLabelObject(e2)
@@ -41,14 +42,14 @@ function s.initial_effect(c)
 	e5:SetOperation(s.eqop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x107a}
+s.listed_series={SET_NOBLE_KNIGHT}
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	if not eg:IsContains(e:GetHandler()) then return end
 	local pe=e:GetLabelObject()
 	pe:SetValue(1000)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local pe=e:GetLabelObject()

@@ -1,4 +1,5 @@
 --幻奏の歌姫ソロ
+--Solo the Melodious Songstress
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -20,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x9b}
+s.listed_series={SET_MELODIOUS}
 s.listed_names={id}
 function s.spcon(e,c)
 	if c==nil then return true end

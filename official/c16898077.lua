@@ -1,4 +1,5 @@
 --ジャイアント・ボマー・エアレイド
+--Flying Fortress SKY FIRE
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

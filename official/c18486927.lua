@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.nameop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x51}
+s.listed_series={SET_GADGET}
 function s.dectg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CARDTYPE)
@@ -49,7 +49,7 @@ function s.decop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetLabel(ct)
 	e1:SetCondition(s.actcon)
 	e1:SetValue(s.actlimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.actlimit(e,re,tp)
@@ -79,7 +79,7 @@ function s.nameop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_CHANGE_CODE)
 		e1:SetValue(ac)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end

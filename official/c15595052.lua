@@ -32,7 +32,7 @@ function s.ancop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetTarget(s.destg)
 		e1:SetOperation(s.desop)
 		e1:SetLabel(att)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 	end
 end

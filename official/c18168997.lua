@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 	--Lists "Darklord" archetype
-s.listed_series={0xef}
+s.listed_series={SET_DARKLORD}
 	--Pay 1000 LP
 function s.cpcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,1000) end
@@ -37,7 +37,7 @@ function s.cpcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 	--Check for "Darklord" spell/trap
 function s.cpfilter(c)
-	return c:IsSetCard(0xef) and c:IsSpellTrap() and c:IsAbleToDeck() and c:CheckActivateEffect(false,true,false)~=nil
+	return c:IsSetCard(SET_DARKLORD) and c:IsSpellTrap() and c:IsAbleToDeck() and c:CheckActivateEffect(false,true,false)~=nil
 end
 	--Activation legality
 function s.cptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

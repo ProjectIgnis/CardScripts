@@ -1,4 +1,5 @@
 --霞の谷の幼怪鳥
+--Mist Valley Baby Roc
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon

@@ -1,5 +1,5 @@
 --ＣｉＮｏ．１０００ 夢幻虚光神ヌメロニアス・ヌメロニア
---Number iC1000: Numeronius Numeronia
+--Number iC1000: Numerounius Numerounia
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)

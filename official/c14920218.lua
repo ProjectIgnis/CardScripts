@@ -1,4 +1,5 @@
 --賤竜の魔術師
+--Oafdragon Magician
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -29,7 +30,7 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x98,0x99}
+s.listed_series={SET_MAGICIAN,SET_ODD_EYES}
 s.listed_names={id}
 function s.pcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_PZONE,0,1,e:GetHandler(),SET_MAGICIAN)

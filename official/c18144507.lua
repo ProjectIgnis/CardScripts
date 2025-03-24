@@ -1,4 +1,5 @@
 --ハーピィの羽根帚(EU)
+--Harpie's Feather Duster
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

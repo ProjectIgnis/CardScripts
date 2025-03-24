@@ -1,5 +1,5 @@
 --氷風のリフレイン
---Ice Wind's Refrain
+--Icy Breeze Refrain
 --Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -26,9 +26,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.negop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xf0}
+s.listed_series={SET_WINDWITCH}
 function s.filter(c,e,tp)
-	return c:IsMonster() and c:IsSetCard(0xf0) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsMonster() and c:IsSetCard(SET_WINDWITCH) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end
@@ -51,7 +51,7 @@ function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	local cplayer=Duel.GetChainInfo(ch,CHAININFO_TRIGGERING_CONTROLER)
 	local ceff=Duel.GetChainInfo(ch,CHAININFO_TRIGGERING_EFFECT)
 	if re:GetHandler():IsDisabled() or not Duel.IsChainDisablable(ev) then return false end
-	return ep==1-tp and cplayer==tp and ceff:GetHandler():IsSetCard(0xf0) and ceff:GetHandler():IsMonster()
+	return ep==1-tp and cplayer==tp and ceff:GetHandler():IsSetCard(SET_WINDWITCH) and ceff:GetHandler():IsMonster()
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not re:GetHandler():IsStatus(STATUS_DISABLED) end

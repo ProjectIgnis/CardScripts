@@ -1,5 +1,5 @@
 --戒めの龍
---unishment Dragon
+--Punishment Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -43,9 +43,9 @@ function s.initial_effect(c)
 	e5:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x38}
+s.listed_series={SET_LIGHTSWORN}
 function s.spfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x38) and c:IsMonster()
+	return c:IsFaceup() and c:IsSetCard(SET_LIGHTSWORN) and c:IsMonster()
 end
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -59,22 +59,22 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,1000)
 end
 function s.filter(c)
-	return (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE)) and not (c:IsSetCard(0x38) and c:IsMonster()) and c:IsAbleToDeck()
+	return (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE)) and not (c:IsSetCard(SET_LIGHTSWORN) and c:IsMonster()) and c:IsAbleToDeck()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE+LOCATION_REMOVED,LOCATION_GRAVE+LOCATION_REMOVED,1,e:GetHandler()) end
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_GRAVE+LOCATION_REMOVED,LOCATION_GRAVE+LOCATION_REMOVED,e:GetHandler())
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE|LOCATION_REMOVED,LOCATION_GRAVE|LOCATION_REMOVED,1,e:GetHandler()) end
+	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_GRAVE|LOCATION_REMOVED,LOCATION_GRAVE|LOCATION_REMOVED,e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,#g,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_GRAVE+LOCATION_REMOVED,LOCATION_GRAVE+LOCATION_REMOVED,nil)
+	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_GRAVE|LOCATION_REMOVED,LOCATION_GRAVE|LOCATION_REMOVED,nil)
 	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 end
 function s.ddcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
 	return re:IsActiveType(TYPE_MONSTER) and rc~=c
-		and rc:IsSetCard(0x38) and rc:IsControler(tp)
+		and rc:IsSetCard(SET_LIGHTSWORN) and rc:IsControler(tp)
 end
 function s.ddtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

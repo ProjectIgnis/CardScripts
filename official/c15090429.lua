@@ -1,4 +1,5 @@
 --暴風小僧
+--Whirlwind Prodigy
 local s,id=GetID()
 function s.initial_effect(c)
 	--double tribute

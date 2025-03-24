@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x9a}
+s.listed_series={SET_SUPERHEAVY_SAMURAI}
 function s.hspcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
@@ -48,7 +48,7 @@ function s.hspop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetDescription(aux.Stringid(id,5))
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
@@ -95,7 +95,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		if not tc then return end
 		Duel.HintSelection(g)
 		if Duel.Destroy(g,REASON_EFFECT)~=0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-			and not tc:IsLocation(LOCATION_HAND+LOCATION_DECK)
+			and not tc:IsLocation(LOCATION_HAND|LOCATION_DECK)
 			and tc:IsSpellTrap() and tc:IsSSetable()
 			and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
 			Duel.BreakEffect()
@@ -109,7 +109,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.HintSelection(g)
 		if Duel.Destroy(g,REASON_EFFECT)~=0
 			and Duel.CheckPendulumZones(tp)
-			and not tc:IsLocation(LOCATION_HAND+LOCATION_DECK) and not tc:IsForbidden()
+			and not tc:IsLocation(LOCATION_HAND|LOCATION_DECK) and not tc:IsForbidden()
 			and Duel.SelectYesNo(tp,aux.Stringid(id,4)) then
 			Duel.BreakEffect()
 			Duel.MoveToField(tc,tp,tp,LOCATION_PZONE,POS_FACEUP,true)

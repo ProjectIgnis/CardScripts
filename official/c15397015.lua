@@ -62,7 +62,7 @@ function s.typecount(c)
 end
 function s.aclimit1(e,tp,eg,ep,ev,re,r,rp)
 	if ep==1-tp or not re:IsActiveType(TYPE_MONSTER) then return end
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_CONTROL+RESET_PHASE+PHASE_END,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_CONTROL|RESET_PHASE|PHASE_END,0,1)
 end
 function s.aclimit2(e,tp,eg,ep,ev,re,r,rp)
 	if ep~=tp or not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
@@ -75,7 +75,7 @@ function s.econ1(e)
 end
 function s.aclimit3(e,tp,eg,ep,ev,re,r,rp)
 	if ep==tp or not re:IsActiveType(TYPE_MONSTER) then return end
-	e:GetHandler():RegisterFlagEffect(id+1,RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_CONTROL+RESET_PHASE+PHASE_END,0,1)
+	e:GetHandler():RegisterFlagEffect(id+1,RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_CONTROL|RESET_PHASE|PHASE_END,0,1)
 end
 function s.aclimit4(e,tp,eg,ep,ev,re,r,rp)
 	if ep==tp or not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return end

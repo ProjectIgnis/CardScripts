@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.tfop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x1150,0x150}
+s.listed_series={SET_VIRTUAL_WORLD_GATE,SET_VIRTUAL_WORLD}
 function s.tffilter(c,tp)
 	return c:IsSpellTrap() and c:IsSetCard(SET_VIRTUAL_WORLD_GATE) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
 end
@@ -39,7 +39,7 @@ function s.tfop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetTargetRange(LOCATION_MZONE,0)
 			e1:SetValue(200)
 			e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_VIRTUAL_WORLD))
-			e1:SetReset(RESET_PHASE+PHASE_END)
+			e1:SetReset(RESET_PHASE|PHASE_END)
 			Duel.RegisterEffect(e1,tp)
 		end
 		if ct>=3 and Duel.IsPlayerCanDiscardDeck(tp,3) then

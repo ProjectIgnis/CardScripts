@@ -1,4 +1,5 @@
 --一刀両断侍
+--Sasuke Samurai
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy

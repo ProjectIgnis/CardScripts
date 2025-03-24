@@ -1,9 +1,9 @@
 -- 
--- Libromancer First Appearance
--- Scripted by Hatter
+--Libromancer First Appearance
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -11,15 +11,15 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	-- Ritual Summon 1 "Libromancer" monster
-	local e2=Ritual.CreateProc(c,RITPROC_GREATER,aux.FilterBoolFunction(Card.IsSetCard,0x17d),nil,aux.Stringid(id,1))
+	--Ritual Summon 1 "Libromancer" monster
+	local e2=Ritual.CreateProc(c,RITPROC_GREATER,aux.FilterBoolFunction(Card.IsSetCard,SET_LIBROMANCER),nil,aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_FZONE)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x17d}
+s.listed_series={SET_LIBROMANCER}
 function s.thfilter(c,tp)
-	return c:IsMonster() and c:IsSetCard(0x17d) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(SET_LIBROMANCER) and c:IsAbleToHand()
 		and not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,c:GetCode()),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

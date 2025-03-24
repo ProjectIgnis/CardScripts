@@ -27,15 +27,15 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCountLimit(1,{id,1})
 	e3:SetCondition(s.descon)
-	e3:SetCost(aux.bfgcost)
+	e3:SetCost(Cost.SelfBanish)
 	e3:SetTarget(s.destg)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
 s.listed_names={id}
-s.listed_series={0x135}
+s.listed_series={SET_IGNISTER}
 function s.thfilter(c)
-	return c:IsSetCard(0x135) and c:IsMonster() and c:IsLevelBelow(4) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_IGNISTER) and c:IsMonster() and c:IsLevelBelow(4) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -72,4 +72,3 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end
-

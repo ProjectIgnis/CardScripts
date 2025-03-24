@@ -1,4 +1,5 @@
 --賢者ケイローン
+--Chiron the Mage
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon

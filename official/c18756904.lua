@@ -1,4 +1,5 @@
 --馬の骨の対価
+--White Elephant's Gift
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

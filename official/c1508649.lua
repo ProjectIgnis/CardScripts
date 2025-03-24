@@ -40,7 +40,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
-s.listed_series={0x103}
+s.listed_series={SET_ALTERGEIST}
 function s.atkfilter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_ALTERGEIST) and c:GetBaseAttack()>=0
 end

@@ -1,4 +1,5 @@
 --魂の共有－コモンソウル
+--Common Soul
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -19,7 +20,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	e1:SetLabelObject(e2)
 end
-s.listed_series={0x1f}
+s.listed_series={SET_NEO_SPACIAN}
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_NEO_SPACIAN) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -56,7 +57,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCondition(s.rcon)
 		e1:SetValue(sc:GetAttack())
 		e1:SetLabelObject(sc)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1,true)
 	end
 end

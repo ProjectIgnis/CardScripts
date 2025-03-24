@@ -44,7 +44,7 @@ end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local rg=Duel.GetMatchingGroup(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND+LOCATION_MZONE,0,nil)
+	local rg=Duel.GetMatchingGroup(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND|LOCATION_MZONE,0,nil)
 	local g1=rg:Filter(Card.IsCode,nil,80208158)
 	local g2=rg:Filter(Card.IsCode,nil,16796157)
 	local g3=rg:Filter(Card.IsCode,nil,43791861)
@@ -57,7 +57,7 @@ function s.spcon(e,c)
 		and aux.SelectUnselectGroup(g,e,tp,4,4,s.rescon,0)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
-	local rg=Duel.GetMatchingGroup(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND+LOCATION_MZONE,0,nil):Filter(Card.IsCode,nil,80208158,16796157,43791861,79185500)
+	local rg=Duel.GetMatchingGroup(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND|LOCATION_MZONE,0,nil):Filter(Card.IsCode,nil,80208158,16796157,43791861,79185500)
 	local g=aux.SelectUnselectGroup(rg,e,tp,4,4,s.rescon,1,tp,HINTMSG_TOGRAVE,nil,nil,true)
 	if #g>0 then
 		g:KeepAlive()

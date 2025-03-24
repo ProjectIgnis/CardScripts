@@ -1,4 +1,5 @@
 --インフェルニティ・リフレクター
+--Infernity Reflector
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xb}
+s.listed_series={SET_INFERNITY}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
 	local g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)

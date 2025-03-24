@@ -1,5 +1,5 @@
 --ネメシス・フラッグ
---Nemesis Flag
+--Nemeses Flag
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-s.listed_series={0x13d}
+s.listed_series={SET_NEMESES}
 function s.tdfilter(c)
 	return c:IsMonster() and c:IsFaceup() and c:IsAbleToDeck() and not c:IsCode(id)
 end
@@ -48,7 +48,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x13d) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_NEMESES) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -62,4 +62,3 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-

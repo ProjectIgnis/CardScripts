@@ -1,8 +1,9 @@
 --スーパービークロイド－モビルベース
+--Super Vehicroid - Mobile Base
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,s.matfilter,aux.FilterBoolFunctionEx(Card.IsSetCard,0x16))
+	Fusion.AddProcMix(c,true,true,s.matfilter,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_ROID))
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -27,21 +28,21 @@ function s.initial_effect(c)
 	e2:SetOperation(s.mvop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x16}
-s.material_setcode=0x16
+s.listed_series={SET_ROID}
+s.material_setcode=SET_ROID
 function s.matfilter(c,fc,sumtype,tp)
-	return c:IsType(TYPE_FUSION,fc,sumtype,tp) and c:IsSetCard(0x16,fc,sumtype,tp)
+	return c:IsType(TYPE_FUSION,fc,sumtype,tp) and c:IsSetCard(SET_ROID,fc,sumtype,tp)
 end
 function s.spfilter1(c,e,tp,loc)
 	return c:IsFaceup() and Duel.IsExistingMatchingCard(s.spfilter2,tp,loc,0,1,nil,e,tp,c:GetAttack())
 end
 function s.spfilter2(c,e,tp,atk)
 	if c:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp,nil,c)==0 then return false end
-	return c:IsSetCard(0x16) and c:IsAttackBelow(atk) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_ROID) and c:IsAttackBelow(atk) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local loc=LOCATION_EXTRA
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then loc=loc+LOCATION_DECK end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then loc=loc|LOCATION_DECK end
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and s.spfilter1(chkc,e,tp,loc) end
 	if chk==0 then return Duel.IsExistingTarget(s.spfilter1,tp,0,LOCATION_MZONE,1,nil,e,tp,loc) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
@@ -50,7 +51,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local loc=LOCATION_EXTRA
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then loc=loc+LOCATION_DECK end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then loc=loc|LOCATION_DECK end
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -61,7 +62,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.mvfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x16) and c:IsAbleToHand() and c:GetSequence()<5
+	return c:IsFaceup() and c:IsSetCard(SET_ROID) and c:IsAbleToHand() and c:GetSequence()<5
 end
 function s.mvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.mvfilter(chkc) end

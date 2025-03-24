@@ -1,5 +1,5 @@
 --氷結界に至る晴嵐
---The Calm After the Ice Barrier’s Storm
+--Winds Over the Ice Barrier
 --Logical Nonsense
 
 --Substitute ID
@@ -23,17 +23,17 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(aux.exccon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
 	--Lists "Ice Barrier" archetype
-s.listed_series={0x2f}
+s.listed_series={SET_ICE_BARRIER}
 
 	--Check for level 4 or lower "Ice Barrier" monsters
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x2f) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsMonster() and c:IsLevelBelow(4)
+	return c:IsSetCard(SET_ICE_BARRIER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsMonster() and c:IsLevelBelow(4)
 end
 	--Tribute up to the number of cards in s.spfilter
 function s.check(ct)
@@ -48,10 +48,10 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=#cg
 	if chk==0 then
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<0 then return false end
-		return ct>0 and Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,99,false,s.check(cg),nil,0x2f)
+		return ct>0 and Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,99,false,s.check(cg),nil,SET_ICE_BARRIER)
 	end
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ct=1 end
-	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,ct,false,s.check(cg),nil,0x2f)
+	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,ct,false,s.check(cg),nil,SET_ICE_BARRIER)
 	Duel.Release(g,REASON_COST)
 	e:SetLabel(#g)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,#g,tp,LOCATION_DECK)
@@ -73,15 +73,15 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for an "Ice Barrier" monster
 function s.thfilter(c)
-	return c:IsSetCard(0x2f) and c:IsMonster() and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and c:IsAbleToHand()
+	return c:IsSetCard(SET_ICE_BARRIER) and c:IsMonster() and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and c:IsAbleToHand()
 end
 	--Activation legality
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and chkc:IsControler(tp) and s.thfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.thfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE|LOCATION_REMOVED) and chkc:IsControler(tp) and s.thfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(s.thfilter,tp,LOCATION_GRAVE|LOCATION_REMOVED,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectTarget(tp,s.thfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,tp,LOCATION_GRAVE+LOCATION_REMOVED)
+	local g=Duel.SelectTarget(tp,s.thfilter,tp,LOCATION_GRAVE|LOCATION_REMOVED,0,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,tp,LOCATION_GRAVE|LOCATION_REMOVED)
 end
 	--Add 1 of your "Ice Barrier" monsters, that is banished or in GY
 function s.thop(e,tp,eg,ep,ev,re,r,rp)

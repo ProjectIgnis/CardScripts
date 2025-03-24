@@ -34,12 +34,12 @@ function s.initial_effect(c)
 end
 s.material={96182448}
 s.listed_names={96182448}
-s.material_setcode=0x1017
+s.material_setcode=SET_SYNCHRON
 function s.tfilter(c,lc,stype,tp)
 	return c:IsSummonCode(lc,stype,tp,96182448) or c:IsHasEffect(20932152)
 end
 function s.atcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==tp and Duel.GetTurnPlayer()==tp
+	return ep==tp and Duel.IsTurnPlayer(tp)
 		and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL)
 end
 function s.atop(e,tp,eg,ep,ev,re,r,rp)
@@ -52,9 +52,9 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(s.atkcon)
 	e2:SetValue(1000)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE_CAL+PHASE_END)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE_CAL|PHASE_END)
 	c:RegisterEffect(e2)
-	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 end
 function s.atkcon(e)
 	local c=e:GetHandler()

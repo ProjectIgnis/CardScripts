@@ -1,4 +1,5 @@
 --レディ・デバッガー
+--Lady Debug
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -31,4 +32,3 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-

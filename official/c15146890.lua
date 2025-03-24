@@ -1,4 +1,5 @@
 --竜脈の魔術師
+--Dragonpulse Magician
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -17,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x98}
+s.listed_series={SET_MAGICIAN}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_PZONE,0,1,e:GetHandler(),SET_MAGICIAN)
 end

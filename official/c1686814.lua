@@ -44,7 +44,7 @@ function s.initial_effect(c)
 	e5:SetValue(1)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0xc2}
+s.listed_series={SET_POWER_TOOL}
 function s.sprfilter(c)
 	return c:IsFaceup() and c:GetLevel()>4 and c:IsAbleToGraveAsCost()
 end
@@ -90,7 +90,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(Card.IsControler,1,nil,tp)
 end
 function s.spfilter(c,e,tp)
-	return (c:IsSetCard(0xc2) or ((c:GetLevel()==7 or c:GetLevel()==8) and c:IsRace(RACE_DRAGON)))
+	return (c:IsSetCard(SET_POWER_TOOL) or ((c:GetLevel()==7 or c:GetLevel()==8) and c:IsRace(RACE_DRAGON)))
 		and c:IsType(TYPE_SYNCHRO) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

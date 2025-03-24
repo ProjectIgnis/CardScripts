@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
-s.listed_series={0x114}
+s.listed_series={SET_FUR_HIRE}
 s.listed_names={id}
 function s.recfilter(c)
 	return not c:IsCode(id) and c:IsFaceup() and c:IsSetCard(SET_FUR_HIRE)

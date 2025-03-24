@@ -1,5 +1,5 @@
 --聖邪のステンドグラス
---Stained Glass of the Valiant
+--Stained Glass of Light & Dark
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

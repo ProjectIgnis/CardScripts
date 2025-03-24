@@ -27,10 +27,10 @@ function s.initial_effect(c)
 	e3:SetCondition(s.actcon)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x7}
+s.listed_series={SET_ANCIENT_GEAR}
 s.listed_names={}
 function s.thfilter(c)
-	return c:IsSetCard(0x7) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_ANCIENT_GEAR) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -49,7 +49,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_MSET)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(aux.TRUE)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_CANNOT_SSET)

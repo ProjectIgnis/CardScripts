@@ -1,4 +1,5 @@
 --魔導書士 バテル
+--Spellbook Magician of Prophecy
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FLIP)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x106e}
+s.listed_series={SET_SPELLBOOK}
 function s.filter(c)
 	return c:IsSetCard(SET_SPELLBOOK) and c:IsSpell() and c:IsAbleToHand()
 end

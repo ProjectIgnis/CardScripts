@@ -1,4 +1,5 @@
 --竜の束縛
+--Dragon's Bind
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddPersistentProcedure(c,0,s.filter,nil,nil,nil,0x1c0)

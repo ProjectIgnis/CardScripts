@@ -1,4 +1,5 @@
 --竜呼相打つ
+--Draco Face-Off
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

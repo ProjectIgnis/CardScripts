@@ -1,4 +1,5 @@
 --リゾネーター・エンジン
+--Resonator Engine
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x57}
+s.listed_series={SET_RESONATOR}
 function s.filter(c)
 	return c:IsSetCard(SET_RESONATOR) and c:IsMonster() and c:IsAbleToDeck()
 end

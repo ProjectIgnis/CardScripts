@@ -1,4 +1,5 @@
 --墓守の司令官
+--Gravekeeper's Commandant
 local s,id=GetID()
 function s.initial_effect(c)
 	--search

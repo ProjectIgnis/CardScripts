@@ -33,9 +33,9 @@ function s.effcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.monoppthfilter,tp,LOCATION_MZONE,LOCATION_ONFIELD,nil,e,tp)
 	local b1=not Duel.HasFlagEffect(tp,id) and #g>=4
 		and aux.SelectUnselectGroup(g,e,tp,4,4,s.rescon,0)
-	local b2=not Duel.HasFlagEffect(tp,id+100) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	local b2=not Duel.HasFlagEffect(tp,id+1) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND|LOCATION_GRAVE,0,1,nil,e,tp)
-	local b3=not Duel.HasFlagEffect(tp,id+200)
+	local b3=not Duel.HasFlagEffect(tp,id+2)
 		and Duel.IsExistingMatchingCard(s.fieldspellthfilter,tp,LOCATION_ONFIELD|LOCATION_GRAVE,0,1,nil)
 	if chk==0 then return b1 or b2 or b3 end
 end
@@ -45,9 +45,9 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.GetMatchingGroup(s.monoppthfilter,tp,LOCATION_MZONE,LOCATION_ONFIELD,nil,e,tp)
 	local b1=not Duel.HasFlagEffect(tp,id) and #g>=4
 		and aux.SelectUnselectGroup(g,e,tp,4,4,s.rescon,0)
-	local b2=not Duel.HasFlagEffect(tp,id+100) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	local b2=not Duel.HasFlagEffect(tp,id+1) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND|LOCATION_GRAVE,0,1,nil,e,tp)
-	local b3=not Duel.HasFlagEffect(tp,id+200)
+	local b3=not Duel.HasFlagEffect(tp,id+2)
 		and Duel.IsExistingMatchingCard(s.fieldspellthfilter,tp,LOCATION_ONFIELD|LOCATION_GRAVE,0,1,nil)
 	if chk==0 then e:SetLabel(0) return b1 or b2 or b3 end
 	local op=Duel.SelectEffect(tp,
@@ -65,12 +65,12 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	elseif op==2 then
 		e:SetCategory(CATEGORY_SPECIAL_SUMMON)
 		e:SetProperty(0)
-		if not cost_skip then Duel.RegisterFlagEffect(tp,id+100,RESET_PHASE|PHASE_END,0,1) end
+		if not cost_skip then Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_END,0,1) end
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_GRAVE)
 	elseif op==3 then
 		e:SetCategory(CATEGORY_TOHAND)
 		e:SetProperty(0)
-		if not cost_skip then Duel.RegisterFlagEffect(tp,id+200,RESET_PHASE|PHASE_END,0,1) end
+		if not cost_skip then Duel.RegisterFlagEffect(tp,id+2,RESET_PHASE|PHASE_END,0,1) end
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_ONFIELD|LOCATION_GRAVE)
 	end
 end

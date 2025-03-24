@@ -1,23 +1,30 @@
---星辰法宮グラメル
---Dragontail Gramel
+--星辰爪竜アルザリオン
+--Dragontail Altharion
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Fusion Materials: 1 "Dragontail" monster + 1 monster in the hand
-	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_DRAGONTAIL),aux.FilterBoolFunctionEx(Card.IsLocation,LOCATION_HAND))
-	--Destroy 1 card your opponent controls
+	--Fusion Materials: 1 "Dragontail" monster + 1+ monsters in the hand
+	Fusion.AddProcMixRep(c,true,true,aux.FilterBoolFunctionEx(Card.IsLocation,LOCATION_HAND),1,99,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_DRAGONTAIL))
+	--Register how many materials are used from the hand
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e0:SetCode(EFFECT_MATERIAL_CHECK)
+	e0:SetValue(function(e,c) e:SetLabel(c:GetMaterial():FilterCount(Card.IsLocation,nil,LOCATION_HAND)) end)
+	c:RegisterEffect(e0)
+	--Return monsters on the field and/or in any GY(s) to the hand, up to the number of monsters used as material from the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_DESTROY)
-	e1:SetType(EFFECT_TYPE_QUICK_O)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetCode(EVENT_CHAINING)
-	e1:SetRange(LOCATION_MZONE)
+	e1:SetCategory(CATEGORY_TOHAND)
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
+	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetCountLimit(1,id)
-	e1:SetCondition(s.descon)
-	e1:SetTarget(s.destg)
-	e1:SetOperation(s.desop)
+	e1:SetCondition(function(e) return e:GetHandler():IsFusionSummoned() and e:GetLabelObject():GetLabel()>0 end)
+	e1:SetTarget(s.thtg)
+	e1:SetOperation(s.thop)
+	e1:SetLabelObject(e0)
 	c:RegisterEffect(e1)
 	--Special Summon this card from the GY, but banish it when it leaves the field
 	local e2=Effect.CreateEffect(c)
@@ -41,7 +48,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	local e4=e3:Clone()
 	e4:SetCode(EVENT_CHAINING)
-	e4:SetOperation(function(e) e:GetHandler():ResetFlagEffect(id+100) end)
+	e4:SetOperation(function(e) e:GetHandler():ResetFlagEffect(id+1) end)
 	c:RegisterEffect(e4)
 	local e5=e4:Clone()
 	e5:SetCode(EVENT_CHAIN_SOLVED)
@@ -51,39 +58,30 @@ function s.initial_effect(c)
 	c:RegisterEffect(e6)
 end
 s.listed_series={SET_DRAGONTAIL}
-function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	if rp==1-tp then return false end
-	local trig_p,setcodes=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_PLAYER,CHAININFO_TRIGGERING_SETCODES)
-	if trig_p==1-tp then return false end
-	for _,archetype in ipairs(setcodes) do
-		if ((SET_DRAGONTAIL&0xfff)==(archetype&0xfff) and (archetype&SET_DRAGONTAIL)==SET_DRAGONTAIL) then
-			return true
-		end
-	end
+function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_MZONE|LOCATION_GRAVE) and chkc:IsMonster() and chkc:IsAbleToHand() end
+	if chk==0 then return Duel.IsExistingTarget(aux.AND(Card.IsMonster,Card.IsAbleToHand),tp,LOCATION_MZONE|LOCATION_GRAVE,LOCATION_MZONE|LOCATION_GRAVE,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
+	local ct=e:GetLabelObject():GetLabel()
+	local g=Duel.SelectTarget(tp,aux.AND(Card.IsMonster,Card.IsAbleToHand),tp,LOCATION_MZONE|LOCATION_GRAVE,LOCATION_MZONE|LOCATION_GRAVE,1,ct,nil)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,#g,tp,0)
 end
-function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) end
-	if chk==0 then return Duel.IsExistingTarget(nil,tp,0,LOCATION_ONFIELD,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,nil,tp,0,LOCATION_ONFIELD,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,tp,0)
-end
-function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
-		Duel.Destroy(tc,REASON_EFFECT)
+function s.thop(e,tp,eg,ep,ev,re,r,rp)
+	local tg=Duel.GetTargetCards(e)
+	if #tg>0 then
+		Duel.SendtoHand(tg,nil,REASON_EFFECT)
 	end
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ct=eg:FilterCount(Card.IsMonster,nil)
 	if ct==0 or eg:IsContains(c) then return end
-	if ct>=2 or c:HasFlagEffect(id+100) then
+	if ct>=2 or c:HasFlagEffect(id+1) then
 		Duel.RaiseSingleEvent(c,EVENT_CUSTOM+id,re,r,rp,ep,ev)
 	end
 	local eff=Duel.GetChainInfo(0,CHAININFO_TRIGGERING_EFFECT)
 	if eff then
-		c:RegisterFlagEffect(id+100,RESET_EVENT|RESETS_STANDARD|RESET_CHAIN,0,1)
+		c:RegisterFlagEffect(id+1,RESET_EVENT|RESETS_STANDARD|RESET_CHAIN,0,1)
 	end
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

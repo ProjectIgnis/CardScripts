@@ -66,7 +66,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		de:SetLabelObject(tc)
 		de:SetCondition(s.descon)
 		de:SetOperation(s.desop)
-		if Duel.IsTurnPlayer(tp) and Duel.GetCurrentPhase()==PHASE_END then
+		if Duel.IsTurnPlayer(tp) and Duel.IsPhase(PHASE_END) then
 			de:SetLabel(Duel.GetTurnCount())
 			de:SetReset(RESET_PHASE|PHASE_END|RESET_SELF_TURN,2)
 		else

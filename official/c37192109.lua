@@ -52,14 +52,14 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Remove(g,0,REASON_EFFECT+REASON_TEMPORARY)~=0 then
 		local fid=c:GetFieldID()
 		local rct=1
-		if Duel.IsTurnPlayer(tp) and Duel.GetCurrentPhase()==PHASE_STANDBY then rct=2 end
+		if Duel.IsTurnPlayer(tp) and Duel.IsPhase(PHASE_STANDBY) then rct=2 end
 		local og=Duel.GetOperatedGroup()
 		local oc=og:GetFirst()
 		for oc in aux.Next(og) do
 			if oc:IsControler(tp) then
 				oc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_STANDBY|RESET_SELF_TURN,0,rct,fid)
 			else
-				oc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_STANDBY|RESET_OPPO_TURN),0,rct,fid)
+				oc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_STANDBY|RESET_OPPO_TURN,0,rct,fid)
 			end
 		end
 		og:KeepAlive()
@@ -72,7 +72,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetLabelObject(og)
 		e1:SetCondition(s.retcon)
 		e1:SetOperation(s.retop)
-		if Duel.IsTurnPlayer(tp) and Duel.GetCurrentPhase()==PHASE_STANDBY then
+		if Duel.IsTurnPlayer(tp) and Duel.IsPhase(PHASE_STANDBY) then
 			e1:SetReset(RESET_PHASE|PHASE_STANDBY|RESET_SELF_TURN,2)
 			e1:SetValue(Duel.GetTurnCount())
 		else

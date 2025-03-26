@@ -22,7 +22,7 @@ end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)==0 and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>=3
-		and Duel.GetCurrentPhase()==PHASE_DRAW and c:IsReason(REASON_RULE)
+		and Duel.IsPhase(PHASE_DRAW) and c:IsReason(REASON_RULE)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

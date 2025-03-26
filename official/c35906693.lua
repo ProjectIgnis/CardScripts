@@ -22,7 +22,7 @@ end
 s.listed_series={SET_UTOPIA,SET_ZW}
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return Duel.GetFlagEffect(tp,id)==0 and Duel.GetCurrentPhase()==PHASE_DRAW and c:IsReason(REASON_RULE)
+	return Duel.GetFlagEffect(tp,id)==0 and Duel.IsPhase(PHASE_DRAW) and c:IsReason(REASON_RULE)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

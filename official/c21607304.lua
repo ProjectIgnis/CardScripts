@@ -47,7 +47,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local tct=1
 	if Duel.GetTurnPlayer()~=tp then tct=2
-	elseif Duel.GetCurrentPhase()==PHASE_END then tct=3 end
+	elseif Duel.IsPhase(PHASE_END) then tct=3 end
 	if tc:IsFacedown() and tc:IsRelateToEffect(e) then
 		Duel.GetControl(tc,tp,PHASE_END,tct)
 	end

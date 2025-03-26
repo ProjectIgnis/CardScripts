@@ -51,7 +51,7 @@ function s.setfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_INSECT) and c:IsAttackAbove(3000)
 end
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_END and Duel.IsTurnPlayer(tp)
+	return Duel.IsPhase(PHASE_END) and Duel.IsTurnPlayer(tp)
 		and Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.costfilter(c)

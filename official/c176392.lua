@@ -26,7 +26,7 @@ end
 s.listed_names={176393}
 s.listed_series={SET_KOAKI_MEIRU}
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_END
+	return Duel.IsPhase(PHASE_END)
 end
 function s.rfilter(c)
 	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsSetCard(SET_KOAKI_MEIRU) and not c:IsReason(REASON_REPLACE)
@@ -46,7 +46,7 @@ function s.spfilter(c)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousSetCard(SET_KOAKI_MEIRU)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_END and eg:IsExists(s.spfilter,1,nil)
+	return Duel.IsPhase(PHASE_END) and eg:IsExists(s.spfilter,1,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

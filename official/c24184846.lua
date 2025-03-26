@@ -38,7 +38,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetLabelObject(tc)
 		e1:SetCondition(s.retcon)
 		e1:SetOperation(s.retop)
-		if Duel.IsTurnPlayer(tp) and Duel.GetCurrentPhase()==PHASE_DRAW then
+		if Duel.IsTurnPlayer(tp) and Duel.IsPhase(PHASE_DRAW) then
 			e1:SetLabel(0)
 		else
 			e1:SetLabel(Duel.GetTurnCount())

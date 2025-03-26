@@ -16,7 +16,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
 	e1:SetCode(EFFECT_SKIP_SP)
-	if Duel.IsTurnPlayer(tp) and Duel.GetCurrentPhase()==PHASE_STANDBY then
+	if Duel.IsTurnPlayer(tp) and Duel.IsPhase(PHASE_STANDBY) then
 		e1:SetCondition(s.skipcon)
 		e1:SetLabel(Duel.GetTurnCount())
 		e1:SetReset(RESET_PHASE|PHASE_STANDBY|RESET_SELF_TURN,2)

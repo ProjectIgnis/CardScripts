@@ -49,7 +49,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_PHASE+PHASE_END)
 	e1:SetCountLimit(1)
-	if Duel.GetCurrentPhase()==PHASE_END then
+	if Duel.IsPhase(PHASE_END) then
 		e1:SetReset(RESET_PHASE|PHASE_END,2)
 	else
 		e1:SetReset(RESET_PHASE|PHASE_END)

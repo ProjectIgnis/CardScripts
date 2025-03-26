@@ -1,5 +1,5 @@
 --アメイズメント・ファミリーフェイス
---Amazement Family Face
+--Amazement Family Faces
 --Scripted by Eerie Code
 
 local s,id=GetID()
@@ -42,9 +42,9 @@ function s.initial_effect(c)
 	e4:SetValue(function(e)return e:GetHandlerPlayer()end)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x15e,0x15f}
+s.listed_series={SET_AMAZEMENT,SET_ATTRACTION}
 function s.eqcfilter(c,tp)
-	return c:IsSetCard(0x15f) and c:IsTrap() and c:IsControler(tp)
+	return c:IsSetCard(SET_ATTRACTION) and c:IsTrap() and c:IsControler(tp)
 end
 function s.eqfilter(c,e,tp)
 	return aux.CheckStealEquip(c,e,tp) and c:GetEquipGroup():IsExists(s.eqcfilter,1,nil,tp)
@@ -72,7 +72,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetValue(s.eqlimit)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
 	else
 		c:CancelToGrave(false)

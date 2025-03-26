@@ -33,11 +33,11 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x119}
+s.listed_series={SET_SALAMANGREAT}
 s.listed_names={id}
 	--If a "Salamangreat" monster, besides itself, is sent to GY
 function s.cfilter(c,tp)
-	return c:IsSetCard(0x119) and c:IsMonster() and not c:IsCode(id) and c:IsControler(tp)
+	return c:IsSetCard(SET_SALAMANGREAT) and c:IsMonster() and not c:IsCode(id) and c:IsControler(tp)
 end
 	--If it ever happened
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -57,7 +57,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for a "Salamangreat" card to send to GY, besides itself
 function s.tgfilter(c)
-	return c:IsSetCard(0x119) and c:IsAbleToGrave() and not c:IsCode(id)
+	return c:IsSetCard(SET_SALAMANGREAT) and c:IsAbleToGrave() and not c:IsCode(id)
 end
 	--Activation legality
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)

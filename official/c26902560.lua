@@ -1,4 +1,5 @@
 --融合賢者
+--Fusion Sage
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

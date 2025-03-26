@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 	--Lists "Bujin" archetype
-s.listed_series={0x88}
+s.listed_series={SET_BUJIN}
 
 	--Tribute itself as cost
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -44,7 +44,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 	--Check for "Bujin" monsters, except "Bujin Torifune"
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x88) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(SET_BUJIN) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 	--The 2 "Bujin" monsters have different types from each other
 function s.spcheck(sg,e,tp,mg)
@@ -75,7 +75,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check if a "Bujin" Xyz mosnter was Xyz summoned
 function s.eqcfilter(c,tp)
-	return c:IsSetCard(0x88) and c:IsType(TYPE_XYZ) and c:IsSummonType(SUMMON_TYPE_XYZ) and c:IsSummonPlayer(tp)
+	return c:IsSetCard(SET_BUJIN) and c:IsType(TYPE_XYZ) and c:IsXyzSummoned() and c:IsSummonPlayer(tp)
 end
 	--If it ever happened
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
@@ -101,7 +101,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(s.eqlimit)
 		e1:SetLabelObject(tc)
 		c:RegisterEffect(e1)

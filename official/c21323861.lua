@@ -1,4 +1,5 @@
 --酸の嵐
+--Acid Rain
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

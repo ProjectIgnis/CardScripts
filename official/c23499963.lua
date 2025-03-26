@@ -1,5 +1,5 @@
 --スプリガンズ・ウォッチ
---Sprigans Watch
+--Springans Watch
 --Scripted by Hatter
 
 local s,id=GetID()

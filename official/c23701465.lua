@@ -1,4 +1,5 @@
 --原初の種
+--Primal Seed
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

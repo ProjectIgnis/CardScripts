@@ -1,4 +1,5 @@
 --ふるい落とし
+--Weed Out
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

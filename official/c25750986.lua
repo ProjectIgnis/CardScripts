@@ -43,7 +43,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e1:SetCode(EVENT_CHAINING)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetOperation(s.aclimit)
 	Duel.RegisterEffect(e1,tp)
 	--activate limit
@@ -53,7 +53,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetTargetRange(1,0)
-	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetReset(RESET_PHASE|PHASE_END)
 	e2:SetCondition(s.econ)
 	e2:SetValue(s.elimit)
 	Duel.RegisterEffect(e2,tp)
@@ -67,7 +67,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.aclimit(e,tp,eg,ep,ev,re,r,rp)
 	if ep~=tp or not (re:GetActivateLocation()==LOCATION_GRAVE and re:IsActiveType(TYPE_MONSTER)) then return end
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 end
 function s.econ(e)
 	return Duel.GetFlagEffect(e:GetHandlerPlayer(),id)~=0

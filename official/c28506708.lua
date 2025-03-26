@@ -1,4 +1,5 @@
 --ワーム・コール
+--Worm Call
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -18,13 +19,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x3e}
+s.listed_series={SET_WORM}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
 		and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)~=0
 end
 function s.filter(c,e,sp)
-	return c:IsSetCard(0x3e) and c:IsRace(RACE_REPTILE) and c:IsCanBeSpecialSummoned(e,0,sp,false,false,POS_FACEDOWN_DEFENSE)
+	return c:IsSetCard(SET_WORM) and c:IsRace(RACE_REPTILE) and c:IsCanBeSpecialSummoned(e,0,sp,false,false,POS_FACEDOWN_DEFENSE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

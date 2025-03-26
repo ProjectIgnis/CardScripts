@@ -1,4 +1,5 @@
 --イグナイト・アヴェンジャー
+--Igknight Lancer
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -21,9 +22,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xc8}
+s.listed_series={SET_IGKNIGHT}
 function s.desfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xc8)
+	return c:IsFaceup() and c:IsSetCard(SET_IGKNIGHT)
 end
 function s.desfilter2(c,e)
 	return s.desfilter(c) and c:IsCanBeEffectTarget(e)
@@ -48,7 +49,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xc8) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(SET_IGKNIGHT) and c:IsAbleToHand()
 end
 function s.tdfilter(c)
 	return c:IsSpellTrap() and c:IsAbleToDeck()

@@ -1,5 +1,5 @@
 --ホーリーナイツ・レイエル
---Holy Night Rayel
+--Starry Knight Rayel
 --Scripted by DyXel
 
 local s,id=GetID()
@@ -22,15 +22,15 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.sstg)
 	e2:SetOperation(s.ssop)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-s.listed_series={0x15b}
+s.listed_series={SET_STARRY_KNIGHT}
 function s.thfilter(c)
-	return c:IsSetCard(0x15b) and c:IsSpellTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_STARRY_KNIGHT) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -45,7 +45,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.ssfilter(c,e,tp)
-	return c:IsSetCard(0x15b) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(id)
+	return c:IsSetCard(SET_STARRY_KNIGHT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(id)
 end
 function s.sstg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.ssfilter(chkc,e,tp) end

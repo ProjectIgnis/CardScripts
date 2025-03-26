@@ -1,4 +1,5 @@
 --ピクシーガーディアン
+--Fairy Guardian
 local s,id=GetID()
 function s.initial_effect(c)
 	--to deck

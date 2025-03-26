@@ -69,7 +69,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		e1:SetLabelObject(c)
 		e1:SetCountLimit(1)
 		e1:SetOperation(s.retop)
@@ -105,7 +105,7 @@ function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateAttack() then
-		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE|PHASE_BATTLE,1)
 	end
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)

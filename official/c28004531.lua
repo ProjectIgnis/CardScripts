@@ -1,9 +1,9 @@
--- 空牙団の積荷 レクス
--- Rex, Cargo Fur Hire
--- Scripted by Hatter
+--空牙団の積荷 レクス
+--Rex, Freight Fur Hire
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Search 1 Spell/Trap "Fur Hire"
+	--Search 1 Spell/Trap "Fur Hire"
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
-	-- Add 1 card "Fur Hire" from the GY to the hand
+	--Add 1 card "Fur Hire" from the GY to the hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON)
@@ -28,14 +28,14 @@ function s.initial_effect(c)
 	e3:SetCountLimit(1,{id,1})
 	e3:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
 	e3:SetCondition(s.gthcon)
-	e3:SetCost(aux.bfgcost)
+	e3:SetCost(Cost.SelfBanish)
 	e3:SetTarget(s.gthtg)
 	e3:SetOperation(s.gthop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x114}
+s.listed_series={SET_FUR_HIRE}
 function s.thfilter(c)
-	return c:IsSetCard(0x114) and c:IsSpellTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_FUR_HIRE) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -50,10 +50,10 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.gthcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsMainPhase() and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x114),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsMainPhase() and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_FUR_HIRE),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.gthfilter(c,ft,e,tp)
-	return c:IsSetCard(0x114)
+	return c:IsSetCard(SET_FUR_HIRE)
 		and (c:IsAbleToHand() or (ft>0 and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
 end
 function s.gthtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

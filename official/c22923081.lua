@@ -56,7 +56,7 @@ function s.addop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.addcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_PENDULUM)
+	return e:GetHandler():IsPendulumSummoned()
 end
 function s.atkval(e,c)
 	return c:GetCounter(COUNTER_SPELL)*400

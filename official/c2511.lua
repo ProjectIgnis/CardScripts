@@ -1,9 +1,9 @@
--- 白銀の城の狂時計
--- Labrynth Cooclock
--- Scripted by Hatter
+--白銀の城の狂時計
+--Labrynth Cooclock
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Allow Trap activation in the same turn it's set
+	--Allow Trap activation in the same turn it's set
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_QUICK_O)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetCost(s.accost)
 	e1:SetOperation(s.acop)
 	c:RegisterEffect(e1)
-	-- Add to hand or Special Summon
+	--Add to hand or Special Summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON)

@@ -37,9 +37,9 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xc9}
+s.listed_series={SET_AROMA}
 function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0xc9) and c:IsSummonPlayer(tp)
+	return c:IsFaceup() and c:IsSetCard(SET_AROMA) and c:IsSummonPlayer(tp)
 end
 function s.rccon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
@@ -59,7 +59,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return tp~=Duel.GetTurnPlayer() and Duel.GetLP(tp)<Duel.GetLP(1-tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xc9) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_AROMA) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

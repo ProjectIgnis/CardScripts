@@ -25,35 +25,35 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,id,EFFECT_COUNT_CODE_DUEL)
 	e2:SetCondition(s.spcon2)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.sptg2)
 	e2:SetOperation(s.spop2)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x42,0x4b}
+s.listed_series={SET_NORDIC,SET_AESIR}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return #eg==1 and eg:IsContains(e:GetHandler()) and r&REASON_EFFECT>0 and re and re:IsActiveType(TYPE_LINK) and re:GetHandler():IsSetCard(0x42)
+	return #eg==1 and eg:IsContains(e:GetHandler()) and r&REASON_EFFECT>0 and re and re:IsActiveType(TYPE_LINK) and re:GetHandler():IsSetCard(SET_NORDIC)
 end
 function s.matfilter(c)
-	return c:IsSetCard(0x42) and c:IsMonster() and (c:IsFaceup() or c:IsLocation(LOCATION_DECK)) and c:IsLevelAbove(1)
+	return c:IsSetCard(SET_NORDIC) and c:IsMonster() and (c:IsFaceup() or c:IsLocation(LOCATION_DECK)) and c:IsLevelAbove(1)
 end
 function s.spcheck(sg,e,tp,mg)
 	return #sg==3 and sg:FilterCount(Card.IsLocation,nil,LOCATION_DECK)==2 and sg:GetSum(Card.GetLevel)==10 
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,sg)
 end
 function s.spfilter(c,e,tp,mg)
-	return c:IsSetCard(0x4b) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and (not mg or Duel.GetLocationCountFromEx(tp,tp,mg,c)>0)
+	return c:IsSetCard(SET_AESIR) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and (not mg or Duel.GetLocationCountFromEx(tp,tp,mg,c)>0)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		local g=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_DECK+LOCATION_MZONE,0,nil)
+		local g=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_DECK|LOCATION_MZONE,0,nil)
 		return aux.SelectUnselectGroup(g,e,tp,3,3,s.spcheck,0)
 	end
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,3,tp,LOCATION_DECK+LOCATION_MZONE)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,3,tp,LOCATION_DECK|LOCATION_MZONE)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_DECK+LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_DECK|LOCATION_MZONE,0,nil)
 	local rg=aux.SelectUnselectGroup(g,e,tp,3,3,s.spcheck,1,tp,HINTMSG_TOGRAVE)
 	if #rg==3 and Duel.SendtoGrave(rg,REASON_EFFECT)==3 then
 		Duel.BreakEffect()
@@ -63,13 +63,13 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,tp)
-	return c:IsPreviousSetCard(0x4b) and c:IsSetCard(0x4b) and c:IsPreviousControler(tp)
+	return c:IsPreviousSetCard(SET_AESIR) and c:IsSetCard(SET_AESIR) and c:IsPreviousControler(tp)
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.spfilter2(c,e,tp,rp)
-	return c:IsSetCard(0x4b) and Duel.GetLocationCountFromEx(tp,rp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_AESIR) and Duel.GetLocationCountFromEx(tp,rp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and not Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,c:GetCode())
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)

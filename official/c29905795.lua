@@ -12,9 +12,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x35}
+s.listed_series={SET_FABLED}
 function s.disfilter(c)
-	return c:IsSetCard(0x35) and c:IsMonster() and c:IsDiscardable()
+	return c:IsSetCard(SET_FABLED) and c:IsMonster() and c:IsDiscardable()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

@@ -18,14 +18,14 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,nil,2,tp,LOCATION_MZONE+LOCATION_GRAVE)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,nil,2,tp,LOCATION_MZONE|LOCATION_GRAVE)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.filter1(c,e,tp,tc,lv)
 	local rlv=c:GetLevel()-lv
 	return rlv>0 and c:IsType(TYPE_SYNCHRO) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SYNCHRO,tp,false,false)
 		and Duel.GetLocationCountFromEx(tp,tp,tc,c)>0
-		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,c,tp,rlv)
+		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,c,tp,rlv)
 end
 function s.filter2(c,tp,lv)
 	local rlv=lv-c:GetLevel()
@@ -41,7 +41,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local g1=Duel.SelectMatchingCard(tp,s.filter1,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tc,tc:GetLevel())
 		local lv=g1:GetFirst():GetLevel()-tc:GetLevel()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local g2=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil,tp,lv)
+		local g2=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil,tp,lv)
 		g2:AddCard(tc)
 		if Duel.Remove(g2,POS_FACEUP,REASON_EFFECT)==2 then
 			Duel.SpecialSummon(g1,SUMMON_TYPE_SYNCHRO,tp,tp,false,false,POS_FACEUP)

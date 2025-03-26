@@ -57,4 +57,3 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 	local token=Duel.CreateToken(tp,id+1)
 	Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
 end
-

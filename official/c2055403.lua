@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,tp)
-	return not c:IsSummonPlayer(tp) and (c:GetSummonLocation()&LOCATION_HAND+LOCATION_EXTRA)~=0
+	return not c:IsSummonPlayer(tp) and (c:GetSummonLocation()&LOCATION_HAND|LOCATION_EXTRA)~=0
 		and c:IsAbleToDeck() and c:IsLocation(LOCATION_MZONE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -28,7 +28,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 		local og=Duel.GetOperatedGroup()
-		local ct=og:FilterCount(Card.IsLocation,nil,LOCATION_DECK+LOCATION_EXTRA)
+		local ct=og:FilterCount(Card.IsLocation,nil,LOCATION_DECK|LOCATION_EXTRA)
 		if ct>0 then
 			Duel.BreakEffect()
 			Duel.SetLP(tp,Duel.GetLP(tp)-ct*1000)

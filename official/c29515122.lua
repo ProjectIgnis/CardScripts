@@ -1,4 +1,5 @@
 --重機王ドボク・ザーク
+--Digvorzhak, King of Heavy Industry
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon

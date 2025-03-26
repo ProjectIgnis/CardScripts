@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xbf))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_CHARMER))
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
 	--Increase ATK
@@ -42,12 +42,12 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x10c0,0xbf}
+s.listed_series={SET_FAMILIAR_POSSESSED,SET_CHARMER}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.atktg(e,c)
-	return c:IsSetCard(0x10c0) and Duel.GetAttacker()==c
+	return c:IsSetCard(SET_FAMILIAR_POSSESSED) and Duel.GetAttacker()==c
 end
 function s.atkcon(e)
 	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and Duel.GetAttackTarget()~=nil

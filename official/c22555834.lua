@@ -34,13 +34,13 @@ function s.initial_effect(c)
 	e3:SetValue(s.atkval)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x35}
+s.listed_series={SET_FABLED}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
 function s.tgfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x35) and c:IsAbleToGrave()
+	return c:IsMonster() and c:IsSetCard(SET_FABLED) and c:IsAbleToGrave()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -52,7 +52,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x35) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(SET_FABLED) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc,e,tp) end
@@ -78,7 +78,7 @@ function s.atkcon(e)
 	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and Duel.GetAttackTarget()
 end
 function s.atktg(e,c)
-	return c==Duel.GetAttacker() and c:IsSetCard(0x35)
+	return c==Duel.GetAttacker() and c:IsSetCard(SET_FABLED)
 end
 function s.atkval(e)
 	local d=Duel.GetAttackTarget()

@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x10f}
+s.listed_series={SET_BORREL}
 function s.atkcon()
 	return Duel.IsBattlePhase()
 end
@@ -34,12 +34,12 @@ function s.atkcfilter(c)
 		and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true,false)
 end
 function s.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x10f) and c:IsMonster()
+	return c:IsFaceup() and c:IsSetCard(SET_BORREL) and c:IsMonster()
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.atkcfilter,tp,LOCATION_MZONE+LOCATION_HAND+LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.atkcfilter,tp,LOCATION_MZONE|LOCATION_HAND|LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local tc=Duel.SelectMatchingCard(tp,s.atkcfilter,tp,LOCATION_MZONE+LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.atkcfilter,tp,LOCATION_MZONE|LOCATION_HAND|LOCATION_GRAVE,0,1,1,nil):GetFirst()
 	Duel.Remove(tc,POS_FACEUP,REASON_COST)
 	e:SetLabel(tc:GetBaseAttack())
 end
@@ -57,7 +57,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(e:GetLabel())
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

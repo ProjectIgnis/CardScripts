@@ -1,9 +1,10 @@
 --E・HERO The シャイニング
+--Elemental HERO The Shining
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x3008),aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_LIGHT))
+	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_ELEMENTAL_HERO),aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_LIGHT))
 	--tohand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
@@ -31,19 +32,19 @@ function s.initial_effect(c)
 	e4:SetValue(aux.fuslimit)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x3008}
-s.material_setcode={0x8,0x3008}
+s.listed_series={SET_ELEMENTAL_HERO}
+s.material_setcode={SET_HERO,SET_ELEMENTAL_HERO}
 function s.atkup(e,c)
-	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0x3008),c:GetControler(),LOCATION_REMOVED,0,nil)*300
+	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,SET_ELEMENTAL_HERO),c:GetControler(),LOCATION_REMOVED,0,nil)*300
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return (e:GetHandler():GetPreviousLocation()&LOCATION_ONFIELD)>0
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x3008) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(SET_ELEMENTAL_HERO) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:GetControler()==tp and chkc:IsLocation(LOCATION_REMOVED) and s.filter(chkc) end
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_REMOVED) and s.filter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_REMOVED,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_REMOVED,0,1,2,nil)

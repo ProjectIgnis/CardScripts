@@ -12,7 +12,7 @@ function s.initial_effect(c)
 end
 function s.cfilter(c)
 	return c:IsFaceup()
-		and (c:IsSummonType(SUMMON_TYPE_TRIBUTE) or c:IsSummonType(SUMMON_TYPE_RITUAL) or c:IsSummonType(SUMMON_TYPE_FUSION))
+		and (c:IsTributeSummoned() or c:IsRitualSummoned() or c:IsFusionSummoned())
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -25,9 +25,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTarget(s.tg)
 	e1:SetCode(EFFECT_DISABLE)
 	if Duel.GetTurnPlayer()~=tp then
-		e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,2)
+		e1:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN),2)
 	else
-		e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+		e1:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN)
 	end
 	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()
@@ -42,9 +42,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetTargetRange(1,1)
 	e3:SetTarget(s.splimit)
 	if Duel.GetTurnPlayer()~=tp then
-		e3:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,2)
+		e3:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN),2)
 	else
-		e3:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+		e3:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN)
 	end
 	Duel.RegisterEffect(e3,tp)
 end

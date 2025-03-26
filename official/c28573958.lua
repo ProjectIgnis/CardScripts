@@ -28,10 +28,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x44}
+s.listed_series={SET_THE_AGENT}
 s.listed_names={CARD_SANCTUARY_SKY}
 function s.cfilter1(c)
-	return c:IsSetCard(0x44) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(SET_THE_AGENT) and c:IsAbleToRemoveAsCost()
 end
 function s.atcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter1,tp,LOCATION_GRAVE,0,1,nil) end
@@ -56,7 +56,7 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(800)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

@@ -1,4 +1,5 @@
 --寄生虫パラサイド
+--Parasite Paracide
 local s,id=GetID()
 function s.initial_effect(c)
 	Duel.EnableGlobalFlag(GLOBALFLAG_DECK_REVERSE_CHECK)
@@ -47,7 +48,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetRange(LOCATION_MZONE)
 			e1:SetTargetRange(LOCATION_MZONE,0)
 			e1:SetValue(RACE_INSECT)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			c:RegisterEffect(e1)
 		end
 	end

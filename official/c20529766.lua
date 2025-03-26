@@ -35,7 +35,7 @@ function s.valcheck(e,c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_TRIBUTE) and e:GetLabel()~=0
+	return c:IsTributeSummoned() and e:GetLabel()~=0
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local flag=e:GetLabel()
@@ -46,21 +46,21 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EVENT_CHAIN_SOLVING)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetOperation(s.disop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SINGLE_RANGE)
 		e2:SetRange(LOCATION_MZONE)
 		e2:SetCode(3682106)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e2)
 	end
 	if flag&0x2~=0 then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_PIERCE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 	end
 	if flag&0x4~=0 then
@@ -68,7 +68,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(1000)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 	end
 end

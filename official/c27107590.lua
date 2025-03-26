@@ -37,7 +37,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x4a}
+s.listed_series={SET_TIMELORD}
 function s.sprcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
@@ -45,14 +45,14 @@ function s.sprcon(e,c)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 end
 function s.dtcon(e,c)
-	return c:IsSetCard(0x4a)
+	return c:IsSetCard(SET_TIMELORD)
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x4a) and c:IsMonster() and c:GetAttack()==0 and c:IsAbleToHand()
+	return c:IsSetCard(SET_TIMELORD) and c:IsMonster() and c:GetAttack()==0 and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -77,7 +77,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
 	e1:SetLabelObject(e)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,2),nil)
 end
@@ -85,7 +85,7 @@ function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return se~=e:GetLabelObject()
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x4a) and c:IsMonster() and c:GetAttack()==0 and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsSetCard(SET_TIMELORD) and c:IsMonster() and c:GetAttack()==0 and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

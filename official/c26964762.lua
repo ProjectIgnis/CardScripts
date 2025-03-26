@@ -1,4 +1,5 @@
 --D－HERO ダークエンジェル
+--Destiny HERO - Dark Angel
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -25,7 +26,7 @@ function s.initial_effect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_FIELD)
 	e3:SetRange(LOCATION_GRAVE)
-	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e3:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e3:SetCountLimit(1)
 	e3:SetCondition(s.deckcon)
 	e3:SetCost(s.deckcost)
@@ -33,16 +34,16 @@ function s.initial_effect(c)
 	e3:SetOperation(s.deckop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xc008}
+s.listed_series={SET_DESTINY_HERO}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_GRAVE,0,3,nil,0xc008)
+	return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_GRAVE,0,3,nil,SET_DESTINY_HERO)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDiscardable() end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xc008) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,1-tp)
+	return c:IsSetCard(SET_DESTINY_HERO) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,1-tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end
@@ -67,10 +68,10 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.deckcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.cfilter(c)
-	return c:IsSetCard(0xc008) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(SET_DESTINY_HERO) and c:IsAbleToRemoveAsCost()
 end
 function s.deckcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

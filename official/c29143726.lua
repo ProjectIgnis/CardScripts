@@ -1,4 +1,5 @@
 --転生竜 サンサーラ
+--Samsara, Dragon of Rebirth
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon

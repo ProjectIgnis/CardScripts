@@ -1,4 +1,5 @@
 --ジャンク・アンカー
+--Junk Anchor
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro
@@ -20,14 +21,14 @@ function s.initial_effect(c)
 	e2:SetCode(20932152)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x43}
+s.listed_series={SET_JUNK}
 function s.sccost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST)
 end
 function s.mfilter(c,e,tp,mc)
 	local mg=Group.FromCards(c,mc)
-	return c:IsSetCard(0x43) and not c:IsType(TYPE_TUNER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_JUNK) and not c:IsType(TYPE_TUNER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsExistingMatchingCard(s.scfilter,tp,LOCATION_EXTRA,0,1,nil,mg,tp)
 end
 function s.scfilter(c,mg,tp)
@@ -59,7 +60,7 @@ function s.scop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
-		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		c:RegisterEffect(e1,true)
 		local e2=e1:Clone()
 		tc:RegisterEffect(e2,true)

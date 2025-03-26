@@ -1,5 +1,5 @@
 --水精鱗－サラキアビス
---Mermail Abyssaraki
+--Mermail Abyssalacia
 --
 local s,id=GetID()
 function s.initial_effect(c)
@@ -46,7 +46,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x74}
+s.listed_series={SET_MERMAIL}
 function s.indtg(e,c)
 	return e:GetHandler():GetLinkedGroup():IsContains(c)
 end
@@ -60,7 +60,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x74) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_MERMAIL) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -104,4 +104,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 end
-

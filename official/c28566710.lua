@@ -41,7 +41,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e1:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
 		e1:SetTargetRange(1,1)
-		e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+		e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
 		Duel.RegisterEffect(e1,tp)
 		if tc then Duel.ForceAttack(sc,tc) end
 	end
@@ -50,9 +50,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EVENT_PHASE+PHASE_END)
 	e1:SetCountLimit(1)
 	if Duel.GetCurrentPhase()==PHASE_END then
-		e1:SetReset(RESET_PHASE+PHASE_END,2)
+		e1:SetReset(RESET_PHASE|PHASE_END,2)
 	else
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 	end
 	e1:SetOperation(s.checkop)
 	Duel.RegisterEffect(e1,tp)

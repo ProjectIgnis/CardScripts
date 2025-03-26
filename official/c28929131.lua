@@ -1,4 +1,5 @@
 --時械神ザフィオン
+--Zaphion, the Timelord
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot special summon
@@ -35,7 +36,7 @@ function s.initial_effect(c)
 	e6:SetDescription(aux.Stringid(id,1))
 	e6:SetCategory(CATEGORY_TODECK)
 	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e6:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e6:SetCode(EVENT_PHASE|PHASE_BATTLE)
 	e6:SetCountLimit(1)
 	e6:SetRange(LOCATION_MZONE)
 	e6:SetCondition(s.tdcon)
@@ -59,7 +60,7 @@ function s.initial_effect(c)
 	e8:SetDescription(aux.Stringid(id,3))
 	e8:SetCategory(CATEGORY_TODECK)
 	e8:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e8:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e8:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e8:SetCountLimit(1)
 	e8:SetRange(LOCATION_MZONE)
 	e8:SetCondition(s.rtdcon)
@@ -104,7 +105,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
 function s.rtdcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.rtdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

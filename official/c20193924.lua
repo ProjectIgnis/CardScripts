@@ -1,4 +1,5 @@
 --白夜の女王
+--White Night Queen
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot special summon

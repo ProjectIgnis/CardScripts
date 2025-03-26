@@ -1,4 +1,5 @@
 --CNo.103 神葬零嬢ラグナ・インフィニティ
+--Number C103: Ragnafinity
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon

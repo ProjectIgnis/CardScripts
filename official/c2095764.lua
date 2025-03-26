@@ -37,7 +37,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={id}
-s.listed_series={0x9e}
+s.listed_series={SET_YANG_ZING}
 
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -45,7 +45,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 		and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousControler(tp)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x9e) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_YANG_ZING) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -59,19 +59,19 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_ATTACK)
 end
 function s.sccon(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetTurnPlayer()==tp then return false end
+	if Duel.IsTurnPlayer(tp) then return false end
 	local ph=Duel.GetCurrentPhase()
-	return ph==PHASE_MAIN1 or (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE) or ph==PHASE_MAIN2
+	return ph==PHASE_MAIN1 or (Duel.IsBattlePhase()) or ph==PHASE_MAIN2
 end
 function s.sctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		local mg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0x9e),tp,LOCATION_MZONE,0,nil)
+		local mg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,SET_YANG_ZING),tp,LOCATION_MZONE,0,nil)
 		return Duel.IsExistingMatchingCard(Card.IsSynchroSummonable,tp,LOCATION_EXTRA,0,1,nil,nil,mg)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.scop(e,tp,eg,ep,ev,re,r,rp)
-	local mg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0x9e),tp,LOCATION_MZONE,0,nil)
+	local mg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,SET_YANG_ZING),tp,LOCATION_MZONE,0,nil)
 	local g=Duel.GetMatchingGroup(Card.IsSynchroSummonable,tp,LOCATION_EXTRA,0,nil,nil,mg)
 	if #g>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -92,7 +92,7 @@ function s.immop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_IMMUNE_EFFECT)
 	e1:SetValue(s.efilter)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	rc:RegisterEffect(e1)
 end
 function s.efilter(e,te)

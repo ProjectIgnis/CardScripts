@@ -30,14 +30,14 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop2)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x1115}
+s.listed_series={SET_SKY_STRIKER_ACE}
 function s.spcost1(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsReleasable() end
 	Duel.Release(c,REASON_COST)
 end
 function s.spfilter1(c,e,tp)
-	return c:IsSetCard(0x1115) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_SKY_STRIKER_ACE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.GetLocationCountFromEx(tp,tp,e:GetHandler(),c,0x60)>0
 end
 function s.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -53,7 +53,7 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cfilter(c,tp,rp)
 	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp) and c:GetPreviousTypeOnField()&TYPE_LINK~=0 and c:IsPreviousLocation(LOCATION_MZONE)
-		and c:IsPreviousSetCard(0x1115) and (c:IsReason(REASON_BATTLE) or (rp==1-tp and c:IsReason(REASON_EFFECT)))
+		and c:IsPreviousSetCard(SET_SKY_STRIKER_ACE) and (c:IsReason(REASON_BATTLE) or (rp==1-tp and c:IsReason(REASON_EFFECT)))
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return not eg:IsContains(e:GetHandler()) and eg:IsExists(s.cfilter,1,nil,tp,rp)

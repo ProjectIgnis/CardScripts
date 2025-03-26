@@ -1,4 +1,5 @@
 --墓守の暗殺者
+--Gravekeeper's Assailant
 local s,id=GetID()
 function s.initial_effect(c)
 	--pos

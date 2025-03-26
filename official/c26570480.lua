@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.posop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x71}
+s.listed_series={SET_MADOLCHE}
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_DESTROY) and e:GetHandler():GetReasonPlayer()~=tp
 		and e:GetHandler():IsPreviousControler(tp)
@@ -44,7 +44,7 @@ function s.cfilter(c,tp)
 	local np=c:GetPosition()
 	local pp=c:GetPreviousPosition()
 	return ((np==POS_FACEUP_DEFENSE and pp==POS_FACEUP_ATTACK) or ((pp&POS_DEFENSE)~=0 and np==POS_FACEUP_ATTACK))
-		and c:IsControler(tp) and c:IsSetCard(0x71)
+		and c:IsControler(tp) and c:IsSetCard(SET_MADOLCHE)
 end
 function s.poscon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
@@ -63,25 +63,25 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and not tc:IsPosition(POS_FACEUP_DEFENSE) then
 		Duel.ChangePosition(tc,POS_FACEUP_DEFENSE)
-		if not tc:IsSetCard(0x71) then
+		if not tc:IsSetCard(SET_MADOLCHE) then
 			--Cannot attack
 			local e1=Effect.CreateEffect(c)
 			e1:SetDescription(3206)
 			e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CANNOT_ATTACK)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e1)
 			--Negate its effects
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_DISABLE)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e2)
 			local e3=Effect.CreateEffect(c)
 			e3:SetType(EFFECT_TYPE_SINGLE)
 			e3:SetCode(EFFECT_DISABLE_EFFECT)
-			e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e3)
 		end
 	end

@@ -25,9 +25,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x9f}
+s.listed_series={SET_PERFORMAPAL}
 function s.hspfilter(c,ft,tp)
-	return c:IsSetCard(0x9f) and not c:IsType(TYPE_PENDULUM)
+	return c:IsSetCard(SET_PERFORMAPAL) and not c:IsType(TYPE_PENDULUM)
 end
 function s.hspcon(e,c)
 	if c==nil then return true end

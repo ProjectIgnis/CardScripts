@@ -20,15 +20,15 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCondition(s.spcon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xeb}
+s.listed_series={SET_CHEMICRITTER}
 s.listed_card_types={TYPE_GEMINI}
 function s.cfilter(c,ft)
-	return c:IsFaceup() and c:IsSetCard(0xeb) and c:IsAbleToRemoveAsCost() and (ft>1 or c:GetSequence()<5)
+	return c:IsFaceup() and c:IsSetCard(SET_CHEMICRITTER) and c:IsAbleToRemoveAsCost() and (ft>1 or c:GetSequence()<5)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)
@@ -39,11 +39,11 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.spfilter1(c,e,tp)
-	return c:IsSetCard(0xeb) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_CHEMICRITTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetCode())
 end
 function s.spfilter2(c,e,tp,code)
-	return c:IsSetCard(0xeb) and not c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_CHEMICRITTER) and not c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

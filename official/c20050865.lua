@@ -1,4 +1,5 @@
 --水晶機巧－シトリィ
+--Crystron Citree
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -19,7 +20,7 @@ end
 function s.sccon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
 	return not e:GetHandler():IsStatus(STATUS_CHAINING) and Duel.GetTurnPlayer()~=tp
-		and (ph==PHASE_MAIN1 or (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE) or ph==PHASE_MAIN2)
+		and (ph==PHASE_MAIN1 or (Duel.IsBattlePhase()) or ph==PHASE_MAIN2)
 end
 function s.scfilter1(c,e,tp,mc)
 	local mg=Group.FromCards(c,mc)
@@ -46,7 +47,7 @@ function s.scop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_DISABLE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	tc:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_DISABLE_EFFECT)
@@ -63,7 +64,7 @@ function s.scop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
-		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		c:RegisterEffect(e1,true)
 		local e2=e1:Clone()
 		tc:RegisterEffect(e2,true)

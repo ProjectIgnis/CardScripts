@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0xfc),2)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_GOUKI),2)
 	c:EnableReviveLimit()
 	--indes
 	local e1=Effect.CreateEffect(c)
@@ -29,14 +29,14 @@ function s.initial_effect(c)
 	e3:SetOperation(s.seqop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xfc}
+s.listed_series={SET_GOUKI}
 s.listed_names={22510667}
 function s.incon(e)
 	return e:GetHandler():GetLinkedGroupCount()>0 
-	and e:GetHandler():GetLinkedGroup():IsExists(aux.FaceupFilter(Card.IsSetCard,0xfc),1,nil)
+	and e:GetHandler():GetLinkedGroup():IsExists(aux.FaceupFilter(Card.IsSetCard,SET_GOUKI),1,nil)
 end
 function s.seqfilter(c,zone)
-	return c:IsFaceup() and c:IsSetCard(0xfc) and not c:IsCode(id)
+	return c:IsFaceup() and c:IsSetCard(SET_GOUKI) and not c:IsCode(id)
 		and c:GetSequence()<5 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE,c:GetControler(),LOCATION_REASON_CONTROL,zone)>0
 end
 function s.seqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -58,4 +58,3 @@ function s.seqop(e,tp,eg,ep,ev,re,r,rp)
 	local nseq=math.log(Duel.SelectDisableField(tp,1,LOCATION_MZONE,LOCATION_MZONE,~(zone<<i)),2)-i
 	Duel.MoveSequence(tc,nseq)
 end
-

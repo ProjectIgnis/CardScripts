@@ -1,4 +1,5 @@
 --エンシェント・ホーリー・ワイバーン
+--Ancient Sacred Wyvern
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon

@@ -1,4 +1,5 @@
 --霞の谷の大怪鳥
+--Roc from the Valley of Haze
 local s,id=GetID()
 function s.initial_effect(c)
 	--to deck

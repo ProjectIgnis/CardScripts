@@ -1,5 +1,5 @@
 --オルフェゴール・アタック
---Orphegel Attack
+--Orcustrated Attack
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x11b,0xfe}
+s.listed_series={SET_ORCUST,SET_WORLD_LEGACY}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)
 	return true
@@ -23,7 +23,7 @@ function s.spcheck(sg,tp,exg,dg)
 	return dg:IsExists(aux.TRUE,1,sg)
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x11b) or c:IsSetCard(0xfe)
+	return c:IsSetCard(SET_ORCUST) or c:IsSetCard(SET_WORLD_LEGACY)
 end
 function s.filter(c,e)
 	return c:IsAbleToRemove() and c:IsCanBeEffectTarget(e)
@@ -54,4 +54,3 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 	end
 end
-

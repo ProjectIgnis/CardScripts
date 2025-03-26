@@ -1,4 +1,5 @@
 --EMギッタンバッタ
+--Performapal Teeter Totter Hopper
 local s,id=GetID()
 function s.initial_effect(c)
 	--indes
@@ -37,15 +38,15 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x9f}
+s.listed_series={SET_PERFORMAPAL}
 function s.valcon(e,re,r,rp)
-	return (r&REASON_BATTLE)~=0 and e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL)
+	return (r&REASON_BATTLE)~=0 and e:GetHandler():IsSpecialSummoned()
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x9f) and c:IsLevelBelow(3) and c:IsAbleToHand()
+	return c:IsSetCard(SET_PERFORMAPAL) and c:IsLevelBelow(3) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end
@@ -64,7 +65,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x9f) and c:IsPreviousLocation(LOCATION_HAND)
+	return c:IsMonster() and c:IsSetCard(SET_PERFORMAPAL) and c:IsPreviousLocation(LOCATION_HAND)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil) and not eg:IsContains(e:GetHandler())

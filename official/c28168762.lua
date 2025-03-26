@@ -34,12 +34,12 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x1157}
+s.listed_series={SET_SUNAVALON}
 function s.matfilter(c,lc,st,tp)
 	return c:IsRace(RACE_PLANT,lc,st,tp) and c:IsType(TYPE_NORMAL,lc,st,tp)
 end
 function s.cfilter(c,tp,rp)
-	return c:IsPreviousPosition(POS_FACEUP) and c:IsSetCard(0x1157) and c:IsType(TYPE_LINK) 
+	return c:IsPreviousPosition(POS_FACEUP) and c:IsSetCard(SET_SUNAVALON) and c:IsType(TYPE_LINK) 
 		and c:GetPreviousControler()==tp and c:IsReason(REASON_EFFECT)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
@@ -56,7 +56,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.dmgfilter(c,cc)
-	return c:IsSetCard(0x1157) and c:IsType(TYPE_LINK) and c:GetLinkedGroup():IsContains(cc)
+	return c:IsSetCard(SET_SUNAVALON) and c:IsType(TYPE_LINK) and c:GetLinkedGroup():IsContains(cc)
 end
 function s.dmgcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -70,7 +70,7 @@ function s.dmgop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
 	e1:SetValue(HALF_DAMAGE)
-	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+	e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
@@ -79,13 +79,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e2:SetCode(EVENT_ADJUST)
 	e2:SetOperation(s.skop)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e2:SetReset(RESETS_STANDARD_PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 end
 function s.skop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetCurrentPhase()~=PHASE_DAMAGE then
 		local p=Duel.GetTurnPlayer()
-		Duel.SkipPhase(p,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
+		Duel.SkipPhase(p,PHASE_BATTLE,RESET_PHASE|PHASE_BATTLE_STEP,1)
 		e:Reset()
 	end
 end

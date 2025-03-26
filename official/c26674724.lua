@@ -1,4 +1,5 @@
 --ブリューナクの影霊衣
+--Nekroz of Brionac
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -32,7 +33,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.tdop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xb4}
+s.listed_series={SET_NEKROZ}
 s.listed_names={id}
 function s.mat_filter(c)
 	return not c:IsCode(id)
@@ -42,7 +43,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xb4) and not c:IsCode(id) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_NEKROZ) and not c:IsCode(id) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

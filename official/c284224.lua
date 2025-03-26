@@ -1,5 +1,5 @@
 --双天将 密迹
---Dual Avatar - Empowered Mi-Gyo
+--Dual Avatar - Empowered Mitsu-Jaku
 --Logical Nonsense
 
 --Substitute ID
@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
 	--Fusion summon procedure
-	Fusion.AddProcMixN(c,true,true,11759079,1,aux.FilterBoolFunctionEx(Card.IsSetCard,0x14e),2)
+	Fusion.AddProcMixN(c,true,true,11759079,1,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_DUAL_AVATAR),2)
 	--Each "Dual Avatar" fusion monster get protected once by battle, each turn
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -42,13 +42,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 	--Lists "Dual Avatar" archetype in fusion recipe
-s.material_setcode={0x14e}
+s.material_setcode={SET_DUAL_AVATAR}
 	--Lists "Dual Avatar" archetype
-s.listed_series={0x14e}
+s.listed_series={SET_DUAL_AVATAR}
 
 	--Check for "Dual Avatar" fusion monsters
 function s.indtg(e,c)
-	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x14e)
+	return c:IsType(TYPE_FUSION) and c:IsSetCard(SET_DUAL_AVATAR)
 end
 	--Cannot be destroy by battle, once per turn
 function s.indct(e,re,r,rp)

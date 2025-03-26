@@ -1,4 +1,5 @@
 --シャーク・ザ・クルー
+--Shark Cruiser
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon

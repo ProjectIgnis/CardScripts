@@ -40,7 +40,7 @@ function s.initial_effect(c)
 	e5:SetValue(s.effectfilter)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x103}
+s.listed_series={SET_ALTERGEIST}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
@@ -49,7 +49,7 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==1-tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
 end
 function s.discfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x103) and c:IsAbleToGraveAsCost() and not c:IsStatus(STATUS_BATTLE_DESTROYED)
+	return c:IsFaceup() and c:IsSetCard(SET_ALTERGEIST) and c:IsAbleToGraveAsCost() and not c:IsStatus(STATUS_BATTLE_DESTROYED)
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -74,5 +74,5 @@ end
 function s.effectfilter(e,ct)
 	local p=e:GetHandler():GetControler()
 	local te,tp,loc=Duel.GetChainInfo(ct,CHAININFO_TRIGGERING_EFFECT,CHAININFO_TRIGGERING_PLAYER,CHAININFO_TRIGGERING_LOCATION)
-	return p==tp and te:GetHandler():IsSetCard(0x103) and loc&LOCATION_ONFIELD~=0
+	return p==tp and te:GetHandler():IsSetCard(SET_ALTERGEIST) and loc&LOCATION_ONFIELD~=0
 end

@@ -47,13 +47,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.counter_place_list={COUNTER_SPELL}
-s.listed_series={0x10d}
+s.listed_series={SET_MYTHICAL_BEAST}
 s.listed_names={id}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_PZONE,0) == 1
 end
 function s.spfilter(c,e,tp,rp)
-	return c:IsSetCard(0x10d) and c:IsFaceup() and c:IsType(TYPE_PENDULUM) and Duel.GetLocationCountFromEx(tp,rp,nil,c)>0
+	return c:IsSetCard(SET_MYTHICAL_BEAST) and c:IsFaceup() and c:IsType(TYPE_PENDULUM) and Duel.GetLocationCountFromEx(tp,rp,nil,c)>0
 		and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

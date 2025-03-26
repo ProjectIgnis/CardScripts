@@ -1,4 +1,5 @@
 --電光千鳥
+--Lightning Chidori
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -28,7 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 end
 function s.tdcon1(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
+	return e:GetHandler():IsXyzSummoned()
 end
 function s.tdfilter1(c)
 	return c:IsFacedown() and c:IsAbleToDeck()

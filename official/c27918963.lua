@@ -30,25 +30,25 @@ function s.initial_effect(c)
 	e4:SetOperation(s.operation)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xb3}
+s.listed_series={SET_YOSENJU}
 s.counter_place_list={0x33}
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(aux.FaceupFilter(Card.IsSetCard,0xb3),1,nil)
+	return eg:IsExists(aux.FaceupFilter(Card.IsSetCard,SET_YOSENJU),1,nil)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(0x33,1)
 end
 function s.filter1(c)
-	return c:IsFaceup() and c:IsSetCard(0xb3)
+	return c:IsFaceup() and c:IsSetCard(SET_YOSENJU)
 end
 function s.filter2(c)
-	return c:IsSetCard(0xb3) and c:IsAbleToHand()
+	return c:IsSetCard(SET_YOSENJU) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=e:GetHandler():IsCanRemoveCounter(tp,0x33,1,REASON_COST)
 		and Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_MZONE,0,1,nil)
 	local b2=e:GetHandler():IsCanRemoveCounter(tp,0x33,3,REASON_COST)
-		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil)
+		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,nil)
 	if chk==0 then return b1 or b2 end
 	local op=0
 	if b1 and b2 then
@@ -65,7 +65,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	else
 		e:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 		e:GetHandler():RemoveCounter(tp,0x33,3,REASON_COST)
-		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
+		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK|LOCATION_GRAVE)
 	end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
@@ -79,12 +79,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(300)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
 			tc:RegisterEffect(e1)
 		end
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter2),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
+		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter2),tp,LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil)
 		if #g>0 then
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,g)

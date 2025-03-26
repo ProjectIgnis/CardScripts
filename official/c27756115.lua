@@ -1,4 +1,5 @@
 --超重武者装留マカルガエシ
+--Superheavy Samurai Soulbeads
 local s,id=GetID()
 function s.initial_effect(c)
 	--equip
@@ -7,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_EQUIP)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetRange(LOCATION_HAND+LOCATION_MZONE)
+	e1:SetRange(LOCATION_HAND|LOCATION_MZONE)
 	e1:SetTarget(s.eqtg)
 	e1:SetOperation(s.eqop)
 	c:RegisterEffect(e1)
@@ -24,9 +25,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x9a}
+s.listed_series={SET_SUPERHEAVY_SAMURAI}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x9a)
+	return c:IsFaceup() and c:IsSetCard(SET_SUPERHEAVY_SAMURAI)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -48,7 +49,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_EQUIP_LIMIT)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e1:SetValue(s.eqlimit)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
@@ -56,11 +57,11 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
 	e2:SetCountLimit(1)
 	e2:SetValue(s.valcon)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e2)
 end
 function s.eqlimit(e,c)
-	return c:IsSetCard(0x9a)
+	return c:IsSetCard(SET_SUPERHEAVY_SAMURAI)
 end
 function s.valcon(e,re,r,rp)
 	return (r&REASON_EFFECT)~=0

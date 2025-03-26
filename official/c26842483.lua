@@ -1,4 +1,5 @@
 --ジャスティス・ブリンガー
+--Justice Bringer
 local s,id=GetID()
 function s.initial_effect(c)
 	--negate
@@ -18,7 +19,7 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp,chk)
 	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
 	return ep~=tp and loc==LOCATION_MZONE and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
-		and re:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL)
+		and re:GetHandler():IsSpecialSummoned()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

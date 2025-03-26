@@ -1,5 +1,5 @@
 --E・HERO ブラック・ネオス
---Elemental Hero Darkneos
+--Elemental HERO Dark Neos
 local s,id=GetID()
 function s.initial_effect(c)
 	--Fusion Material
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={CARD_NEOS}
-s.material_setcode={0x8,0x3008,0x9,0x1f}
+s.material_setcode={SET_HERO,SET_ELEMENTAL_HERO,SET_NEOS,SET_NEO_SPACIAN}
 function s.contactfil(tp)
 	return Duel.GetMatchingGroup(Card.IsAbleToDeckOrExtraAsCost,tp,LOCATION_ONFIELD,0,nil)
 end
@@ -54,7 +54,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetCondition(s.rcon)
 		tc:RegisterEffect(e1)
 	end

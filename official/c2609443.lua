@@ -35,12 +35,12 @@ function s.initial_effect(c)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x70}
+s.listed_series={SET_CHRONOMALY}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.gyfilter(c)
-	return (c:IsSetCard(0x70) or c:IsType(TYPE_XYZ)) and c:IsMonster()
+	return (c:IsSetCard(SET_CHRONOMALY) or c:IsType(TYPE_XYZ)) and c:IsMonster()
 		and c:GetAttack()>0 and not c:IsForbidden()
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -65,7 +65,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(math.floor(tc2:GetAttack()/2))
 		tc1:RegisterEffect(e1)
 		if not tc1:IsHasEffect(EFFECT_REVERSE_UPDATE) and c:IsRelateToEffect(e) then

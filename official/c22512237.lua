@@ -1,4 +1,5 @@
 --メカニカル・ハウンド
+--Mechanical Hound
 local s,id=GetID()
 function s.initial_effect(c)
 	--act limit

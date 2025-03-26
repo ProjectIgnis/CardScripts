@@ -45,7 +45,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 				Duel.HintSelection(tc,true)
 				if Duel.Destroy(tc,REASON_EFFECT)~=0
 					and (tc:IsType(TYPE_FIELD) or Duel.GetLocationCount(tp,LOCATION_SZONE)>0)
-					and not tc:IsLocation(LOCATION_HAND+LOCATION_DECK)
+					and not tc:IsLocation(LOCATION_HAND|LOCATION_DECK)
 					and tc:IsType(TYPE_SPELL+TYPE_TRAP) and tc:IsSSetable()
 					and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
 					Duel.BreakEffect()

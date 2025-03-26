@@ -17,7 +17,7 @@ function s.initial_effect(c)
 end
 s.listed_names={28674153}
 s.counter_list={0x37}
-s.listed_series={0xd3}
+s.listed_series={SET_KAIJU}
 function s.tkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,1,0x37,2,REASON_COST) end
 	Duel.RemoveCounter(tp,1,1,0x37,2,REASON_COST)
@@ -35,7 +35,7 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_BE_SYNCHRO_MATERIAL)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(1)
 		token:RegisterEffect(e1,true)
 	end

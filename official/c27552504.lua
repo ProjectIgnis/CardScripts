@@ -28,12 +28,12 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xb1,0xd5}
+s.listed_series={SET_BURNING_ABYSS,SET_DANTE}
 function s.cfilter(c)
-	return c:IsSetCard(0xb1) and c:IsMonster() and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_BURNING_ABYSS) and c:IsMonster() and c:IsAbleToGraveAsCost()
 end
 function s.ovfilter(c,tp,lc)
-	return c:IsFaceup() and c:IsSetCard(0xd5,lc,SUMMON_TYPE_XYZ,tp)
+	return c:IsFaceup() and c:IsSetCard(SET_DANTE,lc,SUMMON_TYPE_XYZ,tp)
 end
 function s.xyzop(e,tp,chk,mc)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
@@ -41,7 +41,7 @@ function s.xyzop(e,tp,chk,mc)
 	local tc=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_HAND,0,nil):SelectUnselect(Group.CreateGroup(),tp,false,Xyz.ProcCancellable)
 	if tc then
 		Duel.SendtoGrave(tc,REASON_COST)
-		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_PHASE+PHASE_END,0,1)
+		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD|RESET_PHASE|PHASE_END,0,1)
 		return true
 	else return false end
 end
@@ -66,7 +66,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsPreviousControler(tp) and rp==1-tp and c:IsReason(REASON_DESTROY)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xb1) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsSetCard(SET_BURNING_ABYSS) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end

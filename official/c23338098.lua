@@ -1,4 +1,5 @@
 --A BF－涙雨のチドリ
+--Assault Blackwing - Chidori the Rain Sprinkling
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -38,18 +39,18 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x33}
+s.listed_series={SET_BLACKWING}
 s.listed_names={id}
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
-	if g:IsExists(Card.IsSetCard,1,nil,0x33) then
+	if g:IsExists(Card.IsSetCard,1,nil,SET_BLACKWING) then
 		e:GetLabelObject():SetLabel(1)
 	else
 		e:GetLabelObject():SetLabel(0)
 	end
 end
 function s.tncon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) and e:GetLabel()==1
+	return e:GetHandler():IsSynchroSummoned() and e:GetLabel()==1
 end
 function s.tnop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -58,11 +59,11 @@ function s.tnop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetCode(EFFECT_ADD_TYPE)
 	e1:SetValue(TYPE_TUNER)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e1)
 end
 function s.atkfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x33)
+	return c:IsMonster() and c:IsSetCard(SET_BLACKWING)
 end
 function s.value(e,c)
 	return Duel.GetMatchingGroupCount(s.atkfilter,c:GetControler(),LOCATION_GRAVE,0,nil)*300

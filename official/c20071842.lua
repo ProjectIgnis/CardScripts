@@ -1,5 +1,5 @@
 --ヘヴィ・トリガー
---Heavy Trigger
+--Heavy Interlock
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -7,15 +7,15 @@ function s.initial_effect(c)
 end
 s.listed_names={7987191}
 s.fit_monster={7987191} --should be removed in hardcode overhaul
-s.listed_series={0x102}
+s.listed_series={SET_ROKKET}
 function s.ritualfil(c)
 	return c:IsCode(7987191) and c:IsRitualMonster()
 end
 function s.mfilter(c,e)
-	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:HasLevel() and c:IsSetCard(0x102) and c:IsMonster() and c:IsDestructable(e)
+	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:HasLevel() and c:IsSetCard(SET_ROKKET) and c:IsMonster() and c:IsDestructable(e)
 end
 function s.extrafil(e,tp,eg,ep,ev,re,r,rp,chk)
-	return Duel.GetMatchingGroup(s.mfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,nil,e)
+	return Duel.GetMatchingGroup(s.mfilter,tp,LOCATION_MZONE|LOCATION_HAND,0,nil,e)
 end
 function s.extraop(mg,e,tp,eg,ep,ev,re,r,rp)
 	local rg=mg:Filter(s.mfilter,nil,e)
@@ -37,7 +37,7 @@ function s.stage2(mat,e,tp,eg,ep,ev,re,r,rp,tc)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EFFECT_IMMUNE_EFFECT)
 	e1:SetValue(s.efilter)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	tc:RegisterEffect(e1,true)
 	--Cannot be destroyed by battle
 	local e2=e1:Clone()
@@ -47,7 +47,7 @@ function s.stage2(mat,e,tp,eg,ep,ev,re,r,rp,tc)
 end
 function s.efilter(e,te)
 	local tc=te:GetOwner()
-	return tc:IsSummonType(SUMMON_TYPE_SPECIAL) and tc:IsSummonLocation(LOCATION_EXTRA) and te:IsActiveType(TYPE_MONSTER)
+	return tc:IsSpecialSummoned() and tc:IsSummonLocation(LOCATION_EXTRA) and te:IsActiveType(TYPE_MONSTER)
 		and te:IsActivated() and te:GetActivateLocation()==LOCATION_MZONE
 end
 function s.indval(e,c)

@@ -1,4 +1,5 @@
 --リボーン・ゾンビ
+--Reborn Zombie
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot destroy

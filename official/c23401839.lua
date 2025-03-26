@@ -1,4 +1,5 @@
 --センジュ・ゴッド
+--Senju of the Thousand Hands
 local s,id=GetID()
 function s.initial_effect(c)
 	--effect

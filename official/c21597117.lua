@@ -1,4 +1,5 @@
 --ヒーロー見参
+--A Hero Emerges
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

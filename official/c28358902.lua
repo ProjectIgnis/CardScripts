@@ -1,4 +1,5 @@
 --紅蓮の女守護兵
+--Crimson Sentry
 local s,id=GetID()
 function s.initial_effect(c)
 	--to deck

@@ -1,4 +1,5 @@
 --天空の虹彩
+--Sky Iris
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -28,12 +29,12 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x98,0x9f,0x99}
+s.listed_series={SET_MAGICIAN,SET_PERFORMAPAL,SET_ODD_EYES}
 function s.tgtg(e,c)
-	return c:IsSetCard(0x98) or c:IsSetCard(0x9f) or c:IsSetCard(0x99)
+	return c:IsSetCard(SET_MAGICIAN) or c:IsSetCard(SET_PERFORMAPAL) or c:IsSetCard(SET_ODD_EYES)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x99) and c:IsAbleToHand()
+	return c:IsSetCard(SET_ODD_EYES) and c:IsAbleToHand()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and chkc:IsFaceup() and chkc~=e:GetHandler() end

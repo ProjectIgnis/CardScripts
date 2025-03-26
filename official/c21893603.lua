@@ -1,4 +1,5 @@
 --星杯の妖精リース
+--Lee the World Chalice Fairy
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -27,9 +28,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop2)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xfd}
+s.listed_series={SET_WORLD_CHALICE}
 function s.thfilter(c)
-	return c:IsSetCard(0xfd) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_WORLD_CHALICE) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -47,9 +48,9 @@ function s.thcfilter(c)
 	return c:IsMonster() and c:IsAbleToGraveAsCost()
 end
 function s.thcost2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.thcfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.thcfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.thcfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.thcfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,1,nil)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.thtg2(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -1,5 +1,5 @@
 --星遺物の交心
---World Legacy Communion
+--World Legacy's Mind Meld
 local s,id=GetID()
 function s.initial_effect(c)
 	--change effect
@@ -20,12 +20,12 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCountLimit(1,id)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x104}
+s.listed_series={SET_KRAWLER}
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.SelectMatchingCard(tp,s.thfilter,tp,0,LOCATION_MZONE,1,1,nil)
 	if #sg>0 then
@@ -33,7 +33,7 @@ function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cecon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x104),tp,LOCATION_MZONE,0,1,nil)
+	return ep~=tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_KRAWLER),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.thfilter(c)
 	return c:IsFaceup() and c:IsAbleToHand()
@@ -51,7 +51,7 @@ function s.spfilter1(c,e,tp)
 	return c:IsFaceup() and c:IsLinkMonster() and zone>0 and Duel.IsExistingMatchingCard(s.spfilter2,tp,0x13,0,1,c,e,tp,zone)
 end
 function s.spfilter2(c,e,tp,zone)
-	return c:IsSetCard(0x104) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE,tp,zone)
+	return c:IsSetCard(SET_KRAWLER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE,tp,zone)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return s.spfilter1(chkc,e,tp) and chkc:IsLocation(LOCATION_MZONE) end
@@ -73,4 +73,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

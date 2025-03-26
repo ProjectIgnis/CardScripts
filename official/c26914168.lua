@@ -43,8 +43,8 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 	if phase~=PHASE_DAMAGE or Duel.IsDamageCalculated() then return false end
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
-	return d~=nil and d:IsFaceup() and ((a:GetControler()==tp and a:IsAttribute(ATTRIBUTE_DARK) and a:IsRelateToBattle())
-		or (d:GetControler()==tp and d:IsAttribute(ATTRIBUTE_DARK) and d:IsRelateToBattle()))
+	return d~=nil and d:IsFaceup() and ((a:IsControler(tp) and a:IsAttribute(ATTRIBUTE_DARK) and a:IsRelateToBattle())
+		or (d:IsControler(tp) and d:IsAttribute(ATTRIBUTE_DARK) and d:IsRelateToBattle()))
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
@@ -58,8 +58,8 @@ function s.aop(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetOwnerPlayer(tp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-	if a:GetControler()==tp then
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
+	if a:IsControler(tp) then
 		e1:SetValue(-d:GetAttack())
 		d:RegisterEffect(e1)
 	else

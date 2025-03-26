@@ -31,25 +31,25 @@ end
 s.synchro_tuner_required=1
 s.synchro_nt_required=1
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return e:GetHandler():IsSynchroSummoned()
 end
 function s.rmfilter(c)
 	return c:IsSpellTrap() and c:IsAbleToRemove()
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.rmfilter,tp,0,LOCATION_GRAVE+LOCATION_ONFIELD,1,nil) end
-	local g=Duel.GetMatchingGroup(s.rmfilter,tp,0,LOCATION_GRAVE+LOCATION_ONFIELD,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.rmfilter,tp,0,LOCATION_GRAVE|LOCATION_ONFIELD,1,nil) end
+	local g=Duel.GetMatchingGroup(s.rmfilter,tp,0,LOCATION_GRAVE|LOCATION_ONFIELD,nil)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,0,0)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(s.rmfilter,tp,0,LOCATION_GRAVE+LOCATION_ONFIELD,nil)
+	local g=Duel.GetMatchingGroup(s.rmfilter,tp,0,LOCATION_GRAVE|LOCATION_ONFIELD,nil)
 	if #g>0 then
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_SYNCHRO) and (r&REASON_EFFECT+REASON_BATTLE)~=0
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSynchroSummoned() and (r&REASON_EFFECT+REASON_BATTLE)~=0
 end
 function s.spfilter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false)

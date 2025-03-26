@@ -1,5 +1,5 @@
 --No.XX インフィニティ・ダークホープ
---Number XX - Infinity Dark Hope
+--Number XX: Utopic Dark Infinity
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -51,7 +51,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:GetBaseAttack()>0
+	return c:IsFaceup() and c:IsSpecialSummoned() and c:GetBaseAttack()>0
 end
 function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()

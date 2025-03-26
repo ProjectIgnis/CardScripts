@@ -18,9 +18,9 @@ function s.initial_effect(c)
 	e2:SetValue(s.atkval)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x3e}
+s.listed_series={SET_WORM}
 function s.filter(c)
-	return c:IsFaceup() and not (c:IsSetCard(0x3e) and c:IsRace(RACE_REPTILE))
+	return c:IsFaceup() and not (c:IsSetCard(SET_WORM) and c:IsRace(RACE_REPTILE))
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -32,7 +32,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(g,REASON_EFFECT)
 end
 function s.vfilter(c)
-	return c:IsSetCard(0x3e) and c:IsRace(RACE_REPTILE)
+	return c:IsSetCard(SET_WORM) and c:IsRace(RACE_REPTILE)
 end
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(s.vfilter,c:GetControler(),LOCATION_GRAVE,0,nil)*500

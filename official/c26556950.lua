@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1)
-	e4:SetCost(aux.dxmcostgen(1,1,nil))
+	e4:SetCost(Cost.Detach(1,1,nil))
 	e4:SetTarget(s.destg)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4,false,REGISTER_FLAG_DETACH_XMAT)
@@ -51,7 +51,7 @@ function s.defval(e,c)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	if rp==tp or not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_CHAIN,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET|RESET_CHAIN,0,1)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

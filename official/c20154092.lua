@@ -1,4 +1,5 @@
 --先史遺産カブレラの投石機
+--Chronomaly Cabrera Trebuchet
 local s,id=GetID()
 function s.initial_effect(c)
 	--atk
@@ -14,9 +15,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x70}
+s.listed_series={SET_CHRONOMALY}
 function s.cfilter(c)
-	return c:IsSetCard(0x70)
+	return c:IsSetCard(SET_CHRONOMALY)
 end
 function s.filter(c,e)
 	return c:IsFaceup() and c:IsCanBeEffectTarget(e)
@@ -40,7 +41,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(0)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

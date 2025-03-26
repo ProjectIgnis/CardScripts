@@ -1,5 +1,5 @@
 --深海の都 マガラニカ
---Magallanica, the Deep Sea City
+--Magellanica, the Deep Sea City
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -63,7 +63,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(lv)
 		tc:RegisterEffect(e1)
 	end
@@ -72,7 +72,7 @@ function s.rmcfilter(c,tp)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_WATER) and c:IsType(TYPE_SYNCHRO) and c:GetSummonPlayer()==tp
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsMainPhase() and Duel.GetTurnPlayer()==tp and eg:IsExists(s.rmcfilter,1,nil,tp)
+	return Duel.IsMainPhase() and Duel.IsTurnPlayer(tp) and eg:IsExists(s.rmcfilter,1,nil,tp)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_HAND,1,nil) end
@@ -97,9 +97,9 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetLabelObject(tc)
 	e1:SetCondition(s.retcon)
 	e1:SetOperation(s.retop)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-	tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,fid)
+	tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1,fid)
 end
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()

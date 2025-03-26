@@ -1,4 +1,5 @@
 --生贄封じの仮面
+--Mask of Restrict
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

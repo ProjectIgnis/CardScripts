@@ -1,5 +1,5 @@
 --デーモンの杖
---Archfiend Staff of Despair
+--Archfiend's Staff of Despair
 --Scripted by DyXel
 
 local s,id=GetID()
@@ -40,7 +40,7 @@ function s.actop(e,tp,eg,ep,ev,re,r,rp)
 		e:SetType(EFFECT_TYPE_SINGLE)
 		e:SetCode(EFFECT_UPDATE_ATTACK)
 		e:SetValue(v)
-		e:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e)
 	end
 end

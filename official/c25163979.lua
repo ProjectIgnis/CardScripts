@@ -1,5 +1,5 @@
 --星遺物へ誘う悪夢
---World Legacy Nightmare
+--World Legacy's Nightmare
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -27,19 +27,19 @@ function s.initial_effect(c)
 	e3:SetOperation(s.mvop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x112}
+s.listed_series={SET_KNIGHTMARE}
 function s.efilter(e,c)
 	return c:GetMutualLinkedGroupCount()>0
 end
 function s.mvfilter1(c)
-	return c:IsFaceup() and c:IsSetCard(0x112)
+	return c:IsFaceup() and c:IsSetCard(SET_KNIGHTMARE)
 end
 function s.mvfilter2(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x112) and c:GetSequence()<5
+	return c:IsFaceup() and c:IsSetCard(SET_KNIGHTMARE) and c:GetSequence()<5
 		and Duel.IsExistingMatchingCard(s.mvfilter3,tp,LOCATION_MZONE,0,1,c)
 end
 function s.mvfilter3(c)
-	return c:IsFaceup() and c:IsSetCard(0x112) and c:GetSequence()<5
+	return c:IsFaceup() and c:IsSetCard(SET_KNIGHTMARE) and c:GetSequence()<5
 end
 function s.mvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.IsExistingMatchingCard(s.mvfilter1,tp,LOCATION_MZONE,0,1,nil)

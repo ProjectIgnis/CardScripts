@@ -28,10 +28,10 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x48}
+s.listed_series={SET_NUMBER}
 s.xyz_number=93
 function s.xyzfilter(c,xyz,sumtype,tp)
-	return c:IsType(TYPE_XYZ,xyz,sumtype,tp) and c:IsSetCard(0x48,xyz,sumtype,tp) and c:GetOverlayCount()>0
+	return c:IsType(TYPE_XYZ,xyz,sumtype,tp) and c:IsSetCard(SET_NUMBER,xyz,sumtype,tp) and c:GetOverlayCount()>0
 end
 function s.xyzcheck(g,tp,xyz)
 	local mg=g:Filter(function(c) return not c:IsHasEffect(511001175) end,nil)
@@ -41,7 +41,7 @@ function s.check(c,rk)
 	return c:GetRank()~=rk and not c:IsHasEffect(511001175)
 end
 function s.filter(c,e,tp,rp)
-	return c:IsRankBelow(9) and c:IsAttackBelow(3000) and c:IsSetCard(0x48)
+	return c:IsRankBelow(9) and c:IsAttackBelow(3000) and c:IsSetCard(SET_NUMBER)
 		and Duel.GetLocationCountFromEx(tp,rp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -67,12 +67,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 				local e1=Effect.CreateEffect(c)
 				e1:SetType(EFFECT_TYPE_SINGLE)
 				e1:SetCode(EFFECT_DISABLE)
-				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+				e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 				tc:RegisterEffect(e1)
 				local e2=Effect.CreateEffect(c)
 				e2:SetType(EFFECT_TYPE_SINGLE)
 				e2:SetCode(EFFECT_DISABLE_EFFECT)
-				e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+				e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 				tc:RegisterEffect(e2)
 				g1:Match(s.gfilter,nil,tp,rp,tc:GetRank())
 				ct=ct-1
@@ -88,19 +88,19 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e3:SetTargetRange(0,1)
 	e3:SetValue(HALF_DAMAGE)
-	e3:SetReset(RESET_PHASE+PHASE_END)
+	e3:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e3,tp)
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
 	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e4:SetDescription(aux.Stringid(id,2))
 	e4:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e4:SetReset(RESET_PHASE+PHASE_END)
+	e4:SetReset(RESET_PHASE|PHASE_END)
 	e4:SetTargetRange(1,0)
 	Duel.RegisterEffect(e4,tp)
 end
 function s.indfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(0x48)
+	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(SET_NUMBER)
 end
 function s.indcon(e)
 	return Duel.IsExistingMatchingCard(s.indfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())

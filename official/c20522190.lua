@@ -1,4 +1,5 @@
 --邪悪なるバリア －ダーク・フォース－
+--Dark Mirror Force
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

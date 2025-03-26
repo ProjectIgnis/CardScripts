@@ -1,5 +1,5 @@
 --DDD死謳王バイス・レイクエム
---D/D/D Eulogy King Vice Requiem
+--D/D/D Vice King Requiem
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -34,12 +34,12 @@ function s.initial_effect(c)
 	e3:SetOperation(s.efop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x10af,0xae}
+s.listed_series={SET_DDD,SET_DARK_CONTRACT}
 function s.splimit(e,c)
-	return not c:IsSetCard(0x10af)
+	return not c:IsSetCard(SET_DDD)
 end
 function s.desfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xae)
+	return c:IsFaceup() and c:IsSetCard(SET_DARK_CONTRACT)
 end
 function s.desfilter2(c,e)
 	return s.desfilter(c) and c:IsCanBeEffectTarget(e)
@@ -72,7 +72,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_LEVEL)
 			e1:SetValue(ct)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 			c:RegisterEffect(e1)
 		end
 	end
@@ -80,7 +80,7 @@ end
 function s.efcon(e,tp,eg,ep,ev,re,r,rp)
 	local p=e:GetHandler()
 	return (r&REASON_FUSION+REASON_SYNCHRO+REASON_XYZ+REASON_LINK)~=0 and p:IsPreviousLocation(LOCATION_ONFIELD)
-		and p:GetReasonCard():IsSetCard(0x10af)
+		and p:GetReasonCard():IsSetCard(SET_DDD)
 end
 function s.efop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -95,14 +95,14 @@ function s.efop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCountLimit(1)
 	e1:SetTarget(s.tdtg)
 	e1:SetOperation(s.tdop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	rc:RegisterEffect(e1,true)
 	--register the hint
 	local e2=Effect.CreateEffect(rc)
 	e2:SetDescription(aux.Stringid(id,5))
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CLIENT_HINT)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 	rc:RegisterEffect(e2,true)
 	--in case the monster did not have an effect
 	if not rc:IsType(TYPE_EFFECT) then
@@ -110,16 +110,16 @@ function s.efop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_ADD_TYPE)
 		e3:SetValue(TYPE_EFFECT)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 		rc:RegisterEffect(e3,true)
 	end
 end
 function s.tdfilter(c)
-	return (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE)) and c:IsSetCard(0xae) and c:IsAbleToDeck()
+	return (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE)) and c:IsSetCard(SET_DARK_CONTRACT) and c:IsAbleToDeck()
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and chkc:IsAbleToDeck() end
-	if chk==0 then return Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_GRAVE+LOCATION_ONFIELD,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_GRAVE|LOCATION_ONFIELD,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,tp,0)
@@ -129,7 +129,7 @@ end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local td=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE+LOCATION_ONFIELD,0,1,1,nil)
+	local td=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE|LOCATION_ONFIELD,0,1,1,nil)
 	if Duel.SendtoDeck(td,nil,2,REASON_EFFECT)~=0 then
 		if tc and tc:IsRelateToEffect(e) then
 			if Duel.Destroy(tc,REASON_EFFECT)~=0 then

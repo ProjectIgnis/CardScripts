@@ -32,10 +32,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x12f}
+s.listed_series={SET_BATTLEWASP}
 
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and (r&REASON_BATTLE)==0 and re and re:GetHandler():IsSetCard(0x12f) and not (re:GetHandler()==e:GetHandler())
+	return ep~=tp and (r&REASON_BATTLE)==0 and re and re:GetHandler():IsSetCard(SET_BATTLEWASP) and not (re:GetHandler()==e:GetHandler())
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsRelateToEffect(e) end
@@ -50,8 +50,8 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.filter(c,tp)
 	local rc=c:GetReasonCard()
-	return (rc:IsSetCard(0x12f) and rc:IsControler(tp))
-		or (c:IsSetCard(0x12f) and c:IsControler(tp))
+	return (rc:IsSetCard(SET_BATTLEWASP) and rc:IsControler(tp))
+		or (c:IsSetCard(SET_BATTLEWASP) and c:IsControler(tp))
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return not eg:IsContains(e:GetHandler()) and eg:IsExists(s.filter,1,nil,tp)
@@ -71,7 +71,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e1,true)
 	end

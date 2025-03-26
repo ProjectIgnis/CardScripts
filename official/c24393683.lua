@@ -21,12 +21,12 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCondition(aux.exccon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.drtg)
 	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x168}
+s.listed_series={SET_GUNKAN}
 s.listed_series={CARD_SUSHIP_SHARI}
 function s.cfilter(c)
 	return c:IsCode(CARD_SUSHIP_SHARI) and not c:IsPublic() 
@@ -45,7 +45,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.thfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x168) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(SET_GUNKAN) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,3,nil) end
@@ -70,7 +70,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tdfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x168) and c:IsAbleToDeck()
+	return c:IsMonster() and c:IsSetCard(SET_GUNKAN) and c:IsAbleToDeck()
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -89,7 +89,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	if g:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then
 		Duel.ShuffleDeck(tp)
 	end
-	local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_DECK+LOCATION_EXTRA)
+	local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_DECK|LOCATION_EXTRA)
 	if ct>0 then
 		Duel.BreakEffect()
 		Duel.Draw(tp,1,REASON_EFFECT)

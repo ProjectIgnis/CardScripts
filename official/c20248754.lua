@@ -38,16 +38,16 @@ function s.initial_effect(c)
 	e3:SetOperation(s.repop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x13f}
+s.listed_series={SET_PLUNDER_PATROLL}
 
 function s.condition1(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():GetEquipGroup():IsExists(Card.IsSetCard,1,nil,0x13f)
+	return not e:GetHandler():GetEquipGroup():IsExists(Card.IsSetCard,1,nil,SET_PLUNDER_PATROLL)
 end
 function s.condition2(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetEquipGroup():IsExists(Card.IsSetCard,1,nil,0x13f)
+	return e:GetHandler():GetEquipGroup():IsExists(Card.IsSetCard,1,nil,SET_PLUNDER_PATROLL)
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x13f) and c:IsDiscardable()
+	return c:IsSetCard(SET_PLUNDER_PATROLL) and c:IsDiscardable()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
@@ -65,7 +65,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x13f) and c:IsSpellTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_PLUNDER_PATROLL) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
@@ -82,7 +82,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.repfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x13f) and c:IsControler(tp) and c:IsOnField()
+	return c:IsFaceup() and c:IsSetCard(SET_PLUNDER_PATROLL) and c:IsControler(tp) and c:IsOnField()
 		and c:IsReason(REASON_BATTLE+REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)

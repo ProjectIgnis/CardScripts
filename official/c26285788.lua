@@ -27,7 +27,7 @@ function s.addcount(e,tp,eg,ep,ev,re,r,rp)
 		p=tc:GetReasonPlayer()
 		if tc:IsMonster() and not tc:IsType(TYPE_TOKEN) and (tc:IsPreviousLocation(LOCATION_MZONE)
 			or (tc:IsPreviousLocation(LOCATION_HAND) and tc:IsPreviousControler(p))) then
-			Duel.RegisterFlagEffect(p,id,RESET_PHASE+PHASE_END,0,1)
+			Duel.RegisterFlagEffect(p,id,RESET_PHASE|PHASE_END,0,1)
 		end
 	end
 end
@@ -44,7 +44,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCountLimit(1)
 	e1:SetCondition(function(_,tp) return Duel.GetFlagEffect(tp,id)>0 end)
 	e1:SetOperation(s.effectop)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.thfilter(c)

@@ -33,10 +33,10 @@ function s.initial_effect(c)
 	e3:SetValue(s.defval)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xdb}
+s.listed_series={SET_PHANTOM_KNIGHTS}
 
 function s.tgfilter(c)
-	return c:IsSetCard(0xdb) and c:IsSpellTrap() and c:IsAbleToGrave()
+	return c:IsSetCard(SET_PHANTOM_KNIGHTS) and c:IsSpellTrap() and c:IsAbleToGrave()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -72,7 +72,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e1,true)
 		Duel.SpecialSummonComplete()
@@ -82,7 +82,7 @@ function s.defcon(e)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1
 end
 function s.filter(c)
-	return c:IsSetCard(0xdb) and c:IsSpellTrap()
+	return c:IsSetCard(SET_PHANTOM_KNIGHTS) and c:IsSpellTrap()
 end
 function s.defval(e,c)
 	return Duel.GetMatchingGroupCount(s.filter,c:GetControler(),LOCATION_GRAVE,0,nil)*300

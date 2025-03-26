@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x151}
+s.listed_series={SET_DRYTRON}
 function s.ritualfil(c)
 	return c:GetAttack()>0 and c:IsRitualMonster()
 end
@@ -26,7 +26,7 @@ function s.filter(c)
 	return c:IsRace(RACE_MACHINE) and c:GetAttack()>0
 end
 function s.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x151) and c:GetAttack()>=1000
+	return c:IsFaceup() and c:IsSetCard(SET_DRYTRON) and c:GetAttack()>=1000
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.atkfilter(chkc) end
@@ -38,7 +38,7 @@ end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:UpdateAttack(-1000,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,c)==-1000
+	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:UpdateAttack(-1000,RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN,c)==-1000
 		and c:IsRelateToEffect(e) then
 		Duel.SendtoHand(c,nil,REASON_EFFECT)
 	end

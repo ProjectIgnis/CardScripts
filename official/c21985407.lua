@@ -1,5 +1,5 @@
 --聖夜の降臨
---Holy Night Advent
+--Starry Knight Arrival
 --Scripted by DyXel
 
 local s,id=GetID()

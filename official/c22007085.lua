@@ -1,5 +1,5 @@
 --聖なる篝火
---Holy Night Bellfire
+--Starry Knight Balefire
 --Scripted by The Razgriz
 
 local s,id=GetID()
@@ -14,12 +14,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x15b}
+s.listed_series={SET_STARRY_KNIGHT}
 function s.ldlv7filter(c)
 	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_DRAGON) and c:IsLevel(7)
 end
 function s.thfilter(c)
-	return ((c:IsSetCard(0x15b) and c:IsMonster()) or s.ldlv7filter(c)) and c:IsAbleToHand()
+	return ((c:IsSetCard(SET_STARRY_KNIGHT) and c:IsMonster()) or s.ldlv7filter(c)) and c:IsAbleToHand()
 end
 function s.spconfilter(c)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_DARK)

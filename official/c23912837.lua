@@ -1,5 +1,5 @@
 --影光の聖選士
---Lashaddoll Incarnation
+--Resh Shaddoll Incarnation
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -24,9 +24,9 @@ function s.initial_effect(c)
 	e2:SetTarget(s.postg)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x9d}
+s.listed_series={SET_SHADDOLL}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x9d) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_DEFENSE)
+	return c:IsSetCard(SET_SHADDOLL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_DEFENSE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end
@@ -47,7 +47,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x9d) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(SET_SHADDOLL) and c:IsAbleToRemoveAsCost()
 end
 function s.poscost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

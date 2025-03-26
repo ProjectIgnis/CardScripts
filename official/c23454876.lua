@@ -1,4 +1,5 @@
 --CXダーク・フェアリー・チア・ガール
+--CXyz Dark Fairy Cheer Girl
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon

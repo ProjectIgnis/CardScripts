@@ -1,5 +1,5 @@
 --驚楽園の助手 <Delia>
---Amazement Assistant <Delia>
+--Amazement Assistant Delia
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -24,9 +24,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.setop)
 	c:RegisterEffect(e2)	
 end
-s.listed_series={0x15f}
+s.listed_series={SET_ATTRACTION}
 function s.costfilter(c)
-	return c:IsSetCard(0x15f) and c:IsTrap() and not c:IsPublic()
+	return c:IsSetCard(SET_ATTRACTION) and c:IsTrap() and not c:IsPublic()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end
@@ -47,7 +47,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,tp)
-	if not (c:IsSetCard(0x15f) and c:IsTrap() and c:IsAbleToGraveAsCost()) then return false end
+	if not (c:IsSetCard(SET_ATTRACTION) and c:IsTrap() and c:IsAbleToGraveAsCost()) then return false end
 	if not c:IsLocation(LOCATION_SZONE) then
 		return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil)
 	else
@@ -56,12 +56,12 @@ function s.cfilter(c,tp)
 	end
 end
 function s.filter(c,ignore)
-	return c:IsSetCard(0x15f) and c:IsTrap() and c:IsSSetable(ignore)
+	return c:IsSetCard(SET_ATTRACTION) and c:IsTrap() and c:IsSSetable(ignore)
 end
 function s.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,nil,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND|LOCATION_ONFIELD,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,nil,tp)
+	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND|LOCATION_ONFIELD,0,1,1,nil,tp)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.setop(e,tp,eg,ep,ev,re,r,rp)

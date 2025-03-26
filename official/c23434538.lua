@@ -1,4 +1,5 @@
 --増殖するG
+--Maxx "C"
 local s,id=GetID()
 function s.initial_effect(c)
 	--draw
@@ -26,7 +27,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetCondition(s.drcon1)
 	e1:SetOperation(s.drop1)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	--sp_summon effect
 	local e2=Effect.CreateEffect(c)
@@ -34,14 +35,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetCondition(s.regcon)
 	e2:SetOperation(s.regop)
-	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e3:SetCode(EVENT_CHAIN_SOLVED)
 	e3:SetCondition(s.drcon2)
 	e3:SetOperation(s.drop2)
-	e3:SetReset(RESET_PHASE+PHASE_END)
+	e3:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e3,tp)
 end
 function s.filter(c,sp)

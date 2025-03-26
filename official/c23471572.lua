@@ -1,4 +1,5 @@
 --ソロモンの律法書
+--Solomon's Lawbook
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -15,12 +16,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
 	e1:SetCode(EFFECT_SKIP_SP)
-	if Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_STANDBY then
+	if Duel.IsTurnPlayer(tp) and Duel.GetCurrentPhase()==PHASE_STANDBY then
 		e1:SetCondition(s.skipcon)
 		e1:SetLabel(Duel.GetTurnCount())
-		e1:SetReset(RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,2)
+		e1:SetReset(RESET_PHASE|PHASE_STANDBY|RESET_SELF_TURN,2)
 	else
-		e1:SetReset(RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN)
+		e1:SetReset(RESET_PHASE|PHASE_STANDBY|RESET_SELF_TURN)
 	end
 	Duel.RegisterEffect(e1,tp)
 end

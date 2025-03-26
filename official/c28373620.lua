@@ -1,5 +1,5 @@
 --神碑の牙ゲーリ
---Geri, Fangs of the Mysterune
+--Geri the Runick Fangs
 --Logical Nonsense
 
 --Substitute ID
@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
 	--2 "Mysterune" monsters
-	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x180),2)
+	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_RUNICK),2)
 	--If Special Summoned from the Extra Deck, add 1 "Mysterune" non-Quick-Play Spell from GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -40,11 +40,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 	--Lists "Mysterune" archetype
-s.listed_series={0x180}
+s.listed_series={SET_RUNICK}
 
 	--Check for a non-Quick-Play "Mysterune" Spell
 function s.thfilter(c)
-	return c:IsSetCard(0x180) and not c:IsType(TYPE_QUICKPLAY) and c:IsSpell() and c:IsAbleToHand()
+	return c:IsSetCard(SET_RUNICK) and not c:IsType(TYPE_QUICKPLAY) and c:IsSpell() and c:IsAbleToHand()
 end
 	--Activation legality
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

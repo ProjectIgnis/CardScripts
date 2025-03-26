@@ -1,4 +1,5 @@
 --闇の進軍
+--March of the Dark Brigade
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -12,9 +13,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x38}
+s.listed_series={SET_LIGHTSWORN}
 function s.filter(c,tp)
-	if not c:IsMonster() or not c:IsSetCard(0x38) or c:GetOriginalLevel()<=0 or not c:IsAbleToHand() then return false end
+	if not c:IsMonster() or not c:IsSetCard(SET_LIGHTSWORN) or c:GetOriginalLevel()<=0 or not c:IsAbleToHand() then return false end
 	local g=Duel.GetDecktopGroup(tp,c:GetOriginalLevel())
 	return g:FilterCount(Card.IsAbleToRemove,nil)==c:GetOriginalLevel()
 end

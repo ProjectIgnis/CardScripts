@@ -1,4 +1,5 @@
 --甲虫装機 エクサスタッグ
+--Inzektor Exa-Stag
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -26,11 +27,11 @@ function s.eqfilter(c)
 	return c:IsLocation(LOCATION_MZONE) or c:IsMonster() and not c:IsForbidden()
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_MZONE) and chkc:IsControler(1-tp) and s.eqfilter(chkc) end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE|LOCATION_MZONE) and chkc:IsControler(1-tp) and s.eqfilter(chkc) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingTarget(s.eqfilter,tp,0,LOCATION_GRAVE+LOCATION_MZONE,1,nil) end
+		and Duel.IsExistingTarget(s.eqfilter,tp,0,LOCATION_GRAVE|LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	local g=Duel.SelectTarget(tp,s.eqfilter,tp,0,LOCATION_GRAVE+LOCATION_MZONE,1,1,nil)
+	local g=Duel.SelectTarget(tp,s.eqfilter,tp,0,LOCATION_GRAVE|LOCATION_MZONE,1,1,nil)
 	if g:GetFirst():IsLocation(LOCATION_GRAVE) then
 		Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,1,0,0)
 	end
@@ -43,7 +44,7 @@ function s.equipop(c,e,tp,tc)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_EQUIP)
 		e2:SetCode(EFFECT_UPDATE_ATTACK)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e2:SetValue(atk)
 		tc:RegisterEffect(e2)
 		local def=tc:GetTextDefense()/2
@@ -51,7 +52,7 @@ function s.equipop(c,e,tp,tc)
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_EQUIP)
 		e3:SetCode(EFFECT_UPDATE_DEFENSE)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e3:SetValue(def)
 		tc:RegisterEffect(e3)
 	end

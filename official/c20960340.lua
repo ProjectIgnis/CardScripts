@@ -1,4 +1,5 @@
 --クリスタル・アバター
+--Krystal Avatar
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -34,7 +35,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SET_ATTACK)
 	e1:SetValue(atk)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e1)
 	--damage
 	local e2=Effect.CreateEffect(c)
@@ -45,7 +46,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCondition(s.damcon)
 	e2:SetTarget(s.damtg)
 	e2:SetOperation(s.damop)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e2,true)
 	Duel.SpecialSummonComplete()
 	local at=Duel.GetAttacker()

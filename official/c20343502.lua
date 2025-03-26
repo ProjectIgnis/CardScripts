@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
 	--Xyz summon procedure
-	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x71),4,2)
+	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_MADOLCHE),4,2)
 	--Targeted "Madolche" monster becomes unaffected by monster effects
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -33,13 +33,13 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x71}
+s.listed_series={SET_MADOLCHE}
 function s.immcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.immfilter(c)
-	return c:IsSetCard(0x71) and c:IsFaceup()
+	return c:IsSetCard(SET_MADOLCHE) and c:IsFaceup()
 end
 function s.immtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.immfilter(chkc) end
@@ -58,7 +58,7 @@ function s.immop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetCode(EFFECT_IMMUNE_EFFECT)
 		e1:SetValue(s.efilter)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end
@@ -66,7 +66,7 @@ function s.efilter(e,te)
 	return te:IsActiveType(TYPE_MONSTER) and te:GetOwner()~=e:GetHandler()
 end
 function s.tdcfilter(c,tp)
-	return c:IsSetCard(0x71) and c:IsControler(tp)
+	return c:IsSetCard(SET_MADOLCHE) and c:IsControler(tp)
 end
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.tdcfilter,1,nil,tp)

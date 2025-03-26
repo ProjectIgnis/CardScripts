@@ -1,4 +1,5 @@
 --ソリテア・マジカル
+--Solitaire Magician
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
@@ -13,9 +14,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x31}
+s.listed_series={SET_FORTUNE_LADY}
 function s.filter1(c)
-	return c:IsFaceup() and c:IsSetCard(0x31) and c:GetLevel()>3
+	return c:IsFaceup() and c:IsSetCard(SET_FORTUNE_LADY) and c:GetLevel()>3
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -38,7 +39,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_LEVEL)
 	e1:SetValue(-3)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c1:RegisterEffect(e1)
 	if tc:IsFacedown() or not tc:IsRelateToEffect(e) then return end
 	Duel.Destroy(tc,REASON_EFFECT)

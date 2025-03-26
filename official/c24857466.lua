@@ -1,4 +1,5 @@
 --冥王竜ヴァンダルギオン
+--Van'Dalgyon the Dark Dragon Lord
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
@@ -61,7 +62,7 @@ function s.chop(e,tp,eg,ep,ev,re,r,rp)
 		local ty=re:GetActiveType()
 		local flag=c:GetFlagEffectLabel(id)
 		if not flag then
-			c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0,ty)
+			c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,0,ty)
 			e:SetLabelObject(de)
 		elseif de~=e:GetLabelObject() then
 			e:SetLabelObject(de)

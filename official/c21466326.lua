@@ -1,4 +1,5 @@
 --残骸爆破
+--Blasting the Ruins
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

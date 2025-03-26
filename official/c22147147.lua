@@ -1,4 +1,5 @@
 --旋風剣
+--Cyclone Blade
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,s.filter)
@@ -15,9 +16,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xc008}
+s.listed_series={SET_DESTINY_HERO}
 function s.filter(c)
-	return c:IsSetCard(0xc008)
+	return c:IsSetCard(SET_DESTINY_HERO)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker()==e:GetHandler():GetEquipTarget()

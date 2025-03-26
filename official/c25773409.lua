@@ -1,4 +1,5 @@
 --伝説の柔術家
+--Legendary Jujitsu Master
 local s,id=GetID()
 function s.initial_effect(c)
 	--to deck

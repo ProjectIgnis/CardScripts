@@ -13,12 +13,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x7f}
+s.listed_series={SET_UTOPIC}
 function s.filter(c,e,tp)
 	return c:IsCanBeEffectTarget(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.xyzfilter(c,mg)
-	return c:IsSetCard(0x7f) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsXyzSummonable(nil,mg,2,2)
+	return c:IsSetCard(SET_UTOPIC) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsXyzSummonable(nil,mg,2,2)
 end
 function s.mfilter1(c,mg,exg)
 	return mg:IsExists(s.mfilter2,1,c,c,exg)
@@ -57,7 +57,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_DISABLE_EFFECT)

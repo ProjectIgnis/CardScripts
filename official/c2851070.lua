@@ -1,4 +1,5 @@
 --魔鏡導士リフレクト・バウンダー
+--Reflect Bounder
 local s,id=GetID()
 function s.initial_effect(c)
 	--damage
@@ -36,7 +37,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(p,Duel.GetAttacker():GetAttack(),REASON_EFFECT)
 	local lp2=Duel.GetLP(p)
 	if lp2<lp1 then
-		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE,0,1)
+		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE,0,1)
 	end
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)

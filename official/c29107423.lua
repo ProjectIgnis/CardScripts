@@ -1,5 +1,5 @@
 --紅蓮薔薇の魔女
---Bloodrose Witch
+--Ruddy Rose Witch
 --scripted by Rundas
 local s,id=GetID()
 function s.initial_effect(c)
@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.tedtg)
 	e2:SetOperation(s.tedop)
 	c:RegisterEffect(e2)
@@ -75,11 +75,11 @@ function s.tedfilter(c,tp)
 		and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
 end
 function s.tedtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.tedfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_GRAVE+LOCATION_REMOVED)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.tedfilter,tp,LOCATION_GRAVE|LOCATION_REMOVED,0,1,nil,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_GRAVE|LOCATION_REMOVED)
 end
 function s.tedop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.tedfilter),tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil,tp):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.tedfilter),tp,LOCATION_GRAVE|LOCATION_REMOVED,0,1,1,nil,tp):GetFirst()
 	if tc then
 		Duel.SendtoDeck(tc,tp,2,REASON_EFFECT)
 	end

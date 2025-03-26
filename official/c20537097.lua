@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetCondition(s.thcon)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x10c}
+s.listed_series={SET_MEKK_KNIGHT}
 s.listed_names={id}
 
 function s.cfilter(c)
@@ -48,7 +48,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_HAND)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x10c) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_MEKK_KNIGHT) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil)

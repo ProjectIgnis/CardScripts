@@ -1,4 +1,5 @@
 --レスキューロイド
+--Rescueroid
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,10 +13,10 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x16}
+s.listed_series={SET_ROID}
 function s.filter(c,tp)
 	return c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_BATTLE) and c:IsPreviousControler(tp)
-		and c:IsSetCard(0x16) and c:IsAbleToHand()
+		and c:IsSetCard(SET_ROID) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

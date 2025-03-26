@@ -1,5 +1,5 @@
 --あまびえさん
---Amabie-San
+--Amabie
 --Logical Nonsense
 
 --Substitute ID

@@ -1,7 +1,8 @@
 --鋼核収納
+--Iron Core Armor
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,0x1d))
+	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,SET_KOAKI_MEIRU))
 	--atk down
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
@@ -20,7 +21,7 @@ function s.initial_effect(c)
 	e4:SetTarget(s.desreptg)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x1d}
+s.listed_series={SET_KOAKI_MEIRU}
 function s.atkcon(e)
 	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL
 		and e:GetHandler():GetEquipTarget():GetBattleTarget()

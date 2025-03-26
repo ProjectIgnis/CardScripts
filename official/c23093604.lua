@@ -1,4 +1,5 @@
 --X－セイバー パシウル
+--X-Saber Pashuul
 local s,id=GetID()
 function s.initial_effect(c)
 	--damage
@@ -8,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e1:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)

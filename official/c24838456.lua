@@ -1,4 +1,5 @@
 --虚無を呼ぶ呪文
+--Vanity's Call
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

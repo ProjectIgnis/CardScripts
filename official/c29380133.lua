@@ -1,4 +1,5 @@
 --ヤドカリュー
+--Yado Karu
 local s,id=GetID()
 function s.initial_effect(c)
 	--todeck

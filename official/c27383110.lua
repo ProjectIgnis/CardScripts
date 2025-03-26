@@ -1,4 +1,5 @@
 --宣告者の預言
+--Dawn of the Herald
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Ritual.AddProcEqual(c,s.ritualfil,6,nil,nil,nil,nil,s.stage2)

@@ -1,4 +1,5 @@
 --柴戦士タロ
+--Shiba-Warrior Taro
 local s,id=GetID()
 function s.initial_effect(c)
 	--battle indestructable

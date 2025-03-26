@@ -42,7 +42,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.regop2)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x115}
+s.listed_series={SET_SKY_STRIKER}
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFlagEffect(tp,id+1)==0
 end
@@ -63,9 +63,9 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetOperation(s.actop)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-	Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_END,0,1)
 end
 function s.actop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
@@ -78,18 +78,18 @@ function s.chainlm(e,rp,tp)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if re:GetHandler():IsSetCard(0x115) and re:IsActiveType(TYPE_SPELL) and rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) then
+	if re:GetHandler():IsSetCard(SET_SKY_STRIKER) and re:IsActiveType(TYPE_SPELL) and rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		local flag=c:GetFlagEffectLabel(id)
 		if flag then
 			c:SetFlagEffectLabel(id,flag+1)
 		else
-			c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,1)
+			c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1,1)
 		end
 	end
 end
 function s.regop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if re:GetHandler():IsSetCard(0x115) and re:IsActiveType(TYPE_SPELL) and rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) then
+	if re:GetHandler():IsSetCard(SET_SKY_STRIKER) and re:IsActiveType(TYPE_SPELL) and rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		local flag=c:GetFlagEffectLabel(id)
 		if flag and flag>0 then
 			c:SetFlagEffectLabel(id,flag-1)
@@ -97,7 +97,7 @@ function s.regop2(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.setfilter(c)
-	return c:IsSetCard(0x115) and c:IsSpell() and c:IsSSetable()
+	return c:IsSetCard(SET_SKY_STRIKER) and c:IsSpell() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=e:GetHandler():GetFlagEffectLabel(id)
@@ -126,7 +126,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetValue(LOCATION_REMOVED)
-		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		tc:RegisterEffect(e1)
 	end
 end

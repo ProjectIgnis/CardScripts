@@ -1,18 +1,18 @@
--- ラドレミコード・エンジェリア
--- LaSolfachord Angelia
--- scripted by Hatter
+--ラドレミコード・エンジェリア
+--LaSolfachord Angelia
+--scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Pendulum procedure
+	--Pendulum procedure
 	Pendulum.AddProcedure(c)
-	-- Prevent the activation of Spell/Traps or monster effects when you Pendulum Summon
+	--Prevent the activation of Spell/Traps or monster effects when you Pendulum Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetRange(LOCATION_PZONE)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetOperation(s.sucop)
 	c:RegisterEffect(e1)
-	-- Special Summon 1 "Solfachord" monster from the Deck
+	--Special Summon 1 "Solfachord" monster from the Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	-- Prevent the activation of Spell/Traps or monster effects when "Solfachord" monsters attack
+	--Prevent the activation of Spell/Traps or monster effects when "Solfachord" monsters attack
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EVENT_ATTACK_ANNOUNCE)
@@ -33,7 +33,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_SOLFACHORD}
 function s.sucfilter(c,tp)
-	return c:IsSetCard(SET_SOLFACHORD) and c:IsType(TYPE_PENDULUM) and c:IsControler(tp) and c:IsSummonType(SUMMON_TYPE_PENDULUM)
+	return c:IsSetCard(SET_SOLFACHORD) and c:IsType(TYPE_PENDULUM) and c:IsControler(tp) and c:IsPendulumSummoned()
 end
 function s.sucop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(s.sucfilter,1,nil,tp) then

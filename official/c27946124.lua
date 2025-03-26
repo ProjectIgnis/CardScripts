@@ -45,10 +45,10 @@ function s.initial_effect(c)
 	e4:SetOperation(s.setop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x1157}
+s.listed_series={SET_SUNAVALON}
 
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1157) and c:IsType(TYPE_LINK)
+	return c:IsFaceup() and c:IsSetCard(SET_SUNAVALON) and c:IsType(TYPE_LINK)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)

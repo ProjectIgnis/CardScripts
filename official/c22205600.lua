@@ -1,4 +1,5 @@
 --連鎖旋風
+--Chain Whirlwind
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

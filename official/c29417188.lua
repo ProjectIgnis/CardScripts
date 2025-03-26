@@ -1,4 +1,5 @@
 --サイキック・ブロッカー
+--Psi-Blocker
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -29,7 +30,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(0x7f,0x7f)
 	e1:SetTarget(s.bantg)
 	e1:SetLabel(ac)
-	e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+	e1:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.bantg(e,c)

@@ -1,5 +1,5 @@
 --ヘビーメタルフォーゼ・エレクトラム
---Heavymetalfoes Electrum
+--Heavymetalfoes Electrumite
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.tecon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+	return e:GetHandler():IsLinkSummoned()
 end
 function s.tefilter(c)
 	return c:IsType(TYPE_PENDULUM) and not c:IsForbidden()
@@ -97,4 +97,3 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
-

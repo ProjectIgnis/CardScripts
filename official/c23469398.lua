@@ -1,5 +1,5 @@
 --マシンナーズ・エアレイダー
---Machina Airraider
+--Machina Air Raider
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon from hand
@@ -28,9 +28,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop2)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x36}
+s.listed_series={SET_MACHINA}
 function s.cfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x36) and c:IsDiscardable()
+	return c:IsMonster() and c:IsSetCard(SET_MACHINA) and c:IsDiscardable()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
@@ -55,7 +55,7 @@ function s.tgfilter(c,e,tp)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c)
 end
 function s.spfilter(c,e,tp,tc)
-	return c:IsSetCard(0x36) and c:IsLevelBelow(tc:GetLevel()) and not c:IsCode(tc:GetCode())
+	return c:IsSetCard(SET_MACHINA) and c:IsLevelBelow(tc:GetLevel()) and not c:IsCode(tc:GetCode())
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

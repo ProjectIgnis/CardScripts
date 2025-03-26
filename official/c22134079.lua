@@ -1,4 +1,5 @@
 --墓守の伏兵
+--Gravekeeper's Ambusher
 local s,id=GetID()
 function s.initial_effect(c)
 	--return to deck
@@ -34,7 +35,7 @@ function s.initial_effect(c)
 	e4:SetCode(EFFECT_NECRO_VALLEY_IM)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x91}
+s.listed_series={SET_NECROVALLEY}
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_GRAVE) and chkc:IsAbleToDeck() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToDeck,tp,0,LOCATION_GRAVE,1,nil) end
@@ -55,7 +56,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)~=0
 end
 function s.filter(c)
-	return c:IsSetCard(0x91) and c:IsAbleToHand()
+	return c:IsSetCard(SET_NECROVALLEY) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end

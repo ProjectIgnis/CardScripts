@@ -1,9 +1,9 @@
--- 月女神の鏃
--- Artemate Slay
--- Scripted by Hatter
+--月女神の鏃
+--Ultimate Slayer
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Return to the Deck
+	--Return to the Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TODECK)

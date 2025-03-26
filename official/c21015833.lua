@@ -1,4 +1,5 @@
 --隼の騎士
+--Hayabusa Knight
 local s,id=GetID()
 function s.initial_effect(c)
 	--double attack

@@ -1,4 +1,5 @@
 --蜘蛛の領域
+--Spiders' Lair
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -26,7 +27,7 @@ function s.initial_effect(c)
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e4:SetRange(LOCATION_SZONE)
-	e4:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e4:SetCode(EVENT_PHASE|PHASE_BATTLE)
 	e4:SetCountLimit(1)
 	e4:SetOperation(s.posop)
 	c:RegisterEffect(e4)
@@ -58,9 +59,9 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
 	if d and d:IsControler(1-tp) and e:GetHandler():IsHasCardTarget(a) then
-		d:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		d:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 	elseif d and a:IsControler(1-tp) and e:GetHandler():IsHasCardTarget(d) then
-		a:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		a:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 	end
 end
 function s.pfilter(c)
@@ -71,7 +72,7 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChangePosition(g,POS_FACEUP_DEFENSE)
 	local tc=g:GetFirst()
 	for tc in aux.Next(g) do
-		tc:RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD,0,1)
+		tc:RegisterFlagEffect(id+1,RESET_EVENT|RESETS_STANDARD,0,1)
 	end
 end
 function s.postg(e,c)

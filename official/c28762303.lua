@@ -1,9 +1,9 @@
--- 氷水のアクティ
--- Icejade Tinola
--- Scripted by Hatter
+--氷水のアクティ
+--Icejade Tinola
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Send itself to GY and Special Summon 1 WATER monster from the GY
+	--Send itself to GY and Special Summon 1 WATER monster from the GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOGRAVE+CATEGORY_SPECIAL_SUMMON)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.tgtg)
 	e1:SetOperation(s.tgop)
 	c:RegisterEffect(e1)
-	-- Special Summon 1 "Icejade" monster from the hand or Deck
+	--Special Summon 1 "Icejade" monster from the hand or Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_DESTROYED)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(s.spcon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)

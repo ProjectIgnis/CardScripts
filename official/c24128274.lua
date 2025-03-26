@@ -1,4 +1,5 @@
 --深海の戦士
+--Deepsea Warrior
 local s,id=GetID()
 function s.initial_effect(c)
 	--immune spell

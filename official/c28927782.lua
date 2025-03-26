@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.efop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x29}
+s.listed_series={SET_DRAGUNITY}
 function s.select(e,tp,b1,b2)
 	local op=0
 	if b1 and b2 then
@@ -44,13 +44,13 @@ function s.select(e,tp,b1,b2)
 	end
 end
 function s.spfilter(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x29) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsFaceup() and c:IsSetCard(SET_DRAGUNITY) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.eqfilter1(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x29) and Duel.IsExistingMatchingCard(s.eqfilter2,tp,LOCATION_GRAVE,0,1,nil,c,tp)
+	return c:IsFaceup() and c:IsSetCard(SET_DRAGUNITY) and Duel.IsExistingMatchingCard(s.eqfilter2,tp,LOCATION_GRAVE,0,1,nil,c,tp)
 end
 function s.eqfilter2(c,tc,tp)
-	return c:IsSetCard(0x29) and c:IsMonster() and not c:IsForbidden()
+	return c:IsSetCard(SET_DRAGUNITY) and c:IsMonster() and not c:IsForbidden()
 end
 
 function s.eftg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -90,7 +90,7 @@ function s.efop(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_EQUIP_LIMIT)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			e1:SetValue(s.eqlimit2)
 			e1:SetLabelObject(ec)
 			tc:RegisterEffect(e1)
@@ -100,7 +100,7 @@ function s.efop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetTargetRange(1,0)
 	e1:SetLabelObject(e)
 	e1:SetTarget(s.splimit)
@@ -108,7 +108,7 @@ function s.efop(e,tp,eg,ep,ev,re,r,rp)
 	aux.RegisterClientHint(c,nil,tp,1,0,aux.Stringid(id,3),nil)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return not c:IsSetCard(0x29)
+	return not c:IsSetCard(SET_DRAGUNITY)
 end
 function s.eqlimit2(e,c)
 	return c==e:GetLabelObject()

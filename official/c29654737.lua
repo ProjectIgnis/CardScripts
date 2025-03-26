@@ -1,4 +1,5 @@
 --アマゾネスの鎖使い
+--Amazoness Chain Master
 local s,id=GetID()
 function s.initial_effect(c)
 	--get card

@@ -22,18 +22,18 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(s.spcon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-s.listed_series={0x15b}
+s.listed_series={SET_STARRY_KNIGHT}
 function s.ldlv7filter(c)
 	return c:IsLevel(7) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_DRAGON)
 end
 function s.spcfilter(c,tp)
-	return (s.ldlv7filter(c) or c:IsSetCard(0x15b)) and c:IsFaceup() and c:IsAbleToHandAsCost() and not c:IsCode(id)
+	return (s.ldlv7filter(c) or c:IsSetCard(SET_STARRY_KNIGHT)) and c:IsFaceup() and c:IsAbleToHandAsCost() and not c:IsCode(id)
 		and Duel.GetMZoneCount(tp,c)>0
 end
 function s.spselfcost(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -17,12 +17,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x207a,0x107a}
+s.listed_series={SET_NOBLE_ARMS,SET_NOBLE_KNIGHT}
 function s.filter2(c)
-	return c:IsFaceup() and c:IsSetCard(0x207a) and c:IsType(TYPE_EQUIP)
+	return c:IsFaceup() and c:IsSetCard(SET_NOBLE_ARMS) and c:IsType(TYPE_EQUIP)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x107a),tp,LOCATION_MZONE,0,1,nil)
+	return ep~=tp and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_NOBLE_KNIGHT),tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

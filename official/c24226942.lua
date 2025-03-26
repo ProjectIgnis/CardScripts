@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_DESTROYED)
-	e2:SetRange(LOCATION_HAND+LOCATION_GRAVE)
+	e2:SetRange(LOCATION_HAND|LOCATION_GRAVE)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(s.spcon)
 	e2:SetCost(s.spcost)
@@ -54,7 +54,7 @@ function s.sprescon(sg,e,tp,mg)
 	return sg:IsExists(s.attrfilter,1,nil,sg) and aux.ChkfMMZ(1)(sg,e,tp,mg)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
+	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil)
 	if chk==0 then return aux.SelectUnselectGroup(g,e,tp,2,2,s.sprescon,0) end
 	local sg=aux.SelectUnselectGroup(g,e,tp,2,2,s.sprescon,1,tp,HINTMSG_REMOVE)
 	Duel.Remove(sg,POS_FACEUP,REASON_COST)
@@ -80,7 +80,7 @@ function s.rmfilter(c,e)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	local g=Duel.GetMatchingGroup(s.rmfilter,tp,0,LOCATION_ONFIELD+LOCATION_GRAVE,nil,e)
+	local g=Duel.GetMatchingGroup(s.rmfilter,tp,0,LOCATION_ONFIELD|LOCATION_GRAVE,nil,e)
 	if chk==0 then return aux.SelectUnselectGroup(g,e,tp,3,3,s.rmrescon,0) end
 	local sg=aux.SelectUnselectGroup(g,e,tp,3,3,s.rmrescon,1,tp,HINTMSG_REMOVE)
 	Duel.SetTargetCard(sg)

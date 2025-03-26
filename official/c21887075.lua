@@ -1,5 +1,5 @@
 --無尽機関アルギロ・システム
---Perpetual Engine Argyro System
+--Endless Engine Argyro System
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -23,9 +23,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x17b}
+s.listed_series={SET_THERION}
 function s.tgfilter(c)
-	return c:IsSetCard(0x17b) and c:IsAbleToGrave()
+	return c:IsSetCard(SET_THERION) and c:IsAbleToGrave()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -39,7 +39,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c,hc)
-	if not c:IsSetCard(0x17b) then return false end
+	if not c:IsSetCard(SET_THERION) then return false end
 	return (c:IsAbleToHand() and hc:IsAbleToDeck()) or (c:IsAbleToDeck() and hc:IsAbleToHand())
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

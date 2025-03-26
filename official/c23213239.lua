@@ -1,5 +1,5 @@
 --激動の未界域
---Danger! Disaster!
+--Danger! Disturbance! Disorder!
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -29,10 +29,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x11e}
+s.listed_series={SET_DANGER}
 function s.cfilter(c,tp)
 	local rc=c:GetReasonCard()
-	return c:IsReason(REASON_BATTLE) and c:GetPreviousControler()==tp and c:IsSetCard(0x11e)
+	return c:IsReason(REASON_BATTLE) and c:GetPreviousControler()==tp and c:IsSetCard(SET_DANGER)
 		and rc and rc:IsControler(1-tp) and rc:IsRelateToBattle()
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
@@ -55,7 +55,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.descfilter(c)
-	return c:IsSetCard(0x11e) and c:IsSpellTrap() and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(SET_DANGER) and c:IsSpellTrap() and c:IsAbleToRemoveAsCost()
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.descfilter,tp,LOCATION_GRAVE,0,1,nil)
@@ -82,9 +82,9 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.splimit(e,c)
-	return not c:IsSetCard(0x11e)
+	return not c:IsSetCard(SET_DANGER)
 end

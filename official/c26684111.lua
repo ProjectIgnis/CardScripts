@@ -1,9 +1,9 @@
--- 天空の聖水
--- The Sacred Water of the Sky
--- Scripted by Hatter
+--天空の聖水
+--The Sacred Waters in the Sky
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Activate "The Sanctuary in the Sky" or search a monster that lists it
+	--Activate "The Sanctuary in the Sky" or search a monster that lists it
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_RECOVER)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.acthtg)
 	e1:SetOperation(s.acthop)
 	c:RegisterEffect(e1)
-	-- Banish self from GY to replace destruction
+	--Banish self from GY to replace destruction
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EFFECT_DESTROY_REPLACE)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.repop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x44,0x171}
+s.listed_series={SET_THE_AGENT,SET_HYPERION}
 s.listed_names={CARD_SANCTUARY_SKY}
 function s.acfilter(c,tp)
 	return c:IsCode(CARD_SANCTUARY_SKY) and c:GetActivateEffect()
@@ -39,12 +39,12 @@ function s.acthtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.lpfilter(c)
-	return c:IsFaceup() and (c:IsSetCard(0x44) or c:IsSetCard(0x171))
+	return c:IsFaceup() and (c:IsSetCard(SET_THE_AGENT) or c:IsSetCard(SET_HYPERION))
 end
 function s.acthop(e,tp,eg,ep,ev,re,r,rp)
 	local ac=Duel.IsExistingMatchingCard(s.acfilter,tp,LOCATION_DECK,0,1,nil,tp)
 	local th=Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil)
-	-- Choose effect to apply
+	--Choose effect to apply
 	local op
 	if ac and th then
 		op=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))
@@ -53,7 +53,7 @@ function s.acthop(e,tp,eg,ep,ev,re,r,rp)
 	elseif th then
 		op=Duel.SelectOption(tp,aux.Stringid(id,1))+1 
 	end
-	-- Apply chosen effect
+	--Apply chosen effect
 	local gainlp=nil
 	if op==0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
@@ -67,9 +67,9 @@ function s.acthop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.ConfirmCards(1-tp,g)
 		end
 	end
-	-- Gain LP
+	--Gain LP
 	if gainlp and (Duel.IsEnvironment(CARD_SANCTUARY_SKY) 
-		or Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_SANCTUARY_SKY),0,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,1,nil))
+		or Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_SANCTUARY_SKY),0,LOCATION_ONFIELD|LOCATION_GRAVE,LOCATION_ONFIELD|LOCATION_GRAVE,1,nil))
 		and Duel.IsExistingMatchingCard(s.lpfilter,tp,LOCATION_MZONE,0,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 		Duel.BreakEffect()

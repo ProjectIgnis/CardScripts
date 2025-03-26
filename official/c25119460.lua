@@ -1,4 +1,5 @@
 --YZ－キャタピラー・ドラゴン
+--YZ-Tank Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -24,7 +25,7 @@ function s.contactop(g)
 	Duel.Remove(g,POS_FACEUP,REASON_COST+REASON_MATERIAL)
 end
 function s.splimit(e,se,sp,st)
-	return not e:GetHandler():IsLocation(LOCATION_EXTRA+LOCATION_GRAVE)
+	return not e:GetHandler():IsLocation(LOCATION_EXTRA|LOCATION_GRAVE)
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end

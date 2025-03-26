@@ -1,5 +1,5 @@
--- 音響戦士ロックス
--- Symphonic Warrior Rocks
+--音響戦士ロックス
+--Symphonic Warrior Rockks
 local s,id=GetID()
 function s.initial_effect(c)
 	--Synchro summon
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e1:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e1:SetRange(LOCATION_PZONE)
 	e1:SetCountLimit(1,{id,1})
 	e1:SetTarget(s.thtg)
@@ -95,7 +95,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if not (c:IsRelateToEffect(e) and tc:IsRelateToBattle()) then return end
 	Duel.Destroy(Group.FromCards(c,tc),REASON_EFFECT)
 end
--- place itself in Pzone
+--place itself in Pzone
 function s.pencon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return (r&REASON_EFFECT+REASON_BATTLE)~=0 and c:IsPreviousLocation(LOCATION_MZONE) and c:IsFaceup()

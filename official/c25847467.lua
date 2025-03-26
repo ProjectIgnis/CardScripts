@@ -1,4 +1,5 @@
 --暗黒界の刺客 カーキ
+--Kahkki, Guerilla of Dark World
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy

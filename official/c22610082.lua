@@ -1,4 +1,5 @@
 --遺言の仮面
+--The Mask of Remnants
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

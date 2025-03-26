@@ -1,5 +1,5 @@
 --救魔の標
---Guidance of Spell Salvation
+--Dwimmered Path
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)
@@ -18,7 +18,7 @@ function s.filter(c)
 	return c:IsRace(RACE_SPELLCASTER) and c:IsType(TYPE_EFFECT) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:GetControler()==tp and chkc:GetLocation()==LOCATION_GRAVE and s.filter(chkc) end
+	if chkc then return chkc:IsControler(tp) and chkc:GetLocation()==LOCATION_GRAVE and s.filter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil)

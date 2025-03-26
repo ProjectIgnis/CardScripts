@@ -1,4 +1,5 @@
 --ファーニマル・ドッグ
+--Fluffal Dog
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -17,13 +18,13 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xa9}
+s.listed_series={SET_FLUFFAL}
 s.listed_names={30068120}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_HAND)
 end
 function s.filter(c)
-	return (c:IsCode(30068120) or (c:IsSetCard(0xa9) and c:IsMonster() and not c:IsCode(id)))
+	return (c:IsCode(30068120) or (c:IsSetCard(SET_FLUFFAL) and c:IsMonster() and not c:IsCode(id)))
 		and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

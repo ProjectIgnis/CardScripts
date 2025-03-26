@@ -1,4 +1,5 @@
 --三連星のトリオン
+--Triple Star Trion
 local s,id=GetID()
 function s.initial_effect(c)
 	--to grave
@@ -21,7 +22,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetRange(LOCATION_GRAVE)
 		e1:SetTarget(s.sptg)
 		e1:SetOperation(s.spop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end

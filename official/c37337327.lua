@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x43}
+s.listed_series={SET_JUNK}
 function s.matfilter(c,lc,sumtype,tp)
 	return c:IsType(TYPE_EFFECT,lc,sumtype,tp) and c:IsRace(RACE_WARRIOR+RACE_MACHINE,lc,sumtype,tp)
 end
@@ -39,7 +39,7 @@ function s.lcheck(g,lc,sumtype,tp)
 end
 function s.sccon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
-	return ph==PHASE_MAIN1 or (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE) or ph==PHASE_MAIN2
+	return ph==PHASE_MAIN1 or (Duel.IsBattlePhase()) or ph==PHASE_MAIN2
 end
 function s.scfilter(c,mg)
 	return c:IsSynchroSummonable(nil,mg)
@@ -65,10 +65,10 @@ end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:GetReasonPlayer()~=tp
-	and c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_LINK)
+	and c:IsPreviousLocation(LOCATION_MZONE) and c:IsLinkSummoned()
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x43) and c:IsType(TYPE_SYNCHRO) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SYNCHRO,tp,false,false)
+	return c:IsSetCard(SET_JUNK) and c:IsType(TYPE_SYNCHRO) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SYNCHRO,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
@@ -82,4 +82,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		g:GetFirst():CompleteProcedure()
 	end
 end
-

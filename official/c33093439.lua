@@ -1,4 +1,5 @@
 --サイバー・エルタニン
+--Cyber Eltanin
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -51,7 +52,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	if Duel.IsPlayerAffectedByEffect(tp,69832741) then
 		g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil)
 	else
-		g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
+		g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil)
 	end
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 	local e1=Effect.CreateEffect(c)

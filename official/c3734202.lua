@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x2a}
+s.listed_series={SET_NATURIA}
 s.listed_names={id}
 function s.cfilter(c,race,ft,tp)
 	return c:IsRace(race) and c:IsAttribute(ATTRIBUTE_EARTH) and (ft>0 or (c:GetSequence()<5 and c:IsControler(tp))) and (c:IsFaceup() or c:IsControler(tp))
@@ -50,7 +50,7 @@ function s.spcost1(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if chk==0 then return Duel.GetFlagEffect(tp,id)==0
 		and Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil,RACE_INSECT,ft,tp) end
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 	local g=Duel.SelectReleaseGroupCost(tp,s.cfilter,1,1,false,nil,nil,RACE_INSECT,ft,tp)
 	Duel.Release(g,REASON_COST)
 end
@@ -76,7 +76,7 @@ function s.spcost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if chk==0 then return Duel.GetFlagEffect(tp,id)==0
 		and Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil,RACE_PLANT,ft,tp) end
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 	local g=Duel.SelectReleaseGroupCost(tp,s.cfilter,1,1,false,nil,nil,RACE_PLANT,ft,tp)
 	Duel.Release(g,REASON_COST)
 end
@@ -95,7 +95,7 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x2a) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_NATURIA) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

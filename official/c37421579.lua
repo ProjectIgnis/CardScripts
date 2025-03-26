@@ -1,4 +1,5 @@
 --炎の騎士 キラー
+--Charubin the Fire Knight
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material

@@ -53,7 +53,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
 	e1:SetValue(s.aclimit)
-	e1:SetReset(RESET_PHASE+PHASE_END,2)
+	e1:SetReset(RESET_PHASE|PHASE_END,2)
 	Duel.RegisterEffect(e1,p)
 	--cannot attack
 	local e2=Effect.CreateEffect(e:GetHandler())
@@ -61,13 +61,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetTargetRange(1,0)
-	e2:SetReset(RESET_PHASE+PHASE_END,2)
+	e2:SetReset(RESET_PHASE|PHASE_END,2)
 	Duel.RegisterEffect(e2,p)
 	--client hint
 	local e3=Effect.CreateEffect(e:GetHandler())
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e3:SetDescription(aux.Stringid(id,2))
-	e3:SetReset(RESET_PHASE+PHASE_END,2)
+	e3:SetReset(RESET_PHASE|PHASE_END,2)
 	e3:SetTargetRange(1,0)
 	Duel.RegisterEffect(e3,p)
 end
@@ -94,6 +94,6 @@ function s.diceop(e,tp,eg,ep,ev,re,r,rp)
 		dc[ac]=7
 		Duel.SetDiceResult(table.unpack(dc))
 		s[0]=cid
-		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 	end
 end

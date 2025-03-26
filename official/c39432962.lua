@@ -16,9 +16,9 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x82}
+s.listed_series={SET_DODODO}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x82) and c:GetCode()~=id
+	return c:IsSetCard(SET_DODODO) and c:GetCode()~=id
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK|POS_FACEDOWN_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -1,4 +1,5 @@
 --縮退回路
+--Degenerate Circuit
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -21,7 +22,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e3:SetRange(LOCATION_SZONE)
-	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e3:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e3:SetCountLimit(1)
 	e3:SetCondition(s.costcon)
 	e3:SetOperation(s.costop)
@@ -31,7 +32,7 @@ function s.rmtg(e,c)
 	return c:IsLocation(LOCATION_MZONE) or (c:GetOriginalType()&TYPE_MONSTER)~=0
 end
 function s.costcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.costop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.CheckLPCost(tp,500) then

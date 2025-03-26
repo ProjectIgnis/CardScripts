@@ -1,4 +1,5 @@
 --インヴェルズの先鋭
+--Steelswarm Sting
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy

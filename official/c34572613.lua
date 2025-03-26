@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x159))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_MYUTANT))
 	e2:SetValue(s.atkval)
 	c:RegisterEffect(e2)
 	--Place 1 card from hand to deck, draw 1
@@ -30,15 +30,15 @@ function s.initial_effect(c)
 	e3:SetOperation(s.drop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x159}
+s.listed_series={SET_MYUTANT}
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x159) and c:GetLevel()<5 and (c:IsFaceup() or c:IsLocation(LOCATION_HAND))
+	return c:IsSetCard(SET_MYUTANT) and c:GetLevel()<5 and (c:IsFaceup() or c:IsLocation(LOCATION_HAND))
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND+LOCATION_REMOVED,0,nil,e,tp)
+	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND|LOCATION_REMOVED,0,nil,e,tp)
 	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=g:Select(tp,1,1,nil)
@@ -46,14 +46,14 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x159)
+	return c:IsFaceup() and c:IsSetCard(SET_MYUTANT)
 end
 function s.atkval(e,c)
 	local g=Duel.GetMatchingGroup(s.atkfilter,e:GetHandlerPlayer(),LOCATION_REMOVED,0,nil)
 	return g:GetClassCount(Card.GetCode)*100
 end
 function s.drfilter(c)
-	return c:IsSetCard(0x159) and c:IsMonster() and c:IsAbleToDeck()
+	return c:IsSetCard(SET_MYUTANT) and c:IsMonster() and c:IsAbleToDeck()
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) 

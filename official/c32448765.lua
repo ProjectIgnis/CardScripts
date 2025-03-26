@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0xfb),2,2)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_TRICKSTAR),2,2)
 	c:EnableReviveLimit()
 	--damage
 	local e1=Effect.CreateEffect(c)
@@ -39,9 +39,9 @@ function s.initial_effect(c)
 	e5:SetOperation(s.atkop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0xfb}
+s.listed_series={SET_TRICKSTAR}
 function s.cfilter(c,g)
-	return c:IsSetCard(0xfb) and g:IsContains(c)
+	return c:IsSetCard(SET_TRICKSTAR) and g:IsContains(c)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local lg=e:GetHandler():GetLinkedGroup()
@@ -52,10 +52,10 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(1-tp,200,REASON_EFFECT)
 end
 function s.indtg(e,c)
-	return c:IsSetCard(0xfb) and e:GetHandler():GetLinkedGroup():IsContains(c)
+	return c:IsSetCard(SET_TRICKSTAR) and e:GetHandler():GetLinkedGroup():IsContains(c)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and (r&REASON_EFFECT)~=0 and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0xfb)
+	return ep~=tp and (r&REASON_EFFECT)~=0 and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(SET_TRICKSTAR)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -64,7 +64,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(ev)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end

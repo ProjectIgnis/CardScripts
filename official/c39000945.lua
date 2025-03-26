@@ -3,7 +3,7 @@
 --scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	c:EnableCounterPermit(COUNTER_SPELL,LOCATION_PZONE+LOCATION_MZONE)
+	c:EnableCounterPermit(COUNTER_SPELL,LOCATION_PZONE|LOCATION_MZONE)
 	c:SetSPSummonOnce(id)
 	Pendulum.AddProcedure(c)
 	--Special Summon itself and from the hand
@@ -59,7 +59,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e6)
 end
 s.counter_place_list={COUNTER_SPELL}
-s.listed_series={0x12a}
+s.listed_series={SET_ENDYMION}
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,COUNTER_SPELL,3,REASON_COST) end 
 		e:GetHandler():RemoveCounter(tp,COUNTER_SPELL,3,REASON_COST)
@@ -74,7 +74,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil,e,tp)
 		and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) 
 	end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,2,tp,LOCATION_PZONE+LOCATION_HAND)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,2,tp,LOCATION_PZONE|LOCATION_HAND)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -140,7 +140,7 @@ function s.srcon(e,tp,eg,ep,ev,re,r,rp)
 	return ct>0 and c:IsReason(REASON_BATTLE)
 end
 function s.srfilter(c)
-	return c:IsAbleToHand() and c:IsSetCard(0x12a)
+	return c:IsAbleToHand() and c:IsSetCard(SET_ENDYMION)
 end
 function s.srtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

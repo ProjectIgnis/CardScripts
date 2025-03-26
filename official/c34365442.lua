@@ -1,5 +1,5 @@
 --Ｅｖｉｌ★Ｔｗｉｎ イージーゲーム
---Evil★Twin Easy Game
+--Evil★Twin GG EZ
 --Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -37,13 +37,13 @@ function s.initial_effect(c)
 	e2:SetOperation(s.negop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x153,0x154}
+s.listed_series={SET_KI_SIKIL,SET_LIL_LA}
 function s.cfilter(c,tp)
-	return (c:IsSetCard(0x153) or c:IsSetCard(0x154)) and c:GetBaseAttack()>0
+	return (c:IsSetCard(SET_KI_SIKIL) or c:IsSetCard(SET_LIL_LA)) and c:GetBaseAttack()>0
 		and Duel.IsExistingTarget(s.atktgfilter,tp,LOCATION_MZONE,0,1,c)
 end
 function s.atktgfilter(c)
-	return c:IsFaceup() and (c:IsSetCard(0x153) or c:IsSetCard(0x154))
+	return c:IsFaceup() and (c:IsSetCard(SET_KI_SIKIL) or c:IsSetCard(SET_LIL_LA))
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp)
 	e:SetLabel(1)
@@ -70,7 +70,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(e:GetLabel())
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end
@@ -82,7 +82,7 @@ function s.negcond(e,tp,eg,ep,ev,re,r,rp)
 	return ex and tg~=nil and tc+tg:FilterCount(Card.IsOnField,nil)-#tg>0
 end
 function s.cfilter2(c,tp)
-	return (c:IsSetCard(0x153) or c:IsSetCard(0x154)) and c:IsMonster()
+	return (c:IsSetCard(SET_KI_SIKIL) or c:IsSetCard(SET_LIL_LA)) and c:IsMonster()
 end
 function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.cfilter2,1,false,nil,nil) end

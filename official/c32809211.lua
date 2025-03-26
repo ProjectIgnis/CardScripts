@@ -1,4 +1,5 @@
 --人造人間7号
+--Jinzo #7
 local s,id=GetID()
 function s.initial_effect(c)
 	--direct attack

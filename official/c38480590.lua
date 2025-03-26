@@ -1,4 +1,5 @@
 --女豹の傭兵
+--Lady Panther
 local s,id=GetID()
 function s.initial_effect(c)
 	--to deck

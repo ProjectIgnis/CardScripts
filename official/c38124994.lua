@@ -1,4 +1,5 @@
 --ファーニマル・ラビット
+--Fluffal Rabbit
 local s,id=GetID()
 function s.initial_effect(c)
 	--tohand
@@ -14,13 +15,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xa9}
+s.listed_series={SET_FLUFFAL}
 s.listed_names={30068120}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE) and r==REASON_FUSION
 end
 function s.filter(c)
-	return (c:IsCode(30068120) or (c:IsSetCard(0xa9) and c:IsMonster() and not c:IsCode(id)))
+	return (c:IsCode(30068120) or (c:IsSetCard(SET_FLUFFAL) and c:IsMonster() and not c:IsCode(id)))
 		and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

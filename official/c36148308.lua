@@ -1,5 +1,5 @@
 --命の奇跡
---Life Exstream
+--Life Extreme
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -40,7 +40,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xc2}
+s.listed_series={SET_POWER_TOOL}
 s.listed_names={25165047}
 function s.eqfilter(c)
 	return c:IsType(TYPE_SYNCHRO) and c:IsAttribute(ATTRIBUTE_EARTH)
@@ -76,7 +76,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.costfilter(c,e,tp)
-	return c:IsSetCard(0xc2) and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c)
+	return c:IsSetCard(SET_POWER_TOOL) and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c)
 end
 function s.spfilter(c,e,tp,mc)
 	return Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and c:IsCode(25165047)

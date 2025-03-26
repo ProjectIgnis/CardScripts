@@ -1,4 +1,5 @@
 --偽物のわな
+--Fake Trap
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -29,7 +30,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local reg=tg:Filter(s.cfilter,e:GetHandler(),tp)
 	local tc=reg:GetFirst()
 	for tc in aux.Next(reg) do
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_CHAIN,0,1)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_CHAIN,0,1)
 	end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -42,7 +43,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetValue(s.repvalue)
 	e1:SetOperation(s.repop)
 	e1:SetLabelObject(re)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e1)
 end
 function s.repfilter(c)

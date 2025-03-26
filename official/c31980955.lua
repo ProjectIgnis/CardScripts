@@ -1,4 +1,5 @@
 --スローライフ
+--Quiet Life
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

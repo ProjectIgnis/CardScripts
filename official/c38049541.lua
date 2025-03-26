@@ -1,5 +1,5 @@
 --Ａ・ジェネクス・ケミストリ
---Genex Ally Chemister
+--Genex Ally Chemistrer
 local s,id=GetID()
 function s.initial_effect(c)
 	--Change the Attribute of 1 "Genex" monster you control

@@ -1,4 +1,5 @@
 --伝説のフィッシャーマン
+--The Legendary Fisherman
 local s,id=GetID()
 function s.initial_effect(c)
 	--immune spell

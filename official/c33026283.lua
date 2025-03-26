@@ -1,11 +1,11 @@
 --双天将 金剛
---Kongou, Heavenly General of the Souten
+--Dual Avatar - Empowered Kon-Gyo
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
 	--Fusion summon procedure
 	c:EnableReviveLimit()
-	Fusion.AddProcMixN(c,true,true,85360035,1,aux.FilterBoolFunctionEx(Card.IsSetCard,0x14e),2)
+	Fusion.AddProcMixN(c,true,true,85360035,1,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_DUAL_AVATAR),2)
 	--Activation limit
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -40,8 +40,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.disop)
 	c:RegisterEffect(e3)
 end
-s.material_setcode={0x14e}
-s.listed_series={0x14e}
+s.material_setcode={SET_DUAL_AVATAR}
+s.listed_series={SET_DUAL_AVATAR}
 function s.actcon(e)
 	return Duel.GetAttacker()==e:GetHandler() or Duel.GetAttackTarget()==e:GetHandler()
 end

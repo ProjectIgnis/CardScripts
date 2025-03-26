@@ -1,4 +1,5 @@
 --工作列車シグナル・レッド
+--Construction Train Signal Red
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -32,7 +33,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e1:SetValue(1)
-			e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+			e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
 			c:RegisterEffect(e1)
 			Duel.CalculateDamage(a,c)
 		end

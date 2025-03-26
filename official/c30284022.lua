@@ -1,9 +1,9 @@
--- 暗黒界の傀儡
--- Dark World Puppet
--- Scripted by Hatter
+--暗黒界の傀儡
+--Dark World Puppetry
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Banish up to 3 cards
+	--Banish up to 3 cards
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_REMOVE+CATEGORY_HANDES)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.rmtg)
 	e1:SetOperation(s.rmop)
 	c:RegisterEffect(e1)
-	-- Add 1 banished Fiend monster to the hand
+	--Add 1 banished Fiend monster to the hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND)
@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCondition(aux.exccon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
@@ -34,7 +34,7 @@ function s.tgfilter(c)
 	return c:IsRace(RACE_FIEND) and c:IsDiscardable(REASON_EFFECT)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local loc=LOCATION_GRAVE+LOCATION_MZONE
+	local loc=LOCATION_GRAVE|LOCATION_MZONE
 	if chkc then return chkc:IsLocation(loc) and s.rmfilter(chkc,tp) end
 	if chk==0 then return Duel.IsExistingTarget(s.rmfilter,tp,loc,loc,1,nil,tp)
 		and Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_HAND,0,1,nil) end

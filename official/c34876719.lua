@@ -1,5 +1,5 @@
 --Ｎ・Ａｓ・Ｈ Ｋｎｉｇｈｔ
---Nafil Asylum Heth Knight
+--N.As.H. Knight
 local s,id=GetID()
 function s.initial_effect(c)
 	--Xyz Summon
@@ -23,21 +23,21 @@ function s.initial_effect(c)
 	e2:SetHintTiming(0,TIMING_MAIN_END+TIMINGS_CHECK_MONSTER)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(s.attcon)
-	e2:SetCost(aux.dxmcostgen(2,2,nil))
+	e2:SetCost(Cost.Detach(2,2,nil))
 	e2:SetTarget(s.atttg)
 	e2:SetOperation(s.attop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x48}
+s.listed_series={SET_NUMBER}
 function s.indcon(e)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x48),0,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_NUMBER),0,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function s.attcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsMainPhase()
 end
 function s.attfilter1(c,e)
 	local no=c.xyz_number
-	return no and no>=101 and no<=107 and c:IsSetCard(0x48) and c:IsType(TYPE_XYZ) and not c:IsImmuneToEffect(e)
+	return no and no>=101 and no<=107 and c:IsSetCard(SET_NUMBER) and c:IsType(TYPE_XYZ) and not c:IsImmuneToEffect(e)
 end
 function s.atttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.attfilter1,tp,LOCATION_EXTRA,0,1,nil,e)

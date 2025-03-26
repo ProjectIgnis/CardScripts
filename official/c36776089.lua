@@ -1,4 +1,5 @@
 --神騎セイントレア
+--Sky Cavalry Centaurea
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon

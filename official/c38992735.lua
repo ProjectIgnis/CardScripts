@@ -1,4 +1,5 @@
 --波動キャノン
+--Wave-Motion Cannon
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -22,7 +23,7 @@ function s.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e3:SetCode(EVENT_PHASE_START+PHASE_STANDBY)
+	e3:SetCode(EVENT_PHASE_START|PHASE_STANDBY)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetOperation(s.turncount)
 	c:RegisterEffect(e3)

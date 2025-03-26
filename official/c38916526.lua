@@ -28,10 +28,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.negop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x114}
+s.listed_series={SET_FUR_HIRE}
 s.listed_names={id}
 function s.ctfilter(c)
-	return not c:IsCode(id) and c:IsFaceup() and c:IsSetCard(0x114)
+	return not c:IsCode(id) and c:IsFaceup() and c:IsSetCard(SET_FUR_HIRE)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -65,7 +65,7 @@ function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 		and ep~=tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x114) and c:IsDiscardable()
+	return c:IsSetCard(SET_FUR_HIRE) and c:IsDiscardable()
 end
 function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end

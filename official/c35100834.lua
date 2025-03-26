@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetHintTiming(0,TIMING_BATTLE_START+TIMING_END_PHASE)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x51}
+s.listed_series={SET_GADGET}
 
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
@@ -22,7 +22,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function s.eqfilter(c)
-	return c:IsLevel(4) and c:IsRace(RACE_MACHINE) and c:IsSetCard(0x51)
+	return c:IsLevel(4) and c:IsRace(RACE_MACHINE) and c:IsSetCard(SET_GADGET)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -37,16 +37,16 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e1:SetValue(s.atkval)
 	c:RegisterEffect(e1)
 	c:AddMonsterAttributeComplete()
-	local g=Duel.GetMatchingGroup(s.eqfilter,tp,LOCATION_DECK+LOCATION_HAND,0,nil)
+	local g=Duel.GetMatchingGroup(s.eqfilter,tp,LOCATION_DECK|LOCATION_HAND,0,nil)
 	if Duel.SpecialSummonComplete()==1 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 		local tc=g:Select(tp,1,1,nil):GetFirst()
-		aux.AddEREquipLimit(c,nil,s.eqval,s.equipop,e,nil,RESET_EVENT+RESETS_STANDARD_DISABLE)
+		aux.AddEREquipLimit(c,nil,s.eqval,s.equipop,e,nil,RESET_EVENT|RESETS_STANDARD_DISABLE)
 		s.equipop(c,e,tp,tc,true)
 	end
 end
@@ -60,11 +60,11 @@ function s.equipop(c,e,tp,tc,chk)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_OWNER_RELATE)
 	e1:SetCode(EFFECT_EQUIP_LIMIT)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e1:SetValue(Card.EquipByEffectLimit)
 	e1:SetLabelObject(e:GetLabelObject())
 	tc:RegisterEffect(e1)
-	tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
+	tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,0)
 end
 function s.idfilter(c)
 	return c:GetFlagEffect(id)~=0

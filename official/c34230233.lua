@@ -23,10 +23,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x6}
+s.listed_series={SET_DARK_WORLD}
 s.listed_names={id}
 function s.spfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x6) and not c:IsCode(id) and c:IsAbleToHandAsCost()
+	return c:IsFaceup() and c:IsSetCard(SET_DARK_WORLD) and not c:IsCode(id) and c:IsAbleToHandAsCost()
 end
 function s.spcon(e,c)
 	if c==nil then return true end

@@ -27,9 +27,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x106}
+s.listed_series={SET_VENDREAD}
 function s.cfilter(c)
-	return c:IsSetCard(0x106) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(SET_VENDREAD) and c:IsAbleToRemoveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,nil) end
@@ -59,7 +59,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetDescription(aux.Stringid(id,5))
 		e1:SetValue(s.aclimit3)
 	end
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.aclimit1(e,re,tp)
@@ -73,14 +73,14 @@ function s.aclimit3(e,re,tp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_RITUAL)
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsRitualSummoned()
 end
 function s.thfilter(c,tp)
 	return c:GetType() & TYPE_RITUAL+TYPE_MONSTER == TYPE_RITUAL+TYPE_MONSTER and c:IsAbleToHand()
 		and Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,c)
 end
 function s.tgfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x106) and c:IsAbleToGrave()
+	return c:IsMonster() and c:IsSetCard(SET_VENDREAD) and c:IsAbleToGrave()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,tp) end

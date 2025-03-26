@@ -1,4 +1,5 @@
 --フォトン・リザード
+--Photon Lizard
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -13,13 +14,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x55}
+s.listed_series={SET_PHOTON}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.filter(c)
-	return c:IsLevelBelow(4) and c:IsSetCard(0x55) and c:IsAbleToHand()
+	return c:IsLevelBelow(4) and c:IsSetCard(SET_PHOTON) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

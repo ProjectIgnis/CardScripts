@@ -22,9 +22,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x604e,0x304e}
+s.listed_series={SET_EVOLSAUR,SET_EVOLTILE}
 function s.tgfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x604e) and c:IsAbleToGrave()
+	return c:IsMonster() and c:IsSetCard(SET_EVOLSAUR) and c:IsAbleToGrave()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -38,7 +38,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x304e) and c:IsCanBeSpecialSummoned(e,156,tp,false,false)
+	return c:IsSetCard(SET_EVOLTILE) and c:IsCanBeSpecialSummoned(e,156,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

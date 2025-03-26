@@ -32,7 +32,7 @@ function s.initial_effect(c)
 end
 s.material={63977008}
 s.listed_names={63977008}
-s.material_setcode=0x1017
+s.material_setcode=SET_SYNCHRON
 function s.matfilter(c,scard,sumtype,tp)
 	return c:IsSummonCode(scard,sumtype,tp,63977008) or c:IsHasEffect(20932152)
 end

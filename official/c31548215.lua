@@ -1,5 +1,5 @@
 --墓穴ホール
---Grave Hole
+--Gravedigger's Trap Hole
 --Scripted by Hel
 local s,id=GetID()
 function s.initial_effect(c)
@@ -31,4 +31,3 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Damage(1-tp,2000,REASON_EFFECT)
 	end
 end
-

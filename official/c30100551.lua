@@ -1,4 +1,5 @@
 --ライトロード・セイント ミネルバ
+--Minerva, the Exalted Lightsworn
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -26,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x38}
+s.listed_series={SET_LIGHTSWORN}
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
@@ -38,7 +39,7 @@ function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,3)
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x38) and c:IsLocation(LOCATION_GRAVE)
+	return c:IsSetCard(SET_LIGHTSWORN) and c:IsLocation(LOCATION_GRAVE)
 end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)

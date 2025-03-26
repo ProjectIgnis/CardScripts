@@ -1,4 +1,5 @@
 --サイバー・オーガ・2
+--Cyber Ogre 2
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetValue(s.atkval)
 	c:RegisterEffect(e1)
 end
-s.material_setcode=0x93
+s.material_setcode=SET_CYBER
 function s.atkcon(e)
 	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL
 		and e:GetHandler()==Duel.GetAttacker() and Duel.GetAttackTarget()~=nil

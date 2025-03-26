@@ -1,4 +1,5 @@
 --ヴォルカニック・チャージ
+--Volcanic Recharge
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,9 +12,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x32}
+s.listed_series={SET_VOLCANIC}
 function s.filter(c)
-	return c:IsSetCard(0x32) and c:IsMonster() and c:IsAbleToDeck()
+	return c:IsSetCard(SET_VOLCANIC) and c:IsMonster() and c:IsAbleToDeck()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc) end

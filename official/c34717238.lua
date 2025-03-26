@@ -1,4 +1,5 @@
 --畳返し
+--Pulling the Rug
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,4 +1,5 @@
 --No.34 電算機獣テラ・バイト
+--Number 34: Terror-Byte
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon

@@ -21,17 +21,17 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e3:SetCode(EFFECT_CHANGE_CODE)
-	e3:SetRange(LOCATION_MZONE+LOCATION_GRAVE)
+	e3:SetRange(LOCATION_MZONE|LOCATION_GRAVE)
 	e3:SetValue(CARD_HARPIE_LADY)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x64}
+s.listed_series={SET_HARPIE}
 s.listed_names={CARD_HARPIE_LADY,CARD_HARPIE_LADY_SISTERS}
 function s.thfilter(c)
 	return c:ListsCode(CARD_HARPIE_LADY_SISTERS) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x64) and c:IsLevelAbove(5)
+	return c:IsFaceup() and c:IsSetCard(SET_HARPIE) and c:IsLevelAbove(5)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -51,4 +51,3 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoHand(sg1,nil,REASON_EFFECT)
 	Duel.ConfirmCards(1-tp,sg1)
 end
-

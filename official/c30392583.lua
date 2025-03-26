@@ -1,4 +1,5 @@
 --聖占術の儀式
+--Prediction Ritual
 local s,id=GetID()
 function s.initial_effect(c)
 	Ritual.AddProcGreaterCode(c,9,nil,94997874)
@@ -8,14 +9,14 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_GRAVE)
 	e1:SetCondition(aux.exccon)
-	e1:SetCost(aux.bfgcost)
+	e1:SetCost(Cost.SelfBanish)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xcc}
+s.listed_series={SET_PREDICTION_PRINCESS}
 function s.thfilter(c)
-	return c:IsSetCard(0xcc) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_PREDICTION_PRINCESS) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

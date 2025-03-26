@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e3:SetValue(aux.ChangeBattleDamage(1,HALF_DAMAGE))
 	c:RegisterEffect(e3)
 	--Fusion Summon
-	local params = {fusfilter=aux.FilterBoolFunction(Card.IsSetCard,0xbb),extrafil=s.fextra,extratg=s.extratg}
+	local params = {fusfilter=aux.FilterBoolFunction(Card.IsSetCard,SET_INFERNOID),extrafil=s.fextra,extratg=s.extratg}
 	local e4=Effect.CreateEffect(c)
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e4:SetType(EFFECT_TYPE_IGNITION)
@@ -36,12 +36,12 @@ function s.initial_effect(c)
 	e4:SetOperation(Fusion.SummonEffOP(params))
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xbb}
+s.listed_series={SET_INFERNOID}
 function s.lvtg(e,c)
-	return c:IsSetCard(0xbb) and c:GetOriginalLevel()>=2
+	return c:IsSetCard(SET_INFERNOID) and c:GetOriginalLevel()>=2
 end
 function s.rdtg(e,c)
-	return c:IsSetCard(0xbb) and c:GetOriginalLevel()>=2
+	return c:IsSetCard(SET_INFERNOID) and c:GetOriginalLevel()>=2
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end

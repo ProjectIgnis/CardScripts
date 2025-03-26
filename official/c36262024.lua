@@ -1,4 +1,5 @@
 --黒竜の雛
+--Black Dragon's Chick
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon

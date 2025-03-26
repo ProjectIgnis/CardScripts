@@ -1,4 +1,5 @@
 --ブランチ
+--Branch!
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -21,7 +22,7 @@ function s.initial_effect(c)
 end
 function s.filter(c)
 	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsReason(REASON_DESTROY) and c:IsType(TYPE_FUSION)
-		and c:IsSummonType(SUMMON_TYPE_FUSION)
+		and c:IsFusionSummoned()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp,chk)
 	return eg:IsExists(s.filter,1,nil)

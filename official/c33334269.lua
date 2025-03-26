@@ -1,4 +1,5 @@
 --DDゴースト
+--D/D Ghost
 local s,id=GetID()
 function s.initial_effect(c)
 	--to grave
@@ -22,10 +23,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.rtgop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xaf,0xae}
+s.listed_series={SET_DD,SET_DARK_CONTRACT}
 s.listed_names={id}
 function s.tgfilter1(c,tp)
-	return ((c:IsSetCard(0xaf) and c:IsMonster() and not c:IsCode(id)) or c:IsSetCard(0xae))
+	return ((c:IsSetCard(SET_DD) and c:IsMonster() and not c:IsCode(id)) or c:IsSetCard(SET_DARK_CONTRACT))
 		and Duel.IsExistingMatchingCard(s.tgfilter2,tp,LOCATION_DECK,0,1,nil,c:GetCode())
 end
 function s.tgfilter2(c,cd)
@@ -50,7 +51,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rtgfilter(c)
-	return c:IsFaceup() and ((c:IsSetCard(0xaf) and c:IsMonster() and not c:IsCode(id)) or c:IsSetCard(0xae))
+	return c:IsFaceup() and ((c:IsSetCard(SET_DD) and c:IsMonster() and not c:IsCode(id)) or c:IsSetCard(SET_DARK_CONTRACT))
 end
 function s.rtgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and s.rtgfilter(chkc) end

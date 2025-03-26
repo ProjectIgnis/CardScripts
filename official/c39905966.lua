@@ -1,4 +1,5 @@
 --リチュア・マーカー
+--Gishki Marker
 local s,id=GetID()
 function s.initial_effect(c)
 	--salvage
@@ -18,9 +19,9 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x3a}
+s.listed_series={SET_GISHKI}
 function s.filter(c)
-	return c:IsSetCard(0x3a) and c:IsType(TYPE_RITUAL) and c:IsAbleToHand()
+	return c:IsSetCard(SET_GISHKI) and c:IsType(TYPE_RITUAL) and c:IsAbleToHand()
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end

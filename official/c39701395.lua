@@ -1,4 +1,5 @@
 --調和の宝札
+--Cards of Consonance
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

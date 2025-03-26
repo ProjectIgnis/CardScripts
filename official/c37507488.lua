@@ -1,4 +1,5 @@
 --モンスターレリーフ
+--Relieve Monster
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==1-tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.filter(c,ft)
 	return c:IsAbleToHand() and (ft>0 or c:GetSequence()<5)

@@ -1,4 +1,5 @@
 --ボーンクラッシャー
+--Bone Crusher
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
@@ -50,7 +51,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTarget(s.sdtg)
 	e1:SetOperation(s.sdop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	e:GetHandler():RegisterEffect(e1)
 end
 function s.sdtg(e,tp,eg,ep,ev,re,r,rp,chk)

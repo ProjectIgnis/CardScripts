@@ -1,4 +1,5 @@
 --聖騎士ベディヴィエール
+--Noble Knight Bedwyr
 local s,id=GetID()
 function s.initial_effect(c)
 	--send to grave
@@ -26,9 +27,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.eqop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x207a}
+s.listed_series={SET_NOBLE_ARMS}
 function s.filter(c)
-	return c:IsType(TYPE_EQUIP) and c:IsSetCard(0x207a) and c:IsAbleToGrave()
+	return c:IsType(TYPE_EQUIP) and c:IsSetCard(SET_NOBLE_ARMS) and c:IsAbleToGrave()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
@@ -42,7 +43,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.eqfilter1(c)
-	return c:IsSetCard(0x207a) and c:GetEquipTarget()
+	return c:IsSetCard(SET_NOBLE_ARMS) and c:GetEquipTarget()
 		and Duel.IsExistingTarget(s.eqfilter2,0,LOCATION_MZONE,LOCATION_MZONE,1,c:GetEquipTarget(),c)
 end
 function s.eqfilter2(c,ec)

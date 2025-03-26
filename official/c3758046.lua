@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(function() return Duel.IsAbleToEnterBP() or Duel.IsBattlePhase() end)
-	e1:SetCost(aux.dxmcostgen(1,1,nil))
+	e1:SetCost(Cost.Detach(1,1,nil))
 	e1:SetTarget(s.regtg)
 	e1:SetOperation(s.regop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xae}
+s.listed_series={SET_DARK_CONTRACT}
 function s.regtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,PLAYER_ALL,LOCATION_GRAVE)
@@ -40,11 +40,11 @@ end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e1:SetCode(EVENT_PHASE|PHASE_BATTLE)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.spcon)
 	e1:SetOperation(s.spop)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.spfilter(c,e,tp,turn)
@@ -69,11 +69,11 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		--Take 1000 damage for each monster Special Summoned by this effect
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
+		e1:SetCode(EVENT_PHASE|PHASE_STANDBY)
 		e1:SetCountLimit(1)
 		e1:SetLabel(ct)
 		e1:SetOperation(s.damop)
-		e1:SetReset(RESET_PHASE+PHASE_STANDBY)
+		e1:SetReset(RESET_PHASE|PHASE_STANDBY)
 		Duel.RegisterEffect(e1,tp)
 	end
 end
@@ -81,7 +81,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(tp,e:GetLabel()*1000,REASON_EFFECT)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xae) and c:IsAbleToHand()
+	return c:IsSetCard(SET_DARK_CONTRACT) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

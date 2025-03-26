@@ -41,7 +41,7 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFlagEffect(tp,id)==0 and Duel.SelectEffectYesNo(tp,e:GetHandler()) then
-		Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 		Duel.Hint(HINT_CARD,0,id)
 		Duel.NegateEffect(ev)
 	end

@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.target)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x107f,0x107e}
+s.listed_series={SET_UTOPIA,SET_ZW}
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return Duel.GetFlagEffect(tp,id)==0 and Duel.GetCurrentPhase()==PHASE_DRAW and c:IsReason(REASON_RULE)
@@ -30,9 +30,9 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_PUBLIC)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_MAIN1)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_MAIN1)
 		c:RegisterEffect(e1)
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_MAIN1,EFFECT_FLAG_CLIENT_HINT,1,0,66)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_MAIN1,EFFECT_FLAG_CLIENT_HINT,1,0,66)
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
@@ -42,18 +42,18 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetFlagEffect(id)~=0 end
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(0x107f)
+	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(SET_UTOPIA)
 end
 function s.filter2(c,e,tp)
 	return s.filter(c) and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c)
 end
 function s.spfilter(c,e,tp,mc)
 	if c.rum_limit and not c.rum_limit(mc,e) then return false end
-	return c:IsSetCard(0x107f) and not c:IsCode(mc:GetCode()) and mc:IsCanBeXyzMaterial(c,tp)
+	return c:IsSetCard(SET_UTOPIA) and not c:IsCode(mc:GetCode()) and mc:IsCanBeXyzMaterial(c,tp)
 		and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,true,false)
 end
 function s.eqfilter(c,tp)
-	return c:IsSetCard(0x107e) and c:IsMonster() and c:CheckUniqueOnField(tp) and not c:IsForbidden()
+	return c:IsSetCard(SET_ZW) and c:IsMonster() and c:CheckUniqueOnField(tp) and not c:IsForbidden()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then
@@ -62,7 +62,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		else return b and s.filter2(chkc,e,tp) end
 	end
 	local ct=Duel.GetLocationCount(tp,LOCATION_SZONE)
-	local b1=Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil) and Duel.IsExistingMatchingCard(s.eqfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,nil,tp) and (ct>1 or (ct>0 and not e:GetHandler():IsLocation(LOCATION_HAND)))
+	local b1=Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil) and Duel.IsExistingMatchingCard(s.eqfilter,tp,LOCATION_DECK|LOCATION_EXTRA,0,1,nil,tp) and (ct>1 or (ct>0 and not e:GetHandler():IsLocation(LOCATION_HAND)))
 	local b2=Duel.IsExistingTarget(s.filter2,tp,LOCATION_MZONE,0,1,nil,e,tp)
 	if chk==0 then return b1 or b2 end
 	local op=0
@@ -87,7 +87,7 @@ end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
-	local g=Duel.GetMatchingGroup(s.eqfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,nil,tp)
+	local g=Duel.GetMatchingGroup(s.eqfilter,tp,LOCATION_DECK|LOCATION_EXTRA,0,nil,tp)
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) and #g>0 and ft>0 then
 		local sg=aux.SelectUnselectGroup(g,e,tp,1,ft,aux.dncheck,1,tp,HINTMSG_EQUIP)
 		local sc=sg:GetFirst()
@@ -97,7 +97,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_EQUIP_LIMIT)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			e1:SetValue(s.eqlimit)
 			e1:SetLabelObject(tc)
 			sc:RegisterEffect(e1)

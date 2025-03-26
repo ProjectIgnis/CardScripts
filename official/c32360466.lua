@@ -12,12 +12,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x10cf,0xbd}
+s.listed_series={SET_BLACK_LUSTER_SOLDIER,SET_GAIA_THE_FIERCE_KNIGHT}
 function s.filter1(c)
 	return c:IsRace(RACE_WARRIOR) and c:IsAbleToHand()
 end
 function s.filter2(c)
-	return c:IsSetCard(0x10cf) or c:IsSetCard(0xbd)
+	return c:IsSetCard(SET_BLACK_LUSTER_SOLDIER) or c:IsSetCard(SET_GAIA_THE_FIERCE_KNIGHT)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.filter1,tp,LOCATION_DECK,0,nil)

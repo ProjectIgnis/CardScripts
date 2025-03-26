@@ -1,5 +1,5 @@
 --グランドレミコード・ミューゼシア
---Grandoremichord Musesea
+--GranSolfachord Musecia
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x164}
+s.listed_series={SET_SOLFACHORD}
 function s.xthfilter1(c,tp)
 	return c:IsType(TYPE_PENDULUM) and not c:IsForbidden()
 		and Duel.IsExistingMatchingCard(s.xthfilter2,tp,LOCATION_EXTRA,0,1,c,c)
@@ -52,12 +52,12 @@ function s.xthop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter1(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x164) and c:IsSummonPlayer(tp)
-		and c:IsSummonType(SUMMON_TYPE_PENDULUM) and c:IsCanBeEffectTarget(e)
+	return c:IsFaceup() and c:IsSetCard(SET_SOLFACHORD) and c:IsSummonPlayer(tp)
+		and c:IsPendulumSummoned() and c:IsCanBeEffectTarget(e)
 		and Duel.IsExistingMatchingCard(s.thfilter2,tp,LOCATION_DECK,0,1,nil,c:GetScale())
 end
 function s.thfilter2(c,lv)
-	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(0x164) and c:IsLevel(lv) and c:IsAbleToHand()
+	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(SET_SOLFACHORD) and c:IsLevel(lv) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(s.thfilter1,1,nil,e,tp) end

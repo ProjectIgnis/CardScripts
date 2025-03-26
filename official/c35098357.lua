@@ -1,5 +1,5 @@
 --ウィッチクラフト・コンフュージョン
---Witchcrafter Confusion
+--Witchcrafter Confusion Confession
 --Logical Nonsense
 
 --Substitute ID
@@ -24,20 +24,20 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 	--Lists "Witchcrafter" archetype
-s.listed_series={0x128}
+s.listed_series={SET_WITCHCRAFTER}
 
 function s.mfilter(c)
-	return (c:IsLocation(LOCATION_HAND+LOCATION_MZONE) and c:IsAbleToGrave())
+	return (c:IsLocation(LOCATION_HAND|LOCATION_MZONE) and c:IsAbleToGrave())
 end
 function s.checkmat(tp,sg,fc)
-	return sg:IsExists(Card.IsSetCard,1,nil,0x128)
+	return sg:IsExists(Card.IsSetCard,1,nil,SET_WITCHCRAFTER)
 end
 function s.fextra(e,tp,mg)
-	return Duel.GetMatchingGroup(s.mfilter,tp,LOCATION_ONFIELD+LOCATION_HAND,0,nil),s.checkmat
+	return Duel.GetMatchingGroup(s.mfilter,tp,LOCATION_ONFIELD|LOCATION_HAND,0,nil),s.checkmat
 end
 	--Check for face-up "Witchcrafter" monster and if it's your End Phase
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x128),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_WITCHCRAFTER),tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsTurnPlayer(tp)
 end
 	--Activation legality

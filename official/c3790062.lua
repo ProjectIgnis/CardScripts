@@ -1,4 +1,5 @@
 --No.65 裁断魔人ジャッジ・バスター
+--Number 65: Djinn Buster
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon

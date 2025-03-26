@@ -1,4 +1,5 @@
 --スーパービークロイド－ジャンボドリル
+--Super Vehicroid Jumbo Drill
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -10,4 +11,4 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_PIERCE)
 	c:RegisterEffect(e1)
 end
-s.material_setcode=0x16
+s.material_setcode=SET_ROID

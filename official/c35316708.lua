@@ -16,10 +16,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(0,1)
 	e1:SetCode(EFFECT_SKIP_DP)
-	if Duel.GetCurrentPhase()==PHASE_DRAW and Duel.GetTurnPlayer()==1-tp then
-		e1:SetReset(RESET_PHASE+PHASE_DRAW+RESET_OPPO_TURN,2)
+	if Duel.GetCurrentPhase()==PHASE_DRAW and Duel.IsTurnPlayer(1-tp) then
+		e1:SetReset(RESET_PHASE|PHASE_DRAW|RESET_OPPO_TURN),2)
 	else
-		e1:SetReset(RESET_PHASE+PHASE_DRAW+RESET_OPPO_TURN)
+		e1:SetReset(RESET_PHASE|PHASE_DRAW|RESET_OPPO_TURN)
 	end
 	Duel.RegisterEffect(e1,tp)
 end

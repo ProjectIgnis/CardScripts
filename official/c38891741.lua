@@ -1,4 +1,5 @@
 --神の摂理
+--Ultimate Providence
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

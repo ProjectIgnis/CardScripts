@@ -1,4 +1,5 @@
 --コアキメイルの鋼核
+--Iron Core of Koa'ki Meiru
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCode(EVENT_PHASE+PHASE_DRAW)
+	e2:SetCode(EVENT_PHASE|PHASE_DRAW)
 	e2:SetCountLimit(1)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCondition(s.condition2)
@@ -24,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation2)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x1d}
+s.listed_series={SET_KOAKI_MEIRU}
 function s.condition1(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer() and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0
 		and Duel.GetDrawCount(tp)>0
@@ -40,7 +41,7 @@ function s.target1(e,tp,eg,ep,ev,re,r,rp,chk)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e1:SetCode(EFFECT_DRAW_COUNT)
 		e1:SetTargetRange(1,0)
-		e1:SetReset(RESET_PHASE+PHASE_DRAW)
+		e1:SetReset(RESET_PHASE|PHASE_DRAW)
 		e1:SetValue(0)
 		Duel.RegisterEffect(e1,tp)
 	end
@@ -58,7 +59,7 @@ function s.condition2(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer()
 end
 function s.costfilter(c)
-	return c:IsSetCard(0x1d) and c:IsMonster() and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_KOAKI_MEIRU) and c:IsMonster() and c:IsAbleToGraveAsCost()
 end
 function s.cost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end

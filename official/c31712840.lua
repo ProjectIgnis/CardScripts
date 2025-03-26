@@ -1,5 +1,5 @@
 --ゼアル・アライアンス
---ZEXAL Alliance
+--Zexal Alliance
 --Logical Nonsense
 
 --Substitute ID
@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 	--Lists "Utopia" and "Number" archetype
-s.listed_series={0x107f,0x48}
+s.listed_series={SET_UTOPIA,SET_NUMBER}
 
 	--Pay LP until you have 10 left
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -38,7 +38,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for a "Utopia" monster
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x107f) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
+	return c:IsSetCard(SET_UTOPIA) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -64,20 +64,20 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 			e1:SetValue(1)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			sg:RegisterEffect(e1)
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 			e2:SetValue(s.indval)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 			sg:RegisterEffect(e2)
 			--Double its ATK
 			local e3=Effect.CreateEffect(c)
 			e3:SetType(EFFECT_TYPE_SINGLE)
 			e3:SetCode(EFFECT_SET_ATTACK)
 			e3:SetValue(sg:GetTextAttack()*2)
-			e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 			sg:RegisterEffect(e3)
 		end
 		--Choose a card to place on top of deck
@@ -91,5 +91,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.indval(e,c)
-	return not c:IsSetCard(0x48)
+	return not c:IsSetCard(SET_NUMBER)
 end

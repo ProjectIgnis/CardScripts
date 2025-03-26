@@ -1,5 +1,5 @@
 --電脳堺獣－鷲々
---Datascape Beast - Jiujiu
+--Virtual World Beast - Jiujiu
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -50,7 +50,7 @@ function s.gycheck(sg,e,tp)
 		and Duel.IsExistingTarget(Card.IsAbleToGrave,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,sg)
 end
 function s.gycost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(s.gycfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil,tp)
+	local g=Duel.GetMatchingGroup(s.gycfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil,tp)
 	if chk==0 then return aux.SelectUnselectGroup(g,e,tp,2,2,s.gycheck,0) end
 	local sg=aux.SelectUnselectGroup(g,e,tp,2,2,s.gycheck,1,tp,HINTMSG_REMOVE)
 	Duel.Remove(sg,POS_FACEUP,REASON_COST)

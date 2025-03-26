@@ -22,12 +22,12 @@ function s.initial_effect(c)
 	e4:SetTarget(s.desreptg)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x2e}
+s.listed_series={SET_GRAVEKEEPERS}
 function s.otfilter(c,tp)
-	return c:IsSetCard(0x2e) and (c:IsControler(tp) or c:IsFaceup())
+	return c:IsSetCard(SET_GRAVEKEEPERS) and (c:IsControler(tp) or c:IsFaceup())
 end
 function s.filter(c)
-	return c:IsSetCard(0x2e) and c:IsMonster()
+	return c:IsSetCard(SET_GRAVEKEEPERS) and c:IsMonster()
 end
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(s.filter,c:GetControler(),LOCATION_GRAVE,0,nil)*200

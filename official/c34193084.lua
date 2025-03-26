@@ -1,4 +1,5 @@
 --闇よりの恐怖
+--Fear from the Dark
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsPreviousLocation(LOCATION_HAND+LOCATION_DECK) and (r&REASON_EFFECT)~=0 and rp~=tp
+	return e:GetHandler():IsPreviousLocation(LOCATION_HAND|LOCATION_DECK) and (r&REASON_EFFECT)~=0 and rp~=tp
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

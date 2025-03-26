@@ -1,4 +1,5 @@
 --カラクリ屋敷
+--Karakuri Trick House
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,11 +13,11 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x11}
+s.listed_series={SET_KARAKURI}
 function s.cfilter(c,tp)
 	local np=c:GetPosition()
 	local pp=c:GetPreviousPosition()
-	return c:IsControler(tp) and c:IsSetCard(0x11) and ((pp==0x1 and np==0x4) or (pp==0x4 and np==0x1))
+	return c:IsControler(tp) and c:IsSetCard(SET_KARAKURI) and ((pp==SET_ALLY_OF_JUSTICE and np==SET_AMAZONESS) or (pp==SET_AMAZONESS and np==SET_ALLY_OF_JUSTICE))
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

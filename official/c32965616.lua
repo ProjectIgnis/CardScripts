@@ -1,4 +1,5 @@
 --精霊神后 ドリアード
+--Elemental Grace Doriado
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

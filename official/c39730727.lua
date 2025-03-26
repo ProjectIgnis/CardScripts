@@ -1,5 +1,5 @@
 --天威無崩の地
---Tenyi Wubeng Stance
+--Flawless Perfection of the Tenyi
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

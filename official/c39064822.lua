@@ -32,7 +32,7 @@ function s.lcheck(g,lc,sumtype,tp)
 end
 function s.sumcon(e,tp,eg,ep,ev,re,r,rp)
 	local tp=e:GetHandlerPlayer()
-	return Duel.GetTurnPlayer()==tp  and e:GetHandler():IsSummonType(SUMMON_TYPE_LINK) 
+	return Duel.IsTurnPlayer(tp)  and e:GetHandler():IsLinkSummoned() 
 	and Duel.IsPlayerCanAdditionalSummon(tp)
 end
 function s.sumcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -65,9 +65,9 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetLabelObject(c)
 	e1:SetCondition(s.sumcon2)
 	e1:SetValue(s.sumval)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 end
 function s.sumcon2(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetLabelObject():IsLocation(LOCATION_MZONE)
@@ -81,4 +81,3 @@ end
 function s.tgtg(e,c)
 	return c:GetMutualLinkedGroupCount()>0
 end
-

@@ -40,7 +40,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.tgop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x144,0x142}
+s.listed_series={SET_GOLDEN_LAND,SET_ELDLICH}
 function s.atktg(e,c)
 	return not c:IsRace(RACE_ZOMBIE)
 end
@@ -49,7 +49,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,800)
 end
 function s.filter(c)
-	return (c:IsSetCard(0x144) and c:IsSpellTrap()) or (c:IsSetCard(0x142) and c:IsMonster())
+	return (c:IsSetCard(SET_GOLDEN_LAND) and c:IsSpellTrap()) or (c:IsSetCard(SET_ELDLICH) and c:IsMonster())
 end
 function s.thfilter(c)
 	return s.filter(c) and c:IsAbleToHand()

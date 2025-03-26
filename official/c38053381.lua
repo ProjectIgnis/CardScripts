@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={38053382}
-s.listed_series={0x134}
+s.listed_series={SET_GENERAIDER}
 function s.cfilter(c,tp)
 	return c:IsControler(tp) and c:IsPreviousLocation(LOCATION_DECK)
 end
@@ -44,7 +44,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,1-tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x134) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(SET_GENERAIDER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -60,10 +60,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tkfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x134) and c:GetSummonPlayer()==tp
+	return c:IsFaceup() and c:IsSetCard(SET_GENERAIDER) and c:GetSummonPlayer()==tp
 end
 function s.tkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and eg:IsExists(s.tkfilter,1,nil,tp)
+	return Duel.IsTurnPlayer(1-tp) and eg:IsExists(s.tkfilter,1,nil,tp)
 end
 function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x134,TYPES_TOKEN,1500,1500,4,RACE_FAIRY,ATTRIBUTE_LIGHT) 
@@ -83,7 +83,7 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 	for i=1,ft do
 		local token=Duel.CreateToken(tp,id+1)
 		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP_ATTACK)
-		token:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
+		token:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1,fid)
 		g:AddCard(token)
 	end
 	Duel.SpecialSummonComplete()

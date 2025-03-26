@@ -1,4 +1,5 @@
 --妖刀－不知火
+--Shiranui Spectralsword
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon

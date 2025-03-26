@@ -1,5 +1,5 @@
 --スターヴ・ヴェノム・プレデター・フュージョン・ドラゴン
---Starving Venom Predator Fusion Dragon
+--Starving Venom Predapower Fusion Dragon
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.counter_list={COUNTER_PREDATOR}
-s.listed_series={0x10f3}
+s.listed_series={SET_PREDAPLANT}
 function s.mfilter(c,sc,st,tp)
 	return c:IsAttribute(ATTRIBUTE_DARK,sc,st,tp) and c:IsType(TYPE_FUSION,sc,st,tp)
 end
@@ -56,7 +56,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_FUSION) and rp==1-tp
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsFusionSummoned() and rp==1-tp
 end
 function s.spfilter(c,e,tp)
 	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

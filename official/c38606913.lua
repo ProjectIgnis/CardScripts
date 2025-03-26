@@ -1,5 +1,5 @@
 --方界縁起
---Cubic Omen
+--Cubic Causality
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -24,15 +24,15 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetHintTiming(0,TIMING_BATTLE_START)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(aux.bfgcost) 
+	e2:SetCost(Cost.SelfBanish) 
 	e2:SetTarget(s.damtg)
 	e2:SetOperation(s.damact)
 	c:RegisterEffect(e2)
 end
 s.counter_place_list={0x1038}
-s.listed_series={0xe3}
+s.listed_series={SET_CUBIC}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xe3)
+	return c:IsFaceup() and c:IsSetCard(SET_CUBIC)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -52,7 +52,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CANNOT_ATTACK)
 			e1:SetCondition(s.condition)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			ac:RegisterEffect(e1)
 			local e2=e1:Clone()
 			e2:SetCode(EFFECT_DISABLE)
@@ -64,7 +64,7 @@ function s.condition(e)
 	return e:GetHandler():GetCounter(0x1038)>0
 end
 function s.tgfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xe3)
+	return c:IsFaceup() and c:IsSetCard(SET_CUBIC)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and s.tgfilter(chkc) end
@@ -81,7 +81,7 @@ function s.damact(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EVENT_LEAVE_FIELD_P)
 		e1:SetOperation(s.shchk)
 		e1:SetLabelObject(tc)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 		local e2=Effect.CreateEffect(c)
 		e2:SetDescription(aux.Stringid(id,2))
@@ -91,9 +91,9 @@ function s.damact(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCondition(s.shcon)
 		e2:SetOperation(s.damop)
 		e2:SetLabelObject(tc)
-		e2:SetReset(RESET_PHASE+PHASE_END)
+		e2:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e2,tp)
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_LEAVE-RESET_TOGRAVE+RESET_PHASE+PHASE_END,0,1)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD-RESET_LEAVE-RESET_TOGRAVE|RESET_PHASE|PHASE_END,0,1)
 		tc:CreateEffectRelation(e1)
 	end
 end

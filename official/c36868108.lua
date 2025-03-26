@@ -1,4 +1,5 @@
 --ガラスの鎧
+--Armored Glass
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -16,7 +17,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_DISABLE)
 	e1:SetTargetRange(LOCATION_SZONE,LOCATION_SZONE)
 	e1:SetTarget(s.distarget)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.distarget(e,c)

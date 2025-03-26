@@ -1,4 +1,5 @@
 --墓守の番兵
+--Gravekeeper's Guard
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip

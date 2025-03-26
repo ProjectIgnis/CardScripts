@@ -1,4 +1,5 @@
 --流星竜メテオ・ブラック・ドラゴン
+--Meteor Black Comet Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -27,26 +28,26 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.material_setcode=0x3b
+s.material_setcode=SET_RED_EYES
 function s.mfilter1(c,fc,sumtype,tp)
-	return c:IsSetCard(0x3b,fc,sumtype,tp) and c:GetLevel()==7
+	return c:IsSetCard(SET_RED_EYES,fc,sumtype,tp) and c:GetLevel()==7
 end
 function s.mfilter2(c,fc,sumtype,tp)
 	return c:IsRace(RACE_DRAGON,fc,sumtype,tp) and c:GetLevel()==6
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
+	return e:GetHandler():IsFusionSummoned()
 end
 function s.damfilter(c,fc,tp)
-	return c:IsSetCard(0x3b,fc,SUMMON_TYPE_FUSION,tp) and c:GetBaseAttack()>0 and c:IsAbleToGrave()
+	return c:IsSetCard(SET_RED_EYES,fc,SUMMON_TYPE_FUSION,tp) and c:GetBaseAttack()>0 and c:IsAbleToGrave()
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.damfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e:GetHandler(),tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.damfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,nil,e:GetHandler(),tp) end
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,0)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.damfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e:GetHandler(),tp)
+	local g=Duel.SelectMatchingCard(tp,s.damfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,1,nil,e:GetHandler(),tp)
 	local tc=g:GetFirst()
 	if #g>0 and Duel.SendtoGrave(g,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_GRAVE) then
 		Duel.Damage(1-tp,math.ceil(g:GetFirst():GetBaseAttack()/2),REASON_EFFECT)

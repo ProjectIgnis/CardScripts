@@ -1,4 +1,5 @@
 --ガスタの疾風 リーズ
+--Reeze, Whirlwind of Gusto
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x10}
+s.listed_series={SET_GUSTO}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToDeckAsCost,tp,LOCATION_HAND,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
@@ -22,7 +23,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoDeck(g,nil,1,REASON_COST)
 end
 function s.filter1(c)
-	return c:IsFaceup() and c:IsSetCard(0x10) and c:IsAbleToChangeControler()
+	return c:IsFaceup() and c:IsSetCard(SET_GUSTO) and c:IsAbleToChangeControler()
 end
 function s.filter2(c)
 	return c:IsAbleToChangeControler()

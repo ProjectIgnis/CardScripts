@@ -24,7 +24,7 @@ function s.filter2(c,tp,tc)
 		and Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,tg)
 end
 function s.desfilter(c,tg)
-	return not tg:IsContains(c) and c:IsSummonType(SUMMON_TYPE_SPECIAL)
+	return not tg:IsContains(c) and c:IsSpecialSummoned()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

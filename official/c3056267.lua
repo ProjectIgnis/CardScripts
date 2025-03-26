@@ -1,4 +1,5 @@
 --王座の侵略者
+--Invader of the Throne
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip
@@ -17,7 +18,7 @@ function s.swapfilter(c)
 end
 function s.condition(e)
 	local ph=Duel.GetCurrentPhase()
-	return not (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE)
+	return not (Duel.IsBattlePhase())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

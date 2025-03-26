@@ -1,9 +1,9 @@
--- ＸＸクルージョン
--- Cross X-Clusion
--- Scripted by Hatter
+--ＸＸクルージョン
+--XX-clusion
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Negate activation
+	--Negate activation
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_HANDES)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)

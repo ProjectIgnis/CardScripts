@@ -26,9 +26,9 @@ function s.initial_effect(c)
 	e2:SetValue(LOCATION_REMOVED)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x5a}
+s.listed_series={SET_PENGUIN}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:GetHandler():IsSetCard(0x5a) and re:IsActiveType(TYPE_MONSTER)
+	return re:GetHandler():IsSetCard(SET_PENGUIN) and re:IsActiveType(TYPE_MONSTER)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -40,5 +40,5 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rmtg(e,c)
-	return c:IsReason(REASON_EFFECT) and c:GetReasonEffect() and c:GetReasonEffect():GetHandler():IsSetCard(0x5a)
+	return c:IsReason(REASON_EFFECT) and c:GetReasonEffect() and c:GetReasonEffect():GetHandler():IsSetCard(SET_PENGUIN)
 end

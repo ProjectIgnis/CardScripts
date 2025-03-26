@@ -13,9 +13,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x84}
+s.listed_series={SET_BATTLIN_BOXER}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x84) and c:IsType(TYPE_XYZ)
+	return c:IsFaceup() and c:IsSetCard(SET_BATTLIN_BOXER) and c:IsType(TYPE_XYZ)
 		and c:GetOverlayCount()>0
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

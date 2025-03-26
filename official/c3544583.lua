@@ -1,5 +1,5 @@
 --無の畢竟 オールヴェイン
---Allvain, the Final Nothingness
+--Allvain the Essence of Vanity
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

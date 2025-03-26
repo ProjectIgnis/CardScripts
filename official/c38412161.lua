@@ -1,5 +1,5 @@
 --霊塞術師 チョウサイ
---Chosai the Ghost Blocker
+--Chow Sai the Ghost Stopper
 --scripted by Xylen5967
 local s,id=GetID()
 function s.initial_effect(c)

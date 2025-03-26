@@ -1,4 +1,5 @@
 --暗黒界の尖兵 ベージ
+--Beiige, Vanguard of Dark World
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon

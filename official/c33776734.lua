@@ -53,7 +53,7 @@ s.LVnum=9
 s.LVset=0x10a4
 function s.checkop1(e,tp,eg,ep,ev,re,r,rp)
 	if re and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) then
-		re:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+		re:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 	end
 end
 function s.checkop2(e,tp,eg,ep,ev,re,r,rp)

@@ -1,4 +1,5 @@
 --暗黒界の軍神 シルバ
+--Sillva, Warlord of Dark World
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon

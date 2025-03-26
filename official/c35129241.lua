@@ -31,12 +31,12 @@ function s.initial_effect(c)
 	e3:SetValue(1)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xa3}
+s.listed_series={SET_STARDUST}
 function s.filter(c,e,tp,re)
 	local re=c:GetReasonEffect()
 	if not re then return false end
 	local rc=re:GetHandler()
-	return c:IsSetCard(0xa3) and c:IsType(TYPE_SYNCHRO) and c:IsPreviousControler(tp)
+	return c:IsSetCard(SET_STARDUST) and c:IsType(TYPE_SYNCHRO) and c:IsPreviousControler(tp)
 		and c:IsReason(REASON_COST) and rc==c
 		and c:IsCanBeEffectTarget(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -57,7 +57,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if e:GetHandler():IsRelateToEffect(e) and tc and tc:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP) then
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,2))
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,2))
 	end
 end
 function s.intg(e,c)

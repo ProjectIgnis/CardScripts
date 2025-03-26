@@ -1,4 +1,5 @@
 --竜の騎士
+--Dragonic Knight
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon

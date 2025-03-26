@@ -1,4 +1,5 @@
 --幸運の鉄斧
+--Lucky Iron Axe
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c)

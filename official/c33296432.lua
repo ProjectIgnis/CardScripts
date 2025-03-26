@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 	--Lists "Dogmatika" archetype
-s.listed_series={0x146}
+s.listed_series={SET_DOGMATIKA}
 	--Specifically lists itself
 s.listed_names={id}
 	--If special summoned from extra deck
@@ -65,7 +65,7 @@ function s.indval(e,c)
 end
 	--Check for "Dogmatika" monster (except for this card's name)
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x146) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_DOGMATIKA) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 	--If destroyed by battle or card effect while on the field
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)

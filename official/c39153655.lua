@@ -1,4 +1,5 @@
 --DDケルベロス
+--D/D Cerberus
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -24,11 +25,11 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xaf}
+s.listed_series={SET_DD}
 s.listed_names={id}
 function s.filter(c)
 	local lv=c:GetLevel()
-	return c:IsFaceup() and c:IsSetCard(0xaf) and lv>0 and lv~=4
+	return c:IsFaceup() and c:IsSetCard(SET_DD) and lv>0 and lv~=4
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -46,7 +47,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)
 		e1:SetValue(4)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UPDATE_ATTACK)
@@ -58,11 +59,11 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xaf) and not c:IsCode(id)
+	return c:IsFaceup() and c:IsSetCard(SET_DD) and not c:IsCode(id)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_PENDULUM) and c:IsPreviousLocation(LOCATION_HAND)
+	return c:IsPendulumSummoned() and c:IsPreviousLocation(LOCATION_HAND)
 		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.thfilter(c)

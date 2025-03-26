@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x64}
+s.listed_series={SET_HARPIE}
 	--This card lists names in its text
 s.listed_names={CARD_HARPIE_LADY,CARD_HARPIE_LADY_SISTERS}
 	--Check for "Harpie Lady" or "Harpie Sisters"
@@ -36,7 +36,7 @@ function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 	--Check for level 5 or higher "Harpie"
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x64) and c:IsLevelAbove(5)
+	return c:IsFaceup() and c:IsSetCard(SET_HARPIE) and c:IsLevelAbove(5)
 end
 	--Performing the effect of shuffling and drawing
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
@@ -45,7 +45,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoDeck(tg,nil,0,REASON_EFFECT)
 	local g=Duel.GetOperatedGroup()
 	if g:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then Duel.ShuffleDeck(tp) end
-	local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_DECK+LOCATION_EXTRA)
+	local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_DECK|LOCATION_EXTRA)
 	if ct==3 then
 		Duel.BreakEffect()
 		Duel.Draw(tp,e:GetLabel(),REASON_EFFECT)
@@ -59,7 +59,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetDescription(aux.Stringid(id,2))
 		e1:SetTargetRange(1,0)
 		e1:SetTarget(s.splimit)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 	end
 end
@@ -67,4 +67,3 @@ end
 function s.splimit(e,c)
 	return not c:IsAttribute(ATTRIBUTE_WIND)
 end
-

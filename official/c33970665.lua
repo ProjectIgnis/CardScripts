@@ -1,4 +1,5 @@
 --ポンコツの意地
+--Guts of Steel
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,9 +12,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x24}
+s.listed_series={SET_SCRAP}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x24) and c:IsAbleToRemove() 
+	return c:IsSetCard(SET_SCRAP) and c:IsAbleToRemove() 
 		and (c:IsCanBeSpecialSummoned(e,0,tp,false,false) or c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,1-tp))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

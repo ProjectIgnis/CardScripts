@@ -1,4 +1,5 @@
 --暗黒恐獣
+--Black Tyranno
 local s,id=GetID()
 function s.initial_effect(c)
 	--direct attack

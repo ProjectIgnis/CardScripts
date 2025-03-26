@@ -1,4 +1,5 @@
 --異次元の指名者
+--D.D. Designator
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

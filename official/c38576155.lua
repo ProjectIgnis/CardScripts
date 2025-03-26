@@ -20,10 +20,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x122}
+s.listed_series={SET_VALKYRIE}
 s.listed_names={64961254}
 function s.thcfilter(c)
-	return c:IsFacedown() or not c:IsSetCard(0x122)
+	return c:IsFacedown() or not c:IsSetCard(SET_VALKYRIE)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)>0
@@ -55,7 +55,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_SUMMON)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.sumlimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
@@ -65,4 +65,3 @@ end
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp)
 	return not c:IsRace(RACE_FAIRY)
 end
-

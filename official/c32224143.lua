@@ -1,4 +1,5 @@
 --ゴーストリック・サキュバス
+--Ghostrick Socuteboss
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -26,13 +27,13 @@ function s.initial_effect(c)
 	e2:SetValue(aux.imval2)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x8d}
+s.listed_series={SET_GHOSTRICK}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x8d)
+	return c:IsFaceup() and c:IsSetCard(SET_GHOSTRICK)
 end
 function s.filter(c,atk)
 	return c:IsFaceup() and c:IsAttackBelow(atk)

@@ -1,5 +1,5 @@
 --絶対なる幻神獣
---The Absolute Divine Beast
+--Ultimate Divine-Beast
 --Scripted by Larry126
 
 local s,id=GetID()
@@ -53,13 +53,13 @@ function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	return re:GetHandler():IsOnField()
 end
 function s.regop1(e,tp,eg,ep,ev,re,r,rp)
-	re:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	re:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 end
 function s.regop2(e,tp,eg,ep,ev,re,r,rp)
 	local ct=re:GetHandler():GetFlagEffect(id)
 	re:GetHandler():ResetFlagEffect(id)
 	for i=1,ct-1 do
-		re:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		re:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 	end
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)

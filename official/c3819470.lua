@@ -1,4 +1,5 @@
 --盗賊の七つ道具
+--Seven Tools of the Bandit
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

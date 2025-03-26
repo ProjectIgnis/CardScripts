@@ -1,4 +1,5 @@
 --カラクリ商人 壱七七
+--Karakuri Merchant mdl 177 "Inashichi"
 local s,id=GetID()
 function s.initial_effect(c)
 	--must attack
@@ -25,7 +26,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.op)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x11}
+s.listed_series={SET_KARAKURI}
 function s.poscon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsAttackPos()
 end
@@ -36,7 +37,7 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c)
-	return c:IsSetCard(0x11) and c:IsAbleToHand()
+	return c:IsSetCard(SET_KARAKURI) and c:IsAbleToHand()
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

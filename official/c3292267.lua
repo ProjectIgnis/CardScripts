@@ -1,5 +1,5 @@
 --聖刻天龍－エネアード
---Hieratic Heavenly Dragon Overlord of Heliopolis
+--Hieratic Sky Dragon Overlord of Heliopolis
 local s,id=GetID()
 function s.initial_effect(c)
 	--Xyz summon

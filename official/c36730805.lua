@@ -1,4 +1,5 @@
 --スピードリフト
+--Speedlift
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x2016}
+s.listed_series={SET_SPEEDROID}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
 	if #g~=1 then return false end
@@ -19,7 +20,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsFaceup() and c:IsType(TYPE_TUNER)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x2016) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_SPEEDROID) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 	--Lists "Nekroz" archetype
-s.listed_series={0xb4}
+s.listed_series={SET_NEKROZ}
 
 	--Cannot include level 10 monsters for its ritual summon
 function s.mat_filter(c)
@@ -54,11 +54,11 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 	--Check for "Nekroz" monsters to tribute
 function s.filter(c)
-	return c:IsSetCard(0xb4) and c:IsMonster() and c:IsReleasableByEffect()
+	return c:IsSetCard(SET_NEKROZ) and c:IsMonster() and c:IsReleasableByEffect()
 end
 	--Check for "Nekroz" cards to send to GY
 function s.sendfilter(c)
-	return c:IsSetCard(0xb4) and c:IsAbleToGrave()
+	return c:IsSetCard(SET_NEKROZ) and c:IsAbleToGrave()
 end
 	--Activation legality
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)

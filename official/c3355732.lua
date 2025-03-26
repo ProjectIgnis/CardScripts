@@ -1,5 +1,5 @@
 --氷水帝コスモクロア
---Cosmocroix the Icejade Imperatrix
+--Icejade Kosmochlor
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={7142724}
-s.listed_series={0x16e}
+s.listed_series={SET_ICEJADE}
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
@@ -56,5 +56,5 @@ end
 function s.atktg(e,c)
 	local tp=e:GetHandlerPlayer()
 	local bc=c:GetBattleTarget()
-	return c:IsControler(1-tp) and bc and bc:IsSetCard(0x16e) and bc:IsControler(tp)
+	return c:IsControler(1-tp) and bc and bc:IsSetCard(SET_ICEJADE) and bc:IsControler(tp)
 end

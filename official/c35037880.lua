@@ -14,9 +14,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x100d,0xd,0xb0}
+s.listed_series={SET_X_SABER,SET_SABER,SET_GOTTOMS}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x100d)
+	return c:IsFaceup() and c:IsSetCard(SET_X_SABER)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -28,7 +28,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.filter(c)
-	return ((c:IsSetCard(0xd) and c:IsSpellTrap()) or c:IsSetCard(0xb0)) and c:IsAbleToHand()
+	return ((c:IsSetCard(SET_SABER) and c:IsSpellTrap()) or c:IsSetCard(SET_GOTTOMS)) and c:IsAbleToHand()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Recover(tp,ev,REASON_EFFECT,true)

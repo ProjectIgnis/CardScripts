@@ -17,14 +17,14 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x119}
+s.listed_series={SET_SALAMANGREAT}
 s.listed_names={16313112}
 s.fit_monster={16313112}
 function s.ritualfil(c)
-	return c:IsSetCard(0x119) and c:IsRitualMonster()
+	return c:IsSetCard(SET_SALAMANGREAT) and c:IsRitualMonster()
 end
 function s.mfilter(c)
-	return c:HasLevel() and c:IsSetCard(0x119) and c:IsAbleToDeck()
+	return c:HasLevel() and c:IsSetCard(SET_SALAMANGREAT) and c:IsAbleToDeck()
 end
 function s.ckfilter(c,e,tp)
 	return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsLinkMonster()

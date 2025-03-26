@@ -1,9 +1,9 @@
--- ナチュルの春風
--- Naturia Spring Breeze
--- Scripted by Hatter
+--ナチュルの春風
+--Naturia Blessing
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.actop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x2a}
+s.listed_series={SET_NATURIA}
 function s.acttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=s.sptg(e,tp,eg,ep,ev,re,r,rp,0)
 	local b2=s.syntg(e,tp,eg,ep,ev,re,r,rp,0)
@@ -41,23 +41,23 @@ function s.actop(e,tp,eg,ep,ev,re,r,rp,chk)
 	elseif op==3 then s.fusop(e,tp,eg,ep,ev,re,r,rp) end
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x2a) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_NATURIA) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_GRAVE)
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND|LOCATION_GRAVE,0,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_GRAVE)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND|LOCATION_GRAVE,0,1,1,nil,e,tp)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
 function s.syncheck(tp,sg,sc)
-	return sg:IsExists(Card.IsSetCard,1,nil,0x2a)
+	return sg:IsExists(Card.IsSetCard,1,nil,SET_NATURIA)
 end
 function s.syntg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -79,7 +79,7 @@ function s.synop(e,tp,eg,ep,ev,re,r,rp)
 	Synchro.CheckAdditional=nil
 end
 function s.fuscheck(tp,sg,fc)
-	return sg:IsExists(aux.FilterBoolFunction(Card.IsSetCard,0x2a,fc,SUMMON_TYPE_FUSION,tp),1,nil)
+	return sg:IsExists(aux.FilterBoolFunction(Card.IsSetCard,SET_NATURIA,fc,SUMMON_TYPE_FUSION,tp),1,nil)
 end
 function s.fusextra(e,tp,mg)
 	return nil,s.fuscheck

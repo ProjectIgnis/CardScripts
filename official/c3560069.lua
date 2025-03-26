@@ -57,4 +57,3 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(p,d,REASON_EFFECT)
 	e:GetHandler():ResetFlagEffect(511600046)
 end
-

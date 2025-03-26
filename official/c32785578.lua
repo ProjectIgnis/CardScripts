@@ -1,5 +1,5 @@
 --フェアーウェルカム・ラビュリンス
---Fairwelcome Labrynth
+--Farewelcome Labrynth
 --Scripted by Yuno
 local s,id=GetID()
 function s.initial_effect(c)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x17f}
+s.listed_series={SET_LABRYNTH}
 function s.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_FIEND)
 end
@@ -30,13 +30,13 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function s.setfilter(c)
-	return c:GetType()==TYPE_TRAP and not c:IsSetCard(0x17f) and c:IsSSetable()
+	return c:GetType()==TYPE_TRAP and not c:IsSetCard(SET_LABRYNTH) and c:IsSSetable()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not Duel.NegateAttack() or not tc:IsRelateToEffect(e) then return end
 	if Duel.Destroy(tc,REASON_EFFECT)==0 then return end
-	local g=Duel.GetMatchingGroup(s.setfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil)
+	local g=Duel.GetMatchingGroup(s.setfilter,tp,LOCATION_HAND|LOCATION_DECK,0,nil)
 	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 		local sg=g:Select(tp,1,1,nil)

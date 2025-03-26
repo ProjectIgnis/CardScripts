@@ -67,7 +67,7 @@ function s.matop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check if it's opponent's turn
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 	--Detach 1 Xyz material from your field as cost
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -101,7 +101,7 @@ function s.dsop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(eg,REASON_EFFECT)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateAttack() then

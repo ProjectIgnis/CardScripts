@@ -13,7 +13,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return Duel.GetTurnPlayer()~=tp and c:IsPreviousControler(tp)
+	return Duel.IsTurnPlayer(1-tp) and c:IsPreviousControler(tp)
 		and c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)

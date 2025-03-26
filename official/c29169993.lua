@@ -43,7 +43,7 @@ function s.valcon(e,re,r,rp)
 	return (r&REASON_BATTLE)~=0 and e:GetHandler():IsSpecialSummoned()
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.thfilter(c)
 	return c:IsSetCard(SET_PERFORMAPAL) and c:IsLevelBelow(3) and c:IsAbleToHand()

@@ -35,7 +35,7 @@ function s.actcon(e)
 	return tc and tc:IsControler(tp) and (tc:IsSetCard(SET_PERFORMAPAL) or tc:IsSetCard(SET_ODD_EYES))
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,nil,SET_PERFORMAPAL) end

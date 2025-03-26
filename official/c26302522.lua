@@ -43,14 +43,14 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCondition(s.descon)
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
-	e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_OPPO_TURN)|RESET_PHASE|PHASE_STANDBY)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_OPPO_TURN|RESET_PHASE|PHASE_STANDBY)
 	c:RegisterEffect(e2)
 end
 function s.eqlimit(e,c)
 	return e:GetOwner()==c
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

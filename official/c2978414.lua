@@ -88,7 +88,7 @@ function s.efop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_TRIGGER)
 	e1:SetTargetRange(0,LOCATION_MZONE)
 	e1:SetTarget(s.actfilter)
-	e1:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN),1)
+	e1:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN,1)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.actfilter(e,c)

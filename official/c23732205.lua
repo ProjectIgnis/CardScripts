@@ -40,7 +40,7 @@ function s.matfilter(c,scard,sumtype,tp)
 	return c:IsRace(RACE_DRAGON,scard,sumtype,tp) and c:IsAttribute(ATTRIBUTE_DARK,scard,sumtype,tp)
 end
 function s.dmgcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.dmgfilter(c)
 	return c:GetAttackAnnouncedCount()==0 and c:IsFaceup() and c:IsPosition(POS_FACEUP_ATTACK)

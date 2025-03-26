@@ -82,7 +82,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.dfilter(c,e,sp)
 	return c:GetSummonPlayer()==sp and (not e or c:IsRelateToEffect(e))
@@ -101,7 +101,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.damcon2(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and rp~=tp
+	return Duel.IsTurnPlayer(1-tp) and rp~=tp
 end
 function s.damtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -116,7 +116,7 @@ function s.damop2(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.damcon3(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and rp~=tp
+	return Duel.IsTurnPlayer(1-tp) and rp~=tp
 end
 function s.sfilter(c,e)
 	return c:IsFacedown() and (not e or c:IsRelateToEffect(e))

@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e1:SetRange(LOCATION_HAND|LOCATION_MZONE)
 	e1:SetCondition(s.condition)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.SelfToGrave)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 	--search
@@ -39,10 +39,6 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 		and a:IsSetCard(SET_DINOWRESTLER) and a:IsRelateToBattle()
 		and Duel.GetAttackTarget()~=nil and dif>=0
 	else return false end
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

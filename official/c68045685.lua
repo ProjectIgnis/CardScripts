@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetCode(EVENT_PHASE+PHASE_END)
 	e4:SetCountLimit(1)
-	e4:SetCost(s.spcost)
+	e4:SetCost(Cost.SelfToGrave)
 	e4:SetCondition(function(_,tp)return Duel.IsTurnPlayer(tp) end)
 	e4:SetTarget(s.sptg)
 	e4:SetOperation(s.spop)
@@ -99,10 +99,6 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 	--Send this face-up card to GY as cost
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
-end
 	--Check for a "Bujin" monster
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_BUJIN) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)

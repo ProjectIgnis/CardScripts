@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.atkcon)
-	e1:SetCost(s.atkcost)
+	e1:SetCost(Cost.SelfToGrave)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
 	--If sent from field to GY, add 1 "Gouki" card from deck
@@ -38,10 +38,6 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsControler(1-tp) then tc=Duel.GetAttackTarget() end
 	e:SetLabelObject(tc)
 	return tc and tc:IsSetCard(SET_GOUKI) and tc:IsRelateToBattle() and Duel.GetAttackTarget()~=nil
-end
-function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetLabelObject()

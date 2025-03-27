@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_BATTLED)
 	e3:SetRange(LOCATION_SZONE)
-	e3:SetCost(s.cost)
+	e3:SetCost(Cost.SelfToGrave)
 	e3:SetTarget(s.target)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
@@ -65,10 +65,6 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.sumlimit(e,c)
 	return not c:IsSetCard(SET_INFERNOID)
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local a=Duel.GetAttacker()

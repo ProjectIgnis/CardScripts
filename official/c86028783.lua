@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND|LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.atkcon)
-	e1:SetCost(s.atkcost)
+	e1:SetCost(Cost.SelfToGrave)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
 	--Add to hand
@@ -34,10 +34,6 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	if a:IsControler(1-tp) then a,b=b,a end
 	return a and b and a~=e:GetHandler() and a:IsControler(tp) and a:IsFaceup()
 		and a:IsRace(RACE_WARRIOR) and b:IsFaceup() and b:IsControler(1-tp)
-end
-function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local a=Duel.GetAttacker()

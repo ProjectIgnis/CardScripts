@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL+EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_MZONE|LOCATION_HAND)
 	e1:SetCondition(s.discon)
-	e1:SetCost(s.discost)
+	e1:SetCost(Cost.SelfToGrave)
 	e1:SetTarget(s.distg)
 	e1:SetOperation(s.disop)
 	c:RegisterEffect(e1)
@@ -31,10 +31,6 @@ end
 s.listed_series={SET_SUBTERROR}
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)
-end
-function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_SUBTERROR) and c:IsCanTurnSet()

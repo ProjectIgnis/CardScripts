@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.rthcon)
-	e1:SetCost(s.rthcost)
+	e1:SetCost(Cost.SelfToGrave)
 	e1:SetTarget(s.rthtg)
 	e1:SetOperation(s.rthop)
 	c:RegisterEffect(e1)
@@ -41,10 +41,6 @@ function s.rthcon(e,tp,eg,ep,ev,re,r,rp)
 		e:SetLabelObject(bc)
 		return true
 	else return false end
-end
-function s.rthcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.rthtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

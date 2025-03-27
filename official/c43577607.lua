@@ -57,7 +57,7 @@ function s.initial_effect(c)
 	e6:SetType(EFFECT_TYPE_IGNITION)
 	e6:SetRange(LOCATION_SZONE)
 	e6:SetCondition(s.effcon)
-	e6:SetCost(s.descost)
+	e6:SetCost(Cost.SelfToGrave)
 	e6:SetTarget(s.destg)
 	e6:SetOperation(s.desop)
 	e6:SetLabel(5)
@@ -87,10 +87,6 @@ function s.repval(e,c)
 end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoGrave(e:GetHandler(),REASON_EFFECT)
-end
-function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,e:GetHandler()) end

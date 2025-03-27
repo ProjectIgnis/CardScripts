@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e2:SetCondition(s.condition2)
-	e2:SetCost(s.cost2)
+	e2:SetCost(Cost.SelfToGrave)
 	e2:SetOperation(s.operation2)
 	c:RegisterEffect(e2)
 end
@@ -42,10 +42,6 @@ function s.condition2(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
 	return d~=nil and d:IsFaceup() and ((a:IsControler(tp) and a:IsAttribute(ATTRIBUTE_LIGHT) and a:IsRelateToBattle())
 		or (d:IsControler(tp) and d:IsAttribute(ATTRIBUTE_LIGHT) and d:IsRelateToBattle()))
-end
-function s.cost2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.operation2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local a=Duel.GetAttacker()

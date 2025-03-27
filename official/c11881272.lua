@@ -37,7 +37,7 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_BATTLE_DESTROYING)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetCondition(s.atkcon)
-	e4:SetCost(s.atkcost)
+	e4:SetCost(Cost.SelfToGrave)
 	e4:SetOperation(s.atkop)
 	c:RegisterEffect(e4)
 end
@@ -67,10 +67,6 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetEquipTarget()
 	return ec==eg:GetFirst() and ec==Duel.GetAttacker()
 		and ec:IsStatus(STATUS_OPPO_BATTLE) and ec:CanChainAttack()
-end
-function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChainAttack()

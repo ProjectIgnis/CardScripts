@@ -64,7 +64,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e4:SetCode(EVENT_CHAINING)
 		e4:SetRange(LOCATION_SZONE)
 		e4:SetCondition(s.ngcon)
-		e4:SetCost(s.ngcost)
+		e4:SetCost(Cost.SelfToGrave)
 		e4:SetTarget(s.ngtg)
 		e4:SetOperation(s.ngop)
 		e4:SetReset(RESET_EVENT|RESETS_STANDARD)
@@ -83,10 +83,6 @@ function s.ngcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=tg:GetFirst()
 	if #tg~=1 or not tc:IsLocation(LOCATION_MZONE) or not tc:IsSetCard(SET_INZEKTOR) then return false end
 	return Duel.IsChainDisablable(ev) and loc~=LOCATION_DECK
-end
-function s.ngcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.ngtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

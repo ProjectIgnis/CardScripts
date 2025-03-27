@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_TOGRAVE)
 	e1:SetRange(LOCATION_HAND|LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.tgcost)
+	e1:SetCost(Cost.SelfToGrave)
 	e1:SetTarget(s.tgtg)
 	e1:SetOperation(s.tgop)
 	c:RegisterEffect(e1)
@@ -29,10 +29,6 @@ end
 s.listed_series={SET_TRI_BRIGADE}
 function s.tgfilter(c)
 	return c:IsMonster() and c:IsLevelBelow(3) and c:IsRace(RACES_BEAST_BWARRIOR_WINGB) and c:IsAbleToGrave()
-end
-function s.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end

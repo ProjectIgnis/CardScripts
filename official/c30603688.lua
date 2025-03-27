@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e4:SetRange(LOCATION_HAND|LOCATION_MZONE)
 	e4:SetCondition(s.atkcon)
-	e4:SetCost(s.atkcost)
+	e4:SetCost(Cost.SelfToGrave)
 	e4:SetOperation(s.atkop)
 	c:RegisterEffect(e4)
 end
@@ -82,10 +82,6 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	e:SetLabelObject(c)
 	return c and c~=e:GetHandler() and c:IsRace(RACE_SPELLCASTER)
 		and c:IsAttribute(ATTRIBUTE_DARK) and c:IsRelateToBattle()
-end
-function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetLabelObject()

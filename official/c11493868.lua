@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
-	e3:SetCost(s.cost)
+	e3:SetCost(Cost.SelfToGrave)
 	e3:SetTarget(Fusion.SummonEffTG(table.unpack(params)))
 	e3:SetOperation(Fusion.SummonEffOP(table.unpack(params)))
 	c:RegisterEffect(e3)
@@ -53,8 +53,4 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(800)
 		tc:RegisterEffect(e1)
 	end
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end

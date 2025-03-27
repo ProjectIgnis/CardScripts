@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e2:SetHintTiming(TIMING_DAMAGE_STEP)
 	e2:SetCondition(s.condition)
-	e2:SetCost(s.cost)
+	e2:SetCost(Cost.SelfToGrave)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
@@ -68,10 +68,6 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsControler(1-tp) then tc=Duel.GetAttackTarget() end
 	e:SetLabelObject(tc)
 	return tc and tc:IsSetCard(SET_SUPERHEAVY_SAMURAI) and tc:IsDefensePos() and tc:IsRelateToBattle() and Duel.GetAttackTarget()~=nil
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()

@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e4:SetCountLimit(1)
 	e4:SetCondition(s.setcon)
-	e4:SetCost(s.setcost)
+	e4:SetCost(Cost.SelfToGrave)
 	e4:SetTarget(s.settg)
 	e4:SetOperation(s.setop)
 	c:RegisterEffect(e4)
@@ -83,10 +83,6 @@ end
 --set
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsTurnPlayer(1-tp)
-end
-function s.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.setfilter(c)
 	return c:IsContinuousTrap() and c:IsSSetable(true)

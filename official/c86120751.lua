@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP+TIMINGS_CHECK_MONSTER)
 	e1:SetCondition(s.adcon)
-	e1:SetCost(s.adcost)
+	e1:SetCost(Cost.SelfToGrave)
 	e1:SetTarget(s.adtg)
 	e1:SetOperation(s.adop)
 	c:RegisterEffect(e1)
@@ -33,10 +33,6 @@ end
 s.listed_names={74063034}
 function s.adcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
-function s.adcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_FUSION)

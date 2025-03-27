@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_SPSUMMON)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(s.discon)
-	e1:SetCost(s.discost)
+	e1:SetCost(Cost.SelfToGrave)
 	e1:SetTarget(s.distg)
 	e1:SetOperation(s.disop)
 	c:RegisterEffect(e1)
@@ -58,10 +58,6 @@ end
 s.listed_series={SET_THE_WEATHER}
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return tp~=ep and Duel.GetCurrentChain()==0 and e:GetHandler():IsLinkSummoned()
-end
-function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

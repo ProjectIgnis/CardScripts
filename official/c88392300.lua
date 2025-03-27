@@ -10,14 +10,10 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_HAND|LOCATION_MZONE)
 	e2:SetCountLimit(1)
-	e2:SetCost(s.seqcost)
+	e2:SetCost(Cost.SelfToGrave)
 	e2:SetTarget(s.seqtg)
 	e2:SetOperation(s.seqop)
 	c:RegisterEffect(e2)
-end
-function s.seqcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.seqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) end

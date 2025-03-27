@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetCondition(s.condition)
-	e2:SetCost(s.cost)
+	e2:SetCost(Cost.SelfToGrave)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
@@ -20,10 +20,6 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if not d then return false end
 	return (a:IsControler(tp) and a:IsSetCard(SET_BLACKWING))
 		or (d:IsControler(tp) and d:IsSetCard(SET_BLACKWING))
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 	local a=Duel.GetAttacker()

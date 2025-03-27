@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetCode(EVENT_TO_GRAVE)
-	e2:SetCost(s.spcost)
+	e2:SetCost(Cost.SelfToGrave)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
@@ -65,10 +65,6 @@ function s.eqlimit(e,c)
 end
 function s.valcon(e,re,r,rp)
 	return (r&REASON_EFFECT)~=0
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.cfilter(c,e,tp)
 	return c:IsControler(tp) and c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_BATTLE)

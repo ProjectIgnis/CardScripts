@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_BATTLE_DESTROYED)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.descon)
-	e1:SetCost(s.descost)
+	e1:SetCost(Cost.SelfToGrave)
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
@@ -24,10 +24,6 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.cfilter,nil,tp)
 	e:SetLabelObject(g:GetFirst())
 	return #g>0
-end
-function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetLabelObject():GetReasonCard()

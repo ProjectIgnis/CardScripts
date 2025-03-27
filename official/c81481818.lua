@@ -1,4 +1,5 @@
 --パッチワーク・ファーニマル
+--Patchwork Fluffal
 local s,id=GetID()
 function s.initial_effect(c)
 	--setcode
@@ -18,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.subval)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xad}
+s.listed_series={SET_FRIGHTFUR}
 function s.subval(e,c)
-	return c:IsSetCard(0xad)
+	return c:IsSetCard(SET_FRIGHTFUR)
 end

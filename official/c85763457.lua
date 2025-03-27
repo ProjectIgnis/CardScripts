@@ -1,5 +1,5 @@
 --星遺物に響く残叫
---Echo in the World Legacy
+--World Legacy's Sorrow
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -32,4 +32,3 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(eg,REASON_EFFECT)
 	end
 end
-

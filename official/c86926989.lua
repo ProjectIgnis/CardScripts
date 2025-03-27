@@ -1,5 +1,5 @@
 --麗神－不知火
---Shiranui Splendidsaga
+--Shiranui Skillsaga Supremacy
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -40,7 +40,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.IsTurnPlayer(1-tp)
 	end
 function s.filter(c,e,tp,zone)
 	return c:IsFaceup() and c:IsType(TYPE_SYNCHRO) and c:IsRace(RACE_ZOMBIE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)

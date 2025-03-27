@@ -1,4 +1,5 @@
 --デストーイ・シザー・ベアー
+--Frightfur Bear
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -16,7 +17,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	aux.AddEREquipLimit(c,nil,aux.FilterBoolFunction(Card.IsMonster),s.equipop,e1)
 end
-s.material_setcode={0xc3,0xa9}
+s.material_setcode={SET_EDGE_IMP,SET_FLUFFAL}
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=c:GetBattleTarget()
@@ -34,7 +35,7 @@ function s.equipop(c,e,tp,tc)
 	e2:SetType(EFFECT_TYPE_EQUIP)
 	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_OWNER_RELATE)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e2:SetValue(1000)
 	tc:RegisterEffect(e2)
 end

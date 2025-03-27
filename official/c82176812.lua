@@ -1,4 +1,5 @@
 --魔装戦士 ハイドロータス
+--Hydrotortoise, the Empowered Warrior
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip

@@ -1,9 +1,10 @@
 --キメラテック・メガフリート・ドラゴン
+--Chimeratech Megafleet Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMixRep(c,true,true,s.matfilter,1,99,aux.FilterBoolFunctionEx(Card.IsSetCard,0x1093))
+	Fusion.AddProcMixRep(c,true,true,s.matfilter,1,99,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_CYBER_DRAGON))
 	Fusion.AddContactProc(c,s.contactfil,s.contactop,s.splimit)
 	--cannot be fusion material
 	local e1=Effect.CreateEffect(c)
@@ -13,8 +14,8 @@ function s.initial_effect(c)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x1093}
-s.material_setcode={0x93,0x1093}
+s.listed_series={SET_CYBER_DRAGON}
+s.material_setcode={SET_CYBER,SET_CYBER_DRAGON}
 function s.matfilter(c,fc,sumtype,tp)
 	return c:GetSequence()>4 and c:IsLocation(LOCATION_MZONE) and (c:IsControler(tp) or c:IsFaceup())
 end
@@ -33,7 +34,7 @@ function s.contactop(g,tp,c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SET_BASE_ATTACK)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE-RESET_TOFIELD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE-RESET_TOFIELD)
 	e1:SetValue(#g*1200)
 	c:RegisterEffect(e1)
 end

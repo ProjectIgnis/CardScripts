@@ -1,5 +1,5 @@
 --A BF－神立のオニマル
---Assault Blacwing - Onimaru the Divine Thunder
+--Assault Blackwing - Onimaru the Divine Thunder
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -48,10 +48,10 @@ function s.initial_effect(c)
 	e5:SetValue(3000)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x33}
+s.listed_series={SET_BLACKWING}
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
-	if g:IsExists(Card.IsSetCard,1,nil,0x33) then
+	if g:IsExists(Card.IsSetCard,1,nil,SET_BLACKWING) then
 		e:GetLabelObject():SetLabel(1)
 	else
 		e:GetLabelObject():SetLabel(0)
@@ -67,11 +67,11 @@ function s.tnop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetCode(EFFECT_ADD_TYPE)
 	e1:SetValue(TYPE_TUNER)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e1)
 end
 function s.lvfilter(c,lv)
-	return c:IsSetCard(0x33) and c:HasLevel() and c:GetLevel()~=lv
+	return c:IsSetCard(SET_BLACKWING) and c:HasLevel() and c:GetLevel()~=lv
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.lvfilter(chkc,e:GetHandler():GetLevel()) end
@@ -87,7 +87,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)
 		e1:SetValue(tc:GetLevel())
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 	end
 end

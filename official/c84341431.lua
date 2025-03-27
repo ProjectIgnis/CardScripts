@@ -1,4 +1,5 @@
 --デーモンの巨神
+--Archfiend Giant
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy replace
@@ -22,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x45}
+s.listed_series={SET_ARCHFIEND}
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_EFFECT) 
@@ -36,7 +37,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return (e:GetHandler():GetReason()&0x41)==0x41
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x45) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_ARCHFIEND) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

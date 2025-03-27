@@ -1,4 +1,5 @@
 --機動要塞フォルテシモ
+--Fortissimo the Mobile Fortress
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -17,9 +18,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x6013}
+s.listed_series={SET_MEKLORD_ARMY}
 function s.filter(c,e,sp)
-	return c:IsSetCard(0x6013) and c:IsCanBeSpecialSummoned(e,0,sp,false,false)
+	return c:IsSetCard(SET_MEKLORD_ARMY) and c:IsCanBeSpecialSummoned(e,0,sp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

@@ -1,4 +1,5 @@
 --CNo.105 BK 彗星のカエストス
+--Number C105: Battlin' Boxer Comet Cestus
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon

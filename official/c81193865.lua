@@ -54,12 +54,12 @@ function s.initial_effect(c)
 		end)
 	end)
 end
-s.listed_series={0x1093}
+s.listed_series={SET_CYBER_DRAGON}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	if tc:GetFlagEffect(id)==0 then
 		s[ep]=s[ep]+1
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 	end
 end
 function s.eqlimit(e,c)
@@ -83,13 +83,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.actcon(e)
 	local ph=Duel.GetCurrentPhase()
-	return Duel.GetTurnPlayer()==e:GetHandler():GetControler() and ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
+	return Duel.GetTurnPlayer()==e:GetHandler():GetControler() and Duel.IsBattlePhase()
 end
 function s.cacon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker()==e:GetHandler():GetEquipTarget() and Duel.GetAttackTarget()~=nil
 end
 function s.cafilter(c)
-	return c:IsSetCard(0x1093) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(SET_CYBER_DRAGON) and c:IsAbleToRemoveAsCost()
 end
 function s.cacost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -102,7 +102,7 @@ function s.cacost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetTarget(s.ftarget)
 	e1:SetLabel(c:GetEquipTarget():GetFieldID())
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,s.cafilter,tp,LOCATION_GRAVE,0,1,1,nil)
@@ -123,6 +123,6 @@ function s.caop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE+PHASE_DAMAGE_CAL)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE|PHASE_DAMAGE_CAL)
 	ec:RegisterEffect(e1)
 end

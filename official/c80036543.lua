@@ -1,4 +1,5 @@
 --活路への希望
+--Hope for Escape
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

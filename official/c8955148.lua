@@ -1,5 +1,5 @@
 --リトマスの死儀式
--- Litmus Doom Ritual
+--Litmus Doom Ritual
 local s,id=GetID()
 function s.initial_effect(c)
 	Ritual.AddProcGreaterCode(c,8,nil,72566043)

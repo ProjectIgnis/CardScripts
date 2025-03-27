@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.dbop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x116}
+s.listed_series={SET_CRUSADIA}
 function s.spval(e,c)
 	return 0,aux.GetMMZonesPointedTo(c:GetControler())
 end
@@ -33,7 +33,7 @@ function s.dbcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP()
 end
 function s.dbfilter(c)
-	return c:IsFaceup() and c:IsLinkMonster() and c:IsSetCard(0x116)
+	return c:IsFaceup() and c:IsLinkMonster() and c:IsSetCard(SET_CRUSADIA)
 end
 function s.dbtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.dbfilter(chkc) end
@@ -53,7 +53,7 @@ function s.dbop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
 		e1:SetCondition(s.damcon)
 		e1:SetValue(aux.ChangeBattleDamage(1,DOUBLE_DAMAGE))
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		--Your other monsters cannot attack
 		local e2=Effect.CreateEffect(c)
@@ -62,7 +62,7 @@ function s.dbop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetTargetRange(LOCATION_MZONE,0)
 		e2:SetTarget(s.ftarget)
 		e2:SetLabel(tc:GetFieldID())
-		e2:SetReset(RESET_PHASE+PHASE_END)
+		e2:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e2,tp)
 	end
 end

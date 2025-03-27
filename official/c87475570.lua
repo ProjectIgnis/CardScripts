@@ -1,4 +1,5 @@
 --宝玉の先導者
+--Crystal Master
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -24,17 +25,17 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x1034,0x2034,0x34}
+s.listed_series={SET_CRYSTAL_BEAST,SET_ULTIMATE_CRYSTAL,SET_CRYSTAL}
 function s.tgtg(e,c)
-	return c:IsSetCard(0x1034) or (c:IsLocation(LOCATION_MZONE) and c:IsSetCard(0x2034))
+	return c:IsSetCard(SET_CRYSTAL_BEAST) or (c:IsLocation(LOCATION_MZONE) and c:IsSetCard(SET_ULTIMATE_CRYSTAL))
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.filter(c)
-	return (((c:IsSetCard(0x1034) or c:IsSetCard(0x2034)) and c:IsMonster())
-		or (c:IsSetCard(0x34) and c:IsSpellTrap())) and c:IsAbleToHand()
+	return (((c:IsSetCard(SET_CRYSTAL_BEAST) or c:IsSetCard(SET_ULTIMATE_CRYSTAL)) and c:IsMonster())
+		or (c:IsSetCard(SET_CRYSTAL) and c:IsSpellTrap())) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

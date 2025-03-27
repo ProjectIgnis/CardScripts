@@ -1,4 +1,5 @@
 --王宮の重税
+--Royal Writ of Taxation
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_STANDBY and Duel.GetTurnPlayer()~=tp
+	return Duel.IsPhase(PHASE_STANDBY) and Duel.GetTurnPlayer()~=tp
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(1-tp,LOCATION_HAND,0)>0 end
@@ -31,7 +32,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCondition(s.damcon)
 	e1:SetOperation(s.damop)
 	e1:SetLabel(0)
-	e1:SetReset(RESET_PHASE+PHASE_END,2)
+	e1:SetReset(RESET_PHASE|PHASE_END,2)
 	Duel.RegisterEffect(e1,tp)
 	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -39,7 +40,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetOperation(s.damop2)
 	e2:SetLabelObject(e1)
 	e2:SetLabel(code)
-	e2:SetReset(RESET_PHASE+PHASE_END,2)
+	e2:SetReset(RESET_PHASE|PHASE_END,2)
 	Duel.RegisterEffect(e2,tp)
 	local e3=Effect.CreateEffect(e:GetHandler())
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -48,11 +49,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetOperation(s.damop3)
 	e3:SetLabelObject(e1)
 	e3:SetLabel(code)
-	e3:SetReset(RESET_PHASE+PHASE_END,2)
+	e3:SetReset(RESET_PHASE|PHASE_END,2)
 	Duel.RegisterEffect(e3,tp)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and e:GetLabel()==0
+	return Duel.IsTurnPlayer(tp) and e:GetLabel()==0
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(1-tp,1000,REASON_EFFECT)

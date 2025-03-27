@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,0,id)
-	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,0x119))
+	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,SET_SALAMANGREAT))
 	aux.EnableCheckReincarnation(c)
 	--indes
 	local e1=Effect.CreateEffect(c)
@@ -26,9 +26,8 @@ function s.initial_effect(c)
 	e4:SetValue(function(e,c) return c:GetLink()-1 end)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x119}
+s.listed_series={SET_SALAMANGREAT}
 function s.macon(e)
 	local c=e:GetHandler():GetEquipTarget()
-	return c:IsSetCard(0x119) and c:IsLinkMonster() and c:IsReincarnationSummoned()
+	return c:IsSetCard(SET_SALAMANGREAT) and c:IsLinkMonster() and c:IsReincarnationSummoned()
 end
-

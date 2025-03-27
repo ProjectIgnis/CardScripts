@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
 	e0:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e0:SetCode(EFFECT_CHANGE_CODE)
-	e0:SetRange(LOCATION_MZONE+LOCATION_GRAVE)
+	e0:SetRange(LOCATION_MZONE|LOCATION_GRAVE)
 	e0:SetValue(CARD_HARPIE_LADY)
 	c:RegisterEffect(e0)
 	--destroy replace
@@ -38,9 +38,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x64}
+s.listed_series={SET_HARPIE}
 function s.repfilter(c,tp)
-	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_ONFIELD) and c:IsSetCard(0x64) and c:IsMonster()
+	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_ONFIELD) and c:IsSetCard(SET_HARPIE) and c:IsMonster()
 		and (c:IsReason(REASON_BATTLE) or c:IsReason(REASON_EFFECT)) and not c:IsReason(REASON_REPLACE)
 end
 function s.desfilter(c,e,tp)
@@ -69,13 +69,13 @@ function s.repop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.rtfilter(c,e,tp)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
-	and c:IsPreviousSetCard(0x64) and c:IsPreviousControler(tp) and c:IsControler(tp) and c~=e:GetHandler()
+	and c:IsPreviousSetCard(SET_HARPIE) and c:IsPreviousControler(tp) and c:IsControler(tp) and c~=e:GetHandler()
 end
 function s.thcond(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.rtfilter,1,nil,e,tp)
 end
 function s.rttgfilter(c)
-	return c:IsFaceup() and c:IsAbleToHand() and c:IsSummonType(SUMMON_TYPE_SPECIAL) 
+	return c:IsFaceup() and c:IsAbleToHand() and c:IsSpecialSummoned() 
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -90,4 +90,3 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end
-

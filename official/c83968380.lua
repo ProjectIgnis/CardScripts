@@ -1,4 +1,5 @@
 --強欲な瓶
+--Jar of Greed
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

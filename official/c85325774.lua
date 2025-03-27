@@ -1,5 +1,5 @@
 --暗黒界の援軍
---Dark World Reinforcements
+--Charge Into a Dark World
 --Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

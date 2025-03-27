@@ -1,4 +1,5 @@
 --No.15 ギミック・パペット－ジャイアントキラー
+--Number 15: Gimmick Puppet Giant Grinder
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon

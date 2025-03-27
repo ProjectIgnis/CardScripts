@@ -1,4 +1,5 @@
 --エアジャチ
+--Airorca
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
@@ -38,17 +39,17 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.Remove(c,0,REASON_EFFECT+REASON_TEMPORARY)==0 then return end
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
+		e1:SetCode(EVENT_PHASE|PHASE_STANDBY)
 		e1:SetCountLimit(1)
 		e1:SetLabelObject(c)
 		e1:SetCondition(s.retcon)
 		e1:SetOperation(s.retop)
-		e1:SetReset(RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN)
+		e1:SetReset(RESET_PHASE|PHASE_STANDBY|RESET_SELF_TURN)
 		Duel.RegisterEffect(e1,tp)
 	end
 end
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ReturnToField(e:GetLabelObject())

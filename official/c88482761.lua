@@ -1,4 +1,5 @@
 --ダイスロール・バトル
+--Dice Roll Battle
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -19,21 +20,21 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetCondition(s.atkcon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.atktg)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x2016}
+s.listed_series={SET_SPEEDROID}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.rmfilter1(c,e,tp)
-	return c:IsSetCard(0x2016) and c:IsAbleToRemove() 
+	return c:IsSetCard(SET_SPEEDROID) and c:IsAbleToRemove() 
 		and Duel.IsExistingMatchingCard(s.rmfilter2,tp,LOCATION_HAND,0,1,nil,e,tp,c:GetOriginalLevel())
 end
 function s.rmfilter2(c,e,tp,lv)
-	return c:IsSetCard(0x2016) and c:IsType(TYPE_TUNER) and c:IsAbleToRemove()
+	return c:IsSetCard(SET_SPEEDROID) and c:IsType(TYPE_TUNER) and c:IsAbleToRemove()
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c:GetOriginalLevel()+lv)
 end
 function s.spfilter(c,e,tp,lv)
@@ -64,7 +65,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and Duel.GetCurrentPhase()==PHASE_BATTLE_STEP
+	return Duel.IsTurnPlayer(1-tp) and Duel.GetCurrentPhase()==PHASE_BATTLE_STEP
 end
 function s.atkfilter(c)
 	return c:IsType(TYPE_SYNCHRO) and c:IsPosition(POS_FACEUP_ATTACK)

@@ -1,4 +1,5 @@
 --バスターランチャー
+--Buster Rancher
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsAttackBelow,1000),s.eqlimit)

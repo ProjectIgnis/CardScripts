@@ -46,12 +46,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 	e3:SetLabelObject(e4)
 end
-s.listed_series={0x8e}
+s.listed_series={SET_VAMPIRE}
 function s.eqval(ec,c,tp)
 	return ec:IsControler(1-tp) and ec:GetAttack()>c:GetAttack()
 end
 function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x8e) and c:IsControler(tp)
+	return c:IsFaceup() and c:IsSetCard(SET_VAMPIRE) and c:IsControler(tp)
 end
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	return not eg:IsContains(e:GetHandler()) and eg:IsExists(s.cfilter,1,nil,tp)
@@ -75,7 +75,7 @@ function s.equipop(c,e,tp,tc)
 	e1:SetType(EFFECT_TYPE_EQUIP)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(atk)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	tc:RegisterEffect(e1)
 end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)

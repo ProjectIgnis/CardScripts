@@ -1,5 +1,5 @@
 --ＢＦ－幻耀のスズリ
---Blackwing - Suthri the Illusory Spark
+--Blackwing - Sudri the Phantom Glimmer
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -59,7 +59,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	--Clock Lizard check
 	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)

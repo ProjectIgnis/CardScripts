@@ -1,4 +1,5 @@
 --サイバー・ダーク・クロー
+--Cyberdark Claw
 local s,id=GetID()
 function s.initial_effect(c)
 	--search S/T
@@ -36,14 +37,14 @@ function s.initial_effect(c)
 	e3:SetOperation(s.op)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x4093}
+s.listed_series={SET_CYBERDARK}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsDiscardable() end
 	Duel.SendtoGrave(c,REASON_COST+REASON_DISCARD)
 end
 function s.filter2(c)
-	return c:IsSetCard(0x4093) and c:IsSpellTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_CYBERDARK) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK,0,1,nil) end
@@ -76,7 +77,7 @@ function s.gyop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter1(c)
-	return c:IsSetCard(0x4093) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_CYBERDARK) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -1,10 +1,10 @@
--- 音響戦士ディージェス
--- Symphonic Warrior Deejays
--- Scripted by Hatter
+--音響戦士ディージェス
+--Symphonic Warrior DJJ
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	Pendulum.AddProcedure(c)
-	-- Flip "Symphonic Warrior" monster face-up
+	--Flip "Symphonic Warrior" monster face-up
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_POSITION)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.postg)
 	e1:SetOperation(s.posop)
 	c:RegisterEffect(e1)
-	-- Special Summon self
+	--Special Summon self
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.ssptg)
 	e2:SetOperation(s.sspop)
 	c:RegisterEffect(e2)
-	-- Special Summon "Symphonic Warrior" monster from Deck
+	--Special Summon "Symphonic Warrior" monster from Deck
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -42,10 +42,10 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x1066}
+s.listed_series={SET_SYMPHONIC_WARRIOR}
 s.listed_names={75304793,id}
 function s.posfilter(c)
-	return c:IsSetCard(0x1066) and c:IsFacedown() and c:IsDefensePos() and c:IsCanChangePosition()
+	return c:IsSetCard(SET_SYMPHONIC_WARRIOR) and c:IsFacedown() and c:IsDefensePos() and c:IsCanChangePosition()
 end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.posfilter,tp,LOCATION_MZONE,0,1,nil) end
@@ -59,7 +59,7 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.sspcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x1066)
+	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(SET_SYMPHONIC_WARRIOR)
 end
 function s.ssptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -74,7 +74,7 @@ function s.sspop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.dspfilter(c,e,tp,pos)
-	return c:IsSetCard(0x1066) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,pos)
+	return c:IsSetCard(SET_SYMPHONIC_WARRIOR) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,pos)
 end
 function s.dsptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local pos=POS_FACEDOWN_DEFENSE
@@ -94,11 +94,11 @@ function s.dspop(e,tp,eg,ep,ev,re,r,rp)
 		if sc:IsFacedown() then
 			Duel.ConfirmCards(1-tp,sc)
 		elseif sc:IsFaceup() then
-			-- Negate its effects
+			--Negate its effects
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_DISABLE)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			sc:RegisterEffect(e1)
 			local e2=e1:Clone()
 			e2:SetCode(EFFECT_DISABLE_EFFECT)

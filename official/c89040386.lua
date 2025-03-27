@@ -1,4 +1,5 @@
 --BF－バックフラッシュ
+--Blackwing - Backlash
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,9 +12,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x33}
+s.listed_series={SET_BLACKWING}
 function s.cfilter(c)
-	return c:IsSetCard(0x33) and c:IsMonster()
+	return c:IsSetCard(SET_BLACKWING) and c:IsMonster()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tp~=Duel.GetTurnPlayer() and Duel.GetAttackTarget()==nil

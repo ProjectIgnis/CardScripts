@@ -1,14 +1,14 @@
--- ＥＮ ウェーブ
--- EN Wave
--- Scripted by Hatter
+--ＥＮ ウェーブ
+--EN Wave
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	-- Special Summon from Deck
+	--Special Summon from Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.dsptg)
 	e1:SetOperation(s.dspop)
 	c:RegisterEffect(e1)
-	-- Special Summon from GY
+	--Special Summon from GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -36,16 +36,16 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_NEOS}
-s.listed_series={0x3008,0x1f}
+s.listed_series={SET_ELEMENTAL_HERO,SET_NEO_SPACIAN}
 function s.dspconfilter(c,tp)
-	return c:IsSetCard(0x3008) and c:IsPreviousControler(tp) and c:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED)
+	return c:IsSetCard(SET_ELEMENTAL_HERO) and c:IsPreviousControler(tp) and c:IsLocation(LOCATION_GRAVE|LOCATION_REMOVED)
 		and c:IsFaceup() and (c:IsMonster() or c:IsPreviousLocation(LOCATION_MZONE))
 end
 function s.dspcon(e,tp,eg,ep,ev,re,r,rp)
 	return (r&REASON_FUSION)==REASON_FUSION and eg:IsExists(s.dspconfilter,1,nil,tp)
 end
 function s.dspfilter(c,e,tp)
-	return (c:IsSetCard(0x1f) or c:IsCode(CARD_NEOS)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return (c:IsSetCard(SET_NEO_SPACIAN) or c:IsCode(CARD_NEOS)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.dsptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -61,14 +61,14 @@ function s.dspop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.gspconfilter(c,tp)
-	return ((c:IsMonster() and c:IsSetCard(0x1f)) or c:IsCode(CARD_NEOS))
-		and c:IsPreviousControler(tp) and c:IsControler(tp) and c:IsPreviousLocation(LOCATION_MZONE+LOCATION_GRAVE)
+	return ((c:IsMonster() and c:IsSetCard(SET_NEO_SPACIAN)) or c:IsCode(CARD_NEOS))
+		and c:IsPreviousControler(tp) and c:IsControler(tp) and c:IsPreviousLocation(LOCATION_MZONE|LOCATION_GRAVE)
 end
 function s.gspcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.gspconfilter,1,nil,tp)
 end
 function s.gspfilter(c,e,tp)
-	return c:IsSetCard(0x3008) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_ELEMENTAL_HERO) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.gsptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

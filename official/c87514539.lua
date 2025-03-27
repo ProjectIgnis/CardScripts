@@ -1,4 +1,5 @@
 --傀儡虫
+--Marionette Mite
 local s,id=GetID()
 function s.initial_effect(c)
 	--control

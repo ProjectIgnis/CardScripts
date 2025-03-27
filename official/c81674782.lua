@@ -1,4 +1,5 @@
 --次元の裂け目
+--Dimensional Fissure
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

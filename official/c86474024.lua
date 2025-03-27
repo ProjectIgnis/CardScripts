@@ -1,4 +1,5 @@
 --共同戦線
+--United Front
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

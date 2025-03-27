@@ -1,4 +1,5 @@
 --紋章獣エアレー
+--Heraldic Beast Eale
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -10,9 +11,9 @@ function s.initial_effect(c)
 	e1:SetCondition(s.spcon)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x76}
+s.listed_series={SET_HERALDIC_BEAST}
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0 and
-		Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x76),c:GetControler(),LOCATION_MZONE,0,2,nil)
+		Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_HERALDIC_BEAST),c:GetControler(),LOCATION_MZONE,0,2,nil)
 end

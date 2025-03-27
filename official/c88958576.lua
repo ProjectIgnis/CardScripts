@@ -1,4 +1,5 @@
 --ラヴァルバーナー
+--Laval Burner
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -10,11 +11,11 @@ function s.initial_effect(c)
 	e1:SetCondition(s.spcon)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x39}
+s.listed_series={SET_LAVAL}
 function s.spcon(e,c)
 	if c==nil then return true end
 	if Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)<=0 then return false end
-	local g=Duel.GetMatchingGroup(Card.IsSetCard,c:GetControler(),LOCATION_GRAVE,0,nil,0x39)
+	local g=Duel.GetMatchingGroup(Card.IsSetCard,c:GetControler(),LOCATION_GRAVE,0,nil,SET_LAVAL)
 	local ct=g:GetClassCount(Card.GetCode)
 	return ct>=3
 end

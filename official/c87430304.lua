@@ -1,4 +1,5 @@
 --先史遺産モアイ
+--Chronomaly Moai
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -11,9 +12,9 @@ function s.initial_effect(c)
 	e1:SetCondition(s.hspcon)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x70}
+s.listed_series={SET_CHRONOMALY}
 function s.hspcon(e,c)
 	if c==nil then return true end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x70),c:GetControler(),LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_CHRONOMALY),c:GetControler(),LOCATION_MZONE,0,1,nil)
 end

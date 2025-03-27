@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.regop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xc1}
+s.listed_series={SET_PSY_FRAME}
 function s.regcfilter(c,tp)
 	return c:IsRace(RACE_PSYCHIC) and c:IsFaceup() and c:GetPreviousRaceOnField()&RACE_PSYCHIC~=0 and c:IsPreviousLocation(LOCATION_MZONE)
 		and c:IsPreviousControler(tp) and c:IsPreviousPosition(POS_FACEUP)
@@ -47,11 +47,11 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.thcon)
 	e1:SetOperation(s.thop)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xc1) and c:IsAbleToHand()
+	return c:IsSetCard(SET_PSY_FRAME) and c:IsAbleToHand()
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil)

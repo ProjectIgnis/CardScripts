@@ -1,5 +1,5 @@
 --希望皇オノマトピア
---Utopic Onomatopeia
+--Utopic Onomatopoeia
 --Scripted by Logical Nonsense and AlphaKretin, revised handling of archetype check by edo9300
 local s,id=GetID()
 function s.initial_effect(c)
@@ -16,10 +16,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={id}
-s.listed_series={0x54,0x59,0x82,0x8f}
+s.listed_series={SET_GAGAGA,SET_GOGOGO,SET_DODODO,SET_ZUBABA}
 function s.spfilter(c,e,tp)
 	return c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
-		and (c:IsSetCard(0x54) or c:IsSetCard(0x59) or c:IsSetCard(0x82) or  c:IsSetCard(0x8f)) and not c:IsCode(id)
+		and (c:IsSetCard(SET_GAGAGA) or c:IsSetCard(SET_GOGOGO) or c:IsSetCard(SET_DODODO) or  c:IsSetCard(SET_ZUBABA)) and not c:IsCode(id)
 end
 function s.rescon(checkfunc)
 	return function(sg,e,tp,mg)
@@ -47,7 +47,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	ge1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	ge1:SetTargetRange(1,0)
 	ge1:SetTarget(s.splimit)
-	ge1:SetReset(RESET_PHASE+PHASE_END)
+	ge1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(ge1,tp)
 	aux.RegisterClientHint(e:GetHandler(),EFFECT_FLAG_OATH,tp,1,0,aux.Stringid(id,5),nil)
 	--lizard check

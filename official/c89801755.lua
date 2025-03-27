@@ -25,7 +25,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(att)
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetTargetParam(rc)
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,1-tp,LOCATION_HAND+LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,1-tp,LOCATION_HAND|LOCATION_DECK)
 end
 function s.filter(c,rc,att)
 	return c:IsRace(rc) and c:IsAttribute(att) and c:IsAbleToGrave()
@@ -34,7 +34,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local att=e:GetLabel()
 	local p,rc=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(p,s.filter,p,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,rc,att)
+	local g=Duel.SelectMatchingCard(p,s.filter,p,LOCATION_HAND|LOCATION_DECK,0,1,1,nil,rc,att)
 	if #g>0 then
 		Duel.SendtoGrave(g,REASON_EFFECT)
 	end

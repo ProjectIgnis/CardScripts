@@ -37,11 +37,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 	--Lists "Constellar" archetype
-s.listed_series={0x53}
+s.listed_series={SET_CONSTELLAR}
 
 	--Check for a "Constellar" monster, except "Constellar Caduceus"
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x53) and not c:IsCode(id)
+	return c:IsFaceup() and c:IsSetCard(SET_CONSTELLAR) and not c:IsCode(id)
 end
 	--If it exists
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -61,7 +61,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for "Constellar" spell/trap
 function s.thfilter(c)
-	return c:IsSpellTrap() and c:IsSetCard(0x53) and c:IsAbleToHand()
+	return c:IsSpellTrap() and c:IsSetCard(SET_CONSTELLAR) and c:IsAbleToHand()
 end
 	--Activation legality
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -79,7 +79,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check if attached to "Constellar" Xyz monster
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSetCard(0x53)
+	return e:GetHandler():IsSetCard(SET_CONSTELLAR)
 end
 	--Activation legality
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)

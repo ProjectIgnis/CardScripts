@@ -1,4 +1,5 @@
 --ディメンション・ミラージュ
+--Dimension Mirage
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddPersistentProcedure(c,1,aux.FilterBoolFunction(Card.IsPosition,POS_FACEUP_ATTACK))
@@ -45,7 +46,7 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_MUST_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_FIRST_ATTACK)

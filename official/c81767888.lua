@@ -1,5 +1,5 @@
 --烙印の剣
---Branded Blade
+--Branded Sword
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -25,15 +25,15 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetHintTiming(0,TIMING_END_PHASE)
 	e2:SetCountLimit(1,id)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_ALBAZ,id+1}
-s.listed_series={0x160}
+s.listed_series={SET_BRANDED}
 function s.cfilter(c)
-	return c:IsSetCard(0x160) and c:IsSpellTrap() and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(SET_BRANDED) and c:IsSpellTrap() and c:IsAbleToRemoveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)

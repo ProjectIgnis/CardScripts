@@ -1,4 +1,5 @@
 --電子光虫－ライノセバス
+--Digital Bug Rhinosebus
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

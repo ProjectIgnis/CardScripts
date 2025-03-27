@@ -1,4 +1,5 @@
 --E・HERO キャプテン・ゴールド
+--Elemental HERO Captain Gold
 local s,id=GetID()
 function s.initial_effect(c)
 	--search

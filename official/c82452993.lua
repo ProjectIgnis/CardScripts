@@ -1,4 +1,5 @@
 --孤高の格闘家
+--Lone Wolf
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -31,7 +32,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetCondition(s.rcon)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1,true)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_IMMUNE_EFFECT)

@@ -1,5 +1,5 @@
 --ドライトロン流星群
---Draitron Meteor Shower
+--Drytron Meteor Shower
 --Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

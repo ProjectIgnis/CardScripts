@@ -1,4 +1,5 @@
 --極星獣ガルム
+--Garmr of the Nordic Beasts
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy

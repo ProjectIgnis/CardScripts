@@ -1,4 +1,5 @@
 --陽炎獣 ヒュドラー
+--Hazy Flame Hydra
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot be target
@@ -43,22 +44,22 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCondition(s.matcon)
 	e1:SetTarget(s.mattg)
 	e1:SetOperation(s.matop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	rc:RegisterEffect(e1,true)
 	if not rc:IsType(TYPE_EFFECT) then
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_ADD_TYPE)
 		e2:SetValue(TYPE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		rc:RegisterEffect(e2,true)
 	end
 end
 function s.matcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
+	return e:GetHandler():IsXyzSummoned()
 end
 function s.matfilter(c)
-	return c:IsSetCard(0x107d) and c:IsMonster()
+	return c:IsSetCard(SET_HAZY_FLAME) and c:IsMonster()
 end
 function s.mattg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.matfilter(chkc) end

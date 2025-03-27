@@ -1,4 +1,5 @@
 --No.63 おしゃもじソルジャー
+--Number 63: Shamoji Soldier
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -29,11 +30,11 @@ function s.efop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==0 then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_PHASE_START+PHASE_STANDBY)
+		e1:SetCode(EVENT_PHASE_START|PHASE_STANDBY)
 		e1:SetCountLimit(1)
 		e1:SetCondition(s.drcon)
 		e1:SetOperation(s.drop)
-		e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+		e1:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN)
 		Duel.RegisterEffect(e1,tp)
 	else
 		Duel.Recover(tp,1000,REASON_EFFECT)
@@ -41,7 +42,7 @@ function s.efop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)

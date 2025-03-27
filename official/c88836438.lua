@@ -1,9 +1,9 @@
--- スプライト・スマッシャーズ
--- Splight Smashers
--- Scripted by Hatter
+--スプライト・スマッシャーズ
+--Spright Smashers
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -14,9 +14,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.actop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x158,0x17b,0x181}
+s.listed_series={SET_SPRINGANS,SET_THERION,SET_SPRIGHT}
 function s.actcostfilter(c,tp,dsp,gg,rg)
-	if not ((c:IsSetCard(0x158) or c:IsSetCard(0x17b) or c:IsSetCard(0x181)) and c:IsAbleToRemoveAsCost() 
+	if not ((c:IsSetCard(SET_SPRINGANS) or c:IsSetCard(SET_THERION) or c:IsSetCard(SET_SPRIGHT)) and c:IsAbleToRemoveAsCost() 
 		and (c:IsLocation(LOCATION_HAND) or aux.SpElimFilter(c,true))) then return false end
 	return (Duel.GetMZoneCount(tp,c)>0 and (dsp or #(gg-c)>0)) or (rg and #(rg-c)>0)
 end
@@ -32,9 +32,9 @@ function s.actcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local gg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_GRAVE,0,nil,e,tp,0x17b)
 	local rg=Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,nil)
 		and Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_MZONE,0,nil) or nil
-	if chk==0 then return Duel.IsExistingMatchingCard(s.actcostfilter,tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_MZONE,0,1,c,tp,dsp,gg,rg) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.actcostfilter,tp,LOCATION_HAND|LOCATION_GRAVE|LOCATION_MZONE,0,1,c,tp,dsp,gg,rg) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local cg=Duel.SelectMatchingCard(tp,s.actcostfilter,tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_MZONE,0,1,1,c,tp,dsp,gg,rg)
+	local cg=Duel.SelectMatchingCard(tp,s.actcostfilter,tp,LOCATION_HAND|LOCATION_GRAVE|LOCATION_MZONE,0,1,1,c,tp,dsp,gg,rg)
 	Duel.Remove(cg,POS_FACEUP,REASON_COST)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local op=Duel.SelectEffect(tp,

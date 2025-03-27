@@ -1,9 +1,9 @@
--- スケアクロー・トライヒハート
--- Scareclaw Reich Heart
--- Scripted by Hatter
+--スケアクロー・トライヒハート
+--Scareclaw Reichheart
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon procedure
+	--Special Summon procedure
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetValue(s.hspval)
 	c:RegisterEffect(e1)
-	-- Search
+	--Search
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_DRAW)
@@ -27,8 +27,8 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x17c}
-s.sclawfilter=aux.FaceupFilter(Card.IsSetCard,0x17c)
+s.listed_series={SET_SCARECLAW}
+s.sclawfilter=aux.FaceupFilter(Card.IsSetCard,SET_SCARECLAW)
 function s.hspval(e,c)
 	local zone=0
 	local left_right=0
@@ -41,7 +41,7 @@ function s.hspval(e,c)
 	return 0,zone&0x1f
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x17c) and c:IsSpellTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_SCARECLAW) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

@@ -1,4 +1,5 @@
 --Kozmo Lightsword
+--Kozmo Lightsword
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,s.filter)
@@ -36,9 +37,9 @@ function s.initial_effect(c)
 	e8:SetOperation(s.thop)
 	c:RegisterEffect(e8)
 end
-s.listed_series={0xd2}
+s.listed_series={SET_KOZMO}
 function s.filter(c)
-	return c:IsSetCard(0xd2) and c:IsRace(RACE_PSYCHIC)
+	return c:IsSetCard(SET_KOZMO) and c:IsRace(RACE_PSYCHIC)
 end
 function s.dircon(e)
 	return e:GetHandler():GetEquipTarget():GetAttackAnnouncedCount()>0

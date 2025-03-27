@@ -1,4 +1,5 @@
 --ホールディング・レッグス
+--Holding Legs
 local s,id=GetID()
 function s.initial_effect(c)
 	--to hand
@@ -23,7 +24,7 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_GRAVE)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e4:SetCost(aux.bfgcost)
+	e4:SetCost(Cost.SelfBanish)
 	e4:SetTarget(s.target)
 	e4:SetOperation(s.operation)
 	c:RegisterEffect(e4)
@@ -49,7 +50,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_TRIGGER)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_SELF_TURN)
+		e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_SELF_TURN)
 		e1:SetValue(1)
 		tc:RegisterEffect(e1)
 	end

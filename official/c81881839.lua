@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	--name change
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_PHASE+PHASE_BATTLE_START)
+	e3:SetCode(EVENT_PHASE|PHASE_BATTLE_START)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCountLimit(1,{id,1})
@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.nmop)
 	c:RegisterEffect(e3)	
 end
-s.listed_series={0xe5}
+s.listed_series={SET_CIPHER}
 function s.lvfilter(c,e)
 	return c:IsFaceup() and c:IsLevelBelow(6) and c:IsCanBeEffectTarget(e)
 end
@@ -53,7 +53,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL_FINAL)
 		e1:SetValue(tc:GetLevel()*2)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 end
@@ -61,7 +61,7 @@ function s.nmfilter2(c,cd)
 	return c:IsFaceup() and not c:IsCode(cd)
 end
 function s.nmfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xe5) 
+	return c:IsFaceup() and c:IsSetCard(SET_CIPHER) 
 		and Duel.IsExistingMatchingCard(s.nmfilter2,0,LOCATION_MZONE,LOCATION_MZONE,1,c,c:GetCode())
 end
 function s.nmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -82,7 +82,7 @@ function s.nmop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_CODE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(tc:GetCode())
 		sg:GetFirst():RegisterEffect(e1)
 	end

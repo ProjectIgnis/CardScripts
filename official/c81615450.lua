@@ -1,9 +1,9 @@
--- レプティレス・ラミフィケーション
--- Reptilianne Lamification
--- Scripted by Hatter
+--レプティレス・ラミフィケーション
+--Reptilianne Ramifications
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -14,20 +14,20 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x3c}
+s.listed_series={SET_REPTILIANNE}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,e:GetHandler()) end
 	Duel.DiscardHand(tp,Card.IsAbleToGraveAsCost,1,1,REASON_COST)
 end
 function s.mfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x3c) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(SET_REPTILIANNE) and c:IsAbleToHand()
 end
 function s.mthtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.mfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.stfilter(c)
-	return c:IsSpellTrap() and c:IsSetCard(0x3c) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSpellTrap() and c:IsSetCard(SET_REPTILIANNE) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.stthtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.stfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -88,12 +88,12 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,Card.HasNonZeroAttack,tp,0,LOCATION_MZONE,1,1,nil)
 	if #g>0 then
 		Duel.HintSelection(g,true)
-		-- ATK becomes 0
+		--ATK becomes 0
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(0)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		g:GetFirst():RegisterEffect(e1)
 	end
 end

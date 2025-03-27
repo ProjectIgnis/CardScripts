@@ -1,4 +1,5 @@
 --ファイヤークラッカー
+--Fire Cracker
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x42)
@@ -53,10 +54,10 @@ function s.damop1(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e1:SetCode(EFFECT_SKIP_DP)
 		e1:SetTargetRange(1,0)
-		if Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_DRAW then 
-			e1:SetReset(RESET_PHASE+PHASE_DRAW+RESET_SELF_TURN,2)
+		if Duel.IsTurnPlayer(tp) and Duel.IsPhase(PHASE_DRAW) then 
+			e1:SetReset(RESET_PHASE|PHASE_DRAW|RESET_SELF_TURN,2)
 		else
-			e1:SetReset(RESET_PHASE+PHASE_DRAW+RESET_SELF_TURN)
+			e1:SetReset(RESET_PHASE|PHASE_DRAW|RESET_SELF_TURN)
 		end
 		Duel.RegisterEffect(e1,tp)
 	end

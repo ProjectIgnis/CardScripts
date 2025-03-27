@@ -1,4 +1,5 @@
 --ゲート・ブロッカー
+--Gate Blocker
 local s,id=GetID()
 function s.initial_effect(c)
 	--disable

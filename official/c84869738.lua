@@ -17,31 +17,31 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.mattg)
 	e2:SetOperation(s.matop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x20f8}
+s.listed_series={SET_SUPREME_KING_DRAGON}
 s.listed_names={13331639}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,13331639),tp,LOCATION_ONFIELD,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_ZARC),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.spfilter(c,e,tp)
-	if not (c:IsSetCard(0x20f8) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)) then return false end
+	if not (c:IsSetCard(SET_SUPREME_KING_DRAGON) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)) then return false end
 	if c:IsLocation(LOCATION_EXTRA) then
-		local g=Duel.GetMatchingGroup(aux.NOT(aux.FaceupFilter(Card.IsCode,13331639)),tp,LOCATION_MZONE,0,nil)
+		local g=Duel.GetMatchingGroup(aux.NOT(aux.FaceupFilter(Card.IsCode,CARD_ZARC)),tp,LOCATION_MZONE,0,nil)
 		return Duel.GetLocationCountFromEx(tp,tp,g,c)>0
 	else
 		return Duel.GetMZoneCount(tp,g)>0
 	end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(aux.NOT(aux.FaceupFilter(Card.IsCode,13331639)),tp,LOCATION_MZONE,0,nil)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.NOT(aux.FaceupFilter(Card.IsCode,13331639)),tp,LOCATION_MZONE,0,1,nil)
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE+LOCATION_EXTRA,0,1,nil,e,tp) end
+	local g=Duel.GetMatchingGroup(aux.NOT(aux.FaceupFilter(Card.IsCode,CARD_ZARC)),tp,LOCATION_MZONE,0,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.NOT(aux.FaceupFilter(Card.IsCode,CARD_ZARC)),tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE|LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE+LOCATION_EXTRA)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE|LOCATION_EXTRA)
 end
 function s.exfilter1(c)
 	return c:IsLocation(LOCATION_EXTRA) and c:IsFacedown() and c:IsType(TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ)
@@ -62,7 +62,7 @@ function s.rescon(ft1,ft2,ft3,ft4,ft)
 			end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local dg=Duel.GetMatchingGroup(aux.NOT(aux.FaceupFilter(Card.IsCode,13331639)),tp,LOCATION_MZONE,0,nil)
+	local dg=Duel.GetMatchingGroup(aux.NOT(aux.FaceupFilter(Card.IsCode,CARD_ZARC)),tp,LOCATION_MZONE,0,nil)
 	if Duel.Destroy(dg,REASON_EFFECT)==0 then return end
 	local ft1=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local ft2=Duel.GetLocationCountFromEx(tp)
@@ -84,8 +84,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		ft4 = math.min(ect, ft4)
 	end
 	local loc=0
-	if ft1>0 then loc=loc+LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE end
-	if ft2>0 or ft3>0 or ft4>0 then loc=loc+LOCATION_EXTRA end
+	if ft1>0 then loc=loc|LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE end
+	if ft2>0 or ft3>0 or ft4>0 then loc=loc|LOCATION_EXTRA end
 	if loc==0 then return end
 	local sg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,loc,0,nil,e,tp)
 	if #sg==0 then return end
@@ -93,15 +93,15 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(rg,0,tp,tp,true,false,POS_FACEUP)
 end
 function s.xyzfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x20f8) and c:IsType(TYPE_XYZ)
+	return c:IsFaceup() and c:IsSetCard(SET_SUPREME_KING_DRAGON) and c:IsType(TYPE_XYZ)
 end
 function s.matfilter(c)
-	return c:IsSetCard(0x20f8) and c:IsMonster() and (c:IsFaceup() or not c:IsLocation(LOCATION_EXTRA))
+	return c:IsSetCard(SET_SUPREME_KING_DRAGON) and c:IsMonster() and (c:IsFaceup() or not c:IsLocation(LOCATION_EXTRA))
 end
 function s.mattg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.xyzfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(s.xyzfilter,tp,LOCATION_MZONE,0,1,nil)
-		and Duel.IsExistingMatchingCard(s.matfilter,tp,LOCATION_GRAVE+LOCATION_EXTRA,0,2,nil) end
+		and Duel.IsExistingMatchingCard(s.matfilter,tp,LOCATION_GRAVE|LOCATION_EXTRA,0,2,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	Duel.SelectTarget(tp,s.xyzfilter,tp,LOCATION_MZONE,0,1,1,nil)
 end
@@ -109,7 +109,7 @@ function s.matop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-		local g=Duel.SelectMatchingCard(tp,s.matfilter,tp,LOCATION_GRAVE+LOCATION_EXTRA,0,2,2,nil)
+		local g=Duel.SelectMatchingCard(tp,s.matfilter,tp,LOCATION_GRAVE|LOCATION_EXTRA,0,2,2,nil)
 		if #g>0 then
 			Duel.Overlay(tc,g)
 		end

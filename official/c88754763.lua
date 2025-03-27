@@ -1,4 +1,5 @@
 --CX 熱血指導神アルティメットレーナー
+--CXyz Coach Lord Ultimatrainer
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon

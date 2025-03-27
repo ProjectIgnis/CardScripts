@@ -1,4 +1,5 @@
 --古代の機械砲台
+--Ancient Gear Cannon
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -29,7 +30,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(1,1)
 	e1:SetCondition(s.accon)
 	e1:SetValue(s.aclimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.accon(e)

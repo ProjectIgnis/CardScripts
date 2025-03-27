@@ -10,9 +10,9 @@ function s.initial_effect(c)
 	e1:SetCondition(s.condition)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x10f3}
+s.listed_series={SET_PREDAPLANT}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x10f3),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_PREDAPLANT),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function s.checkextra(tp,sg,fc)
 	return sg:IsExists(aux.AND(aux.FilterBoolFunction(Card.IsAttribute,ATTRIBUTE_DARK),aux.FilterBoolFunction(Card.IsControler,tp)),2,nil)

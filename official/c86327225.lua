@@ -1,4 +1,5 @@
 --天界王 シナト
+--Shinato, King of a Higher Plane
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

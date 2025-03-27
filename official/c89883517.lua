@@ -14,8 +14,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local ct1=Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD+LOCATION_HAND,0)
-	local ct2=Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD+LOCATION_HAND)
+	local ct1=Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD|LOCATION_HAND,0)
+	local ct2=Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD|LOCATION_HAND)
 	return ct1<ct2
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

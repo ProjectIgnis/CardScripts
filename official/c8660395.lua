@@ -1,5 +1,5 @@
 --結晶の女神ニンアルル
---Magistus Goddess Ninaruru
+--Ninaruru, the Magistus Glass Goddess
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -37,7 +37,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x152}
+s.listed_series={SET_MAGISTUS}
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
@@ -61,7 +61,7 @@ end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetEquipTarget()
 end
-s.desfilter=aux.FaceupFilter(Card.IsSetCard,0x152)
+s.desfilter=aux.FaceupFilter(Card.IsSetCard,SET_MAGISTUS)
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	if chk==0 then return Duel.IsExistingTarget(s.desfilter,tp,LOCATION_SZONE,0,1,nil)

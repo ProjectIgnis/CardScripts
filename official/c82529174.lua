@@ -1,4 +1,5 @@
 --希望の光
+--Ray of Hope
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

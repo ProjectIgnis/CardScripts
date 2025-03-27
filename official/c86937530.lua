@@ -50,7 +50,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.SelectTarget(tp,s.thfilter,tp,0,LOCATION_MZONE,1,1,nil)
 	g:AddCard(e:GetHandler())
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,g,2,0,LOCATION_MZONE)
-	Duel.SetPossibleOperationInfo(0,CATEGORY_TOGRAVE,nil,1,1-tp,LOCATION_DECK+LOCATION_EXTRA)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOGRAVE,nil,1,1-tp,LOCATION_DECK|LOCATION_EXTRA)
 end
 function s.cfilter(c,code)
 	return c:IsCode(code) and c:IsAbleToGraveAsCost()
@@ -60,7 +60,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
 	if Duel.IsChainDisablable(0) then
-		local g=Duel.GetMatchingGroup(s.cfilter,tp,0,LOCATION_DECK+LOCATION_EXTRA,nil,tc:GetCode())
+		local g=Duel.GetMatchingGroup(s.cfilter,tp,0,LOCATION_DECK|LOCATION_EXTRA,nil,tc:GetCode())
 		if #g>0 and Duel.SelectYesNo(1-tp,aux.Stringid(id,2)) then
 			Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_TOGRAVE)
 			local sg=g:Select(1-tp,1,1,nil)

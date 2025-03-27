@@ -1,4 +1,5 @@
 --慈悲深き修道女
+--The Forgiving Maiden
 local s,id=GetID()
 function s.initial_effect(c)
 	--to hand

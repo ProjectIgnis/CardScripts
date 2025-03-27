@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,LOCATION_HAND+LOCATION_MZONE)
+	e2:SetTargetRange(LOCATION_HAND|LOCATION_MZONE,LOCATION_HAND|LOCATION_MZONE)
 	e2:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
 	e2:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_PSYCHIC))
 	e2:SetOperation(s.esop)
@@ -49,7 +49,7 @@ function s.initial_effect(c)
 end
 s.counter_list={0x4}
 function s.esop(e,tp,eg,ep,ev,re,r,rp,c)
-	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_PHASE+PHASE_END,0,1)
+	c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD|RESET_PHASE|PHASE_END,0,1)
 end
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:GetFirst():GetFlagEffect(id)~=0

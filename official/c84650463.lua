@@ -1,4 +1,5 @@
 --フラッピィ
+--Slushy
 local s,id=GetID()
 function s.initial_effect(c)
 	--send to grave
@@ -19,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(s.spcon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
@@ -42,7 +43,7 @@ function s.cfilter(c)
 	return c:IsCode(id) and c:IsFaceup()
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetMatchingGroupCount(s.cfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,nil)==3
+	return Duel.GetMatchingGroupCount(s.cfilter,tp,LOCATION_GRAVE|LOCATION_REMOVED,0,nil)==3
 end
 function s.filter(c,e,tp)
 	return c:IsLevelAbove(5) and c:IsRace(RACE_SEASERPENT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

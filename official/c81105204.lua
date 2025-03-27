@@ -21,10 +21,10 @@ function s.initial_effect(c)
 	e2:SetValue(s.valcon)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x33}
+s.listed_series={SET_BLACKWING}
 s.listed_names={id}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x33) and not c:IsCode(id)
+	return c:IsFaceup() and c:IsSetCard(SET_BLACKWING) and not c:IsCode(id)
 end
 function s.spcon(e,c)
 	if c==nil then return true end

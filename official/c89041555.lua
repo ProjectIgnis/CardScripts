@@ -1,4 +1,5 @@
 --生贄の抱く爆弾
+--Blast Held by a Tribute
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer() and eg:GetFirst():IsSummonType(SUMMON_TYPE_TRIBUTE)
+	return tp~=Duel.GetTurnPlayer() and eg:GetFirst():IsTributeSummoned()
 end
 function s.filter(c)
 	return c:IsAttackPos()

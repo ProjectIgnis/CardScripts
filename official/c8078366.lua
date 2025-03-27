@@ -1,4 +1,5 @@
 --海皇の突撃兵
+--Atlantean Attack Squad
 local s,id=GetID()
 function s.initial_effect(c)
 	--ayk

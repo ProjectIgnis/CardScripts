@@ -1,4 +1,5 @@
 --魔術師の右手
+--Magician's Right Hand
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

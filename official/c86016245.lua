@@ -1,4 +1,5 @@
 --弱者の意地
+--Pride of the Weak
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

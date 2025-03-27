@@ -5,9 +5,9 @@ function s.initial_effect(c)
 	--pendulum summon
 	Pendulum.AddProcedure(c)
 	--Ritual Summon
-	local e1=Ritual.CreateProc(c,RITPROC_EQUAL,aux.FilterBoolFunction(Card.IsSetCard,0xb4),nil,aux.Stringid(id,1))
+	local e1=Ritual.CreateProc(c,RITPROC_EQUAL,aux.FilterBoolFunction(Card.IsSetCard,SET_NEKROZ),nil,aux.Stringid(id,1))
 	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetRange(LOCATION_MZONE+LOCATION_HAND)
+	e1:SetRange(LOCATION_MZONE|LOCATION_HAND)
 	e1:SetCountLimit(1,id)
 	e1:SetCost(s.cost)
 	c:RegisterEffect(e1)
@@ -21,13 +21,13 @@ function s.initial_effect(c)
 	e2:SetTarget(s.splimit)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xb4,0xc4}
+s.listed_series={SET_NEKROZ,SET_ZEFRA}
 s.listed_names={21105106}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp)
-	if c:IsSetCard(0xb4) or c:IsSetCard(0xc4) then return false end
+	if c:IsSetCard(SET_NEKROZ) or c:IsSetCard(SET_ZEFRA) then return false end
 	return (sumtype&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end

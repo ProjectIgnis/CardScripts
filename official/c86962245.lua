@@ -30,9 +30,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x119}
+s.listed_series={SET_SALAMANGREAT}
 function s.cfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x119)
+	return c:IsMonster() and c:IsSetCard(SET_SALAMANGREAT)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,3,nil)
@@ -45,7 +45,7 @@ function s.filter(c)
 	return c:GetSequence()<5
 end
 function s.tdfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x119) and c:IsLinkMonster() and c:IsAbleToExtra()
+	return c:IsMonster() and c:IsSetCard(SET_SALAMANGREAT) and c:IsLinkMonster() and c:IsAbleToExtra()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -85,4 +85,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 end
-

@@ -1,4 +1,5 @@
 --ジェスター・コンフィ
+--Jester Confit
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,0,id)
@@ -39,7 +40,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCondition(s.thcon)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
-	e1:SetReset(RESET_EVENT+0x16a0000+RESET_PHASE+PHASE_END,2)
+	e1:SetReset(RESET_EVENT|RESET_TOFIELD|RESET_PHASE|PHASE_END,2)
 	e1:SetLabel(Duel.GetTurnCount())
 	c:RegisterEffect(e1)
 end

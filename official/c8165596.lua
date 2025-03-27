@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetCountLimit(1,id)
 	e2:SetCode(EVENT_CHAINING)
 	e2:SetCondition(s.negcon)
-	e2:SetCost(aux.dxmcostgen(1,1,s.slwc))
+	e2:SetCost(Cost.Detach(1,1,s.slwc))
 	e2:SetTarget(s.negtg)
 	e2:SetOperation(s.negop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
@@ -41,17 +41,17 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x7b,0x55}
+s.listed_series={SET_GALAXY,SET_PHOTON}
 s.xyz_number=90
 function s.indcon(e)
-	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsSetCard,1,nil,0x55)
+	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsSetCard,1,nil,SET_PHOTON)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp,chk)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and ep~=tp
 		and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainDisablable(ev)
 end
 function s.slwc(e,og)
-	e:SetLabel(og:GetFirst():IsSetCard(0x7b) and 1 or 0)
+	e:SetLabel(og:GetFirst():IsSetCard(SET_GALAXY) and 1 or 0)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -69,10 +69,10 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsStatus(STATUS_BATTLE_DESTROYED) then return false end
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.filter(c)
-	return c:IsSetCard(0x55) or c:IsSetCard(0x7b)
+	return c:IsSetCard(SET_PHOTON) or c:IsSetCard(SET_GALAXY)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

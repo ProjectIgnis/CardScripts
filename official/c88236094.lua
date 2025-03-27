@@ -1,4 +1,5 @@
 --アスワンの亡霊
+--Aswan Apparition
 local s,id=GetID()
 function s.initial_effect(c)
 	--todeck

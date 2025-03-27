@@ -1,4 +1,5 @@
 --ディープ・スィーパー
+--Deep Sweeper
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy

@@ -36,7 +36,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
 	if tc and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)~=0 then
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,0)
 		e:SetLabelObject(tc)
 	end
 end
@@ -51,12 +51,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if not tc or tc:IsFacedown() or tc:GetFlagEffect(id)==0 then return false end
 		local b1=tc:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true) 
-			and Duel.IsExistingMatchingCard(s.relfilter,tp,LOCATION_MZONE+LOCATION_HAND+LOCATION_GRAVE,0,1,tc,e,tp,tc,ft)
+			and Duel.IsExistingMatchingCard(s.relfilter,tp,LOCATION_MZONE|LOCATION_HAND|LOCATION_GRAVE,0,1,tc,e,tp,tc,ft)
 		local b2=tc:IsAbleToHand()
 		return b1 or b2
 	end
 	local b1=tc:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true) 
-		and Duel.IsExistingMatchingCard(s.relfilter,tp,LOCATION_MZONE+LOCATION_HAND+LOCATION_GRAVE,0,1,tc,e,tp,tc,ft)
+		and Duel.IsExistingMatchingCard(s.relfilter,tp,LOCATION_MZONE|LOCATION_HAND|LOCATION_GRAVE,0,1,tc,e,tp,tc,ft)
 	local b2=tc:IsAbleToHand()
 	local sel=0
 	if b1 and b2 then
@@ -96,7 +96,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not rc:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true) then return end
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.relfilter),tp,LOCATION_MZONE+LOCATION_HAND+LOCATION_GRAVE,0,1,1,rc,e,tp,rc,ft):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.relfilter),tp,LOCATION_MZONE|LOCATION_HAND|LOCATION_GRAVE,0,1,1,rc,e,tp,rc,ft):GetFirst()
 	if tc then
 		rc:SetMaterial(Group.FromCards(tc))
 		if tc:IsLocation(LOCATION_GRAVE) then

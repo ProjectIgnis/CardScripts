@@ -1,4 +1,5 @@
 --レスキュー・ウォリアー
+--Rescue Warrior
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)

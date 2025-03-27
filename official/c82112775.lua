@@ -1,4 +1,5 @@
 --D・D・M
+--D.D.M. - Different Dimension Master
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon

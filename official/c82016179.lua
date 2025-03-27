@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x90}
+s.listed_series={SET_SYLVAN}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,3) end
 	Duel.SetTargetPlayer(tp)
@@ -27,9 +27,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ShuffleHand(p)
 		Duel.BreakEffect()
 		local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,p,LOCATION_HAND,0,nil)
-		if #g>1 and g:IsExists(Card.IsSetCard,1,nil,0x90) then
+		if #g>1 and g:IsExists(Card.IsSetCard,1,nil,SET_SYLVAN) then
 			Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
-			local sg1=g:FilterSelect(p,Card.IsSetCard,1,1,nil,0x90)
+			local sg1=g:FilterSelect(p,Card.IsSetCard,1,1,nil,SET_SYLVAN)
 			Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
 			local sg2=g:Select(p,1,1,sg1:GetFirst())
 			sg1:Merge(sg2)

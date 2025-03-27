@@ -1,4 +1,5 @@
 --コクーン・パーティ
+--Cocoon Party
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -10,12 +11,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x1f,0x1e}
+s.listed_series={SET_NEO_SPACIAN,SET_CHRYSALIS}
 function s.gfilter(c)
-	return c:IsSetCard(0x1f) and c:IsMonster()
+	return c:IsSetCard(SET_NEO_SPACIAN) and c:IsMonster()
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x1e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_CHRYSALIS) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

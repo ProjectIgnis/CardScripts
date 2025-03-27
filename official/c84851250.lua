@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
-	e2:SetRange(LOCATION_HAND+LOCATION_MZONE)
+	e2:SetRange(LOCATION_HAND|LOCATION_MZONE)
 	e2:SetCost(s.cost)
 	e2:SetCondition(s.condition)
 	e2:SetTarget(s.target)
@@ -30,13 +30,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 	--Lists “Windwitch" archetype
-s.listed_series={0xf0}
+s.listed_series={SET_WINDWITCH}
 	--Specifically lists itself
 s.listed_names={id}
 
 	--Check for non-"Windwitch" monster
 function s.filter(c)
-	return c:IsFacedown() or not c:IsSetCard(0xf0)
+	return c:IsFacedown() or not c:IsSetCard(SET_WINDWITCH)
 end
 function s.ntcon(e,c,minc,zone)
 	if c==nil then return true end
@@ -52,7 +52,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 	--Check if player controls a "Windwitch" monster other than this card's name
 function s.cfilter(c)
-	return c:IsSetCard(0xf0) and c:IsFaceup() and not c:IsCode(id)
+	return c:IsSetCard(SET_WINDWITCH) and c:IsFaceup() and not c:IsCode(id)
 end
 	--Check if it's opponent's main phase and player controls a "Windwitch" monster other than this card's name
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

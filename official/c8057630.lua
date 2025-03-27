@@ -1,4 +1,5 @@
 --コアの再練成
+--Core Reinforcement
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -28,7 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x1d) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_KOAKI_MEIRU) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end
@@ -51,7 +52,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetFirstCardTarget()
 	if not tc then return end
 	if tc:IsLocation(LOCATION_MZONE) and Duel.Destroy(tc,REASON_EFFECT)==0 then return end
-	if re~=e:GetLabelObject() and Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_END then
+	if re~=e:GetLabelObject() and Duel.IsTurnPlayer(tp) and Duel.IsPhase(PHASE_END) then
 		local atk=tc:GetBaseAttack()
 		if atk<0 then atk=0 end
 		Duel.Damage(tp,atk,REASON_EFFECT)
@@ -63,7 +64,7 @@ function s.descon2(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.desop2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetFirstCardTarget()
-	if Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_END then
+	if Duel.IsTurnPlayer(tp) and Duel.IsPhase(PHASE_END) then
 		local atk=tc:GetBaseAttack()
 		if atk<0 then atk=0 end
 		Duel.Damage(tp,atk,REASON_EFFECT)

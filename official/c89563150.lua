@@ -1,4 +1,5 @@
 --白銀のバリア－シルバーフォース－
+--Shining Silver Force
 local s,id=GetID()
 function s.initial_effect(c)
 	--Negate

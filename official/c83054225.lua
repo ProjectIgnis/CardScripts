@@ -1,4 +1,5 @@
 --緊急発進
+--Scramble!! Scramble!!
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x101b}
+s.listed_series={SET_MECHA_PHANTOM_BEAST}
 s.listed_names={TOKEN_MECHA_PHANTOM_BEAST}
 function s.cfilter(c)
 	return not c:IsType(TYPE_TOKEN)
@@ -20,7 +21,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>Duel.GetMatchingGroupCount(s.cfilter,tp,LOCATION_MZONE,0,nil)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x101b) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_MECHA_PHANTOM_BEAST) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetMatchingGroupCount(s.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
@@ -32,7 +33,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.SelectReleaseGroupCost(tp,Card.IsCode,1,ct,false,nil,nil,TOKEN_MECHA_PHANTOM_BEAST)
 	Duel.Release(g,REASON_COST)
 	e:SetLabel(#g)
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,EFFECT_FLAG_OATH,1)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,EFFECT_FLAG_OATH,1)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,#g,tp,LOCATION_DECK)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -49,7 +50,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=sg:GetFirst()
 	for tc in aux.Next(sg) do
 		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1,fid)
 	end
 	Duel.SpecialSummonComplete()
 	sg:KeepAlive()

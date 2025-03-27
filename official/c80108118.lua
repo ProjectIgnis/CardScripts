@@ -1,4 +1,5 @@
 --X－セイバー ウルベルム
+--X-Saber Urbellum
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon

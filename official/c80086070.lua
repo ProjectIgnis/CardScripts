@@ -1,5 +1,5 @@
--- ベアルクティ－グラン＝シャリオ
--- Ursarctic Grand Chariot
+--ベアルクティ－グラン＝シャリオ
+--Ursarctic Grand Chariot
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -45,7 +45,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.disop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x165}
+s.listed_series={SET_URSARCTIC}
 function s.sprfilter(c)
 	return c:IsFaceup() and c:IsAbleToGraveAsCost() and c:HasLevel()
 end
@@ -105,7 +105,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 --negate
 function s.disfilter(c,tp)
-	return c:IsFaceup() and c:IsLocation(LOCATION_ONFIELD) and c:IsControler(tp) and c:IsSetCard(0x165)
+	return c:IsFaceup() and c:IsLocation(LOCATION_ONFIELD) and c:IsControler(tp) and c:IsSetCard(SET_URSARCTIC)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then return false end

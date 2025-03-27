@@ -1,5 +1,5 @@
 --オルターガイスト・エミュレルフ
---Altergeist Emulelf
+--Altergeist Emulatelf
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x103}
+s.listed_series={SET_ALTERGEIST}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0x103,0x21,1400,1800,4,RACE_SPELLCASTER,ATTRIBUTE_LIGHT) end
@@ -34,7 +34,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(LOCATION_ONFIELD,0)
 	e1:SetTarget(s.etarget)
 	e1:SetValue(1)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e1,true)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
@@ -43,11 +43,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetTargetRange(LOCATION_ONFIELD,0)
 	e2:SetTarget(s.etarget)
 	e2:SetValue(1)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e2,true)
 	Duel.SpecialSummonComplete()
 end
 function s.etarget(e,c)
-	return c:IsSetCard(0x103) and c:IsTrap() and c~=e:GetHandler()
+	return c:IsSetCard(SET_ALTERGEIST) and c:IsTrap() and c~=e:GetHandler()
 end
-

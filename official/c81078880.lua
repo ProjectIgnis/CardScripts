@@ -1,5 +1,5 @@
 --Ｌｉｖｅ☆Ｔｗｉｎ リィラ・トリート
---Live☆Twin Lilla Treat
+--Live☆Twin Lil-la Treat
 --Scripted by Hel
 
 local s,id=GetID()
@@ -22,22 +22,22 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(s.condition)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x153,0x155}
+s.listed_series={SET_KI_SIKIL,SET_EVIL_TWIN}
 
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x153),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_KI_SIKIL),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	local at=Duel.GetAttackTarget()
-	return (Duel.GetBattleDamage(tp)>0 or Duel.GetBattleDamage(1-tp)) and (tc:IsSetCard(0x155) or (at and at:IsSetCard(0x155)))
+	return (Duel.GetBattleDamage(tp)>0 or Duel.GetBattleDamage(1-tp)) and (tc:IsSetCard(SET_EVIL_TWIN) or (at and at:IsSetCard(SET_EVIL_TWIN)))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsFaceup() end
@@ -57,7 +57,7 @@ local c=e:GetHandler()
 		else
 			e1:SetValue(-Duel.GetBattleDamage(1-tp))
 		end
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 end

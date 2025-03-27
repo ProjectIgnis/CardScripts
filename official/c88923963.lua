@@ -27,9 +27,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={88923964}
-s.listed_series={0x107a,0x207a}
+s.listed_series={SET_NOBLE_KNIGHT,SET_NOBLE_ARMS}
 function s.tkcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(Card.IsSetCard,1,nil,0x207a)
+	return eg:IsExists(Card.IsSetCard,1,nil,SET_NOBLE_ARMS)
 end
 function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -49,17 +49,17 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetDescription(aux.Stringid(id,2))
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return not c:IsSetCard(0x107a)
+	return not c:IsSetCard(SET_NOBLE_KNIGHT)
 end
 function s.atkcon(e)
 	local c=e:GetHandler()
 	local eg=c:GetEquipGroup()
-	return #eg>0 and eg:IsExists(Card.IsSetCard,1,nil,0x207a)
+	return #eg>0 and eg:IsExists(Card.IsSetCard,1,nil,SET_NOBLE_ARMS)
 end
 function s.atktg(e,c)
-	return c:IsSetCard(0x107a) and c~=e:GetHandler()
+	return c:IsSetCard(SET_NOBLE_KNIGHT) and c~=e:GetHandler()
 end

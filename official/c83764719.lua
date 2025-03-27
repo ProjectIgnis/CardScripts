@@ -1,4 +1,5 @@
 --死者蘇生(EU)
+--Monster Reborn
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,4 +1,5 @@
 --ヘル・ツイン・コップ
+--Stygian Sergeants
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -23,7 +24,7 @@ end
 function s.atcon1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
-	return Duel.GetTurnPlayer()==tp and bc:IsLocation(LOCATION_GRAVE) and bc:IsMonster()
+	return Duel.IsTurnPlayer(tp) and bc:IsLocation(LOCATION_GRAVE) and bc:IsMonster()
 		and c:CanChainAttack() and c:IsStatus(STATUS_OPPO_BATTLE)
 end
 function s.atop1(e,tp,eg,ep,ev,re,r,rp)
@@ -33,14 +34,14 @@ function s.atop1(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(800)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 	c:RegisterEffect(e1)
 	Duel.ChainAttack()
 end
 function s.atcon2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
-	return Duel.GetTurnPlayer()~=tp and c:IsRelateToBattle() and c:IsStatus(STATUS_OPPO_BATTLE) 
+	return Duel.IsTurnPlayer(1-tp) and c:IsRelateToBattle() and c:IsStatus(STATUS_OPPO_BATTLE) 
 		and bc:IsLocation(LOCATION_GRAVE) and bc:IsMonster()
 end
 function s.atop2(e,tp,eg,ep,ev,re,r,rp)
@@ -50,6 +51,6 @@ function s.atop2(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(800)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 	c:RegisterEffect(e1)
 end

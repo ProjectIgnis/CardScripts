@@ -1,4 +1,5 @@
 --破邪の魔法壁
+--Sorcerous Spell Wall
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

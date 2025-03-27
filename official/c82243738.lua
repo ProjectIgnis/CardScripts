@@ -51,5 +51,5 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 function s.con(e)
-	return Duel.IsMainPhase() and e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL)
+	return Duel.IsMainPhase() and e:GetHandler():IsSpecialSummoned()
 end

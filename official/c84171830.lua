@@ -53,7 +53,7 @@ function s.splimit(e,c)
 	return c:IsLocation(LOCATION_EXTRA)
 end
 function s.cfilter(c)
-	return c:IsSummonType(SUMMON_TYPE_TRIBUTE)
+	return c:IsTributeSummoned()
 end
 function s.discon(e)
 	local tp=e:GetHandlerPlayer()
@@ -67,7 +67,7 @@ function s.atkcon(e)
 	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and d and d:IsControler(1-tp)
 end
 function s.atktg(e,c)
-	return c==Duel.GetAttacker() and c:IsSummonType(SUMMON_TYPE_TRIBUTE)
+	return c==Duel.GetAttacker() and c:IsTributeSummoned()
 end
 function s.filter(c)
 	return c:GetAttack()==2800 and c:GetDefense()==1000
@@ -87,12 +87,12 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
 		e1:SetValue(-2)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD|RESET_PHASE|PHASE_END)
 		g:GetFirst():RegisterEffect(e1)
 	end
 end
 function s.effcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg and eg:IsExists(function(c) return c:IsSummonType(SUMMON_TYPE_TRIBUTE)
+	return eg and eg:IsExists(function(c) return c:IsTributeSummoned()
 		and c:IsReason(REASON_FUSION) end,1,nil)
 end
 function s.effop2(e,tp,eg,ep,ev,re,r,rp)

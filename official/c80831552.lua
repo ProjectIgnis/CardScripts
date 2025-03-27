@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.efilter)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x11a}
+s.listed_series={SET_DINOWRESTLER}
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,0)==0
@@ -30,7 +30,7 @@ function s.spcon(e,c)
 		and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
 function s.ecfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x11a) and c:IsLinkAbove(3)
+	return c:IsFaceup() and c:IsSetCard(SET_DINOWRESTLER) and c:IsLinkAbove(3)
 end
 function s.econ(e)
 	return Duel.IsExistingMatchingCard(s.ecfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)

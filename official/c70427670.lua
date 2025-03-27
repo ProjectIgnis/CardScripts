@@ -1,10 +1,10 @@
--- 捕食植物ブフォリキュラ
--- Predaplant Bufollicula
--- Scripted by Hatter
+--捕食植物ブフォリキュラ
+--Predaplant Bufolicula
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	Pendulum.AddProcedure(c)
-	-- Fusion Summon 1 DARK Fusion Monster
+	--Fusion Summon 1 DARK Fusion Monster
 	local params = {aux.FilterBoolFunction(Card.IsAttribute,ATTRIBUTE_DARK)}
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(Fusion.SummonEffTG(table.unpack(params)))
 	e1:SetOperation(Fusion.SummonEffOP(table.unpack(params)))
 	c:RegisterEffect(e1)
-	-- Add 1 face-up DARK Pendulum Monster from the Extra Deck to the hand
+	--Add 1 face-up DARK Pendulum Monster from the Extra Deck to the hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND)
@@ -32,7 +32,7 @@ s.listed_names={id}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return (r&REASON_FUSION)==REASON_FUSION and c:IsFaceup()
-		and c:IsLocation(LOCATION_GRAVE+LOCATION_EXTRA) 
+		and c:IsLocation(LOCATION_GRAVE|LOCATION_EXTRA) 
 end
 function s.thfilter(c)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_DARK) and c:IsType(TYPE_PENDULUM)

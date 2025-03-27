@@ -1,4 +1,5 @@
 --悪魔の偵察者
+--Hiro's Shadow Scout
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip

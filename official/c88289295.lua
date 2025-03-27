@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,TYPE_SYNCHRO)
+	return not Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil,TYPE_SYNCHRO)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,1000) end

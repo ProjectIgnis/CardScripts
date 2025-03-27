@@ -54,7 +54,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.spop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0xdc,0x20dc}
+s.listed_series={SET_SUPER_QUANT,SET_SUPER_QUANTAL_MECH_BEAST}
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetOverlayGroup():GetClassCount(Card.GetCode)>=2 and Duel.IsMainPhase()
 end
@@ -79,13 +79,13 @@ function s.imcon(e)
 	return e:GetHandler():GetOverlayGroup():GetClassCount(Card.GetCode)>=4
 end
 function s.efilter(e,te)
-	return not te:GetOwner():IsSetCard(0xdc)
+	return not te:GetOwner():IsSetCard(SET_SUPER_QUANT)
 end
 function s.drcon(e)
 	return e:GetHandler():GetOverlayGroup():GetClassCount(Card.GetCode)>=6
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x20dc) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_SUPER_QUANTAL_MECH_BEAST) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

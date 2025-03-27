@@ -1,4 +1,5 @@
 --進化の宿命
+--Evo-Karma
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -26,7 +27,7 @@ function s.chainlm(e,rp,tp)
 end
 function s.sucfilter(c)
 	local st=c:GetSummonType()
-	return c:IsSetCard(0x304e) and st>=(SUMMON_TYPE_SPECIAL+150) and st<(SUMMON_TYPE_SPECIAL+180)
+	return c:IsSetCard(SET_EVOLTILE) and st>=(SUMMON_TYPE_SPECIAL+150) and st<(SUMMON_TYPE_SPECIAL+180)
 end
 function s.sucop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(s.sucfilter,1,nil) then

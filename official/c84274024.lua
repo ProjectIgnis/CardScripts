@@ -48,11 +48,11 @@ s.listed_names={CARD_POLYMERIZATION}
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	if c:IsType(TYPE_FUSION) and g:IsExists(Card.IsType,1,nil,TYPE_PENDULUM) then
-		c:RegisterFlagEffect(id,RESET_EVENT+0x4fe0000+RESET_PHASE+PHASE_END,0,1)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESET_TODECK|RESET_TOHAND|RESET_TOGRAVE|RESET_REMOVE|RESET_TEMP_REMOVE|RESET_TURN_SET|RESET_PHASE|PHASE_END,0,1)
 	elseif c:IsType(TYPE_SYNCHRO) and g:IsExists(Card.IsType,1,nil,TYPE_PENDULUM) then
-		c:RegisterFlagEffect(id,RESET_EVENT+0x4fe0000+RESET_PHASE+PHASE_END,0,1)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESET_TODECK|RESET_TOHAND|RESET_TOGRAVE|RESET_REMOVE|RESET_TEMP_REMOVE|RESET_TURN_SET|RESET_PHASE|PHASE_END,0,1)
 	elseif c:IsType(TYPE_XYZ) and g:IsExists(Card.IsType,1,nil,TYPE_PENDULUM) then
-		c:RegisterFlagEffect(id,RESET_EVENT+0x4fe0000+RESET_PHASE+PHASE_END,0,1)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESET_TODECK|RESET_TOHAND|RESET_TOGRAVE|RESET_REMOVE|RESET_TEMP_REMOVE|RESET_TURN_SET|RESET_PHASE|PHASE_END,0,1)
 	end
 end
 function s.cfilter(c,e,tp)
@@ -81,17 +81,17 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_DISABLE)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e1,true)
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_DISABLE_EFFECT)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e2,true)
 		end
 		Duel.SpecialSummonComplete()
 	end
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 end
 function s.thfilter1(c)
 	return c:IsCode(CARD_POLYMERIZATION) and c:IsAbleToHand()
@@ -109,7 +109,7 @@ function s.thop1(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
-	Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_END,0,1)
 end
 function s.thfilter2(c,e,tp,ft,rk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
@@ -134,5 +134,5 @@ function s.thop2(e,tp,eg,ep,ev,re,r,rp)
 						aux.Stringid(id,0)
 						)
 		end
-	Duel.RegisterFlagEffect(tp,id+2,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id+2,RESET_PHASE|PHASE_END,0,1)
 end

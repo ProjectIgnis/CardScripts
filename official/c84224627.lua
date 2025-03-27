@@ -1,4 +1,5 @@
 --キャット・シャーク
+--Cat Shark
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -50,7 +51,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(tc:GetBaseAttack()*2)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()

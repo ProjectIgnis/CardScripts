@@ -60,14 +60,14 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetType(EFFECT_TYPE_SINGLE)
 				e1:SetCode(EFFECT_UPDATE_ATTACK)
 				e1:SetValue(oc*500)
-				e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+				e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 				c:RegisterEffect(e1)
 			end
 		end
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) and Duel.IsTurnPlayer(1-tp)
+	return e:GetHandler():IsSynchroSummoned() and Duel.IsTurnPlayer(1-tp)
 		and Duel.IsMainPhase()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)

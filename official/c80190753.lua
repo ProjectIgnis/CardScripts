@@ -1,4 +1,5 @@
 --桜姫タレイア
+--Talaya, Princess of Cherry Blossoms
 local s,id=GetID()
 function s.initial_effect(c)
 	--atk

@@ -1,4 +1,5 @@
 --ラヴァル炎湖畔の淑女
+--Laval Lakeside Lady
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
@@ -15,10 +16,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetMatchingGroup(Card.IsSetCard,tp,LOCATION_GRAVE,0,nil,0x39):GetClassCount(Card.GetCode)>=3
+	return Duel.GetMatchingGroup(Card.IsSetCard,tp,LOCATION_GRAVE,0,nil,SET_LAVAL):GetClassCount(Card.GetCode)>=3
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x39) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(SET_LAVAL) and c:IsAbleToRemoveAsCost()
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,0)

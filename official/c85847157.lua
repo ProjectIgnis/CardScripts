@@ -1,5 +1,5 @@
 --Proof of Pruflas
---Scripted by Rundas
+--Proof of Pruflas
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon
@@ -49,7 +49,7 @@ function s.ssop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetTargetRange(1,0)
 	Duel.RegisterEffect(e1,tp)
 end

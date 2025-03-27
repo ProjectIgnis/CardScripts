@@ -1,4 +1,5 @@
 --フォーム・チェンジ
+--Form Change
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,12 +12,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xa008,0x8}
+s.listed_series={SET_MASKED_HERO,SET_HERO}
 function s.spfilter(c,code,lv,e,tp,mc)
-	return c:GetLevel()==lv and c:IsSetCard(0xa008) and not c:IsCode(code) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:GetLevel()==lv and c:IsSetCard(SET_MASKED_HERO) and not c:IsCode(code) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.filter(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x8) and c:IsType(TYPE_FUSION) and c:IsAbleToExtra()
+	return c:IsFaceup() and c:IsSetCard(SET_HERO) and c:IsType(TYPE_FUSION) and c:IsAbleToExtra()
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,c:GetCode(),c:GetOriginalLevel(),e,tp,c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

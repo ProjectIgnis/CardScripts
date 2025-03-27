@@ -1,4 +1,5 @@
 --リバースダイス
+--Dice Re-Roll
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -14,7 +15,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EVENT_TOSS_DICE_NEGATE)
 	e1:SetCondition(s.coincon)
 	e1:SetOperation(s.coinop)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.coincon(e,tp,eg,ep,ev,re,r,rp)
@@ -24,7 +25,7 @@ function s.coinop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFlagEffect(tp,id)~=0 then return end
 	if Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.Hint(HINT_CARD,0,id)
-		Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 		local ct1=(ev&0xff)
 		local ct2=(ev>>16)
 		Duel.TossDice(ep,ct1,ct2)

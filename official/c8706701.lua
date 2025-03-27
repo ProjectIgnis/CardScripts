@@ -1,4 +1,5 @@
 --レッド・ミラー
+--Red Mirror
 local s,id=GetID()
 function s.initial_effect(c)
 	--to hand
@@ -51,7 +52,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,tp)
-	return c:IsSummonType(SUMMON_TYPE_SYNCHRO) and c:IsSummonPlayer(tp)
+	return c:IsSynchroSummoned() and c:IsSummonPlayer(tp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp) and aux.exccon(e)

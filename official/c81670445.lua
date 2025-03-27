@@ -61,14 +61,14 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not c:IsRelateToEffect(e) or not tc then return end
 	local value=tc:GetOverlayCount()*300
-	if tc:UpdateAttack(value,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,c)==value and tc:GetOverlayGroup():IsExists(s.ownerfil,1,nil,e) then
+	if tc:UpdateAttack(value,RESETS_STANDARD_PHASE_END,c)==value and tc:GetOverlayGroup():IsExists(s.ownerfil,1,nil,e) then
 		--Can attack directly
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(3205)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DIRECT_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

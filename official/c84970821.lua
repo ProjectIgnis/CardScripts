@@ -1,4 +1,5 @@
 --暗黒の呪縛
+--Curse of Darkness
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

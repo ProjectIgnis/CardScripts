@@ -1,4 +1,5 @@
 --No.59 背反の料理人
+--Number 59: Crooked Cook
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -57,7 +58,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
 			e1:SetValue(ct*300)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 			c:RegisterEffect(e1)
 		end
 	end

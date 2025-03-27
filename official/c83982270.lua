@@ -1,4 +1,5 @@
 --雲魔物－ポイズン・クラウド
+--Cloudian - Poison Cloud
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy&damage

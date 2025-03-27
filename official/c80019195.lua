@@ -1,4 +1,5 @@
 --伝説の騎士 ティマイオス
+--Legendary Knight Timaeus
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

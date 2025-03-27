@@ -63,7 +63,7 @@ function s.indop(e,tp,eg,ep,ev,re,r,rp,chk)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,2)
+		e1:SetReset(RESETS_STANDARD_PHASE_END,2)
 		tc:RegisterEffect(e1)
 	end
 end

@@ -1,5 +1,5 @@
 --EMジンライノ
---Peformapal Thunderhino
+--Performapal Thunderhino
 local s,id=GetID()
 function s.initial_effect(c)
 	--Other monsters cannot be targeted by attacks

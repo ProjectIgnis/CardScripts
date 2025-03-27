@@ -1,4 +1,5 @@
 --ドドドウォリアー
+--Dododo Warrior
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon with no tribute
@@ -38,7 +39,7 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EVENT_CHAIN_SOLVING)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetOperation(s.negop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_DAMAGE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_PHASE|PHASE_DAMAGE)
 	e:GetHandler():RegisterEffect(e1)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)

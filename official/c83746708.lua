@@ -1,4 +1,5 @@
 --魔導師の力
+--Mage Power
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c)

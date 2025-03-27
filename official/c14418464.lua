@@ -41,7 +41,7 @@ s.listed_series={SET_VAYLANTZ}
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then
-		local zone=(1<<c:GetSequence())&0x1f
+		local zone=(1<<c:GetSequence())&ZONES_MMZ
 		return zone~=0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
@@ -49,7 +49,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	local zone=(1<<c:GetSequence())&0x1f
+	local zone=(1<<c:GetSequence())&ZONES_MMZ
 	if zone~=0 then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP,zone)
 	end
@@ -89,7 +89,7 @@ function s.smvcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.smvfilter(c,tp)
 	local z=1<<c:GetSequence()
-	return Duel.GetLocationCount(tp,LOCATION_SZONE,tp,LOCATION_REASON_TOFIELD,(z<<1|z>>1)&0x1f)>0
+	return Duel.GetLocationCount(tp,LOCATION_SZONE,tp,LOCATION_REASON_TOFIELD,(z<<1|z>>1)&ZONES_MMZ)>0
 end
 function s.smvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_PZONE) and s.smvfilter(chkc) end

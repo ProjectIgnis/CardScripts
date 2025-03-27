@@ -19,7 +19,7 @@ function s.filter(c,e,tp)
 	return c:IsSetCard(SET_APPLIANCER) and c:IsLinkMonster() and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,c)
 end
 function s.spfilter(c,e,tp,fc)
-	local zone=fc:GetFreeLinkedZone()&0x1f
+	local zone=fc:GetFreeLinkedZone()&ZONES_MMZ
 	return c:IsSetCard(SET_APPLIANCER) and c:IsLinkMonster() and c:IsLink(1)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
@@ -35,7 +35,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local fid=e:GetHandler():GetFieldID()
 	local c=Duel.GetFirstTarget()
-	local zone=c:GetFreeLinkedZone()&0x1f
+	local zone=c:GetFreeLinkedZone()&ZONES_MMZ
 	local count=s.zone_count(zone)
 	local sg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE,0,nil,e,tp,c)
 	if #sg<count then count=#sg end
@@ -44,7 +44,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		for i=0,count,1 do
 			local tc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,c):GetFirst()
 			if tc then
-				local zone=c:GetFreeLinkedZone()&0x1f
+				local zone=c:GetFreeLinkedZone()&ZONES_MMZ
 				if zone>0 and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP,zone) then
 					tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1,fid)
 				end

@@ -72,5 +72,5 @@ function s.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
 		and (e:GetHandler():IsPendulumSummoned() or e:GetHandler():GetFlagEffect(id)~=0)
 end
 function s.lizfilter(e,c)
-	return not c:IsOriginalSetCard(0xe0)
+	return not c:IsOriginalSetCard(SET_AMORPHAGE)
 end

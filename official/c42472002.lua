@@ -88,5 +88,5 @@ function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(SET_NOBLE_KNIGHT)
 end
 function s.lizfilter(e,c)
-	return not c:IsOriginalSetCard(0x107a)
+	return not c:IsOriginalSetCard(SET_NOBLE_KNIGHT)
 end

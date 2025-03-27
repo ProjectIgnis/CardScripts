@@ -54,7 +54,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTarget(function(e,c) return c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(SET_AMAZONESS) end)
 	Duel.RegisterEffect(e1,tp)
 	--Clock Lizard check
-	aux.addTempLizardCheck(c,tp,function(e,c) return not c:IsOriginalSetCard(0x4) end)
+	aux.addTempLizardCheck(c,tp,function(e,c) return not c:IsOriginalSetCard(SET_AMAZONESS) end)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and s.spthfilter(tc,tp) and Duel.SendtoHand(tc,nil,REASON_EFFECT)>0
 		and tc:IsLocation(LOCATION_HAND) and c:IsRelateToEffect(e) then

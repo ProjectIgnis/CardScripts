@@ -51,7 +51,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cpfilter(c)
-	return c:IsFaceup() and c:IsMonster() and c:IsOriginalSetCard(0x1066) and not c:IsOriginalCode(id)
+	return c:IsFaceup() and c:IsMonster() and c:IsOriginalSetCard(SET_SYMPHONIC_WARRIOR) and not c:IsOriginalCode(id)
 end
 function s.cptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE|LOCATION_GRAVE) and s.cpfilter(chkc) end

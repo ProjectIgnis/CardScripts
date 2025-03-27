@@ -55,5 +55,5 @@ function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return not c:IsSetCard(SET_NINJA) and c:IsLocation(LOCATION_EXTRA)
 end
 function s.lizfilter(e,c)
-	return not c:IsOriginalSetCard(0x2b)
+	return not c:IsOriginalSetCard(SET_NINJA)
 end

@@ -37,13 +37,13 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
-	local zone=re:GetHandler():GetLinkedZone(tp)&0x1f
+	local zone=re:GetHandler():GetLinkedZone(tp)&ZONES_MMZ
 	if chk==0 then return zone~=0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK,tp,zone) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,tp,LOCATION_GRAVE)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local zone=re:GetHandler():GetLinkedZone(tp)&0x1f
+	local zone=re:GetHandler():GetLinkedZone(tp)&ZONES_MMZ
 	if c:IsRelateToEffect(e) and zone~=0 and Duel.SpecialSummonStep(c,0,tp,tp,false,false,POS_FACEUP_ATTACK,zone) then
 		--Cannot be used as link material
 		local e1=Effect.CreateEffect(c)

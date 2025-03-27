@@ -53,7 +53,7 @@ s.listed_names={8491961}
 function s.matval(c,sc)
 	local b
 	if Card.IsOriginalSetCard then
-		b=c:IsOriginalSetCard(0xf7)
+		b=c:IsOriginalSetCard(SET_LYRILUSC)
 	else
 		b=c:IsSetCard(SET_LYRILUSC)
 	end

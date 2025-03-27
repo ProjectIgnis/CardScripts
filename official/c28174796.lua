@@ -21,7 +21,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spfilter(c,e,tp,sc)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_WATER) and c:IsLinkMonster()
-		and (c:GetLinkedZone()&0x1f)~=0 and sc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,c:GetLinkedZone()&0x1f)
+		and (c:GetLinkedZone()&ZONES_MMZ)~=0 and sc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,c:GetLinkedZone()&ZONES_MMZ)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
@@ -35,7 +35,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if not (c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and tc:IsFaceup()) then return end
-	local zone=tc:GetLinkedZone()&0x1f
+	local zone=tc:GetLinkedZone()&ZONES_MMZ
 	if zone~=0 and Duel.SpecialSummonStep(c,0,tp,tp,false,false,POS_FACEUP,zone) then
 		--Banish it if it leaves the field
 		local e1=Effect.CreateEffect(c)

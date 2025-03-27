@@ -2,7 +2,7 @@
 --Safe Zone
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddPersistentProcedure(c,nil,s.filter,nil,nil,nil,0x1e0,nil,nil,nil,s.op)
+	aux.AddPersistentProcedure(c,nil,s.filter,nil,nil,nil,TIMINGS_CHECK_MONSTER_E,nil,nil,nil,s.op)
 	--eff
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)

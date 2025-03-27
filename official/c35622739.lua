@@ -58,7 +58,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTarget(function(e,c) return c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(SET_GEM_KNIGHT) end)
 	Duel.RegisterEffect(e1,tp)
 	--Clock Lizard check
-	aux.addTempLizardCheck(c,tp,function(e,c) return not c:IsOriginalSetCard(0x1047) end)
+	aux.addTempLizardCheck(c,tp,function(e,c) return not c:IsOriginalSetCard(SET_GEM_KNIGHT) end)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -71,5 +71,5 @@ function s.rellimit(e,c,tp,sumtp)
 	return not c:IsSetCard(SET_AMORPHAGE)
 end
 function s.lizfilter(e,c)
-	return not c:IsOriginalSetCard(0xe0)
+	return not c:IsOriginalSetCard(SET_AMORPHAGE)
 end

@@ -50,7 +50,7 @@ function s.spfilter(c,e,tp,zone)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
-	local zone=c:GetFreeLinkedZone()&0x1f
+	local zone=c:GetFreeLinkedZone()&ZONES_MMZ
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp,zone) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,zone) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -60,7 +60,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	local zone=e:GetHandler():GetFreeLinkedZone()&0x1f
+	local zone=e:GetHandler():GetFreeLinkedZone()&ZONES_MMZ
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and zone~=0 and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP,zone)>0 then
 		c:AddCounter(0x20c,1)

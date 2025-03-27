@@ -76,7 +76,7 @@ function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 	Duel.DiscardHand(tp,s.descfilter,1,1,REASON_COST+REASON_DISCARD,nil,tp)
 	local g=Duel.GetOperatedGroup()
-	e:SetLabel(g:GetFirst():GetType()&0x7)
+	e:SetLabel(g:GetFirst():GetMainCardType())
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

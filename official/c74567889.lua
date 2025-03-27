@@ -57,12 +57,12 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 		and re:GetHandler():GetBaseAttack()==2300 and re:GetHandler():IsRace(RACE_CYBERSE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local zone=e:GetHandler():GetLinkedZone()&0x1f
+	local zone=e:GetHandler():GetLinkedZone()&ZONES_MMZ
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE,nil,nil,zone)>0 end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local zone=c:GetLinkedZone()&0x1f
+	local zone=c:GetLinkedZone()&ZONES_MMZ
 	if c:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE,nil,nil,zone)>0 then
 		Duel.MoveSequence(c,math.log(zone,2))
 		if c:IsFaceup() and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then

@@ -72,5 +72,5 @@ function s.limval(e,re,rp)
 	return re:IsActiveType(TYPE_TRAP) and not rc:IsSetCard(SET_AMORPHAGE) and not rc:IsImmuneToEffect(e)
 end
 function s.lizfilter(e,c)
-	return not c:IsOriginalSetCard(0xe0)
+	return not c:IsOriginalSetCard(SET_AMORPHAGE)
 end

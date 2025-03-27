@@ -2,7 +2,7 @@
 --Moon Dance Ritual
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddPersistentProcedure(c,0,s.filter,nil,nil,nil,0x1e0,nil,nil,nil,s.activate)
+	aux.AddPersistentProcedure(c,0,s.filter,nil,nil,nil,TIMINGS_CHECK_MONSTER_E,nil,nil,nil,s.activate)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

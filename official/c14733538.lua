@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetValue(s.zones)
 	c:RegisterEffect(e1)
 end
+s.listed_series={SET_DRACOSLAYER,SET_DRACOVERLORD}
 function s.filter(c,e,tp,b1,setcode)
 	return c:IsSetCard(setcode) and c:IsType(TYPE_PENDULUM) and not c:IsForbidden()
 		and (b1 or c:IsCanBeSpecialSummoned(e,0,tp,false,false))
@@ -23,8 +24,8 @@ function s.zones(e,tp,eg,ep,ev,re,r,rp)
 	local p0=Duel.CheckLocation(tp,LOCATION_PZONE,0)
 	local p1=Duel.CheckLocation(tp,LOCATION_PZONE,1)
 	local sp=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp,false,0xc7)
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp,false,0xda)
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp,false,SET_DRACOSLAYER)
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp,false,SET_DRACOVERLORD)
 	if p0==p1 or sp then return zone end
 	if p0 then zone=zone-0x1 end
 	if p1 then zone=zone-0x10 end
@@ -34,16 +35,16 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.CheckPendulumZones(tp)
 	local b2=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 	if chk==0 then return (b1 or b2)
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp,b1,0xc7)
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp,b1,0xda) end
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp,b1,SET_DRACOSLAYER)
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp,b1,SET_DRACOVERLORD) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,0,tp,LOCATION_DECK)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local b1=Duel.CheckPendulumZones(tp)
 	local b2=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 	if not b1 and not b2 then return end
-	local g1=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK,0,nil,e,tp,b1,0xc7)
-	local g2=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK,0,nil,e,tp,b1,0xda)
+	local g1=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK,0,nil,e,tp,b1,SET_DRACOSLAYER)
+	local g2=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK,0,nil,e,tp,b1,SET_DRACOVERLORD)
 	if #g1==0 or #g2==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local sg1=g1:Select(tp,1,1,nil)

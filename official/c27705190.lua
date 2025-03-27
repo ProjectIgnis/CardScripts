@@ -47,8 +47,8 @@ function s.ceop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChangeChainOperation(ev,s.repop)
 end
 function s.spfilter1(c,e,tp)
-	local zone = c:GetLinkedZone(tp)&0x1f
-	return c:IsFaceup() and c:IsLinkMonster() and zone>0 and Duel.IsExistingMatchingCard(s.spfilter2,tp,0x13,0,1,c,e,tp,zone)
+	local zone=c:GetLinkedZone(tp)&ZONES_MMZ
+	return c:IsFaceup() and c:IsLinkMonster() and zone>0 and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE,0,1,c,e,tp,zone)
 end
 function s.spfilter2(c,e,tp,zone)
 	return c:IsSetCard(SET_KRAWLER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE,tp,zone)
@@ -58,15 +58,15 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk == 0 then return Duel.IsExistingTarget(s.spfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,s.spfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,e,tp)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0x13)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
-		local zone = tc:GetLinkedZone(tp)&0x1f
+		local zone = tc:GetLinkedZone(tp)&ZONES_MMZ
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local sg = Duel.SelectMatchingCard(tp,s.spfilter2,tp,0x13,0,1,1,c,e,tp,zone)
+		local sg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter2),tp,LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE,0,1,1,c,e,tp,zone)
 		if #sg>0 then
 			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE,zone)
 			Duel.ConfirmCards(1-tp,sg)

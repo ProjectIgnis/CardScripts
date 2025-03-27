@@ -36,7 +36,7 @@ function s.spfilter(c,e,tp,zone)
 	return c:IsAttribute(ATTRIBUTE_WATER) and c:IsAttackBelow(1500) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local zone=e:GetHandler():GetLinkedZone(tp)&0x1f
+	local zone=e:GetHandler():GetLinkedZone(tp)&ZONES_MMZ
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp,zone) end
 	if chk==0 then return zone~=0 and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,zone) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -46,8 +46,8 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and c:GetLinkedZone(tp)&0x1f~=0 then
-		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP,c:GetLinkedZone(tp)&0x1f)
+	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and c:GetLinkedZone(tp)&ZONES_MMZ~=0 then
+		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP,c:GetLinkedZone(tp)&ZONES_MMZ)
 	end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)

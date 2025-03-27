@@ -36,7 +36,7 @@ local function adjzone(loc,seq)
 	if loc==LOCATION_MZONE then
 		if seq<5 then
 			--Own zone and horizontally adjancent | Vertical adjancent zone
-			return ((7<<(seq-1))&0x1F)|(1<<(seq+8))
+			return ((7<<(seq-1))&ZONES_MMZ)|(1<<(seq+8))
 		else
 			--Own zone | vertical adjancent main monster zone
 			return (1<<seq)|(2+(6*(seq-5)))

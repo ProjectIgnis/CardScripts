@@ -2,7 +2,7 @@
 --Miniaturize
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddPersistentProcedure(c,nil,s.filter,CATEGORY_ATKCHANGE,EFFECT_FLAG_DAMAGE_STEP,TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP+0x1c0,s.condition)
+	aux.AddPersistentProcedure(c,nil,s.filter,CATEGORY_ATKCHANGE,EFFECT_FLAG_DAMAGE_STEP,TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP+TIMINGS_CHECK_MONSTER,s.condition)
 	--eff
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)

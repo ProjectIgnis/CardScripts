@@ -42,7 +42,7 @@ function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(SET_MAYAKASHI)
 end
 function s.lizfilter(e,c)
-	return not c:IsOriginalSetCard(0x121)
+	return not c:IsOriginalSetCard(SET_MAYAKASHI)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_MAYAKASHI) and (c:IsFaceup() or not c:IsLocation(LOCATION_REMOVED)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

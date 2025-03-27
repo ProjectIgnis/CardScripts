@@ -76,12 +76,12 @@ function s.sgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.sgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
-	local g=Duel.GetFieldGroup(tp,0xe,0xe)
+	local g=Duel.GetFieldGroup(tp,LOCATION_HAND|LOCATION_ONFIELD,LOCATION_HAND|LOCATION_ONFIELD)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,#g,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,0,0,tp,1)
 end
 function s.sgop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetFieldGroup(tp,0xe,0xe)
+	local g=Duel.GetFieldGroup(tp,LOCATION_HAND|LOCATION_ONFIELD,LOCATION_HAND|LOCATION_ONFIELD)
 	Duel.SendtoGrave(g,REASON_EFFECT)
 	Duel.Draw(tp,1,REASON_EFFECT)
 end

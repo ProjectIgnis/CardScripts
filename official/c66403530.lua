@@ -54,7 +54,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function s.znval(e)
-	return ~(e:GetHandler():GetLinkedZone()&0x60)
+	return ~(e:GetHandler():GetLinkedZone()&ZONES_EMZ)
 end
 function s.atkval(e,c)
 	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_REMOVED,LOCATION_REMOVED)*200

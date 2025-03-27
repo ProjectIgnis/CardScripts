@@ -72,7 +72,7 @@ function s.splimit(e,c)
 	return not (c:IsSetCard(SET_NUMBER) and c:IsType(TYPE_XYZ)) and c:IsLocation(LOCATION_EXTRA)
 end
 function s.lizfilter(e,c)
-	return not (c:IsOriginalSetCard(0x48) and c:IsOriginalType(TYPE_XYZ))
+	return not (c:IsOriginalSetCard(SET_NUMBER) and c:IsOriginalType(TYPE_XYZ))
 end
 function s.effcon(e,tp,eg,ep,ev,re,r,rp)
 	return (r&REASON_XYZ)==REASON_XYZ and e:GetHandler():GetReasonCard():IsSetCard(SET_NUMBER) and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)

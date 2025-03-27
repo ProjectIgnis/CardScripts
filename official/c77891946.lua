@@ -99,5 +99,5 @@ function s.splimit(e,c)
 	return not c:IsSetCard(SET_EXOSISTER) and c:IsLocation(LOCATION_EXTRA)
 end
 function s.lizfilter(e,c)
-	return not c:IsOriginalSetCard(0x174)
+	return not c:IsOriginalSetCard(SET_EXOSISTER)
 end

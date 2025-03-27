@@ -45,5 +45,5 @@ function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return not c:IsSetCard(SET_RAIDRAPTOR) and c:IsLocation(LOCATION_EXTRA)
 end
 function s.lizfilter(e,c)
-	return not c:IsOriginalSetCard(0xba)
+	return not c:IsOriginalSetCard(SET_RAIDRAPTOR)
 end

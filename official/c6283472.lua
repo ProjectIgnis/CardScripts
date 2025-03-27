@@ -73,5 +73,5 @@ function s.damval(e,re,val,r,rp,rc)
 	return val
 end
 function s.lizfilter(e,c)
-	return not c:IsOriginalSetCard(0xe0)
+	return not c:IsOriginalSetCard(SET_AMORPHAGE)
 end

@@ -66,7 +66,7 @@ function s.ttcon2(e,c,minc,zone,relzone,exeff)
 		if type(ret)=="function" then
 			ret={ret(exeff,c)}
 			if #ret>1 then
-				zone=(ret[2]>>16)&0x7f
+				zone=(ret[2]>>16)&(ZONES_EMZ|ZONES_MMZ)
 			end
 		end
 	end
@@ -80,7 +80,7 @@ function s.tttg2(e,tp,eg,ep,ev,re,r,rp,chk,c,minc,zone,relzone,exeff)
 		if type(ret)=="function" then
 			ret={ret(exeff,c)}
 			if #ret>1 then
-				zone=(ret[2]>>16)&0x7f
+				zone=(ret[2]>>16)&(ZONES_EMZ|ZONES_MMZ)
 			end
 		end
 	end

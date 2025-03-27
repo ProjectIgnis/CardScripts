@@ -65,7 +65,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.thfilter(c)
 	if not c:IsAbleToHand() then return false end
-	return c:IsCode(CARD_POLYMERIZATION) or (c:IsSpellTrap() and c:ListsCodeWithArchetype(0x3008))
+	return c:IsCode(CARD_POLYMERIZATION) or (c:IsSpellTrap() and c:ListsCodeWithArchetype(SET_ELEMENTAL_HERO))
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

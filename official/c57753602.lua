@@ -26,7 +26,7 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer()
 end
 function s.filter(c)
-	return c:IsFaceup() and (c:GetType()&0x20002)==0x20002
+	return c:IsFaceup() and c:IsContinuousSpell()
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

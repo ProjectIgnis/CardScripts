@@ -93,7 +93,7 @@ function s.damfilter(c,p)
 end
 function s.sgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local g=Duel.GetFieldGroup(tp,0xe,0xe)
+	local g=Duel.GetFieldGroup(tp,LOCATION_HAND|LOCATION_ONFIELD,LOCATION_HAND|LOCATION_ONFIELD)
 	local dc=g:FilterCount(s.damfilter,nil,1-tp)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,#g,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,0,0,1-tp,dc*300)
@@ -102,7 +102,7 @@ function s.sgfilter(c,p)
 	return c:IsLocation(LOCATION_GRAVE) and c:IsControler(p)
 end
 function s.sgop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetFieldGroup(tp,0xe,0xe)
+	local g=Duel.GetFieldGroup(tp,LOCATION_HAND|LOCATION_ONFIELD,LOCATION_HAND|LOCATION_ONFIELD)
 	Duel.SendtoGrave(g,REASON_EFFECT)
 	local og=Duel.GetOperatedGroup()
 	local ct=og:FilterCount(s.sgfilter,nil,1-tp)

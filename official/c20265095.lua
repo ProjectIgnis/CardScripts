@@ -47,7 +47,7 @@ end
 	--Activation legality
 function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
-	local zone=c:GetLinkedZone()&0x1f
+	local zone=c:GetLinkedZone()&ZONES_MMZ
 	if chkc then return chkc:GetLocation()==LOCATION_MZONE and chkc:IsControler(1-tp) and chkc:IsControlerCanBeChanged(false,zone) end
 	local nc=Duel.IsExistingMatchingCard(s.ctfilter,tp,LOCATION_ONFIELD,0,1,nil)
 	local tgchk=Duel.IsExistingTarget(Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,1,nil,false,zone)
@@ -70,7 +70,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and tc then
-		local zone=c:GetLinkedZone()&0x1f
+		local zone=c:GetLinkedZone()&ZONES_MMZ
 		if Duel.GetControl(tc,tp,PHASE_END,1,zone)~=0 then
 			local reset=RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET|RESET_PHASE|PHASE_END
 			--Cannot attack

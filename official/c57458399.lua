@@ -44,7 +44,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,e,tp,sc)
-	return c:IsFaceup() and (c:IsOriginalSetCard(0x66) or c:IsOriginalSetCard(0xa3) or c:IsOriginalSetCard(0x1017)) 
+	return c:IsFaceup() and (c:IsOriginalSetCard(SET_WARRIOR) or c:IsOriginalSetCard(SET_STARDUST) or c:IsOriginalSetCard(SET_SYNCHRON)) 
 	and c:IsType(TYPE_SYNCHRO)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

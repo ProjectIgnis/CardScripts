@@ -88,11 +88,8 @@ end
 function s.thfilter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_MYUTANT) and c:IsAbleToHand()
 end
-function s.classf(c)
-	return c:GetType()&0x7
-end
 function s.ctcheck(sg,e,tp)
-	return sg:GetClassCount(s.classf)==#sg
+	return sg:GetClassCount(Card.GetMainCardType)==#sg
 end
 	--Activation legality
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

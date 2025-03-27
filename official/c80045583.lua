@@ -34,7 +34,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.accon(e)
-	return (Duel.GetCurrentPhase()&0x38)~=0
+	return Duel.IsBattlePhase()
 end
 function s.aclimit(e,re,tp)
 	return re:GetHandler():IsTrap() and re:IsHasType(EFFECT_TYPE_ACTIVATE)

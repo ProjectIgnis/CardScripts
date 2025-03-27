@@ -41,7 +41,7 @@ function s.seqfilter(c,zone)
 end
 function s.seqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
-	local zone=c:GetLinkedZone(tp)&0x1f
+	local zone=c:GetLinkedZone(tp)&ZONES_MMZ
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.seqfilter(chkc,zone) end
 	if chk==0 then return Duel.IsExistingTarget(s.seqfilter,tp,LOCATION_MZONE,0,1,nil,zone) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
@@ -49,7 +49,7 @@ function s.seqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.seqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local zone=c:GetLinkedZone(tp)&0x1f
+	local zone=c:GetLinkedZone(tp)&ZONES_MMZ
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) or tc:IsControler(1-tp) or tc:IsImmuneToEffect(e) or Duel.GetLocationCount(tc:GetControler(),LOCATION_MZONE,tc:GetControler(),LOCATION_REASON_CONTROL,zone)<=0 then return end
 	local i=0

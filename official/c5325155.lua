@@ -59,5 +59,5 @@ function s.splimit(e,c,sump,sumtype,sumpos,targetp)
 	return c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(SET_MAYAKASHI)
 end
 function s.lizfilter(e,c)
-	return not c:IsOriginalSetCard(0x121)
+	return not c:IsOriginalSetCard(SET_MAYAKASHI)
 end

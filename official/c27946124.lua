@@ -91,7 +91,7 @@ function s.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.setfilter(c)
-	return c:GetType()&0x20004==0x20004 and c:IsSSetable(true)
+	return c:IsContinuousTrap() and c:IsSSetable(true)
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.setfilter(chkc) end

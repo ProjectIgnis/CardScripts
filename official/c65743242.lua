@@ -1,4 +1,5 @@
 --地縛霊の誘い
+--Call of the Earthbound
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

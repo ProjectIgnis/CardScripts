@@ -1,4 +1,5 @@
 --復活の福音
+--Return of the Dragon Lords
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

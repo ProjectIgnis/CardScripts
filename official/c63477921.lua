@@ -1,4 +1,5 @@
 --サイバー・サモン・ブラスター
+--Cyber Summon Blaster
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

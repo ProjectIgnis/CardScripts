@@ -1,5 +1,5 @@
 --Pendulum Encore
---scripted by edo9300
+--Pendulum Encore
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	end)
 end
 function s.pencon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==1-tp and Duel.IsMainPhase()
+	return Duel.IsTurnPlayer(1-tp) and Duel.IsMainPhase()
 end
 function s.filter(c,tp)
 	s.exclude_card=c
@@ -54,7 +54,7 @@ function s.pentg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	e:SetLabel(0)
 	Duel.DiscardHand(tp,s.filter,1,1,REASON_COST+REASON_DISCARD,nil,tp)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA+LOCATION_HAND)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA|LOCATION_HAND)
 end
 function s.addreset(c)
 	s.should_check=true
@@ -74,7 +74,7 @@ function s.penop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 		e1:SetTargetRange(LOCATION_PZONE,0)
 		e1:SetValue(aux.indsval)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_CANNOT_ACTIVATE)
@@ -86,7 +86,7 @@ function s.penop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetCode(EVENT_PHASE+PHASE_END)
 		e3:SetCountLimit(1)
 		e3:SetOperation(s.retop)
-		e3:SetReset(RESET_PHASE+PHASE_END)
+		e3:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e3,tp)
 	end
 end

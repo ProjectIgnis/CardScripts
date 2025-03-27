@@ -1,4 +1,5 @@
 --ゴブリンのその場しのぎ
+--Goblin Out of the Frying Pan
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

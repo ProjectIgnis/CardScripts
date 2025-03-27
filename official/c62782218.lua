@@ -1,4 +1,5 @@
 --スカル・コンダクター
+--Skull Conductor
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
@@ -8,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	e1:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e1:SetCode(EVENT_PHASE|PHASE_BATTLE)
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)

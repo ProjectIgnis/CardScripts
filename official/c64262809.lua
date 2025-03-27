@@ -1,4 +1,5 @@
 --ドラゴン・アイス
+--Dragon Ice
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,1,id)
@@ -7,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e1:SetRange(LOCATION_HAND+LOCATION_GRAVE)
+	e1:SetRange(LOCATION_HAND|LOCATION_GRAVE)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetCondition(s.spcon)
 	e1:SetCost(s.spcost)

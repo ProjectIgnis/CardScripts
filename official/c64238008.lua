@@ -31,7 +31,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e1:SetTargetRange(1,0)
 	e1:SetValue(s.aclimit)
-	e1:SetReset(RESET_PHASE+PHASE_END,1)
+	e1:SetReset(RESET_PHASE|PHASE_END,1)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.aclimit(e,re,tp)

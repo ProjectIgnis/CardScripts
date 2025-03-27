@@ -1,5 +1,5 @@
 --シューティング・スター・ドラゴン・TG-EX
---Shooting Star Dragon T.G. - Expansion
+--Shooting Star Dragon T.G. EX
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -84,7 +84,7 @@ function s.daop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateAttack()
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsType,2,false,aux.ReleaseCheckMMZ,nil,TYPE_SYNCHRO) end

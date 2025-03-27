@@ -1,4 +1,5 @@
 --アシンメタファイズ
+--Asymmetaphys
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -37,9 +38,9 @@ function s.initial_effect(c)
 	e4:SetOperation(s.posop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x105}
+s.listed_series={SET_METAPHYS}
 function s.drfilter(c)
-	return c:IsSetCard(0x105) and c:IsAbleToRemove()
+	return c:IsSetCard(SET_METAPHYS) and c:IsAbleToRemove()
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1)
@@ -59,19 +60,19 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.effilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x105) and c:IsControler(tp)
+	return c:IsFaceup() and c:IsSetCard(SET_METAPHYS) and c:IsControler(tp)
 end
 function s.effcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg and eg:IsExists(s.effilter,1,nil,tp)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return s.effcon(e,tp,eg,ep,ev,re,r,rp) and Duel.GetTurnPlayer()==tp
+	return s.effcon(e,tp,eg,ep,ev,re,r,rp) and Duel.IsTurnPlayer(tp)
 end
 function s.atkfilter(c)
-	return c:IsFaceup() and not c:IsSetCard(0x105)
+	return c:IsFaceup() and not c:IsSetCard(SET_METAPHYS)
 end
 function s.posfilter(c)
-	return c:IsCanChangePosition() and not (c:IsFaceup() and c:IsSetCard(0x105))
+	return c:IsCanChangePosition() and not (c:IsFaceup() and c:IsSetCard(SET_METAPHYS))
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -84,7 +85,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetValue(-500)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UPDATE_DEFENSE)

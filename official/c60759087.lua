@@ -24,13 +24,13 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x153,0x154}
+s.listed_series={SET_KI_SIKIL,SET_LIL_LA}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,0):Filter(Card.IsFaceup,nil)
-	return g:IsExists(Card.IsSetCard,1,nil,0x153) and g:IsExists(Card.IsSetCard,1,nil,0x154)
+	return g:IsExists(Card.IsSetCard,1,nil,SET_KI_SIKIL) and g:IsExists(Card.IsSetCard,1,nil,SET_LIL_LA)
 end
 function s.filter1(c)
-	return c:IsFaceup() and (c:IsSetCard(0x153) or c:IsSetCard(0x154)) and c:IsAbleToChangeControler()
+	return c:IsFaceup() and (c:IsSetCard(SET_KI_SIKIL) or c:IsSetCard(SET_LIL_LA)) and c:IsAbleToChangeControler()
 end
 function s.filter2(c)
 	return c:IsFaceup() and c:IsAbleToChangeControler()

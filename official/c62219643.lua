@@ -1,9 +1,9 @@
--- 逢華妖麗譚－魔妖不知火語
--- Ghost Meets Girl - A Mayakashi and Shiranui's Tale
--- Scripted by Nellag
+--逢華妖麗譚－魔妖不知火語
+--Ghost Meets Girl - A Masterful Mayakashi Shiranui Saga
+--Scripted by Nellag
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetCost(s.cost)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	-- Return 1 of your banished Zombies to the GY
+	--Return 1 of your banished Zombies to the GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOGRAVE)
@@ -23,15 +23,15 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetHintTiming(0,TIMING_END_PHASE)
 	e2:SetCountLimit(1,id)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.tgtg)
 	e2:SetOperation(s.tgop)
 	c:RegisterEffect(e2)
 end
--- "Shiranui" + "Mayakashi"
-s.listed_series={0xd9,0x121}
+--"Shiranui" + "Mayakashi"
+s.listed_series={SET_SHIRANUI,SET_MAYAKASHI}
 function s.cfilter(c)
-	return (c:IsSetCard(0xd9) or c:IsSetCard(0x121)) and (c:IsType(TYPE_SYNCHRO) or c:IsType(TYPE_LINK))
+	return (c:IsSetCard(SET_SHIRANUI) or c:IsSetCard(SET_MAYAKASHI)) and (c:IsType(TYPE_SYNCHRO) or c:IsType(TYPE_LINK))
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil) end
@@ -40,7 +40,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(g,REASON_COST)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	-- Cannot Special Summon from the hand, Deck, or Extra Deck
+	--Cannot Special Summon from the hand, Deck, or Extra Deck
 	local e0=Effect.CreateEffect(e:GetHandler())
 	e0:SetDescription(aux.Stringid(id,2))
 	e0:SetType(EFFECT_TYPE_FIELD)
@@ -48,11 +48,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e0:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e0:SetTargetRange(1,1)
 	e0:SetTarget(s.splimit)
-	e0:SetReset(RESET_PHASE+PHASE_END)
+	e0:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e0,tp)
 end
 function s.splimit(e,c,tp)
-	return c:IsLocation(LOCATION_HAND+LOCATION_DECK+LOCATION_EXTRA)
+	return c:IsLocation(LOCATION_HAND|LOCATION_DECK|LOCATION_EXTRA)
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and chkc:IsFaceup() and chkc:IsRace(RACE_ZOMBIE) end

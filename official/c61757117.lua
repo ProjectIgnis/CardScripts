@@ -1,4 +1,5 @@
 --救世の美神ノースウェムコ
+--Divine Grace - Northwemko
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -24,7 +25,7 @@ function s.initial_effect(c)
 end
 s.listed_names={60234913}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_RITUAL)
+	return e:GetHandler():IsRitualSummoned()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsFaceup() and chkc~=e:GetHandler() end

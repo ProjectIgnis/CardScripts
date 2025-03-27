@@ -1,5 +1,5 @@
 --海晶乙女 シースター
---Marincess Seastar
+--Marincess Sea Star
 --scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
@@ -15,13 +15,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x12b}
+s.listed_series={SET_MARINCESS}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x12b)
+	return c:IsFaceup() and c:IsSetCard(SET_MARINCESS)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end
@@ -36,7 +36,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(800)
 		tc:RegisterEffect(e1)
 	end

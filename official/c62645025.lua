@@ -1,4 +1,5 @@
 --幻影騎士団ウロング・マグネリング
+--The Phantom Knights of Wrong Magnetring
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -23,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x10db,0xdb}
+s.listed_series={SET_THE_PHANTOM_KNIGHTS,SET_PHANTOM_KNIGHTS}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp)
 end
@@ -49,8 +50,8 @@ function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cfilter(c)
 	if c:IsFacedown() or not c:IsAbleToGraveAsCost() then return false end
-	return (c:IsSetCard(0x10db) and c:IsMonster())
-		or (c:IsSetCard(0xdb) and c:IsSpellTrap() and c:IsType(TYPE_CONTINUOUS))
+	return (c:IsSetCard(SET_THE_PHANTOM_KNIGHTS) and c:IsMonster())
+		or (c:IsSetCard(SET_PHANTOM_KNIGHTS) and c:IsSpellTrap() and c:IsType(TYPE_CONTINUOUS))
 end
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

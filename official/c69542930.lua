@@ -1,4 +1,5 @@
 --光と闇の洗礼
+--Dedication through Light and Darkness
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

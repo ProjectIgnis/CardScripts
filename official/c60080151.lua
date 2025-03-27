@@ -1,4 +1,5 @@
 --好敵手の記憶
+--Memory of an Adversary
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -33,9 +34,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetOperation(s.spop)
 			e1:SetLabelObject(tc)
 			e1:SetLabel(Duel.GetTurnCount())
-			e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,2)
+			e1:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN,2)
 			Duel.RegisterEffect(e1,tp)
-			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
+			tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,0)
 		end
 	end
 end

@@ -1,4 +1,5 @@
 --邪神ドレッド・ルート
+--The Wicked Dreadroot
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon with 3 tribute

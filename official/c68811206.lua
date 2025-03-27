@@ -1,4 +1,5 @@
 --Tyler the Great Warrior
+--Tyler the Great Warrior
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon condition

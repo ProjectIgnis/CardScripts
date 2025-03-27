@@ -14,24 +14,24 @@ function s.initial_effect(c)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x153,0x154,0x155,0x156}
+s.listed_series={SET_KI_SIKIL,SET_LIL_LA,SET_EVIL_TWIN,SET_LIVE_TWIN}
 
 function s.thfilter(c,add)
-	local c1=(c:IsSetCard(0x155) or c:IsSetCard(0x156)) and c:IsSpellTrap()
-	local c2=c:IsSetCard(0x155) and c:IsMonster()
+	local c1=(c:IsSetCard(SET_EVIL_TWIN) or c:IsSetCard(SET_LIVE_TWIN)) and c:IsSpellTrap()
+	local c2=c:IsSetCard(SET_EVIL_TWIN) and c:IsMonster()
 	return (c1 or (add and c2)) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
-		local add=g:IsExists(Card.IsSetCard,1,nil,0x153) and g:IsExists(Card.IsSetCard,1,nil,0x154)
+		local add=g:IsExists(Card.IsSetCard,1,nil,SET_KI_SIKIL) and g:IsExists(Card.IsSetCard,1,nil,SET_LIL_LA)
 		return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,add)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
-	local add=g:IsExists(Card.IsSetCard,1,nil,0x153) and g:IsExists(Card.IsSetCard,1,nil,0x154)
+	local add=g:IsExists(Card.IsSetCard,1,nil,SET_KI_SIKIL) and g:IsExists(Card.IsSetCard,1,nil,SET_LIL_LA)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil,add)
 	if #g>0 then

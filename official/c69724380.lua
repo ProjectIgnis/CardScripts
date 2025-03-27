@@ -1,4 +1,5 @@
 --魔の取引
+--Terrible Deal
 local s,id=GetID()
 function s.initial_effect(c)
 	--handes

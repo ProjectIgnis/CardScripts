@@ -13,10 +13,10 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x102,0x10f}
+s.listed_series={SET_ROKKET,SET_BORREL}
 
 function s.cfilter(c,tp)
-	return c:IsSetCard(0x102) and Duel.IsExistingTarget(s.tgfilter,tp,LOCATION_MZONE,0,1,c)
+	return c:IsSetCard(SET_ROKKET) and Duel.IsExistingTarget(s.tgfilter,tp,LOCATION_MZONE,0,1,c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil,tp) end
@@ -25,7 +25,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	aux.RemainFieldCost(e,tp,eg,ep,ev,re,r,rp,1)
 end
 function s.tgfilter(c)
-	return c:IsFaceup() and c:IsLinkMonster() and c:IsSetCard(0x10f)
+	return c:IsFaceup() and c:IsLinkMonster() and c:IsSetCard(SET_BORREL)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.tgfilter(chkc) end
@@ -35,7 +35,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,0,0)
 end
 function s.eqlimit(e,c)
-	return c:GetControler()==e:GetHandlerPlayer() and c:IsType(TYPE_LINK) and c:IsSetCard(0x10f)
+	return c:GetControler()==e:GetHandlerPlayer() and c:IsType(TYPE_LINK) and c:IsSetCard(SET_BORREL)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -44,14 +44,14 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local fid=c:GetFieldID()
 		Duel.Equip(tp,c,tc)
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1,fid)
 		--Equip limit
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetValue(s.eqlimit)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
 		--Granted effect
 		local e2=Effect.CreateEffect(c)
@@ -60,7 +60,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EVENT_FREE_CHAIN)
 		e2:SetRange(LOCATION_MZONE)
 		e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e2:SetCountLimit(1)
 		e2:SetTarget(s.indtg)
 		e2:SetOperation(s.indop)
@@ -94,7 +94,7 @@ function s.indop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)

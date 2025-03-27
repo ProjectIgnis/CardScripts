@@ -1,5 +1,5 @@
 --帝王の開岩
---Return of the Monarch
+--Return of the Monarchs
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -35,7 +35,7 @@ function s.sumlimit(e,c,sump,sumtype,sumpos,targetp)
 	return c:IsLocation(LOCATION_EXTRA)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==tp and eg:GetFirst():IsSummonType(SUMMON_TYPE_TRIBUTE)
+	return ep==tp and eg:GetFirst():IsTributeSummoned()
 end
 function s.filter(c,code)
 	return (c:GetAttack()==2400 or c:GetAttack()==2800) and c:GetDefense()==1000 and c:GetCode()~=code and c:IsAbleToHand()

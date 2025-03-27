@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetHintTiming(TIMING_STANDBY_PHASE,TIMING_STANDBY_PHASE)
-	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e2:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e2:SetCondition(s.thcon)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetRange(LOCATION_SZONE)
-	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e3:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e3:SetCondition(s.tgcon)
 	e3:SetTarget(s.tgtg)
 	e3:SetOperation(s.tgop)
@@ -43,12 +43,12 @@ function s.initial_effect(c)
 	e4:SetCondition(s.sdcon)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xbb}
+s.listed_series={SET_INFERNOID}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==1-tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xbb) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_INFERNOID) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end
@@ -66,10 +66,10 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.tgfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xbb) and c:IsMonster()
+	return c:IsFaceup() and c:IsSetCard(SET_INFERNOID) and c:IsMonster()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and s.tgfilter(chkc) end
@@ -86,7 +86,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.sdfilter(c)
-	return c:IsFacedown() or not c:IsSetCard(0xbb)
+	return c:IsFacedown() or not c:IsSetCard(SET_INFERNOID)
 end
 function s.sdcon(e)
 	return Duel.IsExistingMatchingCard(s.sdfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)

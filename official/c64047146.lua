@@ -1,4 +1,5 @@
 --一角獣のホーン
+--Horn of the Unicorn
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c)

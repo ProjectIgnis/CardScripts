@@ -1,4 +1,5 @@
 --暗黒大要塞鯱
+--Orca Mega-Fortress of Darkness
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy

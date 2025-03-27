@@ -1,4 +1,5 @@
 --大欲な壺
+--Pot of Acquisitiveness
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -34,7 +35,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetOperatedGroup()
 	if g:IsExists(s.sfilter,1,nil,tp) then Duel.ShuffleDeck(tp) end
 	if g:IsExists(s.sfilter,1,nil,1-tp) then Duel.ShuffleDeck(1-tp) end
-	local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_DECK+LOCATION_EXTRA)
+	local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_DECK|LOCATION_EXTRA)
 	if ct==3 then
 		Duel.BreakEffect()
 		Duel.Draw(tp,1,REASON_EFFECT)

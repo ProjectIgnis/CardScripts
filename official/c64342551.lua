@@ -1,4 +1,5 @@
 --水陸両用バグロス MK－3
+--Amphibious Bugroth MK-3
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)

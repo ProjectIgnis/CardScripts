@@ -1,5 +1,5 @@
 --ダイナレスラー・イグアノドラッカ
---Dinowrestler Iguanadracker
+--Dinowrestler Iguanodraka
 --Scripted by Hel
 local s,id=GetID()
 function s.initial_effect(c)
@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x11a}
+s.listed_series={SET_DINOWRESTLER}
 function s.cfilter(c)
 	return c:IsRace(RACE_DINOSAUR) and c:IsDiscardable()
 end
@@ -52,7 +52,7 @@ function s.ctfilter(c,e,tp,ft)
 			and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,c:GetOriginalCode())
 end
 function s.spfilter(c,e,tp,code)
-	return c:GetOriginalCode()~=code and c:IsSetCard(0x11a) and c:IsCanBeEffectTarget(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:GetOriginalCode()~=code and c:IsSetCard(SET_DINOWRESTLER) and c:IsCanBeEffectTarget(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
@@ -74,4 +74,3 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 end
-

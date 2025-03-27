@@ -1,4 +1,5 @@
 --暗黒界の術師 スノウ
+--Snoww, Unlight of Dark World
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x6}
+s.listed_series={SET_DARK_WORLD}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	e:SetLabel(e:GetHandler():GetPreviousControler())
 	return e:GetHandler():IsPreviousLocation(LOCATION_HAND) and (r&0x4040)==0x4040
@@ -33,7 +34,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	end
 end
 function s.filter1(c)
-	return c:IsSetCard(0x6) and c:IsAbleToHand()
+	return c:IsSetCard(SET_DARK_WORLD) and c:IsAbleToHand()
 end
 function s.filter2(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)

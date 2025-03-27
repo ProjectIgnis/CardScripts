@@ -38,11 +38,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 	--Lists "Myutant" archetype
-s.listed_series={0x159}
+s.listed_series={SET_MYUTANT}
 
 	--3 level 8+ "Myutant" monsters
 function s.ffilter(c,fc,sumtype,tp)
-	return c:IsLevelAbove(8) and c:IsSetCard(0x159,fc,sumtype,tp)
+	return c:IsLevelAbove(8) and c:IsSetCard(SET_MYUTANT,fc,sumtype,tp)
 end
 	--Card/effect activated
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
@@ -50,13 +50,13 @@ function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for "Myutant" card
 function s.cfilter(c,rtype)
-	return c:IsSetCard(0x159) and (not c:IsOnField() or c:IsFaceup()) and c:IsType(rtype) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(SET_MYUTANT) and (not c:IsOnField() or c:IsFaceup()) and c:IsType(rtype) and c:IsAbleToRemoveAsCost()
 end
 	--Banish 1 "Myutant" card from hand/face-up field/GY with same card type as activated card/effect as cost
 function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rtype=(re:GetActiveType()&0x7)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil,rtype) end
-	local rg=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,1,1,nil,rtype)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND|LOCATION_ONFIELD|LOCATION_GRAVE,0,1,nil,rtype) end
+	local rg=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND|LOCATION_ONFIELD|LOCATION_GRAVE,0,1,1,nil,rtype)
 	Duel.Remove(rg,POS_FACEUP,REASON_COST)
 end
 	--Activation legality
@@ -81,12 +81,12 @@ end
 	--If this fusion summoned card was destroyed by opponent's card
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return rp==1-tp and c:IsSummonType(SUMMON_TYPE_FUSION) and c:IsPreviousLocation(LOCATION_MZONE)
+	return rp==1-tp and c:IsFusionSummoned() and c:IsPreviousLocation(LOCATION_MZONE)
 		and c:IsPreviousControler(tp)
 end
 	--Check for a face-up banished "Myutant" card
 function s.thfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x159) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(SET_MYUTANT) and c:IsAbleToHand()
 end
 function s.classf(c)
 	return c:GetType()&0x7

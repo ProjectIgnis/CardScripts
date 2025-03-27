@@ -1,4 +1,5 @@
 --武神器－ムラクモ
+--Bujingi Quilin
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
@@ -10,14 +11,14 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_GRAVE)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.descon)
-	e1:SetCost(aux.bfgcost)
+	e1:SetCost(Cost.SelfBanish)
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x88}
+s.listed_series={SET_BUJIN}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x88) and c:IsRace(RACE_BEASTWARRIOR)
+	return c:IsFaceup() and c:IsSetCard(SET_BUJIN) and c:IsRace(RACE_BEASTWARRIOR)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)

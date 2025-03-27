@@ -1,4 +1,5 @@
 --地殻変動
+--Earthshaker
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

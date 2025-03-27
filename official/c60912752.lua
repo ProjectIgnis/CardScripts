@@ -1,4 +1,5 @@
 --異次元の境界線
+--D.D. Borderline
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,4 +1,5 @@
 --陽動作戦
+--A Feint Plan
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -15,7 +16,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
 	e1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e1:SetValue(s.atlimit)
-	e1:SetReset(RESET_PHASE+PHASE_END,1)
+	e1:SetReset(RESET_PHASE|PHASE_END,1)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.atlimit(e,c)

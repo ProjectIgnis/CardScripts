@@ -32,7 +32,7 @@ function s.lcheck(g,lc,sumtype,tp)
 	return g:CheckDifferentProperty(Card.GetCode,lc,sumtype,tp)
 end
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+	return e:GetHandler():IsLinkSummoned()
 end
 function s.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
@@ -64,7 +64,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_TRIGGER)
-		e1:SetReset(RESET_EVENT+RESETS_CANNOT_ACT+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_CANNOT_ACT|RESET_PHASE|PHASE_END)
 		tc:RegisterEffect(e1)
 		if e:GetLabel()==1 and Duel.IsPlayerCanDraw(tp,1)
 			and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
@@ -75,6 +75,6 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.aclimit(e,re,tp)
 	local tc=re:GetHandler()
-	return tc:IsLocation(LOCATION_MZONE) and tc:IsFaceup() and tc:IsSummonType(SUMMON_TYPE_SPECIAL)
+	return tc:IsLocation(LOCATION_MZONE) and tc:IsFaceup() and tc:IsSpecialSummoned()
 		and not tc:IsLinked() and re:IsActiveType(TYPE_MONSTER)
 end

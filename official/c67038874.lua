@@ -1,4 +1,5 @@
 --スクラップ・マインドリーダー
+--Scrap Mind Reader
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -17,15 +18,15 @@ function s.initial_effect(c)
 	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetCode(EFFECT_SYNCHRO_MAT_RESTRICTION)
-	e4:SetValue(aux.TargetBoolFunction(Card.IsSetCard,0x24))
+	e4:SetValue(aux.TargetBoolFunction(Card.IsSetCard,SET_SCRAP))
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x24}
+s.listed_series={SET_SCRAP}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN2
 end
 function s.filter(c,ft)
-	return c:IsFaceup() and c:IsSetCard(0x24) and c:GetCode()~=id 
+	return c:IsFaceup() and c:IsSetCard(SET_SCRAP) and c:GetCode()~=id 
 		and (ft>0 or c:GetSequence()<5)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -46,7 +47,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e1,true)
 	end

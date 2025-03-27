@@ -1,5 +1,5 @@
- -- 大いなる魂
- -- The Great Soul
+ --大いなる魂
+ --The Great Soul
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon
@@ -21,12 +21,12 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(s.discon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.distg)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x57}
+s.listed_series={SET_RESONATOR}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_DRAGON) and c:IsType(TYPE_SYNCHRO)
 end
@@ -34,7 +34,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function s.spfilter(c,e,tp)
-	return (c:IsSetCard(0x57) or (c:IsRace(RACE_DRAGON) and c:IsLevel(1))) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return (c:IsSetCard(SET_RESONATOR) or (c:IsRace(RACE_DRAGON) and c:IsLevel(1))) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -77,7 +77,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,2)
+			e1:SetReset(RESETS_STANDARD_PHASE_END,2)
 			e1:SetValue(2000)
 			tc:RegisterEffect(e1)
 		end

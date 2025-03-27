@@ -46,4 +46,3 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.Destroy(tc,REASON_EFFECT)
 end
-

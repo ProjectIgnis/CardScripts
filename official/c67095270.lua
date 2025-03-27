@@ -1,4 +1,5 @@
 --ディメンション・ウォール
+--Dimension Wall
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -18,6 +19,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_REFLECT_BATTLE_DAMAGE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
-	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+	e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
 	Duel.RegisterEffect(e1,tp)
 end

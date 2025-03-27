@@ -1,5 +1,5 @@
 --Ａ・Ɐ・ＣＣ
---Amaze Ɐttraction Cyclone Coaster
+--Amaze Attraction Cyclo-Coaster
 --Scripted by Eerie Code
 
 local s,id=GetID()
@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetCondition(aux.AttractionEquipCon(false))
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x15e}
+s.listed_series={SET_AMAZEMENT}
 function s.gyfilter(c)
 	return c:IsSpellTrap() and c:IsAbleToGrave()
 end
@@ -49,7 +49,7 @@ function s.gyop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x15e) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_AMAZEMENT) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) and e:GetHandler():IsAbleToGrave() end

@@ -1,4 +1,5 @@
 --地竜星－ヘイカン
+--Bi'an, Earth of the Yang Zing
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -35,14 +36,14 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={id}
-s.listed_series={0x9e}
+s.listed_series={SET_YANG_ZING}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
 		and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousControler(tp)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x9e) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(SET_YANG_ZING) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -56,12 +57,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sccon(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetTurnPlayer()==tp then return false end
+	if Duel.IsTurnPlayer(tp) then return false end
 	local ph=Duel.GetCurrentPhase()
-	return ph==PHASE_MAIN1 or (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE) or ph==PHASE_MAIN2
+	return ph==PHASE_MAIN1 or (Duel.IsBattlePhase()) or ph==PHASE_MAIN2
 end
 function s.mfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x9e)
+	return c:IsFaceup() and c:IsSetCard(SET_YANG_ZING)
 end
 function s.sctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -91,6 +92,6 @@ function s.indop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e1:SetValue(1)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	rc:RegisterEffect(e1)
 end

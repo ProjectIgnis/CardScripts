@@ -1,4 +1,5 @@
 --鰤っ子姫
+--Beautunaful Princess
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon

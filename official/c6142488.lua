@@ -15,9 +15,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
-s.listed_series={0xad}
+s.listed_series={SET_FRIGHTFUR}
 function s.counterfilter(c)
-	return c:IsSetCard(0xad) or not c:IsSummonLocation(LOCATION_EXTRA)
+	return c:IsSetCard(SET_FRIGHTFUR) or not c:IsSummonLocation(LOCATION_EXTRA)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0 end
@@ -27,14 +27,14 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,1),nil)
 	--lizard check
 	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return not c:IsSetCard(0xad) and c:IsLocation(LOCATION_EXTRA)
+	return not c:IsSetCard(SET_FRIGHTFUR) and c:IsLocation(LOCATION_EXTRA)
 end
 function s.lizfilter(e,c)
 	return not c:IsOriginalSetCard(0xad)

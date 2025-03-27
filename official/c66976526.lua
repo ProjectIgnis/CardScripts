@@ -1,4 +1,5 @@
 --カラクリ大将軍 無零怒
+--Karakuri Steel Shogun mdl 00X "Bureido"
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -28,12 +29,12 @@ function s.initial_effect(c)
 	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x11}
+s.listed_series={SET_KARAKURI}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return e:GetHandler():IsSynchroSummoned()
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x11) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_KARAKURI) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -51,7 +52,7 @@ end
 function s.cfilter(c,tp)
 	local np=c:GetPosition()
 	local pp=c:GetPreviousPosition()
-	return c:IsSetCard(0x11) and c:IsControler(tp) and ((pp==0x1 and np==0x4) or (pp==0x4 and np==0x1))
+	return c:IsSetCard(SET_KARAKURI) and c:IsControler(tp) and ((pp==SET_ALLY_OF_JUSTICE and np==SET_AMAZONESS) or (pp==SET_AMAZONESS and np==SET_ALLY_OF_JUSTICE))
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

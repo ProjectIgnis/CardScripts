@@ -1,4 +1,5 @@
 --光の護封陣
+--Array of Revealing Light
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

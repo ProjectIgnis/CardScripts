@@ -1,4 +1,5 @@
 --水霊術－「葵」
+--Spiritual Water Art - Aoi
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,5 +1,5 @@
 --驚楽園の案内人 <Comica>
---Amazement Attendant <Comica>
+--Amazement Attendant Comica
 --Scripted by Eerie Code
 
 local s,id=GetID()
@@ -15,9 +15,9 @@ function s.initial_effect(c)
 	--From cards_specific_functions.lua
 	aux.AddAmazementQuickEquipEffect(c,id)
 end
-s.listed_series={0x15f,0x15e}
+s.listed_series={SET_ATTRACTION,SET_AMAZEMENT}
 function s.setfilter(c)
-	return c:IsSetCard(0x15f) and c:IsTrap() and c:IsSSetable()
+	return c:IsSetCard(SET_ATTRACTION) and c:IsTrap() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK,0,1,nil) end

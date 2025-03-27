@@ -1,11 +1,11 @@
 --剣闘獣ドラガシス
---Gladiator Beast Dragacius
+--Gladiator Beast Dragases
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
-	Link.AddProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x19),2,2)
+	Link.AddProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,SET_GLADIATOR),2,2)
 	--indes
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e6:SetDescription(aux.Stringid(id,0))
 	e6:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e6:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e6:SetCode(EVENT_PHASE|PHASE_BATTLE)
 	e6:SetRange(LOCATION_MZONE)
 	e6:SetCountLimit(1,id)
 	e6:SetCondition(s.spcon)
@@ -39,14 +39,14 @@ function s.initial_effect(c)
 	e6:SetOperation(s.spop)
 	c:RegisterEffect(e6)
 end
-s.listed_series={0x19}
+s.listed_series={SET_GLADIATOR}
 function s.indtg(e,c)
-	return c:IsSetCard(0x19) and Duel.GetAttacker()==c
+	return c:IsSetCard(SET_GLADIATOR) and Duel.GetAttacker()==c
 end
 function s.actcon(e)
 	local tc=Duel.GetAttacker()
 	local tp=e:GetHandlerPlayer()
-	return tc and tc:IsControler(tp) and tc:IsSetCard(0x19)
+	return tc and tc:IsControler(tp) and tc:IsSetCard(SET_GLADIATOR)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetBattledGroupCount()>0
@@ -57,7 +57,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoDeck(c,nil,0,REASON_COST)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x19) and c:IsCanBeSpecialSummoned(e,125,tp,false,false)
+	return c:IsSetCard(SET_GLADIATOR) and c:IsCanBeSpecialSummoned(e,125,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -84,8 +84,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		sg1:Merge(sg2)
 		Duel.SpecialSummonStep(tc1,125,tp,tp,false,false,POS_FACEUP)
 		Duel.SpecialSummonStep(tc2,125,tp,tp,false,false,POS_FACEUP)
-		tc1:RegisterFlagEffect(tc1:GetOriginalCode(),RESET_EVENT+RESETS_STANDARD_DISABLE,0,0)
-		tc2:RegisterFlagEffect(tc2:GetOriginalCode(),RESET_EVENT+RESETS_STANDARD_DISABLE,0,0)
+		tc1:RegisterFlagEffect(tc1:GetOriginalCode(),RESET_EVENT|RESETS_STANDARD_DISABLE,0,0)
+		tc2:RegisterFlagEffect(tc2:GetOriginalCode(),RESET_EVENT|RESETS_STANDARD_DISABLE,0,0)
 		Duel.SpecialSummonComplete()
 	end
 end

@@ -1,9 +1,9 @@
--- 現世離レ
--- Sundered from Overroot
--- Scripted by Hatter
+--現世離レ
+--Terrors of the Overroot
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Send 1 card to the GY and Set 1 card from the GY
+	--Send 1 card to the GY and Set 1 card from the GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOGRAVE+CATEGORY_LEAVE_GRAVE)

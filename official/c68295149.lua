@@ -42,11 +42,11 @@ function s.atkfilter(c)
 		and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE+LOCATION_MZONE) and s.atkfilter(chkc) end
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE|LOCATION_MZONE) and s.atkfilter(chkc) end
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil)
-		and Duel.IsExistingTarget(s.atkfilter,tp,LOCATION_GRAVE+LOCATION_MZONE,0,1,nil) end
+		and Duel.IsExistingTarget(s.atkfilter,tp,LOCATION_GRAVE|LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	Duel.SelectTarget(tp,s.atkfilter,tp,LOCATION_GRAVE+LOCATION_MZONE,0,1,1,nil)
+	Duel.SelectTarget(tp,s.atkfilter,tp,LOCATION_GRAVE|LOCATION_MZONE,0,1,1,nil)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
@@ -61,7 +61,7 @@ function s.op(tc,c,atk)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(-atk)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	tc:RegisterEffect(e1)
 end
 function s.tgval(e,re,rp)

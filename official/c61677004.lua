@@ -1,4 +1,5 @@
 --捕食植物ダーリング・コブラ
+--Predaplant Darlingtonia Cobra
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -14,12 +15,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x10f3,0x46}
+s.listed_series={SET_PREDAPLANT,SET_FUSION}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return re and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x10f3)
+	return re and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(SET_PREDAPLANT)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x46) and c:IsSpell() and c:IsAbleToHand()
+	return c:IsSetCard(SET_FUSION) and c:IsSpell() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

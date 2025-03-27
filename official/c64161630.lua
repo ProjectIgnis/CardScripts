@@ -12,14 +12,14 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x48}
+s.listed_series={SET_NUMBER}
 function s.cfilter(c,e,tp)
 	local rk=c:GetRank()
 	return rk>1 and c:IsType(TYPE_XYZ)
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,rk-1,c:GetRace(),e,tp,c)
 end
 function s.filter(c,rk,rc,e,tp,mc)
-	return c:IsType(TYPE_XYZ) and c:IsSetCard(0x48) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
+	return c:IsType(TYPE_XYZ) and c:IsSetCard(SET_NUMBER) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
 		and c:GetRank()==rk and c:IsRace(rc) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -28,7 +28,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.SelectReleaseGroupCost(tp,s.cfilter,1,1,false,nil,nil,e,tp)
 	e:SetLabel(g:GetFirst():GetRank())
 	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetLabel(g:GetFirst():GetRace())
 	Duel.RegisterEffect(e1,tp)
 	e:SetLabelObject(e1)
@@ -47,7 +47,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EVENT_PHASE+PHASE_END)
 	e1:SetCountLimit(1)
 	e1:SetOperation(s.spop)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetLabel(e:GetLabel())
 	e1:SetLabelObject(e:GetLabelObject())
 	Duel.RegisterEffect(e1,tp)

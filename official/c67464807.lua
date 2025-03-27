@@ -1,4 +1,5 @@
 --運命のドラ
+--Dora of Fate
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:GetLevel()>1
@@ -36,13 +37,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCondition(s.damcon)
 			e1:SetOperation(s.damop)
 			e1:SetLabel(lv)
-			e1:SetReset(RESET_PHASE+PHASE_END,2)
+			e1:SetReset(RESET_PHASE|PHASE_END,2)
 			Duel.RegisterEffect(e1,tp)
 		end
 	end
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and ep==tp and eg:GetFirst():GetLevel()==e:GetLabel()-1
+	return Duel.IsTurnPlayer(tp) and ep==tp and eg:GetFirst():GetLevel()==e:GetLabel()-1
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(1-tp,e:GetLabel()*500,REASON_EFFECT)

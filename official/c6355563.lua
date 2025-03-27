@@ -1,5 +1,5 @@
 --Ｙ－ドラゴン・イアヘッド
---Y-Dragon Yearhead
+--Y-Yare Head
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

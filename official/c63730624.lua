@@ -1,4 +1,5 @@
 --ダブルツールD&C
+--Double Tool C&D
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,0,s.filter,s.eqlimit)
@@ -38,20 +39,20 @@ function s.initial_effect(c)
 	e6:SetOperation(s.oop2)
 	c:RegisterEffect(e6)
 end
-s.listed_series={0x26}
+s.listed_series={SET_MORPHTRONIC}
 s.listed_names={2403771}
 function s.eqlimit(e,c)
 	return c:GetControler()==e:GetHandler():GetControler()
-		and (c:IsCode(2403771) or (c:IsSetCard(0x26) and c:GetLevel()>=4 and c:IsRace(RACE_MACHINE)))
+		and (c:IsCode(2403771) or (c:IsSetCard(SET_MORPHTRONIC) and c:GetLevel()>=4 and c:IsRace(RACE_MACHINE)))
 end
 function s.filter(c)
-	return c:IsCode(2403771) or (c:IsSetCard(0x26) and c:GetLevel()>=4 and c:IsRace(RACE_MACHINE))
+	return c:IsCode(2403771) or (c:IsSetCard(SET_MORPHTRONIC) and c:GetLevel()>=4 and c:IsRace(RACE_MACHINE))
 end
 function s.scon1(e)
 	return e:GetHandler():GetEquipTarget() and Duel.GetTurnPlayer()==e:GetHandler():GetControler()
 end
 function s.scon2(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and Duel.GetAttacker()==e:GetHandler():GetEquipTarget()
+	return Duel.IsTurnPlayer(tp) and Duel.GetAttacker()==e:GetHandler():GetEquipTarget()
 end
 function s.sop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -59,12 +60,12 @@ function s.sop2(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_DISABLE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE)
 	d:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_DISABLE_EFFECT)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE)
 	d:RegisterEffect(e2)
 end
 function s.ocon1(e)
@@ -76,7 +77,7 @@ end
 function s.ocon2(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
-	return Duel.GetTurnPlayer()~=tp and d==e:GetHandler():GetEquipTarget() and a:IsRelateToBattle()
+	return Duel.IsTurnPlayer(1-tp) and d==e:GetHandler():GetEquipTarget() and a:IsRelateToBattle()
 end
 function s.otg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.matfilter(c)
-	return c:IsSummonType(SUMMON_TYPE_NORMAL) and c:IsAttackBelow(1000)
+	return c:IsNormalSummoned() and c:IsAttackBelow(1000)
 end
 function s.immcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -56,12 +56,12 @@ function s.immop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 		e1:SetValue(aux.indoval)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end
 function s.spcfilter(c,tp)
-	return c:IsSummonType(SUMMON_TYPE_NORMAL) and c:IsPreviousControler(tp)
+	return c:IsNormalSummoned() and c:IsPreviousControler(tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.spcfilter,1,nil,tp)

@@ -1,4 +1,5 @@
 --BK ラビット・パンチャー
+--Battlin' Boxer Rabbit Puncher
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy

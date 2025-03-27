@@ -1,4 +1,5 @@
 --先史遺産マッドゴーレム・シャコウキ
+--Chronomaly Mud Golem
 local s,id=GetID()
 function s.initial_effect(c)
 	--pierce
@@ -10,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x70}
+s.listed_series={SET_CHRONOMALY}
 function s.target(e,c)
-	return c:IsSetCard(0x70)
+	return c:IsSetCard(SET_CHRONOMALY)
 end

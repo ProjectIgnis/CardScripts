@@ -1,4 +1,5 @@
 --No.106 巨岩掌ジャイアント・ハンド
+--Number 106: Giant Hand
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -44,7 +45,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetCondition(s.rcon)
 		tc:RegisterEffect(e1,true)
 		local e2=e1:Clone()

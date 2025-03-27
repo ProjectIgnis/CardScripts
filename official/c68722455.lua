@@ -1,4 +1,5 @@
 --赤鬼
+--Red Ogre
 local s,id=GetID()
 function s.initial_effect(c)
 	--to hand

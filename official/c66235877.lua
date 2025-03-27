@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
-s.material_setcode=0x45
+s.material_setcode=SET_ARCHFIEND
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	if re:IsActiveType(TYPE_FLIP) then Duel.NegateEffect(ev) end
 	if re:IsActiveType(TYPE_TRAP) and re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then

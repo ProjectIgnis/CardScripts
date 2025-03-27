@@ -1,4 +1,5 @@
 --弾幕回避
+--Do a Barrel Roll
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,4 +1,5 @@
 --H・C 夜襲のカンテラ
+--Heroic Challenger - Night Watchman
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy

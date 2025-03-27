@@ -1,4 +1,5 @@
 --電池メン－単三型
+--Batteryman AA
 local s,id=GetID()
 function s.initial_effect(c)
 	--atk,def

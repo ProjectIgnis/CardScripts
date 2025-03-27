@@ -1,9 +1,9 @@
--- ラビュリンス・セッティング
--- Labrynth Setting
--- Scripted by Hatter
+--ラビュリンス・セッティング
+--Labrynth Set-Up
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Send to Deck
+	--Send to Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TODECK)
@@ -16,19 +16,19 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={id}
-s.listed_series={0x17f}
+s.listed_series={SET_LABRYNTH}
 function s.tdfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x17f) and c:IsSpellTrap() and not c:IsCode(id) and c:IsAbleToDeck()
+	return c:IsFaceup() and c:IsSetCard(SET_LABRYNTH) and c:IsSpellTrap() and not c:IsCode(id) and c:IsAbleToDeck()
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and s.tdfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.tdfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,2,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE|LOCATION_REMOVED) and s.tdfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(s.tdfilter,tp,LOCATION_GRAVE|LOCATION_REMOVED,0,2,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectTarget(tp,s.tdfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,2,2,nil)
+	local g=Duel.SelectTarget(tp,s.tdfilter,tp,LOCATION_GRAVE|LOCATION_REMOVED,0,2,2,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,#g,0,0)
 end
 function s.setfilter(c)
-	return not c:IsSetCard(0x17f) and c:GetType()==TYPE_TRAP and c:IsSSetable()
+	return not c:IsSetCard(SET_LABRYNTH) and c:GetType()==TYPE_TRAP and c:IsSSetable()
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetTargetCards(e)

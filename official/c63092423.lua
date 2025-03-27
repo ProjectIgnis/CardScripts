@@ -1,5 +1,5 @@
 --弾帯城壁龍
---Beltlink Wall Dragon
+--Linkbelt Wall Dragon
 --
 local s,id=GetID()
 function s.initial_effect(c)
@@ -53,14 +53,14 @@ function s.initial_effect(c)
 	e6:SetDescription(aux.Stringid(id,2))
 	e6:SetCategory(CATEGORY_COUNTER)
 	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e6:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e6:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e6:SetCountLimit(1)
 	e6:SetRange(LOCATION_MZONE)
 	e6:SetOperation(s.ctop2)
 	c:RegisterEffect(e6)
 end
 function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsSummonPlayer(tp) and c:IsSummonType(SUMMON_TYPE_LINK)
+	return c:IsFaceup() and c:IsSummonPlayer(tp) and c:IsLinkSummoned()
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
@@ -100,4 +100,3 @@ function s.ctop2(e,tp,eg,ep,ev,re,r,rp)
 		c:AddCounter(0x44,1)
 	end
 end
-

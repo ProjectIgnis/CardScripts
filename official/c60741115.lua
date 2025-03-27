@@ -1,4 +1,5 @@
 --ダメージ・イーター
+--Damage Eater
 local s,id=GetID()
 function s.initial_effect(c)
 	--
@@ -8,12 +9,12 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetRange(LOCATION_GRAVE)
 	e1:SetCondition(s.condition)
-	e1:SetCost(aux.bfgcost)
+	e1:SetCost(Cost.SelfBanish)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	if rp==tp or Duel.GetTurnPlayer()==tp then return false end
+	if rp==tp or Duel.IsTurnPlayer(tp) then return false end
 	local ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_DAMAGE)
 	if ex then return true end
 	ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_RECOVER)

@@ -15,17 +15,17 @@ function s.initial_effect(c)
 	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xb2}
+s.listed_series={SET_UA}
 
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xb2)
+	return c:IsFaceup() and c:IsSetCard(SET_UA)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil)
 	return g:GetClassCount(Card.GetCode)>=2
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0xb2) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_UA) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.mzfilter(c,tp)
 	return c:GetSequence()<5 and c:IsControler(tp)
@@ -74,7 +74,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CANNOT_ATTACK)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
 			sc:RegisterEffect(e1)
 		end
 	end

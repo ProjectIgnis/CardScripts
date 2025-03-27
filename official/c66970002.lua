@@ -1,4 +1,5 @@
 --CNo.39 希望皇ホープレイV
+--Number C39: Utopia Ray V
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -29,7 +30,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 end
-s.listed_series={0x107f}
+s.listed_series={SET_UTOPIA}
 s.xyz_number=39
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp
@@ -51,7 +52,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsSetCard,1,nil,0x107f)
+	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsSetCard,1,nil,SET_UTOPIA)
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end

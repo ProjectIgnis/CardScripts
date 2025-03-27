@@ -1,4 +1,5 @@
 --クリフォート・ディスク
+--Qliphort Disk
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -18,7 +19,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_PZONE)
 	e3:SetCode(EFFECT_UPDATE_ATTACK)
 	e3:SetTargetRange(LOCATION_MZONE,0)
-	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xaa))
+	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_QLI))
 	e3:SetValue(300)
 	c:RegisterEffect(e3)
 	--summon with no tribute
@@ -66,9 +67,9 @@ function s.initial_effect(c)
 	e9:SetLabelObject(e8)
 	c:RegisterEffect(e9)
 end
-s.listed_series={0xaa}
+s.listed_series={SET_QLI}
 function s.splimit(e,c)
-	return not c:IsSetCard(0xaa)
+	return not c:IsSetCard(SET_QLI)
 end
 function s.ntcon(e,c,minc)
 	if c==nil then return true end
@@ -86,7 +87,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(s.lvcon)
 	e1:SetValue(4)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_DISABLE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD|RESET_DISABLE)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
@@ -95,7 +96,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(s.lvcon)
 	e2:SetValue(1800)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_DISABLE)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD|RESET_DISABLE)
 	c:RegisterEffect(e2)
 end
 function s.lvop2(e,tp,eg,ep,ev,re,r,rp)
@@ -106,7 +107,7 @@ function s.lvop2(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(4)
-	e1:SetReset(RESET_EVENT|(RESETS_STANDARD|RESET_DISABLE)&~(RESET_TOFIELD|RESET_LEAVE))
+	e1:SetReset(RESET_EVENT|(RESETS_STANDARD_DISABLE)&~(RESET_TOFIELD|RESET_LEAVE))
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
@@ -114,17 +115,17 @@ function s.lvop2(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetValue(1800)
-	e2:SetReset(RESET_EVENT|(RESETS_STANDARD|RESET_DISABLE)&~(RESET_TOFIELD|RESET_LEAVE))
+	e2:SetReset(RESET_EVENT|(RESETS_STANDARD_DISABLE)&~(RESET_TOFIELD|RESET_LEAVE))
 	c:RegisterEffect(e2)
 end
 function s.immcon(e)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_NORMAL)
+	return e:GetHandler():IsNormalSummoned()
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE) and e:GetLabel()==1
+	return e:GetHandler():IsTributeSummoned() and e:GetLabel()==1
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xaa) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_QLI) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
@@ -142,8 +143,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=g:Select(tp,2,2,nil)
 		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
-		sg:GetFirst():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0,fid)
-		sg:GetNext():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0,fid)
+		sg:GetFirst():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,0,fid)
+		sg:GetNext():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,0,fid)
 		sg:KeepAlive()
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -175,7 +176,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
-	if g:IsExists(Card.IsSetCard,1,nil,0xaa) then
+	if g:IsExists(Card.IsSetCard,1,nil,SET_QLI) then
 		e:GetLabelObject():SetLabel(1)
 	else
 		e:GetLabelObject():SetLabel(0)

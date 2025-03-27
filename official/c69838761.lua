@@ -1,5 +1,5 @@
 --マシンナーズ・メタルクランチ
---Machina Metalcrunch
+--Machina Metalcruncher
 --scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -37,7 +37,7 @@ function s.ntop(e,tp,eg,ep,ev,re,r,rp,c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_DISABLE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD|RESET_DISABLE)
 	e1:SetCode(EFFECT_SET_BASE_ATTACK)
 	e1:SetValue(1800)
 	c:RegisterEffect(e1)

@@ -1,4 +1,5 @@
 --コンフュージョン・チャフ
+--Confusion Chaff
 local s,id=GetID()
 function s.initial_effect(c)
 	--damage cal
@@ -31,7 +32,7 @@ function s.check(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	if Duel.GetAttackTarget()==nil then
 		s[1-tc:GetControler()]=s[1-tc:GetControler()]+1
-		Duel.GetAttacker():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		Duel.GetAttacker():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 		if s[1-tc:GetControler()]==1 then
 			s[2]=Duel.GetAttacker()
 		end
@@ -44,7 +45,7 @@ function s.check2(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and Duel.GetAttackTarget()==nil and s[tp]==2
+	return Duel.IsTurnPlayer(1-tp) and Duel.GetAttackTarget()==nil and s[tp]==2
 		and s[2]:GetFlagEffect(id)~=0 and Duel.GetAttacker()~=s[2]
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)

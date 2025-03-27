@@ -41,7 +41,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_DISABLE)
 		e2:SetTargetRange(0,LOCATION_SZONE)
 		e2:SetTarget(s.distg)
-		e2:SetReset(RESET_PHASE+PHASE_END)
+		e2:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e2,tp)
 		--disable effect
 		local e3=Effect.CreateEffect(c)
@@ -49,7 +49,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetCode(EVENT_CHAIN_SOLVING)
 		e3:SetRange(LOCATION_MZONE)
 		e3:SetOperation(s.disop)
-		e3:SetReset(RESET_PHASE+PHASE_END)
+		e3:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e3,tp)
 	end
 end

@@ -1,5 +1,5 @@
 --リバースポッド
---Flip Jar
+--Reverse Jar
 --Logical Nonsense
 
 --Substitute ID

@@ -14,13 +14,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x88}
+s.listed_series={SET_BUJIN}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=Duel.GetAttackTarget()
 	if not c then return false end
 	if c:IsControler(1-tp) then c=Duel.GetAttacker() end
 	e:SetLabelObject(c)
-	return c and c:IsSetCard(0x88) and c:IsRace(RACE_BEASTWARRIOR) and c:IsRelateToBattle() and not c:IsAttack(c:GetBaseAttack()*2)
+	return c and c:IsSetCard(SET_BUJIN) and c:IsRace(RACE_BEASTWARRIOR) and c:IsRelateToBattle() and not c:IsAttack(c:GetBaseAttack()*2)
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
@@ -33,7 +33,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp,chk)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE_CAL)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE_CAL)
 		e1:SetValue(c:GetBaseAttack()*2)
 		c:RegisterEffect(e1)
 	end

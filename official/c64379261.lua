@@ -1,4 +1,5 @@
 --ゴルゴニック・ガーゴイル
+--Gorgonic Gargoyle
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon success

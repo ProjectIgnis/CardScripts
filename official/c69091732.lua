@@ -1,4 +1,5 @@
 --義賊の入門書
+--Introduction to Gallantry
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

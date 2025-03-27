@@ -1,4 +1,5 @@
 --ブラックフェザー・シュート
+--Black-Winged Strafe
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,9 +13,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x33}
+s.listed_series={SET_BLACKWING}
 function s.costfilter(c)
-	return c:IsSetCard(0x33) and c:IsMonster() and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_BLACKWING) and c:IsMonster() and c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end

@@ -1,4 +1,5 @@
 --Subterror Behemoth Stygokraken
+--Subterror Behemoth Stygokraken
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip
@@ -32,9 +33,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.posop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x10ed}
+s.listed_series={SET_SUBTERROR_BEHEMOTH}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x10ed)
+	return c:IsFaceup() and c:IsSetCard(SET_SUBTERROR_BEHEMOTH)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local ct=Duel.GetMatchingGroupCount(s.filter,tp,LOCATION_MZONE,0,nil)
@@ -71,7 +72,7 @@ end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsCanTurnSet() and c:GetFlagEffect(id)==0 end
-	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_PHASE+PHASE_END,0,1)
+	c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET|RESET_PHASE|PHASE_END,0,1)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,c,1,0,0)
 end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)

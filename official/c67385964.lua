@@ -1,4 +1,5 @@
 --剣闘獣ノクシウス
+--Gladiator Beast Noxious
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -28,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e3:SetCode(EVENT_PHASE|PHASE_BATTLE)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCondition(s.spcon)
 	e3:SetCost(s.spcost)
@@ -36,7 +37,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x19}
+s.listed_series={SET_GLADIATOR}
 s.listed_names={id}
 function s.hspcon(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
@@ -58,14 +59,14 @@ function s.hspop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e1:SetValue(1)
-			e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+			e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
 			c:RegisterEffect(e1)
 			Duel.CalculateDamage(a,c)
 		end
 	end
 end
 function s.tgfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x19) and c:IsAbleToGrave()
+	return c:IsMonster() and c:IsSetCard(SET_GLADIATOR) and c:IsAbleToGrave()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -87,7 +88,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoDeck(c,nil,2,REASON_COST)
 end
 function s.filter(c,e,tp)
-	return not c:IsCode(id) and c:IsSetCard(0x19) and c:IsCanBeSpecialSummoned(e,114,tp,false,false)
+	return not c:IsCode(id) and c:IsSetCard(SET_GLADIATOR) and c:IsCanBeSpecialSummoned(e,114,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
@@ -100,6 +101,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp):GetFirst()
 	if tc and Duel.SpecialSummon(tc,114,tp,tp,false,false,POS_FACEUP)>0 then
-		tc:RegisterFlagEffect(tc:GetOriginalCode(),RESET_EVENT+RESETS_STANDARD_DISABLE,0,0)
+		tc:RegisterFlagEffect(tc:GetOriginalCode(),RESET_EVENT|RESETS_STANDARD_DISABLE,0,0)
 	end
 end

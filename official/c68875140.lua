@@ -1,4 +1,5 @@
 --押し売りゴブリン
+--Hard-sellin' Goblin
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -20,7 +21,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and eg:GetFirst():GetControler()==tp
+	return ep~=tp and eg:GetFirst():IsControler(tp)
 end
 function s.filter(c)
 	return c:GetSequence()<5 and c:IsAbleToHand()

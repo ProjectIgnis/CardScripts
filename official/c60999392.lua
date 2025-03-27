@@ -1,4 +1,5 @@
 --マシンナーズ・ソルジャー
+--Machina Soldier
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon success
@@ -12,12 +13,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.sumop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x36}
+s.listed_series={SET_MACHINA}
 function s.sumcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==1
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x36) and c:GetCode()~=id and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_MACHINA) and c:GetCode()~=id and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

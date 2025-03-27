@@ -1,4 +1,5 @@
 --ネオフレムベル・オリジン
+--Neo Flamvell Origin
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -10,9 +11,9 @@ function s.initial_effect(c)
 	e1:SetCondition(s.spcon)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x2c}
+s.listed_series={SET_FLAMVELL}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x2c) and c:GetCode()~=id
+	return c:IsFaceup() and c:IsSetCard(SET_FLAMVELL) and c:GetCode()~=id
 end
 function s.spcon(e,c)
 	if c==nil then return true end

@@ -46,7 +46,7 @@ function s.initial_effect(c)
 	e5:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e5:SetRange(LOCATION_REMOVED)
-	e5:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e5:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e5:SetCondition(s.spcon)
 	e5:SetTarget(s.sptg)
 	e5:SetOperation(s.spop)
@@ -79,7 +79,7 @@ end
 function s.spreg(e,tp,eg,ep,ev,re,r,rp)
 	if re and re:GetHandler()==e:GetHandler() then
 		e:SetLabel(Duel.GetTurnCount())
-		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,2)
+		e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,2)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

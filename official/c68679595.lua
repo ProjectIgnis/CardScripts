@@ -1,5 +1,5 @@
 --獣装合体 ライオ・ホープレイ
---Leo Utopia Ray
+--Ultimate Leo Utopia Ray
 --Scripted by Eerie Code
 Duel.LoadCardScript("c56840427.lua")
 local s,id=GetID()
@@ -34,10 +34,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={56840427}
-s.listed_series={0x107e}
+s.listed_series={SET_ZW}
 s.xyz_number=39
 function s.filter(c,tc,tp)
-	if not (c:IsSetCard(0x107e) and not c:IsForbidden()) then return false end
+	if not (c:IsSetCard(SET_ZW) and not c:IsForbidden()) then return false end
 	local effs={c:GetCardEffect(75402014)}
 	for _,te in ipairs(effs) do
 		if te:GetValue()(tc,c,tp) then return true end
@@ -50,14 +50,14 @@ function s.eqcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,nil,e:GetHandler(),tp) end
-	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,tp,LOCATION_DECK+LOCATION_EXTRA)
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK|LOCATION_EXTRA,0,1,nil,e:GetHandler(),tp) end
+	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,tp,LOCATION_DECK|LOCATION_EXTRA)
 end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 or c:IsFacedown() or not c:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,1,nil,c,tp)
+	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK|LOCATION_EXTRA,0,1,1,nil,c,tp)
 	local tc=g:GetFirst()
 	if tc then
 		local eff=tc:GetCardEffect(75402014)
@@ -65,7 +65,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.discfilter(c)
-	return c:IsSetCard(0x107e) and c:GetOriginalType() & TYPE_MONSTER ~= 0
+	return c:IsSetCard(SET_ZW) and c:GetOriginalType() & TYPE_MONSTER ~= 0
 end
 function s.discon(e)
 	return e:GetHandler():GetEquipGroup():IsExists(s.discfilter,1,nil)
@@ -88,12 +88,12 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e2)
 		if tc:IsImmuneToEffect(e1) or tc:IsImmuneToEffect(e2) then return end
 		Duel.AdjustInstantly(tc)
@@ -103,7 +103,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e3:SetValue(atk)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e3)
 	end
 end

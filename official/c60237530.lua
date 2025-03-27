@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
 	--Fusion summon procedure
-	Fusion.AddProcFunRep(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x14e),2,true)
+	Fusion.AddProcFunRep(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_DUAL_AVATAR),2,true)
 	--Destroy 1 of opponent's attack position monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -33,8 +33,8 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e3)
 end
-s.material_setcode={0x14e}
-s.listed_series={0x14e}
+s.material_setcode={SET_DUAL_AVATAR}
+s.listed_series={SET_DUAL_AVATAR}
 
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsDirectAttacked() end
@@ -44,7 +44,7 @@ function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	e:GetHandler():RegisterEffect(e1)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -61,10 +61,10 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atktg(e,c)
-	return c:IsSetCard(0x14e) and c:IsType(TYPE_FUSION)
+	return c:IsSetCard(SET_DUAL_AVATAR) and c:IsType(TYPE_FUSION)
 end
 function s.atkfil(c)
-	return c:IsFaceup() and c:IsSetCard(0x14e) and c:IsSummonType(SUMMON_TYPE_FUSION) and c:GetMaterial():IsExists(Card.IsType,1,nil,TYPE_EFFECT)
+	return c:IsFaceup() and c:IsSetCard(SET_DUAL_AVATAR) and c:IsFusionSummoned() and c:GetMaterial():IsExists(Card.IsType,1,nil,TYPE_EFFECT)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.atkfil,e:GetHandler():GetControler(),LOCATION_MZONE,0,1,nil)

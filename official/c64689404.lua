@@ -1,4 +1,5 @@
 --ソードブレイカー
+--Sword Breaker
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -34,7 +35,7 @@ end
 function s.ractg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetLabelObject():GetLabel()~=RACE_ALL end
 	if e:GetHandler():GetFlagEffect(id)==0 then
-		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
+		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,0)
 		e:GetLabelObject():SetLabel(0)
 	end
 	local prc=e:GetLabelObject():GetLabel()

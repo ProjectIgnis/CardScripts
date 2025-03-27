@@ -1,4 +1,5 @@
 --裸の王様
+--The Emperor's Holiday
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate

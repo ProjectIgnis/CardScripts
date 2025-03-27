@@ -1,4 +1,5 @@
 --ビッグ・シールド・ガードナー
+--Big Shield Gardna
 local s,id=GetID()
 function s.initial_effect(c)
 	--to attack

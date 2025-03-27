@@ -1,5 +1,5 @@
 --ＣＸ－Ｎ・Ａｓ・Ｃｈ Ｋｎｉｇｈｔ
---CXyz - Naphil Asylum Chaos Knight
+--CXyz N.As.Ch. Knight
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
@@ -21,19 +21,19 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,id)
-	e2:SetCost(aux.dxmcostgen(1,1,nil))
+	e2:SetCost(Cost.Detach(1,1,nil))
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 end
-s.listed_series={0x48}
+s.listed_series={SET_NUMBER}
 s.listed_names={34876719}
 function s.ovfilter(c,tp,lc)
 	return c:IsFaceup() and c:IsSummonCode(lc,SUMMON_TYPE_XYZ,tp,34876719)
 end
 function s.spfilter(c,e,tp,mc,pg)
 	local no=c.xyz_number
-	return c:IsType(TYPE_XYZ) and c:IsSetCard(0x48)
+	return c:IsType(TYPE_XYZ) and c:IsSetCard(SET_NUMBER)
 		and no and no>=101 and no<=107
 		and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
 		and (#pg<=0 or pg:IsContains(mc))
@@ -70,8 +70,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetLabelObject(sc)
 				e1:SetCondition(s.descon)
 				e1:SetOperation(s.desop)
-				e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
-				sc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,2))
+				e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN)
+				sc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,2))
 				Duel.RegisterEffect(e1,tp)
 			end
 		end

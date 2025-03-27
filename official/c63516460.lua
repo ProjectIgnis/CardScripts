@@ -1,4 +1,5 @@
 --一陣の風
+--Mystical Wind Typhoon
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

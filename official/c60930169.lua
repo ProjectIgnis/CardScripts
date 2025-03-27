@@ -1,4 +1,5 @@
 --ブロークン・ブロッカー
+--Broken Blocker
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -22,10 +23,10 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local t=Duel.GetAttackTarget()
 	if a and a:IsDefensePos() and a:GetDefense()>a:GetAttack() and a:IsStatus(STATUS_BATTLE_DESTROYED) then
-		a:RegisterFlagEffect(id,RESET_PHASE+PHASE_DAMAGE,0,1)
+		a:RegisterFlagEffect(id,RESET_PHASE|PHASE_DAMAGE,0,1)
 	end
 	if t and t:IsDefensePos() and t:GetDefense()>t:GetAttack() and t:IsStatus(STATUS_BATTLE_DESTROYED) then
-		t:RegisterFlagEffect(id,RESET_PHASE+PHASE_DAMAGE,0,1)
+		t:RegisterFlagEffect(id,RESET_PHASE|PHASE_DAMAGE,0,1)
 	end
 end
 function s.filter(c,e,tp)

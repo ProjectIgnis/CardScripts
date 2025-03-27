@@ -1,4 +1,5 @@
 --裁きの天秤
+--Balance of Judgment
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -15,12 +16,12 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local t=Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)
-	local s=Duel.GetFieldGroupCount(tp,LOCATION_HAND+LOCATION_ONFIELD,0)
+	local s=Duel.GetFieldGroupCount(tp,LOCATION_HAND|LOCATION_ONFIELD,0)
 	return t>s
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local t=Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)
-	local s=Duel.GetFieldGroupCount(tp,LOCATION_HAND+LOCATION_ONFIELD,0)
+	local s=Duel.GetFieldGroupCount(tp,LOCATION_HAND|LOCATION_ONFIELD,0)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,t-s) end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(t-s)
@@ -29,7 +30,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 	local t=Duel.GetFieldGroupCount(p,0,LOCATION_ONFIELD)
-	local s=Duel.GetFieldGroupCount(p,LOCATION_HAND+LOCATION_ONFIELD,0)
+	local s=Duel.GetFieldGroupCount(p,LOCATION_HAND|LOCATION_ONFIELD,0)
 	if t>s then
 		Duel.Draw(p,t-s,REASON_EFFECT)
 	end

@@ -1,4 +1,5 @@
 --創世神
+--The Creator
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot special summon

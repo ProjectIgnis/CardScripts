@@ -1,4 +1,5 @@
 --マドルチェ・チケット
+--Madolche Ticket
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -22,11 +23,11 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_TO_HAND)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x71}
+s.listed_series={SET_MADOLCHE}
 function s.cfilter(c,tp)
 	return c:IsControler(tp) and c:IsPreviousControler(tp)
 		and (c:IsPreviousLocation(LOCATION_GRAVE) or (c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)))
-		and c:IsSetCard(0x71) and not c:IsLocation(LOCATION_EXTRA)
+		and c:IsSetCard(SET_MADOLCHE) and not c:IsLocation(LOCATION_EXTRA)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return (r&REASON_EFFECT)~=0 and eg:IsExists(s.cfilter,1,nil,tp)
@@ -37,13 +38,13 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,0,tp,LOCATION_DECK)
 end
 function s.mfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x71) and c:IsRace(RACE_FAIRY)
+	return c:IsFaceup() and c:IsSetCard(SET_MADOLCHE) and c:IsRace(RACE_FAIRY)
 end
 function s.filter1(c)
-	return c:IsSetCard(0x71) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_MADOLCHE) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.filter2(c,e,tp)
-	return c:IsSetCard(0x71) and c:IsMonster()
+	return c:IsSetCard(SET_MADOLCHE) and c:IsMonster()
 		and (c:IsAbleToHand() or c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK))
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)

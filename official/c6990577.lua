@@ -1,5 +1,5 @@
 --守護竜アンドレイク
---Andrake the Guardragon
+--Guardragon Andrake
 --scripted by Logical Nonsense
 local s,id=GetID()
 function s.initial_effect(c)
@@ -38,7 +38,7 @@ function s.splimit(e,se,sp,st)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return eg:GetFirst()==c and c:IsPreviousLocation(LOCATION_HAND+LOCATION_DECK)
+	return eg:GetFirst()==c and c:IsPreviousLocation(LOCATION_HAND|LOCATION_DECK)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -47,7 +47,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_BASE_ATTACK)
 		e1:SetValue(c:GetBaseAttack()*2)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE+RESET_PHASE+PHASE_END,2)
+		e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END,2)
 		c:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_SET_BASE_DEFENSE)
@@ -57,7 +57,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return eg:GetFirst()==c and c:IsPreviousLocation(LOCATION_GRAVE+LOCATION_REMOVED)
+	return eg:GetFirst()==c and c:IsPreviousLocation(LOCATION_GRAVE|LOCATION_REMOVED)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) end
@@ -72,4 +72,3 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end
-

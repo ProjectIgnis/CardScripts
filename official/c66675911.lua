@@ -27,11 +27,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 	--Lists "Shaddoll" archetype
-s.listed_series={0x9d}
+s.listed_series={SET_SHADDOLL}
 
 	--Check for "Shaddoll" monster
 function s.immfilter(c)
-	return c:IsSetCard(0x9d) and c:IsFaceup()
+	return c:IsSetCard(SET_SHADDOLL) and c:IsFaceup()
 end
 	--Activation legality
 function s.immtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -52,7 +52,7 @@ function s.immop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetCode(EFFECT_IMMUNE_EFFECT)
 		e1:SetValue(s.efilter)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end
@@ -81,7 +81,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_CANNOT_TRIGGER)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1,true)
 	end
 end

@@ -1,9 +1,9 @@
 --魔鍵変鬼－トランスフルミネ
---Magikey-Mutated Ogre - Transfurmine
+--Magikey Fiend - Transfurlmine
 --scripted by the Razgriz
 local s,id=GetID()
 function s.initial_effect(c)
-	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x167),1,1,Synchro.NonTunerEx(Card.IsType,TYPE_NORMAL),1,99)
+	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_MAGIKEY),1,1,Synchro.NonTunerEx(Card.IsType,TYPE_NORMAL),1,99)
 	c:EnableReviveLimit()
 	--Make up to 2 attacks on monsters each Battle Phase
 	local e1=Effect.CreateEffect(c)
@@ -47,16 +47,16 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x167}
+s.listed_series={SET_MAGIKEY}
 function s.matcheck(e,c)
 	e:SetLabel(c:GetMaterial():GetClassCount(Card.GetAttribute))
 end
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	local obj=e:GetLabelObject()
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) and obj and obj:GetLabel()>1
+	return e:GetHandler():IsSynchroSummoned() and obj and obj:GetLabel()>1
 end
 function s.setfilter(c)
-	return c:IsSetCard(0x167) and c:IsSpellTrap() and not c:IsType(TYPE_FIELD) and c:IsSSetable()
+	return c:IsSetCard(SET_MAGIKEY) and c:IsSpellTrap() and not c:IsType(TYPE_FIELD) and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0

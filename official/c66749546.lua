@@ -1,26 +1,26 @@
--- 氷水艇キングフィッシャー
--- Icejade Creation Kingfisher
--- Scripted by Hatter
+--氷水艇キングフィッシャー
+--Icejade Creation Kingfisher
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Equip
+	--Equip
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_EQUIP)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetRange(LOCATION_HAND+LOCATION_MZONE)
+	e1:SetRange(LOCATION_HAND|LOCATION_MZONE)
 	e1:SetTarget(s.eqtg)
 	e1:SetOperation(s.eqop)
 	c:RegisterEffect(e1)
-	-- Attack while in defense position
+	--Attack while in defense position
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
 	e2:SetCode(EFFECT_DEFENSE_ATTACK)
 	e2:SetCondition(s.atkcon)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
-	-- Return to hand
+	--Return to hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOHAND)
@@ -52,7 +52,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and tc
 		and tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		Duel.Equip(tp,c,tc,true)
-		-- Equip limit
+		--Equip limit
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)

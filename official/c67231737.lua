@@ -35,7 +35,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	if tc:GetFlagEffect(id)==0 then
 		s[ep]=s[ep]+1
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
@@ -56,7 +56,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetTarget(s.ftarget)
 	e1:SetLabel(a:GetFieldID())
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.ftarget(e,c)
@@ -78,14 +78,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e0:SetType(EFFECT_TYPE_SINGLE)
 		e0:SetCode(EFFECT_EXTRA_ATTACK_MONSTER)
 		e0:SetValue(gc)
-		e0:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
+		e0:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE)
 		a:RegisterEffect(e0)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetCode(EFFECT_MUST_ATTACK_MONSTER)
 		e1:SetTargetRange(LOCATION_MZONE,0)
 		e1:SetValue(s.attg)
-		e1:SetReset(RESET_PHASE+PHASE_BATTLE)
+		e1:SetReset(RESET_PHASE|PHASE_BATTLE)
 		Duel.RegisterEffect(e1,tp)
 	end
 end

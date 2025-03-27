@@ -1,4 +1,5 @@
 --水神の護符
+--Sea Lord's Amulet
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -31,11 +32,11 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetRange(LOCATION_SZONE)
 	e1:SetCondition(s.tgcon)
 	e1:SetOperation(s.tgop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,3)
+	e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN),3)
 	e:GetHandler():RegisterEffect(e1)
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

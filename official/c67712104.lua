@@ -37,7 +37,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.indesop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x12b}
+s.listed_series={SET_MARINCESS}
 function s.econ(e)
 	return e:GetHandler():GetSequence()>4
 end
@@ -60,10 +60,10 @@ function s.indescond(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if at==c then return true end
 	local lg=c:GetLinkedGroup()
-	return at and at:IsControler(tp) and at:IsFaceup() and at:IsSetCard(0x12b) and lg:IsContains(at)
+	return at and at:IsControler(tp) and at:IsFaceup() and at:IsSetCard(SET_MARINCESS) and lg:IsContains(at)
 end
 function s.costfilter(c)
-	return c:IsSetCard(0x12b) and c:IsMonster() and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_MARINCESS) and c:IsMonster() and c:IsAbleToGraveAsCost()
 end
 function s.indescost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end
@@ -81,14 +81,14 @@ function s.indesop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE)
 		at:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_FIELD)
 		e2:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
 		e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e2:SetTargetRange(1,0)
-		e2:SetReset(RESET_PHASE+PHASE_DAMAGE)
+		e2:SetReset(RESET_PHASE|PHASE_DAMAGE)
 		Duel.RegisterEffect(e2,tp)
 	end
 end

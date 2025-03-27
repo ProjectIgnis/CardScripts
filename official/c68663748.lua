@@ -1,5 +1,5 @@
 --フォーチュンフューチャー
---Fortune's Vision
+--Fortune's Future
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,9 +12,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x31}
+s.listed_series={SET_FORTUNE_LADY}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x31) and c:IsMonster()
+	return c:IsFaceup() and c:IsSetCard(SET_FORTUNE_LADY) and c:IsMonster()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and s.filter(chkc) end

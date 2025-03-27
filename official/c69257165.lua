@@ -1,4 +1,5 @@
 --精神汚染
+--Mind Pollutant
 local s,id=GetID()
 function s.initial_effect(c)
 	--control

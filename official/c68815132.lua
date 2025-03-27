@@ -1,4 +1,5 @@
 --ハーピィ・ダンサー
+--Harpie Dancer
 local s,id=GetID()
 function s.initial_effect(c)
 	--return
@@ -17,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetCode(EFFECT_CHANGE_CODE)
-	e2:SetRange(LOCATION_MZONE+LOCATION_GRAVE)
+	e2:SetRange(LOCATION_MZONE|LOCATION_GRAVE)
 	e2:SetValue(CARD_HARPIE_LADY)
 	c:RegisterEffect(e2)
 end

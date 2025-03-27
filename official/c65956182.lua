@@ -1,16 +1,16 @@
--- 暗黒界の登極
--- Dark World Accession
--- Scripted by Hatter
+--暗黒界の登極
+--Dark World Accession
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Fusion Summon
+	--Fusion Summon
 	local e1=Fusion.CreateSummonEff({handler=c,fusfilter=aux.FilterBoolFunction(Card.IsRace,RACE_FIEND),matfilter=s.matfilter,extrafil=s.fextra,extraop=s.extraop,extratg=s.extratg})
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCountLimit(1,id)
 	e1:SetHintTiming(0,TIMING_MAIN_END)
 	e1:SetCondition(function() return Duel.IsMainPhase() end)
 	c:RegisterEffect(e1)
-	-- Add this card to the hand
+	--Add this card to the hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_HANDES)
@@ -21,13 +21,13 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x6}
+s.listed_series={SET_DARK_WORLD}
 function s.matfilter(c)
 	return (c:IsLocation(LOCATION_HAND) and c:IsDiscardable(REASON_EFFECT+REASON_FUSION+REASON_MATERIAL))
 		or (c:IsOnField() and c:IsAbleToRemove())
 end
 function s.checkmat(tp,sg,fc)
-	return fc:IsSetCard(0x6) or not sg:IsExists(Card.IsLocation,1,nil,LOCATION_HAND)
+	return fc:IsSetCard(SET_DARK_WORLD) or not sg:IsExists(Card.IsLocation,1,nil,LOCATION_HAND)
 end
 function s.fextra(e,tp,mg)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_SPIRIT_ELIMINATION) then return nil,s.checkmat end
@@ -43,11 +43,11 @@ function s.extraop(e,tc,tp,sg)
 end
 function s.extratg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,0,tp,LOCATION_MZONE+LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,0,tp,LOCATION_MZONE|LOCATION_GRAVE)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_HANDES,nil,0,tp,1)
 end
 function s.tgfilter(c)
-	return c:IsSetCard(0x6) and c:IsMonster() and c:IsDiscardable(REASON_EFFECT)
+	return c:IsSetCard(SET_DARK_WORLD) and c:IsMonster() and c:IsDiscardable(REASON_EFFECT)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

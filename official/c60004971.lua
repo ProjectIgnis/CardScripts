@@ -1,7 +1,8 @@
 --ドラグニティの神槍
+--Dragunity Divine Lance
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,0x29))
+	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,SET_DRAGUNITY))
 	--atk
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_EQUIP)
@@ -24,7 +25,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.eqop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x29}
+s.listed_series={SET_DRAGUNITY}
 function s.atkval(e,c)
 	return c:GetLevel()*100
 end
@@ -32,7 +33,7 @@ function s.efilter(e,re)
 	return re:IsActiveType(TYPE_TRAP)
 end
 function s.eqfilter(c)
-	return c:IsSetCard(0x29) and c:IsRace(RACE_DRAGON) and c:IsType(TYPE_TUNER) and not c:IsForbidden()
+	return c:IsSetCard(SET_DRAGUNITY) and c:IsRace(RACE_DRAGON) and c:IsType(TYPE_TUNER) and not c:IsForbidden()
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
@@ -51,7 +52,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(s.eqlimit2)
 		e1:SetLabelObject(ec)
 		tc:RegisterEffect(e1)

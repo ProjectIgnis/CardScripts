@@ -1,4 +1,5 @@
 --FNo.0 未来皇ホープ
+--Number F0: Utopic Future
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -40,7 +41,7 @@ function s.initial_effect(c)
 end
 s.xyz_number=0
 function s.xyzfilter(c,xyz,sumtype,tp)
-	return c:IsType(TYPE_XYZ,xyz,sumtype,tp) and not c:IsSetCard(0x48,xyz,sumtype,tp)
+	return c:IsType(TYPE_XYZ,xyz,sumtype,tp) and not c:IsSetCard(SET_NUMBER,xyz,sumtype,tp)
 end
 function s.xyzcheck(g,tp,xyz)
 	local mg=g:Filter(function(c) return not c:IsHasEffect(511001175) end,nil)

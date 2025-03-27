@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	local ritparams={handler=c,lvtype=RITPROC_EQUAL,filter=aux.FilterBoolFunction(Card.IsSetCard,0x138),lv=s.ritlevel,location=LOCATION_DECK,sumpos=POS_FACEUP_DEFENSE}
+	local ritparams={handler=c,lvtype=RITPROC_EQUAL,filter=aux.FilterBoolFunction(Card.IsSetCard,SET_MEGALITH),lv=s.ritlevel,location=LOCATION_DECK,sumpos=POS_FACEUP_DEFENSE}
 	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target(Ritual.Target(ritparams),Ritual.Operation(ritparams)))
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x138}
+s.listed_series={SET_MEGALITH}
 function s.ritlevel(c)
 	return c:GetLevel()*2
 end
@@ -56,6 +56,6 @@ function s.op(tc,c,atk)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(atk)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	tc:RegisterEffect(e1)
 end

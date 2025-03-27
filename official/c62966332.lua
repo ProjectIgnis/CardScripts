@@ -1,4 +1,5 @@
 --天変地異
+--Convulsion of Nature
 local s,id=GetID()
 function s.initial_effect(c)
 	Duel.EnableGlobalFlag(GLOBALFLAG_DECK_REVERSE_CHECK)

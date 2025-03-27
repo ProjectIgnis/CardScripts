@@ -1,5 +1,5 @@
 --三賢者の書
---Tris Magistus
+--Trismagistus
 --Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -40,12 +40,12 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop2)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x152}
+s.listed_series={SET_MAGISTUS}
 function s.indvalue(e,re,r,rp)
 	return r&REASON_BATTLE==REASON_BATTLE
 end
 function s.indfilter(e,c)
-	return c:IsSetCard(0x152) and c:GetEquipCount()>0
+	return c:IsSetCard(SET_MAGISTUS) and c:GetEquipCount()>0
 end
 function s.spfilter1(c,e,tp)
 	return c:IsRace(RACE_SPELLCASTER) and c:IsLevel(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -69,7 +69,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.spfilter2(c,e,tp)
-	return c:IsSetCard(0x152) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_MAGISTUS) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

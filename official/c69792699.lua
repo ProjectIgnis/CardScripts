@@ -3,7 +3,7 @@
 --Scripted by Neo Yuno
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,0x5a))
+	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,SET_PENGUIN))
 	--Atk up
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	e5:SetCode(EVENT_REMOVE)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x5a}
+s.listed_series={SET_PENGUIN}
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and eg:GetFirst()==e:GetHandler():GetEquipTarget()
 end
@@ -52,7 +52,7 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cfilter(c,tp,re)
 	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:GetPreviousControler()==1-tp
-		and c:IsReason(REASON_EFFECT) and re:GetHandler():IsSetCard(0x5a)
+		and c:IsReason(REASON_EFFECT) and re:GetHandler():IsSetCard(SET_PENGUIN)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg and eg:IsExists(s.cfilter,1,nil,tp,re) end
@@ -71,7 +71,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetTargetRange(LOCATION_ONFIELD,LOCATION_ONFIELD)
 		e1:SetLabel(code)
 		e1:SetTarget(s.distg)
-		e1:SetReset(RESET_PHASE+PHASE_END,2)
+		e1:SetReset(RESET_PHASE|PHASE_END,2)
 		Duel.RegisterEffect(e1,tp)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -79,7 +79,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetLabel(code)
 		e2:SetCondition(s.discon)
 		e2:SetOperation(s.disop)
-		e2:SetReset(RESET_PHASE+PHASE_END,2)
+		e2:SetReset(RESET_PHASE|PHASE_END,2)
 		Duel.RegisterEffect(e2,tp)
 		local e3=e1:Clone()
 		e3:SetCode(EFFECT_DISABLE_TRAPMONSTER)

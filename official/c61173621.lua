@@ -1,4 +1,5 @@
 --エッジインプ・チェーン
+--Edge Imp Chain
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -24,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xad}
+s.listed_series={SET_FRIGHTFUR}
 s.listed_names={id}
 function s.filter(c)
 	return c:IsCode(id) and c:IsAbleToHand()
@@ -42,10 +43,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsPreviousLocation(LOCATION_HAND+LOCATION_ONFIELD)
+	return e:GetHandler():IsPreviousLocation(LOCATION_HAND|LOCATION_ONFIELD)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xad) and c:IsAbleToHand()
+	return c:IsSetCard(SET_FRIGHTFUR) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

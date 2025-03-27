@@ -1,4 +1,5 @@
 --ゴゴゴ護符
+--Gogogo Talisman
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -32,9 +33,9 @@ function s.initial_effect(c)
 	e4:SetOperation(s.indop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x59}
+s.listed_series={SET_GOGOGO}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x59)
+	return c:IsFaceup() and c:IsSetCard(SET_GOGOGO)
 end
 function s.damcon(e)
 	return Duel.IsExistingMatchingCard(s.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,2,nil)
@@ -47,7 +48,7 @@ function s.indcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	if tc:IsControler(1-tp) then tc=Duel.GetAttackTarget() end
 	e:SetLabelObject(tc)
-	return tc and tc:IsFaceup() and tc:IsControler(tp) and tc:IsSetCard(0x59)
+	return tc and tc:IsFaceup() and tc:IsControler(tp) and tc:IsSetCard(SET_GOGOGO)
 end
 function s.indtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -61,7 +62,7 @@ function s.indop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE)
 		tc:RegisterEffect(e1)
 	end
 end

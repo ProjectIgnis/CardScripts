@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 	--spsummon
-	local params={aux.FilterBoolFunction(Card.IsSetCard,0xad)}
+	local params={aux.FilterBoolFunction(Card.IsSetCard,SET_FRIGHTFUR)}
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetOperation(Fusion.SummonEffOP(table.unpack(params)))
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xad}
+s.listed_series={SET_FRIGHTFUR}
 s.listed_names={CARD_POLYMERIZATION}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_HAND)

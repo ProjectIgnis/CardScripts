@@ -1,4 +1,5 @@
 --天輪の葬送士
+--Guiding Light
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon

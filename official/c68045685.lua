@@ -1,5 +1,5 @@
 --武神籬
---Bujintersection
+--Bujincandescence
 --Logical Nonsense
 
 --Substitute ID
@@ -43,27 +43,27 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_PHASE+PHASE_END)
 	e4:SetCountLimit(1)
 	e4:SetCost(s.spcost)
-	e4:SetCondition(function(_,tp)return Duel.GetTurnPlayer()==tp end)
+	e4:SetCondition(function(_,tp)return Duel.IsTurnPlayer(tp) end)
 	e4:SetTarget(s.sptg)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
 	--Lists "Bujin" archetype
-s.listed_series={0x88}
+s.listed_series={SET_BUJIN}
 
 function s.target(e,c)
-    return c:IsSetCard(0x88) and c:IsRace(RACE_BEASTWARRIOR)
+    return c:IsSetCard(SET_BUJIN) and c:IsRace(RACE_BEASTWARRIOR)
 end
 	--Define cost
 function s.tgfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x88) and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and c:IsSetCard(SET_BUJIN) and c:IsAbleToGraveAsCost()
 		and (c:IsFaceup() or c:IsLocation(LOCATION_HAND))
 end
 	--Send 1 "Bujin" monster from hand/face-up to GY as cost
 function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_MZONE|LOCATION_HAND,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_MZONE|LOCATION_HAND,0,1,1,nil)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 	--Activation legality
@@ -82,20 +82,20 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetValue(RESET_TURN_SET)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e2)
 		if tc:IsType(TYPE_TRAPMONSTER) then
 			local e3=Effect.CreateEffect(c)
 			e3:SetType(EFFECT_TYPE_SINGLE)
 			e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e3:SetCode(EFFECT_DISABLE_TRAPMONSTER)
-			e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e3:SetReset(RESETS_STANDARD_PHASE_END)
 			tc:RegisterEffect(e3)
 		end
 	end
@@ -107,7 +107,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 	--Check for a "Bujin" monster
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x88) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
+	return c:IsSetCard(SET_BUJIN) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 end
 	--Activation legality
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

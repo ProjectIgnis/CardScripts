@@ -1,4 +1,5 @@
 --ヴァイパー・リボーン
+--Viper's Rebirth
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -38,7 +39,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
 		e1:SetOperation(s.desop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetCountLimit(1)
 		tc:RegisterEffect(e1)
 	end

@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop2)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x7b,0x55}
+s.listed_series={SET_GALAXY,SET_PHOTON}
 s.listed_names={71071546}
 function s.filter(c,e,tp)
 	return c:IsCode(71071546)
@@ -49,7 +49,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spfilter(c,e,tp)
-	return (c:IsSetCard(0x7b) or c:IsSetCard(0x55)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return (c:IsSetCard(SET_GALAXY) or c:IsSetCard(SET_PHOTON)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.cfilter(c,ft,tp)
 	return c:IsRace(RACE_MACHINE)

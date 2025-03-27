@@ -1,4 +1,5 @@
 --アビスフィアー
+--Abyss-sphere
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -26,9 +27,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x74}
+s.listed_series={SET_MERMAIL}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x74) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_MERMAIL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -41,12 +42,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.sdescon)
 	e1:SetOperation(s.sdesop)
-	if Duel.GetCurrentPhase()==PHASE_END and Duel.GetTurnPlayer()~=tp then
+	if Duel.IsPhase(PHASE_END) and Duel.GetTurnPlayer()~=tp then
 		e1:SetLabel(Duel.GetTurnCount())
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,2)
+		e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN),2)
 	else
 		e1:SetLabel(0)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+		e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN)
 	end
 	e:GetHandler():RegisterEffect(e1)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
@@ -65,7 +66,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_OWNER_RELATE)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetCondition(s.rcon)
 		tc:RegisterEffect(e1,true)
 	end
@@ -74,7 +75,7 @@ function s.rcon(e)
 	return e:GetOwner():IsHasCardTarget(e:GetHandler())
 end
 function s.sdescon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and Duel.GetTurnCount()~=e:GetLabel()
+	return Duel.IsTurnPlayer(1-tp) and Duel.GetTurnCount()~=e:GetLabel()
 end
 function s.sdesop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(e:GetHandler(),REASON_EFFECT)

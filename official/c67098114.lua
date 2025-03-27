@@ -51,12 +51,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
-s.listed_series={0xa042}
+s.listed_series={SET_NORDIC_ALFAR}
 function s.tfilter(c,scard,sumtype,tp)
-	return c:IsSetCard(0xa042,scard,sumtype,tp) or c:IsHasEffect(EFFECT_SYNSUB_NORDIC)
+	return c:IsSetCard(SET_NORDIC_ALFAR,scard,sumtype,tp) or c:IsHasEffect(EFFECT_SYNSUB_NORDIC)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.GetTurnPlayer()==tp
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsTurnPlayer(tp)
 		and ep~=tp and (Duel.GetCurrentPhase()&0x38)~=0 and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -77,14 +77,14 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsReason(REASON_BATTLE) then pos=c:GetBattlePosition() end
 	if rp~=tp and c:IsPreviousControler(tp) and c:IsReason(REASON_DESTROY)
 		and c:IsPreviousLocation(LOCATION_ONFIELD) and (pos&POS_FACEUP)~=0 then
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)~=0
 end
 function s.cfilter(c)
-	return c:IsSetCard(0xa042) and c:IsType(TYPE_TUNER) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(SET_NORDIC_ALFAR) and c:IsType(TYPE_TUNER) and c:IsAbleToRemoveAsCost()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,nil) end

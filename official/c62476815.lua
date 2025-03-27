@@ -1,4 +1,5 @@
 --ゴゴゴゴーレム
+--Gogogo Golem
 local s,id=GetID()
 function s.initial_effect(c)
 	--battle indes

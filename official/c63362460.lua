@@ -1,4 +1,5 @@
 --D－HERO ディバインガイ
+--Destiny HERO - Celestial
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
@@ -25,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xc008}
+s.listed_series={SET_DESTINY_HERO}
 function s.desfilter(c)
 	return c:IsFaceup() and c:IsSpell()
 end
@@ -47,7 +48,7 @@ function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)==0 and aux.exccon(e)
 end
 function s.cfilter(c)
-	return c:IsSetCard(0xc008) and c:IsMonster() and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(SET_DESTINY_HERO) and c:IsMonster() and c:IsAbleToRemoveAsCost()
 end
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

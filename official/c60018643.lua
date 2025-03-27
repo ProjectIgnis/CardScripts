@@ -43,10 +43,10 @@ function s.initial_effect(c)
 			end)
 		end)
 end
-s.listed_series={0x101}
+s.listed_series={SET_CODE_TALKER}
 function s.thcfilter(c,e,tp)
 	local attr=c:GetAttribute()
-	return c:IsSetCard(0x101) and c:IsControler(tp)
+	return c:IsSetCard(SET_CODE_TALKER) and c:IsControler(tp)
 		and c:IsLocation(LOCATION_MZONE) and c:IsPreviousLocation(LOCATION_EXTRA)
 		and s.attr_list[tp]&attr==0
 		and c:IsCanBeEffectTarget(e)
@@ -97,7 +97,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 			s.attr_list[tp]=s.attr_list[tp]|att
 		end
 		for _,str in aux.GetAttributeStrings(att) do
-			c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,EFFECT_FLAG_CLIENT_HINT,1,0,str)
+			c:RegisterFlagEffect(0,RESETS_STANDARD_PHASE_END,EFFECT_FLAG_CLIENT_HINT,1,0,str)
 		end
 	end
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -106,7 +106,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,2),nil)
 	--lizard check

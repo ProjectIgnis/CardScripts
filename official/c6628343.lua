@@ -1,4 +1,5 @@
 --開闢の騎士
+--Beginning Knight
 local s,id=GetID()
 function s.initial_effect(c)
 	--gain
@@ -22,13 +23,13 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x10cf}
+s.listed_series={SET_BLACK_LUSTER_SOLDIER}
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
-	return r==REASON_RITUAL and eg:IsExists(Card.IsSetCard,1,nil,0x10cf)
+	return r==REASON_RITUAL and eg:IsExists(Card.IsSetCard,1,nil,SET_BLACK_LUSTER_SOLDIER)
 end
 function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=eg:Filter(Card.IsSetCard,nil,0x10cf)
+	local g=eg:Filter(Card.IsSetCard,nil,SET_BLACK_LUSTER_SOLDIER)
 	local rc=g:GetFirst()
 	if not rc then return end
 	local e1=Effect.CreateEffect(rc)
@@ -40,7 +41,7 @@ function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCountLimit(1)
 	e1:SetTarget(s.rmtg)
 	e1:SetOperation(s.rmop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	rc:RegisterEffect(e1,true)
 	local e2=Effect.CreateEffect(rc)
 	e2:SetDescription(aux.Stringid(id,1))
@@ -48,17 +49,17 @@ function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCode(EVENT_BATTLE_DESTROYING)
 	e2:SetCondition(s.atcon)
 	e2:SetOperation(s.atop)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 	rc:RegisterEffect(e2,true)
 	if not rc:IsType(TYPE_EFFECT) then
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_ADD_TYPE)
 		e3:SetValue(TYPE_EFFECT)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 		rc:RegisterEffect(e3,true)
 	end
-	rc:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,3))
+	rc:RegisterFlagEffect(0,RESET_EVENT|RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,3))
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsAbleToRemove() end

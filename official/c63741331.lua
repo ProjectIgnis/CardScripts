@@ -1,5 +1,5 @@
 --フォッグ・コントロール
---Fog COntrol
+--Fog Control
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -13,9 +13,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.counter_place_list={0x1019}
-s.listed_series={0x18}
+s.listed_series={SET_CLOUDIAN}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x18)
+	return c:IsFaceup() and c:IsSetCard(SET_CLOUDIAN)
 end
 function s.filter(c,e)
 	return c:IsFaceup() and c:IsCanBeEffectTarget(e)

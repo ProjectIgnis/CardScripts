@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
-	e1:SetRange(LOCATION_HAND+LOCATION_GRAVE)
+	e1:SetRange(LOCATION_HAND|LOCATION_GRAVE)
 	e1:SetCondition(s.spcon)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
@@ -46,13 +46,13 @@ function s.initial_effect(c)
 	e5:SetLabelObject(e4)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x29}
+s.listed_series={SET_DRAGUNITY}
 s.listed_names={id}
 function s.eqval(ec,c,tp)
 	return ec:IsControler(tp) and not ec:IsCode(id) and ec:IsRace(RACE_DRAGON)
 end
 function s.spfilter(c,tp)
-	return c:GetEquipGroup():IsExists(Card.IsSetCard,1,nil,0x29) and c:IsAbleToRemoveAsCost()
+	return c:GetEquipGroup():IsExists(Card.IsSetCard,1,nil,SET_DRAGUNITY) and c:IsAbleToRemoveAsCost()
 		and (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 or c:GetSequence()<5)
 end
 function s.spcon(e,c)

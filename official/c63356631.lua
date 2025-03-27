@@ -1,4 +1,5 @@
 --鳳翼の爆風
+--Phoenix Wing Wind Blast
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

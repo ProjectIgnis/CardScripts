@@ -1,5 +1,5 @@
 --大砂海ゴールド・ゴルゴンダ
---Vast Desert Gold Golgonda
+--Great Sand Sea - Gold Golgonda
 --Scripted by Hatter
 
 local s,id=GetID()
@@ -43,26 +43,26 @@ function s.initial_effect(c)
 	e4:SetOperation(s.caop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x158}
+s.listed_series={SET_SPRINGANS}
 
 function s.attg(e,c)
-	return c:IsSetCard(0x158) and c:IsType(TYPE_XYZ)
+	return c:IsSetCard(SET_SPRINGANS) and c:IsType(TYPE_XYZ)
 end
 function s.isfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x158) and c:IsType(TYPE_XYZ)
+	return c:IsFaceup() and c:IsSetCard(SET_SPRINGANS) and c:IsType(TYPE_XYZ)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsExistingMatchingCard(s.isfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x158) and c:IsDiscardable()
+	return c:IsSetCard(SET_SPRINGANS) and c:IsDiscardable()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST+REASON_DISCARD)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x158) and c:IsType(TYPE_XYZ) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
+	return c:IsSetCard(SET_SPRINGANS) and c:IsType(TYPE_XYZ) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -98,7 +98,7 @@ function s.caop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

@@ -1,5 +1,5 @@
 --霊神の聖殿
---Temple of the Elemental Lords
+--Palace of the Elemental Lords
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -44,13 +44,13 @@ function s.initial_effect(c)
 	e6:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 	c:RegisterEffect(e6)
 end
-s.listed_series={0x400d}
+s.listed_series={SET_ELEMENTSABER}
 function s.atkval(e,c)
 	local g=Duel.GetMatchingGroup(Card.IsMonster,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil)
 	return g:GetClassCount(Card.GetAttribute)*200
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x400d) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_ELEMENTSABER) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -68,12 +68,12 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_SKIP_BP)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e1:SetTargetRange(1,0)
-		if Duel.GetTurnPlayer()==tp then
+		if Duel.IsTurnPlayer(tp) then
 			e1:SetLabel(Duel.GetTurnCount())
 			e1:SetCondition(s.skipcon)
-			e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,2)
+			e1:SetReset(RESET_PHASE|PHASE_END|RESET_SELF_TURN,2)
 		else
-			e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,1)
+			e1:SetReset(RESET_PHASE|PHASE_END|RESET_SELF_TURN,1)
 		end
 		Duel.RegisterEffect(e1,tp)
 	end
@@ -84,4 +84,3 @@ end
 function s.condition(e)
 	return e:GetHandler():GetFlagEffect(id)==0
 end
-

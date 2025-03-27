@@ -22,9 +22,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.effop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x48}
+s.listed_series={SET_NUMBER}
 function s.spfilter(c)
-	return c:IsSetCard(0x48) and c:IsType(TYPE_XYZ)
+	return c:IsSetCard(SET_NUMBER) and c:IsType(TYPE_XYZ)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil) end
@@ -48,7 +48,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)
 		e1:SetValue(lv)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 		--Cannot Special Summon from the Extra Deck, except "Number" Xyz Monsters
 		local e2=Effect.CreateEffect(c)
@@ -58,7 +58,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetRange(LOCATION_MZONE)
 		e2:SetAbsoluteRange(tp,1,0)
 		e2:SetTarget(s.splimit)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e2)
 		local e3=e2:Clone()
 		e3:SetCode(CARD_CLOCK_LIZARD)
@@ -69,13 +69,13 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.splimit(e,c)
-	return not (c:IsSetCard(0x48) and c:IsType(TYPE_XYZ)) and c:IsLocation(LOCATION_EXTRA)
+	return not (c:IsSetCard(SET_NUMBER) and c:IsType(TYPE_XYZ)) and c:IsLocation(LOCATION_EXTRA)
 end
 function s.lizfilter(e,c)
 	return not (c:IsOriginalSetCard(0x48) and c:IsOriginalType(TYPE_XYZ))
 end
 function s.effcon(e,tp,eg,ep,ev,re,r,rp)
-	return (r&REASON_XYZ)==REASON_XYZ and e:GetHandler():GetReasonCard():IsSetCard(0x48) and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
+	return (r&REASON_XYZ)==REASON_XYZ and e:GetHandler():GetReasonCard():IsSetCard(SET_NUMBER) and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -87,7 +87,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e1:SetValue(1)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	rc:RegisterEffect(e1,true)
 	--Cannot be destroyed by opponent's effects
 	local e2=e1:Clone()
@@ -101,7 +101,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_ADD_TYPE)
 		e3:SetValue(TYPE_EFFECT)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 		rc:RegisterEffect(e3,true)
 	end
 end

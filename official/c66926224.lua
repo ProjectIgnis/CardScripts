@@ -1,4 +1,5 @@
 --弱肉一色
+--The Law of the Normal
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

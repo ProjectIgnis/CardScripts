@@ -1,4 +1,5 @@
 --イビリチュア・ジールギガス
+--Gishki Zielgigas
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x3a}
+s.listed_series={SET_GISHKI}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,1000) end
 	Duel.PayLPCost(tp,1000) 
@@ -27,7 +28,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Draw(tp,1,REASON_EFFECT)==0 then return end
 	local tc=Duel.GetOperatedGroup():GetFirst()
 	Duel.ConfirmCards(1-tp,tc)
-	if tc:IsSetCard(0x3a) and tc:IsMonster() then
+	if tc:IsSetCard(SET_GISHKI) and tc:IsMonster() then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		local dg=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 		Duel.SendtoDeck(dg,nil,2,REASON_EFFECT)

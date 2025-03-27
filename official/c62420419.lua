@@ -1,4 +1,5 @@
 --大邪神レシェフ
+--Reshef the Dark Being
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

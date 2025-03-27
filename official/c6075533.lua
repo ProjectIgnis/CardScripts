@@ -22,15 +22,15 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(s.discon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.distg)
 	e2:SetOperation(function(_,_,_,_,ev) Duel.NegateEffect(ev) end)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x2f}
+s.listed_series={SET_ICE_BARRIER}
 function s.smfilter(c,tp)
 	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp)
-	       and c:IsSetCard(0x2f) and c:IsType(TYPE_SYNCHRO)
+	       and c:IsSetCard(SET_ICE_BARRIER) and c:IsType(TYPE_SYNCHRO)
 end
 function s.bancheck(tp,loc)
 	return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,loc,1,nil)
@@ -45,7 +45,7 @@ function s.bantg(e,tp,eg,ep,ev,re,r,rp,chk)
 		local b3=dnc>2 and s.bancheck(tp,LOCATION_HAND)
 		return b1 or b2 or b3
 	end
-	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_HAND)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_ONFIELD|LOCATION_GRAVE|LOCATION_HAND)
 end
 function s.banlocop(tp,loc,gf)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,loc,nil)

@@ -36,13 +36,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 	--Lists "Time Thief" archetype
-s.listed_series={0x126}
+s.listed_series={SET_TIME_THIEF}
 	--Specifically lists itself
 s.listed_names={id}
 
 	--If you normal/special summoned a "Time Thief" monster
 function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsSummonPlayer(tp) and c:IsSetCard(0x126) and not c:IsCode(id)
+	return c:IsFaceup() and c:IsSummonPlayer(tp) and c:IsSetCard(SET_TIME_THIEF) and not c:IsCode(id)
 end
 	--If it ever happened
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -62,7 +62,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for "Time Thief" card, except "Time Thief Adjuster"
 function s.tgfilter(c)
-	return c:IsSetCard(0x126) and not c:IsCode(id) and c:IsAbleToGrave()
+	return c:IsSetCard(SET_TIME_THIEF) and not c:IsCode(id) and c:IsAbleToGrave()
 end
 	--Activation legality
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)

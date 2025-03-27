@@ -1,4 +1,5 @@
 --剣闘獣トラケス
+--Gladiator Beast Torax
 local s,id=GetID()
 function s.initial_effect(c)
 	--draw
@@ -6,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DRAW)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e1:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e1:SetCode(EVENT_PHASE|PHASE_BATTLE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(s.spcon)
 	e1:SetCost(s.spcost)

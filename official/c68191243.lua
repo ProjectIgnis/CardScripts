@@ -1,4 +1,5 @@
 --黒蠍団召集
+--Mustering of the Dark Scorpions
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x1a}
+s.listed_series={SET_DARK_SCORPION}
 s.listed_names={76922029}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsCode(76922029)
@@ -20,7 +21,7 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x1a) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_DARK_SCORPION) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 

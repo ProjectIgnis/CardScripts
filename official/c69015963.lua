@@ -1,4 +1,5 @@
 --デビル・フランケン
+--Cyber-Stein
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon

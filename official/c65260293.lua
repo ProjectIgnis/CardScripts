@@ -1,4 +1,5 @@
 --エレメント・マジシャン
+--Element Magician
 local s,id=GetID()
 function s.initial_effect(c)
 	--control

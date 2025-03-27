@@ -1,4 +1,5 @@
 --トリック・デーモン
+--Archfiend Heiress
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -14,13 +15,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x45}
+s.listed_series={SET_ARCHFIEND}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsReason(REASON_EFFECT) or c:IsReason(REASON_BATTLE)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x45) and c:GetCode()~=id and c:IsAbleToHand()
+	return c:IsSetCard(SET_ARCHFIEND) and c:GetCode()~=id and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

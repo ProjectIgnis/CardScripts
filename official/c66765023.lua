@@ -25,7 +25,7 @@ function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()~=tp
 		and Duel.GetTurnPlayer()~=tp and e:GetHandler():GetFlagEffect(id)==0 end
-	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 	return true
 end
 function s.effcon(e,tp,eg,ep,ev,re,r,rp)
@@ -38,7 +38,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_BATTLE_DAMAGE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_SELF_TURN)
+	e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_SELF_TURN)
 	e1:SetCondition(s.wincon)
 	e1:SetOperation(s.winop)
 	c:RegisterEffect(e1)

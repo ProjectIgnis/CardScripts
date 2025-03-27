@@ -126,7 +126,7 @@ function s.hdextg(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SetTargetCard(g)
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,tp,0)
 	end
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 end
 function s.hdexop(e,tp,eg,ep,ev,re,r,rp)
 	local label=e:GetLabel()

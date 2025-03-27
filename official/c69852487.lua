@@ -1,5 +1,5 @@
 --希望皇アストラル・ホープ
---Utopic Astral Hope
+--Astraltopia
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x73,0x139,0x7e,0x16c}
+s.listed_series={SET_XYZ,SET_ONOMAT,SET_ZEXAL,SET_NUMBER_SPELL_TRAP}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,TYPE_XYZ),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
@@ -41,14 +41,14 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,c) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_ONFIELD|LOCATION_HAND,0,1,c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGraveAsCost,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,1,c)
+	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGraveAsCost,tp,LOCATION_ONFIELD|LOCATION_HAND,0,1,1,c)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.thfilter(c)
 	if not (c:IsSpellTrap() and c:IsAbleToHand()) then return false end
-	return c:IsSetCard(0x73) or c:IsSetCard(0x139) or c:IsSetCard(0x7e) or c:IsSetCard(0x16c)
+	return c:IsSetCard(SET_XYZ) or c:IsSetCard(SET_ONOMAT) or c:IsSetCard(SET_ZEXAL) or c:IsSetCard(SET_NUMBER_SPELL_TRAP)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

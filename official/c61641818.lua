@@ -1,5 +1,5 @@
 --電脳堺龍－龍々
---Datascape Dragon - Longlong
+--Virtual World Dragon - Longlong
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)

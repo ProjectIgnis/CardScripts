@@ -1,5 +1,5 @@
 --憑依覚醒
---Awakening of the Posssessed
+--Awakening of the Possessed
 --Scripted by AlphaKretin
 
 local s,id=GetID()
@@ -42,7 +42,7 @@ function s.initial_effect(c)
 	e5:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0xbf,0x10c0}
+s.listed_series={SET_CHARMER,SET_FAMILIAR_POSSESSED}
 
 function s.atkval(e,c)
 	local tp=e:GetHandlerPlayer()
@@ -59,7 +59,7 @@ function s.atkval(e,c)
 	return ct*300
 end
 function s.indtg(e,c)
-	return c:IsFaceup() and (c:IsSetCard(0xbf) or c:IsSetCard(0x10c0))
+	return c:IsFaceup() and (c:IsSetCard(SET_CHARMER) or c:IsSetCard(SET_FAMILIAR_POSSESSED))
 end
 function s.cfilter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:GetBaseAttack()==1850 and c:IsRace(RACE_SPELLCASTER)

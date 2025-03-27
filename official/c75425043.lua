@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xc1}
+s.listed_series={SET_PSY_FRAME}
 s.listed_names={CARD_PSYFRAME_DRIVER}
 
 function s.splimit(e,se,sp,st)
@@ -42,32 +42,32 @@ function s.spfilter2(c,e,tp)
 	return c:IsCode(CARD_PSYFRAME_DRIVER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.IsExistingMatchingCard(s.thfilter0,tp,LOCATION_DECK,0,1,c)
 end
 function s.thfilter0(c)
-	return c:IsSetCard(0xc1) and not c:IsCode(id)
+	return c:IsSetCard(SET_PSY_FRAME) and not c:IsCode(id)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xc1) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_PSY_FRAME) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>1
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and Duel.IsExistingMatchingCard(s.spfilter1,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE)
+		and Duel.IsExistingMatchingCard(s.spfilter1,tp,LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE,0,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<2 or not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter2),tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter2),tp,LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil,e,tp)
 	if #g==0 then return end
 	local tc=g:GetFirst()
 	local c=e:GetHandler()
 	local fid=c:GetFieldID()
 	Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
 	Duel.SpecialSummonStep(c,0,tp,tp,false,false,POS_FACEUP)
-	tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
-	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
+	tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1,fid)
+	c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1,fid)
 	Duel.SpecialSummonComplete()
 	g:AddCard(c)
 	g:KeepAlive()

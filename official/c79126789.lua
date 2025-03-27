@@ -1,4 +1,5 @@
 --暗黒界の狩人 ブラウ
+--Broww, Huntsman of Dark World
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon

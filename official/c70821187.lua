@@ -1,4 +1,5 @@
 --再生ミイラ
+--Regenerating Mummy
 local s,id=GetID()
 function s.initial_effect(c)
 	--damage

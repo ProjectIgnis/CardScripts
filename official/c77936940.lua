@@ -1,4 +1,5 @@
 --ゲルニア
+--Gernia
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e2:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e2:SetCondition(s.spcon)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
@@ -23,7 +24,7 @@ function s.reg(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if (r&0x41)==0x41 and rp==1-tp and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD)
 		and c:IsPreviousPosition(POS_FACEUP) then
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

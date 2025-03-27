@@ -1,8 +1,9 @@
 --フォトン・アレキサンドラ・クィーン
+--Photon Alexandra Queen
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
-	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x6a),4,2)
+	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_BUTTERSPY),4,2)
 	c:EnableReviveLimit()
 	--return
 	local e1=Effect.CreateEffect(c)
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.retop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 end
-s.listed_series={0x6a}
+s.listed_series={SET_BUTTERSPY}
 function s.retcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)

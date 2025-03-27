@@ -14,9 +14,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x107a}
+s.listed_series={SET_NOBLE_KNIGHT}
 function s.filter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x107a)
+	return c:IsFaceup() and c:IsSetCard(SET_NOBLE_KNIGHT)
 		and Duel.IsExistingMatchingCard(s.eqfilter,tp,LOCATION_DECK,0,1,nil,c,tp)
 end
 function s.eqfilter(c,tc,tp)
@@ -42,4 +42,3 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

@@ -1,4 +1,5 @@
 --イビリチュア・メロウガイスト
+--Evigishki Merrowgeist
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -33,7 +34,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 		e1:SetTarget(s.reptg)
 		e1:SetOperation(s.repop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE)
 		bc:RegisterEffect(e1)
 	end
 end

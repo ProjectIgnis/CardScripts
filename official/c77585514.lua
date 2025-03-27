@@ -1,4 +1,5 @@
 --人造人間－サイコ·ショッカー
+--Jinzo
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot trigger

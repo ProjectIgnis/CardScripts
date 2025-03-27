@@ -1,5 +1,5 @@
 --ハーピィの狩場
---Harpie's Hunting Ground
+--Harpies' Hunting Ground
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

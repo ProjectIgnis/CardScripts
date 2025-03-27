@@ -1,5 +1,5 @@
 --エヴォリューション・レザルト・バースト
---Evolution Result Burst
+--Evolution End Burst
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -35,7 +35,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetCondition(s.atkcon)
 	e1:SetOperation(s.atkop)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	if not e:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
 	--Cannot Special Summon, except with Spell effects
@@ -45,12 +45,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e2:SetTargetRange(1,0)
-	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetReset(RESET_PHASE|PHASE_END)
 	e2:SetTarget(s.splimit)
 	Duel.RegisterEffect(e2,tp)
 end
 function s.atkfilter(c,tp,re)
-	return re and re:GetHandler():IsCode(3659803) and c:IsSummonPlayer(tp) and c:IsSummonType(SUMMON_TYPE_FUSION)
+	return re and re:GetHandler():IsCode(3659803) and c:IsSummonPlayer(tp) and c:IsFusionSummoned()
 		and c:GetMaterialCount()>=6
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
@@ -67,7 +67,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_EXTRA_ATTACK)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetValue(tc:GetMaterialCount()-1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

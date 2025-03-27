@@ -68,7 +68,7 @@ function s.actg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
-	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,tp):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil,tp):GetFirst()
 	if not tc then return end
 	if tc:IsFieldSpell() then
 		Duel.ActivateFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)

@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x102),2,2)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_ROKKET),2,2)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -16,9 +16,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x10f,0x102}
+s.listed_series={SET_BORREL,SET_ROKKET}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x10f) and c:IsLinkMonster()
+	return c:IsFaceup() and c:IsSetCard(SET_BORREL) and c:IsLinkMonster()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -44,7 +44,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
 		e1:SetValue(s.lnklimit)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetLabel(e:GetLabel())
 		c:RegisterEffect(e1,true)
 	end
@@ -54,4 +54,3 @@ function s.lnklimit(e,c)
 	if not c then return false end
 	return c:IsLink(e:GetLabel())
 end
-

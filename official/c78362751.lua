@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 	--Lists "Gunkan" archetype
-s.listed_series={0x168}
+s.listed_series={SET_GUNKAN}
 	--Specifically lists itself and "Gunkan Suship Shari"
 s.listed_names={id,CARD_SUSHIP_SHARI}
 
@@ -53,7 +53,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for a "Gunkan" monster, except "Gunkan Suship Shirauo"
 function s.ssfilter(c,e,tp)
-	return c:IsSetCard(0x168) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_GUNKAN) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 	--Activation legality
 function s.sstg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -72,7 +72,7 @@ function s.ssop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.ssfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 	if #g>0 and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)>0 then
-		local sg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.tdfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,nil)
+		local sg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.tdfilter),tp,LOCATION_DECK|LOCATION_GRAVE,0,nil)
 		if #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 			--Move any number of "Gunkan Suship Shari" from deck/GY to top of deck
 			Duel.BreakEffect()

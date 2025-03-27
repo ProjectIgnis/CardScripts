@@ -1,22 +1,22 @@
 -- 
--- Libromancer Doombroker
--- Scripted by Hatter
+--Libromancer Doombroker
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	-- Check materials on Ritual Summon
+	--Check materials on Ritual Summon
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
 	e0:SetCode(EFFECT_MATERIAL_CHECK)
 	e0:SetValue(s.matcheck)
 	c:RegisterEffect(e0)
-	-- Can attack directly
+	--Can attack directly
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_DIRECT_ATTACK)
 	e1:SetCondition(s.matcon)
 	c:RegisterEffect(e1)
-	-- Set 1 "Libromancer" Trap from the Deck
+	--Set 1 "Libromancer" Trap from the Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.settg)
 	e2:SetOperation(s.setop)
 	c:RegisterEffect(e2)
-	-- Shuffle 1 card to the Deck
+	--Shuffle 1 card to the Deck
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TODECK)
@@ -38,19 +38,19 @@ function s.initial_effect(c)
 	e3:SetOperation(s.tdop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x17d}
+s.listed_series={SET_LIBROMANCER}
 function s.matcheck(e,c)
 	if c:GetMaterial():IsExists(Card.IsLocation,1,nil,LOCATION_MZONE) then
-		local reset=RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD
+		local reset=RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD
 		c:RegisterFlagEffect(id,reset,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,2))
 	end
 end
 function s.matcon(e)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_RITUAL) and c:GetFlagEffect(id)>0
+	return c:IsRitualSummoned() and c:GetFlagEffect(id)>0
 end
 function s.setfilter(c)
-	return c:IsSetCard(0x17d) and c:IsTrap() and c:IsSSetable()
+	return c:IsSetCard(SET_LIBROMANCER) and c:IsTrap() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK,0,1,nil) end

@@ -1,4 +1,5 @@
 --黄昏の忍者－ジョウゲン
+--Twilight Ninja Jogen
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -9,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_PIERCE)
 	e1:SetRange(LOCATION_PZONE)
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x2b))
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_NINJA))
 	c:RegisterEffect(e1)
 	--special summon
 	local e2=Effect.CreateEffect(c)
@@ -27,9 +28,9 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_PIERCE)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x61,0x2b}
+s.listed_series={SET_NINJITSU_ART,SET_NINJA}
 function s.costfilter(c)
-	return c:IsSetCard(0x61) and not c:IsPublic()
+	return c:IsSetCard(SET_NINJITSU_ART) and not c:IsPublic()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end

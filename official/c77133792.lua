@@ -1,4 +1,5 @@
 --マグネット・コンバージョン
+--Magnet Conversion
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -18,14 +19,14 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCondition(aux.exccon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x2066}
+s.listed_series={SET_MAGNET_WARRIOR}
 function s.filter(c)
-	return c:IsSetCard(0x2066) and c:IsLevelBelow(4) and c:IsAbleToHand()
+	return c:IsSetCard(SET_MAGNET_WARRIOR) and c:IsLevelBelow(4) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -40,7 +41,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoHand(sg,nil,REASON_EFFECT)
 end
 function s.spfilter(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x2066) and c:IsLevelBelow(4)
+	return c:IsFaceup() and c:IsSetCard(SET_MAGNET_WARRIOR) and c:IsLevelBelow(4)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

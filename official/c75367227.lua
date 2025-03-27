@@ -1,4 +1,5 @@
 --ゴーストリック・アルカード
+--Ghostrick Alucard
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -35,9 +36,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x8d}
+s.listed_series={SET_GHOSTRICK}
 function s.tg(e,c)
-	return c~=e:GetHandler() and (c:IsFacedown() or c:IsSetCard(0x8d))
+	return c~=e:GetHandler() and (c:IsFacedown() or c:IsSetCard(SET_GHOSTRICK))
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
@@ -60,7 +61,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c)
-	return c:IsSetCard(0x8d) and c:IsAbleToHand()
+	return c:IsSetCard(SET_GHOSTRICK) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end

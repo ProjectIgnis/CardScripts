@@ -1,4 +1,5 @@
 --エッジインプ・コットン・イーター
+--Edge Imp Cotton Eater
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -37,10 +38,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.damop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xad}
+s.listed_series={SET_FRIGHTFUR}
 function s.cfilter(c,tp)
-	return c:IsControler(tp) and c:IsSetCard(0xad) and c:IsType(TYPE_FUSION)
-		and c:IsSummonType(SUMMON_TYPE_FUSION)
+	return c:IsControler(tp) and c:IsSetCard(SET_FRIGHTFUR) and c:IsType(TYPE_FUSION)
+		and c:IsFusionSummoned()
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
@@ -54,7 +55,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(tp,1,REASON_EFFECT)
 end
 function s.damfilter(c)
-	return c:IsSetCard(0xad) and c:IsMonster()
+	return c:IsSetCard(SET_FRIGHTFUR) and c:IsMonster()
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.damfilter,tp,LOCATION_GRAVE,0,1,nil) end

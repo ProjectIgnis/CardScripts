@@ -29,16 +29,16 @@ function s.initial_effect(c)
 	e2:SetCountLimit(1,id)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x159}
+s.listed_series={SET_MYUTANT}
 
 function s.filter(c)
-	return c:IsSetCard(0x159) and c:IsLevelAbove(8)
+	return c:IsSetCard(SET_MYUTANT) and c:IsLevelAbove(8)
 end
 function s.bancon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler():GetEquipTarget()
 	local bc=c:GetBattleTarget()
 	return Duel.GetAttacker()==c and bc and bc:IsControler(1-tp)
-		and bc:IsSummonType(SUMMON_TYPE_SPECIAL) and bc:IsAbleToRemove()
+		and bc:IsSpecialSummoned() and bc:IsAbleToRemove()
 end
 function s.bantg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -59,17 +59,17 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function s.spfilter(c,e,tp,att)
-	return c:IsSetCard(0x159) and c:IsLevel(8) and not c:IsOriginalAttribute(att)
+	return c:IsSetCard(SET_MYUTANT) and c:IsLevel(8) and not c:IsOriginalAttribute(att)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetLabelObject()
 	local att=c:GetOriginalAttribute()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1 and c:IsAbleToGrave()
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp,att) end
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,nil,e,tp,att) end
 	Duel.SetTargetCard(c)
 	e:SetLabel(c:GetOriginalAttribute())
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_DECK)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,c,1,0,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -77,7 +77,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not tc or not tc:IsRelateToEffect(e) then return end
 	if Duel.SendtoGrave(tc,REASON_EFFECT)~=0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp,e:GetLabel())
+		local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,1,nil,e,tp,e:GetLabel())
 		if #g>0 then Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP) end
 	end
 end

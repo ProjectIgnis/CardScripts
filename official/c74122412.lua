@@ -37,7 +37,7 @@ function s.initial_effect(c)
 	e3:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xb4}
+s.listed_series={SET_NEKROZ}
 
 function s.mat_filter(c)
 	return c:GetLevel()~=7
@@ -47,7 +47,7 @@ function s.indcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0xb4)
+	return c:IsFaceup() and c:IsSetCard(SET_NEKROZ)
 end
 function s.indtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end
@@ -64,7 +64,7 @@ function s.indop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(1)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
@@ -73,7 +73,7 @@ function s.indop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c)
-	return c:IsSetCard(0xb4) and c:IsDiscardable()
+	return c:IsSetCard(SET_NEKROZ) and c:IsDiscardable()
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end

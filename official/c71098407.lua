@@ -1,4 +1,5 @@
 --もの忘れ
+--Memory Loss
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

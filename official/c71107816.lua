@@ -1,4 +1,5 @@
 --悪魔の調理師
+--The Bistro Butcher
 local s,id=GetID()
 function s.initial_effect(c)
 	--draw

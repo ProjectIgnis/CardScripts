@@ -22,23 +22,23 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.tdtg)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x104f}
+s.listed_series={SET_ASSAULT_MODE}
 s.listed_names={CARD_ASSAULT_MODE}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)
 	return true
 end
 function s.cfilter(c,e,tp,ft)
-	return c:IsSetCard(0x104f) and (ft>0 or (c:GetSequence()<5 and c:IsControler(tp))) 
+	return c:IsSetCard(SET_ASSAULT_MODE) and (ft>0 or (c:GetSequence()<5 and c:IsControler(tp))) 
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetCode())
 end
 function s.filter(c,e,tp,cd)
-	return c:IsSetCard(0x104f) and not c:IsCode(cd) and c:IsCanBeSpecialSummoned(e,0,tp,true,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(SET_ASSAULT_MODE) and not c:IsCode(cd) and c:IsCanBeSpecialSummoned(e,0,tp,true,false,POS_FACEUP_DEFENSE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
@@ -79,4 +79,3 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	if #tg==0 then return end
 	Duel.SendtoDeck(tg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 end
-

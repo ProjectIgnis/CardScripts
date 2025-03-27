@@ -12,11 +12,11 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x50}
+s.listed_series={SET_VENOM}
 s.counter_place_list={0x1009}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttackTarget()
-	return tc and tc:IsControler(tp) and tc:IsFaceup() and tc:IsSetCard(0x50)
+	return tc and tc:IsControler(tp) and tc:IsFaceup() and tc:IsSetCard(SET_VENOM)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tg=Duel.GetAttacker()
@@ -27,7 +27,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	if tc:IsRelateToEffect(e) and Duel.NegateAttack() then
-		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
+		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE|PHASE_BATTLE_STEP,1)
 		Duel.BreakEffect()
 		local atk=tc:GetAttack()
 		tc:AddCounter(0x1009,1)

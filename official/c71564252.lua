@@ -1,4 +1,5 @@
 --ライオウ
+--Thunder King Rai-Oh
 local s,id=GetID()
 function s.initial_effect(c)
 	--disable search

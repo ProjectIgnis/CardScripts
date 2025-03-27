@@ -28,11 +28,11 @@ function s.filter(c,e,tp,zone)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local zone=e:GetHandler():GetLinkedZone(tp)&0x1f
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and chkc:IsControler(tp) and s.filter(chkc,e,tp,zone) end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE|LOCATION_REMOVED) and chkc:IsControler(tp) and s.filter(chkc,e,tp,zone) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil,e,tp,zone) end
+		and Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE|LOCATION_REMOVED,0,1,nil,e,tp,zone) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil,e,tp,zone)
+	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE|LOCATION_REMOVED,0,1,1,nil,e,tp,zone)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -45,12 +45,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD)
 		tc:RegisterEffect(e2)
 		--Place on bottom of deck if it leaves the field
 		local e3=Effect.CreateEffect(c)
@@ -58,7 +58,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-		e3:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e3:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		e3:SetValue(LOCATION_DECKBOT)
 		tc:RegisterEffect(e3)
 		--Cannot special summon link monsters for rest of turn
@@ -69,7 +69,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e4:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 		e4:SetTargetRange(1,0)
 		e4:SetTarget(s.splimit)
-		e4:SetReset(RESET_PHASE+PHASE_END)
+		e4:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e4,tp)
 	end
 	Duel.SpecialSummonComplete()

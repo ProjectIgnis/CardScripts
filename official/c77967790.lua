@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
-	Link.AddProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x11a),2)
+	Link.AddProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,SET_DINOWRESTLER),2)
 	c:EnableReviveLimit()
 	--activation limit
 	local e1=Effect.CreateEffect(c)
@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_PHASE+PHASE_BATTLE_START)
+	e3:SetCode(EVENT_PHASE|PHASE_BATTLE_START)
 	e3:SetCountLimit(1)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCondition(s.atkcon)
@@ -37,7 +37,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x11a}
+s.listed_series={SET_DINOWRESTLER}
 function s.aclimit(e,re,tp)
 	return re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
@@ -48,7 +48,7 @@ function s.atlimit(e,c)
 	return c~=e:GetHandler()
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsAttackPos() end
@@ -60,7 +60,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetCode(EFFECT_CANNOT_ATTACK)
@@ -69,17 +69,17 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCondition(s.atkcon2)
 		e1:SetTarget(s.atktg2)
 		e1:SetLabelObject(tc)
-		e1:SetReset(RESET_PHASE+PHASE_BATTLE)
+		e1:SetReset(RESET_PHASE|PHASE_BATTLE)
 		Duel.RegisterEffect(e1,tp)
 		local e2=Effect.CreateEffect(c)
 		e2:SetDescription(aux.Stringid(id,1))
 		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e2:SetCode(EVENT_PHASE+PHASE_BATTLE)
+		e2:SetCode(EVENT_PHASE|PHASE_BATTLE)
 		e2:SetCountLimit(1)
 		e2:SetLabelObject(tc)
 		e2:SetCondition(s.descon)
 		e2:SetOperation(s.desop)
-		e2:SetReset(RESET_PHASE+PHASE_BATTLE)
+		e2:SetReset(RESET_PHASE|PHASE_BATTLE)
 		Duel.RegisterEffect(e2,tp)
 	end
 end

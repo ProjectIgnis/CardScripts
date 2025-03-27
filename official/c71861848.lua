@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={id}
-s.listed_series={0x119}
+s.listed_series={SET_SALAMANGREAT}
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	return r==REASON_LINK
 end
@@ -26,15 +26,15 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetRange(LOCATION_GRAVE)
 		e1:SetCountLimit(1,id)
 		e1:SetTarget(s.target)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x119) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(SET_SALAMANGREAT) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x119) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_SALAMANGREAT) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then

@@ -1,4 +1,5 @@
 --N・マリン・ドルフィン
+--Neo-Spacian Marine Dolphin
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

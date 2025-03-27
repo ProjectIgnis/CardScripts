@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x10b),3,3)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_TINDANGLE),3,3)
 	--atk
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e3:SetCode(EVENT_PHASE|PHASE_BATTLE)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
 	e3:SetCondition(s.spcon)
@@ -34,17 +34,17 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x10b}
+s.listed_series={SET_TINDANGLE}
 s.listed_names={94365540,75119041}
 function s.cfilter(c)
-	return c:IsSetCard(0x10b) and c:IsMonster()
+	return c:IsSetCard(SET_TINDANGLE) and c:IsMonster()
 end
 function s.atkcon(e)
 	local g=Duel.GetMatchingGroup(s.cfilter,e:GetHandler():GetControler(),LOCATION_GRAVE,0,nil)
 	return g:GetClassCount(Card.GetCode)>=3 and g:IsExists(Card.IsCode,1,nil,94365540)
 end
 function s.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x10b)
+	return c:IsFaceup() and c:IsSetCard(SET_TINDANGLE)
 end
 function s.atkval(e,c)
 	return c:GetLinkedGroup():FilterCount(s.atkfilter,nil)*500

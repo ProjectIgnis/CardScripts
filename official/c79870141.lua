@@ -1,4 +1,5 @@
 --猛進する剣角獣
+--Mad Sword Beast
 local s,id=GetID()
 function s.initial_effect(c)
 	--pierce

@@ -1,4 +1,5 @@
 --黒羽を狩る者
+--Hunter of Black Feathers
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy

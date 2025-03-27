@@ -23,10 +23,10 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x33}
+s.listed_series={SET_BLACKWING}
 s.listed_names={id}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x33) and not c:IsCode(id)
+	return c:IsFaceup() and c:IsSetCard(SET_BLACKWING) and not c:IsCode(id)
 end
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -34,7 +34,7 @@ function s.spcon(e,c)
 		and Duel.IsExistingMatchingCard(s.cfilter,c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x33) and c:GetLevel()>=1
+	return c:IsFaceup() and c:IsSetCard(SET_BLACKWING) and c:GetLevel()>=1
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) and chkc~=e:GetHandler() end
@@ -50,7 +50,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
 		e1:SetValue(tc:GetLevel())
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 	end
 end

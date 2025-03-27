@@ -1,5 +1,5 @@
 --虹の天気模様
---The Weather Rainbow Canvas
+--The Weather Rainbowed Canvas
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -28,16 +28,16 @@ function s.initial_effect(c)
 	e3:SetLabelObject(e2)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x109}
+s.listed_series={SET_THE_WEATHER}
 function s.eftg(e,c)
 	local g=e:GetHandler():GetColumnGroup(1,1)
-	return c:IsType(TYPE_EFFECT) and c:IsSetCard(0x109) and c:GetSequence()<5 and g:IsContains(c)
+	return c:IsType(TYPE_EFFECT) and c:IsSetCard(SET_THE_WEATHER) and c:GetSequence()<5 and g:IsContains(c)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
 end
 function s.spfilter(c,e,tp,code)
-	return c:IsSetCard(0x109) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(code)
+	return c:IsSetCard(SET_THE_WEATHER) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(code)
 end
 function s.announcecost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,chk) end
@@ -64,10 +64,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsLocation(LOCATION_DECK)
 end
-

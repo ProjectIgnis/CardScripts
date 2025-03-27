@@ -1,9 +1,9 @@
--- エクソシスター・パークス
--- Exorsister Pax
--- Scripted by Hatter
+--エクソシスター・パークス
+--Exosister Pax
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Search
+	--Search
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -17,20 +17,20 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={id}
-s.listed_series={0x174}
+s.listed_series={SET_EXOSISTER}
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,800) end
 	Duel.PayLPCost(tp,800)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x174) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_EXOSISTER) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.listfilter(c,sc)
-	return c:IsSetCard(0x174) and c:IsFaceup() and c:IsMonster() and sc:ListsCode(c:GetCode())
+	return c:IsSetCard(SET_EXOSISTER) and c:IsFaceup() and c:IsMonster() and sc:ListsCode(c:GetCode())
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
@@ -40,7 +40,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ShuffleHand(tp)
 	if sc:IsMonster() and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
 		and sc:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and Duel.IsExistingMatchingCard(s.listfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,sc) 
+		and Duel.IsExistingMatchingCard(s.listfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil,sc) 
 		and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.BreakEffect()
 		Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)

@@ -1,4 +1,5 @@
 --妖精の風
+--Fairy Wind
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

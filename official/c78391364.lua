@@ -1,4 +1,5 @@
 --超重武者テンB－N
+--Superheavy Samurai Scales
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -24,7 +25,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x9a}
+s.listed_series={SET_SUPERHEAVY_SAMURAI}
 s.listed_names={id}
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -33,7 +34,7 @@ function s.spcon(e,c)
 		and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x9a) and c:IsLevelBelow(4) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(SET_SUPERHEAVY_SAMURAI) and c:IsLevelBelow(4) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end

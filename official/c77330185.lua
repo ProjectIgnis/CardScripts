@@ -1,4 +1,5 @@
 --XX－セイバー ガルセム
+--XX-Saber Garsem
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -20,9 +21,9 @@ function s.initial_effect(c)
 	e2:SetValue(s.atkval)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x100d}
+s.listed_series={SET_X_SABER}
 function s.atfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x100d)
+	return c:IsFaceup() and c:IsSetCard(SET_X_SABER)
 end
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(s.atfilter,c:GetControler(),LOCATION_MZONE,0,nil)*200
@@ -32,7 +33,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 		and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.filter(c)
-	return c:IsSetCard(0x100d) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_X_SABER) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

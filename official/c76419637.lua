@@ -1,4 +1,5 @@
 --CX 激烈華戦艦タオヤメ
+--CXyz Battleship Cherry Blossom
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -31,7 +32,7 @@ function s.initial_effect(c)
 end
 s.listed_names={40424929}
 function s.dccon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
+	return Duel.IsTurnPlayer(1-tp) and Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
 end
 function s.dctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

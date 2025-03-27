@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,0,id)
 	--xyz summon
-	Xyz.AddProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x88),4,2)
+	Xyz.AddProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,SET_BUJIN),4,2)
 	c:EnableReviveLimit()
 	--search
 	local e1=Effect.CreateEffect(c)
@@ -24,13 +24,13 @@ function s.initial_effect(c)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x88}
+s.listed_series={SET_BUJIN}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.filter(c)
-	return c:IsSetCard(0x88) and c:IsMonster() and (c:IsAbleToHand() or c:IsAbleToGrave())
+	return c:IsSetCard(SET_BUJIN) and c:IsMonster() and (c:IsAbleToHand() or c:IsAbleToGrave())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

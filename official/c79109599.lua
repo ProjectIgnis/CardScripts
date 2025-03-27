@@ -1,4 +1,5 @@
 --沼地の魔神王
+--King of the Swamp
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -20,7 +21,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_POLYMERIZATION}
 function s.subcon(e)
-	return e:GetHandler():IsLocation(LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE)
+	return e:GetHandler():IsLocation(LOCATION_HAND|LOCATION_ONFIELD|LOCATION_GRAVE)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

@@ -1,8 +1,6 @@
---JP name
+--シンセシス・ミュートリアス
 --Myutant Synthesis
---Logical Nonsense
-
---Substitute ID
+--scripted by Logical Nonsense
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -45,16 +43,14 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-	--Lists "Myutant" archetype
-s.listed_series={0x159}
-
+s.listed_series={SET_MYUTANT}
 	--2 "Myutant" monsters with different attributes
 function s.ffilter(c,fc,sumtype,sp,sub,mg,sg)
-	return c:IsSetCard(0x159,fc,sumtype,sp) and (not sg or sg:FilterCount(aux.TRUE,c)==0 or not sg:IsExists(Card.IsAttribute,1,c,c:GetAttribute(),fc,sumtype,sp))
+	return c:IsSetCard(SET_MYUTANT,fc,sumtype,sp) and (not sg or sg:FilterCount(aux.TRUE,c)==0 or not sg:IsExists(Card.IsAttribute,1,c,c:GetAttribute(),fc,sumtype,sp))
 end
 	--If fusion summoned
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
+	return e:GetHandler():IsFusionSummoned()
 end
 	--Activation legality
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -88,7 +84,7 @@ function s.immop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetCode(EFFECT_IMMUNE_EFFECT)
 		e1:SetValue(s.imfilter1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 		c:RegisterEffect(e1)
 	elseif rtype&TYPE_SPELL~=0 then
 		--Unaffected by opponent's spell effects
@@ -99,7 +95,7 @@ function s.immop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetCode(EFFECT_IMMUNE_EFFECT)
 		e1:SetValue(s.imfilter2)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 		c:RegisterEffect(e1)
 	elseif rtype&TYPE_TRAP~=0 then
 		--Unaffected by opponent's trap effects
@@ -110,7 +106,7 @@ function s.immop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetCode(EFFECT_IMMUNE_EFFECT)
 		e1:SetValue(s.imfilter3)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end
@@ -127,12 +123,12 @@ end
 	--If this fusion summoned card was destroyed by opponent's card
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_FUSION) and (c:IsReason(REASON_BATTLE)
+	return c:IsFusionSummoned() and (c:IsReason(REASON_BATTLE)
 		or (rp==1-tp and c:IsReason(REASON_EFFECT)) and c:GetPreviousControler()==tp)
 end
 	--Check for face-up banished "Myutant" card
 function s.thfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x159) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(SET_MYUTANT) and c:IsAbleToHand()
 end
 	--Activation legality
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

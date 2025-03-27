@@ -33,7 +33,7 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_DISABLE_FIELD)
 	e1:SetLabel(0x1<<seq)
 	e1:SetOperation(s.disop)
-	e1:SetReset(RESET_PHASE+PHASE_END,2)
+	e1:SetReset(RESET_PHASE|PHASE_END,2)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.disop(e,tp)

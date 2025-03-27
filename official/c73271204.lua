@@ -24,9 +24,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.milop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xe6}
+s.listed_series={SET_FLOWER_CARDIAN}
 function s.filter(c)
-	return c:IsSetCard(0xe6) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_FLOWER_CARDIAN) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -36,7 +36,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xe6) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsSetCard(SET_FLOWER_CARDIAN) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
@@ -54,7 +54,7 @@ end
 function s.milcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
 	local rc=re:GetHandler()
-	return e:GetHandler():IsReason(REASON_EFFECT) and rc:IsSetCard(0xe6) and rc:IsMonster()
+	return e:GetHandler():IsReason(REASON_EFFECT) and rc:IsSetCard(SET_FLOWER_CARDIAN) and rc:IsMonster()
 end
 function s.miltg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>4 end

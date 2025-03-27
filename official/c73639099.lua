@@ -41,14 +41,14 @@ function s.initial_effect(c)
 	e5:SetOperation(s.setop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x108a,0x4c,0x89}
+s.listed_series={SET_TRAPTRIX,SET_TRAP_HOLE,SET_HOLE}
 	--Link material of a non-link "Traptrix" monster
 function s.matfilter(c,lc,sumtype,tp)
-	return c:IsSetCard(0x108a,lc,sumtype,tp) and not c:IsType(TYPE_LINK,lc,sumtype,tp)
+	return c:IsSetCard(SET_TRAPTRIX,lc,sumtype,tp) and not c:IsType(TYPE_LINK,lc,sumtype,tp)
 end
 	--If this card was link summoned
 function s.immcon(e)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+	return e:GetHandler():IsLinkSummoned()
 end
 	--Unaffected by trap effects
 function s.efilter(e,te)
@@ -64,7 +64,7 @@ function s.namefilter(c,cd)
 end
 	--Check for "Traptrix" monster
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x108a) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_TRAPTRIX) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and not Duel.IsExistingMatchingCard(s.namefilter,tp,LOCATION_ONFIELD,0,1,nil,c:GetCode())
 end
 	--Activation legality
@@ -84,11 +84,11 @@ end
 	--If your "Traptrix" monster effect activates, except this card
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==tp and re:IsActiveType(TYPE_MONSTER)
-		and re:GetHandler():IsSetCard(0x108a) and re:GetHandler()~=e:GetHandler()
+		and re:GetHandler():IsSetCard(SET_TRAPTRIX) and re:GetHandler()~=e:GetHandler()
 end
 	--Check for "Trap Hole" normal trap
 function s.setfilter(c)
-	return (c:IsSetCard(0x4c) or c:IsSetCard(0x89)) and c:GetType()==TYPE_TRAP and c:IsSSetable()
+	return (c:IsSetCard(SET_TRAP_HOLE) or c:IsSetCard(SET_HOLE)) and c:GetType()==TYPE_TRAP and c:IsSSetable()
 end
 	--Activation legality
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)

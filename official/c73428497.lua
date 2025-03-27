@@ -1,4 +1,5 @@
 --ギアギアーセナル
+--Geargiarsenal
 local s,id=GetID()
 function s.initial_effect(c)
 	--atkup
@@ -20,9 +21,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x72}
+s.listed_series={SET_GEARGIA}
 function s.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x72)
+	return c:IsFaceup() and c:IsSetCard(SET_GEARGIA)
 end
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(s.atkfilter,c:GetControler(),LOCATION_MZONE,0,nil)*200
@@ -32,7 +33,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x72) and c:GetCode()~=id and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(SET_GEARGIA) and c:GetCode()~=id and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)

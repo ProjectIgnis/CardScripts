@@ -43,15 +43,15 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
-s.listed_series={0x10f2,0x2073,0x2017,0x1046}
+s.listed_series={SET_PENDULUM_DRAGON,SET_XYZ_DRAGON,SET_SYNCHRO_DRAGON,SET_FUSION_DRAGON}
 s.listed_names={94415058,13331639}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	for tc in aux.Next(eg) do
-		if tc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) then
-			tc:RegisterFlagEffect(id,RESET_EVENT+0x1f20000+RESET_PHASE+PHASE_END,0,1)
+		if tc:IsLocation(LOCATION_GRAVE|LOCATION_REMOVED) then
+			tc:RegisterFlagEffect(id,RESET_EVENT|RESET_TURN_SET|RESET_TEMP_REMOVE|RESET_TOHAND|RESET_TODECK|RESET_LEAVE|RESET_TOFIELD|RESET_PHASE|PHASE_END,0,1)
 		elseif tc:IsLocation(LOCATION_EXTRA) then
-			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+			tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 		end
 	end
 end
@@ -60,15 +60,15 @@ function s.rpfilter(c,e,tp)
 		or (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
 end
 function s.rptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.rpfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.rpfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,e:GetHandler(),1,0,0)
-	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK+LOCATION_HAND)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK|LOCATION_HAND)
 end
 function s.rpop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.Destroy(c,REASON_EFFECT)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,6))
-		local g=Duel.SelectMatchingCard(tp,s.rpfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp)
+		local g=Duel.SelectMatchingCard(tp,s.rpfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,1,nil,e,tp)
 		local tc=g:GetFirst()
 		local op=0
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and tc:IsCanBeSpecialSummoned(e,0,tp,false,false) then
@@ -123,7 +123,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c)
-	return (c:IsSetCard(0x10f2) or c:IsSetCard(0x2073) or c:IsSetCard(0x2017) or c:IsSetCard(0x1046)) and c:IsMonster()
+	return (c:IsSetCard(SET_PENDULUM_DRAGON) or c:IsSetCard(SET_XYZ_DRAGON) or c:IsSetCard(SET_SYNCHRO_DRAGON) or c:IsSetCard(SET_FUSION_DRAGON)) and c:IsMonster()
 		and c:IsAbleToRemoveAsCost() and (not c:IsLocation(LOCATION_MZONE) or c:IsFaceup()) and (c:IsLocation(LOCATION_HAND) or aux.SpElimFilter(c,true,true))
 end
 function s.rescon(checkfunc)
@@ -133,12 +133,12 @@ function s.rescon(checkfunc)
 	end
 end
 function s.hnfilter(c,e,tp,sg)
-	return c:IsCode(13331639) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial()
+	return c:IsCode(CARD_ZARC) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial()
 			and Duel.GetLocationCountFromEx(tp,tp,sg and (sg+e:GetHandler()) or nil,c)>0
 end
 function s.hncost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local mg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,c)
+	local mg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_HAND|LOCATION_MZONE|LOCATION_GRAVE,0,c)
 	local checkfunc=aux.PropertyTableFilter(Card.GetSetCard,0x10f2,0x2073,0x2017,0x1046)
 	if chk==0 then return c:IsAbleToRemoveAsCost() and aux.SelectUnselectGroup(mg,e,tp,4,4,s.rescon(checkfunc),0) end
 	local sg=aux.SelectUnselectGroup(mg,e,tp,4,4,s.rescon(checkfunc),1,tp,HINTMSG_REMOVE,s.rescon(checkfunc))+c

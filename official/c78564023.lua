@@ -1,4 +1,5 @@
 --BF－二の太刀のエテジア
+--Blackwing - Etesian of Two Swords
 local s,id=GetID()
 function s.initial_effect(c)
 	--atkup
@@ -15,11 +16,11 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x33}
+s.listed_series={SET_BLACKWING}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
-	return a:IsControler(tp) and a:IsSetCard(0x33) and a:IsRelateToBattle() and d and d:IsRelateToBattle()
+	return a:IsControler(tp) and a:IsSetCard(SET_BLACKWING) and a:IsRelateToBattle() and d and d:IsRelateToBattle()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end

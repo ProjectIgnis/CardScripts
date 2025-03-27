@@ -1,4 +1,5 @@
 --星邪の神喰
+--Jewels of the Valiant
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)

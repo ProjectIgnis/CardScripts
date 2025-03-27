@@ -1,4 +1,5 @@
 --サイバー・エンジェル－弁天－
+--Cyber Angel Benten
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

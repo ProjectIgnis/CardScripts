@@ -1,4 +1,5 @@
 --死者への手向け
+--Tribute to The Doomed
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

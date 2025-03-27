@@ -13,9 +13,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x107f}
+s.listed_series={SET_UTOPIA}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x107f) and c:IsType(TYPE_XYZ)
+	return c:IsFaceup() and c:IsSetCard(SET_UTOPIA) and c:IsType(TYPE_XYZ)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end

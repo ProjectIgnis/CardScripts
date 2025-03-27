@@ -1,4 +1,5 @@
 --暗黒界の武神 ゴルド
+--Goldd, Wu-Lord of Dark World
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon

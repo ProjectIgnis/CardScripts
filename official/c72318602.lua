@@ -12,9 +12,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x1045}
+s.listed_series={SET_RED_DRAGON_ARCHFIEND}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1045)
+	return c:IsFaceup() and c:IsSetCard(SET_RED_DRAGON_ARCHFIEND)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ep==1-tp and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)
@@ -30,6 +30,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetValue(aux.indoval)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end

@@ -1,4 +1,5 @@
 --D・バリア
+--Morphtronic Forcefield
 local s,id=GetID()
 function s.initial_effect(c)
 	--Negate
@@ -12,9 +13,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x26}
+s.listed_series={SET_MORPHTRONIC}
 function s.dfilter(c,p)
-	return c:GetControler()==p and c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsSetCard(0x26)
+	return c:GetControler()==p and c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsSetCard(SET_MORPHTRONIC)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsChainNegatable(ev) or not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return false end
@@ -22,7 +23,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ex and tg~=nil and tc+tg:FilterCount(s.dfilter,nil,tp)-#tg>0
 end
 function s.filter(c)
-	return c:IsSetCard(0x26) and c:IsAbleToHand()
+	return c:IsSetCard(SET_MORPHTRONIC) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

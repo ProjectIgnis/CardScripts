@@ -1,9 +1,9 @@
--- ふわんだりぃずと怖い海
--- Floowandereeze and the Scary Sea
--- Scripted by Hatter
+--ふわんだりぃずと怖い海
+--Floowandereeze and the Scary Sea
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Negate an opponent's Special Summon
+	--Negate an opponent's Special Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DISABLE_SUMMON+CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -26,25 +26,25 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	-- Opponent cannot Special Summon
+	--Opponent cannot Special Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetTargetRange(0,1)
 	Duel.RegisterEffect(e1,tp)
-	-- Opponent can conduct 3 Normal Summons/Sets
+	--Opponent can conduct 3 Normal Summons/Sets
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_SET_SUMMON_COUNT_LIMIT)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetTargetRange(0,1)
 	e2:SetValue(3)
-	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e2,tp)
-	-- Negate and return to hand
+	--Negate and return to hand
 	Duel.NegateSummon(eg)
 	Duel.SendtoHand(eg,nil,REASON_EFFECT)
 end

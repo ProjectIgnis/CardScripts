@@ -1,4 +1,5 @@
 --風霊術－「雅」
+--Spiritual Wind Art - Miyabi
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

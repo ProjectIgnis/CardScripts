@@ -34,12 +34,12 @@ function s.initial_effect(c)
 	e3:SetOperation(s.regop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xaf,0xae}
+s.listed_series={SET_DD,SET_DARK_CONTRACT}
 function s.desfilter1(c,e)
 	return c:IsSpellTrap() and c:IsCanBeEffectTarget(e)
 end
 function s.desfilter2(c,e,tp)
-	return c:IsFaceup() and (c:IsSetCard(0xaf) or c:IsSetCard(0xae)) and c:IsControler(tp)
+	return c:IsFaceup() and (c:IsSetCard(SET_DD) or c:IsSetCard(SET_DARK_CONTRACT)) and c:IsControler(tp)
 		and c:IsCanBeEffectTarget(e)
 end
 function s.rescon(sg,e,tp,mg)
@@ -85,7 +85,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)

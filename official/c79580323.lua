@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e2:SetCode(EVENT_PHASE|PHASE_BATTLE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(s.spcon)
 	e2:SetCost(s.spcost)
@@ -32,12 +32,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={id}
-s.listed_series={0x4d,0x19}
+s.listed_series={SET_BEASTS_BATTLE,SET_GLADIATOR}
 function s.splimit(e,se,sp,st)
 	return st==(SUMMON_TYPE_SPECIAL+101) or st&SUMMON_TYPE_PENDULUM==SUMMON_TYPE_PENDULUM
 end
 function s.sfilter(c)
-	return c:IsSetCard(0x4d) and c:IsType(TYPE_EQUIP) and c:IsAbleToHand()
+	return c:IsSetCard(SET_BEASTS_BATTLE) and c:IsType(TYPE_EQUIP) and c:IsAbleToHand()
 end
 function s.stg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -60,7 +60,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoDeck(c,nil,2,REASON_COST)
 end
 function s.filter(c,e,tp)
-	return not c:IsCode(id) and c:IsSetCard(0x19) and c:IsCanBeSpecialSummoned(e,110,tp,false,false)
+	return not c:IsCode(id) and c:IsSetCard(SET_GLADIATOR) and c:IsCanBeSpecialSummoned(e,110,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
@@ -73,6 +73,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp):GetFirst()
 	if tc and Duel.SpecialSummon(tc,110,tp,tp,false,false,POS_FACEUP)>0 then
-		tc:RegisterFlagEffect(tc:GetOriginalCode(),RESET_EVENT+RESETS_STANDARD_DISABLE,0,0)
+		tc:RegisterFlagEffect(tc:GetOriginalCode(),RESET_EVENT|RESETS_STANDARD_DISABLE,0,0)
 	end
 end

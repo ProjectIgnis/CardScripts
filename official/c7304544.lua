@@ -1,4 +1,5 @@
 --ナチュル・パイナポー
+--Naturia Pineapple
 local s,id=GetID()
 function s.initial_effect(c)
 	--Change race
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_FIELD)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e2:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1)
 	e2:SetCondition(s.condition)

@@ -1,4 +1,5 @@
 --オーバー・デステニー
+--Over Destiny
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,14 +12,14 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xc008}
+s.listed_series={SET_DESTINY_HERO}
 function s.filter1(c,e,sp)
 	local lv=math.floor(c:GetLevel()/2)
-	return lv>0 and c:IsSetCard(0xc008)
+	return lv>0 and c:IsSetCard(SET_DESTINY_HERO)
 		and Duel.IsExistingMatchingCard(s.filter2,sp,LOCATION_DECK,0,1,nil,lv,e,sp)
 end
 function s.filter2(c,lv,e,sp)
-	return c:IsLevelBelow(lv) and c:IsSetCard(0xc008)  and c:IsCanBeSpecialSummoned(e,0,sp,false,false)
+	return c:IsLevelBelow(lv) and c:IsSetCard(SET_DESTINY_HERO)  and c:IsCanBeSpecialSummoned(e,0,sp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter1(chkc,e,tp) end
@@ -43,7 +44,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EVENT_PHASE+PHASE_END)
 	e1:SetCountLimit(1)
-	e1:SetReset(RESET_PHASE+PHASE_END+RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_PHASE|PHASE_END|RESET_EVENT|RESETS_STANDARD)
 	e1:SetOperation(s.des)
 	sc:RegisterEffect(e1)
 end

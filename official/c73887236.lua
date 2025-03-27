@@ -1,4 +1,5 @@
 --RR－ライズ・ファルコン
+--Raidraptor - Rise Falcon
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -23,7 +24,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 end
 function s.atkfilter(e,c)
-	return c:IsSummonType(SUMMON_TYPE_SPECIAL)
+	return c:IsSpecialSummoned()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
@@ -31,7 +32,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:GetAttack()>0
-		and c:IsSummonType(SUMMON_TYPE_SPECIAL)
+		and c:IsSpecialSummoned()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end
@@ -47,7 +48,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(tc:GetAttack())
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 	end
 end

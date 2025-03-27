@@ -1,4 +1,5 @@
 --マジシャンズ・ロッド
+--Magician's Rod
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -43,7 +44,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and rp==tp and re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+	return Duel.IsTurnPlayer(1-tp) and rp==tp and re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsRace,1,false,nil,nil,RACE_SPELLCASTER) end

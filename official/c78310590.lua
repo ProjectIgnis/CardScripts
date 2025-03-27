@@ -50,14 +50,14 @@ function s.initial_effect(c)
 	e5:SetOperation(s.spop2)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x10ec,0x20ec}
+s.listed_series={SET_ABYSS_ACTOR,SET_ABYSS_SCRIPT}
 s.listed_names={id}
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,1000) end
 	Duel.PayLPCost(tp,1000)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x10ec) and not c:IsCode(id) and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
+	return c:IsSetCard(SET_ABYSS_ACTOR) and not c:IsCode(id) and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -78,15 +78,15 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,3),nil)
 end
 function s.splimit(e,c)
-	return not (c:IsSetCard(0x10ec) and c:IsType(TYPE_PENDULUM))
+	return not (c:IsSetCard(SET_ABYSS_ACTOR) and c:IsType(TYPE_PENDULUM))
 end
 function s.valfilter(c)
-	return c:IsSetCard(0x20ec) and c:IsSpell()
+	return c:IsSetCard(SET_ABYSS_SCRIPT) and c:IsSpell()
 end
 function s.val(e,c)
 	return Duel.GetMatchingGroupCount(s.valfilter,c:GetControler(),LOCATION_GRAVE,0,nil)*100
@@ -108,10 +108,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_SPELL)and re:GetHandler():IsSetCard(0x20ec)
+	return re:IsActiveType(TYPE_SPELL)and re:GetHandler():IsSetCard(SET_ABYSS_SCRIPT)
 end
 function s.spfilter(c,e,tp)
-	return c:IsLevelBelow(4) and c:IsSetCard(0x10ec) and c:IsType(TYPE_PENDULUM) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevelBelow(4) and c:IsSetCard(SET_ABYSS_ACTOR) and c:IsType(TYPE_PENDULUM) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -127,7 +127,7 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	if tc then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 		local fid=c:GetFieldID()
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1,fid)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
@@ -150,4 +150,3 @@ end
 function s.thop2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoHand(e:GetLabelObject(),nil,REASON_EFFECT)
 end
-

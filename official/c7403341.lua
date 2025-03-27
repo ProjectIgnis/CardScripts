@@ -14,9 +14,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x101}
+s.listed_series={SET_CODE_TALKER}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x101),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_CODE_TALKER),tp,LOCATION_MZONE,0,1,nil)
 		and (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE)) and Duel.IsChainNegatable(ev)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -43,12 +43,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetTargetRange(0,1)
 		e1:SetLabel(ec:GetOriginalCode())
 		e1:SetValue(s.aclimit)
-		e1:SetReset(RESET_PHASE+PHASE_END,2)
+		e1:SetReset(RESET_PHASE|PHASE_END,2)
 		Duel.RegisterEffect(e1,tp)
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 		e2:SetDescription(aux.Stringid(id,1))
-		e2:SetReset(RESET_PHASE+PHASE_END,2)
+		e2:SetReset(RESET_PHASE|PHASE_END,2)
 		e2:SetTargetRange(0,1)
 		Duel.RegisterEffect(e2,tp)
 	end

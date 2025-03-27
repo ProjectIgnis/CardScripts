@@ -1,4 +1,5 @@
 --終焉の王デミス
+--Demise, King of Armageddon
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

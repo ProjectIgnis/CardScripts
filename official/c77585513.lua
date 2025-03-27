@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetTargetRange(1,1)
 	e2:SetValue(s.aclimit)
-	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetReset(RESET_PHASE|PHASE_END)
 	c:RegisterEffect(e2)
 	--disable
 	local e3=Effect.CreateEffect(c)

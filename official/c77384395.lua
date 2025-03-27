@@ -1,11 +1,11 @@
 -- 
--- Pazuzule
--- Scripted by Hatter
+--Pazuzule
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Pendulum properties
+	--Pendulum properties
 	Pendulum.AddProcedure(c)
-	-- Change scale
+	--Change scale
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -15,14 +15,14 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sctg)
 	e1:SetOperation(s.scop)
 	c:RegisterEffect(e1)
-	-- Pendulum Summons cannot be negated
+	--Pendulum Summons cannot be negated
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_CANNOT_DISABLE_SPSUMMON)
 	e2:SetProperty(EFFECT_FLAG_IGNORE_RANGE+EFFECT_FLAG_SET_AVAILABLE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(1,0)
-	e2:SetTarget(function(_,c)return c:IsSummonType(SUMMON_TYPE_PENDULUM) end)
+	e2:SetTarget(function(_,c)return c:IsPendulumSummoned() end)
 	c:RegisterEffect(e2)
 end
 function s.scfilter(c,sc)
@@ -42,12 +42,12 @@ function s.scop(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if tc and tc:IsRelateToEffect(e) then
 		local lv=tc:GetOriginalLevel()
 		if lv~=c:GetLeftScale() then
-			-- Change scale
+			--Change scale
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CHANGE_LSCALE)
 			e1:SetValue(lv)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
 			c:RegisterEffect(e1)
 			local e2=e1:Clone()
 			e2:SetCode(EFFECT_CHANGE_RSCALE)
@@ -55,13 +55,13 @@ function s.scop(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 			c:RegisterEffect(e2)
 		end
 	end
-	-- Cannot Special Summon, except by Pendulum Summon
+	--Cannot Special Summon, except by Pendulum Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(function(_,_,_,st)return SUMMON_TYPE_PENDULUM~=(st&SUMMON_TYPE_PENDULUM)end)
 	Duel.RegisterEffect(e1,tp)

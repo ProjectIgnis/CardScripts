@@ -1,4 +1,5 @@
 --真竜凰の使徒
+--Disciples of the True Dracophoenix
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -40,9 +41,9 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xf9}
+s.listed_series={SET_TRUE_DRACO_KING}
 function s.tdfilter(c)
-	return c:IsSetCard(0xf9) and c:IsAbleToDeck()
+	return c:IsSetCard(SET_TRUE_DRACO_KING) and c:IsAbleToDeck()
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.tdfilter(chkc) end
@@ -61,14 +62,14 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoDeck(tg,nil,0,REASON_EFFECT)
 	local g=Duel.GetOperatedGroup()
 	if g:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then Duel.ShuffleDeck(tp) end
-	local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_DECK+LOCATION_EXTRA)
+	local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_DECK|LOCATION_EXTRA)
 	if ct>0 then
 		Duel.BreakEffect()
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end
 end
 function s.sumfilter(c)
-	return c:IsSetCard(0xf9) and c:IsSummonable(true,nil,1)
+	return c:IsSetCard(SET_TRUE_DRACO_KING) and c:IsSummonable(true,nil,1)
 end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.sumfilter,tp,LOCATION_HAND,0,1,nil) end

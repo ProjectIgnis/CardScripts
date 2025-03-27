@@ -1,4 +1,5 @@
 --魔法封印の呪符
+--Talisman of Spell Sealing
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

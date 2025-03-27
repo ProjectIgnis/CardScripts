@@ -1,4 +1,5 @@
 --幻奏の音女エレジー
+--Elegy the Melodious Diva
 local s,id=GetID()
 function s.initial_effect(c)
 	--indes
@@ -21,10 +22,10 @@ function s.initial_effect(c)
 	e2:SetCondition(s.tgcon)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x9b}
+s.listed_series={SET_MELODIOUS}
 function s.indtg(e,c)
-	return c:IsSetCard(0x9b) and c:IsSummonType(SUMMON_TYPE_SPECIAL)
+	return c:IsSetCard(SET_MELODIOUS) and c:IsSpecialSummoned()
 end
 function s.tgcon(e)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL)
+	return e:GetHandler():IsSpecialSummoned()
 end

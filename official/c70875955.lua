@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.mtop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x101b}
+s.listed_series={SET_MECHA_PHANTOM_BEAST}
 s.listed_names={TOKEN_MECHA_PHANTOM_BEAST}
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_MECHA_PHANTOM_BEAST,0x101b,TYPES_TOKEN,0,0,3,RACE_MACHINE,ATTRIBUTE_WIND)
@@ -47,7 +47,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rfilter(c)
-	return c:IsType(TYPE_TOKEN) or c:IsSetCard(0x101b)
+	return c:IsType(TYPE_TOKEN) or c:IsSetCard(SET_MECHA_PHANTOM_BEAST)
 end
 function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.CheckReleaseGroupCost(tp,s.rfilter,1,false,nil,nil)

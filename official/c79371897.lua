@@ -1,4 +1,5 @@
 --Reinforcement of the Army's Troops
+--Reinforcement of the Army's Troops
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -28,10 +28,10 @@ function s.initial_effect(c)
 	e4:SetValue(s.efilter)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x1d}
+s.listed_series={SET_KOAKI_MEIRU}
 s.listed_names={36623431}
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.cfilter1(c)
 	return c:IsCode(36623431) and c:IsAbleToGraveAsCost()
@@ -55,7 +55,7 @@ function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.otfilter(c,tp)
-	return c:IsSetCard(0x1d) and (c:IsControler(tp) or c:IsFaceup())
+	return c:IsSetCard(SET_KOAKI_MEIRU) and (c:IsControler(tp) or c:IsFaceup())
 end
 function s.efilter(e,re,rp)
 	return re:IsActiveType(TYPE_TRAP)

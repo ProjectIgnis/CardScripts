@@ -18,14 +18,14 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x134}
+s.listed_series={SET_GENERAIDER}
 function s.cfilter(c,e,tp,ft)
-	return (c:IsRace(RACE_ZOMBIE) or (c:IsSetCard(0x134) and c:IsMonster()))
+	return (c:IsRace(RACE_ZOMBIE) or (c:IsSetCard(SET_GENERAIDER) and c:IsMonster()))
 		and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5)) and (c:IsControler(tp) or c:IsFaceup())
 			and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,c:GetCode())
 end
 function s.spfilter(c,e,tp,code)
-	return not c:IsCode(code) and (c:IsRace(RACE_ZOMBIE) or c:IsSetCard(0x134)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return not c:IsCode(code) and (c:IsRace(RACE_ZOMBIE) or c:IsSetCard(SET_GENERAIDER)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)

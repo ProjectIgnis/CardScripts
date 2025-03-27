@@ -1,4 +1,5 @@
 --No.66 覇鍵甲虫マスター・キー・ビートル
+--Number 66: Master Key Beetle
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -44,7 +45,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if c:IsFaceup() and c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) then
 		c:SetCardTarget(tc)
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,0)
 		--indes
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
@@ -52,7 +53,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetProperty(EFFECT_FLAG_SET_AVAILABLE+EFFECT_FLAG_OWNER_RELATE)
 		e2:SetCondition(s.indcon)
 		e2:SetValue(1)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e2)
 	end
 end

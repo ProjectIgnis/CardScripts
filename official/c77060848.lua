@@ -1,4 +1,5 @@
 --極星霊デックアールヴ
+--Svartalf of the Nordic Alfar
 local s,id=GetID()
 function s.initial_effect(c)
 	--salvage
@@ -12,9 +13,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x42}
+s.listed_series={SET_NORDIC}
 function s.filter(c)
-	return c:IsSetCard(0x42) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_NORDIC) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end

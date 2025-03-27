@@ -1,4 +1,5 @@
 --EMキャスト・チェンジ
+--Performapal Recasting
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,9 +13,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x9f}
+s.listed_series={SET_PERFORMAPAL}
 function s.filter(c)
-	return c:IsSetCard(0x9f) and c:IsMonster() and c:IsAbleToDeck() and not c:IsPublic()
+	return c:IsSetCard(SET_PERFORMAPAL) and c:IsMonster() and c:IsAbleToDeck() and not c:IsPublic()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp)

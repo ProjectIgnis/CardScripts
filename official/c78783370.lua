@@ -1,4 +1,5 @@
 --地獄の扉越し銃
+--Barrel Behind the Door
 local s,id=GetID()
 function s.initial_effect(c)
 	--reflect

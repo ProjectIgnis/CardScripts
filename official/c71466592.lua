@@ -1,4 +1,5 @@
 --魔力吸収球体
+--Maryokutai
 local s,id=GetID()
 function s.initial_effect(c)
 	--Negate

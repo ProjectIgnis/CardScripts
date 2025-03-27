@@ -1,4 +1,5 @@
 --水精鱗－サルフアビス
+--Mermail Abyssbalaen
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -33,9 +34,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x74}
+s.listed_series={SET_MERMAIL}
 function s.cfilter(c)
-	return c:IsSetCard(0x74) and c:IsDiscardable() and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_MERMAIL) and c:IsDiscardable() and c:IsAbleToGraveAsCost()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,4,e:GetHandler()) end
@@ -55,7 +56,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1
 end
 function s.descount(c)
-	return c:IsSetCard(0x74) and c:IsMonster()
+	return c:IsSetCard(SET_MERMAIL) and c:IsMonster()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsOnField() end
@@ -74,7 +75,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(500)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 	end
 	local g=Duel.GetTargetCards(e)
@@ -84,7 +85,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN1
 end
 function s.rfilter(c)
-	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsSetCard(0x74)
+	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsSetCard(SET_MERMAIL)
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.rfilter,1,false,nil,e:GetHandler()) end
@@ -105,9 +106,9 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EVENT_BATTLE_START)
 		e1:SetTarget(s.destg2)
 		e1:SetOperation(s.desop2)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,1)
+		e1:SetReset(RESETS_STANDARD_PHASE_END,1)
 		c:RegisterEffect(e1)
-		c:RegisterFlagEffect(id,RESET_PHASE+PHASE_END,0,1)
+		c:RegisterFlagEffect(id,RESET_PHASE|PHASE_END,0,1)
 	end
 end
 function s.destg2(e,tp,eg,ep,ev,re,r,rp,chk)

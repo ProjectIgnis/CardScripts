@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOGRAVE)
 	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetRange(LOCATION_GRAVE+LOCATION_HAND)
+	e1:SetRange(LOCATION_GRAVE|LOCATION_HAND)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.spcon)
 	e1:SetTarget(s.sptg)
@@ -26,9 +26,9 @@ function s.initial_effect(c)
 	aux.addContinuousLizardCheck(c,LOCATION_MZONE,s.lizfilter)
 end
 s.listed_names={id}
-s.listed_series={0x121}
+s.listed_series={SET_MAYAKASHI}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x121) and not c:IsCode(id)
+	return c:IsFaceup() and c:IsSetCard(SET_MAYAKASHI) and not c:IsCode(id)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_ONFIELD,0,1,nil)
@@ -59,7 +59,7 @@ function s.tgfilter(c)
 	return c:IsRace(RACE_ZOMBIE) and c:IsAbleToGrave()
 end
 function s.sslimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(0x121)
+	return c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(SET_MAYAKASHI)
 end
 function s.lizfilter(e,c)
 	return not c:IsOriginalSetCard(0x121)

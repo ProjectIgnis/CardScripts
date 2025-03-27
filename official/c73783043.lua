@@ -1,4 +1,5 @@
 --レアル・ジェネクス・アクセラレーター
+--R-Genex Accelerator
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -12,9 +13,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x2}
+s.listed_series={SET_GENEX}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x2) and c:IsControler(tp) and not c:IsPublic()
+	return c:IsSetCard(SET_GENEX) and c:IsControler(tp) and not c:IsPublic()
 		and c:IsPreviousLocation(LOCATION_DECK) and c:IsPreviousControler(tp)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

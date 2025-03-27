@@ -54,7 +54,7 @@ function s.replaceop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_EVENT|RESETS_STANDARD&~RESET_TURN_SET)
 	e1:SetValue(TYPE_SPELL+TYPE_CONTINUOUS)
 	c:RegisterEffect(e1)
-	Duel.RaiseEvent(c,EVENT_CUSTOM+47408488,e,0,tp,0,0)
+	Duel.RaiseEvent(c,EVENT_CUSTOM+CARD_CRYSTAL_TREE,e,0,tp,0,0)
 end
 function s.filter(c)
 	return c:IsSetCard(SET_ADVANCED_CRYSTAL_BEAST) and not c:IsForbidden() and (not c:IsLocation(LOCATION_REMOVED) or c:IsFaceup())
@@ -77,6 +77,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT|RESETS_STANDARD&~RESET_TURN_SET)
 		e1:SetValue(TYPE_SPELL+TYPE_CONTINUOUS)
 		tc:RegisterEffect(e1)
-		Duel.RaiseEvent(tc,EVENT_CUSTOM+47408488,e,0,tp,0,0)
+		Duel.RaiseEvent(tc,EVENT_CUSTOM+CARD_CRYSTAL_TREE,e,0,tp,0,0)
 	end
 end

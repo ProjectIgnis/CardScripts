@@ -1,5 +1,5 @@
 --ビーストアイズ・ペンデュラム・ドラゴン
--- Beast-Eyes Pendulum Dragon
+--Beast-Eyes Pendulum Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material

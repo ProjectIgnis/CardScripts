@@ -13,13 +13,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xe3}
+s.listed_series={SET_CUBIC}
 s.counter_place_list={0x1038}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp) and Duel.GetAttackTarget()==nil
 end
 function s.spfilter1(c,e,tp)
-	return c:IsSetCard(0xe3) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsSetCard(SET_CUBIC) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local at=Duel.GetAttacker()
@@ -38,14 +38,14 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local tg=Group.FromCards(tc)
 		local ft=Duel.GetLocationCount(1-tp,LOCATION_MZONE)
-		local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter2),1-tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,nil,e,1-tp,tc)
+		local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter2),1-tp,LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE,0,nil,e,1-tp,tc)
 		if ft>0 and #g>0 then
 			if Duel.IsPlayerAffectedByEffect(1-tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
 			local sg=g:Clone()
 			if #g>ft then
 				Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_SPSUMMON)
 				sg=g:Select(1-tp,ft,ft,nil)
-				g:Remove(Card.IsLocation,nil,LOCATION_MZONE+LOCATION_GRAVE)
+				g:Remove(Card.IsLocation,nil,LOCATION_MZONE|LOCATION_GRAVE)
 				Duel.SendtoGrave(g,REASON_EFFECT)
 			end
 			local sc=sg:GetFirst()
@@ -76,7 +76,7 @@ function s.counter(tc,ec)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 	e1:SetValue(0)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	tc:RegisterEffect(e1)
 	--
 	tc:AddCounter(0x1038,1)
@@ -84,7 +84,7 @@ function s.counter(tc,ec)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_CANNOT_ATTACK)
 	e2:SetCondition(s.disable)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 	tc:RegisterEffect(e2)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_DISABLE)

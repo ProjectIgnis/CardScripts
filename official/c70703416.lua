@@ -26,15 +26,15 @@ function s.initial_effect(c)
 	e3:SetOperation(s.tgop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x2f}
+s.listed_series={SET_ICE_BARRIER}
 function s.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x2f) and c:IsMonster()
+	return c:IsFaceup() and c:IsSetCard(SET_ICE_BARRIER) and c:IsMonster()
 end
 function s.atkcon(e,tp,ev,ep,eg,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.atkfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.tgfilter(c,lv)
-	return c:IsLevelBelow(3) and c:IsSetCard(0x2f) and c:IsAbleToGrave()
+	return c:IsLevelBelow(3) and c:IsSetCard(SET_ICE_BARRIER) and c:IsAbleToGrave()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -52,7 +52,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)
 		e1:SetValue(tc:GetLevel())
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end

@@ -38,9 +38,9 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xe2}
+s.listed_series={SET_TRIAMID}
 function s.actfilter(c,tp)
-	return c and c:IsFaceup() and c:IsSetCard(0xe2) and c:IsMonster() and c:IsControler(tp)
+	return c and c:IsFaceup() and c:IsSetCard(SET_TRIAMID) and c:IsMonster() and c:IsControler(tp)
 end
 function s.actcon(e)
 	local tp=e:GetHandlerPlayer()
@@ -51,7 +51,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsPreviousLocation(LOCATION_FZONE) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xe2) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_TRIAMID) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

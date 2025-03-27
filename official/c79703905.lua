@@ -35,13 +35,13 @@ function s.initial_effect(c)
 	e4:SetOperation(s.hdop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x18}
+s.listed_series={SET_CLOUDIAN}
 s.counter_place_list={0x1019}
 function s.sdcon(e)
 	return e:GetHandler():IsPosition(POS_FACEUP_DEFENSE)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x18)
+	return c:IsFaceup() and c:IsSetCard(SET_CLOUDIAN)
 end
 function s.addc(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsRelateToEffect(e) then

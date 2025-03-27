@@ -26,9 +26,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x1b}
+s.listed_series={SET_PHANTOM_BEAST}
 function s.otfilter(c,tp)
-	return c:IsSetCard(0x1b) and (c:IsControler(tp) or c:IsFaceup())
+	return c:IsSetCard(SET_PHANTOM_BEAST) and (c:IsControler(tp) or c:IsFaceup())
 end
 function s.damtg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

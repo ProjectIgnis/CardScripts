@@ -3,7 +3,7 @@
 --scripted by Rundas
 local s,id=GetID()
 function s.initial_effect(c)
-	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x166),s.matfilter)
+	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_DESPIA),s.matfilter)
 	c:EnableReviveLimit()
 	--Change ATK to 0
 	local e1=Effect.CreateEffect(c)
@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x166}
+s.listed_series={SET_DESPIA}
 s.listed_names={CARD_ALBAZ}
 function s.matfilter(c,fc,st,tp)
 	return c:IsAttribute(ATTRIBUTE_LIGHT,fc,st,tp) or c:IsAttribute(ATTRIBUTE_DARK,fc,st,tp)
@@ -57,7 +57,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(0)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end
@@ -67,7 +67,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and c:IsReason(REASON_EFFECT) and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp)
 end
 function s.thfilter(c,e,tp,ft)
-	return ((c:IsSetCard(0x166) and c:IsMonster()) or c:IsCode(CARD_ALBAZ))
+	return ((c:IsSetCard(SET_DESPIA) and c:IsMonster()) or c:IsCode(CARD_ALBAZ))
 		and (c:IsAbleToHand() or (c:IsCanBeSpecialSummoned(e,0,tp,false,false) and ft>0))
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -1,5 +1,5 @@
 --覇王城 
---Supreme King Castle
+--Supreme King's Castle
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={CARD_DARK_FUSION}
-s.listed_series={0x6008}
+s.listed_series={SET_EVIL_HERO}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	local bc=Duel.GetAttackTarget()
@@ -39,12 +39,12 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return bc:IsFaceup() and bc:IsRace(RACE_FIEND)
 end
 function s.atkcfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x6008) and c:HasLevel() and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and c:IsSetCard(SET_EVIL_HERO) and c:HasLevel() and c:IsAbleToGraveAsCost()
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.atkcfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.atkcfilter,tp,LOCATION_DECK|LOCATION_EXTRA,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local tc=Duel.SelectMatchingCard(tp,s.atkcfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,1,nil):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.atkcfilter,tp,LOCATION_DECK|LOCATION_EXTRA,0,1,1,nil):GetFirst()
 	Duel.SendtoGrave(tc,REASON_COST)
 	e:SetLabel(tc:GetLevel())
 end
@@ -57,7 +57,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(ct)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

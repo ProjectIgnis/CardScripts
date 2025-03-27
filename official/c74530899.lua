@@ -1,4 +1,5 @@
 --時械神メタイオン
+--Metaion, the Timelord
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot special summon
@@ -36,7 +37,7 @@ function s.initial_effect(c)
 	e6:SetDescription(aux.Stringid(id,1))
 	e6:SetCategory(CATEGORY_TOHAND+CATEGORY_DAMAGE)
 	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e6:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e6:SetCode(EVENT_PHASE|PHASE_BATTLE)
 	e6:SetCountLimit(1)
 	e6:SetRange(LOCATION_MZONE)
 	e6:SetCondition(s.thcon)
@@ -48,7 +49,7 @@ function s.initial_effect(c)
 	e7:SetDescription(aux.Stringid(id,2))
 	e7:SetCategory(CATEGORY_TODECK)
 	e7:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e7:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e7:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e7:SetCountLimit(1)
 	e7:SetRange(LOCATION_MZONE)
 	e7:SetCondition(s.tdcon)
@@ -79,11 +80,11 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	if #g==0 then return end
 	Duel.SendtoHand(g,nil,REASON_EFFECT)
 	local og=Duel.GetOperatedGroup()
-	local ct=og:FilterCount(Card.IsLocation,nil,LOCATION_HAND+LOCATION_EXTRA)
+	local ct=og:FilterCount(Card.IsLocation,nil,LOCATION_HAND|LOCATION_EXTRA)
 	Duel.Damage(1-tp,ct*300,REASON_EFFECT)
 end
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

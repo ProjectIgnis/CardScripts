@@ -77,7 +77,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local rg=g:Select(tp,5,5,nil)
 	Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)
 	for tc in aux.Next(rg) do
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,0)
 	end
 	e:GetLabelObject():Clear()
 	e:GetLabelObject():Merge(rg)

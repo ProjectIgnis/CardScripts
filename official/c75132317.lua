@@ -28,15 +28,15 @@ function s.initial_effect(c)
 	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x7c}
+s.listed_series={SET_FIRE_FORMATION}
 function s.tgfilter(c,tp)
-	return c:IsControler(tp) and c:IsSetCard(0x7c) and c:IsSpellTrap()
+	return c:IsControler(tp) and c:IsSetCard(SET_FIRE_FORMATION) and c:IsSpellTrap()
 end
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.tgfilter,1,nil,tp)
 end
 function s.filter(c)
-	return c:IsSetCard(0x7c) and c:IsTrap() and c:IsSSetable()
+	return c:IsSetCard(SET_FIRE_FORMATION) and c:IsTrap() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsRelateToEffect(e) and e:GetHandler():IsFaceup()
@@ -54,7 +54,7 @@ function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==1
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x7c) and c:IsSpellTrap() and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and c:IsSetCard(SET_FIRE_FORMATION) and c:IsSpellTrap() and c:IsAbleToGraveAsCost()
 end
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local nc=Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,2,nil)

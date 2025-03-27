@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:SetSPSummonOnce(id)
 	--Synchro procedure
-	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTunerEx(Card.IsSetCard,0x10),1,99)
+	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTunerEx(Card.IsSetCard,SET_GUSTO),1,99)
 	c:EnableReviveLimit()
 	--Special Summon 2 "Gusto" monsters and Synchro Summon using them
 	local e1=Effect.CreateEffect(c)
@@ -28,15 +28,15 @@ function s.initial_effect(c)
 	e2:SetValue(aux.tgoval)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x10}
+s.listed_series={SET_GUSTO}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return e:GetHandler():IsSynchroSummoned()
 end
 function s.matfilter(c,e,tp)
-	return c:IsSetCard(0x10) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_GUSTO) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.filter(c,mg,tp,chk)
-	return c:IsSetCard(0x10) and c:IsType(TYPE_SYNCHRO) and (not chk or Duel.GetLocationCountFromEx(tp,tp,mg,c)>0) and (not mg or Card.IsSynchroSummonable(c,nil,mg,#mg,#mg))
+	return c:IsSetCard(SET_GUSTO) and c:IsType(TYPE_SYNCHRO) and (not chk or Duel.GetLocationCountFromEx(tp,tp,mg,c)>0) and (not mg or Card.IsSynchroSummonable(c,nil,mg,#mg,#mg))
 end
 function s.rescon(exg)
 	return function(sg,e,tp,mg)
@@ -47,12 +47,12 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local exg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_EXTRA,0,nil,nil,tp)
 	local cancelcon=s.rescon(exg)
-	local mg=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil,e,tp)
+	local mg=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_HAND|LOCATION_DECK,0,nil,e,tp)
 	local ft=math.min(2,Duel.GetLocationCount(tp,LOCATION_MZONE))
 	if chk==0 then return ft>1 and Duel.IsPlayerCanSpecialSummonCount(tp,2)
 		and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
 		and aux.SelectUnselectGroup(mg,e,tp,1,2,cancelcon,0) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,3,0,LOCATION_HAND+LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,3,0,LOCATION_HAND|LOCATION_DECK)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	--cannot special summon except wind
@@ -63,12 +63,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	--synchro part
 	local exg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_EXTRA,0,nil,nil,tp)
 	local cancelcon=s.rescon(exg)
-	local mg=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil,e,tp)
+	local mg=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_HAND|LOCATION_DECK,0,nil,e,tp)
 	local g=aux.SelectUnselectGroup(mg,e,tp,1,2,cancelcon,1,tp,HINTMSG_SPSUMMON,cancelcon)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<#g or #g==0 or (Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and #g>1) then return end
 	for tc in aux.Next(g) do
@@ -76,7 +76,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
@@ -96,5 +96,5 @@ function s.splimit(e,c)
 end
 --opponent cannot target
 function s.tgtg(e,c)
-	return c:IsSetCard(0x10) and c:IsType(TYPE_SYNCHRO) and c~=e:GetHandler()
+	return c:IsSetCard(SET_GUSTO) and c:IsType(TYPE_SYNCHRO) and c~=e:GetHandler()
 end

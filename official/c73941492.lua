@@ -50,13 +50,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e7)
 end
 s.listed_names={id}
-s.listed_series={0x98}
+s.listed_series={SET_MAGICIAN}
 
 function s.filter(e,c)
-	return c:IsSetCard(0x98) and c:IsType(TYPE_PENDULUM)
+	return c:IsSetCard(SET_MAGICIAN) and c:IsType(TYPE_PENDULUM)
 end
 function s.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x98) and c:IsType(TYPE_PENDULUM)
+	return c:IsFaceup() and c:IsSetCard(SET_MAGICIAN) and c:IsType(TYPE_PENDULUM)
 end
 function s.atkval(e,c)
 	local g=Duel.GetMatchingGroup(s.atkfilter,c:GetControler(),LOCATION_EXTRA,0,nil)
@@ -67,7 +67,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:GetSummonType()==SUMMON_TYPE_PENDULUM and c:IsPreviousLocation(LOCATION_HAND)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x98) and c:IsType(TYPE_PENDULUM) and not c:IsCode(id)
+	return c:IsSetCard(SET_MAGICIAN) and c:IsType(TYPE_PENDULUM) and not c:IsCode(id)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -86,12 +86,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1,true)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e2,true)
 		--Banish it if it leaves the field
 		local e3=Effect.CreateEffect(c)
@@ -99,7 +99,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-		e3:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e3:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		e3:SetValue(LOCATION_REMOVED)
 		tc:RegisterEffect(e3,true)
 	end

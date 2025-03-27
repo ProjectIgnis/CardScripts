@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 	--Part of "Artifact" archetype
-s.listed_series={0x97}
+s.listed_series={SET_ARTIFACT}
 
 	--Monsters with different names
 function s.matfilter(g,lc,sumtype,tp)
@@ -41,7 +41,7 @@ function s.matfilter(g,lc,sumtype,tp)
 end
 	--"Artifact" monster that can be set as a spell
 function s.setfilter(c)
-	return c:IsSetCard(0x97) and c:IsMonster() and c:IsSSetable(true)
+	return c:IsSetCard(SET_ARTIFACT) and c:IsMonster() and c:IsSSetable(true)
 end
 	--If the card/effect (other than this card) was activated on the field
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
@@ -51,12 +51,12 @@ end
 	--Activation legality
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil) end
+		and Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,nil) end
 end
 	--If a card/effect on the field is activated, set an "Artifact" from hand/deck, but destroy it later
 function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
-	local g=Duel.SelectMatchingCard(tp,s.setfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.setfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,1,nil)
 	if #g>0 then
 		local c=e:GetHandler()
 		local tc=g:GetFirst()
@@ -69,12 +69,12 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetLabelObject(tc)
 		e1:SetCondition(s.descon)
 		e1:SetOperation(s.desop)
-		if Duel.GetCurrentPhase()==PHASE_END and Duel.GetTurnPlayer()~=tp then
+		if Duel.IsPhase(PHASE_END) and Duel.GetTurnPlayer()~=tp then
 		e1:SetLabel(Duel.GetTurnCount())
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,2)
+		e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN),2)
 		else
 		e1:SetLabel(0)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+		e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN)
 		end
 		Duel.RegisterEffect(e1,tp)
 		tc:CreateEffectRelation(e1)
@@ -83,7 +83,7 @@ end
 	--Check for flag
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
-	return Duel.GetTurnPlayer()~=tp and Duel.GetTurnCount()~=e:GetLabel() and tc:IsRelateToEffect(e)
+	return Duel.IsTurnPlayer(1-tp) and Duel.GetTurnCount()~=e:GetLabel() and tc:IsRelateToEffect(e)
 end
 	--Destroy the set "Artifact" card
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
@@ -93,11 +93,11 @@ end
 	--If this link summoned card is destroyed during opponent's turn
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_LINK) and Duel.GetTurnPlayer()~=tp
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsLinkSummoned() and Duel.GetTurnPlayer()~=tp
 end
 	--Check for "Artifact" monster
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x97) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(SET_ARTIFACT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 	--Activation legality
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

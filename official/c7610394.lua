@@ -19,12 +19,12 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetOperation(s.tgop)
 	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_EVIL_EYE_SELENE,7610395}
-s.listed_series={0x129}
+s.listed_series={SET_EVIL_EYE}
 function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x129,TYPES_TOKEN,400,400,1,RACE_FIEND,ATTRIBUTE_DARK,POS_FACEUP) end
@@ -53,7 +53,7 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetDescription(aux.Stringid(id,2))
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp)
@@ -67,9 +67,8 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e1:SetTargetRange(LOCATION_SZONE,0)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x129))
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_EVIL_EYE))
 	e1:SetValue(aux.tgoval)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
-

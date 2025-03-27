@@ -1,4 +1,5 @@
 --リチュア・ディバイナー
+--Gishki Diviner
 local s,id=GetID()
 function s.initial_effect(c)
 	--announce

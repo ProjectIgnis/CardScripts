@@ -35,4 +35,3 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Draw(p,d,REASON_EFFECT)
 	end
 end
-

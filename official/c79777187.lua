@@ -1,4 +1,5 @@
 --バリア・バブル
+--Bubble Barrier
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -25,9 +26,9 @@ function s.initial_effect(c)
 	e3:SetValue(s.indct)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xc6,0x9f}
+s.listed_series={SET_PERFORMAGE,SET_PERFORMAPAL}
 function s.target(e,c)
-	return c:IsSetCard(0xc6) or c:IsSetCard(0x9f)
+	return c:IsSetCard(SET_PERFORMAGE) or c:IsSetCard(SET_PERFORMAPAL)
 end
 function s.indct(e,re,r,rp)
 	if (r&REASON_BATTLE+REASON_EFFECT)~=0 then

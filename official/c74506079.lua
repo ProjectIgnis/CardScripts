@@ -1,4 +1,5 @@
 --ワーム・ゼロ
+--Worm Zero
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -11,9 +12,9 @@ function s.initial_effect(c)
 	e2:SetValue(s.matcheck)
 	c:RegisterEffect(e2)
 end
-s.material_setcode=0x3e
+s.material_setcode=SET_WORM
 function s.ffilter(c,fc,sumtype,tp)
-	return c:IsSetCard(0x3e,fc,sumtype,tp) and c:IsRace(RACE_REPTILE,fc,sumtype,tp)
+	return c:IsSetCard(SET_WORM,fc,sumtype,tp) and c:IsRace(RACE_REPTILE,fc,sumtype,tp)
 end
 function s.matcheck(e,c)
 	local ct=c:GetMaterial():GetClassCount(Card.GetCode)
@@ -22,7 +23,7 @@ function s.matcheck(e,c)
 		ae:SetType(EFFECT_TYPE_SINGLE)
 		ae:SetCode(EFFECT_SET_ATTACK)
 		ae:SetValue(ct*500)
-		ae:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE-RESET_TOFIELD)
+		ae:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE-RESET_TOFIELD)
 		c:RegisterEffect(ae)
 	end
 	if ct>=2 then
@@ -35,7 +36,7 @@ function s.matcheck(e,c)
 		e1:SetCountLimit(1)
 		e1:SetTarget(s.sptg)
 		e1:SetOperation(s.spop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD)
 		c:RegisterEffect(e1)
 	end
 	if ct>=4 then
@@ -48,7 +49,7 @@ function s.matcheck(e,c)
 		e1:SetCost(s.tgcost)
 		e1:SetTarget(s.tgtg)
 		e1:SetOperation(s.tgop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD)
 		c:RegisterEffect(e1)
 	end
 	if ct>=6 then
@@ -61,7 +62,7 @@ function s.matcheck(e,c)
 		e1:SetCountLimit(1)
 		e1:SetTarget(s.drtg)
 		e1:SetOperation(s.drop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD)
 		c:RegisterEffect(e1)
 	end
 end
@@ -87,9 +88,9 @@ function s.costfilter(c)
 	return c:IsRace(RACE_REPTILE) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local rg=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil)
+	local rg=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil)
 	Duel.Remove(rg,POS_FACEUP,REASON_COST)
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

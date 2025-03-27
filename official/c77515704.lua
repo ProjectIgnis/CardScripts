@@ -21,12 +21,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-s.listed_series={0x133}
+s.listed_series={SET_DRAGONMAID}
 function s.thfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x133) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(SET_DRAGONMAID) and c:IsAbleToHand()
 end
 function s.athfilter(c)
-	return c:IsSetCard(0x133) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_DRAGONMAID) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.rthfilter(c)
 	return c:IsSpellTrap() and c:IsAbleToHand()

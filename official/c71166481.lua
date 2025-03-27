@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.xop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x48}
+s.listed_series={SET_NUMBER}
 s.xyz_number=75
 function s.chcon(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsActiveType(TYPE_MONSTER) and rp==1-tp
@@ -50,7 +50,7 @@ function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(1-tp,1,REASON_EFFECT)
 end
 function s.xfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(0x48)
+	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(SET_NUMBER)
 end
 function s.xtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()

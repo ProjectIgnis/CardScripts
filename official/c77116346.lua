@@ -1,4 +1,5 @@
 --ダイナミスト・チャージ
+--Dinomist Charge
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -21,9 +22,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xd8}
+s.listed_series={SET_DINOMIST}
 function s.filter(c)
-	return c:IsSetCard(0xd8) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_DINOMIST) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
@@ -39,7 +40,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c,tp)
-	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_EXTRA) and c:IsSetCard(0xd8)
+	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_EXTRA) and c:IsSetCard(SET_DINOMIST)
 		and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)

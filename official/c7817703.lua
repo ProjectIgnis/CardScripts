@@ -1,4 +1,5 @@
 --D・パワーユニット
+--Morphtronic Engine
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,s.filter,nil,nil,nil,s.operation)
@@ -10,7 +11,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.filter(c)
-	return c:IsSetCard(0x26) and c:GetLevel()==3
+	return c:IsSetCard(SET_MORPHTRONIC) and c:GetLevel()==3
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
@@ -18,14 +19,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-		e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
+		e1:SetCode(EVENT_PHASE|PHASE_STANDBY)
 		e1:SetRange(LOCATION_SZONE)
 		e1:SetCountLimit(1)
 		e1:SetLabel(Duel.GetTurnCount())
 		e1:SetCondition(s.descon)
 		e1:SetTarget(s.destg)
 		e1:SetOperation(s.desop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_SELF_TURN,3)
+		e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_SELF_TURN,3)
 		e:GetHandler():RegisterEffect(e1)
 	end
 end

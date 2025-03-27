@@ -1,5 +1,5 @@
 --魔界劇場「ファンタスティックシアター」
---Abyss Playhouse – Fantastic Theater
+--Abyss Playhouse - Fantastic Theater
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)
@@ -73,7 +73,7 @@ function s.chop1(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChangeChainOperation(ev,s.repop)
 end
 function s.confilter(c)
-	return c:IsFaceup() and c:IsSetCard(SET_ABYSS_ACTOR) and c:IsSummonType(SUMMON_TYPE_PENDULUM)
+	return c:IsFaceup() and c:IsSetCard(SET_ABYSS_ACTOR) and c:IsPendulumSummoned()
 end
 function s.desfilter(c)
 	return c:IsFacedown() and c:IsSpellTrap()

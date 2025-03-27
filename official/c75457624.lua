@@ -1,4 +1,5 @@
 --霊獣の相絆
+--Ritual Beast's Bond
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,9 +13,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xb5}
+s.listed_series={SET_RITUAL_BEAST}
 function s.cfilter(c)
-	return c:IsSetCard(0xb5) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(SET_RITUAL_BEAST) and c:IsAbleToRemoveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil)
@@ -26,7 +27,7 @@ function s.rescon(sg,e,tp,mg)
 	return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,sg)
 end
 function s.spfilter(c,e,tp,sg)
-	return c:IsSetCard(0xb5) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and Duel.GetLocationCountFromEx(tp,tp,sg,c) > 0
+	return c:IsSetCard(SET_RITUAL_BEAST) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and Duel.GetLocationCountFromEx(tp,tp,sg,c) > 0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

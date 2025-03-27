@@ -28,12 +28,12 @@ function s.initial_effect(c)
 	e3:SetOperation(s.daop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x11e}
+s.listed_series={SET_DANGER}
 function s.target(e,c)
-	return c:IsSetCard(0x11e) and c:IsStatus(STATUS_SPSUMMON_TURN)
+	return c:IsSetCard(SET_DANGER) and c:IsStatus(STATUS_SPSUMMON_TURN)
 end
 function s.dafilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x11e)
+	return c:IsFaceup() and c:IsSetCard(SET_DANGER)
 end
 function s.datg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.dafilter(chkc) end
@@ -51,7 +51,7 @@ function s.daop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_DIRECT_ATTACK)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e1:SetCondition(s.rcon)
 	tc:RegisterEffect(e1)
 	local e2=e1:Clone()

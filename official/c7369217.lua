@@ -1,4 +1,5 @@
 --メタル化寄生生物－ルナタイト
+--Metallizing Parasite - Lunatite
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddUnionProcedure(c,nil,true)

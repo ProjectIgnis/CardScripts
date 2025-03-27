@@ -1,4 +1,5 @@
 --底なし流砂
+--Bottomless Shifting Sand
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -21,7 +22,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e3:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCountLimit(1)
 	e3:SetCondition(s.descon2)

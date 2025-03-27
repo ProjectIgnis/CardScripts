@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_TO_GRAVE_REDIRECT)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTarget(s.rmtarget)
-	e1:SetTargetRange(LOCATION_HAND+LOCATION_DECK,LOCATION_HAND+LOCATION_DECK)
+	e1:SetTargetRange(LOCATION_HAND|LOCATION_DECK,LOCATION_HAND|LOCATION_DECK)
 	e1:SetValue(LOCATION_REMOVED)
 	c:RegisterEffect(e1)
 	--Negate activation

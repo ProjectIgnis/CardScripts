@@ -1,4 +1,5 @@
 --異次元の女戦士
+--D.D. Warrior Lady
 local s,id=GetID()
 function s.initial_effect(c)
 	--remove

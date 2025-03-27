@@ -1,4 +1,5 @@
 --闇よりの罠
+--Trap of Darkness
 local s,id=GetID()
 function s.initial_effect(c)
 	--copy trap

@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x55,0x7b}
+s.listed_series={SET_PHOTON,SET_GALAXY}
 s.counter_place_list={0x2c}
 
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
@@ -61,7 +61,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(2000)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 		--Cannot attack directly
 		local e2=Effect.CreateEffect(c)
@@ -69,7 +69,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e2)
 		--Send itself to GY
 		local e3=Effect.CreateEffect(c)
@@ -90,7 +90,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.filter(c)
-	return (c:IsSetCard(0x55) or c:IsSetCard(0x7b)) and c:IsMonster() and c:IsAbleToHand()
+	return (c:IsSetCard(SET_PHOTON) or c:IsSetCard(SET_GALAXY)) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc) end

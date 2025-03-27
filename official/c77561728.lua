@@ -1,4 +1,5 @@
 --攪乱作戦
+--Disturbance Strategy
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,9 +1,9 @@
--- ティアラメンツ・メイルゥ
--- Tearalaments Merrli
--- Scripted by Hatter
+--ティアラメンツ・メイルゥ
+--Tearlaments Merrli
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Mill 3 cards
+	--Mill 3 cards
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DECKDES)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
-	-- Fusion Summon
+	--Fusion Summon
 	local fusparams = {matfilter=Card.IsAbleToDeck,extrafil=s.extramat,extraop=s.extraop,gc=Fusion.ForcedHandler,extratg=s.extratarget}
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
@@ -43,10 +43,10 @@ function s.extramat(e,tp,mg)
 end
 function s.extratarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,e:GetHandler(),1,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,e:GetHandler(),1,tp,LOCATION_HAND|LOCATION_MZONE|LOCATION_GRAVE)
 end
 function s.extraop(e,tc,tp,sg)
-	local gg=sg:Filter(Card.IsLocation,nil,LOCATION_HAND+LOCATION_GRAVE)
+	local gg=sg:Filter(Card.IsLocation,nil,LOCATION_HAND|LOCATION_GRAVE)
 	if #gg>0 then Duel.HintSelection(gg,true) end
 	local rg=sg:Filter(Card.IsFacedown,nil)
 	if #rg>0 then Duel.ConfirmCards(1-tp,rg) end

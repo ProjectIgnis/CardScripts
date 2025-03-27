@@ -1,4 +1,5 @@
 --聖刻龍－ドラゴンゲイヴ
+--Hieratic Dragon of Gebeb
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -23,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetLabel(1)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x69}
+s.listed_series={SET_HIERATIC}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
@@ -33,7 +34,7 @@ function s.spfilter1(c,e,tp)
 	return c:IsType(TYPE_NORMAL) and c:IsRace(RACE_DRAGON) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spfilter2(c,e,tp)
-	return c:IsType(TYPE_NORMAL) and c:IsSetCard(0x69) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsType(TYPE_NORMAL) and c:IsSetCard(SET_HIERATIC) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -55,7 +56,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK)
 		e1:SetValue(0)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_SET_DEFENSE)

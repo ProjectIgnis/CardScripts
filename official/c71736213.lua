@@ -27,9 +27,9 @@ function s.initial_effect(c)
 	e3:SetOperation(Fusion.SummonEffOP(table.unpack(params)))
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x107a}
+s.listed_series={SET_NOBLE_KNIGHT}
 function s.thfilter(c)
-	return c:IsSetCard(0x107a) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsAbleToHand()
+	return c:IsSetCard(SET_NOBLE_KNIGHT) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

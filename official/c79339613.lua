@@ -1,5 +1,5 @@
 --ソウルエナジーＭＡＸ！！
---Soul Energy MAX!!
+--Soul Energy MAX!!!
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -25,14 +25,14 @@ function s.initial_effect(c)
 	e2:SetHintTiming(0,TIMING_MAIN_END+TIMING_BATTLE_END)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(s.thcon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
 s.listed_names={10000000}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsCode(10000000) and c:IsOriginalAttribute(ATTRIBUTE_DIVINE)
+	return c:IsFaceup() and c:IsCode(CARD_OBELISK) and c:IsOriginalAttribute(ATTRIBUTE_DIVINE)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
@@ -63,18 +63,18 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsMainPhase() or Duel.IsBattlePhase()
 end
 function s.thfilter(c)
-	return c:IsCode(10000000) and c:IsAbleToHand()
+	return c:IsCode(CARD_OBELISK) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK|LOCATION_GRAVE)
 end
 function s.sumfilter(c)
-	return c:IsCode(10000000) and c:IsSummonable(true,nil)
+	return c:IsCode(CARD_OBELISK) and c:IsSummonable(true,nil)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil):GetFirst()
 	if tc and Duel.SendtoHand(tc,nil,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_HAND) then
 		Duel.ConfirmCards(1-tp,tc)
 		local g=Duel.GetMatchingGroup(s.sumfilter,tp,LOCATION_HAND,0,nil)

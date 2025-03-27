@@ -1,8 +1,9 @@
 --LL－インディペンデント・ナイチンゲール
+--Lyrilusc - Independent Nightingale
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,48608796,aux.FilterBoolFunctionEx(Card.IsSetCard,0xf7))
+	Fusion.AddProcMix(c,true,true,48608796,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_LYRILUSC))
 	--increase level
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -47,14 +48,14 @@ function s.initial_effect(c)
 	e4:SetOperation(s.damop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xf7}
+s.listed_series={SET_LYRILUSC}
 s.listed_names={8491961}
 function s.matval(c,sc)
 	local b
 	if Card.IsOriginalSetCard then
 		b=c:IsOriginalSetCard(0xf7)
 	else
-		b=c:IsSetCard(0xf7)
+		b=c:IsSetCard(SET_LYRILUSC)
 	end
 	if (b or c:IsOriginalCode(8491961)) and c:IsType(TYPE_XYZ,sc,SUMMON_TYPE_FUSION) then
 		return c:GetOverlayCount()
@@ -66,7 +67,7 @@ function s.valcheck(e,c)
 	e:GetLabelObject():SetLabel(val)
 end
 function s.lvcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION) and e:GetLabel()>0
+	return e:GetHandler():IsFusionSummoned() and e:GetLabel()>0
 end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -75,7 +76,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
 		e1:SetValue(e:GetLabel())
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 	end
 end

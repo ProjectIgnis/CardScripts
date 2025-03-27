@@ -1,4 +1,5 @@
 --儀水鏡の反魂術
+--Aquamirror Cycle
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

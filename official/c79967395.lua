@@ -1,4 +1,5 @@
 --EMウィップ・バイパー
+--Performapal Whip Snake
 local s,id=GetID()
 function s.initial_effect(c)
 	--swap
@@ -17,7 +18,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
-	return ph==PHASE_MAIN1 or ph==PHASE_MAIN2
+	return Duel.IsMainPhase()
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsDefenseAbove(0)
@@ -38,7 +39,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_SWAP_ATTACK_FINAL)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetValue(def)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_SWAP_DEFENSE_FINAL)

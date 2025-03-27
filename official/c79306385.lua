@@ -1,4 +1,5 @@
 --宣告者の神託
+--Oracle of the Herald
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Ritual.AddProcGreaterCode(c,12,nil,48546368)

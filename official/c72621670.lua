@@ -1,4 +1,5 @@
 --ダブルマジックアームバインド
+--Double Magical Arm Bind
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate

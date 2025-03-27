@@ -1,5 +1,5 @@
 --ストライピング・パートナー
---Striping Panther
+--Striping Partner
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

@@ -1,4 +1,5 @@
 --水精鱗－アビスディーネ
+--Mermail Abyssdine
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -25,12 +26,12 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop2)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x74}
+s.listed_series={SET_MERMAIL}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x74)
+	return c:IsFaceup() and c:IsSetCard(SET_MERMAIL)
 end
 function s.spcon1(e,tp,eg,ep,ev,re,r,rp)
-	return (r&REASON_EFFECT)~=0 and e:GetHandler():IsPreviousLocation(LOCATION_DECK+LOCATION_GRAVE)
+	return (r&REASON_EFFECT)~=0 and e:GetHandler():IsPreviousLocation(LOCATION_DECK|LOCATION_GRAVE)
 		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -45,10 +46,10 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x74)
+	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(SET_MERMAIL)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x74) and c:IsLevelBelow(3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_MERMAIL) and c:IsLevelBelow(3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end

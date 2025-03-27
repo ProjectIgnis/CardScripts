@@ -1,4 +1,5 @@
 --ガントレット・ウォリアー
+--Gauntlet Warrior
 local s,id=GetID()
 function s.initial_effect(c)
 	--atkup
@@ -35,7 +36,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(500)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UPDATE_DEFENSE)
@@ -45,7 +46,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 		e3:SetCode(EVENT_DAMAGE_STEP_END)
 		e3:SetOperation(s.resetop)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e3:SetLabelObject(e2)
 		tc:RegisterEffect(e3)
 	end

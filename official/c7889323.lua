@@ -1,5 +1,5 @@
 --鉄獣の死線
---Tri-Brigade Last Stand
+--Tri-Brigade Showdown
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.rthop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x14f}
+s.listed_series={SET_TRI_BRIGADE}
 function s.cfilter(c,tp)
 	return c:IsRace(RACES_BEAST_BWARRIOR_WINGB) and c:IsControler(tp) and c:IsFaceup()
 end
@@ -42,7 +42,7 @@ function s.thcond(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.thfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x14f) and c:IsFaceup() and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(SET_TRI_BRIGADE) and c:IsFaceup() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_REMOVED) and s.thfilter(chkc) end
@@ -59,7 +59,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.rthcon(e,tp,eg,ep,ev,re,r,rp)
 	local a,b=Duel.GetBattleMonster(tp)
-	return a and a:IsSetCard(0x14f) and b and b:IsAbleToHand()
+	return a and a:IsSetCard(SET_TRI_BRIGADE) and b and b:IsAbleToHand()
 end
 function s.rthtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -29,12 +29,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 	--Part of "@Ignister" archetype
-s.listed_series={0x135}
+s.listed_series={SET_IGNISTER}
 	--Lists "A.I. Love Fusion"
 s.listed_names={59332125}
 	--Look for "@Ignister" monster
 function s.filter(c)
-	return c:IsSetCard(0x135) and c:IsFaceup()
+	return c:IsSetCard(SET_IGNISTER) and c:IsFaceup()
 end
 	--Check for "@Ignister" monster in monster zones
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -80,4 +80,3 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,sg)
 	end
 end
-

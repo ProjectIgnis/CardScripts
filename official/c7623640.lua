@@ -1,4 +1,5 @@
 --暗黒界の導師 セルリ
+--Ceruli, Guru of Dark World
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -35,7 +36,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.hdcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:GetHandler():IsSetCard(0x6)
+	return re:GetHandler():IsSetCard(SET_DARK_WORLD)
 end
 function s.hdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

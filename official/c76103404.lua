@@ -1,4 +1,5 @@
 --サイバー・プチ・エンジェル
+--Cyber Petit Angel
 local s,id=GetID()
 function s.initial_effect(c)
 	--tohand
@@ -19,10 +20,10 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x2093}
+s.listed_series={SET_CYBER_ANGEL}
 s.listed_names={39996157}
 function s.thfilter(c)
-	return ((c:IsSetCard(0x2093) and c:IsMonster()) or c:IsCode(39996157)) and c:IsAbleToHand()
+	return ((c:IsSetCard(SET_CYBER_ANGEL) and c:IsMonster()) or c:IsCode(39996157)) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

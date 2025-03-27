@@ -1,5 +1,5 @@
 --告天子竜パイレン
---Pairen the Skylark Dragon
+--Dragonlark Pairen
 --Scripted by The Razgriz
 local s,id=GetID()
 function s.initial_effect(c)
@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e3:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,id)
 	e3:SetCost(s.spcost)

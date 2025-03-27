@@ -1,5 +1,5 @@
 --マギアス・パラディオン
---Crusadia Magias
+--Crusadia Magius
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
@@ -35,9 +35,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x116}
+s.listed_series={SET_CRUSADIA}
 function s.matfilter(c,lc,sumtype,tp)
-	return c:IsSetCard(0x116,lc,sumtype,tp) and not c:IsSummonCode(lc,sumtype,tp,id)
+	return c:IsSetCard(SET_CRUSADIA,lc,sumtype,tp) and not c:IsSummonCode(lc,sumtype,tp,id)
 end
 function s.lcheck(g,lc)
 	return g:IsExists(Card.IsType,1,nil,TYPE_LINK)
@@ -50,7 +50,7 @@ function s.atklimit(e,c)
 	return e:GetHandler():GetLinkedGroup():IsContains(c)
 end
 function s.thfilter(c,tp)
-	return c:IsMonster() and c:IsSetCard(0x116) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(SET_CRUSADIA) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,tp) end
@@ -64,4 +64,3 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g1)
 	end
 end
-

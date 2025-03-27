@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
 	e2:SetRange(LOCATION_PZONE)
 	e2:SetCountLimit(1)
-	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e2:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e2:SetCondition(s.descon)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
@@ -43,12 +43,12 @@ function s.initial_effect(c)
 	--Lizard check
 	aux.addContinuousLizardCheck(c,LOCATION_MZONE,s.lizfilter,0xff,0xff)
 end
-s.listed_series={0xe0}
+s.listed_series={SET_AMORPHAGE}
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -61,14 +61,14 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(0xe0)
-	and (e:GetHandler():IsSummonType(SUMMON_TYPE_PENDULUM) or e:GetHandler():GetFlagEffect(id)~=0)
+	return c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(SET_AMORPHAGE)
+	and (e:GetHandler():IsPendulumSummoned() or e:GetHandler():GetFlagEffect(id)~=0)
 end
 function s.relcon(e)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0xe0),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_AMORPHAGE),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.rellimit(e,c,tp,sumtp)
-	return not c:IsSetCard(0xe0)
+	return not c:IsSetCard(SET_AMORPHAGE)
 end
 function s.lizfilter(e,c)
 	return not c:IsOriginalSetCard(0xe0)

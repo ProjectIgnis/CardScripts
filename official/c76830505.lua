@@ -30,7 +30,7 @@ function s.initial_effect(c)
 end
 s.listed_names={id}
 	--Part of "Infintrack" archetype
-s.listed_series={0x127}
+s.listed_series={SET_INFINITRACK}
 
 	--Check for EARTH machine
 function s.cfilter(c,tp)
@@ -58,7 +58,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Filter for "Infintrack" monster, besides itself
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x127) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(SET_INFINITRACK) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 	--If special summoned from hand
 function s.sscon(e,tp,eg,ep,ev,re,r,rp)
@@ -79,12 +79,12 @@ function s.ssop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1,true)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 	end
 	Duel.SpecialSummonComplete()
 	local e3=Effect.CreateEffect(e:GetHandler())
@@ -94,7 +94,7 @@ function s.ssop(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetTargetRange(1,0)
 	e3:SetTarget(s.splimit)
-	e3:SetReset(RESET_PHASE+PHASE_END)
+	e3:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e3,tp)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)

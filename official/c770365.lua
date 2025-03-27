@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 end
-s.listed_series={0x106e}
+s.listed_series={SET_SPELLBOOK}
 function s.atkval(e,c)
 	return Duel.GetOverlayCount(c:GetControler(),1,0)*300
 end
@@ -36,7 +36,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=5 end
 end
 function s.filter(c)
-	return c:IsSetCard(0x106e)
+	return c:IsSetCard(SET_SPELLBOOK)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ShuffleDeck(tp)

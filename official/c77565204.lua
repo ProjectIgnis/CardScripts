@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_TOGRAVE)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e2:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e2:SetCountLimit(1)
 	e2:SetCondition(s.tgcon)
 	e2:SetTarget(s.tgtg)
@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e3:SetRange(LOCATION_SZONE)
-	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e3:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e3:SetCountLimit(1)
 	e3:SetCondition(s.proccon)
 	e3:SetOperation(s.procop)
@@ -51,7 +51,7 @@ function s.reg(e,tp,eg,ep,ev,re,r,rp,chk)
 	c:SetTurnCounter(0)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_PHASE_START+PHASE_STANDBY)
+	e1:SetCode(EVENT_PHASE_START|PHASE_STANDBY)
 	e1:SetCountLimit(1)
 	e1:SetOperation(s.ctop)
 	Duel.RegisterEffect(e1,tp)
@@ -70,7 +70,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	c:SetTurnCounter(ct)
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and e:GetHandler():GetTurnCounter()==1
+	return Duel.IsTurnPlayer(tp) and e:GetHandler():GetTurnCounter()==1
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -97,14 +97,14 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 		mat:KeepAlive()
 		Duel.SendtoGrave(mat,REASON_EFFECT)
 		for mc in aux.Next(mat) do
-			mc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+			mc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 		end
 		e:SetLabel(code)
 		e:SetLabelObject(mat)
 	end
 end
 function s.proccon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and e:GetHandler():GetTurnCounter()==2
+	return Duel.IsTurnPlayer(tp) and e:GetHandler():GetTurnCounter()==2
 end
 function s.procfilter(c,code,e,tp)
 	return c:IsCode(code) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false)

@@ -39,13 +39,13 @@ function s.initial_effect(c)
 	e5:SetOperation(s.operation)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x9a}
+s.listed_series={SET_SUPERHEAVY_SAMURAI}
 function s.sccon(e)
 	local tp=e:GetHandlerPlayer()
 	return Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,0,1,nil,TYPE_SPELL+TYPE_TRAP)
 end
 function s.afilter(c,tp)
-	return c:IsControler(tp) and c:IsSetCard(0x9a) and c:CanChainAttack()
+	return c:IsControler(tp) and c:IsSetCard(SET_SUPERHEAVY_SAMURAI) and c:CanChainAttack()
 end
 function s.catg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(s.afilter,1,nil,tp) end
@@ -63,10 +63,10 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,0,1,nil,TYPE_SPELL+TYPE_TRAP)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,nil,0x9a) end
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,nil,SET_SUPERHEAVY_SAMURAI) end
 	local ct=Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)
 	if ct>2 then ct=2 end
-	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,ct,false,nil,nil,0x9a)
+	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,ct,false,nil,nil,SET_SUPERHEAVY_SAMURAI)
 	local rct=Duel.Release(g,REASON_COST)
 	e:SetLabel(rct)
 end

@@ -38,7 +38,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.ddop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x2016}
+s.listed_series={SET_SPEEDROID}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE
 		and ep==tp and (r&REASON_BATTLE+REASON_EFFECT)~=0
@@ -93,12 +93,12 @@ function s.ddop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetOperatedGroup():GetFirst()
 	local c=e:GetHandler()
 	local sync=c:GetReasonCard()
-	if tc and tc:IsSetCard(0x2016) and tc:IsMonster() and tc:IsLocation(LOCATION_GRAVE) then
+	if tc and tc:IsSetCard(SET_SPEEDROID) and tc:IsMonster() and tc:IsLocation(LOCATION_GRAVE) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(1000)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		sync:RegisterEffect(e1)
 	end
 end

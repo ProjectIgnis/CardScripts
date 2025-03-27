@@ -1,5 +1,5 @@
 --魔草 マンドラゴラ
---magical Plant Mandragola
+--Magical Plant Mandragola
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip

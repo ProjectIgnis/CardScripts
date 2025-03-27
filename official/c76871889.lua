@@ -30,13 +30,13 @@ function s.initial_effect(c)
 	e3:SetOperation(s.atop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x106}
+s.listed_series={SET_VENDREAD}
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,e:GetHandler()) end
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x106) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_VENDREAD) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -55,11 +55,11 @@ function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=eg:GetFirst()
 	local bc=ec:GetBattleTarget()
 	e:SetLabelObject(ec)
-	return ec:IsControler(tp) and ec:IsSetCard(0x106) and bc and bc:IsMonster() 
+	return ec:IsControler(tp) and ec:IsSetCard(SET_VENDREAD) and bc and bc:IsMonster() 
 		and ec:CanChainAttack(0,true) and ec:IsStatus(STATUS_OPPO_BATTLE)
 end
 function s.atcfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x106) and c:IsAbleToRemoveAsCost()
+	return c:IsMonster() and c:IsSetCard(SET_VENDREAD) and c:IsAbleToRemoveAsCost()
 end
 function s.atcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.atcfilter,tp,LOCATION_GRAVE,0,1,nil) end
@@ -77,7 +77,6 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE)
 	ec:RegisterEffect(e1)
 end
-

@@ -32,14 +32,14 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={49389190,CARD_DREAM_MIRROR_JOY}
-s.listed_series={0x131}
+s.listed_series={SET_DREAM_MIRROR}
 
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
-	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x131)
+	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(SET_DREAM_MIRROR)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x131) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_DREAM_MIRROR) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -57,7 +57,7 @@ end
 function s.dspcon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_DREAM_MIRROR_JOY),tp,LOCATION_FZONE,LOCATION_FZONE,1,nil)
-		and (ph==PHASE_MAIN1 or (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE) or ph==PHASE_MAIN2)
+		and (ph==PHASE_MAIN1 or (Duel.IsBattlePhase()) or ph==PHASE_MAIN2)
 end
 function s.dspcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end

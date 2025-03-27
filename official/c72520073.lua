@@ -1,4 +1,5 @@
 --闇の芸術家
+--Dark Artist
 local s,id=GetID()
 function s.initial_effect(c)
 	--defdown

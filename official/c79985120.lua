@@ -1,5 +1,5 @@
 --RR－レヴォリューション・ファルコン－エアレイド
---Raidraptor - Revolution Falcon - Airraid
+--Raidraptor - Revolution Falcon - Air Raid
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -28,13 +28,13 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x95,0xba}
+s.listed_series={SET_RANK_UP_MAGIC,SET_RAIDRAPTOR}
 s.listed_names={81927732}
 function s.cfilter(c)
-	return c:IsSetCard(0x95) and c:IsSpell() and c:IsDiscardable()
+	return c:IsSetCard(SET_RANK_UP_MAGIC) and c:IsSpell() and c:IsDiscardable()
 end
 function s.ovfilter(c,tp,xyzc)
-	return c:IsFaceup() and c:IsSetCard(0xba,xyzc,SUMMON_TYPE_XYZ,tp) and c:IsType(TYPE_XYZ,xyzc,SUMMON_TYPE_XYZ,tp) and c:IsRankBelow(5)
+	return c:IsFaceup() and c:IsSetCard(SET_RAIDRAPTOR,xyzc,SUMMON_TYPE_XYZ,tp) and c:IsType(TYPE_XYZ,xyzc,SUMMON_TYPE_XYZ,tp) and c:IsRankBelow(5)
 end
 function s.xyzop(e,tp,chk,mc)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
@@ -46,7 +46,7 @@ function s.xyzop(e,tp,chk,mc)
 	else return false end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
+	return e:GetHandler():IsXyzSummoned()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) end

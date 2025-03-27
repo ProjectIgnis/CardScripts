@@ -23,12 +23,12 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetRange(LOCATION_GRAVE)
-	e3:SetCost(aux.bfgcost)
+	e3:SetCost(Cost.SelfBanish)
 	e3:SetTarget(s.xyztg)
 	e3:SetOperation(s.xyzop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xf1}
+s.listed_series={SET_ZOODIAC}
 function s.rfilter(c,tp,oc)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ)
 		and c:CheckRemoveOverlayCard(tp,oc,REASON_COST)
@@ -36,7 +36,7 @@ end
 function s.rcon(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	return (r&REASON_COST)~=0 and re:IsActivated()
-		and re:IsActiveType(TYPE_XYZ) and ep==e:GetOwnerPlayer() and rc:IsSetCard(0xf1)
+		and re:IsActiveType(TYPE_XYZ) and ep==e:GetOwnerPlayer() and rc:IsSetCard(SET_ZOODIAC)
 		and Duel.IsExistingMatchingCard(s.rfilter,tp,LOCATION_MZONE,0,1,rc,tp,ev)
 end
 function s.rop(e,tp,eg,ep,ev,re,r,rp)
@@ -47,7 +47,7 @@ function s.rop(e,tp,eg,ep,ev,re,r,rp)
 	return ct
 end
 function s.xyzfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(0xf1)
+	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(SET_ZOODIAC)
 end
 function s.xyztg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

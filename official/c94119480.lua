@@ -1,4 +1,5 @@
 --終焉の守護者アドレウス
+--Adreus, Keeper of Armageddon
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon

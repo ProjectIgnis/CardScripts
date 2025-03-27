@@ -1,5 +1,5 @@
 --覇王黒竜オッドアイズ・リベリオン・ドラゴン－オーバーロード
---Odd-Eyes Rebellion Dragon - Overlord
+--Odd-Eyes Rebellion Dragon Overlord
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -44,12 +44,12 @@ function s.initial_effect(c)
 end
 s.listed_names={}
 s.pendulum_level=7
-s.listed_series={0x13b,0x10db}
+s.listed_series={SET_REBELLION,SET_THE_PHANTOM_KNIGHTS}
 function s.ovfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x13b) and c:IsType(TYPE_XYZ)
+	return c:IsFaceup() and c:IsSetCard(SET_REBELLION) and c:IsType(TYPE_XYZ)
 end
 function s.spfilter(c,e,tp,mc,pg)
-	return c:IsFacedown() and (c:IsSetCard(0x13b) or c:IsSetCard(0x10db)) and c:IsType(TYPE_XYZ)
+	return c:IsFacedown() and (c:IsSetCard(SET_REBELLION) or c:IsSetCard(SET_THE_PHANTOM_KNIGHTS)) and c:IsType(TYPE_XYZ)
 		and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 		and mc:IsCanBeXyzMaterial(c,tp) and not c:IsCode(id)
@@ -92,7 +92,7 @@ function s.valcheck(e,c)
 	e:GetLabelObject():SetLabel(c:GetMaterial():FilterCount(s.valfilter,nil))
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
+	return e:GetHandler():IsXyzSummoned()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -104,7 +104,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_EXTRA_ATTACK)
 		e1:SetValue(2)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
 	end
 end

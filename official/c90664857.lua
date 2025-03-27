@@ -1,5 +1,5 @@
 --電脳堺甲－甲々
---Datascape Shell - Jiajia
+--Virtual World Shell - Jaja
 --Scripted by AlphaKretin
 
 local s,id=GetID()
@@ -51,7 +51,7 @@ function s.indop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+		e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN)
 		tc:RegisterEffect(e1)
 	end
 end

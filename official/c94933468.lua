@@ -1,4 +1,5 @@
 --Vain－裏切りの嘲笑
+--Vain Betrayer
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate

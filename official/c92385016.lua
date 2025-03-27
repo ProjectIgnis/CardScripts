@@ -1,5 +1,5 @@
 --神碑の翼ムニン
---Muninn, Wings of the Mysterune
+--Munin the Runick Wings
 --Logical Nonsense
 
 --Substitute ID
@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
 	--2 "Mysterune" monsters
-	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x180),2)
+	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_RUNICK),2)
 	--If Special Summoned from the Extra Deck, add 1 "Mysterune" Continuous Spell from Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_CHAINING)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(s.negcon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.negtg)
 	e2:SetOperation(s.negop)
 	c:RegisterEffect(e2)
@@ -56,7 +56,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 	--Lists "Mysterune" archetype
-s.listed_series={0x180}
+s.listed_series={SET_RUNICK}
 
 	--Discard 1 card as cost
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -65,7 +65,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 	--Check for "Mysterune" Continuous Spell
 function s.thfilter(c)
-	return c:GetType()==TYPE_SPELL+TYPE_CONTINUOUS and c:IsSetCard(0x180) and c:IsAbleToHand()
+	return c:GetType()==TYPE_SPELL+TYPE_CONTINUOUS and c:IsSetCard(SET_RUNICK) and c:IsAbleToHand()
 end
 	--Activation legality
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -82,7 +82,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--If your "Mysterune" card(s) and/or Set card(s) is targeted
 function s.tgfilter(c,tp)
-	return c:IsControler(tp) and c:IsOnField() and ((c:IsFaceup() and c:IsSetCard(0x180)) or c:IsFacedown())
+	return c:IsControler(tp) and c:IsOnField() and ((c:IsFaceup() and c:IsSetCard(SET_RUNICK)) or c:IsFacedown())
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	if not (rp==1-tp and re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) and Duel.IsChainNegatable(ev)) then return false end

@@ -1,12 +1,12 @@
--- Ｅｖｉｌ★Ｔｗｉｎ'ｓ トラブル・サニー
--- Evil★Twin's Trouble Sunny
--- Scripted by Hatter
+--Ｅｖｉｌ★Ｔｗｉｎ'ｓ トラブル・サニー
+--Evil★Twin's Trouble Sunny
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	-- 2+ monsters, including an "Evil★Twin" monster
+	--2+ monsters, including an "Evil★Twin" monster
 	Link.AddProcedure(c,nil,2,4,s.lcheck)
-	-- Special Summon up to 1 "Ki-sikil" and "Lil-la" monster each
+	--Special Summon up to 1 "Ki-sikil" and "Lil-la" monster each
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	-- Send 1 card on the field to the GY
+	--Send 1 card on the field to the GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOGRAVE)

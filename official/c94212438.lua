@@ -43,9 +43,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.listed_names={id}
-s.listed_series={0x1c}
+s.listed_series={SET_SPIRIT_MESSAGE}
 function s.plcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and e:GetHandler():GetFlagEffect(id)<4
+	return Duel.IsTurnPlayer(1-tp) and e:GetHandler():GetFlagEffect(id)<4
 end
 function s.plfilter(c,code)
 	return c:IsCode(code) and not c:IsForbidden()
@@ -57,9 +57,9 @@ function s.plop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	local passcode=CARDS_SPIRIT_MESSAGE[c:GetFlagEffect(id)+1]
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
-	local g=Duel.SelectMatchingCard(tp,s.plfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,passcode)
+	local g=Duel.SelectMatchingCard(tp,s.plfilter,tp,LOCATION_DECK|LOCATION_HAND,0,1,1,nil,passcode)
 	if #g>0 and Duel.MoveToField(g:GetFirst(),tp,tp,LOCATION_SZONE,POS_FACEUP,true) then
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,0)
 	end
 end
 function s.extraop(e,tp,eg,ep,ev,re,r,rp)
@@ -67,7 +67,7 @@ function s.extraop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	local cid=CARDS_SPIRIT_MESSAGE[c:GetFlagEffect(id)+1]
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
-	local g=Duel.SelectMatchingCard(tp,s.plfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,cid)
+	local g=Duel.SelectMatchingCard(tp,s.plfilter,tp,LOCATION_DECK|LOCATION_HAND,0,1,1,nil,cid)
 	local tc=g:GetFirst()
 	if tc and Duel.IsPlayerCanSpecialSummonMonster(tp,cid,0,0x11,0,0,1,RACE_FIEND,ATTRIBUTE_DARK,POS_FACEUP,tp,181)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -82,20 +82,20 @@ function s.extraop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetCode(EFFECT_IMMUNE_EFFECT)
 		e1:SetValue(s.efilter)
-		e1:SetReset(RESET_EVENT+0x47c0000)
+		e1:SetReset(RESET_EVENT|RESET_TODECK|RESET_TOHAND|RESET_TOGRAVE|RESET_REMOVE)
 		tc:RegisterEffect(e1)
 		--cannot be target
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_IGNORE_BATTLE_TARGET)
 		e2:SetValue(1)
-		e2:SetReset(RESET_EVENT+0x47c0000)
+		e2:SetReset(RESET_EVENT|RESET_TODECK|RESET_TOHAND|RESET_TOGRAVE|RESET_REMOVE)
 		tc:RegisterEffect(e2)
 		Duel.SpecialSummonComplete()
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,0)
 	elseif tc and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 then
 		Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,0)
 	end
 end
 function s.efilter(e,te)
@@ -103,10 +103,10 @@ function s.efilter(e,te)
 	return not tc:IsCode(id)
 end
 function s.cfilter1(c,tp)
-	return c:IsControler(tp) and (c:IsCode(id) or c:IsSetCard(0x1c))
+	return c:IsControler(tp) and (c:IsCode(id) or c:IsSetCard(SET_SPIRIT_MESSAGE))
 end
 function s.cfilter2(c)
-	return c:IsFaceup() and (c:IsCode(id) or c:IsSetCard(0x1c))
+	return c:IsFaceup() and (c:IsCode(id) or c:IsSetCard(SET_SPIRIT_MESSAGE))
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter1,1,nil,tp)

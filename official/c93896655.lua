@@ -43,7 +43,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x2157}
+s.listed_series={SET_SUNVINE}
 function s.matfilter(c,lc,sumtype,tp)
 	return c:IsRace(RACE_PLANT,lc,sumtype,tp) and c:IsLevelBelow(4)
 end
@@ -56,11 +56,11 @@ function s.valcheck(e,c)
 	end
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSequence()>4 and e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+	return e:GetHandler():GetSequence()>4 and e:GetHandler():IsLinkSummoned()
 		and e:GetLabel()==1
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x2157) and c:IsSpellTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_SUNVINE) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -78,7 +78,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp and (r&REASON_BATTLE+REASON_EFFECT)~=0
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x2157) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_SUNVINE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCountFromEx(tp)>0

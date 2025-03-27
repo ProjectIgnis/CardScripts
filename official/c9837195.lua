@@ -14,9 +14,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x10}
+s.listed_series={SET_GUSTO}
 function s.filter1(c)
-	return c:IsSetCard(0x10) and c:IsMonster() and c:IsAbleToDeck()
+	return c:IsSetCard(SET_GUSTO) and c:IsMonster() and c:IsAbleToDeck()
 end
 function s.filter2(c)
 	return c:IsFaceup() and c:IsType(TYPE_EFFECT)
@@ -44,12 +44,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 				local e1=Effect.CreateEffect(e:GetHandler())
 				e1:SetType(EFFECT_TYPE_SINGLE)
 				e1:SetCode(EFFECT_DISABLE)
-				e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+				e1:SetReset(RESETS_STANDARD_PHASE_END)
 				tc:RegisterEffect(e1)
 				local e2=Effect.CreateEffect(e:GetHandler())
 				e2:SetType(EFFECT_TYPE_SINGLE)
 				e2:SetCode(EFFECT_DISABLE_EFFECT)
-				e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+				e2:SetReset(RESETS_STANDARD_PHASE_END)
 				tc:RegisterEffect(e2)
 			end
 		end

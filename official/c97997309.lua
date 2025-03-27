@@ -1,4 +1,5 @@
 --ゲーテの魔導書
+--Spellbook of Fate
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -42,10 +43,10 @@ function s.initial_effect(c)
 	e3:SetLabel(3)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x106e}
+s.listed_series={SET_SPELLBOOK}
 s.check=false
 function s.rfilter(c)
-	return c:IsSetCard(0x106e) and c:IsSpell() and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(SET_SPELLBOOK) and c:IsSpell() and c:IsAbleToRemoveAsCost()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_SPELLCASTER),tp,LOCATION_MZONE,0,1,nil)

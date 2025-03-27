@@ -1,4 +1,5 @@
 --磁力の召喚円 LV2
+--Magnet Circle LV2
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

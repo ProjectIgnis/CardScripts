@@ -1,4 +1,5 @@
 --毒蛇の供物
+--Offering to the Snake Deity
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

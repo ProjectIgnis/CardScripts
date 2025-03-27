@@ -1,4 +1,5 @@
 --閃光の追放者
+--Banisher of the Radiance
 local s,id=GetID()
 function s.initial_effect(c)
 	--remove

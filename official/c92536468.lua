@@ -53,7 +53,7 @@ function s.initial_effect(c)
 end
 function s.revcon1(e,tp,eg,ep,ev,re,r,rp)
 	if not (ep==tp and (r&REASON_EFFECT)~=0) then return false end
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_CHAIN,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_CHAIN,0,1)
 	if Duel.GetFlagEffect(tp,id)>0 then Duel.ResetFlagEffect(tp,id) end
 	return true
 end
@@ -87,7 +87,7 @@ function s.revop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetTargetRange(1,1)
 		e1:SetValue(s.revval)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 	end
 end

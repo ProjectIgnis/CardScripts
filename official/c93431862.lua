@@ -1,4 +1,5 @@
 --D－HERO ダンクガイ
+--Destiny HERO - Dunker
 local s,id=GetID()
 function s.initial_effect(c)
 	--damage
@@ -13,9 +14,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.damop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xc008}
+s.listed_series={SET_DESTINY_HERO}
 function s.cfilter(c)
-	return c:IsSetCard(0xc008) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_DESTINY_HERO) and c:IsAbleToGraveAsCost()
 end
 function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end

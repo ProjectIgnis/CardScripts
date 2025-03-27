@@ -1,9 +1,9 @@
 --トリックスター・スイートデビル
---Trickstar Sweet Devil
+--Trickstar Black Catbat
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0xfb),2,2)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_TRICKSTAR),2,2)
 	--damage
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_DAMAGE)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xfb}
+s.listed_series={SET_TRICKSTAR}
 function s.cfilter(c,tp,zone)
 	local seq=c:GetPreviousSequence()
 	if not c:IsPreviousControler(tp) then seq=seq+16 end
@@ -39,7 +39,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and r&REASON_BATTLE==0 and re
-		and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0xfb)
+		and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(SET_TRICKSTAR)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -52,7 +52,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-ct*200)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

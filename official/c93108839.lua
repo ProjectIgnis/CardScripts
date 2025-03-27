@@ -1,5 +1,5 @@
 --No.58 炎圧鬼バーナー・バイサー
---Number 58: Burner Vision
+--Number 58: Burner Visor
 local s,id=GetID()
 function s.initial_effect(c)
 	Xyz.AddProcedure(c,nil,4,2)

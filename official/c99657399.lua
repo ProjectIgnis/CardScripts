@@ -1,4 +1,5 @@
 --油断大敵
+--Asleep at the Switch
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,4 +1,5 @@
 --超魔導剣士－ブラック・パラディン
+--Dark Paladin
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material

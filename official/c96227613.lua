@@ -58,11 +58,11 @@ function s.initial_effect(c)
 	e7:SetOperation(s.trig)
 	c:RegisterEffect(e7)
 end
-s.listed_series={0x46}
+s.listed_series={SET_FUSION}
 s.listed_names={13331639,22211622}
 
 function s.ndcfilter(c)
-	return c:IsFaceup() and c:IsCode(13331639)
+	return c:IsFaceup() and c:IsCode(CARD_ZARC)
 end
 function s.ndcon(e)
 	return Duel.IsExistingMatchingCard(s.ndcfilter,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil)
@@ -85,7 +85,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_PZONE,0,1,e:GetHandler(),22211622)
 end
 function s.thfilter(c)
-	return c:IsSpell() and c:IsSetCard(0x46) and c:IsAbleToHand()
+	return c:IsSpell() and c:IsSetCard(SET_FUSION) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -139,19 +139,19 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_DISABLE)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			sc:RegisterEffect(e1,true)
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_DISABLE_EFFECT)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 			sc:RegisterEffect(e2,true)
 			--ATK/DEF becomes 0
 			local e3=Effect.CreateEffect(c)
 			e3:SetType(EFFECT_TYPE_SINGLE)
 			e3:SetCode(EFFECT_SET_ATTACK_FINAL)
 			e3:SetValue(0)
-			e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 			sc:RegisterEffect(e3,true)
 			local e4=e3:Clone()
 			e4:SetCode(EFFECT_SET_DEFENSE_FINAL)

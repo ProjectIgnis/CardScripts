@@ -1,4 +1,5 @@
 --レスキューキューロイド
+--Ambulance Rescueroid
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -23,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.activate)
 	c:RegisterEffect(e2)
 end
-s.material_setcode=0x16
+s.material_setcode=SET_ROID
 function s.filter(c,e,tp)
 	return c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_BATTLE) and c:IsPreviousControler(tp)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)

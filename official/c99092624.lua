@@ -81,15 +81,15 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) and Duel.Remove(tc,0,REASON_EFFECT+REASON_TEMPORARY)>0 then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
+		e1:SetCode(EVENT_PHASE|PHASE_STANDBY)
 		e1:SetLabelObject(tc)
 		e1:SetCountLimit(1)
-		if Duel.GetCurrentPhase()==PHASE_STANDBY then
+		if Duel.IsPhase(PHASE_STANDBY) then
 			e1:SetLabel(Duel.GetTurnCount())
 			e1:SetCondition(s.retcon)
-			e1:SetReset(RESET_PHASE+PHASE_STANDBY,2)
+			e1:SetReset(RESET_PHASE|PHASE_STANDBY,2)
 		else
-			e1:SetReset(RESET_PHASE+PHASE_STANDBY)
+			e1:SetReset(RESET_PHASE|PHASE_STANDBY)
 		end
 		e1:SetOperation(s.retop)
 		Duel.RegisterEffect(e1,tp)

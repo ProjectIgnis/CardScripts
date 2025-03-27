@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.op2)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x35}
+s.listed_series={SET_FABLED}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_HAND) and (r&REASON_DISCARD)~=0
 end
@@ -41,7 +41,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x35) and c:IsMonster() and not c:IsPublic()
+	return c:IsSetCard(SET_FABLED) and c:IsMonster() and not c:IsPublic()
 end
 function s.cost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
@@ -51,7 +51,7 @@ function s.cost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.ShuffleHand(tp)
 end
 function s.filter2(c)
-	return c:IsSetCard(0x35) and c:IsMonster() and c:IsAbleToGrave()
+	return c:IsSetCard(SET_FABLED) and c:IsMonster() and c:IsAbleToGrave()
 end
 function s.tg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK,0,1,nil) end

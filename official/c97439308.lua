@@ -1,4 +1,5 @@
 --カオス・グリード
+--Chaos Greed
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

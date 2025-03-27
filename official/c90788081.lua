@@ -28,8 +28,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsFaceup() and c:IsRelateToEffect(e) then
 		local count=Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)
-		if c:UpdateLevel(count,RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)==count then
-			return c:UpdateAttack(count*100,RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+		if c:UpdateLevel(count,RESETS_STANDARD_DISABLE|RESET_PHASE|PHASE_END)==count then
+			return c:UpdateAttack(count*100,RESETS_STANDARD_DISABLE|RESET_PHASE|PHASE_END)
 		end
 	end
 end
@@ -48,7 +48,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_NO_TURN_RESET)
 		e1:SetCountLimit(1)
 		e1:SetValue(s.valcon)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 end

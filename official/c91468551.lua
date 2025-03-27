@@ -1,4 +1,5 @@
 --太陽の祭壇
+--Temple of the Sun
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -17,5 +18,5 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.atktg(e,c)
-	return c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:IsSummonLocation(LOCATION_GRAVE)
+	return c:IsSpecialSummoned() and c:IsSummonLocation(LOCATION_GRAVE)
 end

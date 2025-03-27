@@ -1,4 +1,5 @@
 --A・O・J ディサイシブ・アームズ
+--Ally of Justice Decisive Armor
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon

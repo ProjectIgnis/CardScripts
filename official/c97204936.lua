@@ -1,4 +1,5 @@
 --大地の騎士ガイアナイト
+--Gaia Knight, the Force of Earth
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon

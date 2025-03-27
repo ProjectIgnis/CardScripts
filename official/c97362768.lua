@@ -1,4 +1,5 @@
 --スパークガン
+--Spark Blaster
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsCode,20721928))
@@ -49,7 +50,7 @@ function s.resetop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not eg:IsContains(c) or not c:IsLocation(LOCATION_SZONE) then return end
 	if c:GetFlagEffect(id)==0 then
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,0)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1,0)
 	end
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)

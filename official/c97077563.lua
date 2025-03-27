@@ -1,4 +1,5 @@
 --リビングデッドの呼び声
+--Call of the Haunted
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -37,7 +38,7 @@ function s.filter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:GetLocation()==LOCATION_GRAVE and chkc:GetControler()==tp
+	if chkc then return chkc:GetLocation()==LOCATION_GRAVE and chkc:IsControler(tp)
 		and chkc:IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end

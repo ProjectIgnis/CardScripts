@@ -1,5 +1,5 @@
 --電脳堺狐－仙々
---Datascape Fox - Xianxian
+--Virtual World Kyubi - Shenshen
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -65,7 +65,7 @@ function s.rescon(sg,e,tp,mg)
 	return sg:GetClassCount(Card.GetOriginalRace)==#sg and sg:GetClassCount(Card.GetOriginalAttribute)==#sg
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_GRAVE+LOCATION_MZONE,0,e:GetHandler())
+	local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_GRAVE|LOCATION_MZONE,0,e:GetHandler())
 	if chk==0 then return aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0) end
 	local g=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_REMOVE,nil,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)

@@ -1,4 +1,5 @@
 --謙虚な番兵
+--The Humble Sentry
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

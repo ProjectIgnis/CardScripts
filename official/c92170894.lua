@@ -1,4 +1,5 @@
 --EMロングフォーン・ブル
+--Performapal Longphone Bull
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -13,9 +14,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.tgop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x9f}
+s.listed_series={SET_PERFORMAPAL}
 function s.thfilter(c)
-	return c:IsSetCard(0x9f) and c:IsMonster() and not c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
+	return c:IsSetCard(SET_PERFORMAPAL) and c:IsMonster() and not c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

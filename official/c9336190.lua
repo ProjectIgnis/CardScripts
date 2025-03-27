@@ -26,9 +26,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x10db}
+s.listed_series={SET_THE_PHANTOM_KNIGHTS}
 function s.thfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x10db) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(SET_THE_PHANTOM_KNIGHTS) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and s.thfilter(chkc) end
@@ -45,7 +45,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x10db) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_THE_PHANTOM_KNIGHTS) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0x10db,0x11,0,0,c:GetOriginalLevel(),RACE_WARRIOR,ATTRIBUTE_DARK)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -78,7 +78,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 			e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 			e1:SetValue(LOCATION_REMOVED)
-			e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+			e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 			c:RegisterEffect(e1,true)
 			--Change Level
 			local e2=Effect.CreateEffect(c)
@@ -86,7 +86,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e2:SetCode(EFFECT_CHANGE_LEVEL_FINAL)
 			e2:SetValue(lv)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
+			e2:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET)
 			c:RegisterEffect(e2,true)
 		end
 	end

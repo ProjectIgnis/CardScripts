@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 	--Lists "Number" archetype
-s.listed_series={0x48}
+s.listed_series={SET_NUMBER}
 	--Mentions itself
 s.listed_names={id}
 	--Number 39
@@ -43,7 +43,7 @@ s.xyz_number=39
 
 	--Check for a "Number" Xyz Monster
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x48) and c:IsType(TYPE_XYZ) and not c:IsCode(id)
+	return c:IsSetCard(SET_NUMBER) and c:IsType(TYPE_XYZ) and not c:IsCode(id)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 	--Activation legality
@@ -69,7 +69,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--If you Xyz Summon
 function s.revfilter(c,tp)
-	return c:IsSummonType(SUMMON_TYPE_XYZ) and c:IsSummonPlayer(tp)
+	return c:IsXyzSummoned() and c:IsSummonPlayer(tp)
 end
 function s.revcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.revfilter,1,nil,tp)
@@ -92,7 +92,7 @@ function s.revop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
-		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		c:RegisterEffect(e1,true)
 	end
 end

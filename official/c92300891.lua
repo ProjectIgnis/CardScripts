@@ -1,4 +1,5 @@
 --カラクリ樽 真九六
+--Karakuri Barrel mdl 96 "Shinkuro"
 local s,id=GetID()
 function s.initial_effect(c)
 	--must attack

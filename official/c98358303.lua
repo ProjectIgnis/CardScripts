@@ -1,4 +1,5 @@
 --静寂のサイコウィッチ
+--Serene Psychic Witch
 local s,id=GetID()
 function s.initial_effect(c)
 	--remove
@@ -19,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1)
-	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e2:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e2:SetCondition(s.spcon)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
@@ -45,8 +46,8 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	if tc then
 		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 		if c:IsRelateToEffect(e) then
-			c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,2)
-			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,2)
+			c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,2)
+			tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,2)
 			e:SetLabelObject(tc)
 		end
 	end

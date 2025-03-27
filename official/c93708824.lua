@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={id,CARD_BLACK_ROSE_DRAGON}
-s.listed_series={0x1123}
+s.listed_series={SET_ROSE_DRAGON}
 --Search
 function s.thfilter(c)
 	return c:IsAbleToHand() and not c:IsCode(id) and c:ListsCode(CARD_BLACK_ROSE_DRAGON)
@@ -53,7 +53,7 @@ end
 function s.rthfilter(c,tp)
 	return (c:IsReason(REASON_BATTLE) or (c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp))
 		and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
-		and (c:IsPreviousSetCard(0x1123) or (c:GetPreviousRaceOnField()&RACE_PLANT~=0 and c:GetPreviousTypeOnField()&TYPE_SYNCHRO~=0))
+		and (c:IsPreviousSetCard(SET_ROSE_DRAGON) or (c:GetPreviousRaceOnField()&RACE_PLANT~=0 and c:GetPreviousTypeOnField()&TYPE_SYNCHRO~=0))
 end
 function s.rthcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

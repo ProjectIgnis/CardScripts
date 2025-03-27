@@ -1,4 +1,5 @@
 --ジャッカルの聖戦士
+--Mystical Knight of Jackal
 local s,id=GetID()
 function s.initial_effect(c)
 	--to deck

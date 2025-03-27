@@ -31,11 +31,11 @@ end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,tp)
+	return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil,tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local rg=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,true,nil,tp)
+	local rg=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,true,nil,tp)
 	if rg and #rg>0 then
 		rg:KeepAlive()
 		e:SetLabelObject(rg)
@@ -66,7 +66,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	if not tc:IsRelateToEffect(e) or Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)==0 then return end
 	if tc:IsLocation(LOCATION_DECK) then Duel.ShuffleDeck(tp) end
 	local c=e:GetHandler()
-	if tc:IsType(TYPE_RITUAL|TYPE_FUSION) and tc:IsLocation(LOCATION_DECK+LOCATION_EXTRA) then
+	if tc:IsType(TYPE_RITUAL|TYPE_FUSION) and tc:IsLocation(LOCATION_DECK|LOCATION_EXTRA) then
 		Duel.BreakEffect()
 		Duel.Draw(tp,1,REASON_EFFECT)
 	elseif tc:IsType(TYPE_SYNCHRO|TYPE_XYZ) and tc:IsLocation(LOCATION_EXTRA)
@@ -76,7 +76,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		e1:SetValue(1000)
 		c:RegisterEffect(e1)
 	end

@@ -1,4 +1,5 @@
 --魚雷魚
+--Torpedo Fish
 local s,id=GetID()
 function s.initial_effect(c)
 	--immune spell

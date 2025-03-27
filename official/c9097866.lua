@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(s.atkcon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.atktg)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
@@ -67,11 +67,11 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tgc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToBattle() and tc:IsFaceup() and 
 		tgc and tgc:IsRelateToEffect(e) and tgc:IsLocation(LOCATION_GRAVE) and 
-		tc:UpdateAttack(tgc:GetAttack(),RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,c)==tgc:GetAttack() then
+		tc:UpdateAttack(tgc:GetAttack(),RESETS_STANDARD_PHASE_END,c)==tgc:GetAttack() then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-		e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+		e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
 		e1:SetValue(1)
 		tc:RegisterEffect(e1)
 	end

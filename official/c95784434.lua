@@ -1,4 +1,5 @@
 --モルティング・エスケープ
+--Molting Escape
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsRace,RACE_REPTILE))
@@ -21,7 +22,7 @@ function s.initial_effect(c)
 end
 function s.valcon(e,re,r,rp)
 	if (r&REASON_BATTLE)~=0 then
-		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE,0,1)
+		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE,0,1)
 		return true
 	else return false end
 end
@@ -35,6 +36,6 @@ function s.adop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(300)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:GetEquipTarget():RegisterEffect(e1)
 end

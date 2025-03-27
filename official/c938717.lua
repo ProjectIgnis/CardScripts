@@ -24,14 +24,14 @@ function s.initial_effect(c)
 	e2:SetValue(s.atkval)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x51}
+s.listed_series={SET_GADGET}
 
 function s.eqfilter(c)
-	return c:IsRace(RACE_MACHINE) and c:IsSetCard(0x51) and c:IsFaceup() and c:IsMonster()
+	return c:IsRace(RACE_MACHINE) and c:IsSetCard(SET_GADGET) and c:IsFaceup() and c:IsMonster()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local g=Duel.GetMatchingGroup(s.eqfilter,tp,LOCATION_GRAVE+LOCATION_MZONE,0,nil)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_MZONE) and chkc:IsControler(tp) and s.eqfilter(chkc) end
+	local g=Duel.GetMatchingGroup(s.eqfilter,tp,LOCATION_GRAVE|LOCATION_MZONE,0,nil)
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE|LOCATION_MZONE) and chkc:IsControler(tp) and s.eqfilter(chkc) end
 	local ft=math.min(Duel.GetLocationCount(tp,LOCATION_SZONE),2)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and ft>0
 		and aux.SelectUnselectGroup(g,e,tp,1,ft,aux.dncheck,chk)
@@ -46,7 +46,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
-		local g=Duel.GetTargetCards(e):Match(Card.IsMonster,nil):Match(Card.IsSetCard,nil,0x51)
+		local g=Duel.GetTargetCards(e):Match(Card.IsMonster,nil):Match(Card.IsSetCard,nil,SET_GADGET)
 		if ft<#g then return end
 		Duel.BreakEffect()
 		for tc in aux.Next(g) do
@@ -55,10 +55,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetProperty(EFFECT_FLAG_OWNER_RELATE)
 			e1:SetCode(EFFECT_EQUIP_LIMIT)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			e1:SetValue(s.eqlimit)
 			tc:RegisterEffect(e1)
-			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+			tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 		end
 	end
 end

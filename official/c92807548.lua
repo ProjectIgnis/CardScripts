@@ -1,4 +1,5 @@
 --堕天使ユコバック
+--Darklord Ukoback
 local s,id=GetID()
 function s.initial_effect(c)
 	--tograve
@@ -16,9 +17,9 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xef}
+s.listed_series={SET_DARKLORD}
 function s.tgfilter(c)
-	return c:IsSetCard(0xef) and c:IsAbleToGrave()
+	return c:IsSetCard(SET_DARKLORD) and c:IsAbleToGrave()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end

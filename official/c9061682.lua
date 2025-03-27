@@ -1,5 +1,5 @@
 --魔轟神アンドレイス
---Fabled Andraith
+--Fabled Andwraith
 --Logical Nonsense
 
 --Substitute ID
@@ -39,7 +39,7 @@ s.listed_names={id}
 	
 	--Check for "Fabled" monster
 function s.tfilter(c,lc,stype,tp)
-	return c:IsSetCard(0x35,lc,stype,tp)
+	return c:IsSetCard(SET_FABLED,lc,stype,tp)
 end
 	--Activation legality
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -103,12 +103,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e2)
 		Duel.SpecialSummonComplete()
 	end

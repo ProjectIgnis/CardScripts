@@ -1,4 +1,5 @@
 --Arcana Triumph Joker
+--Arcana Triumph Joker
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -6,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetRange(LOCATION_HAND+LOCATION_GRAVE)
+	e1:SetRange(LOCATION_HAND|LOCATION_GRAVE)
 	e1:SetCost(s.spcost)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
@@ -39,9 +40,9 @@ function s.rescon(sg,e,tp,mg)
 	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:GetClassCount(Card.GetCode)==3
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g1=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,nil,CARD_QUEEN_KNIGHT)
-	local g2=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,nil,CARD_KING_KNIGHT)
-	local g3=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,nil,CARD_JACK_KNIGHT)
+	local g1=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,nil,CARD_QUEEN_KNIGHT)
+	local g2=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,nil,CARD_KING_KNIGHT)
+	local g3=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,nil,CARD_JACK_KNIGHT)
 	g1:Merge(g2)
 	g1:Merge(g3)
 	if chk==0 then return aux.SelectUnselectGroup(g1,e,tp,3,3,s.rescon,0) end

@@ -1,5 +1,5 @@
 --Sea Monster of Theseus
---Scripted by Eerie Code
+--Sea Monster of Theseus
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

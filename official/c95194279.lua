@@ -1,4 +1,5 @@
 --次元の歪み
+--Dimension Distortion
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

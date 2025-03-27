@@ -1,4 +1,5 @@
 --トラミッド・フォートレス
+--Triamid Fortress
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -21,7 +22,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e3:SetRange(LOCATION_FZONE)
 	e3:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xe2))
+	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_TRIAMID))
 	e3:SetValue(1)
 	c:RegisterEffect(e3)
 	--to hand
@@ -37,13 +38,13 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xe2}
+s.listed_series={SET_TRIAMID}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsPreviousLocation(LOCATION_FZONE) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xe2) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_TRIAMID) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end

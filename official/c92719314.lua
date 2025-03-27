@@ -1,4 +1,5 @@
 --ダーク・クリエイター
+--The Dark Creator
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -46,14 +47,14 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return false end
 		if e:GetLabel()==1 then
 			e:SetLabel(0)
-			return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,e,tp)
+			return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil,e,tp)
 		else
 			return Duel.IsExistingTarget(s.tgfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
 		end
 	end
 	if e:GetLabel()==1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local cg=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil,e,tp)
+		local cg=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil,e,tp)
 		Duel.Remove(cg,POS_FACEUP,REASON_COST)
 		e:SetLabel(0)
 	end

@@ -1,5 +1,5 @@
 --ゼロ・デイ・ブラスター
---Zero Day Blaster
+--Zero-Day Blaster
 --scripted by andré
 local s,id=GetID()
 function s.initial_effect(c)

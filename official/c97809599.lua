@@ -1,4 +1,5 @@
 --旧神の印
+--Seal of the Ancients
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

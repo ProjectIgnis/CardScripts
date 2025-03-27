@@ -35,9 +35,9 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
-s.listed_series={0x45}
+s.listed_series={SET_ARCHFIEND}
 function s.regfilter(c)
-	return c:IsReason(REASON_DESTROY) and not c:IsReason(REASON_BATTLE) and c:IsSetCard(0x45) and c:HasLevel()
+	return c:IsReason(REASON_DESTROY) and not c:IsReason(REASON_BATTLE) and c:IsSetCard(SET_ARCHFIEND) and c:HasLevel()
 		and (c:IsPreviousLocation(LOCATION_MZONE) or (not c:IsPreviousLocation(LOCATION_MZONE) and c:IsMonster()))
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
@@ -61,10 +61,10 @@ end
 function s.lrcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
 	local rc=re:GetHandler()
-	return Duel.GetCurrentPhase()==PHASE_STANDBY and rc:IsSetCard(0x45) and rc:IsMonster()
+	return Duel.IsPhase(PHASE_STANDBY) and rc:IsSetCard(SET_ARCHFIEND) and rc:IsMonster()
 end
 function s.filter(c,lv)
-	return c:GetLevel()<lv and c:IsSetCard(0x45) and c:IsMonster() and c:IsAbleToHand()
+	return c:GetLevel()<lv and c:IsSetCard(SET_ARCHFIEND) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,ev) end

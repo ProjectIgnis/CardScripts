@@ -45,14 +45,14 @@ function s.initial_effect(c)
 	e5:SetRange(LOCATION_GRAVE)
 	e5:SetCountLimit(1,id)
 	e5:SetCondition(s.spcon)
-	e5:SetCost(aux.bfgcost)
+	e5:SetCost(Cost.SelfBanish)
 	e5:SetTarget(s.sptg)
 	e5:SetOperation(s.spop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x11a}
+s.listed_series={SET_DINOWRESTLER}
 function s.atkcon1(e)
-	return e:GetHandler():GetFlagEffect(id)~=0 and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x11a),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
+	return e:GetHandler():GetFlagEffect(id)~=0 and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_DINOWRESTLER),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.atktg1(e,c)
 	return c:GetFieldID()~=e:GetLabel()
@@ -60,11 +60,11 @@ end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():GetFlagEffect(id)~=0 then return end
 	local fid=eg:GetFirst():GetFieldID()
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 	e:GetLabelObject():SetLabel(fid)
 end
 function s.atktg2(e,c)
-	return c:IsSetCard(0x11a) and Duel.GetTurnPlayer()==e:GetHandlerPlayer() 
+	return c:IsSetCard(SET_DINOWRESTLER) and Duel.GetTurnPlayer()==e:GetHandlerPlayer() 
 		and Duel.GetAttacker()==c
 end
 function s.atkcon2(e)
@@ -74,7 +74,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x11a) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_DINOWRESTLER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -89,4 +89,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-

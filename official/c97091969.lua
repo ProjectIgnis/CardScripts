@@ -30,10 +30,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.optfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x111) and c:HasLevel()
+	return c:IsFaceup() and c:IsSetCard(SET_ARMED_DRAGON) and c:HasLevel()
 end
 function s.thfilter(c,lvl)
-	return c:IsSetCard(0x111) and c:IsMonster() and c:IsLevelBelow(lvl) and c:IsAbleToHand()
+	return c:IsSetCard(SET_ARMED_DRAGON) and c:IsMonster() and c:IsLevelBelow(lvl) and c:IsAbleToHand()
 end
 function s.opttarget(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.optfilter(chkc) end
@@ -61,7 +61,7 @@ function s.opteffect(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			e1:SetValue(val)
 			tc:RegisterEffect(e1)
 		end
@@ -77,7 +77,7 @@ function s.opteffect(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.repfilter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
-		and c:IsSetCard(0x111) and c:IsReason(REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
+		and c:IsSetCard(SET_ARMED_DRAGON) and c:IsReason(REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(s.repfilter,1,nil,tp) end

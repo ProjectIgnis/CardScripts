@@ -59,10 +59,10 @@ end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() and
-		c:UpdateAttack(600,RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)==600 then
+		c:UpdateAttack(600,RESETS_STANDARD_DISABLE_PHASE_END)==600 then
 		local tc=Duel.GetFirstTarget()
 		if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
-			tc:UpdateAttack(-600,RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END,c)
+			tc:UpdateAttack(-600,RESETS_STANDARD_DISABLE_PHASE_END,c)
 		end
 	end
 end

@@ -1,4 +1,5 @@
 --雷神の怒り
+--Kaminari Attack
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material

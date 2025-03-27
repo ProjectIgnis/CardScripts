@@ -1,4 +1,5 @@
 --No.24 竜血鬼ドラギュラス
+--Number 24: Dragulas the Vampiric Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon

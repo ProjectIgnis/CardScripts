@@ -1,5 +1,5 @@
--- ガラスの靴 
--- Glass Slippers
+--ガラスの靴 
+--Glass Slippers
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c)
@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(s.value)
 	c:RegisterEffect(e1)
-	-- cannot attack
+	--cannot attack
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
 	e2:SetCode(EFFECT_CANNOT_ATTACK)
@@ -66,4 +66,3 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Equip(tp,c,tc)
 	end
 end
-

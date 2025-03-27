@@ -76,4 +76,3 @@ function s.doperation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(dg,REASON_EFFECT)
 	end
 end
-

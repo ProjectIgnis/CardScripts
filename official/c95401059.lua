@@ -1,4 +1,5 @@
 --オルシャドール－セフィラルーツ
+--Shaddoll Zefracore
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -28,17 +29,17 @@ function s.initial_effect(c)
 	e4:SetCondition(aux.TRUE)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x9d,0xc4}
+s.listed_series={SET_SHADDOLL,SET_ZEFRA}
 s.listed_names={id}
 function s.splimit(e,c,sump,sumtype,sumpos,targetp)
-	if c:IsSetCard(0x9d) or c:IsSetCard(0xc4) then return false end
+	if c:IsSetCard(SET_SHADDOLL) or c:IsSetCard(SET_ZEFRA) then return false end
 	return (sumtype&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
 function s.condition1(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_PENDULUM)
+	return e:GetHandler():IsPendulumSummoned()
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0xc4) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_ZEFRA) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_PZONE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end

@@ -1,4 +1,5 @@
 --精霊術師 ドリアード
+--Elemental Mistress Doriado
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

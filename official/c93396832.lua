@@ -1,4 +1,5 @@
 --角笛砕き
+--Smashing Horn
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

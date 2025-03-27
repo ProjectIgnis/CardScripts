@@ -1,4 +1,5 @@
 --ギミック・パペット－ネクロ・ドール
+--Gimmick Puppet Dreary Doll
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -20,15 +21,15 @@ function s.initial_effect(c)
 	e2:SetValue(s.xyzlimit)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x1083}
+s.listed_series={SET_GIMMICK_PUPPET}
 function s.cfilter(c,tp)
-	return c:IsSetCard(0x1083) and c:IsAbleToRemoveAsCost() and c:IsMonster() and aux.SpElimFilter(c,true) 
+	return c:IsSetCard(SET_GIMMICK_PUPPET) and c:IsAbleToRemoveAsCost() and c:IsMonster() and aux.SpElimFilter(c,true) 
 		and (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 or (c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5))
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,e:GetHandler(),tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,e:GetHandler(),tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,e:GetHandler(),tp)
+	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,e:GetHandler(),tp)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -43,5 +44,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.xyzlimit(e,c)
 	if not c then return false end
-	return not c:IsSetCard(0x1083)
+	return not c:IsSetCard(SET_GIMMICK_PUPPET)
 end

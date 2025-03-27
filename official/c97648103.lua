@@ -1,5 +1,5 @@
 --星遺物の加護
---Star Relic's Aegis
+--World Legacy's Heart
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -22,9 +22,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.repop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xfd}
+s.listed_series={SET_WORLD_CHALICE}
 function s.thfilter(c,e)
-	return c:IsMonster() and c:IsSetCard(0xfd) and c:IsAbleToHand() and c:IsCanBeEffectTarget(e)
+	return c:IsMonster() and c:IsSetCard(SET_WORLD_CHALICE) and c:IsAbleToHand() and c:IsCanBeEffectTarget(e)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_GRAVE,0,nil,e)

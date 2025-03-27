@@ -1,4 +1,5 @@
 --フォトン・ストリーク・バウンサー
+--Photon Strike Bounzer
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon

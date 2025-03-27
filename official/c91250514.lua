@@ -1,4 +1,5 @@
 --タン・ツイスター
+--Tongue Twister
 local s,id=GetID()
 function s.initial_effect(c)
 	--draw

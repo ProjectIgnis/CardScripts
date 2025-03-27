@@ -1,4 +1,5 @@
 --砲弾ヤリ貝
+--Cannonball Spear Shellfish
 local s,id=GetID()
 function s.initial_effect(c)
 	--immune spell

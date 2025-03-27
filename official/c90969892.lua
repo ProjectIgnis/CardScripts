@@ -1,9 +1,9 @@
--- トライブ・ドライブ
--- Tribe Drive
--- Scripted by Hatter
+--トライブ・ドライブ
+--Tribe Drive
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Add to hand or Special Summon
+	--Add to hand or Special Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_SPECIAL_SUMMON)

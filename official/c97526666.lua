@@ -1,4 +1,5 @@
 --惑星探査車
+--Planet Pathfinder
 local s,id=GetID()
 function s.initial_effect(c)
 	--search

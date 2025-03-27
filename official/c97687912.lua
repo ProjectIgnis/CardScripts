@@ -1,4 +1,5 @@
 --メテオ・ストライク
+--Fairy Meteor Crush
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c)

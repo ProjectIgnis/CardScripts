@@ -1,4 +1,5 @@
 --創世者の化身
+--The Creator Incarnate
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon

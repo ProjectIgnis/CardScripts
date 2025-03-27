@@ -1,5 +1,5 @@
 --星遺物の導く先
---World Legacy's Continuation
+--The World Legacy
 --Scripted by Eerie Code
 local s,id=GetID()
 local COUNTER_WL =0x14f

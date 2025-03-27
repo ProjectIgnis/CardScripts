@@ -18,12 +18,12 @@ function s.initial_effect(c)
 	e2:SetOperation(s.flipop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x7c}
+s.listed_series={SET_FIRE_FORMATION}
 function s.filter1(c)
-	return c:IsSetCard(0x7c) and c:IsTrap() and c:IsSSetable()
+	return c:IsSetCard(SET_FIRE_FORMATION) and c:IsTrap() and c:IsSSetable()
 end
 function s.filter2(c)
-	return c:IsSetCard(0x7c) and c:IsSpell() and c:IsSSetable()
+	return c:IsSetCard(SET_FIRE_FORMATION) and c:IsSpell() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_DECK,0,1,nil) end

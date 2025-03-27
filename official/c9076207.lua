@@ -1,4 +1,5 @@
 --青い忍者
+--Armed Ninja
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip

@@ -37,7 +37,7 @@ function s.damval(e,re,val,r,rp,rc)
 	local c=e:GetHandler()
 	if r&REASON_EFFECT~=0 and c:IsCanAddCounter(0x43,1) and c:GetFlagEffect(id)==0 then
 		c:AddCounter(0x43,1)
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 		return 0
 	end
 	return val
@@ -64,7 +64,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(800)
 		tc:RegisterEffect(e1)
 	end

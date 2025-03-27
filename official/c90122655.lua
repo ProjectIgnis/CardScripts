@@ -1,4 +1,5 @@
 --天魔大帝
+--Tenmataitei
 local s,id=GetID()
 function s.initial_effect(c)
 	--act limit
@@ -12,7 +13,7 @@ end
 function s.chainop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
-	if re:IsActiveType(TYPE_MONSTER) and loc==LOCATION_MZONE and rc:IsSummonType(SUMMON_TYPE_NORMAL) then
+	if re:IsActiveType(TYPE_MONSTER) and loc==LOCATION_MZONE and rc:IsNormalSummoned() then
 		Duel.SetChainLimit(s.chainlm)
 	end
 end

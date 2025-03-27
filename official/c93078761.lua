@@ -1,5 +1,5 @@
 --賽挑戦
---Dice Try Again
+--Diced Dice
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

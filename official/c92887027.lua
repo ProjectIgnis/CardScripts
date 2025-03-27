@@ -1,4 +1,5 @@
 --ながれ者傭兵部隊
+--Nomadic Force
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy

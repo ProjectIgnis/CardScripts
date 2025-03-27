@@ -1,4 +1,5 @@
 --緊急救急救命レスキュー
+--Emerging Emergency Rescute Rescue
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate

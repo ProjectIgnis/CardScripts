@@ -1,4 +1,5 @@
 --RR－アーセナル・ファルコン
+--Raidraptor - Arsenal Falcon
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -34,7 +35,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop2)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xba}
+s.listed_series={SET_RAIDRAPTOR}
 s.listed_names={id}
 function s.spcost1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
@@ -57,17 +58,17 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.ctcon(e)
-	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsSetCard,1,nil,0xba)
+	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsSetCard,1,nil,SET_RAIDRAPTOR)
 end
 function s.ctval(e,c)
-	return e:GetHandler():GetOverlayGroup():FilterCount(Card.IsSetCard,nil,0xba)-1
+	return e:GetHandler():GetOverlayGroup():FilterCount(Card.IsSetCard,nil,SET_RAIDRAPTOR)-1
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:GetOverlayGroup():IsExists(Card.IsSetCard,1,nil,0xba) and c:IsPreviousLocation(LOCATION_MZONE)
+	return c:GetOverlayGroup():IsExists(Card.IsSetCard,1,nil,SET_RAIDRAPTOR) and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function s.spfilter2(c,e,tp)
-	return c:IsSetCard(0xba) and c:IsType(TYPE_XYZ) and not c:IsCode(id) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_RAIDRAPTOR) and c:IsType(TYPE_XYZ) and not c:IsCode(id) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_EXTRA,0,1,nil,e,tp) end

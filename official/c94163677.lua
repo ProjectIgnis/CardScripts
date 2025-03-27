@@ -1,4 +1,5 @@
 --無限の手札
+--Infinite Cards
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

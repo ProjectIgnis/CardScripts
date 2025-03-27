@@ -28,11 +28,11 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tnop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x12f}
+s.listed_series={SET_BATTLEWASP}
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	local bc=tc:GetBattleTarget()
-	return tc:IsRelateToBattle() and tc:IsStatus(STATUS_OPPO_BATTLE) and tc:IsControler(tp) and tc:IsSetCard(0x12f)
+	return tc:IsRelateToBattle() and tc:IsStatus(STATUS_OPPO_BATTLE) and tc:IsControler(tp) and tc:IsSetCard(SET_BATTLEWASP)
 		and bc:IsLocation(LOCATION_GRAVE) and bc:IsReason(REASON_BATTLE) and bc:GetPreviousControler()~=tp and bc:GetBaseAttack()>0
 		and bc:GetOwner()==1-tp
 end
@@ -69,7 +69,7 @@ function s.tnop(e,tp,eg,ep,ev,re,r,rp)
 		local e0=Effect.CreateEffect(c)
 		e0:SetType(EFFECT_TYPE_SINGLE)
 		e0:SetCode(EFFECT_ADD_TYPE)
-		e0:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e0:SetReset(RESETS_STANDARD_PHASE_END)
 		e0:SetValue(TYPE_TUNER)
 		tc:RegisterEffect(e0)
 	end
@@ -80,7 +80,7 @@ function s.tnop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	--lizard check
 	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)

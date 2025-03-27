@@ -28,11 +28,11 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetCode(EFFECT_SYNCHRO_MAT_RESTRICTION)
 	e4:SetCondition(s.matcon)
-	e4:SetValue(aux.TargetBoolFunction(Card.IsSetCard,0x33))
+	e4:SetValue(aux.TargetBoolFunction(Card.IsSetCard,SET_BLACKWING))
 	c:RegisterEffect(e4)
 end
 s.listed_names={9047461}
-s.listed_series={0x33}
+s.listed_series={SET_BLACKWING}
 function s.tkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsPreviousPosition(POS_FACEUP) and c:GetLocation()~=LOCATION_DECK
@@ -63,7 +63,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,0)
 	end
 end
 function s.matcon(e)

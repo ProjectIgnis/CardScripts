@@ -8,12 +8,12 @@ function s.initial_effect(c)
 	--Using monsters from your field as material
 	--If "Dream Mirror of Joy" is on the field, include from hand as well
 	--If "Dream Mirror of Terror" is on the field, banish from GY as well
-	local e1=Fusion.CreateSummonEff({handler=c,fusfilter=aux.FilterBoolFunction(Card.IsSetCard,0x131),
+	local e1=Fusion.CreateSummonEff({handler=c,fusfilter=aux.FilterBoolFunction(Card.IsSetCard,SET_DREAM_MIRROR),
 		matfilter=Fusion.OnFieldMat,extrafil=s.fextra,extraop=s.extraop,extratg=s.extrtarget})
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x131}
+s.listed_series={SET_DREAM_MIRROR}
 s.listed_names={CARD_DREAM_MIRROR_JOY,CARD_DREAM_MIRROR_TERROR}
 
 function s.fextra(e,tp,mg)

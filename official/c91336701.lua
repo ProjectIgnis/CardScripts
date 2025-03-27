@@ -1,5 +1,5 @@
 --魔導耀士 デイブレイカー
---Day-Breaker the Shinning Magical Knight
+--Day-Breaker the Shining Magical Warrior
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -49,7 +49,7 @@ function s.initial_effect(c)
 end
 s.counter_place_list={COUNTER_SPELL}
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+	return e:GetHandler():IsLinkSummoned()
 end
 function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

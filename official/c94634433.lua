@@ -1,4 +1,5 @@
 --緊急同調
+--Urgent Tuning
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro effect

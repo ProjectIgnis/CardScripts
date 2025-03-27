@@ -1,4 +1,5 @@
 --ギミック・パペット－ナイト・ジョーカー
+--Gimmick Puppet Twilight Joker
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -14,9 +15,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x1083}
+s.listed_series={SET_GIMMICK_PUPPET}
 function s.cfilter(c,tp)
-	return c:IsControler(tp) and c:IsLocation(LOCATION_GRAVE) and c:IsSetCard(0x1083)
+	return c:IsControler(tp) and c:IsLocation(LOCATION_GRAVE) and c:IsSetCard(SET_GIMMICK_PUPPET)
 		and c:IsPreviousControler(tp) and c:IsAbleToRemoveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

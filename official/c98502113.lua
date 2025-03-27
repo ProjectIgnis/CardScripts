@@ -1,4 +1,5 @@
 --超魔導剣士－ブラック・パラディン
+--Dark Paladin
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -33,7 +34,7 @@ function s.initial_effect(c)
 	e3:SetValue(aux.fuslimit)
 	c:RegisterEffect(e3)
 end
-s.material_setcode={0x10a2,0xd7}
+s.material_setcode={SET_DARK_MAGICIAN,SET_BUSTER_BLADER}
 s.listed_names={CARD_DARK_MAGICIAN,78193831}
 function s.val(e,c)
 	return Duel.GetMatchingGroupCount(s.filter,0,0x14,0x14,nil)*500

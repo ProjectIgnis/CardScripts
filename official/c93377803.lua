@@ -1,5 +1,5 @@
 --孤毒の剣
---Sword of Toxic Solitude
+--Solitary Sword of Poison
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -75,4 +75,3 @@ end
 function s.defval(e,c)
 	return c:GetBaseDefense()*2
 end
-

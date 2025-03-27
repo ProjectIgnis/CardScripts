@@ -1,5 +1,5 @@
 --ステルス・クラーゲン・エフィラ
---Kragen Spawn
+--Stealth Kragen Spawn
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.regop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x48,0x16a}
+s.listed_series={SET_NUMBER,SET_STEALTH_KRAGEN}
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsMainPhase()
 end
@@ -44,13 +44,13 @@ end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
-	if rc and re:IsActiveType(TYPE_MONSTER) and rc:IsSetCard(0x48) and rc:IsType(TYPE_XYZ) then
+	if rc and re:IsActiveType(TYPE_MONSTER) and rc:IsSetCard(SET_NUMBER) and rc:IsType(TYPE_XYZ) then
 		local e3=Effect.CreateEffect(c)
 		e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 		e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 		e3:SetCode(EVENT_DESTROYED)
 		e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOGRAVE-RESET_LEAVE-RESET_REMOVE)
+		e3:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TOGRAVE-RESET_LEAVE-RESET_REMOVE)
 		e3:SetCondition(s.spcon)
 		e3:SetTarget(s.sptg)
 		e3:SetOperation(s.spop)
@@ -61,7 +61,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e4:SetCode(EVENT_LEAVE_FIELD_P)
 		e4:SetOperation(s.recordop)
-		e4:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOGRAVE-RESET_LEAVE-RESET_REMOVE)
+		e4:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TOGRAVE-RESET_LEAVE-RESET_REMOVE)
 		e4:SetLabelObject(e3)
 		c:RegisterEffect(e4)
 	end
@@ -72,7 +72,7 @@ function s.recordop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetLabelObject():SetLabelObject(g)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x16a) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_STEALTH_KRAGEN) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_MZONE)

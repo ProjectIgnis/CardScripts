@@ -1,4 +1,5 @@
 --森の聖獣 カラントーサ
+--Kalantosa, Mystical Beast of the Forest
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy

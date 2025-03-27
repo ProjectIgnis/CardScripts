@@ -1,4 +1,5 @@
 --魔導法皇 ハイロン
+--Hierophant of Prophecy
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -16,13 +17,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 end
-s.listed_series={0x106e}
+s.listed_series={SET_SPELLBOOK}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x106e) and c:IsSpell()
+	return c:IsSetCard(SET_SPELLBOOK) and c:IsSpell()
 end
 function s.filter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP)

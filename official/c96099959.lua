@@ -1,4 +1,5 @@
 --X－セイバー パロムロ
+--X-Saber Palomuro
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -14,9 +15,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xd}
+s.listed_series={SET_SABER}
 function s.filter(c,ec,tp)
-	return c~=ec and c:IsSetCard(0xd) and c:IsLocation(LOCATION_GRAVE) and c:IsPreviousControler(tp)
+	return c~=ec and c:IsSetCard(SET_SABER) and c:IsLocation(LOCATION_GRAVE) and c:IsPreviousControler(tp)
 		and c:IsReason(REASON_BATTLE)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

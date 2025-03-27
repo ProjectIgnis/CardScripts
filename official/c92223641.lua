@@ -1,4 +1,5 @@
 --天空の泉
+--The Fountain in the Sky
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

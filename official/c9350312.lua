@@ -1,24 +1,24 @@
--- 丘と芽吹の春化精
--- Vernalizer Fairy of Hills and Blooms
--- Scripted by Hatter
+--丘と芽吹の春化精
+--Vernusylph of the Flourishing Hills
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Effect destruction protection
+	--Effect destruction protection
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x183))
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_VERNUSYLPH))
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	-- Search 1 "Vernalizer Fairy" card
+	--Search 1 "Vernalizer Fairy" card
 	c:RegisterEffect(Effect.CreateVernalizerSPEffect(c,id,0,CATEGORY_TOHAND+CATEGORY_SEARCH,s.thtg,s.thop))
 end
 s.listed_names={id}
-s.listed_series={0x183}
+s.listed_series={SET_VERNUSYLPH}
 function s.thfilter(c)
-	return c:IsSetCard(0x183) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_VERNUSYLPH) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

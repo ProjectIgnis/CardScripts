@@ -82,7 +82,7 @@ end
 function s.mtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=e:GetLabelObject():Filter(s.mcfilter,nil,e,tp)
 	if chkc then return g:IsContains(chkc) and s.mcfilter(chkc,e,tp) end
-	if chk==0 then return #g>0 and Duel.GetFlagEffect(tp,id)==0 and Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE+LOCATION_EXTRA,0,1,nil,TYPE_XYZ) end
+	if chk==0 then return #g>0 and Duel.GetFlagEffect(tp,id)==0 and Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE|LOCATION_EXTRA,0,1,nil,TYPE_XYZ) end
 	Duel.RegisterFlagEffect(tp,id,RESET_CHAIN,0,1)
 	if #g==1 then
 		Duel.SetTargetCard(g:GetFirst())
@@ -96,7 +96,7 @@ function s.mop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if e:GetHandler():IsRelateToEffect(e) and tc:IsFaceup() and tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(Card.IsType),tp,LOCATION_GRAVE+LOCATION_EXTRA,0,1,1,tc,TYPE_XYZ)
+		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(Card.IsType),tp,LOCATION_GRAVE|LOCATION_EXTRA,0,1,1,tc,TYPE_XYZ)
 		if #g>0 then
 			Duel.Overlay(tc,g,true)
 		end

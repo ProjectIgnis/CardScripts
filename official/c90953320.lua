@@ -1,4 +1,5 @@
 --TG ハイパー・ライブラリアン
+--T.G. Hyper Librarian
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon

@@ -18,10 +18,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 	--Part of "Adamacia" archetype
-s.listed_series={0x140}
+s.listed_series={SET_ADAMANCIPATOR}
 	--Check for "Adamacia" monster
 function s.cfilter(c)
-	return c:IsSetCard(0x140) and c:IsMonster()
+	return c:IsSetCard(SET_ADAMANCIPATOR) and c:IsMonster()
 end
 function s.spcheck(sg,tp,exg,oc)
 	local ex=sg:Clone()

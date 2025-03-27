@@ -1,4 +1,5 @@
 --銀嶺の巨神
+--Soul of Silvermountain
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -49,7 +50,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_OWNER_RELATE)
 		e1:SetCode(EFFECT_CANNOT_TRIGGER)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetCondition(s.rcon)
 		e1:SetValue(1)
 		tc:RegisterEffect(e1)

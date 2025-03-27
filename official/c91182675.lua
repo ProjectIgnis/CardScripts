@@ -44,7 +44,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.counter_place_list={COUNTER_SPELL}
-s.listed_series={0x10d}
+s.listed_series={SET_MYTHICAL_BEAST}
 s.listed_names={55424270}
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_PZONE,0)==1
@@ -81,7 +81,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(c,REASON_COST)
 end
 function s.spfilter(c,e,tp)
-	return (c:IsSetCard(0x10d) or c:IsCode(55424270)) and not c:IsCode(id)
+	return (c:IsSetCard(SET_MYTHICAL_BEAST) or c:IsCode(55424270)) and not c:IsCode(id)
 		and c:IsType(TYPE_EFFECT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

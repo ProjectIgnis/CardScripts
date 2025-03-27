@@ -1,4 +1,5 @@
 --召喚制限－エクストラネット
+--Extra Net
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

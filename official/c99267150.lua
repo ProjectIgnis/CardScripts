@@ -1,4 +1,5 @@
 --F・G・D
+--Five-Headed Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material

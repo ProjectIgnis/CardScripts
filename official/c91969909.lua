@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x122))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_VALKYRIE))
 	e2:SetValue(aux.indoval)
 	c:RegisterEffect(e2)
 	--Prevent effect target
@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.rmop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x122}
+s.listed_series={SET_VALKYRIE}
 function s.rmfilter(c)
 	return c:IsFacedown() and c:IsAbleToRemove()
 end

@@ -1,4 +1,5 @@
 --ハーピィ・チャネラー
+--Harpie Channeler
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -17,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetCode(EFFECT_CHANGE_CODE)
-	e2:SetRange(LOCATION_MZONE+LOCATION_GRAVE)
+	e2:SetRange(LOCATION_MZONE|LOCATION_GRAVE)
 	e2:SetValue(CARD_HARPIE_LADY)
 	c:RegisterEffect(e2)
 	--change level
@@ -30,17 +31,17 @@ function s.initial_effect(c)
 	e3:SetValue(7)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x64}
+s.listed_series={SET_HARPIE}
 s.listed_names={CARD_HARPIE_LADY}
 function s.cfilter(c)
-	return c:IsSetCard(0x64) and c:IsDiscardable()
+	return c:IsSetCard(SET_HARPIE) and c:IsDiscardable()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
 	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST+REASON_DISCARD)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x64) and c:GetCode()~=id and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(SET_HARPIE) and c:GetCode()~=id and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

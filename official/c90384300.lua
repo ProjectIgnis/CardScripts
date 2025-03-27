@@ -20,8 +20,8 @@ function s.filter(c)
 		and not c:IsSummonableCard() and not c:IsType(TYPE_TOKEN)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND+LOCATION_MZONE,0,2,nil) end
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND+LOCATION_MZONE,0,2,2,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND|LOCATION_MZONE,0,2,nil) end
+	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND|LOCATION_MZONE,0,2,2,nil)
 	Duel.Remove(g,POS_FACEDOWN,REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

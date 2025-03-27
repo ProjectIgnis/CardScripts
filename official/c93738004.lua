@@ -1,5 +1,5 @@
 --空牙団の孤高 サジータ
---Sajita, Solitary of the Skyfang Brigade
+--Sagitta, Maverick Fur Hire
 local s,id=GetID()
 function s.initial_effect(c)
 	--damage
@@ -25,9 +25,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-s.listed_series={0x114}
+s.listed_series={SET_FUR_HIRE}
 function s.damfilter(c)
-	return not c:IsCode(id) and c:IsFaceup() and c:IsSetCard(0x114)
+	return not c:IsCode(id) and c:IsFaceup() and c:IsSetCard(SET_FUR_HIRE)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.damfilter,tp,LOCATION_MZONE,0,1,nil) end
@@ -41,6 +41,5 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(1-tp,dam,REASON_EFFECT)
 end
 function s.tgtg(e,c)
-	return c~=e:GetHandler() and c:IsSetCard(0x114)
+	return c~=e:GetHandler() and c:IsSetCard(SET_FUR_HIRE)
 end
-

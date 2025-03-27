@@ -1,5 +1,5 @@
 --照耀の光霊使いライナ
---Lyna the Light Charmer, Shining
+--Lyna the Light Charmer, Lustrous
 local s,id=GetID()
 function s.initial_effect(c)
 	--Link summon
@@ -54,7 +54,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and rp==1-tp and c:IsSummonType(SUMMON_TYPE_LINK) and c:IsPreviousLocation(LOCATION_MZONE)
+	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and rp==1-tp and c:IsLinkSummoned() and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function s.thfilter(c)
 	return c:IsDefenseBelow(1500) and c:IsMonster() and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsAbleToHand()

@@ -1,5 +1,5 @@
 --熾天蝶
---Seraphim Papillon
+--Seraphim Papillion
 --Scripted by AlphaKretin
 local COUNTER_PAPILLON=0x14d
 local s,id=GetID()
@@ -52,7 +52,7 @@ function s.lcheck(g,lc,sumtype,tp)
 	return g:CheckDifferentProperty(Card.GetCode,lc,sumtype,tp)
 end
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+	return e:GetHandler():IsLinkSummoned()
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

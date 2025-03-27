@@ -1,4 +1,5 @@
 --ヴァイロン・エレメント
+--Vylon Element
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -18,9 +19,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x30}
+s.listed_series={SET_VYLON}
 function s.cfilter(c,tp)
-	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_SZONE) and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousSetCard(0x30)
+	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_SZONE) and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousSetCard(SET_VYLON)
 		and (c:GetPreviousTypeOnField()&TYPE_EQUIP)~=0
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -29,7 +30,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return ct>0
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x30) and c:IsType(TYPE_TUNER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_VYLON) and c:IsType(TYPE_TUNER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsStatus(STATUS_CHAINING)
@@ -51,12 +52,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_BE_SYNCHRO_MATERIAL)
 		e1:SetValue(s.synlimit)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 	Duel.SpecialSummonComplete()
 end
 function s.synlimit(e,c)
 	if not c then return false end
-	return not c:IsSetCard(0x30)
+	return not c:IsSetCard(SET_VYLON)
 end

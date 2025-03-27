@@ -1,4 +1,5 @@
 --流星の弓－シール
+--Shooting Star Bow - Ceal
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c)

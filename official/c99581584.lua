@@ -1,4 +1,5 @@
 --ガード・ペンギン
+--Guard Penguin
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon

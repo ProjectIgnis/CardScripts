@@ -1,4 +1,5 @@
 --SPYGAL Misty
+--SPYGAL Misty
 local s,id=GetID()
 function s.initial_effect(c)
 	--draw

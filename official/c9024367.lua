@@ -1,4 +1,5 @@
 --ギャラクシー・ドラグーン
+--Galaxy Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--atklimit
@@ -43,18 +44,18 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
 	if bc and bc:IsRace(RACE_DRAGON) then
-		c:CreateRelation(bc,RESET_EVENT+RESETS_STANDARD)
+		c:CreateRelation(bc,RESET_EVENT|RESETS_STANDARD)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
 		e1:SetCondition(s.discon)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE)
 		bc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetCondition(s.discon)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE)
 		bc:RegisterEffect(e2)
 	end
 end

@@ -1,4 +1,5 @@
 --No.41 泥睡魔獣バグースカ
+--Number 41: Bagooska the Terribly Tired Tapir
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -8,7 +9,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e1:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.mtcon)
@@ -48,7 +49,7 @@ function s.initial_effect(c)
 end
 s.xyz_number=41
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) then

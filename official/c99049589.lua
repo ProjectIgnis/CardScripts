@@ -21,15 +21,15 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,id)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-s.listed_series={0xad,0xa9,0xc3}
+s.listed_series={SET_FRIGHTFUR,SET_FLUFFAL,SET_EDGE_IMP}
 function s.tedfilter(c)
-	return c:IsSetCard(0xad) and c:IsMonster() and c:IsType(TYPE_FUSION) and c:IsAbleToExtra()
+	return c:IsSetCard(SET_FRIGHTFUR) and c:IsMonster() and c:IsType(TYPE_FUSION) and c:IsAbleToExtra()
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.tedfilter(chkc) end
@@ -40,7 +40,7 @@ function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function s.spfilter(c,e,tp)
-	return c:IsMonster() and (c:IsSetCard(0xa9) or c:IsSetCard(0xc3)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsMonster() and (c:IsSetCard(SET_FLUFFAL) or c:IsSetCard(SET_EDGE_IMP)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.tedop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

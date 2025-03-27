@@ -22,13 +22,13 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCondition(s.gycond)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.gytg)
 	e2:SetOperation(s.gyop)
 	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_VISAS_STARFROST}
-s.listed_series={0x17c}
+s.listed_series={SET_SCARECLAW}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)
 	return true
@@ -49,7 +49,7 @@ function s.tgfilter(c,e,tp)
 	return not visas or c:IsAbleToRemove()
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x17c)
+	return c:IsSetCard(SET_SCARECLAW)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and s.tgfilter(chkc,e,tp) end
@@ -85,7 +85,7 @@ function s.gytg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.GetFlagEffect(0,id)==0 end
 end
 function s.gyop(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	Duel.RegisterFlagEffect(0,id,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(0,id,RESET_PHASE|PHASE_END,0,1)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetDescription(aux.Stringid(id,2))
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -93,7 +93,7 @@ function s.gyop(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e1:SetTargetRange(1,1)
 	e1:SetValue(s.actlimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.actlimit(e,re,tp)

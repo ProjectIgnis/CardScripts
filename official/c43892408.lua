@@ -1,4 +1,5 @@
 --竜騎士ブラック・マジシャン・ガール
+--Dark Magician Girl the Dragon Knight
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -26,7 +27,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={1784686}
-s.material_setcode={0x10a2,0x20a2}
+s.material_setcode={SET_DARK_MAGICIAN,SET_MAGICIAN_GIRL}
 function s.splimit(e,se,sp,st)
 	return (st&SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION or se:GetHandler():IsCode(1784686)
 end

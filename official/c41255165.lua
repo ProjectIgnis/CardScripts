@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 	--Lists "Penguin" archetype
-s.listed_series={0x5a}
+s.listed_series={SET_PENGUIN}
 
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -46,7 +46,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for a face-up "Penguin" monster
 function s.setfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x5a) and c:IsCanTurnSet()
+	return c:IsFaceup() and c:IsSetCard(SET_PENGUIN) and c:IsCanTurnSet()
 end
 	--Activation legality
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

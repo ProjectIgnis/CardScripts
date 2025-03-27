@@ -1,5 +1,5 @@
 --デスマニア・デビル
---Desmania Devil
+--Desmanian Devil
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -29,4 +29,3 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-

@@ -1,4 +1,5 @@
 --光学迷彩アーマー
+--Opti-Camouflage Armor
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,aux.FilterEqualFunction(Card.GetLevel,1))

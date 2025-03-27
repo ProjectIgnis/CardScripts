@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 	--Lists "Infernity" archetype
-s.listed_series={0xb}
+s.listed_series={SET_INFERNITY}
 
 	--Activation legality
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -46,7 +46,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for an "Infernity" monster
 function s.tgfilter(c)
-	return c:IsSetCard(0xb) and c:IsMonster() and c:IsAbleToGrave()
+	return c:IsSetCard(SET_INFERNITY) and c:IsMonster() and c:IsAbleToGrave()
 end
 	--Activation legality
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)

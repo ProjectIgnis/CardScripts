@@ -19,7 +19,7 @@ function s.initial_effect(c)
 end
 s.material={63977008}
 s.listed_names={63977008}
-s.material_setcode=0x1017
+s.material_setcode=SET_SYNCHRON
 function s.tfilter(c,scard,sumtype,tp)
 	return c:IsSummonCode(scard,sumtype,tp,63977008) or c:IsHasEffect(20932152)
 end
@@ -36,7 +36,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		e1:SetCountLimit(1)
 		e1:SetLabelObject(tc)
 		e1:SetOperation(s.retop)

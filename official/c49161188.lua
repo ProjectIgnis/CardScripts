@@ -53,7 +53,7 @@ function s.fusfilter(c,attr,fc,sumtype,tp)
 	return c:IsAttribute(attr,fc,sumtype,tp) and not c:IsHasEffect(511002961)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
+	return e:GetHandler():IsFusionSummoned()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

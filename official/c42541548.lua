@@ -1,4 +1,5 @@
 --鬼ゴブリン
+--Coach Goblin
 local s,id=GetID()
 function s.initial_effect(c)
 	--draw
@@ -17,7 +18,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.cfilter(c)
 	return c:IsType(TYPE_NORMAL) and c:IsAbleToDeckAsCost()

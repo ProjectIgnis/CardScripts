@@ -29,13 +29,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 	--Lists "Gunkan" archetype
-s.listed_series={0x168}
+s.listed_series={SET_GUNKAN}
 	--Specifically lists "Gunkan Suship Shari"
 s.listed_names={CARD_SUSHIP_SHARI}
 
 	--Check for a "Gunkan" card to reveal
 function s.cfilter(c)
-	return c:IsSetCard(0x168) and not c:IsPublic()
+	return c:IsSetCard(SET_GUNKAN) and not c:IsPublic()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
@@ -78,7 +78,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for a "Gunkan" monster with a level
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x168) and c:HasLevel()
+	return c:IsFaceup() and c:IsSetCard(SET_GUNKAN) and c:HasLevel()
 end
 	--Activation legality
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -103,7 +103,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetValue(lv)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil)
 		if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then

@@ -1,4 +1,5 @@
 --超能力治療
+--Supernatural Regeneration
 local s,id=GetID()
 function s.initial_effect(c)
 	--recover
@@ -28,7 +29,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	s[0]=s[0]+eg:FilterCount(Card.IsRace,nil,RACE_PSYCHIC)
 end
 function s.reccon(e,tp,eg,ep,ev,re,r,rp,chk)
-	return Duel.GetCurrentPhase()==PHASE_END
+	return Duel.IsPhase(PHASE_END)
 end
 function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return s[0]~=0 end

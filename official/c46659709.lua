@@ -1,4 +1,5 @@
 --銀河戦士
+--Galaxy Soldier
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -22,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x7b}
+s.listed_series={SET_GALAXY}
 function s.cfilter(c)
 	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsAbleToGraveAsCost()
 end
@@ -41,7 +42,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.filter(c)
-	return c:IsSetCard(0x7b) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_GALAXY) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

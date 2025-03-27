@@ -1,4 +1,5 @@
 --青き眼の祭司
+--Master with Eyes of Blue
 local s,id=GetID()
 function s.initial_effect(c)
 	--tohand
@@ -24,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xdd}
+s.listed_series={SET_BLUE_EYES}
 function s.thfilter(c)
 	return c:IsType(TYPE_TUNER) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:GetLevel()==1 and c:IsAbleToHand()
 end
@@ -49,7 +50,7 @@ function s.gvfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsAbleToGrave()
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xdd) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_BLUE_EYES) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.gvfilter(chkc) end

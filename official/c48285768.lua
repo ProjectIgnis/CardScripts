@@ -1,5 +1,5 @@
 --スプリガンズ・メリーメイカ
---Sprigguns Merry-Maker
+--Springans Merrymaker
 --Logical Nonsense
 
 --Substitute ID
@@ -36,11 +36,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 	--Lists "Sprigguns" archetype
-s.listed_series={0x158}
+s.listed_series={SET_SPRINGANS}
 
 	--Check for a "Sprigguns" monster
 function s.tgfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x158) and c:IsAbleToGrave()
+	return c:IsMonster() and c:IsSetCard(SET_SPRINGANS) and c:IsAbleToGrave()
 end
 	--Activation legality
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -76,7 +76,7 @@ function s.banop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		e1:SetLabelObject(c)
 		e1:SetCountLimit(1)
 		e1:SetOperation(s.retop)

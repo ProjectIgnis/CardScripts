@@ -1,5 +1,5 @@
 --氷結界の晶壁
---Clear Wall of the Ice Barrier
+--Freezing Chains of the Ice Barrier
 --Scripted by Hel
 local s,id=GetID()
 function s.initial_effect(c)
@@ -15,15 +15,15 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_IMMUNE_EFFECT)
 	e2:SetCondition(s.unacon)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x2f))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_ICE_BARRIER))
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetValue(s.unaval)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x2f}
+s.listed_series={SET_ICE_BARRIER}
 function s.filter(c,e,tp)
-	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsSetCard(0x2f) and c:IsLevelBelow(4)
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsSetCard(SET_ICE_BARRIER) and c:IsLevelBelow(4)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc,e,tp) end
@@ -50,13 +50,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.unafilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x2f)
+	return c:IsFaceup() and c:IsSetCard(SET_ICE_BARRIER)
 end
 function s.unacon(e)
 	return Duel.IsExistingMatchingCard(s.unafilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,3,nil)
 end
 function s.unaval(e,te)
 	local tc=te:GetOwner()
-	return tc:IsSummonType(SUMMON_TYPE_SPECIAL) and tc:IsSummonLocation(LOCATION_EXTRA) and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
+	return tc:IsSpecialSummoned() and tc:IsSummonLocation(LOCATION_EXTRA) and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
 		and te:IsActiveType(TYPE_MONSTER) and te:IsActivated() and te:GetActivateLocation()==LOCATION_MZONE
 end

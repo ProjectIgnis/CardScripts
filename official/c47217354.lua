@@ -1,4 +1,5 @@
 --魔轟神レイヴン
+--Fabled Raven
 local s,id=GetID()
 function s.initial_effect(c)
 	--lv atk up
@@ -23,13 +24,13 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 		e1:SetValue(ct*400)
 		c:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_UPDATE_LEVEL)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 		e2:SetValue(ct)
 		c:RegisterEffect(e2)
 	end

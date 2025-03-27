@@ -15,9 +15,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x14f}
+s.listed_series={SET_TRI_BRIGADE}
 function s.spfilter2(c,fg,minmat,maxmat)
-	return c:IsSetCard(0x14f) and c:IsLinkSummonable(nil,fg,minmat,maxmat)
+	return c:IsSetCard(SET_TRI_BRIGADE) and c:IsLinkSummonable(nil,fg,minmat,maxmat)
 end
 function s.rescon(sg,e,tp,mg)
 	return Duel.GetMatchingGroupCount(s.spfilter2,tp,LOCATION_EXTRA,0,nil,sg,#sg,#sg)>0
@@ -28,17 +28,17 @@ function s.filtercheck(c,e,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local fg=Duel.GetMatchingGroup(s.filtercheck,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,nil,e,tp)
+	local fg=Duel.GetMatchingGroup(s.filtercheck,tp,LOCATION_GRAVE|LOCATION_REMOVED,0,nil,e,tp)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
 	if chk==0 then return ft>0 and Duel.IsPlayerCanSpecialSummonCount(tp,2)
 		and Duel.GetLocationCountFromEx(tp,tp,nil,TYPE_LINK)>0
 		and aux.SelectUnselectGroup(fg,e,tp,1,ft,s.rescon,0)
 	end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE+LOCATION_REMOVED+LOCATION_EXTRA)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE|LOCATION_REMOVED|LOCATION_EXTRA)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local fg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.filtercheck),tp,LOCATION_GRAVE+LOCATION_REMOVED,0,nil,e,tp)
+	local fg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.filtercheck),tp,LOCATION_GRAVE|LOCATION_REMOVED,0,nil,e,tp)
 	if ft<1 or not Duel.IsPlayerCanSpecialSummonCount(tp,2) then return end
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
 	local g=aux.SelectUnselectGroup(fg,e,tp,1,ft,s.rescon,1,tp,HINTMSG_SPSUMMON,s.rescon,nil,false)
@@ -49,7 +49,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_DISABLE_EFFECT)

@@ -29,10 +29,10 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x3d,0x20}
+s.listed_series={SET_SIX_SAMURAI,SET_SHIEN}
 s.counter_place_list={0x3}
 function s.ctfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x3d)
+	return c:IsFaceup() and c:IsSetCard(SET_SIX_SAMURAI)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(s.ctfilter,1,nil) then
@@ -46,7 +46,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.filter(c,ct,e,tp)
-	return c:IsLevelBelow(ct) and (c:IsSetCard(0x3d) or c:IsSetCard(0x20)) 
+	return c:IsLevelBelow(ct) and (c:IsSetCard(SET_SIX_SAMURAI) or c:IsSetCard(SET_SHIEN)) 
 		and c:IsType(TYPE_EFFECT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

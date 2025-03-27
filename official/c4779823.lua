@@ -1,4 +1,5 @@
 --ライトロード・アーク ミカエル
+--Michael, the Arch-Lightsworn
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -39,7 +40,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.disop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x38}
+s.listed_series={SET_LIGHTSWORN}
 function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,1000) end
 	Duel.PayLPCost(tp,1000)
@@ -58,7 +59,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c)
-	return c:IsSetCard(0x38) and c:IsMonster() and c:IsAbleToDeck()
+	return c:IsSetCard(SET_LIGHTSWORN) and c:IsMonster() and c:IsAbleToDeck()
 end
 function s.rettg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end

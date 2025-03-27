@@ -38,14 +38,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetOwnerPlayer(tp)
 		e1:SetCondition(s.descon)
 		e1:SetOperation(s.desop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1,true)
 		local reg=tc:GetFlagEffectLabel(id)
 		if reg then
 			reg=(reg|att)
 			tc:SetFlagEffectLabel(id,reg)
 		else
-			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,att)
+			tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1,att)
 		end
 	end
 end

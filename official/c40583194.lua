@@ -1,4 +1,5 @@
 --フォース・リゾネーター
+--Force Resonator
 local s,id=GetID()
 function s.initial_effect(c)
 	--
@@ -30,7 +31,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_ATTACK_ANNOUNCE)
 		e1:SetOperation(s.atkop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end
@@ -41,7 +42,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
 	e1:SetTargetRange(0,0xff)
 	e1:SetValue(s.etarget)
-	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+	e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.etarget(e,re,c)

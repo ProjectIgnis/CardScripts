@@ -1,5 +1,5 @@
 --翼の魔妖－波旬
--- Hajun, the Winged Mayakashi
+--Hajun, the Winged Mayakashi
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -29,10 +29,10 @@ function s.initial_effect(c)
 	--Lizard check
 	aux.addContinuousLizardCheck(c,LOCATION_MZONE,s.lizfilter)
 end
-s.listed_series={0x121}
+s.listed_series={SET_MAYAKASHI}
 s.listed_names={id}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x121) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_MAYAKASHI) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -48,7 +48,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.sslimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(0x121)
+	return c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(SET_MAYAKASHI)
 end
 function s.lizfilter(e,c)
 	return not c:IsOriginalSetCard(0x121)

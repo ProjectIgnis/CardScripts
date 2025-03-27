@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xd8))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_DINOMIST))
 	e2:SetValue(300)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
@@ -30,9 +30,9 @@ function s.initial_effect(c)
 	e4:SetCondition(s.actcon)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xd8}
+s.listed_series={SET_DINOMIST}
 function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0xd8) and c:IsControler(tp)
+	return c:IsFaceup() and c:IsSetCard(SET_DINOMIST) and c:IsControler(tp)
 end
 function s.actcon(e)
 	local tp=e:GetHandlerPlayer()

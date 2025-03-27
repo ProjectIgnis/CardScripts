@@ -1,4 +1,5 @@
 --振り出し
+--Back to Square One
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

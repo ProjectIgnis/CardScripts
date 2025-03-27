@@ -1,4 +1,5 @@
 --超重武者ワカ－O2
+--Superheavy Samurai Blue Brawler
 local s,id=GetID()
 function s.initial_effect(c)
 	--position

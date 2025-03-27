@@ -15,19 +15,19 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,id)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.eqtg)
 	e2:SetOperation(s.eqop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x13f}
+s.listed_series={SET_PLUNDER_PATROLL}
 s.listed_names={80621422}
 
 function s.efilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x13f) and Duel.IsExistingMatchingCard(s.eqfilter,tp,LOCATION_DECK,0,1,nil,c)
+	return c:IsFaceup() and c:IsSetCard(SET_PLUNDER_PATROLL) and Duel.IsExistingMatchingCard(s.eqfilter,tp,LOCATION_DECK,0,1,nil,c)
 end
 function s.eqfilter(c,tc)
-	return not c:IsForbidden() and ((c:IsCode(80621422) and c:CheckEquipTarget(tc)) or (c:IsMonster() and c:IsSetCard(0x13f)))
+	return not c:IsForbidden() and ((c:IsCode(80621422) and c:CheckEquipTarget(tc)) or (c:IsMonster() and c:IsSetCard(SET_PLUNDER_PATROLL)))
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.efilter(chkc,tp) end
@@ -38,7 +38,7 @@ function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if not (tc and tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsControler(tp) and tc:IsSetCard(0x13f)) then return end
+	if not (tc and tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsControler(tp) and tc:IsSetCard(SET_PLUNDER_PATROLL)) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	local g=Duel.SelectMatchingCard(tp,s.eqfilter,tp,LOCATION_DECK,0,1,1,nil,tc)
 	local eq=g:GetFirst()
@@ -47,7 +47,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(s.eqlimit)
 		e1:SetLabelObject(tc)
 		eq:RegisterEffect(e1)

@@ -1,4 +1,5 @@
 --エレキツネザル
+--Wattlemur
 local s,id=GetID()
 function s.initial_effect(c)
 	--bp limit
@@ -21,10 +22,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(0,1)
 	e1:SetCondition(s.con)
 	e1:SetLabel(Duel.GetTurnCount())
-	if Duel.GetTurnPlayer()==tp then
-		e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,1)
+	if Duel.IsTurnPlayer(tp) then
+		e1:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN,1)
 	else
-		e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,2)
+		e1:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN,2)
 	end
 	Duel.RegisterEffect(e1,tp)
 end

@@ -52,7 +52,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	if Duel.SpecialSummonStep(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
-		c:RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD,0,1)
+		c:RegisterFlagEffect(id+1,RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD,0,1)
 		Duel.SpecialSummonComplete()
 	end
 end

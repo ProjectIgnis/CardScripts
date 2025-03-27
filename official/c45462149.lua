@@ -1,5 +1,5 @@
 --コード・トーカー・インヴァート
---Code Talker Invert
+--Code Talker Inverted
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+	return e:GetHandler():IsLinkSummoned()
 end
 function s.filter(c,e,tp,zone)
 	return c:IsRace(RACE_CYBERSE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)

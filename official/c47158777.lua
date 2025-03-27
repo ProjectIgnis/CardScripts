@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_DAMAGE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e2:SetCode(EVENT_PHASE|PHASE_BATTLE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(s.dmgcon)
@@ -37,19 +37,19 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 	--Related to "Destruction Sword" archetype
-s.listed_series={0xd6,0xd7}
+s.listed_series={SET_DESTRUCTION_SWORD,SET_BUSTER_BLADER}
 
 	--Check for "Destruction Sword" card to send to GY
 function s.tgfilter(c)
-	return c:IsSetCard(0xd6) and c:IsAbleToGrave()
+	return c:IsSetCard(SET_DESTRUCTION_SWORD) and c:IsAbleToGrave()
 end
 	--Check for "Buster Blader" monster
 function s.filter(c,e,tp)
-	return c:IsSetCard(0xd7) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_BUSTER_BLADER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 	--If link summoned
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+	return e:GetHandler():IsLinkSummoned()
 end
 	--Activation legality
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -72,11 +72,11 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--If it's player's Battle Phase and opponent has no monsters
 function s.dmgcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)==0
+	return Duel.IsTurnPlayer(tp) and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)==0
 end
 	--Check for "Buster Blader" monster that didn't attack
 function s.dmgfilter(c)
-	return c:GetAttackAnnouncedCount()==0 and c:IsFaceup() and c:IsSetCard(0xd7)
+	return c:GetAttackAnnouncedCount()==0 and c:IsFaceup() and c:IsSetCard(SET_BUSTER_BLADER)
 end
 	--Activation legality
 function s.dmgtg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -1,5 +1,5 @@
 --氷の王 ニードヘッグ
---Nidhogg, Generaid of Ice
+--Nidhogg, Generaider Boss of Ice
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -18,12 +18,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.disop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x134}
+s.listed_series={SET_GENERAIDER}
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return tp~=ep and Duel.GetCurrentChain()==0
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x134) or c:IsRace(RACE_WYRM)
+	return c:IsSetCard(SET_GENERAIDER) or c:IsRace(RACE_WYRM)
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil) end

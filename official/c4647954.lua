@@ -1,5 +1,5 @@
 --ＺＳ－昇華賢者
---ZS – Ascend Sage
+--ZS - Ascended Sage
 --Logical Nonsense
 
 --Substitute ID
@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 	--Lists "Utopia" and "Rank-Up-Magic" archetypes
-s.listed_series={0x107f,0x95}
+s.listed_series={SET_UTOPIA,SET_RANK_UP_MAGIC}
 
 	--If you control no cards
 function s.spcon(e,c)
@@ -37,7 +37,7 @@ end
 	--If an "Utopia" Xyz used this card as material
 function s.efcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return r==REASON_XYZ and c:GetReasonCard():IsSetCard(0x107f)
+	return r==REASON_XYZ and c:GetReasonCard():IsSetCard(SET_UTOPIA)
 end
 	--Grant effect to "Utopia "Xyz monster using this card as material
 function s.efop(e,tp,eg,ep,ev,re,r,rp)
@@ -52,24 +52,24 @@ function s.efop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCondition(s.xyzcon)
 	e1:SetTarget(s.xyztg)
 	e1:SetOperation(s.xyzop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	rc:RegisterEffect(e1,true)
 	if not rc:IsType(TYPE_EFFECT) then
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_ADD_TYPE)
 		e2:SetValue(TYPE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		rc:RegisterEffect(e2,true)
 	end
 end
 	--If Xyz summoned
 function s.xyzcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
+	return e:GetHandler():IsXyzSummoned()
 end
 	--Check for "Rank-Up-Magic" normal spell
 function s.filter(c)
-	return c:IsSetCard(0x95) and c:GetType()==TYPE_SPELL and c:IsAbleToHand()
+	return c:IsSetCard(SET_RANK_UP_MAGIC) and c:GetType()==TYPE_SPELL and c:IsAbleToHand()
 end
 	--Activation legality
 function s.xyztg(e,tp,eg,ep,ev,re,r,rp,chk)

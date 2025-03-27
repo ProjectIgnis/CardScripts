@@ -1,5 +1,5 @@
 --イチロクの魔物台帳
---Pawnshop Ledgerbook
+--Ichiroku's Ledger Book
 --Logical Nonsense
 
 --Substitute ID
@@ -35,7 +35,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetDescription(aux.Stringid(id,1))
 			e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 			e1:SetCode(EVENT_PHASE+PHASE_END)
-			e1:SetReset(RESET_PHASE+PHASE_END)
+			e1:SetReset(RESET_PHASE|PHASE_END)
 			e1:SetLabelObject(rc)
 			e1:SetCountLimit(1)
 			e1:SetOperation(s.retop)

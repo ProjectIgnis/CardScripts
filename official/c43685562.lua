@@ -1,5 +1,5 @@
 --ジョウルリ－パンクデンジャラス・ガブ
---Joururi P.U.N.K. Dangerous Gabu
+--Joruri-P.U.N.K. Dangerous Gabu
 --scripted by Rundas
 local s,id=GetID()
 function s.initial_effect(c)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.negop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x173}
+s.listed_series={SET_PUNK}
 --Negate Effect
 function s.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and not c:IsDisabled()
@@ -28,7 +28,7 @@ function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil)
 end
 function s.recfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x173)
+	return c:IsFaceup() and c:IsSetCard(SET_PUNK)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -38,13 +38,13 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetValue(RESET_TURN_SET)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e2)
 		local atk=tc:GetTextAttack()
 		if atk>0 and Duel.IsExistingMatchingCard(s.recfilter,tp,LOCATION_MZONE,0,1,nil)

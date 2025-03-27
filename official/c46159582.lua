@@ -1,4 +1,5 @@
 --リチュアの儀水鏡
+--Gishki Aquamirror
 local s,id=GetID()
 function s.initial_effect(c)
 	Ritual.AddProcEqual(c,s.ritual_filter)
@@ -14,16 +15,16 @@ function s.initial_effect(c)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x3a}
+s.listed_series={SET_GISHKI}
 function s.ritual_filter(c)
-	return c:IsSetCard(0x3a) and c:IsRitualMonster()
+	return c:IsSetCard(SET_GISHKI) and c:IsRitualMonster()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToDeckAsCost() end
 	Duel.SendtoDeck(e:GetHandler(),nil,2,REASON_COST)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x3a) and c:IsRitualMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_GISHKI) and c:IsRitualMonster() and c:IsAbleToHand()
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end

@@ -1,5 +1,5 @@
 --崩界の守護竜
---Guardragon of Corruption
+--Guardragon Cataclysm
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -58,4 +58,3 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
 	Duel.Destroy(sg,REASON_EFFECT)
 end
-

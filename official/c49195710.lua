@@ -1,4 +1,5 @@
 --CNo.65 裁断魔王ジャッジ・デビル
+--Number C65: King Overfiend
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -54,7 +55,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-1000)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UPDATE_DEFENSE)

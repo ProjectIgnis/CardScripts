@@ -28,10 +28,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x11d}
+s.listed_series={SET_FORBIDDEN}
 s.listed_names={id}
 function s.thfilter(c)
-	return (c:IsSetCard(0x11d) or c:IsCode(25789292,27243130,54773234,96864811)) and c:IsType(TYPE_QUICKPLAY) and c:IsAbleToHand()
+	return (c:IsSetCard(SET_FORBIDDEN) or c:IsCode(25789292,27243130,54773234,96864811)) and c:IsType(TYPE_QUICKPLAY) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -46,7 +46,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)
+	return Duel.IsTurnPlayer(1-tp) and (Duel.IsMainPhase())
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
@@ -68,4 +68,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-

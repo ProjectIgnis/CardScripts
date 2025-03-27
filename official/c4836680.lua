@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(s.con(POS_FACEUP_ATTACK))
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
@@ -40,9 +40,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x9f,0x99}
+s.listed_series={SET_PERFORMAPAL,SET_ODD_EYES}
 function s.thfilter(c)
-	return (c:IsSetCard(0x99) or c:IsSetCard(0x9f)) and c:IsAbleToHand()
+	return (c:IsSetCard(SET_ODD_EYES) or c:IsSetCard(SET_PERFORMAPAL)) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.thfilter(chkc) end
@@ -62,11 +62,11 @@ end
 function s.con(pos)
 	return  function(e)
 				local c=e:GetHandler()
-				return c:IsSummonType(SUMMON_TYPE_PENDULUM) and c:IsPosition(pos)
+				return c:IsPendulumSummoned() and c:IsPosition(pos)
 			end
 end
 function s.spfilter(c,e,tp)
-	return (c:IsSetCard(0x99) or c:IsSetCard(0x9f)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return (c:IsSetCard(SET_ODD_EYES) or c:IsSetCard(SET_PERFORMAPAL)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.spfilter(chkc,e,tp) end
@@ -83,7 +83,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c)
-	return (c:IsSetCard(0x99) or c:IsSetCard(0x9f)) and c:IsType(TYPE_PENDULUM)
+	return (c:IsSetCard(SET_ODD_EYES) or c:IsSetCard(SET_PERFORMAPAL)) and c:IsType(TYPE_PENDULUM)
 		and (not c:IsForbidden() or c:IsAbleToGrave())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

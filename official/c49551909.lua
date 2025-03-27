@@ -14,9 +14,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x6f}
+s.listed_series={SET_HEROIC}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x6f)
+	return c:IsFaceup() and c:IsSetCard(SET_HEROIC)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end
@@ -41,7 +41,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCondition(s.descon)
 		e1:SetTarget(s.destg)
 		e1:SetOperation(s.desop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
 		--Battle damage is shared
 		local e2=Effect.CreateEffect(c)
@@ -54,14 +54,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetCode(EFFECT_EQUIP_LIMIT)
 		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e3:SetValue(s.eqlimit)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e3)
 	else
 		c:CancelToGrave(false)
 	end
 end
 function s.eqlimit(e,c)
-	return c:GetControler()==e:GetOwnerPlayer() and c:IsSetCard(0x6f)
+	return c:GetControler()==e:GetOwnerPlayer() and c:IsSetCard(SET_HEROIC)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetEquipTarget()

@@ -1,9 +1,9 @@
 --剛鬼ザ・ジャイアント・オーガ
---Gouki the Giant Ogre
+--Gouki The Giant Ogre
 local s,id=GetID()
 function s.initial_effect(c)
 	--Link Summon procedure
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0xfc),3)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_GOUKI),3)
 	c:EnableReviveLimit()
 	--Prevent destruction by battle
 	local e1=Effect.CreateEffect(c)
@@ -46,7 +46,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.atkop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xfc}
+s.listed_series={SET_GOUKI}
 function s.immval(e,te)
 	return te:GetOwner()~=e:GetHandler() and te:IsActiveType(TYPE_MONSTER) and e:GetHandlerPlayer() ~= te:GetHandlerPlayer()
 		and te:GetOwner():GetAttack()<=e:GetHandler():GetAttack() and te:IsActivated()
@@ -76,7 +76,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(-500)
 	c:RegisterEffect(e1)
@@ -97,7 +97,6 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(1000)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 	c:RegisterEffect(e1)
 end
-

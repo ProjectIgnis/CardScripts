@@ -1,4 +1,5 @@
 --転生の予言
+--The Transmigration Prophecy
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

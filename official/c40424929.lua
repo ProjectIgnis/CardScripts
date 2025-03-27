@@ -1,4 +1,5 @@
 --烈華砲艦ナデシコ
+--Battlecruiser Dianthus
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon

@@ -1,9 +1,10 @@
 --ジェムナイト・パーズ
+--Gem-Knight Topaz
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,false,false,54620698,aux.FilterBoolFunctionEx(Card.IsSetCard,0x1047))
+	Fusion.AddProcMix(c,false,false,54620698,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_GEM_KNIGHT))
 	--spsummon condition
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
@@ -29,8 +30,8 @@ function s.initial_effect(c)
 	e4:SetValue(1)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x1047}
-s.material_setcode={0x47,0x1047}
+s.listed_series={SET_GEM_KNIGHT}
+s.material_setcode={SET_GEM,SET_GEM_KNIGHT}
 function s.splimit(e,se,sp,st)
 	return not e:GetHandler():IsLocation(LOCATION_EXTRA) or (st&SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
 end

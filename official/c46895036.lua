@@ -1,4 +1,5 @@
 --ゴーストリック・デュラハン
+--Ghostrick Dullahan
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -38,9 +39,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x8d}
+s.listed_series={SET_GHOSTRICK}
 function s.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x8d)
+	return c:IsFaceup() and c:IsSetCard(SET_GHOSTRICK)
 end
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(s.atkfilter,c:GetControler(),LOCATION_ONFIELD,0,nil)*200
@@ -64,13 +65,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(tc:GetAttack()/2)
 		tc:RegisterEffect(e1)
 	end
 end
 function s.filter(c)
-	return c:IsSetCard(0x8d) and c:IsAbleToHand()
+	return c:IsSetCard(SET_GHOSTRICK) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end

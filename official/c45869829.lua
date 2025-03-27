@@ -1,4 +1,5 @@
 --速攻魔力増幅器
+--Quick Booster
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

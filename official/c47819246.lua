@@ -1,4 +1,5 @@
 --超量機神剣－マグナスレイヤー
+--Super Quantal Mech Sword - Magnaslayer
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -35,12 +36,12 @@ function s.initial_effect(c)
 	e4:SetOperation(s.mtop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xdc}
+s.listed_series={SET_SUPER_QUANT}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0xdc) and c:IsType(TYPE_XYZ)
+	return c:IsFaceup() and c:IsSetCard(SET_SUPER_QUANT) and c:IsType(TYPE_XYZ)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end
@@ -61,20 +62,20 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetValue(s.eqlimit)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
 	else
 		c:CancelToGrave(false)
 	end
 end
 function s.eqlimit(e,c)
-	return c:GetControler()==e:GetOwnerPlayer() and c:IsSetCard(0xdc) and c:IsType(TYPE_XYZ)
+	return c:GetControler()==e:GetOwnerPlayer() and c:IsSetCard(SET_SUPER_QUANT) and c:IsType(TYPE_XYZ)
 end
 function s.atkval(e,c)
 	return c:GetRank()*100
 end
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsType(TYPE_EQUIP) and Duel.GetTurnPlayer()==tp and (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE)
+	return e:GetHandler():IsType(TYPE_EQUIP) and Duel.IsTurnPlayer(tp) and (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE)
 end
 function s.mtcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -94,7 +95,7 @@ function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_EXTRA_ATTACK)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetValue(2)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		ec:RegisterEffect(e1)
 	end
 end

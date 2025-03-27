@@ -1,4 +1,5 @@
 --RR－ブレイズ・ファルコン
+--Raidraptor - Blaze Falcon
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -55,7 +56,7 @@ function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.filter(c)
-	return c:IsSummonType(SUMMON_TYPE_SPECIAL)
+	return c:IsSpecialSummoned()
 end
 function s.destg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil) end

@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.eqop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x107a}
+s.listed_series={SET_NOBLE_KNIGHT}
 function s.dircon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP()
 end
@@ -43,7 +43,7 @@ function s.dirop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_EQUIP)
 	e1:SetProperty(EFFECT_CANNOT_DISABLE)
 	e1:SetCode(EFFECT_DIRECT_ATTACK)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	c:RegisterEffect(e1)
 end
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
@@ -52,7 +52,7 @@ function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
 		and c:CheckUniqueOnField(tp)
 end
 function s.eqfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x107a) and c:IsRace(RACE_WARRIOR)
+	return c:IsFaceup() and c:IsSetCard(SET_NOBLE_KNIGHT) and c:IsRace(RACE_WARRIOR)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.eqfilter(chkc) end

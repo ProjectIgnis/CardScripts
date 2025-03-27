@@ -1,9 +1,9 @@
--- 夜の逃飛行
--- Night Flight
--- Scripted by Hatter
+--夜の逃飛行
+--Night Flight
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Return face-up monster to hand
+	--Return face-up monster to hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -24,7 +24,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() and Duel.SendtoHand(tc,nil,REASON_EFFECT)>0
 		and tc:IsLocation(LOCATION_HAND) then
-		-- Cannot activate cards/effects with the same name
+		--Cannot activate cards/effects with the same name
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -32,7 +32,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetTargetRange(1,1)
 		e1:SetValue(s.aclimit)
 		e1:SetLabelObject(tc)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 	end
 end

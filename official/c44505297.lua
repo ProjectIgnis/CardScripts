@@ -1,5 +1,5 @@
 --甲虫装機 エクサビートル
---c44505297
+--Inzektor Exa-Beetle
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 end
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
+	return e:GetHandler():IsXyzSummoned()
 end
 function s.eqfilter(c)
 	return c:IsMonster() and not c:IsForbidden()
@@ -51,7 +51,7 @@ function s.equipop(c,e,tp,tc)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e2:SetValue(atk)
 	tc:RegisterEffect(e2)
 	local def=tc:GetTextDefense()/2
@@ -59,7 +59,7 @@ function s.equipop(c,e,tp,tc)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_EQUIP)
 	e3:SetCode(EFFECT_UPDATE_DEFENSE)
-	e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e3:SetValue(def)
 	tc:RegisterEffect(e3)
 end

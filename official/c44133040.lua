@@ -3,7 +3,7 @@
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,0x129))
+	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,SET_EVIL_EYE))
 	--Prevent destruction by battle
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_EQUIP)
@@ -45,11 +45,11 @@ function s.initial_effect(c)
 	e6:SetOperation(s.setop)
 	c:RegisterEffect(e6)
 end
-s.listed_series={0x129}
+s.listed_series={SET_EVIL_EYE}
 s.listed_names={id}
 function s.atkupcond(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetEquipTarget()
-	return ((re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and re:GetHandler():IsSetCard(0x129) and re:GetHandler()~=e:GetHandler())
+	return ((re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and re:GetHandler():IsSetCard(SET_EVIL_EYE) and re:GetHandler()~=e:GetHandler())
 		or re:GetHandler()==ec) and tp==rp
 end
 function s.atkupop(e,tp,eg,ep,ev,re,r,rp)
@@ -61,7 +61,7 @@ function s.atkupop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rfilter(c)
-	return c:IsSpellTrap() and c:IsSetCard(0x129) and c:IsAbleToRemoveAsCost() and not c:IsCode(id)
+	return c:IsSpellTrap() and c:IsSetCard(SET_EVIL_EYE) and c:IsAbleToRemoveAsCost() and not c:IsCode(id)
 end
 function s.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,1000) and Duel.IsExistingMatchingCard(s.rfilter,tp,LOCATION_GRAVE,0,1,nil) end

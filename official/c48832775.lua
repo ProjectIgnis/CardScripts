@@ -1,12 +1,12 @@
--- ダイノルフィア・ケントレギナ
--- Dinoruffia Kentregina
--- Scripted by Hatter
+--ダイノルフィア・ケントレギナ
+--Dinomorphia Kentregina
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	-- 2 “Dinoruffia” monsters with different names
+	--2 “Dinoruffia” monsters with different names
 	Fusion.AddProcMixN(c,true,true,s.ffilter,2)
-	-- Lose ATK equal to LP
+	--Lose ATK equal to LP
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(function(_,c)return -Duel.GetLP(c:GetControler())end)
 	c:RegisterEffect(e1)
-	-- Apply Normal Trap effect
+	--Apply Normal Trap effect
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_QUICK_O)
@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.eftg)
 	e2:SetOperation(s.efop)
 	c:RegisterEffect(e2)
-	-- Special Summon
+	--Special Summon
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -40,15 +40,15 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x175}
+s.listed_series={SET_DINOMORPHIA}
 function s.ffilter(c,fc,sumtype,tp,sub,mg,sg)
-	return c:IsSetCard(0x175,fc,sumtype,tp) and (not sg or not sg:IsExists(s.fusfilter,1,c,c:GetCode(fc,sumtype,tp),fc,sumtype,tp))
+	return c:IsSetCard(SET_DINOMORPHIA,fc,sumtype,tp) and (not sg or not sg:IsExists(s.fusfilter,1,c,c:GetCode(fc,sumtype,tp),fc,sumtype,tp))
 end
 function s.fusfilter(c,code,fc,sumtype,tp)
 	return c:IsSummonCode(fc,sumtype,tp,code) and not c:IsHasEffect(511002961)
 end
 function s.effilter(c)
-	return c:IsAbleToRemoveAsCost() and c:IsSetCard(0x175) and c:GetType()==TYPE_TRAP
+	return c:IsAbleToRemoveAsCost() and c:IsSetCard(SET_DINOMORPHIA) and c:GetType()==TYPE_TRAP
 		and c:CheckActivateEffect(false,true,false)~=nil 
 end
 function s.efcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -90,7 +90,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return (r&REASON_EFFECT+REASON_BATTLE)~=0
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x175) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_DINOMORPHIA) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

@@ -31,15 +31,15 @@ function s.initial_effect(c)
 	e4:SetOperation(s.tdop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x140}
+s.listed_series={SET_ADAMANCIPATOR}
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		local g=Duel.GetMatchingGroup(Card.IsSetCard,tp,LOCATION_DECK,0,nil,0x140)
+		local g=Duel.GetMatchingGroup(Card.IsSetCard,tp,LOCATION_DECK,0,nil,SET_ADAMANCIPATOR)
 		return aux.SelectUnselectGroup(g,e,tp,1,5,nil,chk)
 	end
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(Card.IsSetCard,tp,LOCATION_DECK,0,nil,0x140)
+	local g=Duel.GetMatchingGroup(Card.IsSetCard,tp,LOCATION_DECK,0,nil,SET_ADAMANCIPATOR)
 	local rg=aux.SelectUnselectGroup(g,e,tp,1,5,nil,1,tp,aux.Stringid(id,1))
 	if #rg>0 then
 		Duel.ConfirmCards(1-tp,rg)

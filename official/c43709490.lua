@@ -1,9 +1,9 @@
--- 被検体ミュートリアＧＢ－８８
--- Myutant GB-88
--- Scripted by Hatter
+--被検体ミュートリアＧＢ－８８
+--Myutant GB-88
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special summon itself from hand
+	--Special summon itself from hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.hsptg)
 	e1:SetOperation(s.hspop)
 	c:RegisterEffect(e1)
-	-- Special summon 1 level 8 "Myutant" monster, that is banished or in GY
+	--Special summon 1 level 8 "Myutant" monster, that is banished or in GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)

@@ -1,4 +1,5 @@
 --強引な番兵
+--The Forceful Sentry
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

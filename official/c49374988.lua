@@ -1,4 +1,5 @@
 --マドルチェ・メェプル
+--Madolche Baaple
 local s,id=GetID()
 function s.initial_effect(c)
 	--to deck
@@ -23,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.posop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x71}
+s.listed_series={SET_MADOLCHE}
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_DESTROY) and e:GetHandler():GetReasonPlayer()~=tp
 		and e:GetHandler():IsPreviousControler(tp)
@@ -38,7 +39,7 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter1(c)
-	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsCanChangePosition() and c:IsSetCard(0x71)
+	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsCanChangePosition() and c:IsSetCard(SET_MADOLCHE)
 end
 function s.filter2(c)
 	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsCanChangePosition()
@@ -66,7 +67,7 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,2)
+			e1:SetReset(RESETS_STANDARD_PHASE_END,2)
 			tc:RegisterEffect(e1)
 		end
 	end

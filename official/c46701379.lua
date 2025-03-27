@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x122))
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_VALKYRIE))
 	e1:SetValue(s.atkval)
 	c:RegisterEffect(e1)
 	--mill
@@ -24,14 +24,14 @@ function s.initial_effect(c)
 	e2:SetOperation(s.gyop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x122}
+s.listed_series={SET_VALKYRIE}
 s.listed_names={id}
 function s.atkval(e,c)
 	local tp=e:GetHandlerPlayer()
 	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsMonster),tp,0,LOCATION_REMOVED,nil)*200
 end
 function s.gycfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x122) and not c:IsCode(id)
+	return c:IsFaceup() and c:IsSetCard(SET_VALKYRIE) and not c:IsCode(id)
 end
 function s.gycon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.gycfilter,tp,LOCATION_MZONE,0,1,nil)

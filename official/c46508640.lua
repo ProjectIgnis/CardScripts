@@ -1,4 +1,5 @@
 --龍脈に棲む者
+--Dweller in the Depths
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy

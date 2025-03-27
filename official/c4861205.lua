@@ -1,4 +1,5 @@
 --ミイラの呼び声
+--Call of the Mummy
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

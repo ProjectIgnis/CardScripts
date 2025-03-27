@@ -5,7 +5,7 @@ function s.initial_effect(c)
 	c:SetSPSummonOnce(id)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,false,false,99645428,aux.FilterBoolFunctionEx(Card.IsSetCard,0x1047))
+	Fusion.AddProcMix(c,false,false,99645428,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_GEM_KNIGHT))
 	--spsummon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -24,19 +24,19 @@ function s.initial_effect(c)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x1047}
-s.material_setcode={0x47,0x1047}
+s.listed_series={SET_GEM_KNIGHT}
+s.material_setcode={SET_GEM,SET_GEM_KNIGHT}
 function s.splimit(e,se,sp,st)
 	return not e:GetHandler():IsLocation(LOCATION_EXTRA) or (st&SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
 end
 function s.filter(c)
-	return c:IsSetCard(0x1047) and c:IsMonster() and c:IsAbleToGrave()
+	return c:IsSetCard(SET_GEM_KNIGHT) and c:IsMonster() and c:IsAbleToGrave()
 end
 function s.ctfilter(c)
-	return c:IsSummonType(SUMMON_TYPE_SPECIAL)
+	return c:IsSpecialSummoned()
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK|LOCATION_EXTRA,0,1,nil)
 		and Duel.IsExistingMatchingCard(s.ctfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	local ct=Duel.GetMatchingGroupCount(s.ctfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	Duel.SetTargetPlayer(1-tp)
@@ -44,7 +44,7 @@ function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK|LOCATION_EXTRA,0,1,1,nil)
 	if #g>0 then
 		Duel.SendtoGrave(g,REASON_EFFECT)
 			local ct=Duel.GetOperatedGroup():FilterCount(Card.IsLocation,nil,LOCATION_GRAVE)

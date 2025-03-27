@@ -32,23 +32,23 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCountLimit(1,{id,1})
-	e3:SetCost(aux.bfgcost)
+	e3:SetCost(Cost.SelfBanish)
 	e3:SetCondition(s.tokencon)
 	e3:SetTarget(s.tokentg)
 	e3:SetOperation(s.tokenop)
 	c:RegisterEffect(e3)
 end
 s.listed_names={44308318}
-s.listed_series={0x2f}
+s.listed_series={SET_ICE_BARRIER}
 
 function s.changecon(e)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x2f),e:GetHandler():GetControler(),LOCATION_MZONE,0,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_ICE_BARRIER),e:GetHandler():GetControler(),LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.changetg(e,c)
 	return c:IsDefensePos()
 end
 function s.spcfilter(c)
-	return c:IsFaceup() and c:IsMonster() and c:IsSetCard(0x2f)
+	return c:IsFaceup() and c:IsMonster() and c:IsSetCard(SET_ICE_BARRIER)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.spcfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -64,7 +64,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function s.tokenfilter(c)
-	return c:IsFaceup() and c:IsMonster() and c:IsSetCard(0x2f)
+	return c:IsFaceup() and c:IsMonster() and c:IsSetCard(SET_ICE_BARRIER)
 end
 function s.tokencon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.tokenfilter,tp,LOCATION_MZONE,0,1,nil)

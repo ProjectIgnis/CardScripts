@@ -1,4 +1,5 @@
 --巨大戦艦 テトラン
+--B.E.S. Tetran
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x1f)

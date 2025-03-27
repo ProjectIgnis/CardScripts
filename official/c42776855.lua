@@ -1,4 +1,5 @@
 --追走の翼
+--Follow Wing
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddPersistentProcedure(c,0,s.filter,nil,nil,nil,0x1e0)
@@ -60,7 +61,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(atk)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

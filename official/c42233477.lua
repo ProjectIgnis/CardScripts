@@ -1,4 +1,5 @@
 --バーバリアン・レイジ
+--Battleguard Rage
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddPersistentProcedure(c,0,aux.FaceupFilter(Card.IsRace,RACE_WARRIOR),CATEGORY_ATKCHANGE,EFFECT_FLAG_DAMAGE_STEP,TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP,s.condition)

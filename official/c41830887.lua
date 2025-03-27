@@ -23,19 +23,19 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(aux.exccon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.sptg2)
 	e2:SetOperation(s.spop2)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x14a}
+s.listed_series={SET_APPLIANCER}
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() and chkc:IsSetCard(0x14a) end
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() and chkc:IsSetCard(SET_APPLIANCER) end
 	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and Duel.IsExistingTarget(aux.FaceupFilter(Card.IsSetCard,0x14a),tp,LOCATION_MZONE,0,1,nil,c) end
-	Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsSetCard,0x14a),tp,LOCATION_MZONE,0,1,1,nil,c)
+		and Duel.IsExistingTarget(aux.FaceupFilter(Card.IsSetCard,SET_APPLIANCER),tp,LOCATION_MZONE,0,1,nil,c) end
+	Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsSetCard,SET_APPLIANCER),tp,LOCATION_MZONE,0,1,1,nil,c)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,LOCATION_HAND)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -48,7 +48,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetCode(EFFECT_CHANGE_CODE)
 		e1:SetValue(code)
 		c:RegisterEffect(e1)
@@ -56,8 +56,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummonComplete()
 end
 function s.filter(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x14a)
-		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,e:GetHandler(),e,tp,c:GetCode())
+	return c:IsFaceup() and c:IsSetCard(SET_APPLIANCER)
+		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_HAND|LOCATION_GRAVE,0,1,e:GetHandler(),e,tp,c:GetCode())
 end
 function s.filter2(c,e,tp,code)
 	return c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -68,13 +68,13 @@ function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		and Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil,e,tp)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_GRAVE)
 end
 function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local g=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,e,tp,tc:GetCode())
+		local g=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_HAND|LOCATION_GRAVE,0,1,1,nil,e,tp,tc:GetCode())
 		if #g>0 then
 			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 		end

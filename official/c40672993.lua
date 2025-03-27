@@ -1,4 +1,5 @@
 --避雷神
+--Lightning Rod Lord
 local s,id=GetID()
 function s.initial_effect(c)
 	--actlimit

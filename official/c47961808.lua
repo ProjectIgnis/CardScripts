@@ -1,4 +1,5 @@
 --業火の結界像
+--Barrier Statue of the Inferno
 local s,id=GetID()
 function s.initial_effect(c)
 	--disable spsummon

@@ -1,5 +1,5 @@
 --翼の魔妖-天狗
---Winged Mayakashi - Tengu
+--Tengu, the Winged Mayakashi
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,0,id)
@@ -77,4 +77,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-

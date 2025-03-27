@@ -55,7 +55,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 		--During the End Phase of this turn, draw 1 card
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_PHASE|PHASE_END)
+		e1:SetCode(EVENT_PHASE+PHASE_END)
 		e1:SetCountLimit(1)
 		e1:SetOperation(function(_,_tp) Duel.Draw(_tp,1,REASON_EFFECT) end)
 		e1:SetReset(RESET_PHASE|PHASE_END)

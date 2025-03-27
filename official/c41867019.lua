@@ -32,7 +32,7 @@ function s.initial_effect(c)
 end
 s.listed_names={}
 	--Lists "Mayakashi" archetype
-s.listed_series={0x121}
+s.listed_series={SET_MAYAKASHI}
 
 	--Zombie synchro monster special summoned anywhere but extra deck
 function s.cfilter(c)
@@ -50,7 +50,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for "Mayakashi" spell/trap, except itself
 function s.setfilter(c)
-	return c:IsSetCard(0x121) and c:IsType(TYPE_TRAP+TYPE_SPELL) and c:IsSSetable() and not c:IsCode(id)
+	return c:IsSetCard(SET_MAYAKASHI) and c:IsType(TYPE_TRAP+TYPE_SPELL) and c:IsSSetable() and not c:IsCode(id)
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -91,7 +91,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local op=Duel.SelectOption(tp,table.unpack(ops))
 	if opval[op]==1 then --Draw 1 card
 		Duel.Draw(tp,1,REASON_EFFECT)
-		Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 	elseif opval[op]==2 then --Set 1 "Mayakashi" spell/trap from deck
 		local g=Duel.GetMatchingGroup(s.setfilter,tp,LOCATION_DECK,0,nil)
 		if #g>0 then
@@ -99,7 +99,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			local sg=g:Select(tp,1,1,nil)
 			Duel.SSet(tp,sg)
 			Duel.ConfirmCards(1-tp,sg)
-			Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE+PHASE_END,0,1)
+			Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_END,0,1)
 		end
 	elseif opval[op]==3 then --Send opponent's monster with lowest ATK to GY
 		local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
@@ -111,11 +111,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				Duel.HintSelection(sg)
 				Duel.SendtoGrave(sg,REASON_EFFECT)
 			else Duel.SendtoGrave(tg,REASON_EFFECT) end
-		Duel.RegisterFlagEffect(tp,id+2,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id+2,RESET_PHASE|PHASE_END,0,1)
 		end
 	elseif opval[op]==4 then --Inflict 800 damage
 		local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 			Duel.Damage(p,d,REASON_EFFECT)
-		Duel.RegisterFlagEffect(tp,id+3,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id+3,RESET_PHASE|PHASE_END,0,1)
 	end
 end

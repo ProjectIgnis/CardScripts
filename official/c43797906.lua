@@ -1,4 +1,5 @@
 --アトランティスの戦士
+--Warrior of Atlantis
 local s,id=GetID()
 function s.initial_effect(c)
 	--search

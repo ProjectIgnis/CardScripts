@@ -1,4 +1,5 @@
 --竜の霊廟
+--Dragon Shrine
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

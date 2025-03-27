@@ -1,5 +1,5 @@
 --魔獣の大餌
---Feed Back
+--Banquet of Millions
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -35,7 +35,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 			local fid=c:GetFieldID()
 			local opg=Duel.GetOperatedGroup()
 			for oc in aux.Next(opg) do
-				oc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,fid)
+				oc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1,fid)
 			end
 			opg:KeepAlive()
 			local e1=Effect.CreateEffect(c)
@@ -47,7 +47,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetLabelObject(opg)
 			e1:SetCondition(s.retcon)
 			e1:SetOperation(s.retop)
-			e1:SetReset(RESET_PHASE+PHASE_END)
+			e1:SetReset(RESET_PHASE|PHASE_END)
 			Duel.RegisterEffect(e1,tp)
 		end
 	end

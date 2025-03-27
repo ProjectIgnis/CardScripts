@@ -1,4 +1,5 @@
 --ローズ・テンタクルス
+--Rose Tentacles
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot special summon
@@ -9,7 +10,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e2:SetCode(EVENT_PHASE_START+PHASE_BATTLE_START)
+	e2:SetCode(EVENT_PHASE_START|PHASE_BATTLE_START)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetOperation(s.maop)
 	c:RegisterEffect(e2)
@@ -32,7 +33,7 @@ function s.maop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EXTRA_ATTACK)
 		e1:SetValue(ct)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_BATTLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_PHASE|PHASE_BATTLE)
 		e:GetHandler():RegisterEffect(e1)
 	end
 end

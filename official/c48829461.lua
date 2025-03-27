@@ -19,12 +19,12 @@ function s.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e2:SetRange(LOCATION_GRAVE+LOCATION_MZONE)
+	e2:SetRange(LOCATION_GRAVE|LOCATION_MZONE)
 	e2:SetCode(id)
 	e2:SetCountLimit(1,{id,1})
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x23}
+s.listed_series={SET_MALEFIC}
 s.listed_names={74509280}
 function s.spcon(e,tp,eg,ep,ev,re,r,r,rp)
 	return Duel.IsExistingMatchingCard(Card.IsFaceup,0,LOCATION_FZONE,LOCATION_FZONE,1,nil)
@@ -38,7 +38,7 @@ function s.spfilter(c,e,tp,chk)
 		and (not chk or Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,c))
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x23) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_MALEFIC) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,true) end

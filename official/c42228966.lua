@@ -44,7 +44,7 @@ s.listed_names={id}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsDamageCalculated() then return end
 	if Duel.GetAttackTarget() then
-		Duel.RegisterFlagEffect(0,id,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(0,id,RESET_PHASE|PHASE_END,0,1)
 	end
 end
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)

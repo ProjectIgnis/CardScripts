@@ -40,22 +40,22 @@ function s.initial_effect(c)
 	e5:SetLabel(c:GetOriginalCode())
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x48,0x107f}
+s.listed_series={SET_NUMBER,SET_UTOPIA}
 s.xyz_number=0
 s.listed_names={65305468}
 
 function s.xyzfilter(c,xyz,sumtype,tp)
-	return c:IsType(TYPE_XYZ,xyz,sumtype,tp) and not c:IsSetCard(0x48,xyz,sumtype,tp)
+	return c:IsType(TYPE_XYZ,xyz,sumtype,tp) and not c:IsSetCard(SET_NUMBER,xyz,sumtype,tp)
 end
 function s.xyzcheck(g,tp,xyz)
 	local mg=g:Filter(function(c) return not c:IsHasEffect(511001175) end,nil)
 	return mg:GetClassCount(Card.GetRank)==1
 end
 function s.ovfilter(c,tp,lc)
-	return c:IsFaceup() and (c:IsSetCard(0x107f,lc,SUMMON_TYPE_XYZ,tp) or c:IsSummonCode(lc,SUMMON_TYPE_XYZ,tp,65305468))
+	return c:IsFaceup() and (c:IsSetCard(SET_UTOPIA,lc,SUMMON_TYPE_XYZ,tp) or c:IsSummonCode(lc,SUMMON_TYPE_XYZ,tp,65305468))
 end
 function s.atkfilter(c)
-	return c:IsType(TYPE_XYZ) and c:IsSetCard(0x48)
+	return c:IsType(TYPE_XYZ) and c:IsSetCard(SET_NUMBER)
 end
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(s.atkfilter,c:GetControler(),LOCATION_GRAVE,LOCATION_GRAVE,nil)*500
@@ -80,7 +80,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_EXTRA_ATTACK)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end

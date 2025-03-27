@@ -1,4 +1,5 @@
 --摩天楼2－ヒーローシティ
+--Skyscraper 2 - Hero City
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -18,9 +19,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x3008}
+s.listed_series={SET_ELEMENTAL_HERO}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x3008) and (c:GetReason()&REASON_BATTLE)~=0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_ELEMENTAL_HERO) and (c:GetReason()&REASON_BATTLE)~=0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end

@@ -1,4 +1,5 @@
 --D.D.デストロイヤー
+--D.D. Destroyer
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy

@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_CHAIN,s.chainfilter)
 end
 s.listed_names={79407975,79856792}
-s.listed_series={0x1034}
+s.listed_series={SET_CRYSTAL_BEAST}
 function s.chainfilter(re,tp,cid)
 	local rc=re:GetHandler()
 	return not (re:IsActiveType(TYPE_MONSTER) and rc:IsOriginalCodeRule(79407975,79856792))
@@ -23,7 +23,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCustomActivityCount(id,tp,ACTIVITY_CHAIN)~=0
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x1034) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_CRYSTAL_BEAST) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.effop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x55,0x7b}
+s.listed_series={SET_PHOTON,SET_GALAXY}
 s.listed_names={CARD_GALAXYEYES_P_DRAGON}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -33,12 +33,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetDescription(aux.Stringid(12670770,1))
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e1:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e1:SetCountLimit(1)
 	e1:SetRange(LOCATION_SZONE)
 	e1:SetCondition(s.descon)
 	e1:SetOperation(s.desop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,3)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_STANDBY|RESET_SELF_TURN,3)
 	c:SetTurnCounter(0)
 	c:RegisterEffect(e1)
 	if s.effcost(e,tp,eg,ep,ev,re,r,rp,0)
@@ -50,7 +50,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -63,27 +63,27 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.effcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end
-	Duel.RegisterFlagEffect(tp,id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id,RESETS_STANDARD_PHASE_END,0,1)
 end
 function s.costfilter1(c,e,tp)
-	return c:IsAbleToGraveAsCost() and c:IsFaceup() and (c:IsSetCard(0x55) or c:IsSetCard(0x7b)) and Duel.GetMZoneCount(tp,c)>0
+	return c:IsAbleToGraveAsCost() and c:IsFaceup() and (c:IsSetCard(SET_PHOTON) or c:IsSetCard(SET_GALAXY)) and Duel.GetMZoneCount(tp,c)>0
 		and Duel.IsExistingMatchingCard(s.spfilter1,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetOriginalCode())
 end
 function s.spfilter1(c,e,tp,code)
-	return c:IsSetCard(0x55) and c:GetOriginalCode()~=code and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_PHOTON) and c:GetOriginalCode()~=code and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.costfilter2(c)
-	return c:IsFaceup() and (c:IsSetCard(0x55) or c:IsSetCard(0x7b))  and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and (c:IsSetCard(SET_PHOTON) or c:IsSetCard(SET_GALAXY))  and c:IsAbleToGraveAsCost()
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x55) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_PHOTON) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.costfilter3(c,e,tp)
 	return c:IsAbleToGraveAsCost() and c:IsFaceup() and c:IsCode(CARD_GALAXYEYES_P_DRAGON) and Duel.GetMZoneCount(tp,c)>0
 		and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetOriginalCode())
 end
 function s.spfilter2(c,e,tp,code)
-	return c:IsSetCard(0x55) and c:GetOriginalCode()~=code and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_PHOTON) and c:GetOriginalCode()~=code and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,c)
 end
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -156,4 +156,3 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

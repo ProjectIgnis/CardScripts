@@ -1,4 +1,5 @@
 --十二獣ラビーナ
+--Zoodiac Bunnyblast
 local s,id=GetID()
 function s.initial_effect(c)
 	--to hand
@@ -24,13 +25,13 @@ function s.initial_effect(c)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xf1}
+s.listed_series={SET_ZOODIAC}
 s.listed_names={id}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return (r&REASON_EFFECT+REASON_BATTLE)~=0
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xf1) and c:IsAbleToHand() and not c:IsCode(id)
+	return c:IsSetCard(SET_ZOODIAC) and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end

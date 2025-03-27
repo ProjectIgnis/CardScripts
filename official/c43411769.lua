@@ -1,5 +1,5 @@
 --守護竜ガルミデス
---Garmides the Guardragon
+--Guardragon Garmides
 --scripted by Logical Nonsense
 local s,id=GetID()
 function s.initial_effect(c)

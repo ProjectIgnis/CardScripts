@@ -71,7 +71,7 @@ function s.equipop(c,e,tp,tc)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
 	e2:SetCode(id)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 	tc:RegisterEffect(e2)
 end
 function s.opd(e,tp,eg,ep,ev,re,r,rp)

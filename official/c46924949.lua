@@ -1,5 +1,5 @@
 --縄張恐竜
---Beat Raptor
+--Beatraptor
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)

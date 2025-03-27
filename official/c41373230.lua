@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e2:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION) end)
+	e2:SetCondition(function(e) return e:GetHandler():IsFusionSummoned() end)
 	e2:SetOperation(s.atkop)
 	e2:SetLabelObject(e1)
 	c:RegisterEffect(e2)
@@ -58,7 +58,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsSummonType(SUMMON_TYPE_FUSION) then return end
+	if not c:IsFusionSummoned() then return end
 	--immune
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -71,7 +71,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.efilter(e,te)
 	local tc=te:GetOwner()
-	return tc:IsSummonType(SUMMON_TYPE_SPECIAL) and tc:IsSummonLocation(LOCATION_EXTRA) and tc~=e:GetHandler()
+	return tc:IsSpecialSummoned() and tc:IsSummonLocation(LOCATION_EXTRA) and tc~=e:GetHandler()
 		and te:IsMonsterEffect() and te:IsActivated() and te:GetActivateLocation()==LOCATION_MZONE
 end
 function s.regop2(e,tp,eg,ep,ev,re,r,rp)

@@ -37,7 +37,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={TOKEN_WORLD_LEGACY}
-s.listed_series={0xfe}
+s.listed_series={SET_WORLD_LEGACY}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
@@ -59,12 +59,12 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp,chk)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-3000)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 end
 function s.atktg(e,c)
-	return c:IsFaceup() and c:IsSetCard(0xfe) and c~=e:GetHandler()
+	return c:IsFaceup() and c:IsSetCard(SET_WORLD_LEGACY) and c~=e:GetHandler()
 end
 function s.tkcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(Card.IsSummonLocation,1,nil,LOCATION_EXTRA)

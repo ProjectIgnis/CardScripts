@@ -1,4 +1,5 @@
 --いたずら好きな双子悪魔
+--Delinquent Duo
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

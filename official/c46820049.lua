@@ -1,4 +1,5 @@
 --地獄将軍・メフィスト
+--Mefist the Infernal General
 local s,id=GetID()
 function s.initial_effect(c)
 	--handes

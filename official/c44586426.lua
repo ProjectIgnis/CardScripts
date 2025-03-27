@@ -1,5 +1,5 @@
 --太陽電池メン
---Solar Batteryman
+--Batteryman Solar
 local s,id=GetID()
 function s.initial_effect(c)
 	--gy
@@ -78,10 +78,10 @@ function s.nmfilter(c,cd)
 end
 function s.nmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local cd=e:GetHandler():GetCode()
-	if chkc then return chkc:IsLocation(LOCATION_MZONE+LOCATION_GRAVE) and chkc:IsControler(tp) and s.nmfilter(chkc,cd) end
-	if chk==0 then return Duel.IsExistingTarget(s.nmfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,cd) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE|LOCATION_GRAVE) and chkc:IsControler(tp) and s.nmfilter(chkc,cd) end
+	if chk==0 then return Duel.IsExistingTarget(s.nmfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil,cd) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	Duel.SelectTarget(tp,s.nmfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil,cd)
+	Duel.SelectTarget(tp,s.nmfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil,cd)
 end
 function s.nmop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -91,8 +91,7 @@ function s.nmop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_CODE)
 		e1:SetValue(tc:GetOriginalCode())
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end
-

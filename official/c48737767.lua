@@ -1,4 +1,5 @@
 --切り盛り隊長
+--Marmiting Captain
 local s,id=GetID()
 function s.initial_effect(c)
 	--todeck

@@ -1,5 +1,5 @@
 --ボーン・テンプル・ブロック
---Thunder King, the Lightningstrike Kaiju
+--Bone Temple Block
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -50,7 +50,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
 		e1:SetCondition(s.descon)
 		e1:SetOperation(s.desop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,2)
+		e1:SetReset(RESETS_STANDARD_PHASE_END,2)
 		e1:SetCountLimit(1)
 		e1:SetLabel(Duel.GetTurnCount())
 		sc:RegisterEffect(e1,true)
@@ -64,7 +64,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
 		e1:SetCondition(s.descon)
 		e1:SetOperation(s.desop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,2)
+		e1:SetReset(RESETS_STANDARD_PHASE_END,2)
 		e1:SetCountLimit(1)
 		e1:SetLabel(Duel.GetTurnCount())
 		oc:RegisterEffect(e1,true)

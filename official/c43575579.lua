@@ -26,7 +26,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.Remove(c,POS_FACEUP,REASON_EFFECT)>0 then
-		local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_DECK+LOCATION_ONFIELD+LOCATION_HAND+LOCATION_GRAVE,0,nil)
+		local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_DECK|LOCATION_ONFIELD|LOCATION_HAND|LOCATION_GRAVE,0,nil)
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 		if Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_REMOVED,0,1,nil) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
@@ -39,20 +39,20 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCountLimit(1)
 			e1:SetCondition(s.con)
 			e1:SetOperation(s.op)
-			if Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_DRAW then
+			if Duel.IsTurnPlayer(tp) and Duel.IsPhase(PHASE_DRAW) then
 				e1:SetLabel(Duel.GetTurnCount())
-				e1:SetReset(RESET_PHASE+PHASE_DRAW+RESET_SELF_TURN,2)
+				e1:SetReset(RESET_PHASE|PHASE_DRAW|RESET_SELF_TURN,2)
 			else
 				e1:SetLabel(0)
-				e1:SetReset(RESET_PHASE+PHASE_DRAW+RESET_SELF_TURN)
+				e1:SetReset(RESET_PHASE|PHASE_DRAW|RESET_SELF_TURN)
 			end
 			Duel.RegisterEffect(e1,tp)
 		end
 	end
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
-	return ep==tp and (r&REASON_RULE)~=0 and Duel.GetTurnPlayer()==tp and Duel.GetTurnCount()~=e:GetLabel() 
-		and Duel.GetCurrentPhase()==PHASE_DRAW and #eg>0
+	return ep==tp and (r&REASON_RULE)~=0 and Duel.IsTurnPlayer(tp) and Duel.GetTurnCount()~=e:GetLabel() 
+		and Duel.IsPhase(PHASE_DRAW) and #eg>0
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if #eg<1 then return end

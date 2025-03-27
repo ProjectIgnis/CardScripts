@@ -1,4 +1,5 @@
 --エクシーズ・ブロック
+--Xyz Block
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,4 +1,5 @@
 --No.55 ゴゴゴゴライアス
+--Number 55: Gogogo Goliath
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon

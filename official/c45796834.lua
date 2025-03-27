@@ -1,5 +1,5 @@
 --光天のマハー・ヴァイロ
---Lightsky Maha Vailo
+--Maha Vailo, Light of the Heavens
 --Logical Nonsense
 
 --Substitute ID
@@ -98,7 +98,7 @@ end
 function s.actcon(e)
 	local c=e:GetHandler()
 	local ph=Duel.GetCurrentPhase()
-	return c:GetEquipCount()>=4 and ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
+	return c:GetEquipCount()>=4 and Duel.IsBattlePhase()
 end
 	--If 5+ equips, this card inflicts double battle damage
 function s.damcon(e)

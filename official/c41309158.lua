@@ -1,4 +1,5 @@
 --CX 機装魔人エンジェネラル
+--CXyz Mechquipped Djinn Angeneral
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -28,7 +29,7 @@ function s.initial_effect(c)
 end
 s.listed_names={15914410}
 function s.poscon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
+	return e:GetHandler():IsXyzSummoned()
 end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsDefensePos() end

@@ -1,9 +1,10 @@
 --剣闘獣ガイザレス
+--Gladiator Beast Gyzarus
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,41470137,aux.FilterBoolFunctionEx(Card.IsSetCard,0x19))
+	Fusion.AddProcMix(c,true,true,41470137,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_GLADIATOR))
 	Fusion.AddContactProc(c,s.contactfil,s.contactop,s.splimit)
 	--destroy
 	local e3=Effect.CreateEffect(c)
@@ -20,7 +21,7 @@ function s.initial_effect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e4:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e4:SetCode(EVENT_PHASE|PHASE_BATTLE)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCondition(s.spcon)
 	e4:SetCost(s.spcost)
@@ -28,9 +29,9 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x19}
+s.listed_series={SET_GLADIATOR}
 s.listed_names={41470137}
-s.material_setcode=0x19
+s.material_setcode=SET_GLADIATOR
 function s.contactfil(tp)
 	return Duel.GetMatchingGroup(function(c) return c:IsMonster() and c:IsAbleToDeckOrExtraAsCost() end,tp,LOCATION_ONFIELD,0,nil)
 end
@@ -64,7 +65,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoDeck(c,nil,0,REASON_COST)
 end
 function s.filter(c,e,tp)
-	return not c:IsCode(41470137) and c:IsSetCard(0x19) and c:IsCanBeSpecialSummoned(e,120,tp,false,false)
+	return not c:IsCode(41470137) and c:IsSetCard(SET_GLADIATOR) and c:IsCanBeSpecialSummoned(e,120,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -84,10 +85,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local sg=g:Select(tp,2,2,nil)
 		local tc=sg:GetFirst()
 		Duel.SpecialSummonStep(tc,120,tp,tp,false,false,POS_FACEUP)
-		tc:RegisterFlagEffect(tc:GetOriginalCode(),RESET_EVENT+RESETS_STANDARD_DISABLE,0,0)
+		tc:RegisterFlagEffect(tc:GetOriginalCode(),RESET_EVENT|RESETS_STANDARD_DISABLE,0,0)
 		tc=sg:GetNext()
 		Duel.SpecialSummonStep(tc,120,tp,tp,false,false,POS_FACEUP)
-		tc:RegisterFlagEffect(tc:GetOriginalCode(),RESET_EVENT+RESETS_STANDARD_DISABLE,0,0)
+		tc:RegisterFlagEffect(tc:GetOriginalCode(),RESET_EVENT|RESETS_STANDARD_DISABLE,0,0)
 		Duel.SpecialSummonComplete()
 	end
 end

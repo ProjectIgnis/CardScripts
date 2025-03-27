@@ -27,13 +27,13 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 end
-s.listed_series={0x71}
+s.listed_series={SET_MADOLCHE}
 s.listed_names={74641045}
 function s.ovfilter(c,tp,lc)
-	return c:IsFaceup() and c:IsRankBelow(4) and c:IsSetCard(0x71,lc,SUMMON_TYPE_XYZ,tp)
+	return c:IsFaceup() and c:IsRankBelow(4) and c:IsSetCard(SET_MADOLCHE,lc,SUMMON_TYPE_XYZ,tp)
 end
 function s.tdfilter(c)
-	return c:IsSetCard(0x71) and c:IsAbleToDeck()
+	return c:IsSetCard(SET_MADOLCHE) and c:IsAbleToDeck()
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.tdfilter(chkc) end
@@ -49,7 +49,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,tp)
-	return c:IsSetCard(0x71) and c:IsLocation(LOCATION_DECK)
+	return c:IsSetCard(SET_MADOLCHE) and c:IsLocation(LOCATION_DECK)
 		and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_GRAVE)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -62,7 +62,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	c:RegisterFlagEffect(id,RESET_CHAIN,0,1)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x71) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK|POS_FACEDOWN_DEFENSE)
+	return c:IsSetCard(SET_MADOLCHE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK|POS_FACEDOWN_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

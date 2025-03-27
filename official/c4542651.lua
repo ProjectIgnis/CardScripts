@@ -1,4 +1,5 @@
 --カオス・シールド
+--Yellow Luster Shield
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate

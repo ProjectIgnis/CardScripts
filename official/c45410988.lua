@@ -5,14 +5,14 @@ function s.initial_effect(c)
 	--Activate
 	Ritual.AddProcGreater{handler=c,filter=s.ritualfil,lv=8,extrafil=s.extrafil,extratg=s.extratg}
 end
-s.listed_series={0x3b}
+s.listed_series={SET_RED_EYES}
 s.fit_monster={19025379} --should be removed in hardcode overhaul
 s.listed_names={19025379}
 function s.ritualfil(c)
 	return c:IsCode(19025379) and c:IsRitualMonster()
 end
 function s.mfilter(c)
-	return not Duel.IsPlayerAffectedByEffect(c:GetControler(),69832741) and c:HasLevel() and c:IsSetCard(0x3b)
+	return not Duel.IsPlayerAffectedByEffect(c:GetControler(),69832741) and c:HasLevel() and c:IsSetCard(SET_RED_EYES)
 		and c:IsMonster() and c:IsAbleToRemove()
 end
 function s.extrafil(e,tp,eg,ep,ev,re,r,rp,chk)

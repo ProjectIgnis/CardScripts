@@ -1,4 +1,5 @@
 --魔術師の再演
+--Magician's Restage
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -28,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x98}
+s.listed_series={SET_MAGICIAN}
 s.listed_names={id}
 function s.spfilter(c,e,tp)
 	return c:IsRace(RACE_SPELLCASTER) and c:IsLevelBelow(3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -49,7 +50,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x98) and c:GetType()==TYPE_SPELL+TYPE_CONTINUOUS and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_MAGICIAN) and c:GetType()==TYPE_SPELL+TYPE_CONTINUOUS and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

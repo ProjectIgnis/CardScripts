@@ -1,4 +1,5 @@
 --連鎖炸薬
+--Chain Burst
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

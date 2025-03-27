@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x99}
+s.listed_series={SET_ODD_EYES}
 function s.fcheck(tp,sg,fc)
 	return sg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA)<=2
 end
@@ -21,5 +21,5 @@ function s.fextra(e,tp,mg)
 	return nil
 end
 function s.exfilter(c)
-	return c:IsSetCard(0x99) and c:IsAbleToGrave()
+	return c:IsSetCard(SET_ODD_EYES) and c:IsAbleToGrave()
 end

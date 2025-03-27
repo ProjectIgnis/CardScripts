@@ -1,4 +1,5 @@
 --古代の機械爆弾
+--Ancient Gear Explosive
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,9 +12,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x7}
+s.listed_series={SET_ANCIENT_GEAR}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x7)
+	return c:IsFaceup() and c:IsSetCard(SET_ANCIENT_GEAR)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end

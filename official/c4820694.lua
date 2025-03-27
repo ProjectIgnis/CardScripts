@@ -1,4 +1,5 @@
 --セイクリッド・テンペスト
+--Constellar Tempest
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -22,7 +23,7 @@ function s.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e3:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetCountLimit(1)
@@ -31,12 +32,12 @@ function s.initial_effect(c)
 	e3:SetOperation(s.matop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x53}
+s.listed_series={SET_CONSTELLAR}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x53) and c:IsType(TYPE_XYZ) and c:GetOverlayCount()>0
+	return c:IsFaceup() and c:IsSetCard(SET_CONSTELLAR) and c:IsType(TYPE_XYZ) and c:GetOverlayCount()>0
 end
 function s.lptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -58,10 +59,10 @@ function s.lpop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tgfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x53) and c:IsType(TYPE_XYZ)
+	return c:IsFaceup() and c:IsSetCard(SET_CONSTELLAR) and c:IsType(TYPE_XYZ)
 end
 function s.mfilter(c)
-	return c:IsSetCard(0x53) and c:IsMonster()
+	return c:IsSetCard(SET_CONSTELLAR) and c:IsMonster()
 end
 function s.mattg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

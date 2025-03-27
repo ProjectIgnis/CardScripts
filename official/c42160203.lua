@@ -1,4 +1,5 @@
 --覇王眷竜ダーク・リベリオン
+--Supreme King Dragon Dark Rebellion
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -28,7 +29,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x10f8,0x20f8}
+s.listed_series={SET_SUPREME_KING_GATE,SET_SUPREME_KING_DRAGON}
 function s.matfilter(c,xyz,sumtype,tp)
 	return c:IsType(TYPE_PENDULUM,xyz,sumtype,tp) and c:IsAttribute(ATTRIBUTE_DARK,xyz,sumtype,tp)
 end
@@ -49,7 +50,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(0)
 		tc:RegisterEffect(e1)
 		if c:IsRelateToEffect(e) and c:IsFaceup() then
@@ -57,7 +58,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e2:SetCode(EFFECT_UPDATE_ATTACK)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e2:SetReset(RESETS_STANDARD_PHASE_END)
 			e2:SetValue(atk)
 			c:RegisterEffect(e2)
 		end
@@ -72,7 +73,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoDeck(c,nil,0,REASON_COST)
 end
 function s.spfilter(c,e,tp)
-	return c:IsFaceup() and (c:IsSetCard(0x10f8) or c:IsSetCard(0x20f8))
+	return c:IsFaceup() and (c:IsSetCard(SET_SUPREME_KING_GATE) or c:IsSetCard(SET_SUPREME_KING_DRAGON))
 		and c:IsType(TYPE_PENDULUM) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

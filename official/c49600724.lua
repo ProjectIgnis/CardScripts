@@ -1,4 +1,5 @@
 --異次元への隙間
+--Crevice Into the Different Dimension
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -18,12 +19,12 @@ function s.filter1(c,g)
 	return g:IsExists(Card.IsAttribute,1,c,c:GetAttribute())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE+LOCATION_GRAVE) and s.filter(chkc,e) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE|LOCATION_GRAVE) and s.filter(chkc,e) end
 	if chk==0 then
-		local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,nil,e)
+		local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE|LOCATION_GRAVE,LOCATION_MZONE|LOCATION_GRAVE,nil,e)
 		return g:IsExists(s.filter1,1,nil,g)
 	end
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,nil,e)
+	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE|LOCATION_GRAVE,LOCATION_MZONE|LOCATION_GRAVE,nil,e)
 	local rg=g:Filter(s.filter1,nil,g)
 	local tc=rg:GetFirst()
 	local att=0

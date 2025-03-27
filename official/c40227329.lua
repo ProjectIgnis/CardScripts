@@ -59,12 +59,12 @@ function s.initial_effect(c)
 	e7:SetValue(1)
 	c:RegisterEffect(e7)
 end
-s.listed_series={0xaf}
+s.listed_series={SET_DD}
 function s.damval(e,re,val,r,rp,rc)
 	local c=e:GetHandler()
 	local tp=e:GetHandlerPlayer()
 	if r&REASON_EFFECT~=0 and Duel.GetFlagEffect(tp,id)==0 then
-		Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 		return 0
 	end
 	return val
@@ -74,7 +74,7 @@ function s.ntcon(e,c,minc)
 	return minc==0 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
 function s.nttg(e,c)
-	return c:IsLevelAbove(5) and c:IsSetCard(0xaf)
+	return c:IsLevelAbove(5) and c:IsSetCard(SET_DD)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,nil,1,false,nil,e:GetHandler()) end
@@ -116,11 +116,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DIRECT_ATTACK)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e1)
 	elseif op==2 then
 		--Opponent cannot activate cards or effects in S/T zones
-		Duel.RegisterFlagEffect(1-tp,id+1,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(1-tp,id+1,RESET_PHASE|PHASE_END,0,1)
 		aux.RegisterClientHint(c,nil,tp,0,1,aux.Stringid(id,6),nil)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_FIELD)
@@ -128,11 +128,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_CANNOT_ACTIVATE)
 		e2:SetTargetRange(0,1)
 		e2:SetValue(s.aclimit1)
-		e2:SetReset(RESET_PHASE+PHASE_END)
+		e2:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e2,tp)
 	elseif op==3 then
 		--Opponent cannot activate effects in hand or GY
-		Duel.RegisterFlagEffect(1-tp,id+2,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(1-tp,id+2,RESET_PHASE|PHASE_END,0,1)
 		aux.RegisterClientHint(c,nil,tp,0,1,aux.Stringid(id,7),nil)
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_FIELD)
@@ -140,7 +140,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetCode(EFFECT_CANNOT_ACTIVATE)
 		e3:SetTargetRange(0,1)
 		e3:SetValue(s.aclimit2)
-		e3:SetReset(RESET_PHASE+PHASE_END)
+		e3:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e3,tp)
 	end
 end
@@ -155,7 +155,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 	e1:SetValue(lp)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	c:RegisterEffect(e1)
 end
 function s.aclimit1(e,re,tp)
@@ -164,5 +164,5 @@ function s.aclimit1(e,re,tp)
 end
 function s.aclimit2(e,re,tp)
 	local rc=re:GetHandler()
-	return rc and rc:IsLocation(LOCATION_HAND+LOCATION_GRAVE)
+	return rc and rc:IsLocation(LOCATION_HAND|LOCATION_GRAVE)
 end

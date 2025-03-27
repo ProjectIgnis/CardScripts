@@ -45,15 +45,15 @@ function s.initial_effect(c)
 	e7:SetValue(1)
 	c:RegisterEffect(e7)
 end
-s.listed_series={0x9a}
+s.listed_series={SET_SUPERHEAVY_SAMURAI}
 function s.splimcon(e)
 	return not e:GetHandler():IsForbidden()
 end
 function s.splimit(e,c,tp,sumtp,sumpos)
-	return not c:IsSetCard(0x9a) and (sumtp&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
+	return not c:IsSetCard(SET_SUPERHEAVY_SAMURAI) and (sumtp&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x9a) and c:HasLevel()
+	return c:IsFaceup() and c:IsSetCard(SET_SUPERHEAVY_SAMURAI) and c:HasLevel()
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -69,7 +69,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 end
@@ -84,5 +84,5 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.otfilter(c,tp)
-	return c:IsSetCard(0x9a) and (c:IsControler(tp) or c:IsFaceup())
+	return c:IsSetCard(SET_SUPERHEAVY_SAMURAI) and (c:IsControler(tp) or c:IsFaceup())
 end

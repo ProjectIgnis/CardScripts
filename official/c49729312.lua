@@ -1,5 +1,5 @@
 --礫岩の霊長－コングレード
---Kongrade, Primate of Conglomerates
+--Primineral Kongreat
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

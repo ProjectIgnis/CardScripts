@@ -1,4 +1,5 @@
 --勇気の砂時計
+--Hourglass of Courage
 local s,id=GetID()
 function s.initial_effect(c)
 	--atkup
@@ -20,16 +21,16 @@ function s.adop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_BASE_ATTACK)
 		e1:SetValue(s.atkval)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_SET_BASE_DEFENSE)
 		e2:SetValue(s.defval)
 		c:RegisterEffect(e2)
-		if Duel.GetTurnPlayer()==tp then
-			c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END+RESET_SELF_TURN,0,2)
+		if Duel.IsTurnPlayer(tp) then
+			c:RegisterFlagEffect(id,RESETS_STANDARD_DISABLE_PHASE_END|RESET_SELF_TURN,0,2)
 		else
-			c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END+RESET_SELF_TURN,0,1)
+			c:RegisterFlagEffect(id,RESETS_STANDARD_DISABLE_PHASE_END|RESET_SELF_TURN,0,1)
 		end
 	end
 end

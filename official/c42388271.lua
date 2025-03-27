@@ -79,7 +79,7 @@ function s.edfilter(c,tp)
 end
 	--If this ever happened and monster was normal summoned
 function s.dkcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.edfilter,1,nil,1-tp) and e:GetHandler():IsSummonType(SUMMON_TYPE_NORMAL) and rp~=tp
+	return eg:IsExists(s.edfilter,1,nil,1-tp) and e:GetHandler():IsNormalSummoned() and rp~=tp
 end
 	--Check for a monster
 function s.dkfilter(c)
@@ -98,4 +98,3 @@ function s.dkop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(g,REASON_EFFECT)
 	end
 end
-

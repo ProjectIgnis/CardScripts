@@ -29,7 +29,7 @@ end
 s.listed_series={SET_TRICKSTAR}
 function s.imcon(e)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_LINK) and c:GetLinkedGroup():FilterCount(Card.IsMonster,nil)==0
+	return c:IsLinkSummoned() and c:GetLinkedGroup():FilterCount(Card.IsMonster,nil)==0
 end
 function s.immval(e,te)
 	return te:GetOwner()~=e:GetHandler() and te:IsActivated() and s.imcon(e) --condition handling for mid-resolution updating

@@ -1,5 +1,5 @@
 --心太砲式
---J.E.L.L.Y. Cannon System
+--Jelly Cannon
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)

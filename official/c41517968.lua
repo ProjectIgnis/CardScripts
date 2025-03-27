@@ -1,4 +1,5 @@
 --E・HERO ダーク・ブライトマン
+--Elemental HERO Darkbright
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -34,7 +35,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 end
-s.material_setcode={0x8,0x3008}
+s.material_setcode={SET_HERO,SET_ELEMENTAL_HERO}
 function s.poscon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler()==Duel.GetAttacker() and e:GetHandler():IsRelateToBattle()
 end

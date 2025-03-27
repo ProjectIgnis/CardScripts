@@ -1,4 +1,5 @@
 --破滅の女神ルイン
+--Ruin, Queen of Oblivion
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

@@ -32,7 +32,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		local tc=eg:GetFirst()
 		if tc:IsLevelBelow(2) then
 			Duel.Destroy(tc,REASON_EFFECT)
-			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+			tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 		end
 	end
 end

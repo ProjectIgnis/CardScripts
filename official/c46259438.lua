@@ -1,4 +1,5 @@
 --契約洗浄
+--Contract Laundering
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -10,9 +11,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xae}
+s.listed_series={SET_DARK_CONTRACT}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0xae) and c:GetSequence()<5
+	return c:IsFaceup() and c:IsSetCard(SET_DARK_CONTRACT) and c:GetSequence()<5
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp)

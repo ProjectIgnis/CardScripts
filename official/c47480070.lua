@@ -1,4 +1,5 @@
 --アマゾネスの聖戦士
+--Amazoness Paladin
 local s,id=GetID()
 function s.initial_effect(c)
 	--atkup
@@ -10,10 +11,10 @@ function s.initial_effect(c)
 	e1:SetValue(s.val)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x4}
+s.listed_series={SET_AMAZONESS}
 function s.val(e,c)
 	return Duel.GetMatchingGroupCount(s.filter,c:GetControler(),LOCATION_MZONE,0,nil)*100
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x4)
+	return c:IsFaceup() and c:IsSetCard(SET_AMAZONESS)
 end

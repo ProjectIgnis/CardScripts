@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.lzcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+	return e:GetHandler():IsLinkSummoned()
 end
 function s.lzfilter(c)
 	return c:GetSequence()>4
@@ -53,7 +53,7 @@ function s.lzop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_DISABLE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetOperation(s.disop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e1:SetLabel(e:GetLabel())
 	e:GetHandler():RegisterEffect(e1)
 end

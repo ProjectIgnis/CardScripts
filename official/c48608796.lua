@@ -1,4 +1,5 @@
 --LL－アセンブリー・ナイチンゲール
+--Lyrilusc - Assembled Nightingale
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -35,7 +36,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.indop)
 	c:RegisterEffect(e4,false,REGISTER_FLAG_DETACH_XMAT)
 end
-s.listed_series={0xf7}
+s.listed_series={SET_LYRILUSC}
 function s.atkval(e,c)
 	return c:GetOverlayCount()*200
 end
@@ -54,8 +55,8 @@ function s.indop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e1:SetValue(1)
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xf7))
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_LYRILUSC))
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
@@ -66,6 +67,6 @@ function s.indop(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e3:SetTargetRange(1,0)
 	e3:SetValue(1)
-	e3:SetReset(RESET_PHASE+PHASE_END)
+	e3:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e3,tp)
 end

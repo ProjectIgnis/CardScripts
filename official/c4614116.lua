@@ -1,4 +1,5 @@
 --闇・エネルギー
+--Dark Energy
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsRace,RACE_FIEND))

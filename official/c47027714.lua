@@ -52,7 +52,7 @@ function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,eg,#eg,0,0)
 end
 function s.rmfilter(c)
-	return c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:IsAbleToRemove()
+	return c:IsSpecialSummoned() and c:IsAbleToRemove()
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -1,4 +1,5 @@
 --ダブルコストン
+--Double Coston
 local s,id=GetID()
 function s.initial_effect(c)
 	--double tribute

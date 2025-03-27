@@ -22,29 +22,29 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-s.listed_series={0x107,0xb2}
+s.listed_series={SET_FA,SET_UA}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
 	if not d then return false end
 	if d:IsControler(tp) then a,d=d,a end
-	return (a:IsSetCard(0x107) or a:IsSetCard(0xb2)) and not a:IsStatus(STATUS_BATTLE_DESTROYED)
+	return (a:IsSetCard(SET_FA) or a:IsSetCard(SET_UA)) and not a:IsStatus(STATUS_BATTLE_DESTROYED)
 		and d:IsStatus(STATUS_BATTLE_DESTROYED)
 end
 function s.spfilter(c,e,tp)
-	return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) and (c:IsSetCard(0x107) or c:IsSetCard(0xb2))
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) and (c:IsSetCard(SET_FA) or c:IsSetCard(SET_UA))
 end
 function s.sprescon(sg,e,tp,mg)
 	return sg:GetClassCount(Card.GetCode)>=#sg
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE+LOCATION_HAND,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,LOCATION_GRAVE+LOCATION_HAND)
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE|LOCATION_HAND,0,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,LOCATION_GRAVE|LOCATION_HAND)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local tg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_GRAVE+LOCATION_HAND,0,nil,e,tp)
+	local tg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_GRAVE|LOCATION_HAND,0,nil,e,tp)
 	if #tg==0 or ft<=0 then return end
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
 	local g=aux.SelectUnselectGroup(tg,e,tp,1,ft,s.sprescon,1,tp,HINTMSG_SPSUMMON)
@@ -54,5 +54,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.dmcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return ep==1-tp and tc:IsControler(tp) and (tc:IsSetCard(0x107) or tc:IsSetCard(0xb2))
+	return ep==1-tp and tc:IsControler(tp) and (tc:IsSetCard(SET_FA) or tc:IsSetCard(SET_UA))
 end

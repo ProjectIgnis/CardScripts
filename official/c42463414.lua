@@ -1,4 +1,5 @@
 --ニードル・ギルマン
+--Spined Gillman
 local s,id=GetID()
 function s.initial_effect(c)
 	--atk up

@@ -25,9 +25,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.retop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xfe}
+s.listed_series={SET_WORLD_LEGACY}
 function s.cfilter(c)
-	return c:IsSetCard(0xfe) and c:IsDiscardable()
+	return c:IsSetCard(SET_WORLD_LEGACY) and c:IsDiscardable()
 end
 function s.sumcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
@@ -45,12 +45,12 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(LOCATION_HAND,0)
 	e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
 	e1:SetValue(0x1)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_EXTRA_SET_COUNT)
 	Duel.RegisterEffect(e2,tp)
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 end
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

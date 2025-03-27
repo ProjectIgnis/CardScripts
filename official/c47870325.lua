@@ -44,7 +44,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Remove(rg,POS_FACEDOWN,REASON_EFFECT)>0 then
 		local og=Duel.GetOperatedGroup()
 		for tc in og:Iter() do
-			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+			tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 		end
 	end
 end
@@ -78,7 +78,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 			e1:SetTargetRange(1,0)
 			e1:SetValue(DOUBLE_DAMAGE)
-			e1:SetReset(RESET_PHASE+PHASE_END)
+			e1:SetReset(RESET_PHASE|PHASE_END)
 			Duel.RegisterEffect(e1,p)
 		end
 	end

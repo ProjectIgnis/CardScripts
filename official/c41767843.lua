@@ -1,4 +1,5 @@
 --幻奏の音女スコア
+--Score the Melodious Diva
 local s,id=GetID()
 function s.initial_effect(c)
 	--atkdef 0
@@ -13,13 +14,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x9b}
+s.listed_series={SET_MELODIOUS}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
 	if not d then return false end
 	if a:IsControler(1-tp) then a,d=d,a end
-	return a:IsSetCard(0x9b) and a:IsRelateToBattle() and (d:GetAttack()>0 or d:GetDefense()>0)
+	return a:IsSetCard(SET_MELODIOUS) and a:IsRelateToBattle() and (d:GetAttack()>0 or d:GetDefense()>0)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
@@ -33,7 +34,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	e1:SetValue(0)
 	d:RegisterEffect(e1)
 	local e2=e1:Clone()

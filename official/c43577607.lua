@@ -1,4 +1,5 @@
 --竜星の気脈
+--Yang Zing Prana
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -62,19 +63,19 @@ function s.initial_effect(c)
 	e6:SetLabel(5)
 	c:RegisterEffect(e6)
 end
-s.listed_series={0x9e}
+s.listed_series={SET_YANG_ZING}
 function s.confilter(c)
-	return c:IsSetCard(0x9e) and c:IsMonster()
+	return c:IsSetCard(SET_YANG_ZING) and c:IsMonster()
 end
 function s.effcon(e)
 	local g=Duel.GetMatchingGroup(s.confilter,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil)
 	return g:GetClassCount(Card.GetAttribute)>=e:GetLabel()
 end
 function s.atktg(e,c)
-	return c:IsSetCard(0x9e)
+	return c:IsSetCard(SET_YANG_ZING)
 end
 function s.repfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x9e) and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) 
+	return c:IsFaceup() and c:IsSetCard(SET_YANG_ZING) and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) 
 		and not c:IsReason(REASON_REPLACE)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)

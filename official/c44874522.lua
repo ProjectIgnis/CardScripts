@@ -38,19 +38,19 @@ function s.initial_effect(c)
 	e4:SetOperation(s.operation)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x7,0x51}
+s.listed_series={SET_ANCIENT_GEAR,SET_GADGET}
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	local flag=0
 	local tc=g:GetFirst()
 	for tc in aux.Next(g) do
-		if tc:IsSetCard(0x7) then flag=(flag|0x1) end
-		if tc:IsSetCard(0x51) then flag=(flag|0x2) end
+		if tc:IsSetCard(SET_ANCIENT_GEAR) then flag=(flag|SET_ALLY_OF_JUSTICE) end
+		if tc:IsSetCard(SET_GADGET) then flag=(flag|SET_GENEX) end
 	end
 	e:SetLabel(flag)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE)
+	return e:GetHandler():IsTributeSummoned()
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local flag=e:GetLabelObject():GetLabel()
@@ -59,7 +59,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_PIERCE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
 	end
 	if (flag&0x2)~=0 then
@@ -67,7 +67,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_EXTRA_ATTACK)
 		e2:SetValue(1)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e2)
 	end
 end

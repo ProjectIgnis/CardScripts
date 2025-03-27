@@ -15,9 +15,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xd9}
+s.listed_series={SET_SHIRANUI}
 function s.filter(c)
-	return c:IsSetCard(0xd9) and c:IsMonster() and c:IsAbleToRemove()
+	return c:IsSetCard(SET_SHIRANUI) and c:IsMonster() and c:IsAbleToRemove()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)

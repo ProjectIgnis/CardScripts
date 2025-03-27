@@ -1,5 +1,5 @@
 --Ｕ．Ａ．プレイングマネージャー
---U.A. Playing Manager
+--U.A. Player Manager
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -40,9 +40,9 @@ function s.initial_effect(c)
 	e4:SetOperation(s.disop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xb2}
+s.listed_series={SET_UA}
 function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0xb2) and c:IsSummonPlayer(tp)
+	return c:IsFaceup() and c:IsSetCard(SET_UA) and c:IsSummonPlayer(tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
@@ -76,7 +76,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.disfilter(c)
-	return c:IsFaceup() and not c:IsSetCard(0xb2)
+	return c:IsFaceup() and not c:IsSetCard(SET_UA)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.disfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
@@ -88,12 +88,12 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e2)
 	end
 end

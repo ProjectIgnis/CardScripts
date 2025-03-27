@@ -1,4 +1,5 @@
 --高等儀式術
+--Advanced Ritual Art
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Ritual.CreateProc({handler=c,lvtype=RITPROC_EQUAL,extrafil=s.extrafil,extraop=s.extraop,matfilter=s.forcedgroup})

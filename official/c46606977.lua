@@ -1,5 +1,5 @@
 --ネメシス・アンブレラ
---Nemesis Umbrella
+--Nemeses Umbrella
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)
@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x13d}
+s.listed_series={SET_NEMESES}
 s.listed_names={id}
 function s.tdfilter(c)
 	return c:IsMonster() and c:IsFaceup() and c:IsAbleToDeck() and not c:IsCode(id)
@@ -47,7 +47,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x13d) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_NEMESES) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.thfilter(chkc) end
@@ -62,4 +62,3 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end
-

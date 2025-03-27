@@ -1,5 +1,5 @@
 --夢迷枕パラソムニア
---Dream Pillow Parasomnia
+--Parasomnia Pillow
 --Logical Nonsense
 
 --Substitute ID
@@ -67,7 +67,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SET_BASE_ATTACK)
 	e1:SetValue(tc:GetBaseAttack())
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD)
 	token:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_CHANGE_RACE)

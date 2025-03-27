@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x106}
+s.listed_series={SET_VENDREAD}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetBattleTarget()~=nil
 end
@@ -37,10 +37,10 @@ end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:GetFlagEffect(id)==0
-		and Duel.IsExistingMatchingCard(s.atkcfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,c) end
+		and Duel.IsExistingMatchingCard(s.atkcfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,c) end
 	c:RegisterFlagEffect(id,RESET_CHAIN,0,1)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.atkcfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,c)
+	local g=Duel.SelectMatchingCard(tp,s.atkcfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,c)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
@@ -50,19 +50,19 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(300)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 	end
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_RITUAL)
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsRitualSummoned()
 end
 function s.thfilter(c)
 	return c:GetType()==TYPE_RITUAL+TYPE_SPELL and c:IsAbleToHand()
 end
 function s.tgfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x106) and c:IsAbleToGrave()
+	return c:IsMonster() and c:IsSetCard(SET_VENDREAD) and c:IsAbleToGrave()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil)

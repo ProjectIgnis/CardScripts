@@ -13,10 +13,10 @@ function s.initial_effect(c)
 	e1:SetHintTiming(0,TIMING_MAIN_END+TIMING_BATTLE_START)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x6b}
+s.listed_series={SET_BOUNZER}
 
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x6b)
+	return c:IsFaceup() and c:IsSetCard(SET_BOUNZER)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -34,7 +34,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		--Cannot be targeted by card effects
 		local e2=Effect.CreateEffect(e:GetHandler())
@@ -43,7 +43,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 		e2:SetValue(1)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e2)
 		local e3=Effect.CreateEffect(e:GetHandler())
 		e3:SetType(EFFECT_TYPE_FIELD)
@@ -51,7 +51,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetTargetRange(0,LOCATION_MZONE)
 		e3:SetValue(s.atklimit)
 		e3:SetLabel(tc:GetRealFieldID())
-		e3:SetReset(RESET_PHASE+PHASE_END)
+		e3:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e3,tp)
 	end
 end

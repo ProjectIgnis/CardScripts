@@ -15,17 +15,17 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x150}
+s.listed_series={SET_VIRTUAL_WORLD}
 s.listed_names={id}
 local key=TYPE_MONSTER+TYPE_SPELL+TYPE_TRAP
 function s.tgtfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x150) and Duel.IsExistingMatchingCard(s.tgvfilter,tp,LOCATION_DECK,0,1,nil,c:GetType()&key)
+	return c:IsFaceup() and c:IsSetCard(SET_VIRTUAL_WORLD) and Duel.IsExistingMatchingCard(s.tgvfilter,tp,LOCATION_DECK,0,1,nil,c:GetType()&key)
 end
 function s.tgvfilter(c,type1)
-	return c:IsAbleToGrave() and c:IsSetCard(0x150) and not c:IsType(type1)
+	return c:IsAbleToGrave() and c:IsSetCard(SET_VIRTUAL_WORLD) and not c:IsType(type1)
 end
 function s.tgvfilter2(c,type1,type2)
-	return c:IsAbleToGrave() and c:IsSetCard(0x150) and not c:IsType(type1) and not c:IsType(type2) and not c:IsCode(id)
+	return c:IsAbleToGrave() and c:IsSetCard(SET_VIRTUAL_WORLD) and not c:IsType(type1) and not c:IsType(type2) and not c:IsCode(id)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and chkc:IsControler(tp) and s.tgtfilter(chkc,tp) end
@@ -46,7 +46,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e0:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e0:SetTargetRange(1,0)
 	e0:SetTarget(s.splimit)
-	e0:SetReset(RESET_PHASE+PHASE_END)
+	e0:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e0,tp)
 	aux.RegisterClientHint(c,EFFECT_FLAG_OATH,tp,1,0,aux.Stringid(id,1),nil)
 	local tc=Duel.GetFirstTarget()

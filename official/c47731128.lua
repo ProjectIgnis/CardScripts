@@ -1,4 +1,5 @@
 --結界術師 メイコウ
+--Mei-Kou, Master of Barriers
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy

@@ -22,15 +22,15 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetCondition(s.thcd)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x23}
+s.listed_series={SET_MALEFIC}
 function s.cfilter(c,tp)
-	return c:IsSetCard(0x23)
+	return c:IsSetCard(SET_MALEFIC)
 	and (c:IsReason(REASON_BATTLE) or (c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()~=tp))
 	and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
 end
@@ -48,7 +48,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
 function s.condfilter(c,tp)
-	return c:IsSetCard(0x23)
+	return c:IsSetCard(SET_MALEFIC)
 	and not c:IsReason(REASON_BATTLE)
 	and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
 end
@@ -56,7 +56,7 @@ function s.thcd(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.condfilter,1,nil,tp)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x23) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_MALEFIC) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

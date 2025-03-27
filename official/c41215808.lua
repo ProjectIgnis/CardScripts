@@ -1,5 +1,5 @@
 --ふわんだりぃずと夢の町
---Flundereeze and the City of Dreams
+--Floowandereeze and the Dreaming Town
 --scripted by XyLeN
 local s,id=GetID()
 function s.initial_effect(c)
@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SUMMON_SUCCESS)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(s.poscon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.postg)
 	e2:SetOperation(s.posop)
 	c:RegisterEffect(e2)
@@ -34,19 +34,19 @@ function s.filter(c)
 	return c:IsLevelBelow(4) and c:IsRace(RACE_WINGEDBEAST) and c:IsSummonable(true,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_SUMMON,nil,1,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,1,nil)
 	if #g>0 then
 		Duel.Summon(tp,g:GetFirst(),true,nil)
 	end
 end
 function s.poscon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=eg:GetFirst()
-	return ec:IsFaceup() and ec:IsSummonPlayer(tp) and ec:IsSummonType(SUMMON_TYPE_TRIBUTE) and ec:IsLevelAbove(7)
+	return ec:IsFaceup() and ec:IsSummonPlayer(tp) and ec:IsTributeSummoned() and ec:IsLevelAbove(7)
 end
 function s.posfilter(c)
 	return c:IsFaceup() and c:IsCanTurnSet()

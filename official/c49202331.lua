@@ -1,4 +1,5 @@
 --CX 超巨大空中要塞バビロン
+--CXyz Skypalace Babylon
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon

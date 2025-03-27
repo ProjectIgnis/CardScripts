@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={160208008}
+s.named_material={160208008}
 function s.ffilter(c,fc,sumtype,tp)
 	return c:IsRace(RACE_WINGEDBEAST,fc,sumtype,tp) and c:IsLevelBelow(4)
 end

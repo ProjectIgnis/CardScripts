@@ -2,18 +2,18 @@
 --The Phantom Knights of Ragged Gloves
 local s,id=GetID()
 function s.initial_effect(c)
-	--An Xyz Monster that uses this card as material gains 1000 ATK
+	--A DARK Xyz Monster that was Summoned using this card on the field as material gains this effect: ● If it is Xyz Summoned: It gains 1000 ATK.
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_BE_MATERIAL)
 	e1:SetProperty(EFFECT_FLAG_EVENT_PLAYER)
+	e1:SetCode(EVENT_BE_MATERIAL)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(function(e,tp,eg,ep,ev,re,r,rp) return r==REASON_XYZ and e:GetHandler():GetReasonCard():IsAttribute(ATTRIBUTE_DARK) end)
-	e1:SetOperation(s.efop)
+	e1:SetOperation(s.effop)
 	c:RegisterEffect(e1)
 	--Send 1 "Phantom Knights" card from your Deck to the GY
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOGRAVE)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
@@ -23,16 +23,17 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tgop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_PHANTOM_KNIGHTS}
-function s.efop(e,tp,eg,ep,ev,re,r,rp)
+s.listed_series={SET_THE_PHANTOM_KNIGHTS,SET_PHANTOM_KNIGHTS}
+function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=c:GetReasonCard()
+	--● If it is Xyz Summoned: It gains 1000 ATK.
 	local e1=Effect.CreateEffect(rc)
-	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e1:SetCondition(function (e) return e:GetHandler():IsXyzSummoned() end)
+	e1:SetCondition(function(e) return e:GetHandler():IsXyzSummoned() end)
 	e1:SetOperation(s.atkop)
 	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	rc:RegisterEffect(e1,true)
@@ -52,7 +53,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tgfilter(c)
-	return c:IsSetCard(SET_PHANTOM_KNIGHTS) and c:IsAbleToGrave()
+	return (c:IsSetCard(SET_THE_PHANTOM_KNIGHTS) or (c:IsSetCard(SET_PHANTOM_KNIGHTS) and c:IsSpellTrap())) and c:IsAbleToGrave()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end

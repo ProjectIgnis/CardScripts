@@ -60,7 +60,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 		if sc:IsMonster() and Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0
 			and Duel.SpecialSummon(sc,0,tp,1-tp,false,false,POS_FACEDOWN_DEFENSE)>0 then
 			Duel.ConfirmCards(1-tp,sc)
-		elseif sc:IsType(TYPE_SPELL+TYPE_TRAP) and sc:IsSSetable() then
+		elseif sc:IsSpellTrap() and sc:IsSSetable() then
 			Duel.SSet(tp,sc,1-tp)
 		end
 	end

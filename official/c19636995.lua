@@ -37,7 +37,7 @@ function s.initial_effect(c)
 end
 function s.hspval(e,c)
 	local tp=c:GetControler()
-	local zone=0x1f
+	local zone=ZONES_MMZ
 	local lg=Duel.GetFieldGroup(tp,LOCATION_ONFIELD,LOCATION_ONFIELD)
 	for tc in aux.Next(lg) do
 		zone=zone&(~tc:GetColumnZone(LOCATION_MZONE,0,0,tp))

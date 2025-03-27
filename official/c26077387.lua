@@ -38,7 +38,7 @@ function s.spcost1(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spfilter1(c,e,tp)
 	return c:IsSetCard(SET_SKY_STRIKER_ACE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and Duel.GetLocationCountFromEx(tp,tp,e:GetHandler(),c,0x60)>0
+		and Duel.GetLocationCountFromEx(tp,tp,e:GetHandler(),c,ZONES_EMZ)>0
 end
 function s.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter1,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
@@ -48,7 +48,7 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter1,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
 	if #g>0 then
-		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP,0x60)
+		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP,ZONES_EMZ)
 	end
 end
 function s.cfilter(c,tp,rp)

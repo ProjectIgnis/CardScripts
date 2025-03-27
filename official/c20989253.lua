@@ -1,7 +1,6 @@
 --アメイズメント・ファミリーフェイス
 --Amazement Family Faces
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Equip this card to 1 monster
@@ -32,7 +31,7 @@ function s.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_EQUIP)
 	e3:SetCode(EFFECT_ADD_SETCODE)
-	e3:SetValue(0x15e)
+	e3:SetValue(SET_AMAZEMENT)
 	e3:SetCondition(s.condition)
 	c:RegisterEffect(e3)
 	--control

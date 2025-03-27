@@ -27,7 +27,7 @@ function s.filter(c)
 	return c:IsSetCard(SET_ARTIFACT) and c:IsMonster() and c:IsSSetable(true)
 end
 function s.desfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSpellTrap()
 end
 function s.desfilter2(c)
 	return c:IsSpellTrap() and c:GetSequence()<5

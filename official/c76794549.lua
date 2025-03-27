@@ -109,7 +109,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
-		local g=Duel.GetMatchingGroup(s.thfilter1,tp,0x70,0x70,nil,tp)
+		local g=Duel.GetMatchingGroup(s.thfilter1,tp,LOCATION_GRAVE|LOCATION_REMOVED|LOCATION_EXTRA,LOCATION_GRAVE|LOCATION_REMOVED|LOCATION_EXTRA,nil,tp)
 		if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,4)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,7))

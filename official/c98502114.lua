@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.val(e,c)
-	return Duel.GetMatchingGroupCount(s.filter,0,0x14,0x14,nil)*500
+	return Duel.GetMatchingGroupCount(s.filter,0,LOCATION_MZONE|LOCATION_GRAVE,LOCATION_MZONE|LOCATION_GRAVE,nil)*500
 end
 function s.filter(c)
 	return c:IsRace(RACE_DRAGON) and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())

@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop2)
 	c:RegisterEffect(e2)
 end
-s.listed_names={0x161}
+s.listed_series={SET_WAR_ROCK}
 function s.spcfilter(c,tp)
 	return c:IsControler(tp) and c:IsAttribute(ATTRIBUTE_EARTH) and c:IsRace(RACE_WARRIOR)
 end

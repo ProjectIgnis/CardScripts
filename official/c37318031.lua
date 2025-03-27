@@ -13,7 +13,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_ELEMENTAL_HERO}
 function s.filter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSpellTrap()
 end
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_ELEMENTAL_HERO)

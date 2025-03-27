@@ -1,6 +1,5 @@
 --創星神 tierra
 --Tierra, Source of Destruction
-
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -35,6 +34,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.tdop)
 	c:RegisterEffect(e4)
 end
+local LOC_HAND_FIELD_GRAVE_EXTRA=LOCATION_HAND|LOCATION_ONFIELD|LOCATION_GRAVE|LOCATION_EXTRA
 function s.rescon(sg,e,tp,mg)
 	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:GetClassCount(Card.GetCode)==#sg,sg:GetClassCount(Card.GetCode)~=#sg
 end
@@ -62,15 +62,15 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	rg:DeleteGroup()
 end
 function s.tdfilter(c)
-	return (c:IsLocation(0x1e) or (c:IsFaceup() and c:IsType(TYPE_PENDULUM))) and c:IsAbleToDeck()
+	return (c:IsLocation(LOCATION_GRAVE|LOCATION_ONFIELD|LOCATION_HAND) or (c:IsFaceup() and c:IsType(TYPE_PENDULUM))) and c:IsAbleToDeck()
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local g=Duel.GetMatchingGroup(s.tdfilter,tp,0x5e,0x5e,e:GetHandler())
+	local g=Duel.GetMatchingGroup(s.tdfilter,tp,LOC_HAND_FIELD_GRAVE_EXTRA,LOC_HAND_FIELD_GRAVE_EXTRA,e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,#g,0,0)
 	Duel.SetChainLimit(aux.FALSE)
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(s.tdfilter,tp,0x5e,0x5e,e:GetHandler())
+	local g=Duel.GetMatchingGroup(s.tdfilter,tp,LOC_HAND_FIELD_GRAVE_EXTRA,LOC_HAND_FIELD_GRAVE_EXTRA,e:GetHandler())
 	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 end

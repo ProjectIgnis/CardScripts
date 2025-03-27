@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.filter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) or (c:IsCode(id) and c:IsFaceup())
+	return c:IsSpellTrap() or (c:IsCode(id) and c:IsFaceup())
 end
 function s.filter2(c)
 	return c:IsMonster() and not c:IsRace(RACE_PLANT+RACE_BEAST)

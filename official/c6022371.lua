@@ -38,7 +38,7 @@ s.listed_names={85066822}
 
 function s.splimit(e,se,sp,st)
 	local sc=se:GetHandler()
-	return sc and sc:IsType(TYPE_SPELL+TYPE_TRAP) and sc:IsSetCard(SET_BONDING)
+	return sc and sc:IsSpellTrap() and sc:IsSetCard(SET_BONDING)
 end
 function s.atkfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_EFFECT)

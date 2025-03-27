@@ -74,10 +74,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e4,tp)
 end
 function s.indtg(e,c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSpellTrap()
 end
 function s.efilter(e,ct)
 	local te,tp=Duel.GetChainInfo(ct,CHAININFO_TRIGGERING_EFFECT,CHAININFO_TRIGGERING_PLAYER)
 	local tc=te:GetHandler()
-	return tp~=e:GetHandlerPlayer() and tc:IsType(TYPE_SPELL+TYPE_TRAP)
+	return tp~=e:GetHandlerPlayer() and tc:IsSpellTrap()
 end

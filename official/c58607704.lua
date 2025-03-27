@@ -19,7 +19,7 @@ function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	if not g or #g~=1 then return false end
 	local tc=g:GetFirst()
 	e:SetLabelObject(tc)
-	return tc:IsOnField() and tc:IsType(TYPE_SPELL+TYPE_TRAP)
+	return tc:IsOnField() and tc:IsSpellTrap()
 end
 function s.filter(c,ct)
 	return c:IsSpellTrap() and Duel.CheckChainTarget(ct,c)

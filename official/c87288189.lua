@@ -42,7 +42,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,nil,1,g:GetFirst():GetControler(),LOCATION_HAND_DECK_EXTRA_GRAVE)
 end
 function s.rmfilter(c,code)
-	return c:IsCode(code) and (c:IsLocation(0x43) or aux.SpElimFilter(c,true))
+	return c:IsCode(code) and (c:IsLocation(LOCATION_HAND|LOCATION_DECK|LOCATION_EXTRA) or aux.SpElimFilter(c,true))
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)

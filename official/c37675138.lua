@@ -26,7 +26,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 		and e:GetHandler():IsPreviousControler(tp)
 end
 function s.desfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSpellTrap()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsOnField() and s.desfilter(chkc) end

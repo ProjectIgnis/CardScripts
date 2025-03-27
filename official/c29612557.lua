@@ -27,7 +27,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 		and (ec:GetReason()&0x41)==0x41
 end
 function s.dfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSpellTrap()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

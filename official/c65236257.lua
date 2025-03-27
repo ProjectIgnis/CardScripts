@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_TELLARKNIGHT}
 function s.filter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSpellTrap()
 end
 function s.cfilter(c)
 	return c:IsSetCard(SET_TELLARKNIGHT) and c:IsFaceup()

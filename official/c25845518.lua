@@ -27,7 +27,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_DRAGUNITY}
-s.listed_names={0x29}
 function s.thfilter(c)
 	return c:IsLevelAbove(5) and c:IsSetCard(SET_DRAGUNITY) and c:IsAbleToHand()
 end

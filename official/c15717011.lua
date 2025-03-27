@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.subcon(e)
-	return e:GetHandler():IsLocation(0x1e)
+	return e:GetHandler():IsLocation(LOCATION_GRAVE|LOCATION_SZONE|LOCATION_MZONE|LOCATION_HAND)
 end
 function s.filter(c,e,tp,m,gc,chkf)
 	return c:IsType(TYPE_FUSION) and c:IsAttribute(ATTRIBUTE_LIGHT)

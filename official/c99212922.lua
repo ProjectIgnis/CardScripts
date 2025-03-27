@@ -25,5 +25,5 @@ function s.splimit(e,se,sp,st)
 	return se:GetHandler():IsSetCard(SET_NINJITSU_ART)
 end
 function s.indes(e,c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSpellTrap()
 end

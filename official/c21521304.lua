@@ -2,7 +2,7 @@
 --Number 39: Utopia Beyond
 local s,id=GetID()
 function s.initial_effect(c)
-	c:AddSetcodesRule(id,true,0x107f) --easier workaround so that Utopia Beyond (Anime) doesn't get the setcode
+	c:AddSetcodesRule(id,true,SET_UTOPIA) --easier workaround so that Utopia Beyond (Anime) doesn't get the setcode
 	--xyz summon
 	Xyz.AddProcedure(c,nil,6,2)
 	c:EnableReviveLimit()

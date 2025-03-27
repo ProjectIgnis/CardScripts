@@ -64,14 +64,14 @@ function s.stcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.sttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and
-			Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0xa3,TYPES_TOKEN,0,0,1,RACE_DRAGON,ATTRIBUTE_LIGHT)
+			Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,SET_STARDUST,TYPES_TOKEN,0,0,1,RACE_DRAGON,ATTRIBUTE_LIGHT)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 end
 function s.stop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and
-			Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0xa3,TYPES_TOKEN,0,0,1,RACE_DRAGON,ATTRIBUTE_LIGHT) then
+			Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,SET_STARDUST,TYPES_TOKEN,0,0,1,RACE_DRAGON,ATTRIBUTE_LIGHT) then
 		local token=Duel.CreateToken(tp,id+1)
 		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
 	end

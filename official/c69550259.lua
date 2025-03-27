@@ -21,14 +21,14 @@ end
 function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local sync=e:GetHandler():GetReasonCard()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x2016,TYPES_TOKEN,0,0,sync:GetLevel(),RACE_MACHINE,ATTRIBUTE_WIND) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,SET_SPEEDROID,TYPES_TOKEN,0,0,sync:GetLevel(),RACE_MACHINE,ATTRIBUTE_WIND) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,tp,0)
 end
 function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local sync=c:GetReasonCard()
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x2016,TYPES_TOKEN,0,0,sync:GetLevel(),RACE_MACHINE,ATTRIBUTE_WIND) then
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,SET_SPEEDROID,TYPES_TOKEN,0,0,sync:GetLevel(),RACE_MACHINE,ATTRIBUTE_WIND) then
 		local tk=Duel.CreateToken(tp,id+1)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

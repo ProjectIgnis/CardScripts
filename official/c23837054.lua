@@ -27,7 +27,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		local sg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_GRAVE,0,nil,e,tp)
 		local g=Duel.GetMatchingGroup(s.setfitler,tp,LOCATION_GRAVE,0,nil,0x163)
 		local gysummon=g:GetClassCount(Card.GetCode)>=8 and sg:GetClassCount(Card.GetCode)>=2
-		local tksummon=Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x163,TYPES_TOKEN,0,0,2,RACE_REPTILE,ATTRIBUTE_DARK)
+		local tksummon=Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,SET_OGDOADIC,TYPES_TOKEN,0,0,2,RACE_REPTILE,ATTRIBUTE_DARK)
 		return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and Duel.GetLocationCount(tp,LOCATION_MZONE)>1 and (tksummon or gysummon)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,0)
@@ -39,7 +39,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE,0,nil,e,tp)
 	local g=Duel.GetMatchingGroup(s.setfitler,tp,LOCATION_GRAVE,0,nil,0x163)
 	local gysummon=g:GetClassCount(Card.GetCode)>=8 and sg:GetClassCount(Card.GetCode)>=2
-	local tksummon=Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x163,TYPES_TOKEN,0,0,2,RACE_REPTILE,ATTRIBUTE_DARK)
+	local tksummon=Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,SET_OGDOADIC,TYPES_TOKEN,0,0,2,RACE_REPTILE,ATTRIBUTE_DARK)
 	--Choose option
 	local choice
 	if tksummon and gysummon then

@@ -16,7 +16,7 @@ s.listed_names={30650148}
 s.listed_series={SET_VENDREAD}
 function s.filter(c,tp)
 	return c:IsFaceup() and c:GetOriginalLevel()>0 and c:IsReleasableByEffect()
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x106,TYPES_TOKEN,0,0,c:GetLevel(),RACE_ZOMBIE,ATTRIBUTE_DARK)
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,SET_VENDREAD,TYPES_TOKEN,0,0,c:GetLevel(),RACE_ZOMBIE,ATTRIBUTE_DARK)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc,tp) end

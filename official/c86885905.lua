@@ -14,14 +14,14 @@ end
 s.listed_series={SET_ALTERGEIST}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0x103,0x21,1400,1800,4,RACE_SPELLCASTER,ATTRIBUTE_LIGHT) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,SET_ALTERGEIST,TYPE_MONSTER|TYPE_EFFECT,1400,1800,4,RACE_SPELLCASTER,ATTRIBUTE_LIGHT) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
-		or not Duel.IsPlayerCanSpecialSummonMonster(tp,id,0x103,0x21,1400,1800,4,RACE_SPELLCASTER,ATTRIBUTE_LIGHT) then return end
+		or not Duel.IsPlayerCanSpecialSummonMonster(tp,id,SET_ALTERGEIST,TYPE_MONSTER|TYPE_EFFECT,1400,1800,4,RACE_SPELLCASTER,ATTRIBUTE_LIGHT) then return end
 	c:AddMonsterAttribute(TYPE_TRAP+TYPE_EFFECT)
 	Duel.SpecialSummonStep(c,0,tp,tp,true,false,POS_FACEUP)
 	c:AddMonsterAttributeComplete()

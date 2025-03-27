@@ -20,7 +20,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) or Duel.GetLocationCount(tp,LOCATION_MZONE)<2 
-		or not Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x22,TYPES_TOKEN,0,0,1,RACE_DINOSAUR,ATTRIBUTE_FIRE) then return end
+		or not Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,SET_JURRAC,TYPES_TOKEN,0,0,1,RACE_DINOSAUR,ATTRIBUTE_FIRE) then return end
 	for i=1,2 do
 		local token=Duel.CreateToken(tp,id+1)
 		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP_DEFENSE)

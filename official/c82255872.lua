@@ -56,7 +56,7 @@ function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.cansstk(tp)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and
-	       Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x137,TYPES_TOKEN,500,500,1,RACE_BEAST_WARRIOR,ATTRIBUTE_WIND)
+	       Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,SET_ANCIENT_WARRIORS,TYPES_TOKEN,500,500,1,RACE_BEAST_WARRIOR,ATTRIBUTE_WIND)
 end
 function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return rp~=tp and s.cansstk(tp) end

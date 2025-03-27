@@ -61,7 +61,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0x2016,0x1011,0,0,1,RACE_MACHINE,ATTRIBUTE_WIND) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,SET_SPEEDROID,0x1011,0,0,1,RACE_MACHINE,ATTRIBUTE_WIND) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_LVCHANGE,g,1,0,0)
@@ -78,7 +78,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetValue(-1)
 	tc:RegisterEffect(e1)
 	if not c:IsRelateToEffect(e) or Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	if Duel.IsPlayerCanSpecialSummonMonster(tp,id,0x2016,0x1011,0,0,1,RACE_MACHINE,ATTRIBUTE_WIND) then
+	if Duel.IsPlayerCanSpecialSummonMonster(tp,id,SET_SPEEDROID,0x1011,0,0,1,RACE_MACHINE,ATTRIBUTE_WIND) then
 		c:AddMonsterAttribute(TYPE_NORMAL+TYPE_TUNER)
 		c:AssumeProperty(ASSUME_RACE,RACE_MACHINE)
 		Duel.SpecialSummonStep(c,0,tp,tp,true,false,POS_FACEUP)

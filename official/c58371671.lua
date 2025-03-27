@@ -36,7 +36,7 @@ function s.getprops(c)
 end
 function s.desfilter(c,e,tp)
 	return c:IsFaceup() and c:IsSetCard(SET_CRYSTAL_BEAST) and c:IsOriginalType(TYPE_MONSTER) and Duel.GetMZoneCount(tp,c)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x1034,TYPES_TOKEN,s.getprops(c))
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,SET_CRYSTAL_BEAST,TYPES_TOKEN,s.getprops(c))
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_ONFIELD) and s.desfilter(chkc,e,tp) end
@@ -49,7 +49,7 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x1034,TYPES_TOKEN,s.getprops(tc)) then
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,SET_CRYSTAL_BEAST,TYPES_TOKEN,s.getprops(tc)) then
 		local token=Duel.CreateToken(tp,id+1)
 		--Change Type, Attribute, Level, and ATK/DEF
 		token:Race(tc:GetOriginalRace())

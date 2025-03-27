@@ -27,14 +27,14 @@ s.listed_names={CARD_EVIL_EYE_SELENE,7610395}
 s.listed_series={SET_EVIL_EYE}
 function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x129,TYPES_TOKEN,400,400,1,RACE_FIEND,ATTRIBUTE_DARK,POS_FACEUP) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,SET_EVIL_EYE,TYPES_TOKEN,400,400,1,RACE_FIEND,ATTRIBUTE_DARK,POS_FACEUP) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 end
 s.eyefilter=aux.FaceupFilter(Card.IsCode,CARD_EVIL_EYE_SELENE)
 function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x129,TYPES_TOKEN,400,400,1,RACE_FIEND,ATTRIBUTE_DARK,POS_FACEUP) then
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,SET_EVIL_EYE,TYPES_TOKEN,400,400,1,RACE_FIEND,ATTRIBUTE_DARK,POS_FACEUP) then
 		local g=Group.FromCards(Duel.CreateToken(tp,id+1))
 		local ct=1
 		if not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and Duel.IsExistingMatchingCard(s.eyefilter,tp,LOCATION_SZONE,0,1,nil)

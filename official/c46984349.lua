@@ -16,7 +16,7 @@ end
 function s.cfilter(c,tp)
 	return c:IsMonster() and aux.SpElimFilter(c,true,true)
 		and c:IsLevelAbove(1) and c:IsAbleToRemoveAsCost() and Duel.GetMZoneCount(tp,c)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,0x21,0,0,c:GetLevel(),RACE_SPELLCASTER,ATTRIBUTE_LIGHT)
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,TYPE_MONSTER|TYPE_EFFECT,0,0,c:GetLevel(),RACE_SPELLCASTER,ATTRIBUTE_LIGHT)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil,tp) end
@@ -34,7 +34,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	local lv=e:GetLabel()
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
-		or not Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,0x21,0,0,lv,RACE_SPELLCASTER,ATTRIBUTE_LIGHT) then return end
+		or not Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,TYPE_MONSTER|TYPE_EFFECT,0,0,lv,RACE_SPELLCASTER,ATTRIBUTE_LIGHT) then return end
 	c:AddMonsterAttribute(TYPE_EFFECT+TYPE_TRAP)
 	if Duel.SpecialSummonStep(c,0,tp,tp,true,false,POS_FACEUP) then
 		c:AddMonsterAttributeComplete()

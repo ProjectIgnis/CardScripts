@@ -53,14 +53,14 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetAttackAnnouncedCount()>0
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x10b,TYPES_TOKEN,0,0,1,RACE_FIEND,ATTRIBUTE_DARK)
+	if chk==0 then return Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,SET_TINDANGLE,TYPES_TOKEN,0,0,1,RACE_FIEND,ATTRIBUTE_DARK)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x10b,TYPES_TOKEN,0,0,1,RACE_FIEND,ATTRIBUTE_DARK) then
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,SET_TINDANGLE,TYPES_TOKEN,0,0,1,RACE_FIEND,ATTRIBUTE_DARK) then
 		local token=Duel.CreateToken(tp,id+1)
 		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
 	end

@@ -46,7 +46,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_THE_PHANTOM_KNIGHTS) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0x10db,0x11,0,0,c:GetOriginalLevel(),RACE_WARRIOR,ATTRIBUTE_DARK)
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,SET_THE_PHANTOM_KNIGHTS,TYPE_MONSTER|TYPE_NORMAL,0,0,c:GetOriginalLevel(),RACE_WARRIOR,ATTRIBUTE_DARK)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.spfilter(chkc,e,tp) end
@@ -66,7 +66,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local lv=tc:GetOriginalLevel()
 	if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsRelateToEffect(e) 
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0x10db,0x11,0,0,lv,RACE_WARRIOR,ATTRIBUTE_DARK) then
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,SET_THE_PHANTOM_KNIGHTS,TYPE_MONSTER|TYPE_NORMAL,0,0,lv,RACE_WARRIOR,ATTRIBUTE_DARK) then
 		c:AddMonsterAttribute(TYPE_NORMAL,0,0,lv,0,0)
 		c:AssumeProperty(ASSUME_RACE,RACE_WARRIOR)
 		if Duel.SpecialSummonStep(c,0,tp,tp,true,false,POS_FACEUP) then

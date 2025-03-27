@@ -35,7 +35,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local ct=1
-	if Duel.GetTurnPlayer()~=tp then ct=2 end
+	if Duel.IsTurnPlayer(1-tp) then ct=2 end
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		Duel.GetControl(tc,tp,PHASE_END,ct)
 	end

@@ -41,7 +41,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	local ph=Duel.GetCurrentPhase()
 	return Duel.IsMainPhase()
 end
 function s.costfilter(c,tp)

@@ -30,7 +30,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function s.setfilter(c)
-	return c:GetType()==TYPE_TRAP and not c:IsSetCard(SET_LABRYNTH) and c:IsSSetable()
+	return c:IsNormalTrap() and not c:IsSetCard(SET_LABRYNTH) and c:IsSSetable()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

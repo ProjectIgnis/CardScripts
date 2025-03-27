@@ -29,7 +29,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.ShuffleHand(tp)
 end
 function s.filter(c)
-	return c:IsSetCard(SET_SPELLBOOK) and not c:IsCode(id) and c:GetType()==TYPE_SPELL and c:CheckActivateEffect(true,true,false)~=nil
+	return c:IsSetCard(SET_SPELLBOOK) and not c:IsCode(id) and c:IsNormalSpell() and c:CheckActivateEffect(true,true,false)~=nil
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then

@@ -29,7 +29,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsTributeSummoned() and rp~=tp
 end
 function s.thfilter(c,tp)
-	return c:IsSetCard(SET_TRUE_DRACO_KING) and c:GetType()==0x20002
+	return c:IsSetCard(SET_TRUE_DRACO_KING) and c:IsContinuousSpell()
 		and (c:IsAbleToHand() or (c:GetActivateEffect():IsActivatable(tp,true,true) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0))
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -28,7 +28,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function s.setfilter(c)
-	return c:GetType()==TYPE_SPELL and c:IsSetCard(SET_RANK_UP_MAGIC) and c:IsSSetable()
+	return c:IsNormalSpell() and c:IsSetCard(SET_RANK_UP_MAGIC) and c:IsSSetable()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())

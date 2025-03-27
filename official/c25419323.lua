@@ -29,7 +29,7 @@ function s.initial_effect(c)
 end
 s.listed_names={25419324}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_BATTLE_START and Duel.IsTurnPlayer(1-tp)
+	return Duel.IsPhase(PHASE_BATTLE_START) and Duel.IsTurnPlayer(1-tp)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

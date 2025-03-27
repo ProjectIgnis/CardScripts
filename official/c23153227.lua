@@ -29,7 +29,7 @@ s.listed_names={id}
 s.listed_series={SET_SEVENTH,SET_BARIANS,SET_RANK_UP_MAGIC}
 function s.filter(c,dct) 
 	return ((((c:IsSetCard(SET_SEVENTH) and not c:IsCode(id)) or c:IsSetCard(SET_BARIANS)) and c:IsSpellTrap())
-		or (c:IsSetCard(SET_RANK_UP_MAGIC) and c:GetType()==TYPE_QUICKPLAY+TYPE_SPELL))
+		or (c:IsSetCard(SET_RANK_UP_MAGIC) and c:IsQuickPlaySpell()))
 		and (c:IsAbleToHand() or dct>1)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

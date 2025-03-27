@@ -23,9 +23,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.condition2(e,tp,eg,ep,ev,re,r,rp)
-	local tn=Duel.GetTurnPlayer()
-	local ph=Duel.GetCurrentPhase()
-	return tn~=tp and (Duel.IsMainPhase() or Duel.IsBattlePhase())
+	return Duel.IsTurnPlayer(1-tp) and (Duel.IsMainPhase() or Duel.IsBattlePhase())
 end
 function s.filter(c)
 	return c:IsSummonable(true,nil,1) or c:IsMSetable(true,nil,1)

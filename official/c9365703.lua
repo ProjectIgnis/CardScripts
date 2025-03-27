@@ -25,7 +25,7 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET|RESET_PHASE|PHASE_END,0,1)
 end
 function s.dacon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_BATTLE_STEP and Duel.GetCurrentChain()==0
+	return Duel.IsPhase(PHASE_BATTLE_STEP) and Duel.GetCurrentChain()==0
 		and e:GetHandler():GetFlagEffect(id)~=0
 end
 function s.daop(e,tp,eg,ep,ev,re,r,rp)

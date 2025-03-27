@@ -68,7 +68,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(0x48,1)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsTurnPlayer(tp) and Duel.GetCurrentPhase()==PHASE_MAIN2
+	return Duel.IsTurnPlayer(tp) and Duel.IsPhase(PHASE_MAIN2)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x48,1,REASON_EFFECT)

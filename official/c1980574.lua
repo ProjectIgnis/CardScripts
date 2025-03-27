@@ -19,9 +19,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.sccon(e,tp,eg,ep,ev,re,r,rp)
-	local ph=Duel.GetCurrentPhase()
-	return not e:GetHandler():IsStatus(STATUS_CHAINING) and Duel.GetTurnPlayer()~=tp
-		and (Duel.IsMainPhase())
+	return not e:GetHandler():IsStatus(STATUS_CHAINING) and Duel.IsTurnPlayer(1-tp) and Duel.IsMainPhase()
 end
 function s.scfilter1(c,tp,mc)
 	return c:IsFaceup()

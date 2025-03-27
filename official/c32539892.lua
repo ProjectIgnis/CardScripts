@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetPreviousLocation()==LOCATION_HAND and (r&0x4040)==0x4040 and rp~=tp
+	return e:GetHandler():GetPreviousLocation()==LOCATION_HAND and r&(REASON_DISCARD|REASON_EFFECT)==REASON_DISCARD|REASON_EFFECT and rp~=tp
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

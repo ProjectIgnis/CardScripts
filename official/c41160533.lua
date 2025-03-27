@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.maop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetTurnPlayer()~=tp then return end
+	if Duel.IsTurnPlayer(1-tp) then return end
 	local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsRace,RACE_PLANT),tp,0,LOCATION_MZONE,nil)
 	if ct~=0 then
 		local e1=Effect.CreateEffect(e:GetHandler())

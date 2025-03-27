@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.rmfilter(c)
-	return c:GetType()==TYPE_TRAP and c:IsAbleToRemove()
+	return c:IsNormalTrap() and c:IsAbleToRemove()
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.rmfilter(chkc) end
@@ -27,7 +27,7 @@ end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local c=e:GetHandler()
-	if tc:IsRelateToEffect(e) and tc:GetType()==TYPE_TRAP and Duel.Remove(tc,POS_FACEUP,REASON_COST)>0
+	if tc:IsRelateToEffect(e) and tc:IsNormalTrap() and Duel.Remove(tc,POS_FACEUP,REASON_COST)>0
 		and c:IsFaceup() and c:IsRelateToEffect(e) then
 		--Increase ATK
 		local e1=Effect.CreateEffect(c)

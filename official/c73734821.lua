@@ -57,7 +57,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return c:IsFaceup() and c:GetType()==TYPE_SPELL+TYPE_CONTINUOUS and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsContinuousSpell() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_SZONE) and chkc:IsControler(tp) and s.thfilter(chkc) end
@@ -67,7 +67,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 end
 function s.tffilter(c,tp)
-	return c:IsSetCard(SET_MAGICIAN) and c:GetType()==TYPE_SPELL+TYPE_CONTINUOUS and c:GetActivateEffect():IsActivatable(tp,true)
+	return c:IsSetCard(SET_MAGICIAN) and c:IsContinuousSpell() and c:GetActivateEffect():IsActivatable(tp,true)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

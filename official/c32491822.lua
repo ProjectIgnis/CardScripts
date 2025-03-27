@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.spfilter(c)
-	return c:IsFaceup() and c:GetType()==TYPE_SPELL+TYPE_CONTINUOUS and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and c:IsContinuousSpell() and c:IsAbleToGraveAsCost()
 end
 function s.exfilter(c)
 	return s.spfilter(c) or (c:IsFacedown() and c:IsSpell() and c:IsAbleToGraveAsCost())

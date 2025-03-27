@@ -54,9 +54,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Damage(p,tc:GetLevel()*200,REASON_EFFECT)
 	end
 end
-
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	local ph=Duel.GetCurrentPhase()
 	return Duel.IsBattlePhase()
 end
 function s.spfil1(c,e,tp)

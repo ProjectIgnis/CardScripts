@@ -24,7 +24,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetFlagEffect(id)~=0 and Duel.GetCurrentPhase()==PHASE_MAIN2
+	return e:GetHandler():GetFlagEffect(id)~=0 and Duel.IsPhase(PHASE_MAIN2)
 end
 function s.cfilter(c)
 	return c:IsSpell() and c:IsAbleToGraveAsCost()
@@ -48,7 +48,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e2,tp)
 end
 function s.filter(c)
-	return c:GetType()==TYPE_SPELL+TYPE_CONTINUOUS and c:IsSSetable()
+	return c:IsContinuousSpell() and c:IsSSetable()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0

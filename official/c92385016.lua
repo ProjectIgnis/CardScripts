@@ -65,7 +65,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 	--Check for "Mysterune" Continuous Spell
 function s.thfilter(c)
-	return c:GetType()==TYPE_SPELL+TYPE_CONTINUOUS and c:IsSetCard(SET_RUNICK) and c:IsAbleToHand()
+	return c:IsContinuousSpell() and c:IsSetCard(SET_RUNICK) and c:IsAbleToHand()
 end
 	--Activation legality
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

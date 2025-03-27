@@ -84,7 +84,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetTurnPlayer()~=tp or Duel.GetTurnCount()==e:GetLabel() then return false end
+	if Duel.IsTurnPlayer(1-tp) or Duel.GetTurnCount()==e:GetLabel() then return false end
 	local tc=e:GetLabelObject()
 	return tc:IsRelateToEffect(e)
 end

@@ -44,7 +44,7 @@ end
 function s.target1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsNegatable() end
 	if chk==0 then return true end
-	if Duel.GetTurnPlayer()~=tp and Duel.IsPhase(PHASE_STANDBY)
+	if Duel.IsTurnPlayer(1-tp) and Duel.IsPhase(PHASE_STANDBY)
 		and Duel.IsExistingTarget(Card.IsNegatable,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 		and Duel.SelectYesNo(tp,94) then
 		e:SetProperty(EFFECT_FLAG_CARD_TARGET)

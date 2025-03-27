@@ -1,7 +1,6 @@
 --夢魔鏡の白騎士－ルペウス
 --Morpheus, the Dream Mirror White Knight
 --Scripted by Naim
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Make itself unable to be destroyed by battle or card effects
@@ -30,7 +29,6 @@ function s.initial_effect(c)
 end
 s.listed_names={38267552,CARD_DREAM_MIRROR_TERROR}
 s.listed_series={SET_DREAM_MIRROR}
-
 function s.indcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
 	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(SET_DREAM_MIRROR)
@@ -53,9 +51,8 @@ function s.indop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	local ph=Duel.GetCurrentPhase()
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_DREAM_MIRROR_TERROR),tp,LOCATION_FZONE,LOCATION_FZONE,1,nil,tp) 
-		and (ph==PHASE_MAIN1 or Duel.IsBattlePhase() or ph==PHASE_MAIN2)
+		and (Duel.IsMainPhase() or Duel.IsBattlePhase())
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end

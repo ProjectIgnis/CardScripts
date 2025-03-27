@@ -21,7 +21,7 @@ function s.chainfilter(re,tp,cid)
 	return re:GetHandler():IsSetCard(SET_BUJIN)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN2
+	return Duel.IsPhase(PHASE_MAIN2)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

@@ -24,7 +24,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.atkcon(e)
-	local ph=Duel.GetCurrentPhase()
 	local tp=Duel.GetTurnPlayer()
 	return tp==e:GetHandler():GetControler() and Duel.IsBattlePhase()
 end

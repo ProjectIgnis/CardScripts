@@ -65,7 +65,7 @@ function s.confilter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_NOBLE_KNIGHT)
 end
 function s.effcon(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetTurnPlayer()~=tp then return false end
+	if Duel.IsTurnPlayer(1-tp) then return false end
 	local g=Duel.GetMatchingGroup(s.confilter,tp,LOCATION_GRAVE|LOCATION_ONFIELD,0,nil)
 	return g:GetClassCount(Card.GetCode)>=e:GetLabel()
 end
@@ -126,7 +126,7 @@ function s.operation3(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.condition4(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetTurnPlayer()~=tp then return false end
+	if Duel.IsTurnPlayer(1-tp) then return false end
 	local g=Duel.GetMatchingGroup(s.confilter,tp,LOCATION_GRAVE|LOCATION_ONFIELD,0,nil)
 	return g:GetClassCount(Card.GetCode)==12
 end

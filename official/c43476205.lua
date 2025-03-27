@@ -51,7 +51,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if Duel.GetTurnPlayer()~=tp then
+	if Duel.IsTurnPlayer(1-tp) then
 		if not tc or not tc:IsRelateToEffect(e) or not tc:IsFaceup() or Duel.GetControl(tc,tp)==0 then return end
 		Duel.BreakEffect()
 	end

@@ -35,7 +35,7 @@ function s.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(c,REASON_COST+REASON_DISCARD)
 end
 function s.setfilter(c)
-	return c:GetType()==TYPE_SPELL+TYPE_CONTINUOUS and c:IsSetCard(SET_FUSION) and c:IsSSetable()
+	return c:IsContinuousSpell() and c:IsSetCard(SET_FUSION) and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK,0,1,nil) end

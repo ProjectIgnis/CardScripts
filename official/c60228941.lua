@@ -15,7 +15,7 @@ end
 s.listed_series={SET_DARK_WORLD}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	e:SetLabel(e:GetHandler():GetPreviousControler())
-	return e:GetHandler():IsPreviousLocation(LOCATION_HAND) and (r&0x4040)==0x4040
+	return e:GetHandler():IsPreviousLocation(LOCATION_HAND) and r&(REASON_DISCARD|REASON_EFFECT)==REASON_DISCARD|REASON_EFFECT
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter2(chkc,e,tp) end

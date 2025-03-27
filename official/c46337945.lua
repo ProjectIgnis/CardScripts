@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_GISHKI}
 function s.costfilter(c)
-	return not c:IsPublic() and c:GetType()==0x82
+	return not c:IsPublic() and c:IsRitualSpell()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end

@@ -17,7 +17,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and not rc:IsStatus(STATUS_ACT_FROM_HAND) 
 		and rc:IsPreviousPosition(POS_FACEDOWN) and rp==tp 
-		and rc:GetType()==TYPE_TRAP and not rc:IsCode(id)
+		and rc:IsNormalTrap() and not rc:IsCode(id)
 		and rc:CheckActivateEffect(false,true,true)~=nil
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

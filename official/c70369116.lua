@@ -48,7 +48,7 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.copfilter(c)
-	return c:IsAbleToGraveAsCost() and c:IsSetCard(SET_FUSION) and (c:GetType()==TYPE_SPELL or c:GetType()==TYPE_SPELL+TYPE_QUICKPLAY) and c:CheckActivateEffect(true,true,false)~=nil 
+	return c:IsAbleToGraveAsCost() and c:IsSetCard(SET_FUSION) and (c:IsNormalSpell() or c:IsQuickPlaySpell()) and c:CheckActivateEffect(true,true,false)~=nil 
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,2000) and Duel.IsExistingMatchingCard(s.copfilter,tp,LOCATION_DECK,0,1,nil) end

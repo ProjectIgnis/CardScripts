@@ -45,7 +45,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.BreakEffect()
 		local a=eqc
 		local d=tc
-		if Duel.GetTurnPlayer()~=tp then
+		if Duel.IsTurnPlayer(1-tp) then
 			a=tc
 			d=eqc
 		end

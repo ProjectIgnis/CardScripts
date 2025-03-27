@@ -33,7 +33,7 @@ s.xyz_number=104
 function s.condition(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ph=Duel.GetCurrentPhase()
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and ep~=tp
-		and (ph>PHASE_MAIN1 and ph<PHASE_MAIN2) and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
+		and Duel.IsBattlePhase() and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end

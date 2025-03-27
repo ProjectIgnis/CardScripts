@@ -17,7 +17,7 @@ function s.initial_effect(c)
 end
 s.listed_names={74983882}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN2
+	return Duel.IsPhase(PHASE_MAIN2)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,500) end

@@ -22,7 +22,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,1000)
 end
 function s.filter(c)
-	return c:GetType()==0x4 and not c:IsCode(id) and c:IsAbleToRemove() and c:CheckActivateEffect(false,true,false)~=nil
+	return c:IsNormalTrap() and not c:IsCode(id) and c:IsAbleToRemove() and c:CheckActivateEffect(false,true,false)~=nil
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then

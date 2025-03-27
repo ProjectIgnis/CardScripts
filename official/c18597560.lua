@@ -16,7 +16,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={CARD_CYBER_DRAGON}
-
 function s.cfilter(c,e,tp)
 	return c:IsCode(CARD_CYBER_DRAGON) and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c)
 end
@@ -26,7 +25,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(g,REASON_COST)
 end
 function s.filter(c,e,tp,mc)
-	return c:IsType(TYPE_FUSION) and c:ListsArchetypeAsMaterial(0x1093) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsType(TYPE_FUSION) and c:ListsArchetypeAsMaterial(SET_CYBER_DRAGON) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

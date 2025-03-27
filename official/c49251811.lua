@@ -25,5 +25,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.distarget(e,c)
-	return c:GetType()==TYPE_CONTINUOUS+TYPE_SPELL
+	return c:IsContinuousSpell()
 end

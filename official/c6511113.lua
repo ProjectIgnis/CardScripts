@@ -61,7 +61,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	return true
 end
 function s.filter(c)
-	return c:GetType()==TYPE_TRAP and (c:IsSetCard(SET_TRAP_HOLE) or c:IsSetCard(SET_HOLE)) and c:IsAbleToGraveAsCost()
+	return c:IsNormalTrap() and (c:IsSetCard(SET_TRAP_HOLE) or c:IsSetCard(SET_HOLE)) and c:IsAbleToGraveAsCost()
 		and c:CheckActivateEffect(false,true,true)~=nil
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

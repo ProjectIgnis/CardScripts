@@ -43,7 +43,7 @@ s.listed_series={SET_TRAP_HOLE,SET_HOLE}
 	--Unaffected by "Hole" normal trap cards
 function s.efilter(e,te)
 	local c=te:GetHandler()
-	return c:GetType()==TYPE_TRAP and (c:IsSetCard(SET_TRAP_HOLE) or c:IsSetCard(SET_HOLE))
+	return c:IsNormalTrap() and (c:IsSetCard(SET_TRAP_HOLE) or c:IsSetCard(SET_HOLE))
 end
 	--Check for a set trap
 function s.cfilter(c)
@@ -71,7 +71,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for a "Hole" normal trap
 function s.setfilter(c)
-	return c:GetType()==TYPE_TRAP and c:IsSSetable() and (c:IsSetCard(SET_TRAP_HOLE) or c:IsSetCard(SET_HOLE))
+	return c:IsNormalTrap() and c:IsSSetable() and (c:IsSetCard(SET_TRAP_HOLE) or c:IsSetCard(SET_HOLE))
 end
 	--If you have no cards in your S/T zones
 function s.filter(c)

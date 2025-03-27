@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.reccon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN2
+	return Duel.IsPhase(PHASE_MAIN2)
 end
 function s.recop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

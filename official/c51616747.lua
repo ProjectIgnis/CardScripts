@@ -18,7 +18,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp
 end
 function s.filter(c)
-	return c:GetType()==TYPE_SPELL+TYPE_CONTINUOUS and c:IsAbleToDeck()
+	return c:IsContinuousSpell() and c:IsAbleToDeck()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end

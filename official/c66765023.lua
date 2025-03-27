@@ -24,7 +24,7 @@ end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()~=tp
-		and Duel.GetTurnPlayer()~=tp and e:GetHandler():GetFlagEffect(id)==0 end
+		and Duel.IsTurnPlayer(1-tp) and e:GetHandler():GetFlagEffect(id)==0 end
 	c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 	return true
 end

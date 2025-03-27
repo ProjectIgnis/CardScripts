@@ -48,7 +48,7 @@ function s.fusfilter(c,code,fc,sumtype,tp)
 	return c:IsSummonCode(fc,sumtype,tp,code) and not c:IsHasEffect(511002961)
 end
 function s.effilter(c)
-	return c:IsAbleToRemoveAsCost() and c:IsSetCard(SET_DINOMORPHIA) and c:GetType()==TYPE_TRAP
+	return c:IsAbleToRemoveAsCost() and c:IsSetCard(SET_DINOMORPHIA) and c:IsNormalTrap() 
 		and c:CheckActivateEffect(false,true,false)~=nil 
 end
 function s.efcost(e,tp,eg,ep,ev,re,r,rp,chk)

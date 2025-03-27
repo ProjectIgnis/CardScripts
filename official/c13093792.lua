@@ -22,7 +22,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ConfirmDecktop(tp,1)
 	local g=Duel.GetDecktopGroup(tp,1)
 	local tc=g:GetFirst()
-	if tc:GetType()==TYPE_SPELL then
+	if tc:IsNormalSpell() then
 		Duel.DisableShuffleCheck()
 		Duel.SendtoGrave(g,REASON_EFFECT)
 		local ae=tc:GetActivateEffect()

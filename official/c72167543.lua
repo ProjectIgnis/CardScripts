@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.ovfilter(c)
-	return c:IsFaceup() and c:IsRankBelow(3) and Duel.GetCurrentPhase()==PHASE_MAIN2
+	return c:IsFaceup() and c:IsRankBelow(3) and Duel.IsPhase(PHASE_MAIN2)
 end
 function s.atkval(e,c)
 	return c:GetOverlayCount()*200

@@ -59,7 +59,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsRitualSummoned()
 end
 function s.thfilter(c)
-	return c:GetType()==TYPE_RITUAL+TYPE_SPELL and c:IsAbleToHand()
+	return c:IsRitualSpell() and c:IsAbleToHand()
 end
 function s.tgfilter(c)
 	return c:IsMonster() and c:IsSetCard(SET_VENDREAD) and c:IsAbleToGrave()

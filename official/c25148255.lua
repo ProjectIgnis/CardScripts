@@ -32,7 +32,7 @@ function s.mfilter(c,e,tp,mc)
 		and Duel.IsExistingMatchingCard(s.scfilter,tp,LOCATION_EXTRA,0,1,nil,mg,tp)
 end
 function s.scfilter(c,mg,tp)
-	return c:ListsArchetypeAsMaterial(0x1017) and Duel.GetLocationCountFromEx(tp,tp,mg,c)>0 and c:IsSynchroSummonable(nil,mg)
+	return c:ListsArchetypeAsMaterial(SET_SYNCHRON) and Duel.GetLocationCountFromEx(tp,tp,mg,c)>0 and c:IsSynchroSummonable(nil,mg)
 end
 function s.sctg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()

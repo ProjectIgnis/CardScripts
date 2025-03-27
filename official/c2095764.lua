@@ -59,9 +59,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_ATTACK)
 end
 function s.sccon(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.IsTurnPlayer(tp) then return false end
-	local ph=Duel.GetCurrentPhase()
-	return ph==PHASE_MAIN1 or Duel.IsBattlePhase() or ph==PHASE_MAIN2
+	return Duel.IsTurnPlayer(1-tp) and (Duel.IsMainPhase() or Duel.IsBattlePhase())
 end
 function s.sctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

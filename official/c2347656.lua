@@ -36,7 +36,7 @@ function s.initial_effect(c)
 end
 function s.chainop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	if rp==tp and rc:GetType()==TYPE_TRAP and re:IsHasType(EFFECT_TYPE_ACTIVATE) then
+	if rp==tp and rc:IsNormalTrap() and re:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		Duel.SetChainLimit(s.chainlm)
 	end
 end
@@ -44,7 +44,7 @@ function s.chainlm(e,rp,tp)
 	return rp==tp or not e:IsActiveType(TYPE_MONSTER)
 end
 function s.filter(c)
-	return c:GetType()==(TYPE_TRAP) and c:IsSSetable()
+	return c:IsNormalTrap() and c:IsSSetable()
 end
 function s.fgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end

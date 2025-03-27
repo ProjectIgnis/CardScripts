@@ -42,7 +42,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.sdescon)
 	e1:SetOperation(s.sdesop)
-	if Duel.IsPhase(PHASE_END) and Duel.GetTurnPlayer()~=tp then
+	if Duel.IsPhase(PHASE_END) and Duel.IsTurnPlayer(1-tp) then
 		e1:SetLabel(Duel.GetTurnCount())
 		e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN,2)
 	else

@@ -61,7 +61,7 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetAttackedCount()>0 and Duel.GetCurrentPhase()==PHASE_MAIN2
+	return e:GetHandler():GetAttackedCount()>0 and Duel.IsPhase(PHASE_MAIN2)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_RAIDRAPTOR) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

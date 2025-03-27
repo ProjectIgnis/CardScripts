@@ -65,7 +65,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsTurnPlayer(1-tp) and Duel.GetCurrentPhase()==PHASE_BATTLE_STEP
+	return Duel.IsTurnPlayer(1-tp) and Duel.IsPhase(PHASE_BATTLE_STEP)
 end
 function s.atkfilter(c)
 	return c:IsType(TYPE_SYNCHRO) and c:IsPosition(POS_FACEUP_ATTACK)

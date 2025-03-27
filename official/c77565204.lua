@@ -65,7 +65,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 		e:Reset()
 		return
 	end
-	if Duel.GetTurnPlayer()~=tp then return end
+	if Duel.IsTurnPlayer(1-tp) then return end
 	ct=ct+1
 	c:SetTurnCounter(ct)
 end

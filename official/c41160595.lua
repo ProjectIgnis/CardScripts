@@ -19,7 +19,7 @@ function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 		and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEDOWN)
 end
 function s.filter(c)
-	return c:GetType()==TYPE_SPELL+TYPE_QUICKPLAY and c:IsSSetable()
+	return c:IsQuickPlaySpell() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0

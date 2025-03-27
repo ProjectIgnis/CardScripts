@@ -17,7 +17,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:GetType()==TYPE_TRAP+TYPE_CONTINUOUS
+	return c:IsFaceup() and c:IsContinuousTrap()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end

@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:GetType()==TYPE_SPELL+TYPE_CONTINUOUS and c:GetSequence()~=5
+	return c:IsFaceup() and c:IsContinuousSpell() and c:GetSequence()~=5
 end
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(s.cfilter,c:GetControler(),LOCATION_SZONE,0,nil)*300

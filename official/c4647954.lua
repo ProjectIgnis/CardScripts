@@ -69,7 +69,7 @@ function s.xyzcon(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for "Rank-Up-Magic" normal spell
 function s.filter(c)
-	return c:IsSetCard(SET_RANK_UP_MAGIC) and c:GetType()==TYPE_SPELL and c:IsAbleToHand()
+	return c:IsSetCard(SET_RANK_UP_MAGIC) and c:IsNormalSpell() and c:IsAbleToHand()
 end
 	--Activation legality
 function s.xyztg(e,tp,eg,ep,ev,re,r,rp,chk)

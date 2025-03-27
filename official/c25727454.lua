@@ -29,7 +29,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
-	if Duel.GetTurnPlayer()~=tp then a=Duel.GetAttackTarget() end
+	if Duel.IsTurnPlayer(1-tp) then a=Duel.GetAttackTarget() end
 	if not a:IsRelateToBattle() or a:IsFacedown() then return end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)

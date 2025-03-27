@@ -14,7 +14,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.con(e)
-	local ph=Duel.GetCurrentPhase()
 	return Duel.IsBattlePhase()
 end
 function s.aclimit(e,re,tp)

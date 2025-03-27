@@ -33,10 +33,10 @@ end
 s.listed_series={SET_TRAP_HOLE,SET_HOLE}
 function s.efilter(e,te)
 	local c=te:GetHandler()
-	return c:GetType()==TYPE_TRAP and (c:IsSetCard(SET_TRAP_HOLE) or c:IsSetCard(SET_HOLE))
+	return c:IsNormalTrap() and (c:IsSetCard(SET_TRAP_HOLE) or c:IsSetCard(SET_HOLE))
 end
 function s.filter(c)
-	return c:GetType()==TYPE_TRAP and (c:IsSetCard(SET_TRAP_HOLE) or c:IsSetCard(SET_HOLE)) and c:IsAbleToHand()
+	return c:IsNormalTrap() and (c:IsSetCard(SET_TRAP_HOLE) or c:IsSetCard(SET_HOLE)) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

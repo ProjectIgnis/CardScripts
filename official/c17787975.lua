@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_BATTLE_STEP
+	return Duel.IsPhase(PHASE_BATTLE_STEP)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

@@ -41,7 +41,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_AESIR}
 function s.spcon(e,c)
-	if c==nil then return Duel.GetCurrentPhase()==PHASE_MAIN2 end
+	if c==nil then return Duel.IsPhase(PHASE_MAIN2) end
 	local tp=c:GetControler()
 	return Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_AESIR),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)

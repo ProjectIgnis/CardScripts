@@ -80,7 +80,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetTurnPlayer()~=tp or Duel.GetTurnCount()==e:GetValue() then return false end
+	if Duel.IsTurnPlayer(1-tp) or Duel.GetTurnCount()==e:GetValue() then return false end
 	return e:GetLabelObject():GetFlagEffect(id+1)~=0
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)

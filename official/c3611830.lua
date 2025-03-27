@@ -126,7 +126,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e:SetLabel(ct)
 end
 function s.thfilter(c)
-	return c:GetType()==TYPE_SPELL and c:IsAbleToHand()
+	return c:IsNormalSpell() and c:IsAbleToHand()
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

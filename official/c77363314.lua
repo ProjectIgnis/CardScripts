@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsTurnPlayer(tp) and Duel.GetCurrentPhase()==PHASE_BATTLE_STEP and Duel.GetCurrentChain()==0
+	return Duel.IsTurnPlayer(tp) and Duel.IsPhase(PHASE_BATTLE_STEP) and Duel.GetCurrentChain()==0
 		and e:GetHandler():GetBattledGroupCount()>0
 end
 function s.thfilter(c)

@@ -35,7 +35,7 @@ s.listed_names={id}
 
 	--Send 1 Normal Trap from hand or field to GY as cost
 function s.spcfilter(c,tp)
-	return c:GetType()==TYPE_TRAP and c:IsAbleToGraveAsCost() and (c:IsLocation(LOCATION_HAND) or c:IsFacedown())
+	return c:IsNormalTrap() and c:IsAbleToGraveAsCost() and (c:IsLocation(LOCATION_HAND) or c:IsFacedown())
 		and Duel.GetMZoneCount(tp,c)>0
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)

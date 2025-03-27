@@ -34,7 +34,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 	local rct=1
-	if Duel.GetTurnPlayer()~=tp then rct=2 end
+	if Duel.IsTurnPlayer(1-tp) then rct=2 end
 	local c=e:GetHandler()
 	--indestructable
 	local e1=Effect.CreateEffect(c)

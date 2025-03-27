@@ -55,7 +55,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e6)
 end
 function s.valcheck(e,c)
-	local g=c:GetMaterial():Filter(Card.IsAttribute,nil,0x2f)
+	local g=c:GetMaterial():Filter(Card.IsAttribute,nil,ATTRIBUTE_DARK|ATTRIBUTE_WIND|ATTRIBUTE_FIRE|ATTRIBUTE_WATER|ATTRIBUTE_EARTH)
 	if #g==5
 		and g:IsExists(Card.IsAttribute,1,nil,ATTRIBUTE_EARTH)
 		and g:IsExists(Card.IsAttribute,1,nil,ATTRIBUTE_WIND)
@@ -83,7 +83,7 @@ function s.efilter(e,te)
 	return te:GetOwner()~=e:GetOwner()
 end
 function s.batfilter(e,c)
-	return c:IsAttribute(0x2f)
+	return c:IsAttribute(ATTRIBUTE_DARK|ATTRIBUTE_WIND|ATTRIBUTE_FIRE|ATTRIBUTE_WATER|ATTRIBUTE_EARTH)
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsTurnPlayer(1-tp)

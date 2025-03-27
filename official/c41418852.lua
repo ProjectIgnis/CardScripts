@@ -33,7 +33,7 @@ function s.cpcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	return true
 end
 function s.filter(c)
-	return c:GetType()==TYPE_SPELL and c:IsSetCard(SET_NUMERON) and c:IsAbleToGraveAsCost()
+	return c:IsNormalSpell() and c:IsSetCard(SET_NUMERON) and c:IsAbleToGraveAsCost()
 		and c:CheckActivateEffect(false,true,false)~=nil
 end
 function s.cptg(e,tp,eg,ep,ev,re,r,rp,chk)

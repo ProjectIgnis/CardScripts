@@ -88,7 +88,7 @@ function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for "Trap Hole" normal trap
 function s.setfilter(c)
-	return (c:IsSetCard(SET_TRAP_HOLE) or c:IsSetCard(SET_HOLE)) and c:GetType()==TYPE_TRAP and c:IsSSetable()
+	return (c:IsSetCard(SET_TRAP_HOLE) or c:IsSetCard(SET_HOLE)) and c:IsNormalTrap() and c:IsSSetable()
 end
 	--Activation legality
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)

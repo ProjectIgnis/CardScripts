@@ -60,7 +60,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.setfilter(c)
-	return c:GetType()==TYPE_TRAP and c:IsSSetable() and not c:IsForbidden() and c:GetActivateEffect()
+	return c:IsNormalTrap() and c:IsSSetable() and not c:IsForbidden() and c:GetActivateEffect()
 		and c:GetActivateEffect():GetCode()==EVENT_ATTACK_ANNOUNCE
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -75,7 +75,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.trapval(c)
-	return c:GetType()==TYPE_TRAP
+	return c:IsNormalTrap() 
 end
 function s.atkval(e,c)
 	local tp=e:GetHandlerPlayer()

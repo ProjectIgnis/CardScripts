@@ -56,7 +56,7 @@ function s.cfilter(c)
 end
 	--Check if it's opponent's main phase and player controls a "Windwitch" monster other than this card's name
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil) and Duel.GetTurnPlayer()~=tp and Duel.IsMainPhase()
+	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil) and Duel.IsTurnPlayer(1-tp) and Duel.IsMainPhase()
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

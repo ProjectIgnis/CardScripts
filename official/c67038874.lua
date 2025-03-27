@@ -23,7 +23,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_SCRAP}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN2
+	return Duel.IsPhase(PHASE_MAIN2)
 end
 function s.filter(c,ft)
 	return c:IsFaceup() and c:IsSetCard(SET_SCRAP) and c:GetCode()~=id 

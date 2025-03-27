@@ -3,11 +3,11 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
-	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.ListsArchetypeAsMaterial,0xc008),Fusion.InHandMat,s.fextra,nil,nil,s.stage2,nil,nil,nil,nil,nil,nil,nil,s.extratg)
+	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.ListsArchetypeAsMaterial,SET_DESTINY_HERO),Fusion.InHandMat,s.fextra,nil,nil,s.stage2,nil,nil,nil,nil,nil,nil,nil,s.extratg)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	c:RegisterEffect(e1)
 end
-s.listed_series={SET_HERO}
+s.listed_series={SET_HERO,SET_DESTINY_HERO}
 function s.fcheck(tp,sg,fc)
 	return sg:IsExists(aux.FilterBoolFunction(Card.IsSetCard,SET_DESTINY_HERO,fc,SUMMON_TYPE_FUSION,tp),1,nil)
 end

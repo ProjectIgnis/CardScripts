@@ -20,7 +20,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_SKIP_BP)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(0,1)
-	if Duel.GetTurnPlayer()~=tp and Duel.IsBattlePhase() then
+	if Duel.IsTurnPlayer(1-tp) and Duel.IsBattlePhase() then
 		e1:SetLabel(Duel.GetTurnCount())
 		e1:SetCondition(s.skipcon)
 		e1:SetReset(RESET_PHASE|PHASE_BATTLE|RESET_OPPO_TURN,2)

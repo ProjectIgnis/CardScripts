@@ -28,7 +28,7 @@ function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,#g,0,0)
 end
 function s.setfilter(c)
-	return not c:IsSetCard(SET_LABRYNTH) and c:GetType()==TYPE_TRAP and c:IsSSetable()
+	return not c:IsSetCard(SET_LABRYNTH) and c:IsNormalTrap() and c:IsSSetable()
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetTargetCards(e)

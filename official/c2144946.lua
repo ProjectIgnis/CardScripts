@@ -45,7 +45,6 @@ end
 s.listed_names={id}
 s.listed_series={SET_FA}
 function s.lvcon(e)
-	local ph=Duel.GetCurrentPhase()
 	return Duel.IsMainPhase()
 end
 function s.cfilter(c,tp)

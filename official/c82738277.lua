@@ -36,7 +36,7 @@ end
 s.listed_series={SET_TRAP_HOLE,SET_HOLE,SET_TRAPTRIX}
 function s.efilter(e,te)
 	local c=te:GetHandler()
-	return c:GetType()==TYPE_TRAP and (c:IsSetCard(SET_TRAP_HOLE) or c:IsSetCard(SET_HOLE))
+	return c:IsNormalTrap() and (c:IsSetCard(SET_TRAP_HOLE) or c:IsSetCard(SET_HOLE))
 end
 function s.filter(c)
 	return c:IsMonster() and c:IsSetCard(SET_TRAPTRIX) and c:IsAbleToHand()

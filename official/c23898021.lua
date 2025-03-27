@@ -36,7 +36,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(g,REASON_COST)
 end
 function s.thfilter(c)
-	return c:GetType()==TYPE_TRAP and c:IsSSetable()
+	return c:IsNormalTrap() and c:IsSSetable()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 

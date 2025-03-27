@@ -24,7 +24,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e1:SetTarget(s.tg)
 	e1:SetCode(EFFECT_DISABLE)
-	if Duel.GetTurnPlayer()~=tp then
+	if Duel.IsTurnPlayer(1-tp) then
 		e1:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN,2)
 	else
 		e1:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN)
@@ -41,7 +41,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetTargetRange(1,1)
 	e3:SetTarget(s.splimit)
-	if Duel.GetTurnPlayer()~=tp then
+	if Duel.IsTurnPlayer(1-tp) then
 		e3:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN,2)
 	else
 		e3:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN)

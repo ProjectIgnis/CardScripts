@@ -20,7 +20,7 @@ function s.filter1(c,e,tp)
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,c)
 end
 function s.filter2(c,e,tp,mc)
-	return c:IsSetCard(SET_SALAMANGREAT) and mc:IsCanBeLinkMaterial(c,tp) and c:IsLinkMonster()  and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 
+	return c:IsSetCard(SET_SALAMANGREAT) and mc:IsCanBeLinkMaterial(c,tp) and c:IsLinkMonster() and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 
 		and c:IsCode(mc:GetCode()) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_LINK,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

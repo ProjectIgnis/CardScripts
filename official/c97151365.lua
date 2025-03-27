@@ -30,7 +30,7 @@ function s.initial_effect(c)
 end
 s.counter_place_list={0x1e}
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetTurnPlayer()~=tp or Duel.GetAttackTarget()~=nil then
+	if Duel.IsTurnPlayer(1-tp) or Duel.GetAttackTarget()~=nil then
 		e:GetHandler():AddCounter(0x1e,1)
 	end
 end

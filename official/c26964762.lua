@@ -83,7 +83,7 @@ function s.deckcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.filter(c)
-	return c:GetType()==TYPE_SPELL
+	return c:IsNormalSpell()
 end
 function s.decktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)>0

@@ -34,7 +34,7 @@ end
 s.listed_series={SET_TRAP_HOLE,SET_HOLE,SET_TRAPTRIX}
 function s.efilter(e,te)
 	local c=te:GetHandler()
-	return c:GetType()==TYPE_TRAP and (c:IsSetCard(SET_TRAP_HOLE) or c:IsSetCard(SET_HOLE))
+	return c:IsNormalTrap() and (c:IsSetCard(SET_TRAP_HOLE) or c:IsSetCard(SET_HOLE))
 end
 function s.filter(c,e,tp)
 	return c:IsSetCard(SET_TRAPTRIX) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
@@ -54,7 +54,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.setfilter(c)
-	return c:GetType()==TYPE_TRAP and (c:IsSetCard(SET_TRAP_HOLE) or c:IsSetCard(SET_HOLE)) and c:IsSSetable()
+	return c:IsNormalTrap() and (c:IsSetCard(SET_TRAP_HOLE) or c:IsSetCard(SET_HOLE)) and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.setfilter(chkc) end

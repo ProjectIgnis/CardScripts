@@ -53,7 +53,7 @@ function s.xyzcheck(g,tp,xyz)
 	return mg:GetClassCount(Card.GetRank)==1
 end
 function s.cfilter(c)
-	return c:IsSetCard(SET_RANK_UP_MAGIC) and c:GetType()==TYPE_SPELL and c:IsDiscardable()
+	return c:IsSetCard(SET_RANK_UP_MAGIC) and c:IsNormalSpell() and c:IsDiscardable()
 end
 function s.ovfilter(c,tp,lc)
 	return c:IsFaceup() and c:IsSetCard(SET_UTOPIA,lc,SUMMON_TYPE_XYZ,tp)

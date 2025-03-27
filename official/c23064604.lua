@@ -102,7 +102,6 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	local ph=Duel.GetCurrentPhase()
 	return Duel.IsMainPhase()
 end
 function s.cfilter(c)

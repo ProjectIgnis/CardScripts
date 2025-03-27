@@ -1,7 +1,6 @@
 --六花精ボタン
 --Mudan the Rikka Fairy
 --Scripted by ahtelel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon itself from GY

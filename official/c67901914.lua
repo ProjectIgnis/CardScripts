@@ -1,7 +1,6 @@
 --魔弾－ネバー・エンドルフィン
 --Magical Musket - Steady Hands
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted "Magical Musket" monster's ATK/DEF becomes double of original ATK/DEF
@@ -25,7 +24,6 @@ function s.initial_effect(c)
 	end)
 end
 s.listed_series={SET_MAGICAL_MUSKET}
-
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	if tc:GetFlagEffect(id)==0 and Duel.GetAttackTarget()==nil then

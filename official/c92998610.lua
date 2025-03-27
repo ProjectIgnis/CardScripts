@@ -1,7 +1,6 @@
 --孤高除獣
 --Aloof Lupine
 --Scripted by ahtelel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Banish 1 monster from deck

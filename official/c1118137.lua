@@ -73,4 +73,3 @@ end
 function s.desrepop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RemoveCounter(tp,1,0,COUNTER_SPELL,1,REASON_EFFECT+REASON_REPLACE)
 end
-

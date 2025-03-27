@@ -1,6 +1,5 @@
 --極星宝メギンギョルズ
 --Nordic Relic Megingjord
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted "Aesir" or "Nordic" monster has its ATK/DEF doubled, but cannot attack directly
@@ -16,7 +15,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_NORDIC,SET_AESIR}
-
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end

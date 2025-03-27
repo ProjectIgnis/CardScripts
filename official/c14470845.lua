@@ -1,6 +1,5 @@
 --おジャマデュオ
 --Ojama Duo
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 2 tokens to opponent's field

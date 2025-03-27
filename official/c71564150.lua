@@ -1,6 +1,5 @@
 --地獄の傀儡魔人
 --Perditious Puppeteer
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Take control all of opponent's level 3 or lower monsters

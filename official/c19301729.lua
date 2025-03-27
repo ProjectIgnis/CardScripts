@@ -1,6 +1,5 @@
 --電子光虫－レジストライダー
 --Digital Bug Registrider
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,7 +1,6 @@
 --紺碧の機界騎士
 --Mekk-Knight Indigo Eclipse
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon itself from hand
@@ -26,7 +25,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_MEKK_KNIGHT}
-
 function s.cfilter(c)
 	return c:GetColumnGroupCount()>0
 end

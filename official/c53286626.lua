@@ -1,7 +1,6 @@
 --聖蔓の播種
 --Sunvine Sowing
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -29,7 +28,6 @@ end
 s.listed_series={SET_SUNSEED,SET_SUNAVALON}
 	--Specifically lists "Sunseed Genius Loci"
 s.listed_names={27520594}
-
 	--Check for a "Sunavalon" link monster
 function s.linkchk(c)
 	return c:IsLinkMonster() and c:IsSetCard(SET_SUNAVALON)

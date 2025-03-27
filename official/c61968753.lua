@@ -1,6 +1,5 @@
 --バブル・シャッフル
 --Bubble Shuffle
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Tribute "Elemental HERO Bubbleman", then special summon 1 "Elemental HERO" monster from hand
@@ -16,7 +15,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_ELEMENTAL_HERO}
 s.listed_names={79979666}
-
 function s.filter1(c,ft)
 	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsCanChangePosition() and c:IsCode(79979666) 
 		and (ft>0 or c:GetSequence()<5)

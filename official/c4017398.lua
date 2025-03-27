@@ -33,7 +33,6 @@ end
 s.listed_series={SET_UTOPIA,SET_ZEXAL,SET_ZW,SET_ZS}
 	--Specifically lists itself
 s.listed_names={id}
-
 	--Check for a "Utopia", "ZW -", or "ZS -" monster
 function s.ssfilter(c,ft,e,tp)
 	return (c:IsSetCard(SET_UTOPIA) or c:IsSetCard(SET_ZW) or c:IsSetCard(SET_ZS)) and c:IsMonster() and ((ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)) or c:IsAbleToHand())

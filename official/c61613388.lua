@@ -16,7 +16,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_UA}
-
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_UA)
 end

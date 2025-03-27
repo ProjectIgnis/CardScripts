@@ -1,7 +1,6 @@
 --クリスタル・ガール
 --Crystal Girl
 --Scripted by AlphaKretin
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Search 1 Level 5+ WATER monster during the End Phase

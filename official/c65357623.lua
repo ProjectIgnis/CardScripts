@@ -1,7 +1,6 @@
 --アンデット・ストラグル
 --Zombie Power Struggle
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)

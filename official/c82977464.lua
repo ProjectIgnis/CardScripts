@@ -1,7 +1,6 @@
 --Ｓ－Ｆｏｒｃｅ スペシメン
 --S-Force Specimen
 --Scripted by edo9300
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 "Security Force" monster, that is banished or in your GY
@@ -30,7 +29,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_S_FORCE}
-
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
 end

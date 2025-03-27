@@ -33,7 +33,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_VAMPIRE}
 s.listed_names={id}
-
 function s.filter(c,e,tp)
 	return c:IsSetCard(SET_VAMPIRE) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end

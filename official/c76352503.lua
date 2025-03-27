@@ -1,7 +1,6 @@
 --霊道士チャンシー
 --Changshi the Spiridao
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -28,7 +27,6 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-
 	--Check for a Zombie monster
 function s.tgfilter(c)
 	return c:IsRace(RACE_ZOMBIE) and c:IsAbleToGrave()

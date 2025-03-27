@@ -1,6 +1,5 @@
 --黙する死者
 --Silent Doom
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 normal monster from GY, it cannot attack

@@ -1,7 +1,6 @@
 --混沌の夢魔鏡
 --Dream Mirror of Chaos
 --Scripted by edo9300
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Fusion summon 1 "Dream Mirror" fusion monster
@@ -15,7 +14,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_DREAM_MIRROR}
 s.listed_names={CARD_DREAM_MIRROR_JOY,CARD_DREAM_MIRROR_TERROR}
-
 function s.fextra(e,tp,mg)
 	local joy=Duel.IsEnvironment(CARD_DREAM_MIRROR_JOY,PLAYER_ALL,LOCATION_FZONE)
 	local terror=Duel.IsEnvironment(CARD_DREAM_MIRROR_TERROR,PLAYER_ALL,LOCATION_FZONE) and not Duel.IsPlayerAffectedByEffect(tp,69832741)

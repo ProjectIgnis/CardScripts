@@ -1,6 +1,5 @@
 --異次元エスパー・スター・ロビン
 --D.D. Esper Star Sparrow
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Can only be 1 copy of this card on the field

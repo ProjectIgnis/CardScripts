@@ -1,6 +1,5 @@
 --Ｋｏｚｍｏ－ダーク・ローズ
 --Kozmoll Wickedwitch
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 level 5+ "Kozmo" monster from hand
@@ -28,7 +27,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_KOZMO}
-
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_KOZMO) and c:IsLevelAbove(5) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

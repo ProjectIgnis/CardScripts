@@ -1,6 +1,5 @@
 --レベル調整
 --Level Modulation
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Opponent draws 2, then you special summon 1 "LV" monster from GY
@@ -14,7 +13,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_LV}
-
 function s.filter(c,e,tp)
 	return c:IsSetCard(SET_LV) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end

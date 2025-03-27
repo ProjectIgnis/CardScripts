@@ -1,6 +1,5 @@
 --青き眼の威光
 --Majesty with Eyes of Blue
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted monster cannot attack
@@ -16,7 +15,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_BLUE_EYES}
-
 function s.filter(c)
 	return c:IsSetCard(SET_BLUE_EYES) and c:IsAbleToGraveAsCost()
 end

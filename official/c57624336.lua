@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetCountLimit(1,{id,1})
-	e3:SetCost(s.descost2)
+	e3:SetCost(Cost.SelfTribute)
 	e3:SetTarget(s.destg2)
 	e3:SetOperation(s.desop2)
 	c:RegisterEffect(e3)
@@ -44,10 +44,6 @@ function s.desop1(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) then
 		Duel.Destroy(Group.FromCards(tc,e:GetHandler()),REASON_EFFECT)
 	end
-end
-function s.descost2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.destg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) end

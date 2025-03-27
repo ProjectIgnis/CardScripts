@@ -1,6 +1,5 @@
 --月光虎
 --Lunalight Tiger
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Enable pendulum summon
@@ -28,7 +27,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_LUNALIGHT}
-
 function s.filter(c,e,tp)
 	return c:IsSetCard(SET_LUNALIGHT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

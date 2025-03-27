@@ -1,7 +1,6 @@
 --妖醒龍ラルバウール
 --Omni Dragon Brotaur
 --Scripted by AlphaKretin
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon from hand or GY

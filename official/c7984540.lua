@@ -1,7 +1,6 @@
 --聖天樹の月桂精
 --Sunavalon Daphne
 --Scripted by Eerie Code, based on the anime version
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Link summon procedure

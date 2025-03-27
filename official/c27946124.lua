@@ -1,6 +1,5 @@
 --聖蔓の社
 --Sunvine Shrine
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -46,7 +45,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={SET_SUNAVALON}
-
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_SUNAVALON) and c:IsType(TYPE_LINK)
 end

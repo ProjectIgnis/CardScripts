@@ -1,6 +1,5 @@
 --不知火の宮司
 --Shiranui Spiritmaster
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--When normal summoned, special summon 1 "Shiranui" monster from hand or GY
@@ -26,7 +25,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_SHIRANUI}
 s.listed_names={id}
-
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_SHIRANUI) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

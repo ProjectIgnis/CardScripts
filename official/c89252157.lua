@@ -1,6 +1,5 @@
 --薔薇恋人
 --Rose Lover
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 plant monster from hand

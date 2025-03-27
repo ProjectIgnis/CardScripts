@@ -1,7 +1,6 @@
 --双天将 密迹
 --Dual Avatar - Empowered Mitsu-Jaku
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -45,7 +44,6 @@ end
 s.material_setcode={SET_DUAL_AVATAR}
 	--Lists "Dual Avatar" archetype
 s.listed_series={SET_DUAL_AVATAR}
-
 	--Check for "Dual Avatar" fusion monsters
 function s.indtg(e,c)
 	return c:IsType(TYPE_FUSION) and c:IsSetCard(SET_DUAL_AVATAR)

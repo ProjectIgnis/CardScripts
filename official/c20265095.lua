@@ -1,7 +1,6 @@
 --慧炎星－コサンジャク
 --Brotherhood of the Fire Fist - Peacock
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -32,7 +31,6 @@ function s.initial_effect(c)
 end
 	--Lists "Fire Fist" archetype
 s.listed_series={SET_FIRE_FORMATION,SET_FIRE_FIST}
-
 	--If this card is pointing to "Fire Fist"
 function s.lkfilter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_FIRE_FIST) and c:IsMonster()

@@ -1,7 +1,6 @@
 --ティンダングル・ドロネー
 --Tindangle Delaunay
 --Script by nekrozar
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Destroy attacking monster, special summon 1 "Tindangle Acute Cerberus" from extra deck
@@ -30,7 +29,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_TINDANGLE}
 s.listed_names={75119040}
-
 function s.cfilter1(c)
 	return c:IsSetCard(SET_TINDANGLE) and c:IsMonster()
 end

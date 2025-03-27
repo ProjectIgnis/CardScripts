@@ -1,6 +1,5 @@
 --マジシャンズ・ローブ
 --Magician's Robe
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 "Dark Magician" from deck
@@ -32,7 +31,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={CARD_DARK_MAGICIAN}
-
 function s.condition1(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsTurnPlayer(1-tp)
 end

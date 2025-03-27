@@ -1,7 +1,6 @@
 --ドラグニティーレムス
 --Dragunity Remus
 --Scripted by AlphaKretin
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Cannot be used as synchro material, except for "Dragunity" synchro monsters
@@ -36,7 +35,6 @@ function s.initial_effect(c)
 end
 s.listed_names={62265044}
 s.listed_series={SET_DRAGUNITY}
-
 function s.synlimit(e,c)
 	if not c then return false end
 	return not c:IsSetCard(SET_DRAGUNITY)

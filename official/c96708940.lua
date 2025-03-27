@@ -1,7 +1,6 @@
 --ＳＲビーダマシーン
 --Speedroid Marble Machine
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Enable pendulum summon
@@ -27,7 +26,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_SPEEDROID}
-
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
 	return d and d:IsControler(tp) and d:IsDefensePos()

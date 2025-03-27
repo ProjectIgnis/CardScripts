@@ -1,7 +1,6 @@
 --聖天樹の開花
 --Sunavalon Bloom
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

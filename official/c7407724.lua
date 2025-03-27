@@ -1,7 +1,6 @@
 --六花精エリカ
 --Erica the Rikka Fairy
 --Scripted by pyrQ
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Making your battling plant monster gain 1000 ATK/DEF
@@ -13,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE|LOCATION_HAND)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.atkcon)
-	e1:SetCost(s.atkcost)
+	e1:SetCost(Cost.SelfTribute)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
 	--Special summon itself from GY
@@ -35,10 +34,6 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsControler(1-tp) then tc=Duel.GetAttackTarget() end
 	e:SetLabelObject(tc)
 	return tc and tc~=e:GetHandler() and tc:IsFaceup() and tc:IsControler(tp) and tc:IsRace(RACE_PLANT)
-end
-function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()

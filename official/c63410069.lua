@@ -1,7 +1,6 @@
 --砂漠の飛蝗賊
 --Desert Locusts
 --Scripted by Cybercatman
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving

@@ -1,7 +1,6 @@
 --聖蔓の乙女
 --Sunvine Maiden
 --Scripted by Eerie Code, anime script by MLD
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon itself from hand
@@ -28,7 +27,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_SUNAVALON,SET_SUNVINE}
-
 function s.tfilter(c,tp)
 	return c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsRace(RACE_PLANT) and c:IsControler(tp) and c:IsSummonLocation(LOCATION_EXTRA)
 end

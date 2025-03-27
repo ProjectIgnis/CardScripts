@@ -1,7 +1,6 @@
 --ＺＷ－天馬双翼剣
 --ZW - Pegasus Twin Saber
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -39,7 +38,6 @@ function s.initial_effect(c)
 end
 	--Lists "Utopia" archetype
 s.listed_series={SET_UTOPIA}
-
 	--If opponent's LP is 2000 higher than yours
 function s.spcon(e,c)
 	if c==nil then return true end

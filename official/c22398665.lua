@@ -1,7 +1,6 @@
 --流星輝巧群
 --Meteonis Drytron
 --Scripted by Eerie Code and edo9300
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Ritual Summon

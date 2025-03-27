@@ -1,6 +1,5 @@
 --紫炎の寄子
 --Shien's Squire
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Your battling "Six Samurai" monster cannot be destroyed by battle
@@ -16,7 +15,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_SIX_SAMURAI}
-
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()

@@ -1,6 +1,5 @@
 --幻影騎士団シャドーベイル
 --The Phantom Knights of Shadow Veil
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted monster gains 300 ATK/DEF

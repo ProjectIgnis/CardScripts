@@ -1,7 +1,6 @@
 --ウィッチクラフト・バイスマスター
 --Witchcrafter Vice-Madame
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -41,7 +40,6 @@ end
 	--Lists "Witchcrafter" archetype and its own name
 s.listed_series={SET_WITCHCRAFTER}
 s.listed_names={id}
-
 	--Check for activated Spell Card/effect or non-fusion Spellcaster's effect
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local race=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_RACE)

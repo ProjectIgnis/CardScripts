@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCost(s.thcost)
+	e3:SetCost(Cost.SelfTribute)
 	e3:SetTarget(s.thtg)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
@@ -46,10 +46,6 @@ function s.sprcon(e,c)
 end
 function s.dtcon(e,c)
 	return c:IsSetCard(SET_TIMELORD)
-end
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.thfilter(c)
 	return c:IsSetCard(SET_TIMELORD) and c:IsMonster() and c:GetAttack()==0 and c:IsAbleToHand()

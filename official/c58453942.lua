@@ -1,6 +1,5 @@
 --サイコ・ウォールド
 --Psychic Snail
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted psychic monster can make a second attack

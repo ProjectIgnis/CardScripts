@@ -1,7 +1,6 @@
 --創造の聖刻印
 --Hieratic Seal of Creation
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -31,7 +30,6 @@ function s.initial_effect(c)
 end
 	--Lists "Hieratic" archetype
 s.listed_series={SET_HIERATIC}
-
 	--Check for a dragon Xyz monster
 function s.filter1(c,e,tp)
 	local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(c),tp,nil,nil,REASON_XYZ)

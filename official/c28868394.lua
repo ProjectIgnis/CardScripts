@@ -1,7 +1,6 @@
 --ジーナの蟲惑魔
 --Traptrix Vesiculo
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -39,7 +38,6 @@ function s.initial_effect(c)
 end
 	--Lists "Hole" archetype
 s.listed_series={SET_TRAP_HOLE,SET_HOLE}
-
 	--Unaffected by "Hole" normal trap cards
 function s.efilter(e,te)
 	local c=te:GetHandler()

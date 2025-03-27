@@ -1,6 +1,5 @@
 --ＤＤＤ死偉王ヘル・アーマゲドン
 --D/D/D Doom King Armageddon
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Enable pendulum summon
@@ -36,7 +35,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_DD}
-
 function s.filter1(c)
 	return c:IsFaceup() and c:IsSetCard(SET_DD)
 end

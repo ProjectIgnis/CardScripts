@@ -22,7 +22,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_CYBER_DRAGON}
-
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tp==1-Duel.GetTurnPlayer()
 end

@@ -1,6 +1,5 @@
 --森羅の恵み
 --Sylvan Blessing
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 "Sylvan" monster from hand or GY
@@ -14,7 +13,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_SYLVAN}
-
 function s.filter(c,e,tp)
 	return c:IsAbleToDeck() and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND|LOCATION_GRAVE,0,1,c,e,tp)
 end

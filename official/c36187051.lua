@@ -1,7 +1,6 @@
 --巌帯の美技－ゼノギタム
 --Rock Band Xenoguitar
 --Scripted by Naim
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Add 1 Rock monster to hand and place 1 card on the top of the deck
@@ -29,7 +28,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-
 function s.thfilter(c)
 	return c:IsMonster() and c:IsRace(RACE_ROCK) and c:IsAbleToHand() and not c:IsCode(id)
 end

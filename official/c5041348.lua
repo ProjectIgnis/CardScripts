@@ -1,7 +1,6 @@
 --天威の龍鬼神
 --Draco Berserker of the Tenyi
 --Scripted by Larry126
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving

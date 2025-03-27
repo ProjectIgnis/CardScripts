@@ -1,6 +1,5 @@
 --幻影騎士団ダーク・ガントレット
 --The Phantom Knights of Dark Gauntlets
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Send 1 "Phantom Knights" spell/trap from deck to GY
@@ -34,7 +33,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_PHANTOM_KNIGHTS}
-
 function s.tgfilter(c)
 	return c:IsSetCard(SET_PHANTOM_KNIGHTS) and c:IsSpellTrap() and c:IsAbleToGrave()
 end

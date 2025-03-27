@@ -1,6 +1,5 @@
 --超重武者ココロガマ－Ａ
 --Superheavy Samurai Prepped Defense
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Cannot be normal or flip summoned while you have a spell/trap in GY

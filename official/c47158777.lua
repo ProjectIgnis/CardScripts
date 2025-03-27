@@ -1,10 +1,8 @@
 --破壊剣士の守護絆竜
 --Protector Whelp of the Destruction Swordsman
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
-
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
@@ -38,7 +36,6 @@ function s.initial_effect(c)
 end
 	--Related to "Destruction Sword" archetype
 s.listed_series={SET_DESTRUCTION_SWORD,SET_BUSTER_BLADER}
-
 	--Check for "Destruction Sword" card to send to GY
 function s.tgfilter(c)
 	return c:IsSetCard(SET_DESTRUCTION_SWORD) and c:IsAbleToGrave()

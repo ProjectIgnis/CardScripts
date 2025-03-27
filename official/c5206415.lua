@@ -1,7 +1,6 @@
 --天雷震龍－サンダー・ドラゴン
 --Thunder Dragonlord
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -42,7 +41,6 @@ function s.initial_effect(c)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_CHAIN,s.chainfilter)
 end
 s.listed_series={SET_THUNDER_DRAGON}
-
 function s.chainfilter(re,tp,cid)
 	return not (re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsRace(RACE_THUNDER)
 		and (Duel.GetChainInfo(cid,CHAININFO_TRIGGERING_LOCATION)==LOCATION_HAND))

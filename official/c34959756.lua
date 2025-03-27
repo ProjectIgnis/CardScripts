@@ -1,7 +1,6 @@
 --リビング・フォッシル
 --Living Fossil
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 level 4 or lower monster from GY

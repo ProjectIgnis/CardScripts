@@ -1,7 +1,6 @@
 --コードブレイカー・ウイルスソードマン
 --Codebreaker Virus Swordsman
 --Scripted by Larry126
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -41,7 +40,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_CODEBREAKER}
 s.listed_names={8662794}
-
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetMutualLinkedGroupCount()>0
 end

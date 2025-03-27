@@ -1,6 +1,5 @@
 --フェイク・ヒーロー
 --Fake Hero
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 "Elemental HERO" monster from hand
@@ -13,7 +12,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_ELEMENTAL_HERO}
-
 function s.filter(c,e,tp)
 	return c:IsSetCard(SET_ELEMENTAL_HERO) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

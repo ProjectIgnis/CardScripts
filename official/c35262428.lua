@@ -1,6 +1,5 @@
 --賢者の聖杯
 --Wiseman's Chalice
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 monster from opponent's GY to your field

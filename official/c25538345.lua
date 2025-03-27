@@ -1,7 +1,6 @@
 --幻影騎士団ティアースケイル
 --The Phantom Knights of Torn Scales
 --Scripted by Larry126
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Send 1 "Phantom Knights" card from deck to GY
@@ -31,7 +30,6 @@ function s.initial_effect(c)
 end
 s.listed_names={id}
 s.listed_series={SET_PHANTOM_KNIGHTS}
-
 function s.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)

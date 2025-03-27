@@ -1,7 +1,6 @@
 --白銀の城の召使い アリアーヌ
 --Ariane the Labrynth Servant
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -32,7 +31,6 @@ function s.initial_effect(c)
 end
 	--Mentions itself
 s.listed_names={id}
-
 	--Send 1 Normal Trap from hand or field to GY as cost
 function s.spcfilter(c,tp)
 	return c:IsNormalTrap() and c:IsAbleToGraveAsCost() and (c:IsLocation(LOCATION_HAND) or c:IsFacedown())

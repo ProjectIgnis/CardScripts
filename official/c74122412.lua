@@ -1,6 +1,5 @@
 --グングニールの影霊衣
 --Nekroz of Gungnir
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -38,7 +37,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_NEKROZ}
-
 function s.mat_filter(c)
 	return c:GetLevel()~=7
 end

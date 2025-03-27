@@ -1,7 +1,6 @@
 --海造賊－豪速のブレンネ号
 --Plunder Patrollship Brann
 --Scripted by pyrQ
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -39,7 +38,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_PLUNDER_PATROLL}
-
 function s.atktg(e,c)
 	return c:IsRace(RACE_FIEND) and c~=e:GetHandler()
 end

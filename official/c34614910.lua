@@ -1,7 +1,6 @@
 --六花精シクラン
 --Cyclamen the Rikka Fairy
 --Scripted by pyrQ
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Reduce targeted player's plant monsters' levels by 2
@@ -11,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE|LOCATION_HAND)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.lvcost)
+	e1:SetCost(Cost.SelfTribute)
 	e1:SetTarget(s.lvtg)
 	e1:SetOperation(s.lvop)
 	c:RegisterEffect(e1)
@@ -35,10 +34,6 @@ function s.initial_effect(c)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
-end
-function s.lvcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.tgfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_PLANT) and c:IsLevelAbove(1) and c:HasLevel()

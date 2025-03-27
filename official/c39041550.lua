@@ -1,7 +1,6 @@
 --
 --Beetrooper Scale Bomber
 --Scripted by DyXel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon itself.

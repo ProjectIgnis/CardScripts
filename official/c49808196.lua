@@ -1,6 +1,5 @@
 --メタボ・サッカー
 --Metabo Globster
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 3 tokens to your field

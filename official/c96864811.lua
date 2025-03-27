@@ -1,6 +1,5 @@
 --禁じられた聖衣
 --Forbidden Dress
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted monster loses 600 ATK, cannot be targeted or destroyed by card effects

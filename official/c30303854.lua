@@ -1,7 +1,6 @@
 --ラヴァル・アーチャー
 --Laval Archer
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -26,7 +25,6 @@ function s.initial_effect(c)
 end
 	--Lists "Laval" archetype
 s.listed_series={SET_LAVAL}
-
 	--Gain an extra normal summon for "Laval" monsters
 function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())

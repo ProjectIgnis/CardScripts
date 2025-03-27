@@ -1,7 +1,6 @@
 --呪眼の眷属 カトブレパス
 --Catoblepas, Familiar of the Evil Eye
 --Scripted by Naim
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted "Evil Eye" spell/trap cannot be destroyed by opponent's card effects
@@ -28,7 +27,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_EVIL_EYE}
 s.listed_names={id}
-
 function s.tgfilter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_EVIL_EYE)
 end

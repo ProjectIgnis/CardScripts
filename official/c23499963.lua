@@ -1,7 +1,6 @@
 --スプリガンズ・ウォッチ
 --Springans Watch
 --Scripted by Hatter
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Add 1 "Vast Desert Gold Golgonda" from deck

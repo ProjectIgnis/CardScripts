@@ -1,6 +1,5 @@
 --ビークロイド・コネクション・ゾーン
 --Vehicroid Connection Zone
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Fusion summon 1 "Vehicroid" fusion monster
@@ -8,7 +7,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,SET_VEHICROID),nil,nil,nil,nil,s.stage2))
 end
 s.listed_series={SET_VEHICROID}
-
 function s.stage2(e,tc,tp,sg,chk)
 	if chk==1 then
 		local c=e:GetHandler()

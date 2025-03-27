@@ -1,6 +1,5 @@
 --ワイト夫人
 --The Lady in Wight
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Name becomes "Skull Servant" while in GY
@@ -31,7 +30,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={CARD_SKULL_SERVANT}
-
 function s.etarget(e,c)
 	return c:GetCode()~=id and c:IsRace(RACE_ZOMBIE) and c:IsLevelBelow(3)
 end

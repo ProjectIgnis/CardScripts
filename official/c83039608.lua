@@ -1,7 +1,6 @@
 --魔轟神獣アバンク
 --The Fabled Abanc
 --Scripted by Naim
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon itself from GY
@@ -16,7 +15,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_FABLED}
-
 function s.cfilter(c)
 	return c:IsSetCard(SET_FABLED) and c:IsMonster() and c:IsDiscardable()
 end

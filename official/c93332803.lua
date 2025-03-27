@@ -1,6 +1,5 @@
 --怒炎壊獣ドゴラン
 --Dogoran, the Mad Flame Kaiju
-
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1,e2=aux.AddKaijuProcedure(c)
@@ -16,7 +15,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.counter_list={0x37}
-
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,1,0x37,3,REASON_COST)
 		and e:GetHandler():GetAttackAnnouncedCount()==0 end

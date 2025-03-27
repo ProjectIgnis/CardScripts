@@ -1,7 +1,6 @@
 --のどかな埋葬
 --Peaceful Burial
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Send 1 monster from deck to GY

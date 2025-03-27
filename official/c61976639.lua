@@ -1,7 +1,6 @@
 --シークレット・パスフレーズ
 --Secret Password
 --Scripted by AlphaKretin and Naim
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -15,7 +14,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_KI_SIKIL,SET_LIL_LA,SET_EVIL_TWIN,SET_LIVE_TWIN}
-
 function s.thfilter(c,add)
 	local c1=(c:IsSetCard(SET_EVIL_TWIN) or c:IsSetCard(SET_LIVE_TWIN)) and c:IsSpellTrap()
 	local c2=c:IsSetCard(SET_EVIL_TWIN) and c:IsMonster()

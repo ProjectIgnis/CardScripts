@@ -1,6 +1,5 @@
 --ピンポイント・ガード
 --Pinpoint Guard
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--When opponent's monster declares an attack, special summon 1 level 4 or lower monster from GY

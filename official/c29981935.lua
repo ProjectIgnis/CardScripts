@@ -1,7 +1,6 @@
 --武神－トリフネ
 --Bujin Torifune
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -12,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.spcost)
+	e1:SetCost(Cost.SelfTribute)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
@@ -36,12 +35,6 @@ function s.initial_effect(c)
 end
 	--Lists "Bujin" archetype
 s.listed_series={SET_BUJIN}
-
-	--Tribute itself as cost
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
-end
 	--Check for "Bujin" monsters, except "Bujin Torifune"
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_BUJIN) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
@@ -80,7 +73,6 @@ end
 	--If it ever happened
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.eqcfilter,1,nil,tp)
-
 end
 	--Activation legality
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

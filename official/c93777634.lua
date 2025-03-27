@@ -1,7 +1,6 @@
 --Ｎｏ．３９ 希望皇ホープ・ライジング
 --Number 39: Utopia Rising
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -40,7 +39,6 @@ s.listed_series={SET_NUMBER}
 s.listed_names={id}
 	--Number 39
 s.xyz_number=39
-
 	--Check for a "Number" Xyz Monster
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_NUMBER) and c:IsType(TYPE_XYZ) and not c:IsCode(id)

@@ -1,6 +1,5 @@
 --ＷＷ－ウィンター・ベル
 --Windwitch - Winter Bell
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -34,7 +33,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_WINDWITCH}
-
 function s.damfil(c)
 	return c:IsMonster() and c:IsSetCard(SET_WINDWITCH) and c:IsLevelAbove(1)
 end

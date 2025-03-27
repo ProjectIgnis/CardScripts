@@ -1,6 +1,5 @@
 --ジェット・シンクロン
 --Jet Synchron
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--If sent to GY as synchro material, add 1 "Junk" monster from deck
@@ -26,7 +25,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_JUNK}
-
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE) and r==REASON_SYNCHRO
 end

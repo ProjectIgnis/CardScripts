@@ -1,6 +1,5 @@
 --水物語－ウラシマ
 --Aqua Story - Urashima
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted monster has its effects negate, its ATK/DEF becomes 100, and is unaffected by opponent's card effects

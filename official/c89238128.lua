@@ -1,7 +1,6 @@
 --サイバース・アクセラレーター
 --Cyberse Accelerator
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving

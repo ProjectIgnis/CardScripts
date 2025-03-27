@@ -1,7 +1,6 @@
 --電脳堺甲－甲々
 --Virtual World Shell - Jaja
 --Scripted by AlphaKretin
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving

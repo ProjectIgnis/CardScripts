@@ -1,6 +1,5 @@
 --聖刻龍－トフェニドラゴン
 --Hieratic Dragon of Tefnuit
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon itself from hand

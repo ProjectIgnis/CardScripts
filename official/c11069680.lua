@@ -1,7 +1,6 @@
 --ジャンク・コンバーター
 --Junk Converter
 --Scripted by Naim
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Add 1 "Synchron" monster from deck
@@ -29,7 +28,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_SYNCHRON}
-
 function s.cfilter(c)
 	return c:IsType(TYPE_TUNER) and c:IsDiscardable()
 end

@@ -1,7 +1,6 @@
 --超重禽属コカトリウム
 --Cocatorium the Heavy Metal Avian
 --Scripted by Naim
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon itself from hand or GY

@@ -1,7 +1,6 @@
 --転生炎獣スピニー
 --Salamangreat Spinny
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -31,7 +30,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_SALAMANGREAT}
 s.listed_names={id}
-
 	--Check for "Salamangreat" card
 function s.atkfilter2(c)
 	return c:IsFaceup() and c:IsSetCard(SET_SALAMANGREAT)

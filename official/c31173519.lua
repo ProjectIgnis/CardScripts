@@ -1,6 +1,5 @@
 --ライライダー
 --Rai Rider
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--A monster that battled this card cannot attack

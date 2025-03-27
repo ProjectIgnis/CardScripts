@@ -1,6 +1,5 @@
 --ダーク・フュージョン
 --Dark Fusion
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Fusion summon 1 fiend fusion monster

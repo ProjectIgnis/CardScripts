@@ -1,6 +1,5 @@
 --超音速波
 --Sonic Boom
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Apply various effects
@@ -30,7 +29,6 @@ function s.initial_effect(c)
 	end)
 end
 s.listed_series={SET_MECHA_PHANTOM_BEAST}
-
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	if tc:GetFlagEffect(id)==0 then

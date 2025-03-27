@@ -1,7 +1,6 @@
 --マシンナーズ・パゼストレージ
 --Machina Possesstorage
 --Scripted by Hel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--If normal or special summoned, special summon 1 "Machina" monster from GY
@@ -32,7 +31,6 @@ function s.initial_effect(c)
 end
 s.listed_names={id}
 s.listed_series={SET_MACHINA}
-
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_MACHINA) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) and not c:IsCode(id)
 end

@@ -1,7 +1,6 @@
 --海造賊－祝宴
 --Plunder Patroll Parrrty
 --Scripted by Naim
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Draw, then shuffle card(s) from hand to deck
@@ -30,7 +29,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_PLUNDER_PATROLL}
-
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_PLUNDER_PATROLL),tp,LOCATION_MZONE,0,1,nil)
 end

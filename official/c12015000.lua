@@ -1,7 +1,6 @@
 --新生代化石竜 スカルガ
 --Fossil Dragon Skullgar
 --Scripted by AlphaKretin
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Fusion summon procedure
@@ -35,7 +34,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_FOSSIL_FUSION}
-
 function s.ffilter(c,fc,sumtype,tp)
 	return c:IsLevelBelow(4) and c:IsLocation(LOCATION_GRAVE) and c:IsControler(1-tp)
 end

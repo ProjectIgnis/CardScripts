@@ -1,6 +1,5 @@
 --アイアイアン
 --Aye-Iron
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Gain 400 ATK, cannot attack this turn

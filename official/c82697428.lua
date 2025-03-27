@@ -1,6 +1,5 @@
 --Ｖ・ＨＥＲＯウィッチ・レイド
 --Vision HERO Witch Raider
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Can also tribute trap cards for its tribute summon
@@ -25,7 +24,6 @@ function s.initial_effect(c)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
 s.listed_series={SET_HERO}
-
 function s.counterfilter(c)
 	return c:IsSetCard(SET_HERO)
 end

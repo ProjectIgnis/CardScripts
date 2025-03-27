@@ -1,7 +1,6 @@
 --転生炎獣の炎虞
 --Salamangreat Burning Shell
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 "Salamangreat" monster from hand, then link summon 1 "Salamangreat" monster
@@ -25,7 +24,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_SALAMANGREAT}
-
 function s.spfilter2(c,mc,fg)
 	return c:IsSetCard(SET_SALAMANGREAT) and c:IsLinkSummonable(mc,fg+mc)
 end

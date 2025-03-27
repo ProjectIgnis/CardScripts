@@ -1,7 +1,6 @@
 --エターナル・カオス
 --Eternal Chaos
 --Scripted by AlphaKretin
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Send 1 LIGHT and 1 DARK monster from deck to GY

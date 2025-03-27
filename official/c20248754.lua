@@ -1,7 +1,6 @@
 --海造賊－静寂のメルケ号
 --Plunder Patrollship Moerk
 --Scripted by Larry126
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -39,7 +38,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_PLUNDER_PATROLL}
-
 function s.condition1(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():GetEquipGroup():IsExists(Card.IsSetCard,1,nil,SET_PLUNDER_PATROLL)
 end

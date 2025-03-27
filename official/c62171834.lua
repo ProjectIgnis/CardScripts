@@ -1,7 +1,6 @@
 --夢幻の夢魔鏡
 --Dream Mirror Phantasms
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--When activated, add 1 "Dream Mirror" monster from deck
@@ -39,7 +38,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_DREAM_MIRROR}
 s.listed_names={CARD_DREAM_MIRROR_JOY,CARD_DREAM_MIRROR_TERROR}
-
 function s.filter(c)
 	return c:IsSetCard(SET_DREAM_MIRROR) and c:IsMonster() and c:IsAbleToHand()
 end

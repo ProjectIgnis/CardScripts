@@ -1,6 +1,5 @@
 --Ｅｍトラピーズ・マジシャン
 --Performage Trapeze Magician
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -41,7 +40,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_PERFORMAGE}
-
 function s.damval(e,re,val,r,rp,rc)
 	local atk=e:GetHandler():GetAttack()
 	if val<=atk then return 0 else return val end

@@ -1,7 +1,6 @@
 --アメイズメント・スペシャルショー
 --Amazement Special Show
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Return 1 of your targeted "Amazement" monsters to hand
@@ -16,7 +15,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_AMAZEMENT}
-
 function s.thfilter(c,tp,e)
 	return c:IsFaceup() and c:IsSetCard(SET_AMAZEMENT) and c:IsLocation(LOCATION_MZONE) 
 		and c:IsControler(tp) and (not e or c:IsCanBeEffectTarget(e)) and c:IsAbleToHand()

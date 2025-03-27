@@ -1,7 +1,6 @@
 --炎舞－「洞明」
 --Fire Formation - Domei
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--When activated, ritual summon 1 beast-warrior ritual monster from hand
@@ -25,7 +24,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_FIRE_FIST}
-
 function s.filter(c)
 	return c:IsRace(RACE_BEASTWARRIOR) and c:IsRitualMonster()
 end

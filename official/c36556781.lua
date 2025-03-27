@@ -1,6 +1,5 @@
 --ドラグニティナイト－ゴルムファバル
 --Dragunity Knight - Gormfaobhar
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Synchro summon procedure
@@ -35,7 +34,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_DRAGUNITY}
-
 function s.eqval(ec,c,tp)
 	return ec:IsControler(tp) and ec:IsSetCard(SET_DRAGUNITY) 
 end

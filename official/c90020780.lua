@@ -1,7 +1,6 @@
 --シノビネクロ
 --Shinobi Necro
 --Scripted by andré
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Draw 1, then discard 1

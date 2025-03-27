@@ -1,7 +1,6 @@
 --契珖のヴルーレセンス
 --Radiant Vouirescence
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -28,7 +27,6 @@ function s.initial_effect(c)
 end
 	--Specifically lists itself
 s.listed_names={id}
-
 	--If opponent controls a monster
 function s.tgcon(e,tp)
 	return Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_MZONE,1,nil)

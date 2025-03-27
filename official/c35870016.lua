@@ -1,7 +1,6 @@
 --剛鬼フィニッシュホールド
 --Gouki Finishing Move
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted "Gouki" link monster gains ATK equal to its link rating x 1000
@@ -16,7 +15,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_GOUKI}
-
 function s.filter(c)
 	return c:IsFaceup() and c:IsLinkMonster()
 		and c:IsSetCard(SET_GOUKI) and c:IsLinkAbove(1)

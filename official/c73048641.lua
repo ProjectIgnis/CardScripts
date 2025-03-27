@@ -1,6 +1,5 @@
 --ハーフ・シャット
 --Half Shut
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted monster cannot be destroyed by battle, also halve its ATK

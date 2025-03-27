@@ -1,6 +1,5 @@
 --エキセントリック・ボーイ
 --Eccentric Boy
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--A synchro monster using this card cannot activate its effects, has its effects negated, and is banished

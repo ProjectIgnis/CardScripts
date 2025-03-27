@@ -1,7 +1,6 @@
 --神碑の翼ムニン
 --Munin the Runick Wings
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -57,7 +56,6 @@ function s.initial_effect(c)
 end
 	--Lists "Mysterune" archetype
 s.listed_series={SET_RUNICK}
-
 	--Discard 1 card as cost
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end

@@ -15,7 +15,6 @@ function s.initial_effect(c)
 	e1:SetValue(s.aclimit)
 	e1:SetCondition(s.actcon)
 	c:RegisterEffect(e1)
-
 	--atk limit (opponent)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
@@ -54,7 +53,6 @@ end
 function s.atlimit(e,c)
 	return c~=e:GetHandler()
 end
-
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) end
 	if chk==0 then return Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_MZONE,1,nil) end
@@ -68,7 +66,6 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end
-
 function s.repfilter(c,e)
 	return c:IsDestructable(e) and not c:IsStatus(STATUS_DESTROY_CONFIRMED)
 end

@@ -1,7 +1,6 @@
 --ペンギン忍者
 --Penguin Ninja
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -28,7 +27,6 @@ function s.initial_effect(c)
 end
 	--Lists "Penguin" archetype
 s.listed_series={SET_PENGUIN}
-
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_SZONE) and chkc:IsAbleToHand() end

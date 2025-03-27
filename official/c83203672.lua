@@ -1,7 +1,6 @@
 --スプリガンズ・バンガー
 --Springans Branga
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -31,7 +30,6 @@ end
 s.listed_series={SET_SPRINGANS}
 	--Specifically lists itself
 s.listed_names={id}
-
 	--Check for "Sprigguns" Xyz monster
 function s.matfilter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_SPRINGANS) and c:IsType(TYPE_XYZ)

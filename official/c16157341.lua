@@ -1,6 +1,5 @@
 --武神器－オハバリ
 --Bujingi Ibis
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted "Bujin" inflicts piercing damage
@@ -16,7 +15,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_BUJIN}
-
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP()
 end

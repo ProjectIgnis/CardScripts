@@ -1,7 +1,6 @@
 --コンドーレンス・パペット
 --Condolence Puppet
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Send "Gimmick Puppet" monsters from deck to GY

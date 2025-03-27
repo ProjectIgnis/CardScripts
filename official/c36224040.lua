@@ -1,7 +1,6 @@
 --ＲＵＭ－ゼアル・フォース
 --Rank-Up-Magic Zexal Force
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -31,7 +30,6 @@ function s.initial_effect(c)
 end
 	--Lists "Utopia", "ZW -", and "ZS -" archetypes
 s.listed_series={SET_UTOPIA,SET_ZW,SET_ZS}
-
 	--Check for an Xyz monster to use as material
 function s.filter1(c,e,tp)
 	local rk=c:GetRank()

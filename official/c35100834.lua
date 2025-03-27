@@ -1,7 +1,6 @@
 --機動砲塁 パワー・ホールド
 --Powerhold the Moving Battery
 --Scripted by AlphaKretin
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon this card as a monster, then equip 1 "Gadget" monster from hand or deck to it
@@ -15,7 +14,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_GADGET}
-
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,TYPE_MONSTER|TYPE_EFFECT,0,2000,4,RACE_MACHINE,ATTRIBUTE_EARTH) end

@@ -1,6 +1,5 @@
 --盾航戦車ステゴサイバー
 --Stegocyber
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon itself from GY, and if you do, take no battle damage

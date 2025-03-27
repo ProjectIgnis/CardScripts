@@ -30,7 +30,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCode(EVENT_PHASE+PHASE_END)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(s.thcon)
-	e2:SetCost(s.thcost)
+	e2:SetCost(Cost.SelfTribute)
 	e2:SetTarget(s.thtg2)
 	e2:SetOperation(s.thop2)
 	e2:SetLabel(Duel.GetTurnCount())
@@ -58,10 +58,6 @@ function s.thop1(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsTurnPlayer(tp) and Duel.GetTurnCount()~=e:GetLabel()
-end
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.filter2(c)
 	return c:IsAttribute(ATTRIBUTE_EARTH) and c:IsAbleToHand()

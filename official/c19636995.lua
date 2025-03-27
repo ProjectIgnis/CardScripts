@@ -1,7 +1,6 @@
 --急き兎馬
 --Red Hared Hasty Horse
 --Scripted by edo9300
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon itself from hand

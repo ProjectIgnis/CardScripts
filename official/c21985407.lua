@@ -1,7 +1,6 @@
 --聖夜の降臨
 --Starry Knight Arrival
 --Scripted by DyXel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

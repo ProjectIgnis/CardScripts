@@ -1,6 +1,5 @@
 --クイック・リボルブ
 --Quick Launch
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 "Rokket" monster from deck
@@ -14,7 +13,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_ROKKET}
-
 function s.filter(c,e,tp)
 	return c:IsSetCard(SET_ROKKET) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

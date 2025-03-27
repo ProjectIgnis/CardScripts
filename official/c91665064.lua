@@ -1,6 +1,5 @@
 --セキュリティ・ブロック
 --Security Block
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted cyberse monster cannot be destroyed by battle, also neither player take battle damage

@@ -1,7 +1,6 @@
 --トゥーン・テラー
 --Toon Terror
 --Scripted by Hel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Negate the activation of a monster effect or spell/trap card
@@ -17,7 +16,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={15259703}
-
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsCode(15259703)
 end

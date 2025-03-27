@@ -1,6 +1,5 @@
 --サルベージェント・ドライバー
 --Salvagent Driver
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon itself from hand or GY

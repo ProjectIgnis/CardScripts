@@ -1,7 +1,6 @@
 --聖夜に煌めく竜
 --Starry Night, Starry Dragon
 --Scripted by edo9300
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--If Normal or Special Summoned from hand, destroy 1 card on the field

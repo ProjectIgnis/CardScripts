@@ -1,7 +1,6 @@
 --スクリプトン
 --Scrypton
 --Scripted by pyrQ
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon itself from hand

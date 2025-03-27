@@ -1,7 +1,6 @@
 --Ｌｉｖｅ☆Ｔｗｉｎ リィラ・トリート
 --Live☆Twin Lil-la Treat
 --Scripted by Hel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon itself from hand
@@ -28,7 +27,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_KI_SIKIL,SET_EVIL_TWIN}
-
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0

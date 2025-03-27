@@ -1,7 +1,6 @@
 --海造賊－白髭の機関士
 --Whitebeard, the Plunder Patroll Helm
 --Scripted by Larry126
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 "Plunder Patroll" monster from extra deck
@@ -32,7 +31,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_PLUNDER_PATROLL}
 s.listed_names={id}
-
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsTurnPlayer(1-tp)
 end

@@ -1,6 +1,5 @@
 --ＳＰＹＲＡＬ ＭＩＳＳＩＯＮ－奪還
 --SPYRAL MISSION - Recapture
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -40,7 +39,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_SPYRAL}
-
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local c=e:GetHandler()

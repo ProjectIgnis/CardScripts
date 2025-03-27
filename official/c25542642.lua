@@ -1,6 +1,5 @@
 --幻影霧剣
 --Phantom Knights' Fog Blade
-
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddPersistentProcedure(c,nil,aux.FaceupFilter(Card.IsType,TYPE_EFFECT),CATEGORY_DISABLE,nil,nil,TIMINGS_CHECK_MONSTER,nil,nil,s.target)

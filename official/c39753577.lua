@@ -1,6 +1,5 @@
 --魔妖変生
 --Mayakashi Metamorphosis
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 of your "Mayakashi" monsters, that is banished or in GY
@@ -18,7 +17,6 @@ function s.initial_effect(c)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
 s.listed_series={SET_MAYAKASHI}
-
 function s.counterfilter(c)
 	return not c:IsSummonLocation(LOCATION_EXTRA) or c:IsSetCard(SET_MAYAKASHI)
 end

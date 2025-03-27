@@ -1,6 +1,5 @@
 --バージェストマ・オレノイデス
 --Paleozoic Olenoides
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Destroy 1 spell/trap on the field

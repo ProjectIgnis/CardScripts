@@ -1,4 +1,4 @@
---SPYRAL GEAR - Drone
+--ＳＰＹＲＡＬ ＧＥＡＲ－ドローン
 --SPYRAL GEAR - Drone
 local s,id=GetID()
 function s.initial_effect(c)
@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetHintTiming(TIMING_DAMAGE_STEP)
 	e3:SetCondition(s.atkcon)
-	e3:SetCost(s.atkcost)
+	e3:SetCost(Cost.SelfTribute)
 	e3:SetTarget(s.atktg)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
@@ -50,10 +50,6 @@ function s.stop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
-function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.atkfilter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_SPYRAL)

@@ -1,7 +1,6 @@
 --星義の執行者
 --Nemeses Adrastea
 --Scripted by AlphaKretin
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 of your "Nemeses" monsters, that is banished or in GY

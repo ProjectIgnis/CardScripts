@@ -1,6 +1,5 @@
 --バックアップ・オペレーター
 --Backup Operator
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon itself from hand

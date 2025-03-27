@@ -1,6 +1,5 @@
 --ピアニッシモ
 --Pianissimo
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted monster's original ATK becomes 100, also cannot be destroyed by battle or card effect

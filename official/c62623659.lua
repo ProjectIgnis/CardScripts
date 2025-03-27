@@ -1,7 +1,6 @@
 --ゼアル・コンストラクション
 --Zexal Construction
 --Scripted by Larry126
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -15,7 +14,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_ZEXAL,SET_ZW,SET_ZS,SET_RANK_UP_MAGIC,SET_RANK_DOWN_MAGIC}
-
 function s.filter(c)
 	return c:IsAbleToDeck() and not c:IsPublic()
 end

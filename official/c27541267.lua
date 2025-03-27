@@ -1,6 +1,5 @@
 --侵略の汎発感染
 --Infestation Pandemic
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--All your "lswarm" monsters are unaffected by other card effects
@@ -13,7 +12,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_LSWARM}
-
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_LSWARM)
 end

@@ -1,6 +1,5 @@
 --ブラック・イリュージョン
 --Black Illusion
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Grant protection to your DARK spellcaster monsters with 2000+ ATK 

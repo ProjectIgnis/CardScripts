@@ -1,7 +1,6 @@
 --リンク・デス・ターレット
 --Link Turret
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x48)
@@ -38,7 +37,6 @@ function s.initial_effect(c)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
 s.listed_series={SET_ROKKET}
-
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc) end
 	local c=e:GetHandler()

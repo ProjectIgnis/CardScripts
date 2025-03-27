@@ -1,7 +1,6 @@
 --
 --Sol and Luna
 --Scripted by DyXel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

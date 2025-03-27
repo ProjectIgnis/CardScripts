@@ -1,6 +1,5 @@
 --花合わせ
 --Flower Gathering
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 4 "Flower Cardian" monsters with 100 ATK from deck
@@ -17,7 +16,6 @@ function s.initial_effect(c)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
 s.listed_series={SET_FLOWER_CARDIAN}
-
 function s.counterfilter(c)
 	return c:IsSetCard(SET_FLOWER_CARDIAN)
 end

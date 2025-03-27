@@ -1,7 +1,6 @@
 --デリンジャラス・ドラゴン
 --Dillingerous Dragon
 --Scripted by pyrQ
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -35,7 +34,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_ROKKET}
-
 function s.matfilter(c,scard,sumtype,tp)
 	return c:IsRace(RACE_DRAGON,scard,sumtype,tp) and c:IsAttribute(ATTRIBUTE_DARK,scard,sumtype,tp)
 end

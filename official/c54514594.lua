@@ -1,6 +1,5 @@
 --ヴォルカニック・ハンマー
 --Volcanic Hammerer
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Inflict damage equal to number of "Volcanic" monsters in your GY x 200
@@ -16,7 +15,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_VOLCANIC}
-
 function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetAttackAnnouncedCount()==0 end
 	--Cannot attack this turn

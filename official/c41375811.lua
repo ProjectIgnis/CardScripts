@@ -1,6 +1,5 @@
 --十二獣ライカ
 --Zoodiac Chakanine
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -33,7 +32,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
 end
 s.listed_series={SET_ZOODIAC}
-
 function s.ovfilter(c,tp,lc)
 	return c:IsFaceup() and c:IsSetCard(SET_ZOODIAC,lc,SUMMON_TYPE_XYZ,tp) and not c:IsSummonCode(lc,SUMMON_TYPE_XYZ,tp,id)
 end

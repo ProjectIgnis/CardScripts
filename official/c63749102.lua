@@ -1,6 +1,5 @@
 --イグザリオン・ユニバース
 --Exarion Universe
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Loses 400 ATK, and if it does, inflict piercing damage

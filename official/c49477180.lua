@@ -1,7 +1,6 @@
 --ヴェンデット・ストリゲス
 --Vendread Striges
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon itself from GY
@@ -26,7 +25,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_VENDREAD}
-
 function s.spcfilter(c)
 	return c:IsSetCard(SET_VENDREAD) and not c:IsPublic()
 end

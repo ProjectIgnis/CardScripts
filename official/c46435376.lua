@@ -1,7 +1,6 @@
 --インフェルニティ・セイジ
 --Infernity Sage
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -29,7 +28,6 @@ function s.initial_effect(c)
 end
 	--Lists "Infernity" archetype
 s.listed_series={SET_INFERNITY}
-
 	--Activation legality
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)

@@ -1,6 +1,5 @@
 --皇の波動
 --Utopian Aura
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Your Xyz monsters cannot be destroyed by card effects

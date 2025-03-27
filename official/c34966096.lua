@@ -1,7 +1,6 @@
 --カオス・ベトレイヤー
 --Chaos Betrayer
 --Scripted by andré
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon itself from GY
@@ -26,7 +25,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-
 function s.ssfilter(c)
 	return c:IsAttribute(ATTRIBUTE_LIGHT|ATTRIBUTE_DARK) and not c:IsCode(id) and aux.SpElimFilter(c,true,false) and c:IsAbleToRemoveAsCost()
 end

@@ -1,7 +1,6 @@
 --デーモンの杖
 --Archfiend's Staff of Despair
 --Scripted by DyXel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,0)

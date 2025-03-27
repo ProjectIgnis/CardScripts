@@ -1,6 +1,5 @@
 --ＰＳＹフレーム・マルチスレッダー
 --PSY-Frame Multi-Threader
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Name becomes "PSY-Frame Driver" while in hand or GY
@@ -35,7 +34,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_PSY_FRAME}
-
 function s.repfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(SET_PSY_FRAME) and c:IsOnField() and c:IsControler(tp) 
 		and not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_EFFECT+REASON_BATTLE)

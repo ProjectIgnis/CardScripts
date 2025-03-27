@@ -1,7 +1,6 @@
 --ＥＭ天空の魔術師
 --Performapal Celestial Magician
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	Pendulum.AddProcedure(c)

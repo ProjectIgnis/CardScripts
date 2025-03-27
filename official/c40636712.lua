@@ -1,6 +1,5 @@
 --デストーイ・ハーケン・クラーケン
 --Frightfur Kraken
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -39,7 +38,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_EDGE_IMP,SET_FLUFFAL}
 s.material_setcode={SET_FLUFFAL,SET_EDGE_IMP}
-
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsDirectAttacked() end
 	--Cannot attack directly this turn

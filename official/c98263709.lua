@@ -1,6 +1,5 @@
 --銀河魔鏡士
 --Galaxy Mirror Sage
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Gain 500 LP per "Galaxy" monster in your GY
@@ -32,7 +31,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_GALAXY}
-
 function s.filter(c)
 	return c:IsSetCard(SET_GALAXY) and c:IsMonster()
 end

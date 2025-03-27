@@ -1,6 +1,5 @@
 --オーバード・パラディオン
 --Crusadia Power
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted "Crusadia" monster becomes unaffected by other card effects
@@ -15,7 +14,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_CRUSADIA}
-
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_CRUSADIA)
 end

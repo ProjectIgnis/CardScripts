@@ -1,6 +1,5 @@
 --トーラの魔導書
 --Spellbook of Wisdom
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted spellcaster monster becomes unaffected by spells or traps

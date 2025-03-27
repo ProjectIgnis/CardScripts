@@ -1,6 +1,5 @@
 --エンタメ・フラッシュ
 --Command Performance
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Change opponent's attack position monsters to defense position

@@ -1,6 +1,5 @@
 --起動する機殻
 --Qlipper Launch
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--All your normal summoned/set "Qli" monsters gain 300 ATK, have their effects negate, and unaffected by spells/traps

@@ -1,7 +1,6 @@
 --機皇帝ワイゼル∞-S・アブソープション
 --Meklord Emperor Wisel - Synchro Absorption
 --Scripted by AlphaKretin
-
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -42,13 +41,12 @@ function s.initial_effect(c)
 	e4:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCondition(s.negcon)
-	e4:SetCost(s.negcost)
+	e4:SetCost(Cost.SelfTribute)
 	e4:SetTarget(s.negtg)
 	e4:SetOperation(s.negop)
 	c:RegisterEffect(e4)
 end
 s.listed_series={SET_MEKLORD}
-
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsTurnPlayer(1-tp)
 end
@@ -98,10 +96,6 @@ function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.GetChainInfo(ev-1,CHAININFO_TRIGGERING_EFFECT):IsHasType(EFFECT_TYPE_ACTIVATE) then return false end
 	local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DESTROY)
 	return ex and tg~=nil and (tc+tg:FilterCount(Card.IsOnField,nil)-#tg)>0
-end
-function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

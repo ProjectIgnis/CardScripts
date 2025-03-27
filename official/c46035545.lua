@@ -1,6 +1,5 @@
 --ＤＤ魔導賢者ニコラ
 --D/D Savant Nikola
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Enable pendulum summon
@@ -39,7 +38,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_DD,SET_DDD}
-
 function s.splimit(e,c,sump,sumtype,sumpos,targetp)
 	return not c:IsSetCard(SET_DD) and (sumtype&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end

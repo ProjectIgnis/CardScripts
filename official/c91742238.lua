@@ -1,7 +1,6 @@
 --リターン・オブ・アンデット
 --Return of the Zombies
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Banish 1 zombie monster from field, then controller of it special summons 1 zombie monster from their GY

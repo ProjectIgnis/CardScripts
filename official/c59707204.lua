@@ -1,7 +1,6 @@
 --護神鳥シムルグ
 --Simorgh, Bird of Protection
 --Scripted by Larry126
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--When normal summoned, return 1 card from opponent's S/T zones to hand

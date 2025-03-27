@@ -1,6 +1,5 @@
 --氷結界のロイヤル・ナイト
 --Royal Knight of the Ice Barrier
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 token to opponent's field

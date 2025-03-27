@@ -1,7 +1,6 @@
 --招神鳥シムルグ
 --Simorgh, Bird of Calamity
 --Scripted by AlphaKretin
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--When normal summoned, send 1 "Simorgh" card from deck to GY
@@ -28,7 +27,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_SIMORGH}
 s.listed_names={id}
-
 function s.tgfilter(c)
 	return c:IsSetCard(SET_SIMORGH) and not c:IsCode(id) and c:IsAbleToGrave()
 end

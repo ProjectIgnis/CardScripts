@@ -1,7 +1,6 @@
 --神碑の牙ゲーリ
 --Geri the Runick Fangs
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -41,7 +40,6 @@ function s.initial_effect(c)
 end
 	--Lists "Mysterune" archetype
 s.listed_series={SET_RUNICK}
-
 	--Check for a non-Quick-Play "Mysterune" Spell
 function s.thfilter(c)
 	return c:IsSetCard(SET_RUNICK) and not c:IsType(TYPE_QUICKPLAY) and c:IsSpell() and c:IsAbleToHand()

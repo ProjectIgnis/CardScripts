@@ -1,6 +1,5 @@
 --沈黙の剣
 --Silent Sword Slash
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted "Silent Swordsman" gains 1500 ATK/DEF, also unaffected by opponent's card effects

@@ -1,6 +1,5 @@
 --おもちゃ箱
 --Box of Friends
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 2 normal monsters, with 0 ATK or DEF and different names, from deck

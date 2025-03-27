@@ -1,6 +1,5 @@
 --骸の魔妖-餓者髑髏
 --Gashadokuro, the Skeletal Mayakashi
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Can only control one

@@ -1,7 +1,6 @@
 --ＺＳ－武装賢者
 --ZS - Armed Sage
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -27,7 +26,6 @@ function s.initial_effect(c)
 end
 	--Lists "Utopia" and "ZW -" archetype
 s.listed_series={SET_UTOPIA,SET_ZW}
-
 	--Check for exactly 1 level 4 monster
 function s.spcon(e)
 	local g=Duel.GetFieldGroup(e:GetHandlerPlayer(),LOCATION_MZONE,0)

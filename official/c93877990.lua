@@ -1,7 +1,6 @@
 --富炎星－ハクテンオウ
 --Brotherhood of the Fire Fist - Swan
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -36,7 +35,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_FIRE_FORMATION}
-
 function s.damfilter(c)
 	return c:IsFaceup() and c:IsSpellTrap() and c:IsSetCard(SET_FIRE_FORMATION)
 end

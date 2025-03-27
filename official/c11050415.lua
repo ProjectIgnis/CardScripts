@@ -1,6 +1,5 @@
 --超カバーカーニバル
 --Super Hippo Carnival
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 "Performapal Hip Hippo" from hand, deck, or GY
@@ -14,7 +13,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={41440148,TOKEN_HIPPO}
-
 function s.filter(c,e,tp)
 	return c:IsCode(41440148) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

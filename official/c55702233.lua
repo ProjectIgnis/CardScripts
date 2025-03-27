@@ -1,7 +1,6 @@
 --生きる偲びのシルキィ
 --Ret-time Reviver Emit-ter
 --Scripted by AlphaKretin
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon itself from hand or GY

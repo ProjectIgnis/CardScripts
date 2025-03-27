@@ -1,7 +1,6 @@
 --巧炎星－エランセイ
 --Brotherhood of the Fire Fist - Eland
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -32,7 +31,6 @@ function s.initial_effect(c)
 end
 s.listed_names={93754402,id}
 s.listed_series={SET_FIRE_FORMATION,SET_FIRE_FIST}
-
 function s.setcfilter(c)
 	return c:IsMonster() and c:IsDiscardable()
 end

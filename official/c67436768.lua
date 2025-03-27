@@ -1,7 +1,6 @@
 --スプリガンズ・ブラザーズ
 --Springans Brothers
 --Scripted by Hel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 "Sprigguns" monster from GY
@@ -28,7 +27,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_SPRINGANS}
-
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local loc=e:GetHandler():GetPreviousLocation()
 	return (loc==LOCATION_HAND or loc==LOCATION_DECK)

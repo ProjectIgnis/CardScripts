@@ -1,7 +1,6 @@
 --戦華史略－大丈夫之義
 --Ancient Warriors Saga - Chivalrous Path
 --Scripted by DyXel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

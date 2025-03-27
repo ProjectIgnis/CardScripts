@@ -1,7 +1,6 @@
 --アロメルスの蟲惑魔
 --Traptrix Allomerus
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -48,7 +47,6 @@ function s.initial_effect(c)
 end
 	--Part of "Traptrix" archetype
 s.listed_series={SET_TRAPTRIX}
-
 	--Has material(s) attached
 function s.imcon(e)
 	return e:GetHandler():GetOverlayCount()>0

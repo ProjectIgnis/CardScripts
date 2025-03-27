@@ -1,7 +1,6 @@
 --ＤＤドッグ
 --D/D Dog
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Enable pendulum summon

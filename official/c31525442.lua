@@ -1,7 +1,6 @@
 --予見者ゾルガ
 --Zolga the Prophet
 --Scripted by The Razgriz
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,7 +1,6 @@
 --聖なる降誕
 --Starry Knight Ceremony
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)

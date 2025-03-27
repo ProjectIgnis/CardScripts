@@ -1,6 +1,5 @@
 --聖騎士ペリノア
 --Noble Knight Pellinore
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Destroy 1 "Noble Arms" equipped to this card and 1 of opponent's monsters
@@ -16,7 +15,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_NOBLE_ARMS}
-
 function s.desfilter(c,g)
 	return c:IsFaceup() and c:IsSetCard(SET_NOBLE_ARMS) and g:IsContains(c)
 end

@@ -1,7 +1,6 @@
 --バイナル・ブレーダー
 --Binary Blader
 --Anime version scripted by Larry126
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving

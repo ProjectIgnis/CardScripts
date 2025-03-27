@@ -1,6 +1,5 @@
 --迷い風
 --Lost Wind
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted monster has its effects negated, also halve its original ATK

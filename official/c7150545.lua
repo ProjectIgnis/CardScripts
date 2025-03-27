@@ -1,7 +1,6 @@
 --カッター・シャーク
 --Buzzsaw Shark
 --Scripted by Eerie Code and edo9300
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 fish monster from deck

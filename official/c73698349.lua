@@ -1,6 +1,5 @@
 --ジャイアント・オーク
 --Giant Orc
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--After attacking, change itself to defense position

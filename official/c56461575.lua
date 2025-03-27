@@ -1,7 +1,6 @@
 --螺旋蘇生
 --Spiral Reborn
 --Scripted by Naim
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 level 7+ dragon monster from GY

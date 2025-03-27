@@ -1,6 +1,5 @@
 --強靭！無敵！最強！
 --The Ultimate Creature of Destruction
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Apply various lingering effects to your "Blue-Eyes White Dragon"
@@ -31,7 +30,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_BLUE_EYES}
 s.listed_names={CARD_BLUEEYES_W_DRAGON}
-
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_BLUE_EYES)
 end

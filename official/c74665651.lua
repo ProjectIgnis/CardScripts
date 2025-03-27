@@ -1,7 +1,6 @@
 --聖光の夢魔鏡
 --Dream Mirror of Joy
 --Scripted by Naim
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -38,7 +37,6 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_DREAM_MIRROR_TERROR}
 s.listed_series={SET_DREAM_MIRROR}
-
 function s.filter(c,tp)
 	return c:IsCode(CARD_DREAM_MIRROR_TERROR) and c:GetActivateEffect():IsActivatable(tp,true,true)
 end

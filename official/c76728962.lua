@@ -39,7 +39,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.toss_coin=true
-
 function s.filter(c,tp)
 	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and (c:GetPreviousRaceOnField()&RACE_MACHINE)~=0
 		and (c:GetPreviousAttributeOnField()&ATTRIBUTE_DARK)~=0 and c:IsPreviousControler(tp)

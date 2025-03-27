@@ -1,7 +1,6 @@
 --トリシューラの鼓動
 --Terror of Trishula
 --Scripted by DyXel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Banish based on numbers of "Ice Barrier" Synchro Monster(s)

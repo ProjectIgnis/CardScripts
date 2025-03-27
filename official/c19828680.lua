@@ -1,7 +1,6 @@
 --煉獄の契約
 --Contract with the Void
 --Scripted by Rundas
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Discard + Special Summon

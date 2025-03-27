@@ -1,6 +1,5 @@
 --青眼の混沌龍 
 --Blue-Eyes Chaos Dragon
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -46,7 +45,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.listed_names={21082832,CARD_BLUEEYES_W_DRAGON}
-
 function s.indval(e,re,tp)
 	return tp~=e:GetHandlerPlayer()
 end

@@ -1,7 +1,6 @@
 --青眼の究極亜龍
 --Blue-Eyes Alternative Ultimate Dragon
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -41,7 +40,6 @@ function s.initial_effect(c)
 end
 s.material_setcode=SET_BLUE_EYES
 s.listed_names={CARD_BLUEEYES_W_DRAGON,38517737}
-
 function s.indval(e,re,tp)
 	return tp~=e:GetHandlerPlayer()
 end

@@ -1,6 +1,5 @@
 --ＰＳＹフレームギア・ε
 --PSY-Framegear Epsilon
-
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableUnsummonable()
@@ -26,7 +25,6 @@ function s.initial_effect(c)
 	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 s.listed_names={CARD_PSYFRAME_DRIVER}
-
 function s.splimit(e,se,sp,st)
 	return se:IsHasType(EFFECT_TYPE_ACTIONS)
 end

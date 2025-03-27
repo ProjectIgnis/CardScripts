@@ -1,6 +1,5 @@
 --トゥーン・ロールバック
 --Toon Rollback
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted toon monster can make a second attack

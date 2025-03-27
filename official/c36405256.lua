@@ -1,6 +1,5 @@
 --時花の魔女－フルール・ド・ソルシエール
 --Sorciere de Fleur
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--When normal or special summoned, special summon 1 monster from opponent's GY

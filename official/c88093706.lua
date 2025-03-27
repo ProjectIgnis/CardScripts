@@ -1,7 +1,6 @@
 --アップデートジャマー
 --Update Jammer
 --Scripted by Larry126
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)

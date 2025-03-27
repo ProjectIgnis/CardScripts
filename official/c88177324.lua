@@ -1,6 +1,5 @@
 --Ｎｏ．１０７ 銀河眼の時空竜
 --Number 107: Galaxy-Eyes Tachyon Dragon
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -29,7 +28,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.xyz_number=107
-
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsTurnPlayer(tp)
 end

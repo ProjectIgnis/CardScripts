@@ -1,7 +1,6 @@
 --光天のマハー・ヴァイロ
 --Maha Vailo, Light of the Heavens
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)

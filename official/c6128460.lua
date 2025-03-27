@@ -1,7 +1,6 @@
 --ワイトベイキング
 --Wightbaking
 --Logical Nonsense
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Name becomes "Skull Servant" while in GY
@@ -35,7 +34,6 @@ function s.initial_effect(c)
 end
 	--Specifically lists "Skull Servant" and itself
 s.listed_names={CARD_SKULL_SERVANT,id}
-
 	--Check for level 3 or lower zombie monsters
 function s.repfilter(c,tp)
 	return c:IsFaceup() and c:IsRace(RACE_ZOMBIE) and c:IsLevelBelow(3) and c:IsControler(tp)

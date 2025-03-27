@@ -1,7 +1,6 @@
 --いたずら風のフィードラン
 --Feedran, the Winds of Mischief
 --Scripted by Naim
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--If normal or special summoned, make 1 of your monsters be able to inflict piercing damage

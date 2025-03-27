@@ -1,6 +1,5 @@
 --サイバネティック・レボリューション
 --Cybernetic Revolution
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 fusion monster, that lists "Cyber Dragon" as material, from extra deck

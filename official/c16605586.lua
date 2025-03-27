@@ -1,7 +1,6 @@
 --Ｄ－ＨＥＲＯ ディナイアルガイ
 --Destiny HERO - Denier
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -35,7 +34,6 @@ end
 s.listed_series={SET_DESTINY_HERO}
 	--Specifically lists itself
 s.listed_names={id}
-
 	--Check for a "Destiny HERO" monster
 function s.filter(c)
 	return c:IsSetCard(SET_DESTINY_HERO) and c:IsMonster() and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE|LOCATION_DECK))

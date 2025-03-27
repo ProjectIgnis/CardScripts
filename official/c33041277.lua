@@ -1,7 +1,6 @@
 --サイバー・レヴシステム
 --Cyber Revsystem
 --Scripted by ahtelel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 "Cyber Dragon" from hand or GY
@@ -14,7 +13,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={CARD_CYBER_DRAGON}
-
 function s.filter(c,e,tp)
 	return c:IsCode(CARD_CYBER_DRAGON) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

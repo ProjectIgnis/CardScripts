@@ -14,7 +14,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_ROKKET,SET_BORREL}
-
 function s.cfilter(c,tp)
 	return c:IsSetCard(SET_ROKKET) and Duel.IsExistingTarget(s.tgfilter,tp,LOCATION_MZONE,0,1,c)
 end

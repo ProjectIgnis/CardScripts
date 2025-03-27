@@ -1,7 +1,6 @@
 --双天拳 鎧阿
 --Dual Avatar Fists - Armored Ah-Gyo
 --Scripted by edo9300
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -35,7 +34,6 @@ function s.initial_effect(c)
 end
 s.material_setcode={SET_DUAL_AVATAR}
 s.listed_series={SET_DUAL_AVATAR}
-
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsDirectAttacked() end
 	local e1=Effect.CreateEffect(e:GetHandler())

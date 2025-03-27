@@ -1,7 +1,6 @@
 --スプリガンズ・メリーメイカ
 --Springans Merrymaker
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -37,7 +36,6 @@ function s.initial_effect(c)
 end
 	--Lists "Sprigguns" archetype
 s.listed_series={SET_SPRINGANS}
-
 	--Check for a "Sprigguns" monster
 function s.tgfilter(c)
 	return c:IsMonster() and c:IsSetCard(SET_SPRINGANS) and c:IsAbleToGrave()

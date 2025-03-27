@@ -1,7 +1,6 @@
 --大砂海ゴールド・ゴルゴンダ
 --Great Sand Sea - Gold Golgonda
 --Scripted by Hatter
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -44,7 +43,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={SET_SPRINGANS}
-
 function s.attg(e,c)
 	return c:IsSetCard(SET_SPRINGANS) and c:IsType(TYPE_XYZ)
 end

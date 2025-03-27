@@ -1,6 +1,5 @@
 --紅蓮地帯を飛ぶ鷹
 --Soaring Eagle Above the Searing Land
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon itself from GY
@@ -15,7 +14,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_LAVAL}
-
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE) and r==REASON_SYNCHRO
 		and Duel.GetMatchingGroup(Card.IsSetCard,tp,LOCATION_GRAVE,0,nil,SET_LAVAL):GetClassCount(Card.GetCode)>=3

@@ -1,7 +1,6 @@
 --死翼のフレスヴェイス
 --Hraesvelgr, the Desperate Doom Eagle
 --Scripted by Naim
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving

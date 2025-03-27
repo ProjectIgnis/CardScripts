@@ -1,6 +1,5 @@
 --竜魔人 クィーンドラグーン
 --Queen Dragun Djinn
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving

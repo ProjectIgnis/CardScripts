@@ -1,6 +1,5 @@
 --幻奏のイリュージョン
 --Melodious Illusion
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted "Melodious" monster becomes unaffected by opponent's card effects, also can attack twice

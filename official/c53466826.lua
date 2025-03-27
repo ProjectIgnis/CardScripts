@@ -1,6 +1,5 @@
 --ヒロイック・チャンス
 --Heroic Chance
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted "Heroic" monster's ATK becomes doubled, cannot attack directly
@@ -15,7 +14,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_HEROIC}
-
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_HEROIC)
 end

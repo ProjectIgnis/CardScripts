@@ -1,7 +1,6 @@
 --ハイパー・ギャラクシー
 --Hyper Galaxy
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -20,7 +19,6 @@ function s.initial_effect(c)
 end
 	--Contains "Galaxy-Eyes Photon Dragon" in text
 s.listed_names={CARD_GALAXYEYES_P_DRAGON}
-
 	--Check for a monster with 2000+ ATK, besides "Galaxy-Eyes Photon Dragon"
 function s.costfilter(c,ft,tp)
 	return (c:IsControler(tp) or c:IsFaceup()) and c:IsAttackAbove(2000) and not c:IsCode(CARD_GALAXYEYES_P_DRAGON) and (ft>0 or c:GetSequence()<5)

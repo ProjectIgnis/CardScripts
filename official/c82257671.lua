@@ -1,7 +1,6 @@
 --ガッチリ＠イグニスター
 --Gatchiri @Ignister
 --Scripted by Eerie Code, anime version by Larry126
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Each cyberse monster get protected once, each turn

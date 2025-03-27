@@ -1,7 +1,6 @@
 --海造賊－進水式
 --Plunder Patroll Shipshape Ships Shipping
 --Scripted by Naim
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Fusion summon 1 fiend fusion monster
@@ -22,7 +21,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_PLUNDER_PATROLL}
 s.listed_names={80621422}
-
 function s.efilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(SET_PLUNDER_PATROLL) and Duel.IsExistingMatchingCard(s.eqfilter,tp,LOCATION_DECK,0,1,nil,c)
 end

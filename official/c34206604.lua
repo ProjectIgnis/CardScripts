@@ -1,6 +1,5 @@
 --魔導サイエンティスト
 --Magical Scientist
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 level 6 or lower fusion monster from extra deck

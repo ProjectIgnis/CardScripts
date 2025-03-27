@@ -1,6 +1,5 @@
 --ロックストーン・ウォリアー
 --Rockstone Warrior
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 2 tokens to your field

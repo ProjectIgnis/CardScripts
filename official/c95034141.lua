@@ -1,7 +1,6 @@
 --黄金郷の七摩天
 --Seven Cities of the Golden Land
 --Logical Nonsense
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,6 +1,5 @@
 --レプティレス・メデューサ
 --Reptilianne Medusa
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted monster's ATK becomes 0, also cannot change its battle position

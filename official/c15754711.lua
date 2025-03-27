@@ -1,7 +1,6 @@
 --ドラゴンメイドのお見送り
 --Dragonmaid Send-Off
 --Scripted by Naim
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon 1 "Dragonmaid" monster from hand
@@ -17,7 +16,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_DRAGONMAID}
-
 function s.filter(c,e,tp)
 	return c:IsFaceup() and c:IsSetCard(SET_DRAGONMAID) and c:IsAbleToHand()
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp,c:GetCode())

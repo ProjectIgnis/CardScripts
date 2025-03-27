@@ -1,7 +1,6 @@
 --斬機ダイア
 --Mathmech Diameter
 --Scripted by AlphaKretin
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 level 4 cyberse from GY
@@ -26,7 +25,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_MATHMECH}
-
 function s.spfilter(c,e,tp)
 	return c:IsLevel(4) and c:IsRace(RACE_CYBERSE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

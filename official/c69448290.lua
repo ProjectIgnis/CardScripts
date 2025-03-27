@@ -1,6 +1,5 @@
 --霞の谷の雷鳥
 --Mist Valley Thunderbird
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--If returned to hand, special summon itself

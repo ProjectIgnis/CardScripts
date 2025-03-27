@@ -1,7 +1,6 @@
 --夢魔鏡の夢魔－イケロス
 --Ikelos, the Dream Mirror Mara
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 "Dream Mirror" monster from hand
@@ -26,14 +25,13 @@ function s.initial_effect(c)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(s.dspcon)
-	e2:SetCost(s.dspcost)
+	e2:SetCost(Cost.SelfTribute)
 	e2:SetTarget(s.dsptg)
 	e2:SetOperation(s.dspop)
 	c:RegisterEffect(e2)
 end
 s.listed_names={49389190,CARD_DREAM_MIRROR_JOY}
 s.listed_series={SET_DREAM_MIRROR}
-
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
 	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(SET_DREAM_MIRROR)
@@ -58,10 +56,6 @@ function s.dspcon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_DREAM_MIRROR_JOY),tp,LOCATION_FZONE,LOCATION_FZONE,1,nil)
 		and (ph==PHASE_MAIN1 or Duel.IsBattlePhase() or ph==PHASE_MAIN2)
-end
-function s.dspcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.dspfilter(c,e,tp)
 	return c:IsCode(49389190) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

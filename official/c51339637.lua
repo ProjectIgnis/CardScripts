@@ -2,7 +2,6 @@
 --Salamangreat Roar
 --Logical Nonsense
 --Substitute ID
-
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.EnableCheckReincarnation(c)
@@ -31,7 +30,6 @@ function s.initial_effect(c)
 end
 	--Lists "Salamangreat" archetype
 s.listed_series={SET_WINDWITCH}
-
 	--Check for "Salamangreat" link monster
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_SALAMANGREAT) and c:IsLinkMonster()

@@ -1,6 +1,5 @@
 --爆竜剣士イグニスターＰ
 --Ignister Prominence, the Blasting Dracoslayer
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -30,7 +29,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_DRACOSLAYER}
-
 function s.desfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_PENDULUM)
 		and Duel.IsExistingMatchingCard(Card.IsAbleToDeck,0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)

@@ -1,7 +1,6 @@
 --クロノダイバー・アジャスター
 --Time Thief Adjuster
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -39,7 +38,6 @@ end
 s.listed_series={SET_TIME_THIEF}
 	--Specifically lists itself
 s.listed_names={id}
-
 	--If you normal/special summoned a "Time Thief" monster
 function s.cfilter(c,tp)
 	return c:IsFaceup() and c:IsSummonPlayer(tp) and c:IsSetCard(SET_TIME_THIEF) and not c:IsCode(id)

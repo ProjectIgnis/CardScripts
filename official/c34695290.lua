@@ -1,7 +1,6 @@
 --ミュートリアル・ビースト
 --Myutant Beast
 --Scripted by Hel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must special summoned by a "Myutant" effect
@@ -47,7 +46,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={SET_MYUTANT}
-
 function s.splimit(e,se,sp,st)
 	return se:GetHandler():IsSetCard(SET_MYUTANT)
 end

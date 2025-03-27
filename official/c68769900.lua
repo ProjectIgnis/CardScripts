@@ -1,7 +1,6 @@
 --海造賊－赤髭の航海士
 --Redbeard, the Plunder Patroll Matey
 --Scripted by senpaizuri
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 "Plunder Patroll" from extra deck
@@ -32,7 +31,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_PLUNDER_PATROLL}
 s.listed_names={id}
-
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsTurnPlayer(1-tp)
 end

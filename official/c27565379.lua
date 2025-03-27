@@ -1,6 +1,5 @@
 --B・F－霊弓のアズサ
 --Battlewasp - Azusa the Ghost Bow
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -33,7 +32,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_BATTLEWASP}
-
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and (r&REASON_BATTLE)==0 and re and re:GetHandler():IsSetCard(SET_BATTLEWASP) and not (re:GetHandler()==e:GetHandler())
 end

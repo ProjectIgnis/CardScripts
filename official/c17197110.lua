@@ -1,7 +1,6 @@
 --氷結界に至る晴嵐
 --Winds Over the Ice Barrier
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -30,7 +29,6 @@ function s.initial_effect(c)
 end
 	--Lists "Ice Barrier" archetype
 s.listed_series={SET_ICE_BARRIER}
-
 	--Check for level 4 or lower "Ice Barrier" monsters
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_ICE_BARRIER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsMonster() and c:IsLevelBelow(4)

@@ -1,6 +1,5 @@
 --Joker's Wild
 --Joker's Wild
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Copy face card spell
@@ -31,7 +30,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_JACK_KNIGHT,CARD_KING_KNIGHT,CARD_QUEEN_KNIGHT}
-
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsMainPhase() or Duel.IsBattlePhase()
 end

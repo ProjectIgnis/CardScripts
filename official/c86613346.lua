@@ -1,7 +1,6 @@
 --ホーリーナイツ・フラムエル
 --Starry Knight Flamel
 --Scripted by DyXel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Send itself to GY; Special Summon from hand

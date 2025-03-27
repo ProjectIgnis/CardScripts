@@ -29,7 +29,6 @@ end
 s.listed_series={SET_SPRINGANS}
 	--Specifically lists "Fallen of Albaz"
 s.listed_names={CARD_ALBAZ}
-
 	--Check for an effect that was special summoned this turn
 function s.filter(c)
 	return c:IsLocation(LOCATION_MZONE) and c:IsType(TYPE_EFFECT) and c:IsStatus(STATUS_SPSUMMON_TURN)

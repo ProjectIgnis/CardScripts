@@ -1,6 +1,5 @@
 --禁じられた聖槍
 --Forbidden Lance
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted monster becomes unaffected by spells/traps

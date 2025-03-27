@@ -1,7 +1,6 @@
 --混錬装融合
 --Parametalfoes Fusion
 --Scripted by edo9300
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

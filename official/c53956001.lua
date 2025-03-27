@@ -1,6 +1,5 @@
 --曇りの天気模様
 --The Weather Cloudy Canvas
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Can only control one
@@ -30,7 +29,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_THE_WEATHER}
-
 function s.eftg(e,c)
 	local g=e:GetHandler():GetColumnGroup(1,1)
 	return c:IsType(TYPE_EFFECT) and c:IsSetCard(SET_THE_WEATHER) and c:GetSequence()<5 and g:IsContains(c)

@@ -1,6 +1,5 @@
 --レプティレス・ゴルゴーン
 --Reptilianne Gorgon
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Attacked monster's ATK becomes 0, also cannot change its battle position

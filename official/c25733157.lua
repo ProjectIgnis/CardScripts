@@ -1,6 +1,5 @@
 --閃刀機－イーグルブースター
 --Sky Striker Mecha - Eagle Booster
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted monster becomes unaffected by other card effects

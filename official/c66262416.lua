@@ -1,6 +1,5 @@
 --Ｄ－ＨＥＲＯ ドリームガイ
 --Destiny HERO - Dreamer
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon itself from GY
@@ -17,7 +16,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_DESTINY_HERO}
-
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	if tc:IsControler(1-tp) then tc=Duel.GetAttackTarget() end

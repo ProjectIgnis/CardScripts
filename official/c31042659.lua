@@ -1,7 +1,6 @@
 --覇蛇大公ゴルゴンダ
 --Supreme Sovereign Serpent of Golgonda
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)

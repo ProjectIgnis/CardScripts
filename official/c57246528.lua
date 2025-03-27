@@ -1,7 +1,6 @@
 --シンクロ・トランセンド
 --Synchro Transcend
 --Scripted by AlphaKretin
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 synchro monster from extra deck

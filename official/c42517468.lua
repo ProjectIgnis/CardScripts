@@ -1,7 +1,6 @@
 --ジャマ・ピンク
 --Ojama Pink
 --Scripted by The Razgriz
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Draw and discard
@@ -17,7 +16,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_OJAMA}
-
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD) or e:GetHandler():IsPreviousLocation(LOCATION_HAND)
 end

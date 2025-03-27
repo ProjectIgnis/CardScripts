@@ -1,7 +1,6 @@
 --マッドマーダー
 --Mad Mauler
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -27,7 +26,6 @@ function s.initial_effect(c)
 end
 	--Specifically lists "Plaguespreader Zombie"
 s.listed_names={33420078}
-
 	--Check for a level 6+ monster
 function s.filter(c)
 	return c:IsFaceup() and c:IsLevelAbove(6)

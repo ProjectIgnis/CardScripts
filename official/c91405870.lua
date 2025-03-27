@@ -1,6 +1,5 @@
 --烈風の空牙団
 --Mayhem Fur Hire
-
 --
 local s,id=GetID()
 function s.initial_effect(c)

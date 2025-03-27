@@ -1,6 +1,5 @@
 --リローダー・ドラゴン
 --Overburst Dragon
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -31,7 +30,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_ROKKET}
-
 function s.spfilter1(c,e,tp)
 	if c:IsFaceup() and c:IsLinkMonster() then
 		local zone=c:GetLinkedZone(tp)

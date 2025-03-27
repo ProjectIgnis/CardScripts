@@ -1,6 +1,5 @@
 --Ｎｏ．６８ 魔天牢サンダルフォン
 --Number 68: Sanaphond the Sky Prison
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving

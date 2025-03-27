@@ -1,6 +1,5 @@
 --救護部隊
 --First-Aid Squad
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Add 1 normal monster from GY

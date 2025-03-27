@@ -31,7 +31,6 @@ end
 s.listed_names={id}
 	--Part of "Infintrack" archetype
 s.listed_series={SET_INFINITRACK}
-
 	--Check for EARTH machine
 function s.cfilter(c,tp)
 	return c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_EARTH)

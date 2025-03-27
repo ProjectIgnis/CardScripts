@@ -1,6 +1,5 @@
 --バージェストマ・エルドニア
 --Paleozoic Eldonia
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted monster gains 500 ATK/DEF

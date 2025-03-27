@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_LVCHANGE)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCost(s.lvcost)
+	e2:SetCost(Cost.SelfTribute)
 	e2:SetTarget(s.lvtg)
 	e2:SetOperation(s.lvop)
 	c:RegisterEffect(e2)
@@ -26,10 +26,6 @@ function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0 and
 		Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_CIPHER),c:GetControler(),LOCATION_MZONE,0,1,nil)
-end
-function s.lvcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.lvfilter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_CIPHER) and c:HasLevel()

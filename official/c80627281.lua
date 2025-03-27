@@ -1,7 +1,6 @@
 --海晶乙女雪花
 --Marincess Snow
 --Credit to Larry126
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -16,7 +15,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_MARINCESS}
-
 function s.filter(c,e,tp)
 	return c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE)
 		and c:IsPreviousSetCard(SET_MARINCESS) and c:GetPreviousTypeOnField()&TYPE_LINK==TYPE_LINK

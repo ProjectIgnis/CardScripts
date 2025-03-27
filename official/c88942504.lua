@@ -1,6 +1,5 @@
 --管魔人メロメロメロディ
 --Melomelody the Brass Djinn
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -21,7 +20,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 end
 s.listed_series={SET_DJINN}
-
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP()
 end

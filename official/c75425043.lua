@@ -1,6 +1,5 @@
 --ＰＳＹフレームギア・α
 --PSY-Framegear Alpha
-
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableUnsummonable()
@@ -28,7 +27,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_PSY_FRAME}
 s.listed_names={CARD_PSYFRAME_DRIVER}
-
 function s.splimit(e,se,sp,st)
 	return se:IsHasType(EFFECT_TYPE_ACTIONS)
 end

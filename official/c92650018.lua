@@ -1,7 +1,6 @@
 --Ａ・Ɐ・ＨＨ
 --Amaze Attraction Horror House
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--From cards_specific_functions.lua

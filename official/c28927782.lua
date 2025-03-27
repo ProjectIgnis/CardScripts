@@ -52,7 +52,6 @@ end
 function s.eqfilter2(c,tc,tp)
 	return c:IsSetCard(SET_DRAGUNITY) and c:IsMonster() and not c:IsForbidden()
 end
-
 function s.eftg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then
 		if e:GetLabel()==0 then

@@ -1,7 +1,6 @@
 --アイスバリアのアテンダント
 --Zuijin of the Ice Barrier
 --LUA by Kohana Sonogami
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon
@@ -11,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.spcost1)
+	e1:SetCost(Cost.SelfTribute)
 	e1:SetTarget(s.sptg1)
 	e1:SetOperation(s.spop1)
 	c:RegisterEffect(e1)
@@ -30,12 +29,6 @@ function s.initial_effect(c)
 end
 --Listed of Archetype
 s.listed_series={SET_ICE_BARRIER}
-
---Activation Cost
-function s.spcost1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
-end
 --Check for "Ice Barrier" monster
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_ICE_BARRIER) and c:IsLevelAbove(5) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

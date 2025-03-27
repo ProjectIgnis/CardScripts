@@ -1,6 +1,5 @@
 --プチラノドン
 --Petiteranodon
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--If destroyed by card effect, special summon 1 level 4+ dinosaur monster

@@ -1,6 +1,5 @@
 --カオス・ゴッデス－混沌の女神－
 --Chaos Goddess
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving

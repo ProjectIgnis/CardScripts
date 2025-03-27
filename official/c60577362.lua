@@ -1,6 +1,5 @@
 --威圧する魔眼
 --Overpowering Eye
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--1 of your zombie monsters with 2000 or less ATK can attack directly

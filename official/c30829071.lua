@@ -1,7 +1,6 @@
 --驚楽園の大使 <Bufo>
 --Amazement Ambassador Bufo
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--equip

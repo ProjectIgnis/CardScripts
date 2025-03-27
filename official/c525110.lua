@@ -1,6 +1,5 @@
 --プチトマボー
 --Cherry Inmato
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 2 "Inmato" monsters from deck
@@ -15,7 +14,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_INMATO}
-
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE) and e:GetHandler():IsReason(REASON_BATTLE)
 end

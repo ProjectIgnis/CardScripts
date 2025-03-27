@@ -1,7 +1,6 @@
 --うにの軍貫
 --Gunkan Suship Uni
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -32,7 +31,6 @@ end
 s.listed_series={SET_GUNKAN}
 	--Specifically lists "Gunkan Suship Shari"
 s.listed_names={CARD_SUSHIP_SHARI}
-
 	--Check for a "Gunkan" card to reveal
 function s.cfilter(c)
 	return c:IsSetCard(SET_GUNKAN) and not c:IsPublic()

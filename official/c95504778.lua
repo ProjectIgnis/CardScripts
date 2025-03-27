@@ -1,6 +1,5 @@
 --トリガー・ヴルム 
 --Triggering Wurm
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--If sent to GY as link material for a DARK monster, special summon itself from GY

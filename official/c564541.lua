@@ -1,6 +1,5 @@
 --ミンゲイドラゴン
 --Totem Dragon
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Treated as 2 tributes for tribute summon of a dragon monster

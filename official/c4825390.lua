@@ -1,7 +1,6 @@
 --イチロクの魔物台帳
 --Ichiroku's Ledger Book
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)

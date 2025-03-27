@@ -1,7 +1,6 @@
 --ワルキューレの抱擁
 --Valkyrie's Embrace
 --Scripted by Naim
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Change 1 of your "Valkyrie" monsters to defense position, banish 1 of opponent's monsters
@@ -19,7 +18,6 @@ function s.initial_effect(c)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
 s.listed_series={SET_VALKYRIE}
-
 function s.counterfilter(c)
 	return c:IsSetCard(SET_VALKYRIE)
 end

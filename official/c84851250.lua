@@ -1,7 +1,6 @@
 --ＷＷ－ブリザード・ベル
 --Windwitch - Blizzard Bell
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -33,7 +32,6 @@ end
 s.listed_series={SET_WINDWITCH}
 	--Specifically lists itself
 s.listed_names={id}
-
 	--Check for non-"Windwitch" monster
 function s.filter(c)
 	return c:IsFacedown() or not c:IsSetCard(SET_WINDWITCH)

@@ -1,6 +1,5 @@
 --魔導皇士 アンプール
 --Emperor of Prophecy
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Take control 1 of opponent's monsters until end phase
@@ -17,7 +16,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_SPELLBOOK}
-
 function s.cfilter1(c)
 	return c:IsFaceup() and c:IsRace(RACE_SPELLCASTER) and c:IsAbleToRemoveAsCost()
 end

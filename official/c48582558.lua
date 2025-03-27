@@ -1,6 +1,5 @@
 --バウンサー・ガード
 --Bounzer Guard
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted "Bounzer" monster cannot be targeted by card effect, also cannot be destroyed by battle
@@ -14,7 +13,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_BOUNZER}
-
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_BOUNZER)
 end

@@ -1,7 +1,6 @@
 --
 --Myutant Blast
 --Scripted by senpaizuri
-
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,0,s.filter)
@@ -30,7 +29,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_MYUTANT}
-
 function s.filter(c)
 	return c:IsSetCard(SET_MYUTANT) and c:IsLevelAbove(8)
 end

@@ -1,7 +1,6 @@
 --アルカナリーディング
 --Arcana Reading
 --Scripted by AlphaKretin
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Flip a coin, apply appropriate effect base on result

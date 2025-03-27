@@ -1,7 +1,6 @@
 --転生炎獣ラクーン
 --Salamangreat Raccoon
 --Scripted by AlphaKretin
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Gain LP equal to opponent's attacking monster's ATK
@@ -30,7 +29,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_SALAMANGREAT}
-
 function s.lpcon(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
 	return d and d:IsControler(tp) and d:IsFaceup() and d:IsSetCard(SET_SALAMANGREAT)

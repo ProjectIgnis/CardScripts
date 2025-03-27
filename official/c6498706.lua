@@ -17,7 +17,6 @@ function s.initial_effect(c)
 end
 	--Part of "Fusion" archetype
 s.listed_series={SET_FUSION}
-
 	--Haven't summoned any non-fusions
 function s.counterfilter(c)
 	return not c:IsSummonLocation(LOCATION_EXTRA) or c:IsType(TYPE_FUSION)

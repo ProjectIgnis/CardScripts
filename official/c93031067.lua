@@ -1,7 +1,6 @@
 --海造賊－拠点
 --Plunder Patroll Shipyarrrd
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -42,7 +41,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={SET_PLUNDER_PATROLL}
-
 function s.atkfil(c)
 	return c:IsFaceup() and c:IsSetCard(SET_PLUNDER_PATROLL) and c:GetSequence()<5
 end

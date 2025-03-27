@@ -1,7 +1,6 @@
 --プランキッズ・プランク
 --Prank-Kids Pranks
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -36,7 +35,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_PRANK_KIDS}
 s.listed_names={43664495}
-
 function s.cfilter(c)
 	return c:IsSetCard(SET_PRANK_KIDS) and c:IsDiscardable()
 end

@@ -1,6 +1,5 @@
 --ドラグニティナイト - ロムルス
 --Dragunity Knight - Romulus
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -35,7 +34,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_DRAGUNITY}
 s.listed_names={62265044}
-
 function s.matfilter(c,sc,st,tp)
 	return c:IsRace(RACE_DRAGON+RACE_WINGEDBEAST,sc,st,tp) and not c:IsType(TYPE_TOKEN,sc,st,tp)
 end

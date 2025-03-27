@@ -1,6 +1,5 @@
 --ヴァンパイアの使い魔
 --Vampire Familiar
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--If special summoned, add 1 "Vampire" monster from deck
@@ -29,7 +28,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_VAMPIRE}
 s.listed_names={id}
-
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,500) end
 	Duel.PayLPCost(tp,500)

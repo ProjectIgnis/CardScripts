@@ -1,7 +1,6 @@
 --ウィッチクラフト・コンフュージョン
 --Witchcrafter Confusion Confession
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -25,7 +24,6 @@ function s.initial_effect(c)
 end
 	--Lists "Witchcrafter" archetype
 s.listed_series={SET_WITCHCRAFTER}
-
 function s.mfilter(c)
 	return (c:IsLocation(LOCATION_HAND|LOCATION_MZONE) and c:IsAbleToGrave())
 end

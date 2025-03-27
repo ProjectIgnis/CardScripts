@@ -1,6 +1,5 @@
 --トリックスター・ヒヨス
 --Trickstar Nightshade
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon itself from GY
@@ -17,7 +16,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_TRICKSTAR}
-
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsLocation(LOCATION_GRAVE) and r==REASON_LINK and c:GetReasonCard():IsSetCard(SET_TRICKSTAR)

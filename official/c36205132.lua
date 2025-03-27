@@ -1,7 +1,6 @@
 --空牙団の伝令 フィロ
 --Filo, Messenger Fur Hire
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 "Fur Hire" monster from hand
@@ -30,7 +29,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_FUR_HIRE}
 s.listed_names={id}
-
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_FUR_HIRE) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

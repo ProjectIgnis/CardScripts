@@ -1,6 +1,5 @@
 --帝王の凍志
 --The Monarchs Awaken
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted tribute summoned monster has its effects negate, also unaffected by other card effects

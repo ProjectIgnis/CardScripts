@@ -1,6 +1,5 @@
 --Ｒｅ－ＢＵＳＴＥＲ
 --Assault Revival
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Destroy all your monsters, special summon 1 "/Assault Mode" monster from GY
@@ -17,7 +16,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_ASSAULT_MODE}
 s.listed_names={CARD_ASSAULT_MODE}
-
 function s.cfilter(c)
 	return c:IsCode(CARD_ASSAULT_MODE) and c:IsAbleToRemoveAsCost()
 end

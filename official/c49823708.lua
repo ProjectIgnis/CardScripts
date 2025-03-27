@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,id)
-	e2:SetCost(s.spcost)
+	e2:SetCost(Cost.SelfTribute)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCountLimit(1,id)
 	e3:SetCondition(s.spcon2)
-	e3:SetCost(s.spcost2)
+	e3:SetCost(Cost.SelfTribute2)
 	e3:SetTarget(s.sptg2)
 	e3:SetOperation(s.spop2)
 	c:RegisterEffect(e3)
@@ -50,10 +50,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.spfilter(c,e,tp)
 	return c:IsCode(CARD_BUSTER_BLADER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -81,7 +77,7 @@ end
 function s.costfilter(c)
 	return c:IsSetCard(SET_DESTRUCTION_SWORD) and c:IsAbleToGraveAsCost()
 end
-function s.spcost2(e,tp,eg,ep,ev,re,r,rp,chk)
+function Cost.SelfTribute2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.DiscardHand(tp,s.costfilter,1,1,REASON_COST)
 end

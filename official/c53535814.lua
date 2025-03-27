@@ -1,7 +1,6 @@
 --氷結界の浄玻璃
 --Judge of the Ice Barrier
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)

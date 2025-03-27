@@ -1,6 +1,5 @@
 --最後の進軍
 --March Towards Ragnarok
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted "Aesir" monster has its effects negated, also unaffected by spells/traps
@@ -14,7 +13,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_AESIR}
-
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_AESIR)
 end

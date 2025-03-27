@@ -1,7 +1,6 @@
 --トゥーン・カオス・ソルジャー
 --Toon Black Luster Soldier
 --Scripted by pyrQ
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -37,7 +36,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={15259703}
-
 function s.spfilter(c)
 	return c:IsMonster() and c:IsType(TYPE_TOON) and c:HasLevel() and c:IsLevelAbove(1) and c:IsReleasable()
 end

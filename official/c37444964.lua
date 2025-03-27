@@ -1,7 +1,6 @@
 --夢魔鏡の夢物語
 --Dream Mirror Fantasy
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Banish 1 card from the field
@@ -27,7 +26,6 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_DREAM_MIRROR_JOY,CARD_DREAM_MIRROR_TERROR}
 s.listed_series={SET_DREAM_MIRROR}
-
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_DREAM_MIRROR),tp,LOCATION_MZONE,0,1,nil)
 end

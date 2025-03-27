@@ -1,7 +1,6 @@
 --電脳堺門－玄武
 --Virtual World Gate - Xuanwu
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -41,7 +40,6 @@ function s.initial_effect(c)
 end
 	--Lists "Virtual World" and "Virtual World - Gate" archetypes
 s.listed_series={SET_VIRTUAL_WORLD,SET_VIRTUAL_WORLD_GATE}
-
 	--Check if battle phase and for another "Virtual World - Gate" card
 function s.poscon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsBattlePhase() and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_VIRTUAL_WORLD_GATE),tp,LOCATION_ONFIELD,0,1,e:GetHandler())

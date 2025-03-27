@@ -1,7 +1,6 @@
 --ホーリーナイツ・アステル
 --Starry Knight Astel
 --LUA by Kohana Sonogami
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Tribute 1 LIGHT monster; Special Summon from hand

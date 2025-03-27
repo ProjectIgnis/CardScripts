@@ -1,7 +1,6 @@
 --聖なる篝火
 --Starry Knight Balefire
 --Scripted by The Razgriz
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Add Holy Night monster or Level 7 Light Dragon from Deck to hand

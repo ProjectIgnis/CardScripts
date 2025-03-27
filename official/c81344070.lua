@@ -1,7 +1,6 @@
 --海造賊－金髪の訓練生
 --Goldenhair, the Newest Plunder Patroll
 --Scripted by pyrQ
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon itself from hand
@@ -28,7 +27,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_PLUNDER_PATROLL}
-
 function s.spcfilter(c,tp)
 	return c:IsSetCard(SET_PLUNDER_PATROLL) and c:IsOriginalType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
 		and (c:IsFaceup() or c:IsLocation(LOCATION_HAND)) and Duel.GetMZoneCount(tp,c)>0

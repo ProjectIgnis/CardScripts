@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE|LOCATION_HAND)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.SelfTribute)
 	c:RegisterEffect(e1)
 	--splimit
 	local e2=Effect.CreateEffect(c)
@@ -23,10 +23,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_NEKROZ,SET_ZEFRA}
 s.listed_names={21105106}
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
-end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp)
 	if c:IsSetCard(SET_NEKROZ) or c:IsSetCard(SET_ZEFRA) then return false end
 	return (sumtype&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM

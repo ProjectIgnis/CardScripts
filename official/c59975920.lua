@@ -1,6 +1,5 @@
 --超量士レッドレイヤー
 --Super Quantum Red Layer
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon itself from hand
@@ -40,7 +39,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_SUPER_QUANT}
 s.listed_names={id}
-
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,0,nil)==0

@@ -1,7 +1,6 @@
 --ボーン・フロム・ドラコニス
 --Born from Draconis
 --Scripted by ahtelel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 level 6+ LIGHT machine from hand

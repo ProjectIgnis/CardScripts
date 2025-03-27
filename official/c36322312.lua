@@ -1,7 +1,6 @@
 --起動提督デストロイリボルバー
 --Boot-Up Admiral - Destroyer Dynamo
 --Scripted by Hel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -47,7 +46,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.listed_series={SET_GADGET}
-
 function s.spfilter(c)
 	return c:IsOriginalType(TYPE_MONSTER) and c:IsSetCard(SET_GADGET) and c:IsAbleToGraveAsCost() and (c:IsFaceup() or c:IsLocation(LOCATION_HAND))
 end

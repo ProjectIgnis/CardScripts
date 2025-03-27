@@ -1,7 +1,6 @@
 --貪食魚グリーディス
 --Gluttonous Reptolphin Greethys
 --Scripted by Naim
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon 1 aqua, fish, or sea serpent monster from GY

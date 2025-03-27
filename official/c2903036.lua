@@ -1,6 +1,5 @@
 --生け贄人形
 --Tribute Doll
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 level 7 monster, that can be normal summoned/set, from hand

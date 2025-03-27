@@ -1,7 +1,6 @@
 --剛鬼アイアン・クロー
 --Gouki Iron Claw
 --Scripted by Naim
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Your battling "Gouki" monster gains 500 ATK, becomes unaffected by opponent's card effects
@@ -32,7 +31,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_GOUKI}
 s.listed_names={id}
-
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
 	if ph~=PHASE_DAMAGE or Duel.IsDamageCalculated() then return false end

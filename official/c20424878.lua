@@ -1,7 +1,6 @@
 --スプリガンズ・ロッキー
 --Springans Rockey
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -34,7 +33,6 @@ end
 s.listed_series={SET_SPRINGANS}
 	--Specifically lists "Vast Desert – Gold Golgonda" and itself
 s.listed_names={60884672,id}
-
 	--Check for "Sprigguns" Xyz monster
 function s.matfilter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_SPRINGANS) and c:IsType(TYPE_XYZ)

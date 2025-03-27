@@ -1,6 +1,5 @@
 --フィッシュボーグ－ドクター
 --Fishborg Doctor
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Destroy this card if player has a non-"Fishborg" monster
@@ -24,7 +23,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_FISHBORG}
-
 function s.cfilter(c)
 	return c:IsFacedown() or not c:IsSetCard(SET_FISHBORG)
 end

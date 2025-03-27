@@ -1,7 +1,6 @@
 --九魂猫
 --Nine-Lives Cat
 --Scripted by Naim
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving

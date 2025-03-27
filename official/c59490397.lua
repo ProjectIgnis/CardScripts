@@ -1,6 +1,5 @@
 --ジェルゴンヌの終焉
 --Gergonne's End
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -28,7 +27,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_TINDANGLE}
-
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local c=e:GetHandler()

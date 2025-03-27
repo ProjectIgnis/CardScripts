@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(s.lvcost)
+	e2:SetCost(Cost.SelfTribute)
 	e2:SetTarget(s.lvtg)
 	e2:SetOperation(s.lvop)
 	c:RegisterEffect(e2)
@@ -77,10 +77,6 @@ function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 end
 function s.atktg(e,c)
 	return not c:IsType(TYPE_XYZ)
-end
-function s.lvcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.lvfilter(c)
 	return c:IsFaceup() and c:HasLevel() and not c:IsLevel(8)

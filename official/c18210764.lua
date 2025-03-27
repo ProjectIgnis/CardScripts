@@ -1,6 +1,5 @@
 --ペンデュラムーチョ
 --Pendulumucho
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Enable pendulum summon
@@ -40,7 +39,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_names={id}
-
 function s.reg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	e:GetHandler():RegisterFlagEffect(id,RESET_PHASE|PHASE_END,EFFECT_FLAG_OATH,1)

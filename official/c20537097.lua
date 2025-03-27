@@ -1,7 +1,6 @@
 --蒼穹の機界騎士
 --Mekk-Knight Blue Sky
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon itself from hand
@@ -31,7 +30,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_MEKK_KNIGHT}
 s.listed_names={id}
-
 function s.cfilter(c)
 	return c:GetColumnGroupCount()>0
 end

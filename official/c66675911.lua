@@ -1,7 +1,6 @@
 --星なる影 ゲニウス
 --Nehshaddoll Genius
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -28,7 +27,6 @@ function s.initial_effect(c)
 end
 	--Lists "Shaddoll" archetype
 s.listed_series={SET_SHADDOLL}
-
 	--Check for "Shaddoll" monster
 function s.immfilter(c)
 	return c:IsSetCard(SET_SHADDOLL) and c:IsFaceup()

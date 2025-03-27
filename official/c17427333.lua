@@ -1,9 +1,7 @@
 --Ｅ．Ｍ．Ｒ．
 --E.M.R.
 --Scripted by DyXel
-
 DIDNT_SKIP_COST=0xDEADBEEF
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Tribute and destroy based on og ATK

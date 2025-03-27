@@ -1,6 +1,5 @@
 --肥大化
 --Massivemorph
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Opponent's monster's ATK/DEF becomes doubled, but cannot attack directly

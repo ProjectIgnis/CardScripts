@@ -50,7 +50,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={SET_ANCIENT_WARRIORS}
-
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()

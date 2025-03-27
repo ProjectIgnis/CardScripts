@@ -1,6 +1,5 @@
 --ネクロバレーの神殿
 --Necrovalley Temple
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -44,7 +43,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_GRAVEKEEPERS,SET_NECROVALLEY}
 s.listed_names={CARD_NECROVALLEY}
-
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_GRAVEKEEPERS),e:GetHandlerPlayer(),LOCATION_MZONE,LOCATION_MZONE,1,nil) and Duel.IsEnvironment(CARD_NECROVALLEY)
 end

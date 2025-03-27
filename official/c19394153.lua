@@ -1,6 +1,5 @@
 --フェザー・ショット
 --Feather Shot
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Make 1 "Elemental HERO Avian" be able to attack multiple times
@@ -14,7 +13,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={21844576}
-
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP()
 end

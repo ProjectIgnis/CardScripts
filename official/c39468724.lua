@@ -1,7 +1,6 @@
 --ドラグニティナイトの影霊衣
 --Nekroz of Areadbhair
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -42,7 +41,6 @@ function s.initial_effect(c)
 end
 	--Lists "Nekroz" archetype
 s.listed_series={SET_NEKROZ}
-
 	--Cannot include level 10 monsters for its ritual summon
 function s.mat_filter(c)
 	return c:GetLevel()~=10

@@ -1,7 +1,6 @@
 --ミュートリアスの産声
 --Myutant Cry
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -14,7 +13,6 @@ function s.initial_effect(c)
 end
 	--Lists "Myutant" archetype
 s.listed_series={SET_MYUTANT}
-
 function s.fextra(e,tp,mg)
 	return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(aux.NecroValleyFilter(Card.IsFaceup,Card.IsAbleToDeck)),tp,LOCATION_GRAVE|LOCATION_REMOVED,0,nil)
 end

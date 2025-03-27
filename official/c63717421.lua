@@ -1,7 +1,6 @@
 --起動指令 ギア・チャージ
 --Boot-Up Order - Gear Charge
 --Scripted by AlphaKretin
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--When activated, special summon any number of your "Gadget" monsters from S/T zones
@@ -25,7 +24,6 @@ function s.initial_effect(c)
 end
 s.listed_names={36322312}
 s.listed_series={SET_GADGET}
-
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_GADGET) and c:IsOriginalType(TYPE_MONSTER) and c:IsType(TYPE_EQUIP) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

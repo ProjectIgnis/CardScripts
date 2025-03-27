@@ -1,6 +1,5 @@
 --青眼の亜白龍
 --Blue-Eyes Alternative White Dragon
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -38,7 +37,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={CARD_BLUEEYES_W_DRAGON}
-
 function s.spcfilter(c,tp)
 	return c:IsCode(CARD_BLUEEYES_W_DRAGON) and not c:IsPublic()
 end

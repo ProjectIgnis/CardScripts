@@ -1,7 +1,6 @@
 --セイクリッド・カドケウス
 --Constellar Caduceus
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -38,7 +37,6 @@ function s.initial_effect(c)
 end
 	--Lists "Constellar" archetype
 s.listed_series={SET_CONSTELLAR}
-
 	--Check for a "Constellar" monster, except "Constellar Caduceus"
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_CONSTELLAR) and not c:IsCode(id)

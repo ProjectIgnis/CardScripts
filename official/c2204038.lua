@@ -1,7 +1,6 @@
 --ワルキューレ・ヴリュンヒルデ
 --Valkyrie Brunhilde
 --Scripted by Naim and AlphaKretin
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Unaffected by opponent's spells

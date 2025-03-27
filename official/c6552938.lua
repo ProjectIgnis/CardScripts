@@ -1,6 +1,5 @@
 --ＲＲ－ラダー・ストリクス
 --Raidraptor - Rudder Strix
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--If normal summoned, inflict 600 damage

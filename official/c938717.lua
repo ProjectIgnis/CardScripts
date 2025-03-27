@@ -1,7 +1,6 @@
 --起動兵長コマンドリボルバー
 --Boot-Up Corporal - Command Dynamo
 --Scripted by AlphaKretin
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon itself from hand
@@ -25,7 +24,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_GADGET}
-
 function s.eqfilter(c)
 	return c:IsRace(RACE_MACHINE) and c:IsSetCard(SET_GADGET) and c:IsFaceup() and c:IsMonster()
 end

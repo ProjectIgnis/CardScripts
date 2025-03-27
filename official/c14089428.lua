@@ -1,6 +1,5 @@
 --ブルーサンダーＴ４５
 --Blue Thunder T-45
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 token to your field

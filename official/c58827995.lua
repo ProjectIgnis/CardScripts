@@ -1,7 +1,6 @@
 --鎧竜降臨
 --Armor Dragon Ritual
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -21,7 +20,6 @@ function s.initial_effect(c)
 end
 	--Specifically lists "Paladin of Armored Dragon"
 s.listed_names={75901113}
-
 function s.rescon(sg,e,tp,mg)
 	return sg:GetSum(Card.GetLevel)>=4
 end

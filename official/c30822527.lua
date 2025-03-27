@@ -1,7 +1,6 @@
 --デコード・トーカー・エクステンド
 --Decode Talker Extended
 --Scripted by AlphaKretin
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -49,7 +48,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.listed_names={1861629}
-
 function s.atkval(e,c)
 	return c:GetLinkedGroup():FilterCount(Card.IsMonster,nil)*500
 end

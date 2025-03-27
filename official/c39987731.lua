@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetHintTiming(0,TIMING_SSET+TIMING_MAIN_END)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(s.sscost)
+	e2:SetCost(Cost.SelfTribute)
 	e2:SetCondition(s.sscon)
 	e2:SetTarget(s.sstg)
 	e2:SetOperation(s.ssop)
@@ -59,11 +59,6 @@ end
 	--Check if current phase is a main phase
 function s.sscon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsMainPhase()
-end
-	--Tribute this card as cost
-function s.sscost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
 end
 	--Check for "Jinzo"
 function s.ssfilter(c,e,tp)

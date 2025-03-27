@@ -1,6 +1,5 @@
 --バージェストマ・ハルキゲニア
 --Paleozoic Hallucigenia
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted monster has its ATK/DEF halved

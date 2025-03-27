@@ -46,7 +46,6 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-
 s.listed_series={SET_MYUTANT}
 	--Must special summoned by a "Myutant" effect
 function s.splimit(e,se,sp,st)

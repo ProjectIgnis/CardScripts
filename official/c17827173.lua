@@ -41,7 +41,6 @@ function s.initial_effect(c)
 end
 	--Lists "Flundereeze" archetype
 s.listed_series={SET_FLOOWANDEREEZE}
-
 	--Cannot special summon the turn you activate e1 or e3
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetActivityCount(tp,ACTIVITY_SPSUMMON)==0 end

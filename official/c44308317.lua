@@ -1,7 +1,6 @@
 --氷結界の依巫
 --Speaker for the Ice Barriers
 --Scripted by Kohana Sonogami
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Cannot Change Battle Position
@@ -40,7 +39,6 @@ function s.initial_effect(c)
 end
 s.listed_names={44308318}
 s.listed_series={SET_ICE_BARRIER}
-
 function s.changecon(e)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_ICE_BARRIER),e:GetHandler():GetControler(),LOCATION_MZONE,0,1,e:GetHandler())
 end

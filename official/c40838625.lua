@@ -1,6 +1,5 @@
 --砂塵のバリア －ダスト・フォース－
 --Quaking Mirror Force
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--When opponent's monster declares an attack, change all of their attack position monsters to face-down defense position

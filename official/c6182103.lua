@@ -1,7 +1,6 @@
 --究極体ミュートリアス
 --Myutant Ultimus
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -39,7 +38,6 @@ function s.initial_effect(c)
 end
 	--Lists "Myutant" archetype
 s.listed_series={SET_MYUTANT}
-
 	--3 level 8+ "Myutant" monsters
 function s.ffilter(c,fc,sumtype,tp)
 	return c:IsLevelAbove(8) and c:IsSetCard(SET_MYUTANT,fc,sumtype,tp)

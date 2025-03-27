@@ -1,6 +1,5 @@
 --マドルチェ・ピョコレート
 --Madolche Chickolates
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--When sent to GY, shuffle itself into deck

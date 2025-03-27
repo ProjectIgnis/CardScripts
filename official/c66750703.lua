@@ -1,7 +1,6 @@
 --炎傑の梁山閣
 --Fire Fortress atop Liang Peak
 --Scripted by ahtelel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Can hold Fire Fist Counters
@@ -56,7 +55,6 @@ function s.initial_effect(c)
 end
 s.counter_list={0x201}
 s.listed_series={SET_FIRE_FIST}
-
 function s.ctfilter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_FIRE_FIST)
 end

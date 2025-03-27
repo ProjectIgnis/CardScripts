@@ -1,6 +1,5 @@
 --Ａ・ジェネクス・バードマン
 --Genex Ally Birdman
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon this card from hand

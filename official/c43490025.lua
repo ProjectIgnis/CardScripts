@@ -1,6 +1,5 @@
 --ＦＮｏ．０ 未来皇ホープ－フューチャー・スラッシュ
 --Number F0: Utopic Future Slash
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -43,7 +42,6 @@ end
 s.listed_series={SET_NUMBER,SET_UTOPIA}
 s.xyz_number=0
 s.listed_names={65305468}
-
 function s.xyzfilter(c,xyz,sumtype,tp)
 	return c:IsType(TYPE_XYZ,xyz,sumtype,tp) and not c:IsSetCard(SET_NUMBER,xyz,sumtype,tp)
 end

@@ -1,6 +1,5 @@
 --Ｂ・Ｆ－降魔弓のハマ
 --Battlewasp - Hama the Conquering Bow
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -63,7 +62,6 @@ function s.initial_effect(c)
 	end)
 end
 s.listed_series={SET_BATTLEWASP}
-
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	if g:IsExists(Card.IsType,1,nil,TYPE_SYNCHRO) then

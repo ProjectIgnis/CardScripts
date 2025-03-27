@@ -1,6 +1,5 @@
 --ワイトプリンス
 --Wightprince
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Name becomes "Skull Servant" while in GY
@@ -33,7 +32,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={CARD_SKULL_SERVANT,36021814,40991587}
-
 function s.tgfilter(c,code)
 	return c:IsCode(code) and c:IsAbleToGrave()
 end

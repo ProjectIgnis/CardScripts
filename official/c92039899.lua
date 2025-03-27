@@ -1,6 +1,5 @@
 --デーモンの騎兵
 --Archfiend Cavalry
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--If destroyed by card effect, special summon 1 "Archfiend" monster from GY
@@ -16,7 +15,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_ARCHFIEND}
-
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsReason(REASON_EFFECT) and c:IsReason(REASON_DESTROY)

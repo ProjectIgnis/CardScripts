@@ -1,6 +1,5 @@
 --煉獄の死徒
 --Void Seer
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted "Infernoid" monster becomes unaffected by opponent's card effects

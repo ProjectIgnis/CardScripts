@@ -1,6 +1,5 @@
 --宝竜星－セフィラフウシ
 --Zefraxi, Treasure of the Yang Zing
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Enable pendulum summon
@@ -27,7 +26,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_YANG_ZING,SET_ZEFRA}
 s.listed_names={id}
-
 function s.splimit(e,c,sump,sumtype,sumpos,targetp)
 	if c:IsSetCard(SET_YANG_ZING) or c:IsSetCard(SET_ZEFRA) then return false end
 	return (sumtype&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM

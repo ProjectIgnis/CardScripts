@@ -1,7 +1,6 @@
 --驚楽園の案内人 <Comica>
 --Amazement Attendant Comica
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--set

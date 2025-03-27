@@ -1,6 +1,5 @@
 --紫炎の老中 エニシ
 --Enishi, Shien's Chancellor
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -36,7 +35,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_SIX_SAMURAI}
-
 function s.spfilter(c,tp)
 	return c:IsSetCard(SET_SIX_SAMURAI) and c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end

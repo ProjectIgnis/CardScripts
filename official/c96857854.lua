@@ -1,6 +1,5 @@
 --ダイヤモンドダストン
 --Diamond Duston
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon "Duston" monsters to either field
@@ -29,7 +28,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_DUSTON}
-
 function s.cfilter(c)
 	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousLocation(LOCATION_ONFIELD)
 end

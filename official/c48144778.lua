@@ -1,7 +1,6 @@
 --インフェルニティ・コンジュラー
 --Infernity Conjurer
 --Scripted by pyrQ
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--All of opponent's monsters loses 800 ATK

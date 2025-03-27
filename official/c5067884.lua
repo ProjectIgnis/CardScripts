@@ -1,6 +1,5 @@
 --ダイナミスト・スピノス
 --Dinomist Spinos
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Enable pendulum summon
@@ -25,7 +24,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_DINOMIST}
-
 function s.repfilter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_ONFIELD) and c:IsSetCard(SET_DINOMIST)
 		and not c:IsReason(REASON_REPLACE) and (c:IsReason(REASON_BATTLE) or (c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()~=tp))

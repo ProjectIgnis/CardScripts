@@ -1,6 +1,5 @@
 --Ｎｏ．１０５ ＢＫ 流星のセスタス
 --Number 105: Battlin' Boxer Star Cestus
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -22,7 +21,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_BATTLIN_BOXER}
 s.xyz_number=105
-
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local at=Duel.GetAttackTarget()

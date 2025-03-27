@@ -1,6 +1,5 @@
 --覇王門零
 --Supreme King Gate Zero
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Enable pendulum summon
@@ -60,7 +59,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_FUSION}
 s.listed_names={13331639,22211622}
-
 function s.ndcfilter(c)
 	return c:IsFaceup() and c:IsCode(CARD_ZARC)
 end

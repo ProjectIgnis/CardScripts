@@ -1,6 +1,5 @@
 --Ａ・ジェネクス・ドゥルダーク
 --Genex Ally Duradark
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Destroy 1 of opponent's monster, who has same attribute as this card

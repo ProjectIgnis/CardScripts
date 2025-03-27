@@ -1,7 +1,6 @@
 --
 --Beetrooper Scout Buggy
 --Scripted by DyXel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Can only Special Summon Insect monsters.

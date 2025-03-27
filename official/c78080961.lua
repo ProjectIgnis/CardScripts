@@ -1,6 +1,5 @@
 --ＳＰＹＲＡＬ－ジーニアス
 --SPYRAL Quik-Fix
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--If normal summoned, add 1 "SPYRAL GEAR" card from deck
@@ -31,7 +30,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_SPYRAL_GEAR}
 s.listed_names={41091257}
-
 function s.thfilter(c)
 	return c:IsSetCard(SET_SPYRAL_GEAR) and c:IsAbleToHand()
 end

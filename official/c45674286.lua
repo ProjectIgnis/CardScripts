@@ -1,7 +1,6 @@
 --マシンナーズ・アンクラスペア
 --Machina Unclaspare
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -36,7 +35,6 @@ end
 s.listed_series={SET_MACHINA}
 	--Specifically lists itself
 s.listed_names={id}
-
 	--If added to hand besides drawing
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsReason(REASON_DRAW)

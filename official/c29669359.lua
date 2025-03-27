@@ -1,6 +1,5 @@
 --Ｎｏ．６１ ヴォルカザウルス
 --Number 61: Volcasaurus
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -21,7 +20,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 end
 s.xyz_number=61
-
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST)
 		and not e:GetHandler():IsDirectAttacked() end

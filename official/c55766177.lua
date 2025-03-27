@@ -1,7 +1,6 @@
 --弑逆の魔轟神
 --Fabled Treason
 --Scripted by Naim
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 "Fabled" monster from GY, destroy 1 card on the field
@@ -16,7 +15,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_FABLED}
-
 function s.spfilter(c,e,tp)
 	return c:IsMonster() and c:IsSetCard(SET_FABLED) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

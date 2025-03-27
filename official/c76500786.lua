@@ -1,7 +1,6 @@
 --一曲集中
 --Star Power!!
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted link monster gains ATK, equal to total levels/ranks of monsters it points to x 400

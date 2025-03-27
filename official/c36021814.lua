@@ -1,6 +1,5 @@
 --ワイトキング
 --King of the Skull Servants
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Original ATK is number of "Skull Servants" in your GY x 1000
@@ -24,7 +23,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_SKULL_SERVANT,id}
-
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsCode,c:GetControler(),LOCATION_GRAVE,0,nil,CARD_SKULL_SERVANT,id)*1000
 end

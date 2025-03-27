@@ -1,7 +1,6 @@
 --大霊術－「一輪」
 --Grand Spiritual Art - Ichirin
 --Scripted by ahtelel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

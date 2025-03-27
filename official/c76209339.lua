@@ -1,7 +1,6 @@
 --メガリス・エマージョン
 --Megalith Emergence
 --Scripted by Naim
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -24,7 +23,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_MEGALITH}
-
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_MEGALITH) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end

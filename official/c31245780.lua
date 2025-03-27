@@ -1,6 +1,5 @@
 --バトルマニア
 --Battle Mania
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Change all of opponent's monsters to attack position, must attack if able to

@@ -1,6 +1,5 @@
 --巻きすぎた発条
 --Zenmailfunction
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 "Wind-Up" monster from GY
@@ -14,7 +13,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_WIND_UP}
-
 function s.filter(c,e,tp)
 	return c:IsSetCard(SET_WIND_UP) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end

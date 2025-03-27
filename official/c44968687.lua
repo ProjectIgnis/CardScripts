@@ -1,6 +1,5 @@
 --伝説のフィッシャーマン三世
 --The Legendary Fisherman III
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -58,7 +57,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e7)
 end
 s.listed_names={3643300}
-
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.CheckReleaseGroup(c:GetControler(),Card.IsCode,1,false,1,true,c,c:GetControler(),nil,false,nil,3643300)

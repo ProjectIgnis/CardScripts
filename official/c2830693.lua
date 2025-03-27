@@ -1,6 +1,5 @@
 --虹クリボー
 --Rainbow Kuriboh
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Equip this card to opponent's attacking monster

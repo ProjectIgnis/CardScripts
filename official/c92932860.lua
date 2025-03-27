@@ -1,10 +1,8 @@
 --EMミス・ディレクター
 --Performapal Miss Director
 --Credit to Larry126 and/or ClementLouis
-
 --Substitute ID
 local s,id=GetID()
-
 function s.initial_effect(c)
 	--Cannot be battle target
 	local e1=Effect.CreateEffect(c)

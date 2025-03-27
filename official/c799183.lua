@@ -1,6 +1,5 @@
 --超戦士の盾
 --Super Soldier Shield
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -25,7 +24,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_BLACK_LUSTER_SOLDIER}
 s.counter_list={COUNTER_SPELL}
-
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_MZONE,0,1,nil,SET_BLACK_LUSTER_SOLDIER) then return false end
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end

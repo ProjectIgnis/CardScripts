@@ -1,6 +1,5 @@
 --ＥＭレインゴート
 --Performapal Rain Goat
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Reduce effect damage to 0
@@ -29,7 +28,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_PERFORMAPAL,SET_ODD_EYES}
-
 function s.effcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDiscardable() end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)

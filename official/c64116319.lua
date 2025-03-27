@@ -1,7 +1,6 @@
 --トゥーン・ハーピィ・レディ
 --Toon Harpie Lady
 --Scripted by Hel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Cannot attack the turn it was summoned
@@ -36,7 +35,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.listed_names={15259703}
-
 function s.atklimit(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)

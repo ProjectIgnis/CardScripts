@@ -1,7 +1,6 @@
 --夢魔鏡の夢占い
 --Dream Mirror Oneiromancy
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--While "Dream Mirror of Joy" is on the field, negate the activation of opponent's spell/trap card
@@ -26,7 +25,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_DREAM_MIRROR_JOY,CARD_DREAM_MIRROR_TERROR}
-
 function s.condition1(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
 		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_DREAM_MIRROR_JOY),tp,LOCATION_FZONE,LOCATION_FZONE,1,nil)

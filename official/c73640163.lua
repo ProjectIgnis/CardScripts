@@ -1,7 +1,6 @@
 --ペンギン僧侶
 --Penguin Cleric
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -30,7 +29,6 @@ function s.initial_effect(c)
 end
 	--Lists "Penguin" archetype
 s.listed_series={SET_PENGUIN}
-
 	--Check for a "Penguin" monster that was sent to GY by opponent's card
 function s.cfilter(c,e,tp)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE) and c:IsPreviousSetCard(SET_PENGUIN)

@@ -1,6 +1,5 @@
 --ゴーストリックの雪女
 --Ghostrick Yuki-onna
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Cannot be normal summoned if player controls no "Ghostrick" monster
@@ -30,7 +29,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_GHOSTRICK}
-
 function s.sfilter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_GHOSTRICK)
 end

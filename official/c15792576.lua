@@ -1,7 +1,6 @@
 --天魔神 シドヘルズ
 --Sky Scourge Cidhels
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)

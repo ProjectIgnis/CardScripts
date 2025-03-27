@@ -29,7 +29,6 @@ function s.initial_effect(c)
 	e2:SetTarget(s.tdtg)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
-
 end
 s.listed_names={id}
 --Search

@@ -1,7 +1,6 @@
 --デメット爺さん
 --Grandpa Demetto
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -52,7 +51,6 @@ function s.initial_effect(c)
 end
 	--Specifically lists "Princess Cologne"
 s.listed_names={75574498}
-
 	--Check for "Princess Cologne"
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsCode(75574498)

@@ -1,6 +1,5 @@
 --連鎖召喚
 --Chain Summon
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

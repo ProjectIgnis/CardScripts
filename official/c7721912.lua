@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,{id,1})
-	e3:SetCost(s.thcost)
+	e3:SetCost(Cost.SelfTribute)
 	e3:SetTarget(s.thtg)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
@@ -60,10 +60,6 @@ function s.tunop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 --search a equip
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
-end
 function s.thfilter(c)
 	return c:IsType(TYPE_EQUIP) and c:IsSpell() and c:IsAbleToHand()
 end

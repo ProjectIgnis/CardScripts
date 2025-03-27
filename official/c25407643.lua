@@ -1,6 +1,5 @@
 --魔法族の聖域
 --Secret Sanctuary of the Spellcasters
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

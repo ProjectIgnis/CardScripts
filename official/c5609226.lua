@@ -1,6 +1,5 @@
 --チューナーズ・バリア
 --Tuner's Barrier
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted tuner monster cannot be destroyed by battle or card effect

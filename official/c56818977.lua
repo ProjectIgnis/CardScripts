@@ -1,7 +1,6 @@
 --スプリガンズ・ピード
 --Springans Pedor
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -23,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(s.spcost)
+	e2:SetCost(Cost.SelfTribute)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
@@ -32,7 +31,6 @@ end
 s.listed_series={SET_SPRINGANS}
 	--Specifically lists itself
 s.listed_names={id}
-
 	--Check for "Sprigguns" Xyz monster
 function s.matfilter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_SPRINGANS) and c:IsType(TYPE_XYZ)
@@ -56,10 +54,6 @@ function s.matop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 	--Tribute itself as cost
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
-end
 	--Check for "Spriggun" monster, except "Sprigguns Pede"
 function s.filter(c,e,tp)
 	return c:IsSetCard(SET_SPRINGANS) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

@@ -1,6 +1,5 @@
 --魔界劇団－ファンキー・コメディアン
 --Abyss Actor - Funky Comedian
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Enable pendulum summon
@@ -42,7 +41,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={SET_ABYSS_ACTOR}
-
 function s.atkfilter1(c,tp)
 	return c:IsSetCard(SET_ABYSS_ACTOR) and Duel.IsExistingTarget(s.atkfilter2,tp,LOCATION_MZONE,0,1,c)
 end

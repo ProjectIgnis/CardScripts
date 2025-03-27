@@ -56,7 +56,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterFlagEffect(c:GetOriginalCode(),RESET_EVENT|RESETS_STANDARD_DISABLE,0,0)
 	end
 end
-
 function s.atkcon(e)
 	return e:GetHandler():GetFlagEffect(id)>0
 end

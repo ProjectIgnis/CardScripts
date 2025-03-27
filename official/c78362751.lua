@@ -1,7 +1,6 @@
 --しらうおの軍貫
 --Gunkan Suship Shirauo
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -31,7 +30,6 @@ end
 s.listed_series={SET_GUNKAN}
 	--Specifically lists itself and "Gunkan Suship Shari"
 s.listed_names={id,CARD_SUSHIP_SHARI}
-
 	--Check for a "Gunkan Suship Shari" you control (in MZ or as overlay material)
 function s.xyzfilter(c)
 	return c:IsFaceup() and (c:IsCode(CARD_SUSHIP_SHARI) or (c:GetOverlayCount()>0 and c:GetOverlayGroup():IsExists(Card.IsCode,1,nil,CARD_SUSHIP_SHARI)))

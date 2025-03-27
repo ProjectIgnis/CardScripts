@@ -1,7 +1,6 @@
 --俊炎星－ゾウセイ
 --Brotherhood of the Fire Fist - Elephant
 --Scripted by Hel
-
 local s,id=GetID()
 function s.initial_effect(c)
 local e1=Effect.CreateEffect(c)
@@ -33,7 +32,6 @@ local e1=Effect.CreateEffect(c)
 end
 s.listed_names={id}
 s.listed_series={SET_FIRE_FORMATION,SET_FIRE_FIST}
-
 function s.cfilter(c)
 	return c:IsFaceup() and (c:IsSpell() or c:IsTrap()) and c:IsSetCard(SET_FIRE_FORMATION) and c:IsAbleToGraveAsCost()
 end

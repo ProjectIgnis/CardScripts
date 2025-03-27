@@ -1,7 +1,6 @@
 --エルフェーズ
 --Elphase
 --Original script by Larry126/OCG changes by Naim
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving

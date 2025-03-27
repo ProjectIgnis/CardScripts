@@ -1,7 +1,6 @@
 --オルフェゴール・コア
 --Orcustrated Core
 --Scripted by andré and Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -34,7 +33,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_ORCUST,SET_WORLD_LEGACY}
 s.listed_names={id}
-
 function s.cfilter(c,tp)
 	return c:IsAbleToRemoveAsCost() and c:IsMonster() and aux.SpElimFilter(c,false,true)
 		and Duel.IsExistingTarget(s.filter,tp,LOCATION_ONFIELD,0,1,c)

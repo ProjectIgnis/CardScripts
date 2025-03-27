@@ -1,6 +1,5 @@
 --Ｅｍフレイム・イーター
 --Performage Flame Eater
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon itself from hand
@@ -27,7 +26,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_PERFORMAGE}
-
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end

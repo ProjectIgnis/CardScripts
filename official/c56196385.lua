@@ -1,7 +1,6 @@
 --鉄獣戦線 キット
 --Tri-Brigade Kitt
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -32,7 +31,6 @@ end
 s.listed_series={SET_TRI_BRIGADE}
 	--Specifically lists itself
 s.listed_names={id}
-
 	--Check for beast, beast-warrior, or winged beast monsters to banish as cost
 function s.rmfilter(c)
 	return c:IsRace(RACES_BEAST_BWARRIOR_WINGB) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true,false)

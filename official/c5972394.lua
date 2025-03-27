@@ -1,6 +1,5 @@
 --モノマネンド
 --Mimiclay
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 level 2 or lower monster from your deck

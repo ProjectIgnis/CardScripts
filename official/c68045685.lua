@@ -1,7 +1,6 @@
 --武神籬
 --Bujincandescence
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -50,7 +49,6 @@ function s.initial_effect(c)
 end
 	--Lists "Bujin" archetype
 s.listed_series={SET_BUJIN}
-
 function s.target(e,c)
     return c:IsSetCard(SET_BUJIN) and c:IsRace(RACE_BEASTWARRIOR)
 end

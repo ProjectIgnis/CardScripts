@@ -1,6 +1,5 @@
 --パラレルポート・アーマー
 --Parallel Port Armor
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted link monster cannot be destroyed by battle, opponent cannot target it with card effects

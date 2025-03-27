@@ -1,6 +1,5 @@
 --サイバネット・バックドア
 --Cynet Backdoor
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Banish 1 of your cyberse monsters, add 1 cyberse monster whose ATK is lower than banished monster's ATK

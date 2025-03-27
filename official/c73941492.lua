@@ -1,6 +1,5 @@
 --調弦の魔術師
 --Harmonizing Magician
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Enable pendulum summon
@@ -51,7 +50,6 @@ function s.initial_effect(c)
 end
 s.listed_names={id}
 s.listed_series={SET_MAGICIAN}
-
 function s.filter(e,c)
 	return c:IsSetCard(SET_MAGICIAN) and c:IsType(TYPE_PENDULUM)
 end

@@ -1,6 +1,5 @@
 --ＲＲ－ネスト
 --Raidraptor - Nest
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -20,7 +19,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_RAIDRAPTOR}
-
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_RAIDRAPTOR),tp,LOCATION_MZONE,0,2,nil)
 end

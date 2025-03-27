@@ -1,7 +1,6 @@
 --雛神鳥シムルグ
 --Simorgh, Bird of Beginning
 --Scripted by AlphaKretin
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Gain an extra normal summon for "Simorgh" monsters
@@ -27,7 +26,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_SIMORGH}
-
 function s.sumcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsPlayerCanAdditionalSummon(tp)
 end

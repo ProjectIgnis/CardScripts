@@ -1,7 +1,6 @@
 --電脳堺嫦－兎々
 --Virtual World Oto-Hime - Toutou
 --Scripted by Naim
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Summon with no tribute

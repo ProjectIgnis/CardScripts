@@ -1,6 +1,5 @@
 --強制転移
 --Creature Swap
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Each player changes control of 1 of their monsters

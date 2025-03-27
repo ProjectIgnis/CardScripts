@@ -1,7 +1,6 @@
 --ジャック・ア・ボーラン
 --Jack-o-Bolan
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon itself from hand

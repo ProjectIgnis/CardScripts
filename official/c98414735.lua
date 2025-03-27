@@ -1,6 +1,5 @@
 --バージェストマ・カナディア
 --Paleozoic Canadia
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Change 1 of opponent's monsters to face-down defense position

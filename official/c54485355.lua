@@ -1,7 +1,6 @@
 --昇華騎士－エクスパラディン
 --Sublimation Knight
 --Scripted by Hel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Equip 1 FIRE warrior or gemini monster from hand or deck to this card

@@ -1,7 +1,6 @@
 --夢魔鏡の使徒－ネイロイ
 --Neiroy, the Dream Mirror Disciple
 --Scripted by Naim
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon itself from the hand
@@ -30,7 +29,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_DREAM_MIRROR}
 s.listed_names={CARD_DREAM_MIRROR_JOY,CARD_DREAM_MIRROR_TERROR}
-
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_DREAM_MIRROR),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end

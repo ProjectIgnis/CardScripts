@@ -1,6 +1,5 @@
 --ＬＬ－コバルト・スパロー
 --Lyrilusc - Cobalt Sparrow
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--If special summon, add 1 level 1 winged beast monster from deck

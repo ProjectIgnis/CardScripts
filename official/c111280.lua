@@ -1,6 +1,5 @@
 --黒魔導強化
 --Dark Magic Expanded
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Apply various effects, depending on the number of "Dark Magicians" and "Dark Magician Girls" in GY
@@ -16,7 +15,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={CARD_DARK_MAGICIAN,CARD_DARK_MAGICIAN_GIRL}
-
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsCode(CARD_DARK_MAGICIAN,CARD_DARK_MAGICIAN_GIRL)
 end

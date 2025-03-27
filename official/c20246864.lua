@@ -1,7 +1,6 @@
 --ＷＷ－フリーズ・ベル
 --Windwitch - Freeze Bell
 --Scripted by ahtelel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon itself from hand
@@ -34,7 +33,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_WINDWITCH}
-
 function s.cfilter(c)
 	return c:IsFacedown() or not c:IsSetCard(SET_WINDWITCH)
 end

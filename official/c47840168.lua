@@ -1,7 +1,6 @@
 --レフトハンド・シャーク
 --Left-Hand Shark
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -38,7 +37,6 @@ function s.initial_effect(c)
 end
 	--Specifically lists "Right Hand Shark"
 s.listed_names={11845050}
-
 	--Check for "Right Hand Shark"
 function s.spfilter(c)
 	return c:IsFaceup() and c:IsCode(11845050)

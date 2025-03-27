@@ -1,6 +1,5 @@
 --妨げられた壊獣の眠り
 --Interrupted Kaiju Slumber
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Destroy all monsters on field, then special summon 2 "Kaiju" monsters to each field, from deck
@@ -26,7 +25,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_KAIJU}
-
 function s.chkfilter1(c,e,tp)
 	return c:IsSetCard(SET_KAIJU) and c:IsMonster() and 
 		not c:IsHasEffect(EFFECT_REVIVE_LIMIT) and Duel.IsPlayerCanSpecialSummon(tp,0,POS_FACEUP,tp,c)

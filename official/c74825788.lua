@@ -1,6 +1,5 @@
 --Ｈ－ヒートハート
 --H - Heated Heart
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted monster gains 500 ATK, also inflict piercing damage

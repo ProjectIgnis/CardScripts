@@ -1,6 +1,5 @@
 --蛮族の狂宴ＬＶ５
 --Feast of the Wild LV5
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon up to 2 level 5 warrior monsters from hand or GY

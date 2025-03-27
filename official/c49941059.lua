@@ -1,7 +1,6 @@
 --奇跡のマジック・ゲート
 --Magic Gate of Miracles
 --Updated by Larry126
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Change 1 of opponent's attack positions to defense position, then take control of it

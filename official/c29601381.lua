@@ -1,7 +1,6 @@
 --スプリガンズ・キャプテン サルガス
 --Springans Captain Sargas
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -42,7 +41,6 @@ function s.initial_effect(c)
 end
 	--Lists "Sprigguns" archetype
 s.listed_series={SET_SPRINGANS}
-
 	--Check for "Sprigguns" Xyz monster
 function s.matfilter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_SPRINGANS) and c:IsType(TYPE_XYZ)

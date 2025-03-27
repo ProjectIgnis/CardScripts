@@ -1,7 +1,6 @@
 --不朽の特殊合金
 --Everlasting Alloy
 --Scripted by andré
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Your machine monsters cannot be destroyed by opponent's card effects
@@ -25,7 +24,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_JINZO}
-
 function s.condition1(e,tp)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_JINZO),tp,LOCATION_ONFIELD,0,1,nil)
 end

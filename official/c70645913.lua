@@ -1,6 +1,5 @@
 --ヴァンパイアの眷属
 --Vampire Retainer
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--If special summoned, add 1 "Vampire" spell/trap from deck
@@ -28,7 +27,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_VAMPIRE}
-
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,500) end
 	Duel.PayLPCost(tp,500)

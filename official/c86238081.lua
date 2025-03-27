@@ -1,6 +1,5 @@
 --覇王烈竜オッドアイズ・レイジング・ドラゴン 
 --Odd-Eyes Raging Dragon
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -63,7 +62,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e6)
 end
 s.pendulum_level=7
-
 function s.pcfilter(c)
 	return c:IsType(TYPE_PENDULUM) and not c:IsForbidden()
 end

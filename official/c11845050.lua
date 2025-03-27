@@ -1,7 +1,6 @@
 --ライトハンド・シャーク
 --Right-Hand Shark
 --Scripted by AlphaKretin
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--When normal summoned, add 1 "Left-Hand Shark" from deck
@@ -36,7 +35,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={47840168}
-
 function s.thfilter(c)
 	return c:IsCode(47840168) and c:IsAbleToHand()
 end

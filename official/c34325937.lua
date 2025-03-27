@@ -1,6 +1,5 @@
 --方界合神
 --Unification of the Cubic Lords
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Fusion 1 "Cubic" fusion monster
@@ -21,7 +20,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_CUBIC}
-
 function s.cfilter(c)
 	return c:IsPreviousSetCard(SET_CUBIC) and c:IsPreviousLocation(LOCATION_MZONE)
 		and c:IsPreviousPosition(POS_FACEUP)

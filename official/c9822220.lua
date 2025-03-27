@@ -1,7 +1,6 @@
 --天獄の王
 --Lord of the Heavenly Prison
 --Scripted by DyXel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Reveal and protect all Set cards.

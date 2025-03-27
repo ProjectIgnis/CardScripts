@@ -1,6 +1,5 @@
 --蛮勇鱗粉
 --Berserk Scales
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted monster gains 1000 ATK, cannot attack directly

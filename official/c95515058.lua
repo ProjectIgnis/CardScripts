@@ -1,6 +1,5 @@
 --剛鬼ザ・ブレード・オーガ
 --Gouki The Blade Ogre
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -26,7 +25,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_GOUKI}
-
 function s.atkval(e,c)
 	return c:GetLinkedGroup():FilterCount(Card.IsMonster,nil)*300
 end

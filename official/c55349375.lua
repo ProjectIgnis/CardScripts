@@ -1,7 +1,6 @@
 --海造賊－青髭の海技士
 --Bluebeard, the Plunder Patroll Shipwright
 --Scripted by Hel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon itself from hand
@@ -31,7 +30,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_PLUNDER_PATROLL}
 s.listed_names={id}
-
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_PLUNDER_PATROLL) and not c:IsCode(id)
 end

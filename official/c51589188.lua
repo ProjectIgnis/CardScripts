@@ -1,6 +1,5 @@
 --フォトン・トライデント
 --Photon Trident
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted "Photon" monster gains 700 ATK, also inflict piercing damage

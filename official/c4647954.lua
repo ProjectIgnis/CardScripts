@@ -1,7 +1,6 @@
 --ＺＳ－昇華賢者
 --ZS - Ascended Sage
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -27,7 +26,6 @@ function s.initial_effect(c)
 end
 	--Lists "Utopia" and "Rank-Up-Magic" archetypes
 s.listed_series={SET_UTOPIA,SET_RANK_UP_MAGIC}
-
 	--If you control no cards
 function s.spcon(e,c)
 	if c==nil then return true end

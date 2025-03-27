@@ -1,7 +1,6 @@
 --魔妖遊行
 --Mayakashi Mayhem
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -33,7 +32,6 @@ end
 s.listed_names={}
 	--Lists "Mayakashi" archetype
 s.listed_series={SET_MAYAKASHI}
-
 	--Zombie synchro monster special summoned anywhere but extra deck
 function s.cfilter(c)
 	return c:IsRace(RACE_ZOMBIE) and c:IsType(TYPE_SYNCHRO) 

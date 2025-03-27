@@ -1,6 +1,5 @@
 --神の氷結
 --The Ice-Bound God
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--1 of opponent's monsters cannot attack, also negate its effects

@@ -22,7 +22,6 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetTargetCard(eg)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,ct,0,0)
 end
-
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.filter,nil,tp):Filter(Card.IsRelateToEffect,nil,e)
 	if #g>0 then

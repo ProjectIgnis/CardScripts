@@ -1,7 +1,6 @@
 --竜装合体 ドラゴニック・ホープレイ
 --Ultimate Dragonic Utopia Ray
 --Scripted by Larry126
-
 Duel.LoadCardScript("c56840427.lua")
 local s,id=GetID()
 function s.initial_effect(c)
@@ -46,7 +45,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_ZW}
 s.xyz_number=39
-
 function s.filter(c,tc,tp)
 	if not (c:IsSetCard(SET_ZW) and not c:IsForbidden()) then return false end
 	local effs={c:GetCardEffect(id)}

@@ -1,6 +1,5 @@
 --雙極の破械神
 --Abominable Unchained Soul
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Can only be special summoned once per turn

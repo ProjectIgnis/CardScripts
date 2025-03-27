@@ -1,6 +1,5 @@
 --調律の魔術師
 --Tuning Magician
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon itself from GY
@@ -29,7 +28,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_MAGICIAN}
-
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_PZONE,0,2,nil,SET_MAGICIAN)
 end

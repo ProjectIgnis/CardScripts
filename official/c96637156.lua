@@ -32,7 +32,6 @@ function s.mvop(e,tp,eg,ep,ev,re,r,rp)
 	if not (c:IsRelateToEffect(e) and c:IsInMainMZone()) then return end
 	local dice=Duel.TossDice(tp,1)
 	if dice<1 or dice>6 then return end
-
 	local seq=c:GetSequence()
 	local col3=Duel.IsDuelType(DUEL_3_COLUMNS_FIELD)
 	local max=col3 and 4 or 5
@@ -41,15 +40,12 @@ function s.mvop(e,tp,eg,ep,ev,re,r,rp)
 		if seq==0 and col3 then seq=-2
 		elseif seq<-max then seq=max-1 end
 	end
-
 	local switch=seq<0
 	if switch and not c:IsAbleToChangeControler() then return s.cannot_move(c) end
-
 	local fp=switch and 1-tp or tp
 	local nseq=switch and 5+seq or seq
 	local tc=Duel.GetFieldCard(fp,LOCATION_MZONE,nseq)
 	if Duel.GetMZoneCount(fp,tc,tp,nil,1<<nseq)<1 then return s.cannot_move(c) end
-
 	local win=false
 	if tc then
 		if c==tc or tc:IsImmuneToEffect(e) or tc:IsType(TYPE_TOKEN) or not c:IsType(TYPE_XYZ) then return s.cannot_move(c) end
@@ -57,7 +53,6 @@ function s.mvop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Overlay(c,tc)
 		win=(prev<7 and c:GetOverlayCount()>6)
 	end
-
 	if switch and Duel.GetControl(c,1-tp,0,0,1<<nseq) or Duel.MoveSequence(c,seq) then
 		if win then Duel.Win(tp,WIN_REASON_MUSICAL_SUMO) end
 	else return s.cannot_move(c) end

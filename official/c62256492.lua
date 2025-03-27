@@ -1,7 +1,6 @@
 --憑依覚醒
 --Awakening of the Possessed
 --Scripted by AlphaKretin
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -43,7 +42,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.listed_series={SET_CHARMER,SET_FAMILIAR_POSSESSED}
-
 function s.atkval(e,c)
 	local tp=e:GetHandlerPlayer()
 	local att=0

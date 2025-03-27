@@ -1,7 +1,6 @@
 --混沌領域
 --Chaos Space
 --Scripted by AlphaKretin
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Add 1 level 4 to 8 LIGHT/DARK monster, that cannot be normal summoned/set

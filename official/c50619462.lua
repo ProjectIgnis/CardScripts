@@ -1,6 +1,5 @@
 --烏合無象
 --Cattle Call
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

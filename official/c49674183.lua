@@ -1,6 +1,5 @@
 --魔天使ローズ・ソーサラー
 --Fallen Angel of Roses
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon itself from hand
@@ -15,7 +14,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={id}
-
 function s.spfilter(c,ft)
 	return c:IsFaceup() and c:IsRace(RACE_PLANT) and not c:IsCode(id) and c:IsAbleToHandAsCost()
 end

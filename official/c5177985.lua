@@ -1,7 +1,6 @@
 --不知火の師範
 --Shiranui Swordmaster
 --Scripted by AlphaKretin
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon itself from GY
@@ -28,7 +27,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_SHIRANUI}
-
 function s.cfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(SET_SHIRANUI)
 		and Duel.IsExistingMatchingCard(s.cfilter2,tp,LOCATION_MZONE,0,1,nil,c:GetCode())

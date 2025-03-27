@@ -1,6 +1,5 @@
 --バージェストマ・ピカイア
 --Paleozoic Pikaia
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Discard 1 "Paleozoic" card, draw 2
@@ -23,7 +22,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_PALEOZOIC}
-
 function s.filter(c)
 	return c:IsSetCard(SET_PALEOZOIC) and c:IsDiscardable(REASON_EFFECT)
 end

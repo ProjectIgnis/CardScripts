@@ -1,7 +1,6 @@
 --武装竜の霹靂
 --Armed Dragon Flash
 --Scripted by Hatter
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 level 3 "Armed Dragon" monster from deck
@@ -15,7 +14,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_ARMED_DRAGON}
-
 function s.filter(c,e,tp)
 	return c:IsLevel(3) and c:IsSetCard(SET_ARMED_DRAGON) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end

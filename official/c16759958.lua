@@ -1,6 +1,5 @@
 --アロマセラフィ－アンゼリカ
 --Aromaseraphy Angelica
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Gain LP equal to targeted "Aroma" monster in your GY
@@ -30,7 +29,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_AROMA}
-
 function s.reccost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDiscardable() end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)

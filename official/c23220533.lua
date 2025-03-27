@@ -1,7 +1,6 @@
 --ホーリーナイツ・レイエル
 --Starry Knight Rayel
 --Scripted by DyXel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Search 1 "Holy Night" Spell/Trap when NS

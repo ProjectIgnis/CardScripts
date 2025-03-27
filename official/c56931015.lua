@@ -1,6 +1,5 @@
 --グラヴィティ・ベヒモス
 --Gravity Behemoth
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Normal summon it with no tributes

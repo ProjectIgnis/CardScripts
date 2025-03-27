@@ -1,7 +1,6 @@
 --Ｌｉｖｅ☆Ｔｗｉｎ リィラ
 --Live☆Twin Lil-la
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)

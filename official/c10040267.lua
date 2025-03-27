@@ -1,7 +1,6 @@
 --新生代化石マシン スカルバギ
 --Fossil Machine Skull Buggy
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -43,7 +42,6 @@ function s.initial_effect(c)
 end
 --Specifically lists "Fossil Fusion"
 s.listed_names={CARD_FOSSIL_FUSION}
-
 	--Check for a rock monster in your GY
 function s.ffilter(c,fc,sumtype,tp)
 	return c:IsRace(RACE_ROCK) and c:IsLocation(LOCATION_GRAVE) and c:IsControler(tp)

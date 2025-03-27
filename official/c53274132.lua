@@ -1,6 +1,5 @@
 --Ｃ・リペアラー
 --Iron Chain Repairman
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--When this card destroys a monster by battle, inflict 300 damage
@@ -29,7 +28,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_IRON_CHAIN}
 s.listed_names={id}
-
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()

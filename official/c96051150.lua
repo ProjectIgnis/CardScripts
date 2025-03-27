@@ -1,6 +1,5 @@
 --陽炎獣 メコレオス
 --Hazy Flame Mantikor
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Cannot be targeted by opponent's card effects

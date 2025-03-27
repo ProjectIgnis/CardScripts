@@ -1,7 +1,6 @@
 --電脳堺姫－娘々
 --Virtual World Hime - Nyannyan
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)

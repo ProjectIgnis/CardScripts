@@ -1,6 +1,5 @@
 --洗脳－ブレインコントロール
 --Brain Control
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Take control 1 of opponent's monsters

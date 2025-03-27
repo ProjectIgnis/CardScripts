@@ -1,7 +1,6 @@
 --炎舞－「隠元」
 --Fire Formation - Ingen
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--When activated, fusion summon 1 beast-warrior fusion monster
@@ -23,7 +22,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_FIRE_FIST}
-
 function s.target(sptg,spop)
 	return function (e,tp,eg,ep,ev,re,r,rp,chk)
 			if chk==0 then return true end

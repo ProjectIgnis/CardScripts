@@ -1,6 +1,5 @@
 --Ｅ・ＨＥＲＯ グロー・ネオス
 --Elemental HERO Glow Neos
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -25,7 +24,6 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_NEOS}
 s.material_setcode={SET_HERO,SET_ELEMENTAL_HERO,SET_NEOS,SET_NEO_SPACIAN}
-
 function s.contactfil(tp)
 	return Duel.GetMatchingGroup(Card.IsAbleToDeckOrExtraAsCost,tp,LOCATION_ONFIELD,0,nil)
 end

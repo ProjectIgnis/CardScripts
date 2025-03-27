@@ -1,7 +1,6 @@
 --黄金の邪教神
 --Golden-Eyes Idol
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -34,7 +33,6 @@ function s.initial_effect(c)
 end
 	--Lists "Relinquished"/"Eyes Restrict" archetype
 s.listed_series={}
-
 	--Activation legality
 function s.looktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetMatchingGroupCount(aux.NOT(Card.IsPublic),tp,0,LOCATION_HAND,nil)>0 end

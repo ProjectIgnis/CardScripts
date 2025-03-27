@@ -1,6 +1,5 @@
 --ヴェノム・ボア
 --Venom Boa
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Place 2 venom counters on 1 of opponent's monsters
@@ -17,7 +16,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.counter_place_list={0x1009}
-
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetAttackAnnouncedCount()==0 end
 	--Cannot attack this turn

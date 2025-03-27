@@ -1,6 +1,5 @@
 --ジェムナイト・ファントムルーツ
 --Gem-Knight Phantom Quartz
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -34,7 +33,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_GEM_KNIGHT,SET_GEM}
-
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLinkSummoned()
 end

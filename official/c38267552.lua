@@ -1,7 +1,6 @@
 --夢魔鏡の黒騎士－ルペウス
 --Morpheus, the Dream Mirror Black Knight
 --Scripted by Naim
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Destroy 1 card on the field
@@ -25,14 +24,13 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(s.spcon)
-	e2:SetCost(s.spcost)
+	e2:SetCost(Cost.SelfTribute)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_DREAM_MIRROR_JOY,1872843}
 s.listed_series={SET_DREAM_MIRROR}
-
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
 	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(SET_DREAM_MIRROR)
@@ -56,11 +54,7 @@ end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
 	return Duel.IsExistingMatchingCard(s.sscond,tp,LOCATION_FZONE,LOCATION_FZONE,1,nil,tp) 
-		and (ph==PHASE_MAIN1 or Duel.IsBattlePhase() or ph==PHASE_MAIN2)
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
+		and (Duel.IsMainPhase() or Duel.IsBattlePhase())
 end
 function s.spfilter(c,e,tp)
 	return c:IsCode(1872843) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

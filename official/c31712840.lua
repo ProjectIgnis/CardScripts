@@ -1,7 +1,6 @@
 --ゼアル・アライアンス
 --Zexal Alliance
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -20,7 +19,6 @@ function s.initial_effect(c)
 end
 	--Lists "Utopia" and "Number" archetype
 s.listed_series={SET_UTOPIA,SET_NUMBER}
-
 	--Pay LP until you have 10 left
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLP(tp)>10 end

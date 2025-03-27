@@ -1,6 +1,5 @@
 --かっとビング・チャレンジ
 --Hi-Five the Sky
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Make 1 of your Xyz monsters, that already attack this turn, make a second attack

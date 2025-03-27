@@ -12,7 +12,6 @@ function s.initial_effect(c)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_CHAIN,aux.FALSE)
 end
 s.listed_series={SET_MYUTANT}
-
 function s.check(g1,g2)
 	return function(tp,sg,fc)
 		local c1=#(sg&g1)

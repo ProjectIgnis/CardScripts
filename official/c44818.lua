@@ -1,7 +1,6 @@
 --ホーリーナイツ・オルビタエル
 --Starry Knight Orbitael
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -34,7 +33,6 @@ function s.initial_effect(c)
 end
 	--Lists "Starry Knight" archetype
 s.listed_series={SET_STARRY_KNIGHT}
-
 function s.releasefilter(c)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsReleasableByEffect()
 end

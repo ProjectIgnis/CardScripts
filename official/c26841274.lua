@@ -1,6 +1,5 @@
 --Ｄ－フュージョン
 --D-Fusion
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Fusion summon 1 "Destiny HERO" fusion monster
@@ -8,7 +7,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(Fusion.CreateSummonEff(c,nil,Fusion.OnFieldMat(aux.FilterBoolFunction(Card.IsSetCard,SET_DESTINY_HERO)),nil,nil,nil,s.stage2))
 end
 s.listed_series={SET_DESTINY_HERO}
-
 function s.stage2(e,tc,tp,sg,chk)
 	if chk==0 then
 		--Cannot be destroyed by battle or card effect

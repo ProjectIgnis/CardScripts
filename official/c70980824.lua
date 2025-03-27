@@ -1,6 +1,5 @@
 --氷結界の還零龍 トリシューラ
 --Trishula, Zero Dragon of the Ice Barrier
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Synchro summon procedure

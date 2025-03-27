@@ -1,7 +1,6 @@
 --機塊リユース
 --Appliancer Reuse
 --Anime version scripted by pyrQ, updated by Larry126
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 "Appliancer" from GY
@@ -15,7 +14,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_APPLIANCER}
-
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_APPLIANCER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

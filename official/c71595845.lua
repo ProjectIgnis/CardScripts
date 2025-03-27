@@ -1,7 +1,6 @@
 --人形の幸福
 --Doll Happiness
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -40,7 +39,6 @@ end
 s.listed_series={SET_DOLL_MONSTER}
 	--Specifically lists "Princess Cologne", "Box of Friends", and "Grandpa Demetto"
 s.listed_names={75574498,81587028,44190146}
-
 	--Check for "Box of Friends" or "Grandpa Demetto"
 function s.filter(c)
 	return c:IsCode(81587028,44190146) and c:IsAbleToHand()

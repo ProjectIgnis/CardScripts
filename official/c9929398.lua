@@ -1,6 +1,5 @@
 --ＢＦ－朧影のゴウフウ
 --Blackwing - Gofu the Vague Shadow
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -36,7 +35,6 @@ function s.initial_effect(c)
 end
 s.listed_names={9929399}
 s.listed_series={SET_BLACKWING}
-
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,0,nil)==0

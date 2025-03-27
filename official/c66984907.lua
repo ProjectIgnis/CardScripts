@@ -1,7 +1,6 @@
 --Ａ・Ɐ・ＣＣ
 --Amaze Attraction Cyclo-Coaster
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--From cards_specific_functions.lua

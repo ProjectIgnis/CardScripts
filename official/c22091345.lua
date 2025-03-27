@@ -1,6 +1,5 @@
 --ＥＭスパイク・イーグル
 --Performapal Spikeagle
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted monster inflicts piercing damage

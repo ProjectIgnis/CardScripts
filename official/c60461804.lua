@@ -39,7 +39,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_HERO,SET_DESTINY_HERO}
 s.material_setcode={SET_HERO,SET_DESTINY_HERO}
-
 function s.matfilter(c,fc,sumtype,tp)
 	return c:IsSetCard(SET_HERO,fc,sumtype,tp) and c:IsLevelAbove(6)
 end
@@ -86,7 +85,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.RegisterEffect(e1,tp)
 end
-
 function s.spcon1(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnCount()~=e:GetLabel()
 end

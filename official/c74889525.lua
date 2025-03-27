@@ -1,6 +1,5 @@
 --黄金狂エルドリッチ
 --Eldlich the Mad Golden Lord
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -42,7 +41,6 @@ end
 s.listed_names={CARD_GOLDEN_LORD}
 s.listed_series={SET_ELDLICH}
 s.material_setcode={SET_ELDLICH}
-
 function s.matfilter(c,fc,sumtype,tp)
 	return c:IsRace(RACE_ZOMBIE,fc,sumtype,tp) and c:IsLevelAbove(5)
 end

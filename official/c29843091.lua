@@ -1,6 +1,5 @@
 --おジャマトリオ
 --Ojama Trio
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 3 tokens to opponent's field

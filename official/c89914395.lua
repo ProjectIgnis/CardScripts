@@ -1,6 +1,5 @@
 --ミョルニルの魔槌
 --Divine Relic Mjollnir
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted "Aesir" monster can make a second attack
@@ -15,7 +14,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_AESIR}
-
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP() or Duel.IsBattlePhase()
 end

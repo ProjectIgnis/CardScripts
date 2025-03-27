@@ -1,6 +1,5 @@
 --武神－アラスダ
 --Bujin Arasuda
-
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,0,id)
@@ -38,7 +37,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_BUJIN}
-
 function s.cfilter(c,tp)
 	return c:IsSetCard(SET_BUJIN) and c:IsPreviousControler(tp)
 		and c:IsPreviousLocation(LOCATION_MZONE|LOCATION_GRAVE) and c:IsPreviousPosition(POS_FACEUP)

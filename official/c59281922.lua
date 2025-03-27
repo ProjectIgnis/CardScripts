@@ -1,6 +1,5 @@
 --サイバー・ドラゴン・ドライ
 --Cyber Dragon Drei
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--When normal summoned, make all your "Cyber Dragons" become level 5
@@ -32,7 +31,6 @@ function s.initial_effect(c)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
 s.listed_names={CARD_CYBER_DRAGON}
-
 function s.counterfilter(c)
 	return c:IsRace(RACE_MACHINE)
 end

@@ -1,7 +1,6 @@
 --海造賊－キャプテン黒髭
 --Blackbeard, the Plunder Patroll Captain
 --Scripted by ahtelel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -23,7 +22,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_PLUNDER_PATROLL}
-
 function s.lcheck(g,lc,sumtype,tp)
 	return g:IsExists(Card.IsSetCard,1,nil,SET_PLUNDER_PATROLL,lc,sumtype,tp)
 end

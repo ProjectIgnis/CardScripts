@@ -1,7 +1,6 @@
 --フリント・クラッガー
 --Flint Cragger
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -33,7 +32,6 @@ end
 s.listed_series={SET_FOSSIL}
 	--Specifically lists itself and "Fossil Fusion"
 s.listed_names={id,CARD_FOSSIL_FUSION}
-
 	--Activation legality
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_EXTRA,0,1,nil)	

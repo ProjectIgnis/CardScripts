@@ -1,6 +1,5 @@
 --氷結界の虎王ドゥローレン
 --Dewloren, Tiger King of the Ice Barrier
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Synchro summon procedure

@@ -1,6 +1,5 @@
 --ＤＤラミア
 --D/D Lamia
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon itself from hand or GY
@@ -17,7 +16,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_DD,SET_DARK_CONTRACT}
 s.listed_names={id}
-
 function s.cfilter(c,ft)
 	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and (c:IsSetCard(SET_DD) or c:IsSetCard(SET_DARK_CONTRACT))
 		and not c:IsCode(id) and c:IsAbleToGraveAsCost() and (ft>0 or c:GetSequence()<5)

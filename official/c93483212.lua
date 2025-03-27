@@ -1,6 +1,5 @@
 --極神聖帝オーディン
 --Odin, Father of the Aesir
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -48,7 +47,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={SET_NORDIC_ASCENDANT}
-
 function s.tfilter(c,scard,sumtype,tp)
 	return c:IsSetCard(SET_NORDIC_ASCENDANT,scard,sumtype,tp) or c:IsHasEffect(EFFECT_SYNSUB_NORDIC)
 end

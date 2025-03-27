@@ -1,7 +1,6 @@
 --凶導の白騎士
 --White Knight of Dogmatika
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)

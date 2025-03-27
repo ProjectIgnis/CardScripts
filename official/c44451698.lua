@@ -1,7 +1,6 @@
 --妖精弓士イングナル
 --Fairy Archer Ingunar
 --Scripted by Hatter
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 level 6+ plant monster

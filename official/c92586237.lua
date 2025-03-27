@@ -1,7 +1,6 @@
 --武神－マヒトツ
 --Bujin Mahitotsu
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -41,7 +40,6 @@ function s.initial_effect(c)
 end
 	--Lists "Bujin" archetype
 s.listed_series={SET_BUJIN}
-
 	--Check for a "Bujin" card
 function s.cfilter(c)
 	return c:IsSetCard(SET_BUJIN) and c:IsAbleToGraveAsCost()

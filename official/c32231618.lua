@@ -1,6 +1,5 @@
 --占術姫コインノーマ
 --Prediction Princess Coinorma
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 level 3+ flip monster from hand or deck
@@ -13,7 +12,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_PREDICTION_PRINCESS}
-
 function s.spfilter(c,e,tp)
 	return c:IsType(TYPE_FLIP) and c:IsLevelAbove(3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
 end

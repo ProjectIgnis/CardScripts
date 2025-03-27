@@ -1,6 +1,5 @@
 --甲化鎧骨格
 --Powered Inzektron
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving

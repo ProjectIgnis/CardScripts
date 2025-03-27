@@ -1,6 +1,5 @@
 --水竜星－ビシキ
 --Bixi, Water of the Yang Zing
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 "Yang Zing" monster from deck
@@ -38,7 +37,6 @@ function s.initial_effect(c)
 end
 s.listed_names={id}
 s.listed_series={SET_YANG_ZING}
-
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE+REASON_EFFECT)

@@ -1,7 +1,6 @@
 --月光黄鼬
 --Lunalight Yellow Marten
 --Logical Nonsense
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon itself from hand or GY
@@ -32,7 +31,6 @@ end
 s.listed_series={SET_LUNALIGHT}
 	--Specifically lists itself
 s.listed_names={id}
-
 	--Check for "Lunalight" card to return to hand
 function s.thfilter1(c,tp)
 	return c:IsFaceup() and c:IsSetCard(SET_LUNALIGHT) and not c:IsCode(id) and c:IsAbleToHand() and Duel.GetMZoneCount(tp,c)

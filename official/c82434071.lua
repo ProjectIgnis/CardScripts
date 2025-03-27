@@ -1,7 +1,6 @@
 --インフェルニティ・ポーン
 --Infernity Pawn
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -19,7 +18,6 @@ function s.initial_effect(c)
 end
 	--Lists "Infernity" and "Void" archetype
 s.listed_series={SET_INFERNITY,SET_VOID}
-
 	--During your draw phase, if you have no cards in hand
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer() and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0

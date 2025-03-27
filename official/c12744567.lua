@@ -1,6 +1,5 @@
 --ＣＮｏ．１０１ Ｓ・Ｈ・Ｄａｒｋ Ｋｎｉｇｈｔ
 --Number C101: Silent Honor DARK
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -31,7 +30,6 @@ function s.initial_effect(c)
 end
 s.xyz_number=101
 s.listed_names={48739166}
-
 function s.filter(c)
 	return not c:IsType(TYPE_TOKEN) and c:IsAbleToChangeControler()
 		and c:IsSpecialSummoned()

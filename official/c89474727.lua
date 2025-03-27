@@ -1,6 +1,5 @@
 --真閃珖竜 スターダスト・クロニクル
 --Stardust Chronicle Spark Dragon
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -38,7 +37,6 @@ function s.initial_effect(c)
 end
 s.synchro_tuner_required=1
 s.synchro_nt_required=1
-
 function s.cfilter(c)
 	return c:IsType(TYPE_SYNCHRO) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end

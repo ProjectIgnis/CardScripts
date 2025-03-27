@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCost(s.cost)
+	e3:SetCost(Cost.SelfTribute)
 	e3:SetTarget(s.target)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
@@ -28,10 +28,6 @@ end
 s.listed_series={SET_CRYSTAL_BEAST,SET_ULTIMATE_CRYSTAL,SET_CRYSTAL}
 function s.tgtg(e,c)
 	return c:IsSetCard(SET_CRYSTAL_BEAST) or (c:IsLocation(LOCATION_MZONE) and c:IsSetCard(SET_ULTIMATE_CRYSTAL))
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.filter(c)
 	return (((c:IsSetCard(SET_CRYSTAL_BEAST) or c:IsSetCard(SET_ULTIMATE_CRYSTAL)) and c:IsMonster())

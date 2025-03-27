@@ -1,7 +1,6 @@
 --Ｈ・Ｃ モーニング・スター
 --Heroic Challenger - Morning Star
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -44,7 +43,6 @@ function s.initial_effect(c)
 end
 	--Lists "Heroic" archetype
 s.listed_series={SET_HEROIC}
-
 	--Check for 2+ Warriors
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_WARRIOR),tp,LOCATION_MZONE,0,2,nil)

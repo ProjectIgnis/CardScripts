@@ -1,4 +1,5 @@
 --電池メン－単一型
+--Batteryman D
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot be battle target

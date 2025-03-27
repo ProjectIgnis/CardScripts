@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
-	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x33),1,1,Synchro.NonTuner(nil),1,99)
+	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_BLACKWING),1,1,Synchro.NonTuner(nil),1,99)
 	c:EnableReviveLimit()
 	--immune
 	local e1=Effect.CreateEffect(c)
@@ -51,7 +51,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.counter_place_list={0x1002}
-s.listed_series={0x33}
+s.listed_series={SET_BLACKWING}
 function s.efilter(e,te)
 	return te:GetOwner()~=e:GetOwner()
 end
@@ -93,4 +93,3 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	Duel.Destroy(g,REASON_EFFECT)
 end
-

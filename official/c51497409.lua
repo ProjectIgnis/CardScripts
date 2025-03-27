@@ -1,4 +1,5 @@
 --DDD磐石王ダリウス
+--D/D/D Stone King Darius
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -25,13 +26,13 @@ function s.initial_effect(c)
 	e2:SetOperation(s.inop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xae}
+s.listed_series={SET_DARK_CONTRACT}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.ddfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xae)
+	return c:IsFaceup() and c:IsSetCard(SET_DARK_CONTRACT)
 end
 function s.ddtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and s.ddfilter(chkc) end
@@ -60,13 +61,13 @@ function s.inop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE)
 		c:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 		e2:SetCode(EVENT_BATTLED)
 		e2:SetOperation(s.desop)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE)
 		c:RegisterEffect(e2)
 	end
 end

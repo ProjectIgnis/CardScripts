@@ -1,25 +1,25 @@
--- エクソシスターズ・マニフィカ
--- Exosisters Magnifica
--- Scripted by Hatter
+--エクソシスターズ・マニフィカ
+--Exosisters Magnifica
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	-- 2 Rank 4 "Exorsister" Xyz Monsters
+	--2 Rank 4 "Exorsister" Xyz Monsters
 	Xyz.AddProcedure(c,s.xyzfilter,nil,2,nil,nil,nil,nil,false)
-	-- Must be Xyz Summoned using the correct materials
+	--Must be Xyz Summoned using the correct materials
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
 	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e0:SetValue(s.splimit)
 	c:RegisterEffect(e0)
-	-- Can make a second attack
+	--Can make a second attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_EXTRA_ATTACK)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	-- Banish 1 opponent card
+	--Banish 1 opponent card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_REMOVE)
@@ -28,11 +28,11 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
 	e2:SetCountLimit(1)
-	e2:SetCost(aux.dxmcostgen(1,1,nil))
+	e2:SetCost(Cost.Detach(1,1,nil))
 	e2:SetTarget(s.rmtg)
 	e2:SetOperation(s.rmop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
-	-- Return material to Extra Deck
+	--Return material to Extra Deck
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TOEXTRA+CATEGORY_SPECIAL_SUMMON)
@@ -44,9 +44,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.teop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x174}
+s.listed_series={SET_EXOSISTER}
 function s.xyzfilter(c,xyz,sumtype,tp)
-	return c:IsType(TYPE_XYZ,xyz,sumtype,tp) and c:IsRank(4) and c:IsSetCard(0x174,xyz,sumtype,tp)
+	return c:IsType(TYPE_XYZ,xyz,sumtype,tp) and c:IsRank(4) and c:IsSetCard(SET_EXOSISTER,xyz,sumtype,tp)
 end
 function s.splimit(e,se,sp,st)
 	return (st&SUMMON_TYPE_XYZ)==SUMMON_TYPE_XYZ and not se

@@ -18,10 +18,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.skipop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x60}
+s.listed_series={SET_BAMBOO_SWORD}
 function s.skipcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE)
-		and re:GetHandler():IsSetCard(0x60)
+		and re:GetHandler():IsSetCard(SET_BAMBOO_SWORD)
 end
 function s.skipop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -30,6 +30,6 @@ function s.skipop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_SKIP_M1)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(0,1)
-	e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+	e1:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN)
 	Duel.RegisterEffect(e1,tp)
 end

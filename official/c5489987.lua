@@ -1,4 +1,5 @@
 --花札衛－桜に幕－
+--Flower Cardian Cherry Blossom with Curtain
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -44,7 +45,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 		local tc=g:GetFirst()
 		Duel.ConfirmCards(1-tp,tc)
 		Duel.BreakEffect()
-		if tc:IsMonster() and tc:IsSetCard(0xe6) then
+		if tc:IsMonster() and tc:IsSetCard(SET_FLOWER_CARDIAN) then
 			if c:IsRelateToEffect(e) then
 				if Duel.SpecialSummon(c,0,tp,tp,true,false,POS_FACEUP)~=0 then
 					c:CompleteProcedure()
@@ -66,7 +67,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	if not tc then return false end
 	if tc:IsControler(1-tp) then tc=Duel.GetAttacker() end
 	e:SetLabelObject(tc)
-	return tc:IsFaceup() and tc:IsSetCard(0xe6) and tc:IsRelateToBattle()
+	return tc:IsFaceup() and tc:IsSetCard(SET_FLOWER_CARDIAN) and tc:IsRelateToBattle()
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDiscardable() end
@@ -79,7 +80,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(1000)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

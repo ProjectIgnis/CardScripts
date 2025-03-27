@@ -1,5 +1,5 @@
 --遮攻カーテン
---Obstructive Curtain
+--Blockout Curtain
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -45,7 +45,7 @@ function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 			e:SetLabelObject(cg:GetFirst())
 		end
 		c:SetStatus(STATUS_DESTROY_CONFIRMED,true)
-		Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 		return true
 	else return false end
 end
@@ -72,7 +72,7 @@ function s.reptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 			local cg=g:Select(tp,1,1,nil)
 			e:SetLabelObject(cg:GetFirst())
 		end
-		Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_END,0,1)
 		return true
 	else return false end
 end

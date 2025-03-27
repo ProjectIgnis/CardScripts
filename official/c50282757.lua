@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
-	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e2:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetCondition(s.condition)
 	e2:SetTarget(s.target)
@@ -42,7 +42,7 @@ function s.initial_effect(c)
 	e3:SetValue(s.indesval)
 	c:RegisterEffect(e3)
 end
-s.material_setcode={0x8,0x3008}
+s.material_setcode={SET_HERO,SET_ELEMENTAL_HERO}
 s.dark_calling=true
 s.listed_names={CARD_DARK_FUSION,58932615,84327329}
 function s.lizcon(e,tp,eg,ep,ev,re,r,rp)
@@ -50,7 +50,7 @@ function s.lizcon(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),EFFECT_SUPREME_CASTLE)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsPosition(POS_FACEUP_DEFENSE) and Duel.GetTurnPlayer()==tp
+	return e:GetHandler():IsPosition(POS_FACEUP_DEFENSE) and Duel.IsTurnPlayer(tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

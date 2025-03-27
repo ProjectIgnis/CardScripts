@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetRange(LOCATION_HAND+LOCATION_GRAVE)
+	e1:SetRange(LOCATION_HAND|LOCATION_GRAVE)
 	e1:SetCountLimit(1,id)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
@@ -29,13 +29,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 	--Lists "Lunalight" archetype
-s.listed_series={0xdf}
+s.listed_series={SET_LUNALIGHT}
 	--Specifically lists itself
 s.listed_names={id}
 
 	--Check for "Lunalight" card to return to hand
 function s.thfilter1(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0xdf) and not c:IsCode(id) and c:IsAbleToHand() and Duel.GetMZoneCount(tp,c)
+	return c:IsFaceup() and c:IsSetCard(SET_LUNALIGHT) and not c:IsCode(id) and c:IsAbleToHand() and Duel.GetMZoneCount(tp,c)
 end
 	--Activation legality
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -58,7 +58,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e1,true)
 	end
@@ -69,7 +69,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for "Lunalight" spell/trap
 function s.srchfilter(c)
-	return c:IsSetCard(0xdf) and c:IsSpellTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_LUNALIGHT) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.srchfilter,tp,LOCATION_DECK,0,1,nil) end

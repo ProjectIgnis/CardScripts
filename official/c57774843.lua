@@ -1,4 +1,5 @@
 --裁きの龍
+--Judgment Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -40,9 +41,9 @@ function s.initial_effect(c)
 	e4:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x38}
+s.listed_series={SET_LIGHTSWORN}
 function s.spfilter(c)
-	return c:IsSetCard(0x38) and c:IsMonster()
+	return c:IsSetCard(SET_LIGHTSWORN) and c:IsMonster()
 end
 function s.spcon(e,c)
 	if c==nil then return true end

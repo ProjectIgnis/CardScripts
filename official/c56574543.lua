@@ -13,18 +13,18 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_GRAVE)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.atkcon)
-	e1:SetCost(aux.bfgcost)
+	e1:SetCost(Cost.SelfBanish)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x88}
+s.listed_series={SET_BUJIN}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local phase=Duel.GetCurrentPhase()
 	if phase~=PHASE_DAMAGE or Duel.IsDamageCalculated() then return false end
 	local c=Duel.GetAttackTarget()
 	if not c then return false end
 	if c:IsControler(1-tp) then c=Duel.GetAttacker() end
-	return c and c:IsSetCard(0x88) and c:IsRace(RACE_BEASTWARRIOR) and c:IsRelateToBattle()
+	return c and c:IsSetCard(SET_BUJIN) and c:IsRace(RACE_BEASTWARRIOR) and c:IsRelateToBattle()
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local a=Duel.GetAttacker()
@@ -36,7 +36,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetOwnerPlayer(tp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE)
 	e1:SetValue(d:GetAttack())
 	a:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(e:GetHandler())
@@ -45,6 +45,6 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp,chk)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetTargetRange(0,1)
 	e2:SetValue(HALF_DAMAGE)
-	e2:SetReset(RESET_PHASE+PHASE_DAMAGE)
+	e2:SetReset(RESET_PHASE|PHASE_DAMAGE)
 	Duel.RegisterEffect(e2,tp)
 end

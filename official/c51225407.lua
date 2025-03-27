@@ -1,5 +1,5 @@
 --魔妖壊劫
---Mayakashi Memorial
+--Mayakashi Winter
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -43,16 +43,16 @@ function s.initial_effect(c)
 	e5:SetOperation(s.spop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x121}
+s.listed_series={SET_MAYAKASHI}
 function s.atkfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x121)
+	return c:IsMonster() and c:IsSetCard(SET_MAYAKASHI)
 end
 function s.atkval(e,c)
 	local g=Duel.GetMatchingGroup(s.atkfilter,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil)
 	return g:GetClassCount(Card.GetCode)*-100
 end
 function s.drcfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x121) and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and c:IsSetCard(SET_MAYAKASHI) and c:IsAbleToGraveAsCost()
 end
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -79,13 +79,13 @@ function s.cfilter(c,e,tp)
 		and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE,0,1,c,e,tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x121) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_MAYAKASHI) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToRemoveAsCost() and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,e,tp) end
+	if chk==0 then return c:IsAbleToRemoveAsCost() and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil,e,tp)
 	g:AddCard(c)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
@@ -103,4 +103,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-

@@ -1,5 +1,5 @@
 --聖なる煌炎
---Holy Night Blast
+--Starry Knight Blast
 --Scripted by DyXel
 
 local s,id=GetID()

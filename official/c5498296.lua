@@ -1,4 +1,5 @@
 --暗黒界の斥候 スカー
+--Scarr, Scout of Dark World
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -20,7 +21,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.filter(c)
-	return c:IsLevelBelow(4) and c:IsSetCard(0x6) and c:IsAbleToHand()
+	return c:IsLevelBelow(4) and c:IsSetCard(SET_DARK_WORLD) and c:IsAbleToHand()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)

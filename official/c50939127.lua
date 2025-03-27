@@ -1,4 +1,5 @@
 --異次元竜 トワイライトゾーンドラゴン
+--Different Dimension Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--indestructable

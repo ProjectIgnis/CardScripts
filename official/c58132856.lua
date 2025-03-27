@@ -1,4 +1,5 @@
 --トイ・マジシャン
+--Toy Magician
 local s,id=GetID()
 function s.initial_effect(c)
 	--Set
@@ -39,7 +40,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsPreviousLocation(LOCATION_SZONE) and c:IsPreviousPosition(POS_FACEDOWN)
 		and c:IsReason(REASON_EFFECT) and c:IsReason(REASON_DESTROY) and rp~=tp then
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,0)
+		c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,0)
 	end
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

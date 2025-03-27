@@ -1,5 +1,5 @@
 --魔轟神マルコシア
---Fabled Marchosia
+--Fabled Marcosia
 --Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -31,12 +31,12 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_HAND,0,e:GetHandler()):IsExists(Card.IsSetCard,1,nil,0x35) end
+		and Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_HAND,0,e:GetHandler()):IsExists(Card.IsSetCard,1,nil,SET_FABLED) end
 	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,tp,1)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function s.rescon(sg,e,tp,mg)
-	return sg:IsExists(Card.IsSetCard,1,nil,0x35) 
+	return sg:IsExists(Card.IsSetCard,1,nil,SET_FABLED) 
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -51,7 +51,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetRange(LOCATION_MZONE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(ct*200)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 			c:RegisterEffect(e1)
 		end
 	end
@@ -60,7 +60,7 @@ function s.thcond(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_HAND) and (r&REASON_DISCARD)~=0
 end
 function s.thfilter(c)
-    return c:IsSetCard(0x35) and c:IsSpellTrap() and c:IsAbleToHand()
+    return c:IsSetCard(SET_FABLED) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return true end

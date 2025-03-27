@@ -19,10 +19,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.activate)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x48,0x1048}
+s.listed_series={SET_NUMBER,SET_NUMBER_C}
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return Duel.GetFlagEffect(tp,id)==0 and Duel.GetCurrentPhase()==PHASE_DRAW and c:IsReason(REASON_RULE)
+	return Duel.GetFlagEffect(tp,id)==0 and Duel.IsPhase(PHASE_DRAW) and c:IsReason(REASON_RULE)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -30,9 +30,9 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_PUBLIC)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_MAIN1)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_MAIN1)
 		c:RegisterEffect(e1)
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_MAIN1,EFFECT_FLAG_CLIENT_HINT,1,0,66)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_MAIN1,EFFECT_FLAG_CLIENT_HINT,1,0,66)
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
@@ -49,19 +49,19 @@ function s.filter1(c,e,tp)
 	end
 	local no=m.xyz_number
 	local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(c),tp,nil,nil,REASON_XYZ)
-	return (#pg<=0 or (#pg==1 and pg:IsContains(c))) and no and no>=101 and no<=107 and c:IsSetCard(0x48) and not c:IsSetCard(0x1048)
+	return (#pg<=0 or (#pg==1 and pg:IsContains(c))) and no and no>=101 and no<=107 and c:IsSetCard(SET_NUMBER) and not c:IsSetCard(SET_NUMBER_C)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and (aux.CheckSummonGate(tp,2) or c:IsLocation(LOCATION_GRAVE))
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,c,no,pg)
 end
 function s.filter2(c,e,tp,mc,no,pg)
 	if c.rum_limit then return false end
-	return c.xyz_number==no and c:IsSetCard(0x1048) and mc:IsCanBeXyzMaterial(c,tp) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
+	return c.xyz_number==no and c:IsSetCard(SET_NUMBER_C) and mc:IsCanBeXyzMaterial(c,tp) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local loc=LOCATION_EXTRA
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then loc=loc+LOCATION_GRAVE end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then loc=loc|LOCATION_GRAVE end
 	if chk==0 then return Duel.IsPlayerCanSpecialSummonCount(tp,2)
 		and Duel.GetFlagEffect(tp,id)==0 and Duel.IsExistingMatchingCard(s.filter1,tp,loc,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,loc)
@@ -70,7 +70,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFlagEffect(tp,id)~=0 then return end
 	Duel.RegisterFlagEffect(tp,id,0,0,0)
 	local loc=LOCATION_EXTRA
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then loc=loc+LOCATION_GRAVE end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then loc=loc|LOCATION_GRAVE end
 	if loc==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g1=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter1),tp,loc,0,1,1,nil,e,tp)

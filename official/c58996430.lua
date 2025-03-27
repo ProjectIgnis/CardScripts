@@ -1,4 +1,5 @@
 --ライトロード・ビースト ウォルフ
+--Wulf, Lightsworn Beast
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableUnsummonable()

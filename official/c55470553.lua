@@ -1,4 +1,5 @@
 --No.98 絶望皇ホープレス
+--Number 98: Antitopian
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -29,7 +30,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x107f}
+s.listed_series={SET_UTOPIA}
 s.xyz_number=98
 function s.poscost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
@@ -48,7 +49,7 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x107f) and not c:IsType(TYPE_TOKEN)
+	return c:IsFaceup() and c:IsSetCard(SET_UTOPIA) and not c:IsType(TYPE_TOKEN)
 		and (c:IsControler(tp) or c:IsAbleToChangeControler())
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

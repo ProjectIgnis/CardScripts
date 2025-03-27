@@ -28,7 +28,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetLabel(Duel.GetTurnCount())
 		e1:SetCondition(s.atkcon)
 		e1:SetOwnerPlayer(tp)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,2)
+		e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN),2)
 		tc:RegisterEffect(e1)
 	end
 end

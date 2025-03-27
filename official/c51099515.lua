@@ -1,4 +1,5 @@
 --恐撃
+--Ghosts From the Past
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -24,7 +25,7 @@ function s.rescon(sg,e,tp,mg)
 	return Duel.IsExistingTarget(s.tfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,sg)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local cg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
+	local cg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil)
 	if chk==0 then return aux.SelectUnselectGroup(cg,e,tp,2,2,s.rescon,0) end
 	local rg=aux.SelectUnselectGroup(cg,e,tp,2,2,s.rescon,1,tp,HINTMSG_REMOVE)
 	Duel.Remove(rg,POS_FACEUP,REASON_COST)
@@ -45,7 +46,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(0)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

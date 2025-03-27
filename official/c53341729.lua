@@ -1,4 +1,5 @@
 --閃光を吸い込むマジック・ミラー
+--Light-Imprisoning Mirror
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate

@@ -1,9 +1,9 @@
--- ウェルカム・ラビュリンス
--- Welcome Labrynth
--- Scripted by Hatter
+--ウェルカム・ラビュリンス
+--Welcome Labrynth
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon 1 "Labrynth" monster
+	--Special Summon 1 "Labrynth" monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	-- Set itself if a monster leaves the field due to a Normal Trap's effect
+	--Set itself if a monster leaves the field due to a Normal Trap's effect
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_LEAVE_GRAVE)
@@ -28,9 +28,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.setop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x17f}
+s.listed_series={SET_LABRYNTH}
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x17f) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_LABRYNTH) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -47,17 +47,17 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	aux.WelcomeLabrynthTrapDestroyOperation(e,tp)
 	if not e:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
 	local c=e:GetHandler()
-	-- Cannot Special Summon from the Deck or Extra Deck, except Fiend monsters
+	--Cannot Special Summon from the Deck or Extra Deck, except Fiend monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,2))
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetTargetRange(1,0)
-	e1:SetReset(RESET_PHASE+PHASE_END,2)
-	e1:SetTarget(function(e,c) return c:IsLocation(LOCATION_DECK+LOCATION_EXTRA) and not c:IsRace(RACE_FIEND) end)
+	e1:SetReset(RESET_PHASE|PHASE_END,2)
+	e1:SetTarget(function(e,c) return c:IsLocation(LOCATION_DECK|LOCATION_EXTRA) and not c:IsRace(RACE_FIEND) end)
 	Duel.RegisterEffect(e1,tp)
-	-- Clock Lizard check
+	--Clock Lizard check
 	aux.addTempLizardCheck(c,tp,function(e,c) return not c:IsOriginalRace(RACE_FIEND) end)
 end
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)

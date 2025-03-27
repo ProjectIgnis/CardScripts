@@ -1,9 +1,9 @@
--- Ｓ－Ｆｏｒｃｅ レトロアクティヴ
--- S-Force Retroactive
--- Scripted by Hatter
+--Ｓ－Ｆｏｒｃｅ レトロアクティヴ
+--S-Force Retroactive
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Use as Link Material from hand
+	--Use as Link Material from hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetRange(LOCATION_HAND)
@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	if s.flagmap[c]==nil then
 		s.flagmap[c]={}
 	end
-	-- Special Summon 1 Level 2 or higher "S-Force" monster from the hand
+	--Special Summon 1 Level 2 or higher "S-Force" monster from the hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON)
@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
-	-- Replace cost
+	--Replace cost
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetDescription(aux.Stringid(id,1))

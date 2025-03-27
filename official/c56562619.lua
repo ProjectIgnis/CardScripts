@@ -50,28 +50,28 @@ function s.initial_effect(c)
 	e4:SetLabelObject(ng)
 	e5:SetLabelObject(ng)
 end
-s.listed_series={0x2b,0x61}
+s.listed_series={SET_NINJA,SET_NINJITSU_ART}
 function s.splimit(e,se,sp,st)
-	return (se:IsActiveType(TYPE_MONSTER) and se:GetHandler():IsSetCard(0x2b)) or se:GetHandler():IsSetCard(0x61)
+	return (se:IsActiveType(TYPE_MONSTER) and se:GetHandler():IsSetCard(SET_NINJA)) or se:GetHandler():IsSetCard(SET_NINJITSU_ART)
 end
 function s.cfilter1(c,tp)
-	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsMonster() and c:IsSetCard(0x2b) and c:IsAbleToGraveAsCost()
-		and Duel.IsExistingMatchingCard(s.cfilter2,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,c,c)
+	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsMonster() and c:IsSetCard(SET_NINJA) and c:IsAbleToGraveAsCost()
+		and Duel.IsExistingMatchingCard(s.cfilter2,tp,LOCATION_HAND|LOCATION_ONFIELD,0,1,c,c)
 end
 function s.cfilter2(c,cc)
-	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsSetCard(0x61) and c:IsAbleToGraveAsCost()
+	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsSetCard(SET_NINJITSU_ART) and c:IsAbleToGraveAsCost()
 		and Duel.IsExistingTarget(s.rmfilter,0,LOCATION_MZONE,LOCATION_MZONE,1,c,cc)
 end
 function s.rmfilter(c,cc)
 	return c~=cc and c:IsAbleToRemove()
 end
 function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter1,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter1,tp,LOCATION_HAND|LOCATION_MZONE,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g1=Duel.SelectMatchingCard(tp,s.cfilter1,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil,tp)
+	local g1=Duel.SelectMatchingCard(tp,s.cfilter1,tp,LOCATION_HAND|LOCATION_MZONE,0,1,1,nil,tp)
 	local cc=g1:GetFirst()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g2=Duel.SelectMatchingCard(tp,s.cfilter2,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,cc,cc)
+	local g2=Duel.SelectMatchingCard(tp,s.cfilter2,tp,LOCATION_HAND|LOCATION_ONFIELD,0,1,1,cc,cc)
 	g1:Merge(g2)
 	Duel.SendtoGrave(g1,REASON_COST)
 end
@@ -85,7 +85,7 @@ end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_REMOVED) then
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,0)
 		e:GetLabelObject():AddCard(tc)
 	end
 end

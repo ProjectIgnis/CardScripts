@@ -1,16 +1,16 @@
 -- 
--- D.D. Assault Carrier
--- Scripted by Hatter
+--D.D. Assault Carrier
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Attack cost
+	--Attack cost
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_ATTACK_COST)
 	e1:SetCost(s.atkcost)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
-	-- Special Summon
+	--Special Summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)

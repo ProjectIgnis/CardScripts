@@ -16,9 +16,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_CHAIN,s.chainfilter)
 end
-s.listed_series={0x88}
+s.listed_series={SET_BUJIN}
 function s.chainfilter(re,tp,cid)
-	return re:GetHandler():IsSetCard(0x88)
+	return re:GetHandler():IsSetCard(SET_BUJIN)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN2
@@ -33,15 +33,15 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e1:SetTargetRange(1,0)
 	e1:SetValue(s.aclimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,1),nil)
 end
 function s.aclimit(e,re,tp)
-	return not re:GetHandler():IsSetCard(0x88)
+	return not re:GetHandler():IsSetCard(SET_BUJIN)
 end
 function s.filter(c)
-	return c:IsSetCard(0x88) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_BUJIN) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

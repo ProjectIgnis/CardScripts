@@ -1,4 +1,5 @@
 --真竜機兵ダースメタトロン
+--Metaltron XII, the True Dracombatant
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon with s/t
@@ -50,7 +51,7 @@ function s.valcheck(e,c)
 	e:SetLabel(typ)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE)
+	return e:GetHandler():IsTributeSummoned()
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -60,19 +61,19 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetCode(EFFECT_IMMUNE_EFFECT)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e1:SetCondition(s.econ)
 	e1:SetValue(s.efilter)
 	e1:SetLabel(typ)
 	c:RegisterEffect(e1)
 	if typ&TYPE_MONSTER~=0 then
-		c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,2))
+		c:RegisterFlagEffect(0,RESET_EVENT|RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,2))
 	end
 	if typ&TYPE_SPELL~=0 then
-		c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,3))
+		c:RegisterFlagEffect(0,RESET_EVENT|RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,3))
 	end
 	if typ&TYPE_TRAP~=0 then
-		c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,4))
+		c:RegisterFlagEffect(0,RESET_EVENT|RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,4))
 	end
 end
 function s.econ(e)
@@ -84,7 +85,7 @@ end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return ((rp==1-tp) or (r&REASON_BATTLE)>0) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
-		and c:IsSummonType(SUMMON_TYPE_TRIBUTE)
+		and c:IsTributeSummoned()
 end
 function s.spfilter(c,e,tp)
 	return c:IsAttribute(ATTRIBUTE_EARTH|ATTRIBUTE_WATER|ATTRIBUTE_FIRE|ATTRIBUTE_WIND) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0

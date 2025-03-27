@@ -1,5 +1,5 @@
 --肆世壊＝ライフォビア
---Lifobia, the Wanton and Willful World of Desire
+--Primitive Planet Reichphobia
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -35,9 +35,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_names={CARD_VISAS_STARFROST}
-s.listed_series={0x17c}
+s.listed_series={SET_SCARECLAW}
 function s.thfilter(c)
-	return ((c:IsSetCard(0x17c) and c:IsMonster()) or c:IsCode(CARD_VISAS_STARFROST)) and c:IsAbleToHand()
+	return ((c:IsSetCard(SET_SCARECLAW) and c:IsMonster()) or c:IsCode(CARD_VISAS_STARFROST)) and c:IsAbleToHand()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

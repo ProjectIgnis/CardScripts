@@ -1,4 +1,5 @@
 --イタクァの暴風
+--Windstorm of Etaqua
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,11 +1,11 @@
--- ドドレミコード・キューティア
--- Dodoremichord Cutea
--- scripted by Hatter
+--ドドレミコード・キューティア
+--DoSolfachord Cutia
+--scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- pendulum summon
+	--pendulum summon
 	Pendulum.AddProcedure(c)
-	-- cannot disable pendulum summon
+	--cannot disable pendulum summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_DISABLE_SPSUMMON)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
-	-- search
+	--search
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
-	-- atk up
+	--atk up
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
 	e4:SetCode(EFFECT_UPDATE_ATTACK)
@@ -39,12 +39,12 @@ function s.initial_effect(c)
 	e4:SetValue(s.atkval)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x164}
+s.listed_series={SET_SOLFACHORD}
 function s.target(e,c)
-	return c:IsSummonType(SUMMON_TYPE_PENDULUM) and c:IsSetCard(0x164) and c:IsType(TYPE_PENDULUM)
+	return c:IsPendulumSummoned() and c:IsSetCard(SET_SOLFACHORD) and c:IsType(TYPE_PENDULUM)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x164) and c:IsMonster() and c:IsType(TYPE_PENDULUM) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_SOLFACHORD) and c:IsMonster() and c:IsType(TYPE_PENDULUM) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -62,7 +62,7 @@ function s.atkcon(e)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsEvenScale),e:GetHandlerPlayer(),LOCATION_PZONE,0,1,nil)
 end
 function s.atktg(e,c)
-	return c:IsSetCard(0x164) and c:IsType(TYPE_PENDULUM)
+	return c:IsSetCard(SET_SOLFACHORD) and c:IsType(TYPE_PENDULUM)
 end
 function s.atkval(e,c)
 	return c:GetLeftScale()*100

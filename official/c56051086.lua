@@ -43,17 +43,17 @@ function s.initial_effect(c)
 	e4:SetOperation(s.damop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x48}
+s.listed_series={SET_NUMBER}
 s.xyz_number=43
 function s.eqval(ec,c,tp)
-	return ec:IsControler(tp) and ec:IsSetCard(0x48)
+	return ec:IsControler(tp) and ec:IsSetCard(SET_NUMBER)
 end
 function s.eqcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.filter(c)
-	return c:IsSetCard(0x48) and c:IsMonster() and not c:IsForbidden()
+	return c:IsSetCard(SET_NUMBER) and c:IsMonster() and not c:IsForbidden()
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -72,7 +72,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.indcon(e)
-	return e:GetHandler():GetEquipGroup():IsExists(Card.IsSetCard,1,nil,0x48)
+	return e:GetHandler():GetEquipGroup():IsExists(Card.IsSetCard,1,nil,SET_NUMBER)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp
@@ -89,7 +89,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(ev)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 	c:RegisterEffect(e1)
 	Duel.Damage(1-tp,ev,REASON_EFFECT)
 end

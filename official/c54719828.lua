@@ -43,7 +43,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetDescription(aux.Stringid(id,4))
 		e1:SetValue(s.aclimit3)
 	end
-	e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,1)
+	e1:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN,1)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.aclimit1(e,re,tp)

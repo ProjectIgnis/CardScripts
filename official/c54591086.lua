@@ -1,4 +1,5 @@
 --魔法除去細菌兵器
+--Virus Cannon
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

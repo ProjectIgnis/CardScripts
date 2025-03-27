@@ -1,4 +1,5 @@
 --幽鬼うさぎ
+--Ghost Ogre & Snow Rabbit
 local s,id=GetID()
 function s.initial_effect(c)
 	--double
@@ -6,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_CHAINING)
-	e1:SetRange(LOCATION_MZONE+LOCATION_HAND)
+	e1:SetRange(LOCATION_MZONE|LOCATION_HAND)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.condition)
 	e1:SetCost(s.cost)

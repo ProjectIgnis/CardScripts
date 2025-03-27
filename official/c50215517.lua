@@ -1,4 +1,5 @@
 --クリムゾン・ヘル・セキュア
+--Scarlet Security
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 end
 s.listed_names={70902743}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsCode(70902743)
+	return c:IsFaceup() and c:IsCode(CARD_RED_DRAGON_ARCHFIEND)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil)

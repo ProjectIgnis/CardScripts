@@ -1,4 +1,5 @@
 --極星の輝き
+--The Nordic Lights
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -26,15 +27,15 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x42}
+s.listed_series={SET_NORDIC}
 function s.indtg(e,c)
-	return c:IsSetCard(0x42)
+	return c:IsSetCard(SET_NORDIC)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.desfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x42)
+	return c:IsFaceup() and c:IsSetCard(SET_NORDIC)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

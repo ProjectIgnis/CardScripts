@@ -89,4 +89,3 @@ function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	g:GetFirst():SetStatus(STATUS_DESTROY_CONFIRMED,false)
 	Duel.Destroy(g,REASON_EFFECT+REASON_REPLACE)
 end
-

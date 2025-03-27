@@ -1,4 +1,5 @@
 --時空混沌渦
+--Tachyon Chaos Hole
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
@@ -21,16 +22,16 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCondition(s.spcon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x7b}
+s.listed_series={SET_GALAXY}
 function s.cfilter(c,tp)
 	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
-		and (c:IsReason(REASON_DESTROY) and c:IsReason(REASON_EFFECT) or c:IsReason(REASON_BATTLE) and Duel.GetTurnPlayer()==1-tp)
-		and c:IsSetCard(0x7b) and c:IsType(TYPE_XYZ)
+		and (c:IsReason(REASON_DESTROY) and c:IsReason(REASON_EFFECT) or c:IsReason(REASON_BATTLE) and Duel.IsTurnPlayer(1-tp))
+		and c:IsSetCard(SET_GALAXY) and c:IsType(TYPE_XYZ)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and eg:IsExists(s.cfilter,1,nil,tp)
@@ -55,7 +56,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.GetDrawCount(tp)>0
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x7b) and c:IsType(TYPE_XYZ) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_GALAXY) and c:IsType(TYPE_XYZ) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end
@@ -70,7 +71,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e1:SetCode(EFFECT_DRAW_COUNT)
 		e1:SetTargetRange(1,0)
-		e1:SetReset(RESET_PHASE+PHASE_DRAW)
+		e1:SetReset(RESET_PHASE|PHASE_DRAW)
 		e1:SetValue(0)
 		Duel.RegisterEffect(e1,tp)
 	end

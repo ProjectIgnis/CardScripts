@@ -88,7 +88,7 @@ function s.desop2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(e:GetHandler(),REASON_EFFECT)
 end
 function s.rccon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and e:GetHandler():GetFirstCardTarget()
+	return Duel.IsTurnPlayer(tp) and e:GetHandler():GetFirstCardTarget()
 end
 function s.rcop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetFirstCardTarget()

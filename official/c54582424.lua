@@ -1,4 +1,5 @@
 --幻蝶の刺客オオルリ
+--Blue Mountain Butterspy
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

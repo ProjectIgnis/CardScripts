@@ -1,4 +1,5 @@
 --破滅の儀式
+--Ritual of Destruction
 local s,id=GetID()
 function s.initial_effect(c)
 	Ritual.AddProcGreaterCode(c,7,nil,30646525)
@@ -24,7 +25,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_BATTLED)
 	e1:SetOperation(s.tdop)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
@@ -36,7 +37,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 		e1:SetTarget(s.reptg)
 		e1:SetOperation(s.repop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE)
 		d:RegisterEffect(e1)
 	end
 end

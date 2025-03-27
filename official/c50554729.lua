@@ -1,4 +1,5 @@
 --アモルファージ・インフェクション
+--Amorphage Infection
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xe0))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_AMORPHAGE))
 	e2:SetValue(s.value)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
@@ -35,28 +36,28 @@ function s.initial_effect(c)
 	e5:SetCondition(s.thcon2)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0xe0}
+s.listed_series={SET_AMORPHAGE}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0xe0)
+	return c:IsFaceup() and c:IsSetCard(SET_AMORPHAGE)
 end
 function s.value(e,c)
 	return Duel.GetMatchingGroupCount(s.filter,0,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)*100
 end
 function s.cfilter1(c,tp)
-	return c:IsMonster() and c:IsPreviousLocation(LOCATION_MZONE+LOCATION_HAND) and c:IsPreviousControler(tp)
+	return c:IsMonster() and c:IsPreviousLocation(LOCATION_MZONE|LOCATION_HAND) and c:IsPreviousControler(tp)
 end
 function s.thcon1(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter1,1,nil,tp)
 end
 function s.cfilter2(c,tp)
 	return c:IsMonster() and c:IsReason(REASON_BATTLE+REASON_EFFECT)
-		and c:IsPreviousLocation(LOCATION_MZONE+LOCATION_HAND) and c:IsPreviousControler(tp)
+		and c:IsPreviousLocation(LOCATION_MZONE|LOCATION_HAND) and c:IsPreviousControler(tp)
 end
 function s.thcon2(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter2,1,nil,tp)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xe0) and c:IsAbleToHand()
+	return c:IsSetCard(SET_AMORPHAGE) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

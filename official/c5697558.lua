@@ -1,4 +1,5 @@
 --The Hidden City
+--The Hidden City
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -32,7 +33,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.thfilter(c)
-	return c:IsMonster() and c:IsSetCard(0xed) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(SET_SUBTERROR) and c:IsAbleToHand()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -45,7 +46,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c)
-	return c:IsSetCard(0xed) and c:IsFacedown() and c:IsDefensePos()
+	return c:IsSetCard(SET_SUBTERROR) and c:IsFacedown() and c:IsDefensePos()
 end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) end

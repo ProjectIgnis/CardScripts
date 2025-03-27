@@ -1,4 +1,5 @@
 --憑依するブラッド・ソウル
+--Possessed Dark Soul
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

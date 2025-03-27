@@ -1,4 +1,5 @@
 --貫ガエル
+--Unifrog
 local s,id=GetID()
 function s.initial_effect(c)
 	--direct
@@ -18,9 +19,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x12}
+s.listed_series={SET_FROG}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x12) and c:GetCode()~=id
+	return c:IsFaceup() and c:IsSetCard(SET_FROG) and c:GetCode()~=id
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and Duel.GetAttackTarget()==nil

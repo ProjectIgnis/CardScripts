@@ -43,20 +43,20 @@ function s.initial_effect(c)
 	e6:SetOperation(s.actop)
 	c:RegisterEffect(e6,false,REGISTER_FLAG_DETACH_XMAT)
 end
-s.listed_series={0x48,0x95,0x107f}
+s.listed_series={SET_NUMBER,SET_RANK_UP_MAGIC,SET_UTOPIA}
 s.xyz_number=0
 function s.xyzfilter(c,xyz,sumtype,tp)
-	return c:IsType(TYPE_XYZ,xyz,sumtype,tp) and c:IsSetCard(0x48,xyz,sumtype,tp)
+	return c:IsType(TYPE_XYZ,xyz,sumtype,tp) and c:IsSetCard(SET_NUMBER,xyz,sumtype,tp)
 end
 function s.xyzcheck(g,tp,xyz)
 	local mg=g:Filter(function(c) return not c:IsHasEffect(511001175) end,nil)
 	return mg:GetClassCount(Card.GetRank)==1
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x95) and c:GetType()==TYPE_SPELL and c:IsDiscardable()
+	return c:IsSetCard(SET_RANK_UP_MAGIC) and c:GetType()==TYPE_SPELL and c:IsDiscardable()
 end
 function s.ovfilter(c,tp,lc)
-	return c:IsFaceup() and c:IsSetCard(0x107f,lc,SUMMON_TYPE_XYZ,tp)
+	return c:IsFaceup() and c:IsSetCard(SET_UTOPIA,lc,SUMMON_TYPE_XYZ,tp)
 end
 function s.xyzop(e,tp,chk,mc)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
@@ -83,7 +83,7 @@ function s.atkval(e,c)
 	return c:GetOverlayCount()*1000
 end
 function s.actcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.actcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
@@ -96,6 +96,6 @@ function s.actop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e1:SetTargetRange(0,1)
 	e1:SetValue(1)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end

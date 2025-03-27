@@ -30,13 +30,13 @@ function s.initial_effect(c)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 end
-s.listed_series={0x95,0x48}
+s.listed_series={SET_RANK_UP_MAGIC,SET_NUMBER}
 s.xyz_number=99
 function s.cfilter(c)
-	return c:IsSetCard(0x95) and c:IsSpell() and c:IsDiscardable()
+	return c:IsSetCard(SET_RANK_UP_MAGIC) and c:IsSpell() and c:IsDiscardable()
 end
 function s.ovfilter(c,tp,lc)
-	return c:IsFaceup() and c:IsSetCard(0x107f,lc,SUMMON_TYPE_XYZ,tp)
+	return c:IsFaceup() and c:IsSetCard(SET_UTOPIA,lc,SUMMON_TYPE_XYZ,tp)
 end
 function s.xyzop(e,tp,chk,mc)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
@@ -48,7 +48,7 @@ function s.xyzop(e,tp,chk,mc)
 	else return false end
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x48) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(SET_NUMBER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end
@@ -65,12 +65,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e2)
 	end
 	Duel.SpecialSummonComplete()

@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xe5}
+s.listed_series={SET_CIPHER}
 function s.filter(c,code)
 	return c:IsFaceup() and c:IsCode(code)
 end
@@ -30,7 +30,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 		tc=Duel.GetAttackTarget()
 	end
 	e:SetLabelObject(tc)
-	return tc and tc:IsFaceup() and tc:IsSetCard(0xe5) and tc:IsRelateToBattle()
+	return tc and tc:IsFaceup() and tc:IsSetCard(SET_CIPHER) and tc:IsRelateToBattle()
 		and Duel.IsExistingMatchingCard(s.filter,0,LOCATION_MZONE,LOCATION_MZONE,1,tc,tc:GetCode())
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -47,7 +47,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE)
 	e1:SetValue(tc:GetAttack()*2)
 	tc:RegisterEffect(e1)
 end

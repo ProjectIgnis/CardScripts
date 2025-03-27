@@ -1,4 +1,5 @@
 --氷結界の龍 トリシューラ
+--Trishula, Dragon of the Ice Barrier
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -16,7 +17,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.remcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return e:GetHandler():IsSynchroSummoned()
 end
 function s.remtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -37,7 +38,7 @@ function s.rmfilter(c)
 end
 function s.remop(e,tp,eg,ep,ev,re,r,rp)
 	local g1=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,nil)
-	local g2=Duel.GetMatchingGroup(s.rmfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,nil)
+	local g2=Duel.GetMatchingGroup(s.rmfilter,tp,0,LOCATION_MZONE|LOCATION_GRAVE,nil)
 	local g3=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_HAND,nil)
 	local sg=Group.CreateGroup()
 	if #g1>0 and ((#g2==0 and #g3==0) or Duel.SelectYesNo(tp,aux.Stringid(id,1))) then

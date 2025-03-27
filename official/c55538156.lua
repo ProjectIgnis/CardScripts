@@ -15,13 +15,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x79,0x7c}
+s.listed_series={SET_FIRE_FIST,SET_FIRE_FORMATION}
 
 function s.filter1(c)
-	return c:IsFaceup() and c:IsSetCard(0x79) and c:IsMonster()
+	return c:IsFaceup() and c:IsSetCard(SET_FIRE_FIST) and c:IsMonster()
 end
 function s.filter2(c)
-	return c:IsFaceup() and c:IsSetCard(0x7c) and (c:IsSpell() or c:IsTrap())
+	return c:IsFaceup() and c:IsSetCard(SET_FIRE_FORMATION) and (c:IsSpell() or c:IsTrap())
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)

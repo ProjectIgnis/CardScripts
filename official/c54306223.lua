@@ -1,5 +1,5 @@
 --ヴェノム・スワンプ
---Venom Swap
+--Venom Swamp
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x50}
+s.listed_series={SET_VENOM}
 s.counter_place_list={0x1009}
 function s.atkval(e,c)
 	return c:GetCounter(0x1009)*-500
@@ -47,7 +47,7 @@ function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetFieldGroup(tp,LOCATION_MZONE,LOCATION_MZONE)
 	local tc=tg:GetFirst()
 	for tc in aux.Next(tg) do
-		if tc:IsCanAddCounter(0x1009,1) and not tc:IsSetCard(0x50) then
+		if tc:IsCanAddCounter(0x1009,1) and not tc:IsSetCard(SET_VENOM) then
 			local atk=tc:GetAttack()
 			tc:AddCounter(0x1009,1)
 			if atk>0 and tc:GetAttack()==0 then

@@ -1,5 +1,5 @@
 --Ａ・Ɐ・ＲＲ
---Amaze Ɐttraction Rapid Racing
+--Amaze Attraction Rapid Racing
 --Scripted by Eerie Code
 
 local s,id=GetID()
@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.lvop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x15e}
+s.listed_series={SET_AMAZEMENT}
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return not chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and chkc:IsAbleToDeck() end
 	local tc=e:GetHandler():GetEquipTarget()
@@ -58,7 +58,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(1)
 		ec:RegisterEffect(e1)
 		if not ec:IsImmuneToEffect(e1) then

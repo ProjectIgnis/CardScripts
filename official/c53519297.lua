@@ -1,4 +1,5 @@
 --ブラック・ブースト
+--Blackboost
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,9 +13,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x33}
+s.listed_series={SET_BLACKWING}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x33) and c:IsType(TYPE_TUNER) and c:IsAbleToRemoveAsCost()
+	return c:IsFaceup() and c:IsSetCard(SET_BLACKWING) and c:IsType(TYPE_TUNER) and c:IsAbleToRemoveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,2,nil) end

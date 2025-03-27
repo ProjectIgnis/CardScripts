@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
-	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x30),1,1,Synchro.NonTuner(nil),1,99)
+	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_VYLON),1,1,Synchro.NonTuner(nil),1,99)
 	c:EnableReviveLimit()
 	--equip
 	local e1=Effect.CreateEffect(c)
@@ -26,9 +26,9 @@ function s.initial_effect(c)
 	e2:SetValue(s.indval)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x30}
+s.listed_series={SET_VYLON}
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return e:GetHandler():IsSynchroSummoned()
 end
 function s.filter(c,ec)
 	return c:IsType(TYPE_EQUIP) and c:CheckEquipTarget(ec)

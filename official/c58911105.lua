@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x2b}
+s.listed_series={SET_NINJA}
 function s.costfilter(c)
 	return c:IsTrap() and c:IsAbleToGraveAsCost()
 end
@@ -25,7 +25,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(cg,REASON_COST)
 end
 function s.filter(c,e,tp)
-	return c:IsLevelBelow(4) and c:IsSetCard(0x2b) and
+	return c:IsLevelBelow(4) and c:IsSetCard(SET_NINJA) and
 		c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_DEFENSE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

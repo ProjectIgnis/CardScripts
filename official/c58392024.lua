@@ -1,4 +1,5 @@
 --融合失敗
+--Mispolymerization
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

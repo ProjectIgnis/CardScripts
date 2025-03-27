@@ -1,4 +1,5 @@
 --イビリチュア・ソウルオーガ
+--Evigishki Soul Ogre
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -15,9 +16,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x3a}
+s.listed_series={SET_GISHKI}
 function s.costfilter(c)
-	return c:IsSetCard(0x3a) and c:IsMonster() and c:IsDiscardable()
+	return c:IsSetCard(SET_GISHKI) and c:IsMonster() and c:IsDiscardable()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end

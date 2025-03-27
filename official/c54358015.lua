@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e3:SetValue(aux.indoval)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x7b}
+s.listed_series={SET_GALAXY}
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
@@ -58,5 +58,5 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tgtg(e,c)
-	return c:IsSetCard(0x7b) and c~=e:GetHandler()
+	return c:IsSetCard(SET_GALAXY) and c~=e:GetHandler()
 end

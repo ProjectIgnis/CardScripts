@@ -1,9 +1,9 @@
--- 救いの架け橋
--- Bridge of Salvation
--- Scripted by Hatter
+--救いの架け橋
+--Rainbow Bridge of Salvation
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.tdtg)
 	e1:SetOperation(s.tdop)
 	c:RegisterEffect(e1)
-	-- Search 1 "Crystal Beast" and 1 Field Spell
+	--Search 1 "Crystal Beast" and 1 Field Spell
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
@@ -23,18 +23,18 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetHintTiming(0,TIMING_END_PHASE)
 	e2:SetCondition(function(_,tp) return Duel.GetFlagEffect(tp,id+1)==0 end)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x1034}
+s.listed_series={SET_CRYSTAL_BEAST}
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsLevelAbove,10),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	return #g>1 and g:GetClassCount(Card.GetRace)>1 and Duel.GetFlagEffect(tp,id)==0
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local loc=LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE
+	local loc=LOCATION_HAND|LOCATION_ONFIELD|LOCATION_GRAVE
 	local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,loc,loc,nil,e:GetHandler())
 	if chk==0 then return #g>0 and Duel.IsPlayerCanDraw(tp,5) and Duel.IsPlayerCanDraw(1-tp,5) end
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,0,0)
@@ -43,11 +43,11 @@ end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFlagEffect(tp,id)~=0 then return end
 	Duel.RegisterFlagEffect(tp,id,0,0,0)
-	local loc=LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE
+	local loc=LOCATION_HAND|LOCATION_ONFIELD|LOCATION_GRAVE
 	local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,loc,loc,nil,e:GetHandler())
 	if #g>0 and Duel.SendtoDeck(g,nil,0,REASON_EFFECT)>0 then
 		local og=Duel.GetOperatedGroup()
-		if not og:IsExists(Card.IsLocation,1,nil,LOCATION_DECK+LOCATION_EXTRA) then return end
+		if not og:IsExists(Card.IsLocation,1,nil,LOCATION_DECK|LOCATION_EXTRA) then return end
 		local dg=og:Filter(Card.IsLocation,nil,LOCATION_DECK)
 		local ct=dg:FilterCount(Card.IsControler,nil,tp)
 		if ct>0 then Duel.ShuffleDeck(tp) end
@@ -58,7 +58,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cbfilter(c,tp)
-	return c:IsMonster() and c:IsSetCard(0x1034) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(SET_CRYSTAL_BEAST) and c:IsAbleToHand()
 		and Duel.IsExistingMatchingCard(s.fsfilter,tp,LOCATION_DECK,0,1,c)
 end
 function s.fsfilter(c)

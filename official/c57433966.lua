@@ -1,5 +1,5 @@
 --魅惑の未界域
---Danger! Suspense! Secrets!
+--Danger! Excitement! Mystery!
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -15,16 +15,16 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x11e}
+s.listed_series={SET_DANGER}
 function s.disthfilter(c)
-	return c:IsSetCard(0x11e) and c:IsMonster() and c:IsLevelAbove(5) and c:IsDiscardable()
+	return c:IsSetCard(SET_DANGER) and c:IsMonster() and c:IsLevelAbove(5) and c:IsDiscardable()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.disthfilter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.DiscardHand(tp,s.disthfilter,1,1,REASON_COST+REASON_DISCARD,nil)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x11e) and c:IsMonster() and c:IsLevelBelow(4) and c:IsAbleToHand()
+	return c:IsSetCard(SET_DANGER) and c:IsMonster() and c:IsLevelBelow(4) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -45,9 +45,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.splimit(e,c)
-	return not c:IsSetCard(0x11e)
+	return not c:IsSetCard(SET_DANGER)
 end

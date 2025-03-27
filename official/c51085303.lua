@@ -1,5 +1,5 @@
 --E・HERO ブルーメ
---Elemental HERO Roison Rose
+--Elemental HERO Poison Rose
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

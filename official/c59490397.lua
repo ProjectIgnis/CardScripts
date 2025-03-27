@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x10b}
+s.listed_series={SET_TINDANGLE}
 
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -53,7 +53,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetOwner():CancelToGrave(false)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsLinkMonster() and c:IsSetCard(0x10b)
+	return c:IsFaceup() and c:IsLinkMonster() and c:IsSetCard(SET_TINDANGLE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -64,7 +64,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,0,0)
 end
 function s.eqlimit(e,c)
-	return c:GetControler()==e:GetHandlerPlayer() and c:IsLinkMonster() and c:IsSetCard(0x10b)
+	return c:GetControler()==e:GetHandlerPlayer() and c:IsLinkMonster() and c:IsSetCard(SET_TINDANGLE)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -78,13 +78,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetValue(s.eqlimit)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_EQUIP)
 		e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e2:SetValue(1)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e2)
 		local e3=e2:Clone()
 		e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)

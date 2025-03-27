@@ -1,4 +1,5 @@
 --合神竜ティマイオス
+--Timaeus the Knight of Destiny
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -33,8 +34,8 @@ function s.initial_effect(c)
 	e5:SetOperation(s.spop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0xa0}
-s.material_setcode=0xa0
+s.listed_series={SET_LEGENDARY_KNIGHT}
+s.material_setcode=SET_LEGENDARY_KNIGHT
 function s.contactfil(tp)
 	return Duel.GetMatchingGroup(Card.IsAbleToGraveAsCost,tp,LOCATION_ONFIELD,0,nil)
 end
@@ -70,7 +71,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(atk)
 		c:RegisterEffect(e1)
 		local e2=e1:Clone()
@@ -79,7 +80,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xa0) and c:IsCanBeSpecialSummoned(e,0,tp,true,true)
+	return c:IsSetCard(SET_LEGENDARY_KNIGHT) and c:IsCanBeSpecialSummoned(e,0,tp,true,true)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)

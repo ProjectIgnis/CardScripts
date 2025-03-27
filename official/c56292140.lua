@@ -1,4 +1,5 @@
 --No.51 怪腕のフィニッシュ・ホールド
+--Number 51: Finisher the Strong Arm
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x40)
@@ -27,7 +28,7 @@ function s.initial_effect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_DESTROY)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e3:SetCode(EVENT_PHASE|PHASE_BATTLE)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
 	e3:SetCondition(s.descon)

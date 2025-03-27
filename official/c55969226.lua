@@ -1,4 +1,5 @@
 --青竜の召喚士
+--Blue Dragon Summoner
 local s,id=GetID()
 function s.initial_effect(c)
 	--tohand

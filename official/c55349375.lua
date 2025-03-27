@@ -29,11 +29,11 @@ function s.initial_effect(c)
 	e2:SetOperation(s.drawop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x13f}
+s.listed_series={SET_PLUNDER_PATROLL}
 s.listed_names={id}
 
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x13f) and not c:IsCode(id)
+	return c:IsFaceup() and c:IsSetCard(SET_PLUNDER_PATROLL) and not c:IsCode(id)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -50,7 +50,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function s.drawcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsPreviousLocation(LOCATION_HAND+LOCATION_MZONE)
+	return e:GetHandler():IsPreviousLocation(LOCATION_HAND|LOCATION_MZONE)
 end
 function s.drawcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,e:GetHandler()) end

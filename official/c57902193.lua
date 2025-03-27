@@ -1,4 +1,5 @@
 --苦渋の転生
+--Painful Return
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -29,7 +30,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetRange(LOCATION_GRAVE)
 		e1:SetCountLimit(1)
 		e1:SetOperation(s.thop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

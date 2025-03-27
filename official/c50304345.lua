@@ -1,4 +1,5 @@
 --E－HERO ヘル・ブラット
+--Evil HERO Infernal Prodigy
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -17,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.regop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x8}
+s.listed_series={SET_HERO}
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
@@ -26,7 +27,7 @@ end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=e:GetHandler():GetReasonCard()
-	if r==REASON_SUMMON and rc:IsSetCard(0x8) then
+	if r==REASON_SUMMON and rc:IsSetCard(SET_HERO) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(aux.Stringid(id,0))
 		e1:SetCategory(CATEGORY_DRAW)
@@ -36,7 +37,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetRange(LOCATION_GRAVE)
 		e1:SetTarget(s.drtarget)
 		e1:SetOperation(s.droperation)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end

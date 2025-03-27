@@ -1,4 +1,5 @@
 --トークン復活祭
+--Token Sundae
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x99),aux.FilterBoolFunctionEx(Card.IsType,TYPE_PENDULUM))
+	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_ODD_EYES),aux.FilterBoolFunctionEx(Card.IsType,TYPE_PENDULUM))
 	--Add to hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND)
@@ -29,8 +29,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
-s.listed_series={0x99}
-s.material_setcode=0x99
+s.listed_series={SET_ODD_EYES}
+s.material_setcode=SET_ODD_EYES
 function s.filter(c)
 	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsAbleToHand()
 end

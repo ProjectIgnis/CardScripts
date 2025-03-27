@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x109),3,3)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_THE_WEATHER),3,3)
 	--disable special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,1))
@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e3:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e3:SetRange(LOCATION_REMOVED)
 	e3:SetCondition(s.spcon)
 	e3:SetTarget(s.sptg)
@@ -55,9 +55,9 @@ function s.initial_effect(c)
 	e5:SetLabelObject(e4)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x109}
+s.listed_series={SET_THE_WEATHER}
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=ep and Duel.GetCurrentChain()==0 and e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+	return tp~=ep and Duel.GetCurrentChain()==0 and e:GetHandler():IsLinkSummoned()
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
@@ -76,9 +76,9 @@ function s.spreg(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return end
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
-	if c:IsReason(REASON_COST) and rc:IsSetCard(0x109) then
+	if c:IsReason(REASON_COST) and rc:IsSetCard(SET_THE_WEATHER) then
 		e:SetLabel(Duel.GetTurnCount()+1)
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,2)
+		c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,2)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -98,7 +98,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.eftg(e,c)
 	local lg=e:GetHandler():GetLinkedGroup()
-	return c:IsType(TYPE_EFFECT) and c:IsSetCard(0x109) and lg:IsContains(c)
+	return c:IsType(TYPE_EFFECT) and c:IsSetCard(SET_THE_WEATHER) and lg:IsContains(c)
 end
 function s.discon2(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)

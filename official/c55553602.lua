@@ -1,4 +1,5 @@
 --EMドラマチックシアター
+--Performapal Dramatic Theater
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -25,7 +26,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x9f,0x99}
+s.listed_series={SET_PERFORMAPAL,SET_ODD_EYES}
 function s.atkfilter(c)
 	return c:IsFaceup() and c:GetRace()~=0
 end
@@ -35,7 +36,7 @@ function s.atkvalue(e,c)
 	return ct*200
 end
 function s.confilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x9f) and c:GetRace()~=0
+	return c:IsFaceup() and c:IsSetCard(SET_PERFORMAPAL) and c:GetRace()~=0
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.confilter,tp,LOCATION_MZONE,0,nil)
@@ -43,18 +44,18 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ct==4
 end
 function s.spfilter(c,e,sp)
-	return c:IsSetCard(0x99) and c:IsCanBeSpecialSummoned(e,0,sp,false,false)
+	return c:IsSetCard(SET_ODD_EYES) and c:IsCanBeSpecialSummoned(e,0,sp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE)
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE,0,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil,e,tp)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end

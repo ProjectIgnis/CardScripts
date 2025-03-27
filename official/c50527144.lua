@@ -1,4 +1,5 @@
 --ゴーストリック・アウト
+--Ghostrick Vanish
 local s,id=GetID()
 function s.initial_effect(c)
 	--
@@ -9,9 +10,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x8d}
+s.listed_series={SET_GHOSTRICK}
 function s.cfilter(c)
-	return c:IsSetCard(0x8d) and c:IsMonster() and not c:IsPublic()
+	return c:IsSetCard(SET_GHOSTRICK) and c:IsMonster() and not c:IsPublic()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
@@ -28,7 +29,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(LOCATION_ONFIELD,0)
 	e1:SetTarget(s.tgfilter)
 	e1:SetValue(1)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
@@ -37,5 +38,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e2,tp)
 end
 function s.tgfilter(e,c)
-	return (c:IsFaceup() and c:IsSetCard(0x8d)) or (c:IsFacedown() and c:IsLocation(LOCATION_MZONE))
+	return (c:IsFaceup() and c:IsSetCard(SET_GHOSTRICK)) or (c:IsFacedown() and c:IsLocation(LOCATION_MZONE))
 end

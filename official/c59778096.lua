@@ -1,5 +1,5 @@
 --星遺物の選託
---World Legacy Choice
+--World Legacy Bestowal
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -11,9 +11,9 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xfe}
+s.listed_series={SET_WORLD_LEGACY}
 function s.cfilter(c)
-	return c:IsSetCard(0xfe) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(SET_WORLD_LEGACY) and c:IsAbleToRemoveAsCost()
 end
 function s.thfilter(c)
 	return c:IsRace(RACE_CYBERSE) and c:IsAbleToHand()

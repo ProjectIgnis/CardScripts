@@ -22,9 +22,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xe6}
+s.listed_series={SET_FLOWER_CARDIAN}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xe6) and c:IsLevelBelow(10)
+	return c:IsFaceup() and c:IsSetCard(SET_FLOWER_CARDIAN) and c:IsLevelBelow(10)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -45,7 +45,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_CANNOT_SUMMON)
@@ -53,10 +53,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
   aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,2),nil)
 end
 function s.splimit(e,c)
-	return not c:IsSetCard(0xe6)
+	return not c:IsSetCard(SET_FLOWER_CARDIAN)
 end
 function s.filter(c)
-	return c:IsSetCard(0xe6) and c:IsAbleToDeck()
+	return c:IsSetCard(SET_FLOWER_CARDIAN) and c:IsAbleToDeck()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -72,7 +72,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoDeck(tg,nil,0,REASON_EFFECT)
 	local g=Duel.GetOperatedGroup()
 	if g:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then Duel.ShuffleDeck(tp) end
-	local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_DECK+LOCATION_EXTRA)
+	local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_DECK|LOCATION_EXTRA)
 	if ct==1 then
 		Duel.BreakEffect()
 		Duel.Draw(tp,1,REASON_EFFECT)

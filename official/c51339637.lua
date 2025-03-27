@@ -30,11 +30,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 	--Lists "Salamangreat" archetype
-s.listed_series={0xf0}
+s.listed_series={SET_WINDWITCH}
 
 	--Check for "Salamangreat" link monster
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x119) and c:IsLinkMonster()
+	return c:IsFaceup() and c:IsSetCard(SET_SALAMANGREAT) and c:IsLinkMonster()
 end
 	--If monster effect or spell/trap card is activated
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
@@ -57,7 +57,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check if "Salamangreat" is reborn link summoned
 function s.lkfilter(c,tp)
-	return c:IsSetCard(0x119) and c:IsLinkMonster() and c:IsReincarnationSummoned() and c:GetControler()==tp
+	return c:IsSetCard(SET_SALAMANGREAT) and c:IsLinkMonster() and c:IsReincarnationSummoned() and c:IsControler(tp)
 end
 	--If it ever happened
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
@@ -79,7 +79,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e1)
 	end

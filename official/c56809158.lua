@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x10c}
+s.listed_series={SET_MEKK_KNIGHT}
 
 function s.cfilter(c)
 	return c:GetColumnGroupCount()>0
@@ -40,7 +40,7 @@ function s.hspval(e,c)
 	return 0,zone
 end
 function s.costfilter(c)
-	return c:IsSetCard(0x10c) and c:IsMonster() and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(SET_MEKK_KNIGHT) and c:IsMonster() and c:IsAbleToRemoveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_GRAVE,0,1,nil) end

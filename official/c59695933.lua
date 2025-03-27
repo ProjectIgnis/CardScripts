@@ -1,4 +1,5 @@
 --インターセプト
+--Intercept
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -27,7 +28,7 @@ function s.valcheck(e,c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	local res=tc:IsSummonType(SUMMON_TYPE_TRIBUTE) and tc:GetFlagEffect(id)~=0
+	local res=tc:IsTributeSummoned() and tc:GetFlagEffect(id)~=0
 	tc:ResetFlagEffect(id)
 	return res
 end

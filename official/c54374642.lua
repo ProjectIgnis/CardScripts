@@ -13,9 +13,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x135}
+s.listed_series={SET_IGNISTER}
 function s.filter(c)
-	return c:IsSetCard(0x135) and c:IsLinkAbove(3) and c:IsFaceup() and c:GetSequence()>4
+	return c:IsSetCard(SET_IGNISTER) and c:IsLinkAbove(3) and c:IsFaceup() and c:GetSequence()>4
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp)
@@ -44,7 +44,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e:SetLabel(0)
 		if Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)>0 then
 			Duel.BreakEffect()
-			Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
+			Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE|PHASE_BATTLE_STEP,1)
 		end
 	end
 end

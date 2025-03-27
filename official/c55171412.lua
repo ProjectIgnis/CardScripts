@@ -1,4 +1,5 @@
 --E・HERO アクア・ネオス
+--Elemental HERO Aqua Neos
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -19,7 +20,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.listed_names={CARD_NEOS}
-s.material_setcode={0x8,0x3008,0x9,0x1f}
+s.material_setcode={SET_HERO,SET_ELEMENTAL_HERO,SET_NEOS,SET_NEO_SPACIAN}
 function s.contactfil(tp)
 	return Duel.GetMatchingGroup(Card.IsAbleToDeckOrExtraAsCost,tp,LOCATION_ONFIELD,0,nil)
 end

@@ -41,4 +41,3 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RaiseEvent(c,EVENT_SSET,e,REASON_EFFECT,tp,tp,0)
 	end
 end
-

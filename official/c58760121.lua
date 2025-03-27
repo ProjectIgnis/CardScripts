@@ -1,4 +1,5 @@
 --ワーム・ファルコ
+--Worm Falco
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip
@@ -9,9 +10,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.posop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x3e}
+s.listed_series={SET_WORM}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x3e) and c:IsRace(RACE_REPTILE)
+	return c:IsFaceup() and c:IsSetCard(SET_WORM) and c:IsRace(RACE_REPTILE)
 end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

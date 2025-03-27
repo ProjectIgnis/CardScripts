@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	--Check if a thunder monster's effect was activated in hand
 	Duel.AddCustomActivityCounter(id,ACTIVITY_CHAIN,s.chainfilter)
 end
-s.listed_series={0x11c}
+s.listed_series={SET_THUNDER_DRAGON}
 
 function s.chainfilter(re,tp,cid)
 	return not (re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsRace(RACE_THUNDER)
@@ -54,15 +54,15 @@ function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=e:GetHandlerPlayer()
 	return (Duel.GetCustomActivityCount(id,tp,ACTIVITY_CHAIN)~=0 or Duel.GetCustomActivityCount(id,1-tp,ACTIVITY_CHAIN)~=0) 
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,c)
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,c)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,c)
+	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,1,c)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.tgcheck(sg,e,tp)
 	return sg:IsExists(Card.IsRace,1,nil,RACE_THUNDER)
@@ -89,15 +89,15 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetDescription(3061)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetValue(aux.tgoval)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end
 function s.gycon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.gyfilter(c)
-	return c:IsSetCard(0x11c) and c:IsAbleToGrave()
+	return c:IsSetCard(SET_THUNDER_DRAGON) and c:IsAbleToGrave()
 end
 function s.gytg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.gyfilter,tp,LOCATION_DECK,0,1,nil) end

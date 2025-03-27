@@ -1,4 +1,5 @@
 --No.95 ギャラクシーアイズ・ダークマター・ドラゴン
+--Number 95: Galaxy-Eyes Dark Matter Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -32,10 +33,10 @@ function s.initial_effect(c)
 end
 s.xyz_number=95
 function s.ovfilter(c,tp,xyzc)
-	return c:IsFaceup() and c:IsSetCard(0x107b,xyzc,SUMMON_TYPE_XYZ,tp) and c:IsType(TYPE_XYZ,xyzc,SUMMON_TYPE_XYZ,tp)
+	return c:IsFaceup() and c:IsSetCard(SET_GALAXY_EYES,xyzc,SUMMON_TYPE_XYZ,tp) and c:IsType(TYPE_XYZ,xyzc,SUMMON_TYPE_XYZ,tp)
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
+	return e:GetHandler():IsXyzSummoned()
 end
 function s.cfilter(c)
 	return c:IsRace(RACE_DRAGON) and c:IsAbleToGraveAsCost()
@@ -87,7 +88,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_EXTRA_ATTACK_MONSTER)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end

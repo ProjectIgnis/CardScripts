@@ -1,5 +1,5 @@
 --アマゾネスの戦士長
---Amazoness Warrior Chief
+--Amazoness War Chief
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -28,10 +28,10 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x4}
+s.listed_series={SET_AMAZONESS}
 s.listed_names={CARD_POLYMERIZATION}
 function s.cfilter(c)
-	return c:IsFacedown() or not c:IsSetCard(0x4)
+	return c:IsFacedown() or not c:IsSetCard(SET_AMAZONESS)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -49,7 +49,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.setfilter(c)
-	return (c:IsCode(CARD_POLYMERIZATION) or (c:IsSetCard(0x4) and c:IsSpellTrap())) and c:IsSSetable()
+	return (c:IsCode(CARD_POLYMERIZATION) or (c:IsSetCard(SET_AMAZONESS) and c:IsSpellTrap())) and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -65,8 +65,8 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
 	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetTarget(function(e,c) return not c:IsSetCard(0x4) end)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetTarget(function(e,c) return not c:IsSetCard(SET_AMAZONESS) end)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	aux.RegisterClientHint(c,nil,tp,1,0,aux.Stringid(id,2),nil)
 end

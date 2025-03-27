@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetHintTiming(0,TIMING_END_PHASE)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x104f}
+s.listed_series={SET_ASSAULT_MODE}
 s.listed_names={CARD_ASSAULT_MODE}
 
 function s.cfilter(c)
@@ -28,7 +28,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x104f) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsSetCard(SET_ASSAULT_MODE) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end
@@ -53,12 +53,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1,true)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e2,true)
 		--Cannot be tributed
 		local e3=Effect.CreateEffect(c)
@@ -66,13 +66,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_UNRELEASABLE_SUM)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e3:SetValue(1)
 		tc:RegisterEffect(e3,true)
 		local e4=Effect.CreateEffect(c)
 		e4:SetType(EFFECT_TYPE_SINGLE)
 		e4:SetCode(EFFECT_UNRELEASABLE_NONSUM)
-		e4:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e4:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e4:SetValue(1)
 		tc:RegisterEffect(e4,true)
 		--Banish it if it leaves the field
@@ -81,7 +81,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e5:SetType(EFFECT_TYPE_SINGLE)
 		e5:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e5:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-		e5:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e5:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		e5:SetValue(LOCATION_REMOVED)
 		tc:RegisterEffect(e5,true)
 	end

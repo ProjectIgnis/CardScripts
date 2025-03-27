@@ -1,4 +1,5 @@
 --サイバーデーモン
+--Cyber Archfiend
 local s,id=GetID()
 function s.initial_effect(c)
 	--draw
@@ -39,7 +40,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>0
+	return Duel.IsTurnPlayer(tp) and Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>0
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -37,10 +37,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.mtop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x8d}
+s.listed_series={SET_GHOSTRICK}
 s.listed_names={id}
 function s.ovfilter(c,tp,xyzc)
-	return c:IsFaceup() and c:IsSetCard(0x8d,xyzc,SUMMON_TYPE_XYZ,tp) and c:IsType(TYPE_XYZ,xyzc,SUMMON_TYPE_XYZ,tp) and not c:IsSummonCode(xyzc,SUMMON_TYPE_XYZ,tp,id)
+	return c:IsFaceup() and c:IsSetCard(SET_GHOSTRICK,xyzc,SUMMON_TYPE_XYZ,tp) and c:IsType(TYPE_XYZ,xyzc,SUMMON_TYPE_XYZ,tp) and not c:IsSummonCode(xyzc,SUMMON_TYPE_XYZ,tp,id)
 end
 function s.winop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():GetOverlayCount()==10 then
@@ -52,7 +52,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x8d) and c:IsSpellTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_GHOSTRICK) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -67,7 +67,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.mtfilter(c)
-	return c:IsSetCard(0x8d)
+	return c:IsSetCard(SET_GHOSTRICK)
 end
 function s.mttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsType(TYPE_XYZ) 

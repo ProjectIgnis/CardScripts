@@ -1,4 +1,5 @@
 --暗黒の侵略者
+--Invader of Darkness
 local s,id=GetID()
 function s.initial_effect(c)
 	--act limit

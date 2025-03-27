@@ -1,4 +1,5 @@
 --暗黒界の策士 グリン
+--Gren, Tactician of Dark World
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy

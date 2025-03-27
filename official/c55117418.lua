@@ -1,4 +1,5 @@
 --能力吸収コア
+--Nega-Ton Corepanel
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,10 +12,10 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x1d}
+s.listed_series={SET_KOAKI_MEIRU}
 s.listed_names={36623431}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1d)
+	return c:IsFaceup() and c:IsSetCard(SET_KOAKI_MEIRU)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)

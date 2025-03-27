@@ -1,4 +1,5 @@
 --岩石の番兵
+--Sentry Soldier of Stone
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon

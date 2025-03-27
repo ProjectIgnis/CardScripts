@@ -1,4 +1,5 @@
 --暴走する魔力
+--That Wacky Magic!
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

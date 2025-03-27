@@ -40,10 +40,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 	--Part of "D/D" archetype
-s.listed_series={0xaf}
+s.listed_series={SET_DD}
 	--Check if pendulum summoned
 function s.cfilter(c,tp)
-	return c:IsControler(tp) and c:IsSummonType(SUMMON_TYPE_PENDULUM)
+	return c:IsControler(tp) and c:IsPendulumSummoned()
 end
 	--If it ever happened
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
@@ -58,7 +58,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e0=Effect.CreateEffect(c)
 		e0:SetType(EFFECT_TYPE_SINGLE)
 		e0:SetCode(EFFECT_DISABLE)
-		e0:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e0:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e0)
 		local e1=e0:Clone()
 		e1:SetDescription(3206)
@@ -72,14 +72,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 	--If no other "D/D" on your side
 function s.atkcon(e)
-	return not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0xaf),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
+	return not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_DD),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
 end
 	--During opponent's turn
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==1-tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.disfilter(c)
-	return c:IsNegatableMonster() and c:IsSummonType(SUMMON_TYPE_PENDULUM)
+	return c:IsNegatableMonster() and c:IsPendulumSummoned()
 end
 	--Activation legality
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -98,13 +98,13 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetValue(RESET_TURN_SET)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e2)
 	end
 end

@@ -23,7 +23,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CHAIN_MATERIAL)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetTarget(s.chain_target)
 	e1:SetOperation(s.chain_operation)
 	e1:SetValue(aux.FilterBoolFunction(Card.IsRace,RACE_MACHINE))
@@ -35,9 +35,9 @@ end
 function s.chain_target(e,te,tp,value)
 	if value and value&SUMMON_TYPE_FUSION==0 then return Group.CreateGroup() end
 	if Duel.IsPlayerAffectedByEffect(tp,69832741) then
-		return Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE+LOCATION_HAND,0,nil,te)
+		return Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE|LOCATION_HAND,0,nil,te)
 	else
-		return Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE+LOCATION_GRAVE+LOCATION_HAND,0,nil,te)
+		return Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE|LOCATION_GRAVE|LOCATION_HAND,0,nil,te)
 	end
 end
 function s.chain_operation(e,te,tp,tc,mat,sumtype,sg,sumpos)

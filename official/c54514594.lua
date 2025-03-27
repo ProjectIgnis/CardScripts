@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.damop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x32}
+s.listed_series={SET_VOLCANIC}
 
 function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetAttackAnnouncedCount()==0 end
@@ -25,11 +25,11 @@ function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	e:GetHandler():RegisterEffect(e1)
 end
 function s.damfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x32)
+	return c:IsMonster() and c:IsSetCard(SET_VOLCANIC)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.damfilter,tp,LOCATION_GRAVE,0,1,nil) end

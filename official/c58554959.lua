@@ -1,4 +1,5 @@
 --E－HERO マリシャス・エッジ
+--Evil HERO Malicious Edge
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon with 1 tribute

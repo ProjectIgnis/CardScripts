@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_SUMMON+CATEGORY_POSITION)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_PHASE+PHASE_BATTLE_START)
+	e3:SetCode(EVENT_PHASE|PHASE_BATTLE_START)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCountLimit(1,id)
 	e3:SetTarget(s.nstg)
@@ -38,7 +38,7 @@ end
 function s.nstg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetHandler():GetEquipTarget()
 	if chk==0 then return tc and tc:IsCanChangePosition() 
-		and Duel.IsExistingMatchingCard(Card.IsSummonable,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil,true,nil) end
+		and Duel.IsExistingMatchingCard(Card.IsSummonable,tp,LOCATION_HAND|LOCATION_MZONE,0,1,nil,true,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,tc,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SUMMON,nil,1,0,0)
 end
@@ -46,7 +46,7 @@ function s.nsop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetEquipTarget()
 	if tc and Duel.ChangePosition(tc,POS_FACEUP_DEFENSE,POS_FACEDOWN_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)~=0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SUMMON)
-		local sc=Duel.SelectMatchingCard(tp,Card.IsSummonable,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil,true,nil):GetFirst()
+		local sc=Duel.SelectMatchingCard(tp,Card.IsSummonable,tp,LOCATION_HAND|LOCATION_MZONE,0,1,1,nil,true,nil):GetFirst()
 		if sc then
 			Duel.Summon(tp,sc,true,nil)
 		end

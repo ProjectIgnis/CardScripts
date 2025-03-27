@@ -47,7 +47,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4,false,REGISTER_FLAG_DETACH_XMAT)
 end
 	--Part of "Traptrix" archetype
-s.listed_series={0x108a}
+s.listed_series={SET_TRAPTRIX}
 
 	--Has material(s) attached
 function s.imcon(e)
@@ -98,7 +98,7 @@ end
 	--Check for opponent's sent monster in GY/banished
 function s.ssfilter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and s.cfilter(c,tp)
-		and c:IsCanBeEffectTarget(e) and c:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED)
+		and c:IsCanBeEffectTarget(e) and c:IsLocation(LOCATION_GRAVE|LOCATION_REMOVED)
 end
 	--Activation legality
 function s.sstg(e,tp,eg,ep,ev,re,r,rp,chk)

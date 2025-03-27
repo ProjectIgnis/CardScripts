@@ -1,4 +1,5 @@
 --妖仙獣の秘技
+--Yosenjus' Secret Move
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,12 +12,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xb3}
+s.listed_series={SET_YOSENJU}
 function s.filter1(c)
-	return c:IsFaceup() and c:IsSetCard(0xb3)
+	return c:IsFaceup() and c:IsSetCard(SET_YOSENJU)
 end
 function s.filter2(c)
-	return c:IsFaceup() and not c:IsSetCard(0xb3)
+	return c:IsFaceup() and not c:IsSetCard(SET_YOSENJU)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_ONFIELD,0,1,nil)

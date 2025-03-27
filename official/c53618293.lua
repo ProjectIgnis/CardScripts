@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetValue(aux.tgoval)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x1157,0x2157}
+s.listed_series={SET_SUNAVALON,SET_SUNVINE}
 
 function s.tfilter(c,tp)
 	return c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsRace(RACE_PLANT) and c:IsControler(tp) and c:IsSummonLocation(LOCATION_EXTRA)
@@ -48,5 +48,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tgtg(e,c)
-	return c:IsFaceup() and c:IsSpellTrap() and (c:IsSetCard(0x1157) or c:IsSetCard(0x2157))
+	return c:IsFaceup() and c:IsSpellTrap() and (c:IsSetCard(SET_SUNAVALON) or c:IsSetCard(SET_SUNVINE))
 end

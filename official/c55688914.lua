@@ -90,8 +90,8 @@ function s.vsop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
 	local op=e:GetLabel()
 	if op==1 then
-		c:UpdateDefense(3000,RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_PHASE|PHASE_END)
+		c:UpdateDefense(3000,RESETS_STANDARD_DISABLE_PHASE_END)
 	elseif op==2 then
-		c:UpdateAttack(3000,RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_PHASE|PHASE_END)
+		c:UpdateAttack(3000,RESETS_STANDARD_DISABLE_PHASE_END)
 	end
 end

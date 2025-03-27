@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.fcheck(tp,sg,fc)
-	return sg:IsExists(aux.FilterBoolFunction(Card.IsSetCard,0x1093,fc,SUMMON_TYPE_FUSION,tp),1,nil)
+	return sg:IsExists(aux.FilterBoolFunction(Card.IsSetCard,SET_CYBER_DRAGON,fc,SUMMON_TYPE_FUSION,tp),1,nil)
 end
 function s.fextra(e,tp,mg)
 	return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(aux.AND(Card.IsAbleToDeck,Card.IsFaceup)),tp,LOCATION_REMOVED,0,nil),s.fcheck
@@ -20,12 +20,10 @@ function s.stage2(e,tc,tp,sg,chk)
 		e1:SetTargetRange(LOCATION_MZONE,0)
 		e1:SetLabel(tc:GetFieldID())
 		e1:SetTarget(s.atktg)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 	end
 end
 function s.atktg(e,c)
 	return e:GetLabel()~=c:GetFieldID()
 end
-
-

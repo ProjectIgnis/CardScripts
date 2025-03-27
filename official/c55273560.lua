@@ -37,7 +37,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.thtg)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
-	-- Check for Fusion Monsters sent to the GY
+	--Check for Fusion Monsters sent to the GY
 	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -48,7 +48,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_ALBAZ}
 s.listed_series={SET_SWORDSOUL}
--- global check
+--global check
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	for tc in eg:Iter() do
 		if tc:IsType(TYPE_FUSION) then

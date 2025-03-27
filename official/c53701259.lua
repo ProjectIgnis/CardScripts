@@ -99,7 +99,7 @@ function s.recop1(e,tp,eg,ep,ev,re,r,rp)
 		local sum=g:GetSum(s.sum)
 		Duel.Hint(HINT_CARD,0,id)
 		if Duel.Recover(tp,sum,REASON_EFFECT)~=0 then 
-			Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE+PHASE_END,0,1)
+			Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_END,0,1)
 		end
 	end
 end
@@ -121,7 +121,7 @@ function s.recop2(e,tp,eg,ep,ev,re,r,rp)
 	e:SetLabel(0)
 	Duel.Hint(HINT_CARD,0,id)
 	if Duel.Recover(tp,rec,REASON_EFFECT)~=0 then
-		Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_END,0,1)
 	end
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
@@ -138,7 +138,7 @@ function s.rmtg(e,c)
 	return c:IsMonster() and c:GetOwner()~=e:GetHandlerPlayer() and Duel.IsPlayerCanRemove(e:GetHandlerPlayer(),c)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsLevel,10),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsTurnPlayer(tp) and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsLevel,10),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.thfilter(c)
 	return c:IsTrap() and c:IsType(TYPE_CONTINUOUS) and c:IsAbleToHand()
@@ -147,7 +147,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,nil) 
 		and c:GetFlagEffect(id)==0 end
-	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)

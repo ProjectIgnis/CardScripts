@@ -29,9 +29,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.cpop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xef}
+s.listed_series={SET_DARKLORD}
 function s.cfilter(c)
-	return c:IsSetCard(0xef) and c:IsDiscardable()
+	return c:IsSetCard(SET_DARKLORD) and c:IsDiscardable()
 end
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDiscardable()
@@ -56,7 +56,7 @@ function s.cpcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,1000)
 end
 function s.cpfilter(c)
-	return c:IsSetCard(0xef) and c:IsSpellTrap() and c:IsAbleToDeck() and c:CheckActivateEffect(false,true,false)~=nil
+	return c:IsSetCard(SET_DARKLORD) and c:IsSpellTrap() and c:IsAbleToDeck() and c:CheckActivateEffect(false,true,false)~=nil
 end
 function s.cptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.cpfilter(chkc) end

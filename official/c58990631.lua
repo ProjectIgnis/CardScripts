@@ -1,4 +1,5 @@
 --オートマチック・レーザー
+--Automatic Laser
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate(summon)

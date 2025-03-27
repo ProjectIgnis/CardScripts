@@ -1,8 +1,6 @@
---JP name
+--ミュートリア連鎖応動
 --Myutant Clash
---Logical Nonsense
-
---Substitute ID
+--scripted by Logical Nonsense
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate (without effect)
@@ -37,10 +35,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
 end
-	--Lists "Myutant" archetype
-s.listed_series={0x159}
-
-	--Activation legality
+s.listed_series={SET_MYUTANT}
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsNegatableMonster() and chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsNegatableMonster,tp,0,LOCATION_MZONE,1,nil) and Duel.IsExistingMatchingCard(s.rmfilter,tp,LOCATION_GRAVE,0,1,nil) end
@@ -53,7 +48,7 @@ function s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 	--Check for "Myutant" monster to banish
 function s.rmfilter(c)
-	return c:IsAbleToRemove() and c:IsMonster() and c:IsSetCard(0x159)
+	return c:IsAbleToRemove() and c:IsMonster() and c:IsSetCard(SET_MYUTANT)
 end
 	--Banish 1 "Myutant" monster from GY, and if you do, negate targeted monster's effects
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
@@ -68,14 +63,14 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e1:SetCode(EFFECT_DISABLE)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
 			tc:RegisterEffect(e1)
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e2:SetCode(EFFECT_DISABLE_EFFECT)
 			e2:SetValue(RESET_TURN_SET)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e2:SetReset(RESETS_STANDARD_PHASE_END)
 			tc:RegisterEffect(e2)
 		end
 	end
@@ -87,9 +82,9 @@ function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	for rc in aux.Next(eg) do
 		if rc:IsStatus(STATUS_OPPO_BATTLE) then
 			if rc:IsRelateToBattle() then
-				if rc:IsControler(tp) and rc:IsSetCard(0x159) and rc:IsLevelAbove(8) then return true end
+				if rc:IsControler(tp) and rc:IsSetCard(SET_MYUTANT) and rc:IsLevelAbove(8) then return true end
 			else
-				if rc:IsPreviousControler(tp) and rc:IsPreviousSetCard(0x159) then return true end
+				if rc:IsPreviousControler(tp) and rc:IsPreviousSetCard(SET_MYUTANT) then return true end
 			end
 		end
 	end

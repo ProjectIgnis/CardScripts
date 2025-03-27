@@ -1,4 +1,5 @@
 --ブンボーグ006
+--Deskbot 006
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -44,9 +45,9 @@ function s.initial_effect(c)
 	e6:SetOperation(s.thop)
 	c:RegisterEffect(e6)
 end
-s.listed_series={0xab}
+s.listed_series={SET_DESKBOT}
 function s.splimit(e,c,tp,sumtp,sumpos)
-	return not c:IsSetCard(0xab) and (sumtp&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
+	return not c:IsSetCard(SET_DESKBOT) and (sumtp&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
 function s.filter(c)
 	return c:IsCanChangePosition()
@@ -65,7 +66,7 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xab)
+	return c:IsFaceup() and c:IsSetCard(SET_DESKBOT)
 end
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(s.cfilter,c:GetControler(),LOCATION_EXTRA,0,nil)*500
@@ -75,7 +76,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsPreviousLocation(LOCATION_PZONE)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xab) and c:IsAbleToHand()
+	return c:IsSetCard(SET_DESKBOT) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end

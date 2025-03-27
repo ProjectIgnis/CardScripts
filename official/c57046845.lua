@@ -1,4 +1,5 @@
 --剣聖－ネイキッド・ギア・フリード
+--Gearfried the Swordmaster
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

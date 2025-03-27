@@ -1,5 +1,5 @@
 --炎雄爆誕
---Explosive Birth of the Flame Champion
+--Birth of the Prominence Flame
 --Scripted by The Razgriz
 local s,id=GetID()
 function s.initial_effect(c)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 function s.rmfilter1(c,e,tp)
 	return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsDefense(200) and not c:IsType(TYPE_TUNER) and c:IsAbleToRemove() 
-		and Duel.IsExistingMatchingCard(s.rmfilter2,tp,LOCATION_GRAVE+LOCATION_MZONE,0,1,nil,e,tp,c:GetOriginalLevel()) and aux.SpElimFilter(c,true)
+		and Duel.IsExistingMatchingCard(s.rmfilter2,tp,LOCATION_GRAVE|LOCATION_MZONE,0,1,nil,e,tp,c:GetOriginalLevel()) and aux.SpElimFilter(c,true)
 end
 function s.rmfilter2(c,e,tp,lv)
 	return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsDefense(200) and c:IsType(TYPE_TUNER) and c:IsAbleToRemove()

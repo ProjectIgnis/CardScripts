@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Synchro Summon
-	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_SYNCHRO),1,1,Synchro.NonTunerEx(Card.IsSetCard,0xff),1,1)
+	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_SYNCHRO),1,1,Synchro.NonTunerEx(Card.IsSetCard,SET_CLEAR_WING),1,1)
 	c:EnableReviveLimit()
 	--Increase ATK
 	local e1=Effect.CreateEffect(c)
@@ -42,7 +42,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.synchro_tuner_required=1
-s.listed_series={0xff}
+s.listed_series={SET_CLEAR_WING}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsActiveType(TYPE_MONSTER) and rp==1-tp and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
 end
@@ -50,7 +50,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() and rc:IsControler(1-tp)
-		and c:UpdateAttack(rc:GetBaseAttack(),RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)==rc:GetBaseAttack() then
+		and c:UpdateAttack(rc:GetBaseAttack(),RESETS_STANDARD_PHASE_END)==rc:GetBaseAttack() then
 		--Unaffected
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(aux.Stringid(id,3))
@@ -58,7 +58,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_IMMUNE_EFFECT)
 		e1:SetRange(LOCATION_MZONE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(s.immval)
 		c:RegisterEffect(e1)
 	end
@@ -87,7 +87,7 @@ end
 --Search
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return rp==1-tp and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return rp==1-tp and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsSynchroSummoned()
 end
 function s.thfilter(c)
 	return c:IsAttribute(ATTRIBUTE_WIND) and c:IsMonster() and c:IsAbleToHand()

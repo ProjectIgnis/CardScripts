@@ -1,4 +1,5 @@
 --シンクロ・マグネーター
+--Synchro Magnet
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -16,7 +17,7 @@ function s.initial_effect(c)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return #eg==1 and tc:IsControler(tp) and tc:IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return #eg==1 and tc:IsControler(tp) and tc:IsSynchroSummoned()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

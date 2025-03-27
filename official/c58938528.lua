@@ -1,10 +1,10 @@
--- ＥＭレディアンジュ
--- Performapal Lady Ange
--- Scripted by Hatter
+--ＥＭレディアンジュ
+--Performapal Ladyange
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	Pendulum.AddProcedure(c)
-	-- Reduce ATK
+	--Reduce ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.atktg)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
-	-- Draw
+	--Draw
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DRAW)
@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.drtg)
 	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
-	-- Place in Pendulum Zone
+	--Place in Pendulum Zone
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetType(EFFECT_TYPE_IGNITION)
@@ -40,7 +40,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={id,21949879}
-s.listed_series={0x9f,0x99}
+s.listed_series={SET_PERFORMAPAL,SET_ODD_EYES}
 function s.atkcostfilter(c)
 	return c:IsDiscardable() and c:IsType(TYPE_PENDULUM)
 end
@@ -58,17 +58,17 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	local tc=e:GetLabelObject()
 	if tc and tc:IsRelateToBattle() and tc:IsFaceup() and tc:IsControler(1-tp) then
-		-- Update ATK
+		--Update ATK
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-1000)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end
 function s.drcostfilter(c)
-	return c:IsSetCard(0x9f) and c:IsMonster() and not c:IsCode(id) and c:IsDiscardable()
+	return c:IsSetCard(SET_PERFORMAPAL) and c:IsMonster() and not c:IsCode(id) and c:IsDiscardable()
 end
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -88,7 +88,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
 function s.penconfilter(c)
-	return c:IsFaceup() and (c:IsSetCard(0x99) or c:IsCode(21949879))
+	return c:IsFaceup() and (c:IsSetCard(SET_ODD_EYES) or c:IsCode(21949879))
 end
 function s.pencon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.penconfilter,tp,LOCATION_ONFIELD,0,1,nil) 

@@ -14,9 +14,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={99426088}
-s.listed_series={0x167}
+s.listed_series={SET_MAGIKEY}
 function s.filter(c)
-	return ((c:IsMonster() and (c:IsType(TYPE_NORMAL) or c:IsSetCard(0x167))) or c:IsCode(99426088)) and c:IsAbleToDeck()
+	return ((c:IsMonster() and (c:IsType(TYPE_NORMAL) or c:IsSetCard(SET_MAGIKEY))) or c:IsCode(99426088)) and c:IsAbleToDeck()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -44,7 +44,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.etg(e,c)
-	return c:IsSetCard(0x167) or (c:IsType(TYPE_NORMAL) and not c:IsType(TYPE_TOKEN))
+	return c:IsSetCard(SET_MAGIKEY) or (c:IsType(TYPE_NORMAL) and not c:IsType(TYPE_TOKEN))
 end
 function s.efilter(e,re)
 	return re==e:GetLabelObject()

@@ -20,19 +20,19 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 end
-s.listed_series={0x84}
+s.listed_series={SET_BATTLIN_BOXER}
 s.xyz_number=105
 
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local at=Duel.GetAttackTarget()
-	return (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE) and at and ((a:IsControler(tp) and a:IsOnField() and a:IsSetCard(0x84))
-		or (at:IsControler(tp) and at:IsOnField() and at:IsFaceup() and at:IsSetCard(0x84)))
+	return (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE) and at and ((a:IsControler(tp) and a:IsOnField() and a:IsSetCard(SET_BATTLIN_BOXER))
+		or (at:IsControler(tp) and at:IsOnField() and at:IsFaceup() and at:IsSetCard(SET_BATTLIN_BOXER)))
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 and e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_DAMAGE,0,1)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_DAMAGE,0,1)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -51,7 +51,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e1:SetValue(1)
-	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+	e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
 	a:RegisterEffect(e1,true)
 	--Opponent takes the battle damage instead
 	local e2=Effect.CreateEffect(e:GetHandler())
@@ -60,19 +60,19 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_REFLECT_BATTLE_DAMAGE)
 	e2:SetValue(1)
-	e2:SetReset(RESET_PHASE+PHASE_DAMAGE)
+	e2:SetReset(RESET_PHASE|PHASE_DAMAGE)
 	a:RegisterEffect(e2,true)
 	--Negate opponent's battling monster
 	if at:IsType(TYPE_EFFECT) then
 		local e3=Effect.CreateEffect(e:GetHandler())
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_DISABLE)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e3:SetReset(RESETS_STANDARD_PHASE_END)
 		at:RegisterEffect(e3)
 		local e4=Effect.CreateEffect(e:GetHandler())
 		e4:SetType(EFFECT_TYPE_SINGLE)
 		e4:SetCode(EFFECT_DISABLE_EFFECT)
-		e4:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e4:SetReset(RESETS_STANDARD_PHASE_END)
 		at:RegisterEffect(e4)
 	end
 end

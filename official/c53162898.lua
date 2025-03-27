@@ -1,4 +1,5 @@
 --アマゾネスの賢者
+--Amazoness Sage
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy

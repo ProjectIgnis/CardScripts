@@ -1,4 +1,5 @@
 --No.56 ゴールドラット
+--Number 56: Gold Rat
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon

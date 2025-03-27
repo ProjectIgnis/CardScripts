@@ -14,12 +14,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={id}
-s.listed_series={0x106e}
+s.listed_series={SET_SPELLBOOK}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_SPELLCASTER),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.cffilter(c)
-	return c:IsSetCard(0x106e) and not c:IsPublic()
+	return c:IsSetCard(SET_SPELLBOOK) and not c:IsPublic()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cffilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
@@ -29,7 +29,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.ShuffleHand(tp)
 end
 function s.filter(c)
-	return c:IsSetCard(0x106e) and not c:IsCode(id) and c:GetType()==TYPE_SPELL and c:CheckActivateEffect(true,true,false)~=nil
+	return c:IsSetCard(SET_SPELLBOOK) and not c:IsCode(id) and c:GetType()==TYPE_SPELL and c:CheckActivateEffect(true,true,false)~=nil
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then

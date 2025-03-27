@@ -33,10 +33,10 @@ function s.initial_effect(c)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
 s.listed_names={TOKEN_TRICKSTAR}
-s.listed_series={0xfb}
+s.listed_series={SET_TRICKSTAR}
 	--Check for anything but "Trickstar" monsters
 function s.counterfilter(c)
-	return c:IsSetCard(0xfb)
+	return c:IsSetCard(SET_TRICKSTAR)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -44,7 +44,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 	--Check for "Trickstar" monster
 function s.thfilter(c)
-	return c:IsMonster() and c:IsSetCard(0xfb) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(SET_TRICKSTAR) and c:IsAbleToHand()
 end
 	--Performing the recycle effect
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -59,7 +59,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for "Trickstar" link monster
 function s.cfilter1(c)
-	return c:IsSetCard(0xfb) and c:IsLinkMonster()
+	return c:IsSetCard(SET_TRICKSTAR) and c:IsLinkMonster()
 end
 function s.spcon1(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter1,tp,LOCATION_MZONE,0,1,nil)
@@ -70,7 +70,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetTargetRange(1,0)
 	e1:SetLabelObject(e)
 	e1:SetTarget(s.splimit)
@@ -78,7 +78,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,3),nil)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return not c:IsSetCard(0xfb)
+	return not c:IsSetCard(SET_TRICKSTAR)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

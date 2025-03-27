@@ -1,4 +1,5 @@
 --女王の選択
+--Queen's Pawn
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,9 +12,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x4}
+s.listed_series={SET_AMAZONESS}
 function s.check(c1,c2,tp)
-	return c1:IsLocation(LOCATION_GRAVE) and c1:IsReason(REASON_BATTLE) and c1:GetPreviousControler()~=tp and c2:IsSetCard(0x4)
+	return c1:IsLocation(LOCATION_GRAVE) and c1:IsReason(REASON_BATTLE) and c1:GetPreviousControler()~=tp and c2:IsSetCard(SET_AMAZONESS)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local dc=eg:GetFirst()
@@ -21,7 +22,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return s.check(dc,bc,tp) or s.check(bc,dc,tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsLevelBelow(4) and c:IsSetCard(0x4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevelBelow(4) and c:IsSetCard(SET_AMAZONESS) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

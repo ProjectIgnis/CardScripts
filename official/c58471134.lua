@@ -1,4 +1,5 @@
 --水精鱗－アビスパイク
+--Mermail Abysspike
 local s,id=GetID()
 function s.initial_effect(c)
 	--search

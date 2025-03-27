@@ -1,4 +1,5 @@
 --トークン収穫祭
+--Token Thanksgiving
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

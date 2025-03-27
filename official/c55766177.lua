@@ -1,5 +1,5 @@
 --弑逆の魔轟神
---Fabled Regicide
+--Fabled Treason
 --Scripted by Naim
 
 local s,id=GetID()
@@ -15,10 +15,10 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x35}
+s.listed_series={SET_FABLED}
 
 function s.spfilter(c,e,tp)
-	return c:IsMonster() and c:IsSetCard(0x35) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsMonster() and c:IsSetCard(SET_FABLED) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()

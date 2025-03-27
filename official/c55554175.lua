@@ -1,5 +1,5 @@
 --ＥＭクラシックリボー
---Performapal ClassiKuriboh
+--Performapal Classikuriboh
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -55,7 +55,7 @@ function s.bpcon(e,tp,eg,ep,ev,re,r,rp)
 	return re and re==e:GetLabelObject()
 end
 function s.bpop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
+	Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE|PHASE_BATTLE_STEP,1)
 end
 function s.sccost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -76,7 +76,7 @@ function s.scop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LSCALE)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_CHANGE_RSCALE)

@@ -1,5 +1,5 @@
 --下克上の首飾り
---Amullet of Ambition
+--Amulet of Ambition
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsType,TYPE_NORMAL))

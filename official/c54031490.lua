@@ -1,4 +1,5 @@
 --紫炎の狼煙
+--Shien's Smoke Signal
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -10,10 +11,10 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x3d}
+s.listed_series={SET_SIX_SAMURAI}
 function s.filter(c)
 	local lv=c:GetLevel()
-	return c:IsSetCard(0x3d) and lv>0 and lv<4 and c:IsAbleToHand()
+	return c:IsSetCard(SET_SIX_SAMURAI) and lv>0 and lv<4 and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

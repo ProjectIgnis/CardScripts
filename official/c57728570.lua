@@ -36,11 +36,11 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.hgfilter,tp,0,LOCATION_HAND,1,nil)
 		or Duel.IsExistingMatchingCard(s.fgfilter,tp,0,LOCATION_MZONE,1,nil) end
-	local g=Duel.GetMatchingGroup(s.tgfilter,tp,0,LOCATION_MZONE+LOCATION_HAND,nil)
+	local g=Duel.GetMatchingGroup(s.tgfilter,tp,0,LOCATION_MZONE|LOCATION_HAND,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local conf=Duel.GetFieldGroup(tp,0,LOCATION_MZONE+LOCATION_HAND)
+	local conf=Duel.GetFieldGroup(tp,0,LOCATION_MZONE|LOCATION_HAND)
 	local ct=0
 	if #conf>0 then
 		Duel.ConfirmCards(tp,conf)
@@ -62,16 +62,16 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e1:SetTargetRange(0,1)
 		e1:SetValue(0)
-		e1:SetReset(RESET_PHASE+PHASE_END,2)
+		e1:SetReset(RESET_PHASE|PHASE_END,2)
 		Duel.RegisterEffect(e1,tp)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_NO_EFFECT_DAMAGE)
-		e2:SetReset(RESET_PHASE+PHASE_END,2)
+		e2:SetReset(RESET_PHASE|PHASE_END,2)
 		Duel.RegisterEffect(e2,tp)
 		local e3=Effect.CreateEffect(e:GetHandler())
 		e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 		e3:SetDescription(aux.Stringid(id,1))
-		e3:SetReset(RESET_PHASE+PHASE_END,2)
+		e3:SetReset(RESET_PHASE|PHASE_END,2)
 		e3:SetTargetRange(0,1)
 		Duel.RegisterEffect(e3,tp)
 	end

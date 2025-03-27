@@ -1,4 +1,5 @@
 --E・HERO マッドボールマン
+--Elemental HERO Mudballman
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -12,4 +13,4 @@ function s.initial_effect(c)
 	e1:SetValue(aux.fuslimit)
 	c:RegisterEffect(e1)
 end
-s.material_setcode={0x8,0x3008}
+s.material_setcode={SET_HERO,SET_ELEMENTAL_HERO}

@@ -1,4 +1,5 @@
 --デモンズ・チェーン
+--Fiendish Chain
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddPersistentProcedure(c,nil,s.filter,CATEGORY_DISABLE,nil,nil,0x1c0,nil,nil,s.target)

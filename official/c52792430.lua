@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x10f3}
+s.listed_series={SET_PREDAPLANT}
 s.listed_names={id}
 s.counter_place_list={COUNTER_PREDATOR}
 function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -41,7 +41,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetCondition(s.lvcon)
 		e1:SetValue(1)
 		tc:RegisterEffect(e1)
@@ -56,7 +56,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return bc and bc:IsLevelBelow(c:GetLevel()) and bc:IsStatus(STATUS_OPPO_BATTLE) and bc:IsRelateToBattle()
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x10f3) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_PREDAPLANT) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

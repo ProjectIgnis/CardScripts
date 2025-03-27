@@ -1,4 +1,5 @@
 --幻影コオロギ
+--Phantom Cricket
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip

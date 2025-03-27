@@ -1,4 +1,5 @@
 --トリシューラの影霊衣
+--Nekroz of Trishula
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -35,12 +36,12 @@ function s.initial_effect(c)
 	e3:SetOperation(s.remop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xb4}
+s.listed_series={SET_NEKROZ}
 function s.mat_filter(c)
 	return c:GetLevel()~=9
 end
 function s.tfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0xb4) and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
+	return c:IsFaceup() and c:IsSetCard(SET_NEKROZ) and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
@@ -61,14 +62,14 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.remcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_RITUAL)
+	return e:GetHandler():IsRitualSummoned()
 end
 function s.remtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),69832741) 
 		and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_HAND,1,nil)
 		and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,nil)
 		and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_GRAVE,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,0,LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_HAND)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,0,LOCATION_ONFIELD|LOCATION_GRAVE|LOCATION_HAND)
 end
 function s.remop(e,tp,eg,ep,ev,re,r,rp)
 	local g1=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_HAND,nil)

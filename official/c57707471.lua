@@ -1,4 +1,5 @@
 --No.21 氷結のレディ・ジャスティス
+--Number 21: Frozen Lady Justice
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

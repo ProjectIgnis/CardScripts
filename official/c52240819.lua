@@ -1,4 +1,5 @@
 --魔界劇団－デビル・ヒール
+--Abyss Actor - Evil Heel
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -37,9 +38,9 @@ function s.initial_effect(c)
 	e4:SetOperation(s.setop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x10ec,0x20ec}
+s.listed_series={SET_ABYSS_ACTOR,SET_ABYSS_SCRIPT}
 function s.atkcfilter(c)
-	return c:IsSetCard(0x10ec)
+	return c:IsSetCard(SET_ABYSS_ACTOR)
 end
 function s.atkfilter1(c,e)
 	return c:IsFaceup() and (not e or c:IsCanBeEffectTarget(e))
@@ -65,12 +66,12 @@ function s.atkop1(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-e:GetLabel())
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end
 function s.atkfilter(c)
-	return c:IsSetCard(0x10ec) and c:IsFaceup()
+	return c:IsSetCard(SET_ABYSS_ACTOR) and c:IsFaceup()
 end
 function s.atktg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsFaceup() end
@@ -88,12 +89,12 @@ function s.atkop2(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-atkval)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x20ec) and c:IsSpell() and c:IsSSetable()
+	return c:IsSetCard(SET_ABYSS_SCRIPT) and c:IsSpell() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.cfilter(chkc) end

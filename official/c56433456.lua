@@ -1,4 +1,5 @@
 --天空の聖域
+--The Sanctuary in the Sky
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

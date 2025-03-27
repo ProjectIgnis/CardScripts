@@ -1,4 +1,5 @@
 --端末世界
+--Terminal World
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

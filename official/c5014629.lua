@@ -1,4 +1,5 @@
 --潜航母艦エアロ・シャーク
+--Submersible Carrier Aero Shark
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon

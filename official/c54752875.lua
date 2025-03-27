@@ -1,4 +1,5 @@
 --双頭の雷龍
+--Twin-Headed Thunder Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material

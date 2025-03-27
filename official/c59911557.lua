@@ -1,4 +1,5 @@
 --ゴゴゴゴラム
+--Gogogo Goram
 local s,id=GetID()
 function s.initial_effect(c)
 	--pos change
@@ -26,7 +27,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.tgop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x59}
+s.listed_series={SET_GOGOGO}
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsFaceup() and c:IsRelateToEffect(e) then
@@ -38,7 +39,7 @@ function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsReason(REASON_DESTROY) and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.tgfilter(c)
-	return c:IsSetCard(0x59) and c:IsMonster() and c:IsAbleToGrave()
+	return c:IsSetCard(SET_GOGOGO) and c:IsMonster() and c:IsAbleToGrave()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

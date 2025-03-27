@@ -1,4 +1,5 @@
 --シャブティのお守り
+--Charm of Shabti
 local s,id=GetID()
 function s.initial_effect(c)
 	--indes
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x2e}
+s.listed_series={SET_GRAVEKEEPERS}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
 	return ph~=PHASE_MAIN2 and ph~=PHASE_END
@@ -26,11 +27,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetTarget(s.tgfilter)
 	e1:SetValue(1)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.tgfilter(e,c)
-	return c:IsSetCard(0x2e)
+	return c:IsSetCard(SET_GRAVEKEEPERS)
 end

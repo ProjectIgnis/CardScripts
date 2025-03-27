@@ -37,7 +37,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x74}
+s.listed_series={SET_MERMAIL}
 function s.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
@@ -48,7 +48,7 @@ function s.tgcon1(e,tp,eg,ep,ev,re,r,rp)
 	if not g or #g~=1 then return false end
 	local tc=g:GetFirst()
 	local c=e:GetHandler()
-	if tc==c or tc:GetControler()==1-tp or tc:IsFacedown() or not tc:IsLocation(LOCATION_MZONE) or not tc:IsSetCard(0x74) then return false end
+	if tc==c or tc:IsControler(1-tp) or tc:IsFacedown() or not tc:IsLocation(LOCATION_MZONE) or not tc:IsSetCard(SET_MERMAIL) then return false end
 	return Duel.CheckChainTarget(ev,c)
 end
 function s.tgop1(e,tp,eg,ep,ev,re,r,rp)
@@ -64,7 +64,7 @@ end
 function s.tgcon2(e,tp,eg,ep,ev,re,r,rp)
 	if tp==Duel.GetTurnPlayer() then return false end
 	local at=Duel.GetAttackTarget()
-	if at and at:IsFaceup() and at:IsSetCard(0x74) then
+	if at and at:IsFaceup() and at:IsSetCard(SET_MERMAIL) then
 		local ag=eg:GetFirst():GetAttackableTarget()
 		return ag:IsContains(e:GetHandler())
 	end
@@ -80,7 +80,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_DESTROY)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x74) and c:GetCode()~=id and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_MERMAIL) and c:GetCode()~=id and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.spfilter(chkc,e,tp) end

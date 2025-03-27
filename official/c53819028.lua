@@ -1,4 +1,5 @@
 --捕食植物セラセニアント
+--Predaplant Sarraceniant
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -37,7 +38,7 @@ function s.initial_effect(c)
 	e4:SetCondition(s.thcon)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xf3}
+s.listed_series={SET_PREDAP}
 s.listed_names={id}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():GetControler()~=tp and Duel.GetAttackTarget()==nil
@@ -71,7 +72,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsReason(REASON_EFFECT) and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xf3) and c:IsAbleToHand() and not c:IsCode(id)
+	return c:IsSetCard(SET_PREDAP) and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

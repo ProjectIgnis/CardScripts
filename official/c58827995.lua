@@ -1,5 +1,5 @@
 --鎧竜降臨
---Armored Dragon Ritual
+--Armor Dragon Ritual
 --Logical Nonsense
 
 --Substitute ID
@@ -30,7 +30,7 @@ function s.costfilter(c)
 end
 	--Banish monsters whose total levels equal 4 as cost
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local rg=Duel.GetMatchingGroup(s.costfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,nil)
+	local rg=Duel.GetMatchingGroup(s.costfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,nil)
 	if chk==0 then return aux.SelectUnselectGroup(rg,e,tp,1,99,s.rescon,0) end
 	local sg=aux.SelectUnselectGroup(rg,e,tp,1,99,s.rescon,1,tp,HINTMSG_REMOVE,nil,s.rescon)
 	Duel.Remove(sg,POS_FACEUP,REASON_COST)

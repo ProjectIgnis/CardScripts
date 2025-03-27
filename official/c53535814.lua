@@ -40,22 +40,22 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_GRAVE)
 	e4:SetCountLimit(1,{id,1})
-	e4:SetCost(aux.bfgcost)
+	e4:SetCost(Cost.SelfBanish)
 	e4:SetCondition(s.poscon)
 	e4:SetTarget(s.postg)
 	e4:SetOperation(s.posop)
 	c:RegisterEffect(e4)
 end
 	--Lists "Ice Barrier" archetype
-s.listed_series={0x2f}
+s.listed_series={SET_ICE_BARRIER}
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	if not (re and re:IsActivated()) then return end
-	e:GetHandler():RegisterFlagEffect(Duel.GetCurrentChain(),RESET_EVENT+RESETS_STANDARD+RESET_CHAIN,0,1)
+	e:GetHandler():RegisterFlagEffect(Duel.GetCurrentChain(),RESET_EVENT|RESETS_STANDARD|RESET_CHAIN,0,1)
 end
 	--If you control another "Ice Barrier" monster
 function s.dmgcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not (ep==1-tp and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x2f),tp,LOCATION_MZONE,0,1,c)) then return false end
+	if not (ep==1-tp and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_ICE_BARRIER),tp,LOCATION_MZONE,0,1,c)) then return false end
 	return c:GetFlagEffect(Duel.GetCurrentChain())>0
 end
 	--Opponent loses 500 LP each time they pay LP
@@ -66,7 +66,7 @@ function s.dmgop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for an "Ice Barrier" monster
 function s.tdfilter(c)
-	return c:IsSetCard(0x2f) and c:IsMonster() and c:IsAbleToDeck()
+	return c:IsSetCard(SET_ICE_BARRIER) and c:IsMonster() and c:IsAbleToDeck()
 end
 	--Check for an attack position monster
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -89,7 +89,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--If you control an "Ice Barrier" monster
 function s.poscon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x2f),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_ICE_BARRIER),tp,LOCATION_MZONE,0,1,nil)
 end
 	--Check for an attack position monster
 function s.posfilter(c)

@@ -1,5 +1,5 @@
 --イグニスターＡｉランド
---Ignister A.I.land
+--Ignister A.I.Land
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -39,7 +39,7 @@ function s.initial_effect(c)
 		end)
 	end)
 end
-s.listed_series={0x135}
+s.listed_series={SET_IGNISTER}
 function s.cfilter(c)
 	return c:GetSequence()<5
 end
@@ -47,7 +47,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x135) and c:IsLevelBelow(4) and s.attr_list[tp]&c:GetAttribute()==0
+	return c:IsSetCard(SET_IGNISTER) and c:IsLevelBelow(4) and s.attr_list[tp]&c:GetAttribute()==0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -64,7 +64,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetDescription(aux.Stringid(id,2))
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -77,19 +77,19 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	if not attr then return end
 	for _,str in aux.GetAttributeStrings(attr) do
-		e:GetHandler():RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,EFFECT_FLAG_CLIENT_HINT,1,0,str)
+		e:GetHandler():RegisterFlagEffect(0,RESETS_STANDARD_PHASE_END,EFFECT_FLAG_CLIENT_HINT,1,0,str)
 	end
 end
 function s.splimit(e,c)
 	return not c:IsRace(RACE_CYBERSE)
 end
 function s.rmfilter(c,tp)
-	return c:IsSetCard(0x135) and c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsSetCard(SET_IGNISTER) and c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.rmfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,e:GetHandler(),tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.rmfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,e:GetHandler(),tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.rmfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,e:GetHandler(),tp)
+	local g=Duel.SelectMatchingCard(tp,s.rmfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,e:GetHandler(),tp)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)

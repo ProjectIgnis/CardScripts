@@ -57,7 +57,7 @@ function s.ffilter(c,fc,sumtype,tp)
 end
 	--If fusion summoned
 function s.condition(e)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
+	return e:GetHandler():IsFusionSummoned()
 end
 	--Get original DEF
 function s.atkval(e,c)

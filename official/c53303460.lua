@@ -1,4 +1,4 @@
--- 魔神儀-キャンドール
+--魔神儀-キャンドール
 --Impcantation Candoll 
 local s,id=GetID()
 function s.initial_effect(c)
@@ -37,10 +37,10 @@ function s.initial_effect(c)
 	--clock lizard
 	aux.addContinuousLizardCheck(c,LOCATION_MZONE)
 end
-s.listed_series={0x117}
+s.listed_series={SET_IMPCANTATION}
 s.listed_names={id}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x117) and not c:IsCode(id)  and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_IMPCANTATION) and not c:IsCode(id)  and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.costfilter(c)
 	return c:IsRitualSpell() and not c:IsPublic()
@@ -57,7 +57,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>1
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,e:GetHandler(),e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_HAND+LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_HAND|LOCATION_DECK)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

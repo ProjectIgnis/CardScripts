@@ -61,7 +61,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsFaceup() and c:IsPreviousLocation(LOCATION_GRAVE)
 end
 function s.atkfilter(c)
-	return c:IsFaceup() and c:IsSummonType(SUMMON_TYPE_SPECIAL)
+	return c:IsFaceup() and c:IsSpecialSummoned()
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsRace,tp,LOCATION_GRAVE,0,1,nil,RACE_CYBERSE)
@@ -79,7 +79,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-atk)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

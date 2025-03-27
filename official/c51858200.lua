@@ -30,19 +30,19 @@ function s.initial_effect(c)
 	e2:SetLabelObject(e1)
 	c:RegisterEffect(e2)
 	--fusion summon
-	local params = {nil,aux.FilterBoolFunction(Card.IsSetCard,0xf3)}
+	local params = {nil,aux.FilterBoolFunction(Card.IsSetCard,SET_PREDAP)}
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_GRAVE)
-	e3:SetCost(aux.bfgcost)
+	e3:SetCost(Cost.SelfBanish)
 	e3:SetTarget(Fusion.SummonEffTG(table.unpack(params)))
 	e3:SetOperation(Fusion.SummonEffOP(table.unpack(params)))
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xf3}
+s.listed_series={SET_PREDAP}
 s.counter_list={COUNTER_PREDATOR}
 function s.lvfdfilter(c)
 	return c:IsLocation(LOCATION_MZONE) and c:GetCounter(COUNTER_PREDATOR)>0
@@ -58,7 +58,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetLabelObject():GetLabel()==1
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xf3) and c:IsAbleToHand()
+	return c:IsSetCard(SET_PREDAP) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

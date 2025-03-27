@@ -26,14 +26,14 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetHintTiming(0,TIMING_END_PHASE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.tdtg)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_MONSTER_REBORN,10000020}
 function s.spfilter(c,e,tp)
-	return c:IsCode(10000020) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
+	return c:IsCode(CARD_SLIFER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct1=6-Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
@@ -74,14 +74,14 @@ function s.tdfilter(c,deck_count)
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local deck_count=Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,deck_count) end
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_GRAVE+LOCATION_DECK)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,nil,deck_count) end
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_GRAVE|LOCATION_DECK)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local deck_count=Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
-	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.tdfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,deck_count):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.tdfilter),tp,LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil,deck_count):GetFirst()
 	if not tc then return end
 	if tc:IsLocation(LOCATION_DECK) then
 		Duel.ShuffleDeck(tp)

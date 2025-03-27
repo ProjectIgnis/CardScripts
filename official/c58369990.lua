@@ -1,4 +1,5 @@
 --凶星の魔術師
+--Doomstar Magician
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy

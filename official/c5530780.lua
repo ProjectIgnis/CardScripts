@@ -1,18 +1,18 @@
--- エクソシスター・ジブリーヌ
--- Exorsister Jibrine
--- Scripted by Hatter
+--エクソシスター・ジブリーヌ
+--Exosister Gibrine
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	-- 2 Level 4 monsters
+	--2 Level 4 monsters
 	Xyz.AddProcedure(c,nil,4,2)
-	-- Check materials on Xyz Summon
+	--Check materials on Xyz Summon
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
 	e0:SetCode(EFFECT_MATERIAL_CHECK)
 	e0:SetValue(s.valcheck)
 	c:RegisterEffect(e0)
-	-- Effect destruction immunity
+	--Effect destruction immunity
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetRange(LOCATION_MZONE)
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e1:SetValue(s.indval)
 	c:RegisterEffect(e1)
-	-- Negate
+	--Negate
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DISABLE)
@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.ngtg)
 	e2:SetOperation(s.ngop)
 	c:RegisterEffect(e2)
-	-- Gain ATK
+	--Gain ATK
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_ATKCHANGE)
@@ -45,17 +45,17 @@ function s.initial_effect(c)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
 end
-s.listed_series={0x174}
+s.listed_series={SET_EXOSISTER}
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
-	if g:IsExists(Card.IsSetCard,1,nil,0x174) then
-		local reset=RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_PHASE+PHASE_END
+	if g:IsExists(Card.IsSetCard,1,nil,SET_EXOSISTER) then
+		local reset=RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD|RESET_PHASE|PHASE_END
 		c:RegisterFlagEffect(id,reset,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,2))
 	end
 end
 function s.indval(e,re,rp)
 	local rc=re:GetHandler()
-	return rc:IsSummonType(SUMMON_TYPE_SPECIAL) and rc:IsSummonLocation(LOCATION_GRAVE)
+	return rc:IsSpecialSummoned() and rc:IsSummonLocation(LOCATION_GRAVE)
 		and re:IsActiveType(TYPE_MONSTER) and re:IsActivated()
 end
 function s.ngtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -72,17 +72,17 @@ function s.ngop(e,tp,eg,ep,ev,re,r,rp)
 	if tc and tc:IsRelateToEffect(e) then
 		local c=e:GetHandler()
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
-		-- Negate targeted monster's effects
+		--Negate targeted monster's effects
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetValue(RESET_TURN_SET)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e2)
 	end
 end
@@ -99,6 +99,6 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_XYZ))
 	e1:SetValue(800)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end

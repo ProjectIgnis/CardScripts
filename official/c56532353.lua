@@ -22,20 +22,20 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e2:SetCondition(s.condition)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xdd}
+s.listed_series={SET_BLUE_EYES}
 s.listed_names={CARD_BLUEEYES_W_DRAGON}
-s.material_setcode=0xdd
+s.material_setcode=SET_BLUE_EYES
 function s.costfilter(c)
-	return c:IsSetCard(0xdd) and c:IsType(TYPE_FUSION) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_BLUE_EYES) and c:IsType(TYPE_FUSION) and c:IsAbleToGraveAsCost()
 end
 function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_FUSION)
+	return c:IsFusionSummoned()
 		and Duel.GetAttacker()==c and c:CanChainAttack(0)
 		and not Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_ONFIELD,0,1,c)
 end
@@ -49,7 +49,7 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChainAttack()
 end
 function s.filter(c,tp)
-	return c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsSetCard(0xdd)
+	return c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsSetCard(SET_BLUE_EYES)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end

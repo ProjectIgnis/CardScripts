@@ -1,4 +1,5 @@
 --強欲な贈り物
+--The Gift of Greed
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,4 +1,5 @@
 --トワイライト・イレイザー
+--Twilight Eraser
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -24,19 +25,19 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x38}
+s.listed_series={SET_LIGHTSWORN}
 function s.filter1(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x38)
+	return c:IsFaceup() and c:IsSetCard(SET_LIGHTSWORN)
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_MZONE,0,1,c,c:GetRace(),c:GetCode())
 end
 function s.filter2(c,race,code)
-	return c:IsFaceup() and c:IsSetCard(0x38) and c:IsRace(race) and not c:IsCode(code)
+	return c:IsFaceup() and c:IsSetCard(SET_LIGHTSWORN) and c:IsRace(race) and not c:IsCode(code)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_MZONE,0,1,nil,tp)
 end
 function s.cfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x38) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsMonster() and c:IsSetCard(SET_LIGHTSWORN) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.rescon(sg,e,tp,mg)
 	sg:AddCard(e:GetHandler())
@@ -46,7 +47,7 @@ function s.rescon(sg,e,tp,mg)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)
-	local cg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
+	local cg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil)
 	if chk==0 then return aux.SelectUnselectGroup(cg,e,tp,2,2,s.rescon,0) end
 	local rg=aux.SelectUnselectGroup(cg,e,tp,2,2,s.rescon,1,tp,HINTMSG_REMOVE)
 	Duel.Remove(rg,POS_FACEUP,REASON_COST)
@@ -68,11 +69,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsPreviousLocation(LOCATION_DECK) and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x38)
+	return e:GetHandler():IsPreviousLocation(LOCATION_DECK) and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(SET_LIGHTSWORN)
 		and r&REASON_EFFECT~=0
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x38) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_LIGHTSWORN) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

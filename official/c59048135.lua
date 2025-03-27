@@ -32,9 +32,9 @@ function s.initial_effect(c)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
 s.listed_names={id}
-s.listed_series={0x76,0x92}
+s.listed_series={SET_HERALDIC_BEAST,SET_HERALDRY}
 function s.counterfilter(c)
-	return c:IsRace(RACE_PSYCHIC) and c:IsType(TYPE_XYZ) or c:IsSetCard(0x76)
+	return c:IsRace(RACE_PSYCHIC) and c:IsType(TYPE_XYZ) or c:IsSetCard(SET_HERALDIC_BEAST)
 end
 function s.etarget(e,c)
 	return c:IsRace(RACE_PSYCHIC) and c:IsType(TYPE_XYZ)
@@ -43,7 +43,7 @@ function s.evalue(e,re,rp)
 	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x76) and c:IsMonster() and c:IsDiscardable()
+	return c:IsSetCard(SET_HERALDIC_BEAST) and c:IsMonster() and c:IsDiscardable()
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SUMMON)==0
@@ -54,7 +54,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
 	Duel.RegisterEffect(e1,tp)
@@ -64,10 +64,10 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,1),nil)
 end
 function s.splimit(e,c)
-	return not (c:IsRace(RACE_PSYCHIC) and c:IsType(TYPE_XYZ)) and not c:IsSetCard(0x76)
+	return not (c:IsRace(RACE_PSYCHIC) and c:IsType(TYPE_XYZ)) and not c:IsSetCard(SET_HERALDIC_BEAST)
 end
 function s.filter(c)
-	return c:IsSetCard(0x92) and c:IsSpellTrap() and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_HERALDRY) and c:IsSpellTrap() and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

@@ -1,4 +1,5 @@
 --悪夢の鉄檻
+--Nightmare's Steelcage
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -34,7 +35,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetRange(LOCATION_SZONE)
 	e1:SetCondition(s.descon)
 	e1:SetOperation(s.desop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,2)
+	e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN),2)
 	c:RegisterEffect(e1)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
@@ -43,7 +44,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	e3:SetLabelObject(e1)
 	e3:SetOwnerPlayer(tp)
 	e3:SetOperation(s.reset)
-	e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,2)
+	e3:SetReset(RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN),2)
 	c:RegisterEffect(e3)
 end
 function s.reset(e,tp,eg,ep,ev,re,r,rp)

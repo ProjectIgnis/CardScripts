@@ -1,4 +1,5 @@
 --魔界闘士 バルムンク
+--Underworld Fighter Balmung
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon

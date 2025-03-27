@@ -24,11 +24,11 @@ function s.initial_effect(c)
 	e2:SetOperation(s.sumop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x3b}
+s.listed_series={SET_RED_EYES}
 function s.spfilter(c,e,tp)
 	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and c:GetReasonPlayer()==1-tp
 		and c:IsReason(REASON_DESTROY) and (c:IsReason(REASON_EFFECT) or (c:IsReason(REASON_BATTLE) and Duel.GetAttacker():IsControler(1-tp)))
-		and c:IsPreviousSetCard(0x3b) and c:IsSetCard(0x3b) and c:GetPreviousLevelOnField()<=7 and c:IsLevelBelow(7) and c:IsControler(tp)
+		and c:IsPreviousSetCard(SET_RED_EYES) and c:IsSetCard(SET_RED_EYES) and c:GetPreviousLevelOnField()<=7 and c:IsLevelBelow(7) and c:IsControler(tp)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,c:GetPreviousPosition())
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -37,7 +37,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and Duel.GetLocationCount(tp,LOCATION_MZONE)>1
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) and #g>0 end
 	Duel.SetTargetCard(g)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g+c,#g+1,tp,LOCATION_HAND+LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g+c,#g+1,tp,LOCATION_HAND|LOCATION_GRAVE)
 end
 function s.filter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false,c:GetPreviousPosition())
@@ -74,8 +74,8 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetDescription(aux.Stringid(id,2))
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
-	e1:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x3b))
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetTargetRange(LOCATION_HAND|LOCATION_MZONE,0)
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_RED_EYES))
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end

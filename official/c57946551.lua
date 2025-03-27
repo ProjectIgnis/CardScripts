@@ -1,9 +1,9 @@
 -- 
--- Rock Scales
--- Scripted by Hatter
+--Rock Scales
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Equip 1 other face-up monster
+	--Equip 1 other face-up monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_EQUIP)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.eqop)
 	c:RegisterEffect(e1)
 	aux.AddEREquipLimit(c,nil,function(ec,c,tp) return ec:IsFaceup() end,Card.EquipByEffectAndLimitRegister,e1)
-	-- Destroy
+	--Destroy
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DESTROY)
@@ -41,7 +41,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and tc:IsFaceup() and tc:IsMonster() then
 		e:GetHandler():EquipByEffectAndLimitRegister(e,tp,tc)
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 	end
 end
 function s.desfilter(c)

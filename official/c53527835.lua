@@ -1,4 +1,5 @@
 --ダーク・シティ
+--Dark City
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -17,13 +18,13 @@ function s.initial_effect(c)
 	e2:SetValue(s.atkval)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xc008}
+s.listed_series={SET_DESTINY_HERO}
 function s.atkcon(e)
 	s[0]=false
 	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and Duel.GetAttackTarget()
 end
 function s.atktg(e,c)
-	return c==Duel.GetAttacker() and c:IsSetCard(0xc008)
+	return c==Duel.GetAttacker() and c:IsSetCard(SET_DESTINY_HERO)
 end
 function s.atkval(e,c)
 	local d=Duel.GetAttackTarget()

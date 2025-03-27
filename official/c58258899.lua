@@ -1,4 +1,5 @@
 --TGX300
+--TGX300
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -15,9 +16,9 @@ function s.initial_effect(c)
 	e2:SetValue(s.val)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x27}
+s.listed_series={SET_TG}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x27)
+	return c:IsFaceup() and c:IsSetCard(SET_TG)
 end
 function s.val(e,c)
 	return Duel.GetMatchingGroupCount(s.filter,c:GetControler(),LOCATION_MZONE,0,nil)*300

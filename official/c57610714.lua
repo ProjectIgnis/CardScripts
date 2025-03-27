@@ -1,4 +1,5 @@
 --雲魔物－アイ・オブ・ザ・タイフーン
+--Cloudian - Eye of the Typhoon
 local s,id=GetID()
 function s.initial_effect(c)
 	--battle indestructable
@@ -24,12 +25,12 @@ function s.initial_effect(c)
 	e3:SetOperation(s.posop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x18}
+s.listed_series={SET_CLOUDIAN}
 function s.sdcon(e)
 	return e:GetHandler():IsPosition(POS_FACEUP_DEFENSE)
 end
 function s.filter(c)
-	return c:IsFaceup() and not c:IsSetCard(0x18)
+	return c:IsFaceup() and not c:IsSetCard(SET_CLOUDIAN)
 end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)

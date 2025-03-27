@@ -1,4 +1,5 @@
 --ジェム・マーチャント
+--Gem-Merchant
 local s,id=GetID()
 function s.initial_effect(c)
 	--atk,def up
@@ -23,8 +24,8 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if phase~=PHASE_DAMAGE or Duel.IsDamageCalculated() then return false end
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
-	return (a:GetControler()==tp and s.filter(a) and a:IsRelateToBattle())
-		or (d and d:GetControler()==tp and d:IsFaceup() and s.filter(d) and d:IsRelateToBattle())
+	return (a:IsControler(tp) and s.filter(a) and a:IsRelateToBattle())
+		or (d and d:IsControler(tp) and d:IsFaceup() and s.filter(d) and d:IsRelateToBattle())
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
@@ -37,7 +38,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	e1:SetValue(1000)
 	a:RegisterEffect(e1)
 	local e2=e1:Clone()

@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetRange(LOCATION_GRAVE+LOCATION_HAND+LOCATION_MZONE)
+	e1:SetRange(LOCATION_GRAVE|LOCATION_HAND|LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
 	e1:SetTarget(s.mattg)
 	e1:SetOperation(s.matop)
@@ -29,13 +29,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 	--Lists "Sprigguns" archetype
-s.listed_series={0x158}
+s.listed_series={SET_SPRINGANS}
 	--Specifically lists itself
 s.listed_names={id}
 
 	--Check for "Sprigguns" Xyz monster
 function s.matfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x158) and c:IsType(TYPE_XYZ)
+	return c:IsFaceup() and c:IsSetCard(SET_SPRINGANS) and c:IsType(TYPE_XYZ)
 end
 	--Activation legality
 function s.mattg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -62,7 +62,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 	--Check for "Spriggun" monster, except "Sprigguns Pede"
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x158) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_SPRINGANS) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc,e,tp) end

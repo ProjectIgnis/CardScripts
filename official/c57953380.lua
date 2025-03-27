@@ -1,4 +1,5 @@
 --生還の宝札
+--Card of Safe Return
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

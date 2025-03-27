@@ -49,13 +49,13 @@ function s.initial_effect(c)
 	e7:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e7)
 end
-s.listed_series={0x1066}
+s.listed_series={SET_SYMPHONIC_WARRIOR}
 s.counter_place_list={0x35}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.thfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1066) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(SET_SYMPHONIC_WARRIOR) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_REMOVED) and s.thfilter(chkc) end
@@ -73,7 +73,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.slcon(e)
-	return not Duel.IsExistingMatchingCard(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_PZONE,0,1,e:GetHandler(),0x1066)
+	return not Duel.IsExistingMatchingCard(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_PZONE,0,1,e:GetHandler(),SET_SYMPHONIC_WARRIOR)
 end
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -89,9 +89,9 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetDescription(aux.Stringid(id,2))
 	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
+	e1:SetTargetRange(LOCATION_HAND|LOCATION_MZONE,0)
 	e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 end

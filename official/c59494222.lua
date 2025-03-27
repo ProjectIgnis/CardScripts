@@ -1,5 +1,5 @@
 --墓守の刻印
---Gravekeeper's Engraving
+--Gravekeeper's Inscription
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -46,7 +46,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	else
 		e1:SetTarget(function(_,c) return c:IsLocation(LOCATION_GRAVE) end)
 	end
-	e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+	e1:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN)
 	Duel.RegisterEffect(e1,tp)
-	Duel.RegisterFlagEffect(tp,id+op,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id+op,RESET_PHASE|PHASE_END,0,1)
 end

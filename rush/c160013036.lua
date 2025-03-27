@@ -19,7 +19,7 @@ end
 s.listed_names={CARD_BLUETOOTH_B_DRAGON,CARD_TAMABOT}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetMatchingGroupCount(Card.IsCode,e:GetHandlerPlayer(),LOCATION_GRAVE,LOCATION_GRAVE,nil,CARD_TAMABOT)
-	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,ct) end
+	if chk==0 then return ct>0 and Duel.IsPlayerCanDiscardDeckAsCost(tp,ct) end
 end
 function s.desfilter(c)
 	return c:IsAttackAbove(1500) and c:IsFaceup()

@@ -33,5 +33,8 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.HintSelection(g,true)
 		g=g:AddMaximumCheck()
 		Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
+		if #g>1 then
+			Duel.SortDeckbottom(1-tp,1-tp,#g)
+		end
 	end
 end

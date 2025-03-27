@@ -52,6 +52,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local dg=Duel.SelectMatchingCard(tp,s.tdfilter,tp,0,LOCATION_ONFIELD,1,1,nil)
 	if #dg==0 then return end
 	dg=dg:AddMaximumCheck()
-	Duel.HintSelection(dg,true)
+	Duel.HintSelection(dg)
 	Duel.SendtoDeck(dg,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
+	if #dg>1 then
+		Duel.SortDeckbottom(1-tp,1-tp,#dg)
+	end
 end

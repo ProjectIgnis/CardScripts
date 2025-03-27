@@ -44,7 +44,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_GRAVE,0,nil)
 	local rqg=aux.SelectUnselectGroup(g,e,tp,2,2,aux.dpcheck(Card.GetRace),1,tp,HINTMSG_TODECK)
 	if #rqg==0 then return end
-	Duel.HintSelection(rqg,true)
+	Duel.HintSelection(rqg)
 	if Duel.SendtoDeck(rqg,nil,SEQ_DECKTOP,REASON_COST)==0 then return end
 	local og=Duel.GetOperatedGroup():Filter(Card.IsLocation,nil,LOCATION_DECK)
 	if #og>0 then Duel.SortDecktop(tp,tp,#og) end
@@ -53,8 +53,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local dg=Duel.SelectMatchingCard(tp,s.tdfilter,tp,0,LOCATION_MZONE,1,1,nil)
 	if #dg==0 then return end
 	dg=dg:AddMaximumCheck()
-	Duel.HintSelection(dg,true)
+	Duel.HintSelection(dg)
 	if Duel.SendtoDeck(dg,nil,SEQ_DECKBOTTOM,REASON_EFFECT)==0 then return end
+	if #dg>1 then
+		Duel.SortDeckbottom(1-tp,1-tp,#dg)
+	end
 	local stg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.setfilter),tp,LOCATION_GRAVE,0,nil)
 	if #stg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)

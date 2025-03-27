@@ -34,26 +34,28 @@ function s.tdfilter(c)
 	return c:IsLevelBelow(8) and c:IsFaceup() and c:IsAbleToDeck()
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
-	--requirement
+	--Requirement
 	local g=Duel.GetMatchingGroup(s.tdcostfilter,tp,LOCATION_GRAVE,0,nil)
 	local cg=aux.SelectUnselectGroup(g,e,tp,2,2,s.tdcostrescon,1,tp,HINTMSG_TODECK)
-	if Duel.SendtoDeck(cg,nil,SEQ_DECKSHUFFLE,REASON_COST)>0 then
-		--Effect
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-		local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.tdfilter),tp,0,LOCATION_MZONE,1,1,nil)
-		if #g==0 then return end
-		g=g:AddMaximumCheck()
-		Duel.HintSelection(g,true)
-		if Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_EFFECT)>0 then
-			local c=e:GetHandler()
-			--Cannot attack directly
-			local e1=Effect.CreateEffect(c)
-			e1:SetDescription(3207)
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-			e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
-			e1:SetReset(RESETS_STANDARD_PHASE_END)
-			c:RegisterEffect(e1)
+	if Duel.SendtoDeck(cg,nil,SEQ_DECKSHUFFLE,REASON_COST)<1 then return end
+	--Effect
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+	local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.tdfilter),tp,0,LOCATION_MZONE,1,1,nil)
+	if #g==0 then return end
+	g=g:AddMaximumCheck()
+	Duel.HintSelection(g)
+	if Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_EFFECT)>0 then
+		if #g>1 then
+			Duel.SortDeckbottom(1-tp,1-tp,#g)
 		end
+		local c=e:GetHandler()
+		--Cannot attack directly
+		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3207)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
+		e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
+		c:RegisterEffect(e1)
 	end
 end

@@ -60,7 +60,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atkcon(e)
-	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL
+	return Duel.IsPhase(PHASE_DAMAGE_CAL)
 		and Duel.GetAttacker()==e:GetHandler():GetEquipTarget() and Duel.GetAttackTarget()
 end
 function s.atkval(e,c)

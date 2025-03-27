@@ -1,8 +1,6 @@
 --アーティファクト-ダグザ
 --Artifact Dagda
---Logical Nonsense
-
---Substitute ID
+--scripted by Logical Nonsense
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -32,9 +30,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-	--Part of "Artifact" archetype
 s.listed_series={SET_ARTIFACT}
-
 	--Monsters with different names
 function s.matfilter(g,lc,sumtype,tp)
 	return g:CheckDifferentProperty(Card.GetCode,lc,sumtype,tp)
@@ -69,12 +65,12 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetLabelObject(tc)
 		e1:SetCondition(s.descon)
 		e1:SetOperation(s.desop)
-		if Duel.IsPhase(PHASE_END) and Duel.GetTurnPlayer()~=tp then
-		e1:SetLabel(Duel.GetTurnCount())
-		e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN),2)
+		if Duel.IsPhase(PHASE_END) and Duel.IsTurnPlayer(1-tp) then
+			e1:SetLabel(Duel.GetTurnCount())
+			e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN,2)
 		else
-		e1:SetLabel(0)
-		e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN)
+			e1:SetLabel(0)
+			e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN)
 		end
 		Duel.RegisterEffect(e1,tp)
 		tc:CreateEffectRelation(e1)

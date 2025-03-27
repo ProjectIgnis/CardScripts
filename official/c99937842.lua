@@ -72,7 +72,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.sccon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsTurnPlayer(1-tp) and (Duel.GetCurrentPhase()==PHASE_MAIN1 
+	return Duel.IsTurnPlayer(1-tp) and (Duel.IsPhase(PHASE_MAIN1) 
 		or Duel.GetCurrentPhase()==PHASE_MAIN2)
 end
 function s.sctg(e,tp,eg,ep,ev,re,r,rp,chk)

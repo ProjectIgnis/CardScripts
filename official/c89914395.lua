@@ -17,7 +17,7 @@ end
 s.listed_series={SET_AESIR}
 
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsAbleToEnterBP() or (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE)
+	return Duel.IsAbleToEnterBP() or Duel.IsBattlePhase()
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_AESIR) and not c:IsHasEffect(EFFECT_EXTRA_ATTACK)

@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_TG}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer()
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.filter(c,e,tp)
 	return ((c:IsType(TYPE_TUNER) and c:IsLevelBelow(4)) or c:IsSetCard(SET_TG)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

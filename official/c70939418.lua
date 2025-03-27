@@ -40,7 +40,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_SPEEDROID}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE
+	return Duel.IsBattlePhase()
 		and ep==tp and (r&REASON_BATTLE+REASON_EFFECT)~=0
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

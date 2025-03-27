@@ -45,7 +45,7 @@ function s.initial_effect(c)
 end
 function s.splimit(e,se,sp,st)
 	return se:IsHasType(EFFECT_TYPE_ACTIONS) and Duel.GetActivityCount(e:GetHandlerPlayer(),ACTIVITY_SPSUMMON)==0
-		and Duel.GetCurrentPhase()==PHASE_MAIN1 and Duel.GetTurnPlayer()==e:GetHandlerPlayer()
+		and Duel.IsPhase(PHASE_MAIN1) and Duel.GetTurnPlayer()==e:GetHandlerPlayer()
 end
 function s.valcon(e,re,r,rp)
 	return (r&REASON_BATTLE)~=0

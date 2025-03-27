@@ -68,7 +68,7 @@ function s.atktg2(e,c)
 		and Duel.GetAttacker()==c
 end
 function s.atkcon2(e)
-	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and Duel.GetAttackTarget()~=nil
+	return Duel.IsPhase(PHASE_DAMAGE_CAL) and Duel.GetAttackTarget()~=nil
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)

@@ -23,7 +23,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_GHOSTRICK}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE)
+	return Duel.IsBattlePhase()
 end
 function s.filter1(c)
 	return c:IsFaceup() and c:IsSetCard(SET_GHOSTRICK) and c:IsCanTurnSet()

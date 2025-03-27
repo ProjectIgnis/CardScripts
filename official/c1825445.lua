@@ -35,7 +35,7 @@ end
 s.listed_series={SET_SUPER_QUANT}
 --Check if it's your main phase
 function s.tgcon(e)
-	return Duel.GetTurnPlayer()==e:GetHandlerPlayer() and Duel.GetCurrentPhase()==PHASE_MAIN1
+	return Duel.GetTurnPlayer()==e:GetHandlerPlayer() and Duel.IsPhase(PHASE_MAIN1)
 end
 --Check for "Super Quant" Xyz monster
 function s.filter2(c)

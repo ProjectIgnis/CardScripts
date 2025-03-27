@@ -51,7 +51,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCountLimit(1)
 		e1:SetCondition(s.retcon)
 		e1:SetOperation(s.retop)
-		e1:SetReset(RESET_PHASE|PHASE_STANDBY|RESET_OPPO_TURN))
+		e1:SetReset(RESET_PHASE|PHASE_STANDBY|RESET_OPPO_TURN)
 		Duel.RegisterEffect(e1,tp)
 	end
 end

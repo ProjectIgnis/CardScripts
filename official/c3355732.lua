@@ -51,7 +51,7 @@ function s.aclimit(e,re,tp)
 		and not rc:IsStatus(status)
 end
 function s.atkcon(e)
-	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and Duel.GetAttackTarget()
+	return Duel.IsPhase(PHASE_DAMAGE_CAL) and Duel.GetAttackTarget()
 end
 function s.atktg(e,c)
 	local tp=e:GetHandlerPlayer()

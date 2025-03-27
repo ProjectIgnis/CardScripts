@@ -50,7 +50,7 @@ function s.atktg(e,c)
 	return c:IsSetCard(SET_FAMILIAR_POSSESSED) and Duel.GetAttacker()==c
 end
 function s.atkcon(e)
-	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and Duel.GetAttackTarget()~=nil
+	return Duel.IsPhase(PHASE_DAMAGE_CAL) and Duel.GetAttackTarget()~=nil
 end
 function s.cfilter(c,tp)
 	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:GetOriginalAttribute()~=0

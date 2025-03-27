@@ -109,7 +109,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.dircon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1 and not e:GetHandler():IsHasEffect(EFFECT_DIRECT_ATTACK)
+	return Duel.IsPhase(PHASE_MAIN1) and not e:GetHandler():IsHasEffect(EFFECT_DIRECT_ATTACK)
 end
 function s.dcfilter(c)
 	return (c:GetOriginalType()&TYPE_MONSTER)~=0 and c:IsAbleToGraveAsCost()

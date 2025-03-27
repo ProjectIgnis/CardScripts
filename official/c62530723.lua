@@ -30,12 +30,12 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.atkfilter(chkc) end
 	if chk==0 then
-		if Duel.GetCurrentPhase()==PHASE_DAMAGE then
+		if Duel.IsPhase(PHASE_DAMAGE) then
 			return Duel.IsExistingTarget(s.atkfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 		end
 		return true
 	end
-	if Duel.GetCurrentPhase()==PHASE_DAMAGE
+	if Duel.IsPhase(PHASE_DAMAGE)
 		or (Duel.IsExistingTarget(s.atkfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,0))) then
 		e:SetCategory(CATEGORY_ATKCHANGE)

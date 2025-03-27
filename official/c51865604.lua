@@ -50,7 +50,7 @@ function s.spfilter(c,e,tp)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsCanBeEffectTarget(e)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE) and eg:IsExists(s.spfilter,1,nil,e,tp)
+	return Duel.IsBattlePhase() and eg:IsExists(s.spfilter,1,nil,e,tp)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end

@@ -68,7 +68,7 @@ end
 function s.atkcon(e)
 	local c=e:GetHandler()
 	if Duel.GetAttackTarget()==nil then return end
-	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and Duel.GetFieldGroupCount(e:GetHandlerPlayer(),0,LOCATION_MZONE)==1
+	return Duel.IsPhase(PHASE_DAMAGE_CAL) and Duel.GetFieldGroupCount(e:GetHandlerPlayer(),0,LOCATION_MZONE)==1
 end
 function s.bdop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -21,7 +21,7 @@ end
 s.listed_series={SET_ELEMENTAL_HERO}
 function s.atkcon(e)
 	s[0]=false
-	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and Duel.GetAttackTarget()
+	return Duel.IsPhase(PHASE_DAMAGE_CAL) and Duel.GetAttackTarget()
 end
 function s.atktg(e,c)
 	return c==Duel.GetAttacker() and c:IsSetCard(SET_ELEMENTAL_HERO)

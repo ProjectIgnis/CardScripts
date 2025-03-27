@@ -58,7 +58,7 @@ function s.atkfilter(c)
 	return c:IsFaceup() and c:GetAttack()>c:GetBaseAttack()
 end
 function s.atkcon(e)
-	return (Duel.GetCurrentPhase()==PHASE_DAMAGE or Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL)
+	return (Duel.IsPhase(PHASE_DAMAGE) or Duel.IsPhase(PHASE_DAMAGE_CAL))
 		and Duel.IsExistingMatchingCard(s.atkfilter,e:GetHandlerPlayer(),0,LOCATION_MZONE,1,nil)
 end
 function s.atkval(e,c)

@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.adcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsTurnPlayer(tp) and (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE)
+	return Duel.IsTurnPlayer(tp) and Duel.IsBattlePhase()
 		and (e:GetHandler()==Duel.GetAttacker() or e:GetHandler()==Duel.GetAttackTarget())
 end
 function s.cfilter(c)

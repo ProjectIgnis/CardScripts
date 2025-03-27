@@ -31,7 +31,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 	local ph=Duel.GetCurrentPhase()
-	if tp~=Duel.GetTurnPlayer() and Duel.IsBattlePhase() then
+	if Duel.IsTurnPlayer(1-tp) and Duel.IsBattlePhase() then
 		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE|PHASE_BATTLE_STEP,1)
 	end
 end

@@ -25,7 +25,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_GLADIATOR_BEAST}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetCurrentPhase()==PHASE_DAMAGE and Duel.IsDamageCalculated() then return false end
+	if Duel.IsPhase(PHASE_DAMAGE) and Duel.IsDamageCalculated() then return false end
 	return true
 end
 function s.filter(c)

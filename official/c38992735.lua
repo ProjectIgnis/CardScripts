@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.turncount(e,tp,eg,ep,ev,re,r,rp)
-	if tp~=Duel.GetTurnPlayer() then return end
+	if Duel.IsTurnPlayer(1-tp) then return end
 	local c=e:GetHandler()
 	local ct=c:GetTurnCounter()
 	ct=ct+1

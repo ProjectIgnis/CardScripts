@@ -58,7 +58,7 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atkcon(e)
 	local c=e:GetHandler()
-	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and c==Duel.GetAttacker()
+	return Duel.IsPhase(PHASE_DAMAGE_CAL) and c==Duel.GetAttacker()
 end
 function s.cacon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

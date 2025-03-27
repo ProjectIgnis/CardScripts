@@ -75,7 +75,7 @@ function s.atkval(e,c)
 	return c:GetRank()*100
 end
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsType(TYPE_EQUIP) and Duel.IsTurnPlayer(tp) and (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE)
+	return e:GetHandler():IsType(TYPE_EQUIP) and Duel.IsTurnPlayer(tp) and Duel.IsBattlePhase()
 end
 function s.mtcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

@@ -17,7 +17,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_X_SABER}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetCurrentPhase()==PHASE_DAMAGE and Duel.IsDamageCalculated() then return false end
+	if Duel.IsPhase(PHASE_DAMAGE) and Duel.IsDamageCalculated() then return false end
 	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
 	local tc=g:GetFirst()
 	e:SetLabelObject(tc)

@@ -44,7 +44,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetOperation(s.sdesop)
 	if Duel.IsPhase(PHASE_END) and Duel.GetTurnPlayer()~=tp then
 		e1:SetLabel(Duel.GetTurnCount())
-		e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN),2)
+		e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN,2)
 	else
 		e1:SetLabel(0)
 		e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN)

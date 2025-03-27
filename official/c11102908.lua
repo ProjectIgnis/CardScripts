@@ -21,7 +21,7 @@ end
 s.listed_series={SET_SIX_SAMURAI}
 function s.atkcon(e)
 	local d=Duel.GetAttackTarget()
-	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and d and d:IsSetCard(SET_SIX_SAMURAI)
+	return Duel.IsPhase(PHASE_DAMAGE_CAL) and d and d:IsSetCard(SET_SIX_SAMURAI)
 end
 function s.atktg(e,c)
 	return c==Duel.GetAttacker()

@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer()
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

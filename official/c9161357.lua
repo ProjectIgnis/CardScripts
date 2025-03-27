@@ -74,7 +74,7 @@ end
 function s.lpcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local eqg=c:GetEquipGroup()
-	if chk==0 then return Duel.GetCurrentPhase()==PHASE_MAIN1 and #eqg>0 and eqg:IsExists(s.eqfilter,1,nil,tp)
+	if chk==0 then return Duel.IsPhase(PHASE_MAIN1) and #eqg>0 and eqg:IsExists(s.eqfilter,1,nil,tp)
 		and c:CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	c:RemoveOverlayCard(tp,1,1,REASON_COST)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)

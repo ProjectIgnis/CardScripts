@@ -68,7 +68,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(e:GetHandler(),REASON_EFFECT)
 end
 function s.deckcon(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer() and e:GetHandler():GetFirstCardTarget()~=nil
+	return Duel.IsTurnPlayer(1-tp) and e:GetHandler():GetFirstCardTarget()~=nil
 end
 function s.decktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

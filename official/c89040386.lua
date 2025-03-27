@@ -17,7 +17,7 @@ function s.cfilter(c)
 	return c:IsSetCard(SET_BLACKWING) and c:IsMonster()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer() and Duel.GetAttackTarget()==nil
+	return Duel.IsTurnPlayer(1-tp) and Duel.GetAttackTarget()==nil
 		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,5,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

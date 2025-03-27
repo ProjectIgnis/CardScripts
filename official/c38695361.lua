@@ -71,7 +71,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atkcon2(e)
 	local tc=e:GetLabelObject()
-	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL
+	return Duel.IsPhase(PHASE_DAMAGE_CAL)
 		and tc:GetFlagEffect(id)~=0 and tc:GetBattleTarget()
 end
 function s.atktg2(e,c)

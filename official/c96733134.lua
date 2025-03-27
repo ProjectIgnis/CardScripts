@@ -91,7 +91,7 @@ function s.damtg(e,c)
 	return c:IsType(TYPE_PENDULUM) and c:GetBattleTarget()~=nil
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE
+	return Duel.IsBattlePhase()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

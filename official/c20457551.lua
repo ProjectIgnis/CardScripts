@@ -23,7 +23,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_KOAKI_MEIRU}
 function s.atkcon(e)
-	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL
+	return Duel.IsPhase(PHASE_DAMAGE_CAL)
 		and e:GetHandler():GetEquipTarget():GetBattleTarget()
 end
 function s.atktg(e,c)

@@ -26,7 +26,7 @@ s.xyz_number=105
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local at=Duel.GetAttackTarget()
-	return (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE) and at and ((a:IsControler(tp) and a:IsOnField() and a:IsSetCard(SET_BATTLIN_BOXER))
+	return Duel.IsBattlePhase() and at and ((a:IsControler(tp) and a:IsOnField() and a:IsSetCard(SET_BATTLIN_BOXER))
 		or (at:IsControler(tp) and at:IsOnField() and at:IsFaceup() and at:IsSetCard(SET_BATTLIN_BOXER)))
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

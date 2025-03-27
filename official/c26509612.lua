@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 s.listed_names={74711057}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsTurnPlayer(1-tp) and (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE)
+	return Duel.IsTurnPlayer(1-tp) and Duel.IsBattlePhase()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,74711057),tp,LOCATION_MZONE,0,1,nil)

@@ -32,7 +32,7 @@ function s.filter(c)
 	return c:IsType(TYPE_GEMINI) and c:CanSummonOrSet(true,nil)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer()
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,500) end

@@ -43,7 +43,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetLabelObject(e1)
 		e3:SetOwnerPlayer(tp)
 		e3:SetOperation(s.reset)
-		e3:SetReset(RESET_PHASE|PHASE_STANDBY|RESET_OPPO_TURN),4)
+		e3:SetReset(RESET_PHASE|PHASE_STANDBY|RESET_OPPO_TURN,4)
 		c:RegisterEffect(e3)
 	end
 end

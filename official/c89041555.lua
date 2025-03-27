@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer() and eg:GetFirst():IsTributeSummoned()
+	return Duel.IsTurnPlayer(1-tp) and eg:GetFirst():IsTributeSummoned()
 end
 function s.filter(c)
 	return c:IsAttackPos()

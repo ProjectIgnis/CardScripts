@@ -99,5 +99,5 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.zeroatkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReincarnationSummoned() and c:IsFusionSummoned() and Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL
+	return c:IsReincarnationSummoned() and c:IsFusionSummoned() and Duel.IsPhase(PHASE_DAMAGE_CAL)
 end

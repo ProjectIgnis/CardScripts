@@ -44,7 +44,7 @@ function s.tfilter(c,scard,sumtype,tp)
 	return c:IsSummonCode(scard,sumtype,tp,56286179) or c:IsHasEffect(20932152)
 end
 function s.datcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1
+	return Duel.IsPhase(PHASE_MAIN1)
 end
 function s.dattg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

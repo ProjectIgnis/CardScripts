@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE)
+	return Duel.IsBattlePhase()
 		and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -71,7 +71,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	tc:RegisterEffect(e1)
 end
 function s.excon(e,tp,eg,ep,ev,re,r,rp)
-	return (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE)
+	return Duel.IsBattlePhase()
 end
 function s.exfilter(c,lg)
 	return c:IsFaceup() and c:IsRace(RACE_CYBERSE) and c:GetEffectCount(EFFECT_EXTRA_ATTACK_MONSTER)==0 and lg and lg:IsContains(c)

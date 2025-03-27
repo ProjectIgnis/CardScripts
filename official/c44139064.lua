@@ -81,7 +81,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	if not a:IsControler(tp) then
 		a=Duel.GetAttackTarget()
 	end
-	return a and a:IsSetCard(SET_ROID) and Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL
+	return a and a:IsSetCard(SET_ROID) and Duel.IsPhase(PHASE_DAMAGE_CAL)
 end
 function s.atkfilter(c)
 	return c:IsMonster() and c:IsSetCard(SET_ROID) and c:IsAbleToGraveAsCost()

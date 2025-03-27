@@ -56,7 +56,7 @@ function s.rcop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Recover(p,d,REASON_EFFECT)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer() and Duel.GetLP(tp)<Duel.GetLP(1-tp)
+	return Duel.IsTurnPlayer(1-tp) and Duel.GetLP(tp)<Duel.GetLP(1-tp)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_AROMA) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

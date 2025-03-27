@@ -34,7 +34,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_VAMPIRE}
 function s.atkcon(e)
-	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL
+	return Duel.IsPhase(PHASE_DAMAGE_CAL)
 end
 function s.cfilter(c,tp)
 	return c:IsPreviousLocation(LOCATION_DECK) and c:IsPreviousControler(tp)

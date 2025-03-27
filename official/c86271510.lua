@@ -33,6 +33,6 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SET_BASE_ATTACK)
 	e1:SetValue(sum)
-	e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN),1)
+	e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN,1)
 	c:RegisterEffect(e1)
 end

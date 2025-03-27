@@ -34,7 +34,7 @@ function s.ntcon(e,c,minc)
 		and Duel.GetFieldGroupCount(c:GetControler(),0,LOCATION_MZONE)>0
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1
+	return Duel.IsPhase(PHASE_MAIN1)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_BLACKWING)

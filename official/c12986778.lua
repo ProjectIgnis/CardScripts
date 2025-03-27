@@ -20,7 +20,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return #g==2 and g:GetFirst():IsSetCard(SET_MEKLORD) and g:GetNext():IsSetCard(SET_MEKLORD)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetCurrentPhase()==PHASE_MAIN1 end
+	if chk==0 then return Duel.IsPhase(PHASE_MAIN1) end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_BP)

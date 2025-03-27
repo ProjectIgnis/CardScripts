@@ -82,7 +82,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(g,REASON_EFFECT)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1
+	return Duel.IsPhase(PHASE_MAIN1)
 end
 function s.rfilter(c)
 	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsSetCard(SET_MERMAIL)

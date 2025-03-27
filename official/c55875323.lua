@@ -1,6 +1,5 @@
 --でんきトカゲ
 --Electric Lizard
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--A non-zombie monster that attacked this card cannot attack next turn
@@ -28,7 +27,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetLabel(Duel.GetTurnCount())
 		e1:SetCondition(s.atkcon)
 		e1:SetOwnerPlayer(tp)
-		e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN),2)
+		e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN,2)
 		tc:RegisterEffect(e1)
 	end
 end

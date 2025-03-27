@@ -34,7 +34,7 @@ function s.wrfilter(c)
 	return c:IsFaceup() and c:IsLevelAbove(7) and c:IsSetCard(SET_WAR_ROCK)
 end
 function s.limcon(e)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1
+	return Duel.IsPhase(PHASE_MAIN1)
 		and Duel.IsExistingMatchingCard(s.wrfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingMatchingCard(Card.IsSummonType,e:GetHandlerPlayer(),0,LOCATION_MZONE,1,nil,SUMMON_TYPE_SPECIAL)
 end

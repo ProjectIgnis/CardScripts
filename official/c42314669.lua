@@ -14,7 +14,7 @@ function s.cfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_SYNCHRO)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1 and not Duel.CheckPhaseActivity()
+	return Duel.IsPhase(PHASE_MAIN1) and not Duel.CheckPhaseActivity()
 		and not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)

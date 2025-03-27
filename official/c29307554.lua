@@ -34,7 +34,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFlagEffect(tp,id)~=0 and Duel.IsTurnPlayer(tp)
-		and (Duel.IsAbleToEnterBP() or (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE))
+		and (Duel.IsAbleToEnterBP() or Duel.IsBattlePhase())
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsLevelAbove(8) and c:GetEffectCount(EFFECT_EXTRA_ATTACK)==0

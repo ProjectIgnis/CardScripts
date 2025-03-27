@@ -53,7 +53,7 @@ end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
 	return Duel.IsExistingMatchingCard(s.sscond,tp,LOCATION_FZONE,LOCATION_FZONE,1,nil,tp) 
-		and (ph==PHASE_MAIN1 or (Duel.IsBattlePhase()) or ph==PHASE_MAIN2)
+		and (ph==PHASE_MAIN1 or Duel.IsBattlePhase() or ph==PHASE_MAIN2)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end

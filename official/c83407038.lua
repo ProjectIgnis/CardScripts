@@ -45,7 +45,7 @@ end
 s.listed_series={SET_AMAZONESS}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
-	return (Duel.IsBattlePhase())
+	return Duel.IsBattlePhase()
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_AMAZONESS) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

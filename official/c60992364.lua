@@ -96,7 +96,7 @@ function s.equipop(c,e,tp,tc)
 	c:RegisterEffect(e1)
 end
 function s.atcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsTurnPlayer(tp) and (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE) and Duel.GetCurrentChain()==0
+	return Duel.IsTurnPlayer(tp) and Duel.IsBattlePhase() and Duel.GetCurrentChain()==0
 end
 function s.atcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end

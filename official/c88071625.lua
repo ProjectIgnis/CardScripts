@@ -56,7 +56,7 @@ function s.valcheck(e,c)
 		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetValue(atk)
-		e1:SetReset(RESET_EVENT|((RESET_EVENT|RESETS_STANDARD_DISABLE)&~RESET_TOFIELD)
+		e1:SetReset(RESET_EVENT|RESET_EVENT|RESETS_STANDARD_DISABLE&~RESET_TOFIELD)
 		c:RegisterEffect(e1)
 		--def continuous effect
 		local e2=e1:Clone()

@@ -45,7 +45,7 @@ function s.ffilter(c,fc,sumtype,tp)
 	return c:IsRace(RACE_WARRIOR,fc,sumtype,tp) and c:GetLevel()>=5
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE
+	return Duel.IsBattlePhase()
 		and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
 end
 function s.atkfilter(c)

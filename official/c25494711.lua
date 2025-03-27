@@ -33,7 +33,7 @@ end
 s.listed_series={SET_DESKBOT}
 s.listed_names={}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1
+	return Duel.IsPhase(PHASE_MAIN1)
 end
 function s.atkfilter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_DESKBOT) and not c:IsCode(id)

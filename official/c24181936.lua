@@ -82,7 +82,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	e:Reset()
 end
 function s.atkcon(e)
-	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and Duel.GetAttackTarget()
+	return Duel.IsPhase(PHASE_DAMAGE_CAL) and Duel.GetAttackTarget()
 end
 function s.atktg(tc)
 	return function(e,c)

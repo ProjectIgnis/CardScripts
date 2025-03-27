@@ -23,7 +23,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_PREDICTION_PRINCESS}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsTurnPlayer(1-tp) and (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<PHASE_BATTLE)
+	return Duel.IsTurnPlayer(1-tp) and Duel.IsBattlePhase()
 		and Duel.IsExistingMatchingCard(Card.IsPosition,tp,LOCATION_MZONE,0,2,nil,POS_FACEDOWN_DEFENSE)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

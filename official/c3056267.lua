@@ -18,7 +18,7 @@ function s.swapfilter(c)
 end
 function s.condition(e)
 	local ph=Duel.GetCurrentPhase()
-	return not (Duel.IsBattlePhase())
+	return not Duel.IsBattlePhase()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

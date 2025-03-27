@@ -63,7 +63,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 function s.adcon(e)
-	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and e:GetHandler():GetBattleTarget()
+	return Duel.IsPhase(PHASE_DAMAGE_CAL) and e:GetHandler():GetBattleTarget()
 end
 function s.adtg(e,c)
 	return c==e:GetHandler():GetBattleTarget()

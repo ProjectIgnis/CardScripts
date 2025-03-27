@@ -54,14 +54,14 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local label=e:GetLabel()
 	if chkc then return s.atktg(e,tp,eg,ep,ev,re,r,rp,0,chkc) end
 	if chk==0 then
-		if Duel.GetCurrentPhase()==PHASE_DAMAGE then
+		if Duel.IsPhase(PHASE_DAMAGE) then
 			if label==1 then e:SetLabel(0) end
 			return (label~=1 or s.atkcost(e,tp,eg,ep,ev,re,r,rp,0)) and s.atktg(e,tp,eg,ep,ev,re,r,rp,0)
 		end
 		return true
 	end
 	if (label~=1 or s.atkcost(e,tp,eg,ep,ev,re,r,rp,0)) and s.atktg(e,tp,eg,ep,ev,re,r,rp,0) 
-		and (Duel.GetCurrentPhase()==PHASE_DAMAGE or Duel.SelectYesNo(tp,aux.Stringid(id,2))) then
+		and (Duel.IsPhase(PHASE_DAMAGE) or Duel.SelectYesNo(tp,aux.Stringid(id,2))) then
 		e:SetCategory(CATEGORY_ATKCHANGE)
 		e:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_CARD_TARGET)
 		e:SetOperation(s.atkop)

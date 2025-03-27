@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 s.listed_names={36623431}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer() and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,2,nil,36623431)
+	return Duel.IsTurnPlayer(1-tp) and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,2,nil,36623431)
 end
 function s.filter(c)
 	return c:IsPosition(POS_FACEUP_ATTACK)

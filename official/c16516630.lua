@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_BLACKWING}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1
+	return Duel.IsPhase(PHASE_MAIN1)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_BLACKWING)

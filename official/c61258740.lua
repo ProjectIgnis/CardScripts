@@ -32,7 +32,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetRange(LOCATION_SZONE)
 	e1:SetCondition(s.tgcon)
 	e1:SetOperation(s.tgop)
-	e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN),3)
+	e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN,3)
 	e:GetHandler():RegisterEffect(e1)
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)

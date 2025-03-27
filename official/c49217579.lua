@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.atkcon(e)
-	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and e:GetHandler():GetBattleTarget()
+	return Duel.IsPhase(PHASE_DAMAGE_CAL) and e:GetHandler():GetBattleTarget()
 end
 function s.atkval(e,c)
 	return e:GetHandler():GetBattleTarget():GetBaseAttack()

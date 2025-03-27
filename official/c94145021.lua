@@ -27,7 +27,7 @@ function s.cfilter(c,tp)
 	return c:IsControler(tp) and c:IsPreviousLocation(LOCATION_DECK)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.IsPhase(PHASE_DRAW) or Duel.GetCurrentPhase()==PHASE_DAMAGE then return false end
+	if Duel.IsPhase(PHASE_DRAW) or Duel.IsPhase(PHASE_DAMAGE) then return false end
 	local v=0
 	if eg:IsExists(s.cfilter,1,nil,0) then v=v+1 end
 	if eg:IsExists(s.cfilter,1,nil,1) then v=v+2 end

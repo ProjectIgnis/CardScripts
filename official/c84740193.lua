@@ -12,12 +12,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.eqlimit(e,c)
-	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL or c:IsAttackBelow(1000)
+	return Duel.IsPhase(PHASE_DAMAGE_CAL) or c:IsAttackBelow(1000)
 end
 function s.atkcon(e)
 	local ec=e:GetHandler():GetEquipTarget()
 	if not ec:IsRelateToBattle() then return end
 	local bc=ec:GetBattleTarget()
-	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and bc
+	return Duel.IsPhase(PHASE_DAMAGE_CAL) and bc
 		and ((bc:IsAttackPos() and bc:IsAttackAbove(2500)) or (bc:IsDefensePos() and bc:IsDefenseAbove(2500)))
 end

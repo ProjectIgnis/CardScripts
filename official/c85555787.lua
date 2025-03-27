@@ -67,7 +67,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN,3)
 		Duel.RegisterEffect(e2,tp)
 		e2:SetLabelObject(e1)
-		c:RegisterFlagEffect(1082946,RESET_PHASE|PHASE_END|RESET_OPPO_TURN),0,3)
+		c:RegisterFlagEffect(1082946,RESET_PHASE|PHASE_END|RESET_OPPO_TURN,0,3)
 		s[c]=e2
 		local e4=Effect.CreateEffect(e:GetHandler())
 		e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)

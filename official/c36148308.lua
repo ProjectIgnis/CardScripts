@@ -46,7 +46,7 @@ function s.eqfilter(c)
 	return c:IsType(TYPE_SYNCHRO) and c:IsAttribute(ATTRIBUTE_EARTH)
 end
 function s.atkcon(e)
-	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL
+	return Duel.IsPhase(PHASE_DAMAGE_CAL)
 		and e:GetHandler():GetEquipTarget():GetBattleTarget()
 end
 function s.atktg(e,c)

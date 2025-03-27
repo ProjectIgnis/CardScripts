@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_ELEMENTAL_HERO}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer()
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsCode,1,false,nil,nil,32679370) end

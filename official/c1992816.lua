@@ -75,7 +75,7 @@ function s.dafilter(c,atk)
 	return c:IsFaceup() and c:GetAttack()>atk
 end
 function s.dacon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1
+	return Duel.IsPhase(PHASE_MAIN1)
 		and Duel.IsExistingMatchingCard(s.dafilter,tp,0,LOCATION_MZONE,1,nil,e:GetHandler():GetAttack())
 end
 function s.dacost(e,tp,eg,ep,ev,re,r,rp,chk)

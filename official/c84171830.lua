@@ -64,7 +64,7 @@ end
 function s.atkcon(e)
 	local d=Duel.GetAttackTarget()
 	local tp=e:GetHandlerPlayer()
-	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and d and d:IsControler(1-tp)
+	return Duel.IsPhase(PHASE_DAMAGE_CAL) and d and d:IsControler(1-tp)
 end
 function s.atktg(e,c)
 	return c==Duel.GetAttacker() and c:IsTributeSummoned()

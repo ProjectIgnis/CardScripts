@@ -36,7 +36,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_STEELSWARM}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1 and not Duel.CheckPhaseActivity() and e:GetHandler():IsSetCard(SET_STEELSWARM)
+	return Duel.IsPhase(PHASE_MAIN1) and not Duel.CheckPhaseActivity() and e:GetHandler():IsSetCard(SET_STEELSWARM)
 		and not Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_ONFIELD,0,1,nil,TYPE_SPELL+TYPE_TRAP) 
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

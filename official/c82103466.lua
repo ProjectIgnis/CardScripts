@@ -84,7 +84,7 @@ end
 function s.adcon(e)
 	local c=e:GetHandler()
 	return Duel.GetAttacker()==c and c:GetBattleTarget()
-		and (Duel.GetCurrentPhase()==PHASE_DAMAGE or Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL)
+		and (Duel.IsPhase(PHASE_DAMAGE) or Duel.IsPhase(PHASE_DAMAGE_CAL))
 end
 function s.adtg(e,c)
 	return c==e:GetHandler():GetBattleTarget()

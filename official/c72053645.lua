@@ -29,7 +29,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e1:SetTargetRange(1,0)
 		e1:SetValue(1)
-		if Duel.IsTurnPlayer(tp) and (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE) then
+		if Duel.IsTurnPlayer(tp) and Duel.IsBattlePhase() then
 			e1:SetLabel(Duel.GetTurnCount())
 			e1:SetCondition(s.bpcon)
 			e1:SetReset(RESET_PHASE|PHASE_BATTLE|RESET_SELF_TURN,2)

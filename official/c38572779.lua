@@ -38,12 +38,12 @@ function s.immop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_DINOSAUR))
 	e1:SetValue(s.efilter)
-	if Duel.GetCurrentPhase()==PHASE_MAIN1 then
+	if Duel.IsPhase(PHASE_MAIN1) then
 		e1:SetReset(RESET_PHASE|PHASE_MAIN1)
 	else
 		e1:SetReset(RESET_PHASE|PHASE_MAIN2)
 	end
-	if Duel.GetCurrentPhase()==PHASE_MAIN1 then
+	if Duel.IsPhase(PHASE_MAIN1) then
 		Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_MAIN1,0,1)
 	else
 		Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_MAIN2,0,1)

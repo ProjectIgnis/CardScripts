@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1
+	return Duel.IsPhase(PHASE_MAIN1)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_BEASTWARRIOR)

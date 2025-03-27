@@ -55,7 +55,7 @@ function s.adop1(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.adcon2(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsTurnPlayer(tp) and (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE) and Duel.GetCurrentChain()==0
+	return Duel.IsTurnPlayer(tp) and Duel.IsBattlePhase() and Duel.GetCurrentChain()==0
 end
 function s.adtg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsDefenseAbove(0) end

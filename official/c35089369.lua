@@ -61,7 +61,7 @@ end
 function s.sccon(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsTurnPlayer(tp) then return false end
 	local ph=Duel.GetCurrentPhase()
-	return ph==PHASE_MAIN1 or (Duel.IsBattlePhase()) or ph==PHASE_MAIN2
+	return ph==PHASE_MAIN1 or Duel.IsBattlePhase() or ph==PHASE_MAIN2
 end
 function s.mfilter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_YANG_ZING)

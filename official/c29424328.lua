@@ -36,7 +36,7 @@ function s.tlimit(e,c)
 	return not c:IsAttribute(ATTRIBUTE_DARK)
 end
 function s.cfcon(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer() and Duel.GetFieldGroupCount(1-tp,LOCATION_DECK,0)>0
+	return Duel.IsTurnPlayer(1-tp) and Duel.GetFieldGroupCount(1-tp,LOCATION_DECK,0)>0
 end
 function s.cfop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetDecktopGroup(1-tp,1)

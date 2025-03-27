@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_BE_MATERIAL)
 	e1:SetProperty(EFFECT_FLAG_EVENT_PLAYER)
 	e1:SetCountLimit(1,id)
-	e1:SetCondition(function(e,tp,eg,ep,ev,re,r,rp) return r==REASON_XYZ and e:GetHandler():GetReasonCard():IsAttribute(ATTRIBUTE DARK) end)
+	e1:SetCondition(function(e,tp,eg,ep,ev,re,r,rp) return r==REASON_XYZ and e:GetHandler():GetReasonCard():IsAttribute(ATTRIBUTE_DARK) end)
 	e1:SetOperation(s.efop)
 	c:RegisterEffect(e1)
 	--Send 1 "Phantom Knights" card from your Deck to the GY

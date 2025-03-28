@@ -45,7 +45,7 @@ end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)
 	local g1=g:Filter(Card.IsLocation,nil,LOCATION_GRAVE)
-	if Duel.SendtoDeck(g1,nil,0,REASON_EFFECT)~=0 then
+	if Duel.SendtoDeck(g1,nil,SEQ_DECKTOP,REASON_EFFECT)~=0 then
 		local og=Duel.GetOperatedGroup()
 		if og:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then Duel.ShuffleDeck(tp) end
 		local g2=g:Filter(Card.IsLocation,nil,LOCATION_ONFIELD)

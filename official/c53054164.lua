@@ -69,7 +69,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local ft=math.min(tc:GetOverlayCount(),Duel.GetMZoneCount(tp,tc))
-	if tc and tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)>0 then
+	if tc and tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,SEQ_DECKTOP,REASON_EFFECT)>0 then
 		local og=Duel.GetOperatedGroup()
 		local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE,0,nil,e,tp)
 		if og:GetFirst():IsLocation(LOCATION_EXTRA) and ft>0 and #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then

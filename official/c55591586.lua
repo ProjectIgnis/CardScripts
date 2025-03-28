@@ -141,7 +141,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=tg:Filter(Card.IsRelateToEffect,nil,e)
 	if #sg>0 then
 		if Duel.SelectOption(tp,aux.Stringid(id,5),aux.Stringid(id,6))==0 then
-			Duel.SendtoDeck(sg,nil,0,REASON_EFFECT)
+			Duel.SendtoDeck(sg,nil,SEQ_DECKTOP,REASON_EFFECT)
 		else
 			Duel.SendtoDeck(sg,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 		end

@@ -34,7 +34,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local mg=tc:GetMaterial()
 	local ct=#mg
 	local sumtype=tc:GetSummonType()
-	if Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)~=0 and sumtype==SUMMON_TYPE_SYNCHRO
+	if Duel.SendtoDeck(tc,nil,SEQ_DECKTOP,REASON_EFFECT)~=0 and sumtype==SUMMON_TYPE_SYNCHRO
 		and ct>0 and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
 		and ct<=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		and mg:FilterCount(aux.NecroValleyFilter(s.mgfilter),nil,e,tp,tc)==ct

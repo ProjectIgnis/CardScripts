@@ -33,7 +33,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not tc:IsRelateToEffect(e) then return end
 	local code=tc:GetCode()
 	local lv=tc:GetOriginalLevel()
-	if Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)==0 then return end
+	if Duel.SendtoDeck(tc,nil,SEQ_DECKTOP,REASON_EFFECT)==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,code,lv,e,tp)
 	if #g>0 then

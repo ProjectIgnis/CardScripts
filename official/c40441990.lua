@@ -64,6 +64,6 @@ end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local bc=e:GetHandler():GetBattleTarget()
 	if bc:IsRelateToBattle() then
-		Duel.SendtoDeck(bc,nil,0,REASON_EFFECT)
+		Duel.SendtoDeck(bc,nil,SEQ_DECKTOP,REASON_EFFECT)
 	end
 end

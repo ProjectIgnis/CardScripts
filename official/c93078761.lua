@@ -37,7 +37,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if r2==1 or r2==6 then
 			Duel.SendtoHand(c,nil,REASON_EFFECT)
 		else
-			Duel.SendtoDeck(c,nil,0,REASON_EFFECT)
+			Duel.SendtoDeck(c,nil,SEQ_DECKTOP,REASON_EFFECT)
 		end
 	end
 end

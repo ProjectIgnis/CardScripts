@@ -49,5 +49,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SendtoDeck(e:GetHandler(),nil,0,REASON_EFFECT)
+	Duel.SendtoDeck(e:GetHandler(),nil,SEQ_DECKTOP,REASON_EFFECT)
 end

@@ -55,7 +55,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		if tc:IsAbleToDeck() then
 			local opt=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
 			if opt==0 then
-				Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)
+				Duel.SendtoDeck(tc,nil,SEQ_DECKTOP,REASON_EFFECT)
 			else
 				Duel.SendtoDeck(tc,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 			end

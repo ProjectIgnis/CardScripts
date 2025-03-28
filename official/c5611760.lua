@@ -45,7 +45,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterFlagEffect(tp,id,0,0,0)
 	local loc=LOCATION_HAND|LOCATION_ONFIELD|LOCATION_GRAVE
 	local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,loc,loc,nil,e:GetHandler())
-	if #g>0 and Duel.SendtoDeck(g,nil,0,REASON_EFFECT)>0 then
+	if #g>0 and Duel.SendtoDeck(g,nil,SEQ_DECKTOP,REASON_EFFECT)>0 then
 		local og=Duel.GetOperatedGroup()
 		if not og:IsExists(Card.IsLocation,1,nil,LOCATION_DECK|LOCATION_EXTRA) then return end
 		local dg=og:Filter(Card.IsLocation,nil,LOCATION_DECK)

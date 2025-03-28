@@ -37,7 +37,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local mg=c:GetMaterial()
 	local sumable=true
 	local sumtype=c:GetSummonType()
-	if Duel.SendtoDeck(c,nil,0,REASON_EFFECT)==0 or (sumtype&SUMMON_TYPE_FUSION)~=SUMMON_TYPE_FUSION or #mg==0
+	if Duel.SendtoDeck(c,nil,SEQ_DECKTOP,REASON_EFFECT)==0 or (sumtype&SUMMON_TYPE_FUSION)~=SUMMON_TYPE_FUSION or #mg==0
 		or #mg>Duel.GetLocationCount(tp,LOCATION_MZONE)
 		or mg:IsExists(s.mgfilter,1,nil,e,tp,c) then
 		sumable=false

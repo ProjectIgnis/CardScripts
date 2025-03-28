@@ -89,7 +89,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(1-tp,Card.IsAbleToDeck,1-tp,LOCATION_HAND,0,1,1,nil)
 	if #g>0 then
 		if Duel.SelectOption(1-tp,aux.Stringid(id,2),aux.Stringid(id,3))==0 then
-			Duel.SendtoDeck(g,nil,0,REASON_EFFECT)
+			Duel.SendtoDeck(g,nil,SEQ_DECKTOP,REASON_EFFECT)
 		else
 			Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 		end

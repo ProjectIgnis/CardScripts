@@ -31,7 +31,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	if not tg or tg:FilterCount(Card.IsRelateToEffect,nil,e)~=3 then return end
-	Duel.SendtoDeck(tg,nil,0,REASON_EFFECT)
+	Duel.SendtoDeck(tg,nil,SEQ_DECKTOP,REASON_EFFECT)
 	local g=Duel.GetOperatedGroup()
 	if g:IsExists(s.sfilter,1,nil,tp) then Duel.ShuffleDeck(tp) end
 	if g:IsExists(s.sfilter,1,nil,1-tp) then Duel.ShuffleDeck(1-tp) end

@@ -74,7 +74,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		local g=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_HAND,0,1,1,nil)
 		if Duel.SelectOption(tp,aux.Stringid(id,3),aux.Stringid(id,4))==0 then
-			Duel.SendtoDeck(g,nil,0,REASON_EFFECT)
+			Duel.SendtoDeck(g,nil,SEQ_DECKTOP,REASON_EFFECT)
 		else
 			Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 		end

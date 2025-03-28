@@ -68,7 +68,7 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_GRAVE,0,nil)
-	if Duel.SendtoDeck(g,nil,0,REASON_EFFECT)>0 then
+	if Duel.SendtoDeck(g,nil,SEQ_DECKTOP,REASON_EFFECT)>0 then
 		local tc=Duel.GetFirstTarget()
 		if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 			local e1=Effect.CreateEffect(e:GetHandler())

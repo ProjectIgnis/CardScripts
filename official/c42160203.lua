@@ -70,7 +70,7 @@ end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToExtraAsCost() end
-	Duel.SendtoDeck(c,nil,0,REASON_COST)
+	Duel.SendtoDeck(c,nil,SEQ_DECKTOP,REASON_COST)
 end
 function s.spfilter(c,e,tp)
 	return c:IsFaceup() and (c:IsSetCard(SET_SUPREME_KING_GATE) or c:IsSetCard(SET_SUPREME_KING_DRAGON))

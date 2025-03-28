@@ -60,7 +60,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local sg=aux.SelectUnselectGroup(rg,e,tp,1,2,s.rescon,1,tp,HINTMSG_TODECK,s.rescon)
 	if #sg==0 then return end
 	Duel.HintSelection(sg,true)
-	if Duel.SendtoDeck(sg,nil,0,REASON_EFFECT)>0 and sg:IsExists(Card.IsLocation,1,nil,LOCATION_EXTRA)
+	if Duel.SendtoDeck(sg,nil,SEQ_DECKTOP,REASON_EFFECT)>0 and sg:IsExists(Card.IsLocation,1,nil,LOCATION_EXTRA)
 		and Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
 		Duel.Destroy(eg,REASON_EFFECT)
 	end

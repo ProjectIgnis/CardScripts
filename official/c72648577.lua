@@ -30,7 +30,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local sg=g:Select(tp,3,3,nil)
 	local cg=sg:Filter(Card.IsLocation,nil,LOCATION_HAND)
 	Duel.ConfirmCards(1-tp,cg)
-	Duel.SendtoDeck(sg,nil,0,REASON_EFFECT)
+	Duel.SendtoDeck(sg,nil,SEQ_DECKTOP,REASON_EFFECT)
 	local dg=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil)
 	if #dg>1 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.BreakEffect()

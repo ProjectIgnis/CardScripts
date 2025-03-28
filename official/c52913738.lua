@@ -47,5 +47,5 @@ function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	return true
 end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SendtoDeck(e:GetHandler(),nil,0,REASON_EFFECT)
+	Duel.SendtoDeck(e:GetHandler(),nil,SEQ_DECKTOP,REASON_EFFECT)
 end

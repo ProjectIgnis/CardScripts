@@ -37,6 +37,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 	local g=Duel.GetTargetCards(e)
 	if #g~=0 then
-		Duel.SendtoDeck(g,nil,0,REASON_EFFECT)
+		Duel.SendtoDeck(g,nil,SEQ_DECKTOP,REASON_EFFECT)
 	end
 end

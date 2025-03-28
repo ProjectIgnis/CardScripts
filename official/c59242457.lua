@@ -82,7 +82,7 @@ function s.teop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local tc=c:GetOverlayGroup():FilterSelect(tp,s.tefilter,1,1,nil,tp):GetFirst()
-	if not tc or Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)<1 or not tc:IsLocation(LOCATION_EXTRA) then return end
+	if not tc or Duel.SendtoDeck(tc,nil,SEQ_DECKTOP,REASON_EFFECT)<1 or not tc:IsLocation(LOCATION_EXTRA) then return end
 	if c:IsFacedown() or c:IsControler(1-tp) or c:IsImmuneToEffect(e) then return end
 	local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(c),tp,nil,nil,REASON_XYZ)
 	if #pg>1 or (#pg==1 and not pg:IsContains(c)) then return end

@@ -90,7 +90,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if lb & TYPE_TRAP ~=0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		local g=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsAbleToDeck),tp,0,LOCATION_ONFIELD,1,1,nil)
-		if #g>0 then Duel.SendtoDeck(g,nil,0,REASON_EFFECT) end
+		if #g>0 then Duel.SendtoDeck(g,nil,SEQ_DECKTOP,REASON_EFFECT) end
 	end
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)

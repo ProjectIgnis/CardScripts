@@ -64,7 +64,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsType(TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ)
 		or Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))==0 then
-		Duel.SendtoDeck(c,nil,0,REASON_EFFECT)
+		Duel.SendtoDeck(c,nil,SEQ_DECKTOP,REASON_EFFECT)
 	else
 		Duel.SendtoDeck(c,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 	end

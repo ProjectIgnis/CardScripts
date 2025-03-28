@@ -74,7 +74,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 		end
 		if not c:IsRelateToEffect(e) then return end
 		Duel.BreakEffect()
-		Duel.SendtoDeck(c,nil,0,REASON_EFFECT)
+		Duel.SendtoDeck(c,nil,SEQ_DECKTOP,REASON_EFFECT)
 		if c:IsLocation(LOCATION_EXTRA) and Duel.IsExistingMatchingCard(s.house_filter,tp,LOCATION_EXTRA,0,1,nil,e,tp) then
 			local tg=Duel.GetFirstMatchingCard(s.house_filter,tp,LOCATION_EXTRA,0,nil,e,tp)
 			if tg then

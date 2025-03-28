@@ -40,7 +40,7 @@ end
 s.listed_series={SET_IMPCANTATION}
 s.listed_names={id}
 function s.filter(c,e,tp)
-	return c:IsSetCard(SET_IMPCANTATION) and not c:IsCode(id)  and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_IMPCANTATION) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.costfilter(c)
 	return c:IsRitualSpell() and not c:IsPublic()

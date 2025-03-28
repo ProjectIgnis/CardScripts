@@ -73,7 +73,7 @@ function s.spfilter1(c,e,tp,code)
 	return c:IsSetCard(SET_PHOTON) and c:GetOriginalCode()~=code and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.costfilter2(c)
-	return c:IsFaceup() and (c:IsSetCard(SET_PHOTON) or c:IsSetCard(SET_GALAXY))  and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and (c:IsSetCard(SET_PHOTON) or c:IsSetCard(SET_GALAXY)) and c:IsAbleToGraveAsCost()
 end
 function s.thfilter(c)
 	return c:IsSetCard(SET_PHOTON) and not c:IsCode(id) and c:IsAbleToHand()

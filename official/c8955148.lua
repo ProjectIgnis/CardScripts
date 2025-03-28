@@ -19,7 +19,7 @@ function s.costfilter(c)
 	return c:IsCode(72566043) and c:IsAbleToDeck()
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsAbleToDeck() and chkc:IsControler(tp)  and chkc~=e:GetHandler() and Duel.IsPlayerCanDraw(tp,1)  end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsAbleToDeck() and chkc:IsControler(tp) and chkc~=e:GetHandler() and Duel.IsPlayerCanDraw(tp,1)  end
 	if chk==0 then return e:GetHandler():IsAbleToDeck()
 		and Duel.IsExistingTarget(s.costfilter,tp,LOCATION_GRAVE,0,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)

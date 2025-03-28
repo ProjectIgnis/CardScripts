@@ -23,7 +23,7 @@ end
 s.listed_names={CARD_NEOS}
 s.material_setcode={SET_HERO,SET_ELEMENTAL_HERO,SET_NEOS,SET_NEO_SPACIAN}
 function s.ffilter(c,fc,sumtype,tp,sub,mg,sg)
-	return c:IsSetCard(SET_NEO_SPACIAN,fc,sumtype,tp)  and c:GetAttribute(fc,sumtype,tp)~=0 and (not sg or not sg:IsExists(s.fusfilter,1,c,c:GetAttribute(fc,sumtype,tp),fc,sumtype,tp))
+	return c:IsSetCard(SET_NEO_SPACIAN,fc,sumtype,tp) and c:GetAttribute(fc,sumtype,tp)~=0 and (not sg or not sg:IsExists(s.fusfilter,1,c,c:GetAttribute(fc,sumtype,tp),fc,sumtype,tp))
 end
 function s.fusfilter(c,attr,fc,sumtype,tp)
 	return c:IsSetCard(SET_NEO_SPACIAN,fc,sumtype,tp) and c:IsAttribute(attr,fc,sumtype,tp) and not c:IsHasEffect(511002961)

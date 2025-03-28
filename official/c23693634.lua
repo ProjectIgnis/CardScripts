@@ -29,8 +29,7 @@ function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsRace,c:GetControler(),LOCATION_GRAVE,LOCATION_GRAVE,nil,RACE_WARRIOR)*100
 end
 function s.sumcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetLocation()==LOCATION_GRAVE
-		and (e:GetHandler():GetReason()&REASON_BATTLE)~=0
+	return e:GetHandler():IsLocation(LOCATION_GRAVE) and (e:GetHandler():GetReason()&REASON_BATTLE)~=0
 end
 function s.filter(c,e,tp)
 	return c:IsRace(RACE_WARRIOR) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

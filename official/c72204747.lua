@@ -19,7 +19,7 @@ function s.filter1(c,e,sp)
 		and Duel.IsExistingMatchingCard(s.filter2,sp,LOCATION_DECK,0,1,nil,lv,e,sp)
 end
 function s.filter2(c,lv,e,sp)
-	return c:IsLevelBelow(lv) and c:IsSetCard(SET_DESTINY_HERO)  and c:IsCanBeSpecialSummoned(e,0,sp,false,false)
+	return c:IsLevelBelow(lv) and c:IsSetCard(SET_DESTINY_HERO) and c:IsCanBeSpecialSummoned(e,0,sp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter1(chkc,e,tp) end

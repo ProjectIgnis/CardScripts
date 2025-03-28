@@ -35,7 +35,7 @@ function s.initial_effect(c)
 end
 s.listed_names={73879377}
 s.LVnum=5
-s.LVset=0x111
+s.LVset=SET_ARMED_DRAGON
 function s.bdop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 end

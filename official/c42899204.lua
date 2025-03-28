@@ -37,7 +37,7 @@ function s.initial_effect(c)
 	e4:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e4:SetTarget(aux.PersistentTargetFilter)
 	e4:SetCondition(s.sccon)
-	e4:SetValue(0x129)
+	e4:SetValue(SET_EVIL_EYE)
 	c:RegisterEffect(e4)
 	--destroy
 	local e5=Effect.CreateEffect(c)

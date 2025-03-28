@@ -25,13 +25,12 @@ s.listed_names={68505803}
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	local att=0
-	local tc=g:GetFirst()
 	for tc in aux.Next(g) do
 		if not tc:IsCode(68505803) or not tc:IsType(TYPE_TUNER) then
 			att=(att|tc:GetAttribute())
 		end
 	end
-	att=(att&0x2a)
+	att=(att&ATTRIBUTE_WIND|ATTRIBUTE_WATER|ATTRIBUTE_DARK)
 	e:SetLabel(att)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)

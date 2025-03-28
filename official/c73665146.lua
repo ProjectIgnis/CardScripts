@@ -35,7 +35,7 @@ end
 s.counter_place_list={COUNTER_SPELL}
 s.listed_names={72443568}
 s.LVnum=4
-s.LVset=0xe8
+s.LVset=SET_SILENT_MAGICIAN
 function s.addc(e,tp,eg,ep,ev,re,r,rp)
 	if ep~=tp then
 		e:GetHandler():AddCounter(COUNTER_SPELL,1)

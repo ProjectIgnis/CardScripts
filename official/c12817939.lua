@@ -24,7 +24,7 @@ function s.initial_effect(c)
 end
 s.listed_names={58206034,85313220}
 s.LVnum=6
-s.LVset=0x4f
+s.LVset=SET_DARK_LUCIUS
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local d=Duel.GetAttackTarget()

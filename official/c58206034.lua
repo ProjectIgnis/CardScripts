@@ -20,7 +20,7 @@ function s.initial_effect(c)
 end
 s.listed_names={12817939}
 s.LVnum=8
-s.LVset=0x4f
+s.LVset=SET_DARK_LUCIUS
 function s.discon(e)
 	return e:GetHandler():GetFlagEffect(12817939)~=0
 end

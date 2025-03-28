@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
 	e2:SetCode(EFFECT_ADD_SETCODE)
-	e2:SetValue(0x2b)
+	e2:SetValue(SET_NINJA)
 	c:RegisterEffect(e2)
 	--Destroy 1 card on the field
 	local e3=Effect.CreateEffect(c)

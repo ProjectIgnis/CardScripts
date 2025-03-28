@@ -38,7 +38,7 @@ function s.initial_effect(c)
 end
 s.listed_names={19877898,34088136}
 s.LVnum=5
-s.LVset=0x5d
+s.LVset=SET_ULTIMATE_INSECT
 function s.con(e)
 	return e:GetHandler():GetFlagEffect(id)~=0
 end

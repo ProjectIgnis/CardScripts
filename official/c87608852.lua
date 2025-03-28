@@ -48,7 +48,7 @@ function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return e:GetLabelObject()~=se and c:IsLevelAbove(5)
 end
 function s.spfilter(c,e,tp)
-	return c:IsLevelAbove(5) and c:IsRace(RACE_SPELLCASTER) and c:IsAttribute(0x30)
+	return c:IsLevelAbove(5) and c:IsRace(RACE_SPELLCASTER) and c:IsAttribute(ATTRIBUTE_DARK|ATTRIBUTE_LIGHT)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

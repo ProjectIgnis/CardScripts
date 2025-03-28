@@ -30,7 +30,7 @@ function s.initial_effect(c)
 end
 s.listed_names={37267041}
 s.LVnum=5
-s.LVset=0xe7
+s.LVset=SET_SILENT_SWORDSMAN
 function s.efilter(e,te)
 	return te:IsActiveType(TYPE_SPELL) and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
 end

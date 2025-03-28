@@ -22,7 +22,7 @@ function s.initial_effect(c)
 end
 function s.reg(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if (r&0x41)==0x41 and rp==1-tp and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD)
+	if (r&(REASON_DESTROY|REASON_EFFECT))==(REASON_DESTROY|REASON_EFFECT) and rp==1-tp and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD)
 		and c:IsPreviousPosition(POS_FACEUP) then
 		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 	end

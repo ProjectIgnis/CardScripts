@@ -40,7 +40,7 @@ function s.initial_effect(c)
 end
 function s.spr(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if (r&0x41)~=0x41 or c:IsPreviousLocation(LOCATION_SZONE) then return end
+	if (r&(REASON_DESTROY|REASON_EFFECT)~=(REASON_DESTROY|REASON_EFFECT)) or c:IsPreviousLocation(LOCATION_SZONE) then return end
 	c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,2)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

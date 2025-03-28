@@ -27,7 +27,7 @@ function s.filter(c)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp,chk)
 	return e:GetHandler():IsPreviousPosition(POS_FACEUP)
-		and (e:GetHandler():GetReason()&0x41)==0x41
+		and (e:GetHandler():GetReason()&(REASON_DESTROY|REASON_EFFECT))==(REASON_DESTROY|REASON_EFFECT)
 end
 function s.thfilter(c)
 	return c:IsSetCard(SET_NORDIC_RELIC) and c:IsAbleToHand()

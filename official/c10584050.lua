@@ -26,12 +26,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return true end
 	local seqs={}
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))
-	local zone1=Duel.SelectFieldZone(tp,1,0,LOCATION_MZONE,0x60<<16)
+	local zone1=Duel.SelectFieldZone(tp,1,0,LOCATION_MZONE,ZONES_EMZ<<16)
 	table.insert(seqs, math.log(zone1,2)-16)
 	Duel.Hint(HINT_ZONE,tp,zone1)
 	if Duel.IsExistingMatchingCard(s.bonusfilter,tp,LOCATION_MZONE,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))
-		local zone2=Duel.SelectFieldZone(tp,1,0,LOCATION_MZONE,(0x60<<16)|zone1)
+		local zone2=Duel.SelectFieldZone(tp,1,0,LOCATION_MZONE,(ZONES_EMZ<<16)|zone1)
 		table.insert(seqs, math.log(zone2,2)-16)
 		Duel.Hint(HINT_ZONE,tp,zone2)
 	end

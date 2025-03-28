@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.LVnum=10
-s.LVset=0x10a4
+s.LVset=SET_WINGED_KURIBOH
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsTurnPlayer(1-tp) and Duel.IsBattlePhase()
 end

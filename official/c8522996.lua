@@ -82,5 +82,5 @@ function s.condition(e,c)
 	return c:IsAttribute(e:GetHandler():GetAttribute())
 end
 function s.splimit(e,c,tp,sumtp,sumpos)
-	return c:IsAttribute(0xff-e:GetHandler():GetAttribute())
+	return c:IsAttribute(ATTRIBUTE_ALL&~(e:GetHandler():GetAttribute()))
 end

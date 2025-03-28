@@ -29,7 +29,7 @@ function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(s.atfilter,c:GetControler(),LOCATION_MZONE,0,nil)*200
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return (e:GetHandler():GetReason()&0x41)==0x41
+	return (e:GetHandler():GetReason()&(REASON_DESTROY|REASON_EFFECT))==(REASON_DESTROY|REASON_EFFECT)
 		and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.filter(c)

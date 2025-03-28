@@ -24,7 +24,7 @@ s.listed_names={86188410}
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetPreviousEquipTarget()
 	return e:GetHandler():IsReason(REASON_LOST_TARGET) and ec:IsLocation(LOCATION_GRAVE)
-		and (ec:GetReason()&0x41)==0x41
+		and (ec:GetReason()&(REASON_DESTROY|REASON_EFFECT))==(REASON_DESTROY|REASON_EFFECT)
 end
 function s.dfilter(c)
 	return c:IsSpellTrap()

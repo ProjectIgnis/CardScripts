@@ -68,7 +68,7 @@ function s.eqlimit(e,c)
 	return c:GetControler()==e:GetOwnerPlayer() and c:IsRace(RACE_PLANT)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetReason()&0x41==0x41 and e:GetHandler():GetEquipTarget()
+	return e:GetHandler():GetReason()&(REASON_DESTROY|REASON_EFFECT)==(REASON_DESTROY|REASON_EFFECT) and e:GetHandler():GetEquipTarget()
 end
 function s.spfilter(c,e,tp)
 	return c:IsRace(RACE_PLANT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

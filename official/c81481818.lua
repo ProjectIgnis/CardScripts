@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_ADD_SETCODE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetValue(0xad)
+	e1:SetValue(SET_FRIGHTFUR)
 	c:RegisterEffect(e1)
 	--fusion substitute
 	local e2=Effect.CreateEffect(c)

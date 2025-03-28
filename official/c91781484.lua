@@ -52,7 +52,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e4:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 			e4:SetType(EFFECT_TYPE_SINGLE)
 			e4:SetCode(EFFECT_ADD_SETCODE)
-			e4:SetValue(0x10af)
+			e4:SetValue(SET_DDD)
 			e4:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e4)
 		end

@@ -25,7 +25,7 @@ function s.initial_effect(c)
 end
 s.listed_names={1102515}
 s.LVnum=1
-s.LVset=0x53
+--s.LVset=0x53 --This is incorrect, 0x53 is "Constellar"
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetTargetPlayer(tp)

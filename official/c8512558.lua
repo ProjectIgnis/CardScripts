@@ -29,14 +29,14 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND,0,nil,e,tp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if chk==0 then return ft>0 and aux.SelectUnselectGroup(g,e,tp,1,ft,s.rescon(aux.PropertyTableFilter(Card.GetSetCard,0x54,0x59,0x82,0x8f)),0) end
+	if chk==0 then return ft>0 and aux.SelectUnselectGroup(g,e,tp,1,ft,s.rescon(aux.PropertyTableFilter(Card.GetSetCard,SET_GAGAGA,SET_GOGOGO,SET_DODODO,SET_ZUBABA)),0) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND,0,nil,e,tp)
 	local ft=math.min(Duel.GetLocationCount(tp,LOCATION_MZONE),4)
 	if #g>0 and ft>0 then 
-		local checkfunc=aux.PropertyTableFilter(Card.GetSetCard,0x54,0x59,0x82,0x8f)
+		local checkfunc=aux.PropertyTableFilter(Card.GetSetCard,SET_GAGAGA,SET_GOGOGO,SET_DODODO,SET_ZUBABA)
 		if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
 		local sg=aux.SelectUnselectGroup(g,e,tp,1,ft,s.rescon(checkfunc),1,tp,HINTMSG_SPSUMMON,s.rescon(checkfunc))
 		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP_DEFENSE)

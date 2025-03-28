@@ -41,7 +41,7 @@ local function getzones(tp)
 	for tc in aux.Next(lg) do
 		zone=(zone|tc:GetColumnZone(LOCATION_MZONE,0,0,tp))
 	end
-	return zone&0x1f
+	return zone&ZONES_MMZ
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE|LOCATION_REMOVED) and chkc:IsControler(tp) and s.filter(chkc,e,tp,getzones(tp)) end

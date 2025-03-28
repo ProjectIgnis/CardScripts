@@ -34,7 +34,7 @@ function s.initial_effect(c)
 end
 s.listed_names={74591968}
 s.LVnum=2
-s.LVset=0x5f
+s.LVset=SET_MYSTIC_SWORDSMAN
 function s.bdop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 end

@@ -19,7 +19,7 @@ function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_BLACKWING)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
-	return (r&0x41)==0x41 and rp~=tp
+	return (r&(REASON_DESTROY|REASON_EFFECT))==(REASON_DESTROY|REASON_EFFECT) and rp~=tp
 		and (e:GetHandler():GetPreviousLocation()&LOCATION_ONFIELD)~=0
 		and (e:GetHandler():GetPreviousPosition()&POS_FACEDOWN)~=0
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)

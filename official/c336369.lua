@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_GUSTO}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return (r&0x41)==0x41
+	return (r&(REASON_DESTROY|REASON_EFFECT))==(REASON_DESTROY|REASON_EFFECT)
 end
 function s.filter(c,e,tp)
 	return c:IsLevelAbove(5) and c:IsSetCard(SET_GUSTO) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

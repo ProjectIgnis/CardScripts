@@ -37,7 +37,7 @@ function s.initial_effect(c)
 end
 s.listed_names={34088136}
 s.LVnum=1
-s.LVset=0x5d
+s.LVset=SET_ULTIMATE_INSECT
 function s.efilter(e,te)
 	return te:IsActiveType(TYPE_SPELL)
 end

@@ -26,7 +26,7 @@ end
 s.listed_series={SET_BLACKWING}
 function s.cfilter(c,tp)
 	return c:IsSetCard(SET_BLACKWING) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
-		and c:IsPreviousPosition(POS_FACEUP) and (c:GetReason()&0x41)==0x41
+		and c:IsPreviousPosition(POS_FACEUP) and (c:GetReason()&(REASON_DESTROY|REASON_EFFECT))==(REASON_DESTROY|REASON_EFFECT)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

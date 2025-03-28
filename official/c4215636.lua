@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c,tp)
-	return (c:GetReason()&0x41)==0x41 and c:IsControler(tp) and c:IsAttribute(ATTRIBUTE_WIND)
+	return (c:GetReason()&(REASON_DESTROY|REASON_EFFECT))==(REASON_DESTROY|REASON_EFFECT) and c:IsControler(tp) and c:IsAttribute(ATTRIBUTE_WIND)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

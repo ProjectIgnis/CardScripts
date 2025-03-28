@@ -28,7 +28,7 @@ function s.initial_effect(c)
 end
 s.listed_names={74388798}
 s.LVnum=7
-s.LVset=0xe7
+s.LVset=SET_SILENT_SWORDSMAN
 function s.distg(e,c)
 	return c:IsSpell()
 end

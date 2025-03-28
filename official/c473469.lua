@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 function s.filter(c,tp)
 	return c:IsTrap() and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousControler(tp)
-		and (c:GetReason()&0x41)==0x41
+		and (c:GetReason()&(REASON_DESTROY|REASON_EFFECT))==(REASON_DESTROY|REASON_EFFECT)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and eg:IsExists(s.filter,1,nil,tp)

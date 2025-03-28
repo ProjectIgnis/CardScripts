@@ -41,7 +41,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return (e:GetHandler():GetReason()&0x41)==0x41
+	return (e:GetHandler():GetReason()&REASON_DESTROY|REASON_EFFECT)==(REASON_DESTROY|REASON_EFFECT)
 end
 function s.filter(c)
 	local def=c:GetDefense()

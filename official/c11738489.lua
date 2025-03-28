@@ -51,7 +51,7 @@ function s.efilter(e,te)
 	return te:GetOwner()~=e:GetOwner()
 end
 function s.desfilter(c,hc,tp)
-	local zone=hc:GetLinkedZone(tp)&~0x60
+	local zone=hc:GetLinkedZone(tp)&~ZONES_EMZ
 	return Duel.GetMZoneCount(tp,c,tp,LOCATION_REASON_TOFIELD,zone)>0
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -67,7 +67,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	local zone=e:GetHandler():GetLinkedZone(tp)&~0x60
+	local zone=e:GetHandler():GetLinkedZone(tp)&~ZONES_EMZ
 	if tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)>0
 		and Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_IGNISTER,SET_IGNISTER,TYPES_TOKEN,0,0,1,RACE_CYBERSE,ATTRIBUTE_DARK) then

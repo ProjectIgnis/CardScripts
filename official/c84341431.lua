@@ -34,7 +34,7 @@ function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	else return false end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return (e:GetHandler():GetReason()&0x41)==0x41
+	return (e:GetHandler():GetReason()&(REASON_DESTROY|REASON_EFFECT))==(REASON_DESTROY|REASON_EFFECT)
 end
 function s.filter(c,e,tp)
 	return c:IsSetCard(SET_ARCHFIEND) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

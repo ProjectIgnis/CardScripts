@@ -63,7 +63,7 @@ function s.eqlimit(e,c)
 	return c:GetControler()==e:GetOwnerPlayer()
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return r&0x41==0x41 and e:GetHandler():GetEquipTarget()~=nil
+	return r&(REASON_DESTROY|REASON_EFFECT)==(REASON_DESTROY|REASON_EFFECT) and e:GetHandler():GetEquipTarget()~=nil
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() end

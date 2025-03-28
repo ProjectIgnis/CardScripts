@@ -13,5 +13,5 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.atktg(e,c)
-	return c:IsRace(0x60040)
+	return c:IsRace(RACE_FISH|RACE_SEASERPENT|RACE_AQUA)
 end

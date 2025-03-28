@@ -23,7 +23,7 @@ function s.initial_effect(c)
 end
 s.listed_names={46384672}
 s.LVnum=7
-s.LVset=0x111
+s.LVset=SET_ARMED_DRAGON
 function s.cfilter(c,tp)
 	local atk=c:GetAttack()
 	if atk<0 then atk=0 end

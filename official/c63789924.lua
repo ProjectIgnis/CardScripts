@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	return (r&0x41)==0x41 and e:GetHandler():GetEquipTarget()~=nil and e:GetHandler():IsLocation(LOCATION_GRAVE)
+	return (r&(REASON_DESTROY|REASON_EFFECT))==(REASON_DESTROY|REASON_EFFECT) and e:GetHandler():GetEquipTarget()~=nil and e:GetHandler():IsLocation(LOCATION_GRAVE)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

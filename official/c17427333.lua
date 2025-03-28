@@ -1,7 +1,6 @@
 --Ｅ．Ｍ．Ｒ．
 --E.M.R.
 --Scripted by DyXel
-DIDNT_SKIP_COST=0xDEADBEEF
 local s,id=GetID()
 function s.initial_effect(c)
 	--Tribute and destroy based on og ATK
@@ -21,14 +20,14 @@ function s.costfilter(c,tc)
 		and Duel.IsExistingTarget(nil,0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,Group.FromCards(tc,c))
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	e:SetLabel(DIDNT_SKIP_COST)
+	e:SetLabel(100)
 	if chk==0 then return true end
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) end
 	if chk==0 then
-		if e:GetLabel()~=DIDNT_SKIP_COST then return false end
+		if e:GetLabel()~=100 then return false end
 		return Duel.CheckReleaseGroupCost(tp,s.costfilter,1,false,nil,nil,c)
 	end
 	local tg=Duel.SelectReleaseGroupCost(tp,s.costfilter,1,1,false,nil,nil,c)

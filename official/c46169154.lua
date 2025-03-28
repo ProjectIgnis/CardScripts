@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-s.listed_names={0x161}
+s.listed_series={SET_WAR_ROCK}
 --Normal Summon without Tributing
 function s.cfilter(c)
 	return c:IsFacedown() or not c:IsRace(RACE_WARRIOR)

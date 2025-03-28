@@ -26,7 +26,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.rescon(sg,e,tp,mg)
-	local t={0x54,0x59,0x82,0x8f}
+	local t={SET_GAGAGA,SET_GOGOGO,SET_DODODO,SET_ZUBABA}
 	local count = 0
 	for i, set in ipairs(t) do
 		if sg:IsExists(Card.IsSetCard,1,nil,set) then count = count + 1 end

@@ -15,8 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c)
-	local tpe=c:GetType()
-	return c:IsFaceup() and (tpe==0x20002 or tpe==0x20004)
+	return c:IsFaceup() and c:IsContinuousSpellTrap()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and s.filter(chkc) end

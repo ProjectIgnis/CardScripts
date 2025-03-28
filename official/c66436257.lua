@@ -25,7 +25,7 @@ function s.filter(c)
 	return c:IsAttribute(ATTRIBUTE_FIRE) and c:GetCode()~=id
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),69832741) and Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT)~=0
+	if not Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),CARD_SPIRIT_ELIMINATION) and Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT)~=0
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil) then
 		Duel.Damage(1-tp,ev,REASON_EFFECT)
 	end

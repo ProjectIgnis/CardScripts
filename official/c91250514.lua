@@ -25,7 +25,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(tp,2,REASON_EFFECT)
 	Duel.BreakEffect()
-	if e:GetHandler():IsRelateToEffect(e) and not Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),69832741) then
+	if e:GetHandler():IsRelateToEffect(e) and not Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),CARD_SPIRIT_ELIMINATION) then
 		Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT)
 	end
 end

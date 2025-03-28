@@ -11,7 +11,7 @@ function s.fcheck(tp,sg,fc)
 	return sg:FilterCount(Card.IsLocation,nil,LOCATION_HAND_DECK_GRAVE)<=1
 end
 function s.fextra(e,tp,mg)
-	if Duel.GetLP(tp)<Duel.GetLP(1-tp) and not Duel.IsPlayerAffectedByEffect(tp,69832741) then
+	if Duel.GetLP(tp)<Duel.GetLP(1-tp) and not Duel.IsPlayerAffectedByEffect(tp,CARD_SPIRIT_ELIMINATION) then
 		local eg=Duel.GetMatchingGroup(s.exfilter0,tp,LOCATION_MZONE|LOCATION_HAND_DECK_GRAVE,0,nil)
 		if #eg>0 then
 			return eg,s.fcheck

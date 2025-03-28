@@ -31,7 +31,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_IGNISTER}
 function s.mfilter(c)
-	return not Duel.IsPlayerAffectedByEffect(c:GetControler(),69832741)
+	return not Duel.IsPlayerAffectedByEffect(c:GetControler(),CARD_SPIRIT_ELIMINATION)
 		and c:IsSetCard(SET_IGNISTER) and c:IsLevelAbove(1) and c:IsAbleToRemove()
 end
 function s.extrafil(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -36,7 +36,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not (tc:IsRelateToEffect(e) and tc:IsFaceup()) then return end
 	if Duel.IsChainDisablable(0) then
-		local g=Duel.GetMatchingGroup(s.cfilter,tp,0,LOCATION_HAND,nil,tc:GetOriginalType()&0x7)
+		local g=Duel.GetMatchingGroup(s.cfilter,tp,0,LOCATION_HAND,nil,tc:GetOriginalType()&(TYPE_MONSTER|TYPE_SPELL|TYPE_TRAP))
 		if #g>0 and Duel.SelectYesNo(1-tp,aux.Stringid(id,1)) then
 			Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_DISCARD)
 			local sg=g:Select(1-tp,1,1,nil)

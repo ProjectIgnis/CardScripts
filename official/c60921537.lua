@@ -22,7 +22,7 @@ function s.matfilter(c)
 	return c:HasLevel() and c:IsType(TYPE_FUSION|TYPE_SYNCHRO) and c:IsAbleToRemove()
 end
 function s.extramat(e,tp,eg,ep,ev,re,r,rp,chk)
-	return Duel.IsPlayerAffectedByEffect(tp,69832741)
+	return Duel.IsPlayerAffectedByEffect(tp,CARD_SPIRIT_ELIMINATION)
 		and Group.NewGroup() or Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_GRAVE,0,nil)
 end
 function s.extratg(e,tp,eg,ep,ev,re,r,rp,chk)

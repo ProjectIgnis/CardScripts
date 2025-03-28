@@ -43,7 +43,7 @@ function s.filter(c,e)
 end
 function s.chain_target(e,te,tp,value)
 	if not value or value&SUMMON_TYPE_FUSION==0 then return Group.CreateGroup() end
-	if Duel.IsPlayerAffectedByEffect(tp,69832741) then
+	if Duel.IsPlayerAffectedByEffect(tp,CARD_SPIRIT_ELIMINATION) then
 		return Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE|LOCATION_HAND|LOCATION_DECK,0,nil,te)
 	else
 		return Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE|LOCATION_GRAVE|LOCATION_HAND|LOCATION_DECK,0,nil,te)

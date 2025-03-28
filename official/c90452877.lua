@@ -34,7 +34,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)~=0 then
 		local b1=Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,nil)
-		local b2=not Duel.IsPlayerAffectedByEffect(tp,69832741) 
+		local b2=not Duel.IsPlayerAffectedByEffect(tp,CARD_SPIRIT_ELIMINATION) 
 			and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_GRAVE,1,nil)
 		local op=0
 		if b1 and b2 then

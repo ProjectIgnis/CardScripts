@@ -21,16 +21,16 @@ function s.remcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.remtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		if Duel.IsPlayerAffectedByEffect(1-tp,69832741) then
-			return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,0x0e,1,nil)
+		if Duel.IsPlayerAffectedByEffect(1-tp,CARD_SPIRIT_ELIMINATION) then
+			return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_HAND|LOCATION_ONFIELD,1,nil)
 		else
-			return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,0x1e,1,nil)
+			return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_HAND|LOCATION_ONFIELD|LOCATION_GRAVE,1,nil)
 		end
 	end
-	if Duel.IsPlayerAffectedByEffect(1-tp,69832741) then
-		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,0,0x0e)
+	if Duel.IsPlayerAffectedByEffect(1-tp,CARD_SPIRIT_ELIMINATION) then
+		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,0,LOCATION_HAND|LOCATION_ONFIELD)
 	else
-		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,0,0x1e)
+		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,0,LOCATION_HAND|LOCATION_ONFIELD|LOCATION_GRAVE)
 	end
 end
 function s.rmfilter(c)

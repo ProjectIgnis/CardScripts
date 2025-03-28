@@ -40,7 +40,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	for tc in aux.Next(og) do
 		typ = typ|tc:GetOriginalType()
 	end
-	Duel.SetChainLimit(s.chainlimit(typ&0x7))
+	Duel.SetChainLimit(s.chainlimit(typ&(TYPE_MONSTER|TYPE_SPELL|TYPE_TRAP)))
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,nil,#og,0,0)
 end
 function s.chainlimit(typ)

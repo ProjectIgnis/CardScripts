@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_CANNOT_TRIGGER)
 	e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetTargetRange(0xa,0xa)
+	e1:SetTargetRange(LOCATION_HAND|LOCATION_SZONE,LOCATION_HAND|LOCATION_SZONE)
 	e1:SetTarget(aux.TargetBoolFunction(Card.IsTrap))
 	c:RegisterEffect(e1)
 	--cannot activate

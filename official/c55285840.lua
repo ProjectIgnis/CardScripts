@@ -48,9 +48,9 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local g=c:GetOverlayGroup()
 	local ty=0
-	if c:IsAbleToRemove() then ty=ty | TYPE_MONSTER end
-	if Duel.IsPlayerCanDraw(tp,1) then ty=ty | TYPE_SPELL end
-	if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsAbleToDeck),tp,0,LOCATION_ONFIELD,1,nil) then ty=ty | TYPE_TRAP end
+	if c:IsAbleToRemove() then ty=ty|TYPE_MONSTER end
+	if Duel.IsPlayerCanDraw(tp,1) then ty=ty|TYPE_SPELL end
+	if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsAbleToDeck),tp,0,LOCATION_ONFIELD,1,nil) then ty=ty|TYPE_TRAP end
 	if chk==0 then return ty>0 and g:IsExists(Card.IsType,1,nil,ty) end
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
@@ -58,16 +58,15 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	local g=c:GetOverlayGroup()
 	local ty=0
-	if c:IsAbleToRemove() then ty=ty | TYPE_MONSTER end
-	if Duel.IsPlayerCanDraw(tp,1) then ty=ty | TYPE_SPELL end
-	if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsAbleToDeck),tp,0,LOCATION_ONFIELD,1,nil) then ty=ty | TYPE_TRAP end
+	if c:IsAbleToRemove() then ty=ty|TYPE_MONSTER end
+	if Duel.IsPlayerCanDraw(tp,1) then ty=ty|TYPE_SPELL end
+	if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsAbleToDeck),tp,0,LOCATION_ONFIELD,1,nil) then ty=ty|TYPE_TRAP end
 	if ty==0 then return end
 	local sg=aux.SelectUnselectGroup(g:Filter(Card.IsType,nil,ty),e,tp,1,3,s.rescon,1,tp,HINTMSG_REMOVEXYZ)
 	local lb=0
 	for tc in aux.Next(sg) do
-		lb=lb | tc:GetType()
+		lb=lb|tc:GetMainCardType()
 	end
-	lb=lb & 0x7
 	Duel.SendtoGrave(sg,REASON_EFFECT)
 	Duel.RaiseSingleEvent(c,EVENT_DETACH_MATERIAL,e,0,0,0,0)
 	Duel.BreakEffect()

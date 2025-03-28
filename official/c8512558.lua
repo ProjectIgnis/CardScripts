@@ -3,7 +3,7 @@
 --Scripted by Logical Nonsense and AlphaKretin, revised handling of archetype check by edo9300
 local s,id=GetID()
 function s.initial_effect(c)
-	c:AddSetcodesRule(id,true,0x8f) --required due to current cdb limitations
+	c:AddSetcodesRule(id,true,SET_ZUBABA) --required due to current cdb limitations
 	--Special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

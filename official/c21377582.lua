@@ -47,7 +47,7 @@ function s.valcheck(e,c)
 	local typ=0
 	local tc=g:GetFirst()
 	for tc in aux.Next(g) do
-		typ=typ|(tc:GetOriginalType()&0x7)
+		typ=typ|(tc:GetOriginalType()&(TYPE_MONSTER|TYPE_SPELL|TYPE_TRAP))
 	end
 	e:SetLabel(typ)
 end

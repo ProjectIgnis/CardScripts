@@ -29,7 +29,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	if chk==0 then
-		if not Duel.IsPlayerAffectedByEffect(tp,69832741) 
+		if not Duel.IsPlayerAffectedByEffect(tp,CARD_SPIRIT_ELIMINATION) 
 			and Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return false end
 		local rg=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil)
 		return Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,rg)

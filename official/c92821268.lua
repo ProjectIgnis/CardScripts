@@ -21,7 +21,7 @@ function s.cfilter(c,tp)
 		and c:IsPreviousControler(tp) and c:IsAbleToRemoveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,69832741) and eg:IsExists(s.cfilter,1,nil,tp) end
+	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_SPIRIT_ELIMINATION) and eg:IsExists(s.cfilter,1,nil,tp) end
 	local g=eg:Filter(s.cfilter,nil,tp)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end

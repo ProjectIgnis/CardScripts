@@ -35,7 +35,7 @@ function s.checkmat(tp,sg,fc)
 	return fc:IsSetCard(SET_DD) or not sg:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE)
 end
 function s.fextra(e,tp,mg)
-	if not Duel.IsPlayerAffectedByEffect(tp,69832741) then
+	if not Duel.IsPlayerAffectedByEffect(tp,CARD_SPIRIT_ELIMINATION) then
 		return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToRemove),tp,LOCATION_GRAVE,0,nil),s.checkmat
 	end
 	return nil

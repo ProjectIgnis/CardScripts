@@ -40,5 +40,5 @@ function s.filter3(c,e)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.filter3,nil,e,tp)
-	Duel.ChangePosition(g,0x1,0x1,0x1,0x1,true)
+	Duel.ChangePosition(g,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK,true)
 end

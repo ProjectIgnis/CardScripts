@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e3:SetCountLimit(1,id)
 	e3:SetHintTiming(TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP+TIMINGS_CHECK_MONSTER)
 	e3:SetCondition(s.adcon)
-	e3:SetCost(s.adcost)
+	e3:SetCost(Cost.SelfDiscard)
 	e3:SetTarget(s.adtg)
 	e3:SetOperation(s.adop)
 	c:RegisterEffect(e3)
@@ -81,10 +81,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 end
 function s.adcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
-function s.adcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsCode(69890967)

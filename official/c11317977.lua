@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
-	e1:SetCost(s.effcost)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetTarget(s.efftg)
 	e1:SetOperation(s.effop)
 	c:RegisterEffect(e1)
@@ -25,11 +25,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_LUNALIGHT}
 s.listed_names={CARD_POLYMERIZATION,id}
-function s.effcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsDiscardable() end
-	Duel.SendtoGrave(c,REASON_COST|REASON_DISCARD)
-end
 function s.gythfilter(c)
 	return c:IsSetCard(SET_LUNALIGHT) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()
 end

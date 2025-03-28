@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER)
-	e2:SetCost(s.ptcost)
+	e2:SetCost(Cost.SelfDiscard)
 	e2:SetTarget(s.pttg)
 	e2:SetOperation(s.ptop)
 	c:RegisterEffect(e2)
@@ -67,11 +67,6 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.BreakEffect()
 		Duel.Destroy(dg,REASON_EFFECT)
 	end
-end
-function s.ptcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsDiscardable() end
-	Duel.SendtoGrave(c,REASON_COST+REASON_DISCARD)
 end
 function s.pttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end

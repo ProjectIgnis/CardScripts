@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_DAMAGE)
 	e3:SetCountLimit(1,id)
 	e3:SetCondition(s.condition)
-	e3:SetCost(s.cost)
+	e3:SetCost(Cost.SelfDiscard)
 	e3:SetTarget(s.target)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
@@ -50,10 +50,6 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp and (r&REASON_BATTLE+REASON_EFFECT)~=0
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
 function s.filter(c,e,tp)
 	return c:IsSetCard(SET_GHOSTRICK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)

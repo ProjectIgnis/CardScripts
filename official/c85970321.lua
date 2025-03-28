@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.crcost)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetOperation(s.crop)
 	c:RegisterEffect(e1)
 	--draw
@@ -33,10 +33,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_YOSENJU}
-function s.crcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
-end
 function s.crop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	--activate limit

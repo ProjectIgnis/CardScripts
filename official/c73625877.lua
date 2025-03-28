@@ -10,14 +10,10 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCost(s.rmcost)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetTarget(s.rmtg)
 	e1:SetOperation(s.rmop)
 	c:RegisterEffect(e1)
-end
-function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_PSYCHIC) and c:IsAbleToRemove()

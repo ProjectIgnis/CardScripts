@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.shcon)
-	e1:SetCost(s.shcost)
+	e1:SetCost(Cost.SelfDiscardToGrave)
 	e1:SetTarget(s.shtg)
 	e1:SetOperation(s.shop)
 	c:RegisterEffect(e1)
@@ -21,10 +21,6 @@ function s.cfilter(c)
 end
 function s.shcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
-end
-function s.shcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() and e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_DISCARD+REASON_COST)
 end
 function s.filter(c)
 	return c:IsSetCard(SET_CHRONOMALY) and c:GetCode()~=id and c:IsMonster() and c:IsAbleToHand()

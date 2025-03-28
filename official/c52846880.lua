@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCountLimit(1,id)
-	e2:SetCost(s.spcost)
+	e2:SetCost(Cost.SelfDiscard)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
@@ -38,10 +38,6 @@ s.listed_series={SET_NEKROZ}
 s.listed_names={id}
 function s.mat_filter(c)
 	return not c:IsCode(id)
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_NEKROZ) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

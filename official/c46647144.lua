@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.atkcon)
-	e1:SetCost(s.atkcost)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
 	--cannot target
@@ -46,11 +46,6 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	e:SetLabelObject(d)
 	local g=Group.FromCards(a,d)
 	return a and d and a:IsRelateToBattle() and d:IsRelateToBattle() and g:IsExists(Card.IsType,1,nil,TYPE_LINK)
-end
-function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsDiscardable() end
-	Duel.SendtoGrave(c,REASON_COST+REASON_DISCARD)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetLabelObject()

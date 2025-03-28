@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e1:SetCondition(aux.damcon1)
-	e1:SetCost(s.effcost)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 	--Targeted "Odd-Eyes" or "Performapal" monster cannot be destroyed by battle or card effects
@@ -21,17 +21,13 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCondition(s.condition2)
-	e2:SetCost(s.effcost)
+	e2:SetCost(Cost.SelfDiscard)
 	e2:SetTarget(s.target2)
 	e2:SetOperation(s.operation2)
 	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_PERFORMAPAL,SET_ODD_EYES}
-function s.effcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
-end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local cid=Duel.GetChainInfo(ev,CHAININFO_CHAIN_ID)
 	local e1=Effect.CreateEffect(e:GetHandler())

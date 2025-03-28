@@ -29,18 +29,13 @@ function s.initial_effect(c)
 	e4:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_HAND)
-	e4:SetCost(s.thcost)
+	e4:SetCost(Cost.SelfDiscard)
 	e4:SetTarget(s.thtg)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
 s.listed_names={27288416,id}
 s.listed_series={SET_MOKEY_MOKEY}
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsDiscardable() end
-	Duel.SendtoGrave(c,REASON_COST+REASON_DISCARD)
-end
 function s.thfilter(c)
 	return c:IsSetCard(SET_MOKEY_MOKEY) and c:IsAbleToHand() and not c:IsCode(id)
 end

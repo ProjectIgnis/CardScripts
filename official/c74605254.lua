@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e4:SetRange(LOCATION_HAND)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e4:SetCountLimit(1,id)
-	e4:SetCost(s.thcost)
+	e4:SetCost(Cost.SelfDiscard)
 	e4:SetTarget(s.thtg)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
@@ -75,10 +75,6 @@ function s.scop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.BreakEffect()
 		Duel.Destroy(g,REASON_EFFECT)
 	end
-end
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
 function s.thfilter(c)
 	return c:IsFaceup() and (c:IsSetCard(SET_DARK_CONTRACT) or c:IsSetCard(SET_DD)) and c:IsAbleToHand()

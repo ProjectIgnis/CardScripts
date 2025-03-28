@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.indcon)
-	e1:SetCost(s.indcost)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetOperation(s.indop)
 	c:RegisterEffect(e1)
 	--Destruction replacement for "Appliancer" monsters
@@ -35,10 +35,6 @@ function s.indcon(e,tp,eg,ep,ev,re,r,rp)
 	if not (tc:IsFaceup() and tc:IsSetCard(SET_APPLIANCER)) then return false end
 	e:SetLabelObject(tc)
 	return true
-end
-function s.indcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST|REASON_DISCARD)
 end
 function s.indop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e1:SetCondition(s.damcon)
-	e1:SetCost(s.damcost)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetOperation(s.damop)
 	c:RegisterEffect(e1)
 	--Halve damage
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e2:SetCondition(aux.damcon1)
-	e2:SetCost(s.damcost)
+	e2:SetCost(Cost.SelfDiscard)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 	--Add to hand
@@ -39,10 +39,6 @@ end
 s.listed_series={SET_GOUKI}
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetBattleDamage(tp)>0 and Duel.GetAttacker()~=tp
-end
-function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())

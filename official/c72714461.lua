@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_HAND)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e3:SetCost(s.sccost)
+	e3:SetCost(Cost.SelfDiscard)
 	e3:SetTarget(s.sctg)
 	e3:SetOperation(s.scop)
 	c:RegisterEffect(e3)
@@ -49,10 +49,6 @@ function s.penop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.MoveToField(tc,tp,tp,LOCATION_PZONE,POS_FACEUP,true)
 		end
 	end
-end
-function s.sccost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_DISCARD+REASON_COST)
 end
 function s.scfilter(c)
 	return c:GetLeftScale()~=c:GetOriginalLeftScale()

@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetRange(LOCATION_HAND)
 	e3:SetCountLimit(1,id)
-	e3:SetCost(s.thcost)
+	e3:SetCost(Cost.SelfDiscard)
 	e3:SetTarget(s.thtg)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
@@ -49,10 +49,6 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.NegateEffect(ev) then return end
 	Duel.BreakEffect()
 	Duel.Destroy(e:GetHandler(),REASON_EFFECT)
-end
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
 function s.thfilter(c)
 	return (c:IsSetCard(SET_DD) or c:IsSetCard(SET_DARK_CONTRACT)) and not c:IsCode(id) and c:IsAbleToHand()

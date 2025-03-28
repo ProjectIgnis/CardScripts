@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_PHASE|PHASE_BATTLE)
 	e1:SetRange(LOCATION_HAND)
-	e1:SetCost(s.spcost1)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetTarget(s.sptg1)
 	e1:SetOperation(s.spop1)
 	c:RegisterEffect(e1)
@@ -29,10 +29,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_KURIBOH}
-function s.spcost1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
-end
 function s.spfilter1(c,e,tp,tid)
 	return c:GetTurnID()==tid and (c:GetReason()&REASON_BATTLE)~=0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

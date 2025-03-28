@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCondition(s.defcon)
-	e1:SetCost(s.defcost)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetTarget(s.deftg)
 	e1:SetOperation(s.defop)
 	c:RegisterEffect(e1)
@@ -32,11 +32,6 @@ end
 s.listed_series={SET_SUPERHEAVY_SAMURAI}
 function s.defcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_SPELL+TYPE_TRAP)==0
-end
-function s.defcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsDiscardable() end
-	Duel.SendtoGrave(c,REASON_COST+REASON_DISCARD)
 end
 function s.deffilter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_SUPERHEAVY_SAMURAI) and c:HasNonZeroDefense()

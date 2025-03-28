@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
@@ -28,10 +28,6 @@ function s.initial_effect(c)
 end
 s.listed_names={44632120,71036835,7021574,CARD_KURIBOH,16404809}
 s.listed_series={SET_KURIBOH}
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
-end
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_KURIBOH)
 end

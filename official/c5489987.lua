@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e2:SetHintTiming(TIMING_DAMAGE_STEP)
 	e2:SetCondition(s.atkcon)
-	e2:SetCost(s.atkcost)
+	e2:SetCost(Cost.SelfDiscard)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
 end
@@ -68,10 +68,6 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsControler(1-tp) then tc=Duel.GetAttacker() end
 	e:SetLabelObject(tc)
 	return tc:IsFaceup() and tc:IsSetCard(SET_FLOWER_CARDIAN) and tc:IsRelateToBattle()
-end
-function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()

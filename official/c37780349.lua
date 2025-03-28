@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.dmcon)
-	e1:SetCost(s.dmcost)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetTarget(s.dmtg)
 	e1:SetOperation(s.dmop)
 	c:RegisterEffect(e1)
@@ -29,10 +29,6 @@ end
 s.listed_series={SET_DESTINY_HERO}
 function s.dmcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetBattleDamage(tp)>0
-end
-function s.dmcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
 function s.dmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

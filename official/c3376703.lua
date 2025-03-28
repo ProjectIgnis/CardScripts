@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(function(e,tp) return not Duel.HasFlagEffect(tp,id) end)
-	e1:SetCost(s.limeffcost)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetOperation(s.limeffop)
 	c:RegisterEffect(e1)
 	--Toss a coin and apply the appropriate effect
@@ -30,11 +30,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_ARCANA_FORCE}
 s.toss_coin=true
-function s.limeffcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsDiscardable() end
-	Duel.SendtoGrave(c,REASON_COST|REASON_DISCARD)
-end
 function s.limeffop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.HasFlagEffect(tp,id) then return end
 	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)

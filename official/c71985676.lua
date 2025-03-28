@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.dmcon)
-	e1:SetCost(s.dmcost)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetOperation(s.dmop)
 	c:RegisterEffect(e1)
 	--Special Summon
@@ -31,10 +31,6 @@ function s.dmcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
 	return d and a:GetControler()~=d:GetControler()
-end
-function s.dmcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
 function s.dmop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())

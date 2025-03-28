@@ -37,7 +37,7 @@ function s.initial_effect(c)
 	e4:SetProperty(EFFECT_FLAG_BOTH_SIDE)
 	e4:SetCode(EVENT_CHAINING)
 	e4:SetCondition(s.condition3)
-	e4:SetCost(s.cost3)
+	e4:SetCost(Cost.PayLP(800))
 	e4:SetTarget(s.target3)
 	e4:SetOperation(s.activate3)
 	c:RegisterEffect(e4)
@@ -60,10 +60,6 @@ function s.activate2(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.condition3(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsHasCategory(CATEGORY_SPECIAL_SUMMON) and Duel.IsChainDisablable(ev)
-end
-function s.cost3(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,800) end
-	Duel.PayLPCost(tp,800)
 end
 function s.target3(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

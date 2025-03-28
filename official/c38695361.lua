@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.atkcon1)
-	e1:SetCost(s.atkcost)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetTarget(s.atktg1)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
@@ -33,10 +33,6 @@ s.listed_series={SET_BLACK_LUSTER_SOLDIER,SET_GAIA_THE_FIERCE_KNIGHT}
 function s.atkcon1(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
 	return Duel.IsBattlePhase() and (ph~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
-end
-function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
 function s.atkfilter(c)
 	return c:IsFaceup() and (c:IsSetCard(SET_BLACK_LUSTER_SOLDIER) or c:IsSetCard(SET_GAIA_THE_FIERCE_KNIGHT))

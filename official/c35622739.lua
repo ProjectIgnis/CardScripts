@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(function(_,tp) return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0 end)
-	e1:SetCost(s.setcost)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetTarget(s.settg)
 	e1:SetOperation(s.setop)
 	c:RegisterEffect(e1)
@@ -29,11 +29,6 @@ function s.initial_effect(c)
 end
 s.listed_names={id}
 s.listed_series={SET_FUSION,SET_GEM_KNIGHT}
-function s.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsDiscardable() end
-	Duel.SendtoGrave(c,REASON_COST+REASON_DISCARD)
-end
 function s.setfilter(c)
 	return c:IsContinuousSpell() and c:IsSetCard(SET_FUSION) and c:IsSSetable()
 end

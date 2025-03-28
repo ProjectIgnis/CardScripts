@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.reccost)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetTarget(s.rectg)
 	e1:SetOperation(s.recop)
 	e1:SetHintTiming(0,TIMING_MAIN_END+TIMING_END_PHASE)
@@ -29,10 +29,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_AROMA}
-function s.reccost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
-end
 function s.recfilter(c)
 	return c:IsSetCard(SET_AROMA) and c:GetAttack()>0
 end

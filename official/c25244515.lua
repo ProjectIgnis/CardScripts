@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.condition)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 	--atk up
@@ -39,10 +39,6 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsControler(1-tp) then tc=Duel.GetAttackTarget() end
 	e:SetLabelObject(tc)
 	return tc and tc:IsSetCard(SET_YOSENJU) and tc:IsRelateToBattle() and Duel.GetAttackTarget()~=nil
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetLabelObject()

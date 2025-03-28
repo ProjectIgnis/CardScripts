@@ -21,7 +21,7 @@ function s.ritual_filter(c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToDeckAsCost() end
-	Duel.SendtoDeck(e:GetHandler(),nil,2,REASON_COST)
+	Duel.SendtoDeck(e:GetHandler(),nil,SEQ_DECKSHUFFLE,REASON_COST)
 end
 function s.thfilter(c)
 	return c:IsSetCard(SET_GISHKI) and c:IsRitualMonster() and c:IsAbleToHand()

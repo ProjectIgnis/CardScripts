@@ -67,5 +67,5 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject()
 	local sg=g:Filter(s.retfilter,nil,e:GetLabel())
 	g:DeleteGroup()
-	Duel.SendtoDeck(sg,1-tp,2,REASON_EFFECT+REASON_RETURN)
+	Duel.SendtoDeck(sg,1-tp,SEQ_DECKSHUFFLE,REASON_EFFECT+REASON_RETURN)
 end

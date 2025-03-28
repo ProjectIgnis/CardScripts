@@ -51,7 +51,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToDeckAsCost() end
-	Duel.SendtoDeck(e:GetHandler(),tp,2,REASON_COST)
+	Duel.SendtoDeck(e:GetHandler(),tp,SEQ_DECKSHUFFLE,REASON_COST)
 end
 function s.thfilter(c)
 	return c:IsSetCard(SET_METAPHYS) and not c:IsCode(id) and c:IsAbleToHand()

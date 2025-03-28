@@ -43,6 +43,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		local rg=dg:Select(tp,1,ct,nil)
 		Duel.HintSelection(rg)
-		Duel.SendtoDeck(rg,nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(rg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 end

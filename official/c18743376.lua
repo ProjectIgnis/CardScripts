@@ -72,7 +72,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToDeckAsCost() end
-	Duel.SendtoDeck(e:GetHandler(),tp,2,REASON_COST)
+	Duel.SendtoDeck(e:GetHandler(),tp,SEQ_DECKSHUFFLE,REASON_COST)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_METAPHYS) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

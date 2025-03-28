@@ -72,7 +72,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 	if #sg>0 then
 		Duel.HintSelection(sg)
-		Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(sg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 end
 function s.imcon(e)

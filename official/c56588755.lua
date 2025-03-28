@@ -43,7 +43,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ex,g1=Duel.GetOperationInfo(0,CATEGORY_TODECK)
 	local ex,g2=Duel.GetOperationInfo(0,CATEGORY_DISABLE)
 	if g1:GetFirst():IsRelateToEffect(e) then
-		Duel.SendtoDeck(g1,nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(g1,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 		local og=Duel.GetOperatedGroup()
 		if og:GetFirst():IsLocation(LOCATION_EXTRA) then
 			local tc=g2:GetFirst()

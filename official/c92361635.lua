@@ -45,7 +45,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local ex,g2=Duel.GetOperationInfo(0,CATEGORY_TODECK)
 	if g1:GetFirst():IsRelateToEffect(e) and Duel.Destroy(g1,REASON_EFFECT)~=0 then
 		local hg=g2:Filter(Card.IsRelateToEffect,nil,e)
-		Duel.SendtoDeck(hg,nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(hg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

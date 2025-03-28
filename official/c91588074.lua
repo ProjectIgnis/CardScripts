@@ -58,7 +58,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local rg=e:GetLabelObject()
 	if not rg then return end
-	Duel.SendtoDeck(rg,nil,2,REASON_COST)
+	Duel.SendtoDeck(rg,nil,SEQ_DECKSHUFFLE,REASON_COST)
 	rg:DeleteGroup()
 end
 function s.tdfilter(c)

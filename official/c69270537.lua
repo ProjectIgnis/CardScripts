@@ -28,7 +28,7 @@ function s.spfilter(c,e,tp,fc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() and Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() and Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)~=0
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>1 and tc:IsLocation(LOCATION_EXTRA) then
 		local sg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_DECK,0,nil,e,tp,tc)
 		if tc:CheckFusionMaterial(sg,nil,PLAYER_NONE|FUSPROC_NOTFUSION) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then

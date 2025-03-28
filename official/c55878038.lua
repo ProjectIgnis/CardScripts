@@ -136,7 +136,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local hg=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,0,LOCATION_HAND,nil)
 	if #hg>0 then
 		local sg=hg:RandomSelect(tp,1)
-		Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(sg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)

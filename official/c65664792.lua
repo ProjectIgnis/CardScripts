@@ -48,7 +48,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE,0,nil,e,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local dg=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_MZONE,0,1,1,nil,e,tp,g)
-	if #dg>0 and Duel.SendtoDeck(dg,nil,2,REASON_EFFECT)>0 then
+	if #dg>0 and Duel.SendtoDeck(dg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 then
 		Duel.BreakEffect()
 		local sg=aux.SelectUnselectGroup(g,e,tp,3,3,s.spcheck,1,tp,HINTMSG_SPSUMMON)
 		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)

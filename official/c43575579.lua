@@ -31,7 +31,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_REMOVED,0,1,nil) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 			local td=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_REMOVED,0,1,1,nil)
-			Duel.SendtoDeck(td,nil,2,REASON_EFFECT)
+			Duel.SendtoDeck(td,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 			e1:SetProperty(EFFECT_FLAG_DELAY)

@@ -30,6 +30,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ConfirmCards(tp,tc)
 	local rc,at=e:GetLabel()
 	if tc:IsRace(rc) and tc:IsAttribute(at) then
-		Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	else Duel.ShuffleHand(1-tp) end
 end

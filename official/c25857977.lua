@@ -130,7 +130,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local td=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE|LOCATION_ONFIELD,0,1,1,nil)
-	if Duel.SendtoDeck(td,nil,2,REASON_EFFECT)~=0 then
+	if Duel.SendtoDeck(td,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)~=0 then
 		if tc and tc:IsRelateToEffect(e) then
 			if Duel.Destroy(tc,REASON_EFFECT)~=0 then
 				Duel.BreakEffect()

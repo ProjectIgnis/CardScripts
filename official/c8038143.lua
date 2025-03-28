@@ -60,7 +60,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			end
 		end
 	end
-	Duel.SendtoDeck(dg,nil,2,REASON_EFFECT)
+	Duel.SendtoDeck(dg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 end
 function s.handcon(e)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_GALAXY_EYES_TACHYON_DRAGON),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)

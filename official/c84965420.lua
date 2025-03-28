@@ -35,5 +35,5 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(Card.IsSummonPlayer,nil,1-tp)
 	Duel.NegateSummon(g)
-	Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
+	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 end

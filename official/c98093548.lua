@@ -78,7 +78,7 @@ function s.addtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.addop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0 then
+	if tc and tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)~=0 then
 		local g=Duel.GetMatchingGroup(s.addfilter,tp,LOCATION_DECK,0,nil)
 		if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 			Duel.BreakEffect()

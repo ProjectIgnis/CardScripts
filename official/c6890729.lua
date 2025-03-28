@@ -39,7 +39,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	g1:Merge(g2)
 	g1:Merge(g3)
 	Duel.ConfirmCards(1-tp,g1)
-	Duel.SendtoDeck(g1,nil,2,REASON_COST)
+	Duel.SendtoDeck(g1,nil,SEQ_DECKSHUFFLE,REASON_COST)
 end
 function s.filter(c,e,tp)
 	return c:IsCode(6022371) and c:IsCanBeSpecialSummoned(e,0,tp,true,true)

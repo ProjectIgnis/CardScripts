@@ -97,5 +97,5 @@ function s.thcon2(e,tp,eg,ep,ev,re,r,rp)
 	else return true end
 end
 function s.thop2(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SendtoDeck(e:GetLabelObject(),nil,2,REASON_EFFECT)
+	Duel.SendtoDeck(e:GetLabelObject(),nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 end

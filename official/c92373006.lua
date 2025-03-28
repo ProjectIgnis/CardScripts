@@ -54,7 +54,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=Duel.GetFirstTarget()
 	if not rc or not rc:IsFaceup() or not rc:IsRelateToEffect(e) then return end
-	local rt=Duel.SendtoDeck(rc,nil,2,REASON_EFFECT)
+	local rt=Duel.SendtoDeck(rc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	if rt==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp):GetFirst()

@@ -61,7 +61,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		if #g1>0 and #g2>0 then
 			Duel.SendtoHand(g2,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,g2)
-			Duel.SendtoDeck(g1,tp,2,REASON_EFFECT)
+			Duel.SendtoDeck(g1,tp,SEQ_DECKSHUFFLE,REASON_EFFECT)
 		end
 	end
 end

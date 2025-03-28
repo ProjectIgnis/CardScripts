@@ -81,7 +81,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=math.min(#g,math.floor(tc:GetAttack()/100))
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local sg=g:Select(tp,1,ct,nil)
-	if Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)>0 and tc:IsFaceup() and tc:IsRelateToBattle() then
+	if Duel.SendtoDeck(sg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 and tc:IsFaceup() and tc:IsRelateToBattle() then
 		local oc=#(Duel.GetOperatedGroup())
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

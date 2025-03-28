@@ -35,7 +35,7 @@ function s.tdfilter2(c)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if not (tc and tc:IsRelateToEffect(e)) or Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)==0 then return end
+	if not (tc and tc:IsRelateToEffect(e)) or Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)==0 then return end
 	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,SET_MADOLCHE),tp,LOCATION_MZONE,0,nil)
 	local ct=0
 	for tc in aux.Next(g) do
@@ -57,6 +57,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #dg~=0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-		Duel.SendtoDeck(dg:Select(tp,1,1,nil),nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(dg:Select(tp,1,1,nil),nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 end

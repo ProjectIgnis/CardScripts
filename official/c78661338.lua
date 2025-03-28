@@ -57,7 +57,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			if #g==0 then return end
 			Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
 			local sg=g:Select(p,ct,ct,nil)
-			Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)
+			Duel.SendtoDeck(sg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 		end
 	end
 end

@@ -86,5 +86,5 @@ function s.cpop(e,tp,eg,ep,ev,re,r,rp)
 		etc:ReleaseEffectRelation(te)
 	end
 	Duel.BreakEffect()
-	Duel.SendtoDeck(te:GetHandler(),nil,2,REASON_EFFECT)
+	Duel.SendtoDeck(te:GetHandler(),nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 end

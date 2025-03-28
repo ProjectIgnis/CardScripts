@@ -58,6 +58,6 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=c:GetBattleTarget()
 	if c:IsRelateToBattle() and tc:IsRelateToBattle() then
-		Duel.SendtoDeck(Group.FromCards(c,tc),nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(Group.FromCards(c,tc),nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 end

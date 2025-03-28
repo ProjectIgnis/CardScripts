@@ -77,6 +77,6 @@ end
 function s.tedop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.tedfilter),tp,LOCATION_GRAVE|LOCATION_REMOVED,0,1,1,nil,tp):GetFirst()
 	if tc then
-		Duel.SendtoDeck(tc,tp,2,REASON_EFFECT)
+		Duel.SendtoDeck(tc,tp,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 end

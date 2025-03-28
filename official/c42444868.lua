@@ -65,7 +65,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ec=re:GetHandler()
 	if Duel.NegateActivation(ev) and ec:IsRelateToEffect(re) then
 		ec:CancelToGrave()
-		if Duel.SendtoDeck(ec,nil,2,REASON_EFFECT)~=0 and ec:IsLocation(LOCATION_DECK|LOCATION_EXTRA) then
+		if Duel.SendtoDeck(ec,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)~=0 and ec:IsLocation(LOCATION_DECK|LOCATION_EXTRA) then
 			local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_DECK|LOCATION_EXTRA,0,nil,e,tp)
 			if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 				Duel.BreakEffect()

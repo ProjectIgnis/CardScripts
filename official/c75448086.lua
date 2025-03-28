@@ -39,7 +39,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.ConfirmCards(1-tp,sg)
 			Duel.ShuffleDeck(tp)
 			Duel.BreakEffect()
-			Duel.SendtoDeck(rc,nil,1,REASON_EFFECT)
+			Duel.SendtoDeck(rc,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 		end
 	end
 end

@@ -39,7 +39,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetOperation(s.tdop)
 		Duel.RegisterEffect(e2,tp)
 		if c:IsRelateToEffect(e) then
-			Duel.SendtoDeck(c,nil,1,REASON_EFFECT)
+			Duel.SendtoDeck(c,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 		end
 		Duel.SpecialSummonComplete()
 	else
@@ -54,5 +54,5 @@ function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	else return true end
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SendtoDeck(e:GetLabelObject(),nil,1,REASON_EFFECT)
+	Duel.SendtoDeck(e:GetLabelObject(),nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 end

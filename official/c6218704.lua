@@ -108,7 +108,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local sc=g:Select(tp,1,1,nil):GetFirst()
 	if not sc then return end
 	Duel.BreakEffect()
-	if Duel.SendtoDeck(sc,nil,1,REASON_EFFECT)>0 and sc:IsLocation(LOCATION_EXTRA)
+	if Duel.SendtoDeck(sc,nil,SEQ_DECKBOTTOM,REASON_EFFECT)>0 and sc:IsLocation(LOCATION_EXTRA)
 		and sc:IsCanBeSpecialSummoned(e,0,tp,true,false)
 		and Duel.GetLocationCountFromEx(tp,tp,nil,sc)>0
 		and Duel.SelectYesNo(tp,aux.Stringid(id,4)) then

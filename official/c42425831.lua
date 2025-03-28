@@ -33,7 +33,7 @@ function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local cg=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE,0,1,1,nil)
-	Duel.SendtoDeck(cg,nil,1,REASON_COST)
+	Duel.SendtoDeck(cg,nil,SEQ_DECKBOTTOM,REASON_COST)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then

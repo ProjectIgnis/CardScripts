@@ -20,7 +20,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToDeckAsCost,tp,LOCATION_HAND,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToDeckAsCost,tp,LOCATION_HAND,0,1,1,nil)
-	Duel.SendtoDeck(g,nil,1,REASON_COST)
+	Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_COST)
 end
 function s.filter1(c)
 	return c:IsFaceup() and c:IsSetCard(SET_GUSTO) and c:IsAbleToChangeControler()

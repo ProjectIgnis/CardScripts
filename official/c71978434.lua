@@ -100,7 +100,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.SelectOption(tp,aux.Stringid(id,2),aux.Stringid(id,3))==0 then
 			Duel.SendtoDeck(sg,nil,0,REASON_EFFECT)
 		else
-			Duel.SendtoDeck(sg,nil,1,REASON_EFFECT)
+			Duel.SendtoDeck(sg,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 		end
 	end
 end

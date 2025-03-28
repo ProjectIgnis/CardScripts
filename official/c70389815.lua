@@ -7,15 +7,11 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.PayLP(800))
 	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_ATTRACTION,SET_AMAZEMENT}
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,800) end
-	Duel.PayLPCost(tp,800)
-end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if Duel.IsTurnPlayer(tp) then

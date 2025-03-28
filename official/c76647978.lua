@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Fusion.CreateSummonEff(c,nil,Card.IsOnField,nil,nil,nil,s.stage2,2)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.PayLP(2000))
 	local tg=e1:GetTarget()
 	e1:SetTarget(function(e,tp,eg,ep,ev,re,r,rp,chk)
 					if chk==0 then
@@ -25,10 +25,6 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,2000) end
-	Duel.PayLPCost(tp,2000)
 end
 function s.stage2(e,tc,tp,sg,chk)
 	if chk==1 then

@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetCondition(s.thcon)
-	e1:SetCost(s.thcost)
+	e1:SetCost(Cost.PayLP(1200))
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
@@ -38,10 +38,6 @@ end
 function s.thcon(e)
 	local c=e:GetHandler()
 	return c:IsLinkSummoned() and c:IsInExtraMZone()
-end
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,1200) end
-	Duel.PayLPCost(tp,1200)
 end
 function s.thfilter(c)
 	return c:IsType(TYPE_PENDULUM) and c:IsMonster() and c:IsAbleToHand()

@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_PZONE)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.thcost)
+	e1:SetCost(Cost.PayLP(1000))
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
@@ -52,10 +52,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_ABYSS_ACTOR,SET_ABYSS_SCRIPT}
 s.listed_names={id}
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,1000) end
-	Duel.PayLPCost(tp,1000)
-end
 function s.thfilter(c)
 	return c:IsSetCard(SET_ABYSS_ACTOR) and not c:IsCode(id) and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
 end

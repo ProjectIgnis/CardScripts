@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_ACTIVATE)
 	e2:SetCode(EVENT_SPSUMMON)
 	e2:SetCondition(s.condition1)
-	e2:SetCost(s.cost2)
+	e2:SetCost(Cost.PayLP(800))
 	e2:SetTarget(s.target2)
 	e2:SetOperation(s.activate2)
 	c:RegisterEffect(e2)
@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_BOTH_SIDE)
 	e3:SetCode(EVENT_SPSUMMON)
 	e3:SetCondition(s.condition2)
-	e3:SetCost(s.cost2)
+	e3:SetCost(Cost.PayLP(800))
 	e3:SetTarget(s.target2)
 	e3:SetOperation(s.activate2)
 	c:RegisterEffect(e3)
@@ -47,10 +47,6 @@ function s.condition1(...)
 end
 function s.condition2(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentChain()==0
-end
-function s.cost2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,800) end
-	Duel.PayLPCost(tp,800)
 end
 function s.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

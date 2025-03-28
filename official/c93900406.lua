@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
 	e2:SetCondition(s.ctlcon)
-	e2:SetCost(s.ctlcost)
+	e2:SetCost(Cost.PayLP(500))
 	e2:SetTarget(s.ctltg)
 	e2:SetOperation(s.ctlop)
 	c:RegisterEffect(e2)
@@ -40,10 +40,6 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.ctlcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsTurnPlayer(tp)
-end
-function s.ctlcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,500) end
-	Duel.PayLPCost(tp,500)
 end
 function s.ctltg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsControlerCanBeChanged() end

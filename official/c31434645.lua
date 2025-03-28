@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCountLimit(1,id)
-	e3:SetCost(s.thcost)
+	e3:SetCost(Cost.PayLP(800))
 	e3:SetTarget(s.thtg)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
@@ -43,10 +43,6 @@ end
 s.listed_series={SET_GOLDEN_LAND,SET_ELDLICH}
 function s.atktg(e,c)
 	return not c:IsRace(RACE_ZOMBIE)
-end
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,800) end
-	Duel.PayLPCost(tp,800)
 end
 function s.filter(c)
 	return (c:IsSetCard(SET_GOLDEN_LAND) and c:IsSpellTrap()) or (c:IsSetCard(SET_ELDLICH) and c:IsMonster())

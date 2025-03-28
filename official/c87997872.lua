@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetCode(EVENT_LEAVE_FIELD)
 	e2:SetCondition(s.spcon)
-	e2:SetCost(s.cost)
+	e2:SetCost(Cost.PayLP(500))
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e4:SetCategory(CATEGORY_ATKCHANGE)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e4:SetCost(s.cost)
+	e4:SetCost(Cost.PayLP(500))
 	e4:SetOperation(s.atkop)
 	c:RegisterEffect(e4)
 end
@@ -40,10 +40,6 @@ end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp,15013468)
 		and eg:IsExists(s.cfilter,1,nil,tp,51402177)
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,500) end
-	Duel.PayLPCost(tp,500)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCountLimit(1,{id,0})
 	e1:SetCondition(s.thgcon)
-	e1:SetCost(s.thgcost)
+	e1:SetCost(Cost.PayLP(600))
 	e1:SetTarget(s.thgtg)
 	e1:SetOperation(s.thgop)
 	c:RegisterEffect(e1)
@@ -37,10 +37,6 @@ s.listed_series={SET_PUNK}
 function s.thgcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSynchroSummoned() or 
 		(re and re:GetHandler():IsSetCard(SET_PUNK))
-end
-function s.thgcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,600) end
-	Duel.PayLPCost(tp,600)
 end
 function s.thgfilter(c)
 	return c:IsLevel(3) and c:IsRace(RACE_PSYCHIC) and (c:IsAbleToHand() or c:IsAbleToGrave())

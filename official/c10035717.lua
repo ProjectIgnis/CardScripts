@@ -16,17 +16,13 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1)
 	e2:SetCondition(s.adcon)
-	e2:SetCost(s.adcost)
+	e2:SetCost(Cost.PayLP(700))
 	e2:SetTarget(s.adtg)
 	e2:SetOperation(s.adop)
 	c:RegisterEffect(e2)
 end
 function s.adcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsTurnPlayer(tp)
-end
-function s.adcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,700) end
-	Duel.PayLPCost(tp,700)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_MACHINE+RACE_WARRIOR) and c:IsDefenseAbove(0)

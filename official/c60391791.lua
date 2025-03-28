@@ -15,16 +15,12 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1)
 	e2:SetCondition(s.cfcon)
-	e2:SetCost(s.cfcost)
+	e2:SetCost(Cost.PayLP(100))
 	e2:SetOperation(s.cfop)
 	c:RegisterEffect(e2)
 end
 function s.cfcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsTurnPlayer(tp) and Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)~=0
-end
-function s.cfcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,100) end
-	Duel.PayLPCost(tp,100)
 end
 function s.cfop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

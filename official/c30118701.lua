@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetHintTiming(TIMING_BATTLE_START_END,TIMINGS_CHECK_MONSTER+TIMING_BATTLE_START_END)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(function() return Duel.IsBattlePhase() end)
-	e2:SetCost(s.fuscost)
+	e2:SetCost(Cost.PayLP(500))
 	e2:SetTarget(Fusion.SummonEffTG(table.unpack(params)))
 	e2:SetOperation(Fusion.SummonEffOP(table.unpack(params)))
 	c:RegisterEffect(e2)
@@ -63,8 +63,4 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE-RESET_TOFIELD)
 	c:RegisterEffect(e1)
 	g:DeleteGroup()
-end
-function s.fuscost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,500) end
-	Duel.PayLPCost(tp,500)
 end

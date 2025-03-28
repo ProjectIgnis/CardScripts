@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.atkcon)
-	e1:SetCost(s.atkcost)
+	e1:SetCost(Cost.PayLP(800))
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
 	--Special Summon 1 "War Rock" from hand or Deck
@@ -32,10 +32,6 @@ s.listed_series={SET_WAR_ROCK}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local bc0,bc1=Duel.GetBattleMonster(tp)
 	return bc0 and bc1 and bc0:IsAttribute(ATTRIBUTE_EARTH) and bc0:IsRace(RACE_WARRIOR)
-end
-function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,800) end
-	Duel.PayLPCost(tp,800)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetBattleMonster(tp)

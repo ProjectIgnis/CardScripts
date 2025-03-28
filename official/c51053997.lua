@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetHintTiming(0,TIMING_END_PHASE)
 	e3:SetCountLimit(1)
-	e3:SetCost(s.cost)
+	e3:SetCost(Cost.PayLP(500))
 	e3:SetTarget(s.target2)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
@@ -40,10 +40,6 @@ end
 s.listed_series={SET_PSY_FRAME}
 function s.rmfilter(c)
 	return c:IsSetCard(SET_PSY_FRAME) and c:IsAbleToRemove()
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,500) end
-	Duel.PayLPCost(tp,500)
 end
 function s.target2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.rmfilter(chkc) end

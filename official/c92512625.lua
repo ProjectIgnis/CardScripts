@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_SUMMON)
 	e1:SetCondition(s.condition1)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.PayLP(3000))
 	e1:SetTarget(s.target1)
 	e1:SetOperation(s.activate1)
 	c:RegisterEffect(e1)
@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_ACTIVATE)
 	e4:SetCode(EVENT_CHAINING)
 	e4:SetCondition(s.condition2)
-	e4:SetCost(s.cost)
+	e4:SetCost(Cost.PayLP(3000))
 	e4:SetTarget(s.target2)
 	e4:SetOperation(s.activate2)
 	c:RegisterEffect(e4)
@@ -35,10 +35,6 @@ end
 function s.condition1(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentChain(true)==0
 		and not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_SZONE,0,1,e:GetHandler())
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,3000) end
-	Duel.PayLPCost(tp,3000)
 end
 function s.target1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e3:SetCategory(CATEGORY_TOGRAVE+CATEGORY_DRAW)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCost(s.sgcost)
+	e3:SetCost(Cost.PayLP(1000))
 	e3:SetTarget(s.sgtg)
 	e3:SetOperation(s.sgop)
 	c:RegisterEffect(e3)
@@ -69,10 +69,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	if not g then return end
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 	g:DeleteGroup()
-end
-function s.sgcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,1000) end
-	Duel.PayLPCost(tp,1000)
 end
 function s.sgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end

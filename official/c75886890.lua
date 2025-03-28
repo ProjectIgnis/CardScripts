@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_TO_GRAVE)
 	e1:SetCondition(s.eqcon)
-	e1:SetCost(s.eqcost)
+	e1:SetCost(Cost.PayLP(500))
 	e1:SetTarget(s.eqtg)
 	e1:SetOperation(s.eqop)
 	c:RegisterEffect(e1)
@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_EQUIP)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetCost(s.eqcost2)
+	e2:SetCost(Cost.PayLP(500)2)
 	e2:SetTarget(s.eqtg2)
 	e2:SetOperation(s.eqop2)
 	c:RegisterEffect(e2)
@@ -29,10 +29,6 @@ end
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:GetPreviousLocation()==LOCATION_MZONE
-end
-function s.eqcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,500) end
-	Duel.PayLPCost(tp,500)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsFaceup() end
@@ -60,7 +56,7 @@ function s.eqlimit(e,c)
 	local tp=e:GetHandlerPlayer()
 	return c:IsControler(tp)
 end
-function s.eqcost2(e,tp,eg,ep,ev,re,r,rp,chk)
+function Cost.PayLP(500)2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
 	e:SetLabelObject(e:GetHandler():GetEquipTarget())
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)

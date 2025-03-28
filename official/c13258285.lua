@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.PayLP(600))
 	e1:SetTarget(Fusion.SummonEffTG(fusparam))
 	e1:SetOperation(Fusion.SummonEffOP(fusparam))
 	c:RegisterEffect(e1)
@@ -25,16 +25,12 @@ function s.initial_effect(c)
 	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E+TIMING_MAIN_END)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(function(_,tp)return Duel.IsTurnPlayer(1-tp)end)
-	e2:SetCost(s.cost)
+	e2:SetCost(Cost.PayLP(600))
 	e2:SetTarget(s.sctg)
 	e2:SetOperation(s.scop)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_PUNK}
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,600) end
-	Duel.PayLPCost(tp,600)
-end
 function s.scfilter(c)
 	return c:IsSetCard(SET_PUNK) and c:IsSynchroSummonable(nil)
 end

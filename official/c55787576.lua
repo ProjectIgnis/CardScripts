@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e4:SetRange(LOCATION_GRAVE)
 	e4:SetCountLimit(1,id)
-	e4:SetCost(s.spcost)
+	e4:SetCost(Cost.PayLP(1000))
 	e4:SetTarget(s.sptg)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
@@ -44,10 +44,6 @@ function s.immval(e,te)
 end
 function s.tgtg(e,c)
 	return c:IsFaceup() and c:IsSetCard(SET_WORLD_LEGACY) and (e:GetHandler():GetColumnGroup():IsContains(c) or e:GetHandler()==c)
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,1000) end
-	Duel.PayLPCost(tp,1000)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

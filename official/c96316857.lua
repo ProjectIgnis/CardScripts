@@ -17,17 +17,13 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1)
 	e2:SetCondition(s.rccon)
-	e2:SetCost(s.rccost)
+	e2:SetCost(Cost.PayLP(300))
 	e2:SetTarget(s.rctg)
 	e2:SetOperation(s.rcop)
 	c:RegisterEffect(e2)
 end
 function s.rccon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsTurnPlayer(tp)
-end
-function s.rccost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,300) end
-	Duel.PayLPCost(tp,300)
 end
 function s.filter(c)
 	return c:IsAbleToDeck() and not c:IsMonster()

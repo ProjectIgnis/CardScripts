@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_SZONE)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.dircon)
-	e1:SetCost(s.dircost)
+	e1:SetCost(Cost.PayLP(500))
 	e1:SetOperation(s.dirop)
 	c:RegisterEffect(e1)
 	--equip
@@ -31,10 +31,6 @@ end
 s.listed_series={SET_NOBLE_KNIGHT}
 function s.dircon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP()
-end
-function s.dircost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,500) end
-	Duel.PayLPCost(tp,500)
 end
 function s.dirop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

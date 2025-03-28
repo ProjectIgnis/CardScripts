@@ -11,17 +11,13 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetHintTiming(0,TIMING_MAIN_END+TIMINGS_CHECK_MONSTER)
 	e1:SetCondition(function()return Duel.IsMainPhase()end)
-	e1:SetCost(s.thcost)
+	e1:SetCost(Cost.PayLP(800))
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
 end
 s.listed_names={id}
 s.listed_series={SET_EXOSISTER}
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,800) end
-	Duel.PayLPCost(tp,800)
-end
 function s.thfilter(c)
 	return c:IsSetCard(SET_EXOSISTER) and not c:IsCode(id) and c:IsAbleToHand()
 end

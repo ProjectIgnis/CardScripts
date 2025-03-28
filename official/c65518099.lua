@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_PZONE)
 	e3:SetCountLimit(1)
-	e3:SetCost(s.cost)
+	e3:SetCost(Cost.PayLP(800))
 	e3:SetTarget(s.target)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
@@ -29,10 +29,6 @@ s.listed_series={SET_QLI}
 s.listed_names={id}
 function s.splimit(e,c,tp,sumtp,sumpos)
 	return not c:IsSetCard(SET_QLI)
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,800) end
-	Duel.PayLPCost(tp,800)
 end
 function s.filter(c)
 	return c:IsSetCard(SET_QLI) and not c:IsCode(id) and c:IsAbleToHand()

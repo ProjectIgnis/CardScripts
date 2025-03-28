@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	e8:SetProperty(EFFECT_FLAG_DELAY)
 	e8:SetCountLimit(1,id)
 	e8:SetCondition(s.thcon)
-	e8:SetCost(s.thcost)
+	e8:SetCost(Cost.PayLP(800))
 	e8:SetTarget(s.thtg)
 	e8:SetOperation(s.thop)
 	c:RegisterEffect(e8)
@@ -46,10 +46,6 @@ function s.dircon(e)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
-end
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,800) end
-	Duel.PayLPCost(tp,800)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToHand() end

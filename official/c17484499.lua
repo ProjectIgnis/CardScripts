@@ -9,17 +9,13 @@ function s.initial_effect(c)
 	e1:SetHintTiming(0,TIMING_DRAW_PHASE)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH+EFFECT_COUNT_CODE_DUEL)
 	e1:SetCondition(s.condition)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.PayLP(1000))
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_GRAVE,0)>=15
 		and Duel.GetFieldGroupCount(tp,0,LOCATION_GRAVE)>=15
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,1000) end
-	Duel.PayLPCost(tp,1000)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SwapDeckAndGrave(tp)

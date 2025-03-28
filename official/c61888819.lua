@@ -1,6 +1,7 @@
 --インヴェルズ・オリジン
 --Steelswarm Origin
 --force effect scripted by edo9300
+local ALL_EMZ=0x600060 --0x60 for your EMZs, 0x60<<16 for your opponent's EMZs
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
@@ -45,7 +46,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_LSWARM}
 function s.fmval(e,c,fp,rp,r)
-	return e:GetHandler():GetLinkedZone(rp)|0x600060
+	return e:GetHandler():GetLinkedZone(rp)|ALL_EMZ
 end
 function s.indcon(e)
 	return #(e:GetHandler():GetLinkedGroup():Filter(Card.IsMonster,nil))>0

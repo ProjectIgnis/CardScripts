@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.spcost)
+	e1:SetCost(Cost.Detach(1))
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
@@ -25,17 +25,13 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_XMATERIAL+EFFECT_TYPE_IGNITION)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCondition(s.ngcon)
-	e2:SetCost(s.ngcost)
+	e2:SetCost(Cost.Detach(2))
 	e2:SetTarget(s.ngtg)
 	e2:SetOperation(s.ngop)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
 s.listed_series={SET_UTOPIC_FUTURE}
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-end
 function s.spfilter(c,e,tp)
 	return c:IsType(TYPE_XYZ) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(id)
 end
@@ -64,10 +60,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.ngcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSetCard(SET_UTOPIC_FUTURE)
-end
-function s.ngcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,2,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,2,2,REASON_COST)
 end
 function s.ngtgfilter(c,e,tp)
 	return c:IsType(TYPE_XYZ) and c:IsFaceup() and c:IsControler(tp)

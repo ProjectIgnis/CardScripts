@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,id)
-	e2:SetCost(s.spcost)
+	e2:SetCost(Cost.Detach(2))
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_TO_GRAVE)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,{id,1})
-	e3:SetCost(s.sscost)
+	e3:SetCost(Cost.Detach(1))
 	e3:SetCondition(s.sscon)
 	e3:SetTarget(s.sstg)
 	e3:SetOperation(s.ssop)
@@ -56,10 +56,6 @@ function s.efilter(e,te)
 	return te:IsActiveType(TYPE_TRAP)
 end
 	--Detach 2 materials as cost
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,2,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,2,2,REASON_COST)
-end
 	--Check for level 4 plant/insect monster
 function s.spfilter(c,e,tp)
 	return c:IsLevel(4) and c:IsRace(RACE_PLANT+RACE_INSECT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -84,10 +80,6 @@ function s.sscon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 	--Detach 1 material as cost
-function s.sscost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-end
 	--Check for opponent's monster that sent there by your effect
 function s.cfilter(c,tp)
 	return c:IsMonster() and c:GetPreviousControler()==1-tp and c:IsPreviousLocation(LOCATION_MZONE) 

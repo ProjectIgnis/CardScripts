@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCondition(s.cfcon)
-	e3:SetCost(s.cfcost)
+	e3:SetCost(Cost.Detach(2))
 	e3:SetTarget(s.cftg)
 	e3:SetOperation(s.cfop)
 	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
@@ -42,10 +42,6 @@ function s.cfcon(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttackTarget()
 	return (a:IsControler(tp) and a~=e:GetHandler() and a:IsSetCard(SET_BATTLIN_BOXER))
 		or (at and at:IsControler(tp) and at:IsFaceup() and at~=e:GetHandler() and at:IsSetCard(SET_BATTLIN_BOXER))
-end
-function s.cfcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,2,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,2,2,REASON_COST)
 end
 function s.cftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>0

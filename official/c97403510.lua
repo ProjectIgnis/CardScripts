@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
 	e3:SetCondition(s.rmcon)
-	e3:SetCost(s.rmcost)
+	e3:SetCost(Cost.Detach(1))
 	e3:SetTarget(s.rmtg)
 	e3:SetOperation(s.rmop)
 	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
@@ -66,10 +66,6 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsTurnPlayer(1-tp)
-end
-function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.filter(c,turn)
 	return (c:IsLocation(LOCATION_MZONE) or c:GetFlagEffect(id)~=0) and c:GetTurnID()==turn and c:IsAbleToRemove()

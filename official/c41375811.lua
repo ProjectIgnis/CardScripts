@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetCountLimit(1)
-	e3:SetCost(s.spcost)
+	e3:SetCost(Cost.Detach(1))
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
@@ -53,10 +53,6 @@ end
 function s.defval(e,c)
 	local g=e:GetHandler():GetOverlayGroup():Filter(s.deffilter,nil)
 	return g:GetSum(Card.GetDefense)
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_ZOODIAC) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

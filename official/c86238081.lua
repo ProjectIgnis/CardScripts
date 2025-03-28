@@ -46,7 +46,7 @@ function s.initial_effect(c)
 	e5:SetRange(LOCATION_MZONE)
 	e5:SetCountLimit(1)
 	e5:SetCondition(s.effcon)
-	e5:SetCost(s.descost)
+	e5:SetCost(Cost.Detach(1))
 	e5:SetTarget(s.destg)
 	e5:SetOperation(s.desop)
 	c:RegisterEffect(e5,false,REGISTER_FLAG_DETACH_XMAT)
@@ -88,10 +88,6 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.effcon(e)
 	return e:GetHandler():GetFlagEffect(id)>0
-end
-function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)>0 end

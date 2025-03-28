@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetCountLimit(1)
 	e2:SetHintTiming(0,TIMING_MAIN_END)
 	e2:SetCondition(s.mtcon)
-	e2:SetCost(s.mtcost)
+	e2:SetCost(Cost.Detach(1))
 	e2:SetTarget(s.mttg)
 	e2:SetOperation(s.mtop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
@@ -46,10 +46,6 @@ function s.damval(e,re,val,r,rp,rc)
 end
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsPhase(PHASE_MAIN1) and Duel.IsAbleToEnterBP()
-end
-function s.mtcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.mtfilter(c)
 	return c:IsPosition(POS_FACEUP_ATTACK) and not c:IsHasEffect(EFFECT_EXTRA_ATTACK)

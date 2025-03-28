@@ -21,17 +21,13 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
-	e2:SetCost(s.indcost)
+	e2:SetCost(Cost.Detach(2))
 	e2:SetOperation(s.indop)
 	e2:SetHintTiming(0,TIMING_BATTLE_START)
 	c:RegisterEffect(e2)
 end
 function s.efilter(e,te)
 	return te:GetOwner()~=e:GetOwner()
-end
-function s.indcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,2,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,2,2,REASON_COST)
 end
 function s.indop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

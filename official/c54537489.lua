@@ -22,7 +22,7 @@ function s.initial_effect(c)
 end
 s.listed_names={54537489}
 function s.splimit(e,se,sp,st)
-	return se:IsActiveType(TYPE_MONSTER) and se:GetHandler():IsRace(RACE_WYRM)
+	return se:IsMonsterEffect() and se:GetHandler():IsRace(RACE_WYRM)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetLevel()>1 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0

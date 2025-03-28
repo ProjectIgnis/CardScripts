@@ -29,7 +29,7 @@ end
 s.listed_names={id}
 s.listed_series={SET_FIRE_FORMATION,SET_FIRE_FIST}
 function s.spcon1(e,tp,eg,ep,ev,re,r,rp)
-	return rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and re:GetHandler():IsSetCard(SET_FIRE_FORMATION)
+	return rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsSpellTrapEffect() and re:GetHandler():IsSetCard(SET_FIRE_FORMATION)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end

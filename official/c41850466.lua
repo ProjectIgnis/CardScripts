@@ -26,7 +26,7 @@ s.listed_series={SET_NUMBER}
 s.listed_names={79747096,CARD_NUMERON_NETWORK,89477759}
 function s.cfilter(c)
 	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousCodeOnField()==79747096
-		and c:IsReason(REASON_EFFECT) and c:GetReasonEffect():IsActiveType(TYPE_MONSTER)
+		and c:IsReason(REASON_EFFECT) and c:GetReasonEffect():IsMonsterEffect()
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.cfilter,nil)

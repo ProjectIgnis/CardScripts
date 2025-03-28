@@ -54,7 +54,7 @@ end
 function s.indval(e,re,rp)
 	local rc=re:GetHandler()
 	return rc:IsSpecialSummoned() and rc:IsSummonLocation(LOCATION_GRAVE)
-		and re:IsActiveType(TYPE_MONSTER) and re:IsActivated()
+		and re:IsMonsterEffect() and re:IsActivated()
 end
 function s.limcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

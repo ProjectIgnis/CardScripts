@@ -32,7 +32,7 @@ s.listed_names={CARD_DREAM_MIRROR_JOY,62393472}
 s.listed_series={SET_DREAM_MIRROR}
 function s.acon(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
-	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(SET_DREAM_MIRROR)
+	return re:IsMonsterEffect() and re:GetHandler():IsSetCard(SET_DREAM_MIRROR)
 end
 function s.aop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

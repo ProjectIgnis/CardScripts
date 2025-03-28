@@ -41,7 +41,7 @@ function s.initial_effect(c)
 end
 s.listed_names={22398665}
 function s.tgval(e,re,rp)
-	return aux.tgoval(e,re,rp) and re:IsActiveType(TYPE_MONSTER)
+	return aux.tgoval(e,re,rp) and re:IsMonsterEffect()
 end
 function s.valcheck(e,c)
 	local g=c:GetMaterial()

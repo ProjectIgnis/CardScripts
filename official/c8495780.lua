@@ -31,7 +31,7 @@ end
 s.listed_names={id}
 function s.rvcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_DECK|LOCATION_GRAVE) and re and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsAttribute(ATTRIBUTE_WATER)
+	return c:IsPreviousLocation(LOCATION_DECK|LOCATION_GRAVE) and re and re:IsMonsterEffect() and re:GetHandler():IsAttribute(ATTRIBUTE_WATER)
 end
 function s.rvcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

@@ -69,7 +69,7 @@ function s.limcon(e)
 end
 function s.limval(e,re,rp)
 	local rc=re:GetHandler()
-	return re:IsActiveType(TYPE_TRAP) and not rc:IsSetCard(SET_AMORPHAGE) and not rc:IsImmuneToEffect(e)
+	return re:IsTrapEffect() and not rc:IsSetCard(SET_AMORPHAGE) and not rc:IsImmuneToEffect(e)
 end
 function s.lizfilter(e,c)
 	return not c:IsOriginalSetCard(SET_AMORPHAGE)

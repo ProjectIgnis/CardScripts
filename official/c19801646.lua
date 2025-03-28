@@ -33,7 +33,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_UMI}
 function s.efilter(e,te)
-	return te:IsActiveType(TYPE_MONSTER) and te:GetOwner()~=e:GetOwner()
+	return te:IsMonsterEffect() and te:GetOwner()~=e:GetOwner()
 end
 function s.econ(e)
 	return Duel.IsEnvironment(CARD_UMI) and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)

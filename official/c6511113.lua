@@ -51,7 +51,7 @@ function s.imcon(e)
 	return e:GetHandler():GetOverlayCount()>0
 end
 function s.efilter(e,te)
-	return te:IsActiveType(TYPE_TRAP)
+	return te:IsTrapEffect()
 end
 function s.imtg(e,c)
 	return c:IsSetCard(SET_TRAPTRIX) and not c:IsCode(id)

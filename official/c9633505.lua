@@ -40,5 +40,5 @@ function s.sumlimit(e)
 	return not Duel.IsExistingMatchingCard(s.cfilter,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil)
 end
 function s.efilter(e,te)
-	return te:IsActiveType(TYPE_SPELL)
+	return te:IsSpellEffect()
 end

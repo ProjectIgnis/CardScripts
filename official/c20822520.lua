@@ -24,7 +24,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_SPELLBOOK}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and not re:GetHandler():IsSetCard(SET_SPELLBOOK) then
+	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsSpellEffect() and not re:GetHandler():IsSetCard(SET_SPELLBOOK) then
 		Duel.RegisterFlagEffect(rp,id+1,RESET_PHASE|PHASE_END,0,1)
 	end
 end
@@ -48,7 +48,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,1),nil)
 end
 function s.aclimit(e,re,tp)
-	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and not re:GetHandler():IsSetCard(SET_SPELLBOOK)
+	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsSpellEffect() and not re:GetHandler():IsSetCard(SET_SPELLBOOK)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then 

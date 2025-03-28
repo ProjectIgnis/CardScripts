@@ -19,7 +19,7 @@ function s.cfilter(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if tp==ep or not Duel.IsChainNegatable(ev) then return false end
-	if not re:IsActiveType(TYPE_MONSTER) and not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return false end
+	if not re:IsMonsterEffect() and not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return false end
 	local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DESTROY)
 	return ex and tg~=nil and tc+tg:FilterCount(s.cfilter,nil)-#tg>0
 end

@@ -65,12 +65,12 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.aclimit(e,tp,eg,ep,ev,re,r,rp)
-	if ep~=tp or not (re:GetActivateLocation()==LOCATION_GRAVE and re:IsActiveType(TYPE_MONSTER)) then return end
+	if ep~=tp or not (re:GetActivateLocation()==LOCATION_GRAVE and re:IsMonsterEffect()) then return end
 	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 end
 function s.econ(e)
 	return Duel.GetFlagEffect(e:GetHandlerPlayer(),id)~=0
 end
 function s.elimit(e,te,tp)
-	return te:GetActivateLocation()==LOCATION_GRAVE and te:IsActiveType(TYPE_MONSTER)
+	return te:GetActivateLocation()==LOCATION_GRAVE and te:IsMonsterEffect()
 end

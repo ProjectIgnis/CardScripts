@@ -28,7 +28,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_PENGUIN}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:GetHandler():IsSetCard(SET_PENGUIN) and re:IsActiveType(TYPE_MONSTER)
+	return re:GetHandler():IsSetCard(SET_PENGUIN) and re:IsMonsterEffect()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -37,7 +37,7 @@ function s.ntcon(e)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if rp==tp or e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) 
-		or not re:IsActiveType(TYPE_MONSTER) or not Duel.IsChainNegatable(ev) then return false end
+		or not re:IsMonsterEffect() or not Duel.IsChainNegatable(ev) then return false end
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 	if #g==0 then return false end
 	local rc=re:GetHandler()

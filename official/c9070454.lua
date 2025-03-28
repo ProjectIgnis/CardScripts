@@ -17,7 +17,7 @@ function s.initial_effect(c)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
-	return Duel.IsChainNegatable(ev) and re:IsActiveType(TYPE_MONSTER) and (loc&LOCATION_MZONE)~=0 and ep==1-tp
+	return Duel.IsChainNegatable(ev) and re:IsMonsterEffect() and (loc&LOCATION_MZONE)~=0 and ep==1-tp
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

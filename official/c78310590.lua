@@ -104,7 +104,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_SPELL)and re:GetHandler():IsSetCard(SET_ABYSS_SCRIPT)
+	return re:IsSpellEffect()and re:GetHandler():IsSetCard(SET_ABYSS_SCRIPT)
 end
 function s.spfilter(c,e,tp)
 	return c:IsLevelBelow(4) and c:IsSetCard(SET_ABYSS_ACTOR) and c:IsType(TYPE_PENDULUM) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

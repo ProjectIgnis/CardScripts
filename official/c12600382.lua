@@ -46,7 +46,7 @@ function s.initial_effect(c)
 end
 s.listed_names={8124921,44519536,70903634,7902349,33396948}
 function s.efdes(e,re)
-	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+	return re:IsSpellTrapEffect()
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer()

@@ -40,7 +40,7 @@ function s.indval(e,c)
 	return not c:IsType(TYPE_RITUAL)
 end
 function s.indeval(e,re,rp)
-	return re:IsActiveType(TYPE_MONSTER) and not re:IsActiveType(TYPE_RITUAL)
+	return re:IsMonsterEffect() and not re:IsActiveType(TYPE_RITUAL)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

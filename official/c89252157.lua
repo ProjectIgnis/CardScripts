@@ -42,5 +42,5 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummonComplete()
 end
 function s.efilter(e,re)
-	return e:GetOwnerPlayer()~=re:GetOwnerPlayer() and re:IsActiveType(TYPE_TRAP)
+	return e:GetOwnerPlayer()~=re:GetOwnerPlayer() and re:IsTrapEffect()
 end

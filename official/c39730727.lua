@@ -34,7 +34,7 @@ function s.filter(c)
 	return (not c:IsType(TYPE_EFFECT) and c:IsFaceup()) or c:IsFacedown()
 end
 function s.immfilter(e,te)
-	return te:IsActiveType(TYPE_MONSTER)
+	return te:IsMonsterEffect()
 end
 function s.drfilter(c,tp)
 	return not c:IsSummonPlayer(tp) and c:IsType(TYPE_EFFECT) and c:IsFaceup()

@@ -56,7 +56,7 @@ end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
-	return re:IsActiveType(TYPE_MONSTER) and rc~=c and rc:IsSetCard(SET_ANCIENT_WARRIORS) and rc:IsControler(tp)
+	return re:IsMonsterEffect() and rc~=c and rc:IsSetCard(SET_ANCIENT_WARRIORS) and rc:IsControler(tp)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and chkc:IsSpellTrap() end

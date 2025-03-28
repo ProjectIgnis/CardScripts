@@ -47,5 +47,5 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.efilter(e,re)
-	return e:GetHandlerPlayer()~=re:GetOwnerPlayer() and re:IsActiveType(TYPE_SPELL)
+	return e:GetHandlerPlayer()~=re:GetOwnerPlayer() and re:IsSpellEffect()
 end

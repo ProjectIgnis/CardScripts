@@ -50,11 +50,11 @@ function s.splimit(e,se,sp,st)
 	return se:GetHandler():IsSetCard(SET_MYUTANT)
 end
 function s.tgval(e,re,rp)
-	return aux.tgoval(e,re,rp) and re:IsActiveType(TYPE_MONSTER)
+	return aux.tgoval(e,re,rp) and re:IsMonsterEffect()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and rp~=tp
-		and re:IsActiveType(TYPE_SPELL) and Duel.IsChainNegatable(ev)
+		and re:IsSpellEffect() and Duel.IsChainNegatable(ev)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND|LOCATION_ONFIELD,0,1,nil) end

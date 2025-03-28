@@ -54,7 +54,7 @@ end
 function s.negcond(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	return re:GetHandler()~=c and not c:IsStatus(STATUS_BATTLE_DESTROYED)
-		and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
+		and re:IsMonsterEffect() and Duel.IsChainNegatable(ev)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

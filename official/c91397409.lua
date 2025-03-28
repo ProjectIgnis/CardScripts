@@ -64,7 +64,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.poscon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and ep==1-tp
-		and re:IsActiveType(TYPE_MONSTER)
+		and re:IsMonsterEffect()
 end
 function s.posfilter(c)
 	return c:IsAttribute(ATTRIBUTE_WATER) and c:IsFacedown() and c:IsCanChangePosition()

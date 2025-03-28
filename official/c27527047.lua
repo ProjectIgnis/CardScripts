@@ -15,5 +15,5 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_ICE_BARRIER}
 function s.tgval(e,re,rp)
-	return rp~=e:GetHandlerPlayer() and re:IsActiveType(TYPE_MONSTER)
+	return rp~=e:GetHandlerPlayer() and re:IsMonsterEffect()
 end

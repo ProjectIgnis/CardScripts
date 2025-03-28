@@ -48,7 +48,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_GOUKI}
 function s.immval(e,te)
-	return te:GetOwner()~=e:GetHandler() and te:IsActiveType(TYPE_MONSTER) and e:GetHandlerPlayer() ~= te:GetHandlerPlayer()
+	return te:GetOwner()~=e:GetHandler() and te:IsMonsterEffect() and e:GetHandlerPlayer() ~= te:GetHandlerPlayer()
 		and te:GetOwner():GetAttack()<=e:GetHandler():GetAttack() and te:IsActivated()
 end
 function s.negfilter(c,g)

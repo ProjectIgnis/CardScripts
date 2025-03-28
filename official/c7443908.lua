@@ -67,7 +67,7 @@ end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local tgp,loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_CONTROLER,CHAININFO_TRIGGERING_LOCATION)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainDisablable(ev)
-		and tgp~=tp and re:IsActiveType(TYPE_MONSTER) and loc==LOCATION_MZONE and eg:IsExists(s.filter2,1,nil,tp)
+		and tgp~=tp and re:IsMonsterEffect() and loc==LOCATION_MZONE and eg:IsExists(s.filter2,1,nil,tp)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

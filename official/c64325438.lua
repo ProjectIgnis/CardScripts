@@ -47,7 +47,7 @@ function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.Draw(tp,1,REASON_EFFECT)
 	Duel.Draw(1-tp,1,REASON_EFFECT)
-	if e:IsActiveType(TYPE_SPELL+TYPE_TRAP) and e:IsHasType(EFFECT_TYPE_ACTIVATE) then
+	if e:IsSpellTrapEffect() and e:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		c:CancelToGrave(false)
 	end
 end

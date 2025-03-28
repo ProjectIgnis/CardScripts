@@ -52,7 +52,7 @@ function s.immcon(e)
 end
 	--Unaffected by trap effects
 function s.efilter(e,te)
-	return te:IsActiveType(TYPE_TRAP)
+	return te:IsTrapEffect()
 end
 	--If a normal trap card is activated
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -83,7 +83,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--If your "Traptrix" monster effect activates, except this card
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==tp and re:IsActiveType(TYPE_MONSTER)
+	return rp==tp and re:IsMonsterEffect()
 		and re:GetHandler():IsSetCard(SET_TRAPTRIX) and re:GetHandler()~=e:GetHandler()
 end
 	--Check for "Trap Hole" normal trap

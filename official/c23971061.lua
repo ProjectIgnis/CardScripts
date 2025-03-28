@@ -49,7 +49,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e1)
 end
 function s.efilter(e,te)
-	return te:IsActiveType(TYPE_MONSTER) and te:GetOwner()~=e:GetOwner() and not te:IsActiveType(TYPE_LINK)
+	return te:IsMonsterEffect() and te:GetOwner()~=e:GetOwner() and not te:IsActiveType(TYPE_LINK)
 end
 function s.indval(e,c)
 	return not c:IsLinkMonster()

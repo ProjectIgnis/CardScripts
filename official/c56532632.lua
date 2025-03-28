@@ -15,7 +15,7 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
 	return ep~=tp and ph>PHASE_MAIN1 and ph<PHASE_MAIN2
-		and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
+		and re:IsMonsterEffect() and Duel.IsChainNegatable(ev)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

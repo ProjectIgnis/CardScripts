@@ -26,7 +26,7 @@ function s.datg(e,c)
 	return c:IsLevelBelow(3) and c:IsRace(RACE_SEASERPENT)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsReason(REASON_COST) and re:IsActivated() and re:IsActiveType(TYPE_MONSTER)
+	return e:GetHandler():IsReason(REASON_COST) and re:IsActivated() and re:IsMonsterEffect()
 		and re:GetHandler():IsAttribute(ATTRIBUTE_WATER)
 end
 function s.thfilter(c)

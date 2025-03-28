@@ -57,7 +57,7 @@ function s.spcon(e,c)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and g and g:IsExists(Card.IsControler,1,nil,tp)
 end
 function s.chainfilter(re,tp,cid)
-	return not (re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsSetCard(SET_ANCIENT_WARRIORS))
+	return not (re:IsMonsterEffect() and not re:GetHandler():IsSetCard(SET_ANCIENT_WARRIORS))
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsMainPhase()
@@ -76,7 +76,7 @@ function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.aclimit(e,re,tp)
-	return re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsSetCard(SET_ANCIENT_WARRIORS)
+	return re:IsMonsterEffect() and not re:GetHandler():IsSetCard(SET_ANCIENT_WARRIORS)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end

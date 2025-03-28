@@ -49,5 +49,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.efilter(e,re)
-	return e:GetOwnerPlayer()~=re:GetOwnerPlayer() and re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+	return e:GetOwnerPlayer()~=re:GetOwnerPlayer() and re:IsSpellTrapEffect()
 end

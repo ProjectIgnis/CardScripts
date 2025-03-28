@@ -46,7 +46,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetLabelObject(e3)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL)
+	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsSpellEffect()
 end
 function s.regop1(e,tp,eg,ep,ev,re,r,rp)
 	local ct=e:GetLabelObject():GetLabel()

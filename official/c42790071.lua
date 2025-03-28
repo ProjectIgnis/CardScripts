@@ -35,7 +35,7 @@ function s.counterfilter(c)
 	return c:IsSetCard(SET_ALTERGEIST)
 end
 function s.spcon1(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_TRAP)
+	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsTrapEffect()
 		and rp==tp 
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

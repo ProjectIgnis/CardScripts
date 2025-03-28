@@ -88,7 +88,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and Duel.IsChainNegatable(ev)
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and re:IsSpellTrapEffect() and Duel.IsChainNegatable(ev)
 end
 function s.negfilter(c)
 	return c:GetCounter(COUNTER_SPELL)>0 and c:IsAbleToHand()

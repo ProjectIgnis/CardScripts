@@ -11,5 +11,5 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.efilter(e,te)
-	return te:IsActiveType(TYPE_TRAP)
+	return te:IsTrapEffect()
 end

@@ -20,5 +20,5 @@ function s.initial_effect(c)
 end
 function s.aclimit(e,re,tp)
 	local loc=re:GetActivateLocation()
-	return (loc==LOCATION_GRAVE or loc==LOCATION_REMOVED) and re:IsActiveType(TYPE_MONSTER)
+	return (loc==LOCATION_GRAVE or loc==LOCATION_REMOVED) and re:IsMonsterEffect()
 end

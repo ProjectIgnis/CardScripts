@@ -32,5 +32,5 @@ function s.spcon(e,c)
 		and Duel.IsExistingMatchingCard(s.filter,c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function s.valcon(e,re,r,rp)
-	return (r&REASON_EFFECT)~=0 and re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+	return (r&REASON_EFFECT)~=0 and re:IsSpellTrapEffect()
 end

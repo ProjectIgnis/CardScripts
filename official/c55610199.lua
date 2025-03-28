@@ -37,7 +37,7 @@ function s.indval(e,re,r,rp)
 	else return 0 end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==1-tp and Duel.IsTurnPlayer(tp) and re:IsActiveType(TYPE_MONSTER)
+	return ep==1-tp and Duel.IsTurnPlayer(tp) and re:IsMonsterEffect()
 end
 function s.descfilter(c)
 	return c:IsSetCard(SET_GEM_KNIGHT) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)

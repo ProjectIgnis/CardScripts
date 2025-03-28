@@ -85,7 +85,7 @@ function s.actcon(e,tp,eg,ep,ev,re,r,rp)
 	return tc:GetFlagEffect(id)>0
 end
 function s.actop(e,tp,eg,ep,ev,re,r,rp)
-	if re:IsActiveType(TYPE_RITUAL) and re:IsActiveType(TYPE_MONSTER) and ep==tp then
+	if re:IsActiveType(TYPE_RITUAL) and re:IsMonsterEffect() and ep==tp then
 		Duel.SetChainLimit(s.chainlm)
 	end
 end

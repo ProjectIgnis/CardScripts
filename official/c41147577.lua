@@ -30,7 +30,7 @@ function s.initial_effect(c)
 end
 s.listed_names={14152862}
 function s.efilter(e,te)
-	return te:IsActiveType(TYPE_MONSTER) and te:GetOwner()~=e:GetOwner()
+	return te:IsMonsterEffect() and te:GetOwner()~=e:GetOwner()
 end
 function s.poscon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,14152862)

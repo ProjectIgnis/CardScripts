@@ -54,7 +54,7 @@ function s.cfilter(c,re)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsReason(REASON_EFFECT)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==tp and re and re:IsActiveType(TYPE_TRAP) and re:GetHandler():GetOriginalType()==TYPE_TRAP
+	return rp==tp and re and re:IsTrapEffect() and re:GetHandler():GetOriginalType()==TYPE_TRAP
 		and eg:IsExists(s.cfilter,1,nil)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)

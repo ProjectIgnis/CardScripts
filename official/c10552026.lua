@@ -26,7 +26,7 @@ function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsStatus(STATUS_BATTLE_DESTROYED) then return false end
 	local loc,seq,p=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_SEQUENCE,CHAININFO_TRIGGERING_CONTROLER)
 	if p==1-tp then seq=seq+16 end
-	return re:IsActiveType(TYPE_MONSTER) and (loc&LOCATION_MZONE)~=0 and bit.extract(c:GetLinkedZone(),seq)~=0 and Duel.IsChainNegatable(ev)
+	return re:IsMonsterEffect() and (loc&LOCATION_MZONE)~=0 and bit.extract(c:GetLinkedZone(),seq)~=0 and Duel.IsChainNegatable(ev)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

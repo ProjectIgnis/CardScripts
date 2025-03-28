@@ -33,7 +33,7 @@ function s.negconfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:ListsCodeAsMaterial(CARD_ALBAZ)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==1-tp and re:IsActiveType(TYPE_MONSTER)
+	return rp==1-tp and re:IsMonsterEffect()
 		and Duel.IsExistingMatchingCard(s.negconfilter,tp,LOCATION_MZONE,0,1,nil,tp)
 end
 function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)

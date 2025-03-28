@@ -34,7 +34,7 @@ s.listed_names={75888208,CARD_DREAM_MIRROR_TERROR,id}
 s.listed_series={SET_DREAM_MIRROR}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
-	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(SET_DREAM_MIRROR)
+	return re:IsMonsterEffect() and re:GetHandler():IsSetCard(SET_DREAM_MIRROR)
 end
 function s.thfilter(c)
 	return c:IsSetCard(SET_DREAM_MIRROR) and not c:IsCode(id) and c:IsAbleToHand()

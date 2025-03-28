@@ -125,7 +125,7 @@ function s.recop2(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_MONSTER) and rp==1-tp and s.sbcount(tp)>1
+	return re:IsMonsterEffect() and rp==1-tp and s.sbcount(tp)>1
 	and Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)==LOCATION_MZONE
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)

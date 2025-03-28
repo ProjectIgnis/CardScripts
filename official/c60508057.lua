@@ -44,7 +44,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.actlimit(e,re,rp)
 	local rc=re:GetHandler()
-	return re:IsActiveType(TYPE_MONSTER) and not rc:IsSetCard(SET_RAIDRAPTOR)
+	return re:IsMonsterEffect() and not rc:IsSetCard(SET_RAIDRAPTOR)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE)

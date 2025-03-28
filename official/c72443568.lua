@@ -22,5 +22,5 @@ end
 s.LVnum=8
 s.LVset=SET_SILENT_MAGICIAN
 function s.efilter(e,te)
-	return te:IsActiveType(TYPE_SPELL) and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
+	return te:IsSpellEffect() and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
 end

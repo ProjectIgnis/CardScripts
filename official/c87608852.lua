@@ -20,7 +20,7 @@ function s.counterfilter(c)
 	return not c:IsLevelAbove(5)
 end
 function s.chainfilter(re,tp,cid)
-	return not (re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and re:GetHandler():IsSetCard(SET_SPELLBOOK))
+	return not (re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsSpellEffect() and re:GetHandler():IsSetCard(SET_SPELLBOOK))
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable()

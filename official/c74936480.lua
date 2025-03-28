@@ -52,11 +52,11 @@ function s.lpcostval(e,re,rp,val)
 	if not re then return val end
 	local rc=re:GetHandler()
 	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and rc:IsTrap() then return 0 end
-	if re:IsActiveType(TYPE_MONSTER) and rc:IsSetCard(SET_DINOMORPHIA) then return 0 end
+	if re:IsMonsterEffect() and rc:IsSetCard(SET_DINOMORPHIA) then return 0 end
 	return val
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==1-tp and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():GetBaseAttack()>0
+	return rp==1-tp and re:IsMonsterEffect() and re:GetHandler():GetBaseAttack()>0
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

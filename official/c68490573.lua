@@ -58,7 +58,7 @@ function s.cfilter2(c)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsChainDisablable(ev) then return false end
-	return Duel.IsExistingMatchingCard(s.cfilter2,tp,LOCATION_MZONE,0,1,nil) and re:IsActiveType(TYPE_MONSTER)
+	return Duel.IsExistingMatchingCard(s.cfilter2,tp,LOCATION_MZONE,0,1,nil) and re:IsMonsterEffect()
 end
 function s.atkfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_SYNCHRO)

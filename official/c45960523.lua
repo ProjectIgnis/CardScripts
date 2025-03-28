@@ -30,7 +30,7 @@ end
 s.listed_series={SET_METAPHYS}
 s.listed_names={id}
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return re and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(SET_METAPHYS)
+	return re and re:IsMonsterEffect() and re:GetHandler():IsSetCard(SET_METAPHYS)
 end
 function s.rmfilter(c)
 	return c:IsSpecialSummoned() and c:IsAbleToRemove() and c:IsFaceup()

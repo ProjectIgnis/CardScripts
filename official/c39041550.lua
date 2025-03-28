@@ -50,7 +50,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local loct=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
-	return loct==LOCATION_MZONE and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsControler(1-tp)
+	return loct==LOCATION_MZONE and re:IsMonsterEffect() and re:GetHandler():IsControler(1-tp)
 end
 function s.cfilter(c,rc)
 	return c:IsRace(RACE_INSECT) and c~=rc

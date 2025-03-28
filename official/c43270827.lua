@@ -16,7 +16,7 @@ end
 s.listed_names={CARD_ARGYRO_SYSTEM}
 s.listed_series={SET_THERION}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return rp==1-tp and re:IsActiveType(TYPE_MONSTER)
+	return rp==1-tp and re:IsMonsterEffect()
 		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_THERION),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

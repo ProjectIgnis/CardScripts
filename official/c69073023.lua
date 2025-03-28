@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.efilter(e,te)
-	return te:IsActiveType(TYPE_MONSTER) and not te:IsActiveType(TYPE_XYZ)
+	return te:IsMonsterEffect() and not te:IsActiveType(TYPE_XYZ)
 end
 function s.indes(e,c)
 	return not c:IsType(TYPE_XYZ)

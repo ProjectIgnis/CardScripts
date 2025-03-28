@@ -70,7 +70,7 @@ end
 function s.actlmtval(e,re,rp)
 	local rc=re:GetHandler()
 	return rc:IsSpecialSummoned() and rc:IsAttackPos() and rc:IsLocation(LOCATION_MZONE)
-		and re:IsActiveType(TYPE_MONSTER)
+		and re:IsMonsterEffect()
 end
 function s.adcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetBattleTarget()~=nil

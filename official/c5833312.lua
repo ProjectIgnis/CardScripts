@@ -52,7 +52,7 @@ function s.typecheck(types)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,types),0,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return s.typecheck(RACE_WARRIOR|RACE_BEAST|RACE_PYRO) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_TRAP) and rp==tp
+	return s.typecheck(RACE_WARRIOR|RACE_BEAST|RACE_PYRO) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsTrapEffect() and rp==tp
 		and not e:GetHandler():IsDisabled()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -71,7 +71,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return s.typecheck(RACE_DINOSAUR|RACE_SEASERPENT|RACE_THUNDER) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and rp==tp
+	return s.typecheck(RACE_DINOSAUR|RACE_SEASERPENT|RACE_THUNDER) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsSpellEffect() and rp==tp
 		and re:GetHandler()~=c and not c:IsDisabled()
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -83,7 +83,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(1-tp,1000,REASON_EFFECT)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return s.typecheck(RACE_MACHINE|RACE_FAIRY|RACE_FIEND) and re:IsActiveType(TYPE_MONSTER) and rp==tp
+	return s.typecheck(RACE_MACHINE|RACE_FAIRY|RACE_FIEND) and re:IsMonsterEffect() and rp==tp
 		and not e:GetHandler():IsDisabled()
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

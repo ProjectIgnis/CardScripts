@@ -65,7 +65,7 @@ function s.actop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.aclimit(e,re,tp)
-	return re:IsActiveType(TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
+	return re:IsTrapEffect() and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function s.slfilter(c)
 	return c:IsSetCard(SET_MAGICIAN) or c:IsSetCard(SET_ODD_EYES)

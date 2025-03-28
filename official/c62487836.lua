@@ -58,7 +58,7 @@ function s.distg(e,c)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local tl,p=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_PLAYER)
-	if tl==LOCATION_SZONE and p~=tp and re:IsActiveType(TYPE_SPELL) then
+	if tl==LOCATION_SZONE and p~=tp and re:IsSpellEffect() then
 		Duel.NegateEffect(ev)
 	end
 end

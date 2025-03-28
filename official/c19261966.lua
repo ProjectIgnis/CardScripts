@@ -38,7 +38,7 @@ function s.matfilter(c,lc,sumtype,tp)
 	return c:IsAttribute(ATTRIBUTE_WATER,lc,sumtype,tp) or c:IsHasEffect(4904633)
 end
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return se:IsActiveType(TYPE_SPELL+TYPE_TRAP) and se:IsHasType(EFFECT_TYPE_ACTIONS) 
+	return se:IsSpellTrapEffect() and se:IsHasType(EFFECT_TYPE_ACTIONS) 
 		and c:IsLocation(LOCATION_GRAVE|LOCATION_HAND) and c:IsMonster()
 end
 function s.thfilter(c)

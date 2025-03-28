@@ -92,5 +92,5 @@ function s.immop(e,tp,eg,ep,ev,re,r,rp)
 	rc:RegisterEffect(e1)
 end
 function s.efilter(e,te)
-	return te:IsActiveType(TYPE_TRAP)
+	return te:IsTrapEffect()
 end

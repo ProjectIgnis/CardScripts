@@ -37,7 +37,7 @@ function s.initial_effect(c)
 end
 s.listed_names={id}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and re:IsHasCategory(CATEGORY_SPECIAL_SUMMON)
+	return ep~=tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsSpellEffect() and re:IsHasCategory(CATEGORY_SPECIAL_SUMMON)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetFlagEffect(id)==0 end

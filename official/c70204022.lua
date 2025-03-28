@@ -59,7 +59,7 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.sspcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(SET_SYMPHONIC_WARRIOR)
+	return re:IsMonsterEffect() and re:GetHandler():IsSetCard(SET_SYMPHONIC_WARRIOR)
 end
 function s.ssptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

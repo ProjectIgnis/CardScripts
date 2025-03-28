@@ -93,7 +93,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.aclimit(e,re,tp)
-	return (re:IsHasType(EFFECT_TYPE_ACTIVATE) or re:IsActiveType(TYPE_MONSTER))
+	return (re:IsHasType(EFFECT_TYPE_ACTIVATE) or re:IsMonsterEffect())
 end
 function s.actcon(e)
 	local tp=e:GetHandlerPlayer()

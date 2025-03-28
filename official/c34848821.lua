@@ -54,7 +54,7 @@ function s.tgtg(e,c)
 	return c~=e:GetHandler()
 end
 function s.tgval(e,re,rp)
-	return re:IsActiveType(TYPE_MONSTER) and aux.tgoval(e,re,rp)
+	return re:IsMonsterEffect() and aux.tgoval(e,re,rp)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

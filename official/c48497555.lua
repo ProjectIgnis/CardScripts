@@ -26,7 +26,7 @@ end
 s.listed_series={SET_JUNK}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	return rc:IsOnField() and rc:IsControler(1-tp) and re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and not re:IsHasType(EFFECT_TYPE_ACTIVATE)
+	return rc:IsOnField() and rc:IsControler(1-tp) and re:IsSpellTrapEffect() and not re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -39,7 +39,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_MERMAIL}
 function s.tgcon1(e,tp,eg,ep,ev,re,r,rp)
-	if rp==tp or not re:IsActiveType(TYPE_SPELL+TYPE_TRAP) or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
+	if rp==tp or not re:IsSpellTrapEffect() or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	if not g or #g~=1 then return false end
 	local tc=g:GetFirst()

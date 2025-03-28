@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.aclimit(e,re,tp)
-	if not re:IsHasType(EFFECT_TYPE_ACTIVATE) or not re:IsActiveType(TYPE_SPELL) then return false end
+	if not re:IsHasType(EFFECT_TYPE_ACTIVATE) or not re:IsSpellEffect() then return false end
 	local c=re:GetHandler()
 	return not c:IsLocation(LOCATION_SZONE) or c:GetFlagEffect(id)>0
 end

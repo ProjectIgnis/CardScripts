@@ -37,7 +37,7 @@ function s.distarget(e,c)
 end
 function s.disoperation(e,tp,eg,ep,ev,re,r,rp)
 	local tl=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
-	if (tl&LOCATION_SZONE)~=0 and re:IsActiveType(TYPE_SPELL) then
+	if (tl&LOCATION_SZONE)~=0 and re:IsSpellEffect() then
 		Duel.NegateEffect(ev)
 	end
 end

@@ -58,5 +58,5 @@ end
 function s.unaval(e,te)
 	local tc=te:GetOwner()
 	return tc:IsSpecialSummoned() and tc:IsSummonLocation(LOCATION_EXTRA) and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
-		and te:IsActiveType(TYPE_MONSTER) and te:IsActivated() and te:GetActivateLocation()==LOCATION_MZONE
+		and te:IsMonsterEffect() and te:IsActivated() and te:GetActivateLocation()==LOCATION_MZONE
 end

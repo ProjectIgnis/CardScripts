@@ -18,7 +18,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_ABYSS_SCRIPT,SET_ABYSS_ACTOR}
 function s.chainfilter(re,tp,cid)
-	return not (re:IsActiveType(TYPE_SPELL) and re:GetHandler():IsSetCard(SET_ABYSS_SCRIPT))
+	return not (re:IsSpellEffect() and re:GetHandler():IsSetCard(SET_ABYSS_SCRIPT))
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCustomActivityCount(id,tp,ACTIVITY_CHAIN)>0

@@ -30,7 +30,7 @@ end
 s.listed_series={SET_FIRE_FORMATION,SET_FIRE_FIST}
 s.listed_names={id}
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+	return rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsSpellTrapEffect()
 		and re:GetHandler():IsSetCard(SET_FIRE_FORMATION)
 end
 function s.filter(c)

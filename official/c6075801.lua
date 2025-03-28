@@ -65,7 +65,7 @@ function s.eqcon(e)
 	return #eg>0
 end
 function s.efilter(e,te)
-	return te:IsActiveType(TYPE_MONSTER) and te:GetOwner()~=e:GetOwner()
+	return te:IsMonsterEffect() and te:GetOwner()~=e:GetOwner()
 end
 function s.spfilter(c,e,tp)
 	return c:IsRace(RACE_DRAGON) and (c:IsLevel(7) or c:IsLevel(8)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

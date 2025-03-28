@@ -31,7 +31,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_MAGICIAN}
 function s.evalue(e,re,rp)
-	return re:IsActiveType(TYPE_SPELL) and rp~=e:GetHandlerPlayer()
+	return re:IsSpellEffect() and rp~=e:GetHandlerPlayer()
 end
 function s.thcfilter(c,tp)
 	return c:IsType(TYPE_PENDULUM) and c:IsPreviousSetCard(SET_MAGICIAN)

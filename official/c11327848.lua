@@ -68,5 +68,5 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.aclimit(e,re)
 	local loc=re:GetActivateLocation()
-	return loc==LOCATION_MZONE and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():GetEquipGroup():IsExists(Card.IsControler,1,nil,e:GetHandlerPlayer())
+	return loc==LOCATION_MZONE and re:IsMonsterEffect() and re:GetHandler():GetEquipGroup():IsExists(Card.IsControler,1,nil,e:GetHandlerPlayer())
 end

@@ -43,7 +43,7 @@ function s.immcon(e)
 	return e:GetHandler():IsLinkSummoned()
 end
 function s.efilter(e,te)
-	if te:IsActiveType(TYPE_SPELL+TYPE_TRAP) then
+	if te:IsSpellTrapEffect() then
 		return true
 	else
 		return te:IsActiveType(TYPE_LINK) and te:IsActivated() and te:GetOwner()~=e:GetOwner()

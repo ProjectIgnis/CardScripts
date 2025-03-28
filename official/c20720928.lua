@@ -63,7 +63,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 end
 function s.chainop(e,tp,eg,ep,ev,re,r,rp)
-	if re:GetHandler():IsSetCard(SET_METAPHYS) and re:IsActiveType(TYPE_MONSTER) and re:GetOwnerPlayer()==tp then
+	if re:GetHandler():IsSetCard(SET_METAPHYS) and re:IsMonsterEffect() and re:GetOwnerPlayer()==tp then
 		Duel.SetChainLimit(s.chainlm)
 	end
 end

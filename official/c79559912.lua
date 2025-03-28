@@ -34,7 +34,7 @@ end
 s.listed_series={SET_DD,SET_DARK_CONTRACT}
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) or not Duel.IsChainNegatable(ev) then return false end
-	if not re:IsActiveType(TYPE_MONSTER) and not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return false end
+	if not re:IsMonsterEffect() and not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return false end
 	return re:IsHasCategory(CATEGORY_SPECIAL_SUMMON)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)

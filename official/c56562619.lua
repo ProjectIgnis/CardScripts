@@ -52,7 +52,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_NINJA,SET_NINJITSU_ART}
 function s.splimit(e,se,sp,st)
-	return (se:IsActiveType(TYPE_MONSTER) and se:GetHandler():IsSetCard(SET_NINJA)) or se:GetHandler():IsSetCard(SET_NINJITSU_ART)
+	return (se:IsMonsterEffect() and se:GetHandler():IsSetCard(SET_NINJA)) or se:GetHandler():IsSetCard(SET_NINJITSU_ART)
 end
 function s.cfilter1(c,tp)
 	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsMonster() and c:IsSetCard(SET_NINJA) and c:IsAbleToGraveAsCost()

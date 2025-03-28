@@ -52,7 +52,7 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
 	if tc:GetFlagEffect(id)==0 or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	return g and g:IsContains(tc) and re:IsActiveType(TYPE_MONSTER)
+	return g and g:IsContains(tc) and re:IsMonsterEffect()
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateEffect(ev)

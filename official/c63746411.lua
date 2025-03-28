@@ -20,7 +20,7 @@ function s.initial_effect(c)
 end
 s.xyz_number=106
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and re:IsActiveType(TYPE_MONSTER)
+	return rp~=tp and re:IsMonsterEffect()
 		and Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)==LOCATION_MZONE
 end
 function s.filter(c)

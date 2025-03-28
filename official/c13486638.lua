@@ -18,7 +18,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_XYZ_DRAGON,SET_THE_PHANTOM_KNIGHTS,SET_RAIDRAPTOR}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
+	return re:IsMonsterEffect() and Duel.IsChainNegatable(ev)
 end
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsAttribute(ATTRIBUTE_DARK)

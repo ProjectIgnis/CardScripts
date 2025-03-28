@@ -61,7 +61,7 @@ function s.indtg(e,c)
 end
 function s.efilter(e,te)
 	local loc=Duel.GetChainInfo(0,CHAININFO_TRIGGERING_LOCATION)
-	return te:IsActivated() and te:IsActiveType(TYPE_MONSTER) and loc==LOCATION_MZONE and e:GetHandlerPlayer()==1-te:GetHandlerPlayer() 
+	return te:IsActivated() and te:IsMonsterEffect() and loc==LOCATION_MZONE and e:GetHandlerPlayer()==1-te:GetHandlerPlayer() 
 end
 --Functions for determining attack target
 function s.atklimit(e,c)

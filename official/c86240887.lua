@@ -63,5 +63,5 @@ function s.target(e,c)
 	return c:IsRace(RACE_DRAGON)
 end
 function s.aclimit(e,re,tp)
-	return re:GetHandler():IsRace(RACE_DRAGON) and re:IsActiveType(TYPE_MONSTER)
+	return re:GetHandler():IsRace(RACE_DRAGON) and re:IsMonsterEffect()
 end

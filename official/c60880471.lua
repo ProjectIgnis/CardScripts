@@ -35,7 +35,7 @@ end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if not (rp==1-tp and re:IsHasProperty(EFFECT_FLAG_CARD_TARGET)) then return false end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	return g and g:IsExists(s.cfilter,1,nil,tp) and Duel.IsChainDisablable(ev) and re:IsActiveType(TYPE_MONSTER)
+	return g and g:IsExists(s.cfilter,1,nil,tp) and Duel.IsChainDisablable(ev) and re:IsMonsterEffect()
 		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_RIKKA),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)

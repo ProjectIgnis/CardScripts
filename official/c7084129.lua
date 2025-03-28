@@ -44,7 +44,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsTurnPlayer(1-tp) and rp==tp and re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+	return Duel.IsTurnPlayer(1-tp) and rp==tp and re:IsSpellTrapEffect()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsRace,1,false,nil,nil,RACE_SPELLCASTER) end

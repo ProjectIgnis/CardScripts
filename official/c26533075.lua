@@ -41,7 +41,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return (r&REASON_DESTROY)~=0 and rp~=tp and re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+	return (r&REASON_DESTROY)~=0 and rp~=tp and re:IsSpellTrapEffect()
 		and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 		and e:GetHandler():IsPreviousPosition(POS_FACEDOWN)
 end

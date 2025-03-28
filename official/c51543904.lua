@@ -78,7 +78,7 @@ end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsStatus(STATUS_BATTLE_DESTROYED) then return false end
-	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) or not re:IsActiveType(TYPE_MONSTER) then return end
+	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) or not re:IsMonsterEffect() then return end
 	local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	return tg and tg:IsContains(c) and Duel.IsChainNegatable(ev)
 end

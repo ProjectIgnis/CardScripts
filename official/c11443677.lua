@@ -67,7 +67,7 @@ function s.hspop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 function s.efilter(e,te)
-	return te:IsActiveType(TYPE_TRAP)
+	return te:IsTrapEffect()
 end
 function s.stfilter(c)
 	return c:IsTrap() and c:IsSSetable()

@@ -35,7 +35,7 @@ function s.spcon(e,c)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(s.spconfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==1-tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainDisablable(ev) 
+	return rp==1-tp and re:IsMonsterEffect() and Duel.IsChainDisablable(ev) 
 end
 function s.discostfilter(c)
 	return c:IsLevel(2) or c:IsRank(2) or c:IsLink(2)

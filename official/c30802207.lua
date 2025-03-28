@@ -46,7 +46,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_EXOSISTER}
 function s.tgval(e,re,rp)
-	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSummonLocation(LOCATION_GRAVE)
+	return re:IsMonsterEffect() and re:GetHandler():IsSummonLocation(LOCATION_GRAVE)
 end
 function s.negcfilter(c,tp)
 	return c:IsXyzSummoned() and c:IsSetCard(SET_EXOSISTER) and c:IsSummonPlayer(tp)

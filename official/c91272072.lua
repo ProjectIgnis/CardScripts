@@ -44,7 +44,7 @@ function s.matfilter(c,fc,sumtype,tp)
 	return c:IsType(TYPE_LINK,fc,sumtype,tp) and c:IsSetCard(SET_TRICKSTAR,fc,sumtype,tp)
 end
 function s.damval(e,re,val,r,rp)
-	if r&REASON_EFFECT==REASON_EFFECT and re and re:IsActiveType(TYPE_MONSTER) then
+	if r&REASON_EFFECT==REASON_EFFECT and re and re:IsMonsterEffect() then
 		local rc=re:GetHandler()
 		if rc:IsFaceup() and rc:IsSetCard(SET_TRICKSTAR) and rc:IsLinkMonster()
 			and rc:GetLinkedGroup():IsContains(e:GetHandler()) then
@@ -54,7 +54,7 @@ function s.damval(e,re,val,r,rp)
 	return val
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and r&REASON_EFFECT==REASON_EFFECT and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(SET_TRICKSTAR)
+	return ep~=tp and r&REASON_EFFECT==REASON_EFFECT and re:IsMonsterEffect() and re:GetHandler():IsSetCard(SET_TRICKSTAR)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

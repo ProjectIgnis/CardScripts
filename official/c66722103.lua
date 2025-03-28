@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return rp==1-tp and re:IsActiveType(TYPE_MONSTER) and e:GetHandler():IsSpecialSummoned() and Duel.IsChainNegatable(ev)
+	return rp==1-tp and re:IsMonsterEffect() and e:GetHandler():IsSpecialSummoned() and Duel.IsChainNegatable(ev)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

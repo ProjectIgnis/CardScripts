@@ -87,7 +87,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--If a monster effect is activated
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
+	return re:IsMonsterEffect() and Duel.IsChainNegatable(ev)
 		and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,re:GetHandler():GetCode())
 end
 	--Activation legality

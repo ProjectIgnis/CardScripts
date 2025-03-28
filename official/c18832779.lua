@@ -63,7 +63,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
-		and ep==1-tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
+		and ep==1-tp and re:IsMonsterEffect() and Duel.IsChainNegatable(ev)
 end
 function s.negcfilter(c)
 	return c:IsSetCard(SET_PLUNDER_PATROLL) and c:IsDiscardable()

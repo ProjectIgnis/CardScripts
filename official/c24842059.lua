@@ -39,7 +39,7 @@ function s.matfilter(c,lc,sumtype,tp)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then return false end
-	return ep==1-tp and re:IsActiveType(TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
+	return ep==1-tp and re:IsTrapEffect() and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 		and Duel.IsChainDisablable(ev)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)

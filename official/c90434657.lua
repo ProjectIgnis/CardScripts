@@ -19,7 +19,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_GRAVEKEEPERS),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 		or not Duel.IsEnvironment(CARD_NECROVALLEY) then return false end
 	if not Duel.IsChainNegatable(ev) then return false end
-	return re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE)
+	return re:IsMonsterEffect() or re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

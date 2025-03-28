@@ -36,7 +36,7 @@ function s.tgcon(e)
 end
 function s.tgval(e,re,rp)
 	local rc=re:GetHandler()
-	return re:IsActiveType(TYPE_MONSTER) and e:GetHandler()~=rc
+	return re:IsMonsterEffect() and e:GetHandler()~=rc
 end
 function s.atkfilter(c)
 	return c:IsFaceup() and (c:GetAttack()>0 or c:GetDefense()>0)

@@ -46,7 +46,7 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(SET_MERMAIL)
+	return re:IsMonsterEffect() and re:GetHandler():IsSetCard(SET_MERMAIL)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_MERMAIL) and c:IsLevelBelow(3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

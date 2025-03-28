@@ -47,5 +47,5 @@ function s.efop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.efilter(e,re,rp)
-	return re:IsActiveType(TYPE_MONSTER)
+	return re:IsMonsterEffect()
 end

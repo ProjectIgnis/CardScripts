@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsLocation(LOCATION_HAND|LOCATION_MZONE)
+	return rp~=tp and re:IsMonsterEffect() and re:GetHandler():IsLocation(LOCATION_HAND|LOCATION_MZONE)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_HAND|LOCATION_MZONE) and not chkc:IsControler(tp) end

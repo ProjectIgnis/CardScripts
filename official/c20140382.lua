@@ -18,7 +18,7 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsChainNegatable(ev)
-		and (re:IsActiveType(TYPE_MONSTER) or (re:IsActiveType(TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE)))
+		and (re:IsMonsterEffect() or (re:IsTrapEffect() and re:IsHasType(EFFECT_TYPE_ACTIVATE)))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

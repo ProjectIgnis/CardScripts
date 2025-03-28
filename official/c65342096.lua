@@ -45,7 +45,7 @@ s.counter_place_list={COUNTER_SPELL}
 s.listed_names={39910367}
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and re:GetHandler()~=c then
+	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsSpellEffect() and re:GetHandler()~=c then
 		c:AddCounter(COUNTER_SPELL,1)
 	end
 end

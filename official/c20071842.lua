@@ -47,7 +47,7 @@ function s.stage2(mat,e,tp,eg,ep,ev,re,r,rp,tc)
 end
 function s.efilter(e,te)
 	local tc=te:GetOwner()
-	return tc:IsSpecialSummoned() and tc:IsSummonLocation(LOCATION_EXTRA) and te:IsActiveType(TYPE_MONSTER)
+	return tc:IsSpecialSummoned() and tc:IsSummonLocation(LOCATION_EXTRA) and te:IsMonsterEffect()
 		and te:IsActivated() and te:GetActivateLocation()==LOCATION_MZONE
 end
 function s.indval(e,c)

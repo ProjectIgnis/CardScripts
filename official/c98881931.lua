@@ -29,7 +29,7 @@ function s.sprcon(e,c)
 		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_PHOTON),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function s.valcon(e,re,r,rp)
-	return (r&REASON_EFFECT)~=0 and re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+	return (r&REASON_EFFECT)~=0 and re:IsSpellTrapEffect()
 end
 function s.atkcon(e)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_PHOTON),e:GetHandlerPlayer(),LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler())

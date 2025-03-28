@@ -50,7 +50,7 @@ s.listed_series={SET_DRACOSLAYER,SET_DRACOVERLORD}
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	local cont,loc,race=Duel.GetChainInfo(0,CHAININFO_TRIGGERING_CONTROLER,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_RACE)
-	return re:IsActiveType(TYPE_MONSTER) and rc:IsSetCard(SET_DRACOSLAYER) and cont==tp and loc==LOCATION_MZONE and race==RACE_DRAGON
+	return re:IsMonsterEffect() and rc:IsSetCard(SET_DRACOSLAYER) and cont==tp and loc==LOCATION_MZONE and race==RACE_DRAGON
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() end

@@ -51,7 +51,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,2),nil)
 end
 function s.aclimit(e,re,tp)
-	return not re:GetHandler():IsCode(id) and re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+	return not re:GetHandler():IsCode(id) and re:IsSpellTrapEffect()
 end
 function s.tdfilter(c)
 	return c:IsMonster() and c:IsAbleToDeck()

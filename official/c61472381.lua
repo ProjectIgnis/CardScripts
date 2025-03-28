@@ -53,7 +53,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
-		and ep~=tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainDisablable(ev)
+		and ep~=tp and re:IsMonsterEffect() and Duel.IsChainDisablable(ev)
 end
 function s.cfilter(c)
 	return c:IsFaceup() and (c:IsSetCard(SET_FIRE_FIST) or c:IsSetCard(SET_FIRE_FORMATION)) and not c:IsCode(id) and c:IsAbleToGraveAsCost()

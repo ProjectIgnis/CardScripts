@@ -58,7 +58,7 @@ function s.operation1(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.condition2(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsTurnPlayer(1-tp) and rp==tp and re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+	return Duel.IsTurnPlayer(1-tp) and rp==tp and re:IsSpellTrapEffect()
 end
 function s.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

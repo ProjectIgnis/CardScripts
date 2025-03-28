@@ -49,7 +49,7 @@ s.listed_series={SET_EVIL_EYE}
 s.listed_names={id}
 function s.atkupcond(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetEquipTarget()
-	return ((re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and re:GetHandler():IsSetCard(SET_EVIL_EYE) and re:GetHandler()~=e:GetHandler())
+	return ((re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsSpellTrapEffect() and re:GetHandler():IsSetCard(SET_EVIL_EYE) and re:GetHandler()~=e:GetHandler())
 		or re:GetHandler()==ec) and tp==rp
 end
 function s.atkupop(e,tp,eg,ep,ev,re,r,rp)

@@ -40,7 +40,7 @@ function s.etarget(e,c)
 	return c:IsRace(RACE_PSYCHIC) and c:IsType(TYPE_XYZ)
 end
 function s.evalue(e,re,rp)
-	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+	return re:IsSpellTrapEffect()
 end
 function s.cfilter(c)
 	return c:IsSetCard(SET_HERALDIC_BEAST) and c:IsMonster() and c:IsDiscardable()

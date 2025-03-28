@@ -78,7 +78,7 @@ function s.cfilter(c,seq,p)
 	return c:IsFaceup() and c:IsSetCard(SET_MEKK_KNIGHT) and c:IsColumn(seq,p,LOCATION_MZONE)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	if rp==tp or not re:IsActiveType(TYPE_MONSTER) then return false end
+	if rp==tp or not re:IsMonsterEffect() then return false end
 	local rc=re:GetHandler()
 	local p,loc,seq=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_CONTROLER,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_SEQUENCE)
 	return loc==LOCATION_MZONE and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil,seq,p)

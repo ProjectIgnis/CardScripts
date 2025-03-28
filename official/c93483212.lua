@@ -66,7 +66,7 @@ function s.imop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.imfilter(e,re)
-	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+	return re:IsSpellTrapEffect()
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

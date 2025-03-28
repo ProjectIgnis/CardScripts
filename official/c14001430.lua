@@ -54,7 +54,7 @@ function s.repfilter(c,tp)
 		and c:IsAbleToHand()
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return (r&REASON_EFFECT)~=0 and re and re:IsActiveType(TYPE_MONSTER)
+	if chk==0 then return (r&REASON_EFFECT)~=0 and re and re:IsMonsterEffect()
 		and re:GetHandler():IsSetCard(SET_MADOLCHE) and eg:IsExists(s.repfilter,1,nil,tp) end
 	if Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		local c=e:GetHandler()

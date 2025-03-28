@@ -45,7 +45,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_ROKKET}
 function s.etg(e,re,rp)
-	return re:IsActiveType(TYPE_MONSTER)
+	return re:IsMonsterEffect()
 end
 function s.disfilter(c)
 	return c:IsFaceup() and not c:IsDisabled() and c:IsType(TYPE_EFFECT)

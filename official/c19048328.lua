@@ -77,7 +77,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.aclimit(e,re,tp)
 	local att=e:GetLabelObject():GetLabel()
-	return re:IsActiveType(TYPE_MONSTER) and (att&re:GetHandler():GetOriginalAttribute())~=0
+	return re:IsMonsterEffect() and (att&re:GetHandler():GetOriginalAttribute())~=0
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

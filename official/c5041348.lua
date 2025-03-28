@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==1-tp and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsRelateToEffect(re)
+	return rp==1-tp and re:IsMonsterEffect() and re:GetHandler():IsRelateToEffect(re)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rc=re:GetHandler()

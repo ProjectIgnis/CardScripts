@@ -36,7 +36,7 @@ function s.splimit(e,se,sp,st)
 	return se:IsHasType(EFFECT_TYPE_ACTIONS)
 end
 function s.condtion(e,tp,eg,ep,ev,re,r,rp)
-	return (r&REASON_EFFECT)~=0 and re:IsActiveType(TYPE_MONSTER)
+	return (r&REASON_EFFECT)~=0 and re:IsMonsterEffect()
 		and e:GetHandler():IsPreviousLocation(LOCATION_DECK)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

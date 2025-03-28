@@ -53,7 +53,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and re:IsActiveType(TYPE_MONSTER)
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and re:IsMonsterEffect()
 		and re:GetHandler():GetBaseAttack()==2300 and re:GetHandler():IsRace(RACE_CYBERSE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

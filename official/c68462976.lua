@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetLabelObject(e3)
 end
 function s.actlimit(e,te,tp)
-	if not te:IsHasType(EFFECT_TYPE_ACTIVATE) or not te:IsActiveType(TYPE_SPELL) then return false end
+	if not te:IsHasType(EFFECT_TYPE_ACTIVATE) or not te:IsSpellEffect() then return false end
 	if tp==e:GetHandlerPlayer() then return e:GetLabel()==1
 	else return e:GetLabel()==2 end
 end

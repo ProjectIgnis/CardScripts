@@ -85,13 +85,13 @@ function s.fuscond(e)
 	return Duel.IsBattlePhase()
 end
 function s.fuslimit(e,re,tp)
-	return re:IsActiveType(TYPE_MONSTER)
+	return re:IsMonsterEffect()
 end
 function s.syncond(e)
 	return Duel.GetTurnPlayer()==e:GetHandlerPlayer() and Duel.IsMainPhase()
 end
 function s.synlimit(e,re,tp)
-	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+	return re:IsSpellTrapEffect()
 end
 function s.xyzcond(e)
 	local ph=Duel.GetCurrentPhase()

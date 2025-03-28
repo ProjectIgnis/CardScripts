@@ -65,7 +65,7 @@ function s.op(tc,c,atk)
 	tc:RegisterEffect(e1)
 end
 function s.tgval(e,re,rp)
-	return re:IsActiveType(TYPE_MONSTER) and rp~=e:GetHandlerPlayer()
+	return re:IsMonsterEffect() and rp~=e:GetHandlerPlayer()
 end
 function s.repfilter(c,e)
 	return c:IsType(TYPE_FRSX) and c:IsMonster() and c:IsAbleToRemove()

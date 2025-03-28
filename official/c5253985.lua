@@ -17,7 +17,7 @@ function s.initial_effect(c)
 end
 function s.chainfilter(re,tp,cid)
 	if Duel.GetFlagEffect(tp,id)==0 then return true end
-	return not (re:IsActiveType(TYPE_SPELL+TYPE_TRAP) or not re:GetHandler():IsRace(RACE_DIVINE))
+	return not (re:IsSpellTrapEffect() or not re:GetHandler():IsRace(RACE_DIVINE))
 end
 function s.filter(c,e,ec)
 	if not c:IsRace(RACE_DIVINE) then return false end
@@ -95,5 +95,5 @@ function s.accon(e)
 	return Duel.GetCustomActivityCount(id,e:GetHandlerPlayer(),ACTIVITY_CHAIN)>0
 end
 function s.aclimit(e,re,tp)
-	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) or not re:GetHandler():IsRace(RACE_DIVINE)
+	return re:IsSpellTrapEffect() or not re:GetHandler():IsRace(RACE_DIVINE)
 end

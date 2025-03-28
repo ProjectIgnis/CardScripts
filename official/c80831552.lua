@@ -36,5 +36,5 @@ function s.econ(e)
 	return Duel.IsExistingMatchingCard(s.ecfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.efilter(e,te)
-	return te:GetOwnerPlayer()~=e:GetHandlerPlayer() and te:IsActiveType(TYPE_MONSTER) and te:IsActivated() and te:GetHandler():IsLinkBelow(3)
+	return te:GetOwnerPlayer()~=e:GetHandlerPlayer() and te:IsMonsterEffect() and te:IsActivated() and te:GetHandler():IsLinkBelow(3)
 end

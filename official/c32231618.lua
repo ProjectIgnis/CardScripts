@@ -40,5 +40,5 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.actlimit(e,re,rp)
 	local rc=re:GetHandler()
-	return re:IsActiveType(TYPE_MONSTER) and not rc:IsSetCard(SET_PREDICTION_PRINCESS)
+	return re:IsMonsterEffect() and not rc:IsSetCard(SET_PREDICTION_PRINCESS)
 end

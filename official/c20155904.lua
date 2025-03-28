@@ -51,7 +51,7 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:GetOriginalRace()==RACE_BEASTWARRIOR
 		and not c:IsStatus(STATUS_BATTLE_DESTROYED) and ep==1-tp
-		and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
+		and re:IsMonsterEffect() and Duel.IsChainNegatable(ev)
 		and re:IsHasProperty(EFFECT_FLAG_CARD_TARGET)
 		and Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS) and Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS):IsContains(c)
 end

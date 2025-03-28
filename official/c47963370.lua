@@ -39,7 +39,7 @@ end
 s.listed_series={SET_CHAOS}
 s.listed_names={21082832,CARD_DARK_MAGICIAN}
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+	return re:IsSpellTrapEffect()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() end

@@ -64,7 +64,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.aclimit(e,re,tp)
 	local rc=re:GetHandler()
-	return re:IsActiveType(TYPE_MONSTER) and rc:IsOnField()
+	return re:IsMonsterEffect() and rc:IsOnField()
 		and rc:IsSummonLocation(LOCATION_EXTRA) and not rc:IsSetCard(SET_TENYI)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)

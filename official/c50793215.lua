@@ -86,7 +86,7 @@ function s.indop(e,tp,eg,ep,ev,re,r,rp)
 	rc:RegisterEffect(e1)
 end
 function s.efilter(e,re,rp)
-	return re:IsActiveType(TYPE_MONSTER) and e:GetHandlerPlayer()~=rp
+	return re:IsMonsterEffect() and e:GetHandlerPlayer()~=rp
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsAbleToDeck() end

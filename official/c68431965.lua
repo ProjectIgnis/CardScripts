@@ -73,7 +73,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	tc:RegisterEffect(e3)
 end
 function s.aclimit(e,re,tp)
-	return re:GetHandler():IsCode(e:GetLabel()) and re:IsActiveType(TYPE_MONSTER)
+	return re:GetHandler():IsCode(e:GetLabel()) and re:IsMonsterEffect()
 end
 function s.sccon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsTurnPlayer(1-tp) and Duel.IsMainPhase()

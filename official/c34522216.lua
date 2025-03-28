@@ -52,7 +52,7 @@ function s.limcon(e)
 end
 function s.limval(e,re,rp)
 	local rc=re:GetHandler()
-	return re:IsActiveType(TYPE_MONSTER) and not rc:IsSetCard(SET_AMORPHAGE)
+	return re:IsMonsterEffect() and not rc:IsSetCard(SET_AMORPHAGE)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsTurnPlayer(tp)

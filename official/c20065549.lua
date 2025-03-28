@@ -21,5 +21,5 @@ function s.etarget(e,c)
 	return not c:IsType(TYPE_EFFECT)
 end
 function s.efilter(e,re)
-	return re:IsActiveType(TYPE_SPELL)
+	return re:IsSpellEffect()
 end

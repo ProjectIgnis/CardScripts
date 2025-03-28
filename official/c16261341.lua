@@ -41,7 +41,7 @@ function s.spcon1(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	local dp=Duel.GetChainInfo(ev,CHAININFO_DISABLE_PLAYER)
-	return dp==tp and (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE))
+	return dp==tp and (re:IsMonsterEffect() or re:IsHasType(EFFECT_TYPE_ACTIVATE))
 end
 function s.cfilter(c)
 	return c:IsRace(RACE_FAIRY) and c:IsAbleToRemoveAsCost() and (c:IsLocation(LOCATION_HAND) or aux.SpElimFilter(c,true,true))

@@ -45,7 +45,7 @@ end
 s.listed_names={22398665,id}
 s.listed_series={SET_DRYTRON}
 function s.tgval(e,re,rp)
-	return aux.tgoval(e,re,rp) and re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+	return aux.tgoval(e,re,rp) and re:IsSpellTrapEffect()
 end
 function s.valcheck(e,c)
 	local g=c:GetMaterial()

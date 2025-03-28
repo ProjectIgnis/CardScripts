@@ -34,5 +34,5 @@ function s.etarget(e,c)
 	return c:GetCode()~=id and c:IsRace(RACE_ZOMBIE) and c:IsLevelBelow(3)
 end
 function s.efilter(e,te)
-	return te:IsActiveType(TYPE_SPELL+TYPE_TRAP) and not te:GetHandler():IsCode(4064256)
+	return te:IsSpellTrapEffect() and not te:GetHandler():IsCode(4064256)
 end

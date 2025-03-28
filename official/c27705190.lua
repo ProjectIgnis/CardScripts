@@ -33,7 +33,7 @@ function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cecon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_KRAWLER),tp,LOCATION_MZONE,0,1,nil)
+	return ep~=tp and re:IsMonsterEffect() and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_KRAWLER),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.thfilter(c)
 	return c:IsFaceup() and c:IsAbleToHand()

@@ -72,7 +72,7 @@ function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	elseif re then
 		local rc=re:GetHandler()
 		return eg:IsExists(s.cfilter,1,nil,tp)
-			and rc and rc:IsSetCard(SET_SPYRAL) and rc:IsControler(tp) and re:IsActiveType(TYPE_MONSTER)
+			and rc and rc:IsSetCard(SET_SPYRAL) and rc:IsControler(tp) and re:IsMonsterEffect()
 	end
 	return false
 end

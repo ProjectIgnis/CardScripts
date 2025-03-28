@@ -54,7 +54,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==1-tp and Duel.IsChainDisablable(ev) and (re:IsActiveType(TYPE_SPELL) or re:IsActiveType(TYPE_MONSTER))
+	return rp==1-tp and Duel.IsChainDisablable(ev) and (re:IsSpellEffect() or re:IsMonsterEffect())
 		and (Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_UMI),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) or Duel.IsEnvironment(CARD_UMI))
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)

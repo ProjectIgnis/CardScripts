@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_NATURIA}
 function s.chainfilter(re,tp,cid)
-	return not (re:GetHandler():IsSetCard(SET_NATURIA) and re:IsActiveType(TYPE_MONSTER)
+	return not (re:GetHandler():IsSetCard(SET_NATURIA) and re:IsMonsterEffect()
 		and Duel.GetChainInfo(cid,CHAININFO_TRIGGERING_LOCATION)==LOCATION_MZONE)
 end
 function s.spcon(e,c)

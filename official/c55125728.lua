@@ -40,7 +40,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_VERNUSYLPH}
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==1-tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainDisablable(ev) and e:GetHandler():GetFlagEffect(id)==0
+	return rp==1-tp and re:IsMonsterEffect() and Duel.IsChainDisablable(ev) and e:GetHandler():GetFlagEffect(id)==0
 		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsAttribute,ATTRIBUTE_EARTH),tp,LOCATION_MZONE,0,5,nil)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)

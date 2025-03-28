@@ -39,7 +39,7 @@ function s.condition(typ)
 	return  function(e,tp,eg,ep,ev,re,r,rp)
 				if #eg~=1 then return false end
 				local c=eg:GetFirst()
-				return c:IsFaceup() and c:IsType(typ) and c:IsSummonPlayer(tp) and re and re:IsActiveType(TYPE_SPELL)
+				return c:IsFaceup() and c:IsType(typ) and c:IsSummonPlayer(tp) and re and re:IsSpellEffect()
 			end
 end
 function s.gytg(e,tp,eg,ep,ev,re,r,rp,chk)

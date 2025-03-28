@@ -23,7 +23,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_WIND_UP}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(SET_WIND_UP)
+	return re:IsMonsterEffect() and re:GetHandler():IsSetCard(SET_WIND_UP)
 end
 function s.filter(c)
 	return c:IsSetCard(SET_WIND_UP) and c:IsLevelBelow(4) and c:IsAbleToHand()

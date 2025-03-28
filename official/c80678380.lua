@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_VENOM}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and re:IsActiveType(TYPE_SPELL) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
+	return ep~=tp and re:IsSpellEffect() and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
 end
 function s.cfilter(c)
 	return c:IsSetCard(SET_VENOM) and c:IsMonster() and not c:IsPublic()

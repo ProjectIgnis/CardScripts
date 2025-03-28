@@ -17,7 +17,7 @@ function s.filter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsSetCard(SET_GAGAGA)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and re:IsActiveType(TYPE_MONSTER) and eg:IsExists(s.filter,1,nil,tp) and Duel.IsChainDisablable(ev)
+	return rp~=tp and re:IsMonsterEffect() and eg:IsExists(s.filter,1,nil,tp) and Duel.IsChainDisablable(ev)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

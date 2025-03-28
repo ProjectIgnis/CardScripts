@@ -48,7 +48,7 @@ function s.indcon(e)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp,chk)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and ep~=tp
-		and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainDisablable(ev)
+		and re:IsMonsterEffect() and Duel.IsChainDisablable(ev)
 end
 function s.slwc(e,og)
 	e:SetLabel(og:GetFirst():IsSetCard(SET_GALAXY) and 1 or 0)

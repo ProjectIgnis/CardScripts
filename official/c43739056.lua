@@ -27,7 +27,7 @@ end
 function s.aclimit(e,re,tp)
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
-	return rc~=c and re:IsActiveType(TYPE_MONSTER) and rc:IsOnField()
+	return rc~=c and re:IsMonsterEffect() and rc:IsOnField()
 		and rc:IsSpecialSummoned() and rc:IsAttribute(c:GetAttribute())
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

@@ -63,7 +63,7 @@ function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
-	if (Duel.IsMainPhase()) and re:IsActiveType(TYPE_MONSTER)
+	if (Duel.IsMainPhase()) and re:IsMonsterEffect()
 		and re:GetHandler():IsAttribute(ATTRIBUTE_DARK+ATTRIBUTE_LIGHT) then
 		Duel.NegateEffect(ev)
 	end

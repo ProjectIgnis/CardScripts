@@ -74,6 +74,6 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.negcon2(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
+	return re:IsMonsterEffect() and Duel.IsChainNegatable(ev)
 		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,40428851),tp,LOCATION_ONFIELD,0,1,nil)
 end

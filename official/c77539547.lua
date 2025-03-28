@@ -60,7 +60,7 @@ end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
-	return re:IsActiveType(TYPE_MONSTER) and rc~=c and rc:IsSetCard(SET_ANCIENT_WARRIORS) and rc:IsControler(tp)
+	return re:IsMonsterEffect() and rc~=c and rc:IsSetCard(SET_ANCIENT_WARRIORS) and rc:IsControler(tp)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsNegatableMonster() end

@@ -13,7 +13,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_SPELLBOOK}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and re:GetHandler():IsSetCard(SET_SPELLBOOK)
+	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsSpellEffect() and re:GetHandler():IsSetCard(SET_SPELLBOOK)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

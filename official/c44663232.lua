@@ -36,5 +36,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.val(e,re,tp)
-	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsLevelAbove(e:GetLabel())
+	return re:IsMonsterEffect() and re:GetHandler():IsLevelAbove(e:GetLabel())
 end

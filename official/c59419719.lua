@@ -53,7 +53,7 @@ function s.extratarget(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.tgval(e,re,rp)
 	local rc=re:GetHandler()
-	return re:IsActiveType(TYPE_MONSTER)
+	return re:IsMonsterEffect()
 end
 function s.thcfilter(c,tp)
 	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsSetCard(SET_FOSSIL) and c:IsType(TYPE_FUSION)

@@ -53,11 +53,11 @@ function s.splimit(e,se,sp,st)
 end
 	--Cannot be targeted by opponent's trap effects
 function s.tgval(e,re,rp)
-	return aux.tgoval(e,re,rp) and re:IsActiveType(TYPE_TRAP)
+	return aux.tgoval(e,re,rp) and re:IsTrapEffect()
 end
 	--Opponent activates a monster effect
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and re:IsActiveType(TYPE_MONSTER)
+	return rp~=tp and re:IsMonsterEffect()
 end
 	--Banish 1 card from your hand or field as cost
 function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)

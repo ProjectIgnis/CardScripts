@@ -26,7 +26,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_METAPHYS}
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return re and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(SET_METAPHYS)
+	return re and re:IsMonsterEffect() and re:GetHandler():IsSetCard(SET_METAPHYS)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -53,7 +53,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e3)
 end
 function s.efilter(e,re)
-	return re:IsActiveType(TYPE_TRAP)
+	return re:IsTrapEffect()
 end
 function s.caop1(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()

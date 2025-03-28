@@ -27,7 +27,7 @@ function s.syncon(e)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO
 end
 function s.efilter(e,te)
-	return te:IsActiveType(TYPE_MONSTER) and te:GetOwner()~=e:GetOwner()
+	return te:IsMonsterEffect() and te:GetOwner()~=e:GetOwner()
 end
 function s.synval(e,c,sc)
 	if c:IsLocation(LOCATION_HAND) then

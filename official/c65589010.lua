@@ -44,7 +44,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_DOGMATIKA}
 function s.tgval(e,re,rp)
-	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSpecialSummoned() and re:GetHandler():IsSummonLocation(LOCATION_EXTRA)
+	return re:IsMonsterEffect() and re:GetHandler():IsSpecialSummoned() and re:GetHandler():IsSummonLocation(LOCATION_EXTRA)
 end
 function s.check(c,tp)
 	return c and c:IsControler(tp) and c:IsSetCard(SET_DOGMATIKA)

@@ -56,7 +56,7 @@ function s.immop(e,tp,eg,ep,ev,re,r,rp)
 	e:SetLabel(e:GetHandler():GetLevel())
 end
 function s.immval(e,te)
-	if te:GetOwnerPlayer()~=e:GetHandlerPlayer() and te:IsActiveType(TYPE_MONSTER) and te:IsActivated() then
+	if te:GetOwnerPlayer()~=e:GetHandlerPlayer() and te:IsMonsterEffect() and te:IsActivated() then
 		local lv=e:GetLabelObject():GetLabel()
 		local tc=te:GetHandler()
 		if tc:GetRank()>0 then
@@ -67,7 +67,7 @@ function s.immval(e,te)
 	else return false end
 end
 function s.lvcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and re:GetHandler():IsSetCard(SET_FA)
+	return re:IsSpellTrapEffect() and re:GetHandler():IsSetCard(SET_FA)
 end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

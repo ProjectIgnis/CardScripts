@@ -45,7 +45,7 @@ function s.ffilter(c,fc,sumtype,tp)
 	return c:IsRace(RACE_WARRIOR,fc,sumtype,tp) and c:IsAttribute(ATTRIBUTE_LIGHT,fc,sumtype,tp)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
+	return re:IsTrapEffect() and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
 		and rp==1-tp and tp==Duel.GetTurnPlayer()
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)

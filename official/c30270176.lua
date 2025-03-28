@@ -84,7 +84,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 function s.immval(e,te)
-	return te:GetOwner()~=e:GetHandler() and te:IsActiveType(TYPE_MONSTER) and te:IsActivated()
+	return te:GetOwner()~=e:GetHandler() and te:IsMonsterEffect() and te:IsActivated()
 		and te:GetOwner():GetBaseAttack()<=3000 and te:GetOwner():GetBaseAttack()>=0
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)

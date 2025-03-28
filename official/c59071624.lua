@@ -53,7 +53,7 @@ function s.imcon(e)
 end
 	--Trap effects
 function s.efilter(e,te)
-	return te:IsActiveType(TYPE_TRAP)
+	return te:IsTrapEffect()
 end
 	--Detach 2 materials as cost
 	--Check for level 4 plant/insect monster

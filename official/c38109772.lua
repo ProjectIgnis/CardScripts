@@ -22,7 +22,7 @@ function s.filter(c,tp,dg)
 	return c:IsControler(tp) and dg:IsContains(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	if rp==tp or not re:IsActiveType(TYPE_MONSTER) or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
+	if rp==tp or not re:IsMonsterEffect() or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	if not tg or #tg==0 then return false end
 	local ex,dg,dc=Duel.GetOperationInfo(ev,CATEGORY_DESTROY)

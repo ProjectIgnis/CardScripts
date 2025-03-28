@@ -45,12 +45,12 @@ end
 s.listed_series={SET_ANCIENT_GEAR}
 s.material_setcode=SET_ANCIENT_GEAR
 function s.efilter(e,te)
-	return te:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+	return te:IsSpellTrapEffect()
 end
 function s.actcon(e)
 	local ph=Duel.GetCurrentPhase()
 	return Duel.IsBattlePhase()
 end
 function s.actlimit(e,re,tp)
-	return re:IsActiveType(TYPE_MONSTER)
+	return re:IsMonsterEffect()
 end

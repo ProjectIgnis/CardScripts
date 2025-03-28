@@ -108,7 +108,7 @@ end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local code=e:GetLabel()
 	local code1,code2=re:GetHandler():GetOriginalCodeRule()
-	return re:IsActiveType(TYPE_MONSTER) and (code1==code or code2==code)
+	return re:IsMonsterEffect() and (code1==code or code2==code)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)

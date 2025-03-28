@@ -32,7 +32,7 @@ function s.negf(c,tp)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.negf,tp,LOCATION_MZONE,0,1,nil)
-		and rp==1-tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainDisablable(ev)
+		and rp==1-tp and re:IsMonsterEffect() and Duel.IsChainDisablable(ev)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()

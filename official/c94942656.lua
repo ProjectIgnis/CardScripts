@@ -44,7 +44,7 @@ end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
-	if rc and re:IsActiveType(TYPE_MONSTER) and rc:IsSetCard(SET_NUMBER) and rc:IsType(TYPE_XYZ) then
+	if rc and re:IsMonsterEffect() and rc:IsSetCard(SET_NUMBER) and rc:IsType(TYPE_XYZ) then
 		local e3=Effect.CreateEffect(c)
 		e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 		e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)

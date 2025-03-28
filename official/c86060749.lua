@@ -15,20 +15,20 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.IsChainNegatable(ev) or not (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE)) then return false end
+	if not Duel.IsChainNegatable(ev) or not (re:IsMonsterEffect() or re:IsHasType(EFFECT_TYPE_ACTIVATE)) then return false end
 	if re:IsHasCategory(CATEGORY_DISABLE_SUMMON) then return true end
 	local ex,tg,ct=Duel.GetOperationInfo(ev,CATEGORY_NEGATE)
 	if not ex then return false end
 	if ct>1 then
 		for i=1,ev-1 do
 			local ce=Duel.GetChainInfo(ev-i,CHAININFO_TRIGGERING_EFFECT)
-			if ce and ce:IsActiveType(TYPE_SPELL+TYPE_TRAP) and ce:IsHasType(EFFECT_TYPE_ACTIVATE) then
+			if ce and ce:IsSpellTrapEffect() and ce:IsHasType(EFFECT_TYPE_ACTIVATE) then
 				return true
 			end
 		end
 	elseif ct==1 then
 		local ce=Duel.GetChainInfo(ev-1,CHAININFO_TRIGGERING_EFFECT)
-		return ce and ce:IsActiveType(TYPE_SPELL+TYPE_TRAP) and ce:IsHasType(EFFECT_TYPE_ACTIVATE)
+		return ce and ce:IsSpellTrapEffect() and ce:IsHasType(EFFECT_TYPE_ACTIVATE)
 	end
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

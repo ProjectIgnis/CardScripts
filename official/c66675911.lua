@@ -56,7 +56,7 @@ function s.immop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Unaffected by other monster effects
 function s.efilter(e,te)
-	return te:IsActiveType(TYPE_MONSTER) and te:GetOwner()~=e:GetHandler()
+	return te:IsMonsterEffect() and te:GetOwner()~=e:GetHandler()
 end
 	--If sent to GY by card effect
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

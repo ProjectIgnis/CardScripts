@@ -83,7 +83,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e:GetLabelObject():Merge(rg)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
-	if rp==1-tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and e:GetHandler():GetFlagEffect(1)>0 then
+	if rp==1-tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsSpellEffect() and e:GetHandler():GetFlagEffect(1)>0 then
 		e:GetHandler():AddCounter(0x25,1)
 	end
 end

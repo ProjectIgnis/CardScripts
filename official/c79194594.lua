@@ -112,13 +112,13 @@ function s.immop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Unaffected by the respective card types
 function s.imfilter1(e,te)
-	return te:IsActiveType(TYPE_MONSTER) and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
+	return te:IsMonsterEffect() and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
 end
 function s.imfilter2(e,te)
-	return te:IsActiveType(TYPE_SPELL) and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
+	return te:IsSpellEffect() and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
 end
 function s.imfilter3(e,te)
-	return te:IsActiveType(TYPE_TRAP) and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
+	return te:IsTrapEffect() and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
 end
 	--If this fusion summoned card was destroyed by opponent's card
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)

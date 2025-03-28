@@ -46,5 +46,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.aclimit(e,re,tp)
 	local rc=re:GetHandler()
-	return re:IsActiveType(TYPE_MONSTER) and (rc:GetFlagEffect(id)>0 or rc:IsOriginalCode(e:GetLabel()))
+	return re:IsMonsterEffect() and (rc:GetFlagEffect(id)>0 or rc:IsOriginalCode(e:GetLabel()))
 end

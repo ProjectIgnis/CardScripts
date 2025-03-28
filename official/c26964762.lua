@@ -56,7 +56,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
-	if rp==tp and re:IsActiveType(TYPE_SPELL) then
+	if rp==tp and re:IsSpellEffect() then
 		local rc=re:GetHandler()
 		if Duel.NegateEffect(ev) and rc:IsRelateToEffect(re) then
 			Duel.Destroy(rc,REASON_EFFECT)

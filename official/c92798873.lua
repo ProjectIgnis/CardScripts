@@ -50,7 +50,7 @@ function s.matfilter(c,fc,sumtype,tp)
 end
 function s.aclimit(e,re,tp)
 	local rc=re:GetHandler()
-	return re:IsActiveType(TYPE_MONSTER) and rc:IsLocation(LOCATION_MZONE) and rc:IsAttackAbove(Duel.GetLP(e:GetHandlerPlayer()))
+	return re:IsMonsterEffect() and rc:IsLocation(LOCATION_MZONE) and rc:IsAttackAbove(Duel.GetLP(e:GetHandlerPlayer()))
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()

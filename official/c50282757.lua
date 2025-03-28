@@ -64,5 +64,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(p,d,REASON_EFFECT)
 end
 function s.indesval(e,re)
-	return re:IsActiveType(TYPE_SPELL)
+	return re:IsSpellEffect()
 end

@@ -62,7 +62,7 @@ function s.moncond(e)
 	return Duel.IsBattlePhase() and c:GetEquipCount()>=2
 end
 function s.monlimit(e,re,tp)
-	return re:IsActiveType(TYPE_MONSTER)
+	return re:IsMonsterEffect()
 end
 	--If targeted by opponent's card/effect and this card is equipped with 3+ equips
 function s.ngcon(e,tp,eg,ep,ev,re,r,rp)

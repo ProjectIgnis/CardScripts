@@ -18,7 +18,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp,chk)
 	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
-	return ep~=tp and loc==LOCATION_MZONE and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
+	return ep~=tp and loc==LOCATION_MZONE and re:IsMonsterEffect() and Duel.IsChainNegatable(ev)
 		and re:GetHandler():IsSpecialSummoned()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

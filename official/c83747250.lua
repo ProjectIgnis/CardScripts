@@ -59,7 +59,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.indcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsPreviousLocation(LOCATION_DECK) and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(SET_LIGHTSWORN) 
+	return e:GetHandler():IsPreviousLocation(LOCATION_DECK) and re:IsMonsterEffect() and re:GetHandler():IsSetCard(SET_LIGHTSWORN) 
 		and (r&REASON_EFFECT)~=0
 end
 function s.indop(e,tp,eg,ep,ev,re,r,rp)

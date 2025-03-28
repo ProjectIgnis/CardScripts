@@ -72,7 +72,7 @@ end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	return rp~=tp and re:IsActiveType(TYPE_MONSTER) and g and g:IsContains(e:GetLabelObject())
+	return rp~=tp and re:IsMonsterEffect() and g and g:IsContains(e:GetLabelObject())
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateEffect(ev)

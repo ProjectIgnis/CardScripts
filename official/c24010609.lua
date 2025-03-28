@@ -69,7 +69,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.actop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) then
+	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsSpellEffect() then
 		Duel.SetChainLimit(s.chainlm)
 	end
 end
@@ -78,7 +78,7 @@ function s.chainlm(e,rp,tp)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if re:GetHandler():IsSetCard(SET_SKY_STRIKER) and re:IsActiveType(TYPE_SPELL) and rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) then
+	if re:GetHandler():IsSetCard(SET_SKY_STRIKER) and re:IsSpellEffect() and rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		local flag=c:GetFlagEffectLabel(id)
 		if flag then
 			c:SetFlagEffectLabel(id,flag+1)
@@ -89,7 +89,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.regop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if re:GetHandler():IsSetCard(SET_SKY_STRIKER) and re:IsActiveType(TYPE_SPELL) and rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) then
+	if re:GetHandler():IsSetCard(SET_SKY_STRIKER) and re:IsSpellEffect() and rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		local flag=c:GetFlagEffectLabel(id)
 		if flag and flag>0 then
 			c:SetFlagEffectLabel(id,flag-1)

@@ -39,7 +39,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_MAGISTUS}
 function s.indesvalue(e,re,rp)
-	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and rp==1-e:GetHandlerPlayer()
+	return re:IsSpellTrapEffect() and rp==1-e:GetHandlerPlayer()
 end
 function s.descon1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

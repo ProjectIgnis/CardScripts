@@ -31,7 +31,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_LIGHTSWORN}
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+	return re:IsSpellTrapEffect()
 end
 function s.cfilter(c)
 	return c:IsMonster() and c:IsSetCard(SET_LIGHTSWORN) and c:IsAbleToRemoveAsCost()
@@ -62,7 +62,7 @@ end
 function s.ddcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
-	return re:IsActiveType(TYPE_MONSTER) and rc~=c
+	return re:IsMonsterEffect() and rc~=c
 		and rc:IsSetCard(SET_LIGHTSWORN) and rc:IsControler(tp)
 end
 function s.ddtg(e,tp,eg,ep,ev,re,r,rp,chk)

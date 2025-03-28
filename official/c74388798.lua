@@ -32,7 +32,7 @@ s.listed_names={37267041}
 s.LVnum=5
 s.LVset=SET_SILENT_SWORDSMAN
 function s.efilter(e,te)
-	return te:IsActiveType(TYPE_SPELL) and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
+	return te:IsSpellEffect() and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	if ep~=tp and Duel.GetAttackTarget()==nil then

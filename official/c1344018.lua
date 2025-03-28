@@ -34,7 +34,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_MAGICIAN}
 function s.evalue(e,re,rp)
-	return re:IsActiveType(TYPE_TRAP) and rp==1-e:GetHandlerPlayer()
+	return re:IsTrapEffect() and rp==1-e:GetHandlerPlayer()
 end
 function s.desfilter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_MAGICIAN) and c:IsType(TYPE_PENDULUM)

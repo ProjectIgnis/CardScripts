@@ -38,7 +38,7 @@ s.listed_series={SET_THUNDER_DRAGON}
 function s.efilter(e,ct)
 	local te=Duel.GetChainInfo(ct,CHAININFO_TRIGGERING_EFFECT)
 	local tc=te:GetHandler()
-	return te:IsActiveType(TYPE_MONSTER) and tc:IsRace(RACE_THUNDER)
+	return te:IsMonsterEffect() and tc:IsRace(RACE_THUNDER)
 end
 function s.cncfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(SET_THUNDER_DRAGON) and c:IsControler(tp)

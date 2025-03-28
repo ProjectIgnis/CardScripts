@@ -53,7 +53,7 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	if not g then return false end
 	local c=e:GetHandler()
-	return re:IsActiveType(TYPE_MONSTER) and g:IsExists(s.disfilter,1,nil,tp)
+	return re:IsMonsterEffect() and g:IsExists(s.disfilter,1,nil,tp)
 		and not c:IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)
 end
 function s.discfilter(c)

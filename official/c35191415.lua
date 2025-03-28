@@ -39,7 +39,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_DARK_MAGICIAN}
 function s.condition1(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsTurnPlayer(1-tp) and rp==tp and re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+	return Duel.IsTurnPlayer(1-tp) and rp==tp and re:IsSpellTrapEffect()
 end
 function s.target1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -53,7 +53,7 @@ function s.operation1(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.condition2(e,tp,eg,ep,ev,re,r,rp)
-	return rp==tp and re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+	return rp==tp and re:IsSpellTrapEffect()
 end
 function s.filter(c,e,tp)
 	return c:IsCode(CARD_DARK_MAGICIAN) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

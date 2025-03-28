@@ -40,7 +40,7 @@ function s.tfilter(c,lc,stype,tp)
 end
 function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp and Duel.IsTurnPlayer(tp)
-		and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL)
+		and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsSpellEffect()
 end
 function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -45,7 +45,7 @@ function s.immcon(e)
 	return c:IsRitualSummoned() and c:GetFlagEffect(id)>0
 end
 function s.immval(e,re,rp)
-	return aux.tgoval(e,re,rp) and re:IsActiveType(TYPE_MONSTER)
+	return aux.tgoval(e,re,rp) and re:IsMonsterEffect()
 end
 function s.disfilter(c)
 	return c:IsFaceup() and (not c:IsAttack(0) or c:IsNegatableMonster())

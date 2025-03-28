@@ -77,7 +77,7 @@ end
 	--Monster effect activated
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return re:IsActiveType(TYPE_MONSTER) and not c:IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)
+	return re:IsMonsterEffect() and not c:IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)
 end
 	--Tribute 1 monster from hand or field as cost
 function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)

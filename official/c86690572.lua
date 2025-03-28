@@ -26,7 +26,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_LAVAL}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
+	return re:IsTrapEffect() and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
 end
 function s.cfilter(c)
 	return c:IsSetCard(SET_LAVAL) and c:IsAbleToGraveAsCost()

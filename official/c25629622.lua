@@ -69,7 +69,7 @@ function s.limop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.chlimit(e,rp,tp)
-	return tp==rp or e:IsActiveType(TYPE_MONSTER)
+	return tp==rp or e:IsMonsterEffect()
 end
 function s.limop2(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():GetFlagEffect(id)~=0 then

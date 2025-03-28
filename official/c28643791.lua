@@ -49,5 +49,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.imfilter(e,re)
-	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and re:GetOwner()~=e:GetOwner()
+	return re:IsSpellTrapEffect() and re:GetOwner()~=e:GetOwner()
 end

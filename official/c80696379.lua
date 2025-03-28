@@ -61,5 +61,5 @@ function s.condition(e)
 	return Duel.IsBattlePhase()
 end
 function s.aclimit(e,re,tp)
-	return re:IsActiveType(TYPE_MONSTER)
+	return re:IsMonsterEffect()
 end

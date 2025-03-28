@@ -71,7 +71,7 @@ function s.tglimit(e,c)
 	return c~=e:GetHandler()
 end
 function s.tgval(e,re,rp)
-	if not aux.tgoval(e,re,rp) or not re:IsActiveType(TYPE_MONSTER) then return false end
+	if not aux.tgoval(e,re,rp) or not re:IsMonsterEffect() then return false end
 	local c=re:GetHandler()
 	local lv=e:GetHandler():GetLevel()
 	if c:GetRank()>0 then
@@ -81,7 +81,7 @@ function s.tgval(e,re,rp)
 	else return false end
 end
 function s.lvcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and re:GetHandler():IsSetCard(SET_FA)
+	return re:IsSpellTrapEffect() and re:GetHandler():IsSetCard(SET_FA)
 end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -95,7 +95,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.aclimit(e,re,tp)
-	return re:IsActiveType(TYPE_MONSTER)
+	return re:IsMonsterEffect()
 end
 function s.actcon(e)
 	if not e:GetHandler():IsLevelAbove(7) then return false end

@@ -17,7 +17,7 @@ s.listed_names={79407975,79856792}
 s.listed_series={SET_CRYSTAL_BEAST}
 function s.chainfilter(re,tp,cid)
 	local rc=re:GetHandler()
-	return not (re:IsActiveType(TYPE_MONSTER) and rc:IsOriginalCodeRule(79407975,79856792))
+	return not (re:IsMonsterEffect() and rc:IsOriginalCodeRule(79407975,79856792))
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCustomActivityCount(id,tp,ACTIVITY_CHAIN)~=0

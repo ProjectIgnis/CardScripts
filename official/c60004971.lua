@@ -30,7 +30,7 @@ function s.atkval(e,c)
 	return c:GetLevel()*100
 end
 function s.efilter(e,re)
-	return re:IsActiveType(TYPE_TRAP)
+	return re:IsTrapEffect()
 end
 function s.eqfilter(c)
 	return c:IsSetCard(SET_DRAGUNITY) and c:IsRace(RACE_DRAGON) and c:IsType(TYPE_TUNER) and not c:IsForbidden()

@@ -30,7 +30,7 @@ end
 s.listed_names={CARD_VISAS_STARFROST}
 s.listed_series={SET_TEARLAMENTS}
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE)) and Duel.IsChainNegatable(ev)
+	return (re:IsMonsterEffect() or re:IsHasType(EFFECT_TYPE_ACTIVATE)) and Duel.IsChainNegatable(ev)
 		and (Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_VISAS_STARFROST),tp,LOCATION_ONFIELD,0,1,nil)
 		or Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_TEARLAMENTS),tp,LOCATION_MZONE,0,1,nil))
 end

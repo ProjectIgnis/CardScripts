@@ -53,7 +53,7 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return c:GetOriginalRace()==RACE_BEASTWARRIOR
 		and not c:IsStatus(STATUS_BATTLE_DESTROYED) and ep==1-tp
 		and Duel.IsChainNegatable(ev)
-		and re and re:IsActiveType(TYPE_TRAP)
+		and re and re:IsTrapEffect()
 		and re:IsHasProperty(EFFECT_FLAG_CARD_TARGET)
 		and tg and tg:IsContains(c)
 end

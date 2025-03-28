@@ -32,7 +32,7 @@ function s.initial_effect(c)
 end
 function s.chcon(e,tp,eg,ep,ev,re,r,rp)
 	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
-	return (re:IsActiveType(TYPE_MONSTER) and loc==LOCATION_MZONE)
+	return (re:IsMonsterEffect() and loc==LOCATION_MZONE)
 		or ((re:GetActiveType()==TYPE_SPELL or re:GetActiveType()==TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE))
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

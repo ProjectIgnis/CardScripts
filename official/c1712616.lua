@@ -33,7 +33,7 @@ function s.cfilter(c)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil) then return false end
-	return Duel.IsChainNegatable(ev) and re:IsActiveType(TYPE_MONSTER) and ep==1-tp
+	return Duel.IsChainNegatable(ev) and re:IsMonsterEffect() and ep==1-tp
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

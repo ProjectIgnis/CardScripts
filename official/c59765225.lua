@@ -44,7 +44,7 @@ end
 s.synchro_tuner_required=1
 s.listed_series={SET_CLEAR_WING}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_MONSTER) and rp==1-tp and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
+	return re:IsMonsterEffect() and rp==1-tp and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -64,13 +64,13 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.immval(e,te)
-	return te:GetOwner()~=e:GetHandler() and te:IsActiveType(TYPE_MONSTER) and te:IsActivated()
+	return te:GetOwner()~=e:GetHandler() and te:IsMonsterEffect() and te:IsActivated()
 		and te:GetOwner():GetControler()==1-e:GetHandler():GetControler()
 end
 --Negate Spell/Trap or effect
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then return false end
-	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and Duel.IsChainNegatable(ev)
+	return re:IsSpellTrapEffect() and Duel.IsChainNegatable(ev)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -55,7 +55,7 @@ function s.indtg(e,c)
 	return c:IsSetCard(SET_TRICKSTAR) and e:GetHandler():GetLinkedGroup():IsContains(c)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and (r&REASON_EFFECT)~=0 and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(SET_TRICKSTAR)
+	return ep~=tp and (r&REASON_EFFECT)~=0 and re:IsMonsterEffect() and re:GetHandler():IsSetCard(SET_TRICKSTAR)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

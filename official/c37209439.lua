@@ -74,7 +74,7 @@ function s.distg(e,c)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local tl=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
-	if tl==LOCATION_SZONE and re:IsActiveType(TYPE_TRAP) and re:GetHandler():GetFieldID()~=e:GetLabel() then
+	if tl==LOCATION_SZONE and re:IsTrapEffect() and re:GetHandler():GetFieldID()~=e:GetLabel() then
 		Duel.NegateEffect(ev)
 	end
 end

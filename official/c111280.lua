@@ -85,7 +85,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.chainop(e,tp,eg,ep,ev,re,r,rp)
-	if re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and ep==tp then
+	if re:IsSpellTrapEffect() and ep==tp then
 		Duel.SetChainLimit(s.chainlm)
 	end
 end

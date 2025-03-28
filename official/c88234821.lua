@@ -47,7 +47,7 @@ end
 s.listed_series={SET_DRAGUNITY}
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return re:IsActiveType(TYPE_MONSTER) and rp==1-tp and not c:IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)
+	return re:IsMonsterEffect() and rp==1-tp and not c:IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)
 end
 function s.cfilter(c)
 	return c:IsSetCard(SET_DRAGUNITY) and c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true,false)

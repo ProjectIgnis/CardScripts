@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==1-tp and re:IsActiveType(TYPE_MONSTER) 
+	return rp==1-tp and re:IsMonsterEffect() 
 		and Duel.IsChainDisablable(ev) and Duel.IsBattlePhase()
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)

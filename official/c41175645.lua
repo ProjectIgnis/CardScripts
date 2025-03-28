@@ -77,7 +77,7 @@ function s.value(e,c)
 	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_HAND,0)*500
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_SPELL) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
+	return re:IsSpellEffect() and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 		and Duel.IsChainNegatable(ev) and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

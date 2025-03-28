@@ -40,7 +40,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.efilter(e,te)
-	if not te:IsActiveType(TYPE_MONSTER) then return false end
+	if not te:IsMonsterEffect() then return false end
 	local c=e:GetHandler()
 	local ec=te:GetHandler()
 	if ec:IsHasCardTarget(c) then return true end

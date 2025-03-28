@@ -28,7 +28,7 @@ function s.initial_effect(c)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_DECK)
-		and (r&REASON_EFFECT)>0 and re:IsActiveType(TYPE_MONSTER) 
+		and (r&REASON_EFFECT)>0 and re:IsMonsterEffect() 
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

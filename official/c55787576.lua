@@ -39,7 +39,7 @@ end
 s.listed_series={SET_WORLD_LEGACY}
 function s.immval(e,te)
 	local tc=te:GetOwner()
-	return tc:IsSpecialSummoned() and tc:IsSummonLocation(LOCATION_EXTRA) and te:IsActiveType(TYPE_MONSTER)
+	return tc:IsSpecialSummoned() and tc:IsSummonLocation(LOCATION_EXTRA) and te:IsMonsterEffect()
 		and te:IsActivated() and te:GetActivateLocation()==LOCATION_MZONE
 end
 function s.tgtg(e,c)

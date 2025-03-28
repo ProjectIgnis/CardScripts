@@ -48,7 +48,7 @@ end
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_PLAYER)
 	local c=e:GetHandler()
-	if re:IsActiveType(TYPE_MONSTER) and p~=tp and c:GetFlagEffect(1)>0 then
+	if re:IsMonsterEffect() and p~=tp and c:GetFlagEffect(1)>0 then
 		c:AddCounter(COUNTER_SPELL,1)
 	end
 end

@@ -50,7 +50,7 @@ function s.atkval(e,c)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then return false end
-	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and Duel.IsChainNegatable(ev)
+	return re:IsSpellTrapEffect() and Duel.IsChainNegatable(ev)
 end
 function s.cfilter(c,g)
 	return c:IsSetCard(SET_ALTERGEIST) and g:IsContains(c) and not c:IsStatus(STATUS_BATTLE_DESTROYED)

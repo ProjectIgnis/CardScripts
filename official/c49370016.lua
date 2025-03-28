@@ -62,7 +62,7 @@ end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return end
 	local rc=re:GetHandler()
-	return re:IsActiveType(TYPE_MONSTER) and rc:IsControler(tp) and rc:IsLocation(LOCATION_MZONE) and rc:IsRace(RACE_PSYCHIC)
+	return re:IsMonsterEffect() and rc:IsControler(tp) and rc:IsLocation(LOCATION_MZONE) and rc:IsRace(RACE_PSYCHIC)
 		and rc:IsFaceup()
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)

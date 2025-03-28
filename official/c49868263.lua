@@ -55,7 +55,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.NegateEffect(ev)
 end
 function s.disop2(e,tp,eg,ep,ev,re,r,rp)
-	if re:IsActiveType(TYPE_SPELL) and re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then
+	if re:IsSpellEffect() and re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then
 		local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 		if g and g:IsContains(e:GetHandler()) then
 			if Duel.NegateEffect(ev) and re:GetHandler():IsRelateToEffect(re) then

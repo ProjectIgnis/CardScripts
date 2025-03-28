@@ -48,7 +48,7 @@ function s.defval(e,c)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
-	if re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsSetCard(SET_GRAVEKEEPERS) and loc==LOCATION_GRAVE then
+	if re:IsMonsterEffect() and not re:GetHandler():IsSetCard(SET_GRAVEKEEPERS) and loc==LOCATION_GRAVE then
 		Duel.NegateEffect(ev)
 	end
 end

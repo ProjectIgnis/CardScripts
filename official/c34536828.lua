@@ -36,7 +36,7 @@ function s.filter(c)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	return rp==1-tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainDisablable(ev)
+	return rp==1-tp and re:IsMonsterEffect() and Duel.IsChainDisablable(ev)
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) and (rc:IsAttack(0) or rc:IsDefense(0))
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)

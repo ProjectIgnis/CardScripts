@@ -58,5 +58,5 @@ function s.otfilter(c,tp)
 	return c:IsSetCard(SET_KOAKI_MEIRU) and (c:IsControler(tp) or c:IsFaceup())
 end
 function s.efilter(e,re,rp)
-	return re:IsActiveType(TYPE_TRAP)
+	return re:IsTrapEffect()
 end

@@ -39,7 +39,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_PUNK}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==1-tp and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():GetBaseAttack()>0
+	return rp==1-tp and re:IsMonsterEffect() and re:GetHandler():GetBaseAttack()>0
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

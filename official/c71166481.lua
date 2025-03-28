@@ -31,7 +31,7 @@ end
 s.listed_series={SET_NUMBER}
 s.xyz_number=75
 function s.chcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_MONSTER) and rp==1-tp
+	return re:IsMonsterEffect() and rp==1-tp
 end
 function s.chtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and Duel.IsPlayerCanDraw(1-tp,1) end

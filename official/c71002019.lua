@@ -64,5 +64,5 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
-	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsRace(RACE_PLANT)
+	return re:IsMonsterEffect() and re:GetHandler():IsRace(RACE_PLANT)
 end

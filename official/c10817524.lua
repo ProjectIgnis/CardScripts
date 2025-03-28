@@ -32,5 +32,5 @@ function s.indval(e,c)
 	return not c:IsType(TYPE_NORMAL)
 end
 function s.efilter(e,te)
-	return te:IsActiveType(TYPE_MONSTER) and te:GetOwner()~=e:GetOwner()
+	return te:IsMonsterEffect() and te:GetOwner()~=e:GetOwner()
 end

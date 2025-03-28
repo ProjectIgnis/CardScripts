@@ -22,7 +22,7 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp,chk)
 	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and ep~=tp
-		and loc==LOCATION_MZONE and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainDisablable(ev)
+		and loc==LOCATION_MZONE and re:IsMonsterEffect() and Duel.IsChainDisablable(ev)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

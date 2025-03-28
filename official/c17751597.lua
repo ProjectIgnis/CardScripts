@@ -34,7 +34,7 @@ s.listed_names={CARD_ALBAZ,id}
 s.listed_series={SET_BRANDED}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsChainNegatable(ev) then return false end
-	if not re or (not re:IsActiveType(TYPE_MONSTER) and not re:IsHasType(EFFECT_TYPE_ACTIVATE)) then return false end
+	if not re or (not re:IsMonsterEffect() and not re:IsHasType(EFFECT_TYPE_ACTIVATE)) then return false end
 	return re:IsHasCategory(CATEGORY_SPECIAL_SUMMON)
 end
 function s.texfilter(c)

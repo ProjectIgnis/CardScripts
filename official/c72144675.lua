@@ -21,5 +21,5 @@ function s.tlimit(e,c)
 	return not c:IsRace(RACE_WINGEDBEAST)
 end
 function s.efilter(e,te)
-	return te:IsActiveType(TYPE_TRAP)
+	return te:IsTrapEffect()
 end

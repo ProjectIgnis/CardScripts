@@ -43,7 +43,7 @@ s.listed_names={id}
 	--Check for activated Spell Card/effect or non-fusion Spellcaster's effect
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local race=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_RACE)
-	return re:IsActiveType(TYPE_SPELL) or (not re:IsActiveType(TYPE_FUSION) and re:IsActiveType(TYPE_MONSTER)
+	return re:IsSpellEffect() or (not re:IsActiveType(TYPE_FUSION) and re:IsMonsterEffect()
 		and race&RACE_SPELLCASTER>0)
 end
 	--Activation legality

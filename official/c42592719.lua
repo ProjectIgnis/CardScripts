@@ -40,7 +40,7 @@ function s.imcon(e)
 	return e:GetHandler():GetFlagEffect(id)>0
 end
 function s.imfilter(e,te)
-	return te:IsActiveType(TYPE_SPELL)
+	return te:IsSpellEffect()
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetBattledGroupCount()>0

@@ -39,7 +39,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and r&REASON_BATTLE==0 and re
-		and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(SET_TRICKSTAR)
+		and re:IsMonsterEffect() and re:GetHandler():IsSetCard(SET_TRICKSTAR)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

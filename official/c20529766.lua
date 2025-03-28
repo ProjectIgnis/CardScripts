@@ -73,7 +73,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
-	if re:IsActiveType(TYPE_MONSTER) or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return end
+	if re:IsMonsterEffect() or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	if #g==1 and g:GetFirst()==e:GetHandler() then
 		Duel.NegateEffect(ev)

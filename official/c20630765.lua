@@ -46,7 +46,7 @@ function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
-	return re:IsActiveType(TYPE_MONSTER) and rc~=c and c:GetFlagEffect(1)>0
+	return re:IsMonsterEffect() and rc~=c and c:GetFlagEffect(1)>0
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

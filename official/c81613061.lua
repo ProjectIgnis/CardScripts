@@ -39,7 +39,7 @@ function s.limcon(e)
 		and Duel.IsExistingMatchingCard(Card.IsSummonType,e:GetHandlerPlayer(),0,LOCATION_MZONE,1,nil,SUMMON_TYPE_SPECIAL)
 end
 function s.limval(e,re,tp)
-	return re:GetActivateLocation()==LOCATION_MZONE and re:IsActiveType(TYPE_MONSTER)
+	return re:GetActivateLocation()==LOCATION_MZONE and re:IsMonsterEffect()
 end
 function s.setfilter(c)
 	return c:IsSetCard(SET_WAR_ROCK) and not c:IsCode(id) and c:IsSpellTrap() and c:IsSSetable()

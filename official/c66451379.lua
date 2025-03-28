@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return (c:IsReason(REASON_BATTLE) or (c:IsReason(REASON_EFFECT) and re and re:IsActiveType(TYPE_SPELL)))
+	return (c:IsReason(REASON_BATTLE) or (c:IsReason(REASON_EFFECT) and re and re:IsSpellEffect()))
 		and c:IsReason(REASON_DESTROY) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

@@ -66,7 +66,7 @@ function s.sumlimit(e,c,sump,sumtype,sumpos,targetp)
 	return (sumpos&POS_FACEDOWN)>0
 end
 function s.aclimit(e,re,tp)
-	return re:IsActiveType(TYPE_MONSTER)
+	return re:IsMonsterEffect()
 end
 function s.actcon(e)
 	return Duel.GetAttacker()==e:GetHandler()

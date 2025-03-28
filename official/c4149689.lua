@@ -25,7 +25,7 @@ function s.initial_effect(c)
 end
 function s.aclimit(e,re,tp)
 	local rc=re:GetHandler()
-	return re:IsActiveType(TYPE_MONSTER) and re:GetActivateLocation()==LOCATION_MZONE and rc:GetFlagEffect(id)~=0
+	return re:IsMonsterEffect() and re:GetActivateLocation()==LOCATION_MZONE and rc:GetFlagEffect(id)~=0
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if eg then

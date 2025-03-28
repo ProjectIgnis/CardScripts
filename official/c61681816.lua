@@ -57,6 +57,6 @@ end
 function s.value(e,re,rp)
 	local rc=e:GetHandler():GetRace()
 	local trig_rc,eff=Duel.GetChainInfo(0,CHAININFO_TRIGGERING_RACE,CHAININFO_TRIGGERING_EFFECT)
-	return re:IsActiveType(TYPE_MONSTER) and re:GetActivateLocation()==LOCATION_MZONE
+	return re:IsMonsterEffect() and re:GetActivateLocation()==LOCATION_MZONE
 		and (re:GetHandler():IsRace(rc) or (eff==re and trig_rc==rc)) and aux.tgoval(e,re,rp)
 end

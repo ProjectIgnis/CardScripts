@@ -98,5 +98,5 @@ function s.gyop(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.actlimit(e,re,tp)
 	local loc=re:GetActivateLocation()
-	return loc==LOCATION_MZONE and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsType(TYPE_LINK)
+	return loc==LOCATION_MZONE and re:IsMonsterEffect() and re:GetHandler():IsType(TYPE_LINK)
 end

@@ -39,12 +39,12 @@ function s.initial_effect(c)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not re:IsActiveType(TYPE_MONSTER) or re:GetHandler()==c then return end
+	if not re:IsMonsterEffect() or re:GetHandler()==c then return end
 	c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET|RESET_CHAIN,0,1)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not re:IsActiveType(TYPE_MONSTER) or re:GetHandler()==c then return false end
+	if not re:IsMonsterEffect() or re:GetHandler()==c then return false end
 	return c:GetFlagEffect(id)>0 and c:GetAttack()<4000
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)

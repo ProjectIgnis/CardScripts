@@ -34,7 +34,7 @@ s.listed_names={49389190,CARD_DREAM_MIRROR_JOY}
 s.listed_series={SET_DREAM_MIRROR}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
-	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(SET_DREAM_MIRROR)
+	return re:IsMonsterEffect() and re:GetHandler():IsSetCard(SET_DREAM_MIRROR)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_DREAM_MIRROR) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

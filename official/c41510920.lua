@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_TELLARKNIGHT}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE)) and Duel.IsChainNegatable(ev)
+	return (re:IsMonsterEffect() or re:IsHasType(EFFECT_TYPE_ACTIVATE)) and Duel.IsChainNegatable(ev)
 end
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_TELLARKNIGHT) and c:IsAbleToGraveAsCost() and not c:IsStatus(STATUS_BATTLE_DESTROYED)

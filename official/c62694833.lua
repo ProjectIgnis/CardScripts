@@ -54,7 +54,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.setcon2(e,tp,eg,ep,ev,re,r,rp)
-	return re and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(SET_FIRE_FIST)
+	return re and re:IsMonsterEffect() and re:GetHandler():IsSetCard(SET_FIRE_FIST)
 end
 function s.setfilter3(c,tp)
 	return c:IsSetCard(SET_FIRE_FORMATION) and c:IsSpellTrap() and c:IsSSetable()

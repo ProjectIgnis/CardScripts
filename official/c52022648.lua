@@ -28,7 +28,7 @@ function s.tglimit(e,c)
 	return c~=e:GetHandler()
 end
 function s.tgval(e,re,rp)
-	return re:IsActiveType(TYPE_SPELL)
+	return re:IsSpellEffect()
 end
 function s.costfilter(c)
 	return c:IsSpell() and c:IsDiscardable()

@@ -53,11 +53,11 @@ function s.splimit(e,se,sp,st)
 end
 	--Cannot be targeted by opponent's trap effects
 function s.tgval(e,re,rp)
-	return aux.tgoval(e,re,rp) and re:IsActiveType(TYPE_SPELL)
+	return aux.tgoval(e,re,rp) and re:IsSpellEffect()
 end
 	--Opponent activates a trap effect
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==1-tp and re:IsActiveType(TYPE_TRAP)
+	return ep==1-tp and re:IsTrapEffect()
 end
 	--Banish 1 card from your hand or field as cost
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)

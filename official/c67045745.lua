@@ -50,7 +50,7 @@ function s.indval(e,c)
 	else return false end
 end
 function s.lvcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and re:GetHandler():IsSetCard(SET_FA)
+	return re:IsSpellTrapEffect() and re:GetHandler():IsSetCard(SET_FA)
 end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

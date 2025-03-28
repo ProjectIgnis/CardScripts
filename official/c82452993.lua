@@ -44,5 +44,5 @@ function s.rcon(e)
 	return e:GetOwner():IsHasCardTarget(e:GetHandler())
 end
 function s.efilter(e,re)
-	return re:IsActiveType(TYPE_MONSTER) and re:GetOwnerPlayer()~=e:GetOwnerPlayer()
+	return re:IsMonsterEffect() and re:GetOwnerPlayer()~=e:GetOwnerPlayer()
 end

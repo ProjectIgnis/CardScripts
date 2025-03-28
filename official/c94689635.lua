@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==1-tp and re:IsActiveType(TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
+	return ep==1-tp and re:IsTrapEffect() and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 		and Duel.IsChainNegatable(ev)
 end
 function s.costfilter(c)

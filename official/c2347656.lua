@@ -41,7 +41,7 @@ function s.chainop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.chainlm(e,rp,tp)
-	return rp==tp or not e:IsActiveType(TYPE_MONSTER)
+	return rp==tp or not e:IsMonsterEffect()
 end
 function s.filter(c)
 	return c:IsNormalTrap() and c:IsSSetable()
@@ -74,7 +74,7 @@ function s.cfilter(c)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsReason(REASON_EFFECT)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==tp and re and re:IsActiveType(TYPE_TRAP) and re:GetHandler():GetOriginalType()==TYPE_TRAP
+	return rp==tp and re and re:IsTrapEffect() and re:GetHandler():GetOriginalType()==TYPE_TRAP
 		and eg:IsExists(s.cfilter,1,nil)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)

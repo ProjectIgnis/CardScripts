@@ -23,7 +23,7 @@ function s.initial_effect(c)
 end
 function s.efilter(e,te)
 	local c,tc=e:GetHandler(),te:GetHandler()
-	return te:IsActiveType(TYPE_MONSTER) and (not tc:HasLevel() or tc:GetLevel()>c:GetLevel())
+	return te:IsMonsterEffect() and (not tc:HasLevel() or tc:GetLevel()>c:GetLevel())
 end
 function s.cfilter(c)
 	return c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c)

@@ -109,7 +109,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.aclimit(e,re,tp)
-	return re:IsActiveType(TYPE_MONSTER)
+	return re:IsMonsterEffect()
 end
 function s.thfilter(c)
 	return c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()

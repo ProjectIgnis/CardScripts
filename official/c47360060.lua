@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_HIERATIC}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsChainNegatable(ev) and (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE))
+	return Duel.IsChainNegatable(ev) and (re:IsMonsterEffect() or re:IsHasType(EFFECT_TYPE_ACTIVATE))
 end
 function s.cfilter(c)
 	return c:IsSetCard(SET_HIERATIC) and not c:IsStatus(STATUS_BATTLE_DESTROYED)

@@ -64,7 +64,7 @@ function s.atkval(e,c)
 	return c:GetLevel()*300
 end
 function s.lvcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and re:GetHandler():IsSetCard(SET_FA)
+	return re:IsSpellTrapEffect() and re:GetHandler():IsSetCard(SET_FA)
 end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -84,7 +84,7 @@ function s.costchk(e,te_or_c,tp)
 	return Duel.CheckLPCost(tp,ct*300)
 end
 function s.costtg(e,te,tp)
-	if not te:IsActiveType(TYPE_MONSTER) then return false end
+	if not te:IsMonsterEffect() then return false end
 	local tc=te:GetHandler()
 	local lv=e:GetHandler():GetLevel()
 	if tc:GetRank()>0 then

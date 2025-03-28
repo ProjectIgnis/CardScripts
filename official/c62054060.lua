@@ -31,5 +31,5 @@ function s.accon(e)
 	return e:GetLabel()~=Duel.GetTurnCount()
 end
 function s.aclimit(e,re,tp)
-	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_TRAP)
+	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsTrapEffect()
 end

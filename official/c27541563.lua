@@ -46,7 +46,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return ep==1-tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
+	return ep==1-tp and re:IsMonsterEffect() and Duel.IsChainNegatable(ev)
 end
 function s.discfilter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_ALTERGEIST) and c:IsAbleToGraveAsCost() and not c:IsStatus(STATUS_BATTLE_DESTROYED)

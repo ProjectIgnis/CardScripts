@@ -57,7 +57,7 @@ s.counter_list={COUNTER_SPELL}
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
 	local c=re:GetHandler()
-	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and c:IsSetCard(SET_SPELLBOOK) and e:GetHandler():GetFlagEffect(1)>0
+	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsSpellEffect() and c:IsSetCard(SET_SPELLBOOK) and e:GetHandler():GetFlagEffect(1)>0
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(COUNTER_SPELL,1)

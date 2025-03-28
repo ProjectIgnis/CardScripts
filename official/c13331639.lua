@@ -91,7 +91,7 @@ function s.fusfilter4(c,fc,sumtype,tp)
 end
 function s.limval(e,re,rp)
 	local rc=re:GetHandler()
-	return rc:IsLocation(LOCATION_MZONE) and re:IsActiveType(TYPE_MONSTER)
+	return rc:IsLocation(LOCATION_MZONE) and re:IsMonsterEffect()
 		and rc:IsType(TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ)
 end
 function s.ddcon(e,tp,eg,ep,ev,re,r,rp)

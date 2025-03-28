@@ -37,7 +37,7 @@ function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.SelectTarget(tp,s.tdfilter,tp,0,LOCATION_MZONE,1,1,nil,e,extype)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,0,0)
 	if e:IsHasType(EFFECT_TYPE_ACTIVATE) then
-		Duel.SetChainLimit(function(e,ep,tp) return ep==tp or not e:IsActiveType(TYPE_MONSTER) end)
+		Duel.SetChainLimit(function(e,ep,tp) return ep==tp or not e:IsMonsterEffect() end)
 	end
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)

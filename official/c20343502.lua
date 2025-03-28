@@ -59,7 +59,7 @@ function s.immop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.efilter(e,te)
-	return te:IsActiveType(TYPE_MONSTER) and te:GetOwner()~=e:GetHandler()
+	return te:IsMonsterEffect() and te:GetOwner()~=e:GetHandler()
 end
 function s.tdcfilter(c,tp)
 	return c:IsSetCard(SET_MADOLCHE) and c:IsControler(tp)

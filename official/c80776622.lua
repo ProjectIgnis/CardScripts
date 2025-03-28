@@ -55,7 +55,7 @@ function s.sucop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.chainlm(e,rp,tp)
-	return tp==rp or (e:IsActiveType(TYPE_SPELL+TYPE_TRAP) and not e:IsHasType(EFFECT_TYPE_ACTIVATE))
+	return tp==rp or (e:IsSpellTrapEffect() and not e:IsHasType(EFFECT_TYPE_ACTIVATE))
 end
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -123,7 +123,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsType,TYPE_PENDULUM),tp,LOCATION_PZONE,0,nil)
 	local _,sc=g:GetMaxGroup(function(c) return c:GetScale() end)
-	return sc and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and re:IsActiveType(TYPE_MONSTER) and rc:IsAttackBelow(sc*300)
+	return sc and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and re:IsMonsterEffect() and rc:IsAttackBelow(sc*300)
 		and rc:IsOnField() and rc:IsDestructable()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)

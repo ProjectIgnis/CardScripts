@@ -41,7 +41,7 @@ function s.splimit(e,c,sump,sumtype,sumpos,targetp)
 	return not c:IsSetCard(SET_DD) and (sumtype&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsChainDisablable(ev) and re:IsActiveType(TYPE_TRAP) and aux.damcon1(e,tp,eg,ep,ev,re,r,rp) and e:GetHandler():GetFlagEffect(id)==0
+	return Duel.IsChainDisablable(ev) and re:IsTrapEffect() and aux.damcon1(e,tp,eg,ep,ev,re,r,rp) and e:GetHandler():GetFlagEffect(id)==0
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.SelectEffectYesNo(tp,e:GetHandler()) then return end

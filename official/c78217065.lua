@@ -72,5 +72,5 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return not (se and se:IsActiveType(TYPE_SPELL))
+	return not (se and se:IsSpellEffect())
 end

@@ -63,7 +63,7 @@ end
 function s.ddcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
-	return re:IsActiveType(TYPE_MONSTER) and rc~=c
+	return re:IsMonsterEffect() and rc~=c
 		and rc:IsSetCard(SET_LIGHTSWORN) and rc:IsControler(tp)
 end
 function s.ddtg(e,tp,eg,ep,ev,re,r,rp,chk)

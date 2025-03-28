@@ -22,7 +22,7 @@ end
 s.xyz_number=65
 function s.condition(e,tp,eg,ep,ev,re,r,rp,chk)
 	return rp~=tp and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
-		and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
+		and re:IsMonsterEffect() and Duel.IsChainNegatable(ev)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -64,7 +64,7 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.aclimit(e,re,tp)
 	local c=re:GetHandler()
-	return re:IsActiveType(TYPE_MONSTER) and c:IsAttribute(e:GetLabel())
+	return re:IsMonsterEffect() and c:IsAttribute(e:GetLabel())
 end
 function s.atktarget(e,c)
 	return c:IsAttribute(e:GetLabel())

@@ -31,7 +31,7 @@ end
 s.material_setcode=SET_ARCHFIEND
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	if re:IsActiveType(TYPE_FLIP) then Duel.NegateEffect(ev) end
-	if re:IsActiveType(TYPE_TRAP) and re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then
+	if re:IsTrapEffect() and re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then
 		local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 		if g and g:IsContains(e:GetHandler()) then
 			Duel.NegateEffect(ev)

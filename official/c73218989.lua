@@ -102,7 +102,7 @@ end
 --counter and damage
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return ep==1-tp and re:IsActiveType(TYPE_MONSTER) and c:GetFlagEffect(1)~=0
+	return ep==1-tp and re:IsMonsterEffect() and c:GetFlagEffect(1)~=0
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

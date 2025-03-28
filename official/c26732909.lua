@@ -19,7 +19,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_SPELLBOOK}
 function s.chainfilter(re,tp,cid)
-	return not (re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and re:GetHandler():IsSetCard(SET_SPELLBOOK))
+	return not (re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsSpellEffect() and re:GetHandler():IsSetCard(SET_SPELLBOOK))
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsTurnPlayer(tp)

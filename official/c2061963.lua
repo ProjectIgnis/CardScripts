@@ -33,7 +33,7 @@ s.xyz_number=104
 function s.condition(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ph=Duel.GetCurrentPhase()
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and ep~=tp
-		and Duel.IsBattlePhase() and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
+		and Duel.IsBattlePhase() and re:IsMonsterEffect() and Duel.IsChainNegatable(ev)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

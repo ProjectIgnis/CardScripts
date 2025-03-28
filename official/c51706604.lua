@@ -52,7 +52,7 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local code=e:GetLabel()
 	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
 	local code1,code2=re:GetHandler():GetOriginalCodeRule()
-	return re:IsActiveType(TYPE_SPELL) and loc&LOCATION_ONFIELD~=0 and (code1==code or code2==code)
+	return re:IsSpellEffect() and loc&LOCATION_ONFIELD~=0 and (code1==code or code2==code)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)

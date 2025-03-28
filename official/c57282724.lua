@@ -55,7 +55,7 @@ function s.econ(e)
 	return e:GetHandler():IsLinkSummoned()
 end
 function s.efilter(e,re)
-	return re:IsActiveType(TYPE_MONSTER) and re:GetOwner()~=e:GetOwner()
+	return re:IsMonsterEffect() and re:GetOwner()~=e:GetOwner()
 end
 function s.matcheck(e,c)
 	local g=c:GetMaterial()

@@ -23,6 +23,6 @@ function s.etarget(e,c)
 	return (c:GetOriginalRace()&RACE_MACHINE+RACE_ROCK)~=0
 end
 function s.efilter(e,te,c)
-	return te:IsActiveType(TYPE_MONSTER) and te:GetOwner()~=c
+	return te:IsMonsterEffect() and te:GetOwner()~=c
 		and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
 end

@@ -37,7 +37,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_HERO}
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return re and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(SET_HERO)
+	return re and re:IsMonsterEffect() and re:GetHandler():IsSetCard(SET_HERO)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1)

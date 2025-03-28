@@ -56,7 +56,7 @@ function s.initial_effect(c)
 end
 function s.chop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if rp==tp or (not re:IsActiveType(TYPE_MONSTER) and not re:IsHasType(EFFECT_TYPE_ACTIVATE)) then return end
+	if rp==tp or (not re:IsMonsterEffect() and not re:IsHasType(EFFECT_TYPE_ACTIVATE)) then return end
 	local de,dp=Duel.GetChainInfo(ev,CHAININFO_DISABLE_REASON,CHAININFO_DISABLE_PLAYER)
 	if de and dp==tp and de:GetHandler():IsType(TYPE_COUNTER) then
 		local ty=re:GetActiveType()

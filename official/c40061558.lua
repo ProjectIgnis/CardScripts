@@ -45,7 +45,7 @@ function s.immcon(e)
 	return e:GetHandler():IsNormalSummoned()
 end
 function s.efilter(e,te)
-	if te:IsActiveType(TYPE_SPELL+TYPE_TRAP) then return true
+	if te:IsSpellTrapEffect() then return true
 	else return aux.qlifilter(e,te) end
 end
 function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

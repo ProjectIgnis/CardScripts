@@ -45,7 +45,7 @@ function s.accon(e)
 	return Duel.GetLP(tp)>Duel.GetLP(1-tp)
 end
 function s.actlimit(e,re,tp)
-	return re:IsActiveType(TYPE_MONSTER)
+	return re:IsMonsterEffect()
 end
 function s.poscon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp

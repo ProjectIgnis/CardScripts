@@ -62,7 +62,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return aux.exccon(e,tp,eg,ep,ev,re,r,rp) and rp==tp and r&REASON_EFFECT==REASON_EFFECT
-		and re and re:IsActiveType(TYPE_TRAP) and re:GetHandler():GetOriginalType()==TYPE_TRAP
+		and re and re:IsTrapEffect() and re:GetHandler():GetOriginalType()==TYPE_TRAP
 		and eg:IsExists(Card.IsPreviousLocation,1,nil,LOCATION_MZONE)
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)

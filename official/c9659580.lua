@@ -73,7 +73,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.lpcon(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	return Duel.IsTurnPlayer(1-tp) and re:IsActiveType(TYPE_MONSTER) and rc and rc:IsSetCard(SET_CUBIC)
+	return Duel.IsTurnPlayer(1-tp) and re:IsMonsterEffect() and rc and rc:IsSetCard(SET_CUBIC)
 		and eg:IsExists(Card.IsCode,1,nil,CARD_VIJAM)
 end
 function s.lpop(e,tp,eg,ep,ev,re,r,rp)

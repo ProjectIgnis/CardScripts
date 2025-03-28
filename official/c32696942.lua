@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReason(REASON_COST) and re:IsActivated() and re:IsActiveType(TYPE_MONSTER) and (c:GetPreviousLocation()&LOCATION_OVERLAY)~=0
+	return c:IsReason(REASON_COST) and re:IsActivated() and re:IsMonsterEffect() and (c:GetPreviousLocation()&LOCATION_OVERLAY)~=0
 end
 function s.filter(c,e,tp)
 	return c:IsLevelBelow(3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

@@ -56,7 +56,7 @@ function s.sprfilter1(c,tp,g,sc)
 end
 function s.sprfilter2(c,tp,mc,sc)
 	local sg=Group.FromCards(c,mc)
-	return (math.abs((c:GetLevel()-mc:GetLevel()))==7) and c:IsType(TYPE_SYNCHRO) and not c:IsType(TYPE_TUNER) and Duel.GetLocationCountFromEx(tp,tp,sg,sc)>0
+	return math.abs(c:GetLevel()-mc:GetLevel())==7 and c:IsType(TYPE_SYNCHRO) and not c:IsType(TYPE_TUNER) and Duel.GetLocationCountFromEx(tp,tp,sg,sc)>0
 end
 function s.sprcon(e,c)
 	if c==nil then return true end
@@ -87,7 +87,6 @@ function s.sprop(e,tp,eg,ep,ev,re,r,rp,c)
 	if not g then return end
 	Duel.SendtoGrave(g,REASON_COST)
 end
---destroy
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) end
@@ -102,7 +101,6 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(g,REASON_EFFECT)
 	end
 end
---negate
 function s.disfilter(c,tp)
 	return c:IsFaceup() and c:IsLocation(LOCATION_ONFIELD) and c:IsControler(tp) and c:IsSetCard(SET_URSARCTIC)
 end

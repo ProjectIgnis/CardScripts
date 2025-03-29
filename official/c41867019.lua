@@ -1,7 +1,6 @@
 --魔妖遊行
 --Mayakashi Mayhem
 --Logical Nonsense
---Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -29,28 +28,21 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_SZONE)
 	c:RegisterEffect(e3)
 end
-s.listed_names={}
-	--Lists "Mayakashi" archetype
+s.listed_names={id}
 s.listed_series={SET_MAYAKASHI}
-	--Zombie synchro monster special summoned anywhere but extra deck
 function s.cfilter(c)
-	return c:IsRace(RACE_ZOMBIE) and c:IsType(TYPE_SYNCHRO) 
-		and c:GetSummonLocation()~=LOCATION_EXTRA
+	return c:IsRace(RACE_ZOMBIE) and c:IsType(TYPE_SYNCHRO) and not c:IsSummonLocation(LOCATION_EXTRA)
 end
-	--Not really a cost, make the effect once per chain
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,id+4)==0 end
 	Duel.RegisterFlagEffect(tp,id+4,RESET_CHAIN,0,1)
 end
-	--If it ever happened
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil) and not e:GetHandler():IsStatus(STATUS_CHAINING)
 end
-	--Check for "Mayakashi" spell/trap, except itself
 function s.setfilter(c)
-	return c:IsSetCard(SET_MAYAKASHI) and c:IsType(TYPE_TRAP+TYPE_SPELL) and c:IsSSetable() and not c:IsCode(id)
+	return c:IsSetCard(SET_MAYAKASHI) and c:IsSpellTrap() and c:IsSSetable() and not c:IsCode(id)
 end
-	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and Duel.GetFlagEffect(tp,id)==0
 	or Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK,0,1,nil) and Duel.GetFlagEffect(tp,id+1)==0
@@ -60,7 +52,6 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,800)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,0,LOCATION_MZONE)
 end
-	--Apply 1 of the following effects
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local off=1
 	local ops={}

@@ -35,7 +35,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_THE_PHANTOM_KNIGHTS,SET_RAIDRAPTOR,SET_RANK_UP_MAGIC}
 function s.cfilter(c,tp)
-	return c:IsSummonType(SUMMON_TYPE_XYZ) and c:IsSummonPlayer(tp) and c:GetMaterial():IsExists(s.spcfilter,1,nil)
+	return c:IsXyzSummoned() and c:IsSummonPlayer(tp) and c:GetMaterial():IsExists(s.spcfilter,1,nil)
 end
 function s.spcfilter(c)
 	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsType(TYPE_XYZ)

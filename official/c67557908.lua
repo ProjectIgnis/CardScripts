@@ -47,7 +47,7 @@ function s.initial_effect(c)
 	e4:SetLabelObject(e3)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x48}
+s.listed_series={SET_NUMBER}
 s.listed_names={94942656}
 s.xyz_number=4
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
@@ -78,7 +78,7 @@ function s.recordop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_XYZ)
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsXyzSummoned()
 end
 function s.spfilter(c,e,tp,rp)
 	return c:IsCode(94942656) and Duel.GetLocationCountFromEx(tp,rp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

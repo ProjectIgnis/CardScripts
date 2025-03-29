@@ -1,4 +1,5 @@
 --銀幕の鏡壁
+--Mirror Wall
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -37,7 +38,7 @@ function s.initial_effect(c)
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e4:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e4:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetCountLimit(1)
 	e4:SetCondition(s.mtcon)
@@ -56,7 +57,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if a and a:IsControler(1-tp) and a:IsFaceup() and a:IsLocation(LOCATION_MZONE) then
 		e:GetLabelObject():AddCard(a)
 		if a:GetFlagEffect(id)==0 then
-			a:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+			a:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 		end
 	end
 end
@@ -67,7 +68,7 @@ function s.atkval(e,c)
 	return c:GetAttack()/2
 end
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.CheckLPCost(tp,2000) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then

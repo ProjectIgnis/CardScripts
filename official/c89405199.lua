@@ -1,4 +1,5 @@
 --グリード
+--Greed
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -37,7 +38,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	if ct then
 		c:SetFlagEffectLabel(flag,ct+ev)
 	else
-		c:RegisterFlagEffect(flag,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,ev)
+		c:RegisterFlagEffect(flag,RESETS_STANDARD_PHASE_END,0,1,ev)
 	end
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)

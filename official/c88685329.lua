@@ -1,5 +1,5 @@
 --ダークアイ・ナイトメア
---Dark-Eye Nightmare
+--Dark Eye Nightmare
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

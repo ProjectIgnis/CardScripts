@@ -1,9 +1,9 @@
--- ＸＸクルージョン
--- Cross X-Clusion
--- Scripted by Hatter
+--ＸＸクルージョン
+--XX-clusion
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Negate activation
+	--Negate activation
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_HANDES)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and re:GetActivateLocation()==LOCATION_HAND
-		and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
+		and re:IsMonsterEffect() and Duel.IsChainNegatable(ev)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

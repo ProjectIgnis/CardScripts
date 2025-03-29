@@ -1,4 +1,5 @@
 --霞の谷の戦士
+--Mist Valley Soldier
 local s,id=GetID()
 function s.initial_effect(c)
 	--return hand

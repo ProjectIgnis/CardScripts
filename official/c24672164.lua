@@ -1,9 +1,10 @@
 --幻奏の華歌聖ブルーム・プリマ
+--Bloom Prima the Melodious Choir
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMixRep(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x9b),1,99,aux.FilterBoolFunctionEx(Card.IsSetCard,0x109b))
+	Fusion.AddProcMixRep(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_MELODIOUS),1,99,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_MELODIOUS_MAESTRA))
 	--summon success
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
@@ -28,8 +29,8 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x9b,0x109b}
-s.material_setcode={0x9b}
+s.listed_series={SET_MELODIOUS,SET_MELODIOUS_MAESTRA}
+s.material_setcode={SET_MELODIOUS}
 function s.matcheck(e,c)
 	local ct=c:GetMaterialCount()
 	local e1=Effect.CreateEffect(c)
@@ -41,10 +42,10 @@ function s.matcheck(e,c)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_FUSION)
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsFusionSummoned()
 end
 function s.filter(c)
-	return c:IsSetCard(0x9b) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_MELODIOUS) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end

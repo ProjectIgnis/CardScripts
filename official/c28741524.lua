@@ -1,4 +1,5 @@
 --念動収集機
+--Telekinetic Power Well
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate

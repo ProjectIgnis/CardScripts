@@ -1,5 +1,5 @@
 --ニトロ・シンクロン
--- Nitro Synchron
+--Nitro Synchron
 local s,id=GetID()
 function s.initial_effect(c)
 	--draw
@@ -14,10 +14,10 @@ function s.initial_effect(c)
 	e1:SetOperation(s.drop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x2d}
+s.listed_series={SET_NITRO}
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsLocation(LOCATION_GRAVE) and r==REASON_SYNCHRO and c:GetReasonCard():IsSetCard(0x2d)
+	return c:IsLocation(LOCATION_GRAVE) and r==REASON_SYNCHRO and c:GetReasonCard():IsSetCard(SET_NITRO)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

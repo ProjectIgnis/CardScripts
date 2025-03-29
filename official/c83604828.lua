@@ -1,5 +1,5 @@
 --雲魔物－ゴースト・フォッグ
---Cloudian - Ghost Frog
+--Cloudian - Ghost Fog
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot special summon

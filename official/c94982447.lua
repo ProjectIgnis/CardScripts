@@ -36,14 +36,14 @@ function s.initial_effect(c)
 	e4:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xf9}
+s.listed_series={SET_TRUE_DRACO_KING}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsPreviousPosition(POS_FACEUP) and
-		c:IsSummonType(SUMMON_TYPE_TRIBUTE)
+		c:IsTributeSummoned()
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xf9) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(SET_TRUE_DRACO_KING) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -59,5 +59,5 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tgtg(e,c)
-	return c:IsSetCard(0xf9) and c~=e:GetHandler()
+	return c:IsSetCard(SET_TRUE_DRACO_KING) and c~=e:GetHandler()
 end

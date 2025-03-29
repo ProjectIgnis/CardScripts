@@ -1,4 +1,5 @@
 --宝玉の恵み
+--Crystal Blessing
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,9 +12,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x1034}
+s.listed_series={SET_CRYSTAL_BEAST}
 function s.filter(c)
-	return c:IsSetCard(0x1034) and not c:IsForbidden()
+	return c:IsSetCard(SET_CRYSTAL_BEAST) and not c:IsForbidden()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc) end
@@ -47,10 +48,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCode(EFFECT_CHANGE_TYPE)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET)
 			e1:SetValue(TYPE_SPELL+TYPE_CONTINUOUS)
 			tc:RegisterEffect(e1)
 		end
-		Duel.RaiseEvent(sg,EVENT_CUSTOM+47408488,e,0,tp,0,0)
+		Duel.RaiseEvent(sg,EVENT_CUSTOM+CARD_CRYSTAL_TREE,e,0,tp,0,0)
 	end
 end

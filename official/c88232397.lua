@@ -1,5 +1,5 @@
 --熟練の栗魔導士
---Skilled Chestnut Magician
+--Skilled Brown Magician
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
@@ -32,9 +32,9 @@ function s.initial_effect(c)
 end
 s.counter_place_list={COUNTER_SPELL}
 s.listed_names={40703222}
-s.listed_series={0xa4}
+s.listed_series={SET_KURIBOH}
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
-	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and e:GetHandler():GetFlagEffect(1)>0 then
+	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsSpellEffect() and e:GetHandler():GetFlagEffect(1)>0 then
 		e:GetHandler():AddCounter(COUNTER_SPELL,1)
 	end
 end
@@ -43,11 +43,11 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveCounter(tp,COUNTER_SPELL,1,REASON_COST)
 end
 function s.thfilter(c)
-	return (c:IsCode(40703222) or (c:IsSetCard(0xa4) and c:IsMonster())) and c:IsAbleToHand()
+	return (c:IsCode(40703222) or (c:IsSetCard(SET_KURIBOH) and c:IsMonster())) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local b2=Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil)
+	local b2=Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,nil)
 	local op=Duel.SelectEffect(tp,
 		{true,aux.Stringid(id,1)},
 		{b2,aux.Stringid(id,2)})
@@ -56,7 +56,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		e:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_LVCHANGE)
 	else
 		e:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
-		Duel.SetOperationInfo(0,CATEGORY_TOHAND,0,1,tp,LOCATION_DECK+LOCATION_GRAVE)
+		Duel.SetOperationInfo(0,CATEGORY_TOHAND,0,1,tp,LOCATION_DECK|LOCATION_GRAVE)
 	end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
@@ -70,7 +70,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 		--Increase ATK
 		local e2=e1:Clone()
@@ -79,7 +79,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e2)
 	else
 		Duel.Hint(HINT_SELECTMSG,tp, HINTMSG_ATOHAND)
-		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
+		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil)
 		if #g>0 then
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,g)

@@ -1,4 +1,5 @@
 --武神決戦
+--Bujintervention
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -10,9 +11,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x88}
+s.listed_series={SET_BUJIN}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x88)
+	return c:IsFaceup() and c:IsSetCard(SET_BUJIN)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end
@@ -30,7 +31,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EVENT_BATTLE_DESTROYING)
 		e1:SetTarget(s.rmtg)
 		e1:SetOperation(s.rmop)
-		e1:SetReset(RESET_EVENT+0x1620000+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESET_TURN_SET|RESET_TOHAND|RESET_TODECK|RESET_TOFIELD|RESET_PHASE|PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end
@@ -47,7 +48,7 @@ end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetBattleTarget()
 	if Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)==0 then return end
-	local g=Duel.GetMatchingGroup(s.rmfilter,tp,0,LOCATION_HAND+LOCATION_DECK+LOCATION_EXTRA+LOCATION_GRAVE,nil,tc:GetCode())
+	local g=Duel.GetMatchingGroup(s.rmfilter,tp,0,LOCATION_HAND|LOCATION_DECK|LOCATION_EXTRA|LOCATION_GRAVE,nil,tc:GetCode())
 	if #g>0 then
 		Duel.BreakEffect()
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)

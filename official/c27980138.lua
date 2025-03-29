@@ -33,7 +33,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #dg~=2 then return end
 	local hg=tg:Filter(Card.IsLocation,nil,LOCATION_ONFIELD)
 	if Duel.SendtoDeck(dg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0
-		and dg:IsExists(Card.IsLocation,2,nil,LOCATION_DECK+LOCATION_EXTRA)
+		and dg:IsExists(Card.IsLocation,2,nil,LOCATION_DECK|LOCATION_EXTRA)
 		and #hg>0 then
 		Duel.SendtoHand(hg,nil,REASON_EFFECT)
 	end

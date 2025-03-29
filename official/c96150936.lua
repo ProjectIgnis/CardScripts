@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x71),2,2)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_MADOLCHE),2,2)
 	--destroy replace
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
@@ -28,9 +28,9 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x71}
+s.listed_series={SET_MADOLCHE}
 function s.desrepfilter(c)
-	return c:IsSetCard(0x71) and c:IsMonster() and c:IsAbleToDeck() and aux.nvfilter(c)
+	return c:IsSetCard(SET_MADOLCHE) and c:IsMonster() and c:IsAbleToDeck() and aux.nvfilter(c)
 end
 function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsReason(REASON_RULE)
@@ -43,11 +43,11 @@ function s.desrepop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT+REASON_REPLACE)
 end
 function s.linkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x71) and c:IsMonster()
+	return c:IsFaceup() and c:IsSetCard(SET_MADOLCHE) and c:IsMonster()
 end
 function s.indescon(e,c)
 	return e:GetHandler():GetLinkedGroup():IsExists(s.linkfilter,1,nil)
 end
 function s.indestg(e,c)
-	return c:IsFaceup() and c:IsSetCard(0x71) and c:IsSpellTrap()
+	return c:IsFaceup() and c:IsSetCard(SET_MADOLCHE) and c:IsSpellTrap()
 end

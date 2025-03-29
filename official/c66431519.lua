@@ -68,7 +68,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		local atk=tc:GetAttack()//2
 		local c=e:GetHandler()
 		if Duel.Destroy(tc,REASON_EFFECT)>0 and c:IsFaceup() and c:IsRelateToEffect(e) then
-			c:UpdateAttack(atk,RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_PHASE|PHASE_END)
+			c:UpdateAttack(atk,RESETS_STANDARD_DISABLE_PHASE_END)
 		end
 	end
 end

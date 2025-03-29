@@ -1,5 +1,5 @@
 --失烙印
---Paradise Branded
+--Branded Lost
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -50,7 +50,7 @@ function s.efilter(e,ct)
 	return tp==rp and te:IsHasCategory(CATEGORY_FUSION_SUMMON)
 end
 function s.limfilter(c,tp)
-	return c:IsSummonPlayer(tp) and c:IsSummonType(SUMMON_TYPE_FUSION)
+	return c:IsSummonPlayer(tp) and c:IsFusionSummoned()
 end
 function s.limcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.limfilter,1,nil,tp)
@@ -59,7 +59,7 @@ function s.limop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetCurrentChain()==0 then
 		Duel.SetChainLimitTillChainEnd(s.chainlm)
 	elseif Duel.GetCurrentChain()==1 then
-		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_CHAINING)
@@ -85,7 +85,7 @@ function s.chainlm(e,rp,tp)
 	return tp==rp
 end
 function s.cfilter(c,tp)
-	return c:IsSummonPlayer(tp) and c:IsSummonType(SUMMON_TYPE_FUSION) and c:IsType(TYPE_FUSION)
+	return c:IsSummonPlayer(tp) and c:IsFusionSummoned() and c:IsType(TYPE_FUSION)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

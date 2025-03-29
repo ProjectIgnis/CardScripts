@@ -1,4 +1,5 @@
 --C・シューター
+--Iron Chain Blaster
 local s,id=GetID()
 function s.initial_effect(c)
 	--damage
@@ -14,9 +15,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.damop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x25}
+s.listed_series={SET_IRON_CHAIN}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x25) and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and c:IsSetCard(SET_IRON_CHAIN) and c:IsAbleToGraveAsCost()
 end
 function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil) end

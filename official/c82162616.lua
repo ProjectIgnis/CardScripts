@@ -16,9 +16,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x55,0x7b}
+s.listed_series={SET_PHOTON,SET_GALAXY}
 function s.cfilter(c)
-	return c:IsFaceup() and (c:IsSetCard(0x55) or c:IsSetCard(0x7b))
+	return c:IsFaceup() and (c:IsSetCard(SET_PHOTON) or c:IsSetCard(SET_GALAXY))
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -31,7 +31,7 @@ function s.filter1(c,e,tp)
 end
 function s.filter2(c,e,tp,mc,rk,pg)
 	if c.rum_limit and not c.rum_limit(mc,e) then return false end
-	return c:IsRank(rk) and (c:IsSetCard(0x55) or c:IsSetCard(0x7b)) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
+	return c:IsRank(rk) and (c:IsSetCard(SET_PHOTON) or c:IsSetCard(SET_GALAXY)) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
 		and mc:IsCanBeXyzMaterial(c) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -55,4 +55,3 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		sc:CompleteProcedure()
 	end
 end
-

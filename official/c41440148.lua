@@ -1,4 +1,5 @@
 --EMディスカバー・ヒッポ
+--Performapal Hip Hippo
 local s,id=GetID()
 function s.initial_effect(c)
 	--extra summon
@@ -16,7 +17,7 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
 	e1:SetTarget(aux.TargetBoolFunction(Card.IsLevelAbove,7))
 	e1:SetValue(0x1)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 end

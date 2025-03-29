@@ -54,7 +54,7 @@ function s.valcheck(e,c)
 	if g:GetClassCount(Card.GetCode)==5 then e:GetLabelObject():SetLabel(1) end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION) and e:GetLabel()==1
+	return e:GetHandler():IsFusionSummoned() and e:GetLabel()==1
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_ONFIELD)

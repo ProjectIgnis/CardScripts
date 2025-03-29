@@ -1,4 +1,5 @@
 --Sin 真紅眼の黒竜
+--Malefic Red-Eyes Black Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

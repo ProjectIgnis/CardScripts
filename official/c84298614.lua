@@ -1,4 +1,5 @@
 --強化蘇生
+--Powerful Rebirth
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -43,7 +44,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_OWNER_RELATE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(100)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetCondition(s.rcon)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()

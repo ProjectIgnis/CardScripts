@@ -14,9 +14,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x29}
+s.listed_series={SET_DRAGUNITY}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_SYNCHRO) and c:IsSetCard(0x29)
+	return c:IsFaceup() and c:IsType(TYPE_SYNCHRO) and c:IsSetCard(SET_DRAGUNITY)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if ep==tp or not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil) then return false end
@@ -35,7 +35,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x29) and c:IsLevel(10)
+	return c:IsFaceup() and c:IsSetCard(SET_DRAGUNITY) and c:IsLevel(10)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re)
@@ -47,13 +47,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			and Duel.SelectEffectYesNo(tp,e:GetHandler()) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
-			local tc=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsSetCard,0x29),tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
+			local tc=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsSetCard,SET_DRAGUNITY),tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
 			Duel.HintSelection(Group.FromCards(tc))
 			--Increase ATK
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			e1:SetValue(ct*100)
 			tc:RegisterEffect(e1)
 		end

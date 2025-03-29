@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TODECK+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e1:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e1:SetCode(EVENT_PHASE|PHASE_BATTLE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.spcon)
@@ -37,7 +37,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local mg=c:GetMaterial()
 	local sumable=true
 	local sumtype=c:GetSummonType()
-	if Duel.SendtoDeck(c,nil,0,REASON_EFFECT)==0 or (sumtype&SUMMON_TYPE_FUSION)~=SUMMON_TYPE_FUSION or #mg==0
+	if Duel.SendtoDeck(c,nil,SEQ_DECKTOP,REASON_EFFECT)==0 or (sumtype&SUMMON_TYPE_FUSION)~=SUMMON_TYPE_FUSION or #mg==0
 		or #mg>Duel.GetLocationCount(tp,LOCATION_MZONE)
 		or mg:IsExists(s.mgfilter,1,nil,e,tp,c) then
 		sumable=false

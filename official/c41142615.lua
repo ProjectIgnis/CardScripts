@@ -1,4 +1,5 @@
 --陽気な葬儀屋
+--The Cheerful Coffin
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

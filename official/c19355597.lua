@@ -5,7 +5,7 @@ function s.initial_effect(c)
 	c:SetSPSummonOnce(id)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMixN(c,false,false,aux.FilterBoolFunctionEx(Card.IsSetCard,0x1047),3)
+	Fusion.AddProcMixN(c,false,false,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_GEM_KNIGHT),3)
 	--spsummon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -23,28 +23,28 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x1047}
-s.material_setcode={0x47,0x1047}
+s.listed_series={SET_GEM_KNIGHT}
+s.material_setcode={SET_GEM,SET_GEM_KNIGHT}
 function s.splimit(e,se,sp,st)
 	return not e:GetHandler():IsLocation(LOCATION_EXTRA) or (st&SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
 end
 function s.tgfilter(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x1047)
+	return c:IsFaceup() and c:IsSetCard(SET_GEM_KNIGHT)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c)
 end
 function s.spfilter(c,e,tp,mc)
-	return c:IsSetCard(0x1047) and c:IsType(TYPE_FUSION) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsSetCard(SET_GEM_KNIGHT) and c:IsType(TYPE_FUSION) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_MZONE,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.tgfilter2(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x1047)
+	return c:IsFaceup() and c:IsSetCard(SET_GEM_KNIGHT)
 		and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,c)
 end
 function s.spfilter2(c,e,tp,mc)
-	return c:IsSetCard(0x1047) and c:IsType(TYPE_FUSION) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
+	return c:IsSetCard(SET_GEM_KNIGHT) and c:IsType(TYPE_FUSION) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)

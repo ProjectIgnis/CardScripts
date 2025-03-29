@@ -36,12 +36,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.counter_place_list={0x37}
-s.listed_series={0xd3}
+s.listed_series={SET_KAIJU}
 function s.poscon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetCounter(0x37)<3
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0xd3) and c:IsCanTurnSet()
+	return c:IsFaceup() and c:IsSetCard(SET_KAIJU) and c:IsCanTurnSet()
 end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end
@@ -59,7 +59,7 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousControler(tp) and rp==1-tp and (r&0x41)==0x41
+	return c:IsPreviousControler(tp) and rp==1-tp and (r&(REASON_DESTROY|REASON_EFFECT))==(REASON_DESTROY|REASON_EFFECT)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,2) end

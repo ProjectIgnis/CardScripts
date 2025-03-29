@@ -1,4 +1,5 @@
 --火竜の火炎弾
+--Dragon's Gunfire
 local s,id=GetID()
 function s.initial_effect(c)
 	--damage

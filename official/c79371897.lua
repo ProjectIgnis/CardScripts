@@ -1,4 +1,5 @@
 --Reinforcement of the Army's Troops
+--Reinforcement of the Army's Troops
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -18,7 +19,6 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	if tc:IsControler(1-tp) then tc=Duel.GetAttackTarget() end

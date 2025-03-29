@@ -1,4 +1,5 @@
 --未知ガエル
+--Submarine Frog
 local s,id=GetID()
 function s.initial_effect(c)
 	--Pierce

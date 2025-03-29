@@ -54,7 +54,7 @@ function s.conttg(e,c)
 	return c:IsSetCard(SET_GUNKAN) and c:IsSummonLocation(LOCATION_EXTRA)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ) and e:GetLabel()>0
+	return e:GetHandler():IsXyzSummoned() and e:GetLabel()>0
 end
 function s.sfilter(c)
 	return c:IsSetCard(SET_GUNKAN) and c:IsSpellTrap() and c:IsAbleToHand()

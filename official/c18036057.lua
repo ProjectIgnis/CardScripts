@@ -1,4 +1,5 @@
 --天空騎士パーシアス
+--Airknight Parshath
 local s,id=GetID()
 function s.initial_effect(c)
 	--draw

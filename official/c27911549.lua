@@ -1,4 +1,5 @@
 --寄生虫パラサイド
+--Parasite Paracide
 local s,id=GetID()
 function s.initial_effect(c)
 	Duel.EnableGlobalFlag(GLOBALFLAG_DECK_REVERSE_CHECK)
@@ -18,7 +19,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or c:IsStatus(STATUS_BATTLE_DESTROYED) then return end
-	Duel.SendtoDeck(c,1-tp,2,REASON_EFFECT)
+	Duel.SendtoDeck(c,1-tp,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	if not c:IsLocation(LOCATION_DECK) then return end
 	Duel.ShuffleDeck(1-tp)
 	c:ReverseInDeck()
@@ -47,7 +48,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetRange(LOCATION_MZONE)
 			e1:SetTargetRange(LOCATION_MZONE,0)
 			e1:SetValue(RACE_INSECT)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			c:RegisterEffect(e1)
 		end
 	end

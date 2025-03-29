@@ -1,4 +1,5 @@
 --守護神の宝札
+--Guarded Treasure
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

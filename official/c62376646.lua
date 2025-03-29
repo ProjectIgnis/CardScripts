@@ -1,5 +1,5 @@
 --剛鬼再戦
---Gouki Rematch
+--Gouki Re-Match
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -13,9 +13,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xfc}
+s.listed_series={SET_GOUKI}
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xfc) and c:HasLevel()
+	return c:IsSetCard(SET_GOUKI) and c:HasLevel()
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) and c:IsCanBeEffectTarget(e)
 end
 function s.rfilter(c,lv)

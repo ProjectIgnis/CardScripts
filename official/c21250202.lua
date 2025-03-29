@@ -1,4 +1,5 @@
 --オッドアイズ・ペルソナ・ドラゴン
+--Odd-Eyes Persona Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -41,15 +42,15 @@ function s.initial_effect(c)
 	e4:SetOperation(s.disop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x99}
+s.listed_series={SET_ODD_EYES}
 s.listed_names={id}
 function s.regfilter(c,tp)
 	return c:IsLocation(LOCATION_MZONE) and c:IsControler(tp)
-		and c:IsType(TYPE_PENDULUM) and c:IsFaceup() and c:IsSetCard(0x99)
+		and c:IsType(TYPE_PENDULUM) and c:IsFaceup() and c:IsSetCard(SET_ODD_EYES)
 end
 function s.regop1(e,tp,eg,ep,ev,re,r,rp)
 	if rp~=tp and #eg==1 and eg:IsExists(s.regfilter,1,nil,tp) then
-		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_CHAIN,0,1,ev)
+		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_CHAIN,0,1,ev)
 	end
 end
 function s.regop2(e,tp,eg,ep,ev,re,r,rp)
@@ -57,13 +58,13 @@ function s.regop2(e,tp,eg,ep,ev,re,r,rp)
 	local chain_ct={c:GetFlagEffectLabel(id)}
 	for i=1,#chain_ct do
 		if chain_ct[i]==ev then
-			c:RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+			c:RegisterFlagEffect(id+1,RESETS_STANDARD_PHASE_END,0,1)
 			return
 		end
 	end
 end
 function s.penfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x99) and c:IsType(TYPE_PENDULUM) and not c:IsCode(id) and not c:IsForbidden()
+	return c:IsFaceup() and c:IsSetCard(SET_ODD_EYES) and c:IsType(TYPE_PENDULUM) and not c:IsCode(id) and not c:IsForbidden()
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id+1)~=0
@@ -101,13 +102,13 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetValue(RESET_TURN_SET)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e2)
 	end
 end

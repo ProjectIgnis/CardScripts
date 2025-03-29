@@ -1,7 +1,6 @@
 --聖なる煌炎
---Holy Night Blast
+--Starry Knight Blast
 --Scripted by DyXel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Negate by returning to hand

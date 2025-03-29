@@ -36,9 +36,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x13}
+s.listed_series={SET_MEKLORD}
 function s.filter(c)
-	return c:IsSetCard(0x13) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_MEKLORD) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -69,7 +69,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,tp)
-	return c:IsSetCard(0x13) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
+	return c:IsSetCard(SET_MEKLORD) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.desstcond(e,tp,eg,ep,ev,re,r,rp)

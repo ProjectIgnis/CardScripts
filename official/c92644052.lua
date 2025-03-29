@@ -1,5 +1,5 @@
 --ＥＭ稀代の決闘者
---Performapal Greatest Duelist
+--Performapal Duelist Extraordinaire
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_REMOVE)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e3:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
 	e3:SetOperation(s.rmop)
@@ -49,7 +49,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_names={92428405}
-s.listed_series={0x10f8,0x20f8}
+s.listed_series={SET_SUPREME_KING_GATE,SET_SUPREME_KING_DRAGON}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local bc=Duel.GetAttackTarget()
 	if not bc then return false end
@@ -83,7 +83,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetValue(1)
-		e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+		e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
 		a:RegisterEffect(e1)
 	end
 	--Battle damage you take is halved
@@ -93,14 +93,14 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetTargetRange(1,0)
 	e2:SetValue(HALF_DAMAGE)
-	e2:SetReset(RESET_PHASE+PHASE_DAMAGE)
+	e2:SetReset(RESET_PHASE|PHASE_DAMAGE)
 	Duel.RegisterEffect(e2,tp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==1-tp
 end
 function s.thfilter(c)
-	return ((c:IsMonster() and (c:IsSetCard(0x10f8) or c:IsSetCard(0x20f8))) or c:IsCode(92428405)) and c:IsAbleToHand()
+	return ((c:IsMonster() and (c:IsSetCard(SET_SUPREME_KING_GATE) or c:IsSetCard(SET_SUPREME_KING_DRAGON))) or c:IsCode(92428405)) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

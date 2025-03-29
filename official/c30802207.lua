@@ -1,5 +1,5 @@
 --エクソシスター・カルペディベル
---Exorsister Carpedibel
+--Exosister Carpedivem
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x174))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_EXOSISTER))
 	e2:SetValue(s.tgval)
 	c:RegisterEffect(e2)
 	--Negate
@@ -44,12 +44,12 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x174}
+s.listed_series={SET_EXOSISTER}
 function s.tgval(e,re,rp)
-	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSummonLocation(LOCATION_GRAVE)
+	return re:IsMonsterEffect() and re:GetHandler():IsSummonLocation(LOCATION_GRAVE)
 end
 function s.negcfilter(c,tp)
-	return c:IsSummonType(SUMMON_TYPE_XYZ) and c:IsSetCard(0x174) and c:IsSummonPlayer(tp)
+	return c:IsXyzSummoned() and c:IsSetCard(SET_EXOSISTER) and c:IsSummonPlayer(tp)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.negcfilter,1,nil,tp)
@@ -73,7 +73,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(LOCATION_ONFIELD,LOCATION_ONFIELD)
 	e1:SetTarget(s.distg)
 	e1:SetLabel(ac)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -81,7 +81,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCondition(s.discon)
 	e2:SetOperation(s.disop)
 	e2:SetLabel(ac)
-	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 	--Reset the card hint at the end of the turn
 	local e3=Effect.CreateEffect(c)
@@ -108,11 +108,11 @@ end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local at=Duel.GetAttackTarget()
-	return (a:IsControler(tp) and a:IsSetCard(0x174))
-		or (at and at:IsControler(tp) and at:IsFaceup() and at:IsSetCard(0x174))
+	return (a:IsControler(tp) and a:IsSetCard(SET_EXOSISTER))
+		or (at and at:IsControler(tp) and at:IsFaceup() and at:IsSetCard(SET_EXOSISTER))
 end
 function s.desfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSpellTrap()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return s.desfilter(chkc) and chkc:IsLocation(LOCATION_ONFIELD) and chkc:IsControler(1-tp) end

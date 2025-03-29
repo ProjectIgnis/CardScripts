@@ -1,5 +1,5 @@
 --見習い魔嬢
---Apprentice Witchling
+--Wee Witch's Apprentice
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,4 +1,5 @@
 --髑髏顔・天道虫
+--Skull-Mark Ladybug
 local s,id=GetID()
 function s.initial_effect(c)
 	--recover

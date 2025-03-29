@@ -1,4 +1,5 @@
 --ハイドロプレッシャーカノン
+--Hydro Pressure Cannon
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,s.filter)

@@ -1,4 +1,5 @@
 --ダークファミリア
+--Spear Cretin
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip effect
@@ -21,7 +22,7 @@ function s.initial_effect(c)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsLocation(LOCATION_MZONE+LOCATION_GRAVE) then
+	if c:IsLocation(LOCATION_MZONE|LOCATION_GRAVE) then
 		c:RegisterFlagEffect(id,RESET_EVENT|(RESETS_STANDARD|RESET_OVERLAY)&~(RESET_LEAVE|RESET_TOGRAVE),0,1)
 	end
 end

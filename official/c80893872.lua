@@ -1,9 +1,9 @@
--- ロイヤル・ペンギンズ・ガーデン
--- Royal Penguins Garden
--- Scripted by Hatter
+--ロイヤル・ペンギンズ・ガーデン
+--Royal Penguins Garden
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	-- Reduce level then discard
+	--Reduce level then discard
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_LVCHANGE+CATEGORY_HANDES)
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -55,7 +55,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.ConfirmCards(1-tp,g)
 			Duel.ShuffleHand(tp)
 		end
-		-- Reduce level
+		--Reduce level
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)

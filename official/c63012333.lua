@@ -1,4 +1,5 @@
 --精気を吸う骨の塔
+--Soul-Absorbing Bone Tower
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot be target

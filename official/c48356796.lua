@@ -1,4 +1,5 @@
 --閃光の宝札
+--Mystical Cards of Light
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

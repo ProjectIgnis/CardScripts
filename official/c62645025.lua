@@ -1,4 +1,5 @@
 --幻影騎士団ウロング・マグネリング
+--The Phantom Knights of Wrong Magnetring
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -23,13 +24,13 @@ function s.initial_effect(c)
 	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x10db,0xdb}
+s.listed_series={SET_THE_PHANTOM_KNIGHTS,SET_PHANTOM_KNIGHTS}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0x10db,0x21,0,0,2,RACE_WARRIOR,ATTRIBUTE_DARK) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,SET_THE_PHANTOM_KNIGHTS,TYPE_MONSTER|TYPE_EFFECT,0,0,2,RACE_WARRIOR,ATTRIBUTE_DARK) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -38,7 +39,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e)
-		or not Duel.IsPlayerCanSpecialSummonMonster(tp,id,0x10db,0x21,0,0,2,RACE_WARRIOR,ATTRIBUTE_DARK) then return end
+		or not Duel.IsPlayerCanSpecialSummonMonster(tp,id,SET_THE_PHANTOM_KNIGHTS,TYPE_MONSTER|TYPE_EFFECT,0,0,2,RACE_WARRIOR,ATTRIBUTE_DARK) then return end
 	c:AddMonsterAttribute(TYPE_EFFECT)
 	Duel.SpecialSummonStep(c,1,tp,tp,true,false,POS_FACEUP_ATTACK)
 	c:AddMonsterAttributeComplete()
@@ -49,8 +50,8 @@ function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cfilter(c)
 	if c:IsFacedown() or not c:IsAbleToGraveAsCost() then return false end
-	return (c:IsSetCard(0x10db) and c:IsMonster())
-		or (c:IsSetCard(0xdb) and c:IsSpellTrap() and c:IsType(TYPE_CONTINUOUS))
+	return (c:IsSetCard(SET_THE_PHANTOM_KNIGHTS) and c:IsMonster())
+		or (c:IsSetCard(SET_PHANTOM_KNIGHTS) and c:IsSpellTrap() and c:IsType(TYPE_CONTINUOUS))
 end
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

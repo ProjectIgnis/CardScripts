@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e4:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
 	e4:SetTargetRange(LOCATION_MZONE,0)
 	e4:SetCondition(s.damcon)
-	e4:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x10b))
+	e4:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_TINDANGLE))
 	e4:SetValue(aux.ChangeBattleDamage(1,DOUBLE_DAMAGE))
 	c:RegisterEffect(e4)
 	--Add a copy of itself to the hand
@@ -50,25 +50,25 @@ function s.initial_effect(c)
 	e6:SetOperation(s.regop)
 	c:RegisterEffect(e6)
 end
-s.listed_series={0x10b}
+s.listed_series={SET_TINDANGLE}
 s.listed_names={id}
 function s.indtg(e,c)
-	return c:IsSetCard(0x10b) and c:GetSequence()<5
+	return c:IsSetCard(SET_TINDANGLE) and c:GetSequence()<5
 end
 function s.indval(e,re,rp)
 	return rp==1-e:GetHandlerPlayer()
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==1-tp and eg:GetFirst():IsSetCard(0x10b)
+	return ep==1-tp and eg:GetFirst():IsSetCard(SET_TINDANGLE)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 end
 function s.damcon(e)
 	return e:GetHandler():GetFlagEffect(id)==0
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x10b) and c:IsDiscardable()
+	return c:IsSetCard(SET_TINDANGLE) and c:IsDiscardable()
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost()

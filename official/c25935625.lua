@@ -1,4 +1,5 @@
 --闇竜星－ジョクト
+--Jiaotu, Darkness of the Yang Zing
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -26,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x9e}
+s.listed_series={SET_YANG_ZING}
 s.listed_names={id}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -34,7 +35,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 		and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousControler(tp)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x9e) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_YANG_ZING) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -53,18 +54,18 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==1
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x9e) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_YANG_ZING) and c:IsAbleToGraveAsCost()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,2,nil) end
 	Duel.DiscardHand(tp,s.cfilter,2,2,REASON_COST)
 end
 function s.spfilter1(c,e,tp)
-	return c:IsSetCard(0x9e) and c:GetAttack()==0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_YANG_ZING) and c:GetAttack()==0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_DECK,0,1,c,e,tp)
 end
 function s.spfilter2(c,e,tp)
-	return c:IsSetCard(0x9e) and c:IsDefenseBelow(0) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_YANG_ZING) and c:IsDefenseBelow(0) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
@@ -85,7 +86,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local tc=g1:GetFirst()
 		for tc in aux.Next(g1) do
 			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
-			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
+			tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1,fid)
 		end
 		Duel.SpecialSummonComplete()
 		g1:KeepAlive()

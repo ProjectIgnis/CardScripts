@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xef}
+s.listed_series={SET_DARKLORD}
 function s.target(target)
 	return function(e,tp,eg,ep,ev,re,r,rp,chk)
 		if chk==0 then
@@ -44,7 +44,7 @@ function s.extrafil(e,tp,mg1)
 end
 function s.costfilter(c,target,e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabelObject(c)
-	local res=c:IsSetCard(0xef) and c:IsMonster() and (c:IsLocation(LOCATION_HAND) or c:IsFaceup())
+	local res=c:IsSetCard(SET_DARKLORD) and c:IsMonster() and (c:IsLocation(LOCATION_HAND) or c:IsFaceup())
 				and c:IsAbleToGraveAsCost() and target(e,tp,eg,ep,ev,re,r,rp,0)
 	e:SetLabelObject(nil)
 	return res
@@ -53,12 +53,12 @@ function s.cost(target)
 	return function(e,tp,eg,ep,ev,re,r,rp,chk)
 		if chk==0 then
 			e:SetLabel(0)
-			local res=Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil,target,e,tp,eg,ep,ev,re,r,rp,chk)
+			local res=Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,nil,target,e,tp,eg,ep,ev,re,r,rp,chk)
 			if res then e:SetLabel(1) end
 			return res
 		end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil,target,e,tp,eg,ep,ev,re,r,rp,chk)
+		local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,1,nil,target,e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SendtoGrave(g,REASON_COST)
 		e:SetLabelObject(g:GetFirst())
 	end

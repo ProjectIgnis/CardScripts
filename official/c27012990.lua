@@ -48,7 +48,7 @@ function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 		e:SetLabelObject(g)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
+		e1:SetCode(EVENT_PHASE|PHASE_STANDBY)
 		if Duel.IsPhase(PHASE_STANDBY) then e1:SetLabel(Duel.GetTurnCount()) end
 		e1:SetLabelObject(g)
 		e1:SetCountLimit(1)

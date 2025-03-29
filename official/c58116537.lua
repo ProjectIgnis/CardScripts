@@ -36,9 +36,9 @@ function s.initial_effect(c)
 	e5:SetCondition(s.atkcon2)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x137}
+s.listed_series={SET_ANCIENT_WARRIORS}
 function s.nacon(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0x137),tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,SET_ANCIENT_WARRIORS),tp,LOCATION_MZONE,0,nil)
 	return #g>1 and g:GetClassCount(Card.GetAttribute)>1
 end
 function s.natg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -63,7 +63,7 @@ function s.naop(e,tp,eg,ep,ev,re,r,rp,chk)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_TRIGGER)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1,true)
 	end
 end
@@ -71,16 +71,16 @@ function s.atkcon1(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp
 end
 function s.atkcon2(e,tp,eg,ep,ev,re,r,rp)
-	return rp==tp and re:GetHandler():IsSetCard(0x137) and re:GetHandler():IsMonster()
+	return rp==tp and re:GetHandler():IsSetCard(SET_ANCIENT_WARRIORS) and re:GetHandler():IsMonster()
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x137),tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_ANCIENT_WARRIORS),tp,LOCATION_MZONE,0,1,nil) end
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0x137),tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,SET_ANCIENT_WARRIORS),tp,LOCATION_MZONE,0,nil)
 	for tc in aux.Next(g) do
-		tc:UpdateAttack(#g*300,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,c)
+		tc:UpdateAttack(#g*300,RESETS_STANDARD_PHASE_END,c)
 	end
 end

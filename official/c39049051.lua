@@ -1,5 +1,5 @@
 --歌氷麗月
---Wonders of Nature
+--Kahyoreigetsu
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={6205579}
-s.listed_series={0x46}
+s.listed_series={SET_FUSION}
 function s.spfilter(c,e,tp)
 	return c:IsLevelBelow(4) and c:IsRace(RACE_FAIRY|RACE_SPELLCASTER|RACE_WINGEDBEAST|RACE_BEASTWARRIOR) 
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -61,7 +61,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(s.eqlimit)
 		c:RegisterEffect(e1)
 	end
@@ -80,13 +80,13 @@ function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsPreviousLocation(LOCATION_SZONE) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)>0
 end
 function s.thfilter2(c)
-	return ((c:IsSetCard(0x46) and c:IsSpell()) or c:IsCode(6205579)) and c:IsAbleToHand()
+	return ((c:IsSetCard(SET_FUSION) and c:IsSpell()) or c:IsCode(6205579)) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter2,tp,LOCATION_DECK,0,1,nil) end

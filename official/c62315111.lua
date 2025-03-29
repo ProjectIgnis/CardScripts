@@ -21,7 +21,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
 	if bc and bc:GetCounter(COUNTER_A)>0 then
-		c:RegisterFlagEffect(id,RESET_PHASE+PHASE_DAMAGE,0,1)
+		c:RegisterFlagEffect(id,RESET_PHASE|PHASE_DAMAGE,0,1)
 	end
 end
 function s.atcon(e,tp,eg,ep,ev,re,r,rp)

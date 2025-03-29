@@ -1,9 +1,9 @@
--- 相剣瑞獣－純鈞
--- Swordsoul Auspice Chunjun
--- Scripted by Hatter
+--相剣瑞獣－純鈞
+--Swordsoul Auspice Chunjun
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Destroy itself and an opponent's monster that battles your Wyrm monster
+	--Destroy itself and an opponent's monster that battles your Wyrm monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
-	-- Special Summon itself from hand
+	--Special Summon itself from hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	-- Banish 1 card from the field or GY
+	--Banish 1 card from the field or GY
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_REMOVE)

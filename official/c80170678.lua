@@ -16,26 +16,26 @@ function s.initial_effect(c)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
 s.listed_names={CARD_NEOS,CARD_POLYMERIZATION}
-s.listed_series={0x3008,0x1f}
+s.listed_series={SET_ELEMENTAL_HERO,SET_NEO_SPACIAN}
 function s.counterfilter(c)
 	return c:IsType(TYPE_FUSION) or c:GetSummonLocation()~=LOCATION_EXTRA
 end
 function s.cfilter(c)
-	return c:IsMonster() and (c:IsSetCard(0x1f) or c:IsSetCard(0x3008)) and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and (c:IsSetCard(SET_NEO_SPACIAN) or c:IsSetCard(SET_ELEMENTAL_HERO)) and c:IsAbleToGraveAsCost()
 end
 function s.rescon(sg,e,tp,mg)
-	return sg:GetClassCount(Card.GetLocation)==2 and sg:IsExists(Card.IsSetCard,1,nil,0x1f) and sg:IsExists(Card.IsSetCard,1,nil,0x3008)
+	return sg:GetClassCount(Card.GetLocation)==2 and sg:IsExists(Card.IsSetCard,1,nil,SET_NEO_SPACIAN) and sg:IsExists(Card.IsSetCard,1,nil,SET_ELEMENTAL_HERO)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,sg,e,tp)
-		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,sg,e,tp)
+		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,sg,e,tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and (c:IsSetCard(0x1f) or (c:IsSetCard(0x3008) and c:IsLevelAbove(5)))
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and (c:IsSetCard(SET_NEO_SPACIAN) or (c:IsSetCard(SET_ELEMENTAL_HERO) and c:IsLevelAbove(5)))
 end
 function s.thfilter(c)
 	return c:IsCode(CARD_POLYMERIZATION) and c:IsAbleToHand()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local rg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil)
+	local rg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_HAND|LOCATION_DECK,0,nil)
 	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0
 		and aux.SelectUnselectGroup(rg,e,tp,2,2,s.rescon,0) end
 	local g=aux.SelectUnselectGroup(rg,e,tp,2,2,s.rescon,1,tp,HINTMSG_TOGRAVE)
@@ -47,7 +47,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
 	Duel.RegisterEffect(e1,tp)
@@ -63,7 +63,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK|LOCATION_GRAVE)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
@@ -76,11 +76,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(1000)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			sc:RegisterEffect(e1)
 		end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local tg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
+		local tg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil)
 		if #tg>0 then
 			Duel.SendtoHand(tg,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,tg)

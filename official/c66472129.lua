@@ -1,4 +1,4 @@
---Japanese name
+--ディプシーデビル
 --Dipsea Fiend
 --Scripted by Hatter
 local s,id=GetID()
@@ -50,7 +50,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
 			e1:SetValue(attr)
-			e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_PHASE|PHASE_END)
+			e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 			c:RegisterEffect(e1)
 			local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND|LOCATION_GRAVE,0,nil,e,tp,attr)
 			if c:IsAttribute(attr) and target_player==1-tp and Duel.GetLocationCount(tp,LOCATION_MZONE)>0

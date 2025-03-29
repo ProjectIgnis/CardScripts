@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e2:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e2:SetCondition(s.reccon)
 	e2:SetTarget(s.rectg)
 	e2:SetOperation(s.recop)
@@ -52,7 +52,7 @@ function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rec
 	if c:GetFlagEffect(id)==0 then
 		rec=s[tp+2][1]
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY,0,1,1)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_STANDBY,0,1,1)
 	else
 		rec=s[tp+2][c:GetFlagEffectLabel(id)+1]
 		c:SetFlagEffectLabel(id,c:GetFlagEffectLabel(id)+1)

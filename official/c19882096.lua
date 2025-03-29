@@ -1,9 +1,9 @@
--- スケアクロー・ベロネア
--- Scareclaw Belone
--- Scripted by Hatter
+--スケアクロー・ベロネア
+--Scareclaw Belone
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon procedure
+	--Special Summon procedure
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetValue(s.hspval)
 	c:RegisterEffect(e1)
-	-- Piercing damage
+	--Piercing damage
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_PIERCE)

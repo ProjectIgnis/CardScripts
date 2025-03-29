@@ -1,4 +1,5 @@
 --メタル化・魔法反射装甲
+--Metalmorph
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -35,7 +36,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_EQUIP)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(300)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UPDATE_DEFENSE)
@@ -46,7 +47,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetCode(EFFECT_EQUIP_LIMIT)
 		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e3:SetValue(1)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e3)
 		--atk up
 		local e4=Effect.CreateEffect(c)
@@ -54,12 +55,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e4:SetCode(EFFECT_UPDATE_ATTACK)
 		e4:SetCondition(s.atkcon)
 		e4:SetValue(s.atkval)
-		e4:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e4:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e4)
 	end
 end
 function s.atkcon(e)
-	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL
+	return Duel.IsPhase(PHASE_DAMAGE_CAL)
 		and Duel.GetAttacker()==e:GetHandler():GetEquipTarget() and Duel.GetAttackTarget()
 end
 function s.atkval(e,c)

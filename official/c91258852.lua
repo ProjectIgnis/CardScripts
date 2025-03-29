@@ -1,4 +1,5 @@
 --SPYRAL Master Plan
+--SPYRAL Master Plan
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -24,10 +25,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop2)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x20ee,0xee}
+s.listed_series={SET_SPYRAL_MISSION,SET_SPYRAL}
 s.listed_names={54631665}
 function s.thfilter1(c)
-	return c:IsSetCard(0x20ee) and c:IsAbleToHand()
+	return c:IsSetCard(SET_SPYRAL_MISSION) and c:IsAbleToHand()
 end
 function s.thtg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter1,tp,LOCATION_DECK,0,1,nil) end
@@ -49,7 +50,7 @@ function s.thfilter2(c,tp)
 		and Duel.IsExistingMatchingCard(s.thfilter3,tp,LOCATION_DECK,0,1,c)
 end
 function s.thfilter3(c)
-	return c:IsSetCard(0xee) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_SPYRAL) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter2,tp,LOCATION_DECK,0,1,nil,tp) end

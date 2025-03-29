@@ -1,4 +1,5 @@
 --奇跡の光臨
+--Miraculous Descent
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,4 +1,5 @@
 --グリード・グラード
+--Greed Grado
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -36,8 +37,8 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 				end
 		end
 	end
-	if p1 then Duel.RegisterFlagEffect(0,id,RESET_PHASE+PHASE_END,0,1) end
-	if p2 then Duel.RegisterFlagEffect(1,id,RESET_PHASE+PHASE_END,0,1) end
+	if p1 then Duel.RegisterFlagEffect(0,id,RESET_PHASE|PHASE_END,0,1) end
+	if p2 then Duel.RegisterFlagEffect(1,id,RESET_PHASE|PHASE_END,0,1) end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFlagEffect(tp,id)~=0

@@ -36,12 +36,12 @@ function s.initial_effect(c)
 	e4:SetValue(s.valcheck)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xf0}
+s.listed_series={SET_WINDWITCH}
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return e:GetHandler():IsSynchroSummoned()
 end
 function s.damfil(c)
-	return c:IsMonster() and c:IsSetCard(0xf0) and c:IsAttackAbove(1)
+	return c:IsMonster() and c:IsSetCard(SET_WINDWITCH) and c:IsAttackAbove(1)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.damfil(chkc) end
@@ -66,11 +66,11 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chkc then return chkc:IsOnField() end
 	if chk==0 then
-		local wwchk=c:IsSummonType(SUMMON_TYPE_SYNCHRO) and c:GetFlagEffect(id)+1 or 1
+		local wwchk=c:IsSynchroSummoned() and c:GetFlagEffect(id)+1 or 1
 		local ct=c:GetFlagEffect(id+1)
 		return ct<wwchk and Duel.IsExistingTarget(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 	end
-	c:RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	c:RegisterFlagEffect(id+1,RESETS_STANDARD_PHASE_END,0,1)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
@@ -84,6 +84,6 @@ end
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	if not g then return end
-	local ct=g:FilterCount(Card.IsSetCard,nil,0xf0)
+	local ct=g:FilterCount(Card.IsSetCard,nil,SET_WINDWITCH)
 	if ct==#g then e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD-RESET_TOFIELD,0,1) end
 end

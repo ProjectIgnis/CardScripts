@@ -23,9 +23,9 @@ function s.initial_effect(c)
 	e2:SetTarget(s.rmtg)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x122}
+s.listed_series={SET_VALKYRIE}
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return re and re:GetHandler():IsSetCard(0x122)
+	return re and re:GetHandler():IsSetCard(SET_VALKYRIE)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -36,7 +36,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTargetRange(0,LOCATION_MZONE)
 	e1:SetValue(-1000)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e1)
 end
 function s.rmtg(e,c)

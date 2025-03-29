@@ -1,4 +1,5 @@
 --連弾の魔術師
+--Rapid-Fire Magician
 local s,id=GetID()
 function s.initial_effect(c)
 	--damage

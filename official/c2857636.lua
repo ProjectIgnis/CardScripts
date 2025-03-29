@@ -31,7 +31,7 @@ function s.lcheck(g,lc)
 	return g:GetClassCount(Card.GetCode)==#g
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+	return e:GetHandler():IsLinkSummoned()
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
@@ -64,4 +64,3 @@ end
 function s.indtg(e,c)
 	return c:GetMutualLinkedGroupCount()>0
 end
-

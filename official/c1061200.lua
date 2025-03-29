@@ -1,8 +1,8 @@
+--Ｆ．Ａ．シティＧＰ
 --F.A. City Grand Prix
---Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_LEVEL)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x107))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_FA))
 	e2:SetValue(2)
 	e2:SetCondition(s.lvcon)
 	c:RegisterEffect(e2)
@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_FZONE)
 	e3:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e3:SetTargetRange(LOCATION_MZONE,0)
-	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x107))
+	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_FA))
 	e3:SetValue(aux.tgoval)
 	c:RegisterEffect(e3)
 	--to hand
@@ -39,18 +39,17 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x107}
+s.listed_series={SET_FA}
 s.listed_names={id}
 function s.lvcon(e)
-	local ph=Duel.GetCurrentPhase()
-	return ph==PHASE_MAIN1 or ph==PHASE_MAIN2 or (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE)
+	return Duel.IsMainPhase() or Duel.IsBattlePhase()
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsReason(REASON_EFFECT) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x107) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_FA) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

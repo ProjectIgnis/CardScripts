@@ -15,13 +15,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={CARD_NUMERON_NETWORK}
-s.listed_series={0x114b}
+s.listed_series={SET_NUMERON_GATE}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local fc=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
 	return fc and fc:IsFaceup() and fc:IsCode(CARD_NUMERON_NETWORK) and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x114b) and c:IsType(TYPE_XYZ) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_NUMERON_GATE) and c:IsType(TYPE_XYZ) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCountFromEx(tp,tp,nil,TYPE_XYZ)>0
@@ -44,7 +44,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local fid=c:GetFieldID()
 		for tc in aux.Next(sg) do
 			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
-			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,fid)
+			tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1,fid)
 		end
 		Duel.SpecialSummonComplete()
 		sg:KeepAlive()
@@ -52,7 +52,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e0:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e0:SetCode(EVENT_PHASE+PHASE_END)
 		e0:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-		e0:SetReset(RESET_PHASE+PHASE_END)
+		e0:SetReset(RESET_PHASE|PHASE_END)
 		e0:SetCountLimit(1)
 		e0:SetLabel(fid)
 		e0:SetLabelObject(sg)
@@ -67,7 +67,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.limittg)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetLabel(spc)
 	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()

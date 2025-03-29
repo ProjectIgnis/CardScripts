@@ -1,9 +1,9 @@
--- ライトニング・ストーム
--- Lightning Storm
--- Scripted by Hatter
+--ライトニング・ストーム
+--Lightning Storm
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Destroy
+	--Destroy
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)

@@ -1,9 +1,9 @@
--- 地葬星カイザ
--- Kaiza the Funeral Star
--- Scripted by Hatter
+--地葬星カイザ
+--Kaiza the Hidden Star
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon
+	--Special Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	-- Send to GY
+	--Send to GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOGRAVE)
@@ -48,12 +48,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local atk=g:GetFirst():GetBaseAttack()
 	if atk>0 then
 		local c=e:GetHandler()
-		-- Gain ATK
+		--Gain ATK
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(atk)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE-RESET_TOFIELD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE-RESET_TOFIELD)
 		c:RegisterEffect(e1)
 	end
 	g:DeleteGroup()
@@ -62,9 +62,9 @@ function s.tgcostfilter(c)
 	return c:IsRace(RACE_WARRIOR) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.tgcostfilter,tp,LOCATION_GRAVE+LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.tgcostfilter,tp,LOCATION_GRAVE|LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local sg=Duel.SelectMatchingCard(tp,s.tgcostfilter,tp,LOCATION_GRAVE+LOCATION_MZONE,0,1,1,nil)
+	local sg=Duel.SelectMatchingCard(tp,s.tgcostfilter,tp,LOCATION_GRAVE|LOCATION_MZONE,0,1,1,nil)
 	Duel.Remove(sg,POS_FACEUP,REASON_COST)
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)

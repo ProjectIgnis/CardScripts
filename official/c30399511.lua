@@ -1,4 +1,5 @@
 --ジェネクス・パワー・プランナー
+--Genex Power Planner
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -12,9 +13,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x2}
+s.listed_series={SET_GENEX}
 function s.filter(c)
-	return c:GetLevel()==3 and c:IsSetCard(0x2) and c:IsType(TYPE_EFFECT) and c:IsAbleToHand()
+	return c:GetLevel()==3 and c:IsSetCard(SET_GENEX) and c:IsType(TYPE_EFFECT) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

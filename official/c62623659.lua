@@ -1,7 +1,6 @@
 --ゼアル・コンストラクション
---ZEXAL Construction
+--Zexal Construction
 --Scripted by Larry126
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -14,13 +13,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x7e,0x107e,0x207e,0x95,0x15d}
-
+s.listed_series={SET_ZEXAL,SET_ZW,SET_ZS,SET_RANK_UP_MAGIC,SET_RANK_DOWN_MAGIC}
 function s.filter(c)
 	return c:IsAbleToDeck() and not c:IsPublic()
 end
 function s.thfilter(c)
-	return c:IsAbleToHand() and ((c:IsMonster() and (c:IsSetCard(0x107e) or c:IsSetCard(0x207e))) or (c:IsSpell() and (c:IsSetCard(0x7e) or c:IsSetCard(0x95) or c:IsSetCard(0x15d))) or c:IsTrap() and c:IsSetCard(0x7e))
+	return c:IsAbleToHand() and ((c:IsMonster() and (c:IsSetCard(SET_ZW) or c:IsSetCard(SET_ZS))) or (c:IsSpell() and (c:IsSetCard(SET_ZEXAL) or c:IsSetCard(SET_RANK_UP_MAGIC) or c:IsSetCard(SET_RANK_DOWN_MAGIC))) or c:IsTrap() and c:IsSetCard(SET_ZEXAL))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,e:GetHandler())

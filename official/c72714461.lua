@@ -1,4 +1,5 @@
 --慧眼の魔術師
+--Wisdom-Eye Magician
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -18,21 +19,21 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_HAND)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e3:SetCost(s.sccost)
+	e3:SetCost(Cost.SelfDiscard)
 	e3:SetTarget(s.sctg)
 	e3:SetOperation(s.scop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x98,0x9f}
+s.listed_series={SET_MAGICIAN,SET_PERFORMAPAL}
 s.listed_names={id}
 function s.cfilter(c)
-	return c:IsSetCard(0x98) or c:IsSetCard(0x9f)
+	return c:IsSetCard(SET_MAGICIAN) or c:IsSetCard(SET_PERFORMAPAL)
 end
 function s.pencon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_PZONE,0,1,e:GetHandler())
 end
 function s.penfilter(c)
-	return c:IsSetCard(0x98) and c:IsType(TYPE_PENDULUM) and not c:IsCode(id) and not c:IsForbidden()
+	return c:IsSetCard(SET_MAGICIAN) and c:IsType(TYPE_PENDULUM) and not c:IsCode(id) and not c:IsForbidden()
 end
 function s.pentg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.penfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -48,10 +49,6 @@ function s.penop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.MoveToField(tc,tp,tp,LOCATION_PZONE,POS_FACEUP,true)
 		end
 	end
-end
-function s.sccost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_DISCARD+REASON_COST)
 end
 function s.scfilter(c)
 	return c:GetLeftScale()~=c:GetOriginalLeftScale()
@@ -69,7 +66,7 @@ function s.scop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LSCALE)
 		e1:SetValue(tc:GetOriginalLeftScale())
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_CHANGE_RSCALE)

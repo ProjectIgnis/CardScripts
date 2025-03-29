@@ -1,7 +1,6 @@
 --ヴェンデット・コア
 --Vendread Core
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon itself from GY
@@ -25,8 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.mtop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x106}
-
+s.listed_series={SET_VENDREAD}
 function s.cfilter(c)
 	return c:IsRace(RACE_ZOMBIE) and c:IsAbleToRemoveAsCost()
 end
@@ -50,18 +48,18 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e1,true)
 	end
 end
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
 	return r==REASON_RITUAL and e:GetHandler():IsPreviousLocation(LOCATION_MZONE)
-		and eg:IsExists(Card.IsSetCard,1,nil,0x106)
+		and eg:IsExists(Card.IsSetCard,1,nil,SET_VENDREAD)
 end
 function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=eg:Filter(Card.IsSetCard,nil,0x106)
+	local g=eg:Filter(Card.IsSetCard,nil,SET_VENDREAD)
 	local rc=g:GetFirst()
 	if not rc then return end
 	--Cannot be targeted by opponent's card effects
@@ -71,15 +69,15 @@ function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(aux.tgoval)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	rc:RegisterEffect(e1,true)
 	if not rc:IsType(TYPE_EFFECT) then
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_ADD_TYPE)
 		e3:SetValue(TYPE_EFFECT)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 		rc:RegisterEffect(e3,true)
 	end
-	rc:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,3061)
+	rc:RegisterFlagEffect(0,RESET_EVENT|RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,3061)
 end

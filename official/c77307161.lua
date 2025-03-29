@@ -30,12 +30,12 @@ function s.initial_effect(c)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xfb}
+s.listed_series={SET_TRICKSTAR}
 function s.matfilter(c,lc,sumtype,tp)
-	return c:IsLevelBelow(2) and c:IsSetCard(0xfb,lc,sumtype,tp) 
+	return c:IsLevelBelow(2) and c:IsSetCard(SET_TRICKSTAR,lc,sumtype,tp) 
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+	return e:GetHandler():IsLinkSummoned()
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(1-tp,1) end
@@ -50,7 +50,7 @@ end
 function s.cfilter(c,tp,zone)
 	local seq=c:GetPreviousSequence()
 	if not c:IsPreviousControler(tp) then seq=seq+16 end
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsSetCard(0xfb) 
+	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsSetCard(SET_TRICKSTAR) 
 		and c:IsPreviousLocation(LOCATION_MZONE) and bit.extract(zone,seq)~=0
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
@@ -65,4 +65,3 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 	Duel.Damage(p,Duel.GetFieldGroupCount(p,LOCATION_HAND,0)*200,REASON_EFFECT)
 end
-

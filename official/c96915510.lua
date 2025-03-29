@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetValue(2000)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x117}
+s.listed_series={SET_IMPCANTATION}
 s.listed_names={86758915}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsMainPhase()
@@ -40,7 +40,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	c:RegisterFlagEffect(id,RESET_CHAIN,0,1)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x117) and c:IsLevelAbove(1) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_IMPCANTATION) and c:IsLevelAbove(1) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spcheck(sg,e,tp,mg)
 	return sg:GetSum(Card.GetLevel)==10
@@ -66,7 +66,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=sg:GetFirst()
 	for tc in aux.Next(sg) do
 		if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
-			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
+			tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1,fid)
 		end
 	end
 	Duel.SpecialSummonComplete()
@@ -99,9 +99,9 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=e:GetLabelObject()
 	local dg=sg:Filter(s.desfilter,nil,e:GetLabel())
 	if #dg>0 then
-		Duel.SendtoDeck(dg,nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(dg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 end
 function s.tg(e,c)
-	return c:IsSetCard(0x117) and not c:IsType(TYPE_RITUAL)
+	return c:IsSetCard(SET_IMPCANTATION) and not c:IsType(TYPE_RITUAL)
 end

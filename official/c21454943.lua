@@ -1,4 +1,5 @@
 --サイコ・コマンダー
+--Psychic Commander
 local s,id=GetID()
 function s.initial_effect(c)
 	--atkdown
@@ -47,7 +48,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	Duel.PayLPCost(tp,alp)
 	e:SetLabel(-alp)
-	e:GetHandler():RegisterFlagEffect(id,RESET_PHASE+PHASE_DAMAGE,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_PHASE|PHASE_DAMAGE,0,1)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tc=e:GetLabelObject()
@@ -62,7 +63,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	e1:SetValue(e:GetLabel())
 	tc:RegisterEffect(e1)
 	local e2=e1:Clone()

@@ -1,5 +1,5 @@
 --No.99 希望皇ホープドラグナー
---Number 99: Utopia Dragner
+--Number 99: Utopia Dragonar
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
@@ -40,7 +40,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
-s.listed_series={0x48}
+s.listed_series={SET_NUMBER}
 s.xyz_number=99
 function s.counterfilter(c)
 	return c:IsType(TYPE_XYZ) or c:GetSummonLocation()~=LOCATION_EXTRA
@@ -48,8 +48,8 @@ end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	if not Duel.GetAttackTarget() then
-		Duel.RegisterFlagEffect(ep,id,RESET_PHASE+PHASE_END,0,1)
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(ep,id,RESET_PHASE|PHASE_END,0,1)
+		tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 	end
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -65,7 +65,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	ge1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	ge1:SetTargetRange(1,0)
 	ge1:SetTarget(s.splimit)
-	ge1:SetReset(RESET_PHASE+PHASE_END)
+	ge1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(ge1,tp)
 	--lizard check
 	aux.addTempLizardCheck(c,tp,s.lizfilter)
@@ -77,7 +77,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	ge2:SetTargetRange(LOCATION_MZONE,0)
 	ge2:SetTarget(s.ftarget)
 	ge2:SetLabel(c:GetFieldID())
-	ge2:SetReset(RESET_PHASE+PHASE_END)
+	ge2:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(ge2,tp)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
@@ -90,7 +90,7 @@ function s.ftarget(e,c)
 	return e:GetLabel()~=c:GetFieldID()
 end
 function s.filter(c,e,tp,rp)
-	return c:IsSetCard(0x48) and c.xyz_number and c.xyz_number>=1 and c.xyz_number<=100
+	return c:IsSetCard(SET_NUMBER) and c.xyz_number and c.xyz_number>=1 and c.xyz_number<=100
 		and Duel.GetLocationCountFromEx(tp,rp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,true)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -119,7 +119,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(0)
 		tc:RegisterEffect(e1)
 	end

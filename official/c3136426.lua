@@ -1,4 +1,5 @@
 --レベル制限B地区
+--Level Limit - Area B
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

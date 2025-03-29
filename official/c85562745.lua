@@ -1,4 +1,5 @@
 --悪夢の拷問部屋
+--Dark Room of Nightmare
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

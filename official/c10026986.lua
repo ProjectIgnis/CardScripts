@@ -1,4 +1,5 @@
 --ワーム・キング
+--Worm King
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon with 1 tribute
@@ -15,9 +16,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x3e}
+s.listed_series={SET_WORM}
 function s.cfilter(c,tp)
-	return c:IsSetCard(0x3e) and c:IsRace(RACE_REPTILE) and (c:IsControler(tp) or c:IsFaceup())
+	return c:IsSetCard(SET_WORM) and c:IsRace(RACE_REPTILE) and (c:IsControler(tp) or c:IsFaceup())
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroup(tp,s.cfilter,1,nil,tp) end

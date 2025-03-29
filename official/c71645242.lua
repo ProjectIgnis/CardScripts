@@ -1,5 +1,6 @@
 --ブラック・ガーデン
 --Black Garden
+local SUMMONED_BY_BLACK_GARDEN=0x20
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -41,7 +42,7 @@ function s.initial_effect(c)
 end
 s.listed_names={id,TOKEN_ROSE}
 function s.cfilter(c,tp)
-	return c:IsControler(tp) and c:GetSummonType()~=SUMMON_TYPE_SPECIAL+0x20
+	return c:IsControler(tp) and c:GetSummonType()~=SUMMON_TYPE_SPECIAL+SUMMONED_BY_BLACK_GARDEN
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	local sf=0
@@ -81,20 +82,20 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(math.ceil(tc:GetAttack()/2))
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		if not tc:IsImmuneToEffect(e1) and math.ceil(preatk/2)==tc:GetAttack() then change=true end
 	end
 	if not change then return end
 	if bit.extract(ev,tp)~=0 and Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_ROSE,0x123,TYPES_TOKEN,800,800,2,RACE_PLANT,ATTRIBUTE_DARK,POS_FACEUP_ATTACK,1-tp) then
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_ROSE,SET_ROSE,TYPES_TOKEN,800,800,2,RACE_PLANT,ATTRIBUTE_DARK,POS_FACEUP_ATTACK,1-tp) then
 		local token=Duel.CreateToken(tp,TOKEN_ROSE)
-		Duel.SpecialSummonStep(token,0x20,tp,1-tp,false,false,POS_FACEUP_ATTACK)
+		Duel.SpecialSummonStep(token,SUMMONED_BY_BLACK_GARDEN,tp,1-tp,false,false,POS_FACEUP_ATTACK)
 	end
 	if bit.extract(ev,1-tp)~=0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(1-tp,TOKEN_ROSE,0x123,TYPES_TOKEN,800,800,2,RACE_PLANT,ATTRIBUTE_DARK,POS_FACEUP_ATTACK,tp) then
+		and Duel.IsPlayerCanSpecialSummonMonster(1-tp,TOKEN_ROSE,SET_ROSE,TYPES_TOKEN,800,800,2,RACE_PLANT,ATTRIBUTE_DARK,POS_FACEUP_ATTACK,tp) then
 		local token=Duel.CreateToken(1-tp,TOKEN_ROSE)
-		Duel.SpecialSummonStep(token,0x20,1-tp,tp,false,false,POS_FACEUP_ATTACK)
+		Duel.SpecialSummonStep(token,SUMMONED_BY_BLACK_GARDEN,1-tp,tp,false,false,POS_FACEUP_ATTACK)
 	end
 	Duel.SpecialSummonComplete()
 end
@@ -102,7 +103,7 @@ function s.mzfilter(c,tp)
 	return c:IsControler(tp) and c:GetSequence()<5
 end
 function s.filter2(c,atk,e,tp)
-	return c:GetAttack()==atk and c:IsCanBeSpecialSummoned(e,0x20,tp,false,false)
+	return c:GetAttack()==atk and c:IsCanBeSpecialSummoned(e,SUMMONED_BY_BLACK_GARDEN,tp,false,false)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter2(chkc,e:GetLabel(),e,tp) end
@@ -136,6 +137,6 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local atk=og:GetSum(Card.GetPreviousAttackOnField)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:GetAttack()==atk then
-		Duel.SpecialSummon(tc,0x20,tp,tp,false,false,POS_FACEUP)
+		Duel.SpecialSummon(tc,SUMMONED_BY_BLACK_GARDEN,tp,tp,false,false,POS_FACEUP)
 	end
 end

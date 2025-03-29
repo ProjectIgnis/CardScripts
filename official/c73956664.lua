@@ -1,5 +1,5 @@
 --ティアラメンツ・レイノハート
---Tearalaments Rainoheart
+--Tearlaments Reinoheart
 --scripted by Zefile
 local s,id=GetID()
 function s.initial_effect(c)
@@ -30,10 +30,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x182}
+s.listed_series={SET_TEARLAMENTS}
 s.listed_names={id}
 function s.tgfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x182) and c:IsAbleToGrave() and not c:IsCode(id) 
+	return c:IsMonster() and c:IsSetCard(SET_TEARLAMENTS) and c:IsAbleToGrave() and not c:IsCode(id) 
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -47,7 +47,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.disfilter(c)
-	return c:IsSetCard(0x182) and c:IsAbleToGrave()
+	return c:IsSetCard(SET_TEARLAMENTS) and c:IsAbleToGrave()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -67,7 +67,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e1,true)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)

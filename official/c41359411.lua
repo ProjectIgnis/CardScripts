@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_SZONE)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.dircon)
-	e1:SetCost(s.dircost)
+	e1:SetCost(Cost.PayLP(500))
 	e1:SetOperation(s.dirop)
 	c:RegisterEffect(e1)
 	--equip
@@ -28,13 +28,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.eqop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x107a}
+s.listed_series={SET_NOBLE_KNIGHT}
 function s.dircon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP()
-end
-function s.dircost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,500) end
-	Duel.PayLPCost(tp,500)
 end
 function s.dirop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -43,7 +39,7 @@ function s.dirop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_EQUIP)
 	e1:SetProperty(EFFECT_CANNOT_DISABLE)
 	e1:SetCode(EFFECT_DIRECT_ATTACK)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	c:RegisterEffect(e1)
 end
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
@@ -52,7 +48,7 @@ function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
 		and c:CheckUniqueOnField(tp)
 end
 function s.eqfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x107a) and c:IsRace(RACE_WARRIOR)
+	return c:IsFaceup() and c:IsSetCard(SET_NOBLE_KNIGHT) and c:IsRace(RACE_WARRIOR)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.eqfilter(chkc) end

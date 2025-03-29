@@ -1,4 +1,5 @@
 --終末の騎士
+--Armageddon Knight
 local s,id=GetID()
 function s.initial_effect(c)
 	--send to grave

@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_UPDATE_ATTACK)
 	e3:SetRange(LOCATION_FZONE)
 	e3:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x26))
+	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_MORPHTRONIC))
 	e3:SetValue(s.atkval)
 	c:RegisterEffect(e3)
 	--special summon
@@ -37,7 +37,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x26}
+s.listed_series={SET_MORPHTRONIC}
 s.counter_place_list={0x8}
 function s.atkval(e,c)
 	return e:GetHandler():GetCounter(0x8)*300
@@ -58,7 +58,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsReason(REASON_DESTROY) and (c:GetPreviousLocation()&LOCATION_ONFIELD)~=0
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x26) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_MORPHTRONIC) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end

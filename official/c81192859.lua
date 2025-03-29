@@ -30,12 +30,12 @@ function s.initial_effect(c)
 	e3:SetOperation(s.pop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x173}
+s.listed_series={SET_PUNK}
 --Pop on attack
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local a,at=Duel.GetAttacker(),Duel.GetAttackTarget()
 	if a:IsControler(1-tp) then a,at=at,a end
-	return a and at and a:IsSetCard(0x173) and a:IsFaceup() and at:IsControler(1-tp)
+	return a and at and a:IsSetCard(SET_PUNK) and a:IsFaceup() and at:IsControler(1-tp)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -62,8 +62,8 @@ function s.pop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x173))
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_PUNK))
 	e1:SetValue(1)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end

@@ -1,4 +1,5 @@
 --氷弾使いレイス
+--Reese the Ice Mistress
 local s,id=GetID()
 function s.initial_effect(c)
 	--indes

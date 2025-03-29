@@ -1,4 +1,5 @@
 --DD魔導賢者コペルニクス
+--D/D Savant Copernicus
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -35,23 +36,23 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xaf,0xae}
+s.listed_series={SET_DD,SET_DARK_CONTRACT}
 s.listed_names={id}
 function s.splimit(e,c,sump,sumtype,sumpos,targetp)
-	return not c:IsSetCard(0xaf) and (sumtype&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
+	return not c:IsSetCard(SET_DD) and (sumtype&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsChainNegatable(ev) and re:IsActiveType(TYPE_SPELL) and aux.damcon1(e,tp,eg,ep,ev,re,r,rp) and e:GetHandler():GetFlagEffect(id)==0
+	return Duel.IsChainNegatable(ev) and re:IsSpellEffect() and aux.damcon1(e,tp,eg,ep,ev,re,r,rp) and e:GetHandler():GetFlagEffect(id)==0
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.SelectEffectYesNo(tp,e:GetHandler()) then return end
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 	if not Duel.NegateEffect(ev) then return end
 	Duel.BreakEffect()
 	Duel.Destroy(e:GetHandler(),REASON_EFFECT)
 end
 function s.tgfilter(c)
-	return (c:IsSetCard(0xaf) or c:IsSetCard(0xae)) and not c:IsCode(id) and c:IsAbleToGrave()
+	return (c:IsSetCard(SET_DD) or c:IsSetCard(SET_DARK_CONTRACT)) and not c:IsCode(id) and c:IsAbleToGrave()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end

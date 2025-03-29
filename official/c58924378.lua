@@ -1,4 +1,5 @@
 --エレキャッスル
+--Wattcastle
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -14,15 +15,15 @@ function s.initial_effect(c)
 	e2:SetOperation(s.atkdn)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xe}
+s.listed_series={SET_WATT}
 function s.atkdn(e,tp,eg,ep,ev,re,r,rp,chk)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
-	if d and d:IsSetCard(0xe) then
+	if d and d:IsSetCard(SET_WATT) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(-1000)
 		a:RegisterEffect(e1)
 	end

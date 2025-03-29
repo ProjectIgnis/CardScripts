@@ -1,5 +1,5 @@
 --セリオンズ・スタンダップ
---Therions' Standup
+--Therion Stand Up!
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -26,14 +26,14 @@ function s.initial_effect(c)
 	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(function() return Duel.IsMainPhase() end)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.eqtg)
 	e2:SetOperation(s.eqop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x17b}
+s.listed_series={SET_THERION}
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x17b) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_THERION) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end
@@ -44,13 +44,13 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function s.eqfilter(c)
-	return c:IsSetCard(0x17b) and c:IsMonster() and not c:IsForbidden()
+	return c:IsSetCard(SET_THERION) and c:IsMonster() and not c:IsForbidden()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0
 		and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 then
-		local eg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.eqfilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,nil)
+		local eg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.eqfilter),tp,LOCATION_HAND|LOCATION_GRAVE,0,nil)
 		if #eg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
@@ -62,7 +62,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetCode(EFFECT_EQUIP_LIMIT)
 				e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 				e1:SetValue(s.eqlimit)
-				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+				e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 				e1:SetLabelObject(tc)
 				ec:RegisterEffect(e1)
 			end
@@ -71,7 +71,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	local f1=aux.FaceupFilter(Card.IsSetCard,0x17b)
+	local f1=aux.FaceupFilter(Card.IsSetCard,SET_THERION)
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
 	if e:GetHandler():IsLocation(LOCATION_HAND) then ft=ft-1 end
 	if chk==0 then return ft>0 and Duel.IsExistingTarget(f1,tp,LOCATION_MZONE,0,1,nil)
@@ -99,7 +99,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetValue(s.eqlimit)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetLabelObject(tc)
 		oc:RegisterEffect(e1)
 	end

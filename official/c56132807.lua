@@ -1,4 +1,5 @@
 --アップル・マジシャン・ガール
+--Apple Magician Girl
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -24,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x20a2}
+s.listed_series={SET_MAGICIAN_GIRL}
 function s.spfilter(c,e,tp)
 	return c:IsRace(RACE_SPELLCASTER) and c:IsLevelBelow(5) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -47,7 +48,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			e1:SetValue(math.ceil(a:GetAttack()/2))
 			a:RegisterEffect(e1)
 		end
@@ -57,7 +58,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return (r&REASON_EFFECT+REASON_BATTLE)~=0
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x20a2) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_MAGICIAN_GIRL) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end

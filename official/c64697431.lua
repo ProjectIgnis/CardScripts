@@ -1,5 +1,5 @@
 --局所的ハリケーン
---Localized Trunade
+--Hey, Trunade!
 --
 local s,id=GetID()
 function s.initial_effect(c)
@@ -25,4 +25,3 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler())
 	Duel.SendtoHand(sg,nil,REASON_EFFECT)
 end
-

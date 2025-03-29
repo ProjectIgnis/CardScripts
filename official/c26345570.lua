@@ -1,4 +1,5 @@
 --先史遺産－ピラミッド・アイ・タブレット
+--Chronomaly Pyramid Eye Tablet
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,8 +13,8 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x70))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_CHRONOMALY))
 	e2:SetValue(800)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x70}
+s.listed_series={SET_CHRONOMALY}

@@ -33,7 +33,7 @@ end
 s.listed_names={48115278}
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsTurnPlayer(tp) then
-		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,0)
+		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1,0)
 	end
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
@@ -43,7 +43,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ct=c:GetFlagEffectLabel(id)
 	if not ct then
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,0)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1,0)
 	else
 		c:SetFlagEffectLabel(id,ct+1)
 	end
@@ -79,7 +79,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CANNOT_ATTACK)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			token:RegisterEffect(e1,true)
 		end
 		Duel.SpecialSummonComplete()

@@ -1,4 +1,5 @@
 --グレイドル・スプリット
+--Graydle Split
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xd1}
+s.listed_series={SET_GRAYDLE}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
@@ -35,14 +36,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_EQUIP)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(500)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_EQUIP_LIMIT)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e2:SetValue(1)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e2)
 		local e3=Effect.CreateEffect(c)
 		e3:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON)
@@ -54,15 +55,15 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetCost(s.spcost)
 		e3:SetTarget(s.sptg)
 		e3:SetOperation(s.spop)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e3)
 	else
 		c:CancelToGrave(false)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetEquipTarget() and Duel.GetTurnPlayer()==tp
-		and (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)
+	return e:GetHandler():GetEquipTarget() and Duel.IsTurnPlayer(tp)
+		and (Duel.IsMainPhase())
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
@@ -70,11 +71,11 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.spfilter1(c,e,tp)
-	return c:IsSetCard(0xd1) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_GRAYDLE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetCode())
 end
 function s.spfilter2(c,e,tp,code)
-	return c:IsSetCard(0xd1) and not c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_GRAYDLE) and not c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
@@ -100,8 +101,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local tc2=g2:GetFirst()
 		Duel.SpecialSummonStep(tc1,0,tp,tp,false,false,POS_FACEUP)
 		Duel.SpecialSummonStep(tc2,0,tp,tp,false,false,POS_FACEUP)
-		tc1:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
-		tc2:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
+		tc1:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1,fid)
+		tc2:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1,fid)
 		Duel.SpecialSummonComplete()
 		g1:Merge(g2)
 		g1:KeepAlive()

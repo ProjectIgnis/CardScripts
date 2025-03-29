@@ -1,4 +1,5 @@
 --A・ジェネクス・ボルキャノン
+--Genex Ally Volcannon
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
@@ -14,9 +15,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x2}
+s.listed_series={SET_GENEX}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x2) and c:IsAttribute(ATTRIBUTE_FIRE) and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and c:IsSetCard(SET_GENEX) and c:IsAttribute(ATTRIBUTE_FIRE) and c:IsAbleToGraveAsCost()
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil) end

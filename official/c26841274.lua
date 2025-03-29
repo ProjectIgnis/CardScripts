@@ -1,14 +1,12 @@
 --Ｄ－フュージョン
 --D-Fusion
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Fusion summon 1 "Destiny HERO" fusion monster
 	--Using monsters you control as fusion material
-	c:RegisterEffect(Fusion.CreateSummonEff(c,nil,Fusion.OnFieldMat(aux.FilterBoolFunction(Card.IsSetCard,0xc008)),nil,nil,nil,s.stage2))
+	c:RegisterEffect(Fusion.CreateSummonEff(c,nil,Fusion.OnFieldMat(aux.FilterBoolFunction(Card.IsSetCard,SET_DESTINY_HERO)),nil,nil,nil,s.stage2))
 end
-s.listed_series={0xc008}
-
+s.listed_series={SET_DESTINY_HERO}
 function s.stage2(e,tc,tp,sg,chk)
 	if chk==0 then
 		--Cannot be destroyed by battle or card effect
@@ -18,7 +16,7 @@ function s.stage2(e,tc,tp,sg,chk)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)

@@ -1,4 +1,5 @@
 --ワンチャン！？
+--Where Arf Thou?
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -35,7 +36,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EVENT_SUMMON_SUCCESS)
 		e1:SetOperation(s.regop)
 		e1:SetLabel(g:GetFirst():GetCode())
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -43,7 +44,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCountLimit(1)
 		e2:SetCondition(s.damcon)
 		e2:SetOperation(s.damop)
-		e2:SetReset(RESET_PHASE+PHASE_END)
+		e2:SetReset(RESET_PHASE|PHASE_END)
 		e2:SetLabelObject(e1)
 		Duel.RegisterEffect(e2,tp)
 	end

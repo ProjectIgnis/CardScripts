@@ -1,4 +1,5 @@
 --王虎ワンフー
+--King Tiger Wanghu
 local s,id = GetID()
 function s.initial_effect(c)
 	--destroy

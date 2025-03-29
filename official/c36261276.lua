@@ -1,4 +1,5 @@
 --亜空間物質転送装置
+--Interdimensional Matter Transporter
 local s,id=GetID()
 function s.initial_effect(c)
 	--remove
@@ -27,7 +28,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		e1:SetLabelObject(tc)
 		e1:SetCountLimit(1)
 		e1:SetOperation(s.retop)

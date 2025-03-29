@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
 	e4:SetCondition(s.spcon2)
-	e4:SetCost(s.spcost2)
+	e4:SetCost(Cost.SelfTribute)
 	e4:SetTarget(s.sptg2)
 	e4:SetOperation(s.spop2)
 	c:RegisterEffect(e4)
@@ -42,7 +42,7 @@ function s.matfil(c,tp)
 	return c:IsAbleToRemoveAsCost() and (c:IsLocation(LOCATION_SZONE) or aux.SpElimFilter(c,false,true))
 end
 function s.contactfil(tp)
-	return Duel.GetMatchingGroup(s.matfil,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil,tp)
+	return Duel.GetMatchingGroup(s.matfil,tp,LOCATION_ONFIELD|LOCATION_GRAVE,0,nil,tp)
 end
 function s.contactop(g)
 	Duel.Remove(g,POS_FACEUP,REASON_COST+REASON_MATERIAL)
@@ -65,11 +65,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
-end
-function s.spcost2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.spfilter(c,e,tp)
 	return c:IsFaceup() and c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_LIGHT)

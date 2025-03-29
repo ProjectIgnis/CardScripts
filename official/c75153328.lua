@@ -1,5 +1,5 @@
 --強制切断
---Creature Disconnection
+--Packet Swap
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)

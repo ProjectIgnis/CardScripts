@@ -62,9 +62,9 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetLabelObject(tc)
 	e1:SetCondition(s.retcon)
 	e1:SetOperation(s.retop)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-	tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,fid)
+	tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1,fid)
 end
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
@@ -98,10 +98,9 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=tg:Filter(Card.IsRelateToEffect,nil,e)
 	if #sg>0 then
 		if Duel.SelectOption(tp,aux.Stringid(id,2),aux.Stringid(id,3))==0 then
-			Duel.SendtoDeck(sg,nil,0,REASON_EFFECT)
+			Duel.SendtoDeck(sg,nil,SEQ_DECKTOP,REASON_EFFECT)
 		else
-			Duel.SendtoDeck(sg,nil,1,REASON_EFFECT)
+			Duel.SendtoDeck(sg,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 		end
 	end
 end
-

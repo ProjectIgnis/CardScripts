@@ -1,5 +1,5 @@
 --霊塞術師 チョウサイ
---Chosai the Ghost Blocker
+--Chow Sai the Ghost Stopper
 --scripted by Xylen5967
 local s,id=GetID()
 function s.initial_effect(c)
@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.actlimit(e,re,tp)
-	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and re:GetHandler():IsLocation(LOCATION_GRAVE)
+	return re:IsSpellTrapEffect() and re:GetHandler():IsLocation(LOCATION_GRAVE)
 end
 function s.remcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)

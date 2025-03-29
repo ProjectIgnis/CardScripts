@@ -1,4 +1,5 @@
 --氷結のフィッツジェラルド
+--Frozen Fitzgerald
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon

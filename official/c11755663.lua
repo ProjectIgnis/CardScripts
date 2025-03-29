@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.ssop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x11a}
+s.listed_series={SET_DINOWRESTLER}
 function s.bpcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local b=a:GetBattleTarget()
@@ -34,14 +34,14 @@ function s.bpcon(e,tp,eg,ep,ev,re,r,rp)
 	if a and b then
 		local dif=b:GetAttack()-a:GetAttack()
 		return a:GetControler()~=b:GetControler() and a~=e:GetHandler()
-		and a:IsSetCard(0x11a) and a:IsRelateToBattle()
+		and a:IsSetCard(SET_DINOWRESTLER) and a:IsRelateToBattle()
 		and Duel.GetAttackTarget()~=nil and dif>=0
 	else return false end
 end
 function s.bpcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 end
 function s.bpop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -53,7 +53,7 @@ function s.bpop(e,tp,eg,ep,ev,re,r,rp,chk)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE)
 		a:RegisterEffect(e1)
 	end
 	local e2=Effect.CreateEffect(c)
@@ -61,12 +61,12 @@ function s.bpop(e,tp,eg,ep,ev,re,r,rp,chk)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e2:SetCode(EVENT_DAMAGE_STEP_END)
 	e2:SetOperation(s.skop)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e2:SetReset(RESETS_STANDARD_PHASE_END)
 	Duel.RegisterEffect(e2,Duel.GetTurnPlayer())
 end
 function s.skop(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetTurnPlayer()
-	Duel.SkipPhase(p,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
+	Duel.SkipPhase(p,PHASE_BATTLE,RESET_PHASE|PHASE_BATTLE_STEP,1)
 end
 function s.sscon(e,c)
 	return Duel.GetLocationCount(e:GetHandler():GetControler(),LOCATION_MZONE)>0 

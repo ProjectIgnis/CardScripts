@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	--ClockLizard check
 	aux.addContinuousLizardCheck(c,LOCATION_SZONE,s.lizfilter)
 end
-s.listed_series={0x9e}
+s.listed_series={SET_YANG_ZING}
 function s.cfilter(c,tp)
 	return c:IsReason(REASON_BATTLE+REASON_EFFECT)
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
@@ -43,7 +43,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x9e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_YANG_ZING) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

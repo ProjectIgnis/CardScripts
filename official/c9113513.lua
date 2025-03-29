@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
-	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,0x9b),Fusion.InHandMat,s.fextra,nil,nil,s.stage2,2,nil,nil,nil,nil,nil,nil,s.extratg)
+	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,SET_MELODIOUS),Fusion.InHandMat,s.fextra,nil,nil,s.stage2,2,nil,nil,nil,nil,nil,nil,s.extratg)
 	e1:SetCondition(s.condition)
 	c:RegisterEffect(e1)
 end
@@ -20,7 +20,7 @@ function s.extratg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.stage2(e,tc,tp,mg,chk)
 	if chk==0 then
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 	end
 	if chk==1 then
 		local e1=Effect.CreateEffect(e:GetHandler())
@@ -31,7 +31,7 @@ function s.stage2(e,tc,tp,mg,chk)
 		e1:SetLabelObject(tc)
 		e1:SetCondition(s.descon)
 		e1:SetOperation(s.desop)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 	end
 end

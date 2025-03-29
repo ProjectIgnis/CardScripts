@@ -1,4 +1,5 @@
 --機皇兵スキエル・アイン
+--Meklord Army of Skiel
 local s,id=GetID()
 function s.initial_effect(c)
 	--atkup
@@ -20,9 +21,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x13,0x6013}
+s.listed_series={SET_MEKLORD,SET_MEKLORD_ARMY}
 function s.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x13)
+	return c:IsFaceup() and c:IsSetCard(SET_MEKLORD)
 end
 function s.val(e,c)
 	return Duel.GetMatchingGroupCount(s.atkfilter,0,LOCATION_MZONE,LOCATION_MZONE,c)*200
@@ -31,7 +32,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE) and e:GetHandler():IsReason(REASON_BATTLE)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x6013) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_MEKLORD_ARMY) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

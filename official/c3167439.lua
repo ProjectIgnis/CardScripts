@@ -1,9 +1,9 @@
--- 暗黒界の懲罰
--- Dark World Punishment
--- Scripted by Hatter
+--暗黒界の懲罰
+--Dark World Punishment
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Negate Normal or Special Summon
+	--Negate Normal or Special Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DISABLE_SUMMON+CATEGORY_DESTROY+CATEGORY_HANDES)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON)
 	c:RegisterEffect(e2)
-	-- Replace destruction
+	--Replace destruction
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EFFECT_DESTROY_REPLACE)
@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.repop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x6}
+s.listed_series={SET_DARK_WORLD}
 function s.tgfilter(c)
 	return c:IsRace(RACE_FIEND) and c:IsDiscardable(REASON_EFFECT)
 end
@@ -49,7 +49,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.repfilter(c,tp)
-	return c:IsLocation(LOCATION_MZONE) and c:IsSetCard(0x6) and c:IsControler(tp) and not c:IsReason(REASON_REPLACE)
+	return c:IsLocation(LOCATION_MZONE) and c:IsSetCard(SET_DARK_WORLD) and c:IsControler(tp) and not c:IsReason(REASON_REPLACE)
 		and (c:IsReason(REASON_BATTLE) or (c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp))
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)

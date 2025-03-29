@@ -1,4 +1,5 @@
 --虚無魔人
+--Vanity's Fiend
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot special summon

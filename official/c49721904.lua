@@ -1,4 +1,5 @@
 --真六武衆－キザン
+--Legendary Six Samurai - Kizan
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -22,9 +23,9 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x3d}
+s.listed_series={SET_SIX_SAMURAI}
 function s.spfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x3d) and c:GetCode()~=id
+	return c:IsFaceup() and c:IsSetCard(SET_SIX_SAMURAI) and c:GetCode()~=id
 end
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -32,7 +33,7 @@ function s.spcon(e,c)
 		Duel.IsExistingMatchingCard(s.spfilter,c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function s.vfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x3d)
+	return c:IsFaceup() and c:IsSetCard(SET_SIX_SAMURAI)
 end
 function s.valcon(e)
 	local c=e:GetHandler()

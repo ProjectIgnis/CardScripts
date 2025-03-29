@@ -31,11 +31,10 @@ function s.initial_effect(c)
 	e3:SetValue(s.xyzlimit)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x8e}
+s.listed_series={SET_VAMPIRE}
 s.listed_names={id}
-
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x8e) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(SET_VAMPIRE) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end

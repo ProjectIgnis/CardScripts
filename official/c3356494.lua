@@ -33,16 +33,16 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x55,0x7b}
+s.listed_series={SET_PHOTON,SET_GALAXY}
 s.listed_names={CARD_GALAXYEYES_P_DRAGON}
 function s.lcheck(g,lc,sumtype,tp)
 	return g:IsExists(Card.IsAttackAbove,1,nil,2000)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+	return e:GetHandler():IsLinkSummoned()
 end
 function s.thfilter(c)
-	return c:IsMonster() and (c:IsSetCard(0x55) or c:IsSetCard(0x7b)) and c:IsAbleToHand()
+	return c:IsMonster() and (c:IsSetCard(SET_PHOTON) or c:IsSetCard(SET_GALAXY)) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end
@@ -58,13 +58,13 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and Duel.GetCurrentPhase()&PHASE_MAIN1+PHASE_MAIN2~=0
+	return Duel.IsTurnPlayer(1-tp) and Duel.GetCurrentPhase()&PHASE_MAIN1|PHASE_MAIN2~=0
 end
 function s.descfilter(c)
-	return c:IsDiscardable() and (c:IsSetCard(0x55) or c:IsSetCard(0x7b))
+	return c:IsDiscardable() and (c:IsSetCard(SET_PHOTON) or c:IsSetCard(SET_GALAXY))
 end
 function s.rescon(sg,e,tp,mg)
-	return sg:IsExists(Card.IsSetCard,1,nil,0x55) and sg:IsExists(Card.IsSetCard,1,nil,0x7b)
+	return sg:IsExists(Card.IsSetCard,1,nil,SET_PHOTON) and sg:IsExists(Card.IsSetCard,1,nil,SET_GALAXY)
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.descfilter,tp,LOCATION_HAND,0,nil)
@@ -73,7 +73,7 @@ function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(sg,REASON_COST+REASON_DISCARD)
 end
 function s.filter(c)
-	return c:IsSummonType(SUMMON_TYPE_SPECIAL)
+	return c:IsSpecialSummoned()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.filter(chkc) end

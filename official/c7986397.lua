@@ -3,17 +3,17 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
-	local e1=Ritual.CreateProc({handler=c,lvtype=RITPROC_EQUAL,filter=aux.FilterBoolFunction(Card.IsSetCard,0x106),extrafil=s.extragroup,
+	local e1=Ritual.CreateProc({handler=c,lvtype=RITPROC_EQUAL,filter=aux.FilterBoolFunction(Card.IsSetCard,SET_VENDREAD),extrafil=s.extragroup,
 								extraop=s.extraop,stage2=s.stage2,location=LOCATION_HAND|LOCATION_GRAVE,forcedselection=s.ritcheck,extratg=s.extratg})
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x106}
+s.listed_series={SET_VENDREAD}
 function s.extragroup(e,tp,eg,ep,ev,re,r,rp,chk)
 	return Duel.GetMatchingGroup(s.matfilter1,tp,LOCATION_DECK,0,nil)
 end
 function s.matfilter1(c)
-	return c:IsSetCard(0x106) and c:IsAbleToGrave() and c:IsLevelAbove(1)
+	return c:IsSetCard(SET_VENDREAD) and c:IsAbleToGrave() and c:IsLevelAbove(1)
 end
 function s.extraop(mat,e,tp,eg,ep,ev,re,r,rp,tc)
 	local mat2=mat:Filter(Card.IsLocation,nil,LOCATION_DECK)
@@ -26,7 +26,7 @@ function s.extratg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
 function s.stage2(mat,e,tp,eg,ep,ev,re,r,rp,tc)
-	tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,0))
+	tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,0))
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_PHASE+PHASE_END)
@@ -34,7 +34,7 @@ function s.stage2(mat,e,tp,eg,ep,ev,re,r,rp,tc)
 	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e1:SetLabel(Duel.GetTurnCount())
 	e1:SetLabelObject(tc)
-	e1:SetReset(RESET_PHASE+PHASE_END,2)
+	e1:SetReset(RESET_PHASE|PHASE_END,2)
 	e1:SetCondition(s.descon)
 	e1:SetOperation(s.desop)
 	Duel.RegisterEffect(e1,tp)

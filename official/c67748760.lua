@@ -24,9 +24,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x102}
+s.listed_series={SET_ROKKET}
 function s.spfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x102)
+	return c:IsFaceup() and c:IsSetCard(SET_ROKKET)
 end
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -35,7 +35,7 @@ function s.spcon(e,c)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x102) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_ROKKET) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

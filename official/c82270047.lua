@@ -1,4 +1,5 @@
 --Kozmo Lightsword
+--Kozmo Lightsword
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,s.filter)
@@ -31,24 +32,20 @@ function s.initial_effect(c)
 	e8:SetProperty(EFFECT_FLAG_DELAY)
 	e8:SetCountLimit(1,id)
 	e8:SetCondition(s.thcon)
-	e8:SetCost(s.thcost)
+	e8:SetCost(Cost.PayLP(800))
 	e8:SetTarget(s.thtg)
 	e8:SetOperation(s.thop)
 	c:RegisterEffect(e8)
 end
-s.listed_series={0xd2}
+s.listed_series={SET_KOZMO}
 function s.filter(c)
-	return c:IsSetCard(0xd2) and c:IsRace(RACE_PSYCHIC)
+	return c:IsSetCard(SET_KOZMO) and c:IsRace(RACE_PSYCHIC)
 end
 function s.dircon(e)
 	return e:GetHandler():GetEquipTarget():GetAttackAnnouncedCount()>0
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
-end
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,800) end
-	Duel.PayLPCost(tp,800)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToHand() end

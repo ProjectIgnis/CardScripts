@@ -1,5 +1,5 @@
 --邪王トラカレル
---Trakarele, the Evil King
+--Tlakalel, His Malevolent Majesty
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -28,7 +28,7 @@ function s.check(atk)
 			end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE)
+	return e:GetHandler():IsTributeSummoned()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsAttackBelow,e:GetLabel()),tp,0,LOCATION_MZONE,1,nil) end

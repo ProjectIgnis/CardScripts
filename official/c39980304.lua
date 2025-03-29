@@ -19,7 +19,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetCode(EFFECT_CANNOT_ATTACK)
 	e1:SetProperty(EFFECT_FLAG_OATH+EFFECT_FLAG_IGNORE_IMMUNE)
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -32,7 +32,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CHAIN_MATERIAL)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetTarget(s.chain_target)
 	e1:SetOperation(s.chain_operation)
 	e1:SetValue(aux.TRUE)
@@ -43,10 +43,10 @@ function s.filter(c,e)
 end
 function s.chain_target(e,te,tp,value)
 	if not value or value&SUMMON_TYPE_FUSION==0 then return Group.CreateGroup() end
-	if Duel.IsPlayerAffectedByEffect(tp,69832741) then
-		return Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE+LOCATION_HAND+LOCATION_DECK,0,nil,te)
+	if Duel.IsPlayerAffectedByEffect(tp,CARD_SPIRIT_ELIMINATION) then
+		return Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE|LOCATION_HAND|LOCATION_DECK,0,nil,te)
 	else
-		return Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE+LOCATION_GRAVE+LOCATION_HAND+LOCATION_DECK,0,nil,te)
+		return Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE|LOCATION_GRAVE|LOCATION_HAND|LOCATION_DECK,0,nil,te)
 	end
 end
 function s.chain_operation(e,te,tp,tc,mat,sumtype,sg,sumpos)
@@ -56,10 +56,10 @@ function s.chain_operation(e,te,tp,tc,mat,sumtype,sg,sumpos)
 	Duel.BreakEffect()
 	if sg then
 		sg:AddCard(tc)
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-(RESET_TOFIELD+RESET_TURN_SET),0,1)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD-(RESET_TOFIELD|RESET_TURN_SET),0,1)
 	else
 		Duel.SpecialSummonStep(tc,sumtype,tp,tp,false,false,sumpos)
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET,0,1)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET,0,1)
 	end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

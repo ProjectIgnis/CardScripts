@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,s.matfilter,aux.FilterBoolFunctionEx(Card.IsSetCard,0x11a))
+	Fusion.AddProcMix(c,true,true,s.matfilter,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_DINOWRESTLER))
 	--actlimit upon attacking
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -46,10 +46,10 @@ function s.initial_effect(c)
 	e5:SetOperation(s.desop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x11a}
-s.material_setcode={0x11a}
+s.listed_series={SET_DINOWRESTLER}
+s.material_setcode={SET_DINOWRESTLER}
 function s.matfilter(c,fc,sumtype,tp)
-	return c:IsType(TYPE_LINK,fc,sumtype,tp) and c:IsSetCard(0x11a,fc,sumtype,tp)
+	return c:IsType(TYPE_LINK,fc,sumtype,tp) and c:IsSetCard(SET_DINOWRESTLER,fc,sumtype,tp)
 end
 function s.aclimit(e,re,tp)
 	return re:IsHasType(EFFECT_TYPE_ACTIVATE)
@@ -70,7 +70,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(500)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e1)
 end
 function s.filter(c)
@@ -91,4 +91,3 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(g,REASON_EFFECT)
 	end
 end
-

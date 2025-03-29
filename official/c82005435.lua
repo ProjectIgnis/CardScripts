@@ -1,4 +1,5 @@
 --女忍者ヤエ
+--Lady Ninja Yae
 local s,id=GetID()
 function s.initial_effect(c)
 	--to hand

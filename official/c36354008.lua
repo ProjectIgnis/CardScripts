@@ -1,4 +1,5 @@
 --ギルフォード・ザ・ライトニング
+--Gilford the Lightning
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon with 3 tribute

@@ -1,4 +1,5 @@
 --暗黒界の狂王 ブロン
+--Brron, Mad King of Dark World
 local s,id=GetID()
 function s.initial_effect(c)
 	--discard

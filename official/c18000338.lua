@@ -1,5 +1,5 @@
 --Re:EX
---Scripted by Eerie Code
+--Re: EX
 local s,id=GetID()
 function s.initial_effect(c)
 	--increase atk/def

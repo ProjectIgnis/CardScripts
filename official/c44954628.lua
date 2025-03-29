@@ -1,4 +1,5 @@
 --巨大戦艦 テトラン
+--B.E.S. Tetran
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x1f)
@@ -84,7 +85,7 @@ function s.descost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveCounter(tp,0x1f,1,REASON_COST)
 end
 function s.filter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSpellTrap()
 end
 function s.destg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and s.filter(chkc) end

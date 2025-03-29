@@ -1,5 +1,5 @@
 --白き龍の威光
---Majesty with Dragons of White
+--Majesty of the White Dragons
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

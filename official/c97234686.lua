@@ -1,4 +1,5 @@
 --グラディアル・チェンジ
+--Gladiator Lash
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,9 +12,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x19}
+s.listed_series={SET_GLADIATOR}
 function s.filter(c,tp)
-	return c:IsFaceup() and c:IsControler(tp) and c:IsSetCard(0x19)
+	return c:IsFaceup() and c:IsControler(tp) and c:IsSetCard(SET_GLADIATOR)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.filter,1,nil,tp)

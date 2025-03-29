@@ -1,4 +1,5 @@
 --善悪の彼岸
+--Good & Evil in the Burning Abyss
 local s,id=GetID()
 function s.initial_effect(c)
 	Ritual.AddProcGreaterCode(c,6,nil,35330871)
@@ -14,9 +15,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xb1}
+s.listed_series={SET_BURNING_ABYSS}
 function s.cfilter(c)
-	return c:IsSetCard(0xb1) and c:IsMonster() and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_BURNING_ABYSS) and c:IsMonster() and c:IsAbleToGraveAsCost()
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost()
@@ -25,7 +26,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST,nil)
 end
 function s.filter(c)
-	return c:IsSetCard(0xb1) and c:IsAbleToHand()
+	return c:IsSetCard(SET_BURNING_ABYSS) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

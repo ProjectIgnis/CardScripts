@@ -109,7 +109,7 @@ function s.plop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.pencon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp) and c:IsSummonType(SUMMON_TYPE_SPECIAL)
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp) and c:IsSpecialSummoned()
 		and c:IsReason(REASON_EFFECT) and c:IsReasonPlayer(1-tp)
 end
 function s.pentg(e,tp,eg,ep,ev,re,r,rp,chk)

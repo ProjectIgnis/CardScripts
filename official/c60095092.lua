@@ -1,5 +1,5 @@
 --ＶＶ－ソロアクティベート
---Vaylantz Vakening - Solo Activation
+--Vaylantz Wakening - Solo Activation
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -20,14 +20,14 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(function() return Duel.GetFieldGroupCount(0,LOCATION_FZONE,LOCATION_FZONE)>0 end)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.mmvtg)
 	e2:SetOperation(s.mmvop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x17e}
+s.listed_series={SET_VAYLANTZ}
 function s.pzfilter(c)
-	return c:IsSetCard(0x17e) and c:IsType(TYPE_PENDULUM) and not c:IsForbidden()
+	return c:IsSetCard(SET_VAYLANTZ) and c:IsType(TYPE_PENDULUM) and not c:IsForbidden()
 end
 function s.pztg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.pzfilter,tp,LOCATION_DECK,0,1,nil)
@@ -42,7 +42,7 @@ function s.pzop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.mmvfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x17e) and c:CheckAdjacent()
+	return c:IsFaceup() and c:IsSetCard(SET_VAYLANTZ) and c:CheckAdjacent()
 end
 function s.mmvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.mmvfilter(chkc) end

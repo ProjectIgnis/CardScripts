@@ -1,4 +1,5 @@
 --星守る結界
+--Hexatellarknight
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -28,20 +29,20 @@ function s.initial_effect(c)
 	e4:SetOperation(s.negop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x9c}
+s.listed_series={SET_TELLARKNIGHT}
 function s.atktg(e,c)
-	return c:IsType(TYPE_XYZ) and c:IsSetCard(0x9c)
+	return c:IsType(TYPE_XYZ) and c:IsSetCard(SET_TELLARKNIGHT)
 end
 function s.atkval(e,c)
 	return c:GetOverlayCount()*200
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return tc:IsFaceup() and tc:IsType(TYPE_XYZ) and tc:IsSetCard(0x9c)
+	return tc:IsFaceup() and tc:IsType(TYPE_XYZ) and tc:IsSetCard(SET_TELLARKNIGHT)
 		and tc:IsControler(tp) and tc:IsLocation(LOCATION_MZONE)
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x9c) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_TELLARKNIGHT) and c:IsAbleToGraveAsCost()
 end
 function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end

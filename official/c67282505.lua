@@ -1,5 +1,5 @@
 --蟲の忍者－蜜
---Insect Ninja Mitsu
+--Mitsu the Insect Ninja
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -28,10 +28,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.negop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x2b}
+s.listed_series={SET_NINJA}
 s.listed_names={id}
 function s.cfilter(c)
-	return (c:IsFaceup() and c:IsSetCard(0x2b)) or (c:IsPosition(POS_FACEDOWN_DEFENSE) and c:IsLocation(LOCATION_MZONE))
+	return (c:IsFaceup() and c:IsSetCard(SET_NINJA)) or (c:IsPosition(POS_FACEDOWN_DEFENSE) and c:IsLocation(LOCATION_MZONE))
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
@@ -48,7 +48,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==1-tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainDisablable(ev)
+	return ep==1-tp and re:IsMonsterEffect() and Duel.IsChainDisablable(ev)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsPosition(POS_FACEDOWN_DEFENSE) end
@@ -57,7 +57,7 @@ function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
 	local tc=Duel.SelectTarget(tp,Card.IsPosition,tp,LOCATION_MZONE,0,1,1,nil,POS_FACEDOWN_DEFENSE):GetFirst()
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,Group.FromCards(c,tc),1,tp,0)
-	if tc:IsSetCard(0x2b) and not tc:IsCode(id) then
+	if tc:IsSetCard(SET_NINJA) and not tc:IsCode(id) then
 		Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
 	end
 end
@@ -66,7 +66,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFacedown() and Duel.ChangePosition(tc,POS_FACEUP_DEFENSE)>0
 		and c:IsRelateToEffect(e) and c:IsFaceup() and Duel.ChangePosition(c,POS_FACEDOWN_DEFENSE)>0
-		and tc:IsSetCard(0x2b) and not tc:IsCode(id) then
+		and tc:IsSetCard(SET_NINJA) and not tc:IsCode(id) then
 		Duel.BreakEffect()
 		Duel.NegateEffect(ev)
 	end

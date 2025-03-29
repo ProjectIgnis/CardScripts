@@ -1,5 +1,5 @@
 --劫火の眠り姫ゴースト・スリーパー
---Hellfire Sleeping Beauty, Ghost Sleeper
+--Ghost Sleeper, the Underworld Princess
 local s,id=GetID()
 function s.initial_effect(c)
 	--Search 1 "Ghost Fusion"

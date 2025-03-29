@@ -1,4 +1,5 @@
 --ヒーローバリア
+--Hero Barrier
 local s,id=GetID()
 function s.initial_effect(c)
 	--negate attack
@@ -9,12 +10,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x3008}
+s.listed_series={SET_ELEMENTAL_HERO}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x3008)
+	return c:IsFaceup() and c:IsSetCard(SET_ELEMENTAL_HERO)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and Duel.GetCurrentPhase()<PHASE_MAIN2
+	return Duel.IsTurnPlayer(1-tp) and Duel.GetCurrentPhase()<PHASE_MAIN2
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
@@ -23,7 +24,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_ATTACK_ANNOUNCE)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		e1:SetOperation(s.disop)
 		Duel.RegisterEffect(e1,tp)
 	end

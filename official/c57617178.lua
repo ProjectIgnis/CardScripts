@@ -1,4 +1,5 @@
 --ソニックバード
+--Sonic Bird
 local s,id=GetID()
 function s.initial_effect(c)
 	--effect
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.filter(c)
-	return c:GetType()==0x82 and c:IsAbleToHand()
+	return c:IsRitualSpell() and c:IsAbleToHand()
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

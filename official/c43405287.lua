@@ -1,4 +1,5 @@
 --D－チェーン
+--D - Chain
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -14,12 +15,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xc008}
+s.listed_series={SET_DESTINY_HERO}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0xc008)
+	return c:IsFaceup() and c:IsSetCard(SET_DESTINY_HERO)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end
@@ -45,14 +46,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCondition(s.damcon)
 		e1:SetTarget(s.damtg)
 		e1:SetOperation(s.damop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
 		--Atkup
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_EQUIP)
 		e2:SetCode(EFFECT_UPDATE_ATTACK)
 		e2:SetValue(500)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e2)
 		--Equip limit
 		local e3=Effect.CreateEffect(c)
@@ -60,14 +61,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetCode(EFFECT_EQUIP_LIMIT)
 		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e3:SetValue(s.eqlimit)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e3)
 	else
 		c:CancelToGrave(false)
 	end
 end
 function s.eqlimit(e,c)
-	return c:GetControler()==e:GetOwnerPlayer() and c:IsSetCard(0xc008)
+	return c:GetControler()==e:GetOwnerPlayer() and c:IsSetCard(SET_DESTINY_HERO)
 end
 function s.damfilter(c,rc)
 	return c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_BATTLE) and c:GetReasonCard()==rc

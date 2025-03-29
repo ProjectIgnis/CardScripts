@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 s.listed_names={23995346} --"Blue-Eyes Ultimate Dragon"
 function s.tgfilter(c)
-	return c:IsCode(23995346) and c:IsSummonType(SUMMON_TYPE_FUSION) and c:IsFaceup() and not c:HasFlagEffect(id)
+	return c:IsCode(23995346) and c:IsFusionSummoned() and c:IsFaceup() and not c:HasFlagEffect(id)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.tgfilter(chkc) end

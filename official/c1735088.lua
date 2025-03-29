@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x58),2,2)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_WIND_UP),2,2)
 	c:EnableReviveLimit()
 	--search
 	local e1=Effect.CreateEffect(c)
@@ -39,12 +39,12 @@ function s.initial_effect(c)
 	e3:SetOperation(s.matop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x58}
+s.listed_series={SET_WIND_UP}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+	return e:GetHandler():IsLinkSummoned()
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x58) and c:IsAbleToHand()
+	return c:IsSetCard(SET_WIND_UP) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -63,7 +63,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 end
 function s.cfilter(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x58) and c:IsAbleToRemoveAsCost(POS_FACEDOWN) and Duel.GetMZoneCount(tp,c)>0
+	return c:IsFaceup() and c:IsSetCard(SET_WIND_UP) and c:IsAbleToRemoveAsCost(POS_FACEDOWN) and Duel.GetMZoneCount(tp,c)>0
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetCode())
 end
 function s.spfilter(c,e,tp,code)
@@ -95,7 +95,7 @@ function s.matcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_DESTROY)
 end
 function s.matfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x58) and c:IsType(TYPE_XYZ)
+	return c:IsFaceup() and c:IsSetCard(SET_WIND_UP) and c:IsType(TYPE_XYZ)
 end
 function s.mattg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.matfilter(chkc) end
@@ -111,4 +111,3 @@ function s.matop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Overlay(tc,c)
 	end
 end
-

@@ -32,13 +32,13 @@ function s.initial_effect(c)
 	e4:SetValue(aux.indoval)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x98}
+s.listed_series={SET_MAGICIAN}
 function s.cfilter(c,tp)
 	return c:IsType(TYPE_PENDULUM) and not c:IsPublic()
 		and Duel.IsExistingTarget(s.scfilter,tp,LOCATION_PZONE,0,1,nil,c)
 end
 function s.scfilter(c,pc)
-	return c:IsSetCard(0x98) and c:GetLeftScale()~=pc:GetLeftScale()
+	return c:IsSetCard(SET_MAGICIAN) and c:GetLeftScale()~=pc:GetLeftScale()
 end
 function s.sctg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_PZONE) and s.scfilter(chkc,e:GetLabelObject()) end
@@ -60,7 +60,7 @@ function s.scop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LSCALE)
 		e1:SetValue(pc:GetLeftScale())
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_CHANGE_RSCALE)
@@ -69,12 +69,12 @@ function s.scop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.sumsuc(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TEMP_REMOVE-RESET_TURN_SET+RESET_PHASE+PHASE_END,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD-RESET_TEMP_REMOVE-RESET_TURN_SET|RESET_PHASE|PHASE_END,0,1)
 end
 function s.indcon(e)
 	local c=e:GetHandler()
-	return c:GetFlagEffect(id)~=0 and c:IsSummonType(SUMMON_TYPE_PENDULUM)
+	return c:GetFlagEffect(id)~=0 and c:IsPendulumSummoned()
 end
 function s.indtg(e,c)
-	return c:IsSetCard(0x98) and c:IsType(TYPE_PENDULUM)
+	return c:IsSetCard(SET_MAGICIAN) and c:IsType(TYPE_PENDULUM)
 end

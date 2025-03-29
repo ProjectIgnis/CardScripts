@@ -1,4 +1,5 @@
 --鳳翼の爆風
+--Phoenix Wing Wind Blast
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -28,6 +29,6 @@ end
 function s.activate(e)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
-		Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)
+		Duel.SendtoDeck(tc,nil,SEQ_DECKTOP,REASON_EFFECT)
 	end
 end

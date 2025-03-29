@@ -1,5 +1,5 @@
 --スプライト・ダブルクロス
---Splight Double Cross
+--Spright Double Cross
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -30,13 +30,13 @@ function s.spfilter(c,e,tp,zone)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local zone=aux.GetMMZonesPointedTo(tp,Card.IsLink,LOCATION_MZONE,0,nil,2)
-	local b1=Duel.IsExistingTarget(s.atchfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,1,nil,tp)
+	local b1=Duel.IsExistingTarget(s.atchfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,LOCATION_MZONE|LOCATION_GRAVE,1,nil,tp)
 	local b2=Duel.IsExistingTarget(s.ctrlfilter,tp,0,LOCATION_MZONE,1,nil,zone)
 	local b3=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,e,tp,zone)
 	if chkc then
 		local label=e:GetLabel()
 		if label==1 then
-			return chkc:IsLocation(LOCATION_MZONE+LOCATION_GRAVE) and s.atchfilter(chkc,tp)
+			return chkc:IsLocation(LOCATION_MZONE|LOCATION_GRAVE) and s.atchfilter(chkc,tp)
 		elseif label==2 then
 			return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.ctrlfilter(chkc,zone)
 		elseif label==3 then
@@ -52,7 +52,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if op==1 then
 		e:SetCategory(0)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-		local g=Duel.SelectTarget(tp,s.atchfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,1,1,nil,tp)
+		local g=Duel.SelectTarget(tp,s.atchfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,LOCATION_MZONE|LOCATION_GRAVE,1,1,nil,tp)
 		if g:GetFirst():IsLocation(LOCATION_GRAVE) then
 			Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,1,0,0)
 		end

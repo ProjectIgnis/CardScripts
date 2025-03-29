@@ -19,20 +19,20 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_LEAVE_FIELD)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCondition(s.plcon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.pltg)
 	e2:SetOperation(s.plop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x1034,0x2034}
+s.listed_series={SET_CRYSTAL_BEAST,SET_ULTIMATE_CRYSTAL}
 function s.confilter(c,tp)
-	return c:IsPreviousSetCard(0x1034) and c:IsPreviousControler(tp)
+	return c:IsPreviousSetCard(SET_CRYSTAL_BEAST) and c:IsPreviousControler(tp)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.confilter,1,nil,tp)
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x1034) and (c:IsFaceup() or not c:IsOnField()) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_CRYSTAL_BEAST) and (c:IsFaceup() or not c:IsOnField()) and c:IsAbleToGraveAsCost()
 end
 function s.exfilter(c,tp)
 	return Duel.GetLocationCountFromEx(tp,tp,Group.FromCards(c))>0
@@ -43,14 +43,14 @@ function s.rescon(sg,e,tp,mg)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)
-	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_ONFIELD+LOCATION_HAND+LOCATION_DECK,0,nil)
+	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_ONFIELD|LOCATION_HAND|LOCATION_DECK,0,nil)
 	if chk==0 then return g:GetClassCount(Card.GetCode)>=7
 		and aux.SelectUnselectGroup(g,e,tp,7,7,s.rescon,0) end
 	local rg=aux.SelectUnselectGroup(g,e,tp,7,7,s.rescon,1,tp,HINTMSG_TOGRAVE)
 	Duel.SendtoGrave(rg,REASON_COST)
 end
 function s.filter(c,e,tp,sg)
-	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x2034) and Duel.GetLocationCountFromEx(tp,tp,sg,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial()
+	return c:IsType(TYPE_FUSION) and c:IsSetCard(SET_ULTIMATE_CRYSTAL) and Duel.GetLocationCountFromEx(tp,tp,sg,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -65,14 +65,14 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.plcfilter(c,tp)
-	return c:IsPreviousSetCard(0x2034) and c:IsPreviousControler(tp) and c:IsPreviousPosition(POS_FACEUP) and c:GetReasonPlayer()~=tp
+	return c:IsPreviousSetCard(SET_ULTIMATE_CRYSTAL) and c:IsPreviousControler(tp) and c:IsPreviousPosition(POS_FACEUP) and c:GetReasonPlayer()~=tp
 		and c:IsReason(REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsControler(tp)
 end
 function s.plcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.plcfilter,1,nil,tp)
 end
 function s.plfilter(c)
-	return c:IsSetCard(0x1034) and c:IsMonster() and not c:IsForbidden()
+	return c:IsSetCard(SET_CRYSTAL_BEAST) and c:IsMonster() and not c:IsForbidden()
 end
 function s.pltg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
@@ -92,11 +92,10 @@ function s.plop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCode(EFFECT_CHANGE_TYPE)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET)
 			e1:SetValue(TYPE_SPELL+TYPE_CONTINUOUS)
 			tc:RegisterEffect(e1)
 		end
-		Duel.RaiseEvent(g,EVENT_CUSTOM+47408488,e,0,tp,0,0)
+		Duel.RaiseEvent(g,EVENT_CUSTOM+CARD_CRYSTAL_TREE,e,0,tp,0,0)
 	end
 end
-

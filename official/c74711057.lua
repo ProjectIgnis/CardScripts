@@ -1,4 +1,5 @@
 --E・HERO ジ・アース
+--Elemental HERO Terra Firma
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -21,10 +22,10 @@ function s.initial_effect(c)
 	e2:SetValue(aux.fuslimit)
 	c:RegisterEffect(e2)
 end
-s.material_setcode={0x8,0x3008}
+s.material_setcode={SET_HERO,SET_ELEMENTAL_HERO}
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,e:GetHandler(),0x3008) end
-	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,nil,e:GetHandler(),0x3008)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,e:GetHandler(),SET_ELEMENTAL_HERO) end
+	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,nil,e:GetHandler(),SET_ELEMENTAL_HERO)
 	e:SetLabel(g:GetFirst():GetAttack())
 	Duel.Release(g,REASON_COST)
 end
@@ -35,6 +36,6 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(e:GetLabel())
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	c:RegisterEffect(e1)
 end

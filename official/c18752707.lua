@@ -1,4 +1,5 @@
 --マジカル・スター・イリュージョン
+--Magical Star Illusion
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -30,7 +31,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		else
 			e1:SetValue(val2)
 		end
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

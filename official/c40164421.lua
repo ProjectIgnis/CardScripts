@@ -1,4 +1,5 @@
 --ライトロード・メイデン ミネルバ
+--Minerva, Lightsworn Maiden
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -33,9 +34,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.disop2)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x38}
+s.listed_series={SET_LIGHTSWORN}
 function s.cfilter(c)
-	return c:IsSetCard(0x38) and c:IsMonster()
+	return c:IsSetCard(SET_LIGHTSWORN) and c:IsMonster()
 end
 function s.thfilter(c,lv)
 	return c:IsLevelBelow(lv) and c:IsRace(RACE_DRAGON) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsAbleToHand()
@@ -59,7 +60,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsPreviousLocation(LOCATION_DECK+LOCATION_HAND)
+	return e:GetHandler():IsPreviousLocation(LOCATION_DECK|LOCATION_HAND)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -3,11 +3,11 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
-	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,0x8),nil,s.fextra,s.extraop)
+	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,SET_HERO),nil,s.fextra,s.extraop)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x8}
+s.listed_series={SET_HERO}
 function s.exfilter0(c)
 	return c:GetOriginalType()&TYPE_MONSTER==TYPE_MONSTER
 		and c:GetType()&(TYPE_TRAP+TYPE_CONTINUOUS)==TYPE_TRAP+TYPE_CONTINUOUS

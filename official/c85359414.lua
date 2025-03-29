@@ -1,4 +1,5 @@
 --氷岩魔獣
+--Freezing Beast
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddUnionProcedure(c,aux.FilterBoolFunction(Card.IsCode,59364406),true)

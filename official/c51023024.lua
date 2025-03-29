@@ -1,5 +1,5 @@
 --影霊の翼 ウェンディ
---Rishaddoll Wendi
+--Reeshaddoll Wendi
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -27,9 +27,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-s.listed_series={0x9d}
+s.listed_series={SET_SHADDOLL}
 function s.spfilter(c,e,tp,pos)
-	return c:IsSetCard(0x9d) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,pos) and not c:IsCode(id)
+	return c:IsSetCard(SET_SHADDOLL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,pos) and not c:IsCode(id)
 end
 function s.sptg(pos)
 	return function(e,tp,eg,ep,ev,re,r,rp,chk)

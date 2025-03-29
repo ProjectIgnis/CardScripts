@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TOHAND)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e3:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
 	e3:SetCondition(s.thcon3)
@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop3)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x128}
+s.listed_series={SET_WITCHCRAFTER}
 function s.tgfilter(c,tp)
 	return c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and c:IsRace(RACE_SPELLCASTER) and c:IsFaceup()
 end
@@ -43,10 +43,10 @@ function s.thcon2(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and eg:IsExists(s.tgfilter,1,nil,tp)
 end
 function s.filter(c,tp)
-	return c:IsAbleToHand() and (c:IsControler(1-tp) or (c:IsSpell() and c:IsSetCard(0x128)))
+	return c:IsAbleToHand() and (c:IsControler(1-tp) or (c:IsSpell() and c:IsSetCard(SET_WITCHCRAFTER)))
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_ONFIELD+LOCATION_GRAVE) and s.filter(chkc,tp) end
+	if chkc then return chkc:IsLocation(LOCATION_ONFIELD|LOCATION_GRAVE) and s.filter(chkc,tp) end
 	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,LOCATION_ONFIELD,1,nil,tp)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
@@ -64,7 +64,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thcon3(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==1-tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.thtg3(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -1,4 +1,5 @@
 --ニードル・ガンナー
+--Needle Soldier
 local s,id=GetID()
 function s.initial_effect(c)
 	--pierce
@@ -18,6 +19,6 @@ function s.psop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_PIERCE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	rc:RegisterEffect(e1)
 end

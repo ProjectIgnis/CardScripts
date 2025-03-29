@@ -24,9 +24,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.repop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x93}
+s.listed_series={SET_CYBER}
 function s.cybfilter(c)
-	return c:IsType(TYPE_FUSION) and c:IsMonster() and c:IsRace(RACE_MACHINE) and c:IsSetCard(0x93)
+	return c:IsType(TYPE_FUSION) and c:IsMonster() and c:IsRace(RACE_MACHINE) and c:IsSetCard(SET_CYBER)
 end
 function s.filter(c,e,tp,ft)
 	return s.cybfilter(c) and (c:IsAbleToExtra() or (ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,true,false)))

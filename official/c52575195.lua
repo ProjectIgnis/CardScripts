@@ -53,10 +53,10 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 		--Return it during your next Standby Phase
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
+		e1:SetCode(EVENT_PHASE|PHASE_STANDBY)
 		e1:SetRange(LOCATION_REMOVED)
 		e1:SetCountLimit(1)
-		if Duel.GetTurnPlayer()==tp then
+		if Duel.IsTurnPlayer(tp) then
 			if Duel.IsPhase(PHASE_DRAW) then
 				e1:SetLabel(Duel.GetTurnCount())
 			else

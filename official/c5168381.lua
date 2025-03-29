@@ -1,5 +1,5 @@
 --悪魔の技
---Archfiend Glitch
+--Archfiend's Ghastly Glitch
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

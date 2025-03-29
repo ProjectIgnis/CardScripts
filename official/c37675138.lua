@@ -1,4 +1,5 @@
 --ボーンクラッシャー
+--Bone Crusher
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
@@ -25,7 +26,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 		and e:GetHandler():IsPreviousControler(tp)
 end
 function s.desfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSpellTrap()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsOnField() and s.desfilter(chkc) end
@@ -50,7 +51,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTarget(s.sdtg)
 	e1:SetOperation(s.sdop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	e:GetHandler():RegisterEffect(e1)
 end
 function s.sdtg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -1,6 +1,5 @@
 --トーラの魔導書
 --Spellbook of Wisdom
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted spellcaster monster becomes unaffected by spells or traps
@@ -42,13 +41,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetDescription(3103)
 			e1:SetValue(s.efilter2) 
 		end
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end
 function s.efilter1(e,te)
-	return te:IsActiveType(TYPE_SPELL) and te:GetOwner()~=e:GetOwner()
+	return te:IsSpellEffect() and te:GetOwner()~=e:GetOwner()
 end
 function s.efilter2(e,te)
-	return te:IsActiveType(TYPE_TRAP)
+	return te:IsTrapEffect()
 end

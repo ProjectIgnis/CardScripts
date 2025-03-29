@@ -1,4 +1,5 @@
 --A・O・J サイクロン・クリエイター
+--Ally of Justice Cyclone Creator
 local s,id=GetID()
 function s.initial_effect(c)
 	--to hand

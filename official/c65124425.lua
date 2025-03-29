@@ -1,5 +1,5 @@
 --虚ろなる龍輪
---The Hollow Cycle of Dragons
+--Vessel for the Dragon Cycle
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -12,12 +12,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x12c}
+s.listed_series={SET_TENYI}
 function s.gyfilter(c)
 	return c:IsRace(RACE_WYRM) and c:IsAbleToGrave()
 end
 function s.thfilter(c,cd)
-	return c:IsSetCard(0x12c) and c:IsMonster() and not c:IsCode(cd) and c:IsAbleToHand()
+	return c:IsSetCard(SET_TENYI) and c:IsMonster() and not c:IsCode(cd) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.gyfilter,tp,LOCATION_DECK,0,1,nil) end

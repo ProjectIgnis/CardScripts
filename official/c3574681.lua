@@ -62,7 +62,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 	if chkct~=2 then return end
-	Duel.RaiseEvent(tg,EVENT_CUSTOM+47408488,e,0,tp,0,0)
+	Duel.RaiseEvent(tg,EVENT_CUSTOM+CARD_CRYSTAL_TREE,e,0,tp,0,0)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local eq=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND|LOCATION_GRAVE,0,1,1,nil,e,tp,tg):GetFirst()

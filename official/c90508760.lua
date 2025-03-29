@@ -1,4 +1,5 @@
 --X－セイバー エアベルン
+--X-Saber Airbellum
 local s,id=GetID()
 function s.initial_effect(c)
 	--handes

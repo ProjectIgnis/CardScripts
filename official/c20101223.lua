@@ -1,4 +1,5 @@
 --神の息吹
+--Breath of Light
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

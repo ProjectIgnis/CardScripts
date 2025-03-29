@@ -1,7 +1,6 @@
 --螺旋蘇生
 --Spiral Reborn
 --Scripted by Naim
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 level 7+ dragon monster from GY
@@ -41,7 +40,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 			e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 			e1:SetValue(s.indval)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e1)
 			local e2=e1:Clone()
 			e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)

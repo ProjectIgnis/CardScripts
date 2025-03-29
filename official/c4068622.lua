@@ -38,7 +38,7 @@ function s.spfilter1(c,tp)
 	return not c:IsType(TYPE_TUNER)
 end
 function s.spfilter2(c,tp)
-	return c:IsSetCard(0x33) and c:IsType(TYPE_TUNER)
+	return c:IsSetCard(SET_BLACKWING) and c:IsType(TYPE_TUNER)
 end
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -71,7 +71,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 function s.filter(c)
-	return c:IsSetCard(0x33) and c:IsAbleToRemove()
+	return c:IsSetCard(SET_BLACKWING) and c:IsAbleToRemove()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil) end
@@ -85,7 +85,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if tc and c:IsFaceup() and c:IsRelateToEffect(e) and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)>0 then
 		local code=tc:GetOriginalCode()
 		local ba=tc:GetBaseAttack()
-		local reset_flag=RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END
+		local reset_flag=RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END
 		c:CopyEffect(code, reset_flag, 1)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

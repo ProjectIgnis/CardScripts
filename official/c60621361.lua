@@ -1,4 +1,5 @@
 --横取りボーン
+--Monster Rebone
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -48,8 +49,8 @@ function s.spcheckop(e,tp,eg,ep,ev,re,r,rp)
 	for tc in aux.Next(eg) do
 		if tc:GetSummonPlayer()==0 then p1=true else p2=true end
 	end
-	if p1 then Duel.RegisterFlagEffect(0,id,RESET_PHASE+PHASE_END,0,1) end
-	if p2 then Duel.RegisterFlagEffect(1,id,RESET_PHASE+PHASE_END,0,1) end
+	if p1 then Duel.RegisterFlagEffect(0,id,RESET_PHASE|PHASE_END,0,1) end
+	if p2 then Duel.RegisterFlagEffect(1,id,RESET_PHASE|PHASE_END,0,1) end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFlagEffect(1-tp,id)~=0

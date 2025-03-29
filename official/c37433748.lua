@@ -1,4 +1,5 @@
 --SPYRAL GEAR - Last Resort
+--SPYRAL GEAR - Last Resort
 local s,id=GetID()
 function s.initial_effect(c)
 	--equip
@@ -7,14 +8,14 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_EQUIP)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetRange(LOCATION_HAND+LOCATION_MZONE)
+	e1:SetRange(LOCATION_HAND|LOCATION_MZONE)
 	e1:SetTarget(s.eqtg)
 	e1:SetOperation(s.eqop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xee}
+s.listed_series={SET_SPYRAL}
 function s.eqfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xee)
+	return c:IsFaceup() and c:IsSetCard(SET_SPYRAL)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.eqfilter(chkc) and chkc~=e:GetHandler() end
@@ -37,7 +38,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_EQUIP_LIMIT)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e1:SetValue(s.eqlimit)
 	e1:SetLabelObject(tc)
 	c:RegisterEffect(e1)
@@ -47,7 +48,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e2:SetValue(1)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
@@ -66,7 +67,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	e5:SetCondition(s.dircon)
 	e5:SetCost(s.dircost)
 	e5:SetOperation(s.dirop)
-	e5:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e5:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e5)
 end
 function s.eqlimit(e,c)
@@ -90,6 +91,6 @@ function s.dirop(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetType(EFFECT_TYPE_EQUIP)
 	e3:SetProperty(EFFECT_CANNOT_DISABLE)
 	e3:SetCode(EFFECT_DIRECT_ATTACK)
-	e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e3:SetReset(RESETS_STANDARD_PHASE_END)
 	c:RegisterEffect(e3)
 end

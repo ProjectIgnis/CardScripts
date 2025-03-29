@@ -32,10 +32,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.regop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xb3}
+s.listed_series={SET_YOSENJU}
 s.listed_names={id}
 function s.filter(c)
-	return c:IsSetCard(0xb3) and not c:IsCode(id) and c:IsSummonable(true,nil)
+	return c:IsSetCard(SET_YOSENJU) and not c:IsCode(id) and c:IsSummonable(true,nil)
 end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil) end
@@ -50,10 +50,10 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return ep~=tp and tc:IsControler(tp) and tc:IsSetCard(0xb3) and tc~=e:GetHandler()
+	return ep~=tp and tc:IsControler(tp) and tc:IsSetCard(SET_YOSENJU) and tc~=e:GetHandler()
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xb3) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_YOSENJU) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

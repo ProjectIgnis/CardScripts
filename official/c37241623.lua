@@ -1,4 +1,5 @@
 --紋章の記録
+--Heraldry Record
 local s,id=GetID()
 function s.initial_effect(c)
 	Duel.EnableGlobalFlag(GLOBALFLAG_DETACH_EVENT)

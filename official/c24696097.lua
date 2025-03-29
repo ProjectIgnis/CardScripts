@@ -107,7 +107,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.dacon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetAttacker():GetControler()==1-tp
+	return Duel.GetAttacker():IsControler(1-tp)
 end
 function s.datg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()

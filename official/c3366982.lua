@@ -1,5 +1,5 @@
 --ドラゴンに乗るワイバーン
---Alligator’s Sword Dragon
+--Alligator's Sword Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

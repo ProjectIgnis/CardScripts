@@ -1,4 +1,5 @@
 --超念導体ビヒーマス
+--HTS Psyhemuth
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon

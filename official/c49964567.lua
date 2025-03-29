@@ -1,5 +1,5 @@
 --ステイセイラ・ロマリン
---Staysailor Romaryne
+--Staysailor Romarin
 --Scripted by The Razgriz
 local s,id=GetID()
 function s.initial_effect(c)
@@ -54,7 +54,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e1:SetCountLimit(1)
 			e1:SetValue(s.indval)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
 			tc:RegisterEffect(e1,true)
 		end
 	end
@@ -69,12 +69,12 @@ function s.grfilter(c)
 	return c:IsLevelBelow(5) and c:HasLevel() and c:IsRace(RACE_PLANT) and c:IsAbleToGrave()
 end
 function s.grtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.grfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK+LOCATION_EXTRA)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.grfilter,tp,LOCATION_DECK|LOCATION_EXTRA,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK|LOCATION_EXTRA)
 end
 function s.grop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.grfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.grfilter,tp,LOCATION_DECK|LOCATION_EXTRA,0,1,1,nil)
 	if #g>0 then
 		Duel.SendtoGrave(g,REASON_EFFECT)
 	end

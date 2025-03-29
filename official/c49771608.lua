@@ -1,4 +1,5 @@
 --吸収天児
+--Absorbing Kid from the Sky
 local s,id=GetID()
 function s.initial_effect(c)
 	--recover

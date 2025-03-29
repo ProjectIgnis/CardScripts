@@ -1,9 +1,9 @@
 --剛鬼ザ・グレート・オーガ
---Gouki the Great Ogre
+--Gouki The Great Ogre
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0xfc),2)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_GOUKI),2)
 	c:EnableReviveLimit()
 	--atkdown
 	local e1=Effect.CreateEffect(c)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desrepop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xfc}
+s.listed_series={SET_GOUKI}
 function s.atkval(e,c)
 	local val=math.max(c:GetBaseDefense(),0)
 	return val*-1

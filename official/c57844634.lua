@@ -1,4 +1,5 @@
 --素早いムササビ
+--Nimble Musasabi
 local s,id=GetID()
 function s.initial_effect(c)
 	--battle destroyed

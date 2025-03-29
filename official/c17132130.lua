@@ -30,9 +30,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.lpop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xc008}
+s.listed_series={SET_DESTINY_HERO}
 function s.spfilter(c,tp)
-	return c:IsSetCard(0xc008) and (c:IsControler(tp) or c:IsFaceup())
+	return c:IsSetCard(SET_DESTINY_HERO) and (c:IsControler(tp) or c:IsFaceup())
 end
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -73,7 +73,7 @@ function s.lpop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e1:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
 	e1:SetReset(RESET_EVENT|(RESETS_STANDARD|RESET_CONTROL)&~RESET_TOFIELD|RESET_PHASE|PHASE_STANDBY)

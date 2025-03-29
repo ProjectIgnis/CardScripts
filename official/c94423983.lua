@@ -1,5 +1,5 @@
 --同契魔術
---Simult Archfiends
+--Simul Archfiends
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -19,7 +19,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFlagEffect(0,id)==0 end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	Duel.RegisterFlagEffect(0,id,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(0,id,RESET_PHASE|PHASE_END,0,1)
 	local c=e:GetHandler()
 	--Players cannot Special Summon monsters with the same type as they control
 	local e1=Effect.CreateEffect(c)
@@ -29,7 +29,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetTargetRange(1,1)
 	e1:SetTarget(s.sumlimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	--Increase ATK of monsters
 	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsType,TYPE_RITUAL_FUSION_SYNCHRO_XYZ_LINK),tp,LOCATION_MZONE,0,nil)
@@ -44,7 +44,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(500)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 end

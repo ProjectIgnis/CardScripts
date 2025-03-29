@@ -1,4 +1,5 @@
 --異層空間
+--Celestia
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -38,7 +39,7 @@ function s.rescon(sg,e,tp,mg)
 	return Duel.IsExistingTarget(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,sg)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local cg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
+	local cg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil)
 	if chk==0 then return aux.SelectUnselectGroup(cg,e,tp,3,3,s.rescon,0) end
 	local rg=aux.SelectUnselectGroup(cg,e,tp,3,3,s.rescon,1,tp,HINTMSG_REMOVE)
 	Duel.Remove(rg,POS_FACEUP,REASON_COST)

@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.matcheck(g,lc,sumtype,tp)
-	return g:IsExists(Card.IsSetCard,1,nil,0x116,lc,sumtype,tp)
+	return g:IsExists(Card.IsSetCard,1,nil,SET_CRUSADIA,lc,sumtype,tp)
 end
 function s.atkval(e,c)
 	local g=e:GetHandler():GetLinkedGroup():Filter(Card.IsFaceup,nil)

@@ -1,4 +1,5 @@
 --幻奏の音女アリア
+--Aria the Melodious Diva
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot be target/battle indestructable
@@ -7,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x9b))
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_MELODIOUS))
 	e1:SetCondition(s.tgcon)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
@@ -16,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x9b}
+s.listed_series={SET_MELODIOUS}
 function s.tgcon(e)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL)
+	return e:GetHandler():IsSpecialSummoned()
 end

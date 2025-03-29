@@ -1,4 +1,5 @@
 --墓守の祈祷師
+--Gravekeeper's Shaman
 local s,id=GetID()
 function s.initial_effect(c)
 	--def up
@@ -37,17 +38,17 @@ function s.initial_effect(c)
 	e4:SetValue(s.efilter2)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x2e}
+s.listed_series={SET_GRAVEKEEPERS}
 s.listed_names={CARD_NECROVALLEY}
 function s.filter(c)
-	return c:IsSetCard(0x2e) and c:IsMonster()
+	return c:IsSetCard(SET_GRAVEKEEPERS) and c:IsMonster()
 end
 function s.defval(e,c)
 	return Duel.GetMatchingGroupCount(s.filter,c:GetControler(),LOCATION_GRAVE,0,nil)*200
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
-	if re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsSetCard(0x2e) and loc==LOCATION_GRAVE then
+	if re:IsMonsterEffect() and not re:GetHandler():IsSetCard(SET_GRAVEKEEPERS) and loc==LOCATION_GRAVE then
 		Duel.NegateEffect(ev)
 	end
 end

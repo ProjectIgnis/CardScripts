@@ -4,10 +4,10 @@ local s,id=GetID()
 function s.initial_effect(c)
 	Ritual.AddProcGreater({handler=c,filter=s.ritualfil,stage2=s.stage2})
 end
-s.listed_series={0x11f}
+s.listed_series={SET_NEPHTHYS}
 s.fit_monster={88176533,24175232}
 function s.ritualfil(c)
-	return c:IsSetCard(0x11f) and c:IsRitualMonster()
+	return c:IsSetCard(SET_NEPHTHYS) and c:IsRitualMonster()
 end
 function s.mfilter(c)
 	if c:IsPreviousLocation(LOCATION_MZONE) then

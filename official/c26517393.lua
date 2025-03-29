@@ -1,4 +1,5 @@
 --裏風の精霊
+--Spirit of the Fall Wind
 local s,id=GetID()
 function s.initial_effect(c)
 	--search

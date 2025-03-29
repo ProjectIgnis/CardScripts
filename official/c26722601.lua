@@ -10,18 +10,18 @@ function s.initial_effect(c)
 	e1:SetOperation(s.sumop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x100a}
+s.listed_series={SET_STEELSWARM}
 function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 	local ec=eg:GetFirst()
 	local c=e:GetHandler()
-	if ec~=e:GetHandler() and ec:IsSetCard(0x100a) and ec:IsSummonType(SUMMON_TYPE_TRIBUTE) then
+	if ec~=e:GetHandler() and ec:IsSetCard(SET_STEELSWARM) and ec:IsTributeSummoned() then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetDescription(aux.Stringid(id,0))
-		e1:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
+		e1:SetTargetRange(LOCATION_HAND|LOCATION_MZONE,0)
 		e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_EXTRA_SET_COUNT)

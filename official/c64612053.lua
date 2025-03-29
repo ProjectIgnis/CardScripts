@@ -33,10 +33,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.drop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x18c}
+s.listed_series={SET_RESCUE_ACE}
 s.listed_names={id}
 function s.spcfilter(c,tp)
-	return c:IsFaceup() and c:IsControler(tp) and c:IsSetCard(0x18c) and not c:IsCode(id)
+	return c:IsFaceup() and c:IsControler(tp) and c:IsSetCard(SET_RESCUE_ACE) and not c:IsCode(id)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.spcfilter,1,nil,tp)

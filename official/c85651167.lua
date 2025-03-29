@@ -1,4 +1,5 @@
 --真紅眼の鉄騎士－ギア・フリード
+--Gearfried the Red-Eyes Iron Knight
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy equip
@@ -25,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x3b}
+s.listed_series={SET_RED_EYES}
 function s.filter1(c,ec)
 	return c:GetEquipTarget()==ec
 end
@@ -53,7 +54,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x3b) and c:IsLevelBelow(7) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_RED_EYES) and c:IsLevelBelow(7) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.spfilter(chkc,e,tp) end

@@ -1,5 +1,5 @@
 --御巫かみくらべ
---Mikanko Catfight
+--Mikanko Rivalry
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -26,14 +26,14 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(s.thcond)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x18e}
+s.listed_series={SET_MIKANKO}
 function s.eqpcond(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x18e),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_MIKANKO),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.eqfilter(c,eqtg,tp)
 	return c:IsType(TYPE_EQUIP) and c:CheckEquipTarget(eqtg) and c:CheckUniqueOnField(tp)

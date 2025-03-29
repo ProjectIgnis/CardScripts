@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,id)
-	e3:SetCost(aux.dxmcostgen(1,1,nil))
+	e3:SetCost(Cost.Detach(1,1,nil))
 	e3:SetTarget(s.xyztg)
 	e3:SetOperation(s.xyzop)
 	c:RegisterEffect(e3)
@@ -40,12 +40,12 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x162}
+s.listed_series={SET_MATERIACTOR}
 function s.adval(e,c)
 	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_HAND,0)*500
 end
 function s.xyzfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x162)
+	return c:IsMonster() and c:IsSetCard(SET_MATERIACTOR)
 end
 function s.xyztg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_DECK,0,1,nil) end

@@ -57,17 +57,17 @@ function s.initial_effect(c)
 	e6:SetValue(s.valcheck)
 	c:RegisterEffect(e6)
 end
-s.listed_series={0xc4}
+s.listed_series={SET_ZEFRA}
 function s.mtfilter(c)
-	return c:IsSetCard(0xc4) and c:IsMonster()
+	return c:IsSetCard(SET_ZEFRA) and c:IsMonster()
 end
 function s.valcheck(e,c)
 	if c:GetMaterial():IsExists(s.mtfilter,1,nil) then
-		c:RegisterFlagEffect(id,RESET_EVENT+0x4fe0000+RESET_PHASE+PHASE_END,0,1)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESET_TODECK|RESET_TOHAND|RESET_TOGRAVE|RESET_REMOVE|RESET_TEMP_REMOVE|RESET_TURN_SET|RESET_PHASE|PHASE_END,0,1)
 	end
 end
 function s.filter(c)
-	return c:IsSetCard(0xc4) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_ZEFRA) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

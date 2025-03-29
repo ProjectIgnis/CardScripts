@@ -1,5 +1,5 @@
 --トリックスター・シャクナージュ
---Trickstar Shakhnaj
+--Trickstar Rhodode
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -24,16 +24,16 @@ function s.initial_effect(c)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xfb}
+s.listed_series={SET_TRICKSTAR}
 function s.cfilter(c)
-	return c:IsSetCard(0xfb) and c:IsDiscardable()
+	return c:IsSetCard(SET_TRICKSTAR) and c:IsDiscardable()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
 	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST+REASON_DISCARD)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0xfb) and c:IsLinkMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_TRICKSTAR) and c:IsLinkMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end
@@ -60,4 +60,3 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=eg:FilterCount(s.damfilter,nil,tp)
 	Duel.Damage(1-tp,ct*200,REASON_EFFECT)
 end
-

@@ -1,4 +1,5 @@
 --化石調査
+--Fossil Dig
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

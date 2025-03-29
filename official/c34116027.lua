@@ -1,4 +1,5 @@
 --ドラグニティナイト－ガジャルグ
+--Dragunity Knight - Gae Dearg
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon

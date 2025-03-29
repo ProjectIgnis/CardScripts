@@ -1,4 +1,5 @@
 --スクラップ・ファクトリー
+--Scrap Factory
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x24))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_SCRAP))
 	e2:SetValue(200)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
@@ -31,16 +32,16 @@ function s.initial_effect(c)
 	e4:SetOperation(s.operation)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x24}
+s.listed_series={SET_SCRAP}
 function s.cfilter(c,tp)
-	return c:IsSetCard(0x24) and c:IsMonster() and (c:GetReason()&0x41)==0x41
+	return c:IsSetCard(SET_SCRAP) and c:IsMonster() and (c:GetReason()&SET_LV)==SET_LV
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x24) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_SCRAP) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

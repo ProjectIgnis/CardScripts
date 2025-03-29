@@ -1,4 +1,5 @@
 --同族感染ウィルス
+--Tribe-Infecting Virus
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy

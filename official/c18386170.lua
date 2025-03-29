@@ -42,16 +42,16 @@ function s.initial_effect(c)
 	e4:SetOperation(s.hdop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xb1}
-s.material_setcode=0xb1
+s.listed_series={SET_BURNING_ABYSS}
+s.material_setcode=SET_BURNING_ABYSS
 function s.ffilter(c,fc,sumtype,tp,sub,mg,sg)
-	return c:IsSetCard(0xb1,fc,sumtype,tp) and (not sg or not sg:IsExists(s.fusfilter,1,c,c:GetCode(fc,sumtype,tp),fc,sumtype,tp))
+	return c:IsSetCard(SET_BURNING_ABYSS,fc,sumtype,tp) and (not sg or not sg:IsExists(s.fusfilter,1,c,c:GetCode(fc,sumtype,tp),fc,sumtype,tp))
 end
 function s.fusfilter(c,code,fc,sumtype,tp)
 	return c:IsSummonCode(fc,sumtype,tp,code) and not c:IsHasEffect(511002961)
 end
 function s.cfilter(c)
-	return c:IsSetCard(0xb1) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_BURNING_ABYSS) and c:IsAbleToGraveAsCost()
 end
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end

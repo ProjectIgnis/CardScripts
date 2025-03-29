@@ -29,9 +29,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-s.listed_series={0xd8,0xc7}
+s.listed_series={SET_DINOMIST,SET_DRACOSLAYER}
 function s.spfilter(c,e,tp)
-	return (c:IsSetCard(0xd8) or c:IsSetCard(0xc7)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return (c:IsSetCard(SET_DINOMIST) or c:IsSetCard(SET_DRACOSLAYER)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
@@ -49,7 +49,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return (c:IsSetCard(0xd8) or c:IsSetCard(0xc7)) and c:IsType(TYPE_PENDULUM) and not c:IsCode(id) and c:IsFaceup() and c:IsAbleToHand()
+	return (c:IsSetCard(SET_DINOMIST) or c:IsSetCard(SET_DRACOSLAYER)) and c:IsType(TYPE_PENDULUM) and not c:IsCode(id) and c:IsFaceup() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_EXTRA,0,1,nil) end

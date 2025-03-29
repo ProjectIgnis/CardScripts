@@ -1,4 +1,5 @@
 --イビリチュア・リヴァイアニマ
+--Evigishki Levianima
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x3a}
+s.listed_series={SET_GISHKI}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
@@ -23,7 +24,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetOperatedGroup():GetFirst()
 	Duel.ConfirmCards(1-tp,tc)
 	Duel.ShuffleHand(tp)
-	if tc:IsSetCard(0x3a) and tc:IsMonster() then
+	if tc:IsSetCard(SET_GISHKI) and tc:IsMonster() then
 		Duel.BreakEffect()
 		local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
 		if #g>0 then

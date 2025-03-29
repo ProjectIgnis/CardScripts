@@ -50,14 +50,14 @@ function s.initial_effect(c)
 end
 s.listed_names={id} --not standard, but required for Level Up!
 s.LVnum=9
-s.LVset=0x10a4
+s.LVset=SET_WINGED_KURIBOH
 function s.checkop1(e,tp,eg,ep,ev,re,r,rp)
-	if re and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) then
-		re:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+	if re and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsSpellEffect() then
+		re:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 	end
 end
 function s.checkop2(e,tp,eg,ep,ev,re,r,rp)
-	if re and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) then
+	if re and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsSpellEffect() then
 		re:GetHandler():ResetFlagEffect(id)
 	end
 end

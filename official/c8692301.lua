@@ -1,8 +1,9 @@
 --ジェムナイト・ジルコニア
+--Gem-Knight Zirconia
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x1047),aux.FilterBoolFunctionEx(Card.IsRace,RACE_ROCK))
+	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_GEM_KNIGHT),aux.FilterBoolFunctionEx(Card.IsRace,RACE_ROCK))
 end
-s.material_setcode={0x47,0x1047}
+s.material_setcode={SET_GEM,SET_GEM_KNIGHT}

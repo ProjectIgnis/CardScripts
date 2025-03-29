@@ -1,4 +1,5 @@
 --宵闇の騎士
+--Evening Twilight Knight
 local s,id=GetID()
 function s.initial_effect(c)
 	--gain
@@ -22,13 +23,13 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x10cf}
+s.listed_series={SET_BLACK_LUSTER_SOLDIER}
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
-	return r==REASON_RITUAL and eg:IsExists(Card.IsSetCard,1,nil,0x10cf)
+	return r==REASON_RITUAL and eg:IsExists(Card.IsSetCard,1,nil,SET_BLACK_LUSTER_SOLDIER)
 end
 function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=eg:Filter(Card.IsSetCard,nil,0x10cf)
+	local g=eg:Filter(Card.IsSetCard,nil,SET_BLACK_LUSTER_SOLDIER)
 	local rc=g:GetFirst()
 	if not rc then return end
 	local e1=Effect.CreateEffect(rc)
@@ -40,7 +41,7 @@ function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCountLimit(1)
 	e1:SetTarget(s.rmtg)
 	e1:SetOperation(s.rmop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	rc:RegisterEffect(e1,true)
 	local e2=Effect.CreateEffect(rc)
 	e2:SetDescription(aux.Stringid(id,1))
@@ -50,17 +51,17 @@ function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCountLimit(1)
 	e2:SetTarget(s.rmtg2)
 	e2:SetOperation(s.rmop2)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 	rc:RegisterEffect(e2,true)
 	if not rc:IsType(TYPE_EFFECT) then
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_ADD_TYPE)
 		e3:SetValue(TYPE_EFFECT)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 		rc:RegisterEffect(e3,true)
 	end
-	rc:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,3))
+	rc:RegisterFlagEffect(0,RESET_EVENT|RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,3))
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsAbleToRemove() end
@@ -85,7 +86,7 @@ function s.rmop2(e,tp,eg,ep,ev,re,r,rp)
 	local sg=g:RandomSelect(tp,1)
 	local tc=sg:GetFirst()
 	Duel.Remove(tc,POS_FACEDOWN,REASON_EFFECT)
-	tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+	tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_PHASE+PHASE_END)
@@ -93,7 +94,7 @@ function s.rmop2(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCondition(s.retcon)
 	e1:SetOperation(s.retop)
 	e1:SetLabelObject(tc)
-	e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+	e1:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
@@ -102,7 +103,7 @@ function s.retcon(e,tp,eg,ep,ev,re,r,rp)
 		e:Reset()
 		return false
 	else
-		return Duel.GetTurnPlayer()~=tp
+		return Duel.IsTurnPlayer(1-tp)
 	end
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)

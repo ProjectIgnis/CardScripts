@@ -1,4 +1,5 @@
 --黒き人食い鮫
+--Man-eating Black Shark
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material

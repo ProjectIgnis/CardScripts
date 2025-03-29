@@ -1,4 +1,5 @@
 --RR－フォース・ストリクス
+--Raidraptor - Force Strix
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -21,17 +22,13 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
-	e3:SetCost(s.thcost)
+	e3:SetCost(Cost.Detach(1))
 	e3:SetTarget(s.thtg)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
 end
 function s.adval(e,c)
 	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsRace,RACE_WINGEDBEAST),c:GetControler(),LOCATION_MZONE,0,c)*500
-end
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.thfilter(c)
 	return c:GetLevel()==4 and c:IsRace(RACE_WINGEDBEAST) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsAbleToHand()

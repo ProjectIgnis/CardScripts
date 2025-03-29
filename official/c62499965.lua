@@ -1,4 +1,5 @@
 --Z－ONE
+--Z-ONE
 local s,id=GetID()
 function s.initial_effect(c)
 	--salvage

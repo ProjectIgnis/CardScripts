@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop2)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xc9}
+s.listed_series={SET_AROMA}
 function s.descon1(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp
 end
@@ -54,7 +54,7 @@ function s.desop1(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.descon2(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0xc9),tp,LOCATION_MZONE,0,1,nil) and Duel.GetLP(tp)-Duel.GetLP(1-tp)>=3000
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_AROMA),tp,LOCATION_MZONE,0,1,nil) and Duel.GetLP(tp)-Duel.GetLP(1-tp)>=3000
 end
 function s.descost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local lp=Duel.GetLP(tp)-Duel.GetLP(1-tp)

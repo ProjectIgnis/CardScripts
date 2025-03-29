@@ -12,13 +12,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x1034}
+s.listed_series={SET_CRYSTAL_BEAST}
 function s.thfilter(c,tp)
-	return c:IsSetCard(0x1034) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_CRYSTAL_BEAST) and c:IsMonster() and c:IsAbleToHand()
 		and Duel.IsExistingMatchingCard(s.plfilter,tp,LOCATION_DECK,0,1,nil,c:GetCode())
 end
 function s.plfilter(c,code)
-	return c:IsSetCard(0x1034) and c:IsMonster() and not c:IsCode(code) and not c:IsForbidden()
+	return c:IsSetCard(SET_CRYSTAL_BEAST) and c:IsMonster() and not c:IsCode(code) and not c:IsForbidden()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetLocationCount(tp,LOCATION_SZONE)
@@ -44,8 +44,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_CHANGE_TYPE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetValue(TYPE_SPELL+TYPE_CONTINUOUS)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET)
 		tc:RegisterEffect(e1)
-		Duel.RaiseEvent(tc,EVENT_CUSTOM+47408488,e,0,tp,0,0)
+		Duel.RaiseEvent(tc,EVENT_CUSTOM+CARD_CRYSTAL_TREE,e,0,tp,0,0)
 	end
 end

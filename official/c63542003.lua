@@ -1,9 +1,9 @@
--- 宿神像ケルドウ
--- Keldo the Possessed Statue
--- Scripted by Hatter
+--宿神像ケルドウ
+--Keldo the Sacred Protector
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon this card
+	--Special Summon this card
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_SEARCH+CATEGORY_TOHAND)
@@ -14,17 +14,17 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	-- Return cards from the GY to the Deck
+	--Return cards from the GY to the Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TODECK)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetRange(LOCATION_MZONE+LOCATION_GRAVE)
+	e2:SetRange(LOCATION_MZONE|LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E+TIMING_MAIN_END)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.rmtg)
 	e2:SetOperation(s.rmop)
 	c:RegisterEffect(e2)
@@ -64,7 +64,7 @@ function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chkc then return c~=chkc and chkc:IsLocation(LOCATION_GRAVE) end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToDeck,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,c) end
-	local max=(Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_EXCHANGE_SPIRIT),tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil) and 5 or 3)
+	local max=(Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_EXCHANGE_SPIRIT),tp,LOCATION_ONFIELD|LOCATION_GRAVE,0,1,nil) and 5 or 3)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectTarget(tp,Card.IsAbleToDeck,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,max,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,#g,0,0)

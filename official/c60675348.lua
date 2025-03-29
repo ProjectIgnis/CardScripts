@@ -24,9 +24,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xd8}
+s.listed_series={SET_DINOMIST}
 function s.filter(c)
-	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(0xd8) and not c:IsForbidden()
+	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(SET_DINOMIST) and not c:IsForbidden()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -49,15 +49,15 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetDescription(aux.Stringid(id,2))
 		e1:SetTargetRange(1,0)
 		e1:SetTarget(s.splimit)
-		e1:SetReset(RESET_PHASE+PHASE_END,2)
+		e1:SetReset(RESET_PHASE|PHASE_END,2)
 		Duel.RegisterEffect(e1,tp)
 	end
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return not c:IsSetCard(0xd8) and (sumtype&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
+	return not c:IsSetCard(SET_DINOMIST) and (sumtype&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
 function s.thcfilter(c)
-	return c:IsSetCard(0xd8)
+	return c:IsSetCard(SET_DINOMIST)
 end
 function s.thfilter(c,e)
 	return c:IsAbleToHand() and (not e or c:IsCanBeEffectTarget(e))

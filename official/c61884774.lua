@@ -1,5 +1,5 @@
 --妖仙獣の神颪
---Yosenju's Divine Mountain Winds
+--Yosenju Oroshi Channeling
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetValue(s.zones)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xb3}
+s.listed_series={SET_YOSENJU}
 function s.zones(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) and 0xff or 0xe
 end
@@ -21,7 +21,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xb3) and c:IsLevelAbove(5) and c:IsAbleToHand()
+	return c:IsSetCard(SET_YOSENJU) and c:IsLevelAbove(5) and c:IsAbleToHand()
 end
 function s.pzfilter(c,cd)
 	return c:IsCode(cd) and not c:IsForbidden()
@@ -58,7 +58,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetDescription(aux.Stringid(id,2))
 		e1:SetTargetRange(1,0)
 		e1:SetTarget(s.splimit)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 	end
 	local op=e:GetLabel()
@@ -77,8 +77,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.MoveToField(tc1,tp,tp,LOCATION_PZONE,POS_FACEUP,true)
 		Duel.MoveToField(tc2,tp,tp,LOCATION_PZONE,POS_FACEUP,true)
 		local fid=c:GetFieldID()
-		tc1:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,0,1,fid)
-		tc2:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,0,1,fid)
+		tc1:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN,0,1,fid)
+		tc2:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN,0,1,fid)
 		local sg=Group.FromCards(tc1,tc2)
 		sg:KeepAlive()
 		local e1=Effect.CreateEffect(c)
@@ -90,19 +90,19 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetLabelObject(sg)
 		e1:SetCondition(s.descon)
 		e1:SetOperation(s.desop)
-		e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+		e1:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN)
 		Duel.RegisterEffect(e1,tp)
 	end
 end
 function s.splimit(e,c)
-	return not c:IsSetCard(0xb3)
+	return not c:IsSetCard(SET_YOSENJU)
 end
 function s.desfilter(c,fid)
 	return c:GetFlagEffectLabel(id)==fid
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject()
-	if Duel.GetTurnPlayer()==tp then return false end
+	if Duel.IsTurnPlayer(tp) then return false end
 	if not g:IsExists(s.desfilter,1,nil,e:GetLabel()) then
 		g:DeleteGroup()
 		e:Reset()

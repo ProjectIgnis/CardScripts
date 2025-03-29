@@ -1,4 +1,5 @@
 --森の聖獣 アルパカリブ
+--Alpacaribou, Mystical Beast of the Forest
 local s,id=GetID()
 function s.initial_effect(c)
 	--indes1

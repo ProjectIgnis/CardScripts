@@ -1,4 +1,5 @@
 --水晶の占い師
+--Crystal Seer
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip

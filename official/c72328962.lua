@@ -1,4 +1,5 @@
 --魔轟神ソルキウス
+--Fabled Soulkius
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon

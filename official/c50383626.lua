@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e4:SetCode(EVENT_RELEASE)
 	e4:SetProperty(EFFECT_FLAG_DELAY)
-	e4:SetRange(LOCATION_HAND+LOCATION_GRAVE)
+	e4:SetRange(LOCATION_HAND|LOCATION_GRAVE)
 	e4:SetCountLimit(1,id)
 	e4:SetCondition(s.spcon)
 	e4:SetTarget(s.sptg)
@@ -89,9 +89,9 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(1-tp,Card.IsAbleToDeck,1-tp,LOCATION_HAND,0,1,1,nil)
 	if #g>0 then
 		if Duel.SelectOption(1-tp,aux.Stringid(id,2),aux.Stringid(id,3))==0 then
-			Duel.SendtoDeck(g,nil,0,REASON_EFFECT)
+			Duel.SendtoDeck(g,nil,SEQ_DECKTOP,REASON_EFFECT)
 		else
-			Duel.SendtoDeck(g,nil,1,REASON_EFFECT)
+			Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 		end
 	end
 end

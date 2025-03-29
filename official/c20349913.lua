@@ -14,9 +14,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x7b}
+s.listed_series={SET_GALAXY}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x7b) and c:IsType(TYPE_XYZ)
+	return c:IsFaceup() and c:IsSetCard(SET_GALAXY) and c:IsType(TYPE_XYZ)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -42,7 +42,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetDescription(aux.Stringid(id,1))
 		e1:SetTargetRange(0,1)
 		e1:SetValue(s.val)
-		e1:SetReset(RESET_PHASE+PHASE_END,1)
+		e1:SetReset(RESET_PHASE|PHASE_END,1)
 		Duel.RegisterEffect(e1,tp)
 	end
 end

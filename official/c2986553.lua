@@ -1,4 +1,5 @@
 --夜薔薇の騎士
+--Twilight Rose Knight
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot be battle target

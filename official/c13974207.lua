@@ -1,4 +1,5 @@
 --電光－雪花－
+--Denko Sekka
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot special summon

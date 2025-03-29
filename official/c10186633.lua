@@ -75,7 +75,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.HintSelection(sg,true)
 	if Duel.SendtoDeck(sg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)==#sg then
 		local og=Duel.GetOperatedGroup()
-		if og:FilterCount(Card.IsLocation,nil,LOCATION_DECK+LOCATION_EXTRA)~=#sg then return end
+		if og:FilterCount(Card.IsLocation,nil,LOCATION_DECK|LOCATION_EXTRA)~=#sg then return end
 		Duel.ShuffleDeck(tp)
 		Duel.BreakEffect()
 		Duel.Draw(tp,1,REASON_EFFECT)

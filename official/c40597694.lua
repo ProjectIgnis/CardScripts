@@ -28,9 +28,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x1047}
+s.listed_series={SET_GEM_KNIGHT}
 function s.fusfilter(c)
-	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x1047) and not c:IsRace(RACE_ROCK)
+	return c:IsType(TYPE_FUSION) and c:IsSetCard(SET_GEM_KNIGHT) and not c:IsRace(RACE_ROCK)
 end
 function s.extrafil(e,tp,mg1)
 	return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToGrave),tp,LOCATION_DECK,0,nil)
@@ -46,11 +46,11 @@ function s.stage2(e,tc,tp,sg,chk)
 		e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetTargetRange(1,0)
-		e1:SetTarget(function(_,c) return not c:IsSetCard(0x1047) and c:IsLocation(LOCATION_EXTRA) end)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetTarget(function(_,c) return not c:IsSetCard(SET_GEM_KNIGHT) and c:IsLocation(LOCATION_EXTRA) end)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 		--Clock Lizard check
-		aux.addTempLizardCheck(c,tp,function(_,c) return not c:IsSetCard(0x1047) end)
+		aux.addTempLizardCheck(c,tp,function(_,c) return not c:IsSetCard(SET_GEM_KNIGHT) end)
 	end
 end
 function s.extratg(e,tp,eg,ep,ev,re,r,rp,chk)

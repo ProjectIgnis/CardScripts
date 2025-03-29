@@ -1,4 +1,5 @@
 --黄昏の忍者－シンゲツ
+--Twilight Ninja Shingetsu
 local s,id=GetID()
 function s.initial_effect(c)
 	--untargetable
@@ -30,13 +31,13 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x2b}
+s.listed_series={SET_NINJA}
 s.listed_names={id}
 function s.atlimit(e,c)
-	return c:IsFaceup() and c:IsSetCard(0x2b) and c~=e:GetHandler()
+	return c:IsFaceup() and c:IsSetCard(SET_NINJA) and c~=e:GetHandler()
 end
 function s.tglimit(e,c)
-	return c:IsSetCard(0x2b) and c~=e:GetHandler()
+	return c:IsSetCard(SET_NINJA) and c~=e:GetHandler()
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -44,7 +45,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 		or (rp==1-tp and c:IsReason(REASON_DESTROY) and c:IsPreviousControler(tp))
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x2b) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_NINJA) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

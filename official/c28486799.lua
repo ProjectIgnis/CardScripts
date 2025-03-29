@@ -1,4 +1,5 @@
 --補充部隊
+--Backup Squad
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate

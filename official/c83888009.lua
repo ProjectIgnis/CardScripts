@@ -1,5 +1,5 @@
 --七皇再生
---Rebirth of the Seven Emperors
+--Rebirth of the Seventh Emperors
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x48}
+s.listed_series={SET_NUMBER}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)
 	local sg=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_MZONE,0,nil,TYPE_XYZ)
@@ -40,7 +40,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,tp,LOCATION_REMOVED)
 end
 function s.atfilter(c)
-	if not c:IsType(TYPE_XYZ) or not c:IsSetCard(0x48) then return false end
+	if not c:IsType(TYPE_XYZ) or not c:IsSetCard(SET_NUMBER) then return false end
 	local no=c.xyz_number
 	return no and no>=101 and no<=107 and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())
 end
@@ -48,7 +48,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) then return end
 	local ct=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
-	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.atfilter),tp,LOCATION_REMOVED+LOCATION_GRAVE,0,tc)
+	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.atfilter),tp,LOCATION_REMOVED|LOCATION_GRAVE,0,tc)
 	if Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0
 		and ct>0 and #g>0 and not tc:IsImmuneToEffect(e)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
@@ -66,7 +66,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EVENT_PHASE+PHASE_END)
 	e1:SetCountLimit(1)
 	e1:SetOperation(s.damop)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)

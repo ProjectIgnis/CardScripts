@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c)
-	return c:IsSummonType(SUMMON_TYPE_RITUAL)
+	return c:IsRitualSummoned()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil)
@@ -24,10 +24,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e1:SetTargetRange(0,1)
 	e1:SetValue(s.aclimit)
-	if Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()<=PHASE_STANDBY then
-		e1:SetReset(RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,2)
+	if Duel.IsTurnPlayer(tp) and Duel.GetCurrentPhase()<=PHASE_STANDBY then
+		e1:SetReset(RESET_PHASE|PHASE_STANDBY|RESET_SELF_TURN,2)
 	else
-		e1:SetReset(RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN)
+		e1:SetReset(RESET_PHASE|PHASE_STANDBY|RESET_SELF_TURN)
 	end
 	Duel.RegisterEffect(e1,tp)
 end

@@ -1,4 +1,5 @@
 --EMオッドアイズ・ミノタウロス
+--Performapal Odd-Eyes Minitaurus
 local s,id=GetID()
 function s.initial_effect(c)
 	Pendulum.AddProcedure(c)
@@ -20,12 +21,12 @@ function s.initial_effect(c)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x9f,0x99}
+s.listed_series={SET_PERFORMAPAL,SET_ODD_EYES}
 function s.ptg(e,c)
-	return c:IsSetCard(0x9f) or c:IsSetCard(0x99)
+	return c:IsSetCard(SET_PERFORMAPAL) or c:IsSetCard(SET_ODD_EYES)
 end
 function s.atkfilter(c)
-	return c:IsFaceup() and (c:IsSetCard(0x9f) or c:IsSetCard(0x99))
+	return c:IsFaceup() and (c:IsSetCard(SET_PERFORMAPAL) or c:IsSetCard(SET_ODD_EYES))
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
@@ -41,7 +42,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_PHASE+PHASE_DAMAGE_CAL)
+		e1:SetReset(RESET_PHASE|PHASE_DAMAGE_CAL)
 		e1:SetValue(-gc*100)
 		d:RegisterEffect(e1)
 	end

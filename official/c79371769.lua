@@ -78,9 +78,9 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(s.aclimit)
 		e1:SetLabelObject(tc)
 		if Duel.IsTurnPlayer(tp) then
-			e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,2)
+			e1:SetReset(RESET_PHASE|PHASE_END|RESET_SELF_TURN,2)
 		else
-			e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN)
+			e1:SetReset(RESET_PHASE|PHASE_END|RESET_SELF_TURN)
 		end
 		Duel.RegisterEffect(e1,tp)
 	end

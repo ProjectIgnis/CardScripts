@@ -1,4 +1,5 @@
 --EMラディッシュ・ホース
+--Performapal Radish Horse
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -33,9 +34,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.atkop2)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x9f}
+s.listed_series={SET_PERFORMAPAL}
 function s.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x9f) and c:GetAttack()>0
+	return c:IsFaceup() and c:IsSetCard(SET_PERFORMAPAL) and c:GetAttack()>0
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -59,12 +60,12 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-atk)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		hc:RegisterEffect(e1)
 	end
 end
 function s.filter(c)
-	return c:IsSummonType(SUMMON_TYPE_SPECIAL)
+	return c:IsSpecialSummoned()
 end
 function s.hspcon(e,c)
 	if c==nil then return true end
@@ -95,13 +96,13 @@ function s.atkop2(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-atk)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		hc:RegisterEffect(e1)
 		if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_UPDATE_ATTACK)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e2:SetReset(RESETS_STANDARD_PHASE_END)
 			e2:SetValue(atk)
 			tc:RegisterEffect(e2)
 		end

@@ -32,17 +32,17 @@ function s.initial_effect(c)
 	e3:SetOperation(s.actop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xdf}
+s.listed_series={SET_LUNALIGHT}
 s.listed_names={CARD_POLYMERIZATION}
 function s.costfilter(c,ec)
-	return c:IsSetCard(0xdf) and c:IsMonster() and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_LUNALIGHT) and c:IsMonster() and c:IsAbleToGraveAsCost()
 		and not c:IsSummonCode(nil,SUMMON_TYPE_FUSION,PLAYER_NONE,ec:GetCode(nil,SUMMON_TYPE_FUSION))
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,nil,c) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_DECK|LOCATION_EXTRA,0,1,nil,c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local cg=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,1,nil,c)
+	local cg=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_DECK|LOCATION_EXTRA,0,1,1,nil,c)
 	Duel.SendtoGrave(cg,REASON_COST)
 	e:SetLabel(cg:GetFirst():GetCode())
 end
@@ -53,7 +53,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_ADD_CODE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	e1:SetValue(e:GetLabel())
 	e1:SetOperation(s.chngcon)
 	c:RegisterEffect(e1)
@@ -88,10 +88,10 @@ function s.actop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(0,1)
 	e1:SetCondition(s.actcon)
 	e1:SetValue(1)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.actcon(e)
 	local ph=Duel.GetCurrentPhase()
-	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
+	return Duel.IsBattlePhase()
 end

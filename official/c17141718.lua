@@ -26,9 +26,9 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xe6}
+s.listed_series={SET_FLOWER_CARDIAN}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xe6) and c:IsLevelBelow(7)
+	return c:IsFaceup() and c:IsSetCard(SET_FLOWER_CARDIAN) and c:IsLevelBelow(7)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -49,7 +49,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_CANNOT_SUMMON)
@@ -57,10 +57,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,2),nil)
 end
 function s.splimit(e,c)
-	return not c:IsSetCard(0xe6)
+	return not c:IsSetCard(SET_FLOWER_CARDIAN)
 end
 function s.filter(c)
-	return c:IsSetCard(0xe6) and c:IsAbleToDeck() and not c:IsPublic()
+	return c:IsSetCard(SET_FLOWER_CARDIAN) and c:IsAbleToDeck() and not c:IsPublic()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp)

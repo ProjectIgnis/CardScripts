@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xa5}
+s.listed_series={SET_CHANGE}
 function s.rdcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tp=e:GetHandlerPlayer()
@@ -44,7 +44,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsRelateToBattle() and bc:IsLocation(LOCATION_GRAVE) and bc:IsMonster() and bc:IsPreviousControler(1-tp)
 end
 function s.filter(c)
-	return c:IsSetCard(0xa5) and c:IsType(TYPE_QUICKPLAY) and c:IsAbleToHand()
+	return c:IsSetCard(SET_CHANGE) and c:IsType(TYPE_QUICKPLAY) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

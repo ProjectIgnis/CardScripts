@@ -63,13 +63,13 @@ function s.atkval(e,c)
 	return 200+c:GetEquipGroup():FilterCount(Card.IsSetCard,nil,SET_MARINCESS)*600
 end
 function s.etarget(e,c)
-	return c:IsFaceup() and c:IsInExtraMZone() and c:HasFlagEffect(id) and c:IsSummonType(SUMMON_TYPE_LINK)
+	return c:IsFaceup() and c:IsInExtraMZone() and c:HasFlagEffect(id) and c:IsLinkSummoned()
 end
 function s.efilter(e,re)
 	return e:GetOwnerPlayer()~=re:GetOwnerPlayer()
 end
 function s.eqcfilter(c,tp)
-	return c:IsSetCard(SET_MARINCESS) and c:IsLinkMonster() and c:IsSummonType(SUMMON_TYPE_LINK) and c:GetSequence()>=5 and c:IsSummonPlayer(tp)
+	return c:IsSetCard(SET_MARINCESS) and c:IsLinkMonster() and c:IsLinkSummoned() and c:GetSequence()>=5 and c:IsSummonPlayer(tp)
 end
 function s.eqfilter(c)
 	return c:IsSetCard(SET_MARINCESS) and c:IsLinkMonster() and not c:IsForbidden()

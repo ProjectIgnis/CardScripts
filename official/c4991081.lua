@@ -1,9 +1,9 @@
--- ハーピィズペット竜－セイント・ファイアー・ギガ
--- Harpie's Pet Dragon - Fearsome Fire Blast
--- scripted by Hatter
+--ハーピィズペット竜－セイント・ファイアー・ギガ
+--Harpie's Pet Dragon - Fearsome Fire Blast
+--scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- monsters cannot target Harpies for attacks
+	--monsters cannot target Harpies for attacks
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetRange(LOCATION_MZONE)
@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
 	e1:SetValue(s.atlimit)
 	c:RegisterEffect(e1)
-	-- special summon itself from hand
+	--special summon itself from hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	-- send to GY
+	--send to GY
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TOGRAVE)
@@ -35,9 +35,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.gyop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x64}
+s.listed_series={SET_HARPIE}
 function s.atlimit(e,c)
-	return c:IsFaceup() and c:IsLevelBelow(6) and c:IsSetCard(0x64)
+	return c:IsFaceup() and c:IsLevelBelow(6) and c:IsSetCard(SET_HARPIE)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_WIND) and c:IsLevelBelow(6)

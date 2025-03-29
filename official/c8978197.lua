@@ -1,5 +1,5 @@
 --The King of D.
---Scripted by Eerie Code
+--The King of D.
 local s,id=GetID()
 function s.initial_effect(c)
 	--change name

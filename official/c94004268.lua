@@ -1,4 +1,5 @@
 --アマゾネスの剣士
+--Amazoness Swords Woman
 local s,id=GetID()
 function s.initial_effect(c)
 	--reflect battle dam

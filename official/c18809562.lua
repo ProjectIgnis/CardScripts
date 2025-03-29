@@ -1,4 +1,5 @@
 --魔導契約の扉
+--Magical Contract Door
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

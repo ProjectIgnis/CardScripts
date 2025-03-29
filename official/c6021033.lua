@@ -44,8 +44,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		if c:IsFacedown() or not c:IsRelateToEffect(e) then return end
 		c:SetCardTarget(tc)
 		e:SetLabelObject(tc)
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
-		c:RegisterFlagEffect(id,RESET_EVENT+0x1020000,0,0)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,0)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESET_TURN_SET|RESET_TOFIELD,0,0)
 	end
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)

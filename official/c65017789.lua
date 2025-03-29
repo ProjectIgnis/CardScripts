@@ -24,16 +24,16 @@ function s.initial_effect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetRange(LOCATION_REMOVED)
-	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e3:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e3:SetCondition(s.spcon)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	e3:SetLabelObject(e2)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x109}
+s.listed_series={SET_THE_WEATHER}
 function s.tffilter(c,tp)
-	return c:IsSpellTrap() and c:IsSetCard(0x109) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
+	return c:IsSpellTrap() and c:IsSetCard(SET_THE_WEATHER) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
 		and not c:IsType(TYPE_FIELD)
 end
 function s.tftg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -52,9 +52,9 @@ function s.spreg(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return end
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
-	if c:IsReason(REASON_COST) and rc:IsSetCard(0x109) then
+	if c:IsReason(REASON_COST) and rc:IsSetCard(SET_THE_WEATHER) then
 		e:SetLabel(Duel.GetTurnCount()+1)
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,2)
+		c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,2)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

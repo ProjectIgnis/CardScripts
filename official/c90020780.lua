@@ -1,7 +1,6 @@
 --シノビネクロ
 --Shinobi Necro
 --Scripted by andré
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Draw 1, then discard 1
@@ -68,7 +67,7 @@ function s.spoperation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e1,true)
 	end

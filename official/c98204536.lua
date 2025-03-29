@@ -1,5 +1,5 @@
 --先史遺産驚神殿－トリリトン
---Chronomaly Palace Trilithon
+--Chronomaly Temple - Trilithon
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_SZONE)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.nscon)
-	e1:SetCost(s.nscost)
+	e1:SetCost(Cost.PayLP(500))
 	e1:SetTarget(s.nstg)
 	e1:SetOperation(s.nsop)
 	c:RegisterEffect(e1)
@@ -31,17 +31,13 @@ function s.initial_effect(c)
 	e2:SetOperation(s.rop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x70,0x48}
+s.listed_series={SET_CHRONOMALY,SET_NUMBER}
 function s.nscon(e,tp,eg,ep,ev,re,r,rp)
-	local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0x70),tp,LOCATION_MZONE,0,nil)
+	local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,SET_CHRONOMALY),tp,LOCATION_MZONE,0,nil)
 	return ct==Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)
 end
-function s.nscost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,500) end
-	Duel.PayLPCost(tp,500)
-end
 function s.nsfilter(c)
-	return c:IsSetCard(0x70) and c:IsSummonable(true,nil)
+	return c:IsSetCard(SET_CHRONOMALY) and c:IsSummonable(true,nil)
 end
 function s.nstg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.nsfilter,tp,LOCATION_HAND,0,1,nil) end
@@ -57,7 +53,7 @@ end
 function s.rcon(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	return (r&REASON_COST)~=0 and re:IsActivated()
-		and re:IsActiveType(TYPE_XYZ) and (rc:IsSetCard(0x70) or rc:IsSetCard(0x48))
+		and re:IsActiveType(TYPE_XYZ) and (rc:IsSetCard(SET_CHRONOMALY) or rc:IsSetCard(SET_NUMBER))
 		and e:GetHandler():IsAbleToGraveAsCost()
 		and ep==e:GetOwnerPlayer() and ev>=1 and rc:GetOverlayCount()>=ev-1
 end

@@ -22,11 +22,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ConfirmDecktop(tp,1)
 	local g=Duel.GetDecktopGroup(tp,1)
 	local tc=g:GetFirst()
-	if tc:GetType()==TYPE_SPELL then
+	if tc:IsNormalSpell() then
 		Duel.DisableShuffleCheck()
 		Duel.SendtoGrave(g,REASON_EFFECT)
 		local ae=tc:GetActivateEffect()
-		if tc:GetLocation()==LOCATION_GRAVE and ae then
+		if tc:IsLocation(LOCATION_GRAVE) and ae then
 			local e1=Effect.CreateEffect(tc)
 			e1:SetDescription(ae:GetDescription())
 			e1:SetType(EFFECT_TYPE_IGNITION)

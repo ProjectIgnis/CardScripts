@@ -40,18 +40,18 @@ function s.initial_effect(c)
 	e4:SetOperation(s.rmop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x64}
+s.listed_series={SET_HARPIE}
 function s.effcon(e)
 	return e:GetHandler():GetOverlayCount()>0
 end
 function s.atlimit(e,c)
-	return c:IsFaceup() and c:IsSetCard(0x64)
+	return c:IsFaceup() and c:IsSetCard(SET_HARPIE)
 end
 function s.efftg(e,c)
-	return c:IsSetCard(0x64) and c:IsMonster()
+	return c:IsSetCard(SET_HARPIE) and c:IsMonster()
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

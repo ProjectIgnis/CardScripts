@@ -1,5 +1,5 @@
 --先史遺産アカンバロの土偶
---Chronomaly Acámbaro Figure
+--Chronomaly Acambaro Figures
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -25,12 +25,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
-s.listed_series={0x70}
+s.listed_series={SET_CHRONOMALY}
 function s.counterfilter(c)
-	return c:IsSetCard(0x70)
+	return c:IsSetCard(SET_CHRONOMALY)
 end
 function s.repfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x70) and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) 
+	return c:IsFaceup() and c:IsSetCard(SET_CHRONOMALY) and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) 
 		and not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_EFFECT+REASON_BATTLE) and c:GetReasonPlayer()==1-tp
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -52,19 +52,19 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
 	Duel.RegisterEffect(e1,tp)
 	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e2:SetDescription(aux.Stringid(id,2))
-	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetReset(RESET_PHASE|PHASE_END)
 	e2:SetTargetRange(1,0)
 	Duel.RegisterEffect(e2,tp)
 end
 function s.splimit(e,c)
-	return not c:IsSetCard(0x70)
+	return not c:IsSetCard(SET_CHRONOMALY)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -77,7 +77,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 or not c:IsRelateToEffect(e) then return end
 	if Duel.SpecialSummon(c,0,tp,tp,true,false,POS_FACEUP)>0 then
 		local fid=c:GetFieldID()
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1,fid)
 		--Return it to the hand during the End Phase
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

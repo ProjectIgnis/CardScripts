@@ -1,4 +1,5 @@
 --凡人の施し
+--Common Charity
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

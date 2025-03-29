@@ -22,10 +22,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.actop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x10dc}
+s.listed_series={SET_SUPER_QUANTUM}
 s.listed_names={58753372,10424147}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x10dc)
+	return c:IsFaceup() and c:IsSetCard(SET_SUPER_QUANTUM)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil)
@@ -60,9 +60,9 @@ end
 function s.actcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,0)
-		and Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,c) end
+		and Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,c)
+	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,c)
 	g:AddCard(c)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end

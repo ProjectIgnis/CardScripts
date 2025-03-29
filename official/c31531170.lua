@@ -30,10 +30,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCondition(s.pendcon)
 	e1:SetOperation(s.pendop)
 	e1:SetValue(SUMMON_TYPE_PENDULUM)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	tc1:RegisterEffect(e1)
-	tc1:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,tc2:GetFieldID())
-	tc2:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,tc1:GetFieldID())
+	tc1:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1,tc2:GetFieldID())
+	tc2:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1,tc1:GetFieldID())
 end
 function s.pendcon(e,c,inchain,re,rp)
 	if c==nil then return true end
@@ -65,7 +65,7 @@ function s.pendop(e,tp,eg,ep,ev,re,r,rp,c,sg,inchain)
 	if #sg>0 then
 		Duel.Hint(HINT_CARD,0,id)
 		if not inchain then
-			Duel.RegisterFlagEffect(tp,10000000,RESET_PHASE+PHASE_END+RESET_SELF_TURN,0,1)
+			Duel.RegisterFlagEffect(tp,10000000,RESET_PHASE|PHASE_END|RESET_SELF_TURN,0,1)
 		end
 		Duel.HintSelection(Group.FromCards(c))
 		Duel.HintSelection(Group.FromCards(rpz))

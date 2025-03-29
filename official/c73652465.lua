@@ -23,9 +23,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x33}
+s.listed_series={SET_BLACKWING}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x33) and c:GetCode()~=id
+	return c:IsFaceup() and c:IsSetCard(SET_BLACKWING) and c:GetCode()~=id
 end
 function s.spcon(e,c)
 	if c==nil then return true end

@@ -1,9 +1,9 @@
--- 暗岩の海竜神
--- Kairyu-Shin of the Reef
--- Scripted by Hatter
+--暗岩の海竜神
+--Kairyu-Shin's Dark Reef
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon
+	--Special Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -32,24 +32,24 @@ function s.spfilter1(c,e,tp)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter1,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,0,tp,LOCATION_HAND+LOCATION_DECK)
-	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,0,tp,LOCATION_HAND+LOCATION_DECK)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter1,tp,LOCATION_HAND|LOCATION_DECK,0,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,0,tp,LOCATION_HAND|LOCATION_DECK)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,0,tp,LOCATION_HAND|LOCATION_DECK)
 end
 function s.spfilter2(c,e,tp)
 	return c:IsLevelBelow(6) and c:IsType(TYPE_NORMAL) and c:IsAttribute(ATTRIBUTE_WATER)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	-- Special Summon (up to 2 with different names)
-	local g=Duel.GetMatchingGroup(s.spfilter1,tp,LOCATION_HAND+LOCATION_DECK,0,nil,e,tp)
+	--Special Summon (up to 2 with different names)
+	local g=Duel.GetMatchingGroup(s.spfilter1,tp,LOCATION_HAND|LOCATION_DECK,0,nil,e,tp)
 	local ct=math.min(2,Duel.GetLocationCount(tp,LOCATION_MZONE))
 	if ct>0 and Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ct=1 end
 	local sg=aux.SelectUnselectGroup(g,e,tp,1,ct,aux.dncheck,1,tp,HINTMSG_SPSUMMON)
 	if #sg>0 and Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP_DEFENSE)>0
 		and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0 then
-		-- Special Summon (any number)
-		local ng=Duel.GetMatchingGroup(s.spfilter2,tp,LOCATION_HAND+LOCATION_DECK,0,nil,e,tp)
+		--Special Summon (any number)
+		local ng=Duel.GetMatchingGroup(s.spfilter2,tp,LOCATION_HAND|LOCATION_DECK,0,nil,e,tp)
 		local nct=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		if #ng>0 and nct>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then nct=1 end
@@ -62,7 +62,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 	if not e:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
-	-- Cannot Special Summon non-WATER monsters
+	--Cannot Special Summon non-WATER monsters
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetDescription(aux.Stringid(id,2))
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -70,6 +70,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(function(_,c)return not c:IsAttribute(ATTRIBUTE_WATER)end)
-	e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,Duel.IsTurnPlayer(tp) and 2 or 1)
+	e1:SetReset(RESET_PHASE|PHASE_END|RESET_SELF_TURN,Duel.IsTurnPlayer(tp) and 2 or 1)
 	Duel.RegisterEffect(e1,tp)
 end

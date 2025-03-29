@@ -1,4 +1,5 @@
 --カラクリ忍者 七七四九
+--Karakuri Ninja mdl 7749 "Nanashick"
 local s,id=GetID()
 function s.initial_effect(c)
 	--must attack
@@ -25,7 +26,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.drop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x11}
+s.listed_series={SET_KARAKURI}
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsFaceup() and c:IsRelateToEffect(e) then
@@ -33,7 +34,7 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.drfilter(c)
-	return c:IsPosition(POS_FACEUP_DEFENSE) and c:IsSetCard(0x11)
+	return c:IsPosition(POS_FACEUP_DEFENSE) and c:IsSetCard(SET_KARAKURI)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetMatchingGroupCount(s.drfilter,tp,LOCATION_MZONE,0,nil)

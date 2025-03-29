@@ -1,4 +1,5 @@
 --剣闘獣総監エーディトル
+--Gladiator Beast Tamer Editor
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -26,7 +27,7 @@ function s.initial_effect(c)
 	e6:SetDescription(aux.Stringid(id,4))
 	e6:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e6:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e6:SetCode(EVENT_PHASE|PHASE_BATTLE)
 	e6:SetRange(LOCATION_MZONE)
 	e6:SetCountLimit(1)
 	e6:SetCost(s.spcost)
@@ -34,11 +35,11 @@ function s.initial_effect(c)
 	e6:SetOperation(s.spop)
 	c:RegisterEffect(e6)
 end
-s.listed_series={0x19}
+s.listed_series={SET_GLADIATOR}
 s.listed_names={id}
-s.material_setcode=0x19
+s.material_setcode=SET_GLADIATOR
 function s.matfilter(c,fc,sumtype,tp)
-	return c:IsLevelAbove(5) and c:IsSetCard(0x19,fc,sumtype,tp)
+	return c:IsLevelAbove(5) and c:IsSetCard(SET_GLADIATOR,fc,sumtype,tp)
 end
 function s.contactfil(tp)
 	return Duel.GetMatchingGroup(function(c) return c:IsMonster() and c:IsAbleToDeckOrExtraAsCost() end,tp,LOCATION_ONFIELD,0,nil)
@@ -51,7 +52,7 @@ function s.splimit(e,se,sp,st)
 	return e:GetHandler():GetLocation()~=LOCATION_EXTRA
 end
 function s.espfilter(c,e,tp)
-	return c:IsSetCard(0x19) and c:IsType(TYPE_FUSION) and not c:IsCode(id)
+	return c:IsSetCard(SET_GLADIATOR) and c:IsType(TYPE_FUSION) and not c:IsCode(id)
 		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,124,tp,true,false)
 end
 function s.esptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -66,7 +67,7 @@ function s.espop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcfilter(c,ft)
-	return c:IsFaceup() and c:IsSetCard(0x19) and c:GetBattledGroupCount()>0
+	return c:IsFaceup() and c:IsSetCard(SET_GLADIATOR) and c:GetBattledGroupCount()>0
 		and c:IsAbleToDeckOrExtraAsCost() and (ft>0 or c:GetSequence()<5)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -78,7 +79,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x19) and c:IsCanBeSpecialSummoned(e,124,tp,false,false)
+	return c:IsSetCard(SET_GLADIATOR) and c:IsCanBeSpecialSummoned(e,124,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
@@ -91,7 +92,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	if tc then
 		Duel.SpecialSummonStep(tc,124,tp,tp,false,false,POS_FACEUP)
-		tc:RegisterFlagEffect(tc:GetOriginalCode(),RESET_EVENT+RESETS_STANDARD_DISABLE,0,0)
+		tc:RegisterFlagEffect(tc:GetOriginalCode(),RESET_EVENT|RESETS_STANDARD_DISABLE,0,0)
 		Duel.SpecialSummonComplete()
 	end
 end

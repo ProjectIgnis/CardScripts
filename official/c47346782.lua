@@ -1,5 +1,5 @@
 --寝ガエル
---Othello Frog
+--Centerfrog
 local s,id=GetID()
 function s.initial_effect(c)
 	--Cannot be material

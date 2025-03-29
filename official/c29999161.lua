@@ -1,4 +1,5 @@
 --発条の巻き戻し
+--Zenmairch
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,9 +13,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x58}
+s.listed_series={SET_WIND_UP}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x58) and c:IsLevelBelow(4) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(SET_WIND_UP) and c:IsLevelBelow(4) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -25,7 +26,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function s.spfilter(c,lv,e,tp)
-	return c:IsSetCard(0x58) and c:IsLevel(lv) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_WIND_UP) and c:IsLevel(lv) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

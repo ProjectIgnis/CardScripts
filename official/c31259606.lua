@@ -1,9 +1,9 @@
--- 絶海のマーレ
--- Mare of the Shore
--- Scripted by Hatter
+--絶海のマーレ
+--Supreme Sea Mare
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Send 1 Aqua monster to the GY
+	--Send 1 Aqua monster to the GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOGRAVE)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
-	-- Add 1 Aqua monster to the hand
+	--Add 1 Aqua monster to the hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TOHAND)

@@ -1,4 +1,5 @@
 --ブルブレーダー
+--Bull Blader
 local s,id=GetID()
 function s.initial_effect(c)
 	--level change
@@ -21,7 +22,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_NO_BATTLE_DAMAGE)
-		e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+		e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
 		c:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
@@ -31,7 +32,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e3:SetCode(EVENT_BATTLED)
 		e3:SetOperation(s.desop)
-		e3:SetReset(RESET_PHASE+PHASE_DAMAGE)
+		e3:SetReset(RESET_PHASE|PHASE_DAMAGE)
 		Duel.RegisterEffect(e3,tp)
 	end
 end

@@ -1,9 +1,9 @@
--- ヴァンパイアの幽鬼
--- Vampire Ghost Ogre
--- Scripted by Hatter
+--ヴァンパイアの幽鬼
+--Vampire Ghost
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Search
+	--Search
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND+CATEGORY_TOGRAVE)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	-- Normal Summon
+	--Normal Summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SUMMON)
@@ -30,22 +30,22 @@ function s.initial_effect(c)
 	e2:SetOperation(s.nsop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x8e}
+s.listed_series={SET_VAMPIRE}
 function s.thcostfilter(c)
-	return c:IsSetCard(0x8e) and c:IsAbleToGraveAsCost() and (c:IsFaceup() or c:IsLocation(LOCATION_HAND))
+	return c:IsSetCard(SET_VAMPIRE) and c:IsAbleToGraveAsCost() and (c:IsFaceup() or c:IsLocation(LOCATION_HAND))
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsExistingMatchingCard(s.thcostfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,c) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.thcostfilter,tp,LOCATION_HAND|LOCATION_ONFIELD,0,1,c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local cg=Duel.SelectMatchingCard(tp,s.thcostfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,c)
+	local cg=Duel.SelectMatchingCard(tp,s.thcostfilter,tp,LOCATION_HAND|LOCATION_ONFIELD,0,1,1,c)
 	Duel.SendtoGrave(cg,REASON_COST)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x8e) and c:IsLevelAbove(4) and c:IsAbleToHand()
+	return c:IsSetCard(SET_VAMPIRE) and c:IsLevelAbove(4) and c:IsAbleToHand()
 end
 function s.tgfilter(c)
-	return c:IsSetCard(0x8e) and c:IsLevelBelow(2) and c:IsAbleToGrave()
+	return c:IsSetCard(SET_VAMPIRE) and c:IsLevelBelow(2) and c:IsAbleToGrave()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil)
@@ -71,15 +71,15 @@ function s.nscost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,500)
 end
 function s.nsfilter(c)
-	return c:IsSetCard(0x8e) and c:IsSummonable(true,nil)
+	return c:IsSetCard(SET_VAMPIRE) and c:IsSummonable(true,nil)
 end
 function s.nstg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.nsfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.nsfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_SUMMON,nil,1,0,0)
 end
 function s.nsop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.nsfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.nsfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,1,nil)
 	if #g>0 then
 		Duel.Summon(tp,g:GetFirst(),true,nil)
 	end

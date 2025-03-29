@@ -48,10 +48,10 @@ function s.initial_effect(c)
 	e7:SetRange(LOCATION_SZONE)
 	e7:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e7:SetCondition(s.discon)
-	e7:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x23))
+	e7:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_MALEFIC))
 	c:RegisterEffect(e7)
 end
-s.listed_series={0x23}
+s.listed_series={SET_MALEFIC}
 s.listed_names={27564031}
 function s.filter(c,tp)
 	return c:IsCode(27564031) and c:GetActivateEffect() and c:GetActivateEffect():IsActivatable(tp,true,true)
@@ -70,24 +70,24 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetRange(LOCATION_FZONE)
 			e1:SetTargetRange(LOCATION_FZONE,LOCATION_FZONE)
 			e1:SetValue(1)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e1,true)
 		end
 	end
 end
 function s.discon(e)
 	local ph=Duel.GetCurrentPhase()
-	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
+	return Duel.IsBattlePhase()
 end
 function s.stuff(c)
 	local mt=c:GetMetatable()
-	return c:IsFaceup() and mt.has_malefic_unique and mt.has_malefic_unique[c]==true and not c:IsDisabled() and c:IsSetCard(0x23)
+	return c:IsFaceup() and mt.has_malefic_unique and mt.has_malefic_unique[c]==true and not c:IsDisabled() and c:IsSetCard(SET_MALEFIC)
 end
 function s.validitycheck()
 	return Duel.IsExistingMatchingCard(s.stuff,0,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function s.rmfilter(c,...)
-	return c:IsFaceup() and c:IsSetCard(0x23) and c:IsCode(...)
+	return c:IsFaceup() and c:IsSetCard(SET_MALEFIC) and c:IsCode(...)
 end
 function s.rmfilter2(c,fieldid,...)
 	return c:GetFieldID()<fieldid and c:IsCode(...)
@@ -104,7 +104,7 @@ end
 function s.adjustop(e,tp,eg,ep,ev,re,r,rp)
 	local phase=Duel.GetCurrentPhase()
 	if (phase==PHASE_DAMAGE and not Duel.IsDamageCalculated()) or phase==PHASE_DAMAGE_CAL then return end
-	local g=Duel.GetMatchingGroup(aux.AND(Card.IsFaceup,Card.IsSetCard),0,LOCATION_MZONE,LOCATION_MZONE,nil,0x23)
+	local g=Duel.GetMatchingGroup(aux.AND(Card.IsFaceup,Card.IsSetCard),0,LOCATION_MZONE,LOCATION_MZONE,nil,SET_MALEFIC)
 	local sg=g:Filter(s.checkok,nil,g)
 	if #sg>0 then
 		Duel.Destroy(sg,REASON_RULE)

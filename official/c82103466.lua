@@ -1,4 +1,5 @@
 --蛇神ゲー
+--Divine Serpent Geh
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -83,7 +84,7 @@ end
 function s.adcon(e)
 	local c=e:GetHandler()
 	return Duel.GetAttacker()==c and c:GetBattleTarget()
-		and (Duel.GetCurrentPhase()==PHASE_DAMAGE or Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL)
+		and (Duel.IsPhase(PHASE_DAMAGE) or Duel.IsPhase(PHASE_DAMAGE_CAL))
 end
 function s.adtg(e,c)
 	return c==e:GetHandler():GetBattleTarget()
@@ -114,7 +115,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		e1:SetValue(atk)
 		c:RegisterEffect(e1)
 	end

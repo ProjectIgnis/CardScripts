@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x2016}
+s.listed_series={SET_SPEEDROID}
 function s.nsfilter(c)
 	return c:IsAttribute(ATTRIBUTE_WIND) and c:IsSummonable(true,nil)
 end
@@ -49,7 +49,7 @@ function s.nsop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetDescription(aux.Stringid(id,2))
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	--lizard check
 	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)
@@ -61,7 +61,7 @@ function s.lizfilter(e,c)
 	return not c:IsOriginalType(TYPE_SYNCHRO)
 end
 function s.filter(c)
-	return c:IsSetCard(0x2016) and c:IsMonster() and c:IsLevelAbove(1) and c:IsAbleToHand()
+	return c:IsSetCard(SET_SPEEDROID) and c:IsMonster() and c:IsLevelAbove(1) and c:IsAbleToHand()
 end
 function s.rescon(lv)
 	return function(sg,e,tp,mg)

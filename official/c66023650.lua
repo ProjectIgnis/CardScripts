@@ -44,7 +44,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.drop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x114}
+s.listed_series={SET_FUR_HIRE}
 function s.lcheck(g,lc,sumtype,tp)
 	return g:CheckDifferentPropertyBinary(Card.GetRace,lc,sumtype,tp)
 end
@@ -57,10 +57,10 @@ function s.valcheck(e,c)
 	e:GetLabelObject():SetLabel(val)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK) and #(e:GetHandler():GetMaterial())==3
+	return e:GetHandler():IsLinkSummoned() and #(e:GetHandler():GetMaterial())==3
 end
 function s.spfilter(c,e,tp,rc)
-	return c:IsSetCard(0x114) and not c:IsRace(rc) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(SET_FUR_HIRE) and not c:IsRace(rc) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,e:GetLabel()) end
@@ -81,7 +81,7 @@ function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.drcfilter,1,nil,tp)
 end
 function s.drfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x114)
+	return c:IsFaceup() and c:IsSetCard(SET_FUR_HIRE)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.drfilter,tp,LOCATION_MZONE,0,nil)
@@ -99,4 +99,3 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Draw(p,2,REASON_EFFECT)
 	end
 end
-

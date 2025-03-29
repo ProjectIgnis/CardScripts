@@ -1,4 +1,5 @@
 --魂を吸う竹光
+--Soul Devouring Bamboo Sword
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -22,16 +23,16 @@ function s.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e3:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e3:SetCountLimit(1)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCondition(s.descon)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x60}
+s.listed_series={SET_BAMBOO_SWORD}
 function s.filter(c)
-	return c:GetEquipCount()~=0 and c:GetEquipGroup():IsExists(Card.IsSetCard,1,nil,0x60)
+	return c:GetEquipCount()~=0 and c:GetEquipGroup():IsExists(Card.IsSetCard,1,nil,SET_BAMBOO_SWORD)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end
@@ -60,7 +61,7 @@ function s.skipop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(0,1)
 	e1:SetCode(EFFECT_SKIP_DP)
-	e1:SetReset(RESET_PHASE+PHASE_DRAW+RESET_OPPO_TURN)
+	e1:SetReset(RESET_PHASE|PHASE_DRAW|RESET_OPPO_TURN)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)

@@ -1,4 +1,5 @@
 --バッド・エンド・クイーン・ドラゴン
+--Dragon Queen of Tragic Endings
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -25,7 +26,7 @@ function s.initial_effect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_FIELD)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e3:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCountLimit(1)
 	e3:SetCondition(s.spcon)
@@ -35,7 +36,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.hspfilter(c)
-	return c:IsFaceup() and c:GetType()==TYPE_SPELL+TYPE_CONTINUOUS
+	return c:IsFaceup() and c:IsContinuousSpell()
 end
 function s.hspcon(e,c)
 	if c==nil then return true end
@@ -57,10 +58,10 @@ function s.hdop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
+	return Duel.IsTurnPlayer(tp) and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:GetType()==TYPE_SPELL+TYPE_CONTINUOUS and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and c:IsContinuousSpell() and c:IsAbleToGraveAsCost()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_SZONE,0,1,nil) end

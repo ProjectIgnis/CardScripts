@@ -1,4 +1,5 @@
 --C－クラッシュ・ワイバーン
+--C-Crush Wyvern
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddUnionProcedure(c,s.unfilter)
@@ -24,7 +25,7 @@ function s.unfilter(c)
 end
 function s.efilter(e,te)
 	return te:GetOwnerPlayer()~=e:GetHandlerPlayer() and te:GetOwner()~=e:GetOwner()
-		and te:IsActiveType(TYPE_TRAP)
+		and te:IsTrapEffect()
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)

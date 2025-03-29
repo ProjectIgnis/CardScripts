@@ -36,13 +36,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={id}
-s.listed_series={0x13c}
+s.listed_series={SET_CODEBREAKER}
 function s.atktg(e,c)
 	local lg=c:GetLinkedGroup()
-	return not c:IsSetCard(0x13c) and lg and lg:IsContains(e:GetHandler())
+	return not c:IsSetCard(SET_CODEBREAKER) and lg and lg:IsContains(e:GetHandler())
 end
 function s.cfilter(c,tp)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousSetCard(0x13c)
+	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousSetCard(SET_CODEBREAKER)
 		and c:GetPreviousTypeOnField()&(TYPE_MONSTER+TYPE_LINK)==(TYPE_MONSTER+TYPE_LINK)
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
 end
@@ -76,4 +76,3 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-

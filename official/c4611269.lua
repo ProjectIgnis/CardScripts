@@ -1,4 +1,5 @@
 --ライオ・アリゲーター
+--Lion Alligator
 local s,id=GetID()
 function s.initial_effect(c)
 	--pierce

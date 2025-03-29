@@ -1,4 +1,5 @@
 --ナチュル・バンブーシュート
+--Naturia Bamboo Shoot
 local s,id=GetID()
 function s.initial_effect(c)
 	--mat check
@@ -17,15 +18,15 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	e2:SetLabelObject(e1)
 end
-s.listed_series={0x2a}
+s.listed_series={SET_NATURIA}
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	local flag=0
-	if g:IsExists(Card.IsSetCard,1,nil,0x2a) then flag=1 end
+	if g:IsExists(Card.IsSetCard,1,nil,SET_NATURIA) then flag=1 end
 	e:SetLabel(flag)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE)
+	return e:GetHandler():IsTributeSummoned()
 		and e:GetLabelObject():GetLabel()~=0
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
@@ -36,7 +37,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e1:SetTargetRange(0,1)
 	e1:SetValue(s.aclimit)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e:GetHandler():RegisterEffect(e1)
 end
 function s.aclimit(e,re,tp)

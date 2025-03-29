@@ -19,21 +19,21 @@ function s.initial_effect(c)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
 	--fusion summon
-	local params={aux.FilterBoolFunction(Card.IsSetCard,0x9b),Fusion.OnFieldMat}
+	local params={aux.FilterBoolFunction(Card.IsSetCard,SET_MELODIOUS),Fusion.OnFieldMat}
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
-	e3:SetCost(s.cost)
+	e3:SetCost(Cost.SelfToGrave)
 	e3:SetTarget(Fusion.SummonEffTG(table.unpack(params)))
 	e3:SetOperation(Fusion.SummonEffOP(table.unpack(params)))
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x9b}
+s.listed_series={SET_MELODIOUS}
 function s.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x9b)
+	return c:IsFaceup() and c:IsSetCard(SET_MELODIOUS)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.atkfilter(chkc) end
@@ -49,12 +49,8 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_STANDBY|RESET_SELF_TURN)
 		e1:SetValue(800)
 		tc:RegisterEffect(e1)
 	end
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end

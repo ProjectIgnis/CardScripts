@@ -15,22 +15,22 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
-s.listed_series={0x93}
+s.listed_series={SET_CYBER}
 function s.counterfilter(c)
 	return c:IsRace(RACE_MACHINE) or c:GetSummonLocation()~=LOCATION_EXTRA
 end
 function s.cfilter(c)
-	return c:IsRace(RACE_DRAGON+RACE_MACHINE) and c:IsSetCard(0x93) and c:IsAbleToGraveAsCost()
+	return c:IsRace(RACE_DRAGON+RACE_MACHINE) and c:IsSetCard(SET_CYBER) and c:IsAbleToGraveAsCost()
 end
 function s.thfilter(c)
-	return c:IsRace(RACE_DRAGON+RACE_MACHINE) and c:IsSetCard(0x93) and c:IsAbleToHand()
+	return c:IsRace(RACE_DRAGON+RACE_MACHINE) and c:IsSetCard(SET_CYBER) and c:IsAbleToHand()
 end
 function s.check(sg,e,tp,mg)
 	return sg:GetClassCount(Card.GetAttribute)==2 and sg:GetClassCount(Card.GetLocation)==2
 		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,sg)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local rg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil)
+	local rg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_HAND|LOCATION_DECK,0,nil)
 	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0
 		and aux.SelectUnselectGroup(rg,e,tp,2,2,s.check,0) end
 	local g=aux.SelectUnselectGroup(rg,e,tp,2,2,s.check,1,tp,HINTMSG_TOGRAVE)
@@ -41,7 +41,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
 	Duel.RegisterEffect(e1,tp)
@@ -55,7 +55,7 @@ function s.lizfilter(e,c)
 	return not c:IsOriginalRace(RACE_MACHINE)
 end
 function s.gyfilter(c)
-	return c:IsRace(RACE_MACHINE) and c:IsSetCard(0x93) and c:IsType(TYPE_FUSION) and c:IsAbleToGrave()
+	return c:IsRace(RACE_MACHINE) and c:IsSetCard(SET_CYBER) and c:IsType(TYPE_FUSION) and c:IsAbleToGrave()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.gyfilter,tp,LOCATION_EXTRA,0,1,nil) end

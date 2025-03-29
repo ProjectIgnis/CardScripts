@@ -1,4 +1,5 @@
 --バイオレット・ウィッチ
+--Violet Witch
 local s,id=GetID()
 function s.initial_effect(c)
 	--search

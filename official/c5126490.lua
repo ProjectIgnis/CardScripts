@@ -45,7 +45,7 @@ function s.rescon(sg,e,tp,mg)
 	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:IsExists(s.chk,1,nil,sg)
 end
 function s.chk(c,sg)
-	return c:IsCode(CARD_NEOS) and sg:IsExists(Card.IsCode,1,c,78371393)
+	return c:IsCode(CARD_NEOS) and sg:IsExists(Card.IsCode,1,c,CARD_YUBEL)
 end
 function s.spcon(e,c)
 	if c==nil then return true end 

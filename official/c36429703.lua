@@ -78,7 +78,7 @@ function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsActiveType(TYPE_XYZ) and rc:IsSetCard(SET_RAIDRAPTOR) and rc:IsControler(tp)
 	--[[
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
-		and re:IsMonsterEffect() and rc:IsSetCard(SET_RAIDRAPTOR) and rc:IsType(TYPE_XYZ) and rc:GetControler()==tp
+		and re:IsMonsterEffect() and rc:IsSetCard(SET_RAIDRAPTOR) and rc:IsType(TYPE_XYZ) and rc:IsControler(tp)
 	]]
 end
 function s.setfilter(c)

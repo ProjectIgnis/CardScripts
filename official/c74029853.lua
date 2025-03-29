@@ -1,4 +1,5 @@
 --黄金色の竹光
+--Golden Bamboo Sword
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,9 +13,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x60}
+s.listed_series={SET_BAMBOO_SWORD}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x60) and c:IsType(TYPE_EQUIP)
+	return c:IsFaceup() and c:IsSetCard(SET_BAMBOO_SWORD) and c:IsType(TYPE_EQUIP)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil)

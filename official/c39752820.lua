@@ -71,7 +71,7 @@ function s.ctcon(e)
 end
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsLocation(LOCATION_GRAVE) and r==REASON_LINK and c:IsSummonType(SUMMON_TYPE_LINK)
+	return c:IsLocation(LOCATION_GRAVE) and r==REASON_LINK and c:IsLinkSummoned()
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)

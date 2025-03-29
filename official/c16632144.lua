@@ -1,5 +1,5 @@
 --屈強の釣り師
---Angrappler
+--Grappler Angler
 --
 local s,id=GetID()
 function s.initial_effect(c)
@@ -35,4 +35,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 end
-

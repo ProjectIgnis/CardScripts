@@ -1,8 +1,8 @@
 --ラプターズ・アルティメット・メイス
---Raidraptor's Ultimate Mace
+--Raptor's Ultimate Mace
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,0xba))
+	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,SET_RAIDRAPTOR))
 	--atk up
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x95,0xba}
+s.listed_series={SET_RANK_UP_MAGIC,SET_RAIDRAPTOR}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	local ec=e:GetHandler():GetEquipTarget()
@@ -28,7 +28,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return tc==ec and at and at:GetAttack()>ec:GetAttack()
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x95) and c:IsSpell() and c:IsAbleToHand()
+	return c:IsSetCard(SET_RANK_UP_MAGIC) and c:IsSpell() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -50,7 +50,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
 			e1:SetTargetRange(1,0)
 			e1:SetCondition(s.damcon)
-			e1:SetReset(RESET_PHASE+PHASE_DAMAGE_CAL)
+			e1:SetReset(RESET_PHASE|PHASE_DAMAGE_CAL)
 			e1:SetLabelObject(tc)
 			Duel.RegisterEffect(e1,tp)
 		end

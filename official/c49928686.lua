@@ -1,9 +1,9 @@
--- スプライト・ピクシーズ
--- Spright Pixies
--- Scripted by Hatter
+--スプライト・ピクシーズ
+--Spright Pixies
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon self
+	--Special Summon self
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
@@ -12,13 +12,13 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(s.spcon)
 	c:RegisterEffect(e1)
-	-- Boost ATK/DEF of battling monster
+	--Boost ATK/DEF of battling monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
-	e2:SetRange(LOCATION_HAND+LOCATION_MZONE)
+	e2:SetRange(LOCATION_HAND|LOCATION_MZONE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(s.atkcon)
 	e2:SetCost(s.atkcost)
@@ -47,7 +47,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local a,d=Duel.GetBattleMonster(tp)
 	if a and d and a:IsRelateToBattle() and a:IsFaceup() and d:IsRelateToBattle() and d:IsFaceup()
 		and d:IsControler(1-tp) then
-		-- Increase ATK/DEF
+		--Increase ATK/DEF
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)

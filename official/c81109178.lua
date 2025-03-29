@@ -1,4 +1,5 @@
 --ファイヤークラッカー
+--Fire Cracker
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x42)
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,id)
 	e1:SetRange(LOCATION_HAND)
-	e1:SetCost(s.damcost1)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetTarget(s.damtg1)
 	e1:SetOperation(s.damop1)
 	c:RegisterEffect(e1)
@@ -35,10 +36,6 @@ function s.initial_effect(c)
 	e3:SetOperation(s.damop2)
 	c:RegisterEffect(e3)
 end
-function s.damcost1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
-end
 function s.damtg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetTargetPlayer(1-tp)
@@ -53,10 +50,10 @@ function s.damop1(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e1:SetCode(EFFECT_SKIP_DP)
 		e1:SetTargetRange(1,0)
-		if Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_DRAW then 
-			e1:SetReset(RESET_PHASE+PHASE_DRAW+RESET_SELF_TURN,2)
+		if Duel.IsTurnPlayer(tp) and Duel.IsPhase(PHASE_DRAW) then 
+			e1:SetReset(RESET_PHASE|PHASE_DRAW|RESET_SELF_TURN,2)
 		else
-			e1:SetReset(RESET_PHASE+PHASE_DRAW+RESET_SELF_TURN)
+			e1:SetReset(RESET_PHASE|PHASE_DRAW|RESET_SELF_TURN)
 		end
 		Duel.RegisterEffect(e1,tp)
 	end

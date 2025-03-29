@@ -1,4 +1,5 @@
 --炎王獣 キリン
+--Fire King Avatar Kirin
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -25,10 +26,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tgop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x81}
+s.listed_series={SET_FIRE_KING}
 function s.cfilter(c,tp)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp)
-		and c:IsReason(REASON_EFFECT) and c:IsSetCard(0x81)
+		and c:IsReason(REASON_EFFECT) and c:IsSetCard(SET_FIRE_KING)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

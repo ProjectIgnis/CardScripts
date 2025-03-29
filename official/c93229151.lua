@@ -1,13 +1,13 @@
--- 黄金の雫の神碑
--- Mysterune of the Raging Storm
--- Scripted by Hatter
+--黄金の雫の神碑
+--Runick Smiting Storm
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Activate
+	--Activate
 	local e1=Effect.CreateMysteruneQPEffect(c,id,0,s.rmtg,s.rmop,1)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x180}
+s.listed_series={SET_RUNICK}
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)>0 end
 end

@@ -1,5 +1,5 @@
 --光の聖剣ダンネル
---Dunnel, the Noble Arms of Light
+--Dunnell, the Noble Arms of Light
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

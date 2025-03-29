@@ -1,4 +1,5 @@
 --マスク・チェンジ・セカンド
+--Mask Change II
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xa008}
+s.listed_series={SET_MASKED_HERO}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,e:GetHandler()) end
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
@@ -25,7 +26,7 @@ function s.filter(c,e,tp)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,lv,att,c)
 end
 function s.spfilter(c,e,tp,lv,att,mc)
-	return c:IsSetCard(0xa008) and c:GetLevel()>lv and c:IsAttribute(att) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsSetCard(SET_MASKED_HERO) and c:GetLevel()>lv and c:IsAttribute(att) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.chkfilter(c,tc)
 	local lv=tc:GetLevel()

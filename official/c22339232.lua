@@ -16,17 +16,12 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_HAND)
-	e2:SetCost(s.effcost)
+	e2:SetCost(Cost.SelfDiscard)
 	e2:SetTarget(s.efftg)
 	e2:SetOperation(s.effop)
 	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_SKULL_SERVANT,36021814,40991587,id}
-function s.effcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsDiscardable() end
-	Duel.SendtoGrave(c,REASON_COST|REASON_DISCARD)
-end
 function s.spfilter(c,e,tp)
 	return c:IsFaceup() and c:IsCode(36021814,40991587) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

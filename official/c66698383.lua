@@ -1,4 +1,5 @@
 --Vermillion Dragon Mech
+--Vermillion Dragon Mech
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -29,15 +30,15 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c,tp)
-	return (c:IsLocation(LOCATION_HAND+LOCATION_GRAVE) or c:IsFaceup())
+	return (c:IsLocation(LOCATION_HAND|LOCATION_GRAVE) or c:IsFaceup())
 		and c:IsType(TYPE_TUNER) and c:IsAbleToRemoveAsCost()
 		and Duel.IsExistingTarget(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
 		and (c:IsLocation(LOCATION_HAND) or aux.SpElimFilter(c,true,true))
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND|LOCATION_ONFIELD|LOCATION_GRAVE,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,1,1,nil,tp)
+	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND|LOCATION_ONFIELD|LOCATION_GRAVE,0,1,1,nil,tp)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -56,7 +57,7 @@ end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_EFFECT)
-		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_SYNCHRO)
+		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsSynchroSummoned()
 end
 function s.thfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_TUNER) and c:IsAbleToHand()

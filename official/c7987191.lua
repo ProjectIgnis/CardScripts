@@ -29,12 +29,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={20071842}
-s.listed_series={0x102,0x10f}
+s.listed_series={SET_ROKKET,SET_BORREL}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tp~=ep and Duel.GetCurrentChain()==0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0x102),tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,SET_ROKKET),tp,LOCATION_MZONE,0,nil)
 	g:AddCard(e:GetHandler())
 	if chk==0 then return #g>0 end
 	g:Merge(eg)
@@ -44,7 +44,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.NegateSummon(eg)
 	Duel.Destroy(eg,REASON_EFFECT)
-	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0x102),tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,SET_ROKKET),tp,LOCATION_MZONE,0,nil)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then g:AddCard(c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
@@ -56,21 +56,21 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.thfilter(c)
-	return (c:IsSetCard(0x102) or c:IsSetCard(0x10f)) and c:IsMonster() and c:IsAbleToHand()
+	return (c:IsSetCard(SET_ROKKET) or c:IsSetCard(SET_BORREL)) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDestructable,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDestructable,tp,LOCATION_HAND|LOCATION_ONFIELD,0,1,nil)
 		and Duel.IsExistingTarget(s.thfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g=Duel.SelectTarget(tp,s.thfilter,tp,LOCATION_GRAVE,0,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,tp,LOCATION_HAND+LOCATION_ONFIELD)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,tp,LOCATION_HAND|LOCATION_ONFIELD)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,tp,LOCATION_GRAVE)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectMatchingCard(tp,Card.IsDestructable,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,Card.IsDestructable,tp,LOCATION_HAND|LOCATION_ONFIELD,0,1,1,nil)
 	if #g>0 and Duel.Destroy(g,REASON_EFFECT)>0 and tc and tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,tc)

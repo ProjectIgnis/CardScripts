@@ -1,5 +1,5 @@
 --Cocoon of Evolution
---進化の繭
+--Cocoon of Evolution
 --fixed by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
@@ -34,7 +34,7 @@ end
 s.listed_names={58192742,id}
 function s.checkcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetHandler():GetCardTarget()
-	return Duel.GetTurnPlayer()==tp and g and g:IsExists(Card.IsCode,1,nil,58192742)
+	return Duel.IsTurnPlayer(tp) and g and g:IsExists(Card.IsCode,1,nil,58192742)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -80,14 +80,14 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_EQUIP_LIMIT)
 	e1:SetValue(s.eqlimit)
 	e1:SetLabelObject(tc)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e1)
 	--equip effect
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
 	e2:SetCode(EFFECT_SET_BASE_ATTACK)
 	e2:SetValue(0)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_SET_BASE_DEFENSE)

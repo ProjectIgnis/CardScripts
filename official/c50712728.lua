@@ -1,4 +1,5 @@
 --墓守の呪術師
+--Gravekeeper's Curse
 local s,id=GetID()
 function s.initial_effect(c)
 	--damage

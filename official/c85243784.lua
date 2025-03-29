@@ -30,7 +30,7 @@ function s.matfilter(c,lc,sumtype,tp)
 	return c:IsLinkAbove(2) and c:IsType(TYPE_LINK,lc,sumtype,tp)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+	return e:GetHandler():IsLinkSummoned()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -46,7 +46,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(0xff,0xff)
 	e1:SetTarget(aux.TargetBoolFunction(Card.IsCode,TOKEN_LINK))
 	e1:SetValue(s.lklimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local ft=math.min(Duel.GetLocationCount(tp,LOCATION_MZONE),e:GetLabel())
 	if ft<=0 or not Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_LINK,0,TYPES_TOKEN,0,0,1,RACE_CYBERSE,ATTRIBUTE_LIGHT) then return end

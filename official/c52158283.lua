@@ -1,4 +1,5 @@
 --先史遺産コロッサル・ヘッド
+--Chronomaly Colossal Head
 local s,id=GetID()
 function s.initial_effect(c)
 	--adchange
@@ -9,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_GRAVE)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(aux.bfgcost)
+	e1:SetCost(Cost.SelfBanish)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)

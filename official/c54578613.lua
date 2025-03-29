@@ -25,12 +25,12 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x29}
+s.listed_series={SET_DRAGUNITY}
 function s.eqval(ec,c,tp)
-	return ec:IsControler(tp) and ec:IsSetCard(0x29) and ec:IsLevelBelow(3) and ec:IsRace(RACE_DRAGON)
+	return ec:IsControler(tp) and ec:IsSetCard(SET_DRAGUNITY) and ec:IsLevelBelow(3) and ec:IsRace(RACE_DRAGON)
 end
 function s.filter(c)
-	return c:IsSetCard(0x29) and c:IsLevelBelow(3) and c:IsRace(RACE_DRAGON) and not c:IsForbidden()
+	return c:IsSetCard(SET_DRAGUNITY) and c:IsLevelBelow(3) and c:IsRace(RACE_DRAGON) and not c:IsForbidden()
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -49,7 +49,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.costfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x29) and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and c:IsSetCard(SET_DRAGUNITY) and c:IsAbleToGraveAsCost()
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_SZONE,0,1,nil) end

@@ -40,7 +40,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	e1:SetCode(EFFECT_ADD_TYPE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetValue(TYPE_TUNER)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD)
 	c:RegisterEffect(e1)
 end
 function s.thfilter(c)
@@ -48,10 +48,10 @@ function s.thfilter(c)
 		and (c:IsFaceup() or not c:IsLocation(LOCATION_REMOVED))
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and s.thfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.thfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil) end
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE|LOCATION_REMOVED) and s.thfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(s.thfilter,tp,LOCATION_GRAVE|LOCATION_REMOVED,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectTarget(tp,s.thfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,s.thfilter,tp,LOCATION_GRAVE|LOCATION_REMOVED,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)

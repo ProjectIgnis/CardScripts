@@ -1,5 +1,5 @@
 --白銀の城の召使い アリアンナ
---Labrynth Servant Arianna
+--Arianna the Labrynth Servant
 --Scripted by Yuno
 local s,id=GetID()
 function s.initial_effect(c)
@@ -32,10 +32,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={id}
-s.listed_series={0x17f}
+s.listed_series={SET_LABRYNTH}
 --Search a "Labrynth" card
 function s.filter(c)
-	return c:IsSetCard(0x17f) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_LABRYNTH) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
@@ -54,7 +54,7 @@ function s.cfilter(c,re)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsReason(REASON_EFFECT)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==tp and re and re:IsActiveType(TYPE_TRAP) and re:GetHandler():GetOriginalType()==TYPE_TRAP
+	return rp==tp and re and re:IsTrapEffect() and re:GetHandler():GetOriginalType()==TYPE_TRAP
 		and eg:IsExists(s.cfilter,1,nil)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)

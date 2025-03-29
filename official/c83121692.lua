@@ -1,4 +1,5 @@
 --E・HERO テンペスター
+--Elemental HERO Tempest
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -22,7 +23,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.material_setcode={0x8,0x3008}
+s.material_setcode={SET_HERO,SET_ELEMENTAL_HERO}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_ONFIELD,0,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
@@ -41,12 +42,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsFacedown() or not c:IsRelateToEffect(e) then return end
 	if not tc:IsRelateToEffect(e) then return end
 	if c==tc then
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,0)
 	else
 		c:SetCardTarget(tc)
 	end
 	if c:GetFlagEffect(id+1)==0 then
-		c:RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD,0,0)
+		c:RegisterFlagEffect(id+1,RESET_EVENT|RESETS_STANDARD,0,0)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
@@ -54,7 +55,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 		e1:SetTarget(s.indtg)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
 	end
 end

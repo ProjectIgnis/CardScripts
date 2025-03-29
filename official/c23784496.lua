@@ -1,4 +1,5 @@
 --魔界台本「オープニング・セレモニー」
+--Abyss Script - Opening Ceremony
 local s,id=GetID()
 function s.initial_effect(c)
 	--recover
@@ -23,21 +24,21 @@ function s.initial_effect(c)
 	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x10ec}
+s.listed_series={SET_ABYSS_ACTOR}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local rec=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0x10ec),tp,LOCATION_MZONE,0,nil)*500
+	local rec=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,SET_ABYSS_ACTOR),tp,LOCATION_MZONE,0,nil)*500
 	if chk==0 then return rec>0 end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(rec)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,rec)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local rec=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0x10ec),tp,LOCATION_MZONE,0,nil)*500
+	local rec=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,SET_ABYSS_ACTOR),tp,LOCATION_MZONE,0,nil)*500
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 	Duel.Recover(p,rec,REASON_EFFECT)
 end
 function s.filter2(c)
-	return c:IsFaceup() and c:IsType(TYPE_PENDULUM) and c:IsSetCard(0x10ec)
+	return c:IsFaceup() and c:IsType(TYPE_PENDULUM) and c:IsSetCard(SET_ABYSS_ACTOR)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

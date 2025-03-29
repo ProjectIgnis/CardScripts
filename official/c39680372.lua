@@ -1,7 +1,6 @@
 --創造の聖刻印
 --Hieratic Seal of Creation
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -24,14 +23,13 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,id)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
 	--Lists "Hieratic" archetype
-s.listed_series={0x69}
-
+s.listed_series={SET_HIERATIC}
 	--Check for a dragon Xyz monster
 function s.filter1(c,e,tp)
 	local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(c),tp,nil,nil,REASON_XYZ)
@@ -39,7 +37,7 @@ function s.filter1(c,e,tp)
 end
 	--Check for "Hieratic" Xyz monster
 function s.filter2(c,e,tp,mc,code,pg)
-	return mc:IsType(TYPE_XYZ,c,SUMMON_TYPE_XYZ,tp) and c:IsType(TYPE_XYZ) and c:IsSetCard(0x69) and not c:IsOriginalCode(code) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
+	return mc:IsType(TYPE_XYZ,c,SUMMON_TYPE_XYZ,tp) and c:IsType(TYPE_XYZ) and c:IsSetCard(SET_HIERATIC) and not c:IsOriginalCode(code) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
 		and mc:IsCanBeXyzMaterial(c,tp) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end
 	--Activation legality
@@ -67,7 +65,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for "Hieratic" monster
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x69) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(SET_HIERATIC) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 	--Activation legality
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

@@ -1,15 +1,15 @@
--- 解呪の神碑
--- Mysterune of Dispel
--- Scripted by Hatter
+--解呪の神碑
+--Runick Dispelling
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon
+	--Special Summon
 	local e1,e2=Effect.CreateMysteruneQPEffect(c,id,CATEGORY_TOGRAVE+CATEGORY_HANDES,s.tgtg,s.tgop,2,EFFECT_FLAG_DELAY,EVENT_TO_HAND)
 	e1:SetCondition(s.tgcon)
 	c:RegisterEffect(e1)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x180}
+s.listed_series={SET_RUNICK}
 function s.tgconfilter(c,tp)
 	return c:IsControler(1-tp) and c:IsPreviousLocation(LOCATION_DECK)
 end

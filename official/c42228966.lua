@@ -44,11 +44,11 @@ s.listed_names={id}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsDamageCalculated() then return end
 	if Duel.GetAttackTarget() then
-		Duel.RegisterFlagEffect(0,id,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(0,id,RESET_PHASE|PHASE_END,0,1)
 	end
 end
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN2 and Duel.GetFlagEffect(0,id)==0
+	return Duel.IsPhase(PHASE_MAIN2) and Duel.GetFlagEffect(0,id)==0
 end
 function s.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end

@@ -1,4 +1,5 @@
 --六武衆のご隠居
+--Elder of the Six Samurai
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon

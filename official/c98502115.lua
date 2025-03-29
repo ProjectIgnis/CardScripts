@@ -1,4 +1,5 @@
 --超魔導剣士－ブラック・パラディン
+--Dark Paladin
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -34,14 +35,14 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.val(e,c)
-	return Duel.GetMatchingGroupCount(s.filter,0,0x14,0x14,nil)*500
+	return Duel.GetMatchingGroupCount(s.filter,0,LOCATION_MZONE|LOCATION_GRAVE,LOCATION_MZONE|LOCATION_GRAVE,nil)*500
 end
 function s.filter(c)
 	return c:IsRace(RACE_DRAGON) and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
-		and re:IsActiveType(TYPE_SPELL) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
+		and re:IsSpellEffect() and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end

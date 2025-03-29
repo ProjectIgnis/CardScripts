@@ -1,7 +1,6 @@
 --フリント・クラッガー
 --Flint Cragger
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -30,10 +29,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 	--Lists "Fossil" archetype
-s.listed_series={0x14c}
+s.listed_series={SET_FOSSIL}
 	--Specifically lists itself and "Fossil Fusion"
 s.listed_names={id,CARD_FOSSIL_FUSION}
-
 	--Activation legality
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_EXTRA,0,1,nil)	
@@ -43,7 +41,7 @@ function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 	--Check for a "Fossil" fusion monster
 function s.tgfilter(c)
-	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x14c) and c:IsAbleToGrave()
+	return c:IsType(TYPE_FUSION) and c:IsSetCard(SET_FOSSIL) and c:IsAbleToGrave()
 end
 	--Send 1 "Fossil" fusion monster from extra deck to GY
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)

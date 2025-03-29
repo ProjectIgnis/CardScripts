@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.lpop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x4}
+s.listed_series={SET_AMAZONESS}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
@@ -34,7 +34,7 @@ function s.pendfilter(c,tp)
 	return c:IsType(TYPE_PENDULUM) and not c:IsForbidden() and Duel.CheckPendulumZones(tp)
 end
 function s.cfilter(c,tp)
-	return c:IsMonster() and c:IsSetCard(0x4) and (c:IsAbleToHand() or s.pendfilter(c,tp))
+	return c:IsMonster() and c:IsSetCard(SET_AMAZONESS) and (c:IsAbleToHand() or s.pendfilter(c,tp))
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -49,7 +49,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.amzfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x4) and c:IsOriginalType(TYPE_MONSTER)
+	return c:IsFaceup() and c:IsSetCard(SET_AMAZONESS) and c:IsOriginalType(TYPE_MONSTER)
 end
 function s.lpcond(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp and Duel.IsExistingMatchingCard(s.amzfilter,tp,LOCATION_ONFIELD,0,1,nil)

@@ -1,5 +1,5 @@
 --お代狸様の代算様ー
---Overeager Mr. & Mrs. Tanuki
+--Emperor Tanuki's Critter Count
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

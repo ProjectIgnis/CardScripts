@@ -35,7 +35,7 @@ function s.matfilter(c,sc,st,tp)
 end
 function s.thcon(e)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_LINK) and c:IsInExtraMZone()
+	return c:IsLinkSummoned() and c:IsInExtraMZone()
 end
 function s.thfilter(c)
 	return c:IsCode(56063182) and c:IsAbleToHand()

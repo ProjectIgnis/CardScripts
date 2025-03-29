@@ -1,6 +1,5 @@
 --Ｅｍトラピーズ・マジシャン
 --Performage Trapeze Magician
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -25,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetCountLimit(1)
 	e2:SetHintTiming(0,TIMING_MAIN_END)
 	e2:SetCondition(s.mtcon)
-	e2:SetCost(s.mtcost)
+	e2:SetCost(Cost.Detach(1))
 	e2:SetTarget(s.mttg)
 	e2:SetOperation(s.mtop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
@@ -40,18 +39,13 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xc6}
-
+s.listed_series={SET_PERFORMAGE}
 function s.damval(e,re,val,r,rp,rc)
 	local atk=e:GetHandler():GetAttack()
 	if val<=atk then return 0 else return val end
 end
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1 and Duel.IsAbleToEnterBP()
-end
-function s.mtcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
+	return Duel.IsPhase(PHASE_MAIN1) and Duel.IsAbleToEnterBP()
 end
 function s.mtfilter(c)
 	return c:IsPosition(POS_FACEUP_ATTACK) and not c:IsHasEffect(EFFECT_EXTRA_ATTACK)
@@ -75,20 +69,20 @@ function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_EXTRA_ATTACK)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,fid)
+		tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1,fid)
 		--Destroy it at end of battle phase
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e2:SetCode(EVENT_PHASE+PHASE_BATTLE)
+		e2:SetCode(EVENT_PHASE|PHASE_BATTLE)
 		e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 		e2:SetCountLimit(1)
 		e2:SetLabel(fid)
 		e2:SetLabelObject(tc)
 		e2:SetCondition(s.descon)
 		e2:SetOperation(s.desop)
-		e2:SetReset(RESET_PHASE+PHASE_END)
+		e2:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e2,tp)
 	end
 end
@@ -106,7 +100,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 		or (rp~=tp and c:IsReason(REASON_DESTROY) and c:IsPreviousControler(tp))
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xc6) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_PERFORMAGE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

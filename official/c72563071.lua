@@ -1,4 +1,5 @@
 --サイコ・ショックウェーブ
+--Psychic Shockwave
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and re:IsActiveType(TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
+	return ep~=tp and re:IsTrapEffect() and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function s.cfilter(c)
 	return c:IsSpellTrap() and c:IsDiscardable()

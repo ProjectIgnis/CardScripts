@@ -1,9 +1,9 @@
--- 春化精の女神 ヴェーラ
--- Vera, the Vernalizer Fairy Goddess
--- Scripted by Hatter
+--春化精の女神 ヴェーラ
+--Vera the Vernusylph Goddess
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Negate activated effect
+	--Negate activated effect
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.negcon)
 	e1:SetOperation(s.negop)
 	c:RegisterEffect(e1)
-	-- Take control of 1 opponent monster
+	--Take control of 1 opponent monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_CONTROL)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.cttg)
 	e2:SetOperation(s.ctop)
 	c:RegisterEffect(e2)
-	-- Special Summon 1 EARTH monster
+	--Special Summon 1 EARTH monster
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -38,16 +38,16 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x183}
+s.listed_series={SET_VERNUSYLPH}
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==1-tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainDisablable(ev) and e:GetHandler():GetFlagEffect(id)==0
+	return rp==1-tp and re:IsMonsterEffect() and Duel.IsChainDisablable(ev) and e:GetHandler():GetFlagEffect(id)==0
 		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsAttribute,ATTRIBUTE_EARTH),tp,LOCATION_MZONE,0,5,nil)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local cid=Duel.GetChainInfo(ev,CHAININFO_CHAIN_ID)
 	if Duel.GetFlagEffectLabel(tp,id)==cid or not Duel.SelectEffectYesNo(tp,c) then return end
-	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 	Duel.RegisterFlagEffect(tp,id,RESET_CHAIN,0,1,cid)
 	Duel.Hint(HINT_CARD,0,id)
 	local rc=re:GetHandler()
@@ -66,13 +66,13 @@ end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.GetControl(tc,tp) then
-		-- Attribute becomes EARTH
+		--Attribute becomes EARTH
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
 		e1:SetValue(ATTRIBUTE_EARTH)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 end

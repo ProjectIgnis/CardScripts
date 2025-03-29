@@ -42,7 +42,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.recop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xef}
+s.listed_series={SET_DARKLORD}
 function s.rmfilter(c)
 	return c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
@@ -77,7 +77,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xef) and c:IsMonster() and (c:IsAbleToHand() or c:IsAbleToGrave())
+	return c:IsSetCard(SET_DARKLORD) and c:IsMonster() and (c:IsAbleToHand() or c:IsAbleToGrave())
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -88,7 +88,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	aux.ToHandOrElse(g:GetFirst(),tp)
 end
 function s.reccon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

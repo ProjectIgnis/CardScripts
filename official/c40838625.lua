@@ -1,6 +1,5 @@
 --砂塵のバリア －ダスト・フォース－
 --Quaking Mirror Force
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--When opponent's monster declares an attack, change all of their attack position monsters to face-down defense position
@@ -14,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer()
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.filter(c)
 	return c:IsAttackPos() and c:IsCanTurnSet()
@@ -36,7 +35,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e1)
 		end
 	end

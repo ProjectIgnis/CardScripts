@@ -1,4 +1,5 @@
 --影星軌道兵器ハイドランダー
+--Orbital Hydralander
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

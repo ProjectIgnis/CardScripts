@@ -1,4 +1,5 @@
 --海神の巫女
+--Maiden of the Aqua
 local s,id=GetID()
 function s.initial_effect(c)
 	--field

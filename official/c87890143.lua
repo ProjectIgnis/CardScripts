@@ -1,4 +1,5 @@
 --ジェネレーション・フォース
+--Generation Force
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x73}
+s.listed_series={SET_XYZ}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ)
 end
@@ -19,7 +20,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.filter(c)
-	return c:IsSetCard(0x73) and c:IsAbleToHand()
+	return c:IsSetCard(SET_XYZ) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

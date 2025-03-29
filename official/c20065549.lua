@@ -1,4 +1,5 @@
 --絶対魔法禁止区域
+--Non-Spellcasting Area
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -20,5 +21,5 @@ function s.etarget(e,c)
 	return not c:IsType(TYPE_EFFECT)
 end
 function s.efilter(e,re)
-	return re:IsActiveType(TYPE_SPELL)
+	return re:IsSpellEffect()
 end

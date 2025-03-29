@@ -1,4 +1,5 @@
 --サイコ・チューン
+--Psychic Tuning
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -54,12 +55,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_ADD_TYPE)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			e1:SetValue(TYPE_TUNER)
 			tc:RegisterEffect(e1)
 			Duel.SpecialSummonComplete()
 			c:SetCardTarget(tc)
-			c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD_EXC_GRAVE,0,1,lv)
+			c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD_EXC_GRAVE,0,1,lv)
 		end
 	end
 end

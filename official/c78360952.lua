@@ -1,7 +1,6 @@
 --白昼のスナイパー
---Midday Sentinel
+--Sunlit Sentinel
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -27,13 +26,13 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetDescription(aux.Stringid(id,0))
 		e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DESTROY)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-		e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
+		e1:SetCode(EVENT_PHASE|PHASE_STANDBY)
 		e1:SetRange(LOCATION_GRAVE)
 		e1:SetCountLimit(1)
 		e1:SetCondition(s.spcon)
 		e1:SetTarget(s.sptg)
 		e1:SetOperation(s.spop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
 	end
 end

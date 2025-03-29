@@ -14,9 +14,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x3b}
+s.listed_series={SET_RED_EYES}
 function s.cfilter(c)
-	return c:IsSetCard(0x3b) and c:GetLevel()==7 and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_RED_EYES) and c:GetLevel()==7 and c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
@@ -30,7 +30,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
 function s.tgfilter(c)
-	return c:IsSetCard(0x3b) and c:GetLevel()==7 and c:IsAbleToGrave()
+	return c:IsSetCard(SET_RED_EYES) and c:GetLevel()==7 and c:IsAbleToGrave()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)

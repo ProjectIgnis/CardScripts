@@ -1,4 +1,5 @@
 --昼夜の大火事
+--Ookazi
 local s,id=GetID()
 function s.initial_effect(c)
 	--damage

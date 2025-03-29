@@ -1,5 +1,5 @@
 --無限起動キャンサークレーン
---Infinite Ignition Cancer Crane
+--Infinitrack Crab Crane
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)

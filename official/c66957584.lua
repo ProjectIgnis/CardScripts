@@ -1,4 +1,5 @@
 --インフェルニティガン
+--Infernity Launcher
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -29,9 +30,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xb}
+s.listed_series={SET_INFERNITY}
 function s.disfilter(c)
-	return c:IsSetCard(0xb) and c:IsMonster() and c:IsAbleToGrave()
+	return c:IsSetCard(SET_INFERNITY) and c:IsMonster() and c:IsAbleToGrave()
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.disfilter,tp,LOCATION_HAND,0,1,nil) end
@@ -53,7 +54,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0xb) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_INFERNITY) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc,e,tp) end

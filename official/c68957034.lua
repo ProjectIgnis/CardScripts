@@ -1,15 +1,15 @@
--- 輝く炎の神碑
--- Mysterune of the Brilliant Flame
--- Scripted by Hatter
+--輝く炎の神碑
+--Runick Flashing Fire
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Activate
+	--Activate
 	local e1=Effect.CreateMysteruneQPEffect(c,id,CATEGORY_DESTROY,s.destg,s.desop,2,EFFECT_FLAG_CARD_TARGET)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x180}
+s.listed_series={SET_RUNICK}
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsSummonType(SUMMON_TYPE_SPECIAL) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsSpecialSummoned() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsSummonType,tp,0,LOCATION_MZONE,1,nil,SUMMON_TYPE_SPECIAL) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,Card.IsSummonType,tp,0,LOCATION_MZONE,1,1,nil,SUMMON_TYPE_SPECIAL)

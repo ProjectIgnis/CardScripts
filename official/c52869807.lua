@@ -1,4 +1,5 @@
 --BF－逆風のガスト
+--Blackwing - Gust the Backblast
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -20,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetValue(-300)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x33}
+s.listed_series={SET_BLACKWING}
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0 and
@@ -31,7 +32,7 @@ function s.atkcon(e)
 	local d=Duel.GetAttackTarget()
 	local tp=e:GetHandlerPlayer()
 	return (ph==PHASE_DAMAGE or ph==PHASE_DAMAGE_CAL)
-		and d and d:IsControler(tp) and d:IsSetCard(0x33)
+		and d and d:IsControler(tp) and d:IsSetCard(SET_BLACKWING)
 end
 function s.atktg(e,c)
 	return c==Duel.GetAttacker()

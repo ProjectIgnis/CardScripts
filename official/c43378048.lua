@@ -1,5 +1,5 @@
 --混沌幻魔アーミタイル
---Armityle the Chaos Phantom
+--Armityle the Chaos Phantasm
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material

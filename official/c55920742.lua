@@ -1,9 +1,9 @@
--- Ｎｏ－Ｐ.Ｕ.Ｎ.Ｋ.フォクシー・チューン
--- Noh P.U.N.K. Foxy Tune
--- Scripted by Hatter
+--Ｎｏ－Ｐ.Ｕ.Ｎ.Ｋ.フォクシー・チューン
+--Noh-P.U.N.K. Foxy Tune
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Gain LP
+	--Gain LP
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_RECOVER)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.lptg)
 	e1:SetOperation(s.lpop)
 	c:RegisterEffect(e1)
-	-- Special Summon self
+	--Special Summon self
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -25,19 +25,19 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	-- Send to GY and Special Summon from Deck
+	--Send to GY and Special Summon from Deck
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_HANDES+CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_IGNITION)
-	e3:SetRange(LOCATION_HAND+LOCATION_MZONE)
+	e3:SetRange(LOCATION_HAND|LOCATION_MZONE)
 	e3:SetCountLimit(1,{id,1})
-	e3:SetCost(s.tgcost)
+	e3:SetCost(Cost.SelfToGrave)
 	e3:SetTarget(s.tgtg)
 	e3:SetOperation(s.tgop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x173}
+s.listed_series={SET_PUNK}
 function s.lptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local dam=e:GetHandler():GetBattleTarget():GetBaseAttack()
 	if chk==0 then return dam>0 end
@@ -50,9 +50,9 @@ function s.lpop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Recover(p,d,REASON_EFFECT)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,aux.ReleaseCheckMMZ,nil,0x173) end
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,aux.ReleaseCheckMMZ,nil,SET_PUNK) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,aux.ReleaseCheckMMZ,nil,0x173)
+	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,aux.ReleaseCheckMMZ,nil,SET_PUNK)
 	Duel.Release(g,REASON_COST)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -65,12 +65,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-function s.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
-end
 function s.tgspfilter(c,e,tp)
-	return c:IsSetCard(0x173) and not c:IsLevel(8) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_PUNK) and not c:IsLevel(8) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

@@ -1,4 +1,5 @@
 --強欲なウツボ
+--Moray of Greed
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -28,7 +29,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
 		local sg=g:Select(p,2,2,nil)
 		Duel.ConfirmCards(1-p,sg)
-		Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(sg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 		Duel.ShuffleDeck(p)
 		Duel.BreakEffect()
 		Duel.Draw(p,3,REASON_EFFECT)

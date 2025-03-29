@@ -1,16 +1,16 @@
--- 神碑の穂先
--- Point of the Mysterune
--- Scripted by Hatter
+--神碑の穂先
+--Runick Tip
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Activate
+	--Activate
 	local e1=Effect.CreateMysteruneQPEffect(c,id,CATEGORY_SEARCH+CATEGORY_TOHAND,s.thtg,s.thop,1)
 	c:RegisterEffect(e1)
 end
 s.listed_names={id}
-s.listed_series={0x180}
+s.listed_series={SET_RUNICK}
 function s.thfilter(c)
-	return c:IsSetCard(0x180) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_RUNICK) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

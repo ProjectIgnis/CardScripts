@@ -1,4 +1,5 @@
 --マシンナーズ・スナイパー
+--Machina Sniper
 local s,id=GetID()
 function s.initial_effect(c)
 	--atk limit
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetValue(aux.imval1)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x36}
+s.listed_series={SET_MACHINA}
 function s.tg(e,c)
-	return c:IsSetCard(0x36) and c:GetCode()~=id
+	return c:IsSetCard(SET_MACHINA) and c:GetCode()~=id
 end

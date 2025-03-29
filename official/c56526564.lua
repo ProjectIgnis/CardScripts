@@ -1,5 +1,5 @@
 --絶縁の落とし穴
---Breakoff Trap Hole
+--Break Off Trap Hole
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c)
-	return c:IsLinkMonster() and c:IsSummonType(SUMMON_TYPE_LINK)
+	return c:IsLinkMonster() and c:IsLinkSummoned()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil)

@@ -1,9 +1,9 @@
--- デスピアの凶劇
--- Ad Libitum of Despia
--- Scripted by Hatter
+--デスピアの凶劇
+--Ad Libitum of Despia
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Monsters on the field gain ATK
+	--Monsters on the field gain ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.atktg)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
-	-- Special Summon
+	--Special Summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x166}
+s.listed_series={SET_DESPIA}
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.HasLevel),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 end
@@ -39,7 +39,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+			e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN)
 			e1:SetValue(sc:GetLevel()*100)
 			sc:RegisterEffect(e1)
 		end
@@ -47,19 +47,19 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return (r&REASON_FUSION)==REASON_FUSION and c:IsPreviousLocation(LOCATION_ONFIELD+LOCATION_HAND)
-		and c:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and c:IsFaceup()
+	return (r&REASON_FUSION)==REASON_FUSION and c:IsPreviousLocation(LOCATION_ONFIELD|LOCATION_HAND)
+		and c:IsLocation(LOCATION_GRAVE|LOCATION_REMOVED) and c:IsFaceup()
 end
 function s.spfilter(c,e,tp)
-	return not c:IsCode(id) and (c:IsSetCard(0x166) or (c:IsLevelAbove(8) and c:IsType(TYPE_FUSION)))
+	return not c:IsCode(id) and (c:IsSetCard(SET_DESPIA) or (c:IsLevelAbove(8) and c:IsType(TYPE_FUSION)))
 		and c:IsFaceup() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE|LOCATION_REMOVED) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil,e,tp) end
+		and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE|LOCATION_REMOVED,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectTarget(tp,s.spfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil,e,tp)
+	local g=Duel.SelectTarget(tp,s.spfilter,tp,LOCATION_GRAVE|LOCATION_REMOVED,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)

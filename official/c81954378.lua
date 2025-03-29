@@ -1,4 +1,5 @@
 --死神の大鎌－デスサイス
+--Reaper Scythe - Dreadscythe
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsCode,18175965))

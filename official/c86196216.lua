@@ -1,4 +1,5 @@
 --RUM－デス・ダブル・フォース
+--Rank-Up-Magic Doom Double Force
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -19,18 +20,18 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
-s.listed_series={0xba}
+s.listed_series={SET_RAIDRAPTOR}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	for tc in aux.Next(eg) do
-		if tc:IsSetCard(0xba) and tc:IsType(TYPE_XYZ) and tc:IsReason(REASON_DESTROY) and tc:IsReason(REASON_BATTLE) then
-			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		if tc:IsSetCard(SET_RAIDRAPTOR) and tc:IsType(TYPE_XYZ) and tc:IsReason(REASON_DESTROY) and tc:IsReason(REASON_BATTLE) then
+			tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 		end
 	end
 end
 function s.filter1(c,e,tp)
 	local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(c),tp,nil,nil,REASON_XYZ)
-	return (#pg<=0 or (#pg==1 and pg:IsContains(c))) and c:IsSetCard(0xba) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:GetFlagEffect(id)~=0
+	return (#pg<=0 or (#pg==1 and pg:IsContains(c))) and c:IsSetCard(SET_RAIDRAPTOR) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:GetFlagEffect(id)~=0
 		and c:IsType(TYPE_XYZ) and (c:GetRank()>0 or c:IsStatus(STATUS_NO_LEVEL))
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,c,c:GetRank()*2,pg)
 end

@@ -1,4 +1,5 @@
 --連爆魔人
+--Blast Asmodian
 local s,id=GetID()
 function s.initial_effect(c)
 	--chain

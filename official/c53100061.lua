@@ -1,4 +1,5 @@
 --X－セイバー アクセル
+--X-Saber Axel
 local s,id=GetID()
 function s.initial_effect(c)
 	--draw
@@ -14,9 +15,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xd}
+s.listed_series={SET_SABER}
 function s.filter(c)
-	return c:IsSetCard(0xd) and c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_BATTLE)
+	return c:IsSetCard(SET_SABER) and c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_BATTLE)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.filter,1,nil)

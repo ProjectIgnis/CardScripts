@@ -1,4 +1,5 @@
 --白銀の翼
+--Silver Wing
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,s.filter)

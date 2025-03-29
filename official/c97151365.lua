@@ -30,12 +30,12 @@ function s.initial_effect(c)
 end
 s.counter_place_list={0x1e}
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetTurnPlayer()~=tp or Duel.GetAttackTarget()~=nil then
+	if Duel.IsTurnPlayer(1-tp) or Duel.GetAttackTarget()~=nil then
 		e:GetHandler():AddCounter(0x1e,1)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)
+	return Duel.IsTurnPlayer(tp) and (Duel.IsMainPhase())
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end

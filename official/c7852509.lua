@@ -1,5 +1,5 @@
 --Loop of Destruction
---Scripted by Eerie Code
+--Loop of Destruction
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

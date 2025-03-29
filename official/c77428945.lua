@@ -1,4 +1,5 @@
 --土地鋸
+--Terrene Toothed Tsuchinoko
 local s,id=GetID()
 function s.initial_effect(c)
 	--position
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsCanTurnSet() and c:IsSummonType(SUMMON_TYPE_SPECIAL)
+	return c:IsFaceup() and c:IsCanTurnSet() and c:IsSpecialSummoned()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

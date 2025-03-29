@@ -1,5 +1,5 @@
 --雙王の械
---The Shackles of Souoh
+--Abomination's Prison
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -26,9 +26,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x130}
+s.listed_series={SET_UNCHAINED}
 function s.thfilter(c)
-	return c:IsSetCard(0x130) and c:IsAbleToHand()
+	return c:IsSetCard(SET_UNCHAINED) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -47,7 +47,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsReason(REASON_EFFECT) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEDOWN)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x130) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_UNCHAINED) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

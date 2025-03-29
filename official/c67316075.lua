@@ -1,4 +1,5 @@
 --堕天使ナース－レフィキュル
+--Darklord Nurse Reficule
 local s,id=GetID()
 function s.initial_effect(c)
 	--recover conversion

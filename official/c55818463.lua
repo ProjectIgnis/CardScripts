@@ -1,4 +1,5 @@
 --死王リッチーロード
+--Lich Lord, King of the Underworld
 local s,id=GetID()
 function s.initial_effect(c)
 	--tribute limit

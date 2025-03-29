@@ -1,4 +1,5 @@
 --ダメージ・ワクチンΩMAX
+--Damage Vaccine Ω MAX
 local s,id=GetID()
 function s.initial_effect(c)
 	--recover

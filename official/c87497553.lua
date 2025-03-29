@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x116}
+s.listed_series={SET_CRUSADIA}
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFlagEffect(tp,id)==0
 end
@@ -33,13 +33,13 @@ function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 	e1:SetOperation(s.actop)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 end
 function s.actop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	if re:IsActiveType(TYPE_MONSTER) and rc:IsSetCard(0x116) and ep==tp then
+	if re:IsMonsterEffect() and rc:IsSetCard(SET_CRUSADIA) and ep==tp then
 		Duel.SetChainLimit(s.chainlm)
 	end
 end
@@ -51,7 +51,7 @@ function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
 	if not d then return false end
 	if a:IsStatus(STATUS_OPPO_BATTLE) and d:IsControler(tp) then a,d=d,a end
-	if a:IsLinkMonster() and a:IsSetCard(0x116) and d:IsStatus(STATUS_BATTLE_DESTROYED) then
+	if a:IsLinkMonster() and a:IsSetCard(SET_CRUSADIA) and d:IsStatus(STATUS_BATTLE_DESTROYED) then
 		e:SetLabelObject(a)
 		return true
 	else return false end

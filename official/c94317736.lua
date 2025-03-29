@@ -1,5 +1,5 @@
 --極東秘泉郷
---Secret Hot Springs of the Far East
+--Hidden Springs of the Far East
 --Scripted by The Razgriz
 local s,id=GetID()
 function s.initial_effect(c)
@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.reccon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN2
+	return Duel.IsPhase(PHASE_MAIN2)
 end
 function s.recop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -34,7 +34,7 @@ function s.recop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_CANNOT_DISABLE_SUMMON)
 		e1:SetRange(LOCATION_FZONE)
 		e1:SetProperty(EFFECT_FLAG_IGNORE_RANGE+EFFECT_FLAG_SET_AVAILABLE)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e1,p)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_CANNOT_DISABLE_SPSUMMON)
@@ -45,7 +45,7 @@ function s.recop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetCode(EFFECT_CANNOT_INACTIVATE)
 		e3:SetRange(LOCATION_FZONE)
 		e3:SetValue(s.efilter)
-		e3:SetReset(RESET_PHASE+PHASE_END)
+		e3:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e3,p)
 		--Set Spell/Traps cannot be destroyed or targeted 
 		local e4=Effect.CreateEffect(c)
@@ -55,7 +55,7 @@ function s.recop(e,tp,eg,ep,ev,re,r,rp)
 		e4:SetRange(LOCATION_FZONE)
 		e4:SetTargetRange(LOCATION_SZONE,0)
 		e4:SetTarget(aux.TargetBoolFunction(Card.IsPosition,POS_FACEDOWN))
-		e4:SetReset(RESET_PHASE+PHASE_END)
+		e4:SetReset(RESET_PHASE|PHASE_END)
 		e4:SetValue(s.tgvalue)
 		Duel.RegisterEffect(e4,p)
 		local e5=e4:Clone()

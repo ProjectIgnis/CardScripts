@@ -1,4 +1,5 @@
 --調律師の陰謀
+--Tuner's Scheme
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -41,7 +42,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_OWNER_RELATE)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetValue(tp)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET)
 		e1:SetCondition(s.con)
 		tc:RegisterEffect(e1)
 		--redirect
@@ -50,7 +51,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e2:SetCondition(s.dircon)
 		e2:SetValue(LOCATION_REMOVED)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e2)
 	end
 end

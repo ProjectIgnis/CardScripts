@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Fusion summon procedure
-	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0xe1),aux.FilterBoolFunctionEx(Card.IsType,TYPE_FUSION))
+	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_METALFOES),aux.FilterBoolFunctionEx(Card.IsType,TYPE_FUSION))
 	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
 	--Enable pendulum summon
@@ -44,10 +44,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.penop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xe1}
-s.material_setcode={0xe1}
+s.listed_series={SET_METALFOES}
+s.material_setcode={SET_METALFOES}
 function s.cfilter(c,tp)
-	return c:IsReason(REASON_EFFECT) and c:IsPreviousSetCard(0xe1)
+	return c:IsReason(REASON_EFFECT) and c:IsPreviousSetCard(SET_METALFOES)
 		and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)

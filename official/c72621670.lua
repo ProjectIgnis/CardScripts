@@ -1,4 +1,5 @@
 --ダブルマジックアームバインド
+--Double Magical Arm Bind
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -39,6 +40,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(s.tfilter,nil,e)
 	if #g<2 then return end
 	local rct=1
-	if Duel.GetTurnPlayer()~=tp then rct=2 end
+	if Duel.IsTurnPlayer(1-tp) then rct=2 end
 	Duel.GetControl(g,tp,PHASE_END,rct)
 end

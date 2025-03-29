@@ -1,7 +1,6 @@
 --海造賊－祝宴
 --Plunder Patroll Parrrty
 --Scripted by Naim
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Draw, then shuffle card(s) from hand to deck
@@ -29,10 +28,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.eqpop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x13f}
-
+s.listed_series={SET_PLUNDER_PATROLL}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x13f),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_PLUNDER_PATROLL),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsType,TYPE_EQUIP),tp,LOCATION_ONFIELD,0,nil)
@@ -54,7 +52,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.eqptgfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x13f) and c:IsSummonLocation(LOCATION_EXTRA) and c:IsLocation(LOCATION_MZONE) and c:IsSummonPlayer(tp)
+	return c:IsFaceup() and c:IsSetCard(SET_PLUNDER_PATROLL) and c:IsSummonLocation(LOCATION_EXTRA) and c:IsLocation(LOCATION_MZONE) and c:IsSummonPlayer(tp)
 end
 function s.eqptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg and eg:IsExists(s.eqptgfilter,1,nil,tp) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end
@@ -76,14 +74,14 @@ function s.equipop(c,e,tp,tc)
 	e1:SetType(EFFECT_TYPE_EQUIP)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(500)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	tc:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_EQUIP_LIMIT)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e2:SetValue(s.eqlimit)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 	tc:RegisterEffect(e2)
 end
 function s.eqlimit(e,c)

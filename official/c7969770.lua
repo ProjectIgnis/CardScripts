@@ -1,5 +1,5 @@
 --トランスファミリア
---Transfamiliar
+--Trancefamiliar
 --
 local s,id=GetID()
 function s.initial_effect(c)
@@ -27,4 +27,3 @@ function s.mvop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
 	Duel.MoveSequence(tc,math.log(Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,0),2))
 end
-

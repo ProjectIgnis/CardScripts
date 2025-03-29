@@ -19,10 +19,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-s.listed_series={0x165}
+s.listed_series={SET_URSARCTIC}
 --Banish
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x165)
+	return c:IsFaceup() and c:IsSetCard(SET_URSARCTIC)
 end
 function s.bfilter(c)
 	return c:IsAbleToRemove()

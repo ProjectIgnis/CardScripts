@@ -1,4 +1,5 @@
 --Skyforce Kishin
+--Berserker of the Tenyi
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon

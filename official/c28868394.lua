@@ -1,7 +1,6 @@
 --ジーナの蟲惑魔
---Traptrix Ginalloa
+--Traptrix Vesiculo
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -31,19 +30,18 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCountLimit(1,id)
-	e3:SetCost(aux.bfgcost)
+	e3:SetCost(Cost.SelfBanish)
 	e3:SetCondition(s.setcon)
 	e3:SetTarget(s.settg)
 	e3:SetOperation(s.setop)
 	c:RegisterEffect(e3)
 end
 	--Lists "Hole" archetype
-s.listed_series={0x4c,0x89}
-
+s.listed_series={SET_TRAP_HOLE,SET_HOLE}
 	--Unaffected by "Hole" normal trap cards
 function s.efilter(e,te)
 	local c=te:GetHandler()
-	return c:GetType()==TYPE_TRAP and (c:IsSetCard(0x4c) or c:IsSetCard(0x89))
+	return c:IsNormalTrap() and (c:IsSetCard(SET_TRAP_HOLE) or c:IsSetCard(SET_HOLE))
 end
 	--Check for a set trap
 function s.cfilter(c)
@@ -71,7 +69,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for a "Hole" normal trap
 function s.setfilter(c)
-	return c:GetType()==TYPE_TRAP and c:IsSSetable() and (c:IsSetCard(0x4c) or c:IsSetCard(0x89))
+	return c:IsNormalTrap() and c:IsSSetable() and (c:IsSetCard(SET_TRAP_HOLE) or c:IsSetCard(SET_HOLE))
 end
 	--If you have no cards in your S/T zones
 function s.filter(c)

@@ -1,4 +1,5 @@
 --RR－ブースター・ストリクス
+--Raidraptor - Booster Strix
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
@@ -13,10 +14,10 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xba}
+s.listed_series={SET_RAIDRAPTOR}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local at=eg:GetFirst()
-	return at:IsFaceup() and at:IsControler(tp) and at:IsSetCard(0xba)
+	return at:IsFaceup() and at:IsControler(tp) and at:IsSetCard(SET_RAIDRAPTOR)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end

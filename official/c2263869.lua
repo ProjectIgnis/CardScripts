@@ -1,9 +1,9 @@
--- 月女神の鏃
--- Artemate Slay
--- Scripted by Hatter
+--月女神の鏃
+--Ultimate Slayer
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Return to the Deck
+	--Return to the Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TODECK)
@@ -37,7 +37,7 @@ function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.SelectTarget(tp,s.tdfilter,tp,0,LOCATION_MZONE,1,1,nil,e,extype)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,0,0)
 	if e:IsHasType(EFFECT_TYPE_ACTIVATE) then
-		Duel.SetChainLimit(function(e,ep,tp) return ep==tp or not e:IsActiveType(TYPE_MONSTER) end)
+		Duel.SetChainLimit(function(e,ep,tp) return ep==tp or not e:IsMonsterEffect() end)
 	end
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)

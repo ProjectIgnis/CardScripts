@@ -1,4 +1,5 @@
 --ペンデュラム・コール
+--Pendulum Call
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -14,12 +15,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_CHAIN,s.chainfilter)
 end
-s.listed_series={0x98}
+s.listed_series={SET_MAGICIAN}
 function s.chainfilter(re,tp,cid)
 	local rc=re:GetHandler()
 	local loc=Duel.GetChainInfo(cid,CHAININFO_TRIGGERING_LOCATION)
 	return not (re:GetActiveType()==TYPE_PENDULUM+TYPE_SPELL and not re:IsHasType(EFFECT_TYPE_ACTIVATE)
-		and (loc&LOCATION_PZONE)==LOCATION_PZONE and rc:IsSetCard(0x98))
+		and (loc&LOCATION_PZONE)==LOCATION_PZONE and rc:IsSetCard(SET_MAGICIAN))
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCustomActivityCount(id,tp,ACTIVITY_CHAIN)==0
@@ -29,7 +30,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x98) and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
+	return c:IsSetCard(SET_MAGICIAN) and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -55,9 +56,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 		e1:SetTargetRange(LOCATION_PZONE,0)
-		e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x98))
+		e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_MAGICIAN))
 		e1:SetValue(1)
-		e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+		e1:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN)
 		Duel.RegisterEffect(e1,tp)
 	end
 end

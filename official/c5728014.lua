@@ -1,4 +1,5 @@
 --ライバル登場！
+--A Rival Appears!
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

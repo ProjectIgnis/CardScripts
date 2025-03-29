@@ -11,9 +11,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xb}
+s.listed_series={SET_INFERNITY}
 function s.filter(c)
-	return c:IsSetCard(0xb) and c:IsAbleToGrave()
+	return c:IsSetCard(SET_INFERNITY) and c:IsAbleToGrave()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>0

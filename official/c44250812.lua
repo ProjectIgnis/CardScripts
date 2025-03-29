@@ -1,4 +1,5 @@
 --ガガガクラーク
+--Gagaga Clerk
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -10,9 +11,9 @@ function s.initial_effect(c)
 	e1:SetCondition(s.spcon)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x54}
+s.listed_series={SET_GAGAGA}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x54) and c:GetCode()~=id
+	return c:IsFaceup() and c:IsSetCard(SET_GAGAGA) and c:GetCode()~=id
 end
 function s.spcon(e,c)
 	if c==nil then return true end

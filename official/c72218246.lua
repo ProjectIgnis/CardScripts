@@ -29,12 +29,12 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(s.spcon2)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.sptg2)
 	e2:SetOperation(s.spop2)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x123,0x1123}
+s.listed_series={SET_ROSE,SET_ROSE_DRAGON}
 function s.spcheck(g,lc,sumtype,tp)
 	return g:CheckDifferentPropertyBinary(Card.GetRace,lc,sumtype,tp)
 end
@@ -42,7 +42,7 @@ function s.mzfilter(c)
 	return c:IsRace(RACE_PLANT)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
+	return Duel.IsMainPhase()
 end
 function s.exkfilter(c,sg,tp,oc)
 	local sg = sg + oc
@@ -52,7 +52,7 @@ function s.excheck(sg,tp,exg,ssg,c)
 	return ssg:IsExists(s.exkfilter,1,nil,sg,tp,c)
 end
 function s.spfilter(c,e,tp,chk)
-	return (c:IsSetCard(0x123) or c:IsRace(RACE_PLANT)) and c:IsType(TYPE_SYNCHRO) and (not chk or Duel.GetLocationCountFromEx(tp,tp,nil,c)>0)
+	return (c:IsSetCard(SET_ROSE) or c:IsRace(RACE_PLANT)) and c:IsType(TYPE_SYNCHRO) and (not chk or Duel.GetLocationCountFromEx(tp,tp,nil,c)>0)
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SYNCHRO,tp,false,false)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -81,7 +81,7 @@ function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return not eg:IsContains(e:GetHandler()) and eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.spfilter2(c,e,tp)
-	return c:IsSetCard(0x1123) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_ROSE_DRAGON) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

@@ -1,4 +1,5 @@
 --不知火の鍛師
+--Shiranui Smith
 local s,id=GetID()
 function s.initial_effect(c)
 	--to hand
@@ -22,10 +23,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xd9}
+s.listed_series={SET_SHIRANUI}
 s.listed_names={id}
 function s.filter(c)
-	return c:IsSetCard(0xd9) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_SHIRANUI) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -50,7 +51,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetTarget(s.target)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetValue(1)
 	Duel.RegisterEffect(e1,tp)
 end

@@ -5,14 +5,14 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Fusion Material
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x1047),aux.FilterBoolFunctionEx(Card.IsRace,RACE_FAIRY))
+	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_GEM_KNIGHT),aux.FilterBoolFunctionEx(Card.IsRace,RACE_FAIRY))
 	--Your "Gem-Knight" monsters cannot be destroyed once during each opponent's turn
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetTarget(function(_,c) return c:IsSetCard(0x1047) end)
+	e1:SetTarget(function(_,c) return c:IsSetCard(SET_GEM_KNIGHT) end)
 	e1:SetValue(s.indval)
 	c:RegisterEffect(e1)
 	--Destroy 1 face-up card the opponent controls
@@ -29,23 +29,23 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x1047}
-s.material_setcode={0x47,0x1047}
+s.listed_series={SET_GEM_KNIGHT}
+s.material_setcode={SET_GEM,SET_GEM_KNIGHT}
 function s.indval(e,re,r,rp)
 	if Duel.IsTurnPlayer(1-e:GetHandlerPlayer()) and (r&REASON_EFFECT)~=0 then
 		return 1
 	else return 0 end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==1-tp and Duel.IsTurnPlayer(tp) and re:IsActiveType(TYPE_MONSTER)
+	return ep==1-tp and Duel.IsTurnPlayer(tp) and re:IsMonsterEffect()
 end
 function s.descfilter(c)
-	return c:IsSetCard(0x1047) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsSetCard(SET_GEM_KNIGHT) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.descfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.descfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.descfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.descfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

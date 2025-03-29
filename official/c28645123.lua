@@ -1,5 +1,5 @@
 --果たし-Ai-
---Mano A.I. Mano
+--A.I. Challenge You
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)	
@@ -43,9 +43,9 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x135}
+s.listed_series={SET_IGNISTER}
 function s.acfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x135) and c:IsControler(tp)
+	return c:IsFaceup() and c:IsSetCard(SET_IGNISTER) and c:IsControler(tp)
 end
 function s.actcon(e)
 	local tp=e:GetHandlerPlayer()
@@ -54,7 +54,7 @@ function s.actcon(e)
 	return (a and s.acfilter(a,tp)) or (d and s.acfilter(d,tp))
 end
 function s.cfilter(c,tp)
-	return c:IsSetCard(0x135) and c:IsReason(REASON_BATTLE)
+	return c:IsSetCard(SET_IGNISTER) and c:IsReason(REASON_BATTLE)
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

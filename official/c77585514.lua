@@ -1,4 +1,5 @@
 --人造人間－サイコ·ショッカー
+--Jinzo
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot trigger
@@ -7,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_CANNOT_TRIGGER)
 	e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetTargetRange(0xa,0xa)
+	e1:SetTargetRange(LOCATION_HAND|LOCATION_SZONE,LOCATION_HAND|LOCATION_SZONE)
 	e1:SetTarget(s.distg)
 	c:RegisterEffect(e1)
 	--disable
@@ -39,7 +40,7 @@ function s.distg(e,c)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local tl=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
-	if tl==LOCATION_SZONE and re:IsActiveType(TYPE_TRAP) then
+	if tl==LOCATION_SZONE and re:IsTrapEffect() then
 		Duel.NegateEffect(ev)
 	end
 end

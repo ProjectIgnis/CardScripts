@@ -1,4 +1,5 @@
 --地獄からの使い
+--Emissary from Pandemonium
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot special summon

@@ -1,12 +1,12 @@
 --魔鍵召獣－アンシャラボラス
---Magikey Summon Beast - Ansyalabolas
+--Magikey Beast - Ansyalabolas
 --script by V.J.Wilson
 local s,id=GetID()
 function s.initial_effect(c)
 	--Fusion summoned properly if to be revived by effect
 	c:EnableReviveLimit()
 	--Fusion Proc
-	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x167),s.matfilter)
+	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_MAGIKEY),s.matfilter)
 	--Return fusion spell
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -38,12 +38,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={99426088}
-s.listed_series={0x167}
+s.listed_series={SET_MAGIKEY}
 function s.matfilter(c,fc,sumtype,tp)
 	return c:IsType(TYPE_NORMAL,fc,sumtype,tp) and not c:IsType(TYPE_TOKEN,fc,sumtype,tp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
+	return e:GetHandler():IsFusionSummoned()
 end
 function s.thfilter(c)
 	return c:IsCode(99426088) and c:IsAbleToHand()
@@ -62,7 +62,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 --check for attack pos monster
 function s.atkfilter(c)
-	return c:IsMonster() and (c:IsType(TYPE_NORMAL) or c:IsSetCard(0x167))
+	return c:IsMonster() and (c:IsType(TYPE_NORMAL) or c:IsSetCard(SET_MAGIKEY))
 end
 function s.posfilter(c,tp)
 	if c:IsFaceup() and c:IsAttackPos() and c:IsCanChangePosition() then
@@ -89,7 +89,7 @@ function s.posop(e,tp,ev,eg,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_DEFENSE)
 			e1:SetValue(-1000)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e1)
 		end
 	end

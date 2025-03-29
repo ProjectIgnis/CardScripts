@@ -28,9 +28,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={62265044}
-s.listed_series={0x29}
+s.listed_series={SET_DRAGUNITY}
 function s.spcfilter(c)
-	return c:IsFaceup() and ((c:IsMonster() and c:IsSetCard(0x29)) or c:IsCode(62265044))
+	return c:IsFaceup() and ((c:IsMonster() and c:IsSetCard(SET_DRAGUNITY)) or c:IsCode(62265044))
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.spcfilter,tp,LOCATION_ONFIELD,0,1,nil)
@@ -46,7 +46,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function s.descfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x29) and c:IsOriginalType(TYPE_MONSTER)
+	return c:IsFaceup() and c:IsSetCard(SET_DRAGUNITY) and c:IsOriginalType(TYPE_MONSTER)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.descfilter,tp,LOCATION_SZONE,0,1,nil)

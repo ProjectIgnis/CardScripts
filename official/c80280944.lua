@@ -1,4 +1,5 @@
 --ジャイアント・レックス
+--Giant Rex
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot direct attack
@@ -34,7 +35,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetRange(LOCATION_MZONE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(#g*200)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 			c:RegisterEffect(e1)
 		end
 	end

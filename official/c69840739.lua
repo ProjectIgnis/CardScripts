@@ -1,4 +1,5 @@
 --アーティファクト－デュランダル
+--Artifact Durendal
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -31,7 +32,7 @@ function s.initial_effect(c)
 end
 function s.chcon(e,tp,eg,ep,ev,re,r,rp)
 	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
-	return (re:IsActiveType(TYPE_MONSTER) and loc==LOCATION_MZONE)
+	return (re:IsMonsterEffect() and loc==LOCATION_MZONE)
 		or ((re:GetActiveType()==TYPE_SPELL or re:GetActiveType()==TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE))
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -48,11 +49,11 @@ function s.chop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChangeChainOperation(ev,s.repop)
 end
 function s.filter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSpellTrap()
 end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:GetType()==TYPE_SPELL or c:GetType()==TYPE_TRAP then
+	if c:IsNormalSpell() or c:IsNormalTrap()  then
 		c:CancelToGrave(false)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
@@ -73,7 +74,7 @@ function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,LOCATION_HAND,LOCATION_HAND)
-	if Duel.SendtoDeck(g,nil,0,REASON_EFFECT)~=0 then
+	if Duel.SendtoDeck(g,nil,SEQ_DECKTOP,REASON_EFFECT)~=0 then
 		local og=g:Filter(Card.IsLocation,nil,LOCATION_DECK)
 		if og:IsExists(Card.IsControler,1,nil,tp) then Duel.ShuffleDeck(tp) end
 		if og:IsExists(Card.IsControler,1,nil,1-tp) then Duel.ShuffleDeck(1-tp) end

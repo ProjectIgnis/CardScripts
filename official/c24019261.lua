@@ -1,4 +1,5 @@
 --救急救命
+--Emergency Assistance
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -13,10 +14,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN2
+	return Duel.IsPhase(PHASE_MAIN2)
 end
 function s.filter(c,e,tp,tid)
-	return (c:GetReason()&0x41)==0x41 and c:GetTurnID()==tid
+	return (c:GetReason()&(REASON_DESTROY|REASON_EFFECT))==(REASON_DESTROY|REASON_EFFECT) and c:GetTurnID()==tid
 		and c:GetLevel()==4 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

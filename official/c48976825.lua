@@ -1,4 +1,5 @@
 --異次元からの埋葬
+--Burial from a Different Dimension
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,4 +1,5 @@
 --トラミッド・クルーザー
+--Triamid Cruiser
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -39,7 +40,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xe2}
+s.listed_series={SET_TRIAMID}
 function s.lpfilter(c)
 	return c:IsRace(RACE_ROCK)
 end
@@ -51,7 +52,7 @@ function s.lpop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Recover(tp,500,REASON_EFFECT)
 end
 function s.drfilter(c)
-	return c:IsSetCard(0xe2) and c:IsMonster()
+	return c:IsSetCard(SET_TRIAMID) and c:IsMonster()
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(s.drfilter,1,nil) 
@@ -68,7 +69,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xe2) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_TRIAMID) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

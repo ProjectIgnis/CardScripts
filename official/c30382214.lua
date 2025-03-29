@@ -27,9 +27,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-s.listed_series={0xe6}
+s.listed_series={SET_FLOWER_CARDIAN}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0xe6) and c:IsLevelBelow(2)
+	return c:IsFaceup() and c:IsSetCard(SET_FLOWER_CARDIAN) and c:IsLevelBelow(2)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)
@@ -50,7 +50,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_CANNOT_SUMMON)
@@ -58,9 +58,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,2),nil)
 end
 function s.splimit(e,c)
-	return not c:IsSetCard(0xe6)
+	return not c:IsSetCard(SET_FLOWER_CARDIAN)
 end
-s.cfilter=aux.FaceupFilter(Card.IsSetCard,0xe6)
+s.cfilter=aux.FaceupFilter(Card.IsSetCard,SET_FLOWER_CARDIAN)
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil) end
 	local g=Duel.SelectReleaseGroupCost(tp,s.cfilter,1,1,false,nil,nil)
@@ -76,14 +76,14 @@ function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_HAND)
 end
 function s.spfilter(c)
-	return c:IsSetCard(0xe6) and not c:IsCode(id)
+	return c:IsSetCard(SET_FLOWER_CARDIAN) and not c:IsCode(id)
 end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	if Duel.Draw(p,d,REASON_EFFECT)~=0 then
 		local tc=Duel.GetOperatedGroup():GetFirst()
 		Duel.ConfirmCards(1-tp,tc)
-		if tc:IsMonster() and tc:IsSetCard(0xe6) then
+		if tc:IsMonster() and tc:IsSetCard(SET_FLOWER_CARDIAN) then
 			local sg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
 			if #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
 				Duel.BreakEffect()

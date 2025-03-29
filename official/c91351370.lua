@@ -18,14 +18,14 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x33}
+s.listed_series={SET_BLACKWING}
 function s.filter(c,val)
 	local atk=c:GetAttack()
-	return c:IsAttackAbove(0) and atk<val and c:IsSetCard(0x33) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsAttackAbove(0) and atk<val and c:IsSetCard(SET_BLACKWING) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=eg:GetFirst()
-	if chk==0 then return tc:IsSetCard(0x33) and tc:GetControler()==tp
+	if chk==0 then return tc:IsSetCard(SET_BLACKWING) and tc:IsControler(tp)
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,tc:GetAttack()) end
 	tc:CreateEffectRelation(e)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)

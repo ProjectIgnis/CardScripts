@@ -1,4 +1,5 @@
 --エッジインプ・ソウ
+--Edge Imp Saw
 local s,id=GetID()
 function s.initial_effect(c)
 	--draw
@@ -13,9 +14,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xa9}
+s.listed_series={SET_FLUFFAL}
 function s.cfilter(c)
-	return c:IsSetCard(0xa9) and c:IsMonster() and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_FLUFFAL) and c:IsMonster() and c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
@@ -35,9 +36,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		Duel.BreakEffect()
 		if Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))==0 then
-			Duel.SendtoDeck(g,nil,0,REASON_EFFECT)
+			Duel.SendtoDeck(g,nil,SEQ_DECKTOP,REASON_EFFECT)
 		else
-			Duel.SendtoDeck(g,nil,1,REASON_EFFECT)
+			Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 		end
 	end
 end

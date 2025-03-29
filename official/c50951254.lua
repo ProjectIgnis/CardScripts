@@ -40,7 +40,7 @@ end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
-	c:UpdateAttack(e:GetLabel()*400,RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_PHASE|PHASE_END)
+	c:UpdateAttack(e:GetLabel()*400,RESETS_STANDARD_DISABLE_PHASE_END)
 end
 function s.spcfilter(c,tp)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp)

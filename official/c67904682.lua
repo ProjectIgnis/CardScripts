@@ -1,4 +1,5 @@
 --ダーク・フラット・トップ
+--Dark Flattop
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -27,10 +28,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop2)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x63}
+s.listed_series={SET_REACTOR}
 s.listed_names={16898077}
 function s.spfilter1(c,e,tp)
-	return (c:IsSetCard(0x63) or c:IsCode(16898077)) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return (c:IsSetCard(SET_REACTOR) or c:IsCode(16898077)) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.sptg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter1(chkc,e,tp) end

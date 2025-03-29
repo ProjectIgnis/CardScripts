@@ -1,4 +1,5 @@
 --明鏡止水の心
+--Heart of Clear Water
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c)

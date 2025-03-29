@@ -1,4 +1,5 @@
 --秘竜星－セフィラシウゴ
+--Zefraniu, Secret of the Yang Zing
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -28,20 +29,20 @@ function s.initial_effect(c)
 	e4:SetCondition(s.condition2)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x9e,0xc4}
+s.listed_series={SET_YANG_ZING,SET_ZEFRA}
 function s.splimit(e,c,sump,sumtype,sumpos,targetp)
-	if c:IsSetCard(0x9e) or c:IsSetCard(0xc4) then return false end
+	if c:IsSetCard(SET_YANG_ZING) or c:IsSetCard(SET_ZEFRA) then return false end
 	return (sumtype&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
 function s.condition1(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_PENDULUM)
+	return e:GetHandler():IsPendulumSummoned()
 end
 function s.condition2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
 end
 function s.thfilter(c)
-	return (c:IsSetCard(0x9e) or c:IsSetCard(0xc4)) and c:IsSpellTrap() and c:IsAbleToHand()
+	return (c:IsSetCard(SET_YANG_ZING) or c:IsSetCard(SET_ZEFRA)) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

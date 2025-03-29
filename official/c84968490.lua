@@ -1,4 +1,5 @@
 --針虫の巣窟
+--Needlebug Nest
 local s,id=GetID()
 function s.initial_effect(c)
 	--discard deck

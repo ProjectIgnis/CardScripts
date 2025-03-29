@@ -1,4 +1,5 @@
 --砂漠の守護者
+--Desert Protector
 local s,id=GetID()
 function s.initial_effect(c)
 	--defup

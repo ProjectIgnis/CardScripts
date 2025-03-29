@@ -1,4 +1,5 @@
 --再機動
+--Reboot
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,9 +13,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x13}
+s.listed_series={SET_MEKLORD}
 function s.cfilter(c)
-	return c:IsSetCard(0x13) and c:IsMonster() and c:IsAbleToDeckAsCost()
+	return c:IsSetCard(SET_MEKLORD) and c:IsMonster() and c:IsAbleToDeckAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
@@ -23,7 +24,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)
 end
 function s.filter(c)
-	return c:IsSetCard(0x13) and c:IsAbleToHand()
+	return c:IsSetCard(SET_MEKLORD) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc) end

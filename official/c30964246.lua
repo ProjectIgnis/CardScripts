@@ -37,7 +37,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_MZONE)
 end
 function s.trapfilter(c)
-	return c:IsContinuousTrap() and (c:IsLocation(LOCATION_MZONE) or (c:IsTrapMonster()  and c:IsLocation(LOCATION_STZONE))) and c:IsFaceup()
+	return c:IsContinuousTrap() and (c:IsLocation(LOCATION_MZONE) or (c:IsTrapMonster() and c:IsLocation(LOCATION_STZONE))) and c:IsFaceup()
 end
 function s.nsfilter(c)
 	return c:IsRace(RACE_WARRIOR) and c:IsSummonable(true,nil)

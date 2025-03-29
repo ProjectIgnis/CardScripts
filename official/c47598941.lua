@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e4:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xe0}
+s.listed_series={SET_AMORPHAGE}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
@@ -47,7 +47,7 @@ function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.filter(c)
-	return c:IsSetCard(0xe0) and c:IsType(TYPE_PENDULUM) and not c:IsForbidden()
+	return c:IsSetCard(SET_AMORPHAGE) and c:IsType(TYPE_PENDULUM) and not c:IsForbidden()
 end
 function s.settg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckPendulumZones(tp)
@@ -65,8 +65,8 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atktg(e,c)
-	return not c:IsSetCard(0xe0)
+	return not c:IsSetCard(SET_AMORPHAGE)
 end
 function s.atkval(e,c)
-	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0xe0),0,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)*-100
+	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,SET_AMORPHAGE),0,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)*-100
 end

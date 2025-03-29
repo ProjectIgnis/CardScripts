@@ -1,4 +1,5 @@
 --暗黒界の取引
+--Dark World Dealings
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -36,13 +36,13 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
-s.listed_series={0x1d}
+s.listed_series={SET_KOAKI_MEIRU}
 s.listed_names={36623431}
 function s.cfilter(c)
 	return c:IsCode(36623431) and not c:IsPublic()
 end
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -70,7 +70,7 @@ function s.check(e,tp,eg,ep,ev,re,r,rp)
 	local g1=Group.CreateGroup()
 	local g2=Group.CreateGroup()
 	for tc in aux.Next(eg) do
-		if tc:IsFaceup() and tc:IsLocation(LOCATION_MZONE) and tc:IsSetCard(0x1d) then
+		if tc:IsFaceup() and tc:IsLocation(LOCATION_MZONE) and tc:IsSetCard(SET_KOAKI_MEIRU) then
 			if tc:GetOwner()==turnp then g1:AddCard(tc) else g2:AddCard(tc) end
 		end
 	end
@@ -78,7 +78,7 @@ function s.check(e,tp,eg,ep,ev,re,r,rp)
 	if #g2>0 then Duel.RaiseEvent(g2,EVENT_CUSTOM+id,re,r,rp,1-turnp,0) end
 end
 function s.filter(c)
-	return c:IsMonster() and c:IsSetCard(0x1d) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(SET_KOAKI_MEIRU) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

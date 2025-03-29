@@ -78,5 +78,5 @@ function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RegisterFlagEffect(id,RESET_PHASE|PHASE_DAMAGE_CAL,0,1)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():UpdateAttack(800,RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_PHASE|PHASE_END)
+	e:GetHandler():UpdateAttack(800,RESETS_STANDARD_DISABLE_PHASE_END)
 end

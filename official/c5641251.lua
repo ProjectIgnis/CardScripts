@@ -31,13 +31,13 @@ function s.initial_effect(c)
 	e3:SetOperation(s.lvlop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x107}
+s.listed_series={SET_FA}
 s.roll_dice=true
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp) and Duel.GetAttackTarget()==nil
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x107) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
+	return c:IsSetCard(SET_FA) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
@@ -60,7 +60,7 @@ function s.lvlcon(e,tp,eg,ep,ev,re,r,rp)
 	local bc=Duel.GetAttackTarget()
 	if not bc then return false end
 	if tc:IsControler(1-tp) then bc,tc=tc,bc end
-	return bc:IsFaceup() and tc:IsFaceup() and tc:IsSetCard(0x107) and tc:HasLevel()
+	return bc:IsFaceup() and tc:IsFaceup() and tc:IsSetCard(SET_FA) and tc:HasLevel()
 end
 function s.lvlop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -77,7 +77,7 @@ function s.lvlop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(4)
 		tc:RegisterEffect(e1)
 	else

@@ -33,13 +33,13 @@ function s.initial_effect(c)
 	e3:SetOperation(s.retop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x4c,0x89,0x108a}
+s.listed_series={SET_TRAP_HOLE,SET_HOLE,SET_TRAPTRIX}
 function s.efilter(e,te)
 	local c=te:GetHandler()
-	return c:GetType()==TYPE_TRAP and (c:IsSetCard(0x4c) or c:IsSetCard(0x89))
+	return c:IsNormalTrap() and (c:IsSetCard(SET_TRAP_HOLE) or c:IsSetCard(SET_HOLE))
 end
 function s.filter(c)
-	return c:IsMonster() and c:IsSetCard(0x108a) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(SET_TRAPTRIX) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

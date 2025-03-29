@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
-	Synchro.AddProcedure(c,aux.FilterSummonCode(74509280),1,1,Synchro.NonTunerEx(Card.IsSetCard,0x23),1,1)
+	Synchro.AddProcedure(c,aux.FilterSummonCode(74509280),1,1,Synchro.NonTunerEx(Card.IsSetCard,SET_MALEFIC),1,1)
 	c:EnableReviveLimit()
 	c:SetUniqueOnField(1,1,id)
 	--special summon
@@ -32,7 +32,7 @@ function s.descon(e)
 	return not Duel.IsEnvironment(27564031)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return e:GetHandler():IsSynchroSummoned()
 end
 function s.spfilter(c,e,tp)
 	return c:IsType(TYPE_SYNCHRO) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

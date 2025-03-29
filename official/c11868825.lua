@@ -1,4 +1,5 @@
 --ゴブリンの秘薬
+--Goblin's Secret Remedy
 local s,id=GetID()
 function s.initial_effect(c)
 	--recover

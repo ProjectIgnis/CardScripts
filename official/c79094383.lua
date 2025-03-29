@@ -1,4 +1,5 @@
 --光波異邦臣
+--Cipher Etranger
 local s,id=GetID()
 function s.initial_effect(c)
 	--material
@@ -6,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetRange(LOCATION_GRAVE+LOCATION_HAND)
+	e1:SetRange(LOCATION_GRAVE|LOCATION_HAND)
 	e1:SetCountLimit(1,id)
 	e1:SetTarget(s.mattg)
 	e1:SetOperation(s.matop)
@@ -23,9 +24,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xe5}
+s.listed_series={SET_CIPHER}
 function s.matfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xe5) and c:IsType(TYPE_XYZ)
+	return c:IsFaceup() and c:IsSetCard(SET_CIPHER) and c:IsType(TYPE_XYZ)
 end
 function s.mattg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.matfilter(chkc) end
@@ -41,7 +42,7 @@ function s.matop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xe5) and c:IsSpellTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_CIPHER) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

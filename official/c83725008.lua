@@ -1,4 +1,5 @@
 --ライトロード・プリースト ジェニス
+--Jenis, Lightsworn Mender
 local s,id=GetID()
 function s.initial_effect(c)
 	--recover&damage
@@ -19,7 +20,7 @@ function s.initial_effect(c)
 		s[1]=false
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-		e2:SetCode(EVENT_PHASE_START+PHASE_DRAW)
+		e2:SetCode(EVENT_PHASE_START|PHASE_DRAW)
 		e2:SetOperation(s.reset)
 		Duel.RegisterEffect(e2,0)
 		local e3=Effect.CreateEffect(c)
@@ -29,7 +30,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(e3,0)
 	end
 end
-s.listed_series={0x38}
+s.listed_series={SET_LIGHTSWORN}
 function s.reset(e,tp,eg,ep,ev,re,r,rp)
 	s[0]=false
 	s[1]=false
@@ -40,7 +41,7 @@ end
 function s.set(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
 	local rc=re:GetHandler()
-	if (r&REASON_EFFECT)>0 and rc:IsSetCard(0x38) and eg:IsExists(s.cfilter,1,nil) then
+	if (r&REASON_EFFECT)>0 and rc:IsSetCard(SET_LIGHTSWORN) and eg:IsExists(s.cfilter,1,nil) then
 		s[rp]=true
 	end
 end

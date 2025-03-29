@@ -1,4 +1,5 @@
 --ジャスティブレイク
+--Justi-Break
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttackTarget()
-	return tp~=Duel.GetTurnPlayer() and at and at:IsFaceup() and at:IsType(TYPE_NORMAL)
+	return Duel.IsTurnPlayer(1-tp) and at and at:IsFaceup() and at:IsType(TYPE_NORMAL)
 end
 function s.filter(c)
 	return not (c:IsFaceup() and c:IsType(TYPE_NORMAL) and c:IsAttackPos())

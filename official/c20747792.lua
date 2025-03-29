@@ -1,4 +1,5 @@
 --ベリー・マジシャン・ガール
+--Berry Magician Girl
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -29,10 +30,10 @@ function s.initial_effect(c)
 	e3:SetCondition(s.spcon2)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x20a2}
+s.listed_series={SET_MAGICIAN_GIRL}
 s.listed_names={id}
 function s.thfilter(c)
-	return c:IsSetCard(0x20a2) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_MAGICIAN_GIRL) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -47,7 +48,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x20a2) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_MAGICIAN_GIRL) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spcon1(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsContains(e:GetHandler()) and rp~=tp 

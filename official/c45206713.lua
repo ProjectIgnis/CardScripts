@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
-	local params = {aux.FilterBoolFunction(Card.IsSetCard,0x10af),Fusion.InHandMat,nil,nil,Fusion.ForcedHandler}
+	local params = {aux.FilterBoolFunction(Card.IsSetCard,SET_DDD),Fusion.InHandMat,nil,nil,Fusion.ForcedHandler}
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -18,14 +18,14 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xaf,0x10af}
+s.listed_series={SET_DD,SET_DDD}
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xaf) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_DD) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

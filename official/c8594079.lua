@@ -1,4 +1,5 @@
 --ジュラック・ブラキス
+--Jurrac Brachis
 local s,id=GetID()
 function s.initial_effect(c)
 	--battle indestructable
@@ -10,5 +11,5 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.indcon(e)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x22),0,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_JURRAC),0,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler())
 end

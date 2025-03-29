@@ -35,8 +35,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.Destroy(g,REASON_EFFECT)~=0 then
 			Duel.BreakEffect()
 			local turnp=Duel.GetTurnPlayer()
-			Duel.SkipPhase(turnp,PHASE_BATTLE,RESET_PHASE+PHASE_END,1,1)
-			Duel.SkipPhase(turnp,PHASE_MAIN2,RESET_PHASE+PHASE_END,1)
+			Duel.SkipPhase(turnp,PHASE_BATTLE,RESET_PHASE|PHASE_END,1,1)
+			Duel.SkipPhase(turnp,PHASE_MAIN2,RESET_PHASE|PHASE_END,1)
 		end
 	end
 end

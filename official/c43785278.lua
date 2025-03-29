@@ -1,4 +1,5 @@
 --フーコーの魔砲石
+--Foucault's Cannon
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -27,7 +28,7 @@ function s.initial_effect(c)
 end
 function s.reg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	e:GetHandler():RegisterFlagEffect(id,RESET_PHASE+PHASE_END,EFFECT_FLAG_OATH,1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_PHASE|PHASE_END,EFFECT_FLAG_OATH,1)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)~=0

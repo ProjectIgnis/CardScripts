@@ -1,4 +1,5 @@
 --死の4つ星てんとう虫
+--4-Starred Ladybug of Doom
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip

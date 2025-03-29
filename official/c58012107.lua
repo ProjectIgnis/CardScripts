@@ -1,4 +1,5 @@
 --エーリアン・サイコ
+--Alien Psychic
 local s,id=GetID()
 function s.initial_effect(c)
 	--to defense

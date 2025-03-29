@@ -70,14 +70,14 @@ function s.equipop(c,e,tp,tc)
 	e2:SetType(EFFECT_TYPE_EQUIP)
 	e2:SetCode(EFFECT_DESTROY_SUBSTITUTE)
 	e2:SetProperty(EFFECT_FLAG_SET_AVAILABLE+EFFECT_FLAG_IGNORE_IMMUNE)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e2:SetValue(s.repval)
 	tc:RegisterEffect(e2)
 end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsMonster() and tc:IsControler(1-tp)  and s.eqcon(e,tp,eg,ep,ev,re,r,rp) then
+	if tc and tc:IsRelateToEffect(e) and tc:IsMonster() and tc:IsControler(1-tp) and s.eqcon(e,tp,eg,ep,ev,re,r,rp) then
 		s.equipop(c,e,tp,tc)
 	end
 end

@@ -1,5 +1,5 @@
 --エーリアン・ソルジャー M/フレーム
---Alien Shocktrooper Mighty/Frame
+--Alien Shocktrooper M-Frame
 --scripted by Logical Nonsense
 --Substitute ID
 local s,id=GetID()
@@ -89,4 +89,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=aux.SelectUnselectGroup(g,e,tp,1,ct,aux.dncheck,1,tp,HINTMSG_SPSUMMON)
 	Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 end
-

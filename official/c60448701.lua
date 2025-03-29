@@ -1,5 +1,5 @@
 --溟界の淵源
---Depths of the Abhyss
+--Ogdoadic Origin
 --scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

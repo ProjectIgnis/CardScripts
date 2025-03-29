@@ -1,4 +1,5 @@
 --超重武者ダイ－8
+--Superheavy Samurai Wagon
 local s,id=GetID()
 function s.initial_effect(c)
 	--position
@@ -31,7 +32,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x109a}
+s.listed_series={SET_SUPERHEAVY_SAMURAI_SOUL}
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,e:GetHandler(),1,0,0)
@@ -47,7 +48,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 		and not Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,0,1,nil,TYPE_SPELL+TYPE_TRAP)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x109a) and c:IsAbleToHand()
+	return c:IsSetCard(SET_SUPERHEAVY_SAMURAI_SOUL) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

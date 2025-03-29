@@ -1,4 +1,5 @@
 --アーティファクト－ラブリュス
+--Artifact Labrys
 local s,id=GetID()
 function s.initial_effect(c)
 	--set
@@ -29,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x97}
+s.listed_series={SET_ARTIFACT}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsPreviousLocation(LOCATION_SZONE) and c:IsPreviousPosition(POS_FACEDOWN)
@@ -45,7 +46,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function s.cfilter(c,tp)
-	return c:IsControler(tp) and c:IsSetCard(0x97) and c:IsReason(REASON_DESTROY)
+	return c:IsControler(tp) and c:IsSetCard(SET_ARTIFACT) and c:IsReason(REASON_DESTROY)
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

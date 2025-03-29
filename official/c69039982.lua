@@ -1,5 +1,5 @@
 --リユナイト・パラディオン
---Reunite Palladion
+--Crusadia Revival
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)
@@ -29,15 +29,15 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x116}
+s.listed_series={SET_CRUSADIA}
 function s.tg(e,c)
-	return c:IsLinkMonster() and c:IsSetCard(0x116)
+	return c:IsLinkMonster() and c:IsSetCard(SET_CRUSADIA)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP()
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x116) and c:IsLinkMonster()
+	return c:IsFaceup() and c:IsSetCard(SET_CRUSADIA) and c:IsLinkMonster()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -52,7 +52,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_ATTACK_ALL)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 	local e2=Effect.CreateEffect(e:GetHandler())
@@ -61,10 +61,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetTarget(s.ftarget)
 	e2:SetLabel(tc:GetFieldID())
-	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 end
 function s.ftarget(e,c)
 	return e:GetLabel()~=c:GetFieldID()
 end
-

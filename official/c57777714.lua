@@ -1,4 +1,5 @@
 --英霊獣使い－セフィラムピリカ
+--Ritual Beast Tamer Zeframpilica
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetSPSummonOnce(id)
@@ -27,17 +28,17 @@ function s.initial_effect(c)
 	e4:SetCondition(s.condition)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xb5,0xc4}
+s.listed_series={SET_RITUAL_BEAST,SET_ZEFRA}
 s.listed_names={id}
 function s.splimit(e,c,sump,sumtype,sumpos,targetp)
-	if c:IsSetCard(0xb5) or c:IsSetCard(0xc4) then return false end
+	if c:IsSetCard(SET_RITUAL_BEAST) or c:IsSetCard(SET_ZEFRA) then return false end
 	return (sumtype&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_PENDULUM)
+	return e:GetHandler():IsPendulumSummoned()
 end
 function s.filter(c,e,tp)
-	return (c:IsSetCard(0xb5) or c:IsSetCard(0xc4)) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return (c:IsSetCard(SET_RITUAL_BEAST) or c:IsSetCard(SET_ZEFRA)) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end
@@ -51,7 +52,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		local fid=e:GetHandler():GetFieldID()
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1,fid)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)

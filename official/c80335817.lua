@@ -1,4 +1,5 @@
 --刻剣の魔術師
+--Timebreaker Magician
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -43,7 +44,7 @@ end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return #eg==1 and eg:GetFirst()==c
-		and c:IsSummonType(SUMMON_TYPE_PENDULUM) and c:IsPreviousLocation(LOCATION_HAND)
+		and c:IsPendulumSummoned() and c:IsPreviousLocation(LOCATION_HAND)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -52,7 +53,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(c:GetBaseAttack()*2)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 	end
 end
@@ -75,16 +76,16 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 		local oc=og:GetFirst()
 		for oc in aux.Next(og) do
 			if oc:IsControler(tp) then
-				oc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,0,1)
+				oc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_STANDBY|RESET_SELF_TURN,0,1)
 			else
-				oc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_OPPO_TURN,0,1)
+				oc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_STANDBY|RESET_OPPO_TURN,0,1)
 			end
 		end
 		og:KeepAlive()
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
-		e1:SetReset(RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN)
+		e1:SetCode(EVENT_PHASE|PHASE_STANDBY)
+		e1:SetReset(RESET_PHASE|PHASE_STANDBY|RESET_SELF_TURN)
 		e1:SetCountLimit(1)
 		e1:SetLabelObject(og)
 		e1:SetCondition(s.retcon)
@@ -96,7 +97,7 @@ function s.retfilter(c)
 	return c:GetFlagEffect(id)~=0
 end
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject()

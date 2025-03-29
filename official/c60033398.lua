@@ -38,14 +38,14 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x137}
+s.listed_series={SET_ANCIENT_WARRIORS}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	local bc=Duel.GetAttackTarget()
 	if not bc then return false end
 	if tc:IsControler(1-tp) then bc,tc=tc,bc end
 	e:SetLabelObject(bc)
-	return bc:IsFaceup() and tc:IsFaceup() and tc:IsSetCard(0x137)
+	return bc:IsFaceup() and tc:IsFaceup() and tc:IsSetCard(SET_ANCIENT_WARRIORS)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -62,13 +62,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(-1000)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			bc:RegisterEffect(e1)
 		end
 	end
 end
 function s.tg(e,c)
-	return c:IsSetCard(0x137) and c~=e:GetHandler()
+	return c:IsSetCard(SET_ANCIENT_WARRIORS) and c~=e:GetHandler()
 end
 function s.cfilter(c,tp)
 	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:GetPreviousControler()==1-tp and c:IsReason(REASON_BATTLE+REASON_EFFECT)

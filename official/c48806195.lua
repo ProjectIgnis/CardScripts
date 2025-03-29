@@ -1,9 +1,9 @@
 --セリオンズ＂エンプレス＂アラシア
---Therions' "Empress" Arasia
+--Therion "Empress" Alasia
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon self
+	--Special Summon self
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_EQUIP)
@@ -27,25 +27,25 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg2)
 	e2:SetOperation(s.spop2)
 	c:RegisterEffect(e2)
-	-- Equipped monster gains ATK
+	--Equipped monster gains ATK
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_EQUIP)
 	e3:SetCode(EFFECT_UPDATE_ATTACK)
-	e3:SetCondition(function(e) return e:GetHandler():GetEquipTarget():IsSetCard(0x17b) end)
+	e3:SetCondition(function(e) return e:GetHandler():GetEquipTarget():IsSetCard(SET_THERION) end)
 	e3:SetValue(700)
 	c:RegisterEffect(e3)
-	-- Equipped monster gains effect
+	--Equipped monster gains effect
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetTargetRange(LOCATION_MZONE,0)
-	e4:SetTarget(function(e,c) return c==e:GetHandler():GetEquipTarget() and c:IsSetCard(0x17b) end)
+	e4:SetTarget(function(e,c) return c==e:GetHandler():GetEquipTarget() and c:IsSetCard(SET_THERION) end)
 	e4:SetLabelObject(e2)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x17b}
+s.listed_series={SET_THERION}
 function s.eqfilter(c)
-	return c:IsMonster() and (c:IsSetCard(0x17b) or c:IsRace(RACE_REPTILE))
+	return c:IsMonster() and (c:IsSetCard(SET_THERION) or c:IsRace(RACE_REPTILE))
 end
 function s.eqval(ec,c,tp)
 	return ec:IsControler(tp) and s.eqfilter(ec)
@@ -79,7 +79,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
 end
 function s.spfilter(c,e,sp)
-	return c:IsFaceup() and c:IsOriginalType(TYPE_MONSTER) and c:IsSetCard(0x17b) and c:IsCanBeSpecialSummoned(e,0,sp,false,false)
+	return c:IsFaceup() and c:IsOriginalType(TYPE_MONSTER) and c:IsSetCard(SET_THERION) and c:IsCanBeSpecialSummoned(e,0,sp,false,false)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_SZONE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end

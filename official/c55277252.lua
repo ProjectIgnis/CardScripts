@@ -22,9 +22,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.op2)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x35}
+s.listed_series={SET_FABLED}
 function s.disfilter(c)
-	return c:IsSetCard(0x35) and c:IsMonster() and c:IsDiscardable()
+	return c:IsSetCard(SET_FABLED) and c:IsMonster() and c:IsDiscardable()
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -51,7 +51,7 @@ function s.con2(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1
 end
 function s.filter2(c,e,tp)
-	return c:IsLevelBelow(2) and c:IsSetCard(0x35) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevelBelow(2) and c:IsSetCard(SET_FABLED) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.tg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

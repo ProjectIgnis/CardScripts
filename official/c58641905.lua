@@ -1,4 +1,5 @@
 --防御輪
+--Ring of Defense
 local s,id=GetID()
 function s.initial_effect(c)
 	--reflect
@@ -10,7 +11,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	if not re:IsActiveType(TYPE_TRAP) then return false end
+	if not re:IsTrapEffect() then return false end
 	return aux.damcon1(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)

@@ -1,4 +1,5 @@
 --ビッグ・シールド・ガードナー
+--Big Shield Gardna
 local s,id=GetID()
 function s.initial_effect(c)
 	--to attack
@@ -23,7 +24,7 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	if re:IsActiveType(TYPE_SPELL) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then
+	if re:IsSpellEffect() and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then
 		local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 		return #tg==1 and tg:GetFirst()==e:GetHandler() and e:GetHandler():IsFacedown()
 	else 

@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x38}
+s.listed_series={SET_LIGHTSWORN}
 s.listed_names={id}
 function s.cfilter(c)
 	return c:IsPreviousLocation(LOCATION_DECK)
@@ -22,7 +22,7 @@ end
 function s.condtion(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
 	local rc=re:GetHandler()
-	return rp==tp and (r&REASON_EFFECT)~=0 and not rc:IsCode(id) and rc:IsSetCard(0x38) and rc:IsMonster()
+	return rp==tp and (r&REASON_EFFECT)~=0 and not rc:IsCode(id) and rc:IsSetCard(SET_LIGHTSWORN) and rc:IsMonster()
 		and re:GetActivateLocation()==LOCATION_MZONE and eg:IsExists(s.cfilter,1,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -30,7 +30,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,2)
 end
 function s.filter(c)
-	return c:IsLocation(LOCATION_GRAVE) and c:IsSetCard(0x38) and c:IsMonster()
+	return c:IsLocation(LOCATION_GRAVE) and c:IsSetCard(SET_LIGHTSWORN) and c:IsMonster()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

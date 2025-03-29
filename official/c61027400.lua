@@ -1,7 +1,6 @@
 --いくらの軍貫
 --Gunkan Suship Ikura
 --Coded by V.J.Wilson
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon procedure (from hand)
@@ -26,7 +25,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_SUSHIP_SHARI}
-
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0

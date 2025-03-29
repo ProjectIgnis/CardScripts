@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={id}
-s.listed_series={0x165}
+s.listed_series={SET_URSARCTIC}
 s.counter_place_list={0x209}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -47,7 +47,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	c:AddCounter(0x209,7)
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x165) and c:IsSummonLocation(LOCATION_HAND+LOCATION_EXTRA) and c:IsFaceup()
+	return c:IsSetCard(SET_URSARCTIC) and c:IsSummonLocation(LOCATION_HAND|LOCATION_EXTRA) and c:IsFaceup()
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil)
@@ -68,7 +68,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
 function s.tdfilter(c)
-	return c:IsSetCard(0x165) and not c:IsCode(id) and c:IsAbleToDeck()
+	return c:IsSetCard(SET_URSARCTIC) and not c:IsCode(id) and c:IsAbleToDeck()
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return s.tdfilter(chkc) and chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) end

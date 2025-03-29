@@ -1,4 +1,5 @@
 --A・O・J アンノウン・クラッシャー
+--Ally of Justice Unknown Crusher
 local s,id=GetID()
 function s.initial_effect(c)
 	--remove

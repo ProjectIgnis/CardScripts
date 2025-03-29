@@ -1,9 +1,9 @@
 -- 
--- Ghoti Chain
--- Scripted by Hatter
+--Ghoti Chain
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon 1 "Ghoti" monster
+	--Special Summon 1 "Ghoti" monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -16,14 +16,14 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x18b}
-local LOCATION_REMOVED_HAND_DECK_GRAVE=LOCATION_REMOVED+LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE
+s.listed_series={SET_GHOTI}
+local LOCATION_REMOVED_HAND_DECK_GRAVE=LOCATION_REMOVED|LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE
 function s.spcostfilter(c,e,tp)
 	return c:IsFaceup() and c:IsRace(RACE_FISH) and c:IsAbleToRemoveAsCost() and Duel.GetMZoneCount(tp,c)>0
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_REMOVED_HAND_DECK_GRAVE,0,1,nil,e,tp,c:GetOriginalCode())
 end
 function s.spfilter(c,e,tp,code)
-	return c:IsSetCard(0x18b) and (c:IsFaceup() or not c:IsLocation(LOCATION_REMOVED))
+	return c:IsSetCard(SET_GHOTI) and (c:IsFaceup() or not c:IsLocation(LOCATION_REMOVED))
 		and not c:IsOriginalCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -47,14 +47,14 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_REMOVED_HAND_DECK_GRAVE,0,1,1,nil,e,tp,e:GetLabel()):GetFirst()
 	if tc and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0 then
-		-- Banish it if it leaves the field
+		--Banish it if it leaves the field
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetDescription(3300)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
-		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		tc:RegisterEffect(e1,true)
 	end
 end

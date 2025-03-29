@@ -30,10 +30,10 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x132}
+s.listed_series={SET_MATHMECH}
 s.listed_names={id}
 function s.spcfilter(c)
-	return c:IsSetCard(0x132) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_MATHMECH) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToGraveAsCost()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spcfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -60,7 +60,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetCondition(function(e) return e:GetLabel()~=0 end)
 	e1:SetTarget(function(e,c) return c:GetFieldID()~=e:GetLabel() end)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -68,7 +68,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e2:SetLabelObject(e1)
 	e2:SetOperation(s.checkop)
-	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 	aux.RegisterClientHint(c,0,tp,1,0,aux.Stringid(id,2))
 end
@@ -77,13 +77,13 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetLabelObject():SetLabel(fid)
 end
 function s.thcfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x132) and c:IsControler(tp)
+	return c:IsFaceup() and c:IsSetCard(SET_MATHMECH) and c:IsControler(tp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return not eg:IsContains(e:GetHandler()) and eg:IsExists(s.thcfilter,1,nil,tp)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x132) and c:IsType(TYPE_SPELL|TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSetCard(SET_MATHMECH) and c:IsType(TYPE_SPELL|TYPE_TRAP) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

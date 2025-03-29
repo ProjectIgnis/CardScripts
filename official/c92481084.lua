@@ -17,4 +17,3 @@ function s.initial_effect(c)
 	e2:SetValue(1000)
 	c:RegisterEffect(e2)
 end
-

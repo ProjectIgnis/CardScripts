@@ -1,4 +1,5 @@
 --伝説の剣
+--Legendary Sword
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsRace,RACE_WARRIOR))

@@ -28,9 +28,9 @@ function s.initial_effect(c)
 		end)
 	end)
 end
-s.listed_series={0x10b}
+s.listed_series={SET_TINDANGLE}
 function s.cfilter(c,tp)
-	return c:IsSetCard(0x10b) and c:IsDiscardable(REASON_EFFECT) and not s.name_list[tp][c:GetCode()]
+	return c:IsSetCard(SET_TINDANGLE) and c:IsDiscardable(REASON_EFFECT) and not s.name_list[tp][c:GetCode()]
 end
 function s.posfilter(c)
 	return c:IsCanChangePosition() and (c:IsPosition(POS_FACEUP_ATTACK) or c:IsPosition(POS_FACEDOWN_DEFENSE))

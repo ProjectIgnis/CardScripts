@@ -1,4 +1,5 @@
 --RAI－MEI
+--Rai-Mei
 local s,id=GetID()
 function s.initial_effect(c)
 	--search

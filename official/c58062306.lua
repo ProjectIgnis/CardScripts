@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_HAND)
-	e2:SetCost(s.thcost)
+	e2:SetCost(Cost.SelfDiscard)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
@@ -43,15 +43,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetCode(EFFECT_ADD_TYPE)
 	e1:SetValue(TYPE_TUNER)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD)
 	c:RegisterEffect(e1)
 end
 	--This card can be discarded as cost
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsDiscardable() end
-	Duel.SendtoGrave(c,REASON_COST+REASON_DISCARD)
-end
 	--Check for "White Rose Cloister"
 function s.thfilter(c)
 	return c:IsCode(84335863) and c:IsAbleToHand()

@@ -1,4 +1,5 @@
 --ゼンマイハンター
+--Wind-Up Hunter
 local s,id=GetID()
 function s.initial_effect(c)
 	--handes
@@ -14,9 +15,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x58}
+s.listed_series={SET_WIND_UP}
 function s.costfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x58) and c:GetCode()~=id
+	return c:IsFaceup() and c:IsSetCard(SET_WIND_UP) and c:GetCode()~=id
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.costfilter,1,false,nil,nil) end

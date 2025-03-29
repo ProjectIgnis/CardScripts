@@ -1,4 +1,5 @@
 --女邪神ヌヴィア
+--Nuvia the Wicked
 local s,id=GetID()
 function s.initial_effect(c)
 	--self destroy

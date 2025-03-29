@@ -1,5 +1,5 @@
 --青き眼の祈り
---Prayers with Eyes of Blue
+--Wishes for Eyes of Blue
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

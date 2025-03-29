@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return #eg==1 and tc:IsControler(1-tp) and tc:IsSummonType(SUMMON_TYPE_FUSION)
+	return #eg==1 and tc:IsControler(1-tp) and tc:IsFusionSummoned()
 end
 function s.cfilter(c,tp,eg)
 	return Duel.GetMZoneCount(tp,c)>0 and not eg:IsContains(c)

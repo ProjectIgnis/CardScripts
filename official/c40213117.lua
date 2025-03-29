@@ -1,4 +1,5 @@
 --魔導弓士 ラムール
+--Amores of Prophecy
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -13,9 +14,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x106e}
+s.listed_series={SET_SPELLBOOK}
 function s.cffilter(c)
-	return c:IsSetCard(0x106e) and c:IsSpell() and not c:IsPublic()
+	return c:IsSetCard(SET_SPELLBOOK) and c:IsSpell() and not c:IsPublic()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cffilter,tp,LOCATION_HAND,0,1,nil) end

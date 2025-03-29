@@ -30,10 +30,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.posop2)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x104}
+s.listed_series={SET_KRAWLER}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then
@@ -91,7 +91,7 @@ function s.posop1(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x104) and c:IsMonster() and c:IsAbleToDeckAsCost()
+	return c:IsSetCard(SET_KRAWLER) and c:IsMonster() and c:IsAbleToDeckAsCost()
 end
 function s.poscost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return s.cost(e,tp,eg,ep,ev,re,r,rp,0)

@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	--check
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e4:SetCode(EVENT_PHASE_START+PHASE_MAIN1)
+	e4:SetCode(EVENT_PHASE_START|PHASE_MAIN1)
 	e4:SetRange(LOCATION_FZONE)
 	e4:SetOperation(s.chkop)
 	c:RegisterEffect(e4)
@@ -54,7 +54,7 @@ end
 function s.chkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:GetCounter(0x148)==6 then
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,0,aux.Stringid(id,0))
+		c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1,0,aux.Stringid(id,0))
 	end
 end
 function s.gycon(e,tp,eg,ep,ev,re,r,rp)
@@ -74,4 +74,3 @@ function s.gyop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(g,REASON_EFFECT)
 	end
 end
-

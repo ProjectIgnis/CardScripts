@@ -1,9 +1,10 @@
 --V・HERO アドレイション
+--Vision HERO Adoration
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x8),2)
+	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_HERO),2)
 	--summon success
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
@@ -15,10 +16,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.valop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x8}
-s.material_setcode=0x8
+s.listed_series={SET_HERO}
+s.material_setcode=SET_HERO
 function s.sfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x8)
+	return c:IsFaceup() and c:IsSetCard(SET_HERO)
 end
 function s.valtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -40,7 +41,7 @@ function s.valop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(val)
 		o:RegisterEffect(e1)
 		local e2=e1:Clone()

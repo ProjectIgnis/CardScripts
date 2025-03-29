@@ -1,4 +1,5 @@
 --闇の指名者
+--Dark Designator
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

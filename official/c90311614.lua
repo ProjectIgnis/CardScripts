@@ -1,4 +1,5 @@
 --氷結界の水影
+--Dewdark of the Ice Barrier
 local s,id=GetID()
 function s.initial_effect(c)
 	--direct attack

@@ -1,4 +1,5 @@
 --コア濃度圧縮
+--Core Compression
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,13 +13,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x1d}
+s.listed_series={SET_KOAKI_MEIRU}
 s.listed_names={36623431}
 function s.cfilter1(c)
 	return c:IsCode(36623431) and not c:IsPublic()
 end
 function s.cfilter2(c)
-	return c:IsMonster() and c:IsSetCard(0x1d) and c:IsDiscardable()
+	return c:IsMonster() and c:IsSetCard(SET_KOAKI_MEIRU) and c:IsDiscardable()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter1,tp,LOCATION_HAND,0,1,nil)

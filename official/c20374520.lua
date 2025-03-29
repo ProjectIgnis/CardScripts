@@ -1,4 +1,5 @@
 --門前払い
+--Begone, Knave!
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

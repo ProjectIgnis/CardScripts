@@ -1,4 +1,5 @@
 --星見鳥ラリス
+--Rallis the Star Bird
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
@@ -41,8 +42,8 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) and c:IsFaceup() and Duel.Remove(c,POS_FACEUP,REASON_EFFECT+REASON_TEMPORARY)==1 then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_PHASE+PHASE_BATTLE_START)
-		e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,2)
+		e1:SetCode(EVENT_PHASE|PHASE_BATTLE_START)
+		e1:SetReset(RESET_PHASE|PHASE_END|RESET_SELF_TURN,2)
 		e1:SetLabelObject(c)
 		e1:SetCountLimit(1)
 		e1:SetOperation(s.retop)
@@ -50,7 +51,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetTurnPlayer()==tp then
+	if Duel.IsTurnPlayer(tp) then
 		Duel.ReturnToField(e:GetLabelObject())
 	end
 end

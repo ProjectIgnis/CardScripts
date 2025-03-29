@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
-	e1:SetRange(LOCATION_HAND+LOCATION_DECK)
+	e1:SetRange(LOCATION_HAND|LOCATION_DECK)
 	e1:SetValue(1)
 	e1:SetCondition(s.spcon)
 	e1:SetTarget(s.sptg)
@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x614d,0xc0}
+s.listed_series={SET_SPIRITUAL_WATER_ART,SET_POSSESSED}
 function s.spfilter1(c)
 	return c:IsFaceup() and c:IsRace(RACE_SPELLCASTER) and c:IsAbleToGraveAsCost()
 end
@@ -109,7 +109,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.thfilter(c)
-	return c:IsAbleToHand() and (c:IsSetCard(0x614d) or (c:IsSetCard(0xc0) and c:IsSpellTrap()))
+	return c:IsAbleToHand() and (c:IsSetCard(SET_SPIRITUAL_WATER_ART) or (c:IsSetCard(SET_POSSESSED) and c:IsSpellTrap()))
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

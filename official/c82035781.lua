@@ -1,4 +1,5 @@
 --ツインヘデッド・ビースト
+--Twinheaded Beast
 local s,id=GetID()
 function s.initial_effect(c)
 	--multi attack

@@ -55,15 +55,15 @@ end
 --Activation legality
 function s.thtg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return 
-		Duel.IsExistingMatchingCard(s.tgfilter1,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_HAND+LOCATION_MZONE)
+		Duel.IsExistingMatchingCard(s.tgfilter1,tp,LOCATION_HAND|LOCATION_MZONE,0,1,nil,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_HAND|LOCATION_MZONE)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 --Performing the effect of adding to hand
 function s.thop1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local tg=Duel.SelectMatchingCard(tp,s.tgfilter1,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil,tp)
+	local tg=Duel.SelectMatchingCard(tp,s.tgfilter1,tp,LOCATION_HAND|LOCATION_MZONE,0,1,1,nil,tp)
 	local tc=tg:GetFirst()
 	if tc then
 		local code = tc:GetCode()
@@ -96,15 +96,15 @@ end
 --Activation legality
 function s.thtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return 
-		Duel.IsExistingMatchingCard(s.tgfilter2,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_HAND+LOCATION_MZONE)
+		Duel.IsExistingMatchingCard(s.tgfilter2,tp,LOCATION_HAND|LOCATION_MZONE,0,1,nil,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_HAND|LOCATION_MZONE)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 	--Performing the effect of adding to hand
 function s.thop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local tg=Duel.SelectMatchingCard(tp,s.tgfilter2,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil,tp)
+	local tg=Duel.SelectMatchingCard(tp,s.tgfilter2,tp,LOCATION_HAND|LOCATION_MZONE,0,1,1,nil,tp)
 	local tc=tg:GetFirst()
 	if tc and Duel.SendtoGrave(tc,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_GRAVE) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)

@@ -1,7 +1,8 @@
 --星輝士の因子
+--Stellarknight Alpha
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddEquipProcedure(c,0,aux.FilterBoolFunction(Card.IsSetCard,0x9c),s.eqlimit)
+	aux.AddEquipProcedure(c,0,aux.FilterBoolFunction(Card.IsSetCard,SET_TELLARKNIGHT),s.eqlimit)
 	--atk/def
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_EQUIP)
@@ -26,15 +27,15 @@ function s.initial_effect(c)
 	e6:SetCondition(s.descon)
 	c:RegisterEffect(e6)
 end
-s.listed_series={0x9c}
+s.listed_series={SET_TELLARKNIGHT}
 function s.eqlimit(e,c)
-	return c:IsSetCard(0x9c) and c:GetControler()==e:GetHandler():GetControler()
+	return c:IsSetCard(SET_TELLARKNIGHT) and c:GetControler()==e:GetHandler():GetControler()
 end
 function s.efilter(e,re)
 	return e:GetHandlerPlayer()~=re:GetOwnerPlayer()
 end
 function s.cfilter(c)
-	return c:IsFaceup() and not c:IsSetCard(0x9c)
+	return c:IsFaceup() and not c:IsSetCard(SET_TELLARKNIGHT)
 end
 function s.descon(e)
 	return Duel.IsExistingMatchingCard(s.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)

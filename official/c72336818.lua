@@ -14,4 +14,3 @@ function s.initial_effect(c)
 	e1:SetTarget(aux.TargetBoolFunction(Card.IsLinked))
 	c:RegisterEffect(e1)
 end
-

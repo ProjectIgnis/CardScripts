@@ -1,4 +1,5 @@
 --絶対防御将軍
+--Total Defense Shogun
 local s,id=GetID()
 function s.initial_effect(c)
 	--to defense

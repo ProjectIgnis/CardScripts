@@ -1,4 +1,5 @@
 --ファントム・バウンサー
+--Phantom Bounzer
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -13,12 +14,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x6b}
+s.listed_series={SET_BOUNZER}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD) and e:GetHandler():IsReason(REASON_DESTROY)
 end
 function s.filter(c)
-	return c:IsSetCard(0x6b) and c:IsAbleToHand()
+	return c:IsSetCard(SET_BOUNZER) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,2,nil) end

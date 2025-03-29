@@ -1,4 +1,5 @@
 --魔封じの芳香
+--Anti-Spell Fragrance
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -23,13 +24,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.aclimit(e,re,tp)
-	if not re:IsHasType(EFFECT_TYPE_ACTIVATE) or not re:IsActiveType(TYPE_SPELL) then return false end
+	if not re:IsHasType(EFFECT_TYPE_ACTIVATE) or not re:IsSpellEffect() then return false end
 	local c=re:GetHandler()
 	return not c:IsLocation(LOCATION_SZONE) or c:GetFlagEffect(id)>0
 end
 function s.aclimset(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	for tc in aux.Next(eg) do
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,0,1)
+		tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN,0,1)
 	end
 end

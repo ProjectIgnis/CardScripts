@@ -1,4 +1,5 @@
 --オルターガイスト・シルキタス
+--Altergeist Silquitous
 local s,id=GetID()
 function s.initial_effect(c)
 	--to hand
@@ -27,9 +28,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x103}
+s.listed_series={SET_ALTERGEIST}
 function s.rthcfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x103) and c:IsAbleToHandAsCost()
+	return c:IsFaceup() and c:IsSetCard(SET_ALTERGEIST) and c:IsAbleToHandAsCost()
 end
 function s.rthcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -55,7 +56,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x103) and c:IsTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_ALTERGEIST) and c:IsTrap() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end

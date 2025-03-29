@@ -1,4 +1,5 @@
 --シャドー・トゥーン
+--Shadow Toon
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,5 +1,5 @@
 --守護竜エルピィ
---Elpy the Guardragon
+--Guardragon Elpy
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -37,14 +37,14 @@ function s.filter(c,e,tp,zone)
 	return c:IsRace(RACE_DRAGON) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local zone=Duel.GetZoneWithLinkedCount(2,tp)&0x1f
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp,zone) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
+	local zone=Duel.GetZoneWithLinkedCount(2,tp)&ZONES_MMZ
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND|LOCATION_DECK,0,1,nil,e,tp,zone) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_DECK)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	local zone=Duel.GetZoneWithLinkedCount(2,tp)&0x1f
+	local zone=Duel.GetZoneWithLinkedCount(2,tp)&ZONES_MMZ
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp,zone)
+	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND|LOCATION_DECK,0,1,1,nil,e,tp,zone)
 	if #g>0 and zone~=0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP,zone)
 	end

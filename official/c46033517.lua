@@ -1,7 +1,6 @@
 --マシンナーズ・ルインフォース
 --Machina Ruinforce
 --Scripted by DyXel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Can only be summoned with its on procedure
@@ -48,7 +47,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop2)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x36}
+s.listed_series={SET_MACHINA}
 function s.spfilter(c)
 	return c:HasLevel() and c:IsMonster() and c:IsRace(RACE_MACHINE) and c:IsAbleToRemoveAsCost()
 end
@@ -98,7 +97,7 @@ function s.rescon2(sg,e,tp,mg)
 	return sg:GetSum(Card.GetLevel)<=12
 end
 function s.spfilter2(c,e,tp)
-	return c:IsSetCard(0x36) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_MACHINA) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

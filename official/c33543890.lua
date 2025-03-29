@@ -1,5 +1,5 @@
 --竜儀巧－ラスβ
---Draitron Ras-Beta
+--Drytron Beta Rastaban
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOGRAVE)
 	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetRange(LOCATION_HAND+LOCATION_GRAVE)
+	e2:SetRange(LOCATION_HAND|LOCATION_GRAVE)
 	e2:SetCountLimit(1,id)
 	e2:SetCost(Drytron.TributeCost)
 	e2:SetTarget(s.sptg)
@@ -25,9 +25,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.sumfilter)
 end
-s.listed_series={0x151}
+s.listed_series={SET_DRYTRON}
 function s.spconlimit(e,se,sp,st)
-	return se:IsHasType(EFFECT_TYPE_ACTIONS) and se:GetHandler():IsSetCard(0x151)
+	return se:IsHasType(EFFECT_TYPE_ACTIONS) and se:GetHandler():IsSetCard(SET_DRYTRON)
 end
 function s.sumfilter(c)
 	return not c:IsSummonableCard()
@@ -38,7 +38,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,c:GetLocation())
 end
 function s.tgfilter(c)
-	return c:IsSetCard(0x151) and c:IsMonster() and c:IsFaceup()
+	return c:IsSetCard(SET_DRYTRON) and c:IsMonster() and c:IsFaceup()
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

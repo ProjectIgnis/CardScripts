@@ -1,4 +1,5 @@
 --聖騎士パーシヴァル
+--Noble Knight Peredur
 local s,id=GetID()
 function s.initial_effect(c)
 	--Attribute Dark
@@ -26,15 +27,15 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x207a}
+s.listed_series={SET_NOBLE_ARMS}
 function s.eqcon2(e)
-	return e:GetHandler():GetEquipGroup():IsExists(Card.IsSetCard,1,nil,0x207a)
+	return e:GetHandler():GetEquipGroup():IsExists(Card.IsSetCard,1,nil,SET_NOBLE_ARMS)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return s.eqcon2(e) and e:GetHandler():IsLocation(LOCATION_GRAVE)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x207a) and c:IsAbleToHand()
+	return c:IsSetCard(SET_NOBLE_ARMS) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end

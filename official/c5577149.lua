@@ -1,5 +1,5 @@
 --バーバリアン０号
---Battleguard #0
+--Battleguard Cadet
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x2178))
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_BATTLEGUARD))
 	e1:SetValue(500)
 	c:RegisterEffect(e1)
 	--Search 1 "Feast of the Wild LV5"
@@ -38,7 +38,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x2178}
+s.listed_series={SET_BATTLEGUARD}
 s.listed_names={55416843}
 function s.thfilter(c)
 	return c:IsCode(55416843) and c:IsAbleToHand()

@@ -13,10 +13,10 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x50}
+s.listed_series={SET_VENOM}
 s.counter_place_list={0x1009}
 function s.cfilter(c)
-	return c:IsFaceup() and (c:IsCode(72677437,8062132) or c:IsSetCard(0x50))
+	return c:IsFaceup() and (c:IsCode(72677437,8062132) or c:IsSetCard(SET_VENOM))
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)

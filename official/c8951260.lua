@@ -1,4 +1,5 @@
 --正々堂々
+--Respect Play
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

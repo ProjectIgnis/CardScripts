@@ -13,9 +13,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x1002}
+s.listed_series={SET_R_GENEX}
 function s.filter(c)
-	return c:GetLevel()==2 and c:IsSetCard(0x1002) and c:IsAbleToHand()
+	return c:GetLevel()==2 and c:IsSetCard(SET_R_GENEX) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

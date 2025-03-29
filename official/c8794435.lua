@@ -1,4 +1,5 @@
 --合成魔獣 ガーゼット
+--Maju Garzett
 local s,id=GetID()
 function s.initial_effect(c)
 	--tribute check
@@ -29,7 +30,7 @@ function s.valcheck(e,c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK)
 		e1:SetValue(atk)
-		e1:SetReset(RESET_EVENT+0xff0000)
+		e1:SetReset(RESET_EVENT|RESET_DISABLE|RESET_TURN_SET|RESET_TOGRAVE|RESET_REMOVE|RESET_TEMP_REMOVE|RESET_TOHAND|RESET_TODECK|RESET_LEAVE)
 		c:RegisterEffect(e1)
 	end
 end

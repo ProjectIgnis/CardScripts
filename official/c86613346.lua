@@ -1,7 +1,6 @@
 --ホーリーナイツ・フラムエル
---Holy Night Flamel
+--Starry Knight Flamel
 --Scripted by DyXel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Send itself to GY; Special Summon from hand
@@ -25,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetCountLimit(1,id)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
@@ -57,7 +56,7 @@ function s.ssop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
--- Check for Level 7 LIGHT Dragon, making sure that its face-up if on MZONE
+--Check for Level 7 LIGHT Dragon, making sure that its face-up if on MZONE
 function s.thfilter(c)
 	return s.ldlv7filter(c) and c:IsAbleToHand() and
 	       ((c:IsLocation(LOCATION_MZONE) and c:IsFaceup()) or c:IsLocation(LOCATION_GRAVE))

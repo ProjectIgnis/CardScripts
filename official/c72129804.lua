@@ -21,10 +21,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.repop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xf3,0x10f3}
+s.listed_series={SET_PREDAP,SET_PREDAPLANT}
 s.counter_place_list={COUNTER_PREDATOR}
 function s.cfilter(c)
-	return c:IsSetCard(0xf3) and not c:IsPublic()
+	return c:IsSetCard(SET_PREDAP) and not c:IsPublic()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local hg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_HAND,0,e:GetHandler())
@@ -46,7 +46,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CHANGE_LEVEL)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			e1:SetCondition(s.lvcon)
 			e1:SetValue(1)
 			tc:RegisterEffect(e1)
@@ -57,7 +57,7 @@ function s.lvcon(e)
 	return e:GetHandler():GetCounter(COUNTER_PREDATOR)>0
 end
 function s.repfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x10f3) and c:IsLocation(LOCATION_MZONE)
+	return c:IsFaceup() and c:IsSetCard(SET_PREDAPLANT) and c:IsLocation(LOCATION_MZONE)
 		and c:IsControler(tp) and c:IsReason(REASON_BATTLE)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)

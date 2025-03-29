@@ -1,4 +1,5 @@
 --ゴーストリック・ブレイク
+--Ghostrick Break
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,17 +13,17 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x8d}
+s.listed_series={SET_GHOSTRICK}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	if rp~=tp and #eg==1 and tc:IsReason(REASON_DESTROY) and tc:IsReason(REASON_BATTLE+REASON_EFFECT)
-		and tc:IsPreviousLocation(LOCATION_MZONE) and tc:IsPreviousControler(tp) and tc:IsSetCard(0x8d) and tc:IsPreviousPosition(POS_FACEUP) then
+		and tc:IsPreviousLocation(LOCATION_MZONE) and tc:IsPreviousControler(tp) and tc:IsSetCard(SET_GHOSTRICK) and tc:IsPreviousPosition(POS_FACEUP) then
 		e:SetLabel(tc:GetCode())
 		return true
 	else return false end
 end
 function s.filter(c,e,tp,code)
-	return c:IsSetCard(0x8d) and c:GetCode()~=code and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
+	return c:IsSetCard(SET_GHOSTRICK) and c:GetCode()~=code and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc,e,tp,e:GetLabel()) end

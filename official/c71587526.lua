@@ -32,7 +32,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)>0 then
-		local rg=Duel.GetMatchingGroup(s.rfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,tc,tc:GetCode())
+		local rg=Duel.GetMatchingGroup(s.rfilter,tp,0,LOCATION_MZONE|LOCATION_GRAVE,tc,tc:GetCode())
 		if Duel.GetOperatedGroup():GetFirst():IsLocation(LOCATION_REMOVED) and #rg>0 then
 			Duel.BreakEffect()
 			Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)

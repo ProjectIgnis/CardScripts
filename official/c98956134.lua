@@ -1,4 +1,5 @@
 --デストラクション・ジャマー
+--Destruction Jammer
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

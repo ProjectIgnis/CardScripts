@@ -1,4 +1,5 @@
 --魔界の足枷
+--Darkworld Shackles
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c)
@@ -22,7 +23,7 @@ function s.initial_effect(c)
 	e6:SetDescription(aux.Stringid(id,0))
 	e6:SetCategory(CATEGORY_DAMAGE)
 	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e6:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e6:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e6:SetRange(LOCATION_SZONE)
 	e6:SetCountLimit(1)
 	e6:SetCondition(s.damcon)

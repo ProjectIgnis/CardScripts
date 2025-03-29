@@ -1,4 +1,5 @@
 --ジャッカルの霊騎士
+--Ghost Knight of Jackal
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon

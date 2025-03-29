@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
-	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,0x1047),Fusion.OnFieldMat,nil,nil,nil,s.stage2)
+	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,SET_GEM_KNIGHT),Fusion.OnFieldMat,nil,nil,nil,s.stage2)
 	c:RegisterEffect(e1)
 	--Increase ATK
 	local e2=Effect.CreateEffect(c)
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetLabelObject(e1)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x1047}
+s.listed_series={SET_GEM_KNIGHT}
 function s.stage2(e,tc,tp,sg,chk)
 	if chk==1 then
 		e:SetLabelObject(tc)
@@ -41,10 +41,10 @@ end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tc=e:GetLabelObject():GetLabelObject()
 	local mat=tc:GetMaterial()
-	if chkc then return chkc:IsSetCard(0x1047) and mat:IsContains(chkc) end
-	if chk==0 then return mat:IsExists(Card.IsSetCard,1,nil,0x1047) end
+	if chkc then return chkc:IsSetCard(SET_GEM_KNIGHT) and mat:IsContains(chkc) end
+	if chk==0 then return mat:IsExists(Card.IsSetCard,1,nil,SET_GEM_KNIGHT) end
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
-	local g=mat:FilterSelect(tp,Card.IsSetCard,1,1,nil,0x1047)
+	local g=mat:FilterSelect(tp,Card.IsSetCard,1,1,nil,SET_GEM_KNIGHT)
 	tc:CreateEffectRelation(e)
 	Duel.SetTargetCard(g)
 end
@@ -57,6 +57,6 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(tc:GetAttack())
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	sc:RegisterEffect(e1)
 end

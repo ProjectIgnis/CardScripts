@@ -14,10 +14,10 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x129}
+s.listed_series={SET_EVIL_EYE}
 s.listed_names={CARD_EVIL_EYE_SELENE}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x129)
+	return c:IsFaceup() and c:IsSetCard(SET_EVIL_EYE)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)

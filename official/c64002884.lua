@@ -1,5 +1,5 @@
 --
---Simorgh Rejection
+--Simorgh Repulsion
 --scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.lvtg)
 	e2:SetOperation(s.lvop)
 	c:RegisterEffect(e2)
@@ -57,5 +57,5 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,nil)
 	Duel.ConfirmCards(1-tp,g)
 	Duel.ShuffleHand(tp)
-	local hg=Duel.GetMatchingGroup(s.afilter,tp,LOCATION_HAND,0,nil,g:GetFirst():GetCode()):ForEach(function(tc) tc:UpdateLevel(-1,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_PHASE+PHASE_END,e:GetHandler()) end)
+	local hg=Duel.GetMatchingGroup(s.afilter,tp,LOCATION_HAND,0,nil,g:GetFirst():GetCode()):ForEach(function(tc) tc:UpdateLevel(-1,RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD|RESET_PHASE|PHASE_END,e:GetHandler()) end)
 end

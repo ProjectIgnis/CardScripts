@@ -21,10 +21,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x122}
+s.listed_series={SET_VALKYRIE}
 s.listed_names={91969909}
 function s.thcfilter(c)
-	return c:IsFacedown() or not c:IsSetCard(0x122)
+	return c:IsFacedown() or not c:IsSetCard(SET_VALKYRIE)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)>0
@@ -70,4 +70,3 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ShuffleHand(1-tp)
 	end
 end
-

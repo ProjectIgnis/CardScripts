@@ -27,10 +27,10 @@ function s.initial_effect(c)
 	e4:SetValue(s.val)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x3d}
+s.listed_series={SET_SIX_SAMURAI}
 s.counter_place_list={0x3}
 function s.ctfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x3d)
+	return c:IsFaceup() and c:IsSetCard(SET_SIX_SAMURAI)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(s.ctfilter,1,nil) then

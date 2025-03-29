@@ -1,4 +1,5 @@
 --大将軍 紫炎
+--Great Shogun Shien
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -41,9 +42,9 @@ function s.initial_effect(c)
 	e5:SetValue(s.elimit)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x3d}
+s.listed_series={SET_SIX_SAMURAI}
 function s.spfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x3d)
+	return c:IsFaceup() and c:IsSetCard(SET_SIX_SAMURAI)
 end
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -52,7 +53,7 @@ function s.spcon(e,c)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_MZONE,0,2,nil)
 end
 function s.repfilter(c,e)
-	return c:IsFaceup() and c:IsSetCard(0x3d)
+	return c:IsFaceup() and c:IsSetCard(SET_SIX_SAMURAI)
 		and c:IsDestructable(e) and not c:IsStatus(STATUS_DESTROY_CONFIRMED+STATUS_BATTLE_DESTROYED)
 end
 function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)

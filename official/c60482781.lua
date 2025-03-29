@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2) 
 end
 s.LVnum=6
-s.LVset=0x5f
+s.LVset=SET_MYSTIC_SWORDSMAN
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
 	return e:GetHandler()==Duel.GetAttacker() and d and d:IsFacedown() and d:IsDefensePos()

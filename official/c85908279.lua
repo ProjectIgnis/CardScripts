@@ -1,4 +1,5 @@
 --召喚獣コキュートス
+--Invoked Cocytus
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material

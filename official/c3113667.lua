@@ -46,14 +46,14 @@ function s.indct(e,re,r,rp)
 	if tc and tc:IsControler(1-tp) then a,tc=tc,a end
 	local dam=Duel.GetBattleDamage(tp)
 	if not tc or dam<=0 then return 1 end
-	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+	c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(dam)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	tc:RegisterEffect(e1)
 	--Reset
 	local e2=Effect.CreateEffect(c)
@@ -66,7 +66,7 @@ function s.indct(e,re,r,rp)
 			e:Reset()
 		end
 	end)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 	tc:RegisterEffect(e2)
 	return 1
 end

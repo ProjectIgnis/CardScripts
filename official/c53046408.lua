@@ -1,4 +1,5 @@
 --非常食
+--Emergency Provisions
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -39,26 +39,26 @@ function s.lcheck(g,lc,sumtype,tp)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsSummonType(SUMMON_TYPE_LINK) then return end
+	if not c:IsLinkSummoned() then return end
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SET_BASE_ATTACK)
 	e1:SetValue(c:GetMaterialCount()*1000)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 	c:RegisterEffect(e1)
 end
 function s.efilter(e,te)
 	return te:GetOwner()~=e:GetOwner()
 end
 function s.desfilter(c,hc,tp)
-	local zone=hc:GetLinkedZone(tp)&~0x60
+	local zone=hc:GetLinkedZone(tp)&~ZONES_EMZ
 	return Duel.GetMZoneCount(tp,c,tp,LOCATION_REASON_TOFIELD,zone)>0
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc~=e:GetHandler() end
 	local c=e:GetHandler()
 	if chk==0 then return Duel.IsExistingTarget(s.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c,c,tp) 
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_IGNISTER,0x135,TYPES_TOKEN,0,0,1,RACE_CYBERSE,ATTRIBUTE_DARK) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_IGNISTER,SET_IGNISTER,TYPES_TOKEN,0,0,1,RACE_CYBERSE,ATTRIBUTE_DARK) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,c)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
@@ -67,10 +67,10 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	local zone=e:GetHandler():GetLinkedZone(tp)&~0x60
+	local zone=e:GetHandler():GetLinkedZone(tp)&~ZONES_EMZ
 	if tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)>0
 		and Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_IGNISTER,0x135,TYPES_TOKEN,0,0,1,RACE_CYBERSE,ATTRIBUTE_DARK) then
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_IGNISTER,SET_IGNISTER,TYPES_TOKEN,0,0,1,RACE_CYBERSE,ATTRIBUTE_DARK) then
 		local token=Duel.CreateToken(tp,TOKEN_IGNISTER)
 		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP,zone)
 	end

@@ -1,4 +1,5 @@
 --スキル・サクセサー
+--Skill Successor
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -23,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetHintTiming(TIMING_DAMAGE_STEP)
 	e2:SetCondition(s.atkcon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.activate)
 	e2:SetLabel(800)
@@ -44,11 +45,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(e:GetLabel())
 		tc:RegisterEffect(e1)
 	end
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return aux.exccon(e) and Duel.GetTurnPlayer()==tp and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
+	return aux.exccon(e) and Duel.IsTurnPlayer(tp) and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
 end

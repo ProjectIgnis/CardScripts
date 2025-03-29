@@ -30,8 +30,8 @@ function s.smcon(e)
 	return e:GetHandler():GetFlagEffect(id)==0
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
-		and (Duel.GetCurrentPhase()&PHASE_MAIN1+PHASE_MAIN2)>0
+	return Duel.IsTurnPlayer(tp)
+		and (Duel.GetCurrentPhase()&PHASE_MAIN1|PHASE_MAIN2)>0
 end
 function s.filter(tc,c,tp)
 	if not tc:IsFaceup() or not tc:IsCanBeSynchroMaterial() then return false end
@@ -73,7 +73,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			local e3=Effect.CreateEffect(c)
 			e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 			e3:SetCode(EVENT_SPSUMMON_SUCCESS)
-			e3:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
+			e3:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD)
 			e3:SetOperation(s.regop)
 			e3:SetLabelObject(e1)
 			sc:RegisterEffect(e3,true)

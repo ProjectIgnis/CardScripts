@@ -1,6 +1,5 @@
 --魔界劇団－ファンキー・コメディアン
 --Abyss Actor - Funky Comedian
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Enable pendulum summon
@@ -41,13 +40,12 @@ function s.initial_effect(c)
 	e4:SetOperation(s.atkop3)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x10ec}
-
+s.listed_series={SET_ABYSS_ACTOR}
 function s.atkfilter1(c,tp)
-	return c:IsSetCard(0x10ec) and Duel.IsExistingTarget(s.atkfilter2,tp,LOCATION_MZONE,0,1,c)
+	return c:IsSetCard(SET_ABYSS_ACTOR) and Duel.IsExistingTarget(s.atkfilter2,tp,LOCATION_MZONE,0,1,c)
 end
 function s.atkfilter2(c)
-	return c:IsSetCard(0x10ec) and c:IsFaceup()
+	return c:IsSetCard(SET_ABYSS_ACTOR) and c:IsFaceup()
 end
 function s.atkcost1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.atkfilter1,1,false,nil,nil,tp) end
@@ -69,7 +67,7 @@ function s.atkop1(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(e:GetLabel())
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end
@@ -84,7 +82,7 @@ function s.atkop2(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(atkval)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end
@@ -97,7 +95,7 @@ function s.atkcost3(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CANNOT_ATTACK)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	c:RegisterEffect(e1,true)
 end
 function s.atktg3(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -115,7 +113,7 @@ function s.atkop3(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(atk)
 		tc:RegisterEffect(e1)
 	end

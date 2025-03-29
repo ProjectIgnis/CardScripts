@@ -1,5 +1,5 @@
 --ヴァンパイアの支配
-
+--Vampire Domination
 --
 local s,id=GetID()
 function s.initial_effect(c)
@@ -14,13 +14,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x8e}
+s.listed_series={SET_VAMPIRE}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x8e)
+	return c:IsFaceup() and c:IsSetCard(SET_VAMPIRE)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
-		and (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE)) and Duel.IsChainNegatable(ev)
+		and (re:IsMonsterEffect() or re:IsHasType(EFFECT_TYPE_ACTIVATE)) and Duel.IsChainNegatable(ev)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -39,4 +39,3 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Recover(tp,re:GetHandler():GetBaseAttack(),REASON_EFFECT)
 	end
 end
-

@@ -1,4 +1,5 @@
 --墓守の異端者
+--Gravekeeper's Heretic
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)

@@ -1,7 +1,6 @@
 --俊炎星－ゾウセイ
 --Brotherhood of the Fire Fist - Elephant
 --Scripted by Hel
-
 local s,id=GetID()
 function s.initial_effect(c)
 local e1=Effect.CreateEffect(c)
@@ -32,10 +31,9 @@ local e1=Effect.CreateEffect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={id}
-s.listed_series={0x7c,0x79}
-
+s.listed_series={SET_FIRE_FORMATION,SET_FIRE_FIST}
 function s.cfilter(c)
-	return c:IsFaceup() and (c:IsSpell() or c:IsTrap()) and c:IsSetCard(0x7c) and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and (c:IsSpell() or c:IsTrap()) and c:IsSetCard(SET_FIRE_FORMATION) and c:IsAbleToGraveAsCost()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local nc=Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_SZONE,0,1,nil)
@@ -49,7 +47,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x79) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_FIRE_FIST) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -65,10 +63,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.shfilter(c)
-	return c:IsAbleToDeck() and c:IsSetCard(0x7c) and (c:IsSpell() or c:IsTrap())
+	return c:IsAbleToDeck() and c:IsSetCard(SET_FIRE_FORMATION) and (c:IsSpell() or c:IsTrap())
 end
 function s.addfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x79) and c:IsAbleToHand() and c:IsLevelAbove(5)
+	return c:IsMonster() and c:IsSetCard(SET_FIRE_FIST) and c:IsAbleToHand() and c:IsLevelAbove(5)
 end
 function s.addtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.shfilter(chkc) end
@@ -80,7 +78,7 @@ function s.addtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.addop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0 then
+	if tc and tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)~=0 then
 		local g=Duel.GetMatchingGroup(s.addfilter,tp,LOCATION_DECK,0,nil)
 		if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 			Duel.BreakEffect()

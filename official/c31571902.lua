@@ -1,4 +1,5 @@
 --邪神機－獄炎
+--Malevolent Mech - Goku En
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon

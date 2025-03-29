@@ -20,9 +20,9 @@ function s.initial_effect(c)
 	e2:SetValue(10000050)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x10a2}
+s.listed_series={SET_DARK_MAGICIAN}
 function s.tgfilter(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x10a2) and c:IsCanBeFusionMaterial()
+	return c:IsFaceup() and c:IsSetCard(SET_DARK_MAGICIAN) and c:IsCanBeFusionMaterial()
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c)
 end
 function s.spfilter(c,e,tp,mc)

@@ -16,9 +16,9 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x106e}
+s.listed_series={SET_SPELLBOOK}
 function s.cfilter(c)
-	return c:IsSetCard(0x106e) and c:IsSpell()
+	return c:IsSetCard(SET_SPELLBOOK) and c:IsSpell()
 end
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_GRAVE,0,nil)
@@ -27,7 +27,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x106e) and c:IsSpell() and c:IsAbleToHand()
+	return c:IsSetCard(SET_SPELLBOOK) and c:IsSpell() and c:IsAbleToHand()
 end
 function s.spfilter(c,e,tp)
 	return c:IsRace(RACE_SPELLCASTER) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsLevelAbove(5)
@@ -47,7 +47,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(600)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 	end
 	--4+: Search 1 "Spellbook" Spell

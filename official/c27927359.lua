@@ -1,4 +1,5 @@
 --ハーピィ・レディ2
+--Harpie Lady 2
 local s,id=GetID()
 function s.initial_effect(c)
 	--Disable
@@ -17,12 +18,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_EXC_GRAVE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_EXC_GRAVE)
 		bc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD_EXC_GRAVE)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD_EXC_GRAVE)
 		bc:RegisterEffect(e2)
 	end
 end

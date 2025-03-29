@@ -1,4 +1,5 @@
 --クイック・シンクロン
+--Quickdraw Synchron
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -26,7 +27,7 @@ function s.initial_effect(c)
 end
 function s.synlimit(e,c)
 	if not c then return false end
-	return not c:ListsArchetypeAsMaterial(0x1017)
+	return not c:ListsArchetypeAsMaterial(SET_SYNCHRON)
 end
 function s.spfilter(c)
 	return c:IsMonster() and c:IsAbleToGraveAsCost()

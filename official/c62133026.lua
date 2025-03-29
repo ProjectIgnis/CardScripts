@@ -1,23 +1,23 @@
--- 花と野原の春化精
--- Vernalizer Fairy of Flowers and Fields
--- Scripted by Hatter
+--花と野原の春化精
+--Vernusylph of the Flowering Fields
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Effect targetting protection
+	--Effect targetting protection
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x183))
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_VERNUSYLPH))
 	e1:SetValue(aux.tgoval)
 	c:RegisterEffect(e1)
-	-- Add 1 "Vernalizer Fairy" card from the GY to the hand
+	--Add 1 "Vernalizer Fairy" card from the GY to the hand
 	c:RegisterEffect(Effect.CreateVernalizerSPEffect(c,id,0,CATEGORY_TOHAND,s.thtg,s.thop))
 end
 s.listed_names={id}
-s.listed_series={0x183}
+s.listed_series={SET_VERNUSYLPH}
 function s.thfilter(c)
 	return c:IsAttribute(ATTRIBUTE_EARTH) and not c:IsCode(id) and c:IsAbleToHand()
 end

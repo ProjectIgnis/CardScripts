@@ -1,4 +1,5 @@
 --異次元隔離マシーン
+--Different Dimension Gate
 local s,id=GetID()
 function s.initial_effect(c)
 	--remove
@@ -41,9 +42,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.GetOperatedGroup()
 		local tc=g:GetFirst()
 		for tc in aux.Next(g) do
-			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+			tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 		end
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD_EXC_GRAVE,0,1)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD_EXC_GRAVE,0,1)
 		g:KeepAlive()
 		e:SetLabelObject(g)
 	end

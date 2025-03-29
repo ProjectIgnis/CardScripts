@@ -1,4 +1,5 @@
 --XX－セイバー レイジグラ
+--XX-Saber Ragigura
 local s,id=GetID()
 function s.initial_effect(c)
 	--salvage
@@ -15,9 +16,9 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x100d}
+s.listed_series={SET_X_SABER}
 function s.filter(c)
-	return c:IsSetCard(0x100d) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_X_SABER) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc) end

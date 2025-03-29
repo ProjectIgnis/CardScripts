@@ -1,4 +1,5 @@
 --滅びの呪文－デス・アルテマ
+--Chaos Scepter Blast
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

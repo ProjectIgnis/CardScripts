@@ -21,22 +21,22 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(function(_,tp) return Duel.IsTurnPlayer(tp) end)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.damtg)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x17c}
+s.listed_series={SET_SCARECLAW}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,3,false,nil,nil,0x17c) end
-	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,3,3,false,nil,nil,0x17c)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,3,false,nil,nil,SET_SCARECLAW) end
+	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,3,3,false,nil,nil,SET_SCARECLAW)
 	Duel.Release(g,REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 	--Can only Special Summon in Defense Position
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetDescription(aux.Stringid(id,2))
@@ -45,7 +45,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetTargetRange(0,1)
 	e1:SetValue(POS_DEFENSE)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)

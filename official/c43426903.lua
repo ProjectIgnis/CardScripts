@@ -1,6 +1,5 @@
 --レプティレス・ゴルゴーン
 --Reptilianne Gorgon
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Attacked monster's ATK becomes 0, also cannot change its battle position
@@ -24,7 +23,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 	e1:SetValue(0)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	d:RegisterEffect(e1)
 	--Cannot change its battle position
 	local e2=Effect.CreateEffect(e:GetHandler())
@@ -32,6 +31,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 	d:RegisterEffect(e2)
 end

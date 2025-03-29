@@ -1,7 +1,6 @@
 --闇黒の夢魔鏡
 --Dream Mirror of Terror
 --Scripted by ahtelel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -16,7 +15,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_PHASE+PHASE_END)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetCountLimit(1,id)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.tftg)
 	e2:SetOperation(s.tfop)
 	c:RegisterEffect(e2)
@@ -30,29 +29,25 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={CARD_DREAM_MIRROR_JOY}
-s.listed_series={0x131}
-
+s.listed_series={SET_DREAM_MIRROR}
 function s.filter(c,tp)
 	return c:IsCode(CARD_DREAM_MIRROR_JOY) and c:GetActivateEffect():IsActivatable(tp,true,true)
 end
 function s.tftg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK|LOCATION_HAND,0,1,nil,tp) end
 	if not Duel.CheckPhaseActivity() then Duel.RegisterFlagEffect(tp,CARD_MAGICAL_MIDBREAKER,RESET_CHAIN,0,1) end
 end
 function s.tfop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
-	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,tp):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK|LOCATION_HAND,0,1,1,nil,tp):GetFirst()
 	Duel.ActivateFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
 end
 function s.damfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x131) and c:IsAttribute(ATTRIBUTE_DARK)
-end
-function s.cfilter(c,tp)
-	return c:GetSummonPlayer()==tp
+	return c:IsFaceup() and c:IsSetCard(SET_DREAM_MIRROR) and c:IsAttribute(ATTRIBUTE_DARK)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.damfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil) 
-		and eg:IsExists(s.cfilter,1,nil,1-tp)
+		and eg:IsExists(Card.IsSummonPlayer,1,nil,1-tp)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)

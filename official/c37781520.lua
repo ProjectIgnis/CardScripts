@@ -1,4 +1,5 @@
 --水精鱗－リードアビス
+--Mermail Abyssleed
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -35,7 +36,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.hdop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x75,0x74}
+s.listed_series={SET_ABYSS,SET_MERMAIL}
 function s.cfilter(c)
 	return c:IsAttribute(ATTRIBUTE_WATER) and c:IsDiscardable() and c:IsAbleToGraveAsCost()
 end
@@ -57,7 +58,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x75) and c:IsSpellTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_ABYSS) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end
@@ -74,7 +75,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.costfilter(c)
-	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsSetCard(0x74)
+	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsSetCard(SET_MERMAIL)
 end
 function s.hdcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.costfilter,1,false,nil,e:GetHandler()) end

@@ -1,4 +1,5 @@
 --聖獣セルケト
+--Mystical Beast of Serket
 local s,id=GetID()
 function s.initial_effect(c)
 	--selfdestroy
@@ -26,7 +27,7 @@ function s.initial_effect(c)
 end
 s.listed_names={29762407}
 function s.desfilter(c)
-	return c:IsFaceup() and c:IsCode(29762407)
+	return c:IsFaceup() and c:IsCode(CARD_TEMPLE_OF_THE_KINGS)
 end
 function s.descon(e)
 	return not Duel.IsExistingMatchingCard(s.desfilter,e:GetHandler():GetControler(),LOCATION_SZONE,0,1,nil)
@@ -41,6 +42,6 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(500)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 	c:RegisterEffect(e1)
 end

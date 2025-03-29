@@ -1,4 +1,5 @@
 --闇の呪縛
+--Shadow Spell
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddPersistentProcedure(c,1,aux.FilterBoolFunction(Card.IsFaceup),CATEGORY_POSITION,EFFECT_FLAG_DAMAGE_STEP,TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP,s.condition)

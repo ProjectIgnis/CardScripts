@@ -26,9 +26,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.rmop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x15e,0x15f}
+s.listed_series={SET_AMAZEMENT,SET_ATTRACTION}
 function s.setfilter(c)
-	return c:IsSetCard(0x15f) and c:IsTrap() and c:IsSSetable()
+	return c:IsSetCard(SET_ATTRACTION) and c:IsTrap() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetHandler():GetEquipTarget()
@@ -55,7 +55,7 @@ end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetEquipTarget()
 	if tc and tc:IsLocation(LOCATION_MZONE) and Duel.Remove(tc,0,REASON_EFFECT+REASON_TEMPORARY)>0 then
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 		--Return it in the End Phase
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -64,7 +64,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCountLimit(1)
 		e1:SetCondition(s.retcon)
 		e1:SetOperation(s.retop)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 	end
 end

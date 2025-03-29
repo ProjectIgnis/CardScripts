@@ -1,4 +1,5 @@
 --水魔神－スーガ
+--Suijin
 local s,id=GetID()
 function s.initial_effect(c)
 	--atkdown
@@ -16,7 +17,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and Duel.GetAttackTarget()==e:GetHandler()
+	return Duel.IsTurnPlayer(1-tp) and Duel.GetAttackTarget()==e:GetHandler()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetAttacker():IsCanBeEffectTarget(e) end
@@ -28,7 +29,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-		e1:SetReset(RESET_PHASE+PHASE_DAMAGE_CAL)
+		e1:SetReset(RESET_PHASE|PHASE_DAMAGE_CAL)
 		e1:SetValue(0)
 		tc:RegisterEffect(e1)
 	end

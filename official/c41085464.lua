@@ -5,10 +5,10 @@ local s,id=GetID()
 function s.initial_effect(c)
 	Ritual.AddProcGreater({handler=c,filter=s.ritualfil,stage2=s.stage2})
 end
-s.listed_series={0x17d}
+s.listed_series={SET_LIBROMANCER}
 s.fit_monster={88106656,45001322}
 function s.ritualfil(c)
-	return c:IsSetCard(0x17d) and c:IsRitualMonster()
+	return c:IsSetCard(SET_LIBROMANCER) and c:IsRitualMonster()
 end
 function s.mfilter(c)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousCodeOnField()==45001322
@@ -24,7 +24,7 @@ function s.stage2(mg,e,tp,eg,ep,ev,re,r,rp,tc)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1,true)
 		--Cannot be banished by effects
 		local e2=Effect.CreateEffect(c)
@@ -34,7 +34,7 @@ function s.stage2(mg,e,tp,eg,ep,ev,re,r,rp,tc)
 		e2:SetRange(LOCATION_MZONE)
 		e2:SetTargetRange(1,1)
 		e2:SetTarget(s.rmlimit)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e2,true)
 	end
 end

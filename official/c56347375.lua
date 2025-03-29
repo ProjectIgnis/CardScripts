@@ -1,10 +1,10 @@
--- 竜剣士イグニスＰ
--- Ignis Phoenix, the Dracoslayer
--- Scripted by Hatter
+--竜剣士イグニスＰ
+--Ignis Phoenix, the Dracoslayer
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	Pendulum.AddProcedure(c)
-	-- Shuffle 1 Pendulum Monster to the Deck
+	--Shuffle 1 Pendulum Monster to the Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TODECK+CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.tdtg)
 	e1:SetOperation(s.tdop)
 	c:RegisterEffect(e1)
-	-- Special Summon 1 "Dracoslayer" or "Igknight" monster from the Deck
+	--Special Summon 1 "Dracoslayer" or "Igknight" monster from the Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -28,12 +28,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-s.listed_series={0xc7,0xc8}
+s.listed_series={SET_DRACOSLAYER,SET_IGKNIGHT}
 function s.tdfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_PENDULUM) and c:IsAbleToDeck()
 end
 function s.thfilter(c)
-	return (c:IsSetCard(0xc7) or c:IsSetCard(0xc8)) and not c:IsType(TYPE_PENDULUM) and c:IsMonster() and c:IsAbleToHand()
+	return (c:IsSetCard(SET_DRACOSLAYER) or c:IsSetCard(SET_IGKNIGHT)) and not c:IsType(TYPE_PENDULUM) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_EXTRA,0,1,nil)
@@ -60,7 +60,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
 end
 function s.spfilter(c,e,tp)
-	return (c:IsSetCard(0xc7) or c:IsSetCard(0xc8)) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return (c:IsSetCard(SET_DRACOSLAYER) or c:IsSetCard(SET_IGKNIGHT)) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -72,12 +72,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp):GetFirst()
 	if tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
-		-- Treated as a tuner
+		--Treated as a tuner
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_ADD_TYPE)
 		e1:SetValue(TYPE_TUNER)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 	Duel.SpecialSummonComplete()

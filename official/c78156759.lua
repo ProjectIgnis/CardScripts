@@ -1,4 +1,5 @@
 --発条機雷ゼンマイン 
+--Wind-Up Zenmaines
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -31,7 +32,7 @@ function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not c:IsReason(REASON_REPLACE) and c:CheckRemoveOverlayCard(tp,1,REASON_EFFECT) end
 	if Duel.SelectEffectYesNo(tp,c,96) then
 		c:RemoveOverlayCard(tp,1,1,REASON_EFFECT)
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 		return true
 	else return false end
 end

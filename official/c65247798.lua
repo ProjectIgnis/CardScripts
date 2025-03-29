@@ -1,4 +1,5 @@
 --妖仙獣 鎌壱太刀
+--Yosenju Kama 1
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon
@@ -31,10 +32,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.regop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xb3}
+s.listed_series={SET_YOSENJU}
 s.listed_names={id}
 function s.filter(c)
-	return c:IsSetCard(0xb3) and not c:IsCode(id) and c:IsSummonable(true,nil)
+	return c:IsSetCard(SET_YOSENJU) and not c:IsCode(id) and c:IsSummonable(true,nil)
 end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil) end
@@ -48,7 +49,7 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xb3)
+	return c:IsFaceup() and c:IsSetCard(SET_YOSENJU)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,e:GetHandler())

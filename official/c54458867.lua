@@ -14,9 +14,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x102}
+s.listed_series={SET_ROKKET}
 function s.ddfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x102)
+	return c:IsFaceup() and c:IsSetCard(SET_ROKKET)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.ddfilter(chkc) end

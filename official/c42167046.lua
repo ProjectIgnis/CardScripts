@@ -1,4 +1,5 @@
 --グレイモヤ不発弾
+--Widespread Dud
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

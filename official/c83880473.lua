@@ -1,5 +1,5 @@
 --War Rock Spirit
---Scripted by Rundas
+--War Rock Spirit
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon
@@ -14,13 +14,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x161}
+s.listed_series={SET_WAR_ROCK}
 --Special Summon
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsBattlePhase() and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
 end
 function s.filter(c,e,tp,pos)
-	return c:IsSetCard(0x161) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,pos)
+	return c:IsSetCard(SET_WAR_ROCK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,pos)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc,e,tp) end
@@ -55,19 +55,19 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_DISABLE)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
 			tc:RegisterEffect(e1)
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_DISABLE_EFFECT)
 			e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e2:SetReset(RESETS_STANDARD_PHASE_END)
 			tc:RegisterEffect(e2)
 			--Cannot attack directly
 			local e3=Effect.CreateEffect(c)
 			e3:SetType(EFFECT_TYPE_SINGLE)
 			e3:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
-			e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e3:SetReset(RESETS_STANDARD_PHASE_END)
 			tc:RegisterEffect(e3)
 		--Defense Position
 		elseif choice==1 then
@@ -76,9 +76,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			e4:SetType(EFFECT_TYPE_FIELD)
 			e4:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
 			e4:SetTargetRange(LOCATION_MZONE,0)
-			e4:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x161))
+			e4:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_WAR_ROCK))
 			e4:SetValue(s.indct)
-			e4:SetReset(RESET_PHASE+PHASE_END)
+			e4:SetReset(RESET_PHASE|PHASE_END)
 			Duel.RegisterEffect(e4,tp)
 		end
 	end

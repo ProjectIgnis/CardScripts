@@ -1,4 +1,5 @@
 --強烈なはたき落とし
+--Drastic Drop Off
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

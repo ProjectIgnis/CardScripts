@@ -12,11 +12,11 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetRange(LOCATION_MZONE+LOCATION_GRAVE)
+	e1:SetRange(LOCATION_MZONE|LOCATION_GRAVE)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.atkcon)
-	e1:SetCost(aux.bfgcost)
+	e1:SetCost(Cost.SelfBanish)
 	e1:SetTarget(s.atktg)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x48}
+s.listed_series={SET_NUMBER}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
 	return ph>PHASE_MAIN1 and ph<PHASE_MAIN2
@@ -40,7 +40,7 @@ end
 function s.atkfilter(c)
 	local m=c:GetMetatable(true)
 	if not m then return false end
-	return c:IsFaceup() and c:IsSetCard(0x48) and c:IsType(TYPE_XYZ) 
+	return c:IsFaceup() and c:IsSetCard(SET_NUMBER) and c:IsType(TYPE_XYZ) 
 		and c:GetOriginalRace()&RACE_DRAGON==RACE_DRAGON and c:GetOriginalAttribute()&ATTRIBUTE_LIGHT==ATTRIBUTE_LIGHT 
 		and m.xyz_number and m.xyz_number>0
 end
@@ -59,7 +59,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(0,1)
 	e1:SetValue(HALF_DAMAGE)
-	e1:SetReset(RESET_PHASE+PHASE_BATTLE)
+	e1:SetReset(RESET_PHASE|PHASE_BATTLE)
 	Duel.RegisterEffect(e1,tp)
 	--client hint
 	aux.RegisterClientHint(c,nil,tp,1,0,aux.Stringid(id,2),PHASE_BATTLE)
@@ -70,11 +70,11 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_SET_ATTACK_FINAL)
 	e3:SetValue(m.xyz_number*100)
-	e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE,1)
+	e3:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE,1)
 	tc:RegisterEffect(e3)
 end
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_DECK,0,1,nil) end

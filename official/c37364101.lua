@@ -50,7 +50,7 @@ function s.damcon(e)
 	return e:GetHandler():GetEquipTarget():GetBattleTarget()~=nil
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==1-tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -1,4 +1,5 @@
 --黄龍の召喚士
+--Golden Dragon Summoner
 local s,id=GetID()
 function s.initial_effect(c)
 	--tohand

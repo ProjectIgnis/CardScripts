@@ -1,4 +1,5 @@
 --コザッキーの自爆装置
+--Kozaky's Self-Destruct Button
 local s,id=GetID()
 function s.initial_effect(c)
 	--damage

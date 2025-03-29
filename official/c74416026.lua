@@ -1,4 +1,5 @@
 --デストーイ・マーチ
+--Frightfur March
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,15 +12,15 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xad}
+s.listed_series={SET_FRIGHTFUR}
 function s.filter(c,tp)
-	return c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsSetCard(0xad)
+	return c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsSetCard(SET_FRIGHTFUR)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if rp==tp or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	return g and g:IsExists(s.filter,1,nil,tp)
-		and Duel.IsChainNegatable(ev) and (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE))
+		and Duel.IsChainNegatable(ev) and (re:IsMonsterEffect() or re:IsHasType(EFFECT_TYPE_ACTIVATE))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -29,7 +30,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.spfilter(c,e,tp)
-	return c:IsType(TYPE_FUSION) and c:IsLevelAbove(8) and c:IsSetCard(0xad)
+	return c:IsType(TYPE_FUSION) and c:IsLevelAbove(8) and c:IsSetCard(SET_FRIGHTFUR)
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -53,24 +54,24 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetLabelObject(sc)
 				e1:SetCondition(s.rmcon)
 				e1:SetOperation(s.rmop)
-				if Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_END then
+				if Duel.IsTurnPlayer(tp) and Duel.IsPhase(PHASE_END) then
 					e1:SetLabel(Duel.GetTurnCount())
-					e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,2)
+					e1:SetReset(RESET_PHASE|PHASE_END|RESET_SELF_TURN,2)
 				else
 					e:SetLabel(0)
-					e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN)
+					e1:SetReset(RESET_PHASE|PHASE_END|RESET_SELF_TURN)
 				end
 				Duel.RegisterEffect(e1,tp)
 				Duel.SpecialSummonComplete()
 				sc:CompleteProcedure()
-				sc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+				sc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 			end
 		end
 	end
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
-	return Duel.GetTurnPlayer()==tp and Duel.GetTurnCount()~=e:GetLabel() and tc:GetFlagEffect(id)~=0
+	return Duel.IsTurnPlayer(tp) and Duel.GetTurnCount()~=e:GetLabel() and tc:GetFlagEffect(id)~=0
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()

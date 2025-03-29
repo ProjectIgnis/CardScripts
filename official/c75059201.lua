@@ -52,7 +52,7 @@ function s.initial_effect(c)
 	e6:SetCondition(s.actcon)
 	c:RegisterEffect(e6)
 end
-s.listed_series={0x107}
+s.listed_series={SET_FA}
 function s.atkval(e,c)
 	return c:GetLevel()*300
 end
@@ -71,7 +71,7 @@ function s.tglimit(e,c)
 	return c~=e:GetHandler()
 end
 function s.tgval(e,re,rp)
-	if not aux.tgoval(e,re,rp) or not re:IsActiveType(TYPE_MONSTER) then return false end
+	if not aux.tgoval(e,re,rp) or not re:IsMonsterEffect() then return false end
 	local c=re:GetHandler()
 	local lv=e:GetHandler():GetLevel()
 	if c:GetRank()>0 then
@@ -81,7 +81,7 @@ function s.tgval(e,re,rp)
 	else return false end
 end
 function s.lvcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and re:GetHandler():IsSetCard(0x107)
+	return re:IsSpellTrapEffect() and re:GetHandler():IsSetCard(SET_FA)
 end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -90,12 +90,12 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 	end
 end
 function s.aclimit(e,re,tp)
-	return re:IsActiveType(TYPE_MONSTER)
+	return re:IsMonsterEffect()
 end
 function s.actcon(e)
 	if not e:GetHandler():IsLevelAbove(7) then return false end
@@ -103,5 +103,5 @@ function s.actcon(e)
 	if not a then return false end
 	local d=a:GetBattleTarget()
 	if a:IsControler(1-e:GetHandler():GetControler()) then a,d=d,a end
-	return a and a:IsSetCard(0x107)
+	return a and a:IsSetCard(SET_FA)
 end

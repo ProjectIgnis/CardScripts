@@ -1,4 +1,5 @@
 --衛生兵マッスラー
+--Muscle Medic
 local s,id=GetID()
 function s.initial_effect(c)
 	--damage conversion

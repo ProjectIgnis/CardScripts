@@ -33,7 +33,7 @@ function s.initial_effect(c)
 end
 s.listed_names={73879377}
 s.LVnum=10
-s.LVset=0x111
+s.LVset=SET_ARMED_DRAGON
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.CheckReleaseGroup(c:GetControler(),Card.IsCode,1,false,1,true,c,c:GetControler(),nil,false,nil,73879377)

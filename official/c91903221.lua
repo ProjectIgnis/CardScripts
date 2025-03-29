@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x304e}
+s.listed_series={SET_EVOLTILE}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsLocation(LOCATION_GRAVE)
@@ -28,7 +28,7 @@ function s.tdfilter(c)
 	return c:IsRace(RACE_DINOSAUR) and c:IsAbleToDeck()
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x304e) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_EVOLTILE) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Draw(tp,1,REASON_EFFECT)==0 then return end

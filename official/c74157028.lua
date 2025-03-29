@@ -1,4 +1,5 @@
 --サイバー・ツイン・ドラゴン
+--Cyber Twin Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -11,4 +12,4 @@ function s.initial_effect(c)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
 end
-s.material_setcode={0x93,0x1093}
+s.material_setcode={SET_CYBER,SET_CYBER_DRAGON}

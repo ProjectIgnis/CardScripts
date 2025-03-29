@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e7:SetOperation(s.rmop)
 	c:RegisterEffect(e7)
 end
-s.material_setcode=0xdd
+s.material_setcode=SET_BLUE_EYES
 s.listed_names={CARD_BLUEEYES_W_DRAGON}
 function s.splimit(e,se,sp,st)
 	return (st&SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION

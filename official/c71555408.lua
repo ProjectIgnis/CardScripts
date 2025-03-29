@@ -1,7 +1,6 @@
 --剛鬼アイアン・クロー
 --Gouki Iron Claw
 --Scripted by Naim
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Your battling "Gouki" monster gains 500 ATK, becomes unaffected by opponent's card effects
@@ -14,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.atkcon)
-	e1:SetCost(s.atkcost)
+	e1:SetCost(Cost.SelfToGrave)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
 	--If sent from field to GY, add 1 "Gouki" card from deck
@@ -30,20 +29,15 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xfc}
+s.listed_series={SET_GOUKI}
 s.listed_names={id}
-
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
 	if ph~=PHASE_DAMAGE or Duel.IsDamageCalculated() then return false end
 	local tc=Duel.GetAttacker()
 	if tc:IsControler(1-tp) then tc=Duel.GetAttackTarget() end
 	e:SetLabelObject(tc)
-	return tc and tc:IsSetCard(0xfc) and tc:IsRelateToBattle() and Duel.GetAttackTarget()~=nil
-end
-function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
+	return tc and tc:IsSetCard(SET_GOUKI) and tc:IsRelateToBattle() and Duel.GetAttackTarget()~=nil
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetLabelObject()
@@ -54,7 +48,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp,chk)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(500)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		--Unaffected by opponent's card effects
 		local e2=Effect.CreateEffect(c)
@@ -65,7 +59,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp,chk)
 		e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CLIENT_HINT)
 		e2:SetValue(s.efilter)
 		e2:SetOwnerPlayer(tp)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e2,true)
 	end
 end
@@ -76,7 +70,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xfc) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_GOUKI) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

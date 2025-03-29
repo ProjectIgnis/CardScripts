@@ -1,7 +1,8 @@
 --忍法 空蝉の術
+--Ninjitsu Art of Decoy
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddPersistentProcedure(c,0,aux.FaceupFilter(Card.IsSetCard,0x2b))
+	aux.AddPersistentProcedure(c,0,aux.FaceupFilter(Card.IsSetCard,SET_NINJA))
 	--indes
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -12,4 +13,4 @@ function s.initial_effect(c)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x2b}
+s.listed_series={SET_NINJA}

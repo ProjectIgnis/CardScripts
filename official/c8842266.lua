@@ -1,4 +1,5 @@
 --ご隠居の猛毒薬
+--Poison of the Old Man
 local s,id=GetID()
 function s.initial_effect(c)
 	--rec or dam

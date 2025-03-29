@@ -1,4 +1,5 @@
 --つり天井
+--Needle Ceiling
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

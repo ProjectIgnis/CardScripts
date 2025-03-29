@@ -1,5 +1,5 @@
 --魔鍵召竜－アンドラビムス
---Magikey Summon Dragon - Andrabimus
+--Magikey Dragon - Andrabime
 --scripted by Rundas
 local s,id=GetID()
 function s.initial_effect(c)
@@ -44,22 +44,22 @@ function s.initial_effect(c)
 	e3:SetOperation(s.drop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x167}
+s.listed_series={SET_MAGIKEY}
 function s.matfilter1(c,fc,sumtype,tp)
-	return c:IsSetCard(0x167) and c:IsType(TYPE_EFFECT,fc,sumtype,tp)
+	return c:IsSetCard(SET_MAGIKEY) and c:IsType(TYPE_EFFECT,fc,sumtype,tp)
 end
 function s.matfilter2(c,fc,sumtype,tp)
 	return c:IsType(TYPE_NORMAL,fc,sumtype,tp) and not c:IsType(TYPE_TOKEN,fc,sumtype,tp)
 end
 --No Cards and Effects on Fusion Summon
 function s.limcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
+	return e:GetHandler():IsFusionSummoned()
 end
 function s.limop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetCurrentChain()==0 then
 		Duel.SetChainLimitTillChainEnd(s.chainlm)
 	elseif Duel.GetCurrentChain()==1 then
-		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_CHAINING)
@@ -86,7 +86,7 @@ function s.chainlm(e,rp,tp)
 end
 --Destroy
 function s.attfilter(c,tp)
-	return ((c:IsSetCard(0x167) or c:IsType(TYPE_NORMAL)) and c:IsMonster())
+	return ((c:IsSetCard(SET_MAGIKEY) or c:IsType(TYPE_NORMAL)) and c:IsMonster())
 		and Duel.IsExistingMatchingCard(s.desfilter,tp,0,LOCATION_MZONE,1,nil,c:GetAttribute())
 end
 function s.desfilter(c,att)
@@ -115,7 +115,7 @@ function s.drfilter(c,tp,att)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local att,mat=0,e:GetHandler():GetMaterial()
-	if e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION) and mat:GetClassCount(Card.GetAttribute)>1 then
+	if e:GetHandler():IsFusionSummoned() and mat:GetClassCount(Card.GetAttribute)>1 then
 		for tc in Duel.GetMatchingGroup(Card.IsMonster,tp,LOCATION_GRAVE,0,nil):Iter() do
 			att=att|tc:GetAttribute()
 		end

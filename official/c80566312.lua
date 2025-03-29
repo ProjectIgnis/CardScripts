@@ -1,4 +1,5 @@
 --祝祷の聖歌
+--Hymn of Light
 local s,id=GetID()
 function s.initial_effect(c)
 	Ritual.AddProcGreaterCode(c,6,nil,56350972)

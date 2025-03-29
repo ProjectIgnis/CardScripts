@@ -37,16 +37,16 @@ function s.initial_effect(c)
 	e4:SetCondition(s.chcon)
 	e4:SetTarget(s.chtg)
 	e4:SetOperation(s.chop)
-	e4:SetValue(aux.FilterBoolFunction(Card.IsSetCard,0x9d))
+	e4:SetValue(aux.FilterBoolFunction(Card.IsSetCard,SET_SHADDOLL))
 	c:RegisterEffect(e4)
 	local e5=Effect.CreateEffect(c)
 	e5:SetOperation(s.chk)
 	e4:SetLabelObject(e5)
 end
 s.counter_place_list={0x16}
-s.listed_series={0x9d}
+s.listed_series={SET_SHADDOLL}
 function s.cfilter(c)
-	return c:IsSetCard(0x9d) and c:IsMonster() and c:IsReason(REASON_EFFECT)
+	return c:IsSetCard(SET_SHADDOLL) and c:IsMonster() and c:IsReason(REASON_EFFECT)
 end
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil)
@@ -69,7 +69,7 @@ function s.chfilter(c,e,tp)
 end
 function s.chtg(e,te,tp,value)
 	if value&SUMMON_TYPE_FUSION==0 then return Group.CreateGroup() end
-	return Duel.GetMatchingGroup(s.chfilter,tp,LOCATION_MZONE+LOCATION_HAND,LOCATION_MZONE,nil,te,tp)
+	return Duel.GetMatchingGroup(s.chfilter,tp,LOCATION_MZONE|LOCATION_HAND,LOCATION_MZONE,nil,te,tp)
 end
 function s.chop(e,te,tp,tc,mat,sumtype,sg,sumpos)
 	if not sumtype then sumtype=SUMMON_TYPE_FUSION end

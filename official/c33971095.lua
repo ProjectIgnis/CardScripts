@@ -1,5 +1,5 @@
 --Vendread Nightmare
---Scripted by Eerie Code
+--Vendread Nightmare
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -29,9 +29,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x106}
+s.listed_series={SET_VENDREAD}
 function s.lvcfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x106)
+	return c:IsMonster() and c:IsSetCard(SET_VENDREAD)
 end
 function s.lvfilter(c,e)
 	return c:IsFaceup() and c:IsLevelAbove(1) and (not e or c:IsCanBeEffectTarget(e))
@@ -57,13 +57,13 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
 		e1:SetValue(e:GetLabel())
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
-	return a:IsControler(tp) and (a:IsRitualMonster() and a:IsSetCard(0x106)) and a:GetBattleTarget():IsControler(1-tp)
+	return a:IsControler(tp) and (a:IsRitualMonster() and a:IsSetCard(SET_VENDREAD)) and a:GetBattleTarget():IsControler(1-tp)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -73,8 +73,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(1000)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 end
-

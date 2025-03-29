@@ -1,5 +1,5 @@
 --脆刃の剣
---Fragile Double-Edged Sword
+--Double-Edged Sword
 local s,id=GetID()
 function s.initial_effect(c)
 	--equip
@@ -34,4 +34,3 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(e:GetHandler(),REASON_EFFECT)
 	end
 end
-

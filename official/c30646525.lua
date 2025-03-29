@@ -1,4 +1,5 @@
 --破滅の魔王ガーランドルフ
+--Garlandolf, King of Destruction
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 end
 s.listed_names={52913738}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_RITUAL)
+	return e:GetHandler():IsRitualSummoned()
 end
 function s.filter(c,atk)
 	return c:IsFaceup() and c:IsDefenseBelow(atk)
@@ -36,7 +37,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(ct*100)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 	end
 end

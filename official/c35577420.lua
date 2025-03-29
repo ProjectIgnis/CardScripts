@@ -19,14 +19,14 @@ function s.initial_effect(c)
 	e2:SetOperation(s.rmop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x38}
+s.listed_series={SET_LIGHTSWORN}
 function s.cfilter(c)
 	return c:GetPreviousLocation()==LOCATION_DECK
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
 	local rc=re:GetHandler()
-	return rp==tp and (r&REASON_EFFECT)~=0 and rc:IsSetCard(0x38) and rc:IsMonster()
+	return rp==tp and (r&REASON_EFFECT)~=0 and rc:IsSetCard(SET_LIGHTSWORN) and rc:IsMonster()
 		and eg:IsExists(s.cfilter,1,nil)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)

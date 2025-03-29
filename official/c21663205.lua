@@ -1,5 +1,5 @@
 --墓守の神職
---Gravekeeper's Priest
+--Gravekeeper's Headman
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -25,9 +25,9 @@ function s.initial_effect(c)
 	e4:SetCode(EFFECT_NECRO_VALLEY_IM)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x2e}
+s.listed_series={SET_GRAVEKEEPERS}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x2e) and c:IsLevel(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK|POS_FACEDOWN_DEFENSE)
+	return c:IsSetCard(SET_GRAVEKEEPERS) and c:IsLevel(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK|POS_FACEDOWN_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end
@@ -43,4 +43,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_ATTACK|POS_FACEDOWN_DEFENSE)
 	end
 end
-

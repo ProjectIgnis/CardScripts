@@ -24,12 +24,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={176393}
-s.listed_series={0x1d}
+s.listed_series={SET_KOAKI_MEIRU}
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_END
+	return Duel.IsPhase(PHASE_END)
 end
 function s.rfilter(c)
-	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsSetCard(0x1d) and not c:IsReason(REASON_REPLACE)
+	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsSetCard(SET_KOAKI_MEIRU) and not c:IsReason(REASON_REPLACE)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -40,23 +40,23 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	else return false end
 end
 function s.repval(e,c)
-	return c:IsFaceup() and c:IsSetCard(0x1d) and c~=e:GetHandler()
+	return c:IsFaceup() and c:IsSetCard(SET_KOAKI_MEIRU) and c~=e:GetHandler()
 end
 function s.spfilter(c)
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousSetCard(0x1d)
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousSetCard(SET_KOAKI_MEIRU)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_END and eg:IsExists(s.spfilter,1,nil)
+	return Duel.IsPhase(PHASE_END) and eg:IsExists(s.spfilter,1,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x1d,TYPES_TOKEN,1800,1800,4,RACE_ROCK,ATTRIBUTE_EARTH) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,SET_KOAKI_MEIRU,TYPES_TOKEN,1800,1800,4,RACE_ROCK,ATTRIBUTE_EARTH) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x1d,TYPES_TOKEN,1800,1800,4,RACE_ROCK,ATTRIBUTE_EARTH) then
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,SET_KOAKI_MEIRU,TYPES_TOKEN,1800,1800,4,RACE_ROCK,ATTRIBUTE_EARTH) then
 		local token=Duel.CreateToken(tp,id+1)
 		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
 	end

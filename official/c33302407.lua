@@ -1,4 +1,5 @@
 --ポイズン・チェーン
+--Poison Chain
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -19,12 +20,12 @@ function s.initial_effect(c)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x25}
+s.listed_series={SET_IRON_CHAIN}
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer() and Duel.GetActivityCount(tp,ACTIVITY_ATTACK)==0
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x25)
+	return c:IsFaceup() and c:IsSetCard(SET_IRON_CHAIN)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetMatchingGroupCount(s.filter,tp,LOCATION_MZONE,0,nil)

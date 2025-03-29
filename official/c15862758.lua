@@ -1,5 +1,5 @@
 --ＣｉＮｏ．１０００ 夢幻虚光神ヌメロニアス・ヌメロニア
---Number iC1000: Numeronius Numeronia
+--Number iC1000: Numerounius Numerounia
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
@@ -48,7 +48,7 @@ function s.initial_effect(c)
 	e7:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e7:SetRange(LOCATION_MZONE)
 	e7:SetCondition(s.nacon)
-	e7:SetCost(s.nacost)
+	e7:SetCost(Cost.Detach(1))
 	e7:SetTarget(s.natg)
 	e7:SetOperation(s.naop)
 	c:RegisterEffect(e7,false,REGISTER_FLAG_DETACH_XMAT)
@@ -72,10 +72,6 @@ function s.winop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.nacon(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.GetAttacker():IsControler(tp)
-end
-function s.nacost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.natg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetAttacker():IsOnField() end

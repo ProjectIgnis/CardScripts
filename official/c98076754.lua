@@ -54,18 +54,18 @@ function s.initial_effect(c)
 	e5:SetOperation(s.tdop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0xc4}
+s.listed_series={SET_ZEFRA}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.effcon(e)
-	return Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0xc4),e:GetHandlerPlayer(),LOCATION_EXTRA,0,nil):GetClassCount(Card.GetCode)>=e:GetLabel()
+	return Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,SET_ZEFRA),e:GetHandlerPlayer(),LOCATION_EXTRA,0,nil):GetClassCount(Card.GetCode)>=e:GetLabel()
 end
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsFaceup,0,LOCATION_EXTRA,LOCATION_EXTRA,nil)*100
 end
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0xc4),tp,LOCATION_EXTRA,0,nil):GetClassCount(Card.GetCode)==10
+	return Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,SET_ZEFRA),tp,LOCATION_EXTRA,0,nil):GetClassCount(Card.GetCode)==10
 end
 function s.tdcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -73,11 +73,11 @@ function s.tdcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(c,REASON_COST)
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToDeck,tp,0,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,1,nil) end
-	local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,0,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToDeck,tp,0,LOCATION_HAND|LOCATION_ONFIELD|LOCATION_GRAVE,1,nil) end
+	local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,0,LOCATION_HAND|LOCATION_ONFIELD|LOCATION_GRAVE,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,#g,0,0)
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(Card.IsAbleToDeck),tp,0,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,nil)
+	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(Card.IsAbleToDeck),tp,0,LOCATION_HAND|LOCATION_ONFIELD|LOCATION_GRAVE,nil)
 	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 end

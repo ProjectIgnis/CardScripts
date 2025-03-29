@@ -1,4 +1,5 @@
 --SRドミノバタフライ
+--Speedroid Dominobutterfly
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon

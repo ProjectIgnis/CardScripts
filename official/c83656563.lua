@@ -1,7 +1,6 @@
 --中生代化石マシン スカルワゴン
 --Fossil Machine Skull Wagon
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -46,14 +45,13 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCountLimit(1,id)
-	e3:SetCost(aux.bfgcost)
+	e3:SetCost(Cost.SelfBanish)
 	e3:SetTarget(s.destg)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
 --Specifically lists "Fossil Fusion"
 s.listed_names={CARD_FOSSIL_FUSION}
-
 	--Check for a rock monster in your GY
 function s.ffilter(c,fc,sumtype,tp)
 	return c:IsRace(RACE_ROCK) and c:IsLocation(LOCATION_GRAVE) and c:IsControler(tp)

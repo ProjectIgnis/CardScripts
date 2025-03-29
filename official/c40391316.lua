@@ -1,9 +1,10 @@
 --おジャマ・ナイト
+--Ojama Knight
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0xf),2)
+	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_OJAMA),2)
 	--disable field
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
@@ -12,8 +13,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xf}
-s.material_setcode={0xf}
+s.listed_series={SET_OJAMA}
+s.material_setcode={SET_OJAMA}
 function s.disop(e,tp)
 	local c=Duel.GetLocationCount(1-tp,LOCATION_MZONE,PLAYER_NONE,0)
 	if c==0 then return end

@@ -26,10 +26,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x146}
+s.listed_series={SET_DOGMATIKA}
 s.listed_names={CARD_ALBAZ}
 function s.filter(c,e,tp)
-	return (c:IsCode(CARD_ALBAZ) or (c:IsMonster() and c:IsSetCard(0x146)))
+	return (c:IsCode(CARD_ALBAZ) or (c:IsMonster() and c:IsSetCard(SET_DOGMATIKA)))
 end
 function s.spfilter(c,e,tp)
 	return s.filter(c,e,tp) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)

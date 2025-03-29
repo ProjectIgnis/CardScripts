@@ -1,4 +1,5 @@
 --竜姫神サフィラ
+--Saffira, Queen of Dragons
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -23,10 +24,10 @@ function s.initial_effect(c)
 end
 s.listed_names={80566312}
 function s.regcon1(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_RITUAL)
+	return e:GetHandler():IsRitualSummoned()
 end
 function s.regfilter(c)
-	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsPreviousLocation(LOCATION_HAND+LOCATION_DECK)
+	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsPreviousLocation(LOCATION_HAND|LOCATION_DECK)
 end
 function s.regcon2(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.regfilter,1,nil)
@@ -41,7 +42,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	c:RegisterEffect(e1)
 end
 function s.filter(c)

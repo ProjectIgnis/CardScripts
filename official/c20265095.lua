@@ -1,14 +1,13 @@
 --慧炎星－コサンジャク
 --Brotherhood of the Fire Fist - Peacock
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
 	--Link summon procedure
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x79),2,2)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_FIRE_FIST),2,2)
 	--Cannot be targeted for attack while pointing to a "Fire Fist" monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -31,24 +30,23 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 	--Lists "Fire Fist" archetype
-s.listed_series={0x7c,0x79}
-
+s.listed_series={SET_FIRE_FORMATION,SET_FIRE_FIST}
 	--If this card is pointing to "Fire Fist"
 function s.lkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x79) and c:IsMonster()
+	return c:IsFaceup() and c:IsSetCard(SET_FIRE_FIST) and c:IsMonster()
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetLinkedGroup():IsExists(s.lkfilter,1,nil)
 end
 	--Check for "Fire Formation" S/T for cost
 function s.ctfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x7c) and c:IsSpellTrap() and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and c:IsSetCard(SET_FIRE_FORMATION) and c:IsSpellTrap() and c:IsAbleToGraveAsCost()
 end
 	--Activation legality
 function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
-	local zone=c:GetLinkedZone()&0x1f
-	if chkc then return chkc:GetLocation()==LOCATION_MZONE and chkc:GetControler()==1-tp and chkc:IsControlerCanBeChanged(false,zone) end
+	local zone=c:GetLinkedZone()&ZONES_MMZ
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsControlerCanBeChanged(false,zone) end
 	local nc=Duel.IsExistingMatchingCard(s.ctfilter,tp,LOCATION_ONFIELD,0,1,nil)
 	local tgchk=Duel.IsExistingTarget(Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,1,nil,false,zone)
 	if chk==0 then
@@ -70,9 +68,9 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and tc then
-		local zone=c:GetLinkedZone()&0x1f
+		local zone=c:GetLinkedZone()&ZONES_MMZ
 		if Duel.GetControl(tc,tp,PHASE_END,1,zone)~=0 then
-			local reset=RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_PHASE+PHASE_END
+			local reset=RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET|RESET_PHASE|PHASE_END
 			--Cannot attack
 			local e1=Effect.CreateEffect(c)
 			e1:SetDescription(3206)

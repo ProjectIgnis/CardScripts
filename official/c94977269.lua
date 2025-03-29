@@ -1,9 +1,10 @@
 --エルシャドール・ミドラーシュ
+--El Shaddoll Winda
 local s,id=GetID()
 function s.initial_effect(c)
 	Duel.EnableGlobalFlag(GLOBALFLAG_SPSUMMON_COUNT)
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x9d),s.matfilter)
+	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_SHADDOLL),s.matfilter)
 	--splimit
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
@@ -40,8 +41,8 @@ function s.initial_effect(c)
 	e5:SetOperation(s.thop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x9d}
-s.material_setcode=0x9d
+s.listed_series={SET_SHADDOLL}
+s.material_setcode=SET_SHADDOLL
 function s.matfilter(c,lc,sumtype,tp)
 	return c:IsAttribute(ATTRIBUTE_DARK,lc,sumtype,tp) or c:IsHasEffect(4904633)
 end
@@ -49,7 +50,7 @@ function s.indval(e,re,tp)
 	return tp~=e:GetHandlerPlayer()
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x9d) and c:IsSpellTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_SHADDOLL) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end

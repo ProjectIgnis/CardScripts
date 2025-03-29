@@ -1,4 +1,5 @@
 --インフェルニティ・デストロイヤー
+--Infernity Destroyer
 local s,id=GetID()
 function s.initial_effect(c)
 	--damage

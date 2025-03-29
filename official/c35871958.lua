@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetCondition(s.dacon)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x8d))
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_GHOSTRICK))
 	c:RegisterEffect(e1)
 	--special summon
 	local e2=Effect.CreateEffect(c)
@@ -37,9 +37,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x8d}
+s.listed_series={SET_GHOSTRICK}
 function s.matfilter(c,lc,stype,tp)
-	return c:IsSetCard(0x8d,lc,stype,tp) and not c:IsType(TYPE_LINK,lc,stype,tp)
+	return c:IsSetCard(SET_GHOSTRICK,lc,stype,tp) and not c:IsType(TYPE_LINK,lc,stype,tp)
 end
 function s.extraval(chk,summon_type,e,...)
 	if chk==0 then
@@ -52,7 +52,7 @@ function s.extraval(chk,summon_type,e,...)
 	end
 end
 function s.dacon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x8d),0,LOCATION_FZONE,LOCATION_FZONE,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_GHOSTRICK),0,LOCATION_FZONE,LOCATION_FZONE,1,nil)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsTurnPlayer(1-tp)
@@ -63,7 +63,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(c,REASON_COST)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x8d) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
+	return c:IsSetCard(SET_GHOSTRICK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetMZoneCount(tp,e:GetHandler())>0

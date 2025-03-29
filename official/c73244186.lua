@@ -1,9 +1,9 @@
 -- 
--- Moray of Avarice
--- Scripted by Hatter
+--Moray of Avarice
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Draw 2 cards
+	--Draw 2 cards
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DRAW)

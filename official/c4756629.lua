@@ -32,18 +32,18 @@ function s.initial_effect(c)
 	e3:SetOperation(s.decop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xa}
+s.listed_series={SET_LSWARM}
 function s.rmfilter(c,tp)
-	return c:IsSetCard(0xa) and c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsSetCard(SET_LSWARM) and c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 		and Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,c)
 end
 function s.filter(c)
-	return c:IsSetCard(0xa) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_LSWARM) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.rmfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.rmfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.rmfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil,tp)
+	local g=Duel.SelectMatchingCard(tp,s.rmfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil,tp)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -61,14 +61,14 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,tc)
 	end
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 	end
 end
 function s.sumcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)~=0
 end
 function s.sumfilter(c)
-	return c:IsSetCard(0xa) and c:IsSummonable(true,nil)
+	return c:IsSetCard(SET_LSWARM) and c:IsSummonable(true,nil)
 end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.sumfilter,tp,LOCATION_HAND,0,1,nil) end
@@ -93,7 +93,7 @@ function s.decop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCondition(s.econ)
 	e1:SetCountLimit(1)
 	e1:SetValue(0x1)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
@@ -101,13 +101,13 @@ function s.decop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetTargetRange(1,0)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e2:SetReset(RESETS_STANDARD_PHASE_END)
 	c:RegisterEffect(e2)
-	Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_END,0,1)
 end
 function s.econ(e)
 	return #{Duel.GetPlayerEffect(e:GetHandlerPlayer(),id)}~=0
 end
 function s.rfilter(e,c)
-	return c:IsSetCard(0xa)
+	return c:IsSetCard(SET_LSWARM)
 end

@@ -1,4 +1,5 @@
 --身剣一体
+--At One With the Sword
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -14,13 +15,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x100d}
+s.listed_series={SET_X_SABER}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetCurrentPhase()==PHASE_DAMAGE and Duel.IsDamageCalculated() then return false end
+	if Duel.IsPhase(PHASE_DAMAGE) and Duel.IsDamageCalculated() then return false end
 	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
 	local tc=g:GetFirst()
 	e:SetLabelObject(tc)
-	return #g==1 and tc:IsFaceup() and tc:IsSetCard(0x100d)
+	return #g==1 and tc:IsFaceup() and tc:IsSetCard(SET_X_SABER)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -45,13 +46,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCondition(s.drcon)
 		e1:SetTarget(s.drtg)
 		e1:SetOperation(s.drop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
 		--Atkup
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_EQUIP)
 		e2:SetCode(EFFECT_UPDATE_ATTACK)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e2:SetValue(800)
 		c:RegisterEffect(e2)
 		--Equip limit
@@ -60,14 +61,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetCode(EFFECT_EQUIP_LIMIT)
 		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e3:SetValue(s.eqlimit)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e3)
 	else
 		c:CancelToGrave(false)
 	end
 end
 function s.eqlimit(e,c)
-	return c:IsSetCard(0x100d)
+	return c:IsSetCard(SET_X_SABER)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsContains(e:GetHandler():GetEquipTarget())

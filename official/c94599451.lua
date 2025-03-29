@@ -40,7 +40,7 @@ end
 s.counter_place_list={COUNTER_SPELL}
 function s.ctfilter(c,tp)
 	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousLocation(LOCATION_ONFIELD)
-		and (c:GetPreviousTypeOnField()&TYPE_PENDULUM)~=0 and c:IsPreviousSetCard(0x10d) 
+		and (c:GetPreviousTypeOnField()&TYPE_PENDULUM)~=0 and c:IsPreviousSetCard(SET_MYTHICAL_BEAST) 
 		and c:IsPreviousControler(tp) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
 end
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
@@ -55,8 +55,8 @@ function s.thfilter(c,tp)
 		and Duel.IsCanRemoveCounter(tp,1,0,COUNTER_SPELL,c:GetLevel(),REASON_COST)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,nil,tp) end
-	local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,nil,tp)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK|LOCATION_EXTRA,0,1,nil,tp) end
+	local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK|LOCATION_EXTRA,0,nil,tp)
 	local lvt={}
 	local tc=g:GetFirst()
 	for tc in aux.Next(g) do
@@ -72,7 +72,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local lv=Duel.AnnounceNumber(tp,table.unpack(lvt))
 	Duel.RemoveCounter(tp,1,0,COUNTER_SPELL,lv,REASON_COST)
 	e:SetLabel(lv)
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_EXTRA)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK|LOCATION_EXTRA)
 end
 function s.filter(c,lv)
 	return c:IsCanAddCounter(COUNTER_SPELL,1,false,LOCATION_MZONE) and c:IsLevel(lv)
@@ -81,7 +81,7 @@ end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local lv=e:GetLabel()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,1,nil,lv)
+	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK|LOCATION_EXTRA,0,1,1,nil,lv)
 	if #g>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
@@ -95,4 +95,3 @@ end
 function s.desrepop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RemoveCounter(ep,COUNTER_SPELL,1,REASON_EFFECT)
 end
-

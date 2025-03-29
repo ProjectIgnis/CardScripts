@@ -1,4 +1,5 @@
 --BF－白夜のグラディウス
+--Blackwing - Gladius the Midnight Sun
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -19,14 +20,14 @@ function s.initial_effect(c)
 	e2:SetValue(s.valcon)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x33}
+s.listed_series={SET_BLACKWING}
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return false end
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
 	local tc=g:GetFirst()
-	return #g==1 and tc:IsSetCard(0x33) and tc:GetCode()~=id
+	return #g==1 and tc:IsSetCard(SET_BLACKWING) and tc:GetCode()~=id
 end
 function s.valcon(e,re,r,rp)
 	return (r&REASON_BATTLE)~=0

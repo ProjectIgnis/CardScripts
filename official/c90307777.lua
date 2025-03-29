@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--ritual level
-	Ritual.AddWholeLevelTribute(c,aux.FilterBoolFunction(Card.IsSetCard,0xb4))
+	Ritual.AddWholeLevelTribute(c,aux.FilterBoolFunction(Card.IsSetCard,SET_NEKROZ))
 	--tohand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
@@ -17,12 +17,12 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xb4}
+s.listed_series={SET_NEKROZ}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return (r&REASON_EFFECT)~=0
 end
 function s.filter(c)
-	return c:IsSetCard(0xb4) and c:IsType(TYPE_RITUAL) and c:IsRace(RACE_WARRIOR) and c:IsAbleToHand()
+	return c:IsSetCard(SET_NEKROZ) and c:IsType(TYPE_RITUAL) and c:IsRace(RACE_WARRIOR) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

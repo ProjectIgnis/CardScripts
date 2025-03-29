@@ -1,4 +1,5 @@
 --重装武者－ベン・ケイ
+--Armed Samurai - Ben Kei
 local s,id=GetID()
 function s.initial_effect(c)
 	--multi attack

@@ -33,9 +33,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.damop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x13}
+s.listed_series={SET_MEKLORD}
 function s.spfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x13)
+	return c:IsFaceup() and c:IsSetCard(SET_MEKLORD)
 end
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -67,7 +67,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(atk)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 	end
 end

@@ -1,4 +1,5 @@
 --オプション
+--Gradius' Option
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -66,7 +67,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsCode,10992251),tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.HintSelection(g)
 	c:SetCardTarget(g:GetFirst())
-	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD_DISABLE,0,1)
+	c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD_DISABLE,0,1)
 end
 function s.adcon(e)
 	return e:GetHandler():GetFirstCardTarget()~=nil

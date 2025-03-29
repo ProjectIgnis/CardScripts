@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desrepop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xd3}
+s.listed_series={SET_KAIJU}
 s.counter_place_list={0x37}
 function s.cfilter(c)
 	return c:IsPreviousLocation(LOCATION_ONFIELD)
@@ -48,7 +48,7 @@ function s.counter(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xd3) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_KAIJU) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetCounter(0x37)>=3

@@ -23,9 +23,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x38}
+s.listed_series={SET_LIGHTSWORN}
 function s.filter(c)
-	return c:IsSetCard(0x38) and c:IsMonster()
+	return c:IsSetCard(SET_LIGHTSWORN) and c:IsMonster()
 end
 function s.value(e,c)
 	local g=Duel.GetMatchingGroup(s.filter,c:GetControler(),LOCATION_GRAVE,0,nil)

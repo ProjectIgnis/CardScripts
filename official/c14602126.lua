@@ -1,7 +1,6 @@
 --エクシーズ・インポート
 --Xyz Import
 --Scripted by Naim, updated by DyXel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

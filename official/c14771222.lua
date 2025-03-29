@@ -1,4 +1,5 @@
 --絶海の騎士
+--Shore Knight
 local s,id=GetID()
 function s.initial_effect(c)
 	--send to grave

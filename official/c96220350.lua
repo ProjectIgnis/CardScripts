@@ -1,5 +1,5 @@
 --覇勝星イダテン
---Idaten the Conquer Star
+--Idaten the Conqueror Star
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -50,7 +50,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-		e1:SetReset(RESET_PHASE+PHASE_DAMAGE_CAL)
+		e1:SetReset(RESET_PHASE|PHASE_DAMAGE_CAL)
 		e1:SetValue(0)
 		bc:RegisterEffect(e1)
 	end
@@ -66,13 +66,13 @@ function s.atkup(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		e1:SetValue(e:GetLabel()*200)
 		c:RegisterEffect(e1)
 	end
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
+	return e:GetHandler():IsFusionSummoned()
 end
 function s.thfilter(c)
 	return c:GetLevel()==5 and c:IsRace(RACE_WARRIOR) and c:IsAbleToHand()

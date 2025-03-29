@@ -31,14 +31,14 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x1f,0x8}
-s.material_setcode={0x8,0x3008,0x9}
+s.listed_series={SET_NEO_SPACIAN,SET_HERO}
+s.material_setcode={SET_HERO,SET_ELEMENTAL_HERO,SET_NEOS}
 s.listed_names={CARD_NEOS }
 function s.ffilter(c,fc,sumtype,tp)
 	return c:IsType(TYPE_EFFECT,fc,sumtype,tp) and c:IsLevelBelow(4)
 end
 function s.atkfilter(c)
-	return c:IsFaceup() and (c:IsSetCard(0x1f) or c:IsSetCard(0x8)) and c:IsMonster()
+	return c:IsFaceup() and (c:IsSetCard(SET_NEO_SPACIAN) or c:IsSetCard(SET_HERO)) and c:IsMonster()
 end
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(s.atkfilter,c:GetControler(),LOCATION_GRAVE,0,nil)*100
@@ -58,4 +58,3 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-

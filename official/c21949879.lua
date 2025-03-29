@@ -1,10 +1,10 @@
--- ＥＭジェントルード
--- Performapal Gentrude
--- Scripted by Hatter
+--ＥＭジェントルード
+--Performapal Gentrude
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	Pendulum.AddProcedure(c)
-	-- Search
+	--Search
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	-- Place in Pendulum Zone
+	--Place in Pendulum Zone
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.pentg)
 	e2:SetOperation(s.penop)
 	c:RegisterEffect(e2)
-	-- Add to hand
+	--Add to hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_TOHAND)
@@ -38,7 +38,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={id,58938528}
-s.listed_series={0x9f,0x99}
+s.listed_series={SET_PERFORMAPAL,SET_ODD_EYES}
 function s.thconfilter(c)
 	return c:IsFacedown() or not c:IsType(TYPE_PENDULUM)
 end
@@ -47,7 +47,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 		and not Duel.IsExistingMatchingCard(s.thconfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x99) and c:IsAbleToHand()
+	return c:IsSetCard(SET_ODD_EYES) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -63,7 +63,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.penfilter(c)
-	return c:IsSetCard(0x9f) and c:IsType(TYPE_PENDULUM) and not c:IsCode(id) and not c:IsForbidden()
+	return c:IsSetCard(SET_PERFORMAPAL) and c:IsType(TYPE_PENDULUM) and not c:IsCode(id) and not c:IsForbidden()
 end
 function s.pentg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckPendulumZones(tp) and Duel.IsExistingMatchingCard(s.penfilter,tp,LOCATION_DECK,0,1,nil)  end
@@ -89,7 +89,7 @@ function s.rthtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,c,1,0,0)
 end
 function s.rthfilter(c)
-	return (c:IsSetCard(0x9f) or c:IsSetCard(0x99)) and c:IsAbleToHand()
+	return (c:IsSetCard(SET_PERFORMAPAL) or c:IsSetCard(SET_ODD_EYES)) and c:IsAbleToHand()
 end
 function s.rthop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -1,4 +1,5 @@
 --ドラゴン・目覚めの旋律
+--The Melody of Awakening Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

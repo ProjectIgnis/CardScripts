@@ -14,7 +14,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,tc,chk)
 	if chk==0 then return true end
 	local rc=tc:AnnounceAnotherAttribute(tp)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,rc)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1,rc)
 	e:GetHandler():SetHint(CHINT_ATTRIBUTE,rc)
 end
 function s.attcon(e)

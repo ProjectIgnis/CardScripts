@@ -1,4 +1,5 @@
 --撤収命令
+--Sound the Retreat!
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

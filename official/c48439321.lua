@@ -1,4 +1,5 @@
 --マドルチェ・ワルツ
+--Madolche Waltz
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -18,9 +19,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x71}
+s.listed_series={SET_MADOLCHE}
 function s.check(c,tp)
-	return c and c:IsControler(tp) and c:IsSetCard(0x71)
+	return c and c:IsControler(tp) and c:IsSetCard(SET_MADOLCHE)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return s.check(Duel.GetAttacker(),tp) or s.check(Duel.GetAttackTarget(),tp)

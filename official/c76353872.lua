@@ -58,7 +58,7 @@ function s.defop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SET_DEFENSE_FINAL)
 	e1:SetValue(at:GetBaseAttack()*2)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE)
 	at:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_SET_ATTACK_FINAL)
@@ -69,4 +69,3 @@ function s.defop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ChangePosition(at,POS_FACEUP_DEFENSE)
 	end
 end
-

@@ -1,5 +1,5 @@
 --ダイノルフィア・リヴァージョン
---Dinoruffia Reversion
+--Dinomorphia Reversion
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -32,13 +32,13 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCondition(s.nodamcon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetOperation(s.nodamop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x175}
+s.listed_series={SET_DINOMORPHIA}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x175) and c:IsType(TYPE_FUSION)
+	return c:IsFaceup() and c:IsSetCard(SET_DINOMORPHIA) and c:IsType(TYPE_FUSION)
 end
 function s.condition1(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -99,6 +99,6 @@ function s.nodamop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
-	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+	e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
 	Duel.RegisterEffect(e1,tp)
 end

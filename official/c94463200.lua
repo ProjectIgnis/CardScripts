@@ -1,7 +1,8 @@
 --血の刻印
+--Battle-Scarred
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddPersistentProcedure(c,0,aux.FaceupFilter(Card.IsSetCard,0x45),nil,nil,TIMING_STANDBY_PHASE)
+	aux.AddPersistentProcedure(c,0,aux.FaceupFilter(Card.IsSetCard,SET_ARCHFIEND),nil,nil,TIMING_STANDBY_PHASE)
 	--lpcost
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -24,9 +25,9 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desop2)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x45}
+s.listed_series={SET_ARCHFIEND}
 function s.lpcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_STANDBY and ep==tp
+	return Duel.IsPhase(PHASE_STANDBY) and ep==tp
 		and re:GetHandler()==e:GetHandler():GetFirstCardTarget()
 end
 function s.lpop(e,tp,eg,ep,ev,re,r,rp)

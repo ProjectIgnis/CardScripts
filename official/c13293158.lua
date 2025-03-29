@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.activate)
 	c:RegisterEffect(e3)
 end
-s.material_setcode={0x8,0x3008}
+s.material_setcode={SET_HERO,SET_ELEMENTAL_HERO}
 s.dark_calling=true
 s.listed_names={CARD_DARK_FUSION,21844576,86188410}
 function s.lizcon(e,tp,eg,ep,ev,re,r,rp)

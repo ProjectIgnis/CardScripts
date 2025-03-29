@@ -1,4 +1,5 @@
 --E・HERO スチーム・ヒーラー
+--Elemental HERO Steam Healer
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -23,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.recop)
 	c:RegisterEffect(e2)
 end
-s.material_setcode={0x8,0x3008}
+s.material_setcode={SET_HERO,SET_ELEMENTAL_HERO}
 function s.reccon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()

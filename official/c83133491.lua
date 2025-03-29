@@ -1,4 +1,5 @@
 --重力解除
+--Zero Gravity
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -9,14 +9,10 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
-	e1:SetCondition(s.condition)
+	e1:SetCondition(function() return Duel.IsMainPhase() or Duel.IsBattlePhase() end)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local ph=Duel.GetCurrentPhase()
-	return ph==PHASE_MAIN1 or Duel.IsBattlePhase() or ph==PHASE_MAIN2
 end
 function s.thfilter(c)
 	return c:IsAttackAbove(2400) and c:GetDefense()==1000 and c:IsMonster() and c:IsAbleToHand()

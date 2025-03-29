@@ -53,9 +53,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.dspcon(e,tp,eg,ep,ev,re,r,rp)
-	local ph=Duel.GetCurrentPhase()
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_DREAM_MIRROR_JOY),tp,LOCATION_FZONE,LOCATION_FZONE,1,nil)
-		and (ph==PHASE_MAIN1 or Duel.IsBattlePhase() or ph==PHASE_MAIN2)
+		and (Duel.IsMainPhase() or Duel.IsBattlePhase())
 end
 function s.dspfilter(c,e,tp)
 	return c:IsCode(49389190) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

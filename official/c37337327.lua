@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetHintTiming(0,TIMING_BATTLE_START+TIMING_BATTLE_END)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	e1:SetCondition(s.sccon)
+	e1:SetCondition(function() return Duel.IsMainPhase() or Duel.IsBattlePhase() end)
 	e1:SetTarget(s.sctg)
 	e1:SetOperation(s.scop)
 	c:RegisterEffect(e1)
@@ -36,10 +36,6 @@ function s.matfilter(c,lc,sumtype,tp)
 end
 function s.lcheck(g,lc,sumtype,tp)
 	return g:IsExists(Card.IsType,1,nil,TYPE_TUNER,lc,sumtype,tp)
-end
-function s.sccon(e,tp,eg,ep,ev,re,r,rp)
-	local ph=Duel.GetCurrentPhase()
-	return ph==PHASE_MAIN1 or Duel.IsBattlePhase() or ph==PHASE_MAIN2
 end
 function s.scfilter(c,mg)
 	return c:IsSynchroSummonable(nil,mg)

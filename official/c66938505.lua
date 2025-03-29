@@ -18,9 +18,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.sccon(e,tp,eg,ep,ev,re,r,rp)
-	local ph=Duel.GetCurrentPhase()
-	return not e:GetHandler():IsStatus(STATUS_CHAINING) and Duel.GetTurnPlayer()~=tp
-		and (ph==PHASE_MAIN1 or Duel.IsBattlePhase() or ph==PHASE_MAIN2)
+	return not e:GetHandler():IsStatus(STATUS_CHAINING) and Duel.IsTurnPlayer(1-tp)
+		and (Duel.IsMainPhase() or Duel.IsBattlePhase())
 end
 function s.scfilter1(c,e,tp,mc)
 	local mg=Group.FromCards(c,mc)

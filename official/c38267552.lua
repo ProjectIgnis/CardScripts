@@ -52,7 +52,6 @@ function s.sscond(c)
 	return c:IsFaceup() and c:IsCode(CARD_DREAM_MIRROR_JOY)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	local ph=Duel.GetCurrentPhase()
 	return Duel.IsExistingMatchingCard(s.sscond,tp,LOCATION_FZONE,LOCATION_FZONE,1,nil,tp) 
 		and (Duel.IsMainPhase() or Duel.IsBattlePhase())
 end

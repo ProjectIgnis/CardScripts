@@ -32,8 +32,7 @@ function s.lcheck(g,lc,sumtype,tp)
 end
 function s.sumcon(e,tp,eg,ep,ev,re,r,rp)
 	local tp=e:GetHandlerPlayer()
-	return Duel.IsTurnPlayer(tp) and e:GetHandler():IsLinkSummoned() 
-	and Duel.IsPlayerCanAdditionalSummon(tp)
+	return Duel.IsTurnPlayer(tp) and e:GetHandler():IsLinkSummoned() and Duel.IsPlayerCanAdditionalSummon(tp)
 end
 function s.sumcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 and  Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end

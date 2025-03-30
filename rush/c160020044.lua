@@ -51,9 +51,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if ct>0 and #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local sg=g:Select(tp,1,ct,nil)
-		sg=sg:AddMaximumCheck()
+		local sg2=sg:AddMaximumCheck()
 		if #sg>0 then
-			Duel.HintSelection(sg)
+			Duel.HintSelection(sg2)
 			Duel.Destroy(sg,REASON_EFFECT)
 		end
 	end

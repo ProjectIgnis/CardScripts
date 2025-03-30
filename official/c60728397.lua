@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_VENOM}
-s.counter_place_list={0x1009}
+s.counter_place_list={COUNTER_VENOM}
 function s.cfilter(c)
 	return c:IsFaceup() and (c:IsCode(72677437,8062132) or c:IsSetCard(SET_VENOM))
 end
@@ -25,11 +25,11 @@ function s.tgfilter(c)
 	return c:IsRace(RACE_REPTILE) and c:IsAbleToGrave()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(1-tp) and chkc:IsCanAddCounter(0x1009,2) end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsCanAddCounter,tp,0,LOCATION_MZONE,1,nil,0x1009,2)
+	if chkc then return chkc:IsControler(1-tp) and chkc:IsCanAddCounter(COUNTER_VENOM,2) end
+	if chk==0 then return Duel.IsExistingTarget(Card.IsCanAddCounter,tp,0,LOCATION_MZONE,1,nil,COUNTER_VENOM,2)
 		and Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local g=Duel.SelectTarget(tp,Card.IsCanAddCounter,tp,0,LOCATION_MZONE,1,1,nil,0x1009,2)
+	local g=Duel.SelectTarget(tp,Card.IsCanAddCounter,tp,0,LOCATION_MZONE,1,1,nil,COUNTER_VENOM,2)
 	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -38,9 +38,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		Duel.SendtoGrave(g,REASON_EFFECT)
 		local tc=Duel.GetFirstTarget()
-		if tc:IsRelateToEffect(e) and tc:IsCanAddCounter(0x1009,2) and g:GetFirst():IsLocation(LOCATION_GRAVE) then
+		if tc:IsRelateToEffect(e) and tc:IsCanAddCounter(COUNTER_VENOM,2) and g:GetFirst():IsLocation(LOCATION_GRAVE) then
 			local atk=tc:GetAttack()
-			tc:AddCounter(0x1009,2)
+			tc:AddCounter(COUNTER_VENOM,2)
 			if atk>0 and tc:GetAttack()==0 then
 				Duel.RaiseEvent(tc,EVENT_CUSTOM+54306223,e,0,0,0,0)
 			end

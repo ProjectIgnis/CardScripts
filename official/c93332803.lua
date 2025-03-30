@@ -14,11 +14,11 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-s.counter_list={0x37}
+s.counter_list={COUNTER_KAIJU}
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,1,0x37,3,REASON_COST)
+	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,1,COUNTER_KAIJU,3,REASON_COST)
 		and e:GetHandler():GetAttackAnnouncedCount()==0 end
-	Duel.RemoveCounter(tp,1,1,0x37,3,REASON_COST)
+	Duel.RemoveCounter(tp,1,1,COUNTER_KAIJU,3,REASON_COST)
 	--Cannot attack this turn
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetDescription(3206)

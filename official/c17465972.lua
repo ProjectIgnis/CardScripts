@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.cttg)
 	c:RegisterEffect(e3)
 end
-s.counter_place_list={0x1002,0x10}
+s.counter_place_list={0x1002,COUNTER_FEATHER}
 s.listed_series={SET_BLACKWING}
 s.listed_names={9012916}
 function s.spfilter(c,e,tp)
@@ -75,7 +75,7 @@ function s.bwop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsCode,CARD_BLACK_WINGED_DRAGON),tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
 	local ct=Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)
 	if tc and ct>0 then
-		tc:AddCounter(0x10,ct)
+		tc:AddCounter(COUNTER_FEATHER,ct)
 	end
 end
 function s.wcop(e,tp,eg,ep,ev,re,r,rp)

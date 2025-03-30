@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_VENOM}
-s.counter_place_list={0x1009}
+s.counter_place_list={COUNTER_VENOM}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttackTarget()
 	return tc and tc:IsControler(tp) and tc:IsFaceup() and tc:IsSetCard(SET_VENOM)
@@ -30,7 +30,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE|PHASE_BATTLE_STEP,1)
 		Duel.BreakEffect()
 		local atk=tc:GetAttack()
-		tc:AddCounter(0x1009,1)
+		tc:AddCounter(COUNTER_VENOM,1)
 		if atk>0 and tc:GetAttack()==0 then
 			Duel.RaiseEvent(tc,EVENT_CUSTOM+54306223,e,0,0,0,0)
 		end

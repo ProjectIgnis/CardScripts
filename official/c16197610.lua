@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={SET_CLOUDIAN}
-s.counter_place_list={0x1019}
+s.counter_place_list={COUNTER_FOG}
 s.listed_names={80825553}
 function s.sdcon(e)
 	return e:GetHandler():IsPosition(POS_FACEUP_DEFENSE)
@@ -44,12 +44,12 @@ end
 function s.addc(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsRelateToEffect(e) then
 		local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,SET_CLOUDIAN),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-		e:GetHandler():AddCounter(COUNTER_NEED_ENABLE+0x1019,ct)
+		e:GetHandler():AddCounter(COUNTER_NEED_ENABLE+COUNTER_FOG,ct)
 	end
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x1019,1,REASON_COST) end
-	e:GetHandler():RemoveCounter(tp,0x1019,1,REASON_COST)
+	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,COUNTER_FOG,1,REASON_COST) end
+	e:GetHandler():RemoveCounter(tp,COUNTER_FOG,1,REASON_COST)
 end
 function s.spfilter(c,e,tp)
 	return c:IsCode(80825553) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

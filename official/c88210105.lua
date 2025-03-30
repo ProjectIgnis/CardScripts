@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_CLOUDIAN}
-s.counter_place_list={0x1019}
+s.counter_place_list={COUNTER_FOG}
 function s.ctcfilter(c)
 	return c:IsSetCard(SET_CLOUDIAN) and c:IsMonster() and c:IsDiscardable()
 end
@@ -37,7 +37,7 @@ function s.ctcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(dc,REASON_COST+REASON_DISCARD)
 end
 function s.cttfilter(c)
-	return c:IsFaceup() and c:IsLevelAbove(1) and c:IsCanAddCounter(0x1019,c:GetLevel())
+	return c:IsFaceup() and c:IsLevelAbove(1) and c:IsCanAddCounter(COUNTER_FOG,c:GetLevel())
 end
 function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.cttfilter(chkc) end
@@ -48,7 +48,7 @@ end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
-		tc:AddCounter(0x1019,tc:GetLevel())
+		tc:AddCounter(COUNTER_FOG,tc:GetLevel())
 	end
 end
 function s.cfilter(c)

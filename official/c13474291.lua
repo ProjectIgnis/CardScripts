@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={SET_CLOUDIAN}
-s.counter_place_list={0x1019}
+s.counter_place_list={COUNTER_FOG}
 function s.sdcon(e)
 	return e:GetHandler():IsPosition(POS_FACEUP_DEFENSE)
 end
@@ -77,6 +77,6 @@ end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
-		tc:AddCounter(0x1019,1)
+		tc:AddCounter(COUNTER_FOG,1)
 	end
 end

@@ -16,11 +16,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={28674153}
-s.counter_list={0x37}
+s.counter_list={COUNTER_KAIJU}
 s.listed_series={SET_KAIJU}
 function s.tkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,1,0x37,2,REASON_COST) end
-	Duel.RemoveCounter(tp,1,1,0x37,2,REASON_COST)
+	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,1,COUNTER_KAIJU,2,REASON_COST) end
+	Duel.RemoveCounter(tp,1,1,COUNTER_KAIJU,2,REASON_COST)
 end
 function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

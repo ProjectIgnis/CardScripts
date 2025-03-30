@@ -17,13 +17,13 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e4)
 end
-s.counter_list={0x37}
+s.counter_list={COUNTER_KAIJU}
 function s.filter(c,tp)
 	return c:IsSummonPlayer(tp) and c:IsFaceup()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,1,0x37,2,REASON_COST) end
-	Duel.RemoveCounter(tp,1,1,0x37,2,REASON_COST)
+	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,1,COUNTER_KAIJU,2,REASON_COST) end
+	Duel.RemoveCounter(tp,1,1,COUNTER_KAIJU,2,REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(s.filter,1,nil,1-tp) and not eg:IsContains(e:GetHandler()) end

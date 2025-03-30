@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.ctop)
 	c:RegisterEffect(e4)
 end
-s.counter_list={0x1019}
+s.counter_list={COUNTER_FOG}
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local lv=e:GetHandler():GetBattleTarget():GetLevel()
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
@@ -34,6 +34,6 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	for i=1,lv do
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
 		local tc=g:Select(tp,1,1,nil):GetFirst()
-		tc:AddCounter(0x1019,1)
+		tc:AddCounter(COUNTER_FOG,1)
 	end
 end

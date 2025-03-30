@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_DIRECT_ATTACK)
-	e3:SetCondition(function(e) return e:GetHandler():GetCounter(0x1)>0 end)
+	e3:SetCondition(function(e) return e:GetHandler():GetCounter(COUNTER_SPELL)>0 end)
 	c:RegisterEffect(e3)
 	--Place 1 Spell Counter on each card that can hold Spell Counters
 	local e4=Effect.CreateEffect(c)

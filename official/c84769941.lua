@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e3:SetValue(s.atkval)
 	c:RegisterEffect(e3)
 end
-s.counter_list={0x37}
+s.counter_list={COUNTER_KAIJU}
 s.listed_series={SET_KAIJU}
 function s.eqval(ec,c,tp)
 	return ec:IsControler(tp) and s.eqfilter(ec)
@@ -45,8 +45,8 @@ function s.spcon(e,c)
 		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_KAIJU),tp,0,LOCATION_MZONE,1,nil)
 end
 function s.eqcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,1,0x37,2,REASON_COST) end
-	Duel.RemoveCounter(tp,1,1,0x37,2,REASON_COST)
+	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,1,COUNTER_KAIJU,2,REASON_COST) end
+	Duel.RemoveCounter(tp,1,1,COUNTER_KAIJU,2,REASON_COST)
 end
 function s.eqfilter(c)
 	return c:IsSetCard(SET_KAIJU) and c:IsMonster() and not c:IsForbidden()

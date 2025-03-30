@@ -13,9 +13,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.damop)
 	c:RegisterEffect(e1)
 end
-s.counter_place_list={0x1019}
+s.counter_place_list={COUNTER_FOG}
 function s.filter(c)
-	return c:GetCounter(0x1019)>0
+	return c:GetCounter(COUNTER_FOG)>0
 end
 function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
@@ -23,9 +23,9 @@ function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=g:GetFirst()
 	local s=0
 	for tc in aux.Next(g) do
-		local ct=tc:GetCounter(0x1019)
+		local ct=tc:GetCounter(COUNTER_FOG)
 		s=s+ct
-		tc:RemoveCounter(tp,0x1019,ct,REASON_COST)
+		tc:RemoveCounter(tp,COUNTER_FOG,ct,REASON_COST)
 	end
 	e:SetLabel(s*300)
 end

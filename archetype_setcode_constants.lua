@@ -560,9 +560,6 @@ SET_PATISSCIEL                    = 0x206
 SET_HEART                         = 0x207
 SET_TISTINA                       = 0x208
 SET_WHITE_AURA                    = 0x119f
---Currently unreleased in the TCG, the official English name is unconfirmed
---
---Pre-release archetypes
 SET_SALAMANDRA                    = 0x1a4
 SET_ASHENED                       = 0x1a5
 SET_BLUE_TEARS                    = 0x1a9
@@ -584,11 +581,13 @@ SET_ARGOSTARS                     = 0x1ba
 SET_AQUA_JET                      = 0x1bb
 SET_DRAGON_RULER                  = 0x1bc
 SET_MITSURUGI                     = 0x1bd
-SET_REGENESIS                     = 0x1be
 SET_DOMINUS                       = 0x1bf
-SET_DRAGONTAIL                    = 0x1c0
-SET_YUMMY                         = 0x1c1
 SET_APOPHIS                       = 0x1c2
 SET_SERKET                        = 0x1c3
+--Released but the official English name is unconfirmed
+SET_REGENESIS                     = 0x1be
+SET_DRAGONTAIL                    = 0x1c0
+SET_YUMMY                         = 0x1c1
 SET_K9                            = 0x1c4
+--Pre-release archetypes
 SET_TELEPORT                      = 0x1c5

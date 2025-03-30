@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_names={70902743}
+s.listed_names={CARD_RED_DRAGON_ARCHFIEND}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsCode(CARD_RED_DRAGON_ARCHFIEND)
 end

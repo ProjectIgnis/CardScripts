@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-s.listed_names={25652259,90876561}
+s.listed_names={CARD_QUEEN_KNIGHT,CARD_JACK_KNIGHT}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsCode(CARD_QUEEN_KNIGHT)
 end

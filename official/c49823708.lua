@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_DESTRUCTION_SWORD}
-s.listed_names={78193831}
+s.listed_names={CARD_BUSTER_BLADER}
 function s.filter(c)
 	return c:IsSetCard(SET_DESTRUCTION_SWORD) and not c:IsCode(id) and c:IsAbleToHand()
 end

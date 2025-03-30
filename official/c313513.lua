@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	end)
 end
 s.listed_series={SET_ANCIENT_GEAR}
-s.listed_names={83104731}
+s.listed_names={CARD_ANCIENT_GEAR_GOLEM}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_ANCIENT_GEAR) and c:IsAbleToGraveAsCost()
 end
@@ -102,7 +102,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_DECK)
 end
 function s.dfilter(c)
-	return c:IsFacedown() or c:GetCode()~=83104731
+	return c:IsFacedown() or c:GetCode()~=CARD_ANCIENT_GEAR_GOLEM
 end
 function s.spcheck(sg,e,tp,mg)
 	return sg:FilterCount(Card.IsLocation,nil,LOCATION_HAND)<2 and sg:FilterCount(Card.IsLocation,nil,LOCATION_DECK)<2

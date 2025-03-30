@@ -14,9 +14,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-s.listed_names={25955164,62340868,98434877}
+s.listed_names={CARD_SANGA_OF_THE_THUNDER,CARD_KAZEJIN,CARD_SUIJIN}
 function s.rescon(sg,e,tp,mg)
-	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:IsExists(s.chk,1,nil,sg,Group.CreateGroup(),25955164,62340868,98434877)
+	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:IsExists(s.chk,1,nil,sg,Group.CreateGroup(),CARD_SANGA_OF_THE_THUNDER,CARD_KAZEJIN,CARD_SUIJIN)
 end
 function s.chk(c,sg,g,code,...)
 	if not c:IsCode(code) then return false end

@@ -58,7 +58,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e7)
 end
 s.listed_series={SET_FUSION}
-s.listed_names={13331639,22211622}
+s.listed_names={CARD_ZARC,22211622}
 function s.ndcfilter(c)
 	return c:IsFaceup() and c:IsCode(CARD_ZARC)
 end

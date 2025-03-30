@@ -44,7 +44,7 @@ function s.initial_effect(c)
 	end)
 end
 s.listed_series={SET_PENDULUM_DRAGON,SET_XYZ_DRAGON,SET_SYNCHRO_DRAGON,SET_FUSION_DRAGON}
-s.listed_names={94415058,13331639}
+s.listed_names={94415058,CARD_ZARC}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	for tc in aux.Next(eg) do

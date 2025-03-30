@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_ANCIENT_GEAR}
-s.listed_names={83104731,95735217}
+s.listed_names={CARD_ANCIENT_GEAR_GOLEM,95735217}
 function s.rmfilter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_ANCIENT_GEAR) and c:IsAbleToRemove()
 end

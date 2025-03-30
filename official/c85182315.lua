@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.rmop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={10000000}
+s.listed_names={CARD_OBELISK}
 function s.spfilter(c,e,tp)
 	return c:IsCode(CARD_OBELISK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -60,7 +60,7 @@ function s.rmcfilter(c,tp)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
 end
 function s.oblskfilter(c,tp)
-	return s.rmcfilter(c,tp) and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousCodeOnField()==10000000
+	return s.rmcfilter(c,tp) and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousCodeOnField()==CARD_OBELISK
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==tp and r&REASON_COST==REASON_COST and re and re:IsActivated()

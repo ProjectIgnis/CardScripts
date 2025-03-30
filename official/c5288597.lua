@@ -27,7 +27,7 @@ function s.cfilter(c,e,tp,ft)
 		local val=te:GetValue()
 		if val and val(te,c,e,0) then rc=val(te,c,e,1) end
 	end
-	local eff12644061={Duel.GetPlayerEffect(tp,12644061)}
+	local eff12644061={Duel.GetPlayerEffect(tp,CARD_ADVANCED_DARK)}
 	for _,te in ipairs(eff12644061) do
 		local val=te:GetValue()
 		if val and val(te,c,e,0) then att=val(te,c,e,1) end

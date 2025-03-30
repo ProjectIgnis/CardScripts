@@ -37,7 +37,7 @@ function s.initial_effect(c)
 	e4:SetValue(1)
 	c:RegisterEffect(e4)
 end
-s.listed_names={CARD_NEOS,78371393}
+s.listed_names={CARD_NEOS,CARD_YUBEL}
 function s.spfilter(c,...)
 	return c:IsFaceup() and c:IsCode(...) and c:IsAbleToGraveAsCost()
 end
@@ -51,14 +51,14 @@ function s.spcon(e,c)
 	if c==nil then return true end 
 	local tp=c:GetControler()
 	local g1=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE,0,nil,CARD_NEOS)
-	local g2=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE,0,nil,78371393)
+	local g2=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE,0,nil,CARD_YUBEL)
 	local g=g1:Clone()
 	g:Merge(g2)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2 and #g1>0 and #g2>0 
 		and aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
-	local sg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE,0,nil,CARD_NEOS,78371393)
+	local sg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE,0,nil,CARD_NEOS,CARD_YUBEL)
 	local g=aux.SelectUnselectGroup(sg,e,tp,2,2,s.rescon,1,tp,HINTMSG_TOGRAVE,nil,nil,true)
 	if #g>0 then
 		g:KeepAlive()

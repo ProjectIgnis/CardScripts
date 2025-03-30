@@ -64,7 +64,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e7)
 	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
-s.listed_names={77585513}
+s.listed_names={CARD_JINZO}
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local tl=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
 	if tl==LOCATION_SZONE and re:IsTrapEffect() then

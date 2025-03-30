@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,CARD_DARK_MAGICIAN,78193831)
+	Fusion.AddProcMix(c,true,true,CARD_DARK_MAGICIAN,CARD_BUSTER_BLADER)
 	--negate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.material_setcode={SET_DARK_MAGICIAN,SET_BUSTER_BLADER}
-s.listed_names={CARD_DARK_MAGICIAN,78193831}
+s.listed_names={CARD_DARK_MAGICIAN,CARD_BUSTER_BLADER}
 function s.val(e,c)
 	return Duel.GetMatchingGroupCount(s.filter,0,LOCATION_MZONE|LOCATION_GRAVE,LOCATION_MZONE|LOCATION_GRAVE,nil)*500
 end

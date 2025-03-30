@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={CARD_MONSTER_REBORN,10000020}
+s.listed_names={CARD_MONSTER_REBORN,CARD_SLIFER}
 function s.spfilter(c,e,tp)
 	return c:IsCode(CARD_SLIFER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 end

@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={10000000}
+s.listed_names={CARD_OBELISK}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsCode(CARD_OBELISK) and c:IsOriginalAttribute(ATTRIBUTE_DIVINE)
 end

@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_names={78193831}
+s.listed_names={CARD_BUSTER_BLADER}
 function s.filter(c)
 	return c:IsCode(CARD_BUSTER_BLADER) and c:IsAbleToHand()
 end

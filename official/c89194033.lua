@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={29762407}
+s.listed_names={CARD_TEMPLE_OF_THE_KINGS}
 function s.desfilter(c)
 	return c:IsFaceup() and c:IsCode(CARD_TEMPLE_OF_THE_KINGS)
 end

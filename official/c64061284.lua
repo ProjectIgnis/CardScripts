@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_ANCIENT_GEAR}
-s.listed_names={83104731,95735217}
+s.listed_names={CARD_ANCIENT_GEAR_GOLEM,95735217}
 function s.filterchk(c)
 	return c:IsFaceup() and c:IsCode(CARD_ANCIENT_GEAR_GOLEM,95735217) and c:IsOnField()
 end

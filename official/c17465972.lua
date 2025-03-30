@@ -30,7 +30,7 @@ function s.initial_effect(c)
 end
 s.counter_place_list={0x1002,COUNTER_FEATHER}
 s.listed_series={SET_BLACKWING}
-s.listed_names={9012916}
+s.listed_names={CARD_BLACK_WINGED_DRAGON}
 function s.spfilter(c,e,tp)
 	return c:IsFaceup() and c:IsLevelBelow(4)
 		and c:IsSetCard(SET_BLACKWING) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)

@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={CARD_MONSTER_REBORN,10000000}
+s.listed_names={CARD_MONSTER_REBORN,CARD_OBELISK}
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
 	return at:IsControler(1-tp)

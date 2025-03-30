@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
 	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e0)
-	--Gain ATK
+	--Gains 700 ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -30,14 +30,14 @@ function s.initial_effect(c)
 	e1:SetCondition(s.atkcon)
 	e1:SetValue(7000)
 	c:RegisterEffect(e1)
-	--Shuffle cards to Deck
+	--Shuffle as many cards into the Deck as possible and Special Summon "Crystal Beast" monsters
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TODECK+CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E+TIMING_MAIN_END)
+	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E|TIMING_MAIN_END)
 	e2:SetCondition(function(e) return e:GetHandler():GetBattledGroupCount()==0 end)
 	e2:SetCost(s.tdcost)
 	e2:SetTarget(s.tdtg)
@@ -45,13 +45,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_ULTIMATE_CRYSTAL,SET_CRYSTAL_BEAST}
-s.listed_materials={0x2034,0x1034}
+s.material_setcode={SET_ULTIMATE_CRYSTAL,SET_CRYSTAL_BEAST}
 function s.contactfil(tp)
 	local loc=Duel.IsPlayerAffectedByEffect(tp,CARD_SPIRIT_ELIMINATION) and LOCATION_MZONE or LOCATION_MZONE|LOCATION_GRAVE
 	return Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,loc,0,nil)
 end
 function s.contactop(g)
-	Duel.Remove(g,POS_FACEUP,REASON_COST+REASON_MATERIAL)
+	Duel.Remove(g,POS_FACEUP,REASON_COST|REASON_MATERIAL)
 end
 function s.contactlim(e)
 	return e:GetHandler():IsLocation(LOCATION_EXTRA)
@@ -60,8 +60,10 @@ function s.contactcon(tp)
 	return Duel.GetFlagEffect(tp,id)>0
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	for ec in aux.Next(eg) do
-		if ec:IsSetCard(SET_ULTIMATE_CRYSTAL) and ec:IsFaceup() then Duel.RegisterFlagEffect(ec:GetSummonPlayer(),id,0,0,0) end
+	for ec in eg:Iter() do
+		if ec:IsSetCard(SET_ULTIMATE_CRYSTAL) and ec:IsFaceup() then
+			Duel.RegisterFlagEffect(ec:GetSummonPlayer(),id,0,0,0)
+		end
 	end
 end
 function s.cbfilter(c)

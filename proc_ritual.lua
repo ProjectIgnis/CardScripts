@@ -126,7 +126,6 @@ end
 local function GetDefaultSummonFromLocation()
 	return Duel.IsDuelType(DUEL_EXTRA_DECK_RITUAL) and LOCATION_EXTRA or LOCATION_HAND
 end
-
 Ritual.Target = aux.FunctionWithNamedArgs(
 function(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselection,specificmatfilter,requirementfunc,sumpos,extratg)
 	location = location or GetDefaultSummonFromLocation()
@@ -200,7 +199,7 @@ function Ritual.Check(sc,lv,forcedselection,_type,requirementfunc)
 				res=sg:CheckWithSumGreater(requirementfunc or Card.GetRitualLevel,lv,sc)
 			end
 			local stop=false
-			res=res and Duel.GetMZoneCount(tp,sg,tp)>0
+			res=res and (sc:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp,sg,sc) or Duel.GetMZoneCount(tp,sg,tp))>0
 		end
 		return res,stop
 	end

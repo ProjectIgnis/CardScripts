@@ -45,7 +45,7 @@ function s.tgfilter(c)
 end
 	--Send 1 "Fossil" fusion monster from extra deck to GY
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_DISCARD+REASON_EFFECT)~=0 then
+	if Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_DISCARD|REASON_EFFECT)~=0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local g=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_EXTRA,0,1,1,nil)
 		if #g>0 then
@@ -81,7 +81,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 			local sg=g:Select(tp,1,1,nil)
 			Duel.HintSelection(sg)
-			Duel.SendtoGrave(sg,REASON_EFFECT+REASON_RETURN)
+			Duel.SendtoGrave(sg,REASON_EFFECT|REASON_RETURN)
 		end
 	end
 end

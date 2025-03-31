@@ -27,7 +27,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 			local hg=tg:Select(tp,1,1,nil)
-			Duel.SendtoGrave(hg,REASON_EFFECT+REASON_DISCARD)
+			Duel.SendtoGrave(hg,REASON_EFFECT|REASON_DISCARD)
 		end
 		Duel.ShuffleHand(1-tp)
 	end

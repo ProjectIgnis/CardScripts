@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e3:SetCondition(s.poscond)
 	e3:SetTarget(s.postg)
 	e3:SetOperation(s.posop)
-	e3:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
+	e3:SetHintTiming(0,TIMINGS_CHECK_MONSTER|TIMING_END_PHASE)
 	c:RegisterEffect(e3)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

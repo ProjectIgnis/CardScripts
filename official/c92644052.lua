@@ -147,7 +147,7 @@ function s.atkop2(e,tp,eg,ep,ev,re,r,rp)
 			and tc:IsDiscardable(REASON_EFFECT) then
 			Duel.ConfirmCards(1-p,tc)
 			Duel.BreakEffect()
-			if Duel.SendtoGrave(tc,REASON_EFFECT+REASON_DISCARD)==0 then return end
+			if Duel.SendtoGrave(tc,REASON_EFFECT|REASON_DISCARD)==0 then return end
 			Duel.NegateAttack()
 		end
 	end

@@ -91,7 +91,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)
 	if #g~=2 then return end
 	for tc in aux.Next(g) do
-		if Duel.Remove(tc,0,REASON_EFFECT+REASON_TEMPORARY)~=0 then
+		if Duel.Remove(tc,0,REASON_EFFECT|REASON_TEMPORARY)~=0 then
 			tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 		end
 	end

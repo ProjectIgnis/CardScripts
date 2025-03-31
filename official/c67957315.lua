@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetHintTiming(TIMING_BATTLE_PHASE+TIMING_CHAIN_END)
+	e1:SetHintTiming(TIMING_BATTLE_PHASE|TIMING_CHAIN_END)
 	e1:SetCondition(s.adcon)
 	e1:SetCost(s.adcost)
 	e1:SetOperation(s.adop)
@@ -24,7 +24,7 @@ function s.cfilter(c)
 end
 function s.adcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.adop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -111,7 +111,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 --Draw
 function s.drfilter(c,tp,att)
-	return c:IsPreviousControler(1-tp) and c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:GetAttribute()&att>0
+	return c:IsPreviousControler(1-tp) and c:IsReason(REASON_BATTLE|REASON_EFFECT) and c:GetAttribute()&att>0
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local att,mat=0,e:GetHandler():GetMaterial()

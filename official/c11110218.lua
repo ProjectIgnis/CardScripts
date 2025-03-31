@@ -40,7 +40,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #rg>0 and Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)>0 then
 		local og=Duel.GetOperatedGroup()
 		if #sg>0 and og:IsExists(Card.IsLocation,1,nil,LOCATION_REMOVED) then
-			Duel.SendtoGrave(sg,REASON_EFFECT+REASON_RETURN)
+			Duel.SendtoGrave(sg,REASON_EFFECT|REASON_RETURN)
 		end
 	end
 end

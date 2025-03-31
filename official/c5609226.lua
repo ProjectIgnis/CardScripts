@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
-	e1:SetHintTiming(0,TIMING_STANDBY_PHASE+TIMING_BATTLE_START)
+	e1:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_BATTLE_START)
 	c:RegisterEffect(e1)
 end
 function s.filter(c)

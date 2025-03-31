@@ -29,7 +29,7 @@ function s.spfilter(c,e,tp)
 		c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.SendtoGrave(Duel.GetFieldGroup(tp,LOCATION_HAND,0),REASON_EFFECT+REASON_DISCARD)==0 or
+	if Duel.SendtoGrave(Duel.GetFieldGroup(tp,LOCATION_HAND,0),REASON_EFFECT|REASON_DISCARD)==0 or
 	   (not Duel.IsExistingMatchingCard(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE,0,1,nil,e,tp)) then return end
 	if Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.BreakEffect()

@@ -20,7 +20,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_ODD_EYES}
 function s.cfilter(c,tp)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousSetCard(SET_ODD_EYES)
+	return c:IsReason(REASON_BATTLE|REASON_EFFECT) and c:IsPreviousSetCard(SET_ODD_EYES)
 		and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

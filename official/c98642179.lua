@@ -33,7 +33,7 @@ function s.lcheck(g,lc,sumtype,tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and rp~=tp and c:IsPreviousLocation(LOCATION_MZONE) and c:IsLinkSummoned()
+	return c:IsReason(REASON_BATTLE|REASON_EFFECT) and rp~=tp and c:IsPreviousLocation(LOCATION_MZONE) and c:IsLinkSummoned()
 end
 function s.spfilter(c,e,tp)
 	return c:IsRace(RACE_WARRIOR) and not c:IsLinkMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

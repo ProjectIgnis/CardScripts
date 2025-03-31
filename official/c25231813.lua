@@ -34,5 +34,5 @@ function s.reptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.repop2(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():SetStatus(STATUS_DESTROY_CONFIRMED,false)
-	Duel.Destroy(e:GetHandler(),REASON_EFFECT+REASON_REPLACE)
+	Duel.Destroy(e:GetHandler(),REASON_EFFECT|REASON_REPLACE)
 end

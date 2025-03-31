@@ -27,6 +27,6 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetReasonCard()
 	if not tc:IsRelateToBattle() then return end
 	if Duel.IsExistingMatchingCard(Card.IsDiscardable,1-tp,LOCATION_HAND,0,1,nil) and Duel.SelectYesNo(1-tp,aux.Stringid(id,1)) then
-		Duel.DiscardHand(1-tp,Card.IsDiscardable,1,1,REASON_EFFECT+REASON_DISCARD,nil)
+		Duel.DiscardHand(1-tp,Card.IsDiscardable,1,1,REASON_EFFECT|REASON_DISCARD,nil)
 	else Duel.Destroy(tc,REASON_EFFECT) end
 end

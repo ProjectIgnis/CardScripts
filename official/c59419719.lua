@@ -56,7 +56,7 @@ function s.tgval(e,re,rp)
 	return re:IsMonsterEffect()
 end
 function s.thcfilter(c,tp)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsSetCard(SET_FOSSIL) and c:IsType(TYPE_FUSION)
+	return c:IsReason(REASON_BATTLE|REASON_EFFECT) and c:IsSetCard(SET_FOSSIL) and c:IsType(TYPE_FUSION)
 		and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)

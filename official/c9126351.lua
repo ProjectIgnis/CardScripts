@@ -62,7 +62,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local rg=e:GetLabelObject()
 	if not rg then return end
-	Duel.SendtoGrave(rg,REASON_COST+REASON_DISCARD)
+	Duel.SendtoGrave(rg,REASON_COST|REASON_DISCARD)
 	rg:DeleteGroup()
 end
 function s.tgfilter(c)

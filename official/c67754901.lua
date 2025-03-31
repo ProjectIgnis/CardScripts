@@ -60,7 +60,7 @@ function s.valcon(e,re,r,rp)
 	return (r&REASON_BATTLE+REASON_EFFECT)~=0
 end
 function s.cfilter(c,tp)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsSetCard(SET_ODD_EYES) and c:IsType(TYPE_PENDULUM)
+	return c:IsReason(REASON_BATTLE|REASON_EFFECT) and c:IsSetCard(SET_ODD_EYES) and c:IsType(TYPE_PENDULUM)
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp)
 end
 function s.penfilter(c)

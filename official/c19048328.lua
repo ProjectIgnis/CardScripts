@@ -81,7 +81,7 @@ function s.aclimit(e,re,tp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
+	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE|REASON_EFFECT)
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsSynchroSummoned()
 end
 function s.thfilter(c)
@@ -100,7 +100,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,p)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:GetOriginalAttribute()~=0
+	return c:IsReason(REASON_BATTLE|REASON_EFFECT) and c:GetOriginalAttribute()~=0
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==p
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

@@ -64,6 +64,6 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp,chk)
 	if Duel.Draw(tp,1,REASON_EFFECT)>0 then
 		Duel.BreakEffect()
 		Duel.ShuffleHand(tp)
-		Duel.DiscardHand(tp,aux.TRUE,1,1,REASON_EFFECT+REASON_DISCARD)
+		Duel.DiscardHand(tp,aux.TRUE,1,1,REASON_EFFECT|REASON_DISCARD)
 	end
 end

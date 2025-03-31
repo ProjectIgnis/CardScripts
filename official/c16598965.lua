@@ -46,10 +46,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.Draw(1-tp,1,REASON_EFFECT)>0 then
 			Duel.BreakEffect()
 			local dg=Duel.GetFieldGroup(1-tp,LOCATION_HAND,0):RandomSelect(1-tp,1)
-			if Duel.SendtoGrave(dg,REASON_EFFECT+REASON_DISCARD)>0 and Duel.GetFieldGroupCount(1-tp,LOCATION_HAND,0)>0 then
+			if Duel.SendtoGrave(dg,REASON_EFFECT|REASON_DISCARD)>0 and Duel.GetFieldGroupCount(1-tp,LOCATION_HAND,0)>0 then
 				Duel.BreakEffect()
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
-				Duel.DiscardHand(1-tp,nil,1,1,REASON_EFFECT+REASON_DISCARD,nil)
+				Duel.DiscardHand(1-tp,nil,1,1,REASON_EFFECT|REASON_DISCARD,nil)
 			end
 		end
 	end

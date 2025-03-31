@@ -38,7 +38,7 @@ function s.repval(e,c)
 	return s.filter(c,e:GetHandlerPlayer())
 end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Destroy(e:GetHandler(),REASON_EFFECT+REASON_REPLACE)
+	Duel.Destroy(e:GetHandler(),REASON_EFFECT|REASON_REPLACE)
 end
 function s.cfilter(c)
 	return c:IsFacedown() or c:IsCode(id) or not c:IsSetCard(SET_DINOMIST)

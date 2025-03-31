@@ -84,7 +84,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		local g2=Duel.SelectMatchingCard(1-tp,nil,1-tp,LOCATION_REMOVED,0,1,3,nil)
 		g1:Merge(g2)
 		if #g1>0 then
-			Duel.SendtoGrave(g1,REASON_EFFECT+REASON_RETURN)
+			Duel.SendtoGrave(g1,REASON_EFFECT|REASON_RETURN)
 		end
 	end
 	if ct>=10 then

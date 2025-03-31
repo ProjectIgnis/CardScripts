@@ -21,7 +21,7 @@ function s.disthfilter(c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.disthfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,s.disthfilter,1,1,REASON_COST+REASON_DISCARD,nil)
+	Duel.DiscardHand(tp,s.disthfilter,1,1,REASON_COST|REASON_DISCARD,nil)
 end
 function s.thfilter(c)
 	return c:IsSetCard(SET_DANGER) and c:IsMonster() and c:IsLevelBelow(4) and c:IsAbleToHand()

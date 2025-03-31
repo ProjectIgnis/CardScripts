@@ -64,7 +64,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Group.FromCards(c,tc)
 	local mcount=0
 	if tc:IsFaceup() then mcount=tc:GetOverlayCount() end
-	if Duel.Remove(g,0,REASON_EFFECT+REASON_TEMPORARY)~=0 then
+	if Duel.Remove(g,0,REASON_EFFECT|REASON_TEMPORARY)~=0 then
 		local og=Duel.GetOperatedGroup()
 		if not og:IsContains(tc) then mcount=0 end
 		local oc=og:GetFirst()

@@ -17,7 +17,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,LOCATION_HAND,LOCATION_HAND)
-	if #g>0 then Duel.SendtoGrave(g,REASON_DISCARD+REASON_EFFECT) end
+	if #g>0 then Duel.SendtoGrave(g,REASON_DISCARD|REASON_EFFECT) end
 	Duel.BreakEffect()
 	Duel.Draw(tp,5,REASON_EFFECT)
 	Duel.Draw(1-tp,5,REASON_EFFECT)

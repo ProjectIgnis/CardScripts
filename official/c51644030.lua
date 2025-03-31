@@ -57,7 +57,7 @@ function s.atkop2(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 		if c:IsRelateToEffect(e) and not tc:IsHasEffect(EFFECT_REVERSE_UPDATE) then
 			Duel.BreakEffect()
-			if Duel.Remove(c,0,REASON_EFFECT+REASON_TEMPORARY)~=0 then
+			if Duel.Remove(c,0,REASON_EFFECT|REASON_TEMPORARY)~=0 then
 				local e2=Effect.CreateEffect(c)
 				e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 				e2:SetCode(EVENT_PHASE|PHASE_STANDBY)

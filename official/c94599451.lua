@@ -41,7 +41,7 @@ s.counter_place_list={COUNTER_SPELL}
 function s.ctfilter(c,tp)
 	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousLocation(LOCATION_ONFIELD)
 		and (c:GetPreviousTypeOnField()&TYPE_PENDULUM)~=0 and c:IsPreviousSetCard(SET_MYTHICAL_BEAST) 
-		and c:IsPreviousControler(tp) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
+		and c:IsPreviousControler(tp) and c:IsReason(REASON_BATTLE|REASON_EFFECT)
 end
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.ctfilter,1,nil,tp)

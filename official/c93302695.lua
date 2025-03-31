@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetCountLimit(1)
 	e2:SetCost(Cost.PayLP(1000))
 	e2:SetOperation(s.indop)
-	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
+	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER|TIMING_END_PHASE)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_KOZMO}

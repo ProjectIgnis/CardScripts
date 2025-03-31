@@ -33,7 +33,7 @@ function s.splimit(e,c,sump,sumtype,sumpos,targetp)
 	return (sumtype&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
 function s.filter(c,tp)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT)
+	return c:IsReason(REASON_BATTLE|REASON_EFFECT)
 		and (c:IsSetCard(SET_NEKROZ) or c:IsSetCard(SET_ZEFRA)) and not c:IsCode(id)
 		and c:IsPreviousControler(tp)
 		and ((c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP))

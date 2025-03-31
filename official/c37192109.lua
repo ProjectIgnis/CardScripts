@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1)
-	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E+TIMING_END_PHASE)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E|TIMING_END_PHASE)
 	e1:SetHintTiming(TIMING_SPSUMMON)
 	e1:SetTarget(s.rmtg)
 	e1:SetOperation(s.rmop)
@@ -49,7 +49,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not c:IsRelateToEffect(e) or not tc:IsRelateToEffect(e) then return end
 	local g=Group.FromCards(c,tc)
-	if Duel.Remove(g,0,REASON_EFFECT+REASON_TEMPORARY)~=0 then
+	if Duel.Remove(g,0,REASON_EFFECT|REASON_TEMPORARY)~=0 then
 		local fid=c:GetFieldID()
 		local rct=1
 		if Duel.IsTurnPlayer(tp) and Duel.IsPhase(PHASE_STANDBY) then rct=2 end

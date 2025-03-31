@@ -26,7 +26,7 @@ function s.counterfilter(c)
 	return not c:IsSummonLocation(LOCATION_EXTRA) or c:IsSetCard(SET_MAYAKASHI)
 end
 function s.cfilter(c,tp)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsSetCard(SET_MAYAKASHI) and not c:IsCode(id)
+	return c:IsReason(REASON_BATTLE|REASON_EFFECT) and c:IsSetCard(SET_MAYAKASHI) and not c:IsCode(id)
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp) and rp~=tp
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

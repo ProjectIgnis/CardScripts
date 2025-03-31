@@ -33,7 +33,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local ct=Duel.DiscardHand(tp,s.dfilter,1,1,REASON_EFFECT+REASON_DISCARD,nil)
+	local ct=Duel.DiscardHand(tp,s.dfilter,1,1,REASON_EFFECT|REASON_DISCARD,nil)
 	if ct>0 and c:IsFaceup() and c:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

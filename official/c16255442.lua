@@ -27,7 +27,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
-	Duel.SendtoGrave(sg,REASON_EFFECT+REASON_DISCARD)
+	Duel.SendtoGrave(sg,REASON_EFFECT|REASON_DISCARD)
 	local ct=sg:Filter(Card.IsLocation,nil,LOCATION_GRAVE):GetCount()
 	local tg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_GRAVE,0,nil)
 	if ct>0 and #tg>=ct then

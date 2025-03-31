@@ -66,7 +66,7 @@ end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
-	if Duel.DiscardHand(tp,Card.IsDiscardable,2,2,REASON_EFFECT+REASON_DISCARD,nil)~=0 then
+	if Duel.DiscardHand(tp,Card.IsDiscardable,2,2,REASON_EFFECT|REASON_DISCARD,nil)~=0 then
 		if tc and tc:IsRelateToEffect(e) then
 			Duel.SendtoHand(tc,tp,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,tc)

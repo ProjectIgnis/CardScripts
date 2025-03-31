@@ -24,6 +24,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Draw(p,d,REASON_EFFECT)==3 then
 		Duel.ShuffleHand(p)
 		Duel.BreakEffect()
-		Duel.DiscardHand(p,nil,2,2,REASON_EFFECT+REASON_DISCARD)
+		Duel.DiscardHand(p,nil,2,2,REASON_EFFECT|REASON_DISCARD)
 	end
 end

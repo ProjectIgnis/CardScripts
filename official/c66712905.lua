@@ -25,6 +25,6 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
 	if #g>0 then
 		local sg=g:RandomSelect(1-tp,1)
-		return #sg>0 and Duel.SendtoGrave(sg,REASON_EFFECT+REASON_DISCARD)>0
+		return #sg>0 and Duel.SendtoGrave(sg,REASON_EFFECT|REASON_DISCARD)>0
 	end
 end

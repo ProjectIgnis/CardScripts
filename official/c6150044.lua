@@ -32,7 +32,7 @@ end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rtype=(re:GetActiveType()&(TYPE_MONSTER|TYPE_SPELL|TYPE_TRAP))
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil,rtype) end
-	Duel.DiscardHand(tp,s.filter,1,1,REASON_COST+REASON_DISCARD,nil,rtype)
+	Duel.DiscardHand(tp,s.filter,1,1,REASON_COST|REASON_DISCARD,nil,rtype)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

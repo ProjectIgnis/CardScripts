@@ -25,7 +25,7 @@ s.listed_names={id}
 function s.cfilter(c)
 	return c:IsRace(RACE_DRAGON) and c:GetPreviousRaceOnField()==RACE_DRAGON
 		and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousLocation(LOCATION_MZONE)
-		and c:IsReason(REASON_EFFECT+REASON_BATTLE) and not c:IsCode(id)
+		and c:IsReason(REASON_EFFECT|REASON_BATTLE) and not c:IsCode(id)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsContains(e:GetHandler()) then return false end

@@ -50,7 +50,7 @@ function s.activate2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_END,0,1)
 end
 function s.val1(e,re,dam,r,rp,rc)
-	if r&(REASON_BATTLE+REASON_EFFECT)~=0 then
+	if r&(REASON_BATTLE|REASON_EFFECT)~=0 then
 		return dam/2
 	else return dam end
 end

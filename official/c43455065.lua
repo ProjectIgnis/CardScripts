@@ -30,7 +30,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		ct=Duel.GetMatchingGroupCount(s.filter,tp,LOCATION_ONFIELD,0,nil)
 		if ct>0 then
 			Duel.BreakEffect()
-			Duel.DiscardHand(tp,nil,ct,ct,REASON_EFFECT+REASON_DISCARD)
+			Duel.DiscardHand(tp,nil,ct,ct,REASON_EFFECT|REASON_DISCARD)
 		end
 	end
 	local rct=1

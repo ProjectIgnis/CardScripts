@@ -46,7 +46,7 @@ function s.atkcostfilter(c)
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.atkcostfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,s.atkcostfilter,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,s.atkcostfilter,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local bc0,bc1=Duel.GetBattleMonster(tp)
@@ -75,7 +75,7 @@ function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return c:IsDiscardable() and Duel.IsExistingMatchingCard(s.drcostfilter,tp,LOCATION_HAND,0,1,c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 	local g=Duel.SelectMatchingCard(tp,s.drcostfilter,tp,LOCATION_HAND,0,1,1,c)
-	Duel.SendtoGrave(g+c,REASON_DISCARD+REASON_COST)
+	Duel.SendtoGrave(g+c,REASON_DISCARD|REASON_COST)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,2) end

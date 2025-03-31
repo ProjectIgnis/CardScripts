@@ -50,7 +50,7 @@ function s.splimit(e,se,sp,st)
 	return se:GetHandler():IsSetCard(SET_TRIAMID)
 end
 function s.spfilter(c,tp)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT)
+	return c:IsReason(REASON_BATTLE|REASON_EFFECT)
 		and c:IsSetCard(SET_TRIAMID) and not c:IsCode(id)
 		and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)
 end

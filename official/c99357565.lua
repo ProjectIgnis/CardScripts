@@ -57,7 +57,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ct=1 end
 	ct=math.min(ct,Duel.GetLocationCount(tp,LOCATION_MZONE),
 		Duel.GetMatchingGroupCount(s.spfilter,tp,LOCATION_HAND|LOCATION_GRAVE|LOCATION_DECK,0,nil,e,tp))
-	local cg=Duel.DiscardHand(tp,Card.IsDiscardable,1,ct,REASON_COST+REASON_DISCARD,nil)
+	local cg=Duel.DiscardHand(tp,Card.IsDiscardable,1,ct,REASON_COST|REASON_DISCARD,nil)
 	e:SetLabel(cg)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

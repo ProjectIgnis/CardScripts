@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetCost(Cost.SelfDiscard)
 	e2:SetTarget(s.target2)
 	e2:SetOperation(s.operation2)
-	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
+	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER|TIMING_MAIN_END)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_PERFORMAPAL,SET_ODD_EYES}

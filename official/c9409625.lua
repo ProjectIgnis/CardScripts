@@ -77,7 +77,7 @@ end
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.drfilter,tp,LOCATION_HAND,0,1,nil)
 		and s.cost(e,tp,eg,ep,ev,re,r,rp,0) end
-	Duel.DiscardHand(tp,s.drfilter,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,s.drfilter,1,1,REASON_COST|REASON_DISCARD)
 	s.cost(e,tp,eg,ep,ev,re,r,rp,1)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)

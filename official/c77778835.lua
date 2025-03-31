@@ -22,7 +22,7 @@ end
 s.listed_names={CARD_HARPIE_LADY}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,e:GetHandler()) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.filter(c,e,tp)
 	return c:IsCode(CARD_HARPIE_LADY) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

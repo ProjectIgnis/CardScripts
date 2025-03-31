@@ -55,10 +55,10 @@ end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	c:SetStatus(STATUS_DESTROY_CONFIRMED,false)
-	Duel.Destroy(c,REASON_EFFECT+REASON_REPLACE)
+	Duel.Destroy(c,REASON_EFFECT|REASON_REPLACE)
 end
 function s.repfilter2(c,tp)
-	return c:IsControler(1-tp) and not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
+	return c:IsControler(1-tp) and not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_BATTLE|REASON_EFFECT)
 end
 function s.reptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -80,5 +80,5 @@ function s.repval2(e,c)
 	return c==e:GetLabelObject()
 end
 function s.repop2(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT+REASON_REPLACE)
+	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT|REASON_REPLACE)
 end

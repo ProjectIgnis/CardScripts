@@ -60,7 +60,7 @@ function s.hdop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=sg:FilterCount(Card.IsLocation,nil,LOCATION_DECK|LOCATION_EXTRA)
 	if ct==0 then return end
 	local dg=Duel.GetFieldGroup(tp,0,LOCATION_HAND):RandomSelect(tp,ct)
-	local dt=Duel.SendtoGrave(dg,REASON_EFFECT+REASON_DISCARD)
+	local dt=Duel.SendtoGrave(dg,REASON_EFFECT|REASON_DISCARD)
 	local c=e:GetHandler()
 	if dt~=0 and c:IsRelateToEffect(e) and c:IsFaceup() then
 		local e1=Effect.CreateEffect(c)

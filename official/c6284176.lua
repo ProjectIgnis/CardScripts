@@ -91,5 +91,5 @@ end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,1-tp,id)
 	local tc=Duel.GetFirstTarget()
-	Duel.Release(tc,REASON_EFFECT+REASON_REPLACE)
+	Duel.Release(tc,REASON_EFFECT|REASON_REPLACE)
 end

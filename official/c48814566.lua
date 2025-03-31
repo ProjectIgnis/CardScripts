@@ -31,7 +31,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local rmog=Duel.GetOperatedGroup()
 	if rmct>0 and rmct==rmog:FilterCount(Card.IsLocation,nil,LOCATION_REMOVED) then
 		local org=og:RandomSelect(tp,rmct)
-		if Duel.Remove(org,POS_FACEUP,REASON_EFFECT+REASON_TEMPORARY)>0 then
+		if Duel.Remove(org,POS_FACEUP,REASON_EFFECT|REASON_TEMPORARY)>0 then
 			local fid=c:GetFieldID()
 			local opg=Duel.GetOperatedGroup()
 			for oc in aux.Next(opg) do
@@ -67,5 +67,5 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject()
 	local sg=g:Filter(s.retfilter,nil,e:GetLabel())
 	g:DeleteGroup()
-	Duel.SendtoDeck(sg,1-tp,SEQ_DECKSHUFFLE,REASON_EFFECT+REASON_RETURN)
+	Duel.SendtoDeck(sg,1-tp,SEQ_DECKSHUFFLE,REASON_EFFECT|REASON_RETURN)
 end

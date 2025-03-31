@@ -75,7 +75,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.drcfilter(c,tp)
-	return c:IsPreviousLocation(LOCATION_ONFIELD) and not c:IsPreviousControler(tp) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
+	return c:IsPreviousLocation(LOCATION_ONFIELD) and not c:IsPreviousControler(tp) and c:IsReason(REASON_BATTLE|REASON_EFFECT)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.drcfilter,1,nil,tp)

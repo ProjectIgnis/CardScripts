@@ -51,7 +51,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 		local dg=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_HAND,0,1,1,nil)
 		if #dg>0 then
 			Duel.BreakEffect()
-			Duel.SendtoGrave(dg,REASON_EFFECT+REASON_DISCARD)
+			Duel.SendtoGrave(dg,REASON_EFFECT|REASON_DISCARD)
 		end
 	end
 end

@@ -70,7 +70,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 		if #eg~=1 then return false end
 		local tc=eg:GetFirst()
 		return tc:IsFaceup() and tc:IsLocation(LOCATION_MZONE) and tc:IsSetCard(SET_KOAKI_MEIRU) 
-			and not tc:IsReason(REASON_REPLACE) and tc:IsReason(REASON_BATTLE+REASON_EFFECT)
+			and not tc:IsReason(REASON_REPLACE) and tc:IsReason(REASON_BATTLE|REASON_EFFECT)
 			and Duel.IsExistingMatchingCard(s.rfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil)
 	end
 	return Duel.SelectEffectYesNo(tp,e:GetHandler(),96)

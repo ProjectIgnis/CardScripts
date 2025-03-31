@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
+	Duel.SendtoGrave(e:GetHandler(),REASON_COST|REASON_DISCARD)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_MACHINE+RACE_DRAGON) and c:IsControlerCanBeChanged()

@@ -52,7 +52,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	if op==2 then
 		local tg=Duel.GetTargetCards(e)
 		if #tg>0 then
-			ct=Duel.SendtoGrave(tg,REASON_EFFECT+REASON_RETURN)
+			ct=Duel.SendtoGrave(tg,REASON_EFFECT|REASON_RETURN)
 		end
 	elseif op~=1 then return end
 	if not ct or ct==0 then return end

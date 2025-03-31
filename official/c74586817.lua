@@ -58,7 +58,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local hg=g:RandomSelect(1-tp,1)
 	if #hg~=1 then return end
 	local rg=hg+c
-	if Duel.Remove(rg,POS_FACEUP,REASON_EFFECT+REASON_TEMPORARY)==0 then return end
+	if Duel.Remove(rg,POS_FACEUP,REASON_EFFECT|REASON_TEMPORARY)==0 then return end
 	local retg=c:HasFlagEffect(id) and rg or hg
 	retg:Match(Card.IsLocation,nil,LOCATION_REMOVED)
 	aux.DelayedOperation(retg,PHASE_STANDBY,id+1,e,tp,s.retop,s.retcon,RESET_PHASE|PHASE_STANDBY|RESET_SELF_TURN)
@@ -86,7 +86,7 @@ end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetTargetCards(e)
 	if #tg>0 then
-		Duel.SendtoGrave(tg,REASON_EFFECT+REASON_RETURN)
+		Duel.SendtoGrave(tg,REASON_EFFECT|REASON_RETURN)
 	end
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

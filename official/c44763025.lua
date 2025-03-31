@@ -23,12 +23,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(p,0,LOCATION_HAND)
 	if #g>0 then
 		local sg=g:RandomSelect(p,1)
-		Duel.SendtoGrave(sg,REASON_EFFECT+REASON_DISCARD)
+		Duel.SendtoGrave(sg,REASON_EFFECT|REASON_DISCARD)
 		g:RemoveCard(sg:GetFirst())
 		if #g>0 then
 			Duel.Hint(HINT_SELECTMSG,1-p,HINTMSG_DISCARD)
 			sg=g:Select(1-p,1,1,nil)
-			Duel.SendtoGrave(sg,REASON_EFFECT+REASON_DISCARD)
+			Duel.SendtoGrave(sg,REASON_EFFECT|REASON_DISCARD)
 		end
 	end
 end

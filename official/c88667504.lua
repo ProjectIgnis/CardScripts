@@ -37,7 +37,7 @@ function s.initial_effect(c)
 end
 s.listed_names={96462121,22866836}
 function s.desfilter(c,tp)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) 
+	return c:IsReason(REASON_BATTLE|REASON_EFFECT) 
 	and c:GetPreviousAttributeOnField()==ATTRIBUTE_EARTH and c:GetPreviousRaceOnField()==RACE_MACHINE
 		and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
 end

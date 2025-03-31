@@ -48,7 +48,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) or not tc then return end
 	local seq=tc:GetSequence()
 	if tc:IsControler(1-tp) then seq=seq+16 end
-	if tc:IsRelateToEffect(e) and Duel.Remove(tc,0,REASON_EFFECT+REASON_TEMPORARY)~=0 and tc:IsLocation(LOCATION_REMOVED) then
+	if tc:IsRelateToEffect(e) and Duel.Remove(tc,0,REASON_EFFECT|REASON_TEMPORARY)~=0 and tc:IsLocation(LOCATION_REMOVED) then
 		c:SetCardTarget(tc)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD)
@@ -82,7 +82,7 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	if tc and tc:IsRelateToEffect(e) then
 		local seq=tc:GetPreviousSequence()
 		if seq>4 then
-			Duel.SendtoGrave(tc,REASON_RULE+REASON_RETURN)
+			Duel.SendtoGrave(tc,REASON_RULE|REASON_RETURN)
 		end
 		local zone=0x1<<seq
 		Duel.ReturnToField(tc,tc:GetPreviousPosition(),zone)

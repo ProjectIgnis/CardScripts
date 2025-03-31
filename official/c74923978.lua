@@ -32,5 +32,5 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local ct=e:GetLabel()
-	Duel.DiscardHand(1-tp,nil,ct,ct,REASON_EFFECT+REASON_DISCARD)
+	Duel.DiscardHand(1-tp,nil,ct,ct,REASON_EFFECT|REASON_DISCARD)
 end

@@ -35,7 +35,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsDestructable(e) and eg:IsExists(s.rfilter,1,e:GetHandler()) end
 	if Duel.SelectEffectYesNo(tp,c,96) then
-		Duel.Destroy(c,REASON_EFFECT+REASON_REPLACE)
+		Duel.Destroy(c,REASON_EFFECT|REASON_REPLACE)
 		return true
 	else return false end
 end

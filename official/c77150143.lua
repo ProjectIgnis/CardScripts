@@ -32,7 +32,7 @@ function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.DiscardHand(tp,s.filter,1,1,REASON_EFFECT+REASON_DISCARD,nil)~=0 then
+	if Duel.DiscardHand(tp,s.filter,1,1,REASON_EFFECT|REASON_DISCARD,nil)~=0 then
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end
 end

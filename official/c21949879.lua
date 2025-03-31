@@ -81,7 +81,7 @@ function s.rthcostfilter(c)
 end
 function s.rthcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.rthcostfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,s.rthcostfilter,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,s.rthcostfilter,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.rthtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

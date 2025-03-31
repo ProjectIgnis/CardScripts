@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e2:SetCost(s.descost)
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
-	e2:SetHintTiming(0,TIMING_BATTLE_START+TIMING_BATTLE_END)
+	e2:SetHintTiming(0,TIMING_BATTLE_START|TIMING_BATTLE_END)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_FIRE_FORMATION}

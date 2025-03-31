@@ -34,7 +34,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_METALFOES}
 function s.cfilter(c,tp)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD)
+	return c:IsReason(REASON_BATTLE|REASON_EFFECT) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	local v=0

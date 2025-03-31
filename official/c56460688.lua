@@ -38,7 +38,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	local tg=Duel.GetTargetCards(e)
-	if Duel.Remove(tg,0,REASON_EFFECT+REASON_TEMPORARY)~=0 then
+	if Duel.Remove(tg,0,REASON_EFFECT|REASON_TEMPORARY)~=0 then
 		local g=Duel.GetOperatedGroup()
 		local tc=g:GetFirst()
 		for tc in aux.Next(g) do

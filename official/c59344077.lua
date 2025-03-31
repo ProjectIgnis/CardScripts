@@ -27,7 +27,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if sel==0 then
 			Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_DISCARD)
 			local sg=g:Select(1-tp,1,1,nil)
-			Duel.SendtoGrave(sg,REASON_EFFECT+REASON_DISCARD)
+			Duel.SendtoGrave(sg,REASON_EFFECT|REASON_DISCARD)
 			Duel.NegateEffect(0)
 			return
 		end

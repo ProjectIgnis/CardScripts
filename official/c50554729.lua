@@ -50,7 +50,7 @@ function s.thcon1(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter1,1,nil,tp)
 end
 function s.cfilter2(c,tp)
-	return c:IsMonster() and c:IsReason(REASON_BATTLE+REASON_EFFECT)
+	return c:IsMonster() and c:IsReason(REASON_BATTLE|REASON_EFFECT)
 		and c:IsPreviousLocation(LOCATION_MZONE|LOCATION_HAND) and c:IsPreviousControler(tp)
 end
 function s.thcon2(e,tp,eg,ep,ev,re,r,rp)

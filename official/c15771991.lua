@@ -43,7 +43,7 @@ end
 s.listed_names={id,CARD_RA}
 	--If player took battle or effect damage
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==tp and r&(REASON_BATTLE+REASON_EFFECT)~=0
+	return ep==tp and r&(REASON_BATTLE|REASON_EFFECT)~=0
 end
 	--Activation legality
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

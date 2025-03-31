@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,TIMING_BATTLE_START+TIMING_BATTLE_END)
+	e1:SetHintTiming(0,TIMING_BATTLE_START|TIMING_BATTLE_END)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
 	e1:SetCondition(function() return Duel.IsMainPhase() or Duel.IsBattlePhase() end)
@@ -60,7 +60,7 @@ function s.scop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:GetReasonPlayer()~=tp
+	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE|REASON_EFFECT) and c:GetReasonPlayer()~=tp
 	and c:IsPreviousLocation(LOCATION_MZONE) and c:IsLinkSummoned()
 end
 function s.spfilter(c,e,tp)

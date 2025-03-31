@@ -29,7 +29,7 @@ end
 s.listed_series={SET_EYES_RESTRICT}
 s.listed_names={64631466}
 function s.cfilter(c,tp)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT)
+	return c:IsReason(REASON_BATTLE|REASON_EFFECT)
 		and ((c:IsPreviousSetCard(SET_EYES_RESTRICT) and c:GetPreviousTypeOnField()&TYPE_FUSION~=0)
 			or c:GetPreviousCodeOnField()==64631466)
 		and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)

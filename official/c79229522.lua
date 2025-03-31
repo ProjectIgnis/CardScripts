@@ -29,7 +29,7 @@ function s.cfilter(c,tp)
 	return c:IsAbleToGraveAsCost() and (c:IsControler(tp) or c:IsFaceup())
 end
 function s.contactop(g,tp,c)
-	Duel.SendtoGrave(g,REASON_COST+REASON_MATERIAL)
+	Duel.SendtoGrave(g,REASON_COST|REASON_MATERIAL)
 	--spsummon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

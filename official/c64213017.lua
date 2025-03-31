@@ -65,7 +65,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tkfilter(c,tp)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and (c:GetPreviousRaceOnField()&RACE_INSECT)>0
+	return c:IsReason(REASON_BATTLE|REASON_EFFECT) and (c:GetPreviousRaceOnField()&RACE_INSECT)>0
 		and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.tkcon(e,tp,eg,ep,ev,re,r,rp)

@@ -18,7 +18,7 @@ s.listed_series={SET_MARINCESS}
 function s.filter(c,e,tp)
 	return c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE)
 		and c:IsPreviousSetCard(SET_MARINCESS) and c:GetPreviousTypeOnField()&TYPE_LINK==TYPE_LINK
-		and c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsCanBeEffectTarget(e) and c:GetLink()
+		and c:IsReason(REASON_BATTLE|REASON_EFFECT) and c:IsCanBeEffectTarget(e) and c:GetLink()
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c:GetLink()) 
 end
 function s.spfilter(c,e,tp,lk)

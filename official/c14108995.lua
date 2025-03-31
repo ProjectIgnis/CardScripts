@@ -42,5 +42,5 @@ function s.repop(base,e,tp,eg,ep,ev,re,r,rp)
 		Duel.HintSelection(c,true)
 	end
 	c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,EFFECT_FLAG_CLIENT_HINT,1,nil,aux.Stringid(id,1))
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
+	Duel.SendtoGrave(e:GetHandler(),REASON_COST|REASON_DISCARD)
 end

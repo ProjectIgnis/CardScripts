@@ -32,7 +32,7 @@ function s.defcfilter(c)
 end
 function s.defcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.defcfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,s.defcfilter,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,s.defcfilter,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.defop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -23,7 +23,7 @@ function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_DISCARD+REASON_COST)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_DISCARD|REASON_COST)
 end
 function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	local seq=e:GetLabel()

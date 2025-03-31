@@ -60,7 +60,7 @@ function s.atkval(e,c)
 end
 function s.repfilter(c,tp)
 	return c:IsFaceup() and c:IsRace(RACE_DRAGON)
-		and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and c:IsReason(REASON_BATTLE+REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
+		and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and c:IsReason(REASON_BATTLE|REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
 end
 function s.tgfilter(c)
 	return c:IsType(TYPE_NORMAL) and c:IsAbleToGrave()
@@ -72,7 +72,7 @@ function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local sg=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,1,nil)
 		Duel.Hint(HINT_CARD,0,id)
-		Duel.SendtoGrave(sg,REASON_EFFECT+REASON_REPLACE)
+		Duel.SendtoGrave(sg,REASON_EFFECT|REASON_REPLACE)
 		return true
 	else return false end
 end

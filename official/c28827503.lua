@@ -93,7 +93,7 @@ function s.chlimit(e,ep,tp)
 	return tp==ep
 end
 function s.thcfilter(c,tp)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) 
+	return c:IsReason(REASON_BATTLE|REASON_EFFECT) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) 
 		and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousTypeOnField() & TYPE_LINK ~=0
 		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,nil,c:GetOriginalRace())
 end

@@ -68,7 +68,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		local tc=tg:GetFirst()
 		if tc:IsDiscardable(REASON_EFFECT) and Duel.SelectYesNo(p,aux.Stringid(id,3)) then
 			Duel.BreakEffect()
-			Duel.SendtoGrave(tc,REASON_EFFECT+REASON_DISCARD)
+			Duel.SendtoGrave(tc,REASON_EFFECT|REASON_DISCARD)
 			Duel.NegateAttack()
 		else
 			--double damage

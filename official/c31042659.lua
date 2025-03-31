@@ -90,5 +90,5 @@ end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,1-tp,id)
 	local tc=e:GetLabelObject()
-	Duel.Remove(tc,POS_FACEUP,REASON_EFFECT+REASON_REPLACE)
+	Duel.Remove(tc,POS_FACEUP,REASON_EFFECT|REASON_REPLACE)
 end

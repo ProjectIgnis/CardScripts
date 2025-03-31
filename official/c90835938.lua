@@ -66,7 +66,7 @@ end
 function s.banop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local d=Duel.GetAttacker():GetBattleTarget()
-	if d and d:IsRelateToBattle() and d:IsControler(1-tp) and Duel.Remove(d,0,REASON_EFFECT+REASON_TEMPORARY)>0 then
+	if d and d:IsRelateToBattle() and d:IsControler(1-tp) and Duel.Remove(d,0,REASON_EFFECT|REASON_TEMPORARY)>0 then
 		d:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

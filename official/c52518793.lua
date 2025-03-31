@@ -58,5 +58,5 @@ function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	return Duel.SelectEffectYesNo(tp,e:GetHandler(),96)
 end
 function s.desrepop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.DiscardHand(tp,Card.IsCode,1,1,REASON_EFFECT+REASON_DISCARD,nil,id)
+	Duel.DiscardHand(tp,Card.IsCode,1,1,REASON_EFFECT|REASON_DISCARD,nil,id)
 end

@@ -29,7 +29,7 @@ end
 s.listed_series={SET_DARKLORD}
 function s.repfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(SET_DARKLORD) and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) 
-		and not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_EFFECT+REASON_BATTLE)
+		and not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_EFFECT|REASON_BATTLE)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDiscardable() and eg:IsExists(s.repfilter,1,nil,tp) end
@@ -39,7 +39,7 @@ function s.repval(e,c)
 	return s.repfilter(c,e:GetHandlerPlayer())
 end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SendtoGrave(e:GetHandler(),REASON_EFFECT+REASON_DISCARD)
+	Duel.SendtoGrave(e:GetHandler(),REASON_EFFECT|REASON_DISCARD)
 end
 function s.cpfilter(c)
 	return c:IsSetCard(SET_DARKLORD) and c:IsSpellTrap() and c:IsAbleToDeck() and c:CheckActivateEffect(false,true,false)~=nil

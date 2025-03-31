@@ -104,7 +104,7 @@ end
 function s.desrepop(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject()
 	g:SetStatus(STATUS_DESTROY_CONFIRMED,false)
-	Duel.Destroy(g,REASON_EFFECT+REASON_REPLACE)
+	Duel.Destroy(g,REASON_EFFECT|REASON_REPLACE)
 end
 function s.atcon(e)
 	return Duel.IsExistingMatchingCard(s.eqfilter,e:GetHandlerPlayer(),LOCATION_SZONE,LOCATION_SZONE,1,nil,e:GetHandler())

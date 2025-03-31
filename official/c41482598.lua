@@ -69,5 +69,5 @@ function s.dcop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
 	local sg=g:RandomSelect(tp,e:GetLabel())
-	Duel.SendtoGrave(sg,REASON_EFFECT+REASON_DISCARD)
+	Duel.SendtoGrave(sg,REASON_EFFECT|REASON_DISCARD)
 end

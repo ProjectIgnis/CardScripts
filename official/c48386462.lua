@@ -47,7 +47,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	elseif op==2 then
 		--Discard 1 card, then draw 1 card
-		if Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_EFFECT+REASON_DISCARD,nil,REASON_EFFECT)>0 then
+		if Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_EFFECT|REASON_DISCARD,nil,REASON_EFFECT)>0 then
 			Duel.BreakEffect()
 			Duel.Draw(tp,1,REASON_EFFECT)
 		end

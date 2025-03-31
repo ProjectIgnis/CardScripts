@@ -70,7 +70,7 @@ function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.descfilter,tp,LOCATION_HAND,0,nil)
 	if chk==0 then return aux.SelectUnselectGroup(g,e,tp,1,2,s.rescon,0) end
 	local sg=aux.SelectUnselectGroup(g,e,tp,1,2,s.rescon,1,tp,HINTMSG_DISCARD,s.rescon)
-	Duel.SendtoGrave(sg,REASON_COST+REASON_DISCARD)
+	Duel.SendtoGrave(sg,REASON_COST|REASON_DISCARD)
 end
 function s.filter(c)
 	return c:IsSpecialSummoned()

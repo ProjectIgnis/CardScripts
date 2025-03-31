@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetCost(Cost.SelfDiscard)
 	e1:SetTarget(s.rectg)
 	e1:SetOperation(s.recop)
-	e1:SetHintTiming(0,TIMING_MAIN_END+TIMING_END_PHASE)
+	e1:SetHintTiming(0,TIMING_MAIN_END|TIMING_END_PHASE)
 	c:RegisterEffect(e1)
 	--Special summon itself from GY
 	local e2=Effect.CreateEffect(c)

@@ -34,7 +34,7 @@ function s.ctcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.ctcfilter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 	local dc=Duel.SelectMatchingCard(tp,s.ctcfilter,tp,LOCATION_HAND,0,1,1,nil)
-	Duel.SendtoGrave(dc,REASON_COST+REASON_DISCARD)
+	Duel.SendtoGrave(dc,REASON_COST|REASON_DISCARD)
 end
 function s.cttfilter(c)
 	return c:IsFaceup() and c:IsLevelAbove(1) and c:IsCanAddCounter(COUNTER_FOG,c:GetLevel())

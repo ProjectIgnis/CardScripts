@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e3:SetCost(s.handcost)
 	e3:SetTarget(s.handtg)
 	e3:SetOperation(s.handop)
-	e3:SetHintTiming(TIMING_STANDBY_PHASE+TIMING_END_PHASE)
+	e3:SetHintTiming(TIMING_STANDBY_PHASE|TIMING_END_PHASE)
 	c:RegisterEffect(e3)
 	--Look at opponent's extra deck and send 1 monster from it to GY
 	local e4=e3:Clone()
@@ -98,7 +98,7 @@ function s.handop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.ConfirmCards(1-p,g)
 			Duel.Hint(HINT_SELECTMSG,p,HINTMSG_DISCARD)
 			local sg=g:FilterSelect(1-p,Card.IsMonster,1,1,nil)
-			Duel.SendtoGrave(sg,REASON_EFFECT+REASON_DISCARD)
+			Duel.SendtoGrave(sg,REASON_EFFECT|REASON_DISCARD)
 			Duel.ShuffleHand(p)
 		end
 	end

@@ -32,14 +32,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local sealbool=false
 	if h1>0 then
 		Duel.ShuffleHand(tp)
-		if Duel.DiscardHand(tp,aux.TRUE,1,1,REASON_EFFECT+REASON_DISCARD)>0 then
+		if Duel.DiscardHand(tp,aux.TRUE,1,1,REASON_EFFECT|REASON_DISCARD)>0 then
 			local dc=Duel.GetOperatedGroup():GetFirst()
 			if dc:IsSetCard(SET_OJAMA) then sealbool=true end
 		end
 	end
 	if h2>0 then 
 		Duel.ShuffleHand(1-tp)
-		Duel.DiscardHand(1-tp,aux.TRUE,1,1,REASON_EFFECT+REASON_DISCARD)
+		Duel.DiscardHand(1-tp,aux.TRUE,1,1,REASON_EFFECT|REASON_DISCARD)
 	end
 	if sealbool and Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0
 	and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then

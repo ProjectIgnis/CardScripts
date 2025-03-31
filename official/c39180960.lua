@@ -29,7 +29,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_DISCARD)
 	local g2=Duel.SelectMatchingCard(1-tp,aux.TRUE,1-tp,LOCATION_HAND,0,1,1,nil)
 	g1:Merge(g2)
-	Duel.SendtoGrave(g1,REASON_DISCARD+REASON_EFFECT)
+	Duel.SendtoGrave(g1,REASON_DISCARD|REASON_EFFECT)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

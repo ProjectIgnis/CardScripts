@@ -18,7 +18,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_VISION_HERO}
 function s.cfilter(c,tp)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE)
+	return c:IsReason(REASON_BATTLE|REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE)
 		and c:GetPreviousControler()==tp and c:IsPreviousSetCard(SET_HERO) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

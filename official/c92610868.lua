@@ -86,5 +86,5 @@ end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	c:SetStatus(STATUS_DESTROY_CONFIRMED,false)
-	Duel.Destroy(c,REASON_EFFECT+REASON_REPLACE)
+	Duel.Destroy(c,REASON_EFFECT|REASON_REPLACE)
 end

@@ -50,7 +50,7 @@ end
 function s.cfilter(c,tp,zone)
 	local seq=c:GetPreviousSequence()
 	if not c:IsPreviousControler(tp) then seq=seq+16 end
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsSetCard(SET_TRICKSTAR) 
+	return c:IsReason(REASON_BATTLE|REASON_EFFECT) and c:IsSetCard(SET_TRICKSTAR) 
 		and c:IsPreviousLocation(LOCATION_MZONE) and bit.extract(zone,seq)~=0
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)

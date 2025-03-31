@@ -38,7 +38,7 @@ function s.damcon(e)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsReason(REASON_DESTROY) then
+	if c:IsReason(REASON_BATTLE|REASON_EFFECT) and c:IsReason(REASON_DESTROY) then
 		--Special Summon 2 Level 7 or lower Warrior monsters from your GY
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(aux.Stringid(id,0))

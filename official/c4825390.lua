@@ -27,7 +27,7 @@ end
 	--Banish up to 2 of opponent's monsters until End Phase
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetTargetCards(e)
-	if Duel.Remove(tg,0,REASON_EFFECT+REASON_TEMPORARY)>0 then
+	if Duel.Remove(tg,0,REASON_EFFECT|REASON_TEMPORARY)>0 then
 		local c=e:GetHandler()
 		for rc in tg:Iter() do
 			local e1=Effect.CreateEffect(c)

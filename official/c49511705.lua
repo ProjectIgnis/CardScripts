@@ -86,7 +86,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.ConfirmCards(tp,hg)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 			local sg=hg:Select(tp,1,1,nil)
-			Duel.SendtoGrave(sg,REASON_EFFECT+REASON_DISCARD)
+			Duel.SendtoGrave(sg,REASON_EFFECT|REASON_DISCARD)
 			Duel.ShuffleHand(1-tp)
 		end
 	end

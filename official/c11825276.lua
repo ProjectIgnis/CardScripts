@@ -49,7 +49,7 @@ function s.contactfil(tp)
 	return Duel.GetReleaseGroup(tp)
 end
 function s.contactop(g)
-	Duel.Release(g,REASON_COST+REASON_MATERIAL)
+	Duel.Release(g,REASON_COST|REASON_MATERIAL)
 end
 function s.tgcon(e)
 	return Duel.IsExistingMatchingCard(Card.IsPosition,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil,POS_FACEDOWN_DEFENSE)

@@ -53,7 +53,7 @@ function s.pentg(e,tp,eg,ep,ev,re,r,rp,chk)
 		return res
 	end
 	e:SetLabel(0)
-	Duel.DiscardHand(tp,s.filter,1,1,REASON_COST+REASON_DISCARD,nil,tp)
+	Duel.DiscardHand(tp,s.filter,1,1,REASON_COST|REASON_DISCARD,nil,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA|LOCATION_HAND)
 end
 function s.addreset(c)

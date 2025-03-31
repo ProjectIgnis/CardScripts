@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetCountLimit(1)
 	e2:SetCost(s.cost)
 	e2:SetOperation(s.operation)
-	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
+	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER|TIMING_END_PHASE)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c)

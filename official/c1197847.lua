@@ -56,7 +56,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SpecialSummonComplete()
 			if Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>0 then
 				Duel.BreakEffect()
-				Duel.DiscardHand(1-tp,nil,1,1,REASON_EFFECT+REASON_DISCARD)
+				Duel.DiscardHand(1-tp,nil,1,1,REASON_EFFECT|REASON_DISCARD)
 			end
 		end
 	end

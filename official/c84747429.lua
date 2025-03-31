@@ -36,7 +36,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)~=0 and c:IsRelateToEffect(e) then
 		Duel.BreakEffect()
-		if Duel.Remove(c,0,REASON_EFFECT+REASON_TEMPORARY)==0 then return end
+		if Duel.Remove(c,0,REASON_EFFECT|REASON_TEMPORARY)==0 then return end
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE|PHASE_STANDBY)

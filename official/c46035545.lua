@@ -46,7 +46,7 @@ function s.atkcfilter(c)
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.atkcfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,s.atkcfilter,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,s.atkcfilter,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.atkfilter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_DD) and c:IsLevelBelow(6)

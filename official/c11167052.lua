@@ -101,7 +101,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local hg=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
-	local ct=Duel.SendtoGrave(hg,REASON_EFFECT+REASON_DISCARD)
+	local ct=Duel.SendtoGrave(hg,REASON_EFFECT|REASON_DISCARD)
 	if ct<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_GRAVE,0,ct,ct,nil)

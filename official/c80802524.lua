@@ -16,7 +16,7 @@ end
 s.listed_series={SET_GHOSTRICK}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	if rp~=tp and #eg==1 and tc:IsReason(REASON_DESTROY) and tc:IsReason(REASON_BATTLE+REASON_EFFECT)
+	if rp~=tp and #eg==1 and tc:IsReason(REASON_DESTROY) and tc:IsReason(REASON_BATTLE|REASON_EFFECT)
 		and tc:IsPreviousLocation(LOCATION_MZONE) and tc:IsPreviousControler(tp) and tc:IsSetCard(SET_GHOSTRICK) and tc:IsPreviousPosition(POS_FACEUP) then
 		e:SetLabel(tc:GetCode())
 		return true

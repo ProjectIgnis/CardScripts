@@ -39,7 +39,7 @@ function s.condition1(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.condition2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
+	return c:IsReason(REASON_BATTLE|REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
 end
 function s.thfilter(c)
 	return (c:IsSetCard(SET_YANG_ZING) or c:IsSetCard(SET_ZEFRA)) and c:IsSpellTrap() and c:IsAbleToHand()

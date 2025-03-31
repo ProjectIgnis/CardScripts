@@ -82,5 +82,5 @@ function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.desrepop(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetEquipGroup():Filter(s.eqfilter,nil):GetFirst()
-	Duel.Destroy(ec,REASON_EFFECT+REASON_REPLACE)
+	Duel.Destroy(ec,REASON_EFFECT|REASON_REPLACE)
 end

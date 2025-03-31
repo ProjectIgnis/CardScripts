@@ -96,7 +96,7 @@ end
 function s.ttop2(e,tp,eg,ep,ev,re,r,rp,c,minc,zone,relzone,exeff)
 	local g=e:GetLabelObject()
 	c:SetMaterial(g)
-	Duel.Release(g,REASON_SUMMON+REASON_MATERIAL)
+	Duel.Release(g,REASON_SUMMON|REASON_MATERIAL)
 	g:DeleteGroup()
 end
 function s.retreg(e,tp,eg,ep,ev,re,r,rp)

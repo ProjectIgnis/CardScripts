@@ -50,7 +50,7 @@ function s.atkcon(e)
 	return Duel.IsPhase(PHASE_DAMAGE_CAL) and Duel.GetAttackTarget()~=nil
 end
 function s.cfilter(c,tp)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:GetOriginalAttribute()~=0
+	return c:IsReason(REASON_BATTLE|REASON_EFFECT) and c:GetOriginalAttribute()~=0
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

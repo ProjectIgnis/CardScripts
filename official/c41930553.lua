@@ -43,7 +43,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 	local cg=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,1,1,nil)
 	if #cg==0 then return end
-	Duel.SendtoGrave(cg,REASON_EFFECT+REASON_DISCARD)
+	Duel.SendtoGrave(cg,REASON_EFFECT|REASON_DISCARD)
 	if tc and tc:IsRelateToEffect(e) then
 		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 	end

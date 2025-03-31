@@ -26,5 +26,5 @@ end
 function s.otop(e,tp,eg,ep,ev,re,r,rp,c)
 	local sg=Duel.SelectTribute(tp,c,1,1)
 	c:SetMaterial(sg)
-	Duel.Release(sg,REASON_SUMMON+REASON_MATERIAL)
+	Duel.Release(sg,REASON_SUMMON|REASON_MATERIAL)
 end

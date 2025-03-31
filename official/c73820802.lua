@@ -37,7 +37,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local hg=Duel.GetFieldGroup(1-tp,LOCATION_HAND,0)
 		if #hg>0 then
 			local sg=hg:RandomSelect(1-tp,1)
-			Duel.SendtoGrave(sg,REASON_DISCARD+REASON_EFFECT)
+			Duel.SendtoGrave(sg,REASON_DISCARD|REASON_EFFECT)
 		end
 	end
 	Duel.MoveSequence(tc,1)

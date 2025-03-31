@@ -47,7 +47,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.setfilter(c,tp)
 	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
-		and c:IsSetCard(SET_NUMBER) and c:IsType(TYPE_XYZ) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
+		and c:IsSetCard(SET_NUMBER) and c:IsType(TYPE_XYZ) and c:IsReason(REASON_BATTLE|REASON_EFFECT)
 end
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.setfilter,1,nil,tp) and not eg:IsContains(e:GetHandler())

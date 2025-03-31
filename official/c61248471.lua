@@ -36,7 +36,7 @@ end
 s.listed_names={CARD_SUMMONED_SKULL}
 function s.repfilter(c,tp)
 	return c:IsFaceup() and c:IsCode(CARD_SUMMONED_SKULL)
-		and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and c:IsReason(REASON_BATTLE+REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
+		and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and c:IsReason(REASON_BATTLE|REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

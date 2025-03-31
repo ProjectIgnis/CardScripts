@@ -56,6 +56,6 @@ end
 function s.hdop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsEnvironment(94585852) then
 		local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND):RandomSelect(tp,3)
-		Duel.SendtoGrave(g,REASON_EFFECT+REASON_DISCARD)
+		Duel.SendtoGrave(g,REASON_EFFECT|REASON_DISCARD)
 	end
 end

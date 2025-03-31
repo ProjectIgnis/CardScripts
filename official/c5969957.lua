@@ -29,7 +29,7 @@ function s.initial_effect(c)
 end
 function s.cfilter(c,tp)
 	return c:IsPreviousControler(tp) and c:GetPreviousAttributeOnField()&ATTRIBUTE_DARK == ATTRIBUTE_DARK and c:IsPreviousLocation(LOCATION_MZONE)
-		and c:IsSummonLocation(LOCATION_EXTRA) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
+		and c:IsSummonLocation(LOCATION_EXTRA) and c:IsReason(REASON_BATTLE|REASON_EFFECT)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.cfilter,nil,tp)

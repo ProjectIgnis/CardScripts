@@ -32,7 +32,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_AMAZONESS}
 function s.cfilter(c,e,tp)
-	return c:IsSetCard(SET_AMAZONESS) and c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:HasLevel()
+	return c:IsSetCard(SET_AMAZONESS) and c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE|REASON_EFFECT) and c:HasLevel()
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetLevel())
 end
 function s.spfilter(c,e,tp,lv)

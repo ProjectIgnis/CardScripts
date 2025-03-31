@@ -69,7 +69,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 	local sg=g:SelectWithSumGreater(tp,Card.GetLevel,8)
-	Duel.SendtoGrave(sg,REASON_COST+REASON_DISCARD)
+	Duel.SendtoGrave(sg,REASON_COST|REASON_DISCARD)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE) and e:GetHandler():IsReason(REASON_BATTLE)
@@ -97,7 +97,7 @@ function s.hdop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(tp,hg)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 		local sg=hg:Select(tp,1,1,nil)
-		Duel.SendtoGrave(sg,REASON_EFFECT+REASON_DISCARD)
+		Duel.SendtoGrave(sg,REASON_EFFECT|REASON_DISCARD)
 		Duel.ShuffleHand(1-tp)
 	end
 end

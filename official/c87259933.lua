@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TOHAND)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
-	e3:SetHintTiming(0,TIMING_MAIN_END+TIMING_END_PHASE)
+	e3:SetHintTiming(0,TIMING_MAIN_END|TIMING_END_PHASE)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetRange(LOCATION_SZONE)
@@ -37,7 +37,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_CRYSTAL_BEAST}
 function s.cfilter(c,tp)
-	return c:IsSetCard(SET_CRYSTAL_BEAST) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
+	return c:IsSetCard(SET_CRYSTAL_BEAST) and c:IsReason(REASON_BATTLE|REASON_EFFECT)
 		and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

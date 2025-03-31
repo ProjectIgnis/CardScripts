@@ -39,6 +39,6 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	local g2=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_REMOVED,0,nil)
 	if #g2>0 then
-		Duel.SendtoGrave(g2,REASON_EFFECT+REASON_RETURN)
+		Duel.SendtoGrave(g2,REASON_EFFECT|REASON_RETURN)
 	end
 end

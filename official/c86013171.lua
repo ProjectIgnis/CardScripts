@@ -59,7 +59,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local sg=tg:Filter(Card.IsRelateToEffect,nil,e)
-	if #sg>0 and Duel.SendtoGrave(sg,REASON_EFFECT+REASON_RETURN)~=0 then
+	if #sg>0 and Duel.SendtoGrave(sg,REASON_EFFECT|REASON_RETURN)~=0 then
 		Duel.Damage(1-tp,500,REASON_EFFECT)
 	end
 end

@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCost(Cost.Detach(1))
 	e1:SetOperation(s.operation)
-	e1:SetHintTiming(TIMING_STANDBY_PHASE+TIMING_END_PHASE)
+	e1:SetHintTiming(TIMING_STANDBY_PHASE|TIMING_END_PHASE)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 end
 s.listed_series={SET_CONSTELLAR}

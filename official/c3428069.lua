@@ -37,7 +37,7 @@ end
 s.listed_names={CARD_BUSTER_BLADER}
 function s.filter(c,e,tp)
 	return c:IsMonster() and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(1-tp)
-		and c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_EFFECT+REASON_BATTLE) and c:IsCanBeEffectTarget(e) and not c:IsForbidden()
+		and c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_EFFECT|REASON_BATTLE) and c:IsCanBeEffectTarget(e) and not c:IsForbidden()
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return eg:IsContains(chkc) and s.filter(chkc,e,tp) end

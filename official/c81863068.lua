@@ -25,6 +25,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetOperatedGroup()
 	Duel.ConfirmCards(1-p,g)
 	local dg=g:Filter(Card.IsSpell,nil)
-	Duel.SendtoGrave(dg,REASON_EFFECT+REASON_DISCARD)
+	Duel.SendtoGrave(dg,REASON_EFFECT|REASON_DISCARD)
 	Duel.ShuffleHand(p)
 end

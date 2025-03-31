@@ -44,7 +44,7 @@ end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 	local dg=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,1,1,nil)
-	if #dg>0 and Duel.SendtoGrave(dg,REASON_EFFECT+REASON_DISCARD)>0 then
+	if #dg>0 and Duel.SendtoGrave(dg,REASON_EFFECT|REASON_DISCARD)>0 then
 		local og=Duel.GetOperatedGroup()
 		local sg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,SET_DARK_WORLD),tp,LOCATION_MZONE,0,nil)
 		if #sg==0 then return end
@@ -74,7 +74,7 @@ end
 function s.drwop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 	local g=Duel.SelectMatchingCard(tp,Card.IsDiscardable,tp,LOCATION_HAND,0,1,1,nil)
-	if #g>0 and Duel.SendtoGrave(g,REASON_EFFECT+REASON_DISCARD)>0 then
+	if #g>0 and Duel.SendtoGrave(g,REASON_EFFECT|REASON_DISCARD)>0 then
 		Duel.BreakEffect()
 		Duel.Draw(tp,2,REASON_EFFECT)
 	end

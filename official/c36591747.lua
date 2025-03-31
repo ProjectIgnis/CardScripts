@@ -54,7 +54,7 @@ function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetEquipTarget()
-	if tc and tc:IsLocation(LOCATION_MZONE) and Duel.Remove(tc,0,REASON_EFFECT+REASON_TEMPORARY)>0 then
+	if tc and tc:IsLocation(LOCATION_MZONE) and Duel.Remove(tc,0,REASON_EFFECT|REASON_TEMPORARY)>0 then
 		tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 		--Return it in the End Phase
 		local e1=Effect.CreateEffect(e:GetHandler())

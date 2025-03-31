@@ -42,5 +42,5 @@ end
 function s.rmtg(e,c)
 	local tp=e:GetHandlerPlayer()
 	return c:GetOwner()~=tp and Duel.IsPlayerCanRemove(tp,c) 
-		and c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
+		and c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE|REASON_EFFECT)
 end

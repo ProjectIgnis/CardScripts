@@ -76,7 +76,7 @@ end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.GetFieldGroup(tp,LOCATION_HAND,0)==0 then return end
-	Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT+REASON_DISCARD)
+	Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT|REASON_DISCARD)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
 		s.equipop(c,e,tp,tc)

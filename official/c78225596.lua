@@ -88,7 +88,7 @@ end
 function s.checkfilter(c,e,tp)
 	local mg=c:GetMutualLinkedGroup()
 	local octg=e:GetHandler():GetMutualLinkedGroup()
-	return c:IsSetCard(SET_APPLIANCER) and c:IsLinkMonster() and c:IsControler(tp) and c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
+	return c:IsSetCard(SET_APPLIANCER) and c:IsLinkMonster() and c:IsControler(tp) and c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE|REASON_EFFECT)
 		and not (mg:IsContains(e:GetHandler()) and octg:IsContains(c))
 end
 function s.checkcon(e,tp,eg,ep,ev,re,r,rp)

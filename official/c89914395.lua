@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
-	e1:SetHintTiming(0,TIMING_BATTLE_START+TIMING_BATTLE_PHASE)
+	e1:SetHintTiming(0,TIMING_BATTLE_START|TIMING_BATTLE_PHASE)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_AESIR}

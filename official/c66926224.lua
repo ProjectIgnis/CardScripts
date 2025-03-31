@@ -32,7 +32,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g1=Duel.GetFieldGroup(tp,LOCATION_HAND,LOCATION_HAND)
-	Duel.SendtoGrave(g1,REASON_EFFECT+REASON_DISCARD)
+	Duel.SendtoGrave(g1,REASON_EFFECT|REASON_DISCARD)
 	local g2=Duel.GetMatchingGroup(s.dfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	Duel.Destroy(g2,REASON_EFFECT)
 end

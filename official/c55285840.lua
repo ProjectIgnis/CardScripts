@@ -72,7 +72,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	Duel.BreakEffect()
 	if lb & TYPE_MONSTER ~=0 then
 		if c:IsRelateToEffect(e) then
-			Duel.Remove(c,c:GetPosition(),REASON_EFFECT+REASON_TEMPORARY)
+			Duel.Remove(c,c:GetPosition(),REASON_EFFECT|REASON_TEMPORARY)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 			e1:SetCode(EVENT_PHASE+PHASE_END)

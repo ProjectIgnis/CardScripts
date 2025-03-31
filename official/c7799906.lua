@@ -50,7 +50,7 @@ function s.filter(c)
 end
 	--Check if monster(s) with ATK higher than base ATK were destroyed
 function s.cfilter(c,tp)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:GetPreviousAttackOnField()>c:GetBaseAttack()
+	return c:IsReason(REASON_BATTLE|REASON_EFFECT) and c:GetPreviousAttackOnField()>c:GetBaseAttack()
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp)
 end
 	--If it ever happened

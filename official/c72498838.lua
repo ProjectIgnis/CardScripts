@@ -78,7 +78,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_REMOVED,0,1,nil) then
 			local tg=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_REMOVED,0,1,1,nil)
 			if #tg>0 then
-				Duel.SendtoGrave(tg,REASON_EFFECT+REASON_RETURN)
+				Duel.SendtoGrave(tg,REASON_EFFECT|REASON_RETURN)
 			end
 		end
 	end

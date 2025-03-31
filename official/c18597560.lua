@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
-	e1:SetHintTiming(TIMING_BATTLE_PHASE+TIMING_END_PHASE)
+	e1:SetHintTiming(TIMING_BATTLE_PHASE|TIMING_END_PHASE)
 	c:RegisterEffect(e1)
 end
 s.listed_names={CARD_CYBER_DRAGON}

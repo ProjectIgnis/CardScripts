@@ -33,7 +33,7 @@ s.listed_series={SET_FLUFFAL}
 s.listed_names={30068120}
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,e:GetHandler()) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
@@ -60,7 +60,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	else
 		Duel.BreakEffect()
-		Duel.SendtoGrave(tc,REASON_EFFECT+REASON_DISCARD)
+		Duel.SendtoGrave(tc,REASON_EFFECT|REASON_DISCARD)
 	end
 	Duel.ShuffleHand(tp)
 end

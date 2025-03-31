@@ -31,7 +31,7 @@ s.listed_names={CARD_DESTINY_BOARD}
 s.listed_series={SET_SPIRIT_MESSAGE}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,e:GetHandler()) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.thfilter(c)
 	return (c:IsCode(CARD_DESTINY_BOARD) or c:IsRace(RACE_FIEND) and c:GetLevel()==8) and c:IsAbleToHand()

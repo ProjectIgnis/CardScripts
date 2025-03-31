@@ -42,7 +42,7 @@ function s.atktg(e,c)
 	return not c:IsSetCard(SET_CODEBREAKER) and lg and lg:IsContains(e:GetHandler())
 end
 function s.cfilter(c,tp)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousSetCard(SET_CODEBREAKER)
+	return c:IsReason(REASON_BATTLE|REASON_EFFECT) and c:IsPreviousSetCard(SET_CODEBREAKER)
 		and c:GetPreviousTypeOnField()&(TYPE_MONSTER+TYPE_LINK)==(TYPE_MONSTER+TYPE_LINK)
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
 end

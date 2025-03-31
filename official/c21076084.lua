@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
-	e1:SetHintTiming(TIMING_STANDBY_PHASE+TIMING_END_PHASE)
+	e1:SetHintTiming(TIMING_STANDBY_PHASE|TIMING_END_PHASE)
 	c:RegisterEffect(e1)
 	--spsummon
 	local e2=Effect.CreateEffect(c)

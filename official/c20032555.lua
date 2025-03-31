@@ -18,7 +18,7 @@ function s.cfilter(c)
 end
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST|REASON_DISCARD)
 	local opt=0
 	if e:GetHandler():GetLevel()==8 then
 		opt=Duel.SelectOption(tp,aux.Stringid(id,1))

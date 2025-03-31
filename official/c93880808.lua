@@ -74,7 +74,7 @@ end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.descfilter,tp,LOCATION_HAND,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
-	Duel.DiscardHand(tp,s.descfilter,1,1,REASON_COST+REASON_DISCARD,nil,tp)
+	Duel.DiscardHand(tp,s.descfilter,1,1,REASON_COST|REASON_DISCARD,nil,tp)
 	local g=Duel.GetOperatedGroup()
 	e:SetLabel(g:GetFirst():GetMainCardType())
 end

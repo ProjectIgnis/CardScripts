@@ -32,6 +32,6 @@ end
 function s.hdop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
 	if #g>0 then
-		Duel.SendtoGrave(g,REASON_DISCARD+REASON_EFFECT)
+		Duel.SendtoGrave(g,REASON_DISCARD|REASON_EFFECT)
 	end
 end

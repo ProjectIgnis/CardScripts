@@ -36,7 +36,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local tg=Duel.SelectMatchingCard(tp,Card.IsRace,tp,LOCATION_HAND,0,1,1,nil,RACE_FIEND)
 		if #tg>0 then
 			Duel.BreakEffect()
-			Duel.SendtoGrave(tg,REASON_EFFECT+REASON_DISCARD)
+			Duel.SendtoGrave(tg,REASON_EFFECT|REASON_DISCARD)
 		end
 	end
 end

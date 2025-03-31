@@ -42,7 +42,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ConfirmCards(tp,g)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 	local hg=g:Select(tp,1,1,nil)
-	Duel.SendtoGrave(hg,REASON_EFFECT+REASON_DISCARD)
+	Duel.SendtoGrave(hg,REASON_EFFECT|REASON_DISCARD)
 	Duel.ShuffleHand(1-tp)
 	local tc=hg:GetFirst()
 	if tc:IsMonster() then

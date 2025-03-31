@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_GAGAGA,SET_DODODO,SET_GOGOGO}
 function s.filter(c,e,tp)
-	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
+	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE|REASON_EFFECT)
 		and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)
 		and c:IsPreviousControler(tp) and (c:IsSetCard(SET_GAGAGA) or c:IsSetCard(SET_DODODO) or c:IsSetCard(SET_GOGOGO))
 		and c:IsCanBeEffectTarget(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

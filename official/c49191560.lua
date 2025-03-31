@@ -21,7 +21,7 @@ function s.cfilter(c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_DISCARD+REASON_COST)
+	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_DISCARD|REASON_COST)
 end
 function s.filter(c)
 	return c:IsRace(RACE_SPELLCASTER) and c:IsAbleToHand()

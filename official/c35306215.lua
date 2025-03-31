@@ -74,7 +74,7 @@ function s.otop(e,tp,eg,ep,ev,re,r,rp,c)
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.thfilter(c)
 	return c:IsSetCard(SET_DARKLORD) and c:IsMonster() and (c:IsAbleToHand() or c:IsAbleToGrave())

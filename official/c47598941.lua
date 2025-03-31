@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
-	e1:SetCondition(s.condition)
+	e1:SetCondition(aux.StatChangeDamageStepCondition)
 	c:RegisterEffect(e1)
 	--place a card in the pendulum zone
 	local e2=Effect.CreateEffect(c)
@@ -37,9 +37,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={SET_AMORPHAGE}
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
 function s.cfilter(c,tp)
 	return c:IsPreviousLocation(LOCATION_PZONE) and c:IsPreviousControler(tp)
 end

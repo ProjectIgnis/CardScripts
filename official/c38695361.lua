@@ -32,7 +32,7 @@ end
 s.listed_series={SET_BLACK_LUSTER_SOLDIER,SET_GAIA_THE_FIERCE_KNIGHT}
 function s.atkcon1(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
-	return Duel.IsBattlePhase() and (ph~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
+	return Duel.IsBattlePhase() and aux.StatChangeDamageStepCondition()
 end
 function s.atkfilter(c)
 	return c:IsFaceup() and (c:IsSetCard(SET_BLACK_LUSTER_SOLDIER) or c:IsSetCard(SET_GAIA_THE_FIERCE_KNIGHT))

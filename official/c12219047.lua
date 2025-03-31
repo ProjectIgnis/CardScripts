@@ -74,5 +74,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.condition2(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsSetCard,1,nil,SET_THE_PHANTOM_KNIGHTS)
-		and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
+		and aux.StatChangeDamageStepCondition()
 end

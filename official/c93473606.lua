@@ -46,8 +46,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetHandler():GetEquipTarget()
-	if chk==0 then return tc and tc:HasDefense()
-		and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()) end
+	if chk==0 then return tc and tc:HasDefense() and aux.StatChangeDamageStepCondition() end
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

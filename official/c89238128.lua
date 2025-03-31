@@ -35,8 +35,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsBattlePhase()
-		and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
+	return Duel.IsBattlePhase() and aux.StatChangeDamageStepCondition()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetAttackAnnouncedCount()==0 end

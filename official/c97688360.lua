@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
-	e1:SetCondition(s.atkcon)
+	e1:SetCondition(aux.StatChangeDamageStepCondition)
 	e1:SetCost(s.atkcost)
 	e1:SetTarget(s.atktg)
 	e1:SetOperation(s.atkop)
@@ -32,9 +32,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_GOUKI}
 s.listed_names={id}
-function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
 function s.atkfilter1(c,tp)
 	return c:IsSetCard(SET_GOUKI) and Duel.IsExistingTarget(s.atkfilter2,tp,LOCATION_MZONE,0,1,c)
 end
@@ -55,7 +52,7 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
+	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)

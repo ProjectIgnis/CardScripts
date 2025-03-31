@@ -38,8 +38,7 @@ function s.atkcon1(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsPlayerAffectedByEffect(tp,CARD_ORCUSTRATED_BABEL)
 end
 function s.atkcon2(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsPlayerAffectedByEffect(tp,CARD_ORCUSTRATED_BABEL)
-		and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
+	return Duel.IsPlayerAffectedByEffect(tp,CARD_ORCUSTRATED_BABEL) and aux.StatChangeDamageStepCondition()
 end
 function s.filter(c)
 	return c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_DARK) and not c:IsCode(id) and c:IsAbleToGrave()

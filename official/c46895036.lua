@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetHintTiming(TIMING_DAMAGE_STEP)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
-	e2:SetCondition(s.condition)
+	e2:SetCondition(aux.StatChangeDamageStepCondition)
 	e2:SetCost(Cost.Detach(1))
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
@@ -45,9 +45,6 @@ function s.atkfilter(c)
 end
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(s.atkfilter,c:GetControler(),LOCATION_ONFIELD,0,nil)*200
-end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsFaceup() and chkc:IsLocation(LOCATION_MZONE) end

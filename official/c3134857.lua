@@ -47,7 +47,7 @@ function s.tdcon1(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsPlayerAffectedByEffect(tp,CARD_ORCUSTRATED_BABEL)
 end
 function s.tdcon2(e,tp,eg,ep,ev,re,r,rp)
-	return (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()) and Duel.IsPlayerAffectedByEffect(tp,CARD_ORCUSTRATED_BABEL)
+	return aux.StatChangeDamageStepCondition() and Duel.IsPlayerAffectedByEffect(tp,CARD_ORCUSTRATED_BABEL)
 end
 function s.tdfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_MACHINE) and c:IsAbleToDeck()
@@ -70,7 +70,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsLinked),tp,0,LOCATION_MZONE,nil)
 	if #g>0 then
 		Duel.BreakEffect()
-		for tc in aux.Next(g) do
+		for tc in g:Iter() do
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_DISABLE)

@@ -19,8 +19,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_DESTINY_HERO}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	local ph=Duel.GetCurrentPhase()
-	return Duel.IsTurnPlayer(1-tp) and Duel.IsBattlePhase() and (ph~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
+	return Duel.IsTurnPlayer(1-tp) and Duel.IsBattlePhase() and aux.StatChangeDamageStepCondition()
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_DESTINY_HERO)
@@ -30,8 +29,7 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)
-	local tc=g:GetFirst()
-	for tc in aux.Next(g) do
+	for tc in g:Iter() do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetOwnerPlayer(tp)
 		e1:SetType(EFFECT_TYPE_SINGLE)

@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCondition(s.atkcon)
+	e3:SetCondition(aux.StatChangeDamageStepCondition)
 	e3:SetCost(Cost.Detach(1))
 	e3:SetTarget(s.atktg)
 	e3:SetOperation(s.atkop)
@@ -65,9 +65,6 @@ function s.valcheck(e,c)
 	else
 		e:GetLabelObject():SetLabel(0)
 	end
-end
-function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.atkfilter(c)
 	return c:IsSetCard(SET_RAIDRAPTOR) and c:IsMonster()

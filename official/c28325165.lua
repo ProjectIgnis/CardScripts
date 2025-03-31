@@ -19,8 +19,7 @@ function s.cfilter(c)
 	return c:IsSetCard(SET_AQUAACTRESS) and c:IsMonster()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
-		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,nil)
+	return aux.StatChangeDamageStepCondition() and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end

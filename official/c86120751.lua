@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP+TIMINGS_CHECK_MONSTER)
-	e1:SetCondition(s.adcon)
+	e1:SetCondition(aux.StatChangeDamageStepCondition)
 	e1:SetCost(Cost.SelfToGrave)
 	e1:SetTarget(s.adtg)
 	e1:SetOperation(s.adop)
@@ -31,9 +31,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={74063034}
-function s.adcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
 function s.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_FUSION)
 end
@@ -45,7 +42,7 @@ function s.adtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.adop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -66,6 +63,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local tc=Duel.GetFirstMatchingCard(s.thfilter,tp,LOCATION_DECK,0,nil)
 	if tc then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)

@@ -13,16 +13,13 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e3:SetHintTiming(TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP+TIMINGS_CHECK_MONSTER)
 	e3:SetCountLimit(1)
-	e3:SetCondition(s.atkcon)
+	e3:SetCondition(aux.StatChangeDamageStepCondition)
 	e3:SetCost(s.atkcost)
 	e3:SetTarget(s.atktg)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
 end
 s.counter_list={COUNTER_KAIJU}
-function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,1,COUNTER_KAIJU,3,REASON_COST) end
 	Duel.RemoveCounter(tp,1,1,COUNTER_KAIJU,3,REASON_COST)

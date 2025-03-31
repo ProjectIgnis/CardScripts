@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,id)
-	e1:SetCondition(s.atkcon1)
+	e1:SetCondition(aux.StatChangeDamageStepCondition)
 	e1:SetTarget(s.atktg1)
 	e1:SetOperation(s.atkop1)
 	c:RegisterEffect(e1)
@@ -29,9 +29,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_LYRILUSC}
-function s.atkcon1(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
 function s.atkfilter1(c)
 	return c:IsFaceup() and c:IsSetCard(SET_LYRILUSC)
 end
@@ -47,7 +44,7 @@ function s.atkop1(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not (tc:IsRelateToEffect(e) and tc:IsFaceup()) then return end
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
-	for oc in aux.Next(g) do
+	for oc in g:Iter() do
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)

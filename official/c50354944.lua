@@ -71,7 +71,7 @@ function s.atkfilter(c)
 end
 	--Check if it is the battle phase
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsBattlePhase() and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
+	return Duel.IsBattlePhase() and aux.StatChangeDamageStepCondition()
 end
 	--Activation legality
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

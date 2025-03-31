@@ -54,7 +54,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsBattlePhase() and Duel.GetFlagEffect(tp,id)>0
-		and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
+		and aux.StatChangeDamageStepCondition()
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_WAR_ROCK),tp,LOCATION_MZONE,0,1,nil) end
@@ -72,7 +72,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 	end
 	local atkg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,SET_WAR_ROCK),tp,LOCATION_MZONE,0,nil)
-	for tc in aux.Next(atkg) do
+	for tc in atkg:Iter() do
 		--Increase ATK
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)

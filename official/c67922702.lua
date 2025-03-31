@@ -68,7 +68,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetBattleTarget()~=nil and Duel.IsPhase(PHASE_DAMAGE) and not Duel.IsDamageCalculated()
+	return e:GetHandler():GetBattleTarget()~=nil and aux.StatChangeDamageStepCondition()
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():HasFlagEffect(id)

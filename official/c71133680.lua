@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id)
-	e1:SetCondition(s.atkcon)
+	e1:SetCondition(aux.StatChangeDamageStepCondition)
 	e1:SetCost(Cost.SelfDiscard)
 	e1:SetTarget(s.atktg)
 	e1:SetOperation(s.atkop)
@@ -28,9 +28,6 @@ function s.initial_effect(c)
 	e2:SetTarget(s.drtg)
 	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
-end
-function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.atkfilter(c,e,tp)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_WATER)
@@ -51,7 +48,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local dc=Duel.SelectMatchingCard(tp,s.desfilter,tp,LOCATION_MZONE|LOCATION_HAND,0,1,1,tc):GetFirst()
 	if dc and Duel.Destroy(dc,REASON_EFFECT)~=0 then
-		if not tc or tc:IsFacedown() or not tc:IsRelateToEffect(e) then return end
+		if tc:IsFacedown() or not tc:IsRelateToEffect(e) then return end
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)

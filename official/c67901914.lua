@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
-	e1:SetCondition(s.condition)
+	e1:SetCondition(aux.StatChangeDamageStepCondition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
@@ -29,9 +29,6 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:GetFlagEffect(id)==0 and Duel.GetAttackTarget()==nil then
 		tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 	end
-end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_MAGICAL_MUSKET) and c:GetFlagEffect(id)==0

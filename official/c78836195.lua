@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
 	e1:SetCountLimit(1,id)
-	e1:SetCondition(s.rmcon)
+	e1:SetCondition(aux.StatChangeDamageStepCondition)
 	e1:SetTarget(s.rmtg)
 	e1:SetOperation(s.rmop)
 	c:RegisterEffect(e1)
@@ -28,9 +28,6 @@ function s.initial_effect(c)
 end
 s.listed_names={TOKEN_SWORDSOUL}
 s.listed_series={SET_SWORDSOUL}
-function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
 function s.rmfilter(c)
 	return (c:IsSetCard(SET_SWORDSOUL) or (c:IsMonster() and c:IsRace(RACE_WYRM)))
 		and c:IsAbleToRemove() and aux.SpElimFilter(c,true)

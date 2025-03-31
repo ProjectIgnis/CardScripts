@@ -14,8 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
-		and Duel.GetFieldGroupCount(tp,0,LOCATION_GRAVE)>7
+	return aux.StatChangeDamageStepCondition() and Duel.GetFieldGroupCount(tp,0,LOCATION_GRAVE)>7
 end
 function s.filter(c)
 	return c:IsFaceup() and c:GetAttack()>0

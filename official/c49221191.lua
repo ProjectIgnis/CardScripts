@@ -26,7 +26,7 @@ function s.ovfilter(c,tp,lc)
 	return c:IsFaceup() and c:IsSummonCode(lc,SUMMON_TYPE_XYZ,tp,65676461)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetLP(tp)<=1000 and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
+	return Duel.GetLP(tp)<=1000 and aux.StatChangeDamageStepCondition()
 end
 function s.rfilter(c)
 	return c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c) 

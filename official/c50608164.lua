@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetHintTiming(TIMING_DAMAGE_STEP)
 	e3:SetCountLimit(1)
-	e3:SetCondition(s.condition)
+	e3:SetCondition(aux.StatChangeDamageStepCondition)
 	e3:SetCost(s.cost)
 	e3:SetTarget(s.target)
 	e3:SetOperation(s.operation)
@@ -35,9 +35,6 @@ end
 s.listed_series={SET_HERO}
 function s.val(e,c)
 	return Duel.GetFieldGroupCount(c:GetControler(),0,LOCATION_MZONE)*500
-end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.cfilter(c)
 	return c:IsSetCard(SET_HERO) and c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true) 
@@ -58,7 +55,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
+	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)

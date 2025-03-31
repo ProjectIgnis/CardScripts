@@ -65,7 +65,7 @@ function s.eqlimit(e,c)
 	return c:IsSetCard(SET_RED_EYES)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetEquipTarget() and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
+	return e:GetHandler():GetEquipTarget() and aux.StatChangeDamageStepCondition()
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
@@ -86,7 +86,7 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetLabelObject()
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		if ec and ec:IsLocation(LOCATION_MZONE) and ec:IsFaceup() then
 			Duel.Equip(tp,tc,ec)
 			--Atk
@@ -114,7 +114,8 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 			e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 			e3:SetLabelObject(ec)
 			tc:RegisterEffect(e3)
-		else Duel.SendtoGrave(tc,REASON_RULE)
+		else
+			Duel.SendtoGrave(tc,REASON_RULE)
 		end
 	end
 end

@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,id)
-	e2:SetCondition(s.atkcon2)
+	e2:SetCondition(aux.StatChangeDamageStepCondition)
 	e2:SetTarget(s.atktg2)
 	e2:SetOperation(s.atkop2)
 	c:RegisterEffect(e2)
@@ -50,9 +50,6 @@ function s.atkop1(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		bc:RegisterEffect(e1)
 	end
-end
-function s.atkcon2(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.atkfilter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_PERFORMAPAL) and c:GetBaseAttack()~=c:GetAttack()

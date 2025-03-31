@@ -17,7 +17,7 @@ end
 s.listed_series={SET_WAR_ROCK}
 --Special Summon
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsBattlePhase() and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
+	return Duel.IsBattlePhase() and aux.StatChangeDamageStepCondition()
 end
 function s.filter(c,e,tp,pos)
 	return c:IsSetCard(SET_WAR_ROCK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,pos)

@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetHintTiming(TIMING_DAMAGE_STEP)
 	e2:SetCountLimit(1)
-	e2:SetCondition(s.condition)
+	e2:SetCondition(aux.StatChangeDamageStepCondition)
 	e2:SetCost(Cost.Detach(1))
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
@@ -28,9 +28,6 @@ function s.initial_effect(c)
 end
 function s.indcon(e)
 	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsAttribute,1,nil,ATTRIBUTE_WATER)
-end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsRankBelow(4)

@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCountLimit(1,id)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP+TIMING_END_PHASE)
-	e1:SetCondition(s.atkcon)
+	e1:SetCondition(aux.StatChangeDamageStepCondition)
 	e1:SetCost(s.atkcost)
 	e1:SetTarget(s.atktg)
 	e1:SetOperation(s.atkop)
@@ -25,9 +25,6 @@ s.listed_series={SET_DESTINY_HERO}
 s.material_setcode={SET_HERO,SET_DESTINY_HERO}
 function s.ffilter(c,fc,sumtype,tp)
 	return c:IsAttribute(ATTRIBUTE_DARK,fc,sumtype,tp) and c:IsType(TYPE_EFFECT,fc,sumtype,tp)
-end
-function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.cfilter(c,tp)
 	return c:IsDiscardable() and Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,c)
@@ -56,8 +53,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local tg=Duel.GetMatchingGroup(s.atkfilter,tp,LOCATION_MZONE,0,nil)
 		if #tg<=0 then return end
 		local ct=Duel.GetMatchingGroupCount(s.ctfilter,tp,LOCATION_GRAVE,0,nil)
-		local tc=tg:GetFirst()
-		for tc in aux.Next(tg) do
+		for tc in tg:Iter() do
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)

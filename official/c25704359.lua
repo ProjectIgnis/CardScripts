@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
-	e1:SetCondition(s.condition)
+	e1:SetCondition(aux.StatChangeDamageStepCondition)
 	c:RegisterEffect(e1)
 	--Prevent destruction
 	local e2=Effect.CreateEffect(c)
@@ -43,9 +43,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={SET_FAMILIAR_POSSESSED,SET_CHARMER}
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
 function s.atktg(e,c)
 	return c:IsSetCard(SET_FAMILIAR_POSSESSED) and Duel.GetAttacker()==c
 end

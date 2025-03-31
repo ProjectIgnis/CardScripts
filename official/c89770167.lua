@@ -12,15 +12,12 @@ function s.initial_effect(c)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	e1:SetCondition(s.atcon)
+	e1:SetCondition(aux.StatChangeDamageStepCondition)
 	e1:SetCost(s.atcost)
 	e1:SetOperation(s.atop)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_LAVAL}
-function s.atcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
 function s.cfilter(c)
 	return c:IsSetCard(SET_LAVAL) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end

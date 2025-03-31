@@ -19,7 +19,7 @@ end
 s.listed_series={SET_MAGICAL_MUSKET}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_MAGICAL_MUSKET),tp,LOCATION_MZONE,0,1,nil)
-		and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
+		and aux.StatChangeDamageStepCondition()
 end
 function s.filter(c)
 	return c:IsFaceup() and not (c:GetAttack()==0 and c:GetDefense()==0 and c:IsDisabled())

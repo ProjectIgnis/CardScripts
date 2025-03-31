@@ -35,9 +35,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_DRAGONMAID}
-function s.atkcond(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
 function s.tdfilter(c)
 	return c:IsMonster() and c:IsAbleToDeck()
 end

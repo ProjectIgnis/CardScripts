@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E+TIMING_MAIN_END)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
-	e1:SetCondition(s.atkcon)
+	e1:SetCondition(aux.StatChangeDamageStepCondition)
 	e1:SetTarget(s.atktg)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
@@ -30,9 +30,6 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_VISAS_STARFROST}
 s.listed_series={SET_SCARECLAW}
-function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
 function s.atkfilter(c,e,tp)
 	return c:IsFaceup() and c:IsCanBeEffectTarget(e) 
 		and (c:IsSetCard(SET_SCARECLAW) or c:IsCode(CARD_VISAS_STARFROST) or c:IsControler(1-tp))

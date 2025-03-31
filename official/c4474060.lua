@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetHintTiming(TIMING_DAMAGE_STEP)
-	e3:SetCondition(s.atkcon)
+	e3:SetCondition(aux.StatChangeDamageStepCondition)
 	e3:SetCost(Cost.SelfTribute)
 	e3:SetTarget(s.atktg)
 	e3:SetOperation(s.atkop)
@@ -47,9 +47,6 @@ function s.sttg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.stop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SortDecktop(tp,1-tp,3)
-end
-function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.atkfilter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_SPYRAL)

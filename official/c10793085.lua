@@ -38,7 +38,7 @@ function s.costfilter(c,op1,op2,op3)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local phase=Duel.GetCurrentPhase()
-	local op1=Duel.IsExistingTarget(s.cfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) and (phase~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
+	local op1=Duel.IsExistingTarget(s.cfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) and aux.StatChangeDamageStepCondition()
 	local op2=Duel.IsExistingTarget(s.cfilter2,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) and phase~=PHASE_DAMAGE
 	local op3=Duel.IsExistingTarget(s.cfilter3,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) and phase~=PHASE_DAMAGE
 	if chk==0 then return (op1 or op2 or op3) and Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_DECK|LOCATION_EXTRA,0,1,nil,op1,op2,op3) end

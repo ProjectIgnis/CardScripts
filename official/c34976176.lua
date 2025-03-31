@@ -73,5 +73,5 @@ function s.quickconfilter(c)
 end
 function s.quickcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.quickconfilter,tp,LOCATION_MZONE,0,1,nil)
-		and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
+		and aux.StatChangeDamageStepCondition()
 end

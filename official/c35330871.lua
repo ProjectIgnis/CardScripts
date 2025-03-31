@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e2:SetHintTiming(TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP+TIMINGS_CHECK_MONSTER)
 	e2:SetCountLimit(1)
-	e2:SetCondition(s.atkcon)
+	e2:SetCondition(aux.StatChangeDamageStepCondition)
 	e2:SetCost(s.atkcost)
 	e2:SetTarget(s.atktg)
 	e2:SetOperation(s.atkop)
@@ -37,9 +37,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_BURNING_ABYSS}
 s.listed_names={62835876}
-function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
 function s.cfilter(c)
 	return c:IsSetCard(SET_BURNING_ABYSS) and c:IsMonster() and c:IsAbleToGraveAsCost()
 end
@@ -61,7 +58,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local atk=cc:GetAttack()
 	local def=cc:GetDefense()
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -86,7 +83,7 @@ function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		Duel.SendtoGrave(tc,REASON_EFFECT)
 	end
 end

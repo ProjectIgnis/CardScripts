@@ -13,15 +13,12 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP+TIMINGS_CHECK_MONSTER)
 	e1:SetCountLimit(1)
-	e1:SetCondition(s.atkcon)
+	e1:SetCondition(aux.StatChangeDamageStepCondition)
 	e1:SetCost(s.atkcost)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_RITUAL_BEAST}
-function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
 function s.cfilter(c)
 	return c:IsSetCard(SET_RITUAL_BEAST) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end

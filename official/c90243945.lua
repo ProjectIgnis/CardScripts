@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e4:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e4:SetCode(EVENT_FREE_CHAIN)
 	e4:SetRange(LOCATION_MZONE|LOCATION_HAND)
-	e4:SetCondition(s.atkcon)
+	e4:SetCondition(aux.StatChangeDamageStepCondition)
 	e4:SetCost(Cost.SelfToGrave)
 	e4:SetTarget(s.atktg)
 	e4:SetOperation(s.atkop)
@@ -46,13 +46,11 @@ function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
-	local tg=Duel.GetFirstMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,nil)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	local tg=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if tg then
 		Duel.SendtoGrave(tg,REASON_EFFECT)
 	end
-end
-function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.atkfilter(c)
 	return c:IsFaceup() and (c:GetLevel()>0 or c:GetRank()>0)
@@ -62,11 +60,13 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.atkfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	local tc=g:GetFirst()
-	for tc in aux.Next(g) do
+	for tc in g:Iter() do
 		local val=0
-		if tc:IsType(TYPE_XYZ) then val=tc:GetRank()*-300
-		else val=tc:GetLevel()*-300 end
+		if tc:IsType(TYPE_XYZ) then
+			val=tc:GetRank()*-300
+		else
+			val=tc:GetLevel()*-300
+		end
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)

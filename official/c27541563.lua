@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCondition(s.condition)
+	e1:SetCondition(aux.StatChangeDamageStepCondition)
 	c:RegisterEffect(e1)
 	--negate
 	local e2=Effect.CreateEffect(c)
@@ -41,9 +41,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.listed_series={SET_ALTERGEIST}
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return ep==1-tp and re:IsMonsterEffect() and Duel.IsChainNegatable(ev)

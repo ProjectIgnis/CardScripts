@@ -45,8 +45,7 @@ function s.ffilter(c,fc,sumtype,tp)
 	return c:IsRace(RACE_WARRIOR,fc,sumtype,tp) and c:GetLevel()>=5
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsBattlePhase()
-		and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
+	return Duel.IsBattlePhase() and aux.StatChangeDamageStepCondition()
 end
 function s.atkfilter(c)
 	return c:IsFaceup() and c:GetAttack()>0
@@ -56,8 +55,7 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
-	local tc=g:GetFirst()
-	for tc in aux.Next(g) do
+	for tc in g:Iter() do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)

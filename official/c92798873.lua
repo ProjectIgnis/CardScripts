@@ -25,8 +25,8 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetHintTiming(TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP+TIMING_MAIN_END+TIMINGS_CHECK_MONSTER)
 	e2:SetCountLimit(1,id)
-	e2:SetCondition(s.atkcon)
-	e2:SetCost(s.atkcost)
+	e2:SetCondition(aux.StatChangeDamageStepCondition)
+	e2:SetCost(Cost.PayLP(1/2))
 	e2:SetTarget(s.atktg)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
@@ -51,13 +51,6 @@ end
 function s.aclimit(e,re,tp)
 	local rc=re:GetHandler()
 	return re:IsMonsterEffect() and rc:IsLocation(LOCATION_MZONE) and rc:IsAttackAbove(Duel.GetLP(e:GetHandlerPlayer()))
-end
-function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
-function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	Duel.PayLPCost(tp,Duel.GetLP(tp)//2)
 end
 function s.atkfilter(c,atk)
 	return c:IsFaceup() and not c:IsAttack(atk)

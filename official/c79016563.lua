@@ -49,8 +49,7 @@ function s.recop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Recover(p,d,REASON_EFFECT)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
-		and e:GetHandler():GetMutualLinkedGroupCount()>=2
+	return aux.StatChangeDamageStepCondition() and e:GetHandler():GetMutualLinkedGroupCount()>=2
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsFaceup() end

@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_HAND)
 	e3:SetCountLimit(1,id)
 	e3:SetHintTiming(TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP+TIMINGS_CHECK_MONSTER)
-	e3:SetCondition(s.adcon)
+	e3:SetCondition(aux.StatChangeDamageStepCondition)
 	e3:SetCost(Cost.SelfDiscard)
 	e3:SetTarget(s.adtg)
 	e3:SetOperation(s.adop)
@@ -79,9 +79,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	end
 	Duel.Release(g,REASON_COST)
 end
-function s.adcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
 function s.filter(c)
 	return c:IsFaceup() and c:IsCode(69890967)
 end
@@ -94,7 +91,7 @@ end
 function s.adop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local c=e:GetHandler()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)

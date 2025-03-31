@@ -12,15 +12,12 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
-	e1:SetCondition(s.actcon)
+	e1:SetCondition(aux.StatChangeDamageStepCondition)
 	e1:SetTarget(s.acttg)
 	e1:SetOperation(s.actop)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_SOLFACHORD,SET_GRANSOLFACHORD}
-function s.actcon(e)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
 function s.solfilter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_SOLFACHORD) and c:IsType(TYPE_PENDULUM)
 end

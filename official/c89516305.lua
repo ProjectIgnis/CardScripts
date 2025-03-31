@@ -38,7 +38,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,0,EFFECT_COUNT_CODE_SINGLE)
 	e3:SetHintTiming(TIMING_DAMAGE_STEP)
-	e3:SetCondition(s.atkcon)
+	e3:SetCondition(aux.StatChangeDamageStepCondition)
 	e3:SetCost(s.cost)
 	e3:SetTarget(s.atktg)
 	e3:SetOperation(s.atkop)
@@ -90,9 +90,6 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		Duel.ChangePosition(tc,POS_FACEDOWN_DEFENSE)
 	end
-end
-function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end

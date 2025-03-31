@@ -60,7 +60,7 @@ function s.dmop(e,tp,eg,ep,ev,re,r,rp)
 	if c:GetControler()~=ep then return end
 	if (r&REASON_BATTLE)~=0 then
 		c:RegisterFlagEffect(id,RESET_PHASE|PHASE_DAMAGE,0,1)
-	elseif Duel.IsPhase(PHASE_DAMAGE) and not Duel.IsDamageCalculated() then
+	elseif aux.StatChangeDamageStepCondition() then
 		c:RegisterFlagEffect(id+1,RESET_PHASE|PHASE_DAMAGE,0,1)
 	end
 end

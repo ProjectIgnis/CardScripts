@@ -80,8 +80,7 @@ function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsBattlePhase()
-		and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
+	return Duel.IsBattlePhase() and aux.StatChangeDamageStepCondition()
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

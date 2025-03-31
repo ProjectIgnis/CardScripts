@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetHintTiming(TIMING_DAMAGE_STEP)
 	e2:SetCountLimit(1,id)
-	e2:SetCondition(s.gycon)
+	e2:SetCondition(aux.StatChangeDamageStepCondition())
 	e2:SetTarget(s.gytg)
 	e2:SetOperation(s.gyop)
 	c:RegisterEffect(e2)
@@ -42,9 +42,6 @@ end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)
 	Duel.NegateEffect(ev)
-end
-function s.gycon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.gyfilter(c)
 	return c:IsRace(RACE_CYBERSE) and c:IsAbleToGrave()

@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetHintTiming(TIMING_DAMAGE_STEP)
-	e2:SetCondition(s.atkcon)
+	e2:SetCondition(aux.StatChangeDamageStepCondition)
 	e2:SetCost(Cost.SelfTribute)
 	e2:SetTarget(s.atktg)
 	e2:SetOperation(s.atkop)
@@ -50,9 +50,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if tc and Duel.Destroy(tc,REASON_EFFECT)~=0 then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
-end
-function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.atkfilter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_PERFORMAPAL)

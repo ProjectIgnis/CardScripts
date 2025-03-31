@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetHintTiming(TIMING_DAMAGE_STEP)
 	e3:SetCountLimit(1)
-	e3:SetCondition(s.atkcon)
+	e3:SetCondition(aux.StatChangeDamageStepCondition)
 	e3:SetCost(s.atkcost)
 	e3:SetTarget(s.atktg)
 	e3:SetOperation(s.atkop)
@@ -44,9 +44,6 @@ end
 s.listed_series={SET_GLADIATOR}
 function s.mustatkcon(e)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_GLADIATOR),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
-end
-function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.atkcfilter(c)
 	return c:IsSetCard(SET_GLADIATOR) and c:IsMonster() and c:IsAbleToDeckAsCost()

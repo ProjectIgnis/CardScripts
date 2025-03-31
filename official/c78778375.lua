@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetHintTiming(0,TIMING_DAMAGE_STEP+TIMING_END_PHASE)
 	e2:SetCountLimit(1)
-	e2:SetCondition(s.atkcon)
+	e2:SetCondition(aux.StatChangeDamageStepCondition)
 	e2:SetTarget(s.atktg)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
@@ -54,9 +54,6 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if #sg==2 then
 		Duel.Destroy(sg,REASON_EFFECT)
 	end
-end
-function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.atkfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:GetBaseAttack()>0

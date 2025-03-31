@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
-	e1:SetCondition(s.condition)
+	e1:SetCondition(aux.StatChangeDamageStepCondition)
 	c:RegisterEffect(e1)
 	--Increase ATK
 	local e2=Effect.CreateEffect(c)
@@ -55,9 +55,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.listed_series={SET_ZEFRA}
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
 function s.effcon(e)
 	return Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,SET_ZEFRA),e:GetHandlerPlayer(),LOCATION_EXTRA,0,nil):GetClassCount(Card.GetCode)>=e:GetLabel()
 end

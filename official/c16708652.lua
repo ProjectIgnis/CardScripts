@@ -16,8 +16,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_KARAKURI}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local ph=Duel.GetCurrentPhase()
-	return Duel.IsBattlePhase() and (ph~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
+	return Duel.IsBattlePhase() and aux.StatChangeDamageStepCondition()
 end
 function s.filter(c)
 	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsCanChangePosition() and c:IsSetCard(SET_KARAKURI)

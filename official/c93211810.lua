@@ -38,7 +38,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
-	return Duel.IsTurnPlayer(tp) and ph<PHASE_MAIN2 and (ph~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
+	return Duel.IsTurnPlayer(tp) and ph<PHASE_MAIN2 and aux.StatChangeDamageStepCondition()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return s[tp]<2 end

@@ -55,7 +55,7 @@ end
 function s.desop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if re==e:GetLabelObject():GetLabelObject() and c:IsRelateToEffect(re) then
-		if aux.StatChangeDamageStepCondition() then
+		if Duel.IsPhase(PHASE_DAMAGE) and not Duel.IsDamageCalculated() then
 			e:GetLabelObject():SetLabel(1)
 		else
 			if not c:IsDisabled() then Duel.Destroy(c,REASON_EFFECT) end

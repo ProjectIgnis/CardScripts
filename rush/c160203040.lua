@@ -1,9 +1,10 @@
--- 寿司天使ドラゴンロール
--- Dragon Roll the Sushi Angel
+--寿司天使ドラゴンロール
+--Dragon Roll the Sushi Fairy
 local s,id=GetID()
 function s.initial_effect(c)
 	--Send to GY and destroy
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DRAW)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_NORMAL) and c:IsStatus(STATUS_SUMMON_TURN)
+	return c:IsStatus(STATUS_SUMMON_TURN) and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=10
 end
 function s.tdfilter(c)
 	return c:IsAbleToDeck() and c:IsRace(RACE_FAIRY)
@@ -28,18 +29,17 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tg=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil)
-	if Duel.SendtoDeck(tg,nil,SEQ_DECKBOTTOM,REASON_EFFECT)>0 then
-		Duel.Draw(tp,1,REASON_EFFECT)
-		--Cannot attack with level 6 or lower
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_FIELD)
-		e1:SetCode(EFFECT_CANNOT_ATTACK)
-		e1:SetProperty(EFFECT_FLAG_OATH)
-		e1:SetTargetRange(LOCATION_MZONE,0)
-		e1:SetTarget(s.ftarget)
-		e1:SetReset(RESET_PHASE+PHASE_END)
-		Duel.RegisterEffect(e1,tp)
-	end
+	if Duel.SendtoDeck(tg,nil,SEQ_DECKBOTTOM,REASON_EFFECT)<1 then return end
+	Duel.Draw(tp,1,REASON_EFFECT)
+	--Cannot attack with level 6 or lower
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_CANNOT_ATTACK)
+	e1:SetProperty(EFFECT_FLAG_OATH)
+	e1:SetTargetRange(LOCATION_MZONE,0)
+	e1:SetTarget(s.ftarget)
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e1,tp)
 end
 function s.ftarget(e,c)
 	return c:IsLevelBelow(6)

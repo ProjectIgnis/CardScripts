@@ -2,15 +2,15 @@
 --Wightprincess
 local s,id=GetID()
 function s.initial_effect(c)
-	--Name becomes "Skull Servant" while in GY
+	--This card's name becomes "Skull Servant" while in the GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e1:SetRange(LOCATION_GRAVE)
 	e1:SetCode(EFFECT_CHANGE_CODE)
+	e1:SetRange(LOCATION_GRAVE)
 	e1:SetValue(CARD_SKULL_SERVANT)
 	c:RegisterEffect(e1)
-	--If normal or special summoned, send 1 "Wightprince" from deck to GY
+	--Send 1 "Wightprince" from your Deck to the GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOGRAVE)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
-	--Lower ATK/DEF of all monsters on field
+	--Make all monsters currently on the field lose ATK/DEF equal to their own Level/Rank x 300, until the end of that turn
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
@@ -33,11 +33,11 @@ function s.initial_effect(c)
 	e4:SetRange(LOCATION_MZONE|LOCATION_HAND)
 	e4:SetCondition(aux.StatChangeDamageStepCondition)
 	e4:SetCost(Cost.SelfToGrave)
-	e4:SetTarget(s.atktg)
-	e4:SetOperation(s.atkop)
+	e4:SetTarget(s.atkdeftg)
+	e4:SetOperation(s.atkdefop)
 	c:RegisterEffect(e4)
 end
-s.listed_names={CARD_SKULL_SERVANT,57473560}
+s.listed_names={CARD_SKULL_SERVANT,57473560} --"Wightprince"
 function s.tgfilter(c)
 	return c:IsCode(57473560) and c:IsAbleToGrave()
 end
@@ -47,28 +47,26 @@ function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local tg=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
-	if tg then
-		Duel.SendtoGrave(tg,REASON_EFFECT)
+	local g=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
+	if #g>0 then
+		Duel.SendtoGrave(g,REASON_EFFECT)
 	end
 end
-function s.atkfilter(c)
-	return c:IsFaceup() and (c:GetLevel()>0 or c:GetRank()>0)
+function s.atkdeffilter(c)
+	return (c:HasLevel() or c:HasRank()) and c:IsFaceup()
 end
-function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.atkfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler()) end
+function s.atkdeftg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.atkdeffilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler()) end
 end
-function s.atkop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(s.atkfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+function s.atkdefop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local g=Duel.GetMatchingGroup(s.atkdeffilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	for tc in g:Iter() do
-		local val=0
-		if tc:IsType(TYPE_XYZ) then
-			val=tc:GetRank()*-300
-		else
-			val=tc:GetLevel()*-300
-		end
-		local e1=Effect.CreateEffect(e:GetHandler())
+		local val=tc:HasLevel() and tc:GetLevel()*-300 or tc:GetRank()*-300
+		--It loses ATK/DEF equal to its own Level/Rank x 300, until the end of this turn
+		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(val)
 		e1:SetReset(RESETS_STANDARD_PHASE_END)

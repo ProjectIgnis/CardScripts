@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_HAND|LOCATION_MZONE)
 	e2:SetCountLimit(1,{id,0})
 	e2:SetCondition(s.spcon)
-	e2:SetCost(s.spcost)
+	e2:SetCost(Cost.SelfToGrave)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
@@ -42,11 +42,6 @@ s.listed_names={CARD_REDEYES_B_DRAGON,id}
 s.listed_series={SET_RED_EYES}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(Card.IsSummonPlayer,1,nil,1-tp)
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(c,REASON_COST)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_RED_EYES) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

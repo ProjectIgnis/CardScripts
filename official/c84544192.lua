@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E|TIMING_MAIN_END)
 	e2:SetCondition(function(e) return e:GetHandler():GetBattledGroupCount()==0 end)
-	e2:SetCost(s.tdcost)
+	e2:SetCost(Cost.SelfTribute)
 	e2:SetTarget(s.tdtg)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
@@ -71,11 +71,6 @@ function s.cbfilter(c)
 end
 function s.atkcon(e)
 	return Duel.GetMatchingGroup(s.cbfilter,e:GetHandlerPlayer(),LOCATION_REMOVED,0,nil):GetClassCount(Card.GetCode)>=7
-end
-function s.tdcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsReleasable() end
-	Duel.Release(c,REASON_COST)
 end
 function s.spfilter(c,e,tp)
 	return s.cbfilter(c) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

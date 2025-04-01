@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCountLimit(1,id)
-	e3:SetCost(s.tgcost2)
+	e3:SetCost(Cost.SelfToGrave)
 	e3:SetTarget(s.tgtg2)
 	e3:SetOperation(s.tgop2)
 	c:RegisterEffect(e3)
@@ -50,11 +50,6 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		Duel.SendtoGrave(g,REASON_EFFECT)
 	end
-end
-function s.tgcost2(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(c,REASON_COST)
 end
 function s.tgfilter2(c)
 	return c:IsSetCard(SET_INFERNOID) and c:IsMonster() and c:IsAbleToGrave()

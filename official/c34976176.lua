@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE|LOCATION_HAND)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(aux.NOT(s.quickcon))
-	e1:SetCost(s.tgcost)
+	e1:SetCost(Cost.SelfToGrave)
 	e1:SetTarget(s.tgtg)
 	e1:SetOperation(s.tgop)
 	c:RegisterEffect(e1)
@@ -26,11 +26,6 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_BLACK_WINGED_DRAGON}
 s.listed_series={SET_BLACKWING}
-function s.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(c,REASON_COST)
-end
 function s.tgfilter(c)
 	return c:IsAbleToGrave() and ((c:IsSetCard(SET_BLACKWING) and c:IsType(TYPE_SYNCHRO)) or c:IsCode(CARD_BLACK_WINGED_DRAGON))
 end

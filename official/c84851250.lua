@@ -21,18 +21,15 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER|TIMING_MAIN_END)
 	e2:SetRange(LOCATION_HAND|LOCATION_MZONE)
-	e2:SetCost(s.cost)
+	e2:SetCost(Cost.SelfToGrave)
 	e2:SetCondition(s.condition)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	e2:SetCountLimit(1,id)
 	c:RegisterEffect(e2)
 end
-	--Lists “Windwitch" archetype
 s.listed_series={SET_WINDWITCH}
-	--Specifically lists itself
 s.listed_names={id}
-	--Check for non-"Windwitch" monster
 function s.filter(c)
 	return c:IsFacedown() or not c:IsSetCard(SET_WINDWITCH)
 end
@@ -42,13 +39,6 @@ function s.ntcon(e,c,minc,zone)
 	return minc==0 and c:GetLevel()>4 and Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)>0
 		and (Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0 or not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil))
 end
-	--Send itself as cost
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(c,REASON_COST)
-end
-	--Check if player controls a "Windwitch" monster other than this card's name
 function s.cfilter(c)
 	return c:IsSetCard(SET_WINDWITCH) and c:IsFaceup() and not c:IsCode(id)
 end

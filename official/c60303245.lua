@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCost(s.immcost)
+	e1:SetCost(Cost.SelfTribute)
 	e1:SetTarget(s.immtg)
 	e1:SetOperation(s.immop)
 	e1:SetHintTiming(0,TIMING_END_PHASE)
@@ -33,11 +33,6 @@ function s.initial_effect(c)
 end
 function s.matfilter(c)
 	return c:IsNormalSummoned() and c:IsAttackBelow(1000)
-end
-function s.immcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsReleasable() end
-	Duel.Release(c,REASON_COST)
 end
 function s.immtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) end

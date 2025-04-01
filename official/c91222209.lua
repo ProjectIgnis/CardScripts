@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_HAND|LOCATION_MZONE)
 	e3:SetCountLimit(1,{id,1})
 	e3:SetCondition(s.spcond)
-	e3:SetCost(s.spcost)
+	e3:SetCost(Cost.SelfTribute)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
@@ -51,11 +51,6 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcond(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and re:IsMonsterEffect() and re:GetActivateLocation()==LOCATION_MZONE
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsReleasable() end
-	Duel.Release(c,REASON_COST)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_RESCUE_ACE) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

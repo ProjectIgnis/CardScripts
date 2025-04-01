@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.scon)
-	e1:SetCost(s.scost)
+	e1:SetCost(Cost.SelfTribute)
 	e1:SetTarget(s.stg)
 	e1:SetOperation(s.sop)
 	c:RegisterEffect(e1)
@@ -31,17 +31,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
---Search
 function s.sfilter(c)
 	return c:IsRace(RACE_FAIRY) and c:IsAttribute(ATTRIBUTE_EARTH) and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.scon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()&SUMMON_TYPE_SPECIAL==0
-end
-function s.scost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsReleasable() end
-	Duel.Release(c,REASON_COST)
 end
 function s.stg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.sfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -54,7 +48,6 @@ function s.sop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoHand(tc,tp,REASON_EFFECT)
 	Duel.ConfirmCards(1-tp,tc)
 end
---To Decktop
 function s.tgfilter(c,tp)
 	return c:IsRace(RACE_FAIRY)
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp

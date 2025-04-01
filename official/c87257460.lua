@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
 	e3:SetCondition(function(e,tp) return Duel.IsTurnPlayer(tp) and e:GetHandler():GetEquipGroup():IsExists(Card.HasFlagEffect,1,nil,id) end)
-	e3:SetCost(s.spcost)
+	e3:SetCost(Cost.SelfToGrave)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	e3:SetLabelObject(e1)
@@ -83,11 +83,6 @@ function s.equipop(c,e,tp,tc)
 end
 function s.eqval(ec,c,tp)
 	return ec:IsControler(1-tp) and ec:IsLevelBelow(3)
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(c,REASON_COST)
 end
 function s.spfilter(c,e,tp)
 	return c:IsCode(23756165) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

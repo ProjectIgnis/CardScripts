@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,{id,0})
 	e1:SetCondition(s.excon)
-	e1:SetCost(s.excost)
+	e1:SetCost(Cost.SelfTribute)
 	e1:SetTarget(s.extg)
 	e1:SetOperation(s.exop)
 	c:RegisterEffect(e1)
@@ -32,11 +32,6 @@ function s.excon(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsMonster,tp,LOCATION_GRAVE,0,nil)
 	return #g>=4 and g:GetClassCount(Card.GetCode)==#g
 end
-function s.excost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsReleasable() end
-	Duel.Release(c,REASON_COST)
-end 
 function s.extg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local ct=Duel.GetMatchingGroupCount(Card.IsMonster,tp,LOCATION_GRAVE,0,nil)

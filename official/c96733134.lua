@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetHintTiming(0,TIMING_BATTLE_START)
 	e4:SetCondition(s.spcon)
-	e4:SetCost(s.spcost)
+	e4:SetCost(Cost.SelfTribute)
 	e4:SetTarget(s.sptg)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
@@ -92,11 +92,6 @@ function s.damtg(e,c)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsBattlePhase()
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsReleasable() end
-	Duel.Release(c,REASON_COST)
 end
 function s.spfilter(c,e,tp)
 	return c:IsFaceup() and (c:IsSetCard(SET_SUPREME_KING_GATE) or c:IsSetCard(SET_SUPREME_KING_DRAGON))

@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_HAND|LOCATION_MZONE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(s.atkcon)
-	e2:SetCost(s.atkcost)
+	e2:SetCost(Cost.SelfToGrave)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
 end
@@ -37,11 +37,6 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local a,d=Duel.GetBattleMonster(tp)
 	return a and d and a:IsFaceup() and d:IsFaceup()
 		and a~=e:GetHandler() and (a:IsLevel(2) or a:IsRank(2) or a:IsLink(2))
-end
-function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(c,REASON_COST)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local a,d=Duel.GetBattleMonster(tp)

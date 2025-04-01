@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetCountLimit(1,id)
 	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E|TIMING_MAIN_END)
 	e2:SetCondition(s.thcon)
-	e2:SetCost(aux.CostWithReplace(s.thcost,CARD_PRANKKIDS_MEOWMU))
+	e2:SetCost(aux.CostWithReplace(Cost.SelfTribute,CARD_PRANKKIDS_MEOWMU))
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
@@ -37,11 +37,6 @@ function s.atktg(e,c)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsTurnPlayer(tp)
-end
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsReleasable() end
-	Duel.Release(c,REASON_COST)
 end
 function s.thfilter(c,e)
 	return c:IsSetCard(SET_PRANK_KIDS) and not c:IsLinkMonster() and c:IsCanBeEffectTarget(e) and c:IsAbleToHand()
@@ -69,12 +64,9 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetTarget(s.indtg)
-	e1:SetValue(s.indval)
+	e1:SetValue(aux.indoval)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.indtg(e,c)
 	return c:IsSetCard(SET_PRANK_KIDS)
-end
-function s.indval(e,re,rp)
-	return rp==1-e:GetHandlerPlayer()
 end

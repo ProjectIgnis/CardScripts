@@ -2,10 +2,10 @@
 --Obelisk the Tormentor (VG)
 local s,id=GetID()
 function s.initial_effect(c)
-	--summon with 3 tribute
+	--Must be Normal Summoned/Set by Tributing 3 monsters
 	local e1=aux.AddNormalSummonProcedure(c,true,false,3,3)
-	local e2=aux.AddNormalSetProcedure(c)
-	--cannot be target
+	local e2=aux.AddNormalSetProcedure(c,true,false,3,3)
+	--Neither player can target this card with card effects
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetValue(1)
 	c:RegisterEffect(e3)
-	--to grave
+	--Send this Special Summoned card to the Graveyard
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,0))
 	e4:SetCategory(CATEGORY_TOGRAVE)
@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e4:SetTarget(s.tgtg)
 	e4:SetOperation(s.tgop)
 	c:RegisterEffect(e4)
-	--destroy
+	--Destroy all monsters your opponent controls
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,1))
 	e5:SetCategory(CATEGORY_DESTROY)

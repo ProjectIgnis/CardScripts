@@ -1,4 +1,4 @@
--- 
+--ロック・スケイル
 --Rock Scales
 --Scripted by Hatter
 local s,id=GetID()

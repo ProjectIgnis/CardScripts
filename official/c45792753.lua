@@ -1,4 +1,4 @@
--- 
+--ゴーティス・チェイン
 --Ghoti Chain
 --Scripted by Hatter
 local s,id=GetID()

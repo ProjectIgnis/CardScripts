@@ -1,4 +1,4 @@
--- 
+--リブロマンサー・ファイア
 --Libromancer Fire
 --Scripted by Hatter
 local s,id=GetID()

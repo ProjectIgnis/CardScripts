@@ -1,4 +1,4 @@
---
+--ティスティナの戯れ
 --Play of the Tistina
 --Scripted by Hatter
 local s,id=GetID()

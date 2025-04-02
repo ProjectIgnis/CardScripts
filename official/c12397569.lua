@@ -1,4 +1,4 @@
---
+--神域 バ＝ティスティナ
 --Divine Domain Baatistina
 --Scripted by Hatter
 local s,id=GetID()

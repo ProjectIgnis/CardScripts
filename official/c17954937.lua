@@ -1,4 +1,4 @@
---Japanese name
+--巳剣大祓
 --Mitsurugi Great Purification
 --scripted by Naim
 local s,id=GetID()

@@ -1,4 +1,4 @@
--- 
+--絶対なる捕食
 --Apex Predation
 --Scripted by Hatter
 local s,id=GetID()

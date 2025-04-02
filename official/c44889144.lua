@@ -1,4 +1,4 @@
--- 
+--リブロマンサー・インターフェア
 --Libromancer Intervention
 --Scripted by Hatter
 local s,id=GetID()

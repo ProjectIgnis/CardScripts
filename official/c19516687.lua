@@ -1,4 +1,4 @@
--- 
+--リブロマンサー・エージェント
 --Libromancer Agent
 --Scripted by Hatter
 local s,id=GetID()

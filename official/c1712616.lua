@@ -1,4 +1,4 @@
---Beetrooper Fly & Sting
+--騎甲虫空殺舞隊
 --Beetrooper Fly & Sting
 local s,id=GetID()
 function s.initial_effect(c)

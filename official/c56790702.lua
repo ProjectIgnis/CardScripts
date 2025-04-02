@@ -1,4 +1,4 @@
--- 
+--異次元の強襲艦
 --D.D. Assault Carrier
 --Scripted by Hatter
 local s,id=GetID()

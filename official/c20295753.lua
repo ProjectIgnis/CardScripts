@@ -1,4 +1,4 @@
--- 
+--夜刀蛇巳
 --Night Sword Serpent
 --Scripted by Hatter
 local s,id=GetID()

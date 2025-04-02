@@ -1,4 +1,4 @@
---
+--騎甲虫隊上陸態勢
 --Beetrooper Landing
 --scripted by pyrQ
 local s,id=GetID()

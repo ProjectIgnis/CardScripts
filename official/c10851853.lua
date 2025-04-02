@@ -1,4 +1,4 @@
---
+--フラワーダイノ
 --Flowerdino
 --Scripted by Yuno
 local s,id=GetID()

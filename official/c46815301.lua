@@ -1,4 +1,4 @@
--- 
+--ゴーティスの双角アスカーン
 --Askaan, the Bicorned Ghoti
 --Scripted by Hatter
 local s,id=GetID()

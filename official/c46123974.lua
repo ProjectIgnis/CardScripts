@@ -1,4 +1,4 @@
--- 
+--リブロマンサー・Ｇボーイ
 --Libromancer Geek Boy
 --Scripted by Hatter
 local s,id=GetID()

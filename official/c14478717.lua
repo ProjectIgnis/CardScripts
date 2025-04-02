@@ -1,4 +1,4 @@
---
+--リブロマンサー・プリベント
 --Libromancer Prevented
 --scripted by Naim
 local s,id=GetID()

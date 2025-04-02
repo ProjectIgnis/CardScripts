@@ -1,4 +1,4 @@
---TGX1－HL
+--ＴＧＸ１－ＨＬ
 --TGX1-HL
 local s,id=GetID()
 function s.initial_effect(c)

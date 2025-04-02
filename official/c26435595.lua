@@ -1,4 +1,4 @@
--- 
+--聖菓使クーベル
 --Patissciel Couverture
 --Scripted by Hatter
 local s,id=GetID()

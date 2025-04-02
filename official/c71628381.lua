@@ -28,7 +28,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.mgfilter(c,e,tp,fusc)
 	return not c:IsControler(tp) or not c:IsLocation(LOCATION_GRAVE)
-		or (c:GetReason()&0x40008)~=0x40008 or c:GetReasonCard()~=fusc
+		or (c:GetReason()&(REASON_FUSION|REASON_MATERIAL))~=(REASON_FUSION|REASON_MATERIAL) or c:GetReasonCard()~=fusc
 		or not c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)

@@ -20,7 +20,7 @@ s.listed_series={SET_PHOTON}
 s.material_setcode=SET_PHOTON
 function s.mgfilter(c,e,tp,fusc,mg)
 	return c:IsControler(tp) and c:IsLocation(LOCATION_GRAVE)
-		and (c:GetReason()&0x40008)==0x40008 and c:GetReasonCard()==fusc
+		and (c:GetReason()&(REASON_FUSION|REASON_MATERIAL))==(REASON_FUSION|REASON_MATERIAL) and c:GetReasonCard()==fusc
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and fusc:CheckFusionMaterial(mg,c,PLAYER_NONE+65536)
 end

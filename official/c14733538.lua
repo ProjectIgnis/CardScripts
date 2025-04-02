@@ -20,15 +20,15 @@ function s.filter(c,e,tp,b1,setcode)
 		and (b1 or c:IsCanBeSpecialSummoned(e,0,tp,false,false))
 end
 function s.zones(e,tp,eg,ep,ev,re,r,rp)
-	local zone=0xff
+	local zone=0xff --all Spell/Trap zones
 	local p0=Duel.CheckLocation(tp,LOCATION_PZONE,0)
 	local p1=Duel.CheckLocation(tp,LOCATION_PZONE,1)
 	local sp=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp,false,SET_DRACOSLAYER)
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp,false,SET_DRACOVERLORD)
 	if p0==p1 or sp then return zone end
-	if p0 then zone=zone-0x1 end
-	if p1 then zone=zone-0x10 end
+	if p0 then zone=zone-0x1 end --remove the left most S/T zone
+	if p1 then zone=zone-0x10 end --remove the right most S/T zone
 	return zone
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

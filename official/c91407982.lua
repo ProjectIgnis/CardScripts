@@ -44,7 +44,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.imdfilter(c,tp)
-	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousControler(tp) and (c:GetReason()&0x40)==0x40
+	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousControler(tp) and (c:GetReason()&REASON_EFFECT)==REASON_EFFECT
 end
 function s.imdcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg and eg:IsExists(s.imdfilter,1,nil,tp)

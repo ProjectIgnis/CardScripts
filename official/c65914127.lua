@@ -27,13 +27,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.zones(e,tp,eg,ep,ev,re,r,rp)
-	local zone=0xff
+	local zone=0xff --all Spell/Trap zones
 	if Duel.IsDuelType(DUEL_SEPARATE_PZONE) then return zone end
 	local p0=Duel.CheckLocation(tp,LOCATION_PZONE,0)
 	local p1=Duel.CheckLocation(tp,LOCATION_PZONE,1)
 	if p0==p1 then return zone end
-	if p0 then zone=zone-0x1 end
-	if p1 then zone=zone-0x10 end
+	if p0 then zone=zone-0x1 end --remove the left most S/T zone
+	if p1 then zone=zone-0x10 end --remove the right most S/T zone
 	return zone
 end
 function s.costfilter(c)

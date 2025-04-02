@@ -50,7 +50,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local lc=Duel.GetFirstTarget()
-	if lc and lc:IsRelateToEffect(e) and lc:IsFaceup() then
+	if lc:IsRelateToEffect(e) and lc:IsFaceup() then
 		local zone=lc:GetLinkedZone(tp)
 		if zone==0 then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -94,7 +94,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousControler(tp) and r&0x21==0x21
+	return c:IsPreviousControler(tp) and c:IsReason(REASON_BATTLE)
 end
 function s.thfilter(c)
 	return c:IsMonster() and c:IsSetCard(SET_ROKKET) and c:IsAbleToHand()
@@ -108,7 +108,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end

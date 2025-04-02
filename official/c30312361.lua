@@ -37,8 +37,9 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and c:IsFaceup() and tc and tc:IsRelateToEffect(e) then
+	if c:IsRelateToEffect(e) and tc and tc:IsRelateToEffect(e) then
 		if Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)~=1 then return end
+		if not c:IsFaceup() then return end
 		local code=tc:GetOriginalCode()
 		local ba=tc:GetBaseAttack()
 		local e1=Effect.CreateEffect(c)

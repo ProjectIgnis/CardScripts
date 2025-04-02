@@ -35,15 +35,24 @@ function s.tdfilter(c,e)
 	return ((c:IsSetCard(SET_SKY_STRIKER_ACE) and c:IsMonster()) or (c:IsSetCard(SET_SKY_STRIKER) and c:IsSpell()))
 		and c:IsAbleToDeck() and c:IsCanBeEffectTarget(e)
 end
-function s.rescon(sg,e,tp,mg)
-	return sg:FilterCount(Card.IsMonster,nil)==sg:FilterCount(Card.IsSpell,nil)
+function s.rescon(full_mct,full_sct)
+	return function(sg,e,tp,mg)
+		local mct=sg:FilterCount(Card.IsMonster,nil)
+		local sct=#sg-mct
+		if mct==sct then return true end
+		local rem_mct=full_mct-mct
+		local rem_sct=full_sct-sct
+		return false,mct>sct and rem_sct<(mct-sct) or rem_mct<(sct-mct)
+	end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	local g=Duel.GetMatchingGroup(s.tdfilter,tp,LOCATION_GRAVE,0,nil,e)
-	local ct=#g
-	if chk==0 then return ct>1 and aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0) end
-	local tg=aux.SelectUnselectGroup(g,e,tp,2,ct,s.rescon,1,tp,HINTMSG_TODECK,s.rescon)
+	local full_mct=g:FilterCount(Card.IsMonster,nil)
+	local full_sct=#g-full_mct
+	local rescon=s.rescon(full_mct,full_sct)
+	if chk==0 then return full_mct>0 and full_sct>0 and aux.SelectUnselectGroup(g,e,tp,2,2,rescon,0) end
+	local tg=aux.SelectUnselectGroup(g,e,tp,2,math.min(full_mct,full_sct)*2,rescon,1,tp,HINTMSG_TODECK,rescon)
 	Duel.SetTargetCard(tg)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,tg,#tg,tp,0)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_ONFIELD)

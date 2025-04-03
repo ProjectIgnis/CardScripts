@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(s.discon)
-	e2:SetCost(s.discost)
+	e2:SetCost(Cost.Detach(2))
 	e2:SetTarget(s.distg)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
@@ -42,11 +42,6 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if #g==0 then return false end
 	local rc=re:GetHandler()
 	return not g:IsExists(Card.IsAttribute,1,nil,rc:GetAttribute())
-end
-function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:CheckRemoveOverlayCard(tp,2,REASON_COST) end
-	c:RemoveOverlayCard(tp,2,2,REASON_COST)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_PHASE|PHASE_BATTLE_START)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
-	e1:SetTarget(s.btcost)
+	e1:SetTarget(Cost.Detach(1))
 	e1:SetOperation(s.btop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 	--control
@@ -31,11 +31,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.xyz_number=26
-function s.btcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	c:RemoveOverlayCard(tp,1,1,REASON_COST)
-end
 function s.btop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local p=Duel.GetTurnPlayer()

@@ -1,4 +1,4 @@
---
+--ティスティナの変晶
 --Discordance of the Tistina
 --Scripted by Hatter
 local s,id=GetID()

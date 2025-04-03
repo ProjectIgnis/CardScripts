@@ -1,4 +1,4 @@
---
+--騎甲虫ライト・フラッパー
 --Beetrooper Light Flapper
 --Scripted by Zefile
 local s,id=GetID()

@@ -1,4 +1,4 @@
---Loop of Destruction
+--破壊輪廻
 --Loop of Destruction
 local s,id=GetID()
 function s.initial_effect(c)
@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--change code
+	--This card's name becomes "Ring of Destruction" while on the field
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -15,8 +15,9 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetValue(83555666)
 	c:RegisterEffect(e2)
-	--destroy
+	--Destroy 1 monster on the field, and if you do, each player takes 500 damage
 	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_DESTROYED)
@@ -28,6 +29,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={83555666}
 function s.cfilter(c)
 	return c:IsReason(REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE)
 end

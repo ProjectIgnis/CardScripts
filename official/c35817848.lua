@@ -1,4 +1,4 @@
---Synchro Transmission
+--シンクロ・トランスミッション
 --Synchro Transmission
 local s,id=GetID()
 function s.initial_effect(c)

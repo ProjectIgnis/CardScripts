@@ -1,4 +1,4 @@
---
+--補強要員
 --Backup Team
 --scripted by Naim
 local s,id=GetID()

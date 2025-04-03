@@ -1,4 +1,4 @@
---SPYRAL MISSION - Rescue
+--ＳＰＹＲＡＬ ＭＩＳＳＩＯＮ－救出
 --SPYRAL MISSION - Rescue
 local s,id=GetID()
 function s.initial_effect(c)
@@ -38,7 +38,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetHintTiming(0,TIMING_END_PHASE)
-	e3:SetCost(s.spcost)
+	e3:SetCost(Cost.SelfBanish)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
@@ -94,15 +94,10 @@ function s.thtg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
-	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_SPYRAL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

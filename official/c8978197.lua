@@ -1,8 +1,8 @@
---The King of D.
+--ロード・オブ・ドラゴン－ドラゴンの統制者－
 --The King of D.
 local s,id=GetID()
 function s.initial_effect(c)
-	--change name
+	--This card's name becomes "Lord of D." while on the field
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(17985575)
 	c:RegisterEffect(e1)
-	--search
+	--Add 1 "The Flute of Summoning Dragon", "The Melody of Awakening Dragon", or "Dragon Revival Rhapsody" from your Deck to your hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={17985575,71867500,43973174,48800175} -- "Lord of D.", "The Flute of Summoning Dragon", "The Melody of Awakening Dragon", or "Dragon Revival Rhapsody"
 function s.cfilter(c)
 	return c:IsSpellTrap() and c:IsDiscardable()
 end

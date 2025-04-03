@@ -1,8 +1,8 @@
---SPYRAL Master Plan
+--ＳＰＹＲＡＬ－グレース
 --SPYRAL Master Plan
 local s,id=GetID()
 function s.initial_effect(c)
-	--search
+	--Add 1 "SPYRAL MISSION" card from your Deck to your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg1)
 	e1:SetOperation(s.thop1)
 	c:RegisterEffect(e1)
-	--to hand
+	--Add 1 "SPYRAL Resort" and 1 "SPYRAL" monster from your Deck to your hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_SPYRAL_MISSION,SET_SPYRAL}
-s.listed_names={54631665}
+s.listed_names={54631665}--"SPYRAL Resort"
 function s.thfilter1(c)
 	return c:IsSetCard(SET_SPYRAL_MISSION) and c:IsAbleToHand()
 end

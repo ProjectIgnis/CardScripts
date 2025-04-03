@@ -1,4 +1,4 @@
---
+--騎甲虫隊降下作戦
 --Beetrooper Descent
 --Scripted by Zefile
 local s,id=GetID()
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_names={64213018}
+s.listed_names={64213018} --Beetrooper Token
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,64213018,SET_BEETROOPER,TYPES_TOKEN,1000,1000,3,RACE_INSECT,ATTRIBUTE_EARTH) end

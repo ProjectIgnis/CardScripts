@@ -1,4 +1,4 @@
---Pharaonic Guardian Sphinx
+--王家の守護者スフィンクス
 --Pharaonic Guardian Sphinx
 local s,id=GetID()
 function s.initial_effect(c)

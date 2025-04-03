@@ -1,4 +1,4 @@
---
+--偉大なるダブルキャスター
 --The Great Double Casted Caster
 --Scripted by Eerie Code
 local s,id=GetID()

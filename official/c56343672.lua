@@ -9,17 +9,12 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.spcost)
+	e1:SetCost(Cost.SelfToDeck)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
 s.listed_names={id}
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToDeckAsCost() end
-	Duel.SendtoDeck(c,nil,SEQ_DECKSHUFFLE,REASON_COST)
-end
 function s.spfilter(c,e,tp)
 	return c:GetLevel()>0 and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -47,8 +42,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local fid=c:GetFieldID()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=g:SelectWithSumEqual(tp,Card.GetLevel,6,1,ct)
-		local tc=sg:GetFirst()
-		for tc in aux.Next(sg) do
+		for tc in sg:Iter() do
 			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP,zone)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)

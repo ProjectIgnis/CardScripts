@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetCountLimit(1)
 	e2:SetRange(LOCATION_REMOVED)
 	e2:SetCondition(s.thcon)
-	e2:SetCost(s.thcost)
+	e2:SetCost(Cost.SelfToDeck)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
@@ -48,10 +48,6 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnCount()==e:GetHandler():GetTurnID()+1
-end
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToDeckAsCost() end
-	Duel.SendtoDeck(e:GetHandler(),tp,SEQ_DECKSHUFFLE,REASON_COST)
 end
 function s.thfilter(c)
 	return c:IsSetCard(SET_METAPHYS) and not c:IsCode(id) and c:IsAbleToHand()

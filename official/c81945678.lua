@@ -1,4 +1,4 @@
---Joker's Wild
+--ジョーカーズ・ワイルド
 --Joker's Wild
 local s,id=GetID()
 function s.initial_effect(c)

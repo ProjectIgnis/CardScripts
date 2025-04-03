@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_PHASE|PHASE_BATTLE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(function(e) return e:GetHandler():GetBattledGroupCount()>0 end)
-	e2:SetCost(s.dspcost)
+	e2:SetCost(Cost.SelfToDeck)
 	e2:SetTarget(s.dsptg)
 	e2:SetOperation(s.dspop)
 	c:RegisterEffect(e2)
@@ -75,16 +75,11 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	e:Reset()
 end
-function s.dspcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToDeckAsCost() end
-	Duel.SendtoDeck(c,nil,SEQ_DECKSHUFFLE,REASON_COST)
-end
 function s.dspfilter(c,e,tp)
 	return c:IsSetCard(SET_GLADIATOR_BEAST) and c:IsCanBeSpecialSummoned(e,104,tp,false,false) and not c:IsCode(id)
 end
 function s.dsptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
+	if chk==0 then return Duel.GetMZoneCount(tp,e:GetHandler())>0
 		and Duel.IsExistingMatchingCard(s.dspfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end

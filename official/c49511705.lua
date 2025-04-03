@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_CHAINING)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCondition(s.coincon1)
-	e3:SetCost(aux.SelfBanishCost)
+	e3:SetCost(Cost.SelfBanish)
 	e3:SetOperation(s.coinop1)
 	c:RegisterEffect(e3)
 end

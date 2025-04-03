@@ -10,22 +10,18 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_GRAVE)
 	e1:SetCondition(aux.exccon)
-	e1:SetCost(s.thcost)
+	e1:SetCost(Cost.SelfToDeck)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
 end
-s.listed_names={8198712}
-s.fit_monster={46427957,72426662}
+s.listed_names={8198712} --End of the world
+s.fit_monster={46427957,72426662} --"Ruin, Queen of Oblivion" or "Demise, King of Armageddon"
 function s.ritualfil(c)
 	return c:IsCode(46427957,72426662) and c:IsRitualMonster()
 end
 function s.forcedgroup(c,e,tp)
 	return c:IsLocation(LOCATION_ONFIELD)
-end
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToDeckAsCost() end
-	Duel.SendtoDeck(e:GetHandler(),nil,SEQ_DECKSHUFFLE,REASON_COST)
 end
 function s.filter(c)
 	return c:IsCode(8198712) and c:IsAbleToHand()

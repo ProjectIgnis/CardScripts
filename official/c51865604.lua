@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_REMOVE)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(s.spcon)
-	e2:SetCost(s.spcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
@@ -51,10 +51,6 @@ function s.spfilter(c,e,tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsBattlePhase() and eg:IsExists(s.spfilter,1,nil,e,tp)
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
-	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function s.rmfilter(c)
 	return c:IsAttackBelow(3000) and c:IsAbleToRemove()

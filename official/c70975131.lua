@@ -1,6 +1,5 @@
 --番猫－ウォッチキャット
 --Watch Cat
---
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -26,7 +25,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_PHASE+PHASE_END)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCost(s.cost)
+	e3:SetCost(Cost.SelfBanish)
 	e3:SetCountLimit(1,{id,1})
 	e3:SetCondition(s.setcon)
 	e3:SetTarget(s.settg)
@@ -50,10 +49,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
-	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)~=0 and Duel.IsTurnPlayer(tp)

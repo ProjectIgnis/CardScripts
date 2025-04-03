@@ -9,14 +9,10 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_GRAVE)
-	e1:SetCost(s.utcost)
+	e1:SetCost(Cost.SelfBanish)
 	e1:SetTarget(s.uttg)
 	e1:SetOperation(s.utop)
 	c:RegisterEffect(e1)
-end
-function s.utcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
-	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_RITUAL)

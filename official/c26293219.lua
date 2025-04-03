@@ -18,12 +18,12 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetCost(s.rtgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.rtgtg)
 	e2:SetOperation(s.rtgop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={99899504}
+s.listed_names={99899504} --"Skull Flame"
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_HAND)
 end
@@ -36,10 +36,6 @@ end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Damage(p,d,REASON_EFFECT)
-end
-function s.rtgcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
-	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsCode(99899504)

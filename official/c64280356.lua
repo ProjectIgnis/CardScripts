@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetHintTiming(0,TIMING_END_PHASE)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.spcost)
+	e1:SetCost(Cost.SelfBanish)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
@@ -29,10 +29,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_KOZMO}
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
-	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
-end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_KOZMO) and c:IsLevelAbove(2) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -63,23 +59,13 @@ end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil)
 	if g:GetClassCount(Card.GetCode)>=3 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
-		local sg1=g:Select(tp,1,1,nil)
-		g:Remove(Card.IsCode,nil,sg1:GetFirst():GetCode())
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
-		local sg2=g:Select(tp,1,1,nil)
-		g:Remove(Card.IsCode,nil,sg2:GetFirst():GetCode())
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
-		local sg3=g:Select(tp,1,1,nil)
-		sg1:Merge(sg2)
-		sg1:Merge(sg3)
-		Duel.ConfirmCards(1-tp,sg1)
+		local sg=aux.SelectUnselectGroup(g,e,tp,3,3,aux.dncheck,1,tp,HINTMSG_CONFIRM)
+		Duel.ConfirmCards(1-tp,sg)
 		Duel.ShuffleDeck(tp)
 		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_ATOHAND)
-		local cg=sg1:Select(1-tp,1,1,nil)
-		local tc=cg:GetFirst()
+		local tc=sg:Select(1-tp,1,1,nil):GetFirst()
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
-		sg1:RemoveCard(tc)
-		Duel.SendtoGrave(sg1,REASON_EFFECT)
+		sg:RemoveCard(tc)
+		Duel.SendtoGrave(sg,REASON_EFFECT)
 	end
 end

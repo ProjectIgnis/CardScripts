@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCondition(aux.exccon)
-	e2:SetCost(s.lvcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.lvtg)
 	e2:SetOperation(s.lvop)
 	c:RegisterEffect(e2)
@@ -32,8 +32,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	local tc=g:GetFirst()
-	for tc in aux.Next(g) do
+	for tc in g:Iter() do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
@@ -41,10 +40,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
-end
-function s.lvcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
-	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end

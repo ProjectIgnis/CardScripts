@@ -21,7 +21,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e)  then
+	if tc:IsRelateToEffect(e) then
 		--Cannot attack
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetDescription(3206)

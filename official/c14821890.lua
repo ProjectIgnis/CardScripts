@@ -31,8 +31,8 @@ function s.desfilter(c,e,tp)
 	return c:IsCanBeEffectTarget(e) and (c:IsControler(1-tp) or (c:IsFaceup() and c:IsMonster() and c:IsRace(RACE_WYRM)))
 end
 function s.desrescon(sg,e,tp,mg)
-    local own=sg:FilterCount(Card.IsControler,nil,tp)
-    return own==1,own>1
+	local own=sg:FilterCount(Card.IsControler,nil,tp)
+	return own==1,own>1
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

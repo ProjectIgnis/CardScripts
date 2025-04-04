@@ -35,7 +35,7 @@ function s.desfilter(c,tp)
 	return (c:IsFaceup() and c:IsSetCard(SET_DINOMORPHIA) and c:IsMonster() and c:IsControler(tp)) or c:IsControler(1-tp)
 end
 function s.rescon(sg,e,tp,mg)
-    return sg:FilterCount(Card.IsControler,nil,tp)==1
+	return sg:FilterCount(Card.IsControler,nil,tp)==1
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rg=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,tp)
@@ -69,6 +69,9 @@ function s.nodamop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e2,tp)
 end
 function s.damval(e,re,val,r,rp,rc)
-	if (r&REASON_EFFECT)~=0 and rp~=e:GetOwnerPlayer() then return 0
-	else return val end
+	if (r&REASON_EFFECT)~=0 and rp~=e:GetOwnerPlayer() then
+		return 0
+	else
+		return val
+	end
 end

@@ -77,7 +77,7 @@ function s.desfilter(c,e,tp)
 		or (c:IsFaceup() and c:IsSetCard(SET_THERION)))
 end
 function s.desrescon(sg,e,tp,mg)
-    return sg:FilterCount(Card.IsControler,nil,tp)==1
+	return sg:FilterCount(Card.IsControler,nil,tp)==1
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

@@ -19,7 +19,7 @@ s.listed_names={id}
 s.listed_series={SET_GAGAGA,SET_GOGOGO,SET_DODODO,SET_ZUBABA}
 function s.spfilter(c,e,tp)
 	return c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
-		and (c:IsSetCard(SET_GAGAGA) or c:IsSetCard(SET_GOGOGO) or c:IsSetCard(SET_DODODO) or  c:IsSetCard(SET_ZUBABA)) and not c:IsCode(id)
+		and (c:IsSetCard({SET_GAGAGA,SET_GOGOGO,SET_DODODO,SET_ZUBABA})) and not c:IsCode(id)
 end
 function s.rescon(checkfunc)
 	return function(sg,e,tp,mg)

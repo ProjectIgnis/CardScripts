@@ -26,9 +26,9 @@ function s.fextra(e,tp,mg)
 	return nil
 end
 function s.extraop(e,tc,tp,sg)
-    local rg=sg:Filter(Card.IsLocation,nil,LOCATION_SZONE)
-    if #rg>0 then
-        Duel.Remove(rg,POS_FACEUP,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
-        sg:Sub(rg)
-    end
+	local rg=sg:Filter(Card.IsLocation,nil,LOCATION_SZONE)
+	if #rg>0 then
+		Duel.Remove(rg,POS_FACEUP,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
+		sg:Sub(rg)
+	end
 end

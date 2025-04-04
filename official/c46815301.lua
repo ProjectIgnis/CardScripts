@@ -35,7 +35,7 @@ function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSynchroSummoned()
 end
 function s.rmrescon(sg,e,tp)
-    return sg:FilterCount(Card.IsControler,nil,tp)==1
+	return sg:FilterCount(Card.IsControler,nil,tp)==1
 end
 function s.rmfilter(c,e,tp)
 	return c:IsAbleToRemove() and c:IsCanBeEffectTarget(e)

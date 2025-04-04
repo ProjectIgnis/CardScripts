@@ -91,5 +91,5 @@ function s.banop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
-    Duel.ReturnToField(e:GetLabelObject())
+	Duel.ReturnToField(e:GetLabelObject())
 end

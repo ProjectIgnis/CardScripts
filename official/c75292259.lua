@@ -13,7 +13,7 @@ end
 function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
-	return c==Duel.GetAttacker() and bc and  bc:IsRelateToBattle()
+	return c==Duel.GetAttacker() and bc and bc:IsRelateToBattle()
 		and bc:GetBattlePosition()==POS_FACEUP_ATTACK and c:CanChainAttack(3)
 end
 function s.atop(e,tp,eg,ep,ev,re,r,rp)

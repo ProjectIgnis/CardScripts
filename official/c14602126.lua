@@ -20,7 +20,7 @@ function s.atchfilter(c,atk)
 end
 function s.xyzfilter(c,tp)
 	return c:IsFaceup() and c:IsMonster() and c:IsType(TYPE_XYZ) and
-	       Duel.IsExistingTarget(s.atchfilter,tp,0,LOCATION_MZONE,1,nil,c:GetAttack())
+		Duel.IsExistingTarget(s.atchfilter,tp,0,LOCATION_MZONE,1,nil,c:GetAttack())
 end
 function s.acttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

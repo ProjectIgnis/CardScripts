@@ -18,7 +18,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_LAVAL}
 function s.filter(c,e,tp)
-	return c:IsSetCard(SET_LAVAL) and c:IsFaceup() and  c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_LAVAL) and c:IsFaceup() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end

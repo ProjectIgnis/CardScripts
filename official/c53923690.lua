@@ -1,4 +1,4 @@
---
+--オメガの裁き
 --Omega Judgment
 --scripted by Naim
 local s,id=GetID()
@@ -20,12 +20,12 @@ function s.tgfilter(c,e,tp)
 		and c:IsCanBeEffectTarget(e)
 end
 function s.rescon(sg,e,tp,mg)
-    return sg:FilterCount(Card.IsControler,nil,tp)==1
+	return sg:FilterCount(Card.IsControler,nil,tp)==1
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	local rg=Duel.GetMatchingGroup(s.tgfilter,tp,LOCATION_SZONE,LOCATION_ONFIELD,nil,e,tp)
-	if chk==0 then return aux.SelectUnselectGroup(rg,e,tp,3,3,s.rescon,0)	end
+	if chk==0 then return aux.SelectUnselectGroup(rg,e,tp,3,3,s.rescon,0) end
 	local tg=aux.SelectUnselectGroup(rg,e,tp,3,3,s.rescon,1,tp,HINTMSG_DESTROY)
 	Duel.SetTargetCard(tg)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tg,3,0,0)

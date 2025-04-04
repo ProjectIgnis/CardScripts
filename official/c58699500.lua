@@ -54,7 +54,7 @@ function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	else return false end
 end
 function s.desfilter(c,e)
-	return  not c:IsImmuneToEffect(e) and not c:IsStatus(STATUS_DESTROY_CONFIRMED)
+	return not c:IsImmuneToEffect(e) and not c:IsStatus(STATUS_DESTROY_CONFIRMED)
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)

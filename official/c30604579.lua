@@ -48,7 +48,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_NORDIC_BEAST}
 function s.tfilter(c,scard,sumtype,tp)
-	return c:IsSetCard(SET_NORDIC_BEAST,scard,sumtype,tp)  or c:IsHasEffect(EFFECT_SYNSUB_NORDIC)
+	return c:IsSetCard(SET_NORDIC_BEAST,scard,sumtype,tp) or c:IsHasEffect(EFFECT_SYNSUB_NORDIC)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end

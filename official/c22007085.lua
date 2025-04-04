@@ -38,8 +38,8 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ConfirmCards(1-tp,g)
 	Duel.ShuffleHand(tp)
 	if Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)~=0 or
-	   (not Duel.IsExistingMatchingCard(s.spconfilter,tp,0,LOCATION_MZONE,1,nil)) or
-	   (not Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp)) then return end
+		(not Duel.IsExistingMatchingCard(s.spconfilter,tp,0,LOCATION_MZONE,1,nil)) or
+		(not Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp)) then return end
 	if Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

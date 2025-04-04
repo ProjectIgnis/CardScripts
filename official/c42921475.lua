@@ -65,7 +65,7 @@ function s.chop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsNormalSpell() or c:IsNormalTrap()  then
+	if c:IsNormalSpell() or c:IsNormalTrap() then
 		c:CancelToGrave(false)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)

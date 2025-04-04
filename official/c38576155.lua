@@ -21,13 +21,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_VALKYRIE}
-s.listed_names={64961254}
+s.listed_names={64961254} --"Goddess Verdande's Guidance"
 function s.thcfilter(c)
 	return c:IsFacedown() or not c:IsSetCard(SET_VALKYRIE)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)>0
-		and not Duel.IsExistingMatchingCard(s.thcfilter,tp,LOCATION_MZONE,0,1,nil)  
+		and not Duel.IsExistingMatchingCard(s.thcfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.thfilter(c)
 	return c:IsCode(64961254) and c:IsAbleToHand()

@@ -29,7 +29,7 @@ s.xyz_number=77
 function s.ovfilter(c,tp,xyzc)
 	local rk=c:GetRank()
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_DARK,xyzc,SUMMON_TYPE_XYZ,tp)
-	       and c:IsType(TYPE_XYZ,xyzc,SUMMON_TYPE_XYZ,tp) and (rk==10 or rk==11)
+		and c:IsType(TYPE_XYZ,xyzc,SUMMON_TYPE_XYZ,tp) and (rk==10 or rk==11)
 end
 function s.xyzop(e,tp,chk)
 	if chk==0 then return true end

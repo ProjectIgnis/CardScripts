@@ -21,11 +21,9 @@ function s.eqfilter(c)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then
-		return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and
-		       Duel.IsExistingTarget(s.eqfilter,tp,LOCATION_GRAVE,0,1,nil) and
-		       Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
-	end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+		and Duel.IsExistingTarget(s.eqfilter,tp,LOCATION_GRAVE,0,1,nil)
+		and Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g1=Duel.SelectTarget(tp,s.eqfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	local tc=g1:GetFirst()

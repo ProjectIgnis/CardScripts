@@ -75,9 +75,8 @@ function s.filter(c)
 	return c:IsSetCard(SET_PHOTON) or c:IsSetCard(SET_GALAXY)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then
-		return e:GetHandler():IsType(TYPE_XYZ) and
-		       Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil)
+	if chk==0 then return e:GetHandler():IsType(TYPE_XYZ)
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil)
 	end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)

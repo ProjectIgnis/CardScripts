@@ -45,11 +45,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cfilter(c,e,tp,sc)
 	return c:IsFaceup() and (c:IsOriginalSetCard(SET_WARRIOR) or c:IsOriginalSetCard(SET_STARDUST) or c:IsOriginalSetCard(SET_SYNCHRON)) 
-	and c:IsType(TYPE_SYNCHRO)
+		and c:IsType(TYPE_SYNCHRO)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetLevel()~=4 
-	and  Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil)
+	return e:GetHandler():GetLevel()~=4 and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -37,7 +37,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT|REASON_DISCARD)==0 then return end
 	local ex1,tg1=Duel.GetOperationInfo(0,CATEGORY_SPECIAL_SUMMON)
 	local ex2,tg2=Duel.GetOperationInfo(0,CATEGORY_DESTROY)
-	if tg1 and tg1:GetFirst():IsRelateToEffect(e) and  Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SpecialSummon(tg1,0,tp,tp,false,false,POS_FACEUP)~=0 then
+	if tg1 and tg1:GetFirst():IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SpecialSummon(tg1,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		if tg2 and tg2:GetFirst():IsRelateToEffect(e) then
 			Duel.Destroy(tg2,REASON_EFFECT)
 		end

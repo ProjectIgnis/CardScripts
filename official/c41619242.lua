@@ -35,7 +35,7 @@ function s.atkfilter(c,e,tp)
 		and (c:IsSetCard(SET_SCARECLAW) or c:IsCode(CARD_VISAS_STARFROST) or c:IsControler(1-tp))
 end
 function s.atkrescon(sg,e,tp,mg)
-    return sg:GetClassCount(Card.GetControler)==2
+	return sg:GetClassCount(Card.GetControler)==2
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

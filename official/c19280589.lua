@@ -33,7 +33,7 @@ s.listed_names={19280590}
 	--Stats for "Tellus Wing Token"
 function s.cansstk(tp)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and
-	       Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,0,0,1,RACE_FAIRY,ATTRIBUTE_LIGHT)
+		Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,0,0,1,RACE_FAIRY,ATTRIBUTE_LIGHT)
 end
 	--If sent from monster zone to GY
 function s.tkcon(e,tp,eg,ep,ev,re,r,rp)

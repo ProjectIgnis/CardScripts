@@ -29,7 +29,7 @@ end
 s.listed_series={SET_ICE_BARRIER}
 function s.smfilter(c,tp)
 	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp)
-	       and c:IsSetCard(SET_ICE_BARRIER) and c:IsType(TYPE_SYNCHRO)
+		and c:IsSetCard(SET_ICE_BARRIER) and c:IsType(TYPE_SYNCHRO)
 end
 function s.bancheck(tp,loc)
 	return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,loc,1,nil)

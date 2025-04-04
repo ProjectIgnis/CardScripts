@@ -45,9 +45,8 @@ end
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsSetCard,e:GetHandler():GetControler(),LOCATION_GRAVE,0,nil,SET_HERO)*-200
 end
---destroy
 function s.rescon(sg,e,tp,mg)
-    return sg:IsExists(Card.IsControler,1,nil,tp)
+	return sg:IsExists(Card.IsControler,1,nil,tp)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rg=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)

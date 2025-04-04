@@ -77,7 +77,7 @@ function s.rmfilter(c,e)
 	return c:IsCanBeEffectTarget(e) and c:IsSummonLocation(LOCATION_EXTRA) and c:IsAbleToRemove()
 end
 function s.rescon(sg,e,tp,mg)
-    return sg:FilterCount(Card.IsControler,nil,tp)==1
+	return sg:FilterCount(Card.IsControler,nil,tp)==1
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

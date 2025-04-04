@@ -41,7 +41,7 @@ function s.sumop(e,tp,eg,ev,ep,re,r,rp)
 	end
 end
 function s.ffilter(c)
-   return c:IsDefense(c:GetAttack()) and c:IsRace(RACE_MACHINE) and c:IsFaceup()
+	return c:IsDefense(c:GetAttack()) and c:IsRace(RACE_MACHINE) and c:IsFaceup()
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.ffilter(chkc) end

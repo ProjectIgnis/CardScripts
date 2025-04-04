@@ -21,13 +21,14 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.filter2(c,e,tp,mft,sft,code)
-	return  not c:IsCode(code) and 
-		((mft>0 and c:IsMonster() and (c:IsSetCard(SET_CHARMER) or c:IsSetCard(SET_FAMILIAR_POSSESSED)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE))
+	return not c:IsCode(code)
+		and ((mft>0 and c:IsMonster() and c:IsSetCard({SET_CHARMER,SET_FAMILIAR_POSSESSED})
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE))
 		or (sft>0 and c:IsSpellTrap() and c:IsSetCard(SET_POSSESSED) and c:IsSSetable()))
 end
 function s.filter(c,e,tp,mft,sft)
-	return  c:IsAbleToHand() and
-	((c:IsMonster() and (c:IsSetCard(SET_CHARMER) or c:IsSetCard(SET_FAMILIAR_POSSESSED))) or (c:IsSpellTrap() and c:IsSetCard(SET_POSSESSED)))
+	return c:IsAbleToHand()
+		and ((c:IsMonster() and c:IsSetCard({SET_CHARMER,SET_FAMILIAR_POSSESSED})) or (c:IsSpellTrap() and c:IsSetCard(SET_POSSESSED)))
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK,0,1,c,e,tp,mft,sft,c:GetCode())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

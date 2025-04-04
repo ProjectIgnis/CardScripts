@@ -30,7 +30,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,500)
 end
 function s.tdfilter(c)
-	return  c:IsAbleToDeck() and c:IsMonster() and not c:IsPublic() and (c:IsSetCard(SET_FA) or c:IsSetCard(SET_UA))
+	return c:IsAbleToDeck() and c:IsMonster() and not c:IsPublic() and c:IsSetCard({SET_FA,SET_UA})
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

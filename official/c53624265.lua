@@ -53,7 +53,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetDescription(aux.Stringid(id,2))
 	e2:SetReset(RESET_PHASE|PHASE_END)
 	e2:SetTargetRange(1,0)
-	Duel.RegisterEffect(e2,tp)  
+	Duel.RegisterEffect(e2,tp)
 	if tc:IsRelateToEffect(e) then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end

@@ -37,7 +37,7 @@ s.listed_names={id}
 s.listed_series={SET_PUNK}
 function s.ovfilter(c,tp,xyzc)
 	return c:IsFaceup() and c:IsSetCard(SET_PUNK,xyzc,SUMMON_TYPE_XYZ,tp)
-	   and (c:IsType(TYPE_FUSION,xyzc,SUMMON_TYPE_XYZ,tp) or c:IsType(TYPE_SYNCHRO,xyzc,SUMMON_TYPE_XYZ,tp))
+		and (c:IsType(TYPE_FUSION,xyzc,SUMMON_TYPE_XYZ,tp) or c:IsType(TYPE_SYNCHRO,xyzc,SUMMON_TYPE_XYZ,tp))
 end
 function s.xyzop(e,tp,chk)
 	if chk==0 then return not Duel.HasFlagEffect(tp,id) end

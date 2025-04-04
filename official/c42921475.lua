@@ -2,7 +2,7 @@
 --Fairy Tail - Sleeper
 local s,id=GetID()
 function s.initial_effect(c)
-	--flip
+	--FLIP: You can Special Summon 1 monster from your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--change effect
+	--Change the activated effect of an opponent's Normal Spell/Trap to "Change 1 face-up monster your opponent controls to face-down Defense Position"
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_QUICK_O)
@@ -42,21 +42,16 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.chcon(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	return rp==1-tp and (rc:IsNormalSpell() or rc:IsNormalTrap() ) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
-end
-function s.cfilter(c)
-	return not c:IsStatus(STATUS_BATTLE_DESTROYED)
+	return rp==1-tp and rc:IsNormalSpellTrap() and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function s.chcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,e:GetHandler()) end
-	local g=Duel.SelectReleaseGroupCost(tp,s.cfilter,1,1,false,nil,e:GetHandler())
+	local c=e:GetHandler()
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,nil,1,false,nil,c) end
+	local g=Duel.SelectReleaseGroupCost(tp,nil,1,1,false,nil,c)
 	Duel.Release(g,REASON_COST)
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsCanTurnSet()
-end
 function s.chtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,rp,0,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsCanTurnSet,rp,0,LOCATION_MZONE,1,nil) end
 end
 function s.chop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Group.CreateGroup()
@@ -65,11 +60,11 @@ function s.chop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsNormalSpell() or c:IsNormalTrap() then
+	if c:IsNormalSpellTrap() then
 		c:CancelToGrave(false)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,Card.IsCanTurnSet,tp,0,LOCATION_MZONE,1,1,nil)
 	if #g>0 then
 		Duel.ChangePosition(g,POS_FACEDOWN_DEFENSE)
 	end

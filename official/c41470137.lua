@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_GLADIATOR}
+s.listed_series={SET_GLADIATOR_BEAST}
 s.listed_names={id}
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsSpellTrap() end
@@ -42,7 +42,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(SET_GLADIATOR) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,102,tp,false,false)
+	return c:IsSetCard(SET_GLADIATOR_BEAST) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,102,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetMZoneCount(tp,e:GetHandler())>0

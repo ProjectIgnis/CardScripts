@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.dircon(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,0,1,nil,TYPE_SPELL+TYPE_TRAP)
+	return not Duel.IsExistingMatchingCard(Card.IsSpellTrap,tp,LOCATION_GRAVE,0,1,nil)
 		and not e:GetHandler():IsHasEffect(EFFECT_DIRECT_ATTACK)
 end
 function s.dirop(e,tp,eg,ep,ev,re,r,rp)

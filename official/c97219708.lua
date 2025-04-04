@@ -34,8 +34,8 @@ end
 function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and not e:GetHandler():IsStatus(STATUS_CHAINING) and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_ONFIELD|LOCATION_GRAVE,0,1,nil,TYPE_SPELL+TYPE_TRAP) end
-	local ct=Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_ONFIELD|LOCATION_GRAVE,0,nil,TYPE_SPELL+TYPE_TRAP)
+		and Duel.IsExistingMatchingCard(Card.IsSpellTrap,tp,LOCATION_ONFIELD|LOCATION_GRAVE,0,1,nil) end
+	local ct=Duel.GetMatchingGroupCount(Card.IsSpellTrap,tp,LOCATION_ONFIELD|LOCATION_GRAVE,0,nil)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,ct*100)
 end
@@ -43,7 +43,7 @@ function s.recop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 then
-		local ct=Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_ONFIELD|LOCATION_GRAVE,0,nil,TYPE_SPELL+TYPE_TRAP)
+		local ct=Duel.GetMatchingGroupCount(Card.IsSpellTrap,tp,LOCATION_ONFIELD|LOCATION_GRAVE,0,nil)
 		if ct>0 then
 			Duel.BreakEffect()
 			Duel.Recover(tp,ct*100,REASON_EFFECT)

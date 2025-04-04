@@ -43,7 +43,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_THE_WEATHER}
 function s.plfilter(c,tp)
-	return c:IsType(TYPE_SPELL|TYPE_TRAP) and c:IsSetCard(SET_THE_WEATHER) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
+	return c:IsSpellTrap() and c:IsSetCard(SET_THE_WEATHER) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
 		and not c:IsType(TYPE_FIELD)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -84,8 +84,7 @@ function s.nstg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.nsop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.nsfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,1,nil)
-	local tc=g:GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.nsfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,1,nil):GetFirst()
 	if tc then
 		Duel.Summon(tp,tc,true,nil)
 	end

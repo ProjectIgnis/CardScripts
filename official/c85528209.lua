@@ -23,7 +23,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_SUPERHEAVY_SAMURAI}
 function s.sccon(e)
-	return not Duel.IsExistingMatchingCard(Card.IsType,e:GetHandlerPlayer(),LOCATION_GRAVE,0,1,nil,TYPE_SPELL+TYPE_TRAP)
+	return not Duel.IsExistingMatchingCard(Card.IsSpellTrap,e:GetHandlerPlayer(),LOCATION_GRAVE,0,1,nil)
 end
 function s.adval(e,c)
 	return Duel.GetMatchingGroupCount(s.ctfilter,c:GetControler(),0,LOCATION_MZONE,nil)*900

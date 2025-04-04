@@ -66,7 +66,7 @@ function s.scop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,0,1,nil,TYPE_SPELL+TYPE_TRAP)
+	return not Duel.IsExistingMatchingCard(Card.IsSpellTrap,tp,LOCATION_GRAVE,0,1,nil)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsLevelAbove(2) and c:IsSetCard(SET_SUPERHEAVY_SAMURAI) and c:IsType(TYPE_SYNCHRO)

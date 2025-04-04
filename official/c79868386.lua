@@ -61,7 +61,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e4:SetReset(RESET_PHASE|PHASE_END)
 			Duel.RegisterEffect(e4,tp)
 			--Destroy all Spells/Traps the opponent controls
-			local sg=Duel.GetMatchingGroup(Card.IsType,tp,0,LOCATION_ONFIELD,nil,TYPE_SPELL+TYPE_TRAP)
+			local sg=Duel.GetMatchingGroup(Card.IsSpellTrap,tp,0,LOCATION_ONFIELD,nil)
 			if Duel.IsMainPhase() and Duel.IsTurnPlayer(tp) and #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 				Duel.BreakEffect()
 				Duel.Destroy(sg,REASON_EFFECT)

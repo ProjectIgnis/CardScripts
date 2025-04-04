@@ -42,7 +42,7 @@ end
 s.listed_series={SET_SUPERHEAVY_SAMURAI}
 function s.sccon(e)
 	local tp=e:GetHandlerPlayer()
-	return Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,0,1,nil,TYPE_SPELL+TYPE_TRAP)
+	return Duel.IsExistingMatchingCard(Card.IsSpellTrap,tp,LOCATION_GRAVE,0,1,nil)
 end
 function s.afilter(c,tp)
 	return c:IsControler(tp) and c:IsSetCard(SET_SUPERHEAVY_SAMURAI) and c:CanChainAttack()
@@ -60,7 +60,7 @@ function s.caop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,0,1,nil,TYPE_SPELL+TYPE_TRAP)
+	return not Duel.IsExistingMatchingCard(Card.IsSpellTrap,tp,LOCATION_GRAVE,0,1,nil)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,nil,SET_SUPERHEAVY_SAMURAI) end

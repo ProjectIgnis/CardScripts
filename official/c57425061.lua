@@ -10,12 +10,10 @@ end
 s.listed_series={SET_HERO}
 function s.exfilter0(c)
 	return c:GetOriginalType()&TYPE_MONSTER==TYPE_MONSTER
-		and c:GetType()&(TYPE_TRAP+TYPE_CONTINUOUS)==TYPE_TRAP+TYPE_CONTINUOUS
-		and c:IsAbleToRemove()
+		and c:IsContinuousTrap() and c:IsAbleToRemove()
 end
 function s.matlimit(c)
-	return c:GetOriginalType()&TYPE_MONSTER==TYPE_MONSTER and c:IsLocation(LOCATION_SZONE)
-		and c:GetType()&(TYPE_TRAP+TYPE_CONTINUOUS)==TYPE_TRAP+TYPE_CONTINUOUS
+	return c:GetOriginalType()&TYPE_MONSTER==TYPE_MONSTER and c:IsLocation(LOCATION_SZONE) and c:IsContinuousTrap()
 end
 function s.fcheck(tp,sg,fc)
 	return sg:FilterCount(s.matlimit,nil)<=2

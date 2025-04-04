@@ -31,7 +31,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_SUPERHEAVY_SAMURAI}
 function s.defcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_SPELL+TYPE_TRAP)==0
+	return Duel.GetMatchingGroupCount(Card.IsSpellTrap,tp,LOCATION_GRAVE,0,nil)==0
 end
 function s.deffilter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_SUPERHEAVY_SAMURAI) and c:HasNonZeroDefense()
@@ -69,8 +69,7 @@ function s.spfilter(c,e,tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp)
-		and s.spfilter(chkc,e,tp) and chkc~=c end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) and chkc~=c end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE,0,1,c,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -79,7 +78,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

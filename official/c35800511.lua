@@ -61,7 +61,7 @@ function s.eqlimit(e,c)
 	return c:IsSetCard(SET_SUPERHEAVY_SAMURAI)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,0,1,nil,TYPE_SPELL+TYPE_TRAP) then return false end
+	if Duel.IsExistingMatchingCard(Card.IsSpellTrap,tp,LOCATION_GRAVE,0,1,nil) then return false end
 	local phase=Duel.GetCurrentPhase()
 	if phase~=PHASE_DAMAGE or Duel.IsDamageCalculated() then return false end
 	local tc=Duel.GetAttacker()

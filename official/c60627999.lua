@@ -56,7 +56,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.sdescon(e)
-	return Duel.IsExistingMatchingCard(Card.IsType,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,e:GetHandler(),TYPE_SPELL+TYPE_TRAP)
+	return Duel.IsExistingMatchingCard(Card.IsSpellTrap,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,e:GetHandler())
 end
 function s.acttg(e,c)
 	return c:IsFacedown() and c:GetSequence()~=5

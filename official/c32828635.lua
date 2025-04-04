@@ -19,7 +19,7 @@ end
 s.listed_names={46427957,72426662,8198712} --"Ruin, Queen of Oblivion", "Demise, King of Armageddon", "End of the World"
 s.fit_monster={46427957,72426662}
 function s.ritualfil(c)
-	return c:IsCode(72426662,46427957) and c:IsRitualMonster()
+	return c:IsCode(46427957,72426662) and c:IsRitualMonster()
 end
 function s.forcedgroup(c,e,tp)
 	return c:IsLocation(LOCATION_ONFIELD)

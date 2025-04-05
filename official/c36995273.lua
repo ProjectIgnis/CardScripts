@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.rmtg(e,c)
-	return c:IsLocation(LOCATION_MZONE) or (c:GetOriginalType()&TYPE_MONSTER)~=0
+	return c:IsLocation(LOCATION_MZONE) or c:IsMonsterCard()
 end
 function s.costcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsTurnPlayer(tp)

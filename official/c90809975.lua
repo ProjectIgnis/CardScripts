@@ -83,7 +83,7 @@ function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 			Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
 		end
 		local cat=e:GetCategory()
-		if dc:GetOriginalType()&TYPE_MONSTER~=0 then
+		if dc:IsMonsterCard() then
 			e:SetCategory(cat|CATEGORY_SPECIAL_SUMMON)
 			Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,dc,1,0,LOCATION_GRAVE) --Ghost Belle requires this location
 		else

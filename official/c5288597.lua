@@ -32,7 +32,7 @@ function s.cfilter(c,e,tp,ft)
 		local val=te:GetValue()
 		if val and val(te,c,e,0) then att=val(te,c,e,1) end
 	end
-	return c:GetOriginalType()&TYPE_MONSTER~=0 and lv>0 and c:IsFaceup() and c:IsAbleToGraveAsCost() and (ft>0 or c:GetSequence()<5)
+	return c:IsMonsterCard() and lv>0 and c:IsFaceup() and c:IsAbleToGraveAsCost() and (ft>0 or c:GetSequence()<5)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,lv+1,rc,att,e,tp)
 end
 function s.spfilter(c,lv,rc,att,e,tp)

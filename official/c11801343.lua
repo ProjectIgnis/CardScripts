@@ -15,10 +15,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.thfilter(c,e,tp)
-	return c:IsFaceup() and c:IsRace(RACE_CYBERSE)
-		and Duel.GetMZoneCount(tp,c)>0
-		and c:IsAbleToHandAsCost()
-		and c:GetOriginalType()&TYPE_MONSTER>0
+	return c:IsFaceup() and c:IsRace(RACE_CYBERSE)and Duel.GetMZoneCount(tp,c)>0
+		and c:IsAbleToHandAsCost() and c:IsMonsterCard()
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c)
 end
 function s.spfilter(c,e,tp,tc)
@@ -40,7 +38,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,tc)
-		if #g~=0 then
+		if #g>0 then
 			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 		end
 	end

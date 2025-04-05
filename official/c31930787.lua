@@ -112,7 +112,7 @@ function s.dircon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsPhase(PHASE_MAIN1) and not e:GetHandler():IsHasEffect(EFFECT_DIRECT_ATTACK)
 end
 function s.dcfilter(c)
-	return (c:GetOriginalType()&TYPE_MONSTER)~=0 and c:IsAbleToGraveAsCost()
+	return c:IsMonsterCard() and c:IsAbleToGraveAsCost()
 end
 function s.dircost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetEquipGroup():IsExists(s.dcfilter,1,nil) end

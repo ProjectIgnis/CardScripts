@@ -30,7 +30,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_DRAGUNITY}
 function s.equipf(c)
-	return c:IsSetCard(SET_DRAGUNITY) and (c:GetOriginalType()&TYPE_MONSTER)~=0
+	return c:IsSetCard(SET_DRAGUNITY) and c:IsMonsterCard()
 end
 function s.atktg(e,c)
 	return c:GetEquipGroup():IsExists(s.equipf,1,nil)

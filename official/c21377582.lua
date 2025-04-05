@@ -45,8 +45,7 @@ end
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	local typ=0
-	local tc=g:GetFirst()
-	for tc in aux.Next(g) do
+	for tc in g:Iter() do
 		typ=typ|(tc:GetOriginalType()&(TYPE_MONSTER|TYPE_SPELL|TYPE_TRAP))
 	end
 	e:SetLabel(typ)

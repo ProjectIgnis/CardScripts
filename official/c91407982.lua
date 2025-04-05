@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1)
 	e2:SetCondition(s.cannotdescon)
+	e2:SetTarget(function(e,tp,eg,ep,ev,re,r,rp,chk) if chk==0 then return true end Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription()) end)
 	e2:SetOperation(s.cannotdesop)
 	c:RegisterEffect(e2)
 	--Apply a "make the next battle damage you take this turn become 0" effect

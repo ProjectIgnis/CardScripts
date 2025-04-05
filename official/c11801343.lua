@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.thfilter(c,e,tp)
-	return c:IsFaceup() and c:IsRace(RACE_CYBERSE)and Duel.GetMZoneCount(tp,c)>0
+	return c:IsFaceup() and c:IsRace(RACE_CYBERSE) and Duel.GetMZoneCount(tp,c)>0
 		and c:IsAbleToHandAsCost() and c:IsMonsterCard()
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c)
 end

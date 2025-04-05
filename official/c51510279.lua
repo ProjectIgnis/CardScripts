@@ -1,11 +1,11 @@
 --繋がれし魔鍵
---Connected Magikey
+--Magikey Duo
 --Scripted by edo9300
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
-	local fparams={fusfilter=aux.FilterBoolFunction(Card.IsSetCard,0x167),sumpos=POS_FACEUP_DEFENSE}
-	local rparams={filter=aux.FilterBoolFunction(Card.IsSetCard,0x167),lvtype=RITPROC_GREATER,sumpos=POS_FACEUP_DEFENSE}
+	local fparams={fusfilter=aux.FilterBoolFunction(Card.IsSetCard,SET_MAGIKEY),sumpos=POS_FACEUP_DEFENSE}
+	local rparams={filter=aux.FilterBoolFunction(Card.IsSetCard,SET_MAGIKEY),lvtype=RITPROC_GREATER,sumpos=POS_FACEUP_DEFENSE}
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -15,9 +15,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation(Fusion.SummonEffTG(fparams),Fusion.SummonEffOP(fparams),Ritual.Target(rparams),Ritual.Operation(rparams)))
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x167}
+s.listed_series={SET_MAGIKEY}
 function s.filter(c)
-	return (c:IsSetCard(0x167) or c:IsType(TYPE_NORMAL)) and c:IsMonster() and c:IsAbleToHand()
+	return (c:IsSetCard(SET_MAGIKEY) or c:IsType(TYPE_NORMAL)) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end

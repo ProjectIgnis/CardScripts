@@ -1,9 +1,9 @@
--- スモール・ワールド
--- Small World
--- Scripted by Hatter
+--スモール・ワールド
+--Small World
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Banish and search
+	--Banish and search
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_REMOVE+CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)

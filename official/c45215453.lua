@@ -1,4 +1,5 @@
 --ヴァイロン・デルタ
+--Vylon Delta
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -18,7 +19,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and e:GetHandler():IsDefensePos()
+	return Duel.IsTurnPlayer(tp) and e:GetHandler():IsDefensePos()
 end
 function s.filter(c)
 	return c:IsType(TYPE_EQUIP) and c:IsAbleToHand()

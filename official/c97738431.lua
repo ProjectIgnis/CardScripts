@@ -1,4 +1,5 @@
 --ナンバーズ・オーバーレイ・ブースト
+--Numbers Overlay Boost
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -10,9 +11,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x48}
+s.listed_series={SET_NUMBER}
 function s.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(0x48) and c:GetOverlayCount()==0
+	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(SET_NUMBER) and c:GetOverlayCount()==0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end

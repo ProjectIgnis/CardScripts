@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_LEVEL)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x107))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_FA))
 	e2:SetValue(2)
 	e2:SetCondition(s.lvcon)
 	c:RegisterEffect(e2)
@@ -43,13 +43,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_names={id}
-s.listed_series={0x107}
+s.listed_series={SET_FA}
 function s.lvcon(e)
-	local ph=Duel.GetCurrentPhase()
-	return ph==PHASE_MAIN1 or ph==PHASE_MAIN2
+	return Duel.IsMainPhase()
 end
 function s.cfilter(c,tp)
-	return c:IsReason(REASON_BATTLE) and c:IsPreviousControler(tp) and c:IsPreviousSetCard(0x107)
+	return c:IsReason(REASON_BATTLE) and c:IsPreviousControler(tp) and c:IsPreviousSetCard(SET_FA)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
@@ -62,14 +61,14 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND,nil)
 	if #g==0 then return end
 	local sg=g:RandomSelect(1-tp,1)
-	Duel.SendtoGrave(sg,REASON_DISCARD+REASON_EFFECT)
+	Duel.SendtoGrave(sg,REASON_DISCARD|REASON_EFFECT)
 end
 function s.thcon2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsReason(REASON_EFFECT) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.thfilter2(c)
-	return c:IsSetCard(0x107) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_FA) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter2,tp,LOCATION_DECK,0,1,nil) end

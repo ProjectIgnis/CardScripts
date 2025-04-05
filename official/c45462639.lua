@@ -57,7 +57,7 @@ function s.addc(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
-	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and e:GetHandler():GetFlagEffect(1)>0 then
+	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsSpellEffect() and e:GetHandler():GetFlagEffect(1)>0 then
 		e:GetHandler():AddCounter(COUNTER_SPELL,1)
 	end
 end
@@ -76,5 +76,5 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND,nil)
 	if #g==0 then return end
 	local sg=g:RandomSelect(1-tp,1)
-	Duel.SendtoGrave(sg,REASON_DISCARD+REASON_EFFECT)
+	Duel.SendtoGrave(sg,REASON_DISCARD|REASON_EFFECT)
 end

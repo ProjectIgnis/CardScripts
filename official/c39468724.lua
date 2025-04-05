@@ -1,7 +1,6 @@
 --ドラグニティナイトの影霊衣
 --Nekroz of Areadbhair
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -21,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetCountLimit(1,id)
-	e2:SetCost(s.cost)
+	e2:SetCost(Cost.SelfDiscard)
 	e2:SetTarget(s.tgtg)
 	e2:SetOperation(s.tgop)
 	c:RegisterEffect(e2)
@@ -41,24 +40,19 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 	--Lists "Nekroz" archetype
-s.listed_series={0xb4}
-
+s.listed_series={SET_NEKROZ}
 	--Cannot include level 10 monsters for its ritual summon
 function s.mat_filter(c)
 	return c:GetLevel()~=10
 end
 	--Discard itself as cost
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
-end
 	--Check for "Nekroz" monsters to tribute
 function s.filter(c)
-	return c:IsSetCard(0xb4) and c:IsMonster() and c:IsReleasableByEffect()
+	return c:IsSetCard(SET_NEKROZ) and c:IsMonster() and c:IsReleasableByEffect()
 end
 	--Check for "Nekroz" cards to send to GY
 function s.sendfilter(c)
-	return c:IsSetCard(0xb4) and c:IsAbleToGrave()
+	return c:IsSetCard(SET_NEKROZ) and c:IsAbleToGrave()
 end
 	--Activation legality
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -83,7 +77,7 @@ end
 	--Monster effect activated
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return re:IsActiveType(TYPE_MONSTER) and not c:IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)
+	return re:IsMonsterEffect() and not c:IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)
 end
 	--Tribute 1 monster from hand or field as cost
 function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)

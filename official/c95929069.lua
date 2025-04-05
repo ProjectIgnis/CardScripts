@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 s.listed_names={68535320}
 function s.dfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSpellTrap()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and s.dfilter(chkc) end

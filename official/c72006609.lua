@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x10c))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_MEKK_KNIGHT))
 	e2:SetValue(s.tglimit)
 	c:RegisterEffect(e2)
 	--avoid battle damage
@@ -34,26 +34,26 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(LOCATION_MZONE,0)
-	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x10c))
+	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_MEKK_KNIGHT))
 	e3:SetValue(s.tglimit)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x10c,0xfe}
+s.listed_series={SET_MEKK_KNIGHT,SET_WORLD_LEGACY}
 function s.lcheck(g,lc,sumtype,tp)
-	return g:IsExists(Card.IsSetCard,1,nil,0x10c,lc,sumtype,tp)
+	return g:IsExists(Card.IsSetCard,1,nil,SET_MEKK_KNIGHT,lc,sumtype,tp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+	return e:GetHandler():IsLinkSummoned()
 end
 function s.costfilter(c)
-	return ((c:IsSetCard(0x10c) and c:IsMonster()) or c:IsSetCard(0xfe)) and c:IsDiscardable()
+	return ((c:IsSetCard(SET_MEKK_KNIGHT) and c:IsMonster()) or c:IsSetCard(SET_WORLD_LEGACY)) and c:IsDiscardable()
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,s.costfilter,1,1,REASON_DISCARD+REASON_COST)
+	Duel.DiscardHand(tp,s.costfilter,1,1,REASON_DISCARD|REASON_COST)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xfe) and c:IsAbleToHand()
+	return c:IsSetCard(SET_WORLD_LEGACY) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -70,4 +70,3 @@ end
 function s.tglimit(e,c)
 	return c and not c:GetColumnGroup():IsContains(c:GetBattleTarget())
 end
-

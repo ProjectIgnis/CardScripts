@@ -37,7 +37,7 @@ function s.initial_effect(c)
 	e4:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e4:SetTarget(aux.PersistentTargetFilter)
 	e4:SetCondition(s.sccon)
-	e4:SetValue(0x129)
+	e4:SetValue(SET_EVIL_EYE)
 	c:RegisterEffect(e4)
 	--destroy
 	local e5=Effect.CreateEffect(c)
@@ -48,10 +48,10 @@ function s.initial_effect(c)
 	e5:SetOperation(s.desop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x129}
+s.listed_series={SET_EVIL_EYE}
 s.listed_names={CARD_EVIL_EYE_SELENE}
 function s.cfilter1(c)
-	return c:IsFaceup() and c:IsSetCard(0x129)
+	return c:IsFaceup() and c:IsSetCard(SET_EVIL_EYE)
 end
 function s.cfilter2(c,e,tp,eg)
 	return c:IsSummonPlayer(1-tp) and c:IsCanBeEffectTarget(e) and c:IsControlerCanBeChanged() and c:IsPosition(POS_FACEUP_ATTACK)
@@ -80,7 +80,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_OWNER_RELATE)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetValue(tp)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET)
 		e1:SetCondition(s.con)
 		tc:RegisterEffect(e1)
 	end

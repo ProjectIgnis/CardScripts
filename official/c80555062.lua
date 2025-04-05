@@ -1,4 +1,5 @@
 --武神器－チカヘシ
+--Bujingi Warg
 local s,id=GetID()
 function s.initial_effect(c)
 	--
@@ -12,10 +13,10 @@ function s.initial_effect(c)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x88}
+s.listed_series={SET_BUJIN}
 function s.con(e)
 	return e:GetHandler():IsDefensePos()
 end
 function s.target(e,c)
-	return c~=e:GetHandler() and c:IsSetCard(0x88)
+	return c~=e:GetHandler() and c:IsSetCard(SET_BUJIN)
 end

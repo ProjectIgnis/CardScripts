@@ -1,4 +1,5 @@
 --ワーム・ルクイエ
+--Worm Rakuyeh
 local s,id=GetID()
 function s.initial_effect(c)
 	--attack limit
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 	--to defense
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e3:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e3:SetCode(EVENT_PHASE|PHASE_BATTLE)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
 	e3:SetCondition(s.poscon)
@@ -23,7 +24,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 end
 function s.atkcon(e)
 	return e:GetHandler():GetFlagEffect(id)==0

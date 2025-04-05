@@ -1,5 +1,5 @@
 --機甲部隊の再編制
---Machina Reformation
+--Machina Redeployment
 --Scripted by Eerie code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -23,23 +23,23 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-s.listed_series={0x36}
+s.listed_series={SET_MACHINA}
 function s.cfilter1(c)
 	return c:IsDiscardable()
 end
 function s.cfilter2(c)
-	return s.cfilter1(c) and c:IsSetCard(0x36)
+	return s.cfilter1(c) and c:IsSetCard(SET_MACHINA)
 end
 function s.filter1(c)
-	return c:IsSetCard(0x36) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_MACHINA) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.filter2(c)
-	return c:IsSetCard(0x36) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_MACHINA) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.cost(cfil)
 	return	function(e,tp,eg,ep,ev,re,r,rp,chk)
 				if chk==0 then return Duel.IsExistingMatchingCard(cfil,tp,LOCATION_HAND,0,1,e:GetHandler()) end
-				Duel.DiscardHand(tp,cfil,1,1,REASON_COST+REASON_DISCARD)
+				Duel.DiscardHand(tp,cfil,1,1,REASON_COST|REASON_DISCARD)
 			end
 end
 function s.target(fil)

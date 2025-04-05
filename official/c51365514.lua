@@ -1,4 +1,5 @@
 --超力の聖刻印
+--Hieratic Seal of Supremacy
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -10,9 +11,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x69}
+s.listed_series={SET_HIERATIC}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x69) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_HIERATIC) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

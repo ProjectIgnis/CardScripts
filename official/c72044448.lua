@@ -1,4 +1,5 @@
 --破滅のフォトン・ストリーム
+--Photon Stream of Destruction
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -13,17 +14,17 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x107b}
+s.listed_series={SET_GALAXY_EYES}
 s.listed_names={CARD_GALAXYEYES_P_DRAGON}
 function s.cfilter1(c)
-	return c:IsFaceup() and c:IsSetCard(0x107b)
+	return c:IsFaceup() and c:IsSetCard(SET_GALAXY_EYES)
 end
 function s.cfilter2(c)
 	return c:IsFaceup() and c:IsCode(CARD_GALAXYEYES_P_DRAGON)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter1,tp,LOCATION_MZONE,0,1,nil)
-		and (Duel.GetTurnPlayer()==tp or Duel.IsExistingMatchingCard(s.cfilter2,tp,LOCATION_ONFIELD,0,1,nil))
+		and (Duel.IsTurnPlayer(tp) or Duel.IsExistingMatchingCard(s.cfilter2,tp,LOCATION_ONFIELD,0,1,nil))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsAbleToRemove() end

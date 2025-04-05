@@ -8,9 +8,9 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
-	e1:SetRange(LOCATION_HAND+LOCATION_MZONE)
+	e1:SetRange(LOCATION_HAND|LOCATION_MZONE)
 	e1:SetCondition(s.condition)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.SelfToGrave)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 	--search
@@ -21,13 +21,13 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(s.thcon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-s.listed_series={0x11a}
+s.listed_series={SET_DINOWRESTLER}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local b=a:GetBattleTarget()
@@ -36,13 +36,9 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if a and b then
 		local dif=b:GetAttack()-a:GetAttack()
 		return a:GetControler()~=b:GetControler() and a~=e:GetHandler()
-		and a:IsSetCard(0x11a) and a:IsRelateToBattle()
+		and a:IsSetCard(SET_DINOWRESTLER) and a:IsRelateToBattle()
 		and Duel.GetAttackTarget()~=nil and dif>=0
 	else return false end
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -54,7 +50,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE)
 		a:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_FIELD)
@@ -62,15 +58,15 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 		e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e2:SetTargetRange(1,0)
 		e2:SetValue(HALF_DAMAGE)
-		e2:SetReset(RESET_PHASE+PHASE_DAMAGE)
+		e2:SetReset(RESET_PHASE|PHASE_DAMAGE)
 		Duel.RegisterEffect(e2,tp)
 	end
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==1-tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x11a) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_DINOWRESTLER) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

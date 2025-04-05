@@ -1,9 +1,9 @@
--- Ｓ－Ｆｏｒｃｅ ラプスウェル
--- S-Force Lapcewell
--- Scripted by Hatter
+--Ｓ－Ｆｏｒｃｅ ラプスウェル
+--S-Force Lapcewell
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon 1 "S-Force" monster from the GY
+	--Special Summon 1 "S-Force" monster from the GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	-- Destroy all monsters in the same column as your "S-Force" monsters
+	--Destroy all monsters in the same column as your "S-Force" monsters
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DESTROY)

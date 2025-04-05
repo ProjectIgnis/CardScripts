@@ -1,4 +1,4 @@
---Japanese name
+--巳剣之尊 佐士
 --Mitsurugi no Mikoto, Saji
 --scripted by Naim
 local s,id=GetID()

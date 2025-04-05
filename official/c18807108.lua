@@ -1,4 +1,5 @@
 --六芒星の呪縛
+--Spellbinding Circle
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddPersistentProcedure(c,1,nil,CATEGORY_POSITION,nil,nil,nil,nil,nil,nil,nil,true)

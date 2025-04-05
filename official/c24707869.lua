@@ -1,4 +1,5 @@
 --ブライト・フューチャー
+--Bright Future
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -25,7 +26,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetTargetCards(e)
 	if #tg~=2 then return end
-	Duel.SendtoGrave(tg,REASON_EFFECT+REASON_RETURN)
+	Duel.SendtoGrave(tg,REASON_EFFECT|REASON_RETURN)
 	Duel.BreakEffect()
 	Duel.Draw(tp,1,REASON_EFFECT)
 end

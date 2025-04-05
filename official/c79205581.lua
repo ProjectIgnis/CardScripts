@@ -27,9 +27,9 @@ function s.bpcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGraveAsCost,tp,LOCATION_ONFIELD,0,1,1,e:GetHandler())
 	Duel.SendtoGrave(g,REASON_COST)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESET_CHAIN,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESET_CHAIN,0,1)
 end
 function s.bpop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
+	Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE|PHASE_BATTLE_STEP,1)
 end

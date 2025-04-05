@@ -1,9 +1,10 @@
 --D－HERO ディストピアガイ
+--Destiny HERO - Dystopia
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0xc008),2)
+	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_DESTINY_HERO),2)
 	--damage
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -29,10 +30,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xc008}
-s.material_setcode={0x8,0xc008}
+s.listed_series={SET_DESTINY_HERO}
+s.material_setcode={SET_HERO,SET_DESTINY_HERO}
 function s.filter(c)
-	return c:IsSetCard(0xc008) and c:IsLevelBelow(4) and c:GetAttack()>0
+	return c:IsSetCard(SET_DESTINY_HERO) and c:IsLevelBelow(4) and c:GetAttack()>0
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -67,7 +68,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(atk)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 	end
 end

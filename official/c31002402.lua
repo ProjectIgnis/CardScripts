@@ -1,14 +1,14 @@
 --凶導の福音
---Dogmatikas
+--Dogmatikalamity
 --scripted by edo9300
 local s,id=GetID()
 function s.initial_effect(c)
-	local e1=Ritual.CreateProc({handler=c,lvtype=RITPROC_EQUAL,filter=aux.FilterBoolFunction(Card.IsSetCard,0x146),extrafil=s.extragroup,
+	local e1=Ritual.CreateProc({handler=c,lvtype=RITPROC_EQUAL,filter=aux.FilterBoolFunction(Card.IsSetCard,SET_DOGMATIKA),extrafil=s.extragroup,
 								extraop=s.extraop,stage2=s.stage2,forcedselection=s.ritcheck})
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x146}
+s.listed_series={SET_DOGMATIKA}
 function s.matfilter1(c)
 	return c:IsAbleToGrave() and c:IsLevelAbove(1)
 end
@@ -27,7 +27,7 @@ function s.stage2(mat,e,tp,eg,ep,ev,re,r,rp,tc)
 	e0:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e0:SetDescription(aux.Stringid(id,0))
 	e0:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e0:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN)
+	e0:SetReset(RESET_PHASE|PHASE_END|RESET_SELF_TURN)
 	e0:SetTargetRange(1,0)
 	e0:SetTarget(s.splimit)
 	Duel.RegisterEffect(e0,tp)

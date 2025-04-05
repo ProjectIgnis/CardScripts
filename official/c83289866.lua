@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x128))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_WITCHCRAFTER))
 	e2:SetValue(s.indct)
 	c:RegisterEffect(e2)
 	--replace discard effect
@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.tfop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x128}
+s.listed_series={SET_WITCHCRAFTER}
 function s.indct(e,re,r,rp)
 	if (r&REASON_BATTLE+REASON_EFFECT)~=0 then
 		return 1
@@ -42,7 +42,7 @@ function s.indct(e,re,r,rp)
 	end
 end
 function s.tfcond(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x128),tp,LOCATION_MZONE,0,1,nil) and Duel.GetTurnPlayer()==tp
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_WITCHCRAFTER),tp,LOCATION_MZONE,0,1,nil) and Duel.IsTurnPlayer(tp)
 end
 function s.tftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end

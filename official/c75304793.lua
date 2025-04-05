@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_UPDATE_ATTACK)
 	e3:SetRange(LOCATION_FZONE)
 	e3:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x1066))
+	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_SYMPHONIC_WARRIOR))
 	e3:SetValue(s.atkval)
 	c:RegisterEffect(e3)
 	--counter
@@ -35,10 +35,10 @@ function s.initial_effect(c)
 	e4:SetOperation(s.operation)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x1066}
+s.listed_series={SET_SYMPHONIC_WARRIOR}
 s.counter_place_list={0x35}
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
-	return re and re:GetHandler():IsSetCard(0x1066) and not re:IsHasType(EFFECT_TYPE_ACTIVATE)
+	return re and re:GetHandler():IsSetCard(SET_SYMPHONIC_WARRIOR) and not re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(0x35,1)
@@ -47,13 +47,13 @@ function s.atkval(e,c)
 	return e:GetHandler():GetCounter(0x35)*100
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1066)
+	return c:IsFaceup() and c:IsSetCard(SET_SYMPHONIC_WARRIOR)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetMatchingGroupCount(s.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	local b1=Duel.IsCanRemoveCounter(tp,1,0,0x35,5,REASON_COST)
 	local b2=Duel.IsCanRemoveCounter(tp,1,0,0x35,7,REASON_COST)
-		and Duel.IsExistingMatchingCard(s.rmfilter,tp,0,LOCATION_ONFIELD+LOCATION_GRAVE,1,nil)
+		and Duel.IsExistingMatchingCard(s.rmfilter,tp,0,LOCATION_ONFIELD|LOCATION_GRAVE,1,nil)
 	if chk==0 then return ct>0 and (b1 or b2) end
 	local op=0
 	if b1 and b2 then
@@ -72,7 +72,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	else
 		e:SetCategory(CATEGORY_REMOVE)
 		Duel.RemoveCounter(tp,1,0,0x35,7,REASON_COST)
-		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,0,LOCATION_ONFIELD+LOCATION_GRAVE)
+		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,0,LOCATION_ONFIELD|LOCATION_GRAVE)
 	end
 end
 function s.rmfilter(c)
@@ -88,7 +88,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Damage(p,ct*300,REASON_EFFECT)
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local g=Duel.SelectMatchingCard(tp,s.rmfilter,tp,0,LOCATION_ONFIELD+LOCATION_GRAVE,1,ct,nil)
+		local g=Duel.SelectMatchingCard(tp,s.rmfilter,tp,0,LOCATION_ONFIELD|LOCATION_GRAVE,1,ct,nil)
 		if #g>0 then
 			Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 		end

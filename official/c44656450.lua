@@ -1,6 +1,5 @@
 --失楽の魔女
 --Condemned Witch
---
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -19,19 +18,19 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
+	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER|TIMING_MAIN_END)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(s.spcon)
-	e2:SetCost(s.spcost)
+	e2:SetCost(Cost.SelfTribute)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x11d}
+s.listed_series={SET_FORBIDDEN}
 s.listed_names={id}
 function s.thfilter(c)
-	return (c:IsSetCard(0x11d) or c:IsCode(25789292,27243130,54773234,96864811)) and c:IsType(TYPE_QUICKPLAY) and c:IsAbleToHand()
+	return (c:IsSetCard(SET_FORBIDDEN) or c:IsCode(25789292,27243130,54773234,96864811)) and c:IsType(TYPE_QUICKPLAY) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -46,11 +45,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
+	return Duel.IsTurnPlayer(1-tp) and Duel.IsMainPhase()
 end
 function s.spfilter(c,e,tp)
 	return c:IsLevel(4) and c:IsRace(RACE_FAIRY) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -68,4 +63,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-

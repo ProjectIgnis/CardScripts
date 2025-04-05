@@ -36,7 +36,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 	e:SetLabelObject(g:GetFirst())
-	Duel.SendtoGrave(g,REASON_COST+REASON_DISCARD)
+	Duel.SendtoGrave(g,REASON_COST|REASON_DISCARD)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,LOCATION_DECK)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)

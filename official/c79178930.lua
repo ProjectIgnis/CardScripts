@@ -1,4 +1,5 @@
 --時限カラクリ爆弾
+--Karakuri Klock
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,10 +12,10 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x11}
+s.listed_series={SET_KARAKURI}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return tc:IsFaceup() and tc:IsDefensePos() and tc:IsSetCard(0x11)
+	return tc:IsFaceup() and tc:IsDefensePos() and tc:IsSetCard(SET_KARAKURI)
 end
 function s.filter(c)
 	return c:IsFaceup()

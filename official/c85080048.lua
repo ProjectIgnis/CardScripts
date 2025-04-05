@@ -1,4 +1,5 @@
 --雷の裁き
+--Judgment of Thunder
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

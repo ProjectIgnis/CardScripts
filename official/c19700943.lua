@@ -1,4 +1,5 @@
 --ドドドボット
+--Dododo Bot
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon limit
@@ -26,7 +27,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EFFECT_IMMUNE_EFFECT)
 	e1:SetValue(s.efilter)
-	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+	e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
 	c:RegisterEffect(e1)
 end
 function s.efilter(e,te)

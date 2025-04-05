@@ -1,4 +1,5 @@
 --侵略の侵喰感染
+--Infestation Infection
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -23,20 +24,20 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xa}
+s.listed_series={SET_LSWARM}
 function s.cfilter(c)
-	return c:IsSetCard(0xa) and c:IsMonster() and c:IsAbleToDeckAsCost() and (c:IsLocation(LOCATION_HAND) or c:IsFaceup())
+	return c:IsSetCard(SET_LSWARM) and c:IsMonster() and c:IsAbleToDeckAsCost() and (c:IsLocation(LOCATION_HAND) or c:IsFaceup())
 end
 function s.afilter(c)
-	return c:IsSetCard(0xa) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_LSWARM) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	if Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil)
+	if Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingMatchingCard(s.afilter,tp,LOCATION_DECK,0,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-		local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil)
+		local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,1,nil)
 		if g:GetFirst():IsLocation(LOCATION_HAND) then
 			Duel.ConfirmCards(1-tp,g)
 		end
@@ -44,7 +45,7 @@ function s.target1(e,tp,eg,ep,ev,re,r,rp,chk)
 		e:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 		e:SetLabel(1)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
-		e:GetHandler():RegisterFlagEffect(id,RESET_PHASE+PHASE_END,0,1)
+		e:GetHandler():RegisterFlagEffect(id,RESET_PHASE|PHASE_END,0,1)
 	else
 		e:SetCategory(0)
 		e:SetLabel(0)
@@ -61,9 +62,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cost2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,1,nil)
 	if g:GetFirst():IsLocation(LOCATION_HAND) then
 		Duel.ConfirmCards(1-tp,g)
 	end
@@ -73,5 +74,5 @@ function s.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetFlagEffect(id)==0
 		and Duel.IsExistingMatchingCard(s.afilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
-	e:GetHandler():RegisterFlagEffect(id,RESET_PHASE+PHASE_END,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_PHASE|PHASE_END,0,1)
 end

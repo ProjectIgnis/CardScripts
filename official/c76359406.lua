@@ -30,10 +30,10 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_CRYSTRON}
 function s.poscon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return e:GetHandler():IsSynchroSummoned()
 end
 function s.posfilter(c)
-	return c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:IsPosition(POS_FACEUP_ATTACK) and c:IsCanChangePosition()
+	return c:IsSpecialSummoned() and c:IsPosition(POS_FACEUP_ATTACK) and c:IsCanChangePosition()
 end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.posfilter,tp,0,LOCATION_MZONE,1,nil) end
@@ -48,7 +48,7 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_SYNCHRO) and (r&REASON_EFFECT+REASON_BATTLE)>0
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSynchroSummoned() and (r&REASON_EFFECT+REASON_BATTLE)>0
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_CRYSTRON) and not c:IsType(TYPE_SYNCHRO) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

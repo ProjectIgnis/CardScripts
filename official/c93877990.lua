@@ -1,7 +1,6 @@
 --富炎星－ハクテンオウ
 --Brotherhood of the Fire Fist - Swan
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -32,13 +31,12 @@ function s.initial_effect(c)
 	e2:SetCost(s.descost)
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
-	e2:SetHintTiming(0,TIMING_BATTLE_START+TIMING_BATTLE_END)
+	e2:SetHintTiming(0,TIMING_BATTLE_START|TIMING_BATTLE_END)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x7c}
-
+s.listed_series={SET_FIRE_FORMATION}
 function s.damfilter(c)
-	return c:IsFaceup() and c:IsSpellTrap() and c:IsSetCard(0x7c)
+	return c:IsFaceup() and c:IsSpellTrap() and c:IsSetCard(SET_FIRE_FORMATION)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetMatchingGroupCount(s.damfilter,tp,LOCATION_ONFIELD,0,nil)
@@ -54,11 +52,10 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE
-		and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
+	return Duel.IsBattlePhase() and aux.StatChangeDamageStepCondition()
 end
 function s.descfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x7c) and c:IsSpellTrap() and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and c:IsSetCard(SET_FIRE_FORMATION) and c:IsSpellTrap() and c:IsAbleToGraveAsCost()
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local nc=Duel.IsExistingMatchingCard(s.descfilter,tp,LOCATION_ONFIELD,0,1,nil)
@@ -73,9 +70,9 @@ function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsOnField() end
-	if chk==0 then return Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(nil,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,1,nil)
+	local g=Duel.SelectTarget(tp,nil,tp,0,LOCATION_ONFIELD,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)

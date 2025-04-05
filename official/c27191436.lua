@@ -1,4 +1,5 @@
 --バースト・リターン
+--Burst Return
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,13 +12,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x3008}
+s.listed_series={SET_ELEMENTAL_HERO}
 s.listed_names={58932615}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,58932615),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x3008) and not c:IsCode(58932615) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(SET_ELEMENTAL_HERO) and not c:IsCode(58932615) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end

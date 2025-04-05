@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_REMOVE)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x11e}
+s.listed_series={SET_DANGER}
 s.listed_names={id}
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -51,7 +51,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_DISCARD)
 	local tc=g:RandomSelect(1-tp,1,1,nil)
 	Duel.BreakEffect()
-	Duel.SendtoGrave(tc,REASON_EFFECT+REASON_DISCARD)
+	Duel.SendtoGrave(tc,REASON_EFFECT|REASON_DISCARD)
 	if not Duel.IsPlayerCanSpecialSummon(tp) or Duel.GetLocationCount(tp,LOCATION_MZONE)==0 then return end
 	if not tc:GetFirst():IsCode(id) then
 		Duel.BreakEffect()
@@ -66,7 +66,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetPreviousLocation()==LOCATION_HAND and (r&REASON_DISCARD)~=0
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x11e) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_DANGER) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

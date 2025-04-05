@@ -1,4 +1,4 @@
---Japanese name
+--腐死鳥ヴァルコプス
 --Vulcarrion the Rotting Phoenix
 --scripted by Naim
 local s,id=GetID()

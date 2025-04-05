@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id)
 	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER|TIMING_MAIN_END)
 	e1:SetCondition(s.ctcon)
-	e1:SetCost(s.ctcost)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetTarget(s.cttg)
 	e1:SetOperation(s.ctop)
 	c:RegisterEffect(e1)
@@ -34,11 +34,6 @@ s.listed_names={CARD_MEMENTOAL_TECUHTLICA,id}
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsMainPhase() and Duel.IsTurnPlayer(1-tp)
 		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_MEMENTOAL_TECUHTLICA),tp,LOCATION_ONFIELD,0,1,nil)
-end
-function s.ctcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsDiscardable() end
-	Duel.SendtoGrave(c,REASON_COST|REASON_DISCARD)
 end
 function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsFaceup() and chkc:IsControlerCanBeChanged() end

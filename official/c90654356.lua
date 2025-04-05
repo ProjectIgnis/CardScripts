@@ -1,4 +1,5 @@
 --暗黒プテラ
+--Black Ptera
 local s,id=GetID()
 function s.initial_effect(c)
 	--to grave

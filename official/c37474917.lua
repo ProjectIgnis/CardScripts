@@ -1,4 +1,5 @@
 --カタパルト・ウォリアー
+--Catapult Warrior
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -18,8 +19,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,nil,0x43) end
-	local sg=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,nil,nil,0x43)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,nil,SET_JUNK) end
+	local sg=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,nil,nil,SET_JUNK)
 	local atk=sg:GetFirst():GetTextAttack()
 	if atk<0 then atk=0 end
 	e:SetLabel(atk)

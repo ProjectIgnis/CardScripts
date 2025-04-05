@@ -1,4 +1,5 @@
 --樹海の射手
+--Woodland Archer
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -22,7 +23,7 @@ function s.initial_effect(c)
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCost(s.cost)
+	e3:SetCost(Cost.SelfTribute)
 	e3:SetTarget(s.target)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
@@ -31,10 +32,6 @@ function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0 and
 		Duel.IsExistingMatchingCard(Card.IsType,c:GetControler(),LOCATION_GRAVE,0,2,nil,TYPE_NORMAL)
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.filter(c)
 	return c:IsType(TYPE_GEMINI) and c:IsAbleToHand()

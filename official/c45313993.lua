@@ -1,4 +1,5 @@
 --レッド・ウルフ 
+--Red Warg
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon success
@@ -13,9 +14,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x57}
+s.listed_series={SET_RESONATOR}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==tp and eg:GetFirst():IsSetCard(0x57)
+	return ep==tp and eg:GetFirst():IsSetCard(SET_RESONATOR)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -32,7 +33,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(atk/2)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1,true)
 	end
 	Duel.SpecialSummonComplete()

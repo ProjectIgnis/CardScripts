@@ -26,7 +26,7 @@ function s.initial_effect(c)
 end
 s.listed_names={id}
 function s.cfilter(c,ft)
-	return c:IsSummonType(SUMMON_TYPE_TRIBUTE) and c:IsAbleToHandAsCost() and (ft>0 or c:GetSequence()<5)
+	return c:IsTributeSummoned() and c:IsAbleToHandAsCost() and (ft>0 or c:GetSequence()<5)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
@@ -47,7 +47,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
 	Duel.RegisterEffect(e1,tp)

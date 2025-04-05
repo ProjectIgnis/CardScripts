@@ -1,5 +1,5 @@
 --星遺物の守護竜メロダーク
---World Legacy Guardragon Melodark
+--World Legacy Guardragon Mardark
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -40,7 +40,7 @@ function s.spfilter(c)
 	return c:IsType(TYPE_NORMAL) and c:IsAbleToRemoveAsCost() and (c:IsLocation(LOCATION_HAND) or aux.SpElimFilter(c,true))
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,e:GetHandler())
+	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND|LOCATION_MZONE|LOCATION_GRAVE,0,e:GetHandler())
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2 and #rg>1 
 		and aux.SelectUnselectGroup(rg,e,tp,2,2,aux.ChkfMMZ(1),0) end
 	local g=aux.SelectUnselectGroup(rg,e,tp,2,2,aux.ChkfMMZ(1),1,tp,HINTMSG_REMOVE)

@@ -57,7 +57,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			if #g==0 then return end
 			Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
 			local sg=g:Select(p,ct,ct,nil)
-			Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)
+			Duel.SendtoDeck(sg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 		end
 	end
 end
@@ -71,7 +71,7 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD,nil)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD,nil)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -85,4 +85,3 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(eg,REASON_EFFECT)
 	end
 end
-

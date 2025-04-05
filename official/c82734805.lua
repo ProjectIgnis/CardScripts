@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	Fusion.AddProcMixRep(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0xbb),1,99,14799437,23440231)
+	Fusion.AddProcMixRep(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_INFERNOID),1,99,14799437,23440231)
 	--spsummon success
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
@@ -21,8 +21,8 @@ function s.initial_effect(c)
 	e3:SetLabelObject(e2)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xbb}
-s.material_setcode=0xbb
+s.listed_series={SET_INFERNOID}
+s.material_setcode=SET_INFERNOID
 function s.valcheck(e,c)
 	local hc=e:GetHandler()
 	local ct=hc:GetMaterial():GetClassCount(Card.GetCode,hc,SUMMON_TYPE_FUSION,hc:GetControler())
@@ -84,7 +84,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		local g2=Duel.SelectMatchingCard(1-tp,nil,1-tp,LOCATION_REMOVED,0,1,3,nil)
 		g1:Merge(g2)
 		if #g1>0 then
-			Duel.SendtoGrave(g1,REASON_EFFECT+REASON_RETURN)
+			Duel.SendtoGrave(g1,REASON_EFFECT|REASON_RETURN)
 		end
 	end
 	if ct>=10 then

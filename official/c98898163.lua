@@ -1,5 +1,5 @@
 --グランドタスク・ドラゴン
---Grand Ground Tusk Dragon
+--Grandtusk Dragon
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -39,7 +39,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(ct*600)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 	end
 end

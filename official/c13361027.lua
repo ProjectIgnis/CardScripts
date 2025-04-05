@@ -1,4 +1,5 @@
 --ドラグニティ－ブラックスピア
+--Dragunity Darkspear
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -14,9 +15,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x29}
+s.listed_series={SET_DRAGUNITY}
 function s.cfilter(c)
-	return c:IsSetCard(0x29) and c:IsRace(RACE_DRAGON)
+	return c:IsSetCard(SET_DRAGUNITY) and c:IsRace(RACE_DRAGON)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)

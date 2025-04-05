@@ -1,4 +1,5 @@
 --ガーゴイルの道化師
+--Ryu-Kishin Clown
 local s,id=GetID()
 function s.initial_effect(c)
 	--pos

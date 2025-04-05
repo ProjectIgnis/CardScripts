@@ -38,15 +38,15 @@ function s.initial_effect(c)
 	e5:SetOperation(s.repop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x2b,0x61}
+s.listed_series={SET_NINJA,SET_NINJITSU_ART}
 function s.thcfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x2b) and c:IsControler(tp)
+	return c:IsFaceup() and c:IsSetCard(SET_NINJA) and c:IsControler(tp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.thcfilter,1,nil,tp)
 end
 function s.thfilter(c)
-	return ((c:IsMonster() and c:IsSetCard(0x2b)) or c:IsSetCard(0x61))
+	return ((c:IsMonster() and c:IsSetCard(SET_NINJA)) or c:IsSetCard(SET_NINJITSU_ART))
 		and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -69,7 +69,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetTargetRange(1,0)
 		e1:SetValue(s.aclimit)
 		e1:SetLabelObject(tc)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 	end
 end
@@ -78,12 +78,12 @@ function s.aclimit(e,re,tp)
 	return re:GetHandler():IsCode(tc:GetCode())
 end
 function s.repfilter(c,tp,rp)
-	return c:IsFaceup() and ((c:IsMonster() and c:IsSetCard(0x2b)) or c:IsSetCard(0x61))
+	return c:IsFaceup() and ((c:IsMonster() and c:IsSetCard(SET_NINJA)) or c:IsSetCard(SET_NINJITSU_ART))
 		and c:IsOnField() and c:IsControler(tp)
 		and not c:IsReason(REASON_REPLACE) and (c:IsReason(REASON_BATTLE) or (c:IsReason(REASON_EFFECT) and rp~=tp))
 end
 function s.rmfilter(c)
-	return c:IsSetCard(0x2b) and c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsSetCard(SET_NINJA) and c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.repval(e,c)
 	return s.repfilter(c,e:GetHandlerPlayer(),c:GetReasonPlayer())
@@ -102,5 +102,5 @@ end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,1-tp,id)
 	local tc=e:GetLabelObject()
-	Duel.Remove(tc,POS_FACEUP,REASON_EFFECT+REASON_REPLACE)
+	Duel.Remove(tc,POS_FACEUP,REASON_EFFECT|REASON_REPLACE)
 end

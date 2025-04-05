@@ -27,8 +27,8 @@ end
 function s.aclimit(e,re,tp)
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
-	return rc~=c and re:IsActiveType(TYPE_MONSTER) and rc:IsOnField()
-		and rc:IsSummonType(SUMMON_TYPE_SPECIAL) and rc:IsAttribute(c:GetAttribute())
+	return rc~=c and re:IsMonsterEffect() and rc:IsOnField()
+		and rc:IsSpecialSummoned() and rc:IsAttribute(c:GetAttribute())
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
@@ -46,7 +46,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
 		e1:SetValue(att)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END,2)
+		e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END,2)
 		c:RegisterEffect(e1)
 	end
 end

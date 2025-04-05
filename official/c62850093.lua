@@ -1,5 +1,5 @@
 --氷天禍チルブレイン
---Cataclysmic Crisp Chillbrain
+--Cataclysmic Circumpolar Chilblainia
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

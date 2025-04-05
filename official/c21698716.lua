@@ -1,4 +1,5 @@
 --宝玉獣 コバルト・イーグル
+--Crystal Beast Cobalt Eagle
 local s,id=GetID()
 function s.initial_effect(c)
 	--send replace
@@ -21,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x1034}
+s.listed_series={SET_CRYSTAL_BEAST}
 function s.repcon(e)
 	local c=e:GetHandler()
 	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsReason(REASON_DESTROY)
@@ -32,13 +33,13 @@ function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CHANGE_TYPE)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET)
 	e1:SetValue(TYPE_SPELL+TYPE_CONTINUOUS)
 	c:RegisterEffect(e1)
-	Duel.RaiseEvent(c,EVENT_CUSTOM+47408488,e,0,tp,0,0)
+	Duel.RaiseEvent(c,EVENT_CUSTOM+CARD_CRYSTAL_TREE,e,0,tp,0,0)
 end
 function s.filter(c)
-	return c:IsSetCard(0x1034) and c:IsAbleToDeck() and c:IsFaceup()
+	return c:IsSetCard(SET_CRYSTAL_BEAST) and c:IsAbleToDeck() and c:IsFaceup()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and s.filter(chkc) end
@@ -50,6 +51,6 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
-		Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)
+		Duel.SendtoDeck(tc,nil,SEQ_DECKTOP,REASON_EFFECT)
 	end
 end

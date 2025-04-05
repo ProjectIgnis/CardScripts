@@ -1,4 +1,5 @@
 --催眠術
+--Mesmeric Control
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -14,6 +15,6 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
 	e1:SetTargetRange(0,LOCATION_MZONE)
 	e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE+EFFECT_FLAG_IGNORE_IMMUNE)
-	e1:SetReset(RESET_PHASE+PHASE_END,2)
+	e1:SetReset(RESET_PHASE|PHASE_END,2)
 	Duel.RegisterEffect(e1,tp)
 end

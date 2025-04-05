@@ -1,4 +1,4 @@
---Japanese name
+--天叢雲之巳剣
 --Ame no Murakumo no Mitsurugi
 --scripted by Naim
 local s,id=GetID()

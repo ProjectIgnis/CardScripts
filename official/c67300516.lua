@@ -1,4 +1,5 @@
 --真紅眼の飛竜
+--Red-Eyes Wyvern
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -10,17 +11,17 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_PHASE+PHASE_END)
 	e1:SetCondition(s.spcon)
-	e1:SetCost(aux.bfgcost)
+	e1:SetCost(Cost.SelfBanish)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x3b}
+s.listed_series={SET_RED_EYES}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and Duel.GetActivityCount(tp,ACTIVITY_NORMALSUMMON)==0
+	return Duel.IsTurnPlayer(tp) and Duel.GetActivityCount(tp,ACTIVITY_NORMALSUMMON)==0
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x3b) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_RED_EYES) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc,e,tp) end

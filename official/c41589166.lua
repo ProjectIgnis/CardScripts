@@ -1,4 +1,5 @@
 --天下人 紫炎
+--Tenkabito Shien
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
@@ -10,5 +11,5 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.efilter(e,te)
-	return te:IsActiveType(TYPE_TRAP)
+	return te:IsTrapEffect()
 end

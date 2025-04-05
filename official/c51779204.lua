@@ -17,7 +17,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_RED_DRAGON_ARCHFIEND}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsAbleToEnterBP() or (Duel.IsBattlePhase() and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()))
+	return Duel.IsAbleToEnterBP() or (Duel.IsBattlePhase() and aux.StatChangeDamageStepCondition())
 end
 function s.tgfilter(c)
 	return c:IsFaceup() and c:IsCode(CARD_RED_DRAGON_ARCHFIEND) and not c:HasFlagEffect(id)

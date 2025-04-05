@@ -1,4 +1,5 @@
 --翡翠の蟲笛
+--Jade Insect Whistle
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

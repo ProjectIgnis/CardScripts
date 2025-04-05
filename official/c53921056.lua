@@ -1,4 +1,5 @@
 --氷結界の虎将 ガンターラ
+--General Gantala of the Ice Barrier
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -15,12 +16,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x2f}
+s.listed_series={SET_ICE_BARRIER}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x2f) and c:GetCode()~=id and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_ICE_BARRIER) and c:GetCode()~=id and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc,e,tp) end

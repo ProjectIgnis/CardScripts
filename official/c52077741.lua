@@ -1,4 +1,5 @@
 --翻弄するエルフの剣士
+--Obnoxious Celtic Guard
 local s,id=GetID()
 function s.initial_effect(c)
 	--indes

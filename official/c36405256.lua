@@ -1,6 +1,5 @@
 --時花の魔女－フルール・ド・ソルシエール
 --Sorciere de Fleur
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--When normal or special summoned, special summon 1 monster from opponent's GY
@@ -39,7 +38,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
 		e1:SetOperation(s.desop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetCountLimit(1)
 		tc:RegisterEffect(e1)
 		--Cannot attack directly
@@ -48,7 +47,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e2)
 	end
 end

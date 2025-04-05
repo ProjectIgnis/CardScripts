@@ -1,4 +1,5 @@
 --マンモス・ゾンビ
+--Zombie Mammoth
 local s,id=GetID()
 function s.initial_effect(c)
 	--self destroy

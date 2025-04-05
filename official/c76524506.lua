@@ -1,5 +1,5 @@
--- ガーデン・ローズ・フローラ
--- Garden Rose Flora
+--ガーデン・ローズ・フローラ
+--Garden Rose Flora
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
+	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER|TIMING_MAIN_END)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(s.sccon)
 	e2:SetTarget(s.sctarg)
@@ -54,7 +54,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetDescription(aux.Stringid(id,1))
 		e1:SetTargetRange(1,0)
 		e1:SetTarget(s.splimit)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 		--Clock Lizard check
 		aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)
@@ -74,7 +74,7 @@ function s.lizfilter(e,c)
 	return not (c:IsOriginalType(TYPE_SYNCHRO))
 end
 function s.sccon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)
+	return Duel.IsTurnPlayer(1-tp) and (Duel.IsMainPhase())
 end
 function s.sctarg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

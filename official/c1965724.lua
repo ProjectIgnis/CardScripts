@@ -36,7 +36,7 @@ function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,27288416),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	return e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 end
 function s.atkcon(e)
 	return e:GetHandler():GetFlagEffect(id)~=0

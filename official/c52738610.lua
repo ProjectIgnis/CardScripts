@@ -1,4 +1,5 @@
 --影霊衣の舞姫
+--Dance Princess of the Nekroz
 local s,id=GetID()
 function s.initial_effect(c)
 	--act limit
@@ -30,11 +31,11 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xb4}
+s.listed_series={SET_NEKROZ}
 s.listed_names={id}
 function s.chainop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and rc:IsSetCard(0xb4) and re:IsActiveType(TYPE_RITUAL) then
+	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and rc:IsSetCard(SET_NEKROZ) and re:IsActiveType(TYPE_RITUAL) then
 		Duel.SetChainLimit(s.chainlm)
 	end
 end
@@ -42,13 +43,13 @@ function s.chainlm(e,rp,tp)
 	return tp==rp
 end
 function s.tgtg(e,c)
-	return c:IsSetCard(0xb4) and c:IsType(TYPE_RITUAL)
+	return c:IsSetCard(SET_NEKROZ) and c:IsType(TYPE_RITUAL)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return (r&REASON_EFFECT)~=0
 end
 function s.thfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xb4) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(SET_NEKROZ) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and s.thfilter(chkc) end

@@ -1,4 +1,5 @@
 --聖剣を抱く王妃ギネヴィア
+--Gwenhwyfar, Queen of Noble Arms
 local s,id=GetID()
 function s.initial_effect(c)
 	--equip
@@ -7,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCategory(CATEGORY_EQUIP)
-	e1:SetRange(LOCATION_HAND+LOCATION_GRAVE)
+	e1:SetRange(LOCATION_HAND|LOCATION_GRAVE)
 	e1:SetCountLimit(1,id)
 	e1:SetTarget(s.eqtg)
 	e1:SetOperation(s.eqop)
@@ -37,9 +38,9 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x107a}
+s.listed_series={SET_NOBLE_KNIGHT}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x107a)
+	return c:IsFaceup() and c:IsSetCard(SET_NOBLE_KNIGHT)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -64,12 +65,12 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_EQUIP_LIMIT)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e1:SetValue(s.eqlimit)
 	c:RegisterEffect(e1)
 end
 function s.eqlimit(e,c)
-	return c:IsSetCard(0x107a)
+	return c:IsSetCard(SET_NOBLE_KNIGHT)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -78,7 +79,7 @@ function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	return Duel.SelectEffectYesNo(e:GetOwnerPlayer(),c,96)
 end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Destroy(e:GetHandler(),REASON_EFFECT+REASON_REPLACE)
+	Duel.Destroy(e:GetHandler(),REASON_EFFECT|REASON_REPLACE)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local tg=e:GetHandler():GetEquipTarget()

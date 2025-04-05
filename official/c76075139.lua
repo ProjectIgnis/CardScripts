@@ -1,20 +1,20 @@
--- ヴァリアンツＧ－グランデューク
--- Vaylantz Genesis Grand Duke
--- Scripted by Hatter
+--ヴァリアンツＧ－グランデューク
+--Vaylantz Genesis Grand Duke
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	Pendulum.AddProcedure(c,false)
 	c:EnableReviveLimit()
-	-- 2 "Valiants" monsters
+	--2 "Valiants" monsters
 	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_VAYLANTZ),2)
-	-- Special Summon limitation
+	--Special Summon limitation
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
 	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e0:SetValue(s.splimit)
 	c:RegisterEffect(e0)
-	-- Alternate summon procedure
+	--Alternate summon procedure
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.hsptg)
 	e1:SetOperation(s.hspop)
 	c:RegisterEffect(e1)
-	-- Special Summon self or move 1 "Valiants" monster
+	--Special Summon self or move 1 "Valiants" monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	e2:SetCountLimit(1,id)
 	e2:SetTarget(s.spmvtg)
 	c:RegisterEffect(e2)
-	-- Send Monster Card to hand
+	--Send Monster Card to hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_DAMAGE+CATEGORY_ATKCHANGE)
@@ -71,7 +71,7 @@ end
 function s.hspop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=e:GetLabelObject()
 	if not g then return end
-	Duel.Release(g,REASON_COST+REASON_MATERIAL)
+	Duel.Release(g,REASON_COST|REASON_MATERIAL)
 	g:DeleteGroup()
 end
 function s.spmvtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -137,7 +137,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	if dam>0 then
 		Duel.BreakEffect()
 		local c=e:GetHandler()
-		-- Gain ATK
+		--Gain ATK
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)

@@ -1,4 +1,5 @@
 --チューナー・キャプチャー
+--Tuner Capture
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return tc:IsSummonType(SUMMON_TYPE_SYNCHRO) and ep~=tp
+	return tc:IsSynchroSummoned() and ep~=tp
 end
 function s.filter(c,e,tp,mg)
 	return mg:IsContains(c) and c:IsType(TYPE_TUNER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

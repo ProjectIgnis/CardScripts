@@ -30,4 +30,3 @@ function s.dcon2(e)
 	local a,d=Duel.GetAttacker(),Duel.GetAttackTarget()
 	return a:GetControler()==1-e:GetHandlerPlayer() and d and d:IsDefensePos() and d:IsRace(RACE_ROCK)
 end
-

@@ -13,12 +13,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xfc}
+s.listed_series={SET_GOUKI}
 function s.desfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0xfc) and Duel.GetMZoneCount(tp,c)>0
+	return c:IsFaceup() and c:IsSetCard(SET_GOUKI) and Duel.GetMZoneCount(tp,c)>0
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xfc) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_GOUKI) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -40,4 +40,3 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(tc2,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-

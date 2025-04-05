@@ -1,4 +1,5 @@
 --ＳＰＹＲＡＬ ＲＥＳＯＲＴ
+--SPYRAL Resort
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -37,12 +38,12 @@ function s.initial_effect(c)
 	e4:SetOperation(s.mtop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xee}
+s.listed_series={SET_SPYRAL}
 function s.tgtg(e,c)
-	return c:IsSetCard(0xee) and c~=e:GetHandler()
+	return c:IsSetCard(SET_SPYRAL) and c~=e:GetHandler()
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xee) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_SPYRAL) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -58,7 +59,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.cfilter(c)
 	return c:IsMonster() and c:IsAbleToDeckAsCost()

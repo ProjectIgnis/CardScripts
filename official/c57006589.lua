@@ -1,4 +1,5 @@
 --エネルギー吸収板
+--Energy-Absorbing Monolith
 local s,id=GetID()
 function s.initial_effect(c)
 	--reflect

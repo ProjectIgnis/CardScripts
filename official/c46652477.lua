@@ -1,4 +1,5 @@
 --転生の予言
+--The Transmigration Prophecy
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -21,5 +22,5 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
-	Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)
+	Duel.SendtoDeck(sg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 end

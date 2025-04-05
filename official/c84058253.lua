@@ -1,9 +1,10 @@
 --キメラテック・ランページ・ドラゴン
+--Chimeratech Rampage Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--fusion material
-	Fusion.AddProcMixRep(c,false,false,aux.FilterBoolFunctionEx(Card.IsSetCard,0x1093),2,99)
+	Fusion.AddProcMixRep(c,false,false,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_CYBER_DRAGON),2,99)
 	--destroy
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_DESTROY)
@@ -24,17 +25,17 @@ function s.initial_effect(c)
 	e3:SetOperation(s.tgop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x1093}
-s.material_setcode={0x93,0x1093}
+s.listed_series={SET_CYBER_DRAGON}
+s.material_setcode={SET_CYBER,SET_CYBER_DRAGON}
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return (e:GetHandler():GetSummonType()&SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsSpellTrap() end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsType,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil,TYPE_SPELL+TYPE_TRAP) end
+	if chk==0 then return Duel.IsExistingTarget(Card.IsSpellTrap,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
 	local ct=e:GetHandler():GetMaterialCount()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp, Card.IsType,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,ct,nil,TYPE_SPELL+TYPE_TRAP)
+	local g=Duel.SelectTarget(tp, Card.IsSpellTrap,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,ct,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
@@ -61,7 +62,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_EXTRA_ATTACK)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetValue(ct)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end

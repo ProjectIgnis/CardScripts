@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x116}
+s.listed_series={SET_CRUSADIA}
 s.listed_names={id}
 function s.spval(e,c)
 	return 0,aux.GetMMZonesPointedTo(c:GetControler())
@@ -39,7 +39,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return aux.IsZone(e:GetHandler(),zone,tp)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x116) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_CRUSADIA) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end

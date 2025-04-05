@@ -1,12 +1,12 @@
--- 代行者の近衛 ムーン
--- Guard of the Agents - Moon
--- Scripted by Hatter
+--代行者の近衛 ムーン
+--Protector of The Agents - Moon
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	-- 2 Fairy Monsters
+	--2 Fairy Monsters
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_FAIRY),2,2)
-	-- Send to GY or add to hand
+	--Send to GY or add to hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOGRAVE+CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.ghtg)
 	e1:SetOperation(s.ghop)
 	c:RegisterEffect(e1)
-	-- Destroy
+	--Destroy
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DESTROY)
@@ -34,10 +34,10 @@ end
 s.listed_names={CARD_SANCTUARY_SKY,91188343}
 function s.sanct()
 	return Duel.IsEnvironment(CARD_SANCTUARY_SKY)
-		or Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_SANCTUARY_SKY),0,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,1,nil)
+		or Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_SANCTUARY_SKY),0,LOCATION_ONFIELD|LOCATION_GRAVE,LOCATION_ONFIELD|LOCATION_GRAVE,1,nil)
 end
 function s.ghcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+	return e:GetHandler():IsLinkSummoned()
 end
 function s.tgfilter(c)
 	return (c:IsCode(CARD_SANCTUARY_SKY) or c:ListsCode(CARD_SANCTUARY_SKY)) and c:IsAbleToGrave()
@@ -48,14 +48,14 @@ end
 function s.ghtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil)
-			or (s.sanct() and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil))
+			or (s.sanct() and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,nil))
 	end
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
-	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK|LOCATION_GRAVE)
 end
 function s.ghop(e,tp,eg,ep,ev,re,r,rp)
 	local gg=Duel.GetMatchingGroup(s.tgfilter,tp,LOCATION_DECK,0,nil)
-	local hg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.thfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,nil)
+	local hg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.thfilter),tp,LOCATION_DECK|LOCATION_GRAVE,0,nil)
 	if (#hg>0 and s.sanct()) and (#gg<1 or Duel.SelectYesNo(tp,aux.Stringid(id,2))) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=hg:Select(tp,1,1,nil)

@@ -1,5 +1,5 @@
 --珠玉獣－アルゴザウルス
---Jewel Beast - Argosaurus
+--Animadorned Archosaur
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x10e}
+s.listed_series={SET_EVOLUTION_PILL}
 s.listed_names={id}
 function s.desfilter(c,tp)
 	return c:IsRace(RACE_DINOSAUR) and (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and not c:IsCode(id)
@@ -26,19 +26,19 @@ function s.desfilter(c,tp)
 end
 function s.thfilter(c,oc)
 	if not c:IsAbleToHand() then return false end
-	if (c:IsSpell() and c:IsSetCard(0x10e)) then return true end
+	if (c:IsSpell() and c:IsSetCard(SET_EVOLUTION_PILL)) then return true end
 	return c:IsMonster() and oc:HasLevel() and c:GetOriginalLevel()==oc:GetOriginalLevel()
 		and (c:IsRace(RACE_WINGEDBEAST) or c:IsRace(RACE_REPTILE) or c:IsRace(RACE_SEASERPENT))
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil,tp) end
-	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,nil,tp)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,nil,tp) end
+	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,nil,tp)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local tc=Duel.SelectMatchingCard(tp,s.desfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil,tp):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.desfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,1,nil,tp):GetFirst()
 	if tc and Duel.Destroy(tc,REASON_EFFECT)~=0 then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
@@ -49,4 +49,3 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

@@ -1,4 +1,5 @@
 --E・HERO セイラーマン
+--Elemental HERO Mariner
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -18,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.dacon)
 	c:RegisterEffect(e2)
 end
-s.material_setcode={0x8,0x3008}
+s.material_setcode={SET_HERO,SET_ELEMENTAL_HERO}
 function s.filter(c)
 	return c:IsFacedown() and c:GetSequence()~=5
 end

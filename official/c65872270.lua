@@ -1,4 +1,5 @@
 --イグナイト・バースト
+--Igknight Burst
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -28,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xc8}
+s.listed_series={SET_IGKNIGHT}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	if s.descon(e,tp,eg,ep,ev,re,r,rp) and s.destg(e,tp,eg,ep,ev,re,r,rp,0) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
@@ -41,17 +42,17 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
-		and (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)
+	return Duel.IsTurnPlayer(tp)
+		and (Duel.IsMainPhase())
 end
 function s.desfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xc8)
+	return c:IsFaceup() and c:IsSetCard(SET_IGKNIGHT)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_ONFIELD,0,1,e:GetHandler())
 		and Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,1,nil)
 		and e:GetHandler():GetFlagEffect(id)==0 end
-	e:GetHandler():RegisterFlagEffect(id,RESET_PHASE+PHASE_END,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_PHASE|PHASE_END,0,1)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,tp,LOCATION_ONFIELD)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
@@ -72,7 +73,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xc8) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(SET_IGKNIGHT) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_EXTRA,0,1,nil) end

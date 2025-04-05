@@ -1,4 +1,5 @@
 --魔導剣士 シャリオ
+--Charioteer of Prophecy
 local s,id=GetID()
 function s.initial_effect(c)
 	--salvage
@@ -14,13 +15,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x106e}
+s.listed_series={SET_SPELLBOOK}
 function s.cfilter(c)
-	return c:IsSetCard(0x106e) and c:IsSpell() and c:IsDiscardable()
+	return c:IsSetCard(SET_SPELLBOOK) and c:IsSpell() and c:IsDiscardable()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_DISCARD+REASON_COST)
+	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_DISCARD|REASON_COST)
 end
 function s.filter(c)
 	return c:IsRace(RACE_SPELLCASTER) and c:IsAbleToHand()

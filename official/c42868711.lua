@@ -32,7 +32,7 @@ function s.distg(e,c)
 	return c:IsControler(1-e:GetHandlerPlayer()) and c:IsHasCardTarget(e:GetHandler())
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
-	if rp==tp or not re:IsActiveType(TYPE_SPELL+TYPE_TRAP) then return end
+	if rp==tp or not re:IsSpellTrapEffect() then return end
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	if not g or #g==0 then return end

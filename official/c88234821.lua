@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Synchro Summon
-	Synchro.AddProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x29),1,1,Synchro.NonTuner(nil),1,99)
+	Synchro.AddProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,SET_DRAGUNITY),1,1,Synchro.NonTuner(nil),1,99)
 	c:EnableReviveLimit()
 	--Negate activation
 	local e1=Effect.CreateEffect(c)
@@ -44,18 +44,18 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x29}
+s.listed_series={SET_DRAGUNITY}
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return re:IsActiveType(TYPE_MONSTER) and rp==1-tp and not c:IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)
+	return re:IsMonsterEffect() and rp==1-tp and not c:IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x29) and c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true,false)
+	return c:IsSetCard(SET_DRAGUNITY) and c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true,false)
 end
 function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE+LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE|LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_GRAVE+LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_GRAVE|LOCATION_MZONE,0,1,1,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -100,14 +100,14 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_SYNCHRO) and rp==1-tp and c:IsPreviousControler(tp)
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSynchroSummoned() and rp==1-tp and c:IsPreviousControler(tp)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local sg=Duel.GetMatchingGroup(Card.IsType,tp,0,LOCATION_ONFIELD,nil,TYPE_SPELL+TYPE_TRAP)
+	local sg=Duel.GetMatchingGroup(Card.IsSpellTrap,tp,0,LOCATION_ONFIELD,nil)
 	if chk==0 then return #sg>0 end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,sg,#sg,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local sg=Duel.GetMatchingGroup(Card.IsType,tp,0,LOCATION_ONFIELD,nil,TYPE_SPELL+TYPE_TRAP)
+	local sg=Duel.GetMatchingGroup(Card.IsSpellTrap,tp,0,LOCATION_ONFIELD,nil)
 	Duel.Destroy(sg,REASON_EFFECT)
 end

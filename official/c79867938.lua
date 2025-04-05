@@ -1,4 +1,5 @@
 --BK ヘッドギア
+--Battlin' Boxer Headgeared
 local s,id=GetID()
 function s.initial_effect(c)
 	--send to grave
@@ -21,9 +22,9 @@ function s.initial_effect(c)
 	e1:SetValue(s.valcon)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x84}
+s.listed_series={SET_BATTLIN_BOXER}
 function s.tgfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x84) and c:IsAbleToGrave()
+	return c:IsMonster() and c:IsSetCard(SET_BATTLIN_BOXER) and c:IsAbleToGrave()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end

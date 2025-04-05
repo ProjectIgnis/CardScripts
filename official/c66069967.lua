@@ -42,7 +42,7 @@ function s.initial_effect(c)
 	e4:SetValue(aux.indoval)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xcc}
+s.listed_series={SET_PREDICTION_PRINCESS}
 s.listed_names={id}
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -58,7 +58,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter1(c)
-	return c:IsSetCard(0xcc) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_PREDICTION_PRINCESS) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thfilter2(c)
 	return c:IsRitualSpell() and c:IsAbleToHand()

@@ -1,8 +1,8 @@
 --モンスターアソート
---Assorted Monsters
+--Monster Assortment
 --Scripted by Eerie Code
 local s,id=GetID()
-function s.initial_effect(c)	
+function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

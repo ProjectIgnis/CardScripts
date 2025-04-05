@@ -31,9 +31,9 @@ function s.initial_effect(c)
 	e4:SetCategory(CATEGORY_ATKCHANGE)
 	e4:SetType(EFFECT_TYPE_QUICK_O)
 	e4:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
-	e4:SetRange(LOCATION_HAND+LOCATION_MZONE)
+	e4:SetRange(LOCATION_HAND|LOCATION_MZONE)
 	e4:SetCondition(s.atkcon)
-	e4:SetCost(s.atkcost)
+	e4:SetCost(Cost.SelfToGrave)
 	e4:SetOperation(s.atkop)
 	c:RegisterEffect(e4)
 end
@@ -57,7 +57,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=e:GetLabelObject()
 	if not g then return end
-	Duel.SendtoGrave(g,REASON_DISCARD+REASON_COST)
+	Duel.SendtoGrave(g,REASON_DISCARD|REASON_COST)
 	g:DeleteGroup()
 end
 function s.filter(c)
@@ -83,17 +83,13 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return c and c~=e:GetHandler() and c:IsRace(RACE_SPELLCASTER)
 		and c:IsAttribute(ATTRIBUTE_DARK) and c:IsRelateToBattle()
 end
-function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
-end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetLabelObject()
 	if c:IsFaceup() and c:IsRelateToBattle() then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE_CAL)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE_CAL)
 		e1:SetValue(2000)
 		c:RegisterEffect(e1)
 		local e2=e1:Clone()

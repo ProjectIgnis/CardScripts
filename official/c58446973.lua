@@ -15,10 +15,10 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xbb}
+s.listed_series={SET_INFERNOID}
 s.listed_names={id}
 function s.filter(c)
-	return c:IsSetCard(0xbb) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToGrave()
+	return c:IsSetCard(SET_INFERNOID) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToGrave()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
@@ -36,14 +36,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
 		e1:SetValue(tc:GetLevel())
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_CHANGE_CODE)
 		e2:SetValue(code)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e2)
-		c:CopyEffect(code,RESET_EVENT+RESETS_STANDARD,1)
+		c:CopyEffect(code,RESET_EVENT|RESETS_STANDARD,1)
 	end
 end

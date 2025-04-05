@@ -27,18 +27,18 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(tp,g)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 		local sg=g:Select(tp,1,1,nil)
-		Duel.SendtoGrave(sg,REASON_EFFECT+REASON_DISCARD)
+		Duel.SendtoGrave(sg,REASON_EFFECT|REASON_DISCARD)
 		Duel.ShuffleHand(1-tp)
 	elseif d==6 then
 		local g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
 		if #g==0 then return end
-		Duel.SendtoGrave(g,REASON_EFFECT+REASON_DISCARD)
+		Duel.SendtoGrave(g,REASON_EFFECT|REASON_DISCARD)
 	else
 		local g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
 		if #g==0 then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 		local sg=g:Select(tp,1,1,nil)
-		Duel.SendtoGrave(sg,REASON_EFFECT+REASON_DISCARD)
+		Duel.SendtoGrave(sg,REASON_EFFECT|REASON_DISCARD)
 		Duel.ShuffleHand(tp)
 	end
 end

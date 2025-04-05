@@ -1,4 +1,5 @@
 --ゼンマイナイト
+--Wind-Up Knight
 local s,id=GetID()
 function s.initial_effect(c)
 	--negate attack
@@ -13,10 +14,10 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x58}
+s.listed_series={SET_WIND_UP}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
-	return d and d:IsControler(tp) and d:IsFaceup() and d:IsSetCard(0x58)
+	return d and d:IsControler(tp) and d:IsFaceup() and d:IsSetCard(SET_WIND_UP)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateAttack()

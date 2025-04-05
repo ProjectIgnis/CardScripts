@@ -1,4 +1,5 @@
 --有翼幻獣キマイラ
+--Chimera the Flying Mythical Beast
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-s.material_setcode=0x1b
+s.material_setcode=SET_PHANTOM_BEAST
 function s.spfilter(c,e,tp)
 	return c:IsCode(5818798,77207191) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

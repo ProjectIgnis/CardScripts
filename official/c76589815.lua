@@ -1,4 +1,5 @@
 --BK チート・コミッショナー
+--Battlin' Boxer Cheat Commissioner
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -24,14 +25,14 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCondition(s.cfcon)
-	e3:SetCost(s.cfcost)
+	e3:SetCost(Cost.Detach(2))
 	e3:SetTarget(s.cftg)
 	e3:SetOperation(s.cfop)
 	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
 end
-s.listed_series={0x84}
+s.listed_series={SET_BATTLIN_BOXER}
 function s.atfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x84)
+	return c:IsFaceup() and c:IsSetCard(SET_BATTLIN_BOXER)
 end
 function s.atcon(e)
 	return Duel.IsExistingMatchingCard(s.atfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
@@ -39,12 +40,8 @@ end
 function s.cfcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local at=Duel.GetAttackTarget()
-	return (a:IsControler(tp) and a~=e:GetHandler() and a:IsSetCard(0x84))
-		or (at and at:IsControler(tp) and at:IsFaceup() and at~=e:GetHandler() and at:IsSetCard(0x84))
-end
-function s.cfcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,2,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,2,2,REASON_COST)
+	return (a:IsControler(tp) and a~=e:GetHandler() and a:IsSetCard(SET_BATTLIN_BOXER))
+		or (at and at:IsControler(tp) and at:IsFaceup() and at~=e:GetHandler() and at:IsSetCard(SET_BATTLIN_BOXER))
 end
 function s.cftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>0

@@ -1,4 +1,5 @@
 --魔力倹約術
+--Spell Economics
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

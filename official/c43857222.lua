@@ -1,11 +1,11 @@
--- ライブラの魔法秤
--- Magicalibra
--- Scripted by Hatter
+--ライブラの魔法秤
+--Magicalibra
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Pendulum properties
+	--Pendulum properties
 	Pendulum.AddProcedure(c)
-	-- Change levels
+	--Change levels
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -34,7 +34,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetTargetCards(e):Filter(Card.IsFaceup,nil)
 	if not c:IsRelateToEffect(e) or #tg<1 then return end
 	local lv=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
-	local reset=RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END
+	local reset=RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END
 	if #tg==1 then
 		local tc=tg:GetFirst()
 		if tc:GetLevel()<=lv then return end

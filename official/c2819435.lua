@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
-	--Special Summon  1 "Phantasm Spiral Token"
+	--Special Summon 1 "Phantasm Spiral Token"
 	local e6=Effect.CreateEffect(c)
 	e6:SetDescription(aux.Stringid(id,1))
 	e6:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)

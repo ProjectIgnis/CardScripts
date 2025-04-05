@@ -11,26 +11,26 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xaf}
+s.listed_series={SET_DD}
 function s.filter(c)
-	return c:IsSetCard(0xaf) and (c:IsMonster() or c:IsLocation(LOCATION_PZONE)) and (c:IsFaceup() or c:IsLocation(LOCATION_HAND)) and c:IsAbleToDeck()
+	return c:IsSetCard(SET_DD) and (c:IsMonster() or c:IsLocation(LOCATION_PZONE)) and (c:IsFaceup() or c:IsLocation(LOCATION_HAND)) and c:IsAbleToDeck()
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xaf) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_DD) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE+LOCATION_PZONE+LOCATION_GRAVE+LOCATION_HAND,0,3,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,3,tp,LOCATION_MZONE+LOCATION_PZONE+LOCATION_GRAVE+LOCATION_HAND)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE|LOCATION_PZONE|LOCATION_GRAVE|LOCATION_HAND,0,3,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,3,tp,LOCATION_MZONE|LOCATION_PZONE|LOCATION_GRAVE|LOCATION_HAND)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,2,tp,LOCATION_DECK)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.filter),tp,LOCATION_MZONE+LOCATION_PZONE+LOCATION_GRAVE+LOCATION_HAND,0,nil)
+	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.filter),tp,LOCATION_MZONE|LOCATION_PZONE|LOCATION_GRAVE|LOCATION_HAND,0,nil)
 	if #g<3 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local sg=g:Select(tp,3,3,nil)
 	local cg=sg:Filter(Card.IsLocation,nil,LOCATION_HAND)
 	Duel.ConfirmCards(1-tp,cg)
-	Duel.SendtoDeck(sg,nil,0,REASON_EFFECT)
+	Duel.SendtoDeck(sg,nil,SEQ_DECKTOP,REASON_EFFECT)
 	local dg=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil)
 	if #dg>1 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.BreakEffect()

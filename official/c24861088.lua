@@ -26,13 +26,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_CHAIN,s.chainfilter)
 end
-s.listed_series={0x70}
+s.listed_series={SET_CHRONOMALY}
 s.listed_names={id}
 function s.chainfilter(re,tp,cid)
-	return re:GetHandler():IsSetCard(0x70)
+	return re:GetHandler():IsSetCard(SET_CHRONOMALY)
 end
 function s.filter(c)
-	return c:IsSetCard(0x70) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_CHRONOMALY) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
@@ -47,7 +47,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c)
-	return c:IsFacedown() or not c:IsSetCard(0x70)
+	return c:IsFacedown() or not c:IsSetCard(SET_CHRONOMALY)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)>0
@@ -62,11 +62,11 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e1:SetTargetRange(1,0)
 	e1:SetValue(s.aclimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.aclimit(e,re,tp)
-	return not re:GetHandler():IsSetCard(0x70)
+	return not re:GetHandler():IsSetCard(SET_CHRONOMALY)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

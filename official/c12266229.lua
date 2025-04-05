@@ -55,7 +55,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==1-tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainDisablable(ev)
+	return ep==1-tp and re:IsMonsterEffect() and Duel.IsChainDisablable(ev)
 end
 function s.spfilter(c,e,tp)
 	return c:IsCode(CARD_DARK_MAGICIAN) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

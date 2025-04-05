@@ -1,4 +1,5 @@
 --マジック・リサイクラー
+--Spell Recycler
 local s,id=GetID()
 function s.initial_effect(c)
 	--todeck
@@ -10,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e1:SetRange(LOCATION_GRAVE)
 	e1:SetCondition(s.condition)
-	e1:SetCost(aux.bfgcost)
+	e1:SetCost(Cost.SelfBanish)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
@@ -32,6 +33,6 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if Duel.DiscardDeck(tp,1,REASON_EFFECT)>0 and tc:IsRelateToEffect(e) then
-		Duel.SendtoDeck(tc,nil,1,REASON_EFFECT)
+		Duel.SendtoDeck(tc,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 	end
 end

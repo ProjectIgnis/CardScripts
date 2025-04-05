@@ -1,4 +1,5 @@
 --アーマー・ブレイカー
+--Armor Breaker
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddUnionProcedure(c,aux.FilterBoolFunction(Card.IsRace,RACE_WARRIOR),true)

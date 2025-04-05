@@ -1,4 +1,5 @@
 --避雷神
+--Lightning Rod Lord
 local s,id=GetID()
 function s.initial_effect(c)
 	--actlimit
@@ -12,6 +13,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.actlimit(e,te,tp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1
-		and te:IsHasType(EFFECT_TYPE_ACTIVATE) and te:IsActiveType(TYPE_SPELL)
+	return Duel.IsPhase(PHASE_MAIN1)
+		and te:IsHasType(EFFECT_TYPE_ACTIVATE) and te:IsSpellEffect()
 end

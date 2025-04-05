@@ -1,4 +1,5 @@
 --メタファイズ・ネフティス
+--Metaphys Nephthys
 local s,id=GetID()
 function s.initial_effect(c)
 	--remove
@@ -17,19 +18,19 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e2:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e2:SetCountLimit(1)
 	e2:SetRange(LOCATION_REMOVED)
 	e2:SetCondition(s.thcon)
-	e2:SetCost(s.thcost)
+	e2:SetCost(Cost.SelfToDeck)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-s.listed_series={0x105}
+s.listed_series={SET_METAPHYS}
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return re and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x105)
+	return re and re:IsMonsterEffect() and re:GetHandler():IsSetCard(SET_METAPHYS)
 end
 function s.rmfilter(c)
 	return c:IsFacedown() and c:IsSpellTrap() and c:IsAbleToRemove()
@@ -48,12 +49,8 @@ end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnCount()==e:GetHandler():GetTurnID()+1
 end
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToDeckAsCost() end
-	Duel.SendtoDeck(e:GetHandler(),tp,2,REASON_COST)
-end
 function s.thfilter(c)
-	return c:IsSetCard(0x105) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_METAPHYS) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

@@ -1,4 +1,5 @@
 --EMドクロバット・ジョーカー
+--Performapal Skullcrobat Joker
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -22,10 +23,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x9f,0x98,0x99}
+s.listed_series={SET_PERFORMAPAL,SET_MAGICIAN,SET_ODD_EYES}
 s.listed_names={id}
 function s.filter(c)
-	return c:IsSetCard(0x9f) or (c:IsSetCard(0x98) and c:IsType(TYPE_PENDULUM)) or c:IsSetCard(0x99)
+	return c:IsSetCard(SET_PERFORMAPAL) or (c:IsSetCard(SET_MAGICIAN) and c:IsType(TYPE_PENDULUM)) or c:IsSetCard(SET_ODD_EYES)
 end
 function s.splimit(e,c,tp,sumtp,sumpos)
 	return not s.filter(c) and (sumtp&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM

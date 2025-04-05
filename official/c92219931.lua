@@ -1,4 +1,5 @@
 --二者一両損
+--Simultaneous Loss
 local s,id=GetID()
 function s.initial_effect(c)
 	--discard deck

@@ -1,4 +1,5 @@
 --始祖竜ワイアーム
+--First of the Dragons
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,0,id)
@@ -31,5 +32,5 @@ function s.indval(e,c)
 	return not c:IsType(TYPE_NORMAL)
 end
 function s.efilter(e,te)
-	return te:IsActiveType(TYPE_MONSTER) and te:GetOwner()~=e:GetOwner()
+	return te:IsMonsterEffect() and te:GetOwner()~=e:GetOwner()
 end

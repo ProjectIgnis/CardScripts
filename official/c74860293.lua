@@ -19,12 +19,12 @@ function s.initial_effect(c)
 end
 s.material={63977008}
 s.listed_names={63977008}
-s.material_setcode=0x1017
+s.material_setcode=SET_SYNCHRON
 function s.tfilter(c,lc,stype,tp)
 	return c:IsSummonCode(lc,stype,tp,63977008) or c:IsHasEffect(20932152)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return e:GetHandler():IsSynchroSummoned()
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() end

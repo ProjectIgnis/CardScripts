@@ -1,4 +1,5 @@
 --始祖の守護者ティラス
+--Tiras, Keeper of Genesis
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -19,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e2:SetCode(EVENT_PHASE|PHASE_BATTLE)
 	e2:SetCountLimit(1)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(s.descon)
@@ -58,7 +59,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

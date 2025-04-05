@@ -1,4 +1,5 @@
 --キングス・ナイト
+--King's Knight
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -12,15 +13,15 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-s.listed_names={25652259,90876561}
+s.listed_names={CARD_QUEEN_KNIGHT,CARD_JACK_KNIGHT}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsCode(25652259)
+	return c:IsFaceup() and c:IsCode(CARD_QUEEN_KNIGHT)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.filter(c,e,tp)
-	return c:IsCode(90876561) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsCode(CARD_JACK_KNIGHT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

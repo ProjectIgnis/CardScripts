@@ -1,4 +1,5 @@
 --精神統一
+--Gather Your Mind
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

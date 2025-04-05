@@ -1,4 +1,5 @@
 --疾風の暗黒騎士ガイア
+--Swift Gaia the Fierce Knight
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon

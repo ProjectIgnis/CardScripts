@@ -38,7 +38,7 @@ function s.initial_effect(c)
 	e5:SetType(EFFECT_TYPE_QUICK_O)
 	e5:SetRange(LOCATION_MZONE)
 	e5:SetCode(EVENT_FREE_CHAIN)
-	e5:SetHintTiming(TIMINGS_CHECK_MONSTER+TIMING_BATTLE_START+TIMING_MAIN_END)
+	e5:SetHintTiming(TIMINGS_CHECK_MONSTER|TIMING_BATTLE_START|TIMING_MAIN_END)
 	e5:SetCountLimit(1)
 	e5:SetCost(s.cost)
 	e5:SetTarget(s.target)
@@ -46,22 +46,22 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5,false,REGISTER_FLAG_DETACH_XMAT)
 end
 s.listed_names={id}
-s.listed_series={0x108a,0x4c,0x89}
+s.listed_series={SET_TRAPTRIX,SET_TRAP_HOLE,SET_HOLE}
 function s.imcon(e)
 	return e:GetHandler():GetOverlayCount()>0
 end
 function s.efilter(e,te)
-	return te:IsActiveType(TYPE_TRAP)
+	return te:IsTrapEffect()
 end
 function s.imtg(e,c)
-	return c:IsSetCard(0x108a) and not c:IsCode(id)
+	return c:IsSetCard(SET_TRAPTRIX) and not c:IsCode(id)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)
 	return true
 end
 function s.filter(c)
-	return c:GetType()==TYPE_TRAP and (c:IsSetCard(0x4c) or c:IsSetCard(0x89)) and c:IsAbleToGraveAsCost()
+	return c:IsNormalTrap() and (c:IsSetCard(SET_TRAP_HOLE) or c:IsSetCard(SET_HOLE)) and c:IsAbleToGraveAsCost()
 		and c:CheckActivateEffect(false,true,true)~=nil
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -1,9 +1,9 @@
 --ゴルゴネイオの呪眼
---Evil Eye of Gorgone
+--Evil Eye of Gorgoneio
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	local e0=aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,0x129))
+	local e0=aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,SET_EVIL_EYE))
 	e0:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	--change name
 	local e1=Effect.CreateEffect(c)
@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={CARD_EVIL_EYE_SELENE}
-s.listed_series={0x129}
+s.listed_series={SET_EVIL_EYE}
 function s.atkcon(e)
 	local tp=e:GetHandlerPlayer()
 	return Duel.GetLP(tp)<Duel.GetLP(1-tp)
@@ -42,15 +42,15 @@ function s.atkval(e,c)
 	return Duel.GetLP(1-tp)-Duel.GetLP(tp)
 end
 function s.thcfilter(c)
-	return c:IsSetCard(0x129) and c:IsDiscardable()
+	return c:IsSetCard(SET_EVIL_EYE) and c:IsDiscardable()
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,chk) and Duel.IsExistingMatchingCard(s.thcfilter,tp,LOCATION_HAND,0,1,nil) end
 	aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	Duel.DiscardHand(tp,s.thcfilter,1,1,REASON_COST+REASON_DISCARD,nil)
+	Duel.DiscardHand(tp,s.thcfilter,1,1,REASON_COST|REASON_DISCARD,nil)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x129) and c:IsSpellTrap() and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_EVIL_EYE) and c:IsSpellTrap() and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

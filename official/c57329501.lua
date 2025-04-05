@@ -14,14 +14,14 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={91027843}
-s.listed_series={0x12b}
+s.listed_series={SET_MARINCESS}
 --Special Summon from GY filter
 function s.spgfilter(c,e,tp)
-	return c:IsSetCard(0x12b) and not c:IsType(TYPE_LINK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_MARINCESS) and not c:IsType(TYPE_LINK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 --Special Summon from Deck filter
 function s.spdfilter(c,e,tp)
-	return c:IsSetCard(0x12b) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_MARINCESS) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spgfilter(chkc,e,tp) end
@@ -65,7 +65,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
 	Duel.RegisterEffect(e1,tp)

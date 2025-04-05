@@ -24,9 +24,9 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x26}
+s.listed_series={SET_MORPHTRONIC}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x26) and c:IsAttackPos() and c:IsCanChangePosition()
+	return c:IsFaceup() and c:IsSetCard(SET_MORPHTRONIC) and c:IsAttackPos() and c:IsCanChangePosition()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(s.cfilter,1,nil) end
@@ -34,7 +34,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,eg,#eg,0,0)
 end
 function s.filter(c,e)
-	return c:IsFaceup() and c:IsSetCard(0x26) and c:IsAttackPos() and c:IsRelateToEffect(e)
+	return c:IsFaceup() and c:IsSetCard(SET_MORPHTRONIC) and c:IsAttackPos() and c:IsRelateToEffect(e)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

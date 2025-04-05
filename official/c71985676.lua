@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.dmcon)
-	e1:SetCost(s.dmcost)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetOperation(s.dmop)
 	c:RegisterEffect(e1)
 	--Special Summon
@@ -26,15 +26,11 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x9f}
+s.listed_series={SET_PERFORMAPAL}
 function s.dmcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
 	return d and a:GetControler()~=d:GetControler()
-end
-function s.dmcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
 function s.dmop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -42,18 +38,18 @@ function s.dmop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,1)
-	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+	e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp) and Duel.GetAttackTarget()==nil
 end
 function s.spcfilter(c)
-	return c:IsSetCard(0x9f) and c:IsMonster() and c:IsDiscardable()
+	return c:IsSetCard(SET_PERFORMAPAL) and c:IsMonster() and c:IsDiscardable()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spcfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,s.spcfilter,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,s.spcfilter,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

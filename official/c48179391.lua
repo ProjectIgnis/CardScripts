@@ -50,7 +50,7 @@ function s.initial_effect(c)
 	aux.addContinuousLizardCheck(c,LOCATION_FZONE)
 end
 function s.desfilter(c)
-	return c:IsSummonType(SUMMON_TYPE_SPECIAL)
+	return c:IsSpecialSummoned()
 end
 function s.acttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

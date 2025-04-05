@@ -47,7 +47,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsMainPhase() and Duel.GetTurnPlayer()==1-tp
+	return Duel.IsMainPhase() and Duel.IsTurnPlayer(1-tp)
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and chkc:IsFaceup() and c:IsControler(tp) and s.filter(chkc,e) end
@@ -69,7 +69,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-			e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+			e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 			e1:SetValue(LOCATION_REMOVED)
 			c:RegisterEffect(e1)
 		end

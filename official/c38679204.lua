@@ -1,4 +1,5 @@
 --ヴァイロン・ステラ
+--Vylon Stella
 local s,id=GetID()
 function s.initial_effect(c)
 	--equip
@@ -9,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_TO_GRAVE)
 	e1:SetCondition(s.eqcon)
-	e1:SetCost(s.eqcost)
+	e1:SetCost(Cost.PayLP(500))
 	e1:SetTarget(s.eqtg)
 	e1:SetOperation(s.eqop)
 	c:RegisterEffect(e1)
@@ -27,10 +28,6 @@ function s.initial_effect(c)
 end
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_MZONE)
-end
-function s.eqcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,500) end
-	Duel.PayLPCost(tp,500)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsFaceup() end
@@ -52,7 +49,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetValue(s.eqlimit)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
 	end
 end

@@ -1,4 +1,5 @@
 --異次元からの帰還
+--Return from the Different Dimension
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -34,7 +35,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		local tc=g:GetFirst()
 		for tc in aux.Next(g) do
 			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
-			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,fid)
+			tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1,fid)
 		end
 		Duel.SpecialSummonComplete()
 		g:KeepAlive()

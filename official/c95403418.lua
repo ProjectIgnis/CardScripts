@@ -1,4 +1,5 @@
 --スターダストン
+--Starduston
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -46,13 +47,13 @@ function s.initial_effect(c)
 	e6:SetCondition(s.descon)
 	c:RegisterEffect(e6)
 end
-s.listed_series={0x80}
+s.listed_series={SET_DUSTON}
 function s.aclimit(e,re,tp)
 	local rc=re:GetHandler()
 	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and rc:IsLocation(LOCATION_SZONE) and rc:IsFacedown()
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x80) and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and c:IsSetCard(SET_DUSTON) and c:IsAbleToGraveAsCost()
 end
 function s.spcon(e,c)
 	if c==nil then return true end

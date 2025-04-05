@@ -1,5 +1,5 @@
 --ドラゴンメイド・フルス
---Dragonmaid Fluss
+--Dragonmaid Nudyarl
 --Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
@@ -27,21 +27,14 @@ function s.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e3:SetCode(EVENT_PHASE|PHASE_BATTLE)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,{id,1})
 	e3:SetTarget(s.thtg)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x133}
-function s.atkcond(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
-end
+s.listed_series={SET_DRAGONMAID}
 function s.tdfilter(c)
 	return c:IsMonster() and c:IsAbleToDeck()
 end
@@ -55,14 +48,14 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
-		Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 end
 function s.incon(e)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,TYPE_FUSION),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.spfilter(c,e,tp)
-	return c:GetLevel()==2 and c:IsSetCard(0x133) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:GetLevel()==2 and c:IsSetCard(SET_DRAGONMAID) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

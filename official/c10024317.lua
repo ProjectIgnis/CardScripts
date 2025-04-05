@@ -1,5 +1,5 @@
--- パラメタルフォーゼ・メルキャスター
--- Parametalfoes Melcaster
+--パラメタルフォーゼ・メルキャスター
+--Parametalfoes Melcaster
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xe1}
+s.listed_series={SET_METALFOES}
 function s.desfilter(c,tp)
 	if c:IsFacedown() then return false end
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
@@ -39,7 +39,7 @@ function s.desfilter(c,tp)
 	end
 end
 function s.filter(c,ignore)
-	return c:IsSetCard(0xe1) and c:IsSpellTrap() and c:IsSSetable(ignore)
+	return c:IsSetCard(SET_METALFOES) and c:IsSpellTrap() and c:IsSSetable(ignore)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and s.desfilter(chkc,tp) and chkc~=e:GetHandler() end
@@ -63,7 +63,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return (r&REASON_EFFECT+REASON_BATTLE)~=0 and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xe1) and c:IsMonster() and c:IsAbleToHand() and not c:IsCode(id)
+	return c:IsSetCard(SET_METALFOES) and c:IsMonster() and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_EXTRA,0,1,nil) end
@@ -83,7 +83,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetTargetRange(1,0)
 		e1:SetValue(s.aclimit)
 		e1:SetLabel(code)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 	end
 end

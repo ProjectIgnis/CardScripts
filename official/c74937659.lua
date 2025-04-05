@@ -1,5 +1,5 @@
 --サブテラーマリスの妖魔
---Subterror Behemoth Apparition
+--Subterror Behemoth Fiendess
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
@@ -34,9 +34,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xed}
+s.listed_series={SET_SUBTERROR}
 function s.matfilter(c)
-	return c:IsSetCard(0xed) and c:GetOriginalLevel()>=0
+	return c:IsSetCard(SET_SUBTERROR) and c:GetOriginalLevel()>=0
 end
 function s.matcheck(e,c)
 	local g=c:GetMaterial():Filter(s.matfilter,nil)
@@ -45,7 +45,7 @@ function s.matcheck(e,c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(atk*100)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE-RESET_TOFIELD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE-RESET_TOFIELD)
 	c:RegisterEffect(e1)
 end
 function s.tgfilter(c)
@@ -86,11 +86,11 @@ function s.thfilter(c)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK|LOCATION_GRAVE)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil)
 	if #g>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)

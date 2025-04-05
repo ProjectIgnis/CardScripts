@@ -1,4 +1,5 @@
 --炎王炎環
+--Circle of the Fire Kings
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

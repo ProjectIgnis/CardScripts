@@ -1,4 +1,5 @@
 --森の聖霊 エーコ
+--Eco, Mystical Spirit of the Forest
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -32,11 +33,11 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e1:SetTargetRange(1,1)
 		e1:SetValue(s.damval)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_NO_EFFECT_DAMAGE)
-		e2:SetReset(RESET_PHASE+PHASE_END)
+		e2:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e2,tp)
 	end
 end

@@ -1,4 +1,5 @@
 --月華竜 ブラック・ローズ
+--Black Rose Moonlight Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -38,7 +39,7 @@ function s.evop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+id,re,r,rp,ep,ev)
 end
 function s.filter(c)
-	return c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:IsAbleToHand()
+	return c:IsSpecialSummoned() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.filter(chkc) end

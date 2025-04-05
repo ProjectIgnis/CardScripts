@@ -1,5 +1,5 @@
 --烙印の命数
---Branded Central Dogmatika
+--Branded in Central Dogmatika
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -39,7 +39,7 @@ function s.condition(typ)
 	return  function(e,tp,eg,ep,ev,re,r,rp)
 				if #eg~=1 then return false end
 				local c=eg:GetFirst()
-				return c:IsFaceup() and c:IsType(typ) and c:IsSummonPlayer(tp) and re and re:IsActiveType(TYPE_SPELL)
+				return c:IsFaceup() and c:IsType(typ) and c:IsSummonPlayer(tp) and re and re:IsSpellEffect()
 			end
 end
 function s.gytg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -77,19 +77,19 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(tc:GetBaseAttack())
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		--Can only attack an opponent's Attack Position monster
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		e2:SetValue(s.atlimit)
 		tc:RegisterEffect(e2)
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e3:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e3)
 	end
 end

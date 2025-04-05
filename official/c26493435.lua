@@ -40,10 +40,10 @@ function s.initial_effect(c)
 	e5:SetOperation(s.spop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x107f,0x8f,0x54,0x59,0x82}
+s.listed_series={SET_UTOPIA,SET_ZUBABA,SET_GAGAGA,SET_GOGOGO,SET_DODODO}
 s.counter_place_list={0x30}
 function s.ctfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x107f) and c:IsControler(tp)
+	return c:IsFaceup() and c:IsSetCard(SET_UTOPIA) and c:IsControler(tp)
 end
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.ctfilter,1,nil,tp)
@@ -59,7 +59,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveCounter(tp,0x30,2,REASON_COST)
 end
 function s.filter(c,e,tp)
-	return (c:IsSetCard(0x8f) or c:IsSetCard(0x54) or c:IsSetCard(0x59) or c:IsSetCard(0x82))
+	return (c:IsSetCard(SET_ZUBABA) or c:IsSetCard(SET_GAGAGA) or c:IsSetCard(SET_GOGOGO) or c:IsSetCard(SET_DODODO))
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -33,10 +33,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 	--List "@Ignister" and "A.I." archetypes in the card text
-s.listed_series={0x135,0x136}
+s.listed_series={SET_IGNISTER,SET_AI}
 	--Check for "@Ignister" monster
 function s.thfilter(c)
-	return c:IsSetCard(0x135) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_IGNISTER) and c:IsMonster() and c:IsAbleToHand()
 end
 	--Activation legality
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -60,7 +60,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for "A.I." spell/trap
 function s.thfilter2(c)
-	return c:IsSetCard(0x136) and c:IsSpellTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_AI) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 	--Activation legality
 function s.thtg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -77,4 +77,3 @@ function s.thop2(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end
-

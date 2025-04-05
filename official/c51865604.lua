@@ -1,4 +1,5 @@
 --ZS－幻影賢者
+--ZS - Vanish Sage
 local s,id=GetID()
 function s.initial_effect(c)
 	--draw
@@ -22,14 +23,14 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_REMOVE)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(s.spcon)
-	e2:SetCost(s.spcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x107f}
+s.listed_series={SET_UTOPIA}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x107f)
+	return c:IsFaceup() and c:IsSetCard(SET_UTOPIA)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -49,11 +50,7 @@ function s.spfilter(c,e,tp)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsCanBeEffectTarget(e)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE) and eg:IsExists(s.spfilter,1,nil,e,tp)
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
-	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
+	return Duel.IsBattlePhase() and eg:IsExists(s.spfilter,1,nil,e,tp)
 end
 function s.rmfilter(c)
 	return c:IsAttackBelow(3000) and c:IsAbleToRemove()

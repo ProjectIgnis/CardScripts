@@ -1,5 +1,5 @@
 --冥占術姫タロットレイス
---Nether Prediction Princess Tarotreith
+--Prediction Princess Tarotreith
 --Scripted by DyXel
 local s,id=GetID()
 function s.initial_effect(c)

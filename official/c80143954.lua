@@ -1,4 +1,5 @@
 --オルターガイスト・カモフラージュ
+--Altergeist Camouflage
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -21,9 +22,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.repop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x103}
+s.listed_series={SET_ALTERGEIST}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x103)
+	return c:IsFaceup() and c:IsSetCard(SET_ALTERGEIST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -43,13 +44,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetValue(s.eqlimit)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_EQUIP)
 		e2:SetCode(EFFECT_IGNORE_BATTLE_TARGET)
 		e2:SetValue(1)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e2)
 		--negate
 		local e4=Effect.CreateEffect(c)
@@ -59,7 +60,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e4:SetLabelObject(tc)
 		e4:SetCondition(s.negcon)
 		e4:SetOperation(s.negop)
-		e4:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e4:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e4)
 	else
 		c:CancelToGrave(false)
@@ -71,14 +72,14 @@ end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	return rp~=tp and re:IsActiveType(TYPE_MONSTER) and g and g:IsContains(e:GetLabelObject())
+	return rp~=tp and re:IsMonsterEffect() and g and g:IsContains(e:GetLabelObject())
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateEffect(ev)
 end
 function s.repfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x103) and c:IsLocation(LOCATION_ONFIELD) and c:IsControler(tp) 
-		and not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_EFFECT+REASON_BATTLE)
+	return c:IsFaceup() and c:IsSetCard(SET_ALTERGEIST) and c:IsLocation(LOCATION_ONFIELD) and c:IsControler(tp) 
+		and not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_EFFECT|REASON_BATTLE)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemove() and eg:IsExists(s.repfilter,1,nil,tp) end

@@ -1,4 +1,5 @@
 --E・HERO ネクロダークマン
+--Elemental HERO Necroshade
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon with no tribute
@@ -14,11 +15,11 @@ function s.initial_effect(c)
 	e1:SetTarget(aux.FieldSummonProcTg(s.nttg))
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x3008}
+s.listed_series={SET_ELEMENTAL_HERO}
 function s.ntcon(e,c,minc)
 	if c==nil then return true end
 	return minc==0 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
 function s.nttg(e,c)
-	return c:IsLevelAbove(5) and c:IsSetCard(0x3008)
+	return c:IsLevelAbove(5) and c:IsSetCard(SET_ELEMENTAL_HERO)
 end

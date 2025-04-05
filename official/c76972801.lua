@@ -1,4 +1,5 @@
 --ガガガガード
+--Gagagaguard
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -9,9 +10,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x54}
+s.listed_series={SET_GAGAGA}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x54)
+	return c:IsFaceup() and c:IsSetCard(SET_GAGAGA)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,2,nil)
@@ -21,7 +22,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetValue(1)
 	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()

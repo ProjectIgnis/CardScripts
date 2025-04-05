@@ -1,7 +1,6 @@
 --呪眼の眷属 カトブレパス
 --Catoblepas, Familiar of the Evil Eye
 --Scripted by Naim
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted "Evil Eye" spell/trap cannot be destroyed by opponent's card effects
@@ -26,17 +25,16 @@ function s.initial_effect(c)
 	e2:SetOperation(s.ssop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x129}
+s.listed_series={SET_EVIL_EYE}
 s.listed_names={id}
-
 function s.tgfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x129)
+	return c:IsFaceup() and c:IsSetCard(SET_EVIL_EYE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_SZONE) and chkc:IsControler(tp) and aux.FaceupFilter(Card.IsSetCard,0x129)(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(aux.FaceupFilter(Card.IsSetCard,0x129),tp,LOCATION_SZONE,0,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_SZONE) and chkc:IsControler(tp) and aux.FaceupFilter(Card.IsSetCard,SET_EVIL_EYE)(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(aux.FaceupFilter(Card.IsSetCard,SET_EVIL_EYE),tp,LOCATION_SZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local g=Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsSetCard,0x129),tp,LOCATION_SZONE,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsSetCard,SET_EVIL_EYE),tp,LOCATION_SZONE,0,1,1,nil)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
@@ -49,7 +47,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCountLimit(1)
 		e1:SetValue(s.value)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,2)
+		e1:SetReset(RESETS_STANDARD_PHASE_END,2)
 		tc:RegisterEffect(e1)
 	end
 end
@@ -57,7 +55,7 @@ function s.value(e,re,r,rp)
 	return (r&REASON_EFFECT)~=0 and rp==1-e:GetHandlerPlayer()
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x129) and not c:IsCode(id)
+	return c:IsFaceup() and c:IsSetCard(SET_EVIL_EYE) and not c:IsCode(id)
 end
 function s.sscond(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -76,7 +74,7 @@ function s.ssop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e1,true)
 	end

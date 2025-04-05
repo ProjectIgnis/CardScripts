@@ -25,18 +25,18 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_FZONE)
 	e3:SetCondition(s.descon)
-	e3:SetCost(s.descost)
+	e3:SetCost(Cost.SelfToGrave)
 	e3:SetTarget(s.destg)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x114}
+s.listed_series={SET_FUR_HIRE}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer() and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0
 		and Duel.GetDrawCount(tp)>0
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x114) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_FUR_HIRE) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -52,7 +52,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetCode(EFFECT_DRAW_COUNT)
 	e1:SetTargetRange(1,0)
-	e1:SetReset(RESET_PHASE+PHASE_DRAW)
+	e1:SetReset(RESET_PHASE|PHASE_DRAW)
 	e1:SetValue(0)
 	Duel.RegisterEffect(e1,tp)
 	if _replace_count>_replace_max or not e:GetHandler():IsRelateToEffect(e) then return end
@@ -64,15 +64,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x114)
+	return c:IsFaceup() and c:IsSetCard(SET_FUR_HIRE)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil)
 	return g:GetClassCount(Card.GetCode)>=5
-end
-function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) end
@@ -88,11 +84,11 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(0,1)
 	e1:SetValue(0)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_NO_EFFECT_DAMAGE)
-	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,2),nil)
 end

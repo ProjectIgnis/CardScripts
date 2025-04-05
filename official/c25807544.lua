@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_FZONE)
 	e3:SetCountLimit(1)
-	e3:SetCost(s.thcost)
+	e3:SetCost(Cost.PayLP(1200))
 	e3:SetTarget(s.thtg)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
@@ -43,10 +43,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_NOBLE_ARMS,SET_NOBLE_KNIGHT}
 s.listed_names={id,CARD_INFERNOBLE_CHARLES}
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,1200) end
-	Duel.PayLPCost(tp,1200)
-end
 function s.thfilter(c)
 	return c:IsSetCard(SET_NOBLE_ARMS) and not c:IsCode(id) and c:IsAbleToHand()
 end

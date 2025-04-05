@@ -1,4 +1,5 @@
 --智天使ハーヴェスト
+--Harvest Angel of Wisdom
 local s,id=GetID()
 function s.initial_effect(c)
 	--to hand

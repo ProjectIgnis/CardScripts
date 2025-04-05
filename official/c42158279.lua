@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
-	local e1=Ritual.CreateProc({handler=c,lvtype=RITPROC_EQUAL,filter=aux.FilterBoolFunction(Card.IsSetCard,0x146),location=LOCATION_HAND+LOCATION_DECK,matfilter=s.mfilter})
+	local e1=Ritual.CreateProc({handler=c,lvtype=RITPROC_EQUAL,filter=aux.FilterBoolFunction(Card.IsSetCard,SET_DOGMATIKA),location=LOCATION_HAND|LOCATION_DECK,matfilter=s.mfilter})
 	e1:SetCountLimit(1,id)
 	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
 	c:RegisterEffect(e1)
@@ -18,17 +18,17 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetHintTiming(0,TIMING_END_PHASE)
 	e2:SetCountLimit(1,id)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.thdtg)
 	e2:SetOperation(s.thdop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x146}
+s.listed_series={SET_DOGMATIKA}
 function s.mfilter(c)
-	return c:IsLocation(LOCATION_MZONE) and (c:IsSetCard(0x146) or c:IsType(TYPE_RITUAL+TYPE_FUSION+TYPE_SYNCHRO))
+	return c:IsLocation(LOCATION_MZONE) and (c:IsSetCard(SET_DOGMATIKA) or c:IsType(TYPE_RITUAL+TYPE_FUSION+TYPE_SYNCHRO))
 end
 function s.thdfilter(c,e)
-	return c:IsSetCard(0x146) and c:HasLevel() and (c:IsAbleToHand() or c:IsAbleToDeck())
+	return c:IsSetCard(SET_DOGMATIKA) and c:HasLevel() and (c:IsAbleToHand() or c:IsAbleToDeck())
 		and c:IsCanBeEffectTarget(e)
 end
 function s.rescon(sg,e,tp,mg)

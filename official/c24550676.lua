@@ -1,9 +1,10 @@
 --月光舞獅子姫
+--Lunalight Leo Dancer
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMixN(c,false,false,97165977,1,aux.FilterBoolFunctionEx(Card.IsSetCard,0xdf),2)
+	Fusion.AddProcMixN(c,false,false,97165977,1,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_LUNALIGHT),2)
 	--spsummon condition
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
@@ -41,8 +42,8 @@ function s.initial_effect(c)
 	e4:SetOperation(s.operation)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xdf}
-s.material_setcode={0xdf}
+s.listed_series={SET_LUNALIGHT}
+s.material_setcode={SET_LUNALIGHT}
 function s.tgvalue(e,re,rp)
 	return rp~=e:GetHandlerPlayer()
 end

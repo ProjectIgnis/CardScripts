@@ -1,4 +1,4 @@
---Japanese name
+--聖神獣セルケト
 --Divine Scorpion Beast of Serket
 --Scripted by Eerie Code
 local s,id=GetID()

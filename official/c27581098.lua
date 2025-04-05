@@ -1,4 +1,5 @@
 --融合禁止エリア
+--Non-Fusion Area
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

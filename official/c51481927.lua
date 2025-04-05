@@ -1,4 +1,5 @@
 --魔法吸収
+--Spell Absorption
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -24,7 +25,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return re and re:IsActiveType(TYPE_SPELL) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
+	return re and re:IsSpellEffect() and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 		and re:GetHandler()~=e:GetHandler() and e:GetHandler():GetFlagEffect(1)>0
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)

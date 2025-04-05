@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetSPSummonOnce(id)
-	c:EnableCounterPermit(COUNTER_SPELL,LOCATION_PZONE+LOCATION_MZONE)
+	c:EnableCounterPermit(COUNTER_SPELL,LOCATION_PZONE|LOCATION_MZONE)
 	Pendulum.AddProcedure(c)
 	--Add counter to itself
 	local e1=Effect.CreateEffect(c)
@@ -68,7 +68,7 @@ end
 s.counter_place_list={COUNTER_SPELL}
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and re:GetHandler()~=c then
+	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsSpellEffect() and re:GetHandler()~=c then
 		c:AddCounter(COUNTER_SPELL,1)
 	end
 end
@@ -117,7 +117,7 @@ function s.ctop2(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==1-tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.spcost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,COUNTER_SPELL,3,REASON_COST) end

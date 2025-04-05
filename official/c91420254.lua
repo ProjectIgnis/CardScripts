@@ -31,9 +31,9 @@ function s.initial_effect(c)
 	e3:SetValue(s.bttg)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xb3}
+s.listed_series={SET_YOSENJU}
 function s.sccon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_PZONE,0,1,e:GetHandler(),0xb3)
+	return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_PZONE,0,1,e:GetHandler(),SET_YOSENJU)
 		and e:GetHandler():GetLeftScale()~=11
 end
 function s.scop(e,tp,eg,ep,ev,re,r,rp)
@@ -43,7 +43,7 @@ function s.scop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CHANGE_LSCALE)
 	e1:SetValue(11)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_CHANGE_RSCALE)
@@ -55,11 +55,11 @@ function s.scop(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetTargetRange(1,0)
 	e3:SetTarget(s.splimit)
-	e3:SetReset(RESET_PHASE+PHASE_END)
+	e3:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e3,tp)
 end
 function s.splimit(e,c)
-	return not c:IsSetCard(0xb3)
+	return not c:IsSetCard(SET_YOSENJU)
 end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAttackPos() end
@@ -72,5 +72,5 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.bttg(e,c)
-	return c:IsFaceup() and c:IsSetCard(0xb3) and c~=e:GetHandler()
+	return c:IsFaceup() and c:IsSetCard(SET_YOSENJU) and c~=e:GetHandler()
 end

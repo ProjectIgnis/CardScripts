@@ -61,7 +61,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():HasFlagEffect(id) then return false end
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
+	return aux.StatChangeDamageStepCondition()
 end
 function s.atkfilter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_CRYSTAL_BEAST) and c:IsAbleToGraveAsCost()

@@ -18,14 +18,14 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={id}
-s.listed_series={0xd3}
+s.listed_series={SET_KAIJU}
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	if ep==tp or e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then return false end
 	return not re:GetHandler():IsCode(id) and Duel.IsChainNegatable(ev)
 end
 function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,1,0x37,2,REASON_COST) end
-	Duel.RemoveCounter(tp,1,1,0x37,2,REASON_COST)
+	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,1,COUNTER_KAIJU,2,REASON_COST) end
+	Duel.RemoveCounter(tp,1,1,COUNTER_KAIJU,2,REASON_COST)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rc=re:GetHandler()

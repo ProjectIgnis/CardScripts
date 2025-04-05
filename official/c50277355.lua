@@ -70,7 +70,7 @@ function s.ritop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Draw(tp,2,REASON_EFFECT)==2 then
 		Duel.ShuffleHand(tp)
 		Duel.BreakEffect()
-		Duel.DiscardHand(tp,nil,2,2,REASON_EFFECT+REASON_DISCARD)
+		Duel.DiscardHand(tp,nil,2,2,REASON_EFFECT|REASON_DISCARD)
 	end
 end
 function s.fusop(e,tp,eg,ep,ev,re,r,rp)

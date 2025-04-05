@@ -1,8 +1,9 @@
 --魔轟神獣クダベ
+--The Fabled Kudabbi
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
-	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x35),1,1,Synchro.NonTuner(nil),1,99)
+	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_FABLED),1,1,Synchro.NonTuner(nil),1,99)
 	c:EnableReviveLimit()
 	--cannot destroy
 	local e1=Effect.CreateEffect(c)
@@ -28,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x35}
+s.listed_series={SET_FABLED}
 function s.indcon(e)
 	return Duel.GetFieldGroupCount(e:GetHandler():GetControler(),LOCATION_HAND,0)==0
 end

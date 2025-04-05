@@ -1,4 +1,5 @@
 --覚醒
+--Invigoration
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsAttribute,ATTRIBUTE_EARTH))

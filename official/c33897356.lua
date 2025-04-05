@@ -1,7 +1,6 @@
 --シューティングコード・トーカー
 --Shootingcode Talker
 --Scripted by Larry126
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Link summon procedure
@@ -12,7 +11,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e1:SetCode(EVENT_PHASE+PHASE_BATTLE_START)
+	e1:SetCode(EVENT_PHASE|PHASE_BATTLE_START)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.condition)
@@ -24,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DRAW)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e2:SetCode(EVENT_PHASE|PHASE_BATTLE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
 	e2:SetCondition(s.drcon)
@@ -40,7 +39,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetLinkedGroupCount()>0 end
@@ -54,7 +53,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EXTRA_ATTACK_MONSTER)
 		e1:SetValue(ct)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE)
 		c:RegisterEffect(e1)
 	end
 	local e2=Effect.CreateEffect(c)
@@ -62,20 +61,20 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetCondition(s.atkcon)
 	e2:SetValue(-400)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e2:SetReset(RESETS_STANDARD_PHASE_END)
 	c:RegisterEffect(e2)
 end
 function s.atkcon(e)
 	local c=e:GetHandler()
 	if Duel.GetAttackTarget()==nil then return end
-	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and Duel.GetFieldGroupCount(e:GetHandlerPlayer(),0,LOCATION_MZONE)==1
+	return Duel.IsPhase(PHASE_DAMAGE_CAL) and Duel.GetFieldGroupCount(e:GetHandlerPlayer(),0,LOCATION_MZONE)==1
 end
 function s.bdop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:GetFlagEffectLabel(id) then
 		c:SetFlagEffectLabel(id,c:GetFlagEffectLabel(id)+1)
 	else
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,1)
+		c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1,1)
 	end
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)

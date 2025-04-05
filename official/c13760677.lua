@@ -1,6 +1,5 @@
 --Ｐ・Ｍ・キャプチャー
 --P.M. Captor
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Enable pendulum summon
@@ -28,7 +27,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.cfilter(c,e,tp)
-	return c:IsRace(RACE_ZOMBIE) and c:IsSummonPlayer(tp) and c:IsSummonType(SUMMON_TYPE_PENDULUM)
+	return c:IsRace(RACE_ZOMBIE) and c:IsSummonPlayer(tp) and c:IsPendulumSummoned()
 		and (not e or c:IsRelateToEffect(e))
 end
 function s.indcon(e,tp,eg,ep,ev,re,r,rp)
@@ -51,7 +50,7 @@ function s.indop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)

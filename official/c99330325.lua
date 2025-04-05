@@ -1,6 +1,5 @@
 --妨げられた壊獣の眠り
 --Interrupted Kaiju Slumber
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Destroy all monsters on field, then special summon 2 "Kaiju" monsters to each field, from deck
@@ -20,28 +19,27 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCondition(aux.exccon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xd3}
-
+s.listed_series={SET_KAIJU}
 function s.chkfilter1(c,e,tp)
-	return c:IsSetCard(0xd3) and c:IsMonster() and 
+	return c:IsSetCard(SET_KAIJU) and c:IsMonster() and 
 		not c:IsHasEffect(EFFECT_REVIVE_LIMIT) and Duel.IsPlayerCanSpecialSummon(tp,0,POS_FACEUP,tp,c)
 		and Duel.IsExistingMatchingCard(s.chkfilter2,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetCode())
 end
 function s.chkfilter2(c,e,tp,cd)
-	return c:IsSetCard(0xd3) and c:IsMonster() and not c:IsCode(cd)
+	return c:IsSetCard(SET_KAIJU) and c:IsMonster() and not c:IsCode(cd)
 		and not c:IsHasEffect(EFFECT_REVIVE_LIMIT) and Duel.IsPlayerCanSpecialSummon(tp,0,POS_FACEUP,1-tp,c)
 end
 function s.filter1(c,e,tp)
-	return c:IsSetCard(0xd3) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_KAIJU) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetCode())
 end
 function s.filter2(c,e,tp,cd)
-	return c:IsSetCard(0xd3) and c:IsMonster() and not c:IsCode(cd)
+	return c:IsSetCard(SET_KAIJU) and c:IsMonster() and not c:IsCode(cd)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK,1-tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -75,7 +73,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc1:RegisterEffect(e1)
 		local e2=e1:Clone()
 		tc2:RegisterEffect(e2)
@@ -90,7 +88,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xd3) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_KAIJU) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

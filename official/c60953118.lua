@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e1:SetCondition(s.damcon)
-	e1:SetCost(s.damcost)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetOperation(s.damop)
 	c:RegisterEffect(e1)
 	--Toss a coin and apply the appropriate effect
@@ -31,10 +31,6 @@ end
 s.toss_coin=true
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetBattleDamage(tp)>0
-end
-function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	--Prevent Battle Damage

@@ -1,9 +1,10 @@
 --DDD超死偉王ホワイテスト・ヘル・アーマゲドン
+--D/D/D Super Doom King Bright Armageddon
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	Pendulum.AddProcedure(c,false)
-	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0xaf),1,1,Synchro.NonTunerEx(Card.IsSetCard,0x10af),1,99)
+	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_DD),1,1,Synchro.NonTunerEx(Card.IsSetCard,SET_DDD),1,99)
 	--destroy and damage
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -51,12 +52,12 @@ function s.initial_effect(c)
 	e6:SetOperation(s.penop)
 	c:RegisterEffect(e6)
 end
-s.listed_series={0x10af,0xaf}
+s.listed_series={SET_DDD,SET_DD}
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():GetControler()~=tp
 end
 function s.desfilter1(c,tp)
-	return c:IsFaceup() and c:IsType(TYPE_SYNCHRO) and c:IsSetCard(0x10af) and c:GetAttack()>0
+	return c:IsFaceup() and c:IsType(TYPE_SYNCHRO) and c:IsSetCard(SET_DDD) and c:GetAttack()>0
 		and Duel.IsExistingMatchingCard(s.desfilter2,tp,0,LOCATION_MZONE,1,nil,c:GetAttack())
 end
 function s.desfilter2(c,atk)
@@ -99,18 +100,18 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e2)
 		if tc:IsType(TYPE_TRAPMONSTER) then
 			local e3=Effect.CreateEffect(e:GetHandler())
 			e3:SetType(EFFECT_TYPE_SINGLE)
 			e3:SetCode(EFFECT_DISABLE_TRAPMONSTER)
-			e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e3)
 		end
 	end

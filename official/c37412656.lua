@@ -1,4 +1,5 @@
 --ヒーロー・ブラスト
+--Hero Blast
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,15 +13,15 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x3008}
+s.listed_series={SET_ELEMENTAL_HERO}
 function s.filter(c)
-	return c:IsSetCard(0x3008) and c:IsType(TYPE_NORMAL) and c:IsAbleToHand()
+	return c:IsSetCard(SET_ELEMENTAL_HERO) and c:IsType(TYPE_NORMAL) and c:IsAbleToHand()
 end
 function s.dfilter(c,atk)
 	return c:IsFaceup() and c:IsAttackBelow(atk)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:GetLocation()==LOCATION_GRAVE and chkc:GetControler()==tp and s.filter(chkc) end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil)

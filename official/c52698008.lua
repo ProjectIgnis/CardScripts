@@ -1,5 +1,5 @@
 --サイバース・ウィキッド
---Cyberse Widkid
+--Cyberse Wicckid
 --scripted by Logical Nonsense
 --Substitute ID
 local s,id=GetID()
@@ -48,7 +48,7 @@ end
 	--Check if it was link summoned
 function s.indcon(e)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_LINK)
+	return c:IsLinkSummoned()
 end
 	--Linked Cyberse monsters
 function s.indtg(e,c)
@@ -91,4 +91,3 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-

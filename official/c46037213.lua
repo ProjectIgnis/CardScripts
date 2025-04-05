@@ -1,4 +1,5 @@
 --ガーディアン・トライス
+--Guardian Tryce
 local s,id=GetID()
 function s.initial_effect(c)
 	--sum limit

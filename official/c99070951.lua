@@ -1,4 +1,5 @@
 --サイ・ガール
+--Esper Girl
 local s,id=GetID()
 function s.initial_effect(c)
 	--remove
@@ -37,9 +38,9 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	if not tc or not tc:IsAbleToRemove() then return end
 	Duel.DisableShuffleCheck()
 	Duel.Remove(tc,POS_FACEDOWN,REASON_EFFECT)
-	tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+	tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 	if c:IsLocation(LOCATION_MZONE) then
-		c:RegisterFlagEffect(id,RESET_EVENT+0x680000,0,1)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESET_TOGRAVE|RESET_REMOVE,0,1)
 	end
 	e:SetLabelObject(tc)
 end

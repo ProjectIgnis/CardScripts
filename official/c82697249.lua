@@ -1,4 +1,5 @@
 --No.59 背反の料理人
+--Number 59: Crooked Cook
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -21,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetCountLimit(1)
-	e2:SetCost(s.descost)
+	e2:SetCost(Cost.Detach(1))
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
@@ -32,10 +33,6 @@ function s.imcon(e)
 end
 function s.efilter(e,te)
 	return te:GetOwner()~=e:GetOwner()
-end
-function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_ONFIELD,0,1,e:GetHandler()) end
@@ -57,7 +54,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
 			e1:SetValue(ct*300)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 			c:RegisterEffect(e1)
 		end
 	end

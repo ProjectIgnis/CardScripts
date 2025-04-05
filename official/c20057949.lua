@@ -25,10 +25,10 @@ function s.initial_effect(c)
 		end)
 	end)
 end
-s.listed_series={0x31}
+s.listed_series={SET_FORTUNE_LADY}
 function s.checkop1(e,tp,eg,ep,ev,re,r,rp)
 	for tc in aux.Next(eg) do
-		if tc:IsPreviousLocation(LOCATION_MZONE) and tc:IsPreviousPosition(POS_FACEUP) and tc:IsPreviousSetCard(0x31) then
+		if tc:IsPreviousLocation(LOCATION_MZONE) and tc:IsPreviousPosition(POS_FACEUP) and tc:IsPreviousSetCard(SET_FORTUNE_LADY) then
 			s[tc:GetPreviousControler()]=true
 		end
 	end
@@ -39,23 +39,23 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e1:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e1:SetCountLimit(1)
 	e1:SetLabel(Duel.GetTurnCount())
 	e1:SetCondition(s.spcon1)
 	e1:SetOperation(s.spop1)
-	if Duel.GetTurnPlayer()==tp then
-		e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,2)
+	if Duel.IsTurnPlayer(tp) then
+		e1:SetReset(RESET_PHASE|PHASE_END|RESET_SELF_TURN,2)
 	else
-		e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,1)
+		e1:SetReset(RESET_PHASE|PHASE_END|RESET_SELF_TURN,1)
 	end
 	Duel.RegisterEffect(e1,tp)
 end
 function s.spcon1(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnCount()~=e:GetLabel() and Duel.GetTurnPlayer()==tp
+	return Duel.GetTurnCount()~=e:GetLabel() and Duel.IsTurnPlayer(tp)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x31) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_FORTUNE_LADY) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -65,11 +65,11 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetDescription(aux.Stringid(id,1))
 		e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-		e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
+		e1:SetCode(EVENT_PHASE|PHASE_STANDBY)
 		e1:SetCountLimit(1)
 		e1:SetTarget(s.sptg2)
 		e1:SetOperation(s.spop2)
-		e1:SetReset(RESET_PHASE+PHASE_STANDBY)
+		e1:SetReset(RESET_PHASE|PHASE_STANDBY)
 		Duel.RegisterEffect(e1,tp)
 	end
 end

@@ -1,4 +1,5 @@
 --RR－ブレイズ・ファルコン
+--Raidraptor - Blaze Falcon
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -26,7 +27,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
-	e3:SetCost(s.descost)
+	e3:SetCost(Cost.Detach(1))
 	e3:SetTarget(s.destg2)
 	e3:SetOperation(s.desop2)
 	c:RegisterEffect(e3)
@@ -50,12 +51,8 @@ function s.desop1(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end
-function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-end
 function s.filter(c)
-	return c:IsSummonType(SUMMON_TYPE_SPECIAL)
+	return c:IsSpecialSummoned()
 end
 function s.destg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil) end

@@ -1,4 +1,5 @@
 --カラクリ忍者 九壱九
+--Karakuri Ninja mdl 919 "Kuick"
 local s,id=GetID()
 function s.initial_effect(c)
 	--must attack
@@ -39,7 +40,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 		and tc:IsLocation(LOCATION_GRAVE) and tc:IsReason(REASON_BATTLE) 
 end
 function s.filter(c,e,tp)
-	return c:IsLevelBelow(4) and c:IsSetCard(0x11) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsLevelBelow(4) and c:IsSetCard(SET_KARAKURI) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end

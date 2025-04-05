@@ -1,4 +1,5 @@
 --ドラグニティ－プリムス・ピルス
+--Dragunity Primus Pilus
 local s,id=GetID()
 function s.initial_effect(c)
 	--equip
@@ -15,9 +16,9 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x29}
+s.listed_series={SET_DRAGUNITY}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x29) and c:IsRace(RACE_WINGEDBEAST)
+	return c:IsFaceup() and c:IsSetCard(SET_DRAGUNITY) and c:IsRace(RACE_WINGEDBEAST)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -29,7 +30,7 @@ function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,tp,LOCATION_DECK)
 end
 function s.eqfilter(c)
-	return c:IsSetCard(0x29) and c:IsRace(RACE_DRAGON) and c:IsLevelBelow(3) and not c:IsForbidden()
+	return c:IsSetCard(SET_DRAGUNITY) and c:IsRace(RACE_DRAGON) and c:IsLevelBelow(3) and not c:IsForbidden()
 end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
@@ -42,7 +43,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(s.eqlimit)
 		e1:SetLabelObject(tc)
 		eqc:RegisterEffect(e1)

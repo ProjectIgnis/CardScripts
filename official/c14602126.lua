@@ -1,14 +1,13 @@
 --エクシーズ・インポート
 --Xyz Import
 --Scripted by Naim, updated by DyXel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetHintTiming(TIMINGS_CHECK_MONSTER+TIMING_BATTLE_START)
+	e1:SetHintTiming(TIMINGS_CHECK_MONSTER|TIMING_BATTLE_START)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
@@ -21,7 +20,7 @@ function s.atchfilter(c,atk)
 end
 function s.xyzfilter(c,tp)
 	return c:IsFaceup() and c:IsMonster() and c:IsType(TYPE_XYZ) and
-	       Duel.IsExistingTarget(s.atchfilter,tp,0,LOCATION_MZONE,1,nil,c:GetAttack())
+		Duel.IsExistingTarget(s.atchfilter,tp,0,LOCATION_MZONE,1,nil,c:GetAttack())
 end
 function s.acttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

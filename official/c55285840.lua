@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e1:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
 	e1:SetTarget(s.xyztg)
@@ -48,9 +48,9 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local g=c:GetOverlayGroup()
 	local ty=0
-	if c:IsAbleToRemove() then ty=ty | TYPE_MONSTER end
-	if Duel.IsPlayerCanDraw(tp,1) then ty=ty | TYPE_SPELL end
-	if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsAbleToDeck),tp,0,LOCATION_ONFIELD,1,nil) then ty=ty | TYPE_TRAP end
+	if c:IsAbleToRemove() then ty=ty|TYPE_MONSTER end
+	if Duel.IsPlayerCanDraw(tp,1) then ty=ty|TYPE_SPELL end
+	if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsAbleToDeck),tp,0,LOCATION_ONFIELD,1,nil) then ty=ty|TYPE_TRAP end
 	if chk==0 then return ty>0 and g:IsExists(Card.IsType,1,nil,ty) end
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
@@ -58,26 +58,25 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	local g=c:GetOverlayGroup()
 	local ty=0
-	if c:IsAbleToRemove() then ty=ty | TYPE_MONSTER end
-	if Duel.IsPlayerCanDraw(tp,1) then ty=ty | TYPE_SPELL end
-	if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsAbleToDeck),tp,0,LOCATION_ONFIELD,1,nil) then ty=ty | TYPE_TRAP end
+	if c:IsAbleToRemove() then ty=ty|TYPE_MONSTER end
+	if Duel.IsPlayerCanDraw(tp,1) then ty=ty|TYPE_SPELL end
+	if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsAbleToDeck),tp,0,LOCATION_ONFIELD,1,nil) then ty=ty|TYPE_TRAP end
 	if ty==0 then return end
 	local sg=aux.SelectUnselectGroup(g:Filter(Card.IsType,nil,ty),e,tp,1,3,s.rescon,1,tp,HINTMSG_REMOVEXYZ)
 	local lb=0
 	for tc in aux.Next(sg) do
-		lb=lb | tc:GetType()
+		lb=lb|tc:GetMainCardType()
 	end
-	lb=lb & 0x7
 	Duel.SendtoGrave(sg,REASON_EFFECT)
 	Duel.RaiseSingleEvent(c,EVENT_DETACH_MATERIAL,e,0,0,0,0)
 	Duel.BreakEffect()
 	if lb & TYPE_MONSTER ~=0 then
 		if c:IsRelateToEffect(e) then
-			Duel.Remove(c,c:GetPosition(),REASON_EFFECT+REASON_TEMPORARY)
+			Duel.Remove(c,c:GetPosition(),REASON_EFFECT|REASON_TEMPORARY)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 			e1:SetCode(EVENT_PHASE+PHASE_END)
-			e1:SetReset(RESET_PHASE+PHASE_END)
+			e1:SetReset(RESET_PHASE|PHASE_END)
 			e1:SetLabelObject(c)
 			e1:SetCountLimit(1)
 			e1:SetOperation(s.retop)
@@ -90,7 +89,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if lb & TYPE_TRAP ~=0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		local g=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsAbleToDeck),tp,0,LOCATION_ONFIELD,1,1,nil)
-		if #g>0 then Duel.SendtoDeck(g,nil,0,REASON_EFFECT) end
+		if #g>0 then Duel.SendtoDeck(g,nil,SEQ_DECKTOP,REASON_EFFECT) end
 	end
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)

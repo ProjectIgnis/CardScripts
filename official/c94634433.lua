@@ -1,4 +1,5 @@
 --緊急同調
+--Urgent Tuning
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro effect
@@ -6,14 +7,14 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,TIMING_BATTLE_START+TIMING_BATTLE_END)
+	e1:SetHintTiming(0,TIMING_BATTLE_START|TIMING_BATTLE_END)
 	e1:SetCondition(s.sccon)
 	e1:SetTarget(s.sctg)
 	e1:SetOperation(s.scop)
 	c:RegisterEffect(e1)
 end
 function s.sccon(e,tp,eg,ep,ev,re,r,rp)
-	return (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE)
+	return Duel.IsBattlePhase()
 end
 function s.sctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsSynchroSummonable,tp,LOCATION_EXTRA,0,1,nil,nil) end

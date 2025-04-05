@@ -1,4 +1,5 @@
 --墓守の巫女
+--Gravekeeper's Priestess
 local s,id=GetID()
 function s.initial_effect(c)
 	--field
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x2e))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_GRAVEKEEPERS))
 	e2:SetValue(200)
 	c:RegisterEffect(e2)
 	--Def
@@ -23,8 +24,8 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_UPDATE_DEFENSE)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x2e))
+	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_GRAVEKEEPERS))
 	e3:SetValue(200)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x2e}
+s.listed_series={SET_GRAVEKEEPERS}

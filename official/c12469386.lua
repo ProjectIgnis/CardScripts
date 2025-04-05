@@ -1,4 +1,5 @@
 --返り咲く薔薇の大輪
+--Revival Rose
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon

@@ -1,9 +1,9 @@
--- 陽竜果フォンリー
--- Soldrapom Fengli
--- Scripted by Hatter
+--陽竜果フォンリー
+--Fengli the Soldrapom
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon and halve ATK/DEF
+	--Special Summon and halve ATK/DEF
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	-- Replace destruction
+	--Replace destruction
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -28,7 +28,7 @@ function s.initial_effect(c)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_DECK)
-		and (r&REASON_EFFECT)>0 and re:IsActiveType(TYPE_MONSTER) 
+		and (r&REASON_EFFECT)>0 and re:IsMonsterEffect() 
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -47,14 +47,14 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.BreakEffect()
 			Duel.HintSelection(g,true)
 			local tc=g:GetFirst()
-			-- Halve ATK
+			--Halve ATK
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 			e1:SetValue(tc:GetAttack()//2)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e1)
-			-- Halve DEF
+			--Halve DEF
 			local e2=e1:Clone()
 			e2:SetCode(EFFECT_SET_DEFENSE_FINAL)
 			e2:SetValue(tc:GetDefense()//2)
@@ -74,7 +74,7 @@ function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if Duel.SelectEffectYesNo(tp,c,96) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local g=Duel.SelectMatchingCard(tp,s.desrepfilter,tp,LOCATION_DECK,0,1,1,nil)
-		Duel.SendtoGrave(g,REASON_EFFECT+REASON_REPLACE)
+		Duel.SendtoGrave(g,REASON_EFFECT|REASON_REPLACE)
 		return true
 	end
 end

@@ -1,4 +1,5 @@
 --螺旋のストライクバースト
+--Spiral Flame Strike
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -9,15 +10,15 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x99}
+s.listed_series={SET_ODD_EYES}
 function s.thfilter(c)
-	return c:IsSetCard(0x99) and c:GetLevel()==7 and (c:IsFaceup() or not c:IsLocation(LOCATION_EXTRA)) and c:IsAbleToHand()
+	return c:IsSetCard(SET_ODD_EYES) and c:GetLevel()==7 and (c:IsFaceup() or not c:IsLocation(LOCATION_EXTRA)) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() end
-	local b1=Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x99),tp,LOCATION_ONFIELD,0,1,nil)
+	local b1=Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_ODD_EYES),tp,LOCATION_ONFIELD,0,1,nil)
 		and Duel.IsExistingTarget(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,e:GetHandler())
-	local b2=Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,nil)
+	local b2=Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK|LOCATION_EXTRA,0,1,nil)
 	if chk==0 then return b1 or b2 end
 	local op=0
 	if b1 and b2 then
@@ -37,9 +38,9 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	else
 		e:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 		e:SetProperty(0)
-		local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,nil)
+		local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK|LOCATION_EXTRA,0,nil)
 		e:SetOperation(s.thop)
-		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_EXTRA)
+		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK|LOCATION_EXTRA)
 	end
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
@@ -48,7 +49,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK|LOCATION_EXTRA,0,1,1,nil)
 	if #g>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)

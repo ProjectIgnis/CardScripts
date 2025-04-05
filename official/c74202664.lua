@@ -1,5 +1,5 @@
 --一か八か
---All or Nothing
+--One or Eight
 --Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,4 +1,5 @@
 --集いし願い
+--Converging Wishes
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -57,12 +58,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_EQUIP_LIMIT)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			e1:SetValue(s.eqlimit)
 			c:RegisterEffect(e1)
 		end
 		local fid=c:GetFieldID()
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,fid)
+		tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1,fid)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e2:SetCode(EVENT_PHASE+PHASE_END)
@@ -108,9 +109,9 @@ function s.cafilter(c)
 	return s.cfilter(c) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.cacost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cafilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,e:GetHandler():GetEquipTarget()) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cafilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,e:GetHandler():GetEquipTarget()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.cafilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,e:GetHandler():GetEquipTarget())
+	local g=Duel.SelectMatchingCard(tp,s.cafilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,e:GetHandler():GetEquipTarget())
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.catg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -127,6 +128,6 @@ function s.caop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE+PHASE_DAMAGE_CAL)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE|PHASE_DAMAGE_CAL)
 	ec:RegisterEffect(e1)
 end

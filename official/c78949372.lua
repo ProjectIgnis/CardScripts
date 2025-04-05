@@ -36,9 +36,9 @@ function s.initial_effect(c)
 	e5:SetValue(s.effectfilter)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0xd0}
+s.listed_series={SET_MAJESPECTER}
 function s.filter(c)
-	return c:IsSetCard(0xd0) and c:IsAbleToDeck()
+	return c:IsSetCard(SET_MAJESPECTER) and c:IsAbleToDeck()
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -52,21 +52,21 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	if not tg or tg:FilterCount(Card.IsRelateToEffect,nil,e)~=5 then return end
-	Duel.SendtoDeck(tg,nil,0,REASON_EFFECT)
+	Duel.SendtoDeck(tg,nil,SEQ_DECKTOP,REASON_EFFECT)
 	local g=Duel.GetOperatedGroup()
 	if g:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then Duel.ShuffleDeck(tp) end
-	local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_DECK+LOCATION_EXTRA)
+	local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_DECK|LOCATION_EXTRA)
 	if ct==5 then
 		Duel.BreakEffect()
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end
 end
 function s.tgcon(e)
-	return Duel.IsExistingMatchingCard(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_PZONE,0,1,nil,0xd0)
+	return Duel.IsExistingMatchingCard(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_PZONE,0,1,nil,SET_MAJESPECTER)
 end
 function s.effectfilter(e,ct)
 	local p=e:GetHandlerPlayer()
 	local te,tp,loc=Duel.GetChainInfo(ct,CHAININFO_TRIGGERING_EFFECT,CHAININFO_TRIGGERING_PLAYER,CHAININFO_TRIGGERING_LOCATION)
 	local tc=te:GetHandler()
-	return p==tp and (loc&LOCATION_ONFIELD)~=0 and tc:IsSetCard(0xd0) and tc~=e:GetHandler()
+	return p==tp and (loc&LOCATION_ONFIELD)~=0 and tc:IsSetCard(SET_MAJESPECTER) and tc~=e:GetHandler()
 end

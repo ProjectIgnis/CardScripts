@@ -14,9 +14,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x31}
+s.listed_series={SET_FORTUNE_LADY}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x31) and c:IsFaceup()
+	return c:IsSetCard(SET_FORTUNE_LADY) and c:IsFaceup()
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsCanBeEffectTarget(e)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -37,7 +37,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local tc=g:GetFirst()
 		for tc in aux.Next(g) do
 			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
-			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,fid)
+			tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1,fid)
 		end
 		Duel.SpecialSummonComplete()
 		g:KeepAlive()

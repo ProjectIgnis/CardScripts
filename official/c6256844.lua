@@ -1,4 +1,5 @@
 --レアル・ジェネクス・ターボ
+--R-Genex Turbo
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c)
-	return c:GetLevel()==1 and c:IsSetCard(0x2) and c:IsAbleToHand()
+	return c:GetLevel()==1 and c:IsSetCard(SET_GENEX) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

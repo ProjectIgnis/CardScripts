@@ -1,4 +1,5 @@
 --星間竜パーセク
+--Parsec, the Interstellar Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon with no tribute

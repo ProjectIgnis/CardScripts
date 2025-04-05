@@ -37,9 +37,9 @@ function s.initial_effect(c)
 	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 s.listed_names={40428851}
-s.listed_series={0x137}
+s.listed_series={SET_ANCIENT_WARRIORS}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return r&REASON_EFFECT>0 and re:GetHandler():IsSetCard(0x137)
+	return r&REASON_EFFECT>0 and re:GetHandler():IsSetCard(SET_ANCIENT_WARRIORS)
 		and e:GetHandler():GetPreviousLocation()==LOCATION_DECK and e:GetHandler():GetPreviousControler()==tp
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -56,7 +56,7 @@ function s.negcon1(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x137) and c:IsType(TYPE_CONTINUOUS) and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and c:IsSetCard(SET_ANCIENT_WARRIORS) and c:IsType(TYPE_CONTINUOUS) and c:IsAbleToGraveAsCost()
 end
 function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_SZONE,0,1,nil) end
@@ -74,6 +74,6 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.negcon2(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
+	return re:IsMonsterEffect() and Duel.IsChainNegatable(ev)
 		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,40428851),tp,LOCATION_ONFIELD,0,1,nil)
 end

@@ -1,4 +1,5 @@
 --先史遺産マヤン・マシーン
+--Chronomaly Mayan Machine
 local s,id=GetID()
 function s.initial_effect(c)
 	--double tribute

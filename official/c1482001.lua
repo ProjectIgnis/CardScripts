@@ -14,6 +14,5 @@ function s.initial_effect(c)
 end
 function s.spcost(e,c,tp,st)
 	if (st&SUMMON_TYPE_LINK)~=SUMMON_TYPE_LINK then return true end
-	return Duel.GetCurrentPhase()==PHASE_MAIN2
+	return Duel.IsPhase(PHASE_MAIN2)
 end
-

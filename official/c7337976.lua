@@ -1,5 +1,5 @@
 --煉獄の災天
---Void Calamity
+--Void Apocalypse
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -26,15 +26,15 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCountLimit(1,id)
-	e3:SetCost(s.tgcost2)
+	e3:SetCost(Cost.SelfToGrave)
 	e3:SetTarget(s.tgtg2)
 	e3:SetOperation(s.tgop2)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xbb}
+s.listed_series={SET_INFERNOID}
 function s.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.tgfilter(c)
 	return c:IsRace(RACE_FIEND) and c:IsAbleToGrave()
@@ -51,24 +51,19 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(g,REASON_EFFECT)
 	end
 end
-function s.tgcost2(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(c,REASON_COST)
-end
 function s.tgfilter2(c)
-	return c:IsSetCard(0xbb) and c:IsMonster() and c:IsAbleToGrave()
+	return c:IsSetCard(SET_INFERNOID) and c:IsMonster() and c:IsAbleToGrave()
 end
 function s.tgtg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter2,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter2,tp,LOCATION_HAND|LOCATION_DECK,0,1,nil)
 		and Duel.IsExistingMatchingCard(Card.IsSummonLocation,tp,0,LOCATION_MZONE,1,nil,LOCATION_EXTRA) end
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_HAND|LOCATION_DECK)
 end
 function s.tgop2(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetMatchingGroupCount(Card.IsSummonLocation,tp,0,LOCATION_MZONE,nil,LOCATION_EXTRA)
 	if ct<1 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.tgfilter2,tp,LOCATION_HAND+LOCATION_DECK,0,1,ct,nil)
+	local g=Duel.SelectMatchingCard(tp,s.tgfilter2,tp,LOCATION_HAND|LOCATION_DECK,0,1,ct,nil)
 	if #g>0 then
 		Duel.SendtoGrave(g,REASON_EFFECT)
 	end

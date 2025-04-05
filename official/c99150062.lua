@@ -1,4 +1,5 @@
 --ナチュル・アントジョー
+--Naturia Antjaw
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -13,12 +14,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x2a}
+s.listed_series={SET_NATURIA}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(aux.NOT(Card.IsSummonPlayer),1,nil,tp)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x2a) and c:GetLevel()<=3 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_NATURIA) and c:GetLevel()<=3 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

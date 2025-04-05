@@ -1,4 +1,5 @@
 --異国の剣士
+--Swordsman from a Distant Land
 local s,id=GetID()
 function s.initial_effect(c)
 	--
@@ -47,7 +48,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetLabelObject(e)
 		e1:SetLabel(0)
 		e1:SetOwnerPlayer(tp)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		bc:RegisterEffect(e1)
 		e:GetLabelObject():AddCard(bc)
 	end

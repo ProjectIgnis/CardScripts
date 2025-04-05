@@ -37,9 +37,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation_d)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x26}
+s.listed_series={SET_MORPHTRONIC}
 function s.cfilter(c)
-	return c:IsSetCard(0x26) and c:IsMonster() and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(SET_MORPHTRONIC) and c:IsMonster() and c:IsAbleToRemoveAsCost()
 end
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -64,7 +64,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 function s.thdfilter(c)
-	return c:IsSetCard(0x26) and c:IsSpellTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_MORPHTRONIC) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.target_a(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thdfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -85,7 +85,7 @@ function s.operation_a(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thgfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x26) and c:IsLevelBelow(4) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(SET_MORPHTRONIC) and c:IsLevelBelow(4) and c:IsAbleToHand()
 end
 function s.target_d(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thgfilter,tp,LOCATION_GRAVE,0,1,nil) end

@@ -71,7 +71,7 @@ function s.linkspfilter(c,e,tp)
 		and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,c,c:GetCode())
 end
 function s.linksptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.linkspfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end	
+	if chk==0 then return Duel.IsExistingMatchingCard(s.linkspfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function s.linkspop(e,tp,eg,ep,ev,re,r,rp)

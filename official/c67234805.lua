@@ -53,7 +53,7 @@ function s.initial_effect(c)
 end
 s.counter_place_list={0x16}
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
-	if re:IsActiveType(TYPE_MONSTER) and e:GetHandler():GetFlagEffect(1)>0 then
+	if re:IsMonsterEffect() and e:GetHandler():GetFlagEffect(1)>0 then
 		e:GetHandler():AddCounter(0x16,1)
 	end
 end

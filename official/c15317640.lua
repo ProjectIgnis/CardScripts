@@ -1,5 +1,5 @@
 --巨大戦艦 カバード・コア
---B.E.S Covered Core
+--B.E.S. Covered Core
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x1f)

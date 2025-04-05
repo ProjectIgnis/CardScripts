@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e1:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK) end)
+	e1:SetCondition(function(e) return e:GetHandler():IsLinkSummoned() end)
 	e1:SetTarget(s.distg)
 	e1:SetOperation(s.disop)
 	c:RegisterEffect(e1)
@@ -89,7 +89,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.immval(e,re)
 	local c=e:GetHandler()
-	if not (re:IsActivated() and c:IsSummonType(SUMMON_TYPE_LINK) and e:GetOwnerPlayer()==1-re:GetOwnerPlayer()) then return false end
+	if not (re:IsActivated() and c:IsLinkSummoned() and e:GetOwnerPlayer()==1-re:GetOwnerPlayer()) then return false end
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return true end
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	return not g or not g:IsContains(c)

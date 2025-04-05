@@ -1,4 +1,5 @@
 --墓守の使徒
+--Gravekeeper's Nobleman
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x2e}
+s.listed_series={SET_GRAVEKEEPERS}
 s.listed_names={id}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -20,7 +21,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 		and c:IsPreviousControler(tp) and c==Duel.GetAttackTarget() and Duel.GetAttacker():IsControler(1-tp)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x2e) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
+	return c:IsSetCard(SET_GRAVEKEEPERS) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

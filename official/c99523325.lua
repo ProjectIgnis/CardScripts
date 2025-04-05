@@ -1,4 +1,5 @@
 --墓守の石版
+--Gravekeeper's Stele
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -16,9 +17,9 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_NECRO_VALLEY_IM)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x2e}
+s.listed_series={SET_GRAVEKEEPERS}
 function s.filter(c)
-	return c:IsSetCard(0x2e) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_GRAVEKEEPERS) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc) end

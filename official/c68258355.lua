@@ -1,7 +1,6 @@
 --ＺＳ－武装賢者
---ZS - Arms Sage
+--ZS - Armed Sage
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -26,8 +25,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 	--Lists "Utopia" and "ZW -" archetype
-s.listed_series={0x107f,0x107e}
-
+s.listed_series={SET_UTOPIA,SET_ZW}
 	--Check for exactly 1 level 4 monster
 function s.spcon(e)
 	local g=Duel.GetFieldGroup(e:GetHandlerPlayer(),LOCATION_MZONE,0)
@@ -38,7 +36,7 @@ end
 	--If an "Utopia" Xyz used this card as material
 function s.efcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return r==REASON_XYZ and c:GetReasonCard():IsSetCard(0x107f)
+	return r==REASON_XYZ and c:GetReasonCard():IsSetCard(SET_UTOPIA)
 end
 	--Grant effect to "Utopia "Xyz monster using this card as material
 function s.efop(e,tp,eg,ep,ev,re,r,rp)
@@ -53,24 +51,24 @@ function s.efop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCondition(s.xyzcon)
 	e1:SetTarget(s.xyztg)
 	e1:SetOperation(s.xyzop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	rc:RegisterEffect(e1,true)
 	if not rc:IsType(TYPE_EFFECT) then
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_ADD_TYPE)
 		e2:SetValue(TYPE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		rc:RegisterEffect(e2,true)
 	end
 end
 	--If Xyz summoned
 function s.xyzcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
+	return e:GetHandler():IsXyzSummoned()
 end
 	--Check for "ZW -" monster
 function s.filter(c)
-	return c:IsSetCard(0x107e) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_ZW) and c:IsMonster() and c:IsAbleToHand()
 end
 	--Activation legality
 function s.xyztg(e,tp,eg,ep,ev,re,r,rp,chk)

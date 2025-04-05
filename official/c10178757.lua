@@ -1,4 +1,5 @@
 --レアル・ジェネクス・オラクル
+--R-Genex Oracle
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -20,13 +21,13 @@ function s.initial_effect(c)
 	e2:SetValue(s.synlimit)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x2}
+s.listed_series={SET_GENEX}
 function s.synlimit(e,c)
 	if not c then return false end
-	return not c:IsSetCard(0x2)
+	return not c:IsSetCard(SET_GENEX)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return (r&REASON_EFFECT)>0 and re:GetHandler():IsSetCard(0x2)
+	return (r&REASON_EFFECT)>0 and re:GetHandler():IsSetCard(SET_GENEX)
 		and e:GetHandler():GetPreviousLocation()==LOCATION_DECK and e:GetHandler():IsPreviousControler(tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

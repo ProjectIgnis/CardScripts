@@ -1,4 +1,5 @@
 --ドラゴン族・封印の壺
+--Dragon Capture Jar
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

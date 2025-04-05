@@ -1,4 +1,5 @@
 --FA－ブラック・レイ・ランサー
+--Full Armored Black Ray Lancer
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -48,7 +49,7 @@ function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	else return false end
 end
 function s.filter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSpellTrap()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and s.filter(chkc) end

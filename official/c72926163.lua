@@ -1,4 +1,5 @@
 --E・HERO ネオス・ナイト
+--Elemental HERO Neos Knight
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -37,7 +38,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.listed_names={CARD_NEOS}
-s.material_setcode={0x8,0x3008,0x9}
+s.material_setcode={SET_HERO,SET_ELEMENTAL_HERO,SET_NEOS}
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	local atk=0
@@ -49,7 +50,7 @@ function s.valcheck(e,c)
 	e:SetLabel(atk)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
+	return e:GetHandler():IsFusionSummoned()
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -59,7 +60,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(atk)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 	end
 end

@@ -1,11 +1,12 @@
 --妖仙大旋風
+--Yosen Whirlwind
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.PayLP(800))
 	c:RegisterEffect(e1)
 	--tohand
 	local e2=Effect.CreateEffect(c)
@@ -31,13 +32,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xb3}
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,800) end
-	Duel.PayLPCost(tp,800)
-end
+s.listed_series={SET_YOSENJU}
 function s.cfilter(c,tp)
-	return c:IsSetCard(0xb3) and c:IsPreviousControler(tp)
+	return c:IsSetCard(SET_YOSENJU) and c:IsPreviousControler(tp)
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
@@ -56,10 +53,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and e:GetHandler():GetFlagEffect(id)==0
+	return Duel.IsTurnPlayer(tp) and e:GetHandler():GetFlagEffect(id)==0
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(e:GetHandler(),REASON_EFFECT)

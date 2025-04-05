@@ -1,4 +1,5 @@
 --竜角の狩猟者
+--Dragon Horn Hunter
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon

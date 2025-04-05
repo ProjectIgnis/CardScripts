@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0xe1),2,2)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_METALFOES),2,2)
 	--equip or special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -18,17 +18,17 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xe1}
+s.listed_series={SET_METALFOES}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_MZONE) and e:GetHandler():IsReason(REASON_EFFECT)
 end
 function s.spfilter(c,ft)
-	return c:IsFaceup() and c:IsSetCard(0xe1) and (ft>0 or c:GetSequence()<5)
+	return c:IsFaceup() and c:IsSetCard(SET_METALFOES) and (ft>0 or c:GetSequence()<5)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local b1=Duel.IsExistingTarget(Card.IsSetCard,tp,LOCATION_MZONE,0,1,nil,0xe1) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+	local b1=Duel.IsExistingTarget(Card.IsSetCard,tp,LOCATION_MZONE,0,1,nil,SET_METALFOES) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 	local b2=Duel.IsExistingTarget(s.spfilter,tp,LOCATION_ONFIELD,0,1,nil,ft) 
 	if chk==0 then return b1 or b2 end
 	local op=0
@@ -38,7 +38,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	e:SetLabel(op)
 	if op==0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-		local g=Duel.SelectTarget(tp,Card.IsSetCard,tp,LOCATION_MZONE,0,1,1,nil,0xe1)
+		local g=Duel.SelectTarget(tp,Card.IsSetCard,tp,LOCATION_MZONE,0,1,1,nil,SET_METALFOES)
 		e:SetCategory(CATEGORY_EQUIP)
 		Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,0,0)
 	else
@@ -62,13 +62,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetValue(s.eqlimit)
 		e1:SetLabelObject(tc)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_EQUIP)
 		e2:SetCode(EFFECT_UPDATE_ATTACK)
 		e2:SetValue(1000)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e2)
 	elseif e:GetLabel()==1 and Duel.Destroy(tc,REASON_EFFECT)~=0 and c:IsRelateToEffect(e) then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)

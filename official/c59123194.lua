@@ -1,4 +1,5 @@
 --覚醒の魔導剣士
+--Enlightenment Paladin
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -26,16 +27,16 @@ function s.initial_effect(c)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x98}
+s.listed_series={SET_MAGICIAN}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_SYNCHRO) and c:GetMaterial():IsExists(s.pmfilter,1,nil,c)
+	return c:IsSynchroSummoned() and c:GetMaterial():IsExists(s.pmfilter,1,nil,c)
 end
 function s.thfilter(c)
 	return c:IsSpell() and c:IsAbleToHand()
 end
 function s.pmfilter(c,sc)
-	return c:IsSetCard(0x98) and c:IsType(TYPE_PENDULUM,sc,SUMMON_TYPE_SYNCHRO)
+	return c:IsSetCard(SET_MAGICIAN) and c:IsType(TYPE_PENDULUM,sc,SUMMON_TYPE_SYNCHRO)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end

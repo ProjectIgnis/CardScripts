@@ -22,7 +22,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_HAND,0,1,1,nil)
 	if #g>0 then
 		if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)==0 then
-			Duel.SendtoDeck(g,nil,1,REASON_EFFECT)
+			Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 		else
 			local opt=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))
 			Duel.SendtoDeck(g,nil,opt,REASON_EFFECT)

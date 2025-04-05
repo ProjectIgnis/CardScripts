@@ -1,7 +1,8 @@
 --ヴァイロン・フィラメント
+--Vylon Filament
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,0x30))
+	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,SET_VYLON))
 	--Actlimit
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -21,7 +22,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x30}
+s.listed_series={SET_VYLON}
 function s.lmop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetAttacker()~=e:GetHandler():GetEquipTarget() then return end
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -30,7 +31,7 @@ function s.lmop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e1:SetTargetRange(0,1)
 	e1:SetValue(s.aclimit)
-	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+	e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.aclimit(e,re,tp)
@@ -41,7 +42,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 		and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x30) and c:IsSpell() and c:IsAbleToHand()
+	return c:IsSetCard(SET_VYLON) and c:IsSpell() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xe0))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_AMORPHAGE))
 	e2:SetValue(300)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
@@ -33,13 +33,13 @@ function s.initial_effect(c)
 	local e5=Ritual.CreateProc({handler=c,lvtype=RITPROC_EQUAL,filter=aux.FilterBoolFunction(Card.IsCode,98287529),lv=8,matfilter=aux.FilterBoolFunction(Card.IsType,TYPE_PENDULUM)})
 	e5:SetType(EFFECT_TYPE_IGNITION)
 	e5:SetRange(LOCATION_GRAVE)
-	e5:SetCost(aux.bfgcost)
+	e5:SetCost(Cost.SelfBanish)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0xe0}
+s.listed_series={SET_AMORPHAGE}
 s.listed_names={98287529}
 function s.cfilter(c,tp)
-	return c:IsPreviousSetCard(0xe0) and c:IsReason(REASON_RELEASE) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
+	return c:IsPreviousSetCard(SET_AMORPHAGE) and c:IsReason(REASON_RELEASE) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

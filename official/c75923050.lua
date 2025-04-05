@@ -48,7 +48,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not (c:IsRelateToEffect(e) and c:IsFaceup()) then return end
-	if Duel.SendtoDeck(c,nil,2,REASON_EFFECT)>0 then
+	if Duel.SendtoDeck(c,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,c)
 		if #sg==0 then return end

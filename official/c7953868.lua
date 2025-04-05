@@ -1,4 +1,5 @@
 --蒼血鬼
+--Blue-Blooded Oni
 local s,id=GetID()
 function s.initial_effect(c)
 	--to defense

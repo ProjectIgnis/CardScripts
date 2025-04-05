@@ -1,9 +1,10 @@
 --幻奏の華歌聖ブルーム・ディーヴァ
+--Bloom Diva the Melodious Choir
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x109b),aux.FilterBoolFunctionEx(Card.IsSetCard,0x9b))
+	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_MELODIOUS_MAESTRA),aux.FilterBoolFunctionEx(Card.IsSetCard,SET_MELODIOUS))
 	--indes
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -29,8 +30,8 @@ function s.initial_effect(c)
 	e4:SetOperation(s.operation)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x109b,0x9b}
-s.material_setcode={0x9b,0x109b}
+s.listed_series={SET_MELODIOUS_MAESTRA,SET_MELODIOUS}
+s.material_setcode={SET_MELODIOUS,SET_MELODIOUS_MAESTRA}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()

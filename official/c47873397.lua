@@ -46,7 +46,7 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_FREE_CHAIN)
 	e4:SetRange(LOCATION_GRAVE)
 	e4:SetCondition(s.damcon)
-	e4:SetCost(aux.bfgcost)
+	e4:SetCost(Cost.SelfBanish)
 	e4:SetOperation(s.damop)
 	c:RegisterEffect(e4)
 end

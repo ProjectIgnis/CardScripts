@@ -1,4 +1,5 @@
 --ギミック・パペット－ボム・エッグ
+--Gimmick Puppet Egg Head
 local s,id=GetID()
 function s.initial_effect(c)
 	--effects
@@ -11,13 +12,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.effop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x1083}
+s.listed_series={SET_GIMMICK_PUPPET}
 function s.cfilter(c)
-	return c:IsSetCard(0x1083) and c:IsMonster() and c:IsDiscardable()
+	return c:IsSetCard(SET_GIMMICK_PUPPET) and c:IsMonster() and c:IsDiscardable()
 end
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST|REASON_DISCARD)
 	local opt=0
 	if e:GetHandler():GetLevel()==8 then
 		opt=Duel.SelectOption(tp,aux.Stringid(id,1))
@@ -40,7 +41,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)
 		e1:SetValue(8)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e:GetHandler():RegisterEffect(e1)
 	end
 end

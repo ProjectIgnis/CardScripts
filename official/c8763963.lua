@@ -57,7 +57,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(0)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		Duel.Recover(tp,tc:GetBaseAttack(),REASON_EFFECT)
 	end
@@ -68,7 +68,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e2:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
 		e2:SetValue(aux.ChangeBattleDamage(1,HALF_DAMAGE))
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e2)
 	end
 end

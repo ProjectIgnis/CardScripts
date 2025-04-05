@@ -1,5 +1,5 @@
 --革命の御旗
---Revered Banner of the Revolution
+--Pennant of Revolution
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -46,7 +46,7 @@ function s.initial_effect(c)
 end
 s.listed_names={72022087}
 function s.thcfilter(c,tp)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT)
+	return c:IsReason(REASON_BATTLE|REASON_EFFECT)
 		and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousControler(tp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
@@ -56,13 +56,13 @@ function s.thfilter(c)
 	return c:IsCode(72022087) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK|LOCATION_GRAVE)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil)
 	if #g>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
@@ -115,5 +115,5 @@ function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	g:GetFirst():SetStatus(STATUS_DESTROY_CONFIRMED,false)
 	Duel.HintSelection(g)
-	Duel.Destroy(g,REASON_EFFECT+REASON_REPLACE)
+	Duel.Destroy(g,REASON_EFFECT|REASON_REPLACE)
 end

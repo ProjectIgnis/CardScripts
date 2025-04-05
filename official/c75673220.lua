@@ -1,4 +1,5 @@
 --スナップドラゴン
+--Snapdragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--remove
@@ -22,7 +23,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local rg=g:RandomSelect(tp,1)
 	local tc=rg:GetFirst()
 	Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
-	tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+	tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_PHASE+PHASE_END)
@@ -30,7 +31,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetLabelObject(tc)
 	e1:SetCondition(s.retcon)
 	e1:SetOperation(s.retop)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)

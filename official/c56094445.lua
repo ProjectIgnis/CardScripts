@@ -1,4 +1,5 @@
 --古代の機械兵士
+--Ancient Gear Soldier
 local s,id=GetID()
 function s.initial_effect(c)
 	--actlimit

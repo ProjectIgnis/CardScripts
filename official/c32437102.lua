@@ -1,4 +1,5 @@
 --竜魂の力
+--Dragonic Attack
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsRace,RACE_WARRIOR),s.eqlimit)

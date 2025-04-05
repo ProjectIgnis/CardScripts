@@ -1,4 +1,5 @@
 --異界の棘紫竜
+--Interplanetarypurplythorny Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon

@@ -1,5 +1,5 @@
 --星杯戦士ニンギルス
---Star Grail Warrior Ningirsu
+--Ningirsu the World Chalice Warrior
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
@@ -39,19 +39,19 @@ function s.initial_effect(c)
 	e5:SetOperation(s.spop2)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0xfd}
+s.listed_series={SET_WORLD_CHALICE}
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+	return e:GetHandler():IsLinkSummoned()
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local gc=e:GetHandler():GetLinkedGroup():FilterCount(aux.FaceupFilter(Card.IsSetCard,0xfd),nil)
+	local gc=e:GetHandler():GetLinkedGroup():FilterCount(aux.FaceupFilter(Card.IsSetCard,SET_WORLD_CHALICE),nil)
 	Duel.SetTargetPlayer(tp)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,gc)
 end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
-	local gc=e:GetHandler():GetLinkedGroup():FilterCount(aux.FaceupFilter(Card.IsSetCard,0xfd),nil)
+	local gc=e:GetHandler():GetLinkedGroup():FilterCount(aux.FaceupFilter(Card.IsSetCard,SET_WORLD_CHALICE),nil)
 	if gc>0 then
 		Duel.Draw(p,gc,REASON_EFFECT)
 	end
@@ -74,7 +74,7 @@ function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.spfilter2(c,e,tp)
-	return c:IsSetCard(0xfd) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_WORLD_CHALICE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

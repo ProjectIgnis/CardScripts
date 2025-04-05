@@ -29,16 +29,16 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x135}
+s.listed_series={SET_IGNISTER}
 s.listed_names={59054773}
 function s.matfilter(c,scard,sumtype,tp)
-	return not c:IsLinkMonster() and c:IsSetCard(0x135,scard,sumtype,tp)
+	return not c:IsLinkMonster() and c:IsSetCard(SET_IGNISTER,scard,sumtype,tp)
 end
 function s.thfilter(c)
 	return c:IsCode(59054773) and c:IsAbleToHand()
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+	return e:GetHandler():IsLinkSummoned()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -53,16 +53,16 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and re:IsActiveType(TYPE_MONSTER)
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and re:IsMonsterEffect()
 		and re:GetHandler():GetBaseAttack()==2300 and re:GetHandler():IsRace(RACE_CYBERSE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local zone=e:GetHandler():GetLinkedZone()&0x1f
+	local zone=e:GetHandler():GetLinkedZone()&ZONES_MMZ
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE,nil,nil,zone)>0 end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local zone=c:GetLinkedZone()&0x1f
+	local zone=c:GetLinkedZone()&ZONES_MMZ
 	if c:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE,nil,nil,zone)>0 then
 		Duel.MoveSequence(c,math.log(zone,2))
 		if c:IsFaceup() and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
@@ -73,7 +73,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
 			e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
 			e1:SetValue(att)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 			c:RegisterEffect(e1)
 		end
 	end

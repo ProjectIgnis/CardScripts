@@ -36,7 +36,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCode(EVENT_PHASE+PHASE_END)
 			e1:SetCondition(s.descon)
 			e1:SetOperation(s.desop)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
 			e1:SetCountLimit(1)
 			sg:GetFirst():RegisterEffect(e1)
 		end

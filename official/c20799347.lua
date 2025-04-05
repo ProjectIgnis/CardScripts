@@ -1,7 +1,6 @@
 --電脳堺嫦－兎々
---Datascape Rabbit - Tutu
+--Virtual World Oto-Hime - Toutou
 --Scripted by Naim
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Summon with no tribute
@@ -39,7 +38,7 @@ function s.tgfilter(c)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,s.tgfilter,1,1,REASON_COST+REASON_DISCARD,nil)
+	Duel.DiscardHand(tp,s.tgfilter,1,1,REASON_COST|REASON_DISCARD,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -55,7 +54,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_ADD_TYPE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetValue(TYPE_TUNER)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD)
 		c:RegisterEffect(e1)
 		--Banish it if it leaves the field
 		local e2=Effect.CreateEffect(c)
@@ -63,7 +62,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-		e2:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e2:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		e2:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e2,true)
 		--Restricted to level/rank 3+ monsters
@@ -74,7 +73,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 		e3:SetTargetRange(1,0)
 		e3:SetTarget(s.splimit)
-		e3:SetReset(RESET_PHASE+PHASE_END)
+		e3:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e3,tp)
 	end
 end

@@ -34,7 +34,7 @@ function s.distg(e,c)
 		and c:GetCardTarget():IsExists(s.cfilter,1,nil,e:GetHandlerPlayer())
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
-	if not re:IsActiveType(TYPE_SPELL) then return end
+	if not re:IsSpellEffect() then return end
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	if not g or not g:IsExists(s.cfilter,1,nil,tp) then return end

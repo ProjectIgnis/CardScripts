@@ -1,4 +1,5 @@
 --花札衛－雨四光－
+--Flower Cardian Lightshower
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -9,7 +10,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xe6))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_FLOWER_CARDIAN))
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
 	--cannot be target
@@ -42,7 +43,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.epop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0xe6}
+s.listed_series={SET_FLOWER_CARDIAN}
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and r==REASON_RULE
 end
@@ -57,7 +58,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(p,d,REASON_EFFECT)
 end
 function s.epcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.eptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -82,7 +83,7 @@ function s.epop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e1:SetCode(EFFECT_SKIP_DP)
 		e1:SetTargetRange(1,0)
-		e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN)
+		e1:SetReset(RESET_PHASE|PHASE_END|RESET_SELF_TURN)
 		Duel.RegisterEffect(e1,tp)
 	elseif c:IsFaceup() and c:IsRelateToEffect(e) then
 		Duel.NegateRelatedChain(c,RESET_TURN_SET)
@@ -90,7 +91,7 @@ function s.epop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_OPPO_TURN)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_STANDBY|RESET_OPPO_TURN)
 		c:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_DISABLE_EFFECT)

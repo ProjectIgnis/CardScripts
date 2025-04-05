@@ -1,5 +1,5 @@
 --閻魔の裁き
---Enma’s Judgment
+--Enma's Judgment
 --
 local s,id=GetID()
 function s.initial_effect(c)
@@ -18,7 +18,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetTargetCard(eg)
 	local g=eg:Filter(Card.IsSummonPlayer,nil,1-tp)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
-	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_DECK)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_GRAVE)
 end
 function s.filter2(c,e,tp)
@@ -34,7 +34,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.filter2,nil,e,1-tp)
 	if #g>0 and	Duel.Destroy(g,REASON_EFFECT)>0 then
 		local g1=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_GRAVE,0,nil)
-		local g2=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil,e,tp)
+		local g2=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND|LOCATION_DECK,0,nil,e,tp)
 		if #g1>4 and #g2>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 			local rg=g1:Select(tp,5,5,nil)

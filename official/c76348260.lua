@@ -1,4 +1,5 @@
 --極星天ミーミル
+--Mimir of the Nordic Ascendant
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon
@@ -6,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_FIELD)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e1:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e1:SetRange(LOCATION_GRAVE)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.condition)
@@ -15,9 +16,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x42}
+s.listed_series={SET_NORDIC}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x42)
+	return c:IsFaceup() and c:IsSetCard(SET_NORDIC)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer() and not Duel.CheckPhaseActivity()

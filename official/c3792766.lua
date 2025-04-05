@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0xfb),2)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_TRICKSTAR),2)
 	c:EnableReviveLimit()
 	--tohand
 	local e1=Effect.CreateEffect(c)
@@ -15,15 +15,15 @@ function s.initial_effect(c)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xfb}
+s.listed_series={SET_TRICKSTAR}
 function s.lkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xfb)
+	return c:IsFaceup() and c:IsSetCard(SET_TRICKSTAR)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetLinkedGroup():IsExists(s.lkfilter,1,nil)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0xfb) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(SET_TRICKSTAR) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -45,7 +45,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 			e1:SetValue(ct*1000)
 			c:RegisterEffect(e1)
 		end

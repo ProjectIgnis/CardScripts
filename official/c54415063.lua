@@ -1,4 +1,5 @@
 --ハーピィ・レディ3
+--Harpie Lady 3
 local s,id=GetID()
 function s.initial_effect(c)
 	--atk limit
@@ -17,6 +18,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_SELF_TURN,2)
+	e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_SELF_TURN,2)
 	bc:RegisterEffect(e1)
 end

@@ -1,5 +1,5 @@
 --E・HERO サンライザー
---Elemental HERO Sunriser
+--Elemental HERO Sunrise
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
@@ -46,11 +46,11 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 end
-s.material_setcode={0x8}
-s.listed_series={0x8}
+s.material_setcode={SET_HERO}
+s.listed_series={SET_HERO}
 s.listed_names={45906428}
 function s.ffilter(c,fc,sumtype,tp,sub,mg,sg)
-	return c:IsSetCard(0x8,fc,sumtype,tp) and c:GetAttribute(fc,sumtype,tp)~=0 and (not sg or not sg:IsExists(s.fusfilter,1,c,c:GetAttribute(fc,sumtype,tp),fc,sumtype,tp))
+	return c:IsSetCard(SET_HERO,fc,sumtype,tp) and c:GetAttribute(fc,sumtype,tp)~=0 and (not sg or not sg:IsExists(s.fusfilter,1,c,c:GetAttribute(fc,sumtype,tp),fc,sumtype,tp))
 end
 function s.fusfilter(c,attr,fc,sumtype,tp)
 	return c:IsAttribute(attr,fc,sumtype,tp) and not c:IsHasEffect(511002961)
@@ -87,8 +87,8 @@ end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local at=Duel.GetAttackTarget()
-	return a~=e:GetHandler() and a:IsControler(tp) and a:IsSetCard(0x8)
-		or at and at~=e:GetHandler() and at:IsControler(tp) and at:IsFaceup() and at:IsSetCard(0x8)
+	return a~=e:GetHandler() and a:IsControler(tp) and a:IsSetCard(SET_HERO)
+		or at and at~=e:GetHandler() and at:IsControler(tp) and at:IsFaceup() and at:IsSetCard(SET_HERO)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() end

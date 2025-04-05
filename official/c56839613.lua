@@ -1,4 +1,5 @@
 --電池メン－ボタン型
+--Batteryman Micro-Cell
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip effect
@@ -26,10 +27,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.drop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x28}
+s.listed_series={SET_BATTERYMAN}
 s.listed_names={id}
 function s.filter(c,e,tp)
-	return not c:IsCode(id) and c:IsSetCard(0x28) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return not c:IsCode(id) and c:IsSetCard(SET_BATTERYMAN) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -44,7 +45,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD_EXC_GRAVE,0,0)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD_EXC_GRAVE,0,0)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE)

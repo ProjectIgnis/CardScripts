@@ -1,5 +1,5 @@
 --イリュージョン・バルーン
---Illusion Ballons
+--Illusion Balloons
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
-s.listed_series={0x9f}
+s.listed_series={SET_PERFORMAPAL}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	local p1=false
@@ -30,8 +30,8 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 			if tc:IsPreviousControler(0) then p1=true else p2=true end
 		end
 	end
-	if p1 then Duel.RegisterFlagEffect(0,id,RESET_PHASE+PHASE_END,0,1) end
-	if p2 then Duel.RegisterFlagEffect(1,id,RESET_PHASE+PHASE_END,0,1) end
+	if p1 then Duel.RegisterFlagEffect(0,id,RESET_PHASE|PHASE_END,0,1) end
+	if p2 then Duel.RegisterFlagEffect(1,id,RESET_PHASE|PHASE_END,0,1) end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFlagEffect(tp,id)~=0
@@ -41,7 +41,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x9f) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_PERFORMAPAL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)==0 then return end

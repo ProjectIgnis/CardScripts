@@ -1,4 +1,5 @@
 --幻影騎士団フラジャイルアーマー
+--The Phantom Knights of Fragile Armor
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -27,9 +28,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x10db,0xdb}
+s.listed_series={SET_THE_PHANTOM_KNIGHTS,SET_PHANTOM_KNIGHTS}
 function s.filter(c,tp)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsSetCard(0x10db) and c:IsPreviousControler(tp)
+	return c:IsReason(REASON_BATTLE|REASON_EFFECT) and c:IsSetCard(SET_THE_PHANTOM_KNIGHTS) and c:IsPreviousControler(tp)
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
@@ -46,7 +47,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function s.drcfilter(c)
-	return (c:IsSetCard(0x10db) or (c:IsSetCard(0xdb) and c:IsSpellTrap())) and c:IsAbleToGraveAsCost()
+	return (c:IsSetCard(SET_THE_PHANTOM_KNIGHTS) or (c:IsSetCard(SET_PHANTOM_KNIGHTS) and c:IsSpellTrap())) and c:IsAbleToGraveAsCost()
 end
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,0)

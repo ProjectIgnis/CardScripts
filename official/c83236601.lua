@@ -44,12 +44,12 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge2,0)
 	end)
 end
-s.listed_series={0xba,0x95}
+s.listed_series={SET_RAIDRAPTOR,SET_RANK_UP_MAGIC}
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)>0
 end
 function s.tgfilter(c)
-	return c:IsSetCard(0xba) and c:IsAbleToGrave()
+	return c:IsSetCard(SET_RAIDRAPTOR) and c:IsAbleToGrave()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -64,13 +64,13 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	e:GetHandler():RegisterFlagEffect(id+1,RESETS_STANDARD_PHASE_END,0,1)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetFlagEffect(id+1)>0 and Duel.GetCurrentPhase()==PHASE_MAIN2
+	return e:GetHandler():GetFlagEffect(id+1)>0 and DDuel.IsPhase(PHASE_MAIN2)
 end
 function s.filter(c)
-	return c:IsSetCard(0x95) and c:GetType()==TYPE_SPELL+TYPE_QUICKPLAY and c:IsAbleToHand()
+	return c:IsSetCard(SET_RANK_UP_MAGIC) and c:IsQuickPlaySpell() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
@@ -91,9 +91,9 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.splimit(e,c)
-	return not c:IsSetCard(0xba)
+	return not c:IsSetCard(SET_RAIDRAPTOR)
 end

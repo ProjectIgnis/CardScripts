@@ -39,7 +39,7 @@ function s.attackup(e,c)
 	return c:GetCounter(COUNTER_SPELL)*1000
 end
 function s.addcc(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return e:GetHandler():IsSynchroSummoned()
 end
 function s.addct(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

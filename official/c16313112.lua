@@ -25,10 +25,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.atop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x119}
+s.listed_series={SET_SALAMANGREAT}
 s.listed_names={38784726,id}
 function s.cfilter(c,fc,sumtype,tp)
-	return c:IsLinkMonster() and c:IsSetCard(0x119)
+	return c:IsLinkMonster() and c:IsSetCard(SET_SALAMANGREAT)
 end
 function s.atcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil)
@@ -39,14 +39,14 @@ end
 function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsFaceup() and c:IsRelateToEffect(e) and c:GetFlagEffect(id)==0 then
-			c:RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+			c:RegisterFlagEffect(id+1,RESETS_STANDARD_PHASE_END,0,1)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 			e1:SetCode(EVENT_BATTLE_START)
 			e1:SetOwnerPlayer(tp)
 			e1:SetCondition(s.descon2)
 			e1:SetOperation(s.desop2)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
 			c:RegisterEffect(e1,true)
 	end
 end
@@ -63,7 +63,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReincarnationSummoned()
 end
 function s.desfilter(c)
-	return c:IsSummonType(SUMMON_TYPE_SPECIAL)
+	return c:IsSpecialSummoned()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.desfilter,tp,0,LOCATION_MZONE,1,nil) end

@@ -1,5 +1,5 @@
 --Ａ・Ɐ・ＶＶ
---Amaze Ɐttraction Vanquish Viking
+--Amaze Attraction Viking Vortex
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

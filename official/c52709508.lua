@@ -26,7 +26,7 @@ function s.valcheck(e,c)
 	e:SetLabel(att)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) and e:GetLabelObject():GetLabel()~=0
+	return e:GetHandler():IsSynchroSummoned() and e:GetLabelObject():GetLabel()~=0
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local att=e:GetLabelObject():GetLabel()

@@ -1,4 +1,5 @@
 --曲芸の魔術師
+--Acrobatic Magician
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon

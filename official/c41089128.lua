@@ -1,4 +1,5 @@
 --炎を支配する者
+--Flame Ruler
 local s,id=GetID()
 function s.initial_effect(c)
 	--double tribute

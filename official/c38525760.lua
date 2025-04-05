@@ -1,4 +1,5 @@
 --陽炎獣 サーベラス
+--Hazy Flame Cerbereus
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot be target
@@ -30,7 +31,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x7d}
+s.listed_series={SET_HAZY}
 function s.ntcon(e,c,minc)
 	if c==nil then return true end
 	return minc==0 and c:GetLevel()>4 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
@@ -50,7 +51,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_DESTROY)
 end
 function s.filter(c)
-	return c:IsSetCard(0x7d) and c:IsAbleToHand()
+	return c:IsSetCard(SET_HAZY) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

@@ -13,9 +13,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xa}
+s.listed_series={SET_LSWARM}
 function s.rmfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xa) and c:IsAbleToRemove()
+	return c:IsFaceup() and c:IsSetCard(SET_LSWARM) and c:IsAbleToRemove()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

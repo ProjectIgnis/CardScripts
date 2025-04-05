@@ -1,4 +1,5 @@
 --花札衛－松－
+--Flower Cardian Pine
 local s,id=GetID()
 function s.initial_effect(c)
 	--draw (summon)
@@ -21,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.drop2)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xe6}
+s.listed_series={SET_FLOWER_CARDIAN}
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
 	Duel.SetTargetPlayer(tp)
@@ -33,7 +34,7 @@ function s.drop1(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Draw(p,d,REASON_EFFECT)==0 then return end
 	local tc=Duel.GetOperatedGroup():GetFirst()
 	Duel.ConfirmCards(1-tp,tc)
-	if not (tc:IsSetCard(0xe6) and tc:IsMonster()) then
+	if not (tc:IsSetCard(SET_FLOWER_CARDIAN) and tc:IsMonster()) then
 		Duel.SendtoGrave(tc,REASON_EFFECT)
 	end
 	Duel.ShuffleHand(tp)

@@ -1,4 +1,5 @@
 --炎神機－紫龍
+--Pyrotech Mech - Shiryu
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon with 1 tribute

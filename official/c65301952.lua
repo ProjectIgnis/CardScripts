@@ -1,4 +1,5 @@
 --アルケミック・マジシャン
+--Alchemic Magician
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -29,7 +30,7 @@ function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsSpell,c:GetControler(),LOCATION_GRAVE,0,nil)*200
 end
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST)

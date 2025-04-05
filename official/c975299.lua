@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x15))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_BES))
 	e2:SetValue(500)
 	c:RegisterEffect(e2)
 	--DEF increase
@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e4:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e4:SetRange(LOCATION_FZONE)
 	e4:SetTargetRange(LOCATION_MZONE,0)
-	e4:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x15))
+	e4:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_BES))
 	e4:SetValue(aux.indoval)
 	c:RegisterEffect(e4)
 	--Prevent effect target
@@ -38,7 +38,7 @@ function s.initial_effect(c)
 	e5:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e5:SetRange(LOCATION_FZONE)
 	e5:SetTargetRange(LOCATION_MZONE,0)
-	e5:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x15))
+	e5:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_BES))
 	e5:SetValue(aux.tgoval)
 	c:RegisterEffect(e5)
 	--Special Summon from hand
@@ -66,7 +66,7 @@ function s.initial_effect(c)
 	e8:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e8)
 end
-s.listed_series={0x15}
+s.listed_series={SET_BES}
 s.listed_names={66947414}
 function s.thfilter(c)
 	return c:IsCode(66947414) and c:IsAbleToHand()
@@ -82,7 +82,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x15) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_BES) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -98,7 +98,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.ctfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x15) and c:IsControler(tp)
+	return c:IsFaceup() and c:IsSetCard(SET_BES) and c:IsControler(tp)
 end
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg and eg:IsExists(s.ctfilter,1,nil,tp)

@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.thcost)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_THUNDRA)
@@ -31,12 +31,8 @@ function s.initial_effect(c)
 	e3:SetCondition(s.thcon)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x11c}
+s.listed_series={SET_THUNDER_DRAGON}
 s.listed_names={id}
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
-end
 function s.thfilter(c)
 	return c:IsCode(id) and c:IsAbleToHand()
 end
@@ -56,7 +52,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.thfilter2(c)
-	return c:IsSetCard(0x11c) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_THUNDER_DRAGON) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter2,tp,LOCATION_DECK,0,1,nil) end

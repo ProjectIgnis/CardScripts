@@ -24,17 +24,17 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCode(EVENT_FREE_CHAIN)
-	e3:SetCost(aux.bfgcost)
+	e3:SetCost(Cost.SelfBanish)
 	e3:SetTarget(s.tdtg)
 	e3:SetOperation(s.tdop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xae,0xaf}
+s.listed_series={SET_DARK_CONTRACT,SET_DD}
 function s.indtg(e,c)
-	return c:IsSetCard(0xae)
+	return c:IsSetCard(SET_DARK_CONTRACT)
 end
 function s.tdfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xaf) and c:IsAbleToDeck()
+	return c:IsFaceup() and c:IsSetCard(SET_DD) and c:IsAbleToDeck()
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and s.tdfilter(chkc) and chkc~=e:GetHandler() end

@@ -1,4 +1,5 @@
 --ペンデュラム・モラトリアム
+--Pendulum Impenetrable
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -15,14 +16,14 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e1:SetTargetRange(LOCATION_PZONE,LOCATION_PZONE)
 	e1:SetValue(s.indval)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_CHAIN_SOLVING)
 	e2:SetCondition(s.discon)
 	e2:SetOperation(s.disop)
-	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 end
 function s.indval(e,re,tp)

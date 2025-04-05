@@ -1,6 +1,5 @@
 --フィッシュボーグ－ドクター
 --Fishborg Doctor
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Destroy this card if player has a non-"Fishborg" monster
@@ -23,10 +22,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x96}
-
+s.listed_series={SET_FISHBORG}
 function s.cfilter(c)
-	return c:IsFacedown() or not c:IsSetCard(0x96)
+	return c:IsFacedown() or not c:IsSetCard(SET_FISHBORG)
 end
 function s.sdcon(e)
 	return Duel.IsExistingMatchingCard(s.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
@@ -49,7 +47,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e1,true)
 	end

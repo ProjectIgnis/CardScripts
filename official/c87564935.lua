@@ -19,8 +19,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.efilter1(e,re,rp)
-	return rp==1-e:GetHandlerPlayer() and re:IsActiveType(TYPE_MONSTER)
+	return rp==1-e:GetHandlerPlayer() and re:IsMonsterEffect()
 end
 function s.efilter2(e,te)
-	return te:GetHandlerPlayer()~=e:GetHandlerPlayer() and te:IsActiveType(TYPE_MONSTER)
+	return te:GetHandlerPlayer()~=e:GetHandlerPlayer() and te:IsMonsterEffect()
 end

@@ -42,12 +42,12 @@ function s.initial_effect(c)
 	e5:SetOperation(s.negop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x107}
+s.listed_series={SET_FA}
 function s.atkval(e,c)
 	return c:GetLevel()*300
 end
 function s.lvcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and re:GetHandler():IsSetCard(0x107)
+	return re:IsSpellTrapEffect() and re:GetHandler():IsSetCard(SET_FA)
 end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -58,13 +58,13 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(1)
 		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 		e1:SetRange(LOCATION_MZONE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 	end
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
-		and ep==1-tp and re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and Duel.IsChainNegatable(ev)
+		and ep==1-tp and re:IsSpellTrapEffect() and Duel.IsChainNegatable(ev)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetLevel()>2 end

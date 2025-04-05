@@ -1,4 +1,5 @@
 --トゲトゲ神の殺虫剤
+--Eradicating Aerosol
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

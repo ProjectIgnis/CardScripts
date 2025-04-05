@@ -1,4 +1,5 @@
 --フレムベル・ベビー
+--Flamvell Baby
 local s,id=GetID()
 function s.initial_effect(c)
 	--atkup
@@ -33,7 +34,7 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(400)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 end

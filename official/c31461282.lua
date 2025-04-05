@@ -37,16 +37,16 @@ function s.initial_effect(c)
 	e4:SetOperation(s.drop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x12e}
+s.listed_series={SET_FORTUNE_FAIRY}
 function s.atkval(e,c)
-	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0x12e),e:GetHandlerPlayer(),LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,SET_FORTUNE_FAIRY),e:GetHandlerPlayer(),LOCATION_MZONE,0,nil)
 	return g:GetClassCount(Card.GetCode)*500
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	if tc:IsControler(1-tp) then tc=Duel.GetAttackTarget() end
 	e:SetLabelObject(tc)
-	return tc and tc:IsFaceup() and tc:IsControler(tp) and tc:IsSetCard(0x12e)
+	return tc and tc:IsFaceup() and tc:IsControler(tp) and tc:IsSetCard(SET_FORTUNE_FAIRY)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end

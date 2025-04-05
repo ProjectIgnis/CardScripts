@@ -42,7 +42,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,0x21,0,0,4,RACE_MACHINE,ATTRIBUTE_EARTH) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,TYPE_MONSTER|TYPE_EFFECT,0,0,4,RACE_MACHINE,ATTRIBUTE_EARTH) end
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,ft,nil)
@@ -56,7 +56,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
-		or not Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,0x21,0,0,4,RACE_MACHINE,ATTRIBUTE_EARTH) then return end
+		or not Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,TYPE_MONSTER|TYPE_EFFECT,0,0,4,RACE_MACHINE,ATTRIBUTE_EARTH) then return end
 	c:AddMonsterAttribute(TYPE_EFFECT+TYPE_TRAP)
 	Duel.SpecialSummonStep(c,1,tp,tp,true,false,POS_FACEUP)
 	--atk
@@ -65,14 +65,14 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e1:SetValue(s.atkval)
 	c:RegisterEffect(e1)
 	c:AddMonsterAttributeComplete()
 	Duel.SpecialSummonComplete()
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(s.tgfilter,nil,e)
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
-	aux.AddEREquipLimit(c,nil,s.eqval,s.equipop,e,nil,RESET_EVENT+RESETS_STANDARD_DISABLE)
+	aux.AddEREquipLimit(c,nil,s.eqval,s.equipop,e,nil,RESET_EVENT|RESETS_STANDARD_DISABLE)
 	if #g<=0 or ft<=0 then return end
 	local tg=nil
 	if ft<#g then
@@ -100,11 +100,11 @@ function s.equipop(c,e,tp,tc,chk)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_OWNER_RELATE)
 	e1:SetCode(EFFECT_EQUIP_LIMIT)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e1:SetValue(Card.EquipByEffectLimit)
 	e1:SetLabelObject(e:GetLabelObject())
 	tc:RegisterEffect(e1)
-	tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
+	tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,0)
 end
 function s.atkval(e,c)
 	local atk=0

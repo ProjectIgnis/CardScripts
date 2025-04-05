@@ -1,4 +1,4 @@
---
+--ティスティナの息吹
 --Breath of the Tistina
 --Scripted by Hatter
 local s,id=GetID()

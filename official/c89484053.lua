@@ -23,15 +23,15 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(function(_,tp) return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0 end)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.drtg)
 	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.lkfilter)
 end
-s.listed_series={0x119}
+s.listed_series={SET_SALAMANGREAT}
 function s.lkfilter(c)
-	return not (c:IsLinkMonster() and c:IsSummonType(SUMMON_TYPE_LINK))
+	return not (c:IsLinkMonster() and c:IsLinkSummoned())
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)>0
@@ -50,7 +50,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tdfilter(c)
-	return c:IsSetCard(0x119) and c:IsAbleToDeck()
+	return c:IsSetCard(SET_SALAMANGREAT) and c:IsAbleToDeck()
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.tdfilter(chkc) end
@@ -64,7 +64,7 @@ end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetTargetCards(e)
 	if #tg==0 or Duel.SendtoDeck(tg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)==0 then return end
-	local og=Duel.GetOperatedGroup():Filter(Card.IsLocation,nil,LOCATION_DECK+LOCATION_EXTRA)
+	local og=Duel.GetOperatedGroup():Filter(Card.IsLocation,nil,LOCATION_DECK|LOCATION_EXTRA)
 	if #og==0 then return end
 	if og:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then Duel.ShuffleDeck(tp) end
 	Duel.BreakEffect()

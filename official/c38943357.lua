@@ -14,10 +14,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.counter_place_list={COUNTER_SPELL}
-s.listed_series={0x12a}
+s.listed_series={SET_ENDYMION}
 s.listed_names={75014062}
 function s.thfilter(c)
-	return c:IsSetCard(0x12a) and c:IsAbleToHand()
+	return c:IsSetCard(SET_ENDYMION) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -28,7 +28,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if #g>0 and Duel.SendtoHand(g,nil,REASON_EFFECT)>0 then
 		Duel.ConfirmCards(1-tp,g)
-		local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsCode,id,75014062),tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)
+		local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsCode,id,75014062),tp,LOCATION_ONFIELD|LOCATION_GRAVE,0,nil)
 		local cg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsCanAddCounter,COUNTER_SPELL,1),tp,LOCATION_ONFIELD,0,nil)
 		if ct>0 and #cg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 			Duel.BreakEffect()

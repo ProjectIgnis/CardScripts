@@ -1,4 +1,5 @@
 --チューナーズ・ハイ
+--Tuner's High
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -34,7 +35,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(tc:GetRace())
 	e:SetValue(tc:GetAttribute())
 	Duel.SetTargetParam(tc:GetLevel())
-	Duel.SendtoGrave(g,REASON_COST+REASON_DISCARD)
+	Duel.SendtoGrave(g,REASON_COST|REASON_DISCARD)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

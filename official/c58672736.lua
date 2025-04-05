@@ -15,7 +15,6 @@ function s.initial_effect(c)
 	e1:SetValue(s.aclimit)
 	e1:SetCondition(s.actcon)
 	c:RegisterEffect(e1)
-
 	--atk limit (opponent)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
@@ -35,7 +34,6 @@ function s.initial_effect(c)
 	e3:SetTarget(s.destg)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
-	
 	--destroy replace
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
@@ -43,7 +41,6 @@ function s.initial_effect(c)
 	e4:SetTarget(s.reptg)
 	e4:SetOperation(s.repop)
 	c:RegisterEffect(e4)
-	
 end
 function s.aclimit(e,re,tp)
 	return re:IsHasType(EFFECT_TYPE_ACTIVATE)
@@ -54,7 +51,6 @@ end
 function s.atlimit(e,c)
 	return c~=e:GetHandler()
 end
-
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) end
 	if chk==0 then return Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_MZONE,1,nil) end
@@ -68,7 +64,6 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end
-
 function s.repfilter(c,e)
 	return c:IsDestructable(e) and not c:IsStatus(STATUS_DESTROY_CONFIRMED)
 end
@@ -87,6 +82,5 @@ end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	g:GetFirst():SetStatus(STATUS_DESTROY_CONFIRMED,false)
-	Duel.Destroy(g,REASON_EFFECT+REASON_REPLACE)
+	Duel.Destroy(g,REASON_EFFECT|REASON_REPLACE)
 end
-

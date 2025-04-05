@@ -28,15 +28,15 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetRange(LOCATION_GRAVE)
-	e3:SetCost(aux.bfgcost)
+	e3:SetCost(Cost.SelfBanish)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x1066}
+s.listed_series={SET_SYMPHONIC_WARRIOR}
 s.listed_names={id}
 function s.thfilter(c)
-	return c:IsSetCard(0x1066) and not c:IsCode(id) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_SYMPHONIC_WARRIOR) and not c:IsCode(id) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -51,13 +51,13 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cpfilter(c)
-	return c:IsFaceup() and c:IsMonster() and c:IsOriginalSetCard(0x1066) and not c:IsOriginalCode(id)
+	return c:IsFaceup() and c:IsMonster() and c:IsOriginalSetCard(SET_SYMPHONIC_WARRIOR) and not c:IsOriginalCode(id)
 end
 function s.cptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE+LOCATION_GRAVE) and s.cpfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.cpfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) end
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE|LOCATION_GRAVE) and s.cpfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(s.cpfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	Duel.SelectTarget(tp,s.cpfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil)
+	Duel.SelectTarget(tp,s.cpfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil)
 end
 function s.cpop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -70,13 +70,13 @@ function s.cpop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_CHANGE_CODE)
 		e1:SetValue(code)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e1)
-		c:CopyEffect(code,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,1)
+		c:CopyEffect(code,RESETS_STANDARD_PHASE_END,1)
 	end
 end
 function s.spfilter(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x1066) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsFaceup() and c:IsSetCard(SET_SYMPHONIC_WARRIOR) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end

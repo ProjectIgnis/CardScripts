@@ -1,4 +1,5 @@
 --魔妖仙獣 大刃禍是
+--Mayosenju Daibak
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -61,10 +62,10 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
-s.listed_series={0xb3}
+s.listed_series={SET_YOSENJU}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
-	return at:IsControler(tp) and at:IsSetCard(0xb3)
+	return at:IsControler(tp) and at:IsSetCard(SET_YOSENJU)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -74,7 +75,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(300)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE)
 		at:RegisterEffect(e1)
 	end
 end

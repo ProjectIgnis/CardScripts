@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_DRAW)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_BE_BATTLE_TARGET)
-	e1:SetCost(aux.SelfBanishCost)
+	e1:SetCost(Cost.SelfBanish)
 	e1:SetTarget(s.drawtg1)
 	e1:SetOperation(s.drawop1)
 	c:RegisterEffect(e1)
@@ -85,7 +85,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 			local tc=Duel.GetFirstTarget()
 			if tc:IsRelateToEffect(e) then
 				Duel.BreakEffect()
-				Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)
+				Duel.SendtoDeck(tc,nil,SEQ_DECKTOP,REASON_EFFECT)
 				Duel.ConfirmCards(1-tp,tc)
 			end
 		end

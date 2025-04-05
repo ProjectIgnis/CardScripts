@@ -1,4 +1,5 @@
 --プレゼントカード
+--Present Card
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -19,7 +20,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
-	if Duel.SendtoGrave(g,REASON_EFFECT+REASON_DISCARD)~=0 then
+	if Duel.SendtoGrave(g,REASON_EFFECT|REASON_DISCARD)~=0 then
 		Duel.BreakEffect()
 		Duel.Draw(1-tp,5,REASON_EFFECT)
 	end

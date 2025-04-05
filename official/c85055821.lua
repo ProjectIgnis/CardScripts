@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x1169,0x2169}
+s.listed_series={SET_MYSTICAL_BEAST_OF_THE_FOREST,SET_MYSTICAL_SPIRIT_OF_THE_FOREST}
 s.listed_names={id}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_HAND)
@@ -58,14 +58,14 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetTargetCards(e)
 	if not tg or tg:FilterCount(Card.IsRelateToEffect,nil,e)==0 then return end
 	if Duel.SendtoDeck(tg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0
-		and Duel.GetOperatedGroup():IsExists(Card.IsLocation,1,nil,LOCATION_DECK+LOCATION_EXTRA)
+		and Duel.GetOperatedGroup():IsExists(Card.IsLocation,1,nil,LOCATION_DECK|LOCATION_EXTRA)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and c:IsRelateToEffect(e) then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
 function s.thfilter(c)
-	return (c:IsSetCard(0x1169) or c:IsSetCard(0x2169)) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()
+	return (c:IsSetCard(SET_MYSTICAL_BEAST_OF_THE_FOREST) or c:IsSetCard(SET_MYSTICAL_SPIRIT_OF_THE_FOREST)) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

@@ -1,4 +1,5 @@
 --ギャラクシー・ウェーブ
+--Galaxy Wave
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -19,7 +20,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:GetFirst():IsSummonType(SUMMON_TYPE_XYZ) and eg:GetFirst():IsControler(tp)
+	return eg:GetFirst():IsXyzSummoned() and eg:GetFirst():IsControler(tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

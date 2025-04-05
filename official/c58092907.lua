@@ -1,7 +1,6 @@
 --ＥＭ天空の魔術師
 --Performapal Celestial Magician
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	Pendulum.AddProcedure(c)
@@ -49,7 +48,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return #eg==1 and eg:IsExists(s.spcfilter,1,nil,e,tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end	
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,eg,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,e:GetHandler(),1,0,0)
 end
@@ -75,7 +74,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DIRECT_ATTACK)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e1)
 	end
 	if g:IsExists(Card.IsType,1,nil,TYPE_SYNCHRO) then
@@ -86,7 +85,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e2:SetTargetRange(0,1)
 		e2:SetValue(s.aclimit)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		Duel.RegisterEffect(e2,tp)
 	end
 	if g:IsExists(Card.IsType,1,nil,TYPE_XYZ) then
@@ -95,7 +94,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e3:SetValue(c:GetBaseAttack()*2)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+		e3:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 		c:RegisterEffect(e3)
 	end
 	if g:IsExists(Card.IsType,1,nil,TYPE_PENDULUM) then
@@ -105,12 +104,12 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		e4:SetCode(EVENT_PHASE+PHASE_END)
 		e4:SetCountLimit(1)
 		e4:SetOperation(s.thop)
-		e4:SetReset(RESET_PHASE+PHASE_END)
+		e4:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e4,tp)
 	end
 end
 function s.aclimit(e,re,tp)
-	return re:IsActiveType(TYPE_MONSTER)
+	return re:IsMonsterEffect()
 end
 function s.thfilter(c)
 	return c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()

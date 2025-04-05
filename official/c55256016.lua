@@ -1,4 +1,5 @@
 --アヌビスの裁き
+--Judgment of Anubis
 local s,id=GetID()
 function s.initial_effect(c)
 	--Negate
@@ -17,14 +18,14 @@ function s.cfilter(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if tp==ep or not Duel.IsChainNegatable(ev) then return false end
-	if not (re:IsActiveType(TYPE_SPELL) and re:IsHasType(EFFECT_TYPE_ACTIVATE)) then return false end
+	if not (re:IsSpellEffect() and re:IsHasType(EFFECT_TYPE_ACTIVATE)) then return false end
 	local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DESTROY)
 	return ex and tg~=nil and tc+tg:FilterCount(s.cfilter,nil)-#tg>0
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if Duel.IsPlayerAffectedByEffect(tp,EFFECT_DISCARD_COST_CHANGE) then return true end
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,e:GetHandler()) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

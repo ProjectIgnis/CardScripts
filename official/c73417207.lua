@@ -1,4 +1,5 @@
 --極星霊スヴァルトアールヴ
+--Mara of the Nordic Alfar
 local s,id=GetID()
 function s.initial_effect(c)
 	--hand synchro
@@ -22,12 +23,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.synop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x42}
+s.listed_series={SET_NORDIC}
 function s.synfilter(e,c)
-	return c:IsLocation(LOCATION_HAND) and c:IsSetCard(0x42) and c:IsControler(e:GetHandlerPlayer())
+	return c:IsLocation(LOCATION_HAND) and c:IsSetCard(SET_NORDIC) and c:IsControler(e:GetHandlerPlayer())
 end
 function s.synval(e,c,sc)
-	if c:IsSetCard(0x42) and c:IsLocation(LOCATION_HAND) then
+	if c:IsSetCard(SET_NORDIC) and c:IsLocation(LOCATION_HAND) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK)
@@ -47,7 +48,7 @@ function s.chk2(c)
 	return false
 end
 function s.filterchk(c)
-	if c:IsSetCard(0x42) then return false end
+	if c:IsSetCard(SET_NORDIC) then return false end
 	return not c:IsHasEffect(EFFECT_HAND_SYNCHRO) or c:IsHasEffect(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK) 
 		or c:GetCardEffect(EFFECT_HAND_SYNCHRO):GetLabel()~=id
 end

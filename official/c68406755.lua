@@ -45,13 +45,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.listed_names={id}
-s.listed_series={0xe2}
+s.listed_series={SET_TRIAMID}
 function s.splimit(e,se,sp,st)
-	return se:GetHandler():IsSetCard(0xe2)
+	return se:GetHandler():IsSetCard(SET_TRIAMID)
 end
 function s.spfilter(c,tp)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT)
-		and c:IsSetCard(0xe2) and not c:IsCode(id)
+	return c:IsReason(REASON_BATTLE|REASON_EFFECT)
+		and c:IsSetCard(SET_TRIAMID) and not c:IsCode(id)
 		and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -68,7 +68,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xe2)
+	return c:IsFaceup() and c:IsSetCard(SET_TRIAMID)
 end
 function s.efcon(e)
 	return Duel.IsExistingMatchingCard(s.cfilter,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,e:GetHandler())

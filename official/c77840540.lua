@@ -1,5 +1,5 @@
 --超進化の繭
---Super Cocoon of Evolution
+--Cocoon of Ultra Evolution
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetCountLimit(1,id)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.tdtg)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
@@ -67,11 +67,10 @@ function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)~=0
-		and tc:IsLocation(LOCATION_DECK+LOCATION_EXTRA) then
+	if tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,SEQ_DECKTOP,REASON_EFFECT)~=0
+		and tc:IsLocation(LOCATION_DECK|LOCATION_EXTRA) then
 		if tc:IsLocation(LOCATION_DECK) then Duel.ShuffleDeck(tc:GetControler()) end
 		Duel.BreakEffect()
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end
 end
-

@@ -29,7 +29,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc1=g1:GetFirst()
 	local g2=Duel.GetDecktopGroup(1-tp,1)
 	local tc2=g2:GetFirst()
-	if (tc1:GetType()&0x7)==(tc2:GetType()&0x7) then
+	if (tc1:GetMainCardType()==tc2:GetMainCardType()) then
 		Duel.DisableShuffleCheck()
 		Duel.SendtoHand(tc1,nil,REASON_EFFECT)
 		Duel.SendtoHand(tc2,nil,REASON_EFFECT)

@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	e3:SetCondition(s.spcon)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
-	c:RegisterEffect(e3)	
+	c:RegisterEffect(e3)
 end
 s.listed_names={CARD_DARK_FUSION}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

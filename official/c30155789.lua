@@ -1,4 +1,5 @@
 --サディスティック・ポーション
+--Brutal Potion
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -32,7 +33,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EVENT_DAMAGE)
 		e1:SetRange(LOCATION_SZONE)
 		e1:SetOperation(s.damop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
 		--Atkup
 		local e2=Effect.CreateEffect(c)
@@ -40,7 +41,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_UPDATE_ATTACK)
 		e2:SetValue(1000)
 		e2:SetCondition(s.atkcon)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e2)
 		--Equip limit
 		local e3=Effect.CreateEffect(c)
@@ -49,7 +50,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e3:SetValue(s.eqlimit)
 		e3:SetLabelObject(tc)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e3)
 	else
 		c:CancelToGrave(false)
@@ -63,6 +64,6 @@ function s.atkcon(e)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	if r&REASON_EFFECT~=0 and ep~=tp and rp==tp then
-		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END,0,1)
+		e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_DISABLE_PHASE_END,0,1)
 	end
 end

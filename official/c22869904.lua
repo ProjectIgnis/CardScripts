@@ -1,4 +1,5 @@
 --魔力誘爆
+--That Wacky Alchemy!
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

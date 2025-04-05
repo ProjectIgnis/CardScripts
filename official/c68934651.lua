@@ -43,7 +43,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+	return e:GetHandler():IsLinkSummoned()
 end
 function s.ctfilter(c)
 	return c:IsType(TYPES) and c:IsRace(RACE_CYBERSE)
@@ -75,7 +75,7 @@ function s.atkval(e,c)
 	return c:GetCounter(COUNTER_FW)*2500
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==1-tp and re:IsActiveType(TYPE_MONSTER) and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)
+	return rp==1-tp and re:IsMonsterEffect() and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,COUNTER_FW,1,REASON_COST) end
@@ -98,7 +98,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EVENT_DAMAGE_STEP_END)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetOperation(s.chainop)
-		e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+		e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
 		c:RegisterEffect(e1)
 	end
 end

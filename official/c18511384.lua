@@ -1,8 +1,10 @@
 --融合回収
+--Fusion Recovery
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Add 1 "Polymerization" and 1 monster in your GY that was used as material for a Fusion Summon to your hand
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -16,7 +18,7 @@ function s.filter1(c)
 	return c:IsCode(CARD_POLYMERIZATION) and c:IsAbleToHand()
 end
 function s.filter2(c)
-	return (c:GetReason()&0x40008)==0x40008 and c:IsMonster() and c:IsAbleToHand()
+	return (c:GetReason()&(REASON_FUSION|REASON_MATERIAL))==(REASON_FUSION|REASON_MATERIAL) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

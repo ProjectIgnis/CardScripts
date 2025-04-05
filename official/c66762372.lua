@@ -31,12 +31,12 @@ function s.initial_effect(c)
 	e3:SetValue(s.synlimit)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x79,0x7c}
+s.listed_series={SET_FIRE_FIST,SET_FIRE_FORMATION}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE) and e:GetHandler():IsReason(REASON_BATTLE)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x79) and c:GetLevel()==4 and c:GetCode()~=id and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_FIRE_FIST) and c:GetLevel()==4 and c:GetCode()~=id and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -52,13 +52,13 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x79) and c:IsSummonLocation(LOCATION_EXTRA) and c:IsPreviousControler(tp)
+	return c:IsFaceup() and c:IsSetCard(SET_FIRE_FIST) and c:IsSummonLocation(LOCATION_EXTRA) and c:IsPreviousControler(tp)
 end
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.filter(c)
-	return c:IsSetCard(0x7c) and c:IsSpell() and c:IsSSetable()
+	return c:IsSetCard(SET_FIRE_FORMATION) and c:IsSpell() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

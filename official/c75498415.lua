@@ -1,4 +1,5 @@
 --BF－暁のシロッコ
+--Blackwing - Sirocco the Dawn
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon & set with no tribute
@@ -25,7 +26,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x33}
+s.listed_series={SET_BLACKWING}
 function s.ntcon(e,c,minc)
 	if c==nil then return true end
 	return minc==0 and c:GetLevel()>4 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
@@ -33,10 +34,10 @@ function s.ntcon(e,c,minc)
 		and Duel.GetFieldGroupCount(c:GetControler(),0,LOCATION_MZONE)>0
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1
+	return Duel.IsPhase(PHASE_MAIN1)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x33)
+	return c:IsFaceup() and c:IsSetCard(SET_BLACKWING)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -50,7 +51,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetTarget(s.ftarget)
 	e2:SetLabel(g:GetFirst():GetFieldID())
-	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
@@ -65,7 +66,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(atk)
 		tc:RegisterEffect(e1)
 	end

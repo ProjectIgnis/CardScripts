@@ -1,4 +1,5 @@
 --インヴェルズの歩哨
+--Steelswarm Sentinel
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot trigger
@@ -15,5 +16,5 @@ function s.condition(e)
 	return e:GetHandler():IsAttackPos()
 end
 function s.target(e,c)
-	return c:GetLevel()>=5 and c:IsSummonType(SUMMON_TYPE_SPECIAL)
+	return c:GetLevel()>=5 and c:IsSpecialSummoned()
 end

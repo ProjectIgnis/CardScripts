@@ -1,4 +1,5 @@
 --検問
+--The Forceful Checkpoint
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer()
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>0 end
@@ -26,7 +27,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 			local hg=tg:Select(tp,1,1,nil)
-			Duel.SendtoGrave(hg,REASON_EFFECT+REASON_DISCARD)
+			Duel.SendtoGrave(hg,REASON_EFFECT|REASON_DISCARD)
 		end
 		Duel.ShuffleHand(1-tp)
 	end

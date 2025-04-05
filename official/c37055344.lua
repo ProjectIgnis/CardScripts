@@ -21,12 +21,12 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x8d}
+s.listed_series={SET_GHOSTRICK}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE)
+	return Duel.IsBattlePhase()
 end
 function s.filter1(c)
-	return c:IsFaceup() and c:IsSetCard(0x8d) and c:IsCanTurnSet()
+	return c:IsFaceup() and c:IsSetCard(SET_GHOSTRICK) and c:IsCanTurnSet()
 end
 function s.filter2(c)
 	return c:IsPosition(POS_FACEDOWN_DEFENSE)
@@ -78,7 +78,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		end
 	else
 		if not tc:IsRelateToEffect(e) or tc:IsPosition(POS_FACEUP_ATTACK) then return end
-		if Duel.ChangePosition(tc,POS_FACEUP_ATTACK)==0 or not tc:IsSetCard(0x8d) then return end
+		if Duel.ChangePosition(tc,POS_FACEUP_ATTACK)==0 or not tc:IsSetCard(SET_GHOSTRICK) then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 		local g=Duel.SelectMatchingCard(tp,s.filter4,tp,0,LOCATION_MZONE,1,1,nil)
 		if #g>0 then

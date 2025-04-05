@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCondition(function(e) return not e:GetHandler():IsBaseAttack(1500) end)
-	e3:SetCost(aux.dxmcostgen(1,1))
+	e3:SetCost(Cost.Detach(1,1))
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
 end
@@ -69,7 +69,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_SET_BASE_ATTACK)
 			e1:SetValue(1500)
-			e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_PHASE|PHASE_END)
+			e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 			c:RegisterEffect(e1)
 		end
 		--It can attack directly this turn

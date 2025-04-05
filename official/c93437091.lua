@@ -13,10 +13,10 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xdd}
+s.listed_series={SET_BLUE_EYES}
 s.listed_names={CARD_BLUEEYES_W_DRAGON,23995346}
 function s.filter(c)
-	return ( ( (c:IsSetCard(0xdd) and c:IsMonster()) ) or ( (c:ListsCode(CARD_BLUEEYES_W_DRAGON) or c:ListsCode(23995346)) and c:IsSpellTrap() and not c:IsCode(id) ) ) 
+	return ( ( (c:IsSetCard(SET_BLUE_EYES) and c:IsMonster()) ) or ( (c:ListsCode(CARD_BLUEEYES_W_DRAGON) or c:ListsCode(23995346)) and c:IsSpellTrap() and not c:IsCode(id) ) ) 
 		and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

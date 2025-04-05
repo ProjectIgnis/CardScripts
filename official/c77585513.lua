@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_CANNOT_TRIGGER)
 	e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetTargetRange(0xa,0xa)
+	e1:SetTargetRange(LOCATION_HAND|LOCATION_SZONE,LOCATION_HAND|LOCATION_SZONE)
 	e1:SetTarget(aux.TargetBoolFunction(Card.IsTrap))
 	c:RegisterEffect(e1)
 	--cannot activate
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetTargetRange(1,1)
 	e2:SetValue(s.aclimit)
-	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetReset(RESET_PHASE|PHASE_END)
 	c:RegisterEffect(e2)
 	--disable
 	local e3=Effect.CreateEffect(c)
@@ -47,7 +47,7 @@ function s.initial_effect(c)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local tl=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
-	if tl==LOCATION_SZONE and re:IsActiveType(TYPE_TRAP) then
+	if tl==LOCATION_SZONE and re:IsTrapEffect() then
 		Duel.NegateEffect(ev)
 	end
 end

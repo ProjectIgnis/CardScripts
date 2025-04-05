@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(s.retopthcon)
-	e2:SetCost(aux.dxmcostgen(1,1,nil))
+	e2:SetCost(Cost.Detach(1,1,nil))
 	e2:SetTarget(s.retopthtg)
 	e2:SetOperation(s.retopthop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
@@ -50,8 +50,8 @@ function s.retopthtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return eg:IsContains(chkc) and s.retopthfilter(chkc,e,tp) end
 	if chk==0 then return eg:IsExists(s.retopthfilter,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-    	local tc=nil
-    	if #eg==1 then
+	local tc=nil
+	if #eg==1 then
 		tc=eg:GetFirst()
 		Duel.SetTargetCard(tc)
 	else
@@ -83,7 +83,7 @@ function s.llthtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.llthop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(tc,tp,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,tc)
 	end

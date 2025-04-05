@@ -39,10 +39,10 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x3008}
-s.material_setcode={0x8,0x3008}
+s.listed_series={SET_ELEMENTAL_HERO}
+s.material_setcode={SET_HERO,SET_ELEMENTAL_HERO}
 function s.mfilter(c,fc,sumtype,tp)
-	return c:IsSetCard(0x3008,fc,sumtype,tp) and c:IsType(TYPE_FUSION,fc,sumtype,tp)
+	return c:IsSetCard(SET_ELEMENTAL_HERO,fc,sumtype,tp) and c:IsType(TYPE_FUSION,fc,sumtype,tp)
 end
 function s.matcheck(e,c)
 	local g=c:GetMaterial()
@@ -79,11 +79,11 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_FUSION)
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsFusionSummoned()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_DECK)
 end
 function s.spfilter(c,e,sp)
 	return c:IsRace(RACE_WARRIOR) and c:IsCanBeSpecialSummoned(e,0,sp,false,false)
@@ -91,7 +91,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK|LOCATION_HAND,0,1,1,nil,e,tp)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end

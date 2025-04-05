@@ -17,14 +17,10 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
-	e2:SetCost(s.spcost)
+	e2:SetCost(Cost.PayLP(2000))
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,2000) end
-	Duel.PayLPCost(tp,2000)
 end
 function s.filter(c,e,tp)
 	return c:GetLevel()==3 and c:IsRace(RACE_PSYCHIC) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

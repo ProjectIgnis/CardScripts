@@ -1,4 +1,4 @@
---Japanese name
+--エアリアル・イーター
 --Aerial Eater
 --scripted by Naim
 local s,id=GetID()

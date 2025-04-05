@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x111}
+s.listed_series={SET_ARMED_DRAGON}
 function s.tgfilter1(c)
 	return (c:IsAttribute(ATTRIBUTE_WIND) or c:IsLevelAbove(7)) and c:IsRace(RACE_DRAGON) and c:IsAbleToGraveAsCost()
 end
@@ -49,12 +49,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tgfilter2(c)
-	return c:IsSetCard(0x111) and c:IsMonster() and c:IsAbleToGraveAsCost() and not c:IsCode(id)
+	return c:IsSetCard(SET_ARMED_DRAGON) and c:IsMonster() and c:IsAbleToGraveAsCost() and not c:IsCode(id)
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter2,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter2,tp,LOCATION_HAND|LOCATION_DECK,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.tgfilter2,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.tgfilter2,tp,LOCATION_HAND|LOCATION_DECK,0,1,1,nil)
 	Duel.SendtoGrave(g,REASON_COST)
 	local atk=g:GetFirst():GetLevel()*300
 	e:SetLabel(atk)
@@ -74,7 +74,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(e:GetLabel())
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 	--Can only attack with 1 monster
@@ -86,14 +86,14 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetCondition(s.limitcon)
 	e2:SetTarget(s.limittg)
-	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e3:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e3:SetOperation(s.checkop)
-	e3:SetReset(RESET_PHASE+PHASE_END)
+	e3:SetReset(RESET_PHASE|PHASE_END)
 	e3:SetLabelObject(e2)
 	Duel.RegisterEffect(e3,tp)
 end

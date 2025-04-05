@@ -1,4 +1,5 @@
 --キメラテック・オーバー・ドラゴン
+--Chimeratech Overdragon
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -20,18 +21,18 @@ function s.initial_effect(c)
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e4:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION) end)
+	e4:SetCondition(function(e) return e:GetHandler():IsFusionSummoned() end)
 	e4:SetOperation(s.tgop)
 	c:RegisterEffect(e4)
 end
-s.material_setcode={0x93,0x1093}
+s.material_setcode={SET_CYBER,SET_CYBER_DRAGON}
 function s.sucop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SET_BASE_ATTACK)
 	e1:SetValue(c:GetMaterialCount()*800)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_SET_BASE_DEFENSE)

@@ -1,4 +1,5 @@
 --獄落鳥
+--Bird of Paradise Lost
 local s,id=GetID()
 function s.initial_effect(c)
 	--atk & def

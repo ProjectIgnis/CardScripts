@@ -1,5 +1,5 @@
 --教導神理
---Dogmatikatism
+--Dogmatikacism
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -23,15 +23,15 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tgop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x146}
+s.listed_series={SET_DOGMATIKA}
 function s.value(e,c)
 	local ec=e:GetHandler():GetEquipTarget()
-	if ec:IsSetCard(0x146) then
+	if ec:IsSetCard(SET_DOGMATIKA) then
 		if c:HasLevel() then
 			return 100*ec:GetLevel()
 		end
 	else
-		local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0x146),e:GetHandler():GetControler(),LOCATION_MZONE,0,nil)
+		local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,SET_DOGMATIKA),e:GetHandler():GetControler(),LOCATION_MZONE,0,nil)
 		return -200*ct
 	end
 end

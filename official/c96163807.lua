@@ -1,4 +1,5 @@
 --冥界騎士トリスタン
+--Tristan, Knight of the Underworld
 local s,id=GetID()
 function s.initial_effect(c)
 	--tohand

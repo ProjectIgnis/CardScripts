@@ -1,4 +1,5 @@
 --XX－セイバー フラムナイト
+--XX-Saber Fulhelmknight
 local s,id=GetID()
 function s.initial_effect(c)
 	--negate attack
@@ -25,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x100d}
+s.listed_series={SET_X_SABER}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp)
 end
@@ -44,7 +45,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return a==Duel.GetAttacker() and (d:GetBattlePosition()&POS_DEFENSE)~=0
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x100d) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_X_SABER) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc,e,tp) end

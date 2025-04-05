@@ -1,4 +1,5 @@
 --フューチャー・ヴィジョン
+--Future Visions
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -27,7 +28,7 @@ function s.initial_effect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e3:SetRange(LOCATION_FZONE)
-	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e3:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e3:SetCountLimit(1)
 	e3:SetCondition(s.retcon)
 	e3:SetOperation(s.retop)
@@ -35,7 +36,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e4:SetCode(EVENT_PHASE_START+PHASE_MAIN1)
+	e4:SetCode(EVENT_PHASE_START|PHASE_MAIN1)
 	e4:SetRange(LOCATION_FZONE)
 	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e4:SetCountLimit(1)
@@ -57,8 +58,8 @@ end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=eg:GetFirst()
-	if tc:IsRelateToEffect(e) and tc:IsLocation(LOCATION_MZONE) and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT+REASON_TEMPORARY)~=0 then
-		tc:CreateRelation(e:GetHandler(),RESET_EVENT+RESETS_STANDARD)
+	if tc:IsRelateToEffect(e) and tc:IsLocation(LOCATION_MZONE) and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT|REASON_TEMPORARY)~=0 then
+		tc:CreateRelation(e:GetHandler(),RESET_EVENT|RESETS_STANDARD)
 		e:GetLabelObject():GetLabelObject():AddCard(tc)
 	end
 end

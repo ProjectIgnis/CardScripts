@@ -1,4 +1,5 @@
 --彼岸の悪鬼 ハックルスパー
+--Calcab, Malebranche of the Burning Abyss
 local s,id=GetID()
 function s.initial_effect(c)
 	--self destroy
@@ -32,15 +33,15 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xb1}
+s.listed_series={SET_BURNING_ABYSS}
 function s.sdfilter(c)
-	return not c:IsFaceup() or not c:IsSetCard(0xb1)
+	return not c:IsFaceup() or not c:IsSetCard(SET_BURNING_ABYSS)
 end
 function s.sdcon(e)
 	return Duel.IsExistingMatchingCard(s.sdfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.filter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSpellTrap()
 end
 function s.sscon(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_ONFIELD,0,1,nil)

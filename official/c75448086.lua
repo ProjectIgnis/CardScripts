@@ -1,5 +1,5 @@
 --王の試練
---Generaid Quest
+--Generaider Boss Quest
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -14,12 +14,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={id}
-s.listed_series={0x134}
+s.listed_series={SET_GENERAIDER}
 function s.cfilter(c)
-	return c:IsSetCard(0x134) and c:IsMonster() and not c:IsPublic() and c:IsAbleToDeck()
+	return c:IsSetCard(SET_GENERAIDER) and c:IsMonster() and not c:IsPublic() and c:IsAbleToDeck()
 end
 function s.thfilter(c)
-	return not c:IsCode(id) and c:IsSetCard(0x134) and c:IsSpellTrap() and c:IsAbleToHand()
+	return not c:IsCode(id) and c:IsSetCard(SET_GENERAIDER) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil)
@@ -39,7 +39,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.ConfirmCards(1-tp,sg)
 			Duel.ShuffleDeck(tp)
 			Duel.BreakEffect()
-			Duel.SendtoDeck(rc,nil,1,REASON_EFFECT)
+			Duel.SendtoDeck(rc,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 		end
 	end
 end

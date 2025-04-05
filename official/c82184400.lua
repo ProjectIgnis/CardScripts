@@ -1,12 +1,12 @@
 -- 
--- Abyss Keeper
--- Scripted by Hatter
+--Abyss Keeper
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	-- 2 WATER monsters
+	--2 WATER monsters
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_WATER),2,2)
-	-- Cannot be used as Link Material
+	--Cannot be used as Link Material
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.lkcon)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	-- Special Summon
+	--Special Summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -22,11 +22,11 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetCountLimit(1,id)
-	e2:SetCondition(function(e)return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK) end)
+	e2:SetCondition(function(e)return e:GetHandler():IsLinkSummoned() end)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	-- Banish
+	--Banish
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_REMOVE)
@@ -40,7 +40,7 @@ function s.initial_effect(c)
 end
 function s.lkcon(e)
 	local c=e:GetHandler()
-	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsSummonType(SUMMON_TYPE_LINK)
+	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsLinkSummoned()
 end
 function s.spfilter(c,e,tp,zone)
 	return c:IsRace(RACE_FISH) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
@@ -66,7 +66,7 @@ function s.rmfilter(c,e,tp)
 		and (c:IsControler(1-tp) or (c:IsFaceup() and c:IsRace(RACE_FISH)))
 end
 function s.rmrescon(sg,e,tp,mg)
-    return sg:FilterCount(Card.IsControler,nil,tp)==1
+	return sg:FilterCount(Card.IsControler,nil,tp)==1
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

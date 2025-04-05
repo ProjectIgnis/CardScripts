@@ -40,7 +40,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.scop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x66}
+s.listed_series={SET_WARRIOR}
 s.listed_names={84012625}
 s.synchro_tuner_required=1
 s.synchro_nt_required=1
@@ -55,7 +55,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateSummon(eg)
 	Duel.Destroy(eg,REASON_EFFECT)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -74,7 +74,7 @@ function s.sccon(e,tp,eg,ep,ev,re,r,rp)
 		and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x66) and c:IsLevelBelow(8) and c:IsType(TYPE_SYNCHRO) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
+	return c:IsSetCard(SET_WARRIOR) and c:IsLevelBelow(8) and c:IsType(TYPE_SYNCHRO) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SYNCHRO,tp,false,false)
 end
 function s.sctg(e,tp,eg,ep,ev,re,r,rp,chk)

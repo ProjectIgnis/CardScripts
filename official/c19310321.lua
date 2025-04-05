@@ -1,4 +1,5 @@
 --紋章獣ツインヘッド・イーグル
+--Heraldic Beast Twin-Headed Eagle
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -8,17 +9,17 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_GRAVE)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(aux.bfgcost)
+	e1:SetCost(Cost.SelfBanish)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x76}
+s.listed_series={SET_HERALDIC_BEAST}
 function s.filter1(c)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:GetOverlayCount()==0
 end
 function s.filter2(c)
-	return c:IsSetCard(0x76)
+	return c:IsSetCard(SET_HERALDIC_BEAST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

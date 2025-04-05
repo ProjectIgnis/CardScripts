@@ -1,4 +1,5 @@
 --幻影王 ハイド・ライド
+--Phantom King Hydride
 local s,id=GetID()
 function s.initial_effect(c)
 	--nontuner

@@ -1,4 +1,5 @@
 --無の煉獄
+--Into the Void
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -28,11 +29,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_PHASE+PHASE_END)
 	e1:SetCountLimit(1)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetOperation(s.disop)
 	Duel.RegisterEffect(e1,p)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(e:GetOwnerPlayer(),LOCATION_HAND,0)
-	Duel.SendtoGrave(g,REASON_EFFECT+REASON_DISCARD)
+	Duel.SendtoGrave(g,REASON_EFFECT|REASON_DISCARD)
 end

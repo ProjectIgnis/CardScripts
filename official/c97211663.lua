@@ -1,4 +1,5 @@
 --影霊衣の反魂術
+--Nekroz Cycle
 local s,id=GetID()
 function s.initial_effect(c)
 	Ritual.AddProcEqual(c,s.ritualfil,nil,nil,nil,nil,nil,nil,LOCATION_HAND|LOCATION_GRAVE):SetCountLimit(1,id)
@@ -13,15 +14,15 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xb4}
+s.listed_series={SET_NEKROZ}
 function s.ritualfil(c)
-	return c:IsSetCard(0xb4) and c:IsRitualMonster()
+	return c:IsSetCard(SET_NEKROZ) and c:IsRitualMonster()
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
 end
 function s.cfilter(c)
-	return c:IsSetCard(0xb4) and c:IsMonster() and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(SET_NEKROZ) and c:IsMonster() and c:IsAbleToRemoveAsCost()
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost()
@@ -32,7 +33,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xb4) and c:IsSpell() and c:IsAbleToHand()
+	return c:IsSetCard(SET_NEKROZ) and c:IsSpell() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

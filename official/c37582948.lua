@@ -1,5 +1,5 @@
 --Ｌｉｖｅ☆Ｔｗｉｎ トラブルサン
---Live☆Twin Trouble-Sun
+--Live☆Twin Sunny's Snitch
 --Script by XyLeN
 local s,id=GetID()
 function s.initial_effect(c)
@@ -24,9 +24,9 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x155,0x156}
+s.listed_series={SET_EVIL_TWIN,SET_LIVE_TWIN}
 function s.filter(c)
-	return c:IsSetCard(0x156) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_LIVE_TWIN) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -40,7 +40,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	if not eg:IsExists(Card.IsSummonPlayer,1,nil,1-tp) then return false end
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x155),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_EVIL_TWIN),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)

@@ -30,7 +30,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(tc,REASON_EFFECT)
 		if Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>0 then
 			Duel.BreakEffect()
-			Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT+REASON_DISCARD)
+			Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT|REASON_DISCARD)
 		end
 	end
 end

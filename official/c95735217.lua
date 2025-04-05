@@ -1,4 +1,5 @@
 --古代の機械巨人－アルティメット・パウンド
+--Ancient Gear Golem - Ultimate Pound
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot special summon
@@ -34,7 +35,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x7}
+s.listed_series={SET_ANCIENT_GEAR}
 s.listed_names={CARD_POLYMERIZATION}
 function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker()==e:GetHandler() and aux.bdcon(e,tp,eg,ep,ev,re,r,rp)
@@ -45,7 +46,7 @@ function s.costfilter(c)
 end
 function s.atcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,s.costfilter,1,1,REASON_DISCARD+REASON_COST)
+	Duel.DiscardHand(tp,s.costfilter,1,1,REASON_DISCARD|REASON_COST)
 end
 function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChainAttack()
@@ -57,12 +58,12 @@ function s.thfilter1(c)
 	return c:IsCode(CARD_POLYMERIZATION) and c:IsAbleToHand()
 end
 function s.thfilter2(c)
-	return c:IsSetCard(0x7) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_ANCIENT_GEAR) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter1,tp,LOCATION_DECK,0,1,nil)
 		and Duel.IsExistingMatchingCard(s.thfilter2,tp,LOCATION_GRAVE,0,1,e:GetHandler()) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,2,tp,LOCATION_DECK+LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,2,tp,LOCATION_DECK|LOCATION_GRAVE)
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,nil,1,tp,LOCATION_GRAVE)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)

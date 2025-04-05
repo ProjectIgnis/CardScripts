@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
-	e1:SetCondition(s.condition)
+	e1:SetCondition(aux.StatChangeDamageStepCondition)
 	c:RegisterEffect(e1)
 	--place a card in the pendulum zone
 	local e2=Effect.CreateEffect(c)
@@ -36,10 +36,7 @@ function s.initial_effect(c)
 	e4:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xe0}
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
+s.listed_series={SET_AMORPHAGE}
 function s.cfilter(c,tp)
 	return c:IsPreviousLocation(LOCATION_PZONE) and c:IsPreviousControler(tp)
 end
@@ -47,7 +44,7 @@ function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.filter(c)
-	return c:IsSetCard(0xe0) and c:IsType(TYPE_PENDULUM) and not c:IsForbidden()
+	return c:IsSetCard(SET_AMORPHAGE) and c:IsType(TYPE_PENDULUM) and not c:IsForbidden()
 end
 function s.settg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckPendulumZones(tp)
@@ -65,8 +62,8 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atktg(e,c)
-	return not c:IsSetCard(0xe0)
+	return not c:IsSetCard(SET_AMORPHAGE)
 end
 function s.atkval(e,c)
-	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0xe0),0,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)*-100
+	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,SET_AMORPHAGE),0,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)*-100
 end

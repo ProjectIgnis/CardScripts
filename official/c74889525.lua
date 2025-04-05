@@ -1,12 +1,11 @@
 --黄金狂エルドリッチ
---El Rey Conquista Eldlich
-
+--Eldlich the Mad Golden Lord
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
 	--Fusion summon procedure
-	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x142),s.matfilter)
+	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_ELDLICH),s.matfilter)
 	--Name becomes "Eldlich the Golden Lord" while in monster zones
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -40,9 +39,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_names={CARD_GOLDEN_LORD}
-s.listed_series={0x142}
-s.material_setcode={0x142}
-
+s.listed_series={SET_ELDLICH}
+s.material_setcode={SET_ELDLICH}
 function s.matfilter(c,fc,sumtype,tp)
 	return c:IsRace(RACE_ZOMBIE,fc,sumtype,tp) and c:IsLevelAbove(5)
 end
@@ -71,7 +69,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() and Duel.GetControl(tc,tp) then
 		local c=e:GetHandler()
-		local reset=RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_PHASE+PHASE_END
+		local reset=RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET|RESET_PHASE|PHASE_END
 		--Cannot attack this turn
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(3206)
@@ -79,7 +77,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_ATTACK)
 		e1:SetReset(reset)
-		tc:RegisterEffect(e1)		
+		tc:RegisterEffect(e1)
 		--Cannot activate its effect
 		local e2=e1:Clone()
 		e2:SetDescription(3302)

@@ -44,19 +44,19 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xc7,0xda}
+s.listed_series={SET_DRACOSLAYER,SET_DRACOVERLORD}
 function s.rescon(sg,e,tp,mg)
 	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:IsExists(s.chk,1,nil,sg)
 end
 function s.chk(c,sg)
-	return c:IsSetCard(0xc7) and sg:IsExists(Card.IsSetCard,1,c,0xda)
+	return c:IsSetCard(SET_DRACOSLAYER) and sg:IsExists(Card.IsSetCard,1,c,SET_DRACOVERLORD)
 end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	local rg=Duel.GetReleaseGroup(tp)
-	local g1=rg:Filter(Card.IsSetCard,nil,0xc7)
-	local g2=rg:Filter(Card.IsSetCard,nil,0xda)
+	local g1=rg:Filter(Card.IsSetCard,nil,SET_DRACOSLAYER)
+	local g2=rg:Filter(Card.IsSetCard,nil,SET_DRACOVERLORD)
 	local g=g1:Clone()
 	g:Merge(g2)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2 and #g1>0 and #g2>0 and #g>1 
@@ -64,8 +64,8 @@ function s.spcon(e,c)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
 	local rg=Duel.GetReleaseGroup(tp)
-	local g1=rg:Filter(Card.IsSetCard,nil,0xc7)
-	local g2=rg:Filter(Card.IsSetCard,nil,0xda)
+	local g1=rg:Filter(Card.IsSetCard,nil,SET_DRACOSLAYER)
+	local g2=rg:Filter(Card.IsSetCard,nil,SET_DRACOVERLORD)
 	g1:Merge(g2)
 	local sg=aux.SelectUnselectGroup(g1,e,tp,2,2,s.rescon,1,tp,HINTMSG_RELEASE,nil,nil,true)
 	if #sg>0 then
@@ -103,11 +103,11 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.spfilter1(c,e,tp)
-	return c:IsSetCard(0xc7) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_DRACOSLAYER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_DECK,0,1,c,e,tp)
 end
 function s.spfilter2(c,e,tp)
-	return c:IsSetCard(0xda) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_DRACOVERLORD) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>1

@@ -1,4 +1,5 @@
 --超重武者装留ブレイク・アーマー
+--Superheavy Samurai Soulbreaker Armor
 local s,id=GetID()
 function s.initial_effect(c)
 	--equip
@@ -7,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_EQUIP)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetRange(LOCATION_HAND+LOCATION_MZONE)
+	e1:SetRange(LOCATION_HAND|LOCATION_MZONE)
 	e1:SetTarget(s.eqtg)
 	e1:SetOperation(s.eqop)
 	c:RegisterEffect(e1)
@@ -30,10 +31,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.damop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x9a}
+s.listed_series={SET_SUPERHEAVY_SAMURAI}
 s.listed_names={id}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x9a)
+	return c:IsFaceup() and c:IsSetCard(SET_SUPERHEAVY_SAMURAI)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -55,18 +56,18 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_EQUIP_LIMIT)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e1:SetValue(s.eqlimit)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
 	e2:SetCode(EFFECT_UPDATE_DEFENSE)
 	e2:SetValue(-1000)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e2)
 end
 function s.eqlimit(e,c)
-	return c:IsSetCard(0x9a)
+	return c:IsSetCard(SET_SUPERHEAVY_SAMURAI)
 end
 function s.cfilter(c)
 	return c:IsCode(id) and c:IsAbleToRemoveAsCost()
@@ -77,7 +78,7 @@ function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.damfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x9a) and c:GetDefense()<c:GetBaseDefense()
+	return c:IsFaceup() and c:IsSetCard(SET_SUPERHEAVY_SAMURAI) and c:GetDefense()<c:GetBaseDefense()
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.damfilter(chkc) end

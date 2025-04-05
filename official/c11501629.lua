@@ -1,4 +1,5 @@
 --キックファイア
+--Kickfire
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x2d)
@@ -48,7 +49,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(0x2d,e:GetLabel())
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_STANDBY
+	return Duel.IsPhase(PHASE_STANDBY)
 end
 function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end

@@ -1,4 +1,5 @@
 --闇の量産工場
+--Dark Factory of Mass Production
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

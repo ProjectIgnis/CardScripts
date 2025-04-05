@@ -1,5 +1,5 @@
 --溟界の虚
---Emptiness of the Abhyss
+--Ogdoadic Hollow
 --scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -58,14 +58,14 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0 then
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
 		e1:SetCondition(s.tgcon)
 		e1:SetOperation(s.tgop)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		e1:SetCountLimit(1)
 		e1:SetLabelObject(tc)
 		Duel.RegisterEffect(e1,tp)

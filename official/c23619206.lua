@@ -1,7 +1,6 @@
 --招神鳥シムルグ
 --Simorgh, Bird of Calamity
 --Scripted by AlphaKretin
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--When normal summoned, send 1 "Simorgh" card from deck to GY
@@ -26,11 +25,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.ssop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x12d}
+s.listed_series={SET_SIMORGH}
 s.listed_names={id}
-
 function s.tgfilter(c)
-	return c:IsSetCard(0x12d) and not c:IsCode(id) and c:IsAbleToGrave()
+	return c:IsSetCard(SET_SIMORGH) and not c:IsCode(id) and c:IsAbleToGrave()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -63,7 +61,7 @@ function s.ssop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e1,true)
 	end
@@ -74,7 +72,7 @@ function s.ssop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetDescription(aux.Stringid(id,2))
 	e1:SetTargetRange(1,0)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetTarget(s.sslimit)
 	Duel.RegisterEffect(e1,tp)
 end

@@ -52,7 +52,7 @@ function s.initial_effect(c)
 	e9:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e9:SetType(EFFECT_TYPE_IGNITION)
 	e9:SetRange(LOCATION_MZONE)
-	e9:SetCost(s.spcost)
+	e9:SetCost(Cost.SelfTribute)
 	e9:SetTarget(s.sptg)
 	e9:SetOperation(s.spop)
 	c:RegisterEffect(e9)
@@ -66,7 +66,7 @@ function s.ttcon2(e,c,minc,zone,relzone,exeff)
 		if type(ret)=="function" then
 			ret={ret(exeff,c)}
 			if #ret>1 then
-				zone=(ret[2]>>16)&0x7f
+				zone=(ret[2]>>16)&(ZONES_EMZ|ZONES_MMZ)
 			end
 		end
 	end
@@ -80,7 +80,7 @@ function s.tttg2(e,tp,eg,ep,ev,re,r,rp,chk,c,minc,zone,relzone,exeff)
 		if type(ret)=="function" then
 			ret={ret(exeff,c)}
 			if #ret>1 then
-				zone=(ret[2]>>16)&0x7f
+				zone=(ret[2]>>16)&(ZONES_EMZ|ZONES_MMZ)
 			end
 		end
 	end
@@ -96,12 +96,12 @@ end
 function s.ttop2(e,tp,eg,ep,ev,re,r,rp,c,minc,zone,relzone,exeff)
 	local g=e:GetLabelObject()
 	c:SetMaterial(g)
-	Duel.Release(g,REASON_SUMMON+REASON_MATERIAL)
+	Duel.Release(g,REASON_SUMMON|REASON_MATERIAL)
 	g:DeleteGroup()
 end
 function s.retreg(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_PHASE+PHASE_END,0,2)
+	c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET|RESET_PHASE|PHASE_END,0,2)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_PHASE+PHASE_END)
@@ -110,7 +110,7 @@ function s.retreg(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.retcon)
 	e1:SetOperation(s.retop)
-	e1:SetReset(RESET_PHASE+PHASE_END,2)
+	e1:SetReset(RESET_PHASE|PHASE_END,2)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
@@ -123,12 +123,8 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SET_CONTROL)
 	e1:SetValue(c:GetOwner())
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD-(RESET_TOFIELD+RESET_TEMP_REMOVE+RESET_TURN_SET))
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD-(RESET_TOFIELD|RESET_TEMP_REMOVE|RESET_TURN_SET))
 	c:RegisterEffect(e1)
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.filter(c,e,tp)
 	return c:IsCode(CARD_RA) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
@@ -136,20 +132,20 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if e:GetHandler():GetSequence()<5 then ft=ft+1 end
-	if chk==0 then return ft>0 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
+	if chk==0 then return ft>0 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND|LOCATION_DECK,0,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_DECK)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND|LOCATION_DECK,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
 	if tc and Duel.SpecialSummonStep(tc,0,tp,tp,true,false,POS_FACEUP) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK)
 		e1:SetValue(4000)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_SET_DEFENSE)

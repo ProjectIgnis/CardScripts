@@ -1,4 +1,5 @@
 --暗黒ドリケラトプス
+--Dark Driceratops
 local s,id=GetID()
 function s.initial_effect(c)
 	--pierce

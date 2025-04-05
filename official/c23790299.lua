@@ -43,7 +43,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_ALTERGEIST}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsBattlePhase() and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
+	return Duel.IsBattlePhase() and aux.StatChangeDamageStepCondition()
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsAttackAbove,1,false,nil,e:GetHandler(),1) end

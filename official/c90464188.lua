@@ -35,7 +35,7 @@ function s.disfilter(c,tp)
 	return c:IsControler(tp) and c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsAttribute(ATTRIBUTE_DARK)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
-	if not re:IsActiveType(TYPE_SPELL+TYPE_TRAP) or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return end
+	if not re:IsSpellTrapEffect() or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	if not g or #g==0 then return end
 	if g:IsExists(s.disfilter,1,nil,tp) then

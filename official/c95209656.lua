@@ -43,9 +43,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={22398665,id}
-s.listed_series={0x151}
+s.listed_series={SET_DRYTRON}
 function s.tgval(e,re,rp)
-	return aux.tgoval(e,re,rp) and re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+	return aux.tgoval(e,re,rp) and re:IsSpellTrapEffect()
 end
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
@@ -55,27 +55,27 @@ function s.valcheck(e,c)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_RITUAL) and c:GetFlagEffect(id)~=0
+	return c:IsRitualSummoned() and c:GetFlagEffect(id)~=0
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(Card.IsType,tp,0,LOCATION_ONFIELD,nil,TYPE_SPELL+TYPE_TRAP)
+	local g=Duel.GetMatchingGroup(Card.IsSpellTrap,tp,0,LOCATION_ONFIELD,nil)
 	if chk==0 then return #g>0 end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(Card.IsType,tp,0,LOCATION_ONFIELD,nil,TYPE_SPELL+TYPE_TRAP)
+	local g=Duel.GetMatchingGroup(Card.IsSpellTrap,tp,0,LOCATION_ONFIELD,nil)
 	if #g>0 then
 		Duel.Destroy(g,REASON_EFFECT)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsPreviousLocation(LOCATION_MZONE) and e:GetHandler():IsSummonType(SUMMON_TYPE_RITUAL)
+	return e:GetHandler():IsPreviousLocation(LOCATION_MZONE) and e:GetHandler():IsRitualSummoned()
 end
 function s.rescon(sg,e,tp,mg)
 	return sg:GetSum(Card.GetAttack)==4000
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x151) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(id)
+	return c:IsSetCard(SET_DRYTRON) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(id)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

@@ -1,4 +1,5 @@
 --闇の芸術家
+--Dark Artist
 local s,id=GetID()
 function s.initial_effect(c)
 	--defdown
@@ -14,7 +15,7 @@ end
 function s.defcon(e)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
-	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and c==Duel.GetAttackTarget() and bc:IsAttribute(ATTRIBUTE_LIGHT)
+	return Duel.IsPhase(PHASE_DAMAGE_CAL) and c==Duel.GetAttackTarget() and bc:IsAttribute(ATTRIBUTE_LIGHT)
 end
 function s.defval(e,c)
 	return math.ceil(e:GetHandler():GetDefense()/2)

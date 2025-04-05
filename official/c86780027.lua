@@ -1,4 +1,5 @@
 --一族の結束
+--Solidarity
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

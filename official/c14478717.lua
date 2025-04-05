@@ -1,4 +1,4 @@
---
+--リブロマンサー・プリベント
 --Libromancer Prevented
 --scripted by Naim
 local s,id=GetID()
@@ -35,9 +35,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={id}
-s.listed_series={0x17d}
+s.listed_series={SET_LIBROMANCER}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x17d),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_LIBROMANCER),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and c:IsFaceup() end
@@ -54,13 +54,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetDescription(aux.Stringid(id,2))
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_CANNOT_BE_MATERIAL)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(aux.cannotmatfilter(SUMMON_TYPE_FUSION,SUMMON_TYPE_SYNCHRO,SUMMON_TYPE_XYZ,SUMMON_TYPE_LINK))
 		tc:RegisterEffect(e1)
 	end
 end
 function s.rfilter(c)
-	return c:IsRitualMonster() and c:IsSetCard(0x17d) and c:IsFaceup()
+	return c:IsRitualMonster() and c:IsSetCard(SET_LIBROMANCER) and c:IsFaceup()
 end
 function s.tgcond(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsExistingMatchingCard(s.rfilter,tp,LOCATION_MZONE,0,1,nil)

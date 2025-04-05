@@ -1,4 +1,5 @@
 --インヴェルズ万能態
+--Steelswarm Genome
 local s,id=GetID()
 function s.initial_effect(c)
 	--double tribute
@@ -8,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetValue(s.condition)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x100a}
+s.listed_series={SET_STEELSWARM}
 function s.condition(e,c)
-	return c:IsSetCard(0x100a)
+	return c:IsSetCard(SET_STEELSWARM)
 end

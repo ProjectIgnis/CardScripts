@@ -1,4 +1,5 @@
 --パッチワーク・ファーニマル
+--Patchwork Fluffal
 local s,id=GetID()
 function s.initial_effect(c)
 	--setcode
@@ -7,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_ADD_SETCODE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetValue(0xad)
+	e1:SetValue(SET_FRIGHTFUR)
 	c:RegisterEffect(e1)
 	--fusion substitute
 	local e2=Effect.CreateEffect(c)
@@ -18,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.subval)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xad}
+s.listed_series={SET_FRIGHTFUR}
 function s.subval(e,c)
-	return c:IsSetCard(0xad)
+	return c:IsSetCard(SET_FRIGHTFUR)
 end

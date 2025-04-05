@@ -1,8 +1,9 @@
 --アトミック・スクラップ・ドラゴン
+--Atomic Scrap Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
-	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x24),1,1,Synchro.NonTuner(nil),2,99)
+	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_SCRAP),1,1,Synchro.NonTuner(nil),2,99)
 	c:EnableReviveLimit()
 	--Destroy
 	local e1=Effect.CreateEffect(c)
@@ -27,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x24}
+s.listed_series={SET_SCRAP}
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	if chk==0 then return Duel.IsExistingTarget(aux.TRUE,tp,LOCATION_ONFIELD,0,1,nil)
@@ -44,7 +45,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local ex,g2=Duel.GetOperationInfo(0,CATEGORY_TODECK)
 	if g1:GetFirst():IsRelateToEffect(e) and Duel.Destroy(g1,REASON_EFFECT)~=0 then
 		local hg=g2:Filter(Card.IsRelateToEffect,nil,e)
-		Duel.SendtoDeck(hg,nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(hg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -53,7 +54,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsReason(REASON_DESTROY) and c:IsPreviousControler(tp) and tp~=crp and crp~=PLAYER_NONE
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x24) and not c:IsType(TYPE_SYNCHRO) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_SCRAP) and not c:IsType(TYPE_SYNCHRO) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end

@@ -1,5 +1,5 @@
 --影依の巫女 エリアル
---Noel Shaddoll Ariel
+--Naelshaddoll Ariel
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)
@@ -26,9 +26,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.rmop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x9d}
+s.listed_series={SET_SHADDOLL}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x9d) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_DEFENSE)
+	return c:IsSetCard(SET_SHADDOLL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_DEFENSE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end

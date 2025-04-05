@@ -12,13 +12,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x84}
+s.listed_series={SET_BATTLIN_BOXER}
 function s.cfilter(c,pos)
-	return c:IsPosition(pos) and c:IsSetCard(0x84)
+	return c:IsPosition(pos) and c:IsSetCard(SET_BATTLIN_BOXER)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local bc1,bc2=Duel.GetBattleMonster(tp)
-	if not (bc1 and bc1:IsFaceup() and bc1:IsSetCard(0x84)) then return false end
+	if not (bc1 and bc1:IsFaceup() and bc1:IsSetCard(SET_BATTLIN_BOXER)) then return false end
 	if not (bc2 and bc2:IsFaceup()) then return false end
 	local pos=POS_FACEUP
 	if bc1==Duel.GetAttacker() then pos=POS_FACEUP_ATTACK end
@@ -48,7 +48,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(atk)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		sc:RegisterEffect(e1)
 		if bc==Duel.GetAttackTarget() then bc,sc=sc,bc end
 		if sc:IsCanBeBattleTarget(bc) and not bc:IsImmuneToEffect(e) and not sc:IsImmuneToEffect(e) then

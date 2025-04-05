@@ -1,4 +1,5 @@
 --ナチュル・エッグプラント
+--Naturia Eggplant
 local s,id=GetID()
 function s.initial_effect(c)
 	--to hand
@@ -13,12 +14,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x2a}
+s.listed_series={SET_NATURIA}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.filter(c)
-	return c:IsSetCard(0x2a) and c:IsMonster() and c:GetCode()~=id and c:IsAbleToHand()
+	return c:IsSetCard(SET_NATURIA) and c:IsMonster() and c:GetCode()~=id and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end

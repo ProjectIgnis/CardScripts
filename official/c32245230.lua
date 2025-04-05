@@ -36,7 +36,7 @@ s.listed_names={27062594} --The Door of Destiny
 s.listed_series={SET_UTOPIC}
 s.counter_place_list={0x207}
 function s.cfilter(c,tp)
-	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousControler(tp) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
+	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousControler(tp) and c:IsReason(REASON_BATTLE|REASON_EFFECT)
 end
 function s.counter(e,tp,eg,ep,ev,re,r,rp)
 	local ct=eg:FilterCount(s.cfilter,nil,tp)

@@ -18,19 +18,19 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 	--spsummon
-	local params={aux.FilterBoolFunction(Card.IsSetCard,0xad)}
+	local params={aux.FilterBoolFunction(Card.IsSetCard,SET_FRIGHTFUR)}
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,id)
-	e3:SetCost(s.cost)
+	e3:SetCost(Cost.PayLP(500))
 	e3:SetTarget(Fusion.SummonEffTG(table.unpack(params)))
 	e3:SetOperation(Fusion.SummonEffOP(table.unpack(params)))
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xad}
+s.listed_series={SET_FRIGHTFUR}
 s.listed_names={CARD_POLYMERIZATION}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_HAND)
@@ -49,8 +49,4 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,500) end
-	Duel.PayLPCost(tp,500)
 end

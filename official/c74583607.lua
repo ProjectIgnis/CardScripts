@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0xaf),2)
+	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_DD),2)
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -28,16 +28,16 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xaf,0xae}
-s.material_setcode=0xaf
+s.listed_series={SET_DD,SET_DARK_CONTRACT}
+s.material_setcode=SET_DD
 function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0xaf) and c:IsControler(tp)
+	return c:IsFaceup() and c:IsSetCard(SET_DD) and c:IsControler(tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return not eg:IsContains(e:GetHandler()) and eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xaf) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_DD) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end
@@ -59,7 +59,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 		or (rp~=tp and c:IsReason(REASON_EFFECT) and c:IsPreviousControler(tp))
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xae) and c:IsAbleToHand()
+	return c:IsSetCard(SET_DARK_CONTRACT) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end

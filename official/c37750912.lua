@@ -1,5 +1,5 @@
 --スターダスト・イルミネイト
---Stardust Illuminate
+--Stardust Illumination
 --scripted by Rundas
 local s,id=GetID()
 function s.initial_effect(c)
@@ -20,19 +20,19 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.lvtg)
 	e2:SetOperation(s.lvop)
 	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_STARDUST_DRAGON}
-s.listed_series={0xa3}
+s.listed_series={SET_STARDUST}
 --To Grave
 function s.ssfilter(c)
 	return c:IsFaceup() and (c:IsCode(CARD_STARDUST_DRAGON) or (c:ListsCode(CARD_STARDUST_DRAGON) and c:IsType(TYPE_SYNCHRO)))
 end
 function s.tgfilter(c,e,tp,ss,mz)
-	return c:IsMonster() and c:IsSetCard(0xa3) and (c:IsAbleToGrave() or (ss and mz and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
+	return c:IsMonster() and c:IsSetCard(SET_STARDUST) and (c:IsAbleToGrave() or (ss and mz and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ss,mz=Duel.IsExistingMatchingCard(s.ssfilter,tp,LOCATION_MZONE,0,1,nil),Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -54,13 +54,12 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 end
 --Level Change
 function s.lvfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xa3) and c:IsMonster() and c:HasLevel()
+	return c:IsFaceup() and c:IsSetCard(SET_STARDUST) and c:IsMonster() and c:HasLevel()
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.lvfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(s.lvfilter,tp,LOCATION_MZONE,0,1,nil) end
 	local tc=Duel.SelectTarget(tp,s.lvfilter,tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
-	
 end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -76,7 +75,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_LEVEL)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	e1:SetValue(1-(choice*2))
 	tc:RegisterEffect(e1)
 end

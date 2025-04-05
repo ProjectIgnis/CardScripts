@@ -1,4 +1,5 @@
 --明と宵の逆転
+--Exchange of Night and Day
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -51,7 +52,7 @@ function s.target1(e,tp,eg,ep,ev,re,r,rp,chk)
 		end
 		Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_HAND)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
-		Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 	end
 	e:SetLabel(op)
 end
@@ -81,7 +82,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 end
 function s.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.IsExistingMatchingCard(s.tgfilter1,tp,LOCATION_HAND,0,1,nil,tp)

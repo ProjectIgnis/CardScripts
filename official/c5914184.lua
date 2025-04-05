@@ -32,18 +32,18 @@ function s.actop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCondition(s.damcon)
 		e1:SetTarget(s.damtg)
 		e1:SetOperation(s.damop)
-		if Duel.GetTurnPlayer()==tp then
+		if Duel.IsTurnPlayer(tp) then
 			e1:SetLabel(0)
-			e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+			e1:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN)
 		else
 			e1:SetLabel(Duel.GetTurnCount())
-			e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,2)
+			e1:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN,2)
 		end
 		c:RegisterEffect(e1)
 	end
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and Duel.GetTurnCount()~=e:GetLabel()
+	return Duel.IsTurnPlayer(1-tp) and Duel.GetTurnCount()~=e:GetLabel()
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

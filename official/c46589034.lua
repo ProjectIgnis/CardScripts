@@ -1,4 +1,5 @@
 --RR－ペイン・レイニアス
+--Raidraptor - Pain Lanius
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -19,9 +20,9 @@ function s.initial_effect(c)
 	e2:SetValue(s.xyzlimit)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xba}
+s.listed_series={SET_RAIDRAPTOR}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xba) and c:IsLevelAbove(1) and c:GetAttack()~=0 and c:GetDefense()~=0
+	return c:IsFaceup() and c:IsSetCard(SET_RAIDRAPTOR) and c:IsLevelAbove(1) and c:GetAttack()~=0 and c:GetDefense()~=0
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.cfilter(chkc) end
@@ -50,7 +51,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CHANGE_LEVEL)
 			e1:SetValue(tc:GetLevel())
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 			c:RegisterEffect(e1)
 		end
 		Duel.SpecialSummonComplete()

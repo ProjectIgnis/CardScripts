@@ -17,7 +17,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and not rc:IsStatus(STATUS_ACT_FROM_HAND) 
 		and rc:IsPreviousPosition(POS_FACEDOWN) and rp==tp 
-		and rc:GetType()==TYPE_TRAP and not rc:IsCode(id)
+		and rc:IsNormalTrap() and not rc:IsCode(id)
 		and rc:CheckActivateEffect(false,true,true)~=nil
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -54,13 +54,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(0,1)
 	e1:SetValue(s.damval)
-	e1:SetReset(RESET_PHASE+PHASE_END,ct)
+	e1:SetReset(RESET_PHASE|PHASE_END,ct)
 	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_NO_EFFECT_DAMAGE)
-	e2:SetReset(RESET_PHASE+PHASE_END,ct)
+	e2:SetReset(RESET_PHASE|PHASE_END,ct)
 	Duel.RegisterEffect(e2,tp)
-	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,1),nil)	
+	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,1),nil)
 end
 function s.damval(e,re,val,r,rp,rc)
 	if rp==e:GetHandlerPlayer() and (r&REASON_EFFECT)~=0 then return 0

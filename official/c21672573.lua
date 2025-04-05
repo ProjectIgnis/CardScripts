@@ -1,4 +1,5 @@
 --エンペラー・ストゥム
+--Emperor Sem
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
@@ -19,7 +20,7 @@ function s.initial_effect(c)
 end
 function s.tdcon1(e,tp,eg,ep,ev,re,r,rp)
 	return eg:GetFirst()~=e:GetHandler() and ep==tp
-		and eg:GetFirst():IsSummonType(SUMMON_TYPE_TRIBUTE)
+		and eg:GetFirst():IsTributeSummoned()
 end
 function s.tdcon2(e,tp,eg,ep,ev,re,r,rp)
 	return eg:GetFirst():GetMaterialCount()~=0 and ep==tp
@@ -40,5 +41,5 @@ end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) or e:GetHandler():IsFacedown() then return end
 	local g=Duel.GetTargetCards(e)
-	Duel.SendtoDeck(g,nil,0,REASON_EFFECT)
+	Duel.SendtoDeck(g,nil,SEQ_DECKTOP,REASON_EFFECT)
 end

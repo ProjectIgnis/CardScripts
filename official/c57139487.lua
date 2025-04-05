@@ -37,7 +37,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if tc:IsLocation(LOCATION_REMOVED) then
 			local tpe=tc:GetType()
 			if (tpe&TYPE_TOKEN)==0 then
-				rg:Merge(Duel.GetMatchingGroup(Card.IsCode,tp,0,LOCATION_DECK+LOCATION_HAND,nil,tc:GetCode()))
+				rg:Merge(Duel.GetMatchingGroup(Card.IsCode,tp,0,LOCATION_DECK|LOCATION_HAND,nil,tc:GetCode()))
 			end
 		end
 	end

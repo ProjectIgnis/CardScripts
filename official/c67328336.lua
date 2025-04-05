@@ -1,4 +1,5 @@
 --機皇城
+--Meklord Fortress
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x3013))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_MEKLORD_EMPEROR))
 	e2:SetValue(s.effval)
 	c:RegisterEffect(e2)
 	--search
@@ -28,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x3013}
+s.listed_series={SET_MEKLORD_EMPEROR}
 function s.effval(e,re,rp)
 	return re:GetHandler():IsType(TYPE_SYNCHRO)
 end
@@ -37,7 +38,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsReason(REASON_DESTROY) and (c:GetPreviousLocation()&LOCATION_ONFIELD)~=0
 end
 function s.filter(c)
-	return c:IsSetCard(0x3013) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_MEKLORD_EMPEROR) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

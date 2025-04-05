@@ -1,4 +1,5 @@
 --異界空間－Aゾーン
+--Otherworld - The "A" Zone
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -20,14 +21,14 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xc}
+s.listed_series={SET_ALIEN}
 function s.adcon(e)
 	if Duel.GetCurrentPhase()~=PHASE_DAMAGE_CAL then return false end
 	local d=Duel.GetAttackTarget()
 	if not d then return false end
 	local tp=e:GetHandlerPlayer()
 	if d:IsControler(1-tp) then d=Duel.GetAttacker() end
-	return d:IsSetCard(0xc)
+	return d:IsSetCard(SET_ALIEN)
 end
 function s.adtg(e,c)
 	return c==Duel.GetAttacker() or c==Duel.GetAttackTarget()

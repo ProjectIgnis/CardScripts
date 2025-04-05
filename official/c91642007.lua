@@ -27,10 +27,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop2)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x13f}
+s.listed_series={SET_PLUNDER_PATROLL}
 s.listed_names={id}
 function s.thfilter(c)
-	return c:IsSetCard(0x13f) and c:IsMonster() and c:IsAbleToHand() and not c:IsCode(id)
+	return c:IsSetCard(SET_PLUNDER_PATROLL) and c:IsMonster() and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end
@@ -60,17 +60,17 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.splimit(e,c)
-	return not c:IsSetCard(0x13f)
+	return not c:IsSetCard(SET_PLUNDER_PATROLL)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsPreviousLocation(LOCATION_HAND+LOCATION_MZONE)
+	return e:GetHandler():IsPreviousLocation(LOCATION_HAND|LOCATION_MZONE)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x13f) and c:IsOriginalType(TYPE_MONSTER) and c:GetSequence()<5
+	return c:IsSetCard(SET_PLUNDER_PATROLL) and c:IsOriginalType(TYPE_MONSTER) and c:GetSequence()<5
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

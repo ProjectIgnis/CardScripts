@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Link Summon
 	c:EnableReviveLimit()
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x14a),1)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_APPLIANCER),1)
 	--Cannot be Link Material
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -36,7 +36,7 @@ function s.initial_effect(c)
 end
 function s.lkcon(e)
 	local c=e:GetHandler()
-	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsSummonType(SUMMON_TYPE_LINK)
+	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsLinkSummoned()
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
@@ -45,7 +45,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	if a:IsControler(1-tp) then a,b=b,a end
 	if e:GetHandler():GetMutualLinkedGroupCount()>0
 		and a:IsControler(tp) and b:IsControler(1-tp)
-		and Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL then
+		and Duel.IsPhase(PHASE_DAMAGE_CAL) then
 		return true
 	else return false end
 end
@@ -56,7 +56,7 @@ function s.atkcon2(e,tp,eg,ep,ev,re,r,rp)
 	if not b then return false end
 	if a:IsControler(1-tp) then a,b=b,a end
 	if c:GetMutualLinkedGroupCount()==0 and a==c and b:IsControler(1-tp)
-		and Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL then
+		and Duel.IsPhase(PHASE_DAMAGE_CAL) then
 		return true
 	else return false end
 end
@@ -68,7 +68,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-		e1:SetReset(RESET_PHASE+PHASE_DAMAGE_CAL)
+		e1:SetReset(RESET_PHASE|PHASE_DAMAGE_CAL)
 		e1:SetValue(0)
 		tc:RegisterEffect(e1)
 	end

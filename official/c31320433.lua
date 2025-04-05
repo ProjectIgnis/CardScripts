@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
 	e2:SetCondition(s.dacon)
-	e2:SetCost(aux.dxmcostgen(1,1,nil))
+	e2:SetCost(Cost.Detach(1,1,nil))
 	e2:SetTarget(s.datg)
 	e2:SetOperation(s.daop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
@@ -33,13 +33,13 @@ function s.matfilter(c)
 	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and not c:IsType(TYPE_TOKEN) and c:IsLevel(3) and c:IsAttribute(ATTRIBUTE_WATER)
 end
 function s.mattg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.matfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.matfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,nil) end
 end
 function s.matop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-	local g=Duel.SelectMatchingCard(tp,s.matfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.matfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,1,nil)
 	if #g>0 then
 		Duel.Overlay(c,g)
 	end
@@ -67,7 +67,7 @@ function s.daop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DIRECT_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 	--Other monsters cannot attack
@@ -77,7 +77,7 @@ function s.daop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetTarget(s.ftarget)
 	e2:SetLabel(e:GetLabel())
-	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 end
 function s.ftarget(e,c)

@@ -1,4 +1,5 @@
 --イタクァの暴風
+--Windstorm of Etaqua
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -6,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_POSITION)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER|TIMING_MAIN_END)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)

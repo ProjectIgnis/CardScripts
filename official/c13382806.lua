@@ -1,5 +1,5 @@
 --マタタビ仙狸
---Catnip Li Hua
+--Silvervine Senri
 --Scripted by FiftyFour
 local s,id=GetID()
 function s.initial_effect(c)
@@ -11,16 +11,12 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.spcost)
+	e1:SetCost(Cost.SelfTribute)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
 s.listed_names={id}
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
-end
 function s.spfilter(c,e,tp)
 	return c:IsLevel(2) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(id)
 end
@@ -37,7 +33,7 @@ function s.sphfilter(c,e,tp,att)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0
+	if tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
 		local g=Duel.GetMatchingGroup(s.sphfilter,tp,LOCATION_HAND,0,nil,e,tp,tc:GetAttribute())
 		if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then

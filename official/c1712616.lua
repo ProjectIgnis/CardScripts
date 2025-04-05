@@ -1,5 +1,5 @@
+--騎甲虫空殺舞隊
 --Beetrooper Fly & Sting
---Scripted by fiftyfour
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -27,13 +27,13 @@ function s.initial_effect(c)
 	e2:SetOperation(s.setop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x172}
+s.listed_series={SET_BEETROOPER}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x172)
+	return c:IsFaceup() and c:IsSetCard(SET_BEETROOPER)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil) then return false end
-	return Duel.IsChainNegatable(ev) and re:IsActiveType(TYPE_MONSTER) and ep==1-tp
+	return Duel.IsChainNegatable(ev) and re:IsMonsterEffect() and ep==1-tp
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -51,7 +51,7 @@ function s.setfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_INSECT) and c:IsAttackAbove(3000)
 end
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_END and Duel.IsTurnPlayer(tp)
+	return Duel.IsPhase(PHASE_END) and Duel.IsTurnPlayer(tp)
 		and Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.costfilter(c)

@@ -1,5 +1,5 @@
 --極星工イーヴァルディ
---Ivaldi of the Nordic Smiths
+--Nordic Smith Ivaldi
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -29,9 +29,9 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x42,0x4b,0x5042}
+s.listed_series={SET_NORDIC,SET_AESIR,SET_NORDIC_RELIC}
 function s.spcfilter(c)
-	return c:IsFaceup() and (c:IsSetCard(0x42) or c:IsSetCard(0x4b))
+	return c:IsFaceup() and (c:IsSetCard(SET_NORDIC) or c:IsSetCard(SET_AESIR))
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.spcfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -47,7 +47,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x5042) and c:IsAbleToHand()
+	return c:IsSetCard(SET_NORDIC_RELIC) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

@@ -1,4 +1,5 @@
 --妖仙獣 凶旋嵐
+--Yosenju Magat
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon
@@ -31,10 +32,10 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
-s.listed_series={0xb3}
+s.listed_series={SET_YOSENJU}
 s.listed_names={id}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0xb3) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_YOSENJU) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

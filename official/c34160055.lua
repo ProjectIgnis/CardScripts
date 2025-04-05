@@ -1,4 +1,5 @@
 --龍炎剣の使い手
+--Master of the Flaming Dragonswords
 local s,id=GetID()
 function s.initial_effect(c)
 	--atkup
@@ -26,14 +27,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		if c:IsFaceup() and c:IsRelateToEffect(e) then
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_UPDATE_ATTACK)
 			e2:SetValue(300)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+			e2:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 			c:RegisterEffect(e2)
 		end
 	end

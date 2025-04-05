@@ -1,4 +1,5 @@
 --転生断絶
+--Transmigration Break
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

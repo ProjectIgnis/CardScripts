@@ -12,9 +12,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.counter_list={0x1019}
+s.counter_list={COUNTER_FOG}
 function s.filter(c)
-	return c:GetCounter(0x1019)>=4
+	return c:GetCounter(COUNTER_FOG)>=4
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end
@@ -27,7 +27,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
-		local ct=math.floor(tc:GetCounter(0x1019)/4)
+		local ct=math.floor(tc:GetCounter(COUNTER_FOG)/4)
 		if Duel.Destroy(tc,REASON_EFFECT)~=0 and ct~=0 then
 			Duel.Draw(tp,ct,REASON_EFFECT)
 		end

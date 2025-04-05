@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetCountLimit(1)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCost(aux.dxmcostgen(1,1,nil))
+	e1:SetCost(Cost.Detach(1,1,nil))
 	e1:SetTarget(s.cttg)
 	e1:SetOperation(s.ctop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
@@ -37,7 +37,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	for tc in g:Iter() do
 		tc:AddCounter(0x1024,1)
 	end
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,2)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,2)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFlagEffect(tp,id)~=0 and Duel.GetTurnPlayer()~=tp

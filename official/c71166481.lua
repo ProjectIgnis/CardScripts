@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.chcon)
-	e1:SetCost(s.chcost)
+	e1:SetCost(Cost.Detach(2))
 	e1:SetTarget(s.chtg)
 	e1:SetOperation(s.chop)
 	c:RegisterEffect(e1)
@@ -28,14 +28,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.xop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x48}
+s.listed_series={SET_NUMBER}
 s.xyz_number=75
 function s.chcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_MONSTER) and rp==1-tp
-end
-function s.chcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,2,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,2,2,REASON_COST)
+	return re:IsMonsterEffect() and rp==1-tp
 end
 function s.chtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and Duel.IsPlayerCanDraw(1-tp,1) end
@@ -50,7 +46,7 @@ function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(1-tp,1,REASON_EFFECT)
 end
 function s.xfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(0x48)
+	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(SET_NUMBER)
 end
 function s.xtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()

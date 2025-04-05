@@ -1,4 +1,5 @@
 --次元の裂け目
+--Dimensional Fissure
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -27,7 +28,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.rmtarget(e,c)
-	return not c:IsLocation(0x80) and not c:IsSpellTrap()
+	return not c:IsLocation(LOCATION_OVERLAY) and not c:IsSpellTrap()
 end
 function s.checktg(e,c)
 	return not c:IsPublic()

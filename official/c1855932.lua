@@ -25,9 +25,9 @@ function s.initial_effect(c)
 	e2:SetValue(s.repval)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x88}
+s.listed_series={SET_BUJIN}
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
+	return e:GetHandler():IsXyzSummoned()
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -37,19 +37,19 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.DiscardDeck(tp,5,REASON_EFFECT)
 	local c=e:GetHandler()
 	if c:IsFaceup() and c:IsRelateToEffect(e) then
-		local ct=Duel.GetOperatedGroup():FilterCount(Card.IsSetCard,nil,0x88)
+		local ct=Duel.GetOperatedGroup():FilterCount(Card.IsSetCard,nil,SET_BUJIN)
 		if ct>0 then
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(ct*100)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 			c:RegisterEffect(e1)
 		end
 	end
 end
 function s.repfilter(c,tp)
-	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsSetCard(0x88) and c:IsRace(RACE_BEASTWARRIOR)
+	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsSetCard(SET_BUJIN) and c:IsRace(RACE_BEASTWARRIOR)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

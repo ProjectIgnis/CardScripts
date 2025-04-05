@@ -1,4 +1,5 @@
 --大波小波
+--Big Wave Small Wave
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

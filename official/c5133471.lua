@@ -1,4 +1,5 @@
 --ギャラクシー・サイクロン
+--Galaxy Cyclone
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -20,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(aux.exccon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.activate)
 	c:RegisterEffect(e2)

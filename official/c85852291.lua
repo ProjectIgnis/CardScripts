@@ -1,4 +1,5 @@
 --打ち出の小槌
+--Magical Mallet
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

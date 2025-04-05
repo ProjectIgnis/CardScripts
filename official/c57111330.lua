@@ -1,9 +1,9 @@
--- セリオンズ“デューク”ユール
--- Therions' "Duke" Jule
--- Scripted by Hatter
+--セリオンズ“デューク”ユール
+--Therion "Duke" Yul
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon self
+	--Special Summon self
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_EQUIP)
@@ -15,35 +15,35 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 	aux.AddEREquipLimit(c,nil,s.eqval,Card.EquipByEffectAndLimitRegister,e1)
-	-- "Therions" monsters protection
+	--"Therions" monsters protection
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetTarget(function(_,c) return c:IsSetCard(0x17b) and c:IsFaceup() end)
+	e2:SetTarget(function(_,c) return c:IsSetCard(SET_THERION) and c:IsFaceup() end)
 	e2:SetCondition(s.indcon)
 	e2:SetValue(aux.indoval)
 	c:RegisterEffect(e2)
-	-- Equipped monster gains ATK
+	--Equipped monster gains ATK
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_EQUIP)
 	e3:SetCode(EFFECT_UPDATE_ATTACK)
-	e3:SetCondition(function(e) return e:GetHandler():GetEquipTarget():IsSetCard(0x17b) end)
+	e3:SetCondition(function(e) return e:GetHandler():GetEquipTarget():IsSetCard(SET_THERION) end)
 	e3:SetValue(700)
 	c:RegisterEffect(e3)
-	-- Equipped monster gains effect
+	--Equipped monster gains effect
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetTargetRange(LOCATION_MZONE,0)
-	e4:SetTarget(function(e,c) return c==e:GetHandler():GetEquipTarget() and c:IsSetCard(0x17b) end)
+	e4:SetTarget(function(e,c) return c==e:GetHandler():GetEquipTarget() and c:IsSetCard(SET_THERION) end)
 	e4:SetLabelObject(e2)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x17b}
+s.listed_series={SET_THERION}
 function s.eqfilter(c)
-	return c:IsMonster() and (c:IsSetCard(0x17b) or c:IsRace(RACE_PSYCHIC))
+	return c:IsMonster() and (c:IsSetCard(SET_THERION) or c:IsRace(RACE_PSYCHIC))
 end
 function s.eqval(ec,c,tp)
 	return ec:IsControler(tp) and s.eqfilter(ec)

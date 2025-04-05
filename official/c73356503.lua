@@ -1,4 +1,5 @@
 --烈風の結界像
+--Barrier Statue of the Stormwinds
 local s,id=GetID()
 function s.initial_effect(c)
 	--disable spsummon

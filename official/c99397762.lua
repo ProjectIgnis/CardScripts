@@ -1,4 +1,5 @@
 --光波防輪
+--Cipher Bit
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -10,9 +11,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x107b,0xe5}
+s.listed_series={SET_GALAXY_EYES,SET_CIPHER}
 function s.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_XYZ) and (c:IsSetCard(0x107b) or c:IsSetCard(0xe5))
+	return c:IsFaceup() and c:IsType(TYPE_XYZ) and (c:IsSetCard(SET_GALAXY_EYES) or c:IsSetCard(SET_CIPHER))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end
@@ -34,7 +35,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCountLimit(1)
 		e1:SetValue(s.indval)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

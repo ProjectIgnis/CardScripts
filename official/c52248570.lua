@@ -1,11 +1,12 @@
 --プリズンクインデーモン
+--Imprisoned Queen Archfiend
 local s,id=GetID()
 function s.initial_effect(c)
 	--maintain
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e1:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.mtcon)
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e2:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCountLimit(1)
 	e2:SetRange(LOCATION_GRAVE)
@@ -26,7 +27,7 @@ function s.initial_effect(c)
 end
 s.listed_names={94585852}
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.CheckLPCost(tp,1000) then
@@ -36,7 +37,7 @@ function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and Duel.IsEnvironment(94585852)
+	return Duel.IsTurnPlayer(tp) and Duel.IsEnvironment(94585852)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsLevelBelow(4) and c:IsRace(RACE_FIEND)
@@ -54,7 +55,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(1000)
 		tc:RegisterEffect(e1)
 	end

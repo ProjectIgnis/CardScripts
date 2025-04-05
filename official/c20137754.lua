@@ -1,4 +1,5 @@
 --流星方界器デューザ
+--Duza the Meteor Cubic Vessel
 local s,id=GetID()
 function s.initial_effect(c)
 	--send to grave
@@ -37,9 +38,9 @@ function s.initial_effect(c)
 	e4:SetOperation(s.regop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xe3}
+s.listed_series={SET_CUBIC}
 function s.tgfilter(c)
-	return c:IsSetCard(0xe3) and c:IsAbleToGrave()
+	return c:IsSetCard(SET_CUBIC) and c:IsAbleToGrave()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -53,8 +54,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetFlagEffect(id)>0 
-		and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
+	return e:GetHandler():GetFlagEffect(id)>0 and aux.StatChangeDamageStepCondition()
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetMatchingGroupCount(Card.IsMonster,tp,LOCATION_GRAVE,0,nil)>0 end
@@ -68,7 +68,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(val)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end
@@ -79,5 +79,5 @@ function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.rfilter,1,nil,tp)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 end

@@ -1,4 +1,4 @@
---
+--ティスティナの半神
 --Demigod of the Tistina
 --Scripted by Hatter
 local s,id=GetID()

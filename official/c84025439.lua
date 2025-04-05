@@ -11,11 +11,11 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_TODECK)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER|TIMING_MAIN_END)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.tdcon)
-	e1:SetCost(s.tdcost)
+	e1:SetCost(Cost.Detach(1))
 	e1:SetTarget(s.tdtg)
 	e1:SetOperation(s.tdop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
@@ -54,13 +54,9 @@ function s.initial_effect(c)
 	e5:SetOperation(s.spop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0xdc,0x20dc}
+s.listed_series={SET_SUPER_QUANT,SET_SUPER_QUANTAL_MECH_BEAST}
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetOverlayGroup():GetClassCount(Card.GetCode)>=2 and Duel.IsMainPhase()
-end
-function s.tdcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToDeck,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
@@ -72,20 +68,20 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 	if #sg>0 then
 		Duel.HintSelection(sg)
-		Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(sg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 end
 function s.imcon(e)
 	return e:GetHandler():GetOverlayGroup():GetClassCount(Card.GetCode)>=4
 end
 function s.efilter(e,te)
-	return not te:GetOwner():IsSetCard(0xdc)
+	return not te:GetOwner():IsSetCard(SET_SUPER_QUANT)
 end
 function s.drcon(e)
 	return e:GetHandler():GetOverlayGroup():GetClassCount(Card.GetCode)>=6
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x20dc) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_SUPER_QUANTAL_MECH_BEAST) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

@@ -28,9 +28,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.lvop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xb}
+s.listed_series={SET_INFERNITY}
 function s.spfilter(c)
-	return c:IsMonster() and c:IsSetCard(0xb) and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and c:IsSetCard(SET_INFERNITY) and c:IsAbleToGraveAsCost()
 end
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -59,12 +59,12 @@ function s.lvcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)==0
 end
 function s.lvfilter(c)
-	return c:IsSetCard(0xb) and c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsSetCard(SET_INFERNITY) and c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.lvcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.lvfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,e:GetHandler()) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.lvfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.lvfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,e:GetHandler())
+	local g=Duel.SelectMatchingCard(tp,s.lvfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,e:GetHandler())
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -86,7 +86,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 		else
 			e1:SetValue(-1)
 		end
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end

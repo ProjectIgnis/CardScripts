@@ -1,4 +1,4 @@
---
+--炎魔の触媒
 --Zalamander Catalyzer
 --Scripted by Hatter
 local s,id=GetID()

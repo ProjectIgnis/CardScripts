@@ -32,9 +32,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop2)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x3b}
+s.listed_series={SET_RED_EYES}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x3b)
+	return c:IsFaceup() and c:IsSetCard(SET_RED_EYES)
 end
 function s.spcon1(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -61,7 +61,7 @@ function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return (r&REASON_DESTROY+REASON_EFFECT)==REASON_DESTROY+REASON_EFFECT and rp==1-tp
 end
 function s.spfilter2(c,e,tp)
-	return c:IsSetCard(0x3b) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_RED_EYES) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter2(chkc,e,tp) end

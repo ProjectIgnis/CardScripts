@@ -1,4 +1,5 @@
 --ヴォルカニック・バレット
+--Volcanic Shell
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -8,16 +9,12 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_GRAVE)
 	e1:SetCountLimit(1)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.PayLP(500))
 	e1:SetTarget(s.tg)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
 end
 s.listed_names={id}
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,500) end
-	Duel.PayLPCost(tp,500)
-end
 function s.filter(c)
 	return c:IsCode(id) and c:IsAbleToHand()
 end

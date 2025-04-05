@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,false,false,CARD_NEOS,aux.FilterBoolFunctionEx(Card.IsSetCard,0x2034))
+	Fusion.AddProcMix(c,false,false,CARD_NEOS,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_ULTIMATE_CRYSTAL))
 	--special summon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -46,9 +46,9 @@ function s.initial_effect(c)
 	e4:SetOperation(s.tdop3)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x2034}
+s.listed_series={SET_ULTIMATE_CRYSTAL}
 s.listed_names={CARD_NEOS}
-s.material_setcode={0x8,0x3008,0x9,0x34,0x2034}
+s.material_setcode={SET_HERO,SET_ELEMENTAL_HERO,SET_NEOS,SET_CRYSTAL,SET_ULTIMATE_CRYSTAL}
 function s.tdcost1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())

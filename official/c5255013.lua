@@ -37,18 +37,18 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xc4}
+s.listed_series={SET_ZEFRA}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc1=Duel.GetFieldCard(tp,LOCATION_PZONE,0)
 	local tc2=Duel.GetFieldCard(tp,LOCATION_PZONE,1)
-	if not (tc1 and tc2 and tc1:IsSetCard(0xc4) and tc2:IsSetCard(0xc4)) then return false end
+	if not (tc1 and tc2 and tc1:IsSetCard(SET_ZEFRA) and tc2:IsSetCard(SET_ZEFRA)) then return false end
 	local scl1=tc1:GetLeftScale()
 	local scl2=tc2:GetRightScale()
 	if scl1>scl2 then scl1,scl2=scl2,scl1 end
 	return scl1==1 and scl2==7
 end
 function s.filter(c)
-	return (c:IsFacedown() or not c:IsSetCard(0xc4)) and c:IsAbleToDeck()
+	return (c:IsFacedown() or not c:IsSetCard(SET_ZEFRA)) and c:IsAbleToDeck()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -58,7 +58,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp)
-	return not c:IsLocation(LOCATION_HAND+LOCATION_EXTRA)
+	return not c:IsLocation(LOCATION_HAND|LOCATION_EXTRA)
 end
 function s.tgcon(e)
 	local tp=e:GetHandlerPlayer()

@@ -1,5 +1,5 @@
 --神碑の誑かし
---Deceit of the Mysterune
+--Runick Allure
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 end
 s.listed_names={id}
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_SPELL) and re:GetHandler():IsType(TYPE_QUICKPLAY) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
+	return re:IsSpellEffect() and re:GetHandler():IsType(TYPE_QUICKPLAY) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

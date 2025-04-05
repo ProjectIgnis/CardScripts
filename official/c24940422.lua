@@ -1,5 +1,5 @@
 --雪花の光
---Light of Sekka
+--Sekka's Light
 --
 local s,id=GetID()
 function s.initial_effect(c)
@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.tdtg)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
@@ -51,7 +51,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,2),nil)
 end
 function s.aclimit(e,re,tp)
-	return not re:GetHandler():IsCode(id) and re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+	return not re:GetHandler():IsCode(id) and re:IsSpellTrapEffect()
 end
 function s.tdfilter(c)
 	return c:IsMonster() and c:IsAbleToDeck()
@@ -70,7 +70,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
 		local sg=g:Select(p,1,1,nil)
 		Duel.ConfirmCards(1-p,sg)
-		Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(sg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 		Duel.ShuffleDeck(p)
 		Duel.BreakEffect()
 		Duel.Draw(p,1,REASON_EFFECT)

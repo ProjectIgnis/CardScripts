@@ -31,10 +31,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x12c}
+s.listed_series={SET_TENYI}
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,e:GetHandler()) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.filter(c,e,tp)
 	return c:IsRace(RACE_WYRM) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -59,13 +59,13 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e1:SetTargetRange(1,0)
 	e1:SetValue(s.aclimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.aclimit(e,re,tp)
 	local rc=re:GetHandler()
-	return re:IsActiveType(TYPE_MONSTER) and rc:IsOnField()
-		and rc:IsSummonLocation(LOCATION_EXTRA) and not rc:IsSetCard(0x12c)
+	return re:IsMonsterEffect() and rc:IsOnField()
+		and rc:IsSummonLocation(LOCATION_EXTRA) and not rc:IsSetCard(SET_TENYI)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()

@@ -1,4 +1,5 @@
 --アーマーブラスト
+--Armor Blast
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,9 +12,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x56}
+s.listed_series={SET_INZEKTOR}
 function s.filter1(c)
-	return c:IsFaceup() and c:IsSetCard(0x56)
+	return c:IsFaceup() and c:IsSetCard(SET_INZEKTOR)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

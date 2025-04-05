@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(s.spcost)
+	e2:SetCost(Cost.SelfTribute)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
@@ -27,11 +27,6 @@ end
 s.listed_names={id}
 function s.spval(e,c)
 	return 0,aux.GetMMZonesPointedTo(c:GetControler(),Card.IsAttribute,nil,nil,nil,ATTRIBUTE_DARK)
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsReleasable() end
-	Duel.Release(c,REASON_COST)
 end
 function s.spfilter(c,e,tp)
 	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsRace(RACE_MACHINE|RACE_DRAGON) and not c:IsCode(id)

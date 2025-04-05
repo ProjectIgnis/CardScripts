@@ -1,7 +1,8 @@
 --ムーンダンスの儀式
+--Moon Dance Ritual
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddPersistentProcedure(c,0,s.filter,nil,nil,nil,0x1e0,nil,nil,nil,s.activate)
+	aux.AddPersistentProcedure(c,0,s.filter,nil,nil,nil,TIMINGS_CHECK_MONSTER_E,nil,nil,nil,s.activate)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -37,7 +38,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) then
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,0)
+		c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,0)
 	end
 end
 function s.disable(e,c)

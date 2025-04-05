@@ -1,4 +1,5 @@
 --悪夢の迷宮
+--Labyrinth of Nightmare
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

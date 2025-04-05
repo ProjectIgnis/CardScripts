@@ -1,4 +1,5 @@
 --クリスタルP
+--Crystolic Potential
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetValue(300)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xea))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_CRYSTRON))
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_UPDATE_DEFENSE)
@@ -45,11 +46,11 @@ function s.initial_effect(c)
 		end)
 	end)
 end
-s.listed_series={0xea}
+s.listed_series={SET_CRYSTRON}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	for tc in aux.Next(eg) do
-		if tc:IsSetCard(0xea) and tc:IsSummonType(SUMMON_TYPE_SYNCHRO) then
+		if tc:IsSetCard(SET_CRYSTRON) and tc:IsSynchroSummoned() then
 			local p=tc:GetSummonPlayer()
 			s[p]=s[p]+1
 		end

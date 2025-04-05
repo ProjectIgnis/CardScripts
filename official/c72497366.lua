@@ -1,4 +1,5 @@
 --悪魔の憑代
+--Sinister Yorishiro
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -36,7 +37,7 @@ end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=eg:GetFirst()
 	if chk==0 then return #eg==1 and tc:IsFaceup() and tc:IsLocation(LOCATION_MZONE)
-		and tc:IsRace(RACE_FIEND) and tc:IsLevelAbove(5) and tc:IsSummonType(SUMMON_TYPE_NORMAL) 
+		and tc:IsRace(RACE_FIEND) and tc:IsLevelAbove(5) and tc:IsNormalSummoned() 
 		and not tc:IsReason(REASON_REPLACE) end
 	if Duel.SelectEffectYesNo(tp,e:GetHandler(),96) then
 		Duel.SendtoGrave(e:GetHandler(),REASON_EFFECT)

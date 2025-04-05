@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetHintTiming(TIMING_DAMAGE_STEP)
 	e2:SetCondition(function() return not (Duel.IsPhase(PHASE_DAMAGE) and Duel.IsDamageCalculated()) end)
-	e2:SetCost(s.atkcost)
+	e2:SetCost(Cost.SelfDiscard)
 	e2:SetTarget(s.atktg)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
@@ -60,11 +60,6 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 		end
 	end
-end
-function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsDiscardable() end
-	Duel.SendtoGrave(c,REASON_COST|REASON_DISCARD)
 end
 function s.atkfilter(c)
 	return c:IsRank(3) and c:IsType(TYPE_XYZ) and c:IsFaceup()

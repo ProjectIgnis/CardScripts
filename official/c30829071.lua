@@ -1,7 +1,6 @@
 --驚楽園の大使 <Bufo>
---Amazement Ambassador <Bufo>
+--Amazement Ambassador Bufo
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--equip
@@ -16,17 +15,15 @@ function s.initial_effect(c)
 	--From cards_specific_functions.lua
 	aux.AddAmazementQuickEquipEffect(c,id)
 end
-s.listed_series={0x15f,0x15e}
+s.listed_series={SET_ATTRACTION,SET_AMAZEMENT}
 function s.eqfilter(c)
-	return c:IsSetCard(0x15f) and c:IsTrap()
+	return c:IsSetCard(SET_ATTRACTION) and c:IsTrap()
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then
-		return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and
-		       Duel.IsExistingTarget(s.eqfilter,tp,LOCATION_GRAVE,0,1,nil) and
-		       Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
-	end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+		and Duel.IsExistingTarget(s.eqfilter,tp,LOCATION_GRAVE,0,1,nil)
+		and Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g1=Duel.SelectTarget(tp,s.eqfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	local tc=g1:GetFirst()
@@ -49,7 +46,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetValue(AA.eqlim)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		ec:RegisterEffect(e1)
 	end
 end

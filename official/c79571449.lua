@@ -1,4 +1,5 @@
 --天使の施し
+--Graceful Charity
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -23,6 +24,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Draw(p,d,REASON_EFFECT)==3 then
 		Duel.ShuffleHand(p)
 		Duel.BreakEffect()
-		Duel.DiscardHand(p,nil,2,2,REASON_EFFECT+REASON_DISCARD)
+		Duel.DiscardHand(p,nil,2,2,REASON_EFFECT|REASON_DISCARD)
 	end
 end

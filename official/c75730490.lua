@@ -1,7 +1,6 @@
 --白銀の城の召使い アリアーヌ
---Labrynth Servant Arianne
+--Ariane the Labrynth Servant
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -32,16 +31,15 @@ function s.initial_effect(c)
 end
 	--Mentions itself
 s.listed_names={id}
-
 	--Send 1 Normal Trap from hand or field to GY as cost
 function s.spcfilter(c,tp)
-	return c:GetType()==TYPE_TRAP and c:IsAbleToGraveAsCost() and (c:IsLocation(LOCATION_HAND) or c:IsFacedown())
+	return c:IsNormalTrap() and c:IsAbleToGraveAsCost() and (c:IsLocation(LOCATION_HAND) or c:IsFacedown())
 		and Duel.GetMZoneCount(tp,c)>0
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.spcfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,nil,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.spcfilter,tp,LOCATION_HAND|LOCATION_ONFIELD,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.spcfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,nil,tp)
+	local g=Duel.SelectMatchingCard(tp,s.spcfilter,tp,LOCATION_HAND|LOCATION_ONFIELD,0,1,1,nil,tp)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 	--Activation legality
@@ -66,7 +64,7 @@ function s.cfilter(c,re)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsReason(REASON_EFFECT)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==tp and re and re:IsActiveType(TYPE_TRAP) and re:GetHandler():GetOriginalType()==TYPE_TRAP
+	return rp==tp and re and re:IsTrapEffect() and re:GetHandler():GetOriginalType()==TYPE_TRAP
 		and eg:IsExists(s.cfilter,1,nil)
 end
 	--Activation legality

@@ -1,5 +1,5 @@
 --天地返し
---Upside Down
+--The Great Noodle Inversion
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

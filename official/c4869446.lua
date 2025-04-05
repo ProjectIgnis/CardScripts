@@ -1,4 +1,5 @@
 --砂漠の裁き
+--Judgment of the Desert
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

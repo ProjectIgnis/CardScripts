@@ -1,4 +1,5 @@
 --影霊衣の大魔道士
+--Great Sorcerer of the Nekroz
 local s,id=GetID()
 function s.initial_effect(c)
 	--tohand
@@ -27,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tgop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xb4}
+s.listed_series={SET_NEKROZ}
 s.listed_names={id}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -37,7 +38,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return (r&REASON_EFFECT)~=0
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xb4) and c:IsType(TYPE_RITUAL) and c:IsRace(RACE_SPELLCASTER) and c:IsAbleToHand()
+	return c:IsSetCard(SET_NEKROZ) and c:IsType(TYPE_RITUAL) and c:IsRace(RACE_SPELLCASTER) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -52,7 +53,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tgfilter(c)
-	return c:IsSetCard(0xb4) and not c:IsCode(id) and c:IsMonster() and c:IsAbleToGrave()
+	return c:IsSetCard(SET_NEKROZ) and not c:IsCode(id) and c:IsMonster() and c:IsAbleToGrave()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end

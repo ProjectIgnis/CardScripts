@@ -18,12 +18,12 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x18}
+s.listed_series={SET_CLOUDIAN}
 function s.cfilter(c,tp)
 	return c:IsControler(tp) and c:IsPreviousControler(tp)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return (r&0x41)==0x41 and re and re:GetHandler():IsSetCard(0x18)
+	return (r&SET_LV)==SET_LV and re and re:GetHandler():IsSetCard(SET_CLOUDIAN)
 		and eg:IsExists(s.cfilter,1,nil,1-tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

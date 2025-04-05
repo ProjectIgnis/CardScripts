@@ -1,5 +1,5 @@
 --サイバネット・リカバー
---Cynet Recover
+--Cynet Recovery
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

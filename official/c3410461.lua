@@ -26,10 +26,10 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e2:SetCode(EVENT_TO_GRAVE)
 	e2:SetOperation(s.regop)
-	c:RegisterEffect(e2)	
+	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_ALBAZ}
-s.listed_series={0x46}
+s.listed_series={SET_FUSION}
 function s.splimit(e,se,sp,st)
 	return (st&SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
 end
@@ -40,7 +40,7 @@ function s.contactfil(tp)
 	return Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp)
 end
 function s.contactop(g)
-	Duel.SendtoGrave(g,REASON_COST+REASON_MATERIAL)
+	Duel.SendtoGrave(g,REASON_COST|REASON_MATERIAL)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -48,7 +48,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_EXTRA_ATTACK_MONSTER)
 	e1:SetValue(c:GetMaterialCount()-1)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 	c:RegisterEffect(e1)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
@@ -63,11 +63,11 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCountLimit(1)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	c:RegisterEffect(e1)
 end
 function s.thfilter(c)
-	return c:GetType()==TYPE_SPELL and c:IsSetCard(0x46) and c:IsAbleToHand()
+	return c:IsNormalSpell() and c:IsSetCard(SET_FUSION) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

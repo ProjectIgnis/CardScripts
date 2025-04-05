@@ -1,4 +1,5 @@
 --ハイパー・シンクロン
+--Hyper Synchron
 local s,id=GetID()
 function s.initial_effect(c)
 	--atk change
@@ -22,7 +23,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(800)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	sync:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -30,7 +31,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCountLimit(1)
 	e2:SetCode(EVENT_PHASE+PHASE_END)
 	e2:SetOperation(s.rmop)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e2:SetReset(RESETS_STANDARD_PHASE_END)
 	sync:RegisterEffect(e2)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)

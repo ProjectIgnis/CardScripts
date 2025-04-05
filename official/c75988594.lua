@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return e:GetHandler():IsSynchroSummoned()
 end
 function s.thfilter(c)
 	return c:IsRace(RACE_MACHINE) and c:IsAbleToHand()
@@ -40,7 +40,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
-		if Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,0,1,nil,TYPE_SPELL+TYPE_TRAP) then
+		if Duel.IsExistingMatchingCard(Card.IsSpellTrap,tp,LOCATION_GRAVE,0,1,nil) then
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_FIELD)
 			e1:SetCode(EFFECT_CANNOT_SUMMON)
@@ -48,7 +48,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetTargetRange(1,0)
 			e1:SetTarget(s.sumlimit)
 			e1:SetLabel(tc:GetCode())
-			e1:SetReset(RESET_PHASE+PHASE_END)
+			e1:SetReset(RESET_PHASE|PHASE_END)
 			Duel.RegisterEffect(e1,tp)
 			local e2=e1:Clone()
 			e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)

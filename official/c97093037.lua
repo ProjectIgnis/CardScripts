@@ -1,4 +1,5 @@
 --創世者の化身
+--The Creator Incarnate
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -7,16 +8,12 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCost(s.spcost)
+	e1:SetCost(Cost.SelfTribute)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
 s.listed_names={61505339}
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
-end
 function s.filter(c,e,tp)
 	return c:IsCode(61505339) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

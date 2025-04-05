@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.counter_place_list={COUNTER_SPELL}
-s.listed_series={0x10d}
+s.listed_series={SET_MYTHICAL_BEAST}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=e:GetLabel()
 	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,COUNTER_SPELL,ct,REASON_COST) end
@@ -40,7 +40,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RemoveCounter(tp,1,0,COUNTER_SPELL,ct,REASON_COST)
 end
 function s.thfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x10d) and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(SET_MYTHICAL_BEAST) and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_MZONE,0,1,nil) end
@@ -54,7 +54,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spfilter1(c,e,tp,rp)
-	return c:IsFaceup() and c:IsSetCard(0x10d) and c:IsType(TYPE_PENDULUM) and Duel.GetLocationCountFromEx(tp,rp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsFaceup() and c:IsSetCard(SET_MYTHICAL_BEAST) and c:IsType(TYPE_PENDULUM) and Duel.GetLocationCountFromEx(tp,rp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter1,tp,LOCATION_EXTRA,0,1,nil,e,tp,rp) end

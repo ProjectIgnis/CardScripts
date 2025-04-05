@@ -1,5 +1,5 @@
 --光来する奇跡
---Arriving Miracle
+--Arrive in Light
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -37,8 +37,8 @@ function s.tdfilter(c)
 	return c:IsLevel(1) and c:IsRace(RACE_DRAGON) and (c:IsLocation(LOCATION_DECK) or c:IsAbleToDeck())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_HAND|LOCATION_DECK)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -100,7 +100,7 @@ end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFlagEffect(tp,id)>0 then return end
 	Duel.Draw(tp,1,REASON_EFFECT)
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 end
 function s.spfilter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsType(TYPE_TUNER)
@@ -118,5 +118,5 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 		end
 	end
-	Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_END,0,1)
 end

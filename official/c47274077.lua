@@ -1,4 +1,5 @@
 --ネオス・フォース
+--Neos Force
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsCode,CARD_NEOS))
@@ -58,5 +59,5 @@ function s.rettg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	Duel.SendtoDeck(e:GetHandler(),nil,2,REASON_EFFECT)
+	Duel.SendtoDeck(e:GetHandler(),nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 end

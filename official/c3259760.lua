@@ -1,4 +1,4 @@
---
+--呪縛衆
 --Spellbound
 --scripted by Naim
 local s,id=GetID()

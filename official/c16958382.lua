@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={27564031}
-s.listed_series={0x23}
+s.listed_series={SET_MALEFIC}
 function s.spcon(e,c)
 	return not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,id),e:GetHandlerPlayer(),LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 end
@@ -40,7 +40,7 @@ function s.descon(e)
 	return not (Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,27564031),e:GetHandlerPlayer(),LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) or Duel.IsEnvironment(27564031))
 end
 function s.costfilter(c)
-	return c:IsSetCard(0x23) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_MALEFIC) and c:IsAbleToGraveAsCost()
 end
 function s.retcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -63,12 +63,12 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetTarget(s.atktg)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetReset(RESET_PHASE|PHASE_END)
 	e2:SetTargetRange(1,0)
 	Duel.RegisterEffect(e2,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
@@ -84,5 +84,5 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atktg(e,c)
-	return not c:IsSetCard(0x23)
+	return not c:IsSetCard(SET_MALEFIC)
 end

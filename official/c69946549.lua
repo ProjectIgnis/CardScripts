@@ -40,7 +40,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetCondition(s.lvcon)
 		e1:SetValue(1)
 		tc:RegisterEffect(e1)
@@ -51,7 +51,7 @@ function s.lvcon(e)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then return false end
-	return rp==1-tp and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():GetCounter(COUNTER_PREDATOR)>0
+	return rp==1-tp and re:IsMonsterEffect() and re:GetHandler():GetCounter(COUNTER_PREDATOR)>0
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateEffect(ev)

@@ -1,5 +1,5 @@
--- 地翔星ハヤテ
--- Hayate the Earth Star
+--地翔星ハヤテ
+--Hayate the Earth Star
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon with no tribute
@@ -67,7 +67,7 @@ end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local tgp,loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_CONTROLER,CHAININFO_TRIGGERING_LOCATION)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainDisablable(ev)
-		and tgp~=tp and re:IsActiveType(TYPE_MONSTER) and loc==LOCATION_MZONE and eg:IsExists(s.filter2,1,nil,tp)
+		and tgp~=tp and re:IsMonsterEffect() and loc==LOCATION_MZONE and eg:IsExists(s.filter2,1,nil,tp)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -82,7 +82,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-500)
 		c:RegisterEffect(e1)
@@ -102,10 +102,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-500)
 		c:RegisterEffect(e1)
 	end
 end
-

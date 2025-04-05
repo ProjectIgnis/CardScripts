@@ -1,5 +1,5 @@
 --鉄獣戦線 凶鳥のシュライグ
---Tribrigade Shrike the Wicked Wings
+--Tri-Brigade Shuraig the Ominous Omen
 --Scripted by the Razgriz
 local s,id=GetID()
 function s.initial_effect(c)
@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x14f}
+s.listed_series={SET_TRI_BRIGADE}
 function s.cfilter(c,tp)
 	return c:IsRace(RACES_BEAST_BWARRIOR_WINGB) and c:IsControler(tp)
 end

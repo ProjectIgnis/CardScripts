@@ -1,9 +1,10 @@
 --古代の機械魔神
+--Ancient Gear Howitzer
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x7),2)
+	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_ANCIENT_GEAR),2)
 	--immune
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -35,8 +36,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x7}
-s.material_setcode=0x7
+s.listed_series={SET_ANCIENT_GEAR}
+s.material_setcode=SET_ANCIENT_GEAR
 function s.econ(e)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
 end
@@ -57,7 +58,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x7) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsSetCard(SET_ANCIENT_GEAR) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

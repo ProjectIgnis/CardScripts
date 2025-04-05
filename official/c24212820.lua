@@ -1,6 +1,5 @@
 --幻影騎士団ダーク・ガントレット
 --The Phantom Knights of Dark Gauntlets
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Send 1 "Phantom Knights" spell/trap from deck to GY
@@ -33,10 +32,9 @@ function s.initial_effect(c)
 	e3:SetValue(s.defval)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xdb}
-
+s.listed_series={SET_PHANTOM_KNIGHTS}
 function s.tgfilter(c)
-	return c:IsSetCard(0xdb) and c:IsSpellTrap() and c:IsAbleToGrave()
+	return c:IsSetCard(SET_PHANTOM_KNIGHTS) and c:IsSpellTrap() and c:IsAbleToGrave()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -55,13 +53,13 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsStatus(STATUS_CHAINING) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0x10db,0x21,300,600,4,RACE_WARRIOR,ATTRIBUTE_DARK) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,SET_THE_PHANTOM_KNIGHTS,TYPE_MONSTER|TYPE_EFFECT,300,600,4,RACE_WARRIOR,ATTRIBUTE_DARK) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0x10db,0x21,300,600,4,RACE_WARRIOR,ATTRIBUTE_DARK) then
+	if c:IsRelateToEffect(e) and Duel.IsPlayerCanSpecialSummonMonster(tp,id,SET_THE_PHANTOM_KNIGHTS,TYPE_MONSTER|TYPE_EFFECT,300,600,4,RACE_WARRIOR,ATTRIBUTE_DARK) then
 		c:AddMonsterAttribute(TYPE_EFFECT)
 		c:AssumeProperty(ASSUME_RACE,RACE_WARRIOR)
 		Duel.SpecialSummonStep(c,1,tp,tp,true,false,POS_FACEUP_DEFENSE)
@@ -72,7 +70,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e1,true)
 		Duel.SpecialSummonComplete()
@@ -82,7 +80,7 @@ function s.defcon(e)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1
 end
 function s.filter(c)
-	return c:IsSetCard(0xdb) and c:IsSpellTrap()
+	return c:IsSetCard(SET_PHANTOM_KNIGHTS) and c:IsSpellTrap()
 end
 function s.defval(e,c)
 	return Duel.GetMatchingGroupCount(s.filter,c:GetControler(),LOCATION_GRAVE,0,nil)*300

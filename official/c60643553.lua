@@ -13,16 +13,12 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.condition)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase() < PHASE_END
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -34,7 +30,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e0:SetCountLimit(1,{id,1})
 	e0:SetCondition(s.damcon)
 	e0:SetOperation(s.damop)
-	e0:SetReset(RESET_PHASE+PHASE_END)
+	e0:SetReset(RESET_PHASE|PHASE_END)
 	e0:SetLabelObject(e0)
 	Duel.RegisterEffect(e0,tp)
 	local e1=Effect.CreateEffect(c)
@@ -43,7 +39,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetCondition(s.reccon1)
 	e1:SetOperation(s.recop1)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	--sp_summon effect
 	local e2=Effect.CreateEffect(c)
@@ -51,14 +47,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetCondition(s.regcon)
 	e2:SetOperation(s.regop)
-	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e3:SetCode(EVENT_CHAIN_SOLVED)
 	e3:SetCondition(s.reccon2)
 	e3:SetOperation(s.recop2)
-	e3:SetReset(RESET_PHASE+PHASE_END)
+	e3:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e3,tp)
 	e2:SetLabelObject(e3)
 end
@@ -88,7 +84,7 @@ function s.recop1(e,tp,eg,ep,ev,re,r,rp)
 		local sum=g:GetSum(s.sum)
 		Duel.Hint(HINT_CARD,0,id)
 		if Duel.Recover(tp,sum,REASON_EFFECT)~=0 then 
-			Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE+PHASE_END,0,1)
+			Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_END,0,1)
 		end
 	end
 end
@@ -112,7 +108,7 @@ function s.recop2(e,tp,eg,ep,ev,re,r,rp)
 	e:SetLabel(0)
 	Duel.Hint(HINT_CARD,0,id)
 	if Duel.Recover(tp,rec,REASON_EFFECT)~=0 then
-		Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_END,0,1)
 	end
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)

@@ -1,4 +1,5 @@
 --銀河騎士
+--Galaxy Knight
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon with no tribute
@@ -22,10 +23,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x55,0x7b}
+s.listed_series={SET_PHOTON,SET_GALAXY}
 s.listed_names={CARD_GALAXYEYES_P_DRAGON}
 function s.cfilter(c)
-	return c:IsFaceup() and (c:IsSetCard(0x55) or c:IsSetCard(0x7b))
+	return c:IsFaceup() and (c:IsSetCard(SET_PHOTON) or c:IsSetCard(SET_GALAXY))
 end
 function s.ntcon(e,c,minc)
 	if c==nil then return true end
@@ -52,7 +53,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-1000)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 		c:RegisterEffect(e1)
 		local tc=Duel.GetFirstTarget()
 		if tc and tc:IsRelateToEffect(e) then

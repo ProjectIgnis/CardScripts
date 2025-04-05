@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
-	e1:SetRange(LOCATION_HAND+LOCATION_GRAVE)
+	e1:SetRange(LOCATION_HAND|LOCATION_GRAVE)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(s.hspcon)
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_CARD_TARGET)
-	e2:SetRange(LOCATION_MZONE+LOCATION_GRAVE)
+	e2:SetRange(LOCATION_MZONE|LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCost(s.atkcost)
 	e2:SetTarget(s.atktg)
@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.counter_list={COUNTER_PREDATOR}
-s.listed_series={0x10f3}
+s.listed_series={SET_PREDAPLANT}
 function s.hspfilter(c,ft,tp)
 	return c:GetCounter(COUNTER_PREDATOR)>0 and c:IsReleasable() and (ft>0 or (c:GetSequence()<5 and c:IsControler(tp))) and (c:IsFaceup() or c:IsControler(tp))
 end
@@ -64,13 +64,13 @@ function s.hspop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 function s.atkcfil(c)
-	return c:IsSetCard(0x10f3) and c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true) 
+	return c:IsSetCard(SET_PREDAPLANT) and c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true) 
 		and Duel.IsExistingTarget(Card.IsFaceup,0,LOCATION_MZONE,LOCATION_MZONE,1,c)
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.atkcfil,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,e:GetHandler()) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.atkcfil,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.atkcfil,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,e:GetHandler())
+	local g=Duel.SelectMatchingCard(tp,s.atkcfil,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,e:GetHandler())
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -86,7 +86,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-500)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 end

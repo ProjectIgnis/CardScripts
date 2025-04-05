@@ -1,4 +1,5 @@
 --ヘル・エンプレス・デーモン
+--Archfiend Empress
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy replace
@@ -28,10 +29,10 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local dc=eg:GetFirst()
 	if chk==0 then return #eg==1 and dc~=e:GetHandler() and dc:IsFaceup() and dc:IsLocation(LOCATION_MZONE) 
 		and dc:IsRace(RACE_FIEND) and dc:IsAttribute(ATTRIBUTE_DARK) and not dc:IsReason(REASON_REPLACE) 
-		and Duel.IsExistingMatchingCard(s.rfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) end
+		and Duel.IsExistingMatchingCard(s.rfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil) end
 	if Duel.SelectEffectYesNo(tp,e:GetHandler(),96) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local g=Duel.SelectMatchingCard(tp,s.rfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil)
+		local g=Duel.SelectMatchingCard(tp,s.rfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil)
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 		return true
 	else return false end

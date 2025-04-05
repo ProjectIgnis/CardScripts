@@ -1,4 +1,5 @@
 --エレキリギリス
+--Watthopper
 local s,id=GetID()
 function s.initial_effect(c)
 	--untargetable
@@ -19,10 +20,10 @@ function s.initial_effect(c)
 	e2:SetValue(aux.tgoval)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xe}
+s.listed_series={SET_WATT}
 function s.atlimit(e,c)
-	return c:IsFaceup() and c:IsSetCard(0xe) and c~=e:GetHandler()
+	return c:IsFaceup() and c:IsSetCard(SET_WATT) and c~=e:GetHandler()
 end
 function s.tglimit(e,c)
-	return c:IsSetCard(0xe) and c~=e:GetHandler()
+	return c:IsSetCard(SET_WATT) and c~=e:GetHandler()
 end

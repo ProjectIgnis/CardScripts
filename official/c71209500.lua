@@ -1,6 +1,5 @@
 --アマゾネス・スカウト
 --Amazoness Scouts
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Your "Amazoness" monsters cannot targeted by monster effects, also cannot be destroyed by card effects
@@ -10,19 +9,14 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER)
-	e1:SetCost(s.efcost)
+	e1:SetCost(Cost.SelfTribute)
 	e1:SetTarget(s.eftg)
 	e1:SetOperation(s.efop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x4}
-
-function s.efcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
-end
+s.listed_series={SET_AMAZONESS}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x4)
+	return c:IsFaceup() and c:IsSetCard(SET_AMAZONESS)
 end
 function s.eftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,e:GetHandler()) end
@@ -39,7 +33,7 @@ function s.efop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 		e1:SetValue(s.efilter)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		--Cannot be destroyed by card effects
 		local e2=Effect.CreateEffect(c)
@@ -48,10 +42,10 @@ function s.efop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 		e2:SetValue(1)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e2)
 	end
 end
 function s.efilter(e,re,rp)
-	return re:IsActiveType(TYPE_MONSTER)
+	return re:IsMonsterEffect()
 end

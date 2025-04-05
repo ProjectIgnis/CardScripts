@@ -1,4 +1,5 @@
 --RUM－アージェント・カオス・フォース
+--Rank-Up-Magic Argent Chaos Force
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -23,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x1048,0x1073}
+s.listed_series={SET_NUMBER_C,SET_CXYZ}
 function s.filter1(c,e,tp)
 	local rk=c:GetRank()
 	local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(c),tp,nil,nil,REASON_XYZ)
@@ -32,7 +33,7 @@ function s.filter1(c,e,tp)
 end
 function s.filter2(c,e,tp,mc,rk,pg)
 	if c.rum_limit and not c.rum_limit(mc,e) then return false end
-	return mc:IsType(TYPE_XYZ,c,SUMMON_TYPE_XYZ,tp) and c:IsRank(rk) and (c:IsSetCard(0x1048) or c:IsSetCard(0x1073)) and mc:IsCanBeXyzMaterial(c,tp)
+	return mc:IsType(TYPE_XYZ,c,SUMMON_TYPE_XYZ,tp) and c:IsRank(rk) and (c:IsSetCard(SET_NUMBER_C) or c:IsSetCard(SET_CXYZ)) and mc:IsCanBeXyzMaterial(c,tp)
 		and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

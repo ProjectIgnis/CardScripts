@@ -1,4 +1,5 @@
 --古代の機械箱
+--Ancient Gear Box
 local s,id=GetID()
 function s.initial_effect(c)
 	--tohand
@@ -16,7 +17,7 @@ function s.initial_effect(c)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsReason(REASON_DRAW)
-		and e:GetHandler():IsPreviousLocation(LOCATION_DECK+LOCATION_GRAVE)
+		and e:GetHandler():IsPreviousLocation(LOCATION_DECK|LOCATION_GRAVE)
 end
 function s.filter(c)
 	return (c:GetAttack()==500 or c:GetDefense()==500) and c:GetCode()~=id

@@ -47,9 +47,9 @@ function s.initial_effect(c)
 	e5:SetOperation(s.spop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0xab}
+s.listed_series={SET_DESKBOT}
 function s.splimit(e,c,tp,sumtp,sumpos)
-	return not c:IsSetCard(0xab) and (sumtp&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
+	return not c:IsSetCard(SET_DESKBOT) and (sumtp&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsSpellTrap() end
@@ -65,10 +65,10 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atkval(e,c)
-	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0xab),c:GetControler(),LOCATION_EXTRA,0,nil)*500
+	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,SET_DESKBOT),c:GetControler(),LOCATION_EXTRA,0,nil)*500
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xab) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_DESKBOT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end

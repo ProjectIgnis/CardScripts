@@ -1,5 +1,5 @@
 --女王親衛隊
--- Queen's Bodyguard
+--Queen's Bodyguard
 local s,id=GetID()
 function s.initial_effect(c)
 	--at limit
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetValue(aux.imval1)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x14}
+s.listed_series={SET_ALLURE_QUEEN}
 function s.atlimit(e,c)
-	return c:IsFaceup() and c:IsSetCard(0x14)
+	return c:IsFaceup() and c:IsSetCard(SET_ALLURE_QUEEN)
 end

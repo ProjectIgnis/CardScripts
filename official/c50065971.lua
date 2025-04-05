@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e4:SetRange(LOCATION_GRAVE)
-	e4:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e4:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e4:SetCountLimit(1)
 	e4:SetCondition(s.spcon)
 	e4:SetTarget(s.sptg)
@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.dircon(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,0,1,nil,TYPE_SPELL+TYPE_TRAP)
+	return not Duel.IsExistingMatchingCard(Card.IsSpellTrap,tp,LOCATION_GRAVE,0,1,nil)
 		and not e:GetHandler():IsHasEffect(EFFECT_DIRECT_ATTACK)
 end
 function s.dirop(e,tp,eg,ep,ev,re,r,rp)
@@ -48,7 +48,7 @@ function s.dirop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_BASE_DEFENSE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(c:GetBaseDefense()/2)
 		c:RegisterEffect(e1)
 		--
@@ -56,19 +56,19 @@ function s.dirop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DIRECT_ATTACK)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e2)
 	end
 end
 function s.spreg(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if (r&REASON_EFFECT+REASON_DESTROY)~=REASON_EFFECT+REASON_DESTROY then return end
-	if Duel.GetCurrentPhase()==PHASE_STANDBY then
+	if Duel.IsPhase(PHASE_STANDBY) then
 		e:SetLabel(Duel.GetTurnCount())
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY,0,2)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_STANDBY,0,2)
 	else
 		e:SetLabel(0)
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY,0,1)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_STANDBY,0,1)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

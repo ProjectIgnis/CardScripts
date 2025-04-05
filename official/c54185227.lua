@@ -25,14 +25,14 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,{id,1})
-	e3:SetCost(s.spcost)
+	e3:SetCost(Cost.SelfTribute)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x8,0x5008}
+s.listed_series={SET_HERO,SET_VISION_HERO}
 function s.thfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x8) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(SET_HERO) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_REMOVED) and s.thfilter(chkc) end
@@ -47,12 +47,8 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(tc,tp,REASON_EFFECT)
 	end
 end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
-end
 function s.spfilter(c,e,sp)
-	return c:IsFaceup() and c:IsSetCard(0x5008) and c:GetSequence()<5 and c:IsCanBeSpecialSummoned(e,0,sp,true,false)
+	return c:IsFaceup() and c:IsSetCard(SET_VISION_HERO) and c:GetSequence()<5 and c:IsCanBeSpecialSummoned(e,0,sp,true,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_SZONE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end

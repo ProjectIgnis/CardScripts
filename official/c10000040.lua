@@ -35,13 +35,13 @@ function s.initial_effect(c)
 	e4:SetOperation(s.winop)
 	c:RegisterEffect(e4)
 end
-s.listed_names={10000000,CARD_RA,10000020}
+s.listed_names={CARD_OBELISK,CARD_RA,CARD_SLIFER}
 function s.spfilter(c,code)
 	local code1,code2=c:GetOriginalCodeRule()
 	return code1==code or code2==code
 end
 function s.rescon(sg,e,tp,mg)
-	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:IsExists(s.chk,1,nil,sg,Group.CreateGroup(),10000000,CARD_RA,10000020)
+	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:IsExists(s.chk,1,nil,sg,Group.CreateGroup(),CARD_OBELISK,CARD_RA,CARD_SLIFER)
 end
 function s.chk(c,sg,g,code,...)
 	local code1,code2=c:GetOriginalCodeRule()
@@ -60,9 +60,9 @@ function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	local rg=Duel.GetReleaseGroup(tp)
-	local g1=rg:Filter(s.spfilter,nil,10000000)
+	local g1=rg:Filter(s.spfilter,nil,CARD_OBELISK)
 	local g2=rg:Filter(s.spfilter,nil,CARD_RA)
-	local g3=rg:Filter(s.spfilter,nil,10000020)
+	local g3=rg:Filter(s.spfilter,nil,CARD_SLIFER)
 	local g=g1:Clone()
 	g:Merge(g2)
 	g:Merge(g3)
@@ -71,9 +71,9 @@ function s.spcon(e,c)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
 	local rg=Duel.GetReleaseGroup(tp)
-	local g1=rg:Filter(s.spfilter,nil,10000000)
+	local g1=rg:Filter(s.spfilter,nil,CARD_OBELISK)
 	local g2=rg:Filter(s.spfilter,nil,CARD_RA)
-	local g3=rg:Filter(s.spfilter,nil,10000020)
+	local g3=rg:Filter(s.spfilter,nil,CARD_SLIFER)
 	g1:Merge(g2)
 	g1:Merge(g3)
 	local g1=aux.SelectUnselectGroup(g1,e,tp,3,3,s.rescon,1,tp,HINTMSG_RELEASE,s.rescon,nil,true)

@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCountLimit(1,id)
-	e1:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_RITUAL) end)
+	e1:SetCondition(function(e) return e:GetHandler():IsRitualSummoned() end)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
@@ -34,51 +34,51 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={23459650,id}
-s.listed_series={0x11f}
+s.listed_series={SET_NEPHTHYS}
 function s.spfilter(c,e,tp)
 	local pg=aux.GetMustBeMaterialGroup(tp,Group.CreateGroup(),tp,c,nil,REASON_RITUAL)
-	return #pg<=0 and c:IsSetCard(0x11f) and c:IsRitualMonster() and not c:IsCode(id)
+	return #pg<=0 and c:IsSetCard(SET_NEPHTHYS) and c:IsRitualMonster() and not c:IsCode(id)
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,true,false,POS_FACEUP)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_DECK)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local tc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,1,nil,e,tp):GetFirst()
 	if tc and Duel.SpecialSummon(tc,SUMMON_TYPE_RITUAL,tp,tp,true,false,POS_FACEUP)>0 then
 		tc:CompleteProcedure()
 	end
 end
 function s.regcond(e,tp,eg,ep,ev,re,r,rp)
-	return re and re:GetHandler():IsSetCard(0x11f) and r&REASON_EFFECT>0
+	return re and re:GetHandler():IsSetCard(SET_NEPHTHYS) and r&REASON_EFFECT>0
 end
 function s.regtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetPossibleOperationInfo(0,CATEGORY_DESTROY,nil,1,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_ONFIELD)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_DESTROY,nil,1,tp,LOCATION_HAND|LOCATION_DECK|LOCATION_ONFIELD)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	local ct=Duel.GetCurrentPhase()==PHASE_STANDBY and 2 or 1
+	local ct=Duel.IsPhase(PHASE_STANDBY) and 2 or 1
 	--Destroy up to 3 "Nephthys" cards from your hand/Deck/field
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e1:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.descond)
 	e1:SetOperation(s.desop)
 	e1:SetLabel(ct,Duel.GetTurnCount())
-	e1:SetReset(RESET_PHASE+PHASE_STANDBY,ct)
+	e1:SetReset(RESET_PHASE|PHASE_STANDBY,ct)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.desfilter(c,e)
-	return c:IsSetCard(0x11f) and c:IsDestructable(e) and not c:IsRitualMonster() and (c:IsFaceup() or not c:IsLocation(LOCATION_ONFIELD))
+	return c:IsSetCard(SET_NEPHTHYS) and c:IsDestructable(e) and not c:IsRitualMonster() and (c:IsFaceup() or not c:IsLocation(LOCATION_ONFIELD))
 end
 function s.descond(e,tp,eg,ep,ev,re,r,rp)
 	local sp_label,turn=e:GetLabel()
-	return (sp_label==1 or turn~=Duel.GetTurnCount()) and Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_ONFIELD,0,1,nil,e)
+	return (sp_label==1 or turn~=Duel.GetTurnCount()) and Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_HAND|LOCATION_DECK|LOCATION_ONFIELD,0,1,nil,e)
 end
 function s.descheck(sg,e,tp,mg)
 	local res=sg:GetClassCount(Card.GetLocation)==#sg
@@ -86,7 +86,7 @@ function s.descheck(sg,e,tp,mg)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)
-	local sg=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_ONFIELD,0,nil,e)
+	local sg=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_HAND|LOCATION_DECK|LOCATION_ONFIELD,0,nil,e)
 	if #sg==0 then return end
 	local rg=aux.SelectUnselectGroup(sg,e,tp,1,3,s.descheck,1,tp,HINTMSG_DESTROY)
 	Duel.Destroy(rg,REASON_EFFECT)

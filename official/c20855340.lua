@@ -14,13 +14,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x604e}
+s.listed_series={SET_EVOLSAUR}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD) and e:GetHandler():IsPreviousControler(tp)
 		and e:GetHandler():IsReason(REASON_DESTROY)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x604e) and c:IsCanBeSpecialSummoned(e,153,tp,false,false)
+	return c:IsSetCard(SET_EVOLSAUR) and c:IsCanBeSpecialSummoned(e,153,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

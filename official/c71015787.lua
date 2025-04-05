@@ -1,5 +1,5 @@
 --サイレント・ウォビー
---Silent Wooby
+--Silent Wobby
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Sumon itself to the opponent's field

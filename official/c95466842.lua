@@ -1,4 +1,5 @@
 --水精鱗－アビスラング
+--Mermail Abysslung
 local s,id=GetID()
 function s.initial_effect(c)
 	--at limit

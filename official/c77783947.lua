@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e4:SetType(EFFECT_TYPE_QUICK_O)
 	e4:SetCode(EVENT_FREE_CHAIN)
-	e4:SetHintTiming(0,TIMING_BATTLE_START+TIMING_BATTLE_END)
+	e4:SetHintTiming(0,TIMING_BATTLE_START|TIMING_BATTLE_END)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetCondition(s.sccon)
 	e4:SetCost(s.sccost)
@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.scop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x9e}
+s.listed_series={SET_YANG_ZING}
 function s.sccon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsMainPhase() or Duel.IsBattlePhase()
 end
@@ -37,7 +37,7 @@ function s.sccost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(c,REASON_COST)
 end
 function s.mfilter(c)
-	return c:IsSetCard(0x9e) and c:IsMonster()
+	return c:IsSetCard(SET_YANG_ZING) and c:IsMonster()
 end
 function s.checkaddition(tp,sg,sc)
 	return sg:IsExists(s.mfilter,1,nil)

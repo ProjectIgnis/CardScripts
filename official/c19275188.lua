@@ -1,5 +1,5 @@
+--ウォークライ・ジェネレート
 --War Rock Generations
---Scripted by fiftyfour
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -14,12 +14,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x161}
+s.listed_series={SET_WAR_ROCK}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsBattlePhase() and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)
 end
 function s.cfilter(c,e,tp)
-	return c:IsSetCard(0x161) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_WAR_ROCK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -42,7 +42,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetTargetRange(0,LOCATION_MZONE)
 			e1:SetValue(s.atklimit)
 			e1:SetLabel(tc:GetRealFieldID())
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
 			tc:RegisterEffect(e1)
 		end
 		Duel.SpecialSummonComplete()

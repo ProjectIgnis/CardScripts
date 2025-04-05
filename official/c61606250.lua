@@ -30,15 +30,15 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.sumlimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return not c:IsRace(RACE_DRAGON)
 end
 function s.filter(c,ft,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x111)
-		and Duel.IsExistingMatchingCard(s.opfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,c:GetCode(),ft,e,tp)
+	return c:IsFaceup() and c:IsSetCard(SET_ARMED_DRAGON)
+		and Duel.IsExistingMatchingCard(s.opfilter,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,nil,c:GetCode(),ft,e,tp)
 end
 function s.opfilter(c,code,ft,e,tp)
 	return c:IsMonster() and c:IsCode(code)
@@ -52,15 +52,15 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil,ft,e,tp)
-	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
-	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK|LOCATION_GRAVE)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK|LOCATION_GRAVE)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) or tc:IsFacedown() then return end
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELECT)
-	local sc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.opfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,tc:GetCode(),ft,e,tp):GetFirst()
+	local sc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.opfilter),tp,LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil,tc:GetCode(),ft,e,tp):GetFirst()
 	if not sc then return end
 	aux.ToHandOrElse(sc,tp,
 		function(c)
@@ -74,7 +74,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetType(EFFECT_TYPE_SINGLE)
 				e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_CLIENT_HINT)
 				e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
-				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+				e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 				sc:RegisterEffect(e1)
 			end
 			Duel.SpecialSummonComplete()

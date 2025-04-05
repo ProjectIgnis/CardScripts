@@ -2,7 +2,7 @@
 --Orcust Cymbal Skeleton
 local s,id=GetID()
 function s.initial_effect(c)
-	-- special summon
+	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_GRAVE)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(aux.bfgcost)
+	e1:SetCost(Cost.SelfBanish)
 	e1:SetCondition(s.spcon1)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.spcon2)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x11b}
+s.listed_series={SET_ORCUST}
 s.listed_names={id}
 function s.spcon1(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsPlayerAffectedByEffect(tp,CARD_ORCUSTRATED_BABEL)
@@ -31,7 +31,7 @@ function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsPlayerAffectedByEffect(tp,CARD_ORCUSTRATED_BABEL)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x11b) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(id)
+	return c:IsSetCard(SET_ORCUST) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(id)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.spfilter(chkc,e,tp) end
@@ -52,7 +52,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,1),nil)
 end

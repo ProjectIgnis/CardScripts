@@ -1,7 +1,6 @@
 --契珖のヴルーレセンス
 --Radiant Vouirescence
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -28,7 +27,6 @@ function s.initial_effect(c)
 end
 	--Specifically lists itself
 s.listed_names={id}
-
 	--If opponent controls a monster
 function s.tgcon(e,tp)
 	return Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_MZONE,1,nil)
@@ -36,7 +34,7 @@ end
 	--Discard 1 card as cost
 function s.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD)
 end
 	--Check for "Fluorescent Vluorescences"
 function s.tgfilter(c)
@@ -73,6 +71,6 @@ function s.attop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
 	e1:SetValue(ATTRIBUTE_DARK)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 	c:RegisterEffect(e1)
 end

@@ -1,5 +1,5 @@
 --神影金龍ドラッグルクシオン
---Dragluxion
+--Divine Golden Shadow Dragon Dragluxion
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(aux.dxmcostgen(2,2,nil))
+	e2:SetCost(Cost.Detach(2,2,nil))
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
@@ -45,10 +45,6 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,2,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,2,2,REASON_COST)
 end
 function s.spfilter(c,e,tp,mc)
 	return c:IsRank(8) and c:IsRace(RACE_DRAGON) and c:IsType(TYPE_XYZ) and c:IsAttack(3000)

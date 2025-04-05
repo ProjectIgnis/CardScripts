@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
-	e3:SetHintTiming(0,TIMING_END_PHASE+TIMING_EQUIP)
+	e3:SetHintTiming(0,TIMING_END_PHASE|TIMING_EQUIP)
 	e3:SetCondition(s.quickeffcond)
 	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
 	--Attach 1 "Super Quantum" monster from your hand or field to this card

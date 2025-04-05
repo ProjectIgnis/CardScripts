@@ -23,10 +23,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x9b}
+s.listed_series={SET_MELODIOUS}
 s.listed_names={CARD_POLYMERIZATION}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x9b)
+	return c:IsFaceup() and c:IsSetCard(SET_MELODIOUS)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,e:GetHandler())
@@ -35,12 +35,12 @@ function s.thfilter(c)
 	return c:IsCode(CARD_POLYMERIZATION) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK|LOCATION_GRAVE)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil)
 	if #g>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
@@ -62,7 +62,7 @@ end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() and not tc:IsImmuneToEffect(e)
-		and tc:IsAttackAbove(500) and tc:UpdateAttack(-500,RESET_EVENT+RESETS_STANDARD,e:GetHandler())==-500 then
+		and tc:IsAttackAbove(500) and tc:UpdateAttack(-500,RESET_EVENT|RESETS_STANDARD,e:GetHandler())==-500 then
 		Duel.Damage(1-tp,500,REASON_EFFECT)
 	end
 end

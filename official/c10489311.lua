@@ -1,4 +1,5 @@
 --ヒーロー・メダル
+--Hero Medal
 local s,id=GetID()
 function s.initial_effect(c)
 	--draw
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return (r&0x41)==0x41 and rp~=tp and c:IsPreviousControler(tp)
+	return (r&(REASON_DESTROY|REASON_EFFECT))==(REASON_DESTROY|REASON_EFFECT) and rp~=tp and c:IsPreviousControler(tp)
 		and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEDOWN)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -24,7 +25,7 @@ function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and Duel.SendtoDeck(c,nil,2,REASON_EFFECT)~=0 and c:IsLocation(LOCATION_DECK) then
+	if c:IsRelateToEffect(e) and Duel.SendtoDeck(c,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)~=0 and c:IsLocation(LOCATION_DECK) then
 		Duel.ShuffleDeck(tp)
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end

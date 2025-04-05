@@ -1,11 +1,11 @@
--- ファドレミコード・ファンシア
--- Fadoremichord Fancea
--- scripted by Hatter
+--ファドレミコード・ファンシア
+--FaSolfachord Fancia
+--scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- pendulum summon
+	--pendulum summon
 	Pendulum.AddProcedure(c)
-	-- cannot disable pendulum summon
+	--cannot disable pendulum summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_DISABLE_SPSUMMON)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
-	-- to extra
+	--to extra
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.tetg)
 	e2:SetOperation(s.teop)
 	c:RegisterEffect(e2)
-	-- destroy replace
+	--destroy replace
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_DESTROY_REPLACE)
@@ -34,12 +34,12 @@ function s.initial_effect(c)
 	e3:SetOperation(s.repop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x164}
+s.listed_series={SET_SOLFACHORD}
 function s.target(e,c)
-	return c:IsSummonType(SUMMON_TYPE_PENDULUM) and c:IsSetCard(0x164) and c:IsType(TYPE_PENDULUM)
+	return c:IsPendulumSummoned() and c:IsSetCard(SET_SOLFACHORD) and c:IsType(TYPE_PENDULUM)
 end
 function s.tefilter(c)
-	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(0x164) and not c:IsCode(id) and not c:IsForbidden()
+	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(SET_SOLFACHORD) and not c:IsCode(id) and not c:IsForbidden()
 end
 function s.tetg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tefilter,tp,LOCATION_DECK,0,1,nil) end
@@ -56,7 +56,7 @@ function s.repcon(e)
 end
 function s.filter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsType(TYPE_PENDULUM)
-		and c:IsSetCard(0x164) and c:IsReason(REASON_BATTLE) and not c:IsReason(REASON_REPLACE)
+		and c:IsSetCard(SET_SOLFACHORD) and c:IsReason(REASON_BATTLE) and not c:IsReason(REASON_REPLACE)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -68,5 +68,5 @@ function s.repval(e,c)
 	return s.filter(c,e:GetHandlerPlayer())
 end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Destroy(e:GetHandler(),REASON_EFFECT+REASON_REPLACE)
+	Duel.Destroy(e:GetHandler(),REASON_EFFECT|REASON_REPLACE)
 end

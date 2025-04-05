@@ -1,4 +1,5 @@
 --大寒気
+--Cold Feet
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -22,7 +23,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e1:SetTargetRange(1,0)
 	e1:SetValue(s.aclimit)
-	e1:SetReset(RESET_PHASE+PHASE_END,1)
+	e1:SetReset(RESET_PHASE|PHASE_END,1)
 	Duel.RegisterEffect(e1,p)
 	--cannot set
 	local e2=Effect.CreateEffect(e:GetHandler())
@@ -31,9 +32,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetTargetRange(1,0)
 	e2:SetTarget(aux.TRUE)
-	e2:SetReset(RESET_PHASE+PHASE_END,1)
+	e2:SetReset(RESET_PHASE|PHASE_END,1)
 	Duel.RegisterEffect(e2,p)
 end
 function s.aclimit(e,re,tp)
-	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+	return re:IsSpellTrapEffect()
 end

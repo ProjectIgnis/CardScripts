@@ -16,17 +16,17 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xe}
+s.listed_series={SET_WATT}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentChain(true)==0 and eg:IsExists(Card.IsControler,1,nil,1-tp)
 end
 function s.cfilter(c)
-	return c:IsSetCard(0xe) and c:IsMonster() and c:IsDiscardable()
+	return c:IsSetCard(SET_WATT) and c:IsMonster() and c:IsDiscardable()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if Duel.IsPlayerAffectedByEffect(tp,EFFECT_DISCARD_COST_CHANGE) then return true end
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST+REASON_DISCARD,nil)
+	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST|REASON_DISCARD,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

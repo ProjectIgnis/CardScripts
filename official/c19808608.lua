@@ -13,9 +13,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={id}
-s.listed_series={0xaf}
+s.listed_series={SET_DD}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0xaf) and not c:IsCode(id) and c:HasLevel()
+	return c:IsFaceup() and c:IsSetCard(SET_DD) and not c:IsCode(id) and c:HasLevel()
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -34,7 +34,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)
 		e1:SetValue(lv)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 	local e2=Effect.CreateEffect(e:GetHandler())
@@ -44,9 +44,9 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetTargetRange(1,0)
 	e2:SetTarget(s.splimit)
-	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 end
 function s.splimit(e,c)
-	return not c:IsSetCard(0xaf)
+	return not c:IsSetCard(SET_DD)
 end

@@ -50,9 +50,9 @@ function s.costfilter(c,tpe)
 	return c:IsType(tpe) and c:IsDiscardable()
 end
 function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local rtype=(re:GetActiveType()&0x7)
+	local rtype=(re:GetActiveType()&(TYPE_MONSTER|TYPE_SPELL|TYPE_TRAP))
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil,rtype) end
-	Duel.DiscardHand(tp,s.costfilter,1,1,REASON_COST+REASON_DISCARD,nil,rtype)
+	Duel.DiscardHand(tp,s.costfilter,1,1,REASON_COST|REASON_DISCARD,nil,rtype)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -65,7 +65,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_BATTLE) and c:IsSummonType(SUMMON_TYPE_LINK)
+	return c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_BATTLE) and c:IsLinkSummoned()
 end
 function s.spfilter(c,e,tp)
 	return c:IsType(TYPE_NORMAL) and c:IsLevel(4) and c:IsRace(RACE_WARRIOR) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

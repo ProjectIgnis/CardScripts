@@ -1,4 +1,5 @@
 --閃珖竜 スターダスト
+--Stardust Spark Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -31,7 +32,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCountLimit(1)
 		e1:SetValue(s.valcon)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

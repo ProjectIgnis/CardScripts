@@ -1,9 +1,9 @@
--- 古衛兵アギド
--- Agido the Ancient Sentry
--- Scripted by Hatter
+--古衛兵アギド
+--Agido the Ancient Sentinel
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon this card
+	--Special Summon this card
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	-- Mill 5 cards from each Deck
+	--Mill 5 cards from each Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DECKDES)
@@ -24,14 +24,14 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_TO_GRAVE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCondition(function(e) return e:GetHandler():IsPreviousLocation(LOCATION_HAND+LOCATION_DECK) end)
+	e2:SetCondition(function(e) return e:GetHandler():IsPreviousLocation(LOCATION_HAND|LOCATION_DECK) end)
 	e2:SetTarget(s.mltg)
 	e2:SetOperation(s.mlop)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id,CARD_EXCHANGE_SPIRIT}
 function s.spconfilter(c,tp)
-	return c:IsControler(1-tp) and c:IsPreviousLocation(LOCATION_HAND+LOCATION_DECK)
+	return c:IsControler(1-tp) and c:IsPreviousLocation(LOCATION_HAND|LOCATION_DECK)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.spconfilter,1,nil,tp)

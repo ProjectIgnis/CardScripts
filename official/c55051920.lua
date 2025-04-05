@@ -1,7 +1,6 @@
 --オルフェゴール・コア
 --Orcustrated Core
 --Scripted by andré and Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -32,19 +31,18 @@ function s.initial_effect(c)
 	e3:SetOperation(s.repop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x11b,0xfe}
+s.listed_series={SET_ORCUST,SET_WORLD_LEGACY}
 s.listed_names={id}
-
 function s.cfilter(c,tp)
 	return c:IsAbleToRemoveAsCost() and c:IsMonster() and aux.SpElimFilter(c,false,true)
 		and Duel.IsExistingTarget(s.filter,tp,LOCATION_ONFIELD,0,1,c)
 end
 function s.filter(c)
-	return c:IsFaceup() and (c:IsSetCard(0x11b) or c:IsSetCard(0xfe)) and not c:IsCode(id)
+	return c:IsFaceup() and (c:IsSetCard(SET_ORCUST) or c:IsSetCard(SET_WORLD_LEGACY)) and not c:IsCode(id)
 end
 function s.immcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,tp) end
-	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil,tp)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil,tp) end
+	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil,tp)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.immtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -61,14 +59,14 @@ function s.immop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(1)
 		tc:RegisterEffect(e1)
 	end
 end
 function s.repfilter(c,tp)
-	return c:IsFaceup() and (c:IsSetCard(0x11b) or c:IsSetCard(0xfe)) and c:IsOnField()
-		and c:IsControler(tp) and c:IsReason(REASON_EFFECT+REASON_BATTLE) and not c:IsReason(REASON_REPLACE)
+	return c:IsFaceup() and (c:IsSetCard(SET_ORCUST) or c:IsSetCard(SET_WORLD_LEGACY)) and c:IsOnField()
+		and c:IsControler(tp) and c:IsReason(REASON_EFFECT|REASON_BATTLE) and not c:IsReason(REASON_REPLACE)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGrave() and not eg:IsContains(e:GetHandler())

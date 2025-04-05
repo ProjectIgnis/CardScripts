@@ -1,4 +1,5 @@
 --D・ラジカッセン
+--Morphtronic Boomboxen
 local s,id=GetID()
 function s.initial_effect(c)
 	--atk
@@ -19,14 +20,14 @@ function s.initial_effect(c)
 	e2:SetOperation(s.opd)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x26}
+s.listed_series={SET_MORPHTRONIC}
 function s.cona(e)
 	return e:GetHandler():IsAttackPos()
 end
 function s.cond(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local d=Duel.GetAttackTarget()
-	return not c:IsDisabled() and c:IsDefensePos() and d:IsFaceup() and d:IsSetCard(0x26)
+	return not c:IsDisabled() and c:IsDefensePos() and d:IsFaceup() and d:IsSetCard(SET_MORPHTRONIC)
 end
 function s.opd(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateAttack()

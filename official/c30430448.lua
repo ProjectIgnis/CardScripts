@@ -1,13 +1,13 @@
--- 凍てつく呪いの神碑
--- Mysterune of the Freezing Curse
--- Scripted by Hatter
+--凍てつく呪いの神碑
+--Runick Freezing Curses
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Activate
+	--Activate
 	local e1=Effect.CreateMysteruneQPEffect(c,id,CATEGORY_DISABLE,s.negtg,s.negop,3,EFFECT_FLAG_CARD_TARGET)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x180}
+s.listed_series={SET_RUNICK}
 function s.negfilter(c)
 	return c:IsType(TYPE_EFFECT) and c:IsNegatableMonster()
 end
@@ -23,17 +23,17 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() and not tc:IsDisabled() and not tc:IsImmuneToEffect(e) then
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local c=e:GetHandler()
-		-- Negate effects
+		--Negate effects
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetValue(RESET_TURN_SET)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e2)
 		return true
 	end

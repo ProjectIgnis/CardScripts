@@ -1,6 +1,5 @@
 --エキセントリック・ボーイ
 --Eccentric Boy
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--A synchro monster using this card cannot activate its effects, has its effects negated, and is banished
@@ -48,7 +47,7 @@ function s.cop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 	e1:SetValue(LOCATION_REMOVED)
-	e1:SetReset(RESET_EVENT+0x7e0000)
+	e1:SetReset(RESET_EVENT|RESETS_REDIRECT-RESET_OVERLAY)
 	rc:RegisterEffect(e1)
 	--Cannot activate its effects
 	local e2=Effect.CreateEffect(c)
@@ -56,13 +55,13 @@ function s.cop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_CANNOT_TRIGGER)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 	rc:RegisterEffect(e2)
 	--Negate its effects
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_DISABLE)
-	e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 	rc:RegisterEffect(e3)
 end
 function s.synval(e,c,sc)

@@ -1,5 +1,5 @@
 --空牙団の舵手 ヘルマー
---Helmer, Helmsman of the Skyfang Brigade
+--Helmer, Helmsman Fur Hire
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -29,9 +29,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-s.listed_series={0x114}
+s.listed_series={SET_FUR_HIRE}
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x114) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_FUR_HIRE) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -47,17 +47,17 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x114) and c:IsControler(tp)
+	return c:IsFaceup() and c:IsSetCard(SET_FUR_HIRE) and c:IsControler(tp)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return not eg:IsContains(e:GetHandler()) and eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.drcfilter(c)
-	return c:IsSetCard(0x114) and c:IsDiscardable()
+	return c:IsSetCard(SET_FUR_HIRE) and c:IsDiscardable()
 end
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.drcfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,s.drcfilter,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,s.drcfilter,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
@@ -69,4 +69,3 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
-

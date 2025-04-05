@@ -5,7 +5,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
-	c:EnableReviveLimit()	
+	c:EnableReviveLimit()
 	--Fusion summon procedure
 	Fusion.AddProcMix(c,true,true,CARD_ALBAZ,aux.FilterBoolFunctionEx(s.filter))
 	--Move itself to 1 of your unused MMZ
@@ -26,10 +26,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 	--Lists "Sprigguns" archetype
-s.listed_series={0x158}
+s.listed_series={SET_SPRINGANS}
 	--Specifically lists "Fallen of Albaz"
 s.listed_names={CARD_ALBAZ}
-
 	--Check for an effect that was special summoned this turn
 function s.filter(c)
 	return c:IsLocation(LOCATION_MZONE) and c:IsType(TYPE_EFFECT) and c:IsStatus(STATUS_SPSUMMON_TURN)
@@ -67,12 +66,12 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCountLimit(1,id)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	c:RegisterEffect(e1)
 end
 	--Check for a "Sprigguns" monster or "Fallen of Albaz"
 function s.thfilter(c,e,tp,ft)
-	return c:IsMonster() and (c:IsSetCard(0x158) or c:IsCode(CARD_ALBAZ))
+	return c:IsMonster() and (c:IsSetCard(SET_SPRINGANS) or c:IsCode(CARD_ALBAZ))
 		and (c:IsAbleToHand() or (c:IsCanBeSpecialSummoned(e,0,tp,false,false) and ft>0))
 end
 	--Activation legality

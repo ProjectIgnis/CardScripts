@@ -1,4 +1,5 @@
 --隣の芝刈り
+--That Grass Looks Greener
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,4 +1,5 @@
 --X－セイバー パロムロ
+--X-Saber Palomuro
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -9,22 +10,18 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_GRAVE)
 	e1:SetCode(EVENT_BATTLE_DESTROYED)
 	e1:SetCondition(s.condition)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.PayLP(500))
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xd}
+s.listed_series={SET_SABER}
 function s.filter(c,ec,tp)
-	return c~=ec and c:IsSetCard(0xd) and c:IsLocation(LOCATION_GRAVE) and c:IsPreviousControler(tp)
+	return c~=ec and c:IsSetCard(SET_SABER) and c:IsLocation(LOCATION_GRAVE) and c:IsPreviousControler(tp)
 		and c:IsReason(REASON_BATTLE)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.filter,1,nil,e:GetHandler(),tp)
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,500) end
-	Duel.PayLPCost(tp,500)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

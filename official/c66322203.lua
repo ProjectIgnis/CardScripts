@@ -19,14 +19,14 @@ function s.initial_effect(c)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCondition(aux.exccon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x107}
+s.listed_series={SET_FA}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x107) and c:IsLevelAbove(1)
+	return c:IsFaceup() and c:IsSetCard(SET_FA) and c:IsLevelAbove(1)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -42,7 +42,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(2)
 		tc:RegisterEffect(e1)
 	end

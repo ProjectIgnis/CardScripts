@@ -1,6 +1,5 @@
 --天魔神 エンライズ
 --Sky Scourge Enrise
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -50,16 +49,16 @@ end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local rg1=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil,RACE_FAIRY,ATTRIBUTE_LIGHT)
-	local rg2=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil,RACE_FIEND,ATTRIBUTE_DARK)
+	local rg1=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil,RACE_FAIRY,ATTRIBUTE_LIGHT)
+	local rg2=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil,RACE_FIEND,ATTRIBUTE_DARK)
 	local rg=rg1:Clone()
 	rg:Merge(rg2)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-4 and #rg1>2 and #rg2>0 
 		and aux.SelectUnselectGroup(rg,e,tp,4,4,s.rescon,0)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
-	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil,RACE_FAIRY,ATTRIBUTE_LIGHT)
-	rg:Merge(Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil,RACE_FIEND,ATTRIBUTE_DARK))
+	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil,RACE_FAIRY,ATTRIBUTE_LIGHT)
+	rg:Merge(Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil,RACE_FIEND,ATTRIBUTE_DARK))
 	local g=aux.SelectUnselectGroup(rg,e,tp,4,4,s.rescon,1,tp,HINTMSG_REMOVE,nil,nil,true)
 	if #g>0 then
 		g:KeepAlive()
@@ -82,7 +81,7 @@ function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CANNOT_ATTACK)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	e:GetHandler():RegisterEffect(e1,true)
 end
 function s.tgfilter(c)

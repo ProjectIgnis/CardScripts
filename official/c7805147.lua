@@ -1,4 +1,5 @@
 --兵隊竜
+--Soldier Dragons
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon

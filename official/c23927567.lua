@@ -1,4 +1,5 @@
 --幸運を告げるフクロウ
+--An Owl of Luck
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip

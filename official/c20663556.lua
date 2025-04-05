@@ -1,4 +1,5 @@
 --イレカエル
+--Substitoad
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon
@@ -21,9 +22,9 @@ function s.initial_effect(c)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x12}
+s.listed_series={SET_FROG}
 function s.indes(e,c)
-	return c:IsSetCard(0x12)
+	return c:IsSetCard(SET_FROG)
 end
 function s.cfilter(c,ft,tp)
 	return ft>0 or (c:IsControler(tp) and c:GetSequence()<5)
@@ -35,7 +36,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(g,REASON_COST)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x12) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_FROG) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp) end

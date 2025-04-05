@@ -1,5 +1,5 @@
 --Ｒ－ＡＣＥエアホイスター
---Rescue-ACE Air Hoister
+--Rescue-ACE Air Lifter
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -23,18 +23,18 @@ function s.initial_effect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_CHAINING)
-	e3:SetRange(LOCATION_HAND+LOCATION_MZONE)
+	e3:SetRange(LOCATION_HAND|LOCATION_MZONE)
 	e3:SetCountLimit(1,{id,1})
 	e3:SetCondition(s.spcond)
-	e3:SetCost(s.spcost)
+	e3:SetCost(Cost.SelfTribute)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x18c}
+s.listed_series={SET_RESCUE_ACE}
 s.listed_names={id}
 function s.thfilter(c)
-	return c:IsSetCard(0x18c) and c:IsSpell() and c:IsAbleToHand()
+	return c:IsSetCard(SET_RESCUE_ACE) and c:IsSpell() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -49,15 +49,10 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcond(e,tp,eg,ep,ev,re,r,rp)
-	return rp==1-tp and re:IsActiveType(TYPE_MONSTER) and re:GetActivateLocation()==LOCATION_MZONE
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsReleasable() end
-	Duel.Release(c,REASON_COST)
+	return rp==1-tp and re:IsMonsterEffect() and re:GetActivateLocation()==LOCATION_MZONE
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x18c) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_RESCUE_ACE) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

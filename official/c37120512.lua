@@ -1,4 +1,5 @@
 --闇の破神剣
+--Sword of Dark Destruction
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsAttribute,ATTRIBUTE_DARK))
@@ -15,4 +16,3 @@ function s.initial_effect(c)
 	e3:SetValue(-200)
 	c:RegisterEffect(e3)
 end
-

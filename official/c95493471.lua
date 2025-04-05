@@ -40,15 +40,15 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xdc}
+s.listed_series={SET_SUPER_QUANT}
 function s.matcheck(g,lc,sumtype,tp)
-	return g:IsExists(Card.IsSetCard,1,nil,0xdc,lc,sumtype,tp)
+	return g:IsExists(Card.IsSetCard,1,nil,SET_SUPER_QUANT,lc,sumtype,tp)
 end
 function s.incon(e)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+	return e:GetHandler():IsLinkSummoned()
 end
 function s.drcfilter(c,tp,lg)
-	return c:IsSetCard(0xdc) and c:IsType(TYPE_XYZ) and c:IsPreviousLocation(LOCATION_EXTRA)
+	return c:IsSetCard(SET_SUPER_QUANT) and c:IsType(TYPE_XYZ) and c:IsPreviousLocation(LOCATION_EXTRA)
 		and lg:IsContains(c) and not Duel.IsExistingMatchingCard(s.drfilter,tp,LOCATION_MZONE,0,1,c,c:GetCode())
 end
 function s.drfilter(c,code)
@@ -78,7 +78,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp,zone,rp)
 end
 function s.spfilter(c,e,tp,attr)
-	return c:IsSetCard(0xdc) and c:GetOriginalAttribute()&attr~=0
+	return c:IsSetCard(SET_SUPER_QUANT) and c:GetOriginalAttribute()&attr~=0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -25,16 +25,16 @@ function s.initial_effect(c)
 	e2:SetOperation(s.repop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x29}
+s.listed_series={SET_DRAGUNITY}
 function s.cfilter(c)
-	return c:IsSetCard(0x29) and c:IsDiscardable()
+	return c:IsSetCard(SET_DRAGUNITY) and c:IsDiscardable()
 end
 function s.eqcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
-	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST+REASON_DISCARD,e:GetHandler())
+	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST|REASON_DISCARD,e:GetHandler())
 end
 function s.eqfilter(c,ec)
-	return c:IsSetCard(0x29) and c:IsType(TYPE_TUNER) and not c:IsForbidden()
+	return c:IsSetCard(SET_DRAGUNITY) and c:IsType(TYPE_TUNER) and not c:IsForbidden()
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
@@ -52,7 +52,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)
 		e1:SetProperty(EFFECT_FLAG_COPY_INHERIT+EFFECT_FLAG_OWNER_RELATE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(s.eqlimit)
 		e1:SetLabelObject(c)
 		g:GetFirst():RegisterEffect(e1)
@@ -64,7 +64,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetDescription(aux.Stringid(id,2))
 	e2:SetTargetRange(1,0)
 	e2:SetTarget(s.splimit)
-	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 	--lizard check
 	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)
@@ -79,11 +79,11 @@ function s.lizfilter(e,c)
 	return not c:IsOriginalRace(RACE_DRAGON)
 end
 function s.repfilter(c,tp)
-	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_ONFIELD) and c:IsSetCard(0x29)
+	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_ONFIELD) and c:IsSetCard(SET_DRAGUNITY)
 		and (c:IsReason(REASON_BATTLE) or c:IsReason(REASON_EFFECT)) and not c:IsReason(REASON_REPLACE)
 end
 function s.desfilter(c,e,tp)
-	return e:GetHandler():GetEquipGroup():IsContains(c) and c:IsSetCard(0x29)
+	return e:GetHandler():GetEquipGroup():IsContains(c) and c:IsSetCard(SET_DRAGUNITY)
 		and c:IsDestructable(e) and not c:IsStatus(STATUS_DESTROY_CONFIRMED)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -104,5 +104,5 @@ end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
 	tc:SetStatus(STATUS_DESTROY_CONFIRMED,false)
-	Duel.Destroy(tc,REASON_EFFECT+REASON_REPLACE)
+	Duel.Destroy(tc,REASON_EFFECT|REASON_REPLACE)
 end

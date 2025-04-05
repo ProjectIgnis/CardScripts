@@ -9,21 +9,18 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
-	e1:SetCondition(s.condition)
+	e1:SetCondition(aux.StatChangeDamageStepCondition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x71}
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
+s.listed_series={SET_MADOLCHE}
 function s.tdfilter1(c)
-	return c:IsMonster() and c:IsSetCard(0x71) and c:IsAbleToDeck()
+	return c:IsMonster() and c:IsSetCard(SET_MADOLCHE) and c:IsAbleToDeck()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.tdfilter1(chkc) end
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x71),tp,LOCATION_MZONE,0,1,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_MADOLCHE),tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingTarget(s.tdfilter1,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectTarget(tp,s.tdfilter1,tp,LOCATION_GRAVE,0,1,1,nil)
@@ -35,8 +32,8 @@ function s.tdfilter2(c)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if not (tc and tc:IsRelateToEffect(e)) or Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)==0 then return end
-	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0x71),tp,LOCATION_MZONE,0,nil)
+	if not (tc and tc:IsRelateToEffect(e)) or Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)==0 then return end
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,SET_MADOLCHE),tp,LOCATION_MZONE,0,nil)
 	local ct=0
 	for tc in aux.Next(g) do
 	local preatk=tc:GetAttack()
@@ -45,7 +42,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(800)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UPDATE_DEFENSE)
@@ -57,6 +54,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #dg~=0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-		Duel.SendtoDeck(dg:Select(tp,1,1,nil),nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(dg:Select(tp,1,1,nil),nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 end

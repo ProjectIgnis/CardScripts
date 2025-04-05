@@ -45,9 +45,9 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x9e}
+s.listed_series={SET_YANG_ZING}
 function s.matcheck(e,c)
-	local g=c:GetMaterial():Filter(Card.IsSetCard,nil,0x9e)
+	local g=c:GetMaterial():Filter(Card.IsSetCard,nil,SET_YANG_ZING)
 	local att=0
 	local tc=g:GetFirst()
 	for tc in aux.Next(g) do
@@ -56,7 +56,7 @@ function s.matcheck(e,c)
 	e:SetLabel(att)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return e:GetHandler():IsSynchroSummoned()
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -66,23 +66,23 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTargetRange(0,1)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e1:SetValue(s.aclimit)
 	e1:SetLabelObject(e:GetLabelObject())
 	c:RegisterEffect(e1)
 	local att=e:GetLabelObject():GetLabel()
 	for _,str in aux.GetAttributeStrings(att) do
-		c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,str)
+		c:RegisterFlagEffect(0,RESET_EVENT|RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,str)
 	end
 end
 function s.aclimit(e,re,tp)
 	local att=e:GetLabelObject():GetLabel()
-	return re:IsActiveType(TYPE_MONSTER) and (att&re:GetHandler():GetOriginalAttribute())~=0
+	return re:IsMonsterEffect() and (att&re:GetHandler():GetOriginalAttribute())~=0
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
-		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE|REASON_EFFECT)
+		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsSynchroSummoned()
 end
 function s.thfilter(c)
 	return c:IsType(TYPE_TUNER) and c:IsAbleToHand()
@@ -100,7 +100,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,p)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:GetOriginalAttribute()~=0
+	return c:IsReason(REASON_BATTLE|REASON_EFFECT) and c:GetOriginalAttribute()~=0
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==p
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

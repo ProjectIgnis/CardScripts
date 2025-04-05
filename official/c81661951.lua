@@ -1,4 +1,5 @@
 --ドラグニティ－ミリトゥム
+--Dragunity Militum
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -13,9 +14,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x29}
+s.listed_series={SET_DRAGUNITY}
 function s.filter(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x29) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsFaceup() and c:IsSetCard(SET_DRAGUNITY) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_SZONE) and s.filter(chkc,e,tp) end

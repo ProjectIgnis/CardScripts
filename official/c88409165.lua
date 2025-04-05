@@ -1,4 +1,5 @@
 --アビス・ウォリアー
+--Abyss Warrior
 local s,id=GetID()
 function s.initial_effect(c)
 	--to hand
@@ -19,7 +20,7 @@ function s.cfilter(c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.filter(c)
 	return c:IsMonster() and c:IsAbleToDeck()
@@ -36,9 +37,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if tc and tc:IsRelateToEffect(e) then
 		if tc:IsType(TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ)
 			or Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))==0 then
-			Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)
+			Duel.SendtoDeck(tc,nil,SEQ_DECKTOP,REASON_EFFECT)
 		else
-			Duel.SendtoDeck(tc,nil,1,REASON_EFFECT)
+			Duel.SendtoDeck(tc,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 		end
 	end
 end

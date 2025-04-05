@@ -1,7 +1,6 @@
 --ドラゴンメイドのお見送り
 --Dragonmaid Send-Off
 --Scripted by Naim
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon 1 "Dragonmaid" monster from hand
@@ -16,14 +15,13 @@ function s.initial_effect(c)
 	e1:SetHintTiming(0,TIMING_END_PHASE)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x133}
-
+s.listed_series={SET_DRAGONMAID}
 function s.filter(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x133) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(SET_DRAGONMAID) and c:IsAbleToHand()
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp,c:GetCode())
 end
 function s.spfilter(c,e,tp,code)
-	return c:IsSetCard(0x133) and not c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(SET_DRAGONMAID) and not c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc,e,tp) end
@@ -47,15 +45,15 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,2)
+		e1:SetReset(RESETS_STANDARD_PHASE_END,2)
 		g:GetFirst():RegisterEffect(e1)
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e2:SetValue(1)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,2)
+		e2:SetReset(RESETS_STANDARD_PHASE_END,2)
 		g:GetFirst():RegisterEffect(e2)
-		g:GetFirst():RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,EFFECT_FLAG_CLIENT_HINT,2,0,aux.Stringid(id,0))
+		g:GetFirst():RegisterFlagEffect(0,RESETS_STANDARD_PHASE_END,EFFECT_FLAG_CLIENT_HINT,2,0,aux.Stringid(id,0))
 	end
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		Duel.SendtoHand(tc,tp,REASON_EFFECT)

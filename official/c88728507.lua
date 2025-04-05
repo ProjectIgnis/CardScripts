@@ -18,16 +18,16 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetOperation(s.sumop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x8e}
+s.listed_series={SET_VAMPIRE}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and e:GetHandler():IsPreviousControler(tp)
 end
 function s.filter(c)
-	return c:IsSetCard(0x8e) and (c:IsSpellTrap() or c:IsAttribute(ATTRIBUTE_DARK)) and c:IsAbleToHand()
+	return c:IsSetCard(SET_VAMPIRE) and (c:IsSpellTrap() or c:IsAttribute(ATTRIBUTE_DARK)) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
@@ -51,9 +51,9 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCountLimit(1)
 		e1:SetCondition(s.ntcon)
 		e1:SetTarget(aux.FieldSummonProcTg(s.nttg))
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e1,tp)
-		Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 	end
 end
 function s.ntcon(e,c,minc)
@@ -61,5 +61,5 @@ function s.ntcon(e,c,minc)
 	return minc==0 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
 function s.nttg(e,c)
-	return c:IsLevelAbove(5) and c:IsSetCard(0x8e) and c:IsAttribute(ATTRIBUTE_DARK)
+	return c:IsLevelAbove(5) and c:IsSetCard(SET_VAMPIRE) and c:IsAttribute(ATTRIBUTE_DARK)
 end

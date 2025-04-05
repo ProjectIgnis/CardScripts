@@ -66,5 +66,5 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.immfilter(e,te)
 	local c=te:GetOwner()
-	return c:GetType()==TYPE_TRAP and (c:IsSetCard(SET_HOLE) or c:IsSetCard(SET_TRAP_HOLE))
+	return c:IsNormalTrap() and (c:IsSetCard(SET_HOLE) or c:IsSetCard(SET_TRAP_HOLE))
 end

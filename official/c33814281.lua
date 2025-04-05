@@ -43,13 +43,13 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x10af,0xaf}
+s.listed_series={SET_DDD,SET_DD}
 function s.damcfilter(c,tp)
 	local ty=c:GetType() & (TYPE_FUSION|TYPE_SYNCHRO|TYPE_XYZ|TYPE_LINK)
 	return c:IsSummonPlayer(1-tp) and ty~=0 and Duel.IsExistingMatchingCard(s.damcfilter2,tp,LOCATION_MZONE,0,1,nil,ty)
 end
 function s.damcfilter2(c,ty)
-	return c:IsFaceup() and c:IsSetCard(0x10af) and c:IsType(ty)
+	return c:IsFaceup() and c:IsSetCard(SET_DDD) and c:IsType(ty)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=eg:Filter(s.damcfilter,nil,tp)
@@ -93,7 +93,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(0,1)
 	e1:SetTarget(s.sumlimit)
 	e1:SetLabel(ty)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	c:RegisterEffect(e1)
 end
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp)
@@ -105,15 +105,15 @@ function s.sumlimit(e,c,sump,sumtype,sumpos,targetp)
 	end
 end
 function s.thfilter(c)
-	return c:IsMonster() and c:IsSetCard(0xaf) and (c:IsFaceup() or not c:IsLocation(LOCATION_EXTRA)) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(SET_DD) and (c:IsFaceup() or not c:IsLocation(LOCATION_EXTRA)) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_EXTRA+LOCATION_GRAVE,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_EXTRA+LOCATION_GRAVE)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_EXTRA|LOCATION_GRAVE,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_EXTRA|LOCATION_GRAVE)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_EXTRA+LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_EXTRA|LOCATION_GRAVE,0,1,1,nil)
 	if #g>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)

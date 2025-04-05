@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x8),2,2)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_HERO),2,2)
 	--set
 	local e1=Effect.CreateEffect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -31,16 +31,16 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x8,0x46,0xa5}
+s.listed_series={SET_HERO,SET_FUSION,SET_CHANGE}
 function s.setcfilter(c,tp,lg)
-	return c:IsFaceup() and c:IsControler(tp) and c:IsSetCard(0x8) and lg:IsContains(c)
+	return c:IsFaceup() and c:IsControler(tp) and c:IsSetCard(SET_HERO) and lg:IsContains(c)
 end
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	local lg=e:GetHandler():GetLinkedGroup()
 	return eg:IsExists(s.setcfilter,1,nil,tp,lg)
 end
 function s.setfilter(c)
-	return ((c:IsSpell() and c:IsSetCard(0x46)) or (c:IsType(TYPE_QUICKPLAY) and c:IsSetCard(0xa5))) and c:IsSSetable()
+	return ((c:IsSpell() and c:IsSetCard(SET_FUSION)) or (c:IsType(TYPE_QUICKPLAY) and c:IsSetCard(SET_CHANGE))) and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.setfilter(chkc) end
@@ -61,7 +61,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 		or (rp==1-tp and c:IsReason(REASON_DESTROY) and c:IsPreviousControler(tp))
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x8) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_HERO) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -76,4 +76,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-

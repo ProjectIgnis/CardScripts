@@ -1,4 +1,5 @@
 --魔聖騎士ランスロット
+--Ignoble Knight of Black Laundsallyn
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,0,id)
@@ -7,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetRange(LOCATION_HAND+LOCATION_GRAVE)
+	e1:SetRange(LOCATION_HAND|LOCATION_GRAVE)
 	e1:SetCost(s.spcost)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
@@ -24,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x207a}
+s.listed_series={SET_NOBLE_ARMS}
 function s.spfilter(c,ft)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsType(TYPE_NORMAL) and c:IsAbleToGraveAsCost()
 		and (ft>0 or c:GetSequence()<5)
@@ -46,11 +47,11 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x207a) and c:IsAbleToHand()
+	return c:IsSetCard(SET_NOBLE_ARMS) and c:IsAbleToHand()
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,nil,0x107a) end
-	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,nil,nil,0x107a)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,nil,SET_NOBLE_KNIGHT) end
+	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,nil,nil,SET_NOBLE_KNIGHT)
 	Duel.Release(g,REASON_COST)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

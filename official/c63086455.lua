@@ -1,9 +1,9 @@
--- 現世離レ
--- Sundered from Overroot
--- Scripted by Hatter
+--現世離レ
+--Terrors of the Overroot
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Send 1 card to the GY and Set 1 card from the GY
+	--Send 1 card to the GY and Set 1 card from the GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOGRAVE+CATEGORY_LEAVE_GRAVE)
@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
-	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E+TIMING_MAIN_END)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E|TIMING_MAIN_END)
 	e1:SetTarget(s.tgtg)
 	e1:SetOperation(s.tgop)
 	c:RegisterEffect(e1)
@@ -60,7 +60,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 		if sc:IsMonster() and Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0
 			and Duel.SpecialSummon(sc,0,tp,1-tp,false,false,POS_FACEDOWN_DEFENSE)>0 then
 			Duel.ConfirmCards(1-tp,sc)
-		elseif sc:IsType(TYPE_SPELL+TYPE_TRAP) and sc:IsSSetable() then
+		elseif sc:IsSpellTrap() and sc:IsSSetable() then
 			Duel.SSet(tp,sc,1-tp)
 		end
 	end

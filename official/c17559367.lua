@@ -1,4 +1,5 @@
 --ディープ・ダイバー
+--Deep Diver
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -16,10 +17,10 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetDescription(aux.Stringid(id,0))
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 		e1:SetRange(LOCATION_GRAVE)
-		e1:SetCode(EVENT_PHASE+PHASE_BATTLE)
+		e1:SetCode(EVENT_PHASE|PHASE_BATTLE)
 		e1:SetCountLimit(1)
 		e1:SetOperation(s.operation)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE)
 		c:RegisterEffect(e1)
 	end
 end

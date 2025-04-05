@@ -1,4 +1,5 @@
 --共振虫
+--Resonance Insect
 local s,id=GetID()
 function s.initial_effect(c)
 	--tohand

@@ -1,4 +1,5 @@
 --恵みの雨
+--Rain of Mercy
 local s,id=GetID()
 function s.initial_effect(c)
 	--recover

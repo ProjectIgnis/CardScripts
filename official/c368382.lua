@@ -22,10 +22,10 @@ function s.initial_effect(c)
 	e2:SetCondition(s.spcon)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xd8}
+s.listed_series={SET_DINOMIST}
 s.listed_names={id}
 function s.tfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0xd8) and c:IsControler(tp) and c:IsLocation(LOCATION_ONFIELD)
+	return c:IsFaceup() and c:IsSetCard(SET_DINOMIST) and c:IsControler(tp) and c:IsLocation(LOCATION_ONFIELD)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
@@ -35,7 +35,7 @@ end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.SelectEffectYesNo(tp,c) then
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 		if Duel.NegateEffect(ev) then
 			Duel.BreakEffect()
 			Duel.Destroy(c,REASON_EFFECT)

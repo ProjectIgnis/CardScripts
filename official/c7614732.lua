@@ -13,7 +13,7 @@ function s.stage2(e,tc,tp,sg,chk)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_PIERCE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1,true)
 		--Cannot be destroyed by card effects
 		local e2=e1:Clone()
@@ -27,7 +27,7 @@ function s.stage2(e,tc,tp,sg,chk)
 			e3:SetType(EFFECT_TYPE_SINGLE)
 			e3:SetCode(EFFECT_ADD_TYPE)
 			e3:SetValue(TYPE_EFFECT)
-			e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e3,true)
 		end
 	end

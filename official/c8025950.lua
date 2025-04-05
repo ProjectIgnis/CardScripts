@@ -32,7 +32,7 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsCanRemoveCounter(tp,1,0,0x8,1,REASON_EFFECT)
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x51,TYPES_TOKEN,0,0,1,RACE_MACHINE,ATTRIBUTE_EARTH,POS_FACEUP) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,SET_GADGET,TYPES_TOKEN,0,0,1,RACE_MACHINE,ATTRIBUTE_EARTH,POS_FACEUP) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 end
@@ -50,7 +50,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetRange(LOCATION_MZONE)
 			e1:SetAbsoluteRange(tp,1,0)
 			e1:SetTarget(function(_,c) return c:IsLocation(LOCATION_EXTRA) and not c:IsType(TYPE_SYNCHRO) end)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			token:RegisterEffect(e1,true)
 		end
 		Duel.SpecialSummonComplete()

@@ -46,9 +46,9 @@ function s.initial_effect(c)
 	e5:SetOperation(s.spop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0xc4}
+s.listed_series={SET_ZEFRA}
 function s.scfilter(c,pc)
-	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(0xc4) and not c:IsForbidden()
+	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(SET_ZEFRA) and not c:IsForbidden()
 		and c:GetLeftScale()~=pc:GetLeftScale()
 end
 function s.sctg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -65,7 +65,7 @@ function s.scop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LSCALE)
 		e1:SetValue(tc:GetLeftScale())
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_CHANGE_RSCALE)
@@ -79,7 +79,7 @@ function s.hspcon(e,c)
 	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
 	local rg=Duel.GetReleaseGroup(tp)
 	return (#g>0 or #rg>0) and g:FilterCount(Card.IsReleasable,nil)==#g
-		and g:FilterCount(Card.IsSetCard,nil,0xc4)>=3
+		and g:FilterCount(Card.IsSetCard,nil,SET_ZEFRA)>=3
 end
 function s.hspop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=Duel.GetReleaseGroup(tp)
@@ -91,7 +91,7 @@ function s.penop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e1:SetCode(EVENT_ADJUST)
 	e1:SetOperation(s.checkop)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	s.checkop(e,tp)
 end
@@ -107,9 +107,9 @@ function s.checkop(e,tp)
 		e1:SetCondition(s.pencon1)
 		e1:SetOperation(s.penop1)
 		e1:SetValue(SUMMON_TYPE_PENDULUM)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		lpz:RegisterEffect(e1)
-		lpz:RegisterFlagEffect(id,RESET_PHASE+PHASE_END,0,1)
+		lpz:RegisterFlagEffect(id,RESET_PHASE|PHASE_END,0,1)
 	end
 	local olpz=Duel.GetFieldCard(1-tp,LOCATION_PZONE,0)
 	local orpz=Duel.GetFieldCard(1-tp,LOCATION_PZONE,1)
@@ -125,13 +125,13 @@ function s.checkop(e,tp)
 		e2:SetCondition(s.pencon2)
 		e2:SetOperation(s.penop2)
 		e2:SetValue(SUMMON_TYPE_PENDULUM)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		olpz:RegisterEffect(e2)
-		olpz:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		olpz:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 	end
 end
 function s.penfilter(c,e,tp,lscale,rscale)
-	return c:IsSetCard(0xc4) and Pendulum.Filter(c,e,tp,lscale,rscale)
+	return c:IsSetCard(SET_ZEFRA) and Pendulum.Filter(c,e,tp,lscale,rscale)
 end
 function s.pencon1(e,c,og)
 	if c==nil then return true end
@@ -142,8 +142,8 @@ function s.pencon1(e,c,og)
 	local rscale=rpz:GetRightScale()
 	if lscale>rscale then lscale,rscale=rscale,lscale end
 	local loc=0
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then loc=loc+LOCATION_HAND end
-	if Duel.GetLocationCountFromEx(tp)>0 then loc=loc+LOCATION_EXTRA end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then loc=loc|LOCATION_HAND end
+	if Duel.GetLocationCountFromEx(tp)>0 then loc=loc|LOCATION_EXTRA end
 	if loc==0 then return false end
 	local g=nil
 	if og then
@@ -167,8 +167,8 @@ function s.penop1(e,tp,eg,ep,ev,re,r,rp,c,sg,inchain)
 		ft=1
 	end
 	local loc=0
-	if ft1>0 then loc=loc+LOCATION_HAND end
-	if ft2>0 then loc=loc+LOCATION_EXTRA end
+	if ft1>0 then loc=loc|LOCATION_HAND end
+	if ft2>0 then loc=loc|LOCATION_EXTRA end
 	local tg=nil
 	if og then
 		tg=og:Filter(Card.IsLocation,nil,loc):Filter(s.penfilter,nil,e,tp,lscale,rscale)
@@ -185,8 +185,8 @@ function s.penop1(e,tp,eg,ep,ev,re,r,rp,c,sg,inchain)
 		if ct1>ft1 then ct=math.min(ct,ft1) end
 		if ct2>ft2 then ct=math.min(ct,ft2) end
 		local loc=0
-		if ft1>0 then loc=loc+LOCATION_HAND end
-		if ft2>0 then loc=loc+LOCATION_EXTRA end
+		if ft1>0 then loc=loc|LOCATION_HAND end
+		if ft2>0 then loc=loc|LOCATION_EXTRA end
 		local g=tg:Filter(Card.IsLocation,sg,loc)
 		if #g==0 or ft==0 then break end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -212,7 +212,7 @@ function s.penop1(e,tp,eg,ep,ev,re,r,rp,c,sg,inchain)
 	end
 	if #sg>0 then
 	Duel.Hint(HINT_CARD,0,id)
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END+RESET_SELF_TURN,0,1)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END|RESET_SELF_TURN,0,1)
 	Duel.HintSelection(Group.FromCards(c))
 	Duel.HintSelection(Group.FromCards(rpz))
 	end
@@ -251,7 +251,7 @@ function s.penop2(e,tp,eg,ep,ev,re,r,rp,c,sg,inchain)
 	if #sg>0 then
 		Duel.Hint(HINT_CARD,0,31531170)
 		Duel.Hint(HINT_CARD,0,id)
-		Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END+RESET_SELF_TURN,0,1)
+		Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END|RESET_SELF_TURN,0,1)
 		Duel.HintSelection(Group.FromCards(c))
 		Duel.HintSelection(Group.FromCards(rpz))
 	end
@@ -266,7 +266,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(sg,REASON_COST)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xc4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_ZEFRA) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end

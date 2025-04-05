@@ -1,5 +1,5 @@
 --無千ジャミング
---Unlimited Free Radio Jamming
+--Digit Jamming
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -38,9 +38,9 @@ function s.operation(check)
 				local reset=0
 				if check then
 					if not c:IsRelateToEffect(e) then return end
-					reset=RESET_EVENT+RESETS_STANDARD 
+					reset=RESET_EVENT|RESETS_STANDARD 
 				else
-					reset=RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END 
+					reset=RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END 
 				end
 				local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 				for tc in g:Iter() do

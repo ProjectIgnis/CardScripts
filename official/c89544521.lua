@@ -1,4 +1,5 @@
 --ブンボーグ・ジェット
+--Deskbot Jet
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -38,15 +39,15 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xab}
+s.listed_series={SET_DESKBOT}
 function s.val(e,c)
-	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0xab),c:GetControler(),LOCATION_ONFIELD,LOCATION_ONFIELD,nil)*500
+	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,SET_DESKBOT),c:GetControler(),LOCATION_ONFIELD,LOCATION_ONFIELD,nil)*500
 end
 function s.desfilter1(c)
-	return c:IsFaceup() and c:IsSetCard(0xab)
+	return c:IsFaceup() and c:IsSetCard(SET_DESKBOT)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xab) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_DESKBOT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(e:GetLabel()) and chkc:IsControler(tp) and s.desfilter1(chkc) end
@@ -76,7 +77,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.desfilter2(c)
-	return c:IsFaceup() and c:IsSetCard(0xab)
+	return c:IsFaceup() and c:IsSetCard(SET_DESKBOT)
 		and Duel.IsExistingTarget(Card.IsFaceup,0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

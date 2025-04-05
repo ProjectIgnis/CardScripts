@@ -21,7 +21,7 @@ function s.sumop(g,e,tp,eg,ep,ev,re,r,rp,c,minc,zone,relzone,exeff)
 	e1:SetCountLimit(1)
 	e1:SetTarget(s.tgtg)
 	e1:SetOperation(s.tgop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD)
 	c:RegisterEffect(e1)
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)

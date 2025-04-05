@@ -1,4 +1,5 @@
 --四次元の墓
+--The Graveyard in the Fourth Dimension
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,9 +12,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x41}
+s.listed_series={SET_LV}
 function s.filter(c)
-	return c:IsSetCard(0x41) and c:IsAbleToDeck()
+	return c:IsSetCard(SET_LV) and c:IsAbleToDeck()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc) end
@@ -26,7 +27,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
 	if #sg>0 then
-		Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(sg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,sg)
 	end
 end

@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 s.listed_names={69550260}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer() and Duel.GetAttackTarget()==nil
+	return Duel.IsTurnPlayer(1-tp) and Duel.GetAttackTarget()==nil
 		and Duel.IsExistingMatchingCard(Card.IsRace,tp,LOCATION_GRAVE,0,3,nil,RACE_INSECT)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

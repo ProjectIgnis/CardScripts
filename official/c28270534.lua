@@ -30,9 +30,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.bpop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x135}
+s.listed_series={SET_IGNISTER}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x135) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_IGNISTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end
@@ -49,7 +49,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.repfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x135) and c:IsAttackAbove(2300) and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) 
+	return c:IsFaceup() and c:IsSetCard(SET_IGNISTER) and c:IsAttackAbove(2300) and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) 
 		and not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_EFFECT)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -68,10 +68,10 @@ function s.bpop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetTarget(s.indtg)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetValue(1)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.indtg(e,c)
-	return c:IsSetCard(0x135) and c:IsAttackAbove(2300)
+	return c:IsSetCard(SET_IGNISTER) and c:IsAttackAbove(2300)
 end

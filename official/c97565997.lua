@@ -1,5 +1,5 @@
 --溟界神－オグドアビス
---Ogdoabyss, Deity of the Abhyss
+--Ogdoabyss, the Ogdoadic Overlord
 --scripted by Xylen5967
 local s,id=GetID()
 function s.initial_effect(c)
@@ -44,7 +44,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tgfilter(c)
-	return not (c:IsFaceup() and c:IsSummonLocation(LOCATION_GRAVE) and c:IsSummonType(SUMMON_TYPE_SPECIAL)) and c:IsAbleToGrave()
+	return not (c:IsFaceup() and c:IsSummonLocation(LOCATION_GRAVE) and c:IsSpecialSummoned()) and c:IsAbleToGrave()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end

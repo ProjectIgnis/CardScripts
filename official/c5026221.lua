@@ -20,17 +20,17 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x9c}
+s.listed_series={SET_TELLARKNIGHT}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
-	if Duel.GetTurnPlayer()==tp then
-		return ph==PHASE_MAIN1 or ph==PHASE_MAIN2
+	if Duel.IsTurnPlayer(tp) then
+		return Duel.IsMainPhase()
 	else
-		return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
+		return Duel.IsBattlePhase()
 	end
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x9c) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_TELLARKNIGHT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

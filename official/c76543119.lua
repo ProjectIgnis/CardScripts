@@ -1,4 +1,5 @@
 --ギミック・パペット－死の木馬
+--Gimmick Puppet Des Troy
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
@@ -24,9 +25,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x1083}
+s.listed_series={SET_GIMMICK_PUPPET}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1083)
+	return c:IsFaceup() and c:IsSetCard(SET_GIMMICK_PUPPET)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end
@@ -45,7 +46,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x1083) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_GIMMICK_PUPPET) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

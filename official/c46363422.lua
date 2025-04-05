@@ -30,9 +30,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.counter_place_list={COUNTER_SPELL}
-s.listed_names={78193831}
+s.listed_names={CARD_BUSTER_BLADER}
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
-	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and e:GetHandler():GetFlagEffect(1)>0 then
+	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsSpellEffect() and e:GetHandler():GetFlagEffect(1)>0 then
 		e:GetHandler():AddCounter(COUNTER_SPELL,1)
 	end
 end
@@ -41,7 +41,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.filter(c,e,tp)
-	return c:IsCode(78193831) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsCode(CARD_BUSTER_BLADER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)

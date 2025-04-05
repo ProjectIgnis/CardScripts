@@ -1,4 +1,5 @@
 --スケイルモース
+--Scary Moth
 local s,id=GetID()
 function s.initial_effect(c)
 	Duel.EnableGlobalFlag(GLOBALFLAG_SPSUMMON_COUNT)

@@ -1,4 +1,5 @@
 --リーフ・フェアリー
+--Woodland Sprite
 local s,id=GetID()
 function s.initial_effect(c)
 	--damage

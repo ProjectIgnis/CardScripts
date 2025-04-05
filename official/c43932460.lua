@@ -1,4 +1,5 @@
 --ナチュル・ランドオルス
+--Naturia Landoise
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -20,7 +21,7 @@ function s.initial_effect(c)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return e~=re and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
-		and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
+		and re:IsMonsterEffect() and Duel.IsChainNegatable(ev)
 end
 function s.cfilter(c)
 	return c:IsSpell() and c:IsAbleToGraveAsCost()

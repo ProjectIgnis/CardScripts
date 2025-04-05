@@ -1,7 +1,6 @@
---JP name
+--ミュートリアル・ミスト
 --Myutant Mist
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -47,26 +46,24 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-	--Lists "Myutant" archetype
-s.listed_series={0x159}
-
+s.listed_series={SET_MYUTANT}
 	--Must special summoned by a "Myutant" effect
 function s.splimit(e,se,sp,st)
-	return se:GetHandler():IsSetCard(0x159)
+	return se:GetHandler():IsSetCard(SET_MYUTANT)
 end
 	--Cannot be targeted by opponent's trap effects
 function s.tgval(e,re,rp)
-	return aux.tgoval(e,re,rp) and re:IsActiveType(TYPE_SPELL)
+	return aux.tgoval(e,re,rp) and re:IsSpellEffect()
 end
 	--Opponent activates a trap effect
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==1-tp and re:IsActiveType(TYPE_TRAP)
+	return ep==1-tp and re:IsTrapEffect()
 end
 	--Banish 1 card from your hand or field as cost
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND|LOCATION_ONFIELD,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND|LOCATION_ONFIELD,0,1,1,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 	--Activation legality
@@ -89,7 +86,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for 1 of your face-up banished "Myutant" monsters
 function s.thfilter(c)
-	return c:IsSetCard(0x159) and c:IsMonster() and c:IsFaceup() and c:IsAbleToHand()
+	return c:IsSetCard(SET_MYUTANT) and c:IsMonster() and c:IsFaceup() and c:IsAbleToHand()
 end
 	--Activation legality
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

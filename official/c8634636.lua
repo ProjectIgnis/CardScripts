@@ -1,4 +1,5 @@
 --尾も白い黒猫
+--Dark Cat with White Tail
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip

@@ -1,7 +1,6 @@
 --烙印追放
 --Branded Banishment
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -21,7 +20,6 @@ function s.initial_effect(c)
 end
 	--Lists "Despia" archetype
 s.listed_series={SET_DESPIA}
-
 	--Check for "Despia" or level 8+ monster
 function s.spfilter(c,e,tp)
 	return (c:IsSetCard(SET_DESPIA) or (c:IsLevelAbove(8) and c:IsType(TYPE_FUSION))) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

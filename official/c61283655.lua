@@ -1,4 +1,5 @@
 --トリックスター・キャンディナ
+--Trickstar Candina
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -26,9 +27,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.damop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xfb}
+s.listed_series={SET_TRICKSTAR}
 function s.filter(c)
-	return c:IsSetCard(0xfb) and c:IsAbleToHand()
+	return c:IsSetCard(SET_TRICKSTAR) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
@@ -44,7 +45,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	if rp==tp or not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_CHAIN,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET|RESET_CHAIN,0,1)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

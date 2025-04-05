@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE|LOCATION_HAND)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(s.tgcond)
-	e2:SetCost(s.tgcost)
+	e2:SetCost(Cost.SelfToGrave)
 	e2:SetTarget(s.tgtg)
 	e2:SetOperation(s.tgop)
 	c:RegisterEffect(e2)
@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCountLimit(1,{id,1})
-	e3:SetCost(aux.SelfBanishCost)
+	e3:SetCost(Cost.SelfBanish)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
@@ -39,11 +39,6 @@ end
 s.listed_names={CARD_SKULL_SERVANT,36021814} --King of the Skull Servants
 function s.tgcond(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,CARD_SKULL_SERVANT,36021814)
-end
-function s.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(c,REASON_COST)
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,1) end

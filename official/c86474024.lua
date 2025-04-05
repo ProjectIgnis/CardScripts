@@ -1,4 +1,5 @@
 --共同戦線
+--United Front
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -19,7 +20,7 @@ function s.filter2(c,lv1)
 	return c:IsFaceup() and c:GetLevel()==lv1
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
+	return re:IsTrapEffect() and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
 		and Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_MZONE,0,1,nil,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -1,9 +1,9 @@
--- パペット・ルーク
--- Puppet Rook
--- Scripted by Nellag
+--パペット・ルーク
+--Puppet Rook
+--Scripted by Nellag
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Send 1 EARTH Warrior from your Deck to the GY
+	--Send 1 EARTH Warrior from your Deck to the GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_POSITION+CATEGORY_TOGRAVE)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.tgtg)
 	e1:SetOperation(s.tgop)
 	c:RegisterEffect(e1)
-	-- Must attack this card, if able
+	--Must attack this card, if able
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_MUST_ATTACK)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_MUST_ATTACK_MONSTER)
 	e3:SetValue(s.atkval)
 	c:RegisterEffect(e3)
-	-- Special Summon and change attack target
+	--Special Summon and change attack target
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_TOGRAVE+CATEGORY_SPECIAL_SUMMON)

@@ -1,4 +1,5 @@
 --紅蓮の指名者
+--Appointer of the Red Lotus
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -34,17 +35,17 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local sg=g:Select(tp,1,1,nil)
 		local tc=sg:GetFirst()
 		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
 		e1:SetCountLimit(1)
-		if Duel.GetTurnPlayer()==1-tp and Duel.GetCurrentPhase()==PHASE_END then
+		if Duel.IsTurnPlayer(1-tp) and Duel.IsPhase(PHASE_END) then
 			e1:SetLabel(Duel.GetTurnCount())
-			e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,2)
+			e1:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN,2)
 		else
 			e1:SetLabel(0)
-			e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+			e1:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN)
 		end
 		e1:SetLabelObject(tc)
 		e1:SetCondition(s.retcon)
@@ -59,7 +60,7 @@ function s.retcon(e,tp,eg,ep,ev,re,r,rp)
 		e:Reset()
 		return false
 	else
-		return Duel.GetTurnPlayer()==1-tp and Duel.GetTurnCount()~=e:GetLabel()
+		return Duel.IsTurnPlayer(1-tp) and Duel.GetTurnCount()~=e:GetLabel()
 	end
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)

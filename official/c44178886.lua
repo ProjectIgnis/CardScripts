@@ -1,4 +1,5 @@
 --ライトロード・モンク エイリン
+--Ehren, Lightsworn Monk
 local s,id=GetID()
 function s.initial_effect(c)
 	--to deck
@@ -31,7 +32,7 @@ end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local t=Duel.GetAttackTarget()
 	if t~=nil and t:IsRelateToBattle() and not t:IsAttackPos() then
-		Duel.SendtoDeck(t,nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(t,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)

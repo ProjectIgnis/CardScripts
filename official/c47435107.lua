@@ -1,4 +1,5 @@
 --原初の叫喚
+--Primal Cry
 local s,id=GetID()
 function s.initial_effect(c)
 	Ritual.AddProcGreaterCode(c,8,nil,10441498)
@@ -12,13 +13,13 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_GRAVE)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.spcon)
-	e1:SetCost(aux.bfgcost)
+	e1:SetCost(Cost.SelfBanish)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.spfilter(c,e,tp,turn)
 	return c:IsType(TYPE_RITUAL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:GetTurnID()==turn

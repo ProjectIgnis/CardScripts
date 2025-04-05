@@ -1,4 +1,5 @@
 --伝説の黒帯
+--Legendary Black Belt
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsCode,8508055,3810071,49814180))

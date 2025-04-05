@@ -1,4 +1,4 @@
---Japanese name
+--断影烈破
 --Shadow Severing Strike
 --scripted by Naim
 local s,id=GetID()

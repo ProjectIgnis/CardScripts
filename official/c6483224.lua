@@ -1,4 +1,5 @@
 --半月竜ラディウス
+--Radius, the Half-Moon Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -27,6 +28,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EFFECT_CHANGE_LEVEL)
 	e1:SetValue(8)
-	e1:SetReset(RESET_EVENT+0xff0000)
+	e1:SetReset(RESET_EVENT|RESET_DISABLE|RESET_TURN_SET|RESET_TOGRAVE|RESET_REMOVE|RESET_TEMP_REMOVE|RESET_TOHAND|RESET_TODECK|RESET_LEAVE)
 	c:RegisterEffect(e1)
 end

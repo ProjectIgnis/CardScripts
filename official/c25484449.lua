@@ -1,4 +1,5 @@
 --ゼンマイシャーク
+--Wind-Up Shark
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -25,9 +26,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.lvop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x58}
+s.listed_series={SET_WIND_UP}
 function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsControler(tp) and c:IsSetCard(0x58)
+	return c:IsFaceup() and c:IsControler(tp) and c:IsSetCard(SET_WIND_UP)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
@@ -59,7 +60,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 		else
 			e1:SetValue(-1)
 		end
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end

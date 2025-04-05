@@ -52,7 +52,7 @@ end
 	--Check for your monster in EMZ
 function s.repfilter(c,tp)
 	return c:IsLocation(LOCATION_MZONE) and c:IsInExtraMZone(tp)
-		and c:IsReason(REASON_EFFECT+REASON_BATTLE) and not c:IsReason(REASON_REPLACE)
+		and c:IsReason(REASON_EFFECT|REASON_BATTLE) and not c:IsReason(REASON_REPLACE)
 end
 	--Activation legality
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -65,5 +65,5 @@ function s.repval(e,c)
 end
 	--Substutite destruction
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT+REASON_REPLACE)
+	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT|REASON_REPLACE)
 end

@@ -1,4 +1,5 @@
 --ライトロード・ハンター ライコウ
+--Ryko, Lightsworn Hunter
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip

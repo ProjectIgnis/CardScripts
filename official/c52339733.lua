@@ -1,4 +1,5 @@
 --竜胆ブルーム
+--Lindbloom
 local s,id=GetID()
 function s.initial_effect(c)
 	--atk
@@ -24,7 +25,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 			e1:SetValue(a:GetDefense())
-			e1:SetReset(RESET_PHASE+PHASE_DAMAGE_CAL)
+			e1:SetReset(RESET_PHASE|PHASE_DAMAGE_CAL)
 			a:RegisterEffect(e1)
 		end
 		if not d:IsLinkMonster() then
@@ -32,7 +33,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 			e1:SetValue(d:GetDefense())
-			e1:SetReset(RESET_PHASE+PHASE_DAMAGE_CAL)
+			e1:SetReset(RESET_PHASE|PHASE_DAMAGE_CAL)
 			d:RegisterEffect(e1)
 		end
 	end

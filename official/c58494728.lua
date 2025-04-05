@@ -23,20 +23,20 @@ function s.initial_effect(c)
 	e3:SetLabelObject(e2)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x100a}
+s.listed_series={SET_STEELSWARM}
 function s.otfilter(c,tp)
-	return c:IsSetCard(0x100a) and (c:IsControler(tp) or c:IsFaceup())
+	return c:IsSetCard(SET_STEELSWARM) and (c:IsControler(tp) or c:IsFaceup())
 end
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
-	if g:IsExists(Card.IsSetCard,1,nil,0x100a) then
+	if g:IsExists(Card.IsSetCard,1,nil,SET_STEELSWARM) then
 		e:GetLabelObject():SetLabel(1)
 	else
 		e:GetLabelObject():SetLabel(0)
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE) and e:GetLabel()==1
+	return e:GetHandler():IsTributeSummoned() and e:GetLabel()==1
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) end

@@ -1,4 +1,5 @@
 --剣闘獣オクタビウス
+--Gladiator Beast Octavius
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
@@ -17,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_HANDES+CATEGORY_TODECK)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e2:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e2:SetCode(EVENT_PHASE|PHASE_BATTLE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(s.dcon)
 	e2:SetTarget(s.dtg)
@@ -41,19 +42,19 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.dcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetBattledGroupCount()>0 and Duel.GetTurnPlayer()==tp
+	return e:GetHandler():GetBattledGroupCount()>0 and Duel.IsTurnPlayer(tp)
 end
 function s.dtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetFlagEffect(id+1)==0 end
-	e:GetHandler():RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE,EFFECT_FLAG_OATH,1)
+	e:GetHandler():RegisterFlagEffect(id+1,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE,EFFECT_FLAG_OATH,1)
 	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,1,tp,0)
 end
 function s.dop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsFaceup() or not c:IsRelateToEffect(e) then return end
 	if Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
-		Duel.DiscardHand(tp,aux.TRUE,1,1,REASON_EFFECT+REASON_DISCARD)
+		Duel.DiscardHand(tp,aux.TRUE,1,1,REASON_EFFECT|REASON_DISCARD)
 	else
-		Duel.SendtoDeck(c,nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(c,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 end

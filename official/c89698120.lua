@@ -1,4 +1,5 @@
 --華麗なる潜入工作員
+--Tactical Espionage Expert
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon success

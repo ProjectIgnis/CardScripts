@@ -1,7 +1,6 @@
 --アルカナリーディング
 --Arcana Reading
 --Scripted by AlphaKretin
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Flip a coin, apply appropriate effect base on result
@@ -21,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.nstg)
 	e2:SetOperation(s.nsop)
 	c:RegisterEffect(e2)

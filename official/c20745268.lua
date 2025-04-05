@@ -1,5 +1,5 @@
 --魔弾－デスペラード
---Magibullet - Death-perado
+--Magical Musket - Desperado
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -15,9 +15,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x108}
+s.listed_series={SET_MAGICAL_MUSKET}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x108),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_MAGICAL_MUSKET),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()

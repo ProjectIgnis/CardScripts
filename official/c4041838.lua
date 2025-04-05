@@ -1,4 +1,5 @@
 --忍者マスター SASUKE
+--Ninja Grandmaster Sasuke
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy

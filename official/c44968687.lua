@@ -1,6 +1,5 @@
 --伝説のフィッシャーマン三世
 --The Legendary Fisherman III
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -58,7 +57,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e7)
 end
 s.listed_names={3643300}
-
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.CheckReleaseGroup(c:GetControler(),Card.IsCode,1,false,1,true,c,c:GetControler(),nil,false,nil,3643300)
@@ -93,12 +91,12 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_ATTACK)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e:GetHandler():RegisterEffect(e1)
 	end
 end
 function s.efilter(e,te)
-	return te:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+	return te:IsSpellTrapEffect()
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_REMOVED)>0 end
@@ -107,23 +105,23 @@ function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_REMOVED)
-	if Duel.SendtoGrave(g,REASON_EFFECT+REASON_RETURN)~=0 then
+	if Duel.SendtoGrave(g,REASON_EFFECT|REASON_RETURN)~=0 then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetCode(EFFECT_CHANGE_DAMAGE)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e1:SetTargetRange(0,1)
 		e1:SetValue(s.damval)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e1,tp)
-		Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetType(EFFECT_TYPE_FIELD)
 		e2:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
 		e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e2:SetTargetRange(0,1)
 		e2:SetValue(DOUBLE_DAMAGE)
-		e2:SetReset(RESET_PHASE+PHASE_DAMAGE_CAL+PHASE_END)
+		e2:SetReset(RESET_PHASE|PHASE_DAMAGE_CAL|PHASE_END)
 		Duel.RegisterEffect(e2,tp)
 	end
 end

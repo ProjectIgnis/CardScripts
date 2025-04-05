@@ -1,4 +1,5 @@
 --甲虫装機の宝珠
+--Inzektor Orb
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -8,18 +9,15 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
-	e1:SetCondition(s.condition)
+	e1:SetCondition(aux.StatChangeDamageStepCondition)
 	e1:SetCost(aux.RemainFieldCost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x56}
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
+s.listed_series={SET_INZEKTOR}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x56)
+	return c:IsFaceup() and c:IsSetCard(SET_INZEKTOR)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end
@@ -32,20 +30,20 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsLocation(LOCATION_SZONE) or not c:IsRelateToEffect(e) or c:IsStatus(STATUS_LEAVE_CONFIRMED) then return end
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		Duel.Equip(tp,c,tc)
 		--Atk/def
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_EQUIP)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(500)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_EQUIP)
 		e2:SetCode(EFFECT_UPDATE_DEFENSE)
 		e2:SetValue(500)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e2)
 		--Equip limit
 		local e3=Effect.CreateEffect(c)
@@ -53,7 +51,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetCode(EFFECT_EQUIP_LIMIT)
 		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e3:SetValue(s.eqlimit)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e3)
 		--negate
 		local e4=Effect.CreateEffect(c)
@@ -63,29 +61,25 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e4:SetCode(EVENT_CHAINING)
 		e4:SetRange(LOCATION_SZONE)
 		e4:SetCondition(s.ngcon)
-		e4:SetCost(s.ngcost)
+		e4:SetCost(Cost.SelfToGrave)
 		e4:SetTarget(s.ngtg)
 		e4:SetOperation(s.ngop)
-		e4:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e4:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e4)
 	else
 		c:CancelToGrave(false)
 	end
 end
 function s.eqlimit(e,c)
-	return c:IsSetCard(0x56)
+	return c:IsSetCard(SET_INZEKTOR)
 end
 function s.ngcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return end
 	local loc,tg=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TARGET_CARDS)
 	local tc=tg:GetFirst()
-	if #tg~=1 or not tc:IsLocation(LOCATION_MZONE) or not tc:IsSetCard(0x56) then return false end
+	if #tg~=1 or not tc:IsLocation(LOCATION_MZONE) or not tc:IsSetCard(SET_INZEKTOR) then return false end
 	return Duel.IsChainDisablable(ev) and loc~=LOCATION_DECK
-end
-function s.ngcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.ngtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -1,7 +1,6 @@
 --夢魔鏡の白騎士－ルペウス
 --Morpheus, the Dream Mirror White Knight
 --Scripted by Naim
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Make itself unable to be destroyed by battle or card effects
@@ -18,22 +17,21 @@ function s.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
-	e2:SetHintTiming(0,TIMING_MAIN_END+TIMING_BATTLE_START+TIMING_BATTLE_END)
+	e2:SetHintTiming(0,TIMING_MAIN_END|TIMING_BATTLE_START|TIMING_BATTLE_END)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(s.spcon)
-	e2:SetCost(s.spcost)
+	e2:SetCost(Cost.SelfTribute)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
 s.listed_names={38267552,CARD_DREAM_MIRROR_TERROR}
-s.listed_series={0x131}
-
+s.listed_series={SET_DREAM_MIRROR}
 function s.indcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
-	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x131)
+	return re:IsMonsterEffect() and re:GetHandler():IsSetCard(SET_DREAM_MIRROR)
 end
 function s.indop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -45,7 +43,7 @@ function s.indop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
@@ -53,13 +51,8 @@ function s.indop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	local ph=Duel.GetCurrentPhase()
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_DREAM_MIRROR_TERROR),tp,LOCATION_FZONE,LOCATION_FZONE,1,nil,tp) 
-		and (ph==PHASE_MAIN1 or (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE) or ph==PHASE_MAIN2)
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
+		and (Duel.IsMainPhase() or Duel.IsBattlePhase())
 end
 function s.spfilter(c,e,tp)
 	return c:IsCode(38267552) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

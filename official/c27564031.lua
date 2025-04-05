@@ -1,4 +1,5 @@
 --Sin World
+--Malefic World
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -18,13 +19,13 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x23}
+s.listed_series={SET_MALEFIC}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer() and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0
 		and Duel.GetDrawCount(tp)>0
 end
 function s.filter(c)
-	return c:IsSetCard(0x23) and c:IsAbleToHand()
+	return c:IsSetCard(SET_MALEFIC) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,3,nil) end
@@ -37,7 +38,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e1:SetCode(EFFECT_DRAW_COUNT)
 		e1:SetTargetRange(1,0)
-		e1:SetReset(RESET_PHASE+PHASE_DRAW)
+		e1:SetReset(RESET_PHASE|PHASE_DRAW)
 		e1:SetValue(0)
 		Duel.RegisterEffect(e1,tp)
 	end

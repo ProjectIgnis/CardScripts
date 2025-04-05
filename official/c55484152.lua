@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(function(e,tp) return Duel.IsTurnPlayer(1-tp) end)
-	e2:SetCost(s.setcost)
+	e2:SetCost(Cost.PayLP(1000))
 	e2:SetTarget(s.settg)
 	e2:SetOperation(s.setop)
 	c:RegisterEffect(e2)
@@ -65,10 +65,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
-end
-function s.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,1000) end
-	Duel.PayLPCost(tp,1000)
 end
 function s.setfilter(c)
 	return c:IsSetCard(SET_SANGEN) and c:IsSpellTrap() and c:IsSSetable()

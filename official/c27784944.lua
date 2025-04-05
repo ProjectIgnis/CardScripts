@@ -39,40 +39,40 @@ function s.initial_effect(c)
 	e5:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e5:SetRange(LOCATION_REMOVED)
-	e5:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e5:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e5:SetCondition(s.spcon)
 	e5:SetTarget(s.sptg)
 	e5:SetOperation(s.spop)
 	e5:SetLabelObject(e4)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x109}
+s.listed_series={SET_THE_WEATHER}
 function s.tffilter(c,tp)
-	return c:IsSpellTrap() and c:IsSetCard(0x109) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
+	return c:IsSpellTrap() and c:IsSetCard(SET_THE_WEATHER) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
 		and not c:IsType(TYPE_FIELD)
 end
 function s.tftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingMatchingCard(s.tffilter,tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_DECK,0,1,nil,tp) end
+		and Duel.IsExistingMatchingCard(s.tffilter,tp,LOCATION_HAND|LOCATION_GRAVE|LOCATION_DECK,0,1,nil,tp) end
 end
 function s.tfop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
-	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.tffilter),tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_DECK,0,1,1,nil,tp):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.tffilter),tp,LOCATION_HAND|LOCATION_GRAVE|LOCATION_DECK,0,1,1,nil,tp):GetFirst()
 	if tc then
 		Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 	end
 end
 function s.immtg(e,c)
-	return c:IsSetCard(0x109) and c:IsSpellTrap()
+	return c:IsSetCard(SET_THE_WEATHER) and c:IsSpellTrap()
 end
 function s.spreg(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return end
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
-	if c:IsReason(REASON_COST) and rc:IsSetCard(0x109) then
+	if c:IsReason(REASON_COST) and rc:IsSetCard(SET_THE_WEATHER) then
 		e:SetLabel(Duel.GetTurnCount()+1)
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,2)
+		c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,2)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

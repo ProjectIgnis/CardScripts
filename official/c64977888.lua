@@ -1,4 +1,5 @@
 --見習い魔笛使い
+--Apprentice Piper
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip
@@ -40,5 +41,5 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
+	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE|REASON_EFFECT)
 end

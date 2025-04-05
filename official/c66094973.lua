@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	--to defense
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e2:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e2:SetCode(EVENT_PHASE|PHASE_BATTLE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
 	e2:SetCondition(s.poscon)
@@ -68,7 +68,7 @@ function s.equipop(c,e,tp,tc)
 		e2:SetType(EFFECT_TYPE_EQUIP)
 		e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_OWNER_RELATE+EFFECT_FLAG_SET_AVAILABLE)
 		e2:SetCode(EFFECT_UPDATE_ATTACK)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e2:SetValue(atk)
 		tc:RegisterEffect(e2)
 	end
@@ -76,7 +76,7 @@ end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.GetFieldGroup(tp,LOCATION_HAND,0)==0 then return end
-	Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT+REASON_DISCARD)
+	Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT|REASON_DISCARD)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
 		s.equipop(c,e,tp,tc)

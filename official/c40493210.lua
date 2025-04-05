@@ -1,9 +1,9 @@
--- 魔鍵錠－施－
--- Magikey Locking
--- Scripted by Hatter
+--魔鍵錠－施－
+--Magikey Locking
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon
+	--Special Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -16,9 +16,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x167}
+s.listed_series={SET_MAGIKEY}
 function s.costfilter(c)
-	return not c:IsType(TYPE_TOKEN) and (c:IsType(TYPE_NORMAL) or c:IsSetCard(0x167))
+	return not c:IsType(TYPE_TOKEN) and (c:IsType(TYPE_NORMAL) or c:IsSetCard(SET_MAGIKEY))
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.costfilter,1,false,aux.ReleaseCheckMMZ,nil) end
@@ -26,7 +26,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(g,REASON_COST)
 end
 function s.filter(c,e,tp)
-	return c:IsMonster() and c:HasLevel() and (c:IsType(TYPE_NORMAL) or c:IsSetCard(0x167))
+	return c:IsMonster() and c:HasLevel() and (c:IsType(TYPE_NORMAL) or c:IsSetCard(SET_MAGIKEY))
 		and c:IsCanBeEffectTarget(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.rescon(sg,e,tp,mg)
@@ -45,7 +45,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,#g,0,0)
 end
 function s.exfilter(c,sfunc)
-	return c:IsSetCard(0x167) and sfunc(c)
+	return c:IsSetCard(SET_MAGIKEY) and sfunc(c)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)

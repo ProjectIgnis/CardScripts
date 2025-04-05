@@ -1,11 +1,11 @@
--- レドレミコード・ドリーミア
--- Redoremichord Dreamea
--- scripted by Hatter
+--レドレミコード・ドリーミア
+--ReSolfachord Dreamia
+--scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- pendulum summon
+	--pendulum summon
 	Pendulum.AddProcedure(c)
-	-- cannot disable pendulum summon
+	--cannot disable pendulum summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_DISABLE_SPSUMMON)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
-	-- spsummon from hand
+	--spsummon from hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	-- destroy replace
+	--destroy replace
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EFFECT_DESTROY_REPLACE)
@@ -36,12 +36,12 @@ function s.initial_effect(c)
 	e3:SetOperation(s.repop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x164}
+s.listed_series={SET_SOLFACHORD}
 function s.target(e,c)
-	return c:IsSummonType(SUMMON_TYPE_PENDULUM) and c:IsSetCard(0x164) and c:IsType(TYPE_PENDULUM)
+	return c:IsPendulumSummoned() and c:IsSetCard(SET_SOLFACHORD) and c:IsType(TYPE_PENDULUM)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x164),tp,LOCATION_PZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_SOLFACHORD),tp,LOCATION_PZONE,0,1,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -58,7 +58,7 @@ function s.repcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsOddScale),e:GetHandlerPlayer(),LOCATION_PZONE,0,1,nil)
 end
 function s.repfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x164) and c:IsOriginalType(TYPE_PENDULUM) and c:IsOriginalType(TYPE_MONSTER)
+	return c:IsFaceup() and c:IsSetCard(SET_SOLFACHORD) and c:IsOriginalType(TYPE_PENDULUM) and c:IsOriginalType(TYPE_MONSTER)
 		and c:IsControler(tp) and c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp and not c:IsReason(REASON_REPLACE)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -86,5 +86,5 @@ end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	c:SetStatus(STATUS_DESTROY_CONFIRMED,false)
-	Duel.Destroy(c,REASON_EFFECT+REASON_REPLACE)
+	Duel.Destroy(c,REASON_EFFECT|REASON_REPLACE)
 end

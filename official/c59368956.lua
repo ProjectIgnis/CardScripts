@@ -1,4 +1,5 @@
 --ブンボーグ002
+--Deskbot 002
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -24,9 +25,9 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xab}
+s.listed_series={SET_DESKBOT}
 function s.filter(c)
-	return c:IsSetCard(0xab) and c:IsAbleToHand()
+	return c:IsSetCard(SET_DESKBOT) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

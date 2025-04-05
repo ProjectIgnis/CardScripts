@@ -1,5 +1,5 @@
 --揺るがぬ絆
---Unawering Bound
+--Unwavering Bond
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

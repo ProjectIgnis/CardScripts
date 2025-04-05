@@ -1,4 +1,5 @@
 --U.A.スタジアム
+--U.A. Stadium
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -30,13 +31,13 @@ function s.initial_effect(c)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xb2}
+s.listed_series={SET_UA}
 function s.filter(c)
-	return c:IsSetCard(0xb2) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_UA) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=eg:GetFirst()
-	if chk==0 then return tc:IsSetCard(0xb2) and tc:IsControler(tp)
+	if chk==0 then return tc:IsSetCard(SET_UA) and tc:IsControler(tp)
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
@@ -50,7 +51,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0xb2) and c:IsControler(tp)
+	return c:IsFaceup() and c:IsSetCard(SET_UA) and c:IsControler(tp)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
@@ -64,7 +65,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_UPDATE_ATTACK)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e3:SetValue(500)
 		tc:RegisterEffect(e3)
 	end

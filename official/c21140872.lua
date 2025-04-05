@@ -49,11 +49,11 @@ function s.initial_effect(c)
 	e3:SetLabelObject(e4)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x3b}
+s.listed_series={SET_RED_EYES}
 s.listed_names={CARD_NECROVALLEY}
-s.material_setcode=0x3b
+s.material_setcode=SET_RED_EYES
 function s.eqcon(e)
-	return Duel.GetAttacker():IsSetCard(0x3b)
+	return Duel.GetAttacker():IsSetCard(SET_RED_EYES)
 end
 function s.eqfilter(c,tp)
 	return c:IsRace(RACE_WARRIOR) and c:CheckUniqueOnField(tp) and c:IsMonster() and not c:IsForbidden()
@@ -74,7 +74,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(s.eqlimit)
 		e1:SetLabelObject(c)
 		tc:RegisterEffect(e1)
@@ -83,7 +83,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetType(EFFECT_TYPE_EQUIP)
 		e2:SetCode(EFFECT_UPDATE_ATTACK)
 		e2:SetValue(200)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e2)
 	end
 end

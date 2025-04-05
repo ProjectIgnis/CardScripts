@@ -1,4 +1,5 @@
 --奈落の落とし穴
+--Bottomless Trap Hole
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate(summon)

@@ -1,4 +1,4 @@
---Japanese name
+--アポピスの蛇神
 --Apophis the Serpent
 --scripted by Naim
 local s,id=GetID()

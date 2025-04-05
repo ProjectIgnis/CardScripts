@@ -62,7 +62,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EVENT_DAMAGE_STEP_END)
 		e1:SetOperation(s.caop)
 		e1:SetCountLimit(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE)
 		c:RegisterEffect(e1)
 	end
 end

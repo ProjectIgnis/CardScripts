@@ -22,16 +22,16 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
-s.listed_series={0x48}
+s.listed_series={SET_NUMBER}
 s.listed_names={79747096,CARD_NUMERON_NETWORK,89477759}
 function s.cfilter(c)
 	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousCodeOnField()==79747096
-		and c:IsReason(REASON_EFFECT) and c:GetReasonEffect():IsActiveType(TYPE_MONSTER)
+		and c:IsReason(REASON_EFFECT) and c:GetReasonEffect():IsMonsterEffect()
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.cfilter,nil)
 	for tc in aux.Next(g) do
-		Duel.RegisterFlagEffect(tc:GetPreviousControler(),id,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tc:GetPreviousControler(),id,RESET_PHASE|PHASE_END,0,1)
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
@@ -41,7 +41,7 @@ function s.spfilter(c,e,tp)
 	return c:IsCode(89477759) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function s.matfilter(c)
-	return c:IsSetCard(0x48) and c:IsType(TYPE_XYZ)
+	return c:IsSetCard(SET_NUMBER) and c:IsType(TYPE_XYZ)
 end
 function s.rmgchk(f,id)
 	return function(c)
@@ -50,13 +50,13 @@ function s.rmgchk(f,id)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then return false end
-	if chk==0 then return Duel.IsExistingTarget(s.rmgchk(Card.IsCode,CARD_NUMERON_NETWORK),tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil)
-		and Duel.IsExistingTarget(s.rmgchk(s.matfilter),tp,LOCATION_GRAVE+LOCATION_REMOVED,0,4,nil)
+	if chk==0 then return Duel.IsExistingTarget(s.rmgchk(Card.IsCode,CARD_NUMERON_NETWORK),tp,LOCATION_GRAVE|LOCATION_REMOVED,0,1,nil)
+		and Duel.IsExistingTarget(s.rmgchk(s.matfilter),tp,LOCATION_GRAVE|LOCATION_REMOVED,0,4,nil)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-	local atg1=Duel.SelectTarget(tp,s.rmgchk(Card.IsCode,CARD_NUMERON_NETWORK),tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil)
+	local atg1=Duel.SelectTarget(tp,s.rmgchk(Card.IsCode,CARD_NUMERON_NETWORK),tp,LOCATION_GRAVE|LOCATION_REMOVED,0,1,1,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-	local atg2=Duel.SelectTarget(tp,s.rmgchk(s.matfilter),tp,LOCATION_GRAVE+LOCATION_REMOVED,0,4,4,nil)
+	local atg2=Duel.SelectTarget(tp,s.rmgchk(s.matfilter),tp,LOCATION_GRAVE|LOCATION_REMOVED,0,4,4,nil)
 	local sg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_EXTRA,0,nil,e,tp)
 	atg1:Merge(atg2)
 	local lvgg=atg1:Filter(Card.IsLocation,nil,LOCATION_GRAVE)
@@ -75,7 +75,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_SET_ATTACK)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetValue(10000)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_SET_DEFENSE)
@@ -94,7 +94,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.limittg)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetLabel(spc)
 	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()

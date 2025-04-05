@@ -24,21 +24,21 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x94,0x93}
+s.listed_series={SET_CYBERNETIC,SET_CYBER}
 s.listed_names={CARD_CYBER_DRAGON}
 function s.rmfilter(c)
 	return (not c:IsLocation(LOCATION_MZONE) or c:IsFaceup()) and c:IsCode(CARD_CYBER_DRAGON) and c:IsLevelAbove(1) and c:IsAbleToRemove()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local dg=Duel.GetMatchingGroup(nil,tp,0,LOCATION_ONFIELD,nil)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.rmfilter,tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_MZONE,0,1,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.rmfilter,tp,LOCATION_HAND|LOCATION_GRAVE|LOCATION_MZONE,0,1,nil)
 		and #dg>0 end
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_MZONE)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_HAND|LOCATION_GRAVE|LOCATION_MZONE)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,dg,1,1-tp,LOCATION_ONFIELD)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local dg=Duel.GetMatchingGroup(nil,tp,0,LOCATION_ONFIELD,nil)
-	local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_HAND|LOCATION_GRAVE|LOCATION_MZONE,0,nil)
 	if #dg==0 or #g==0 then return end
 	local rg=aux.SelectUnselectGroup(g,e,tp,1,#dg,aux.dpcheck(Card.GetLevel),1,tp,HINTMSG_REMOVE)
 	local rc=Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)
@@ -53,7 +53,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsPreviousLocation(LOCATION_ONFIELD) and r&REASON_EFFECT~=0
 end
 function s.thfilter(c)
-	return c:IsSpellTrap() and (c:IsSetCard(0x94) or c:IsSetCard(0x93)) and c:IsAbleToHand()
+	return c:IsSpellTrap() and (c:IsSetCard(SET_CYBERNETIC) or c:IsSetCard(SET_CYBER)) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -67,4 +67,3 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-

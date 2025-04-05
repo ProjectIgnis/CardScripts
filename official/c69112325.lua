@@ -1,4 +1,5 @@
 --神聖なる森
+--Spiritual Forest
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

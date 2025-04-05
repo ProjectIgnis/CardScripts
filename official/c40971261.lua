@@ -1,5 +1,5 @@
 --亡龍の旋律
---Lost Dragon's Strain
+--Dirge of the Lost Dragon
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -52,7 +52,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	if re:GetHandler():GetCode()==e:GetLabelObject():GetLabel() then
-		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_CHAIN,0,1)
+		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET|RESET_CHAIN,0,1)
 	return true	end
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
@@ -63,7 +63,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.Hint(HINT_CARD,0,id)
 	Duel.SetLP(rp,Duel.GetLP(rp)/2)
-	c:RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	c:RegisterFlagEffect(id+1,RESETS_STANDARD_PHASE_END,0,1)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_PHASE+PHASE_END)
@@ -71,7 +71,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.tgcon)
 	e1:SetOperation(s.tgop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e1)
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
@@ -83,4 +83,3 @@ end
 function s.indescond(e)
 	return Duel.IsExistingMatchingCard(nil,e:GetHandlerPlayer(),0,LOCATION_MZONE,1,nil)
 end
-

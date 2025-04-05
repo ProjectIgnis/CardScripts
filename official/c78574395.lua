@@ -1,5 +1,5 @@
 --ワンダー・バルーン
---Wonder Ballons
+--Wonder Balloons
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x32)

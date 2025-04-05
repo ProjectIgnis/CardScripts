@@ -50,10 +50,10 @@ function s.stage2(e,tc,tp,sg,chk)
 	end
 end
 function s.atlimit(e,c)
-	return not (c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:IsSummonLocation(LOCATION_EXTRA))
+	return not (c:IsSpecialSummoned() and c:IsSummonLocation(LOCATION_EXTRA))
 end
 function s.efilter(e,te)
 	local tc=te:GetOwner()
-	return tc:IsSummonType(SUMMON_TYPE_SPECIAL) and tc:IsSummonLocation(LOCATION_EXTRA) and tc~=e:GetHandler()
+	return tc:IsSpecialSummoned() and tc:IsSummonLocation(LOCATION_EXTRA) and tc~=e:GetHandler()
 		and te:IsMonsterEffect() and te:IsActivated() and te:GetActivateLocation()==LOCATION_MZONE
 end

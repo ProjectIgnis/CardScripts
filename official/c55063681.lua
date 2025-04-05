@@ -1,4 +1,5 @@
 --パワー・サプライヤー
+--Power Supplier
 local s,id=GetID()
 function s.initial_effect(c)
 	--set target
@@ -34,7 +35,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(400)
 			e1:SetCondition(s.atkcon)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e1)
 		else
 			local e1=Effect.CreateEffect(c)
@@ -43,9 +44,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetRange(LOCATION_MZONE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(400)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e1)
-			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+			tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 		end
 	end
 end

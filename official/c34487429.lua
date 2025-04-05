@@ -62,27 +62,27 @@ function s.initial_effect(c)
 	c:RegisterEffect(e6)
 	aux.DoubleSnareValidity(c,LOCATION_SZONE)
 end
-s.listed_series={0x1034}
+s.listed_series={SET_CRYSTAL_BEAST}
 function s.desrepcon(e)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x1034),e:GetHandler():GetControler(),LOCATION_SZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_CRYSTAL_BEAST),e:GetHandler():GetControler(),LOCATION_SZONE,0,1,nil)
 end
 function s.rdcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp and e:GetHandler():GetFlagEffect(id)==0
-		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x1034),tp,LOCATION_SZONE,0,2,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_CRYSTAL_BEAST),tp,LOCATION_SZONE,0,2,nil)
 end
 function s.rdop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SelectEffectYesNo(tp,e:GetHandler()) then
 		Duel.Hint(HINT_CARD,1-tp,id)
 		Duel.ChangeBattleDamage(tp,math.floor(ev/2))
-		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 	end
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
-		and Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_SZONE,0,3,nil,0x1034)
+		and Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_SZONE,0,3,nil,SET_CRYSTAL_BEAST)
 end
 function s.filter2(c)
-	return c:IsFaceup() and c:IsSetCard(0x1034) and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and c:IsSetCard(SET_CRYSTAL_BEAST) and c:IsAbleToGraveAsCost()
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_MZONE,0,1,nil) end
@@ -98,13 +98,13 @@ function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x1034),tp,LOCATION_SZONE,0,3,nil) then return end
+	if not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_CRYSTAL_BEAST),tp,LOCATION_SZONE,0,3,nil) then return end
 	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
 		Duel.Destroy(eg,REASON_EFFECT)
 	end
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x1034),tp,LOCATION_SZONE,0,4,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_CRYSTAL_BEAST),tp,LOCATION_SZONE,0,4,nil)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
@@ -113,15 +113,15 @@ function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x1034),tp,LOCATION_SZONE,0,4,nil) then return end
+	if not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_CRYSTAL_BEAST),tp,LOCATION_SZONE,0,4,nil) then return end
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard, 0x1034),tp,LOCATION_SZONE,0,5,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard, SET_CRYSTAL_BEAST),tp,LOCATION_SZONE,0,5,nil)
 end
 function s.filter3(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x1034) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsFaceup() and c:IsSetCard(SET_CRYSTAL_BEAST) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_SZONE) and chkc:IsControler(tp) and s.filter3(chkc,e,tp) end
@@ -132,7 +132,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x1034),tp,LOCATION_SZONE,0,5,nil) then return end
+	if not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_CRYSTAL_BEAST),tp,LOCATION_SZONE,0,5,nil) then return end
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEUP)

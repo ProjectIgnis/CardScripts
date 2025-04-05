@@ -1,6 +1,5 @@
 --ドロー・マッスル
 --Draw Muscle
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted monster cannot be destroyed by battle, also draw 1
@@ -12,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
-	e1:SetHintTiming(0,TIMING_BATTLE_START+TIMING_END_PHASE)
+	e1:SetHintTiming(0,TIMING_BATTLE_START|TIMING_END_PHASE)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,e,tp)
@@ -35,7 +34,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(1)
 		tc:RegisterEffect(e1)
 	end

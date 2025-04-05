@@ -1,4 +1,5 @@
 --ヴォルカニック・バックショット
+--Volcanic Scattershot
 local s,id=GetID()
 function s.initial_effect(c)
 	--damage
@@ -23,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xb9}
+s.listed_series={SET_BLAZE_ACCELERATOR}
 s.listed_names={id}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -37,14 +38,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(p,d,REASON_EFFECT)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return re and re:GetHandler():IsSetCard(0xb9)
+	return re and re:GetHandler():IsSetCard(SET_BLAZE_ACCELERATOR)
 end
 function s.costfilter(c)
 	return c:IsCode(id) and c:IsAbleToGraveAsCost()
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_DECK+LOCATION_HAND,0,2,nil) end
-	local g=Duel.GetMatchingGroup(s.costfilter,tp,LOCATION_DECK+LOCATION_HAND,0,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_DECK|LOCATION_HAND,0,2,nil) end
+	local g=Duel.GetMatchingGroup(s.costfilter,tp,LOCATION_DECK|LOCATION_HAND,0,nil)
 	if #g>2 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		g=g:Select(tp,2,2,nil)

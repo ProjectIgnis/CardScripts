@@ -1,11 +1,11 @@
 --双天将 金剛
---Kongou, Heavenly General of the Souten
+--Dual Avatar - Empowered Kon-Gyo
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
 	--Fusion summon procedure
 	c:EnableReviveLimit()
-	Fusion.AddProcMixN(c,true,true,85360035,1,aux.FilterBoolFunctionEx(Card.IsSetCard,0x14e),2)
+	Fusion.AddProcMixN(c,true,true,85360035,1,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_DUAL_AVATAR),2)
 	--Activation limit
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -40,8 +40,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.disop)
 	c:RegisterEffect(e3)
 end
-s.material_setcode={0x14e}
-s.listed_series={0x14e}
+s.material_setcode={SET_DUAL_AVATAR}
+s.listed_series={SET_DUAL_AVATAR}
 function s.actcon(e)
 	return Duel.GetAttacker()==e:GetHandler() or Duel.GetAttackTarget()==e:GetHandler()
 end
@@ -68,7 +68,7 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if rp==tp or c:IsStatus(STATUS_BATTLE_DESTROYED) or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local gp=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	return gp and gp:IsContains(c) and Duel.IsChainDisablable(ev) and re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+	return gp and gp:IsContains(c) and Duel.IsChainDisablable(ev) and re:IsSpellTrapEffect()
 		and Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsType,TYPE_FUSION),tp,LOCATION_MZONE,0,nil)>=2
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)

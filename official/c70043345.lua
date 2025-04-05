@@ -30,12 +30,12 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_GRAVE)
-	e3:SetCost(aux.bfgcost)
+	e3:SetCost(Cost.SelfBanish)
 	e3:SetTarget(s.thtg)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xb2}
+s.listed_series={SET_UA}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.GetCurrentPhase()~=PHASE_DAMAGE
 	local b2=Duel.CheckEvent(EVENT_BATTLE_START) and s.rmcon(e,tp,eg,ep,ev,re,r,rp) and s.rmtg(e,tp,eg,ep,ev,re,r,rp,0)
@@ -54,7 +54,7 @@ function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	local bc=Duel.GetAttackTarget()
 	if not bc then return false end
 	if tc:IsControler(1-tp) then tc,bc=bc,tc end
-	if tc:IsFaceup() and tc:IsSetCard(0xb2) then
+	if tc:IsFaceup() and tc:IsSetCard(SET_UA) then
 		e:SetLabelObject(bc)
 		return true
 	else return false end
@@ -63,18 +63,18 @@ function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local bc=e:GetLabelObject()
 	if chk==0 then return bc:IsAbleToRemove() and Duel.GetFlagEffect(tp,id)==0 end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,bc,1,0,0)
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local bc=e:GetLabelObject()
-	if bc:IsRelateToBattle() and bc:IsControler(1-tp) and Duel.Remove(bc,0,REASON_EFFECT+REASON_TEMPORARY)~=0 then
+	if bc:IsRelateToBattle() and bc:IsControler(1-tp) and Duel.Remove(bc,0,REASON_EFFECT|REASON_TEMPORARY)~=0 then
 		bc:SetTurnCounter(0)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetDescription(aux.Stringid(id,3))
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
-		e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,2)
+		e1:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN,2)
 		e1:SetLabelObject(bc)
 		e1:SetCountLimit(1)
 		e1:SetCondition(s.retcon)
@@ -83,7 +83,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
@@ -95,7 +95,7 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xb2) and c:IsSpell() and c:IsAbleToHand()
+	return c:IsSetCard(SET_UA) and c:IsSpell() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

@@ -1,5 +1,5 @@
 --赤しゃりの軍貫
---Gunkan Suship Aka-Shari
+--Gunkan Suship Shari Red
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetCode(EFFECT_CHANGE_CODE)
-	e1:SetRange(LOCATION_MZONE+LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE)
+	e1:SetRange(LOCATION_MZONE|LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE)
 	e1:SetValue(CARD_SUSHIP_SHARI)
 	c:RegisterEffect(e1)
 	--Special Summon itself from the hand
@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_SUSHIP_SHARI}
-s.listed_series={0x168}
+s.listed_series={SET_GUNKAN}
 function s.cfilter(c)
 	return c:IsCode(CARD_SUSHIP_SHARI) and not c:IsPublic()
 end
@@ -41,10 +41,10 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
-	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_DECK+LOCATION_EXTRA)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_DECK|LOCATION_EXTRA)
 end
 function s.spfilter(c,e,tp,mc)
-	return c:IsSetCard(0x168) and not c:IsCode(CARD_SUSHIP_SHARI) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_GUNKAN) and not c:IsCode(CARD_SUSHIP_SHARI) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,mc,c)
 end
 function s.xyzfilter(c,e,tp,mc1,mc2)
@@ -67,13 +67,13 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_DISABLE)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			sc:RegisterEffect(e1)
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_DISABLE_EFFECT)
 			e2:SetValue(RESET_TURN_SET)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 			sc:RegisterEffect(e2)
 		end
 		if Duel.SpecialSummonComplete()==0 then return end

@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.condition)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.SelfToGrave)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
@@ -30,22 +30,18 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x119}
+s.listed_series={SET_SALAMANGREAT}
 function s.cfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x119)
+	return c:IsMonster() and c:IsSetCard(SET_SALAMANGREAT)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,3,nil)
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.filter(c)
 	return c:GetSequence()<5
 end
 function s.tdfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x119) and c:IsLinkMonster() and c:IsAbleToExtra()
+	return c:IsMonster() and c:IsSetCard(SET_SALAMANGREAT) and c:IsLinkMonster() and c:IsAbleToExtra()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -64,7 +60,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local lc=g:GetFirst()
 	if lc==sc then lc=g:GetNext() end
-	if lc and lc:IsRelateToEffect(e) and Duel.SendtoDeck(lc,nil,2,REASON_EFFECT)>0 and sc and sc:IsRelateToEffect(e) then
+	if lc and lc:IsRelateToEffect(e) and Duel.SendtoDeck(lc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 and sc and sc:IsRelateToEffect(e) then
 		Duel.Destroy(sc,REASON_EFFECT)
 	end
 end
@@ -85,4 +81,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 end
-

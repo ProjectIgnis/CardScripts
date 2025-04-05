@@ -43,7 +43,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetTargetCards(e)
-	if #tg==2 and Duel.SendtoGrave(tg,REASON_EFFECT+REASON_RETURN)==2 then
+	if #tg==2 and Duel.SendtoGrave(tg,REASON_EFFECT|REASON_RETURN)==2 then
 		local og=Duel.GetOperatedGroup()
 		if og:FilterCount(Card.IsLocation,nil,LOCATION_GRAVE)~=2 then return end
 		local lvl=tg:GetSum(Card.GetLevel)

@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x10c),2)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_MEKK_KNIGHT),2)
 	--direct attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x10c}
+s.listed_series={SET_MEKK_KNIGHT}
 function s.dircon(e)
 	return e:GetHandler():GetColumnGroupCount()==0
 end
@@ -48,7 +48,7 @@ function s.spcfilter(c,hc)
 	return c:GetColumnGroup():IsContains(hc) and c:IsAbleToGraveAsCost()
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x10c) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(SET_MEKK_KNIGHT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

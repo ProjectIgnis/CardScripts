@@ -1,4 +1,5 @@
 --魔導書の奇跡
+--Spellbook of Miracles
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,12 +13,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x106e}
+s.listed_series={SET_SPELLBOOK}
 function s.filter(c,e,tp)
 	return c:IsType(TYPE_XYZ) and c:IsRace(RACE_SPELLCASTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.filter2(c)
-	return c:IsFaceup() and c:IsSetCard(0x106e) and c:IsSpell()
+	return c:IsFaceup() and c:IsSetCard(SET_SPELLBOOK) and c:IsSpell()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

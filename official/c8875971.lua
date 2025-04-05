@@ -1,4 +1,5 @@
 --光天使ウィングス
+--Star Seraph Scout
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x86) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_STAR_SERAPH) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

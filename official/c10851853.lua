@@ -1,4 +1,4 @@
---
+--フラワーダイノ
 --Flowerdino
 --Scripted by Yuno
 local s,id=GetID()
@@ -38,7 +38,7 @@ function s.initial_effect(c)
 end
 --Special Summon
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return (rp==tp and re:IsActiveType(TYPE_TRAP)) or (rp==1-tp and re:IsActiveType(TYPE_SPELL))
+	return (rp==tp and re:IsTrapEffect()) or (rp==1-tp and re:IsSpellEffect())
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

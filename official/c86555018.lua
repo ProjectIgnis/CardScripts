@@ -1,6 +1,5 @@
 --ストーンヘンジ・メソッド
 --Stonehenge Methods
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 "Chronomaly" monster from deck
@@ -14,17 +13,16 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x70}
-
+s.listed_series={SET_CHRONOMALY}
 function s.cfilter(c,tp)
 	return c:IsLocation(LOCATION_GRAVE) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
-		and c:IsSetCard(0x70) and c:IsMonster()
+		and c:IsSetCard(SET_CHRONOMALY) and c:IsMonster()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsLevelBelow(4) and c:IsSetCard(0x70) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsLevelBelow(4) and c:IsSetCard(SET_CHRONOMALY) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -43,7 +41,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1,true)
 	end
 	Duel.SpecialSummonComplete()

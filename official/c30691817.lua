@@ -26,12 +26,12 @@ c:EnableReviveLimit()
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-s.listed_series={0x12b}
+s.listed_series={SET_MARINCESS}
 function s.mfilter(c,lc,sumtype,tp)
-	return c:IsSetCard(0x12b,lc,sumtype,tp) and c:IsLevelBelow(4)
+	return c:IsSetCard(SET_MARINCESS,lc,sumtype,tp) and c:IsLevelBelow(4)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+	return e:GetHandler():IsLinkSummoned()
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -39,7 +39,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetTarget(s.splimit)
 	Duel.RegisterEffect(e1,tp)
 end
@@ -47,10 +47,10 @@ function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsCode(id) and sumtype&SUMMON_TYPE_LINK==SUMMON_TYPE_LINK
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+	return e:GetHandler():IsLinkSummoned()
 end
 function s.filter(c)
-	return c:IsSetCard(0x12b) and c:IsSpell() and c:IsAbleToHand()
+	return c:IsSetCard(SET_MARINCESS) and c:IsSpell() and c:IsAbleToHand()
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

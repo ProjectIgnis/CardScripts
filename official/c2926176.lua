@@ -1,4 +1,5 @@
 --王家の呪い
+--Curse of Royal
 local s,id=GetID()
 function s.initial_effect(c)
 	--Negate

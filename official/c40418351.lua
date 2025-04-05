@@ -35,7 +35,7 @@ end
 function s.eqval(ec,c,tp)
 	return ec:IsControler(tp) and ec:IsRace(RACE_DRAGON)
 end
-s.material_setcode={0x93,0x4093}
+s.material_setcode={SET_CYBER,SET_CYBERDARK}
 function s.equipop(c,e,tp,tc)
 	local atk=tc:GetTextAttack()
 	if atk<0 then atk=0 end
@@ -44,13 +44,13 @@ function s.equipop(c,e,tp,tc)
 	e2:SetType(EFFECT_TYPE_EQUIP)
 	e2:SetProperty(EFFECT_FLAG_OWNER_RELATE+EFFECT_FLAG_IGNORE_IMMUNE)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e2:SetValue(atk)
 	tc:RegisterEffect(e2)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_EQUIP)
 	e3:SetCode(EFFECT_DESTROY_SUBSTITUTE)
-	e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e3:SetValue(s.repval)
 	tc:RegisterEffect(e3)
 end

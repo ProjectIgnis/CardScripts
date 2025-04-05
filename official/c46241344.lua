@@ -26,20 +26,20 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x7c,0x79}
+s.listed_series={SET_FIRE_FORMATION,SET_FIRE_FIST}
 function s.thfilter(c)
-	return c:IsSpellTrap() and c:IsSetCard(0x7c) and c:IsAbleToHand()
+	return c:IsSpellTrap() and c:IsSetCard(SET_FIRE_FORMATION) and c:IsAbleToHand()
 		and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
 end
 function s.gyfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x79) and c:IsAbleToGrave()
+	return c:IsMonster() and c:IsSetCard(SET_FIRE_FIST) and c:IsAbleToGrave()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_ONFIELD+LOCATION_GRAVE) and s.thfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.thfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil)
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_ONFIELD|LOCATION_GRAVE) and s.thfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(s.thfilter,tp,LOCATION_ONFIELD|LOCATION_GRAVE,0,1,nil)
 		and Duel.IsExistingMatchingCard(s.gyfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-	local g=Duel.SelectTarget(tp,s.thfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,s.thfilter,tp,LOCATION_ONFIELD|LOCATION_GRAVE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,#g,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
@@ -54,4 +54,3 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

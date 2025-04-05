@@ -1,9 +1,9 @@
--- レプティレス・コアトル
--- Reptilianne Coatl
--- Scripted by Hatter
+--レプティレス・コアトル
+--Reptilianne Coatl
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon self from hand
+	--Special Summon self from hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	-- Treat as non-tuner for the Synchro Summmon of a Reptile monster
+	--Treat as non-tuner for the Synchro Summmon of a Reptile monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)

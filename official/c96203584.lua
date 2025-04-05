@@ -1,5 +1,5 @@
 --溟界の大蛟
---Ogdoadic Flood
+--Ogdoadic Serpent Strike
 --Scripted by Neo Yuno
 local s,id=GetID()
 function s.initial_effect(c)
@@ -43,9 +43,9 @@ function s.spfilter(c,e,tp,att)
 	return c:IsRace(RACE_REPTILE) and not c:IsOriginalAttribute(att) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.spcfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,nil,e,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.spcfilter,tp,LOCATION_MZONE|LOCATION_HAND,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.spcfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,s.spcfilter,tp,LOCATION_MZONE|LOCATION_HAND,0,1,1,nil,e,tp)
 	local att=g:GetFirst():GetOriginalAttribute()
 	e:SetLabel(att)
 	Duel.SendtoGrave(g,REASON_COST)

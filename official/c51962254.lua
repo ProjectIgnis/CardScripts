@@ -1,4 +1,5 @@
 --ハンター・アウル
+--Hunter Owl
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot be attacked

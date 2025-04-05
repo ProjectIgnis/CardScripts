@@ -1,9 +1,10 @@
 --DDD怒濤壊薙王カエサル・ラグナロク
+--D/D/D Wave Oblivion King Caesar Ragnarok
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x10af),2)
+	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_DDD),2)
 	--tohand
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_EQUIP)
@@ -18,14 +19,14 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	aux.AddEREquipLimit(c,nil,function(ec,_,tp) return ec:IsControler(1-tp) end,s.equipop,e1)
 end
-s.listed_series={0xaf,0xae,0x10af}
-s.material_setcode={0xaf,0x10af}
+s.listed_series={SET_DD,SET_DARK_CONTRACT,SET_DDD}
+s.material_setcode={SET_DD,SET_DDD}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return (Duel.GetAttacker()==c or Duel.GetAttackTarget()==c)
 end
 function s.thfilter(c)
-	return c:IsFaceup() and (c:IsSetCard(0xaf) or c:IsSetCard(0xae)) and c:IsAbleToHand()
+	return c:IsFaceup() and (c:IsSetCard(SET_DD) or c:IsSetCard(SET_DARK_CONTRACT)) and c:IsAbleToHand()
 end
 function s.eqfilter(c)
 	return c:IsFaceup() and c:IsAbleToChangeControler()
@@ -48,7 +49,7 @@ function s.equipop(c,e,tp,tc)
 		e2:SetType(EFFECT_TYPE_EQUIP)
 		e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_OWNER_RELATE)
 		e2:SetCode(EFFECT_UPDATE_ATTACK)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e2:SetValue(atk)
 		tc:RegisterEffect(e2)
 	end

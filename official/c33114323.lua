@@ -1,6 +1,6 @@
 --メタルシルバー・アーマー
 --Metalsilver Armor
-local LOC_MZN_GRV_BAN=LOCATION_MZONE+LOCATION_GRAVE+LOCATION_REMOVED
+local LOC_MZN_GRV_BAN=LOCATION_MZONE|LOCATION_GRAVE|LOCATION_REMOVED
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c)

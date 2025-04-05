@@ -1,4 +1,5 @@
 --セイクリッド・カウスト
+--Constellar Kaus
 local s,id=GetID()
 function s.initial_effect(c)
 	--lv change
@@ -19,9 +20,9 @@ function s.initial_effect(c)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x53}
+s.listed_series={SET_CONSTELLAR}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x53) and c:IsLevelAbove(1)
+	return c:IsFaceup() and c:IsSetCard(SET_CONSTELLAR) and c:IsLevelAbove(1)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end
@@ -42,7 +43,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		if e:GetLabel()==0 then
 			e1:SetValue(1)
 		else e1:SetValue(-1) end

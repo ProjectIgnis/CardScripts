@@ -1,4 +1,5 @@
 --影霊獣使い－セフィラウェンディ
+--Ritual Beast Tamer Zefrawendi
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetSPSummonOnce(id)
@@ -26,17 +27,17 @@ function s.initial_effect(c)
 	e4:SetCondition(s.condition)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xb5,0xc4}
+s.listed_series={SET_RITUAL_BEAST,SET_ZEFRA}
 s.listed_names={id}
 function s.splimit(e,c,sump,sumtype,sumpos,targetp)
-	if c:IsSetCard(0xb5) or c:IsSetCard(0xc4) then return false end
+	if c:IsSetCard(SET_RITUAL_BEAST) or c:IsSetCard(SET_ZEFRA) then return false end
 	return (sumtype&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_PENDULUM)
+	return e:GetHandler():IsPendulumSummoned()
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0xc4) and c:IsType(TYPE_PENDULUM) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(SET_ZEFRA) and c:IsType(TYPE_PENDULUM) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil) end

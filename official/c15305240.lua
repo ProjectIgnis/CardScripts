@@ -1,4 +1,5 @@
 --鹵獲装置
+--Creature Seizure
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -26,7 +26,7 @@ function s.sslimit(e,c)
 	return not c:IsRace(RACE_ZOMBIE)
 end
 function s.syncon(e)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_NORMAL)
+	return e:GetHandler():IsNormalSummoned()
 end
 function s.synval(e,c,sc)
 	if c:IsLocation(LOCATION_HAND) then
@@ -36,7 +36,7 @@ function s.synval(e,c,sc)
 		e1:SetLabel(id)
 		e1:SetTarget(s.synchktg)
 		c:RegisterEffect(e1)
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 		return true
 	else return false end
 end
@@ -70,4 +70,3 @@ function s.synchktg(e,c,sg,tg,ntg,tsg,ntsg)
 		return true
 	end
 end
-

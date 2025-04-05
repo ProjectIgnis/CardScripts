@@ -1,5 +1,5 @@
 --痕喰竜ブリガンド
---Stigmavore Dragon Brigand
+--Brigrand the Glory Dragon
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -45,26 +45,26 @@ function s.initial_effect(c)
 	e4:SetOperation(s.operation)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x14f}
+s.listed_series={SET_TRI_BRIGADE}
 s.listed_names={CARD_ALBAZ}
 function s.tgcond(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
+	return e:GetHandler():IsFusionSummoned()
 end
 function s.tgtg(e,c)
 	return c~=e:GetHandler()
 end
 function s.tgval(e,re,rp)
-	return re:IsActiveType(TYPE_MONSTER) and aux.tgoval(e,re,rp)
+	return re:IsMonsterEffect() and aux.tgoval(e,re,rp)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)>0
 end
 function s.filter(c,e,tp)
-	return (c:IsCode(CARD_ALBAZ) or (c:IsSetCard(0x14f) and c:IsMonster()))
+	return (c:IsCode(CARD_ALBAZ) or (c:IsSetCard(SET_TRI_BRIGADE) and c:IsMonster()))
 		and (c:IsAbleToHand() or (c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

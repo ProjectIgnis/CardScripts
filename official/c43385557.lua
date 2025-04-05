@@ -1,4 +1,5 @@
 --マジカル・アンドロイド
+--Magical Android
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -19,7 +20,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.reccon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

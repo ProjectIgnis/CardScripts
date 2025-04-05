@@ -1,4 +1,5 @@
 --トゥーン・ヂェミナイ・エルフ
+--Toon Gemini Elf
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot attack
@@ -43,7 +44,7 @@ function s.atklimit(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_ATTACK)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	e:GetHandler():RegisterEffect(e1)
 end
 function s.sfilter(c)
@@ -76,5 +77,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(ep,LOCATION_HAND,0)
 	if #g==0 then return end
 	local sg=g:RandomSelect(1-tp,1)
-	Duel.SendtoGrave(sg,REASON_EFFECT+REASON_DISCARD)
+	Duel.SendtoGrave(sg,REASON_EFFECT|REASON_DISCARD)
 end

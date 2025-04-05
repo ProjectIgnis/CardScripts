@@ -1,10 +1,10 @@
--- ヴァリアンツの忍者－南月
--- Nazuki the Vaylantyz Ninja
--- Scripted by Hatter
+--ヴァリアンツの忍者－南月
+--Nazuki the Vaylantz Ninja
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	Pendulum.AddProcedure(c)
-	-- Special Summon itself from the Pendulum zone
+	--Special Summon itself from the Pendulum zone
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	-- Move 1 other monster to an adjacent zone
+	--Move 1 other monster to an adjacent zone
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.mvtg)
 	e2:SetOperation(s.mvop)
 	c:RegisterEffect(e2)
-	-- Special Summon 1 "Vaylantz" monster from Spell/Trap Zone
+	--Special Summon 1 "Vaylantz" monster from Spell/Trap Zone
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)

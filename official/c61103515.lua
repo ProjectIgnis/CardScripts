@@ -1,5 +1,5 @@
 --劫火の翼竜 ゴースト・ワイバーン
---Hellfire Dragon, Ghost Wyvern
+--Ghost Wyvern, the Underworld Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--Search 1 "Ghost Fusion"
@@ -54,7 +54,7 @@ end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsFacedown() then return end
-	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 end
 function s.thgcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)>0

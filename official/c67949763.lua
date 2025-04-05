@@ -16,7 +16,7 @@ end
 s.listed_names={67949764}
 function s.filter(c,tp)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ)
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x87,TYPES_TOKEN,-2,0,1,RACE_FIEND,ATTRIBUTE_DARK)
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,SET_UMBRAL_HORROR,TYPES_TOKEN,-2,0,1,RACE_FIEND,ATTRIBUTE_DARK)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc,tp) end
@@ -38,7 +38,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			atk=tc:GetAttack()
 			cr=true
 		end
-		if not Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x87,TYPES_TOKEN,-2,0,1,RACE_FIEND,ATTRIBUTE_DARK) then return end
+		if not Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,SET_UMBRAL_HORROR,TYPES_TOKEN,-2,0,1,RACE_FIEND,ATTRIBUTE_DARK) then return end
 		if cr then
 			local de=Effect.CreateEffect(e:GetHandler())
 			de:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
@@ -54,24 +54,24 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			token:RegisterEffect(e1,true)
 			local e2=Effect.CreateEffect(e:GetHandler())
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_UNRELEASABLE_NONSUM)
 			e2:SetValue(1)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 			token:RegisterEffect(e2,true)
 			local e3=Effect.CreateEffect(e:GetHandler())
 			e3:SetType(EFFECT_TYPE_SINGLE)
 			e3:SetCode(EFFECT_SET_ATTACK)
 			e3:SetValue(atk)
 			e3:SetLabelObject(tc)
-			e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 			token:RegisterEffect(e3,true)
 			if cr then
-				token:RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD,0,0,rfid)
-				tc:CreateRelation(token,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
+				token:RegisterFlagEffect(id+1,RESET_EVENT|RESETS_STANDARD,0,0,rfid)
+				tc:CreateRelation(token,RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET)
 			end
 		end
 		Duel.SpecialSummonComplete()

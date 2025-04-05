@@ -1,4 +1,5 @@
 --光神テテュス
+--Tethys, Goddess of Light
 local s,id=GetID()
 function s.initial_effect(c)
 	--draw

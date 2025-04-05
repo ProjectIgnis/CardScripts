@@ -1,9 +1,10 @@
 --捕食植物キメラフレシア
+--Predaplant Chimerafflesia
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x10f3),aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_DARK))
+	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_PREDAPLANT),aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_DARK))
 	--remove
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -37,7 +38,7 @@ function s.initial_effect(c)
 	e4:SetDescription(aux.Stringid(id,2))
 	e4:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e4:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e4:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e4:SetRange(LOCATION_GRAVE)
 	e4:SetCountLimit(1)
 	e4:SetCondition(s.thcon)
@@ -45,8 +46,8 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x46,0x10f3}
-s.material_setcode={0xf3,0x10f3}
+s.listed_series={SET_FUSION,SET_PREDAPLANT}
+s.material_setcode={SET_PREDAP,SET_PREDAPLANT}
 function s.rmfilter(c,lv)
 	return c:IsFaceup() and c:IsLevelBelow(lv) and c:IsAbleToRemove()
 end
@@ -82,23 +83,23 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-1000)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		if c:IsRelateToEffect(e) and c:IsFaceup() and not tc:IsHasEffect(EFFECT_REVERSE_UPDATE) then
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_UPDATE_ATTACK)
 			e2:SetValue(1000)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e2:SetReset(RESETS_STANDARD_PHASE_END)
 			c:RegisterEffect(e2)
 		end
 	end
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetCurrentPhase()==PHASE_STANDBY then
-		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY,0,2,Duel.GetTurnCount())
+	if Duel.IsPhase(PHASE_STANDBY) then
+		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_STANDBY,0,2,Duel.GetTurnCount())
 	else
-		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY,0,1,0)
+		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_STANDBY,0,1,0)
 	end
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
@@ -106,7 +107,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return tid and tid~=Duel.GetTurnCount()
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x46) and c:IsSpell() and c:IsAbleToHand()
+	return c:IsSetCard(SET_FUSION) and c:IsSpell() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

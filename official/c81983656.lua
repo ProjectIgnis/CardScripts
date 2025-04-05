@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
-	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x33),1,1,Synchro.NonTunerEx(Card.IsSetCard,0x33),1,99)
+	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_BLACKWING),1,1,Synchro.NonTunerEx(Card.IsSetCard,SET_BLACKWING),1,99)
 	c:EnableReviveLimit()
 	--special summon
 	local e1=Effect.CreateEffect(c)
@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.ceop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x33}
+s.listed_series={SET_BLACKWING}
 function s.spfilter(c,e,tp)
 	return c:IsLevelAbove(5) and c:IsRace(RACE_WINGEDBEAST) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -61,7 +61,7 @@ function s.cbcon(e,tp,eg,ep,ev,re,r,rp)
 	return r~=REASON_REPLACE
 end
 function s.cbfilter(c,at)
-	return c:IsFaceup() and c:IsSetCard(0x33) and at:IsContains(c)
+	return c:IsFaceup() and c:IsSetCard(SET_BLACKWING) and at:IsContains(c)
 end
 function s.cbtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local at=Duel.GetAttacker():GetAttackableTarget()
@@ -82,7 +82,7 @@ function s.cecon(e,tp,eg,ep,ev,re,r,rp)
 	return g and #g==1 and g:GetFirst()==e:GetHandler()
 end
 function s.cefilter(c,ct)
-	return c:IsFaceup() and c:IsSetCard(0x33) and Duel.CheckChainTarget(ct,c)
+	return c:IsFaceup() and c:IsSetCard(SET_BLACKWING) and Duel.CheckChainTarget(ct,c)
 end
 function s.cetg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.cefilter(chkc,ev) end

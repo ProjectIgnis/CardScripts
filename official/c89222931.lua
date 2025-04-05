@@ -1,4 +1,5 @@
 --機械王－プロトタイプ
+--Machine King Prototype
 local s,id=GetID()
 function s.initial_effect(c)
 	--atkup

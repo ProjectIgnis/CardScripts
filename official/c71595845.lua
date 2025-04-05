@@ -1,7 +1,6 @@
 --人形の幸福
 --Doll Happiness
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -37,10 +36,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 	--Lists "Doll Monster" archetype
-s.listed_series={0x15c}
+s.listed_series={SET_DOLL_MONSTER}
 	--Specifically lists "Princess Cologne", "Box of Friends", and "Grandpa Demetto"
 s.listed_names={75574498,81587028,44190146}
-
 	--Check for "Box of Friends" or "Grandpa Demetto"
 function s.filter(c)
 	return c:IsCode(81587028,44190146) and c:IsAbleToHand()
@@ -70,17 +68,17 @@ function s.atlimit(e,c)
 end
 	--Check for a "Doll Monster" card
 function s.tgfilter(c)
-	return c:IsSetCard(0x15c) and c:IsAbleToGrave()
+	return c:IsSetCard(SET_DOLL_MONSTER) and c:IsAbleToGrave()
 end
 	--Activation legality
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsMonster,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsMonster,tp,LOCATION_HAND|LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end
-	local dg=Duel.GetMatchingGroup(Card.IsMonster,tp,LOCATION_HAND+LOCATION_MZONE,0,nil)
+	local dg=Duel.GetMatchingGroup(Card.IsMonster,tp,LOCATION_HAND|LOCATION_MZONE,0,nil)
 	if not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil) then
-		Duel.SetOperationInfo(0,CATEGORY_DESTROY,dg,1,tp,LOCATION_HAND+LOCATION_MZONE)
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,dg,1,tp,LOCATION_HAND|LOCATION_MZONE)
 	else
-		Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,tp,LOCATION_HAND+LOCATION_MZONE)
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,tp,LOCATION_HAND|LOCATION_MZONE)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
@@ -89,7 +87,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g1=Duel.SelectMatchingCard(tp,Card.IsMonster,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil)
+	local g1=Duel.SelectMatchingCard(tp,Card.IsMonster,tp,LOCATION_HAND|LOCATION_MZONE,0,1,1,nil)
 	if #g1>0 and Duel.Destroy(g1,REASON_EFFECT)~=0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local g2=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
@@ -103,14 +101,14 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	--Clock Lizard check
 	aux.addTempLizardCheck(c,tp,s.lizfilter)
 	local e2=Effect.CreateEffect(c)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT+EFFECT_FLAG_OATH)
 	e2:SetDescription(aux.Stringid(id,3))
-	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetReset(RESET_PHASE|PHASE_END)
 	e2:SetTargetRange(1,0)
 	Duel.RegisterEffect(e2,tp)
 end

@@ -128,8 +128,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		ft4=math.min(ect,ft4)
 	end
 	local loc=0
-	if ft1>0 then loc=loc+LOCATION_DECK+LOCATION_GRAVE end
-	if ft2>0 or ft3>0 or ft4>0 then loc=loc+LOCATION_EXTRA end
+	if ft1>0 then loc=loc|LOCATION_DECK|LOCATION_GRAVE end
+	if ft2>0 or ft3>0 or ft4>0 then loc=loc|LOCATION_EXTRA end
 	if loc==0 then return end
 	local sg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,loc,0,nil,e,tp)
 	if #sg==0 then return end

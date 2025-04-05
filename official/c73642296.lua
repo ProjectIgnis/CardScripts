@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.negcon)
-	e1:SetCost(s.negcost)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetTarget(s.negtg)
 	e1:SetOperation(function(e,tp,eg,ep,ev) Duel.NegateActivation(ev) end)
 	c:RegisterEffect(e1)
@@ -34,11 +34,6 @@ function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 		or s.check(ev,CATEGORY_TODECK)
 		or s.check(ev,CATEGORY_TOEXTRA)) then return true end
 	return false
-end
-function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsDiscardable() end
-	Duel.SendtoGrave(c,REASON_COST|REASON_DISCARD)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

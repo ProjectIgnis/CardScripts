@@ -20,10 +20,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.qop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x38}
+s.listed_series={SET_LIGHTSWORN}
 function s.qcon(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
-	return d:IsFaceup() and d:IsSetCard(0x38) and d:IsControler(tp)
+	return d:IsFaceup() and d:IsSetCard(SET_LIGHTSWORN) and d:IsControler(tp)
 end
 function s.qcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,2) and e:GetHandler():GetFlagEffect(id)==0 end

@@ -1,5 +1,5 @@
 --墓守の刻印
---Gravekeeper's Engraving
+--Gravekeeper's Inscription
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCondition(function() return Duel.GetCurrentPhase()==PHASE_MAIN1 and not Duel.CheckPhaseActivity() end)
+	e1:SetCondition(function() return Duel.IsPhase(PHASE_MAIN1) and not Duel.CheckPhaseActivity() end)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
@@ -46,7 +46,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	else
 		e1:SetTarget(function(_,c) return c:IsLocation(LOCATION_GRAVE) end)
 	end
-	e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+	e1:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN)
 	Duel.RegisterEffect(e1,tp)
-	Duel.RegisterFlagEffect(tp,id+op,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id+op,RESET_PHASE|PHASE_END,0,1)
 end

@@ -1,4 +1,5 @@
 --久遠の魔術師ミラ
+--Milla the Temporal Magician
 local s,id=GetID()
 function s.initial_effect(c)
 	--confirm

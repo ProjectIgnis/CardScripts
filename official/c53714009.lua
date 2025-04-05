@@ -1,4 +1,5 @@
 --フレムベル・ウルキサス
+--Flamvell Uruquizas
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -29,6 +30,6 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(300)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 	c:RegisterEffect(e1)
 end

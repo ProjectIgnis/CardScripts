@@ -1,4 +1,5 @@
 --D・スピードユニット
+--Morphtronic Accelerator
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,9 +12,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x26}
+s.listed_series={SET_MORPHTRONIC}
 function s.filter(c)
-	return c:IsSetCard(0x26) and c:IsMonster() and c:IsAbleToDeck()
+	return c:IsSetCard(SET_MORPHTRONIC) and c:IsMonster() and c:IsAbleToDeck()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc~=e:GetHandler() end
@@ -31,7 +32,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,nil)
 	if #g==0 then return end
 	Duel.ConfirmCards(1-tp,g)
-	Duel.SendtoDeck(g,nil,0,REASON_EFFECT)
+	Duel.SendtoDeck(g,nil,SEQ_DECKTOP,REASON_EFFECT)
 	Duel.ShuffleDeck(tp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then

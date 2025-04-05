@@ -1,4 +1,4 @@
---Japanese name
+--王の遺宝祀りし聖域
 --Treasures of the Kings
 --Scripted by The Razgriz
 local s,id=GetID()

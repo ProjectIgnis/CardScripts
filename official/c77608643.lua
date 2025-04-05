@@ -1,4 +1,5 @@
 --D－HERO ダイハードガイ
+--Destiny HERO - Captain Tenacious
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -19,17 +20,17 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
-	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e2:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e2:SetCondition(s.spcon)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	e2:SetLabelObject(g)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xc008}
+s.listed_series={SET_DESTINY_HERO}
 function s.filter(c,e,tp)
 	return c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_BATTLE)
-		and c:IsPreviousControler(tp) and c:IsSetCard(0xc008)
+		and c:IsPreviousControler(tp) and c:IsSetCard(SET_DESTINY_HERO)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.filter,nil,e,tp)
@@ -38,12 +39,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:GetFlagEffect(id)==0 then
 		sg:Clear()
-		c:RegisterFlagEffect(id,RESET_EVENT+0x3fe0000+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,0,1)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESET_TURN_SET|RESET_TOGRAVE|RESET_REMOVE|RESET_TEMP_REMOVE|RESET_TOHAND|RESET_TODECK|RESET_LEAVE|RESET_TOFIELD|RESET_CONTROL|RESET_PHASE|PHASE_STANDBY|RESET_SELF_TURN,0,1)
 	end
 	sg:Merge(g)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and e:GetHandler():GetFlagEffect(id)~=0
+	return Duel.IsTurnPlayer(tp) and e:GetHandler():GetFlagEffect(id)~=0
 end
 function s.spfilter(c,e,tp)
 	return c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_BATTLE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsCanBeEffectTarget(e)

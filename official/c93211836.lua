@@ -1,4 +1,5 @@
 --アーミー・ジェネクス
+--Genex Army
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon success
@@ -20,10 +21,10 @@ function s.initial_effect(c)
 	e2:SetLabelObject(e1)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x2}
+s.listed_series={SET_GENEX}
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
-	if g:IsExists(Card.IsSetCard,1,nil,0x2) then
+	if g:IsExists(Card.IsSetCard,1,nil,SET_GENEX) then
 		e:GetLabelObject():SetLabel(1)
 	else
 		e:GetLabelObject():SetLabel(0)
@@ -31,7 +32,7 @@ function s.valcheck(e,c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_TRIBUTE) and e:GetLabel()==1
+	return c:IsTributeSummoned() and e:GetLabel()==1
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) end

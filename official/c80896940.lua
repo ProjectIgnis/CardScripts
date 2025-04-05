@@ -1,4 +1,5 @@
 --涅槃の超魔導剣士
+--Nirvana High Paladin
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -61,7 +62,7 @@ function s.initial_effect(c)
 end
 s.synchro_nt_required=1
 function s.matfilter(c,scard,sumtype,tp)
-	return c:IsType(TYPE_PENDULUM,scard,sumtype,tp) and c:IsSummonType(SUMMON_TYPE_PENDULUM)
+	return c:IsType(TYPE_PENDULUM,scard,sumtype,tp) and c:IsPendulumSummoned()
 end
 function s.indcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
@@ -73,13 +74,13 @@ function s.indop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e1:SetValue(1)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE)
 	tc:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
 	e2:SetValue(1)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE)
 	tc:RegisterEffect(e2)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
@@ -96,12 +97,12 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-atk)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) and e:GetLabel()==1
+	return e:GetHandler():IsSynchroSummoned() and e:GetLabel()==1
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and chkc:IsAbleToHand() end
@@ -118,7 +119,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.mfilter(c,sc)
 	return c:IsType(TYPE_PENDULUM,sc,SUMMON_TYPE_SYNCHRO) and c:IsType(TYPE_TUNER,sc,SUMMON_TYPE_SYNCHRO)
-		and c:IsSummonType(SUMMON_TYPE_PENDULUM)
+		and c:IsPendulumSummoned()
 end
 function s.valcheck(e,c)
 	local g=c:GetMaterial()

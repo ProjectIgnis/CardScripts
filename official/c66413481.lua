@@ -1,4 +1,5 @@
 --炎王獣 ヤクシャ
+--Fire King Avatar Yaksha
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -26,10 +27,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x81}
+s.listed_series={SET_FIRE_KING}
 function s.cfilter(c,tp)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp)
-		and c:IsReason(REASON_EFFECT) and c:IsSetCard(0x81)
+		and c:IsReason(REASON_EFFECT) and c:IsSetCard(SET_FIRE_KING)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
@@ -49,13 +50,13 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_DESTROY)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,nil) end
-	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD+LOCATION_HAND,0,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_ONFIELD|LOCATION_HAND,0,1,nil) end
+	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD|LOCATION_HAND,0,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectMatchingCard(tp,aux.TRUE,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,aux.TRUE,tp,LOCATION_ONFIELD|LOCATION_HAND,0,1,1,nil)
 	if #g>0 then
 		Duel.Destroy(g,REASON_EFFECT)
 	end

@@ -32,13 +32,13 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xe1}
+s.listed_series={SET_METALFOES}
 function s.cfilter(c,e,tp)
-	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:IsSummonType(SUMMON_TYPE_FUSION)
+	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:IsFusionSummoned()
 		and Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,nil,c:GetLevel(),e,tp)
 end
 function s.filter(c,lv,e,tp)
-	return c:HasLevel() and c:GetLevel()<lv and c:IsSetCard(0xe1)
+	return c:HasLevel() and c:GetLevel()<lv and c:IsSetCard(SET_METALFOES)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -60,7 +60,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xe1) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_METALFOES) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

@@ -1,4 +1,4 @@
---
+--ティスティナの歩哨
 --Sentinel of the Tistina
 --Scripted by Hatter
 local s,id=GetID()

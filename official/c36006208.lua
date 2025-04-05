@@ -1,4 +1,5 @@
 --彼岸の沈溺
+--Fire Lake of the Burning Abyss
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -13,9 +14,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xb1}
+s.listed_series={SET_BURNING_ABYSS}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0xb1) and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and c:IsSetCard(SET_BURNING_ABYSS) and c:IsAbleToGraveAsCost()
 end
 function s.costfilter(c,rg,dg)
 	local a=0

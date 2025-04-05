@@ -1,4 +1,5 @@
 --魔界劇団の楽屋入り
+--Abyss Actors Back Stage
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -11,12 +12,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x10ec}
+s.listed_series={SET_ABYSS_ACTOR}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_PZONE,0,2,nil,0x10ec)
+	return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_PZONE,0,2,nil,SET_ABYSS_ACTOR)
 end
 function s.filter(c)
-	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(0x10ec) and not c:IsForbidden()
+	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(SET_ABYSS_ACTOR) and not c:IsForbidden()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

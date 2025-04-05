@@ -1,4 +1,5 @@
 --浮鵺城
+--Cloudcastle
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -37,7 +38,7 @@ end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	for tc in aux.Next(eg) do
-		tc:RegisterFlagEffect(id,RESET_EVENT+0x1ec0000+RESET_PHASE+PHASE_END,0,1)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESET_TOGRAVE|RESET_REMOVE|RESET_TOHAND|RESET_TODECK|RESET_LEAVE|RESET_TOFIELD|RESET_PHASE|PHASE_END,0,1)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

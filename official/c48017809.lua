@@ -1,4 +1,5 @@
 --蜃気楼の筒
+--Mirage Tube
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

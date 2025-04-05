@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==1-tp and Duel.GetBattleDamage(tp)>0
+	return Duel.IsTurnPlayer(1-tp) and Duel.GetBattleDamage(tp)>0
 end
 function s.filter(c)
 	return c:IsDefenseBelow(1500) and c:IsType(TYPE_TUNER) and c:IsRace(RACE_WARRIOR)
@@ -29,7 +29,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
-	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+	e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
 	Duel.RegisterEffect(e1,tp)
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.filter),tp,LOCATION_GRAVE,0,nil)
 	if #g~=0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then

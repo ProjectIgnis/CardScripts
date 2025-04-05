@@ -1,8 +1,9 @@
 --月光舞猫姫
+--Lunalight Cat Dancer
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
-	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0xdf),2)
+	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_LUNALIGHT),2)
 	c:EnableReviveLimit()
 	--battle indestructable
 	local e1=Effect.CreateEffect(c)
@@ -30,14 +31,14 @@ function s.initial_effect(c)
 	e3:SetOperation(s.damop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xdf}
-s.material_setcode=0xdf
+s.listed_series={SET_LUNALIGHT}
+s.material_setcode=SET_LUNALIGHT
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,e:GetHandler(),0xdf) end
-	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,nil,e:GetHandler(),0xdf)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,e:GetHandler(),SET_LUNALIGHT) end
+	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,nil,e:GetHandler(),SET_LUNALIGHT)
 	Duel.Release(g,REASON_COST)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
@@ -47,14 +48,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
 	e1:SetTargetRange(0,LOCATION_MZONE)
 	e1:SetValue(s.indct)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	if c:IsRelateToEffect(e) then
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_ATTACK_ALL)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		e2:SetValue(2)
 		c:RegisterEffect(e2)
 	end

@@ -1,5 +1,5 @@
 --円盤闘技場セリオンズ・リング
---Therions' Ring, the Colosseum Saucer
+--Therion Discolosseum
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -35,9 +35,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={CARD_ARGYRO_SYSTEM}
-s.listed_series={0x17b}
+s.listed_series={SET_THERION}
 function s.thfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x17b) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(SET_THERION) and c:IsAbleToHand()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -53,7 +53,7 @@ function s.dfilter(c,tp)
 	return c:IsControler(tp) and c:IsReason(REASON_BATTLE)
 end
 function s.repfilter(c)
-	return (c:IsSetCard(0x17b) or c:IsCode(CARD_ARGYRO_SYSTEM)) and c:IsAbleToGrave()
+	return (c:IsSetCard(SET_THERION) or c:IsCode(CARD_ARGYRO_SYSTEM)) and c:IsAbleToGrave()
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(s.dfilter,1,nil,tp)

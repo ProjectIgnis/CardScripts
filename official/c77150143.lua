@@ -1,4 +1,5 @@
 --十二獣サラブレード
+--Zoodiac Thoroughblade
 local s,id=GetID()
 function s.initial_effect(c)
 	--draw
@@ -21,9 +22,9 @@ function s.initial_effect(c)
 	e3:SetCondition(s.condition)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xf1}
+s.listed_series={SET_ZOODIAC}
 function s.filter(c)
-	return c:IsSetCard(0xf1) and c:IsDiscardable(REASON_EFFECT)
+	return c:IsSetCard(SET_ZOODIAC) and c:IsDiscardable(REASON_EFFECT)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1)
@@ -31,7 +32,7 @@ function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.DiscardHand(tp,s.filter,1,1,REASON_EFFECT+REASON_DISCARD,nil)~=0 then
+	if Duel.DiscardHand(tp,s.filter,1,1,REASON_EFFECT|REASON_DISCARD,nil)~=0 then
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end
 end

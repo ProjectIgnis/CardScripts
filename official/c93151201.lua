@@ -1,4 +1,5 @@
 --ボルテック・コング
+--Voltic Kong
 local s,id=GetID()
 function s.initial_effect(c)
 	--discard deck

@@ -30,21 +30,21 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x3d}
+s.listed_series={SET_SIX_SAMURAI}
 s.listed_names={id}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x3d) and not c:IsCode(id)
+	return c:IsFaceup() and c:IsSetCard(SET_SIX_SAMURAI) and not c:IsCode(id)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.costfilter(c)
-	return c:IsSetCard(0x3d) and c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsSetCard(SET_SIX_SAMURAI) and c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,2,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,2,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,2,2,nil)
+	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,2,2,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.filter(c)
@@ -65,7 +65,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.vfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x3d) and not c:IsCode(id)
+	return c:IsFaceup() and c:IsSetCard(SET_SIX_SAMURAI) and not c:IsCode(id)
 end
 function s.valcon(e)
 	return Duel.IsExistingMatchingCard(s.vfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,2,nil)

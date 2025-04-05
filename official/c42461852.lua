@@ -1,5 +1,5 @@
 --サイバネット・ストーム
---Prototype, requires a core update for full implementation
+--Cynet Storm
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -61,4 +61,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

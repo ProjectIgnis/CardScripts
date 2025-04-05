@@ -1,5 +1,5 @@
 --壱世壊＝ペルレイノ
---Perlayno, the Primal Parallel Ruined Realm
+--Primeval Planet Perlereino
 --scripted by Zefile
 local s,id=GetID()
 function s.initial_effect(c)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetRange(LOCATION_FZONE)
-	e2:SetTarget(function(_,c) return c:IsSetCard(0x182) or c:IsType(TYPE_FUSION) end)
+	e2:SetTarget(function(_,c) return c:IsSetCard(SET_TEARLAMENTS) or c:IsType(TYPE_FUSION) end)
 	e2:SetValue(500)
 	c:RegisterEffect(e2)
 	--Destroy 1 card on the field
@@ -35,9 +35,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={CARD_VISAS_STARFROST}
-s.listed_series={0x182}
+s.listed_series={SET_TEARLAMENTS}
 function s.thfilter(c)
-	return c:IsAbleToHand() and ((c:IsSetCard(0x182) and c:IsMonster()) or c:IsCode(CARD_VISAS_STARFROST))
+	return c:IsAbleToHand() and ((c:IsSetCard(SET_TEARLAMENTS) and c:IsMonster()) or c:IsCode(CARD_VISAS_STARFROST))
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -50,8 +50,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,tp)
-	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_GRAVE+LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
-		and c:IsSetCard(0x182) and (c:IsMonster() or c:IsPreviousLocation(LOCATION_MZONE)) and c:IsReason(REASON_EFFECT)
+	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_GRAVE|LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
+		and c:IsSetCard(SET_TEARLAMENTS) and (c:IsMonster() or c:IsPreviousLocation(LOCATION_MZONE)) and c:IsReason(REASON_EFFECT)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

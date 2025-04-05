@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
-	Synchro.AddProcedure(c,aux.FilterSummonCode(652362),1,1,Synchro.NonTunerEx(Card.IsSetCard,0xc),1,99)
+	Synchro.AddProcedure(c,aux.FilterSummonCode(652362),1,1,Synchro.NonTunerEx(Card.IsSetCard,SET_ALIEN),1,99)
 	c:EnableReviveLimit()
 	--to hand
 	local e1=Effect.CreateEffect(c)
@@ -31,7 +31,7 @@ function s.initial_effect(c)
 end
 s.material={652362}
 s.listed_names={652362}
-s.listed_series={0xc}
+s.listed_series={SET_ALIEN}
 s.counter_place_list={COUNTER_A}
 function s.filter(c)
 	return c:IsFaceup() and c:IsSpellTrap() and c:IsAbleToHand()

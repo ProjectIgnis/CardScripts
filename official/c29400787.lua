@@ -1,4 +1,5 @@
 --ゴーストリック・パレード
+--Ghostrick Parade
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -46,7 +47,7 @@ function s.initial_effect(c)
 	e6:SetCode(EFFECT_NO_EFFECT_DAMAGE)
 	c:RegisterEffect(e6)
 end
-s.listed_series={0x8d}
+s.listed_series={SET_GHOSTRICK}
 function s.dirtg(e,c)
 	return not Duel.IsExistingMatchingCard(Card.IsFaceup,c:GetControler(),0,LOCATION_MZONE,1,nil)
 end
@@ -54,7 +55,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp) and Duel.GetAttackTarget()==nil
 end
 function s.filter(c)
-	return c:IsSetCard(0x8d) and c:IsAbleToHand()
+	return c:IsSetCard(SET_GHOSTRICK) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

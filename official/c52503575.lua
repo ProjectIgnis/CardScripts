@@ -1,4 +1,5 @@
 --最終突撃命令
+--Final Attack Orders
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

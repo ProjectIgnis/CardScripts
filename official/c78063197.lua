@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Fusion Summon
-	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,0x1110),Card.IsAbleToRemove,s.fextra,Fusion.BanishMaterial,nil,nil,nil,nil,nil,nil,nil,nil,nil,s.extratg)
+	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,SET_EYES_RESTRICT),Card.IsAbleToRemove,s.fextra,Fusion.BanishMaterial,nil,nil,nil,nil,nil,nil,nil,nil,nil,s.extratg)
 	e1:SetCountLimit(1,id)
 	c:RegisterEffect(e1)
 	--equip
@@ -14,22 +14,22 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.eqtg)
 	e2:SetOperation(s.eqop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x1110}
+s.listed_series={SET_EYES_RESTRICT}
 s.listed_names={64631466}
 function s.fextra(e,tp,mg)
-	if not Duel.IsPlayerAffectedByEffect(tp,69832741) then
+	if not Duel.IsPlayerAffectedByEffect(tp,CARD_SPIRIT_ELIMINATION) then
 		return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToRemove),tp,LOCATION_GRAVE,0,nil)
 	end
 	return nil
 end
 function s.extratg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,0,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,0,tp,LOCATION_HAND|LOCATION_MZONE|LOCATION_GRAVE)
 end
 function s.filter(c,tp)
 	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsAbleToChangeControler() 
@@ -37,7 +37,7 @@ function s.filter(c,tp)
 end
 function s.eqfilter(c,ec,tp)
 	local eff={c:GetCardEffect(89785779)}
-	if c:IsFacedown() or ((not c:IsSetCard(0x1110) or not c:IsType(TYPE_FUSION)) and not c:IsCode(64631466)) then return false end
+	if c:IsFacedown() or ((not c:IsSetCard(SET_EYES_RESTRICT) or not c:IsType(TYPE_FUSION)) and not c:IsCode(64631466)) then return false end
 	for _,te in ipairs(eff) do
 		if te:GetValue()(ec,c,tp) then return true end
 	end

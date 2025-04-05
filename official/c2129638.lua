@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e7:SetOperation(s.rmop)
 	c:RegisterEffect(e7)
 end
-s.material_setcode=0xdd
+s.material_setcode=SET_BLUE_EYES
 s.listed_names={CARD_BLUEEYES_W_DRAGON}
 function s.splimit(e,se,sp,st)
 	return (st&SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
@@ -42,7 +42,7 @@ function s.contactfil(tp)
 	return Duel.GetMatchingGroup(Card.IsAbleToGraveAsCost,tp,LOCATION_MZONE,0,nil)
 end
 function s.contactop(g)
-	Duel.SendtoGrave(g,REASON_COST+REASON_MATERIAL)
+	Duel.SendtoGrave(g,REASON_COST|REASON_MATERIAL)
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

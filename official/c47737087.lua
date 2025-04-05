@@ -1,4 +1,5 @@
 --E・HERO ランパートガンナー
+--Elemental HERO Rampart Blaster
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -37,7 +38,7 @@ function s.initial_effect(c)
 	e5:SetValue(s.atkval)
 	c:RegisterEffect(e5)
 end
-s.material_setcode={0x8,0x3008}
+s.material_setcode={SET_HERO,SET_ELEMENTAL_HERO}
 function s.dacon(e)
 	return e:GetHandler():IsDefensePos()
 end

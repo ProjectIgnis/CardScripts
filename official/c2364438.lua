@@ -13,9 +13,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={id}
-s.listed_series={0x121}
+s.listed_series={SET_MAYAKASHI}
 function s.filter(c)
-	return c:IsSetCard(0x121) and not c:IsCode(id) and (c:IsAbleToHand() or c:IsAbleToGrave())
+	return c:IsSetCard(SET_MAYAKASHI) and not c:IsCode(id) and (c:IsAbleToHand() or c:IsAbleToGrave())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
@@ -26,4 +26,3 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	aux.ToHandOrElse(tc,tp)
 end
-

@@ -29,9 +29,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xd1}
+s.listed_series={SET_GRAYDLE}
 function s.desfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xd1)
+	return c:IsFaceup() and c:IsSetCard(SET_GRAYDLE)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -52,10 +52,10 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.filter(c)
-	return c:IsSetCard(0xd1) and c:IsAbleToHand()
+	return c:IsSetCard(SET_GRAYDLE) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

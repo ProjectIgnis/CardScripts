@@ -1,4 +1,5 @@
 --海竜神の怒り
+--Rage of Kairyu-Shin
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -44,7 +45,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_DISABLE_FIELD)
 	e1:SetLabel(seq*0x10000)
 	e1:SetOperation(s.disop)
-	e1:SetReset(RESET_PHASE+PHASE_END,2)
+	e1:SetReset(RESET_PHASE|PHASE_END,2)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.disop(e,tp)

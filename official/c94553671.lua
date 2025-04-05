@@ -32,24 +32,24 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetCountLimit(1,{id,1})
 	e3:SetCondition(aux.exccon)
-	e3:SetCost(aux.bfgcost)
+	e3:SetCost(Cost.SelfBanish)
 	e3:SetTarget(s.thtg2)
 	e3:SetOperation(s.thop2)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x128}
+s.listed_series={SET_WITCHCRAFTER}
 function s.tdfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_SPELLCASTER)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x128) and c:IsSpell() and c:IsAbleToHand()
+	return c:IsSetCard(SET_WITCHCRAFTER) and c:IsSpell() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and chkc:IsControler(tp) and s.tdfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.tdfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil)
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE|LOCATION_REMOVED) and chkc:IsControler(tp) and s.tdfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(s.tdfilter,tp,LOCATION_GRAVE|LOCATION_REMOVED,0,1,nil)
 		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectTarget(tp,s.tdfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,s.tdfilter,tp,LOCATION_GRAVE|LOCATION_REMOVED,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
@@ -67,7 +67,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter2(c)
-	return c:IsSetCard(0x128) and c:IsSpell() and c:IsFaceup() and c:IsAbleToHand()
+	return c:IsSetCard(SET_WITCHCRAFTER) and c:IsSpell() and c:IsFaceup() and c:IsAbleToHand()
 end
 function s.thcheck(sg)
 	return sg:GetClassCount(Card.GetCode)==#sg

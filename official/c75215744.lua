@@ -59,7 +59,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ) and e:GetLabel()>0
+	return e:GetHandler():IsXyzSummoned() and e:GetLabel()>0
 end
 function s.regtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local effs=e:GetLabel()

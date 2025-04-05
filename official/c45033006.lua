@@ -1,4 +1,5 @@
 --A・O・J エネミー・キャッチャー
+--Ally of Justice Enemy Catcher
 local s,id=GetID()
 function s.initial_effect(c)
 	--control

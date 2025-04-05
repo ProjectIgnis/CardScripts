@@ -1,5 +1,5 @@
 --Number 79: Battlin' Boxer Nova Kaiser
---No.79 BK 新星のカイザー
+--Number 79: Battlin' Boxer Nova Kaiser
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -33,20 +33,20 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x84}
+s.listed_series={SET_BATTLIN_BOXER}
 s.xyz_number=79
 function s.filter(c)
-	return c:IsSetCard(0x84) and c:IsMonster()
+	return c:IsSetCard(SET_BATTLIN_BOXER) and c:IsMonster()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsType(TYPE_XYZ) 
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil) end
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND|LOCATION_GRAVE,0,1,nil) end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,LOCATION_HAND|LOCATION_GRAVE,0,1,1,nil)
 	if #g>0 then
 		Duel.Overlay(c,g)
 	end
@@ -62,7 +62,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp) and ct>0
 end
 function s.spfilter(c,e,tp)
-	return c:IsLevelBelow(4) and c:IsSetCard(0x84) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevelBelow(4) and c:IsSetCard(SET_BATTLIN_BOXER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end

@@ -1,5 +1,5 @@
 --オーロラの天気模様
---The Weather Auroural Canvas
+--The Weather Auroral Canvas
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,0,id)
@@ -27,10 +27,10 @@ function s.initial_effect(c)
 	e3:SetLabelObject(e2)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x109}
+s.listed_series={SET_THE_WEATHER}
 function s.eftg(e,c)
 	local g=e:GetHandler():GetColumnGroup(1,1)
-	return c:IsType(TYPE_EFFECT) and c:IsSetCard(0x109) and c:GetSequence()<5 and g:IsContains(c)
+	return c:IsType(TYPE_EFFECT) and c:IsSetCard(SET_THE_WEATHER) and c:GetSequence()<5 and g:IsContains(c)
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	return #eg==1

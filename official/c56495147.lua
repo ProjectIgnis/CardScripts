@@ -1,9 +1,9 @@
--- 相剣師－泰阿
--- Swordsoul of Taia
--- Scripted by Hatter
+--相剣師－泰阿
+--Swordsoul of Taia
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon token
+	--Special Summon token
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.tktg)
 	e1:SetOperation(s.tkop)
 	c:RegisterEffect(e1)
-	-- Send to GY
+	--Send to GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOGRAVE)
@@ -28,23 +28,23 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={TOKEN_SWORDSOUL}
-s.listed_series={0x16d}
+s.listed_series={SET_SWORDSOUL}
 function s.filter(c)
-	return c:IsSetCard(0x16d) or (c:IsMonster() and c:IsRace(RACE_WYRM))
+	return c:IsSetCard(SET_SWORDSOUL) or (c:IsMonster() and c:IsRace(RACE_WYRM))
 end
 function s.tkcostfilter(c)
 	return s.filter(c) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.tkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.tkcostfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.tkcostfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.tkcostfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.tkcostfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-			and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_SWORDSOUL,0x16d,TYPES_TOKEN+TYPE_TUNER,0,0,4,RACE_WYRM,ATTRIBUTE_WATER)
+			and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_SWORDSOUL,SET_SWORDSOUL,TYPES_TOKEN+TYPE_TUNER,0,0,4,RACE_WYRM,ATTRIBUTE_WATER)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
@@ -54,7 +54,7 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 		local c=e:GetHandler()
 		local token=Duel.CreateToken(tp,TOKEN_SWORDSOUL)
 		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
-		-- Cannot Special Summon non-Synchro monsters from Extra Deck
+		--Cannot Special Summon non-Synchro monsters from Extra Deck
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -62,11 +62,11 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 		e1:SetAbsoluteRange(tp,1,0)
 		e1:SetTarget(function(_,c) return c:IsLocation(LOCATION_EXTRA) and not c:IsType(TYPE_SYNCHRO) end)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		token:RegisterEffect(e1,true)
-		-- Lizard check
+		--Lizard check
 		local e2=aux.createContinuousLizardCheck(c,LOCATION_MZONE,function(_,c) return not c:IsOriginalType(TYPE_SYNCHRO) end)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		token:RegisterEffect(e2,true)
 	end
 	Duel.SpecialSummonComplete()

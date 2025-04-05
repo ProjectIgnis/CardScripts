@@ -1,4 +1,5 @@
 --青き眼の護人
+--Protector with Eyes of Blue
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon
@@ -20,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.gvop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xdd}
+s.listed_series={SET_BLUE_EYES}
 function s.spfilter1(c,e,tp)
 	return c:IsType(TYPE_TUNER) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:GetLevel()==1 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -41,7 +42,7 @@ function s.gvfilter(c,ft)
 	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsAbleToGrave() and (ft>0 or c:GetSequence()<5)
 end
 function s.spfilter2(c,e,tp)
-	return c:IsSetCard(0xdd) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_BLUE_EYES) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.gvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)

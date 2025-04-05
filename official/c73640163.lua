@@ -1,7 +1,6 @@
 --ペンギン僧侶
---Penguin Priest
+--Penguin Cleric
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -29,11 +28,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 	--Lists "Penguin" archetype
-s.listed_series={0x5a}
-
+s.listed_series={SET_PENGUIN}
 	--Check for a "Penguin" monster that was sent to GY by opponent's card
 function s.cfilter(c,e,tp)
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE) and c:IsPreviousSetCard(0x5a)
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE) and c:IsPreviousSetCard(SET_PENGUIN)
 		and c:GetReasonPlayer()==1-tp and c:IsPreviousControler(tp) and c:IsCanBeEffectTarget(e) and c:IsPreviousPosition(POS_FACEUP)
 end
 	--Activation legality
@@ -55,14 +53,14 @@ end
 function s.ssop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and Duel.SendtoGrave(c,REASON_EFFECT+REASON_DISCARD)==1
+	if c:IsRelateToEffect(e) and Duel.SendtoGrave(c,REASON_EFFECT|REASON_DISCARD)==1
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and tc and tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)
 	end
 end
 	--Check for a "Penguin" monster
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x5a)
+	return c:IsFaceup() and c:IsSetCard(SET_PENGUIN)
 end
 	--Activation legality
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -83,10 +81,10 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(600)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		if tc:IsImmuneToEffect(e) then return end
 		local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 		Duel.Recover(p,d,REASON_EFFECT)
-	end	
+	end
 end

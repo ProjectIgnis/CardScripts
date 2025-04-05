@@ -1,5 +1,5 @@
 --セリオンズ・チャージ
---Therions' Charge
+--Therion Charge
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -16,15 +16,15 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={CARD_ARGYRO_SYSTEM,id}
-s.listed_series={0x17b}
+s.listed_series={SET_THERION}
 function s.cfilter(c)
 	return ((c:IsFaceup() and c:GetSequence()<5) or c:IsLocation(LOCATION_HAND)) and c:IsAbleToGraveAsCost()
-		and ((c:IsSetCard(0x17b) and not c:IsCode(id)) or c:IsCode(CARD_ARGYRO_SYSTEM))
+		and ((c:IsSetCard(SET_THERION) and not c:IsCode(id)) or c:IsCode(CARD_ARGYRO_SYSTEM))
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND+LOCATION_SZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND|LOCATION_SZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND+LOCATION_SZONE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND|LOCATION_SZONE,0,1,1,nil)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

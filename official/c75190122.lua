@@ -1,4 +1,5 @@
 --黒・爆・裂・破・魔・導
+--Dark Burning Magic
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

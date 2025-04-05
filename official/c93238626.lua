@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCode(EVENT_BE_BATTLE_TARGET)
 	e3:SetCondition(s.spcon)
-	e3:SetCost(s.spcost)
+	e3:SetCost(Cost.SelfToGrave)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
@@ -40,12 +40,12 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
-s.listed_series={0x48,0x1048}
+s.listed_series={SET_NUMBER,SET_NUMBER_C}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.RegisterFlagEffect(ep,id,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(ep,id,RESET_PHASE|PHASE_END,0,1)
 end
 function s.reccon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -61,14 +61,10 @@ function s.recop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttackTarget()
-	return at:IsFaceup() and at:IsControler(tp) and at:IsSetCard(0x48) and not at:IsSetCard(0x1048)
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
+	return at:IsFaceup() and at:IsControler(tp) and at:IsSetCard(SET_NUMBER) and not at:IsSetCard(SET_NUMBER_C)
 end
 function s.filter(c,e,tp,mc,no,pg)
-	return c.xyz_number==no and c:IsSetCard(0x1048) and mc:IsCanBeXyzMaterial(c,tp)
+	return c.xyz_number==no and c:IsSetCard(SET_NUMBER_C) and mc:IsCanBeXyzMaterial(c,tp)
 		and (#pg<=0 or pg:IsContains(mc)) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

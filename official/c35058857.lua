@@ -47,10 +47,10 @@ function s.lvfilter(c,lv)
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local lv=e:GetHandler():GetLevel()
-	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE+LOCATION_GRAVE) and s.lvfilter(chkc,lv) end
-	if chk==0 then return Duel.IsExistingTarget(s.lvfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,lv) end
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE|LOCATION_GRAVE) and s.lvfilter(chkc,lv) end
+	if chk==0 then return Duel.IsExistingTarget(s.lvfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil,lv) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	Duel.SelectTarget(tp,s.lvfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil,lv)
+	Duel.SelectTarget(tp,s.lvfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil,lv)
 end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
@@ -60,7 +60,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)
 		e1:SetValue(tc:GetLevel())
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 		c:RegisterEffect(e1)
 	end
 	local e2=Effect.CreateEffect(c)
@@ -69,7 +69,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetTargetRange(1,0)
-	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetReset(RESET_PHASE|PHASE_END)
 	e2:SetTarget(s.splimit)
 	Duel.RegisterEffect(e2,tp)
 end

@@ -1,7 +1,6 @@
 --天威の龍鬼神
 --Draco Berserker of the Tenyi
 --Scripted by Larry126
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -33,7 +32,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==1-tp and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsRelateToEffect(re)
+	return rp==1-tp and re:IsMonsterEffect() and re:GetHandler():IsRelateToEffect(re)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rc=re:GetHandler()
@@ -69,7 +68,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(value)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 	end
 	--Can make a second attack on monsters
@@ -78,7 +77,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_EXTRA_ATTACK)

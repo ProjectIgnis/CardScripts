@@ -35,14 +35,14 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e4:SetProperty(EFFECT_FLAG_DELAY)
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e4:SetCountLimit(1,id)	
+	e4:SetCountLimit(1,id)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCondition(s.thcon)
 	e4:SetTarget(s.thtg)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x165}
+s.listed_series={SET_URSARCTIC}
 function s.sprfilter(c)
 	return c:IsFaceup() and c:IsAbleToGraveAsCost() and c:HasLevel()
 end
@@ -92,7 +92,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(Card.IsSummonPlayer,1,nil,1-tp)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x165) and c:IsAbleToHand()
+	return c:IsSetCard(SET_URSARCTIC) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

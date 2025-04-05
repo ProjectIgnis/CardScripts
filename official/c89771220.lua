@@ -29,11 +29,11 @@ function s.initial_effect(c)
 	e3:SetCode(CARD_URSARCTIC_DRYTRON)
 	c:RegisterEffect(e3)
 end
-s.listed_names={33250142,89264428,58793369,27693363,97148796}
+s.listed_names={33250142,CARD_URSARCTIC_BIG_DIPPER,58793369,27693363,97148796}
 --"Ultimate Flagship Ursatron", "Ursarctic Big Dipper", "Drytron Fafnir", "Ursarctic Polari", "Drytron Alpha Thuban"
 s.listed_series={SET_URSARCTIC,SET_DRYTRON}
 function s.rmfilter(c)
-	return c:IsCode(89264428,58793369) and c:IsAbleToRemove()
+	return c:IsCode(CARD_URSARCTIC_BIG_DIPPER,58793369) and c:IsAbleToRemove()
 end
 function s.rescon(sg,e,tp,mg)
 	return sg:GetClassCount(Card.GetCode)==2 and sg:FilterCount(Card.IsLocation,nil,LOCATION_DECK)<=1

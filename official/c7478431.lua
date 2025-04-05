@@ -16,13 +16,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.disop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x2a}
+s.listed_series={SET_NATURIA}
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and re:IsActiveType(TYPE_MONSTER)
+	return ep~=tp and re:IsMonsterEffect()
 		and Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)~=LOCATION_DECK and Duel.IsChainNegatable(ev)
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x2a) and not c:IsStatus(STATUS_BATTLE_DESTROYED)
+	return c:IsSetCard(SET_NATURIA) and not c:IsStatus(STATUS_BATTLE_DESTROYED)
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

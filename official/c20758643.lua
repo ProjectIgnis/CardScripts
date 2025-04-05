@@ -1,4 +1,5 @@
 --彼岸の悪鬼 グラバースニッチ
+--Graff, Malebranche of the Burning Abyss
 local s,id=GetID()
 function s.initial_effect(c)
 	--self destroy
@@ -32,16 +33,16 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xb1}
+s.listed_series={SET_BURNING_ABYSS}
 s.listed_names={id}
 function s.sdfilter(c)
-	return not c:IsFaceup() or not c:IsSetCard(0xb1)
+	return not c:IsFaceup() or not c:IsSetCard(SET_BURNING_ABYSS)
 end
 function s.sdcon(e)
 	return Duel.IsExistingMatchingCard(s.sdfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.filter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSpellTrap()
 end
 function s.sscon(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_ONFIELD,0,1,nil)
@@ -57,7 +58,7 @@ function s.ssop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xb1) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_BURNING_ABYSS) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

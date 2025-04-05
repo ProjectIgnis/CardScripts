@@ -19,10 +19,10 @@ function s.initial_effect(c)
 	e2:SetValue(s.atlimit)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x42}
+s.listed_series={SET_NORDIC}
 function s.descon(e)
-	return not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x42),0,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler())
+	return not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_NORDIC),0,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler())
 end
 function s.atlimit(e,c)
-	return c:IsFaceup() and c:GetCode()~=id and c:IsSetCard(0x42)
+	return c:IsFaceup() and c:GetCode()~=id and c:IsSetCard(SET_NORDIC)
 end

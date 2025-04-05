@@ -22,9 +22,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.op2)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x35}
+s.listed_series={SET_FABLED}
 function s.disfilter(c)
-	return c:IsSetCard(0x35) and c:IsMonster() and c:IsDiscardable()
+	return c:IsSetCard(SET_FABLED) and c:IsMonster() and c:IsDiscardable()
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -37,11 +37,11 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.disfilter,tp,LOCATION_HAND,0,nil)
 	if #g==0 then return end
 	if #g==1 then
-		Duel.SendtoGrave(g,REASON_EFFECT+REASON_DISCARD)
+		Duel.SendtoGrave(g,REASON_EFFECT|REASON_DISCARD)
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 		local sg=g:Select(tp,1,1,e:GetHandler())
-		Duel.SendtoGrave(sg,REASON_EFFECT+REASON_DISCARD)
+		Duel.SendtoGrave(sg,REASON_EFFECT|REASON_DISCARD)
 	end
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
@@ -51,7 +51,7 @@ function s.con2(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1
 end
 function s.filter2(c,e,tp)
-	return c:IsLevelBelow(2) and c:IsSetCard(0x35) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevelBelow(2) and c:IsSetCard(SET_FABLED) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.tg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

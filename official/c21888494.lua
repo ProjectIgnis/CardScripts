@@ -1,4 +1,5 @@
 --選ばれし者
+--Chosen One
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

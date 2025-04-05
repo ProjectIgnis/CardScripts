@@ -1,5 +1,5 @@
 --EMターントルーパー
---Performapal Turntrooper
+--Performapal Turn Trooper
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_COUNTER)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e1:SetCode(EVENT_PHASE+PHASE_BATTLE_START)
+	e1:SetCode(EVENT_PHASE|PHASE_BATTLE_START)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.countercon)
@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCondition(function(e) return e:GetHandler():GetCounter(0x14a)==2 end)
-	e3:SetCost(s.rmcost)
+	e3:SetCost(Cost.SelfTribute)
 	e3:SetTarget(s.rmtg)
 	e3:SetOperation(s.rmop)
 	c:RegisterEffect(e3)
@@ -49,11 +49,6 @@ function s.counterop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp) and e:GetHandler():GetCounter(0x14a)==1
-end
-function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsReleasable() end
-	Duel.Release(c,REASON_COST)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

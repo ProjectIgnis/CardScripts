@@ -1,4 +1,5 @@
 --破壊神 ヴァサーゴ
+--Versago the Destroyer
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion substitute
@@ -9,5 +10,5 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.subcon(e)
-	return e:GetHandler():IsLocation(LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE)
+	return e:GetHandler():IsLocation(LOCATION_HAND|LOCATION_ONFIELD|LOCATION_GRAVE)
 end

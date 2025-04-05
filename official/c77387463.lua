@@ -33,10 +33,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop2)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xe3}
+s.listed_series={SET_CUBIC}
 s.listed_names={CARD_VIJAM,3775068}
 function s.tgfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xe3) and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and c:IsSetCard(SET_CUBIC) and c:IsAbleToGraveAsCost()
 end
 function s.spcon1(e,c)
 	if c==nil then return true end
@@ -64,7 +64,7 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp,c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(1600)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE-RESET_TOFIELD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE-RESET_TOFIELD)
 	e:GetHandler():RegisterEffect(e1)
 	g:DeleteGroup()
 end

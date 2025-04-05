@@ -1,7 +1,6 @@
 --六花精エリカ
 --Erica the Rikka Fairy
 --Scripted by pyrQ
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Making your battling plant monster gain 1000 ATK/DEF
@@ -10,10 +9,10 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
-	e1:SetRange(LOCATION_MZONE+LOCATION_HAND)
+	e1:SetRange(LOCATION_MZONE|LOCATION_HAND)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.atkcon)
-	e1:SetCost(s.atkcost)
+	e1:SetCost(Cost.SelfTribute)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
 	--Special summon itself from GY
@@ -36,10 +35,6 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	e:SetLabelObject(tc)
 	return tc and tc~=e:GetHandler() and tc:IsFaceup() and tc:IsControler(tp) and tc:IsRace(RACE_PLANT)
 end
-function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
-end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
 	if tc:IsRelateToBattle() and tc:IsFaceup() and tc:IsControler(tp) then
@@ -47,7 +42,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(1000)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UPDATE_DEFENSE)
@@ -75,7 +70,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e1,true)
 	end

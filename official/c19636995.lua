@@ -1,7 +1,6 @@
 --急き兎馬
 --Red Hared Hasty Horse
 --Scripted by edo9300
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon itself from hand
@@ -37,7 +36,7 @@ function s.initial_effect(c)
 end
 function s.hspval(e,c)
 	local tp=c:GetControler()
-	local zone=0x1f
+	local zone=ZONES_MMZ
 	local lg=Duel.GetFieldGroup(tp,LOCATION_ONFIELD,LOCATION_ONFIELD)
 	for tc in aux.Next(lg) do
 		zone=zone&(~tc:GetColumnZone(LOCATION_MZONE,0,0,tp))
@@ -49,7 +48,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetFlagEffect(id)==0 end
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_CHAIN,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_CHAIN,0,1)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,e:GetHandler(),1,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
@@ -69,7 +68,7 @@ function s.datop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_BASE_ATTACK)
 		e1:SetValue(c:GetBaseAttack()/2)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e1)
 		--Can attack directly
 		local e2=Effect.CreateEffect(c)
@@ -77,7 +76,7 @@ function s.datop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DIRECT_ATTACK)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e2)
 	end
 end

@@ -17,12 +17,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x47,0x1047}
+s.listed_series={SET_GEM,SET_GEM_KNIGHT}
 function s.tgfilter(c)
-	return c:IsSetCard(0x1047) and c:IsAbleToHand()
+	return c:IsSetCard(SET_GEM_KNIGHT) and c:IsAbleToHand()
 end
 function s.costfilter(c,tp)
-	return c:IsSetCard(0x47) and c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsSetCard(SET_GEM) and c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 		and Duel.IsExistingTarget(s.tgfilter,tp,LOCATION_GRAVE,0,1,c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

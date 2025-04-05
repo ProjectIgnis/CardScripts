@@ -1,4 +1,5 @@
 --マインドクラッシュ
+--Mind Crush
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -24,10 +25,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local ac=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
 	local g=Duel.GetMatchingGroup(Card.IsCode,tp,0,LOCATION_HAND,nil,ac)
 	if #g>0 then
-		Duel.SendtoGrave(g,REASON_EFFECT+REASON_DISCARD)
+		Duel.SendtoGrave(g,REASON_EFFECT|REASON_DISCARD)
 	else
 		local sg=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
 		local dg=sg:RandomSelect(tp,1)
-		Duel.SendtoGrave(dg,REASON_EFFECT+REASON_DISCARD)
+		Duel.SendtoGrave(dg,REASON_EFFECT|REASON_DISCARD)
 	end
 end

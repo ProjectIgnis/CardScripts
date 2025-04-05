@@ -1,4 +1,5 @@
 --スチーム・シンクロン
+--Steam Synchron
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro effect
@@ -7,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER|TIMING_MAIN_END)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(s.sccon)
 	e1:SetTarget(s.sctarg)
@@ -16,7 +17,7 @@ function s.initial_effect(c)
 end
 function s.sccon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_CHAINING) and Duel.GetTurnPlayer()~=tp
-		and (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)
+		and (Duel.IsMainPhase())
 end
 function s.sctarg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsSynchroSummonable,tp,LOCATION_EXTRA,0,1,nil,e:GetHandler()) end

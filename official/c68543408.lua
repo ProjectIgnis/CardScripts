@@ -1,4 +1,5 @@
 --スターダスト・シャオロン
+--Stardust Xiaolong
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -25,7 +26,7 @@ end
 s.listed_names={CARD_STARDUST_DRAGON}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return tc:IsControler(tp) and tc:IsCode(CARD_STARDUST_DRAGON) and tc:IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return tc:IsControler(tp) and tc:IsCode(CARD_STARDUST_DRAGON) and tc:IsSynchroSummoned()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

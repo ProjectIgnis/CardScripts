@@ -25,9 +25,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.posop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x9d}
+s.listed_series={SET_SHADDOLL}
 function s.filter(c)
-	return c:IsSetCard(0x9d) and c:IsAbleToHand()
+	return c:IsSetCard(SET_SHADDOLL) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc) end
@@ -58,7 +58,7 @@ end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) then return end
-	if tc:IsSetCard(0x9d) then
+	if tc:IsSetCard(SET_SHADDOLL) then
 		Duel.ChangePosition(tc,POS_FACEUP_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)
 	else
 		Duel.ChangePosition(tc,POS_FACEUP_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK,true)

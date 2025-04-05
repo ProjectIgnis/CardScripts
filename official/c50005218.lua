@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x1115,0x115}
+s.listed_series={SET_SKY_STRIKER_ACE,SET_SKY_STRIKER}
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and chkc~=c end
@@ -47,8 +47,8 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ConfirmDecktop(tp,3)
 	local g=Duel.GetDecktopGroup(tp,3)
 	if #g>0 then
-		local g1=g:Filter(Card.IsSetCard,nil,0x115)
-		if g:IsExists(Card.IsSetCard,1,nil,0x115) then
+		local g1=g:Filter(Card.IsSetCard,nil,SET_SKY_STRIKER)
+		if g:IsExists(Card.IsSetCard,1,nil,SET_SKY_STRIKER) then
 			if g1:IsExists(Card.IsAbleToHand,1,nil) then
 				if Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
@@ -60,7 +60,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 			end
 		end
 		Duel.ShuffleDeck(tp)
-		if g:IsExists(Card.IsSetCard,1,nil,0x115) and tc:IsRelateToEffect(e) then
+		if g:IsExists(Card.IsSetCard,1,nil,SET_SKY_STRIKER) and tc:IsRelateToEffect(e) then
 				Duel.BreakEffect()
 				Duel.SendtoGrave(tc,REASON_EFFECT)
 		end
@@ -71,7 +71,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsReason(REASON_EFFECT) and c:IsPreviousLocation(LOCATION_FZONE)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x1115) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_SKY_STRIKER_ACE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

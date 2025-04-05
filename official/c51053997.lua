@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetHintTiming(0,TIMING_END_PHASE)
 	e3:SetCountLimit(1)
-	e3:SetCost(s.cost)
+	e3:SetCost(Cost.PayLP(500))
 	e3:SetTarget(s.target2)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
@@ -37,13 +37,9 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xc1}
+s.listed_series={SET_PSY_FRAME}
 function s.rmfilter(c)
-	return c:IsSetCard(0xc1) and c:IsAbleToRemove()
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,500) end
-	Duel.PayLPCost(tp,500)
+	return c:IsSetCard(SET_PSY_FRAME) and c:IsAbleToRemove()
 end
 function s.target2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.rmfilter(chkc) end
@@ -56,31 +52,31 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.Remove(tc,0,REASON_EFFECT+REASON_TEMPORARY)~=0 then
+	if tc:IsRelateToEffect(e) and Duel.Remove(tc,0,REASON_EFFECT|REASON_TEMPORARY)~=0 then
 		local ct=1
-		if Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_STANDBY then ct=2 end
+		if Duel.IsTurnPlayer(tp) and Duel.IsPhase(PHASE_STANDBY) then ct=2 end
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(aux.Stringid(id,1))
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-		e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
+		e1:SetCode(EVENT_PHASE|PHASE_STANDBY)
 		e1:SetCountLimit(1)
 		e1:SetLabelObject(tc)
 		e1:SetCondition(s.retcon)
 		e1:SetOperation(s.retop)
-		if Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_STANDBY then
-			e1:SetReset(RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,2)
+		if Duel.IsTurnPlayer(tp) and Duel.IsPhase(PHASE_STANDBY) then
+			e1:SetReset(RESET_PHASE|PHASE_STANDBY|RESET_SELF_TURN,2)
 			e1:SetValue(Duel.GetTurnCount())
 		else
-			e1:SetReset(RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN)
+			e1:SetReset(RESET_PHASE|PHASE_STANDBY|RESET_SELF_TURN)
 			e1:SetValue(0)
 		end
 		Duel.RegisterEffect(e1,tp)
-		tc:RegisterFlagEffect(id+1,RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,0,ct)
+		tc:RegisterFlagEffect(id+1,RESET_PHASE|PHASE_STANDBY|RESET_SELF_TURN,0,ct)
 	end
 end
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetTurnPlayer()~=tp or Duel.GetTurnCount()==e:GetValue() then return false end
+	if Duel.IsTurnPlayer(1-tp) or Duel.GetTurnCount()==e:GetValue() then return false end
 	return e:GetLabelObject():GetFlagEffect(id+1)~=0
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
@@ -88,13 +84,13 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ReturnToField(tc)
 end
 function s.cfilter(c,tp)
-	return c:IsPreviousSetCard(0xc1) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp)
+	return c:IsPreviousSetCard(SET_PSY_FRAME) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,e:GetHandler(),tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xc1) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_PSY_FRAME) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsRelateToEffect(e)

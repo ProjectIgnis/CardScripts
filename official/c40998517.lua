@@ -18,9 +18,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x134}
+s.listed_series={SET_GENERAIDER}
 function s.cfilter(c)
-	return c:IsSetCard(0x134) or c:IsRace(RACE_WARRIOR)
+	return c:IsSetCard(SET_GENERAIDER) or c:IsRace(RACE_WARRIOR)
 end
 function s.spcheck(sg,tp)
 	return Duel.IsExistingTarget(aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,#sg,sg)

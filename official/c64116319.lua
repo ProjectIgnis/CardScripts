@@ -1,7 +1,6 @@
 --トゥーン・ハーピィ・レディ
 --Toon Harpie Lady
 --Scripted by Hel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Cannot attack the turn it was summoned
@@ -36,12 +35,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.listed_names={15259703}
-
 function s.atklimit(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_ATTACK)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	e:GetHandler():RegisterEffect(e1)
 end
 function s.dircon(e)
@@ -59,7 +57,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	local g=Duel.GetMatchingGroup(Card.IsType,tp,0,LOCATION_ONFIELD,nil,TYPE_SPELL+TYPE_TRAP)
+	local g=Duel.GetMatchingGroup(Card.IsSpellTrap,tp,0,LOCATION_ONFIELD,nil)
 	if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 and #g>0
 		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,TYPE_TOON),tp,LOCATION_MZONE,0,1,c)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then

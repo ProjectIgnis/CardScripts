@@ -1,5 +1,5 @@
 --一惜二跳
---Two Toads with One Hop
+--Two Toads with One Sting
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -69,13 +69,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e0:SetType(EFFECT_TYPE_SINGLE)
 		e0:SetCode(EFFECT_EQUIP_LIMIT)
 		e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e0:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e0:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e0:SetValue(s.eqlimit)
 		c:RegisterEffect(e0)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_DISABLE_EFFECT)

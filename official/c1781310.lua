@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_HANDES+CATEGORY_DRAW)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E+TIMING_TOHAND)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E|TIMING_TOHAND)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
@@ -59,7 +59,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(g,REASON_EFFECT)
 	elseif opval[op]==3 then
 		local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND):RandomSelect(1-tp,2)
-		Duel.SendtoGrave(g,REASON_EFFECT+REASON_DISCARD)
+		Duel.SendtoGrave(g,REASON_EFFECT|REASON_DISCARD)
 	elseif opval[op]==4 then
 		Duel.Draw(tp,2,REASON_EFFECT)
 	end

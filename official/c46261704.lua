@@ -30,7 +30,7 @@ s.listed_series={SET_PHOTON,SET_GALAXY}
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsDiscardable() end
-	Duel.SendtoGrave(c,REASON_COST+REASON_DISCARD)
+	Duel.SendtoGrave(c,REASON_COST|REASON_DISCARD)
 	c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_CHAIN,0,1)
 end
 function s.spfilter(c,e,tp)

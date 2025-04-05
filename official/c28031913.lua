@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x116}
+s.listed_series={SET_CRUSADIA}
 function s.spval(e,c)
 	return 0,aux.GetMMZonesPointedTo(c:GetControler())
 end
@@ -34,7 +34,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP()
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x116) and c:IsLinkMonster() and not c:IsHasEffect(EFFECT_PIERCE)
+	return c:IsFaceup() and c:IsSetCard(SET_CRUSADIA) and c:IsLinkMonster() and not c:IsHasEffect(EFFECT_PIERCE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsFaceup() end
@@ -51,7 +51,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_PIERCE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

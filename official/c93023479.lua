@@ -1,4 +1,5 @@
 --墓守の召喚師
+--Gravekeeper's Recruiter
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x2e}
+s.listed_series={SET_GRAVEKEEPERS}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 		and e:GetHandler():IsPreviousControler(tp)
@@ -22,7 +23,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.filter(c)
-	return c:IsDefenseBelow(1500) and c:IsSetCard(0x2e) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsDefenseBelow(1500) and c:IsSetCard(SET_GRAVEKEEPERS) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)

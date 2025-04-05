@@ -1,4 +1,5 @@
 --リチュア・アビス
+--Gishki Abyss
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -18,9 +19,9 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x3a}
+s.listed_series={SET_GISHKI}
 function s.filter(c)
-	return c:IsDefenseBelow(1000) and c:IsSetCard(0x3a) and c:IsMonster() and c:GetCode()~=id and c:IsAbleToHand()
+	return c:IsDefenseBelow(1000) and c:IsSetCard(SET_GISHKI) and c:IsMonster() and c:GetCode()~=id and c:IsAbleToHand()
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

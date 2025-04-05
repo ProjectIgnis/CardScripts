@@ -1,4 +1,5 @@
 --虚無の統括者
+--Vanity's Ruler
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot special summon

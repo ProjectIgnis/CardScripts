@@ -1,4 +1,5 @@
 --聖蛇の息吹
+--Sacred Serpent's Wake
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
@@ -31,7 +32,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil)
 	local ct=g:GetClassCount(s.typecast)
-	local g1=Duel.GetMatchingGroup(s.filter1,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,nil,e)
+	local g1=Duel.GetMatchingGroup(s.filter1,tp,LOCATION_GRAVE|LOCATION_REMOVED,0,nil,e)
 	local g2=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_GRAVE,0,nil,e)
 	local g3=Duel.GetMatchingGroup(s.filter3,tp,LOCATION_GRAVE,0,nil,e)
 	if chk==0 then return (ct>1 and #g1>0) or (ct>2 and #g2>0) or (ct>3 and #g3>0) end

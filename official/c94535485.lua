@@ -1,4 +1,5 @@
 --手をつなぐ魔人
+--Hand-Holding Genie
 local s,id=GetID()
 function s.initial_effect(c)
 	--atk limit

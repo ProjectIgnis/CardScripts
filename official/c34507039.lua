@@ -1,4 +1,5 @@
 --ギャクタン
+--Wiretap
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
+	return re:IsTrapEffect() and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -25,6 +26,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ec=re:GetHandler()
 	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
 		ec:CancelToGrave()
-		Duel.SendtoDeck(ec,nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(ec,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 end

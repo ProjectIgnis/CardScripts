@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Fusion summon procedure
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0xbd),s.matfilter)
+	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_GAIA_THE_FIERCE_KNIGHT),s.matfilter)
 	--Change name
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
+	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER|TIMING_MAIN_END)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(s.descon)
 	e2:SetTarget(s.destg)
@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xbd}
+s.listed_series={SET_GAIA_THE_FIERCE_KNIGHT}
 s.listed_names={CARD_GAIA_CHAMPION}
 function s.matfilter(c,fc,sumtype,tp)
 	return c:IsRace(RACE_DRAGON,fc,sumtype,tp) and c:IsLevel(5)
@@ -58,7 +58,7 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and c:UpdateAttack(-2600,RESET_EVENT+RESETS_STANDARD,c)==-2600 then
+	if c:IsRelateToEffect(e) and c:UpdateAttack(-2600,RESET_EVENT|RESETS_STANDARD,c)==-2600 then
 		if tc and tc:IsRelateToEffect(e) then
 			Duel.Destroy(tc,REASON_EFFECT)
 		end
@@ -71,7 +71,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(2600)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 	end
 end

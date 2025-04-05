@@ -1,4 +1,4 @@
---
+--闘炎の剣士
 --Fighting Flame Swordsman
 --scripted by Naim
 local s,id=GetID()

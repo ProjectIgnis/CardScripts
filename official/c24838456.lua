@@ -1,4 +1,5 @@
 --虚無を呼ぶ呪文
+--Vanity's Call
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -25,7 +26,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	for i=1,ev do
 		local te=Duel.GetChainInfo(i,CHAININFO_TRIGGERING_EFFECT)
 		local tc=te:GetHandler()
-		if te:IsHasType(EFFECT_TYPE_ACTIVATE) or te:IsActiveType(TYPE_MONSTER) then
+		if te:IsHasType(EFFECT_TYPE_ACTIVATE) or te:IsMonsterEffect() then
 			ng:AddCard(tc)
 			if tc:IsRelateToEffect(te) then
 				dg:AddCard(tc)
@@ -42,7 +43,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	for i=1,ev do
 		local te=Duel.GetChainInfo(i,CHAININFO_TRIGGERING_EFFECT)
 		local tc=te:GetHandler()
-		if (te:IsHasType(EFFECT_TYPE_ACTIVATE) or te:IsActiveType(TYPE_MONSTER)) and Duel.NegateActivation(i) 
+		if (te:IsHasType(EFFECT_TYPE_ACTIVATE) or te:IsMonsterEffect()) and Duel.NegateActivation(i) 
 			and tc:IsRelateToEffect(e) and tc:IsRelateToEffect(te) then
 			dg:AddCard(tc)
 		end

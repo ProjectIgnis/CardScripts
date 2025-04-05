@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xc}
+s.listed_series={SET_ALIEN}
 s.counter_list={COUNTER_A}
 function s.filter(c)
 	return c:GetCounter(COUNTER_A)>0
@@ -27,7 +27,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xc) and c:GetLevel()==4 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_ALIEN) and c:GetLevel()==4 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
@@ -41,7 +41,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 			local sc=sg:GetFirst()
 			local fid=e:GetHandler():GetFieldID()
-			sc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
+			sc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1,fid)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 			e1:SetCode(EVENT_PHASE+PHASE_END)

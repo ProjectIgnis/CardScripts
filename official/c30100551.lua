@@ -1,4 +1,5 @@
 --ライトロード・セイント ミネルバ
+--Minerva, the Exalted Lightsworn
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -10,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.drcost)
+	e1:SetCost(Cost.Detach(1))
 	e1:SetTarget(s.distg)
 	e1:SetOperation(s.drop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
@@ -26,11 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x38}
-function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-end
+s.listed_series={SET_LIGHTSWORN}
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,3) end
 	Duel.SetTargetPlayer(tp)
@@ -38,7 +35,7 @@ function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,3)
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x38) and c:IsLocation(LOCATION_GRAVE)
+	return c:IsSetCard(SET_LIGHTSWORN) and c:IsLocation(LOCATION_GRAVE)
 end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)

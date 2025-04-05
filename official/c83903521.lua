@@ -1,4 +1,5 @@
 --ファラオの化身
+--Beast of the Pharaoh
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon

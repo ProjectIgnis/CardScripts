@@ -1,4 +1,5 @@
 --クリフォート・シェル
+--Qliphort Shell
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -64,9 +65,9 @@ function s.initial_effect(c)
 	e9:SetLabelObject(e8)
 	c:RegisterEffect(e9)
 end
-s.listed_series={0xaa}
+s.listed_series={SET_QLI}
 function s.splimit(e,c)
-	return not c:IsSetCard(0xaa)
+	return not c:IsSetCard(SET_QLI)
 end
 function s.ntcon(e,c,minc)
 	if c==nil then return true end
@@ -104,7 +105,7 @@ function s.lvop2(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(4)
-	e1:SetReset(RESET_EVENT|(RESETS_STANDARD|RESET_DISABLE)&~(RESET_TOFIELD|RESET_LEAVE))
+	e1:SetReset(RESET_EVENT|(RESETS_STANDARD_DISABLE)&~(RESET_TOFIELD|RESET_LEAVE))
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
@@ -112,14 +113,14 @@ function s.lvop2(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetValue(1800)
-	e2:SetReset(RESET_EVENT|(RESETS_STANDARD|RESET_DISABLE)&~(RESET_TOFIELD|RESET_LEAVE))
+	e2:SetReset(RESET_EVENT|(RESETS_STANDARD_DISABLE)&~(RESET_TOFIELD|RESET_LEAVE))
 	c:RegisterEffect(e2)
 end
 function s.immcon(e)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_NORMAL)
+	return e:GetHandler():IsNormalSummoned()
 end
 function s.effcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE) and e:GetLabel()==1
+	return e:GetHandler():IsTributeSummoned() and e:GetLabel()==1
 end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -127,17 +128,17 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_EXTRA_ATTACK)
 	e1:SetValue(1)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_PIERCE)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e2)
 end
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
-	if g:IsExists(Card.IsSetCard,1,nil,0xaa) then
+	if g:IsExists(Card.IsSetCard,1,nil,SET_QLI) then
 		e:GetLabelObject():SetLabel(1)
 	else
 		e:GetLabelObject():SetLabel(0)

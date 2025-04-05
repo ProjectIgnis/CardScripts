@@ -1,4 +1,5 @@
 --与奪の首飾り
+--Necklace of Command
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c)
@@ -54,6 +55,6 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	elseif e:GetLabel()==1 then
 		local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 		local g=Duel.GetFieldGroup(p,LOCATION_HAND,0):RandomSelect(p,d)
-		Duel.SendtoGrave(g,REASON_EFFECT+REASON_DISCARD)
+		Duel.SendtoGrave(g,REASON_EFFECT|REASON_DISCARD)
 	end
 end

@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCountLimit(1,{id,0})
 	e1:SetCondition(s.thgcon)
-	e1:SetCost(s.thgcost)
+	e1:SetCost(Cost.PayLP(600))
 	e1:SetTarget(s.thgtg)
 	e1:SetOperation(s.thgop)
 	c:RegisterEffect(e1)
@@ -33,14 +33,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x173}
+s.listed_series={SET_PUNK}
 function s.thgcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) or 
-		(re and re:GetHandler():IsSetCard(0x173))
-end
-function s.thgcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,600) end
-	Duel.PayLPCost(tp,600)
+	return e:GetHandler():IsSynchroSummoned() or 
+		(re and re:GetHandler():IsSetCard(SET_PUNK))
 end
 function s.thgfilter(c)
 	return c:IsLevel(3) and c:IsRace(RACE_PSYCHIC) and (c:IsAbleToHand() or c:IsAbleToGrave())
@@ -59,7 +55,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	if ch<=0 then return false end
 	local cplayer=Duel.GetChainInfo(ch,CHAININFO_TRIGGERING_CONTROLER)
 	local ceff=Duel.GetChainInfo(ch,CHAININFO_TRIGGERING_EFFECT)
-	return ep==1-tp and cplayer==tp and ceff:GetHandler():IsSetCard(0x173)
+	return ep==1-tp and cplayer==tp and ceff:GetHandler():IsSetCard(SET_PUNK)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

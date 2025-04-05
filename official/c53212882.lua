@@ -1,9 +1,9 @@
--- ふわんだりぃず×すのーる
--- Flundereeze x Snowl
--- Scripted by Hatter
+--ふわんだりぃず×すのーる
+--Floowandereeze & Snowl
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Can conduct 3 normal summons
+	--Can conduct 3 normal summons
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.nstg)
 	e1:SetOperation(s.nsop)
 	c:RegisterEffect(e1)
-	-- Piercing damage
+	--Piercing damage
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetRange(LOCATION_MZONE)
@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetCondition(s.trcon)
 	c:RegisterEffect(e2)
-	-- Flip opponent monsters face-down
+	--Flip opponent monsters face-down
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_POSITION)
@@ -37,7 +37,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.trcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE)
+	return e:GetHandler():IsTributeSummoned()
 end
 function s.nstg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -56,7 +56,7 @@ function s.nsop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
 	e1:SetValue(3)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.fdcon(e,tp,eg,ep,ev,re,r,rp)
@@ -69,7 +69,7 @@ function s.fdcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.fdfilter(c)
-	return c:IsCanTurnSet() and c:IsSummonType(SUMMON_TYPE_SPECIAL)
+	return c:IsCanTurnSet() and c:IsSpecialSummoned()
 end
 function s.fdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.fdfilter,tp,0,LOCATION_MZONE,nil)

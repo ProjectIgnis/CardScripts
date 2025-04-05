@@ -23,7 +23,7 @@ function s.filter2(c)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local rg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	Duel.SendtoDeck(rg,nil,0,REASON_EFFECT)
+	Duel.SendtoDeck(rg,nil,SEQ_DECKTOP,REASON_EFFECT)
 	rg=Duel.GetOperatedGroup():Match(s.filter2,nil)
 	local ct1=rg:FilterCount(Card.IsControler,nil,tp)
 	local ct2=#rg-ct1

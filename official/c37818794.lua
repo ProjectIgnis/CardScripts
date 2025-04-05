@@ -50,7 +50,7 @@ function s.initial_effect(c)
 end
 s.material={CARD_DARK_MAGICIAN,CARD_REDEYES_B_DRAGON}
 s.listed_names={CARD_DARK_MAGICIAN,CARD_REDEYES_B_DRAGON}
-s.material_setcode={0x3b,0x10a2}
+s.material_setcode={SET_RED_EYES,SET_DARK_MAGICIAN}
 function s.ffilter(c,fc,sumtype,tp)
 	return c:IsRace(RACE_DRAGON,fc,sumtype,tp) and c:IsType(TYPE_EFFECT,fc,sumtype,tp)
 end
@@ -61,7 +61,7 @@ function s.valcheck(e,c)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_FUSION) and e:GetLabel()>0
+	return c:IsFusionSummoned() and e:GetLabel()>0
 end
 function s.chkfilter(c,label)
 	return c:GetFlagEffect(label)>0
@@ -74,7 +74,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetReset(RESET_EVENT+(RESETS_STANDARD&~RESET_TURN_SET))
+	e1:SetReset(RESET_EVENT|(RESETS_STANDARD&~RESET_TURN_SET))
 	e1:SetCountLimit(ct)
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
@@ -105,7 +105,7 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -121,7 +121,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(1000)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		e:GetHandler():RegisterEffect(e1)
 	end
 end

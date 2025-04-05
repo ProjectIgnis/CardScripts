@@ -1,5 +1,5 @@
 --機皇神龍トリスケリア
---Meklord Astro Dragon Triskelia
+--Meklord Astro Dragon Triskelion
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)
@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	e4:SetValue(s.atkval)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x13}
+s.listed_series={SET_MEKLORD}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetEquipGroup():IsExists(Card.IsOriginalType,1,nil,TYPE_SYNCHRO)
 end
@@ -65,11 +65,11 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_EQUIP_LIMIT)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			e1:SetValue(s.eqlimit)
 			e1:SetLabelObject(c)
 			sg:RegisterEffect(e1)
-			sg:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+			sg:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 			Duel.ShuffleExtra(1-tp)
 		end
 	end
@@ -78,7 +78,7 @@ function s.eqlimit(e,c)
 	return c==e:GetLabelObject()
 end
 function s.spfilter(c)
-	return c:IsSetCard(0x13) and c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsSetCard(SET_MEKLORD) and c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.rescon(sg,e,tp,mg)
 	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:GetClassCount(Card.GetCode)==#sg,sg:GetClassCount(Card.GetCode)~=#sg
@@ -86,11 +86,11 @@ end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
+	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-3 and #rg>2 and aux.SelectUnselectGroup(rg,e,tp,3,3,s.rescon,0)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
-	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
+	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil)
 	local g=aux.SelectUnselectGroup(rg,e,tp,3,3,s.rescon,1,tp,HINTMSG_REMOVE,nil,nil,true)
 	if #g>0 then
 		g:KeepAlive()

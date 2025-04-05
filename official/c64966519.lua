@@ -1,5 +1,5 @@
 --激撮ディスパラッチ
---Paparazzi Disparazzi
+--Dispatchparazzi
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

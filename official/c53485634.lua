@@ -19,16 +19,16 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(function(_,tp) return Duel.IsPlayerCanAdditionalSummon(tp) end)
-	e2:SetCost(s.sumcost)
+	e2:SetCost(Cost.SelfTribute)
 	e2:SetTarget(s.sumtg)
 	e2:SetOperation(s.sumop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x3b}
+s.listed_series={SET_RED_EYES}
 function s.spfilter(c,e,tp)
 	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and c:GetReasonPlayer()==1-tp
 		and c:IsReason(REASON_DESTROY) and (c:IsReason(REASON_EFFECT) or (c:IsReason(REASON_BATTLE) and Duel.GetAttacker():IsControler(1-tp)))
-		and c:IsPreviousSetCard(0x3b) and c:IsSetCard(0x3b) and c:GetPreviousLevelOnField()<=7 and c:IsLevelBelow(7) and c:IsControler(tp)
+		and c:IsPreviousSetCard(SET_RED_EYES) and c:IsSetCard(SET_RED_EYES) and c:GetPreviousLevelOnField()<=7 and c:IsLevelBelow(7) and c:IsControler(tp)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,c:GetPreviousPosition())
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -37,7 +37,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and Duel.GetLocationCount(tp,LOCATION_MZONE)>1
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) and #g>0 end
 	Duel.SetTargetCard(g)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g+c,#g+1,tp,LOCATION_HAND+LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g+c,#g+1,tp,LOCATION_HAND|LOCATION_GRAVE)
 end
 function s.filter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false,c:GetPreviousPosition())
@@ -60,11 +60,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.SpecialSummonComplete()
 end
-function s.sumcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsReleasable() end
-	Duel.Release(c,REASON_COST)
-end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanSummon(tp) end
 end
@@ -74,8 +69,8 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetDescription(aux.Stringid(id,2))
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
-	e1:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x3b))
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetTargetRange(LOCATION_HAND|LOCATION_MZONE,0)
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_RED_EYES))
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end

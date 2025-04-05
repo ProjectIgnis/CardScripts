@@ -1,6 +1,5 @@
 --ダイヤモンドダストン
 --Diamond Duston
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon "Duston" monsters to either field
@@ -28,24 +27,23 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x80}
-
+s.listed_series={SET_DUSTON}
 function s.cfilter(c)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousLocation(LOCATION_ONFIELD)
+	return c:IsReason(REASON_BATTLE|REASON_EFFECT) and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x80) and (c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_DUSTON) and (c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		or c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,1-tp))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=#eg
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)+Duel.GetLocationCount(1-tp,LOCATION_MZONE)
 	if chk==0 then return (not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) or ct==1) and ft>=ct
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK+LOCATION_HAND,0,ct,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,ct,tp,LOCATION_DECK+LOCATION_HAND)
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK|LOCATION_HAND,0,ct,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,ct,tp,LOCATION_DECK|LOCATION_HAND)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local ct=#eg
@@ -54,7 +52,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local ft2=Duel.GetLocationCount(1-tp,LOCATION_MZONE)
 	if ft1<=0 and ft2<=0 then return end
 	if ft1+ft2<ct then return end
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_HAND+LOCATION_DECK,0,nil,e,tp)
+	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_HAND|LOCATION_DECK,0,nil,e,tp)
 	if ct>#g then return end
 	if ft2>ct then ft2=ct end
 	local ct2=ct-ft1
@@ -81,7 +79,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummonComplete()
 end
 function s.spfilter(c)
-	return c:IsSetCard(0x80) and c:IsMonster() and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(SET_DUSTON) and c:IsMonster() and c:IsAbleToRemoveAsCost()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil) end
@@ -91,14 +89,14 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,0x11,0,1000,1,RACE_FIEND,ATTRIBUTE_DARK,POS_FACEUP_DEFENSE,1-tp) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,TYPE_MONSTER|TYPE_NORMAL,0,1000,1,RACE_FIEND,ATTRIBUTE_DARK,POS_FACEUP_DEFENSE,1-tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(1-tp,LOCATION_MZONE)<=0 then return end
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e)
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,0x11,0,1000,1,RACE_FIEND,ATTRIBUTE_DARK,POS_FACEUP_DEFENSE,1-tp) then
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,TYPE_MONSTER|TYPE_NORMAL,0,1000,1,RACE_FIEND,ATTRIBUTE_DARK,POS_FACEUP_DEFENSE,1-tp) then
 		c:AddMonsterAttribute(TYPE_NORMAL)
 		c:AssumeProperty(ASSUME_RACE,RACE_FIEND)
 		Duel.SpecialSummonStep(c,0,tp,1-tp,true,false,POS_FACEUP_DEFENSE)
@@ -110,7 +108,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetCode(EFFECT_UNRELEASABLE_SUM)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1,true)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UNRELEASABLE_NONSUM)
@@ -119,7 +117,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 		e3:SetCode(EFFECT_CANNOT_BE_MATERIAL)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e3:SetValue(aux.cannotmatfilter(SUMMON_TYPE_FUSION,SUMMON_TYPE_SYNCHRO,SUMMON_TYPE_XYZ))
 		c:RegisterEffect(e3,true)
 		Duel.SpecialSummonComplete()

@@ -1,4 +1,5 @@
 --漆黒のズムウォルト
+--Dark Diviner
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -48,7 +49,7 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 	e1:SetValue(c:GetAttack())
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE)
 	tc:RegisterEffect(e1)
 end
 function s.ddcon(e,tp,eg,ep,ev,re,r,rp)

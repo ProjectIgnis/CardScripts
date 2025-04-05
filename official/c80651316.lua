@@ -1,4 +1,5 @@
 --エヴォルダー・ケラト
+--Evolsaur Cerato
 local s,id=GetID()
 function s.initial_effect(c)
 	--atkup
@@ -10,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x304e}
+s.listed_series={SET_EVOLTILE}
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsFacedown() or not c:IsRelateToEffect(e) then return end
@@ -19,7 +20,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(200)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 	c:RegisterEffect(e1)
 	--search
 	local e2=Effect.CreateEffect(c)
@@ -29,11 +30,11 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCode(EVENT_BATTLE_DESTROYING)
 	e2:SetTarget(s.schtg)
 	e2:SetOperation(s.schop)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 	c:RegisterEffect(e2)
 end
 function s.sfilter(c)
-	return c:IsSetCard(0x304e) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_EVOLTILE) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.schtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.sfilter,tp,LOCATION_DECK,0,1,nil) end

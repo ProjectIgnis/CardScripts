@@ -31,7 +31,7 @@ function s.spcon(e,c)
 		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_SPELLCASTER),c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsReason(REASON_DESTROY) and e:GetHandler():IsReason(REASON_BATTLE+REASON_EFFECT)
+	return e:GetHandler():IsReason(REASON_DESTROY) and e:GetHandler():IsReason(REASON_BATTLE|REASON_EFFECT)
 end
 function s.filter(c,e,tp)
 	return c:GetAttack()==1500 and c:GetDefense()==200 and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

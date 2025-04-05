@@ -1,5 +1,5 @@
 --大胆無敵
---Boldly Invincible
+--Child's Play
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -46,4 +46,3 @@ end
 function s.bpcondition(e)
 	return Duel.GetLP(e:GetHandlerPlayer())>=10000
 end
-

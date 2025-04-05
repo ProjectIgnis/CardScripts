@@ -1,4 +1,5 @@
 --EMヘルプリンセス
+--Performapal Helpprincess
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -15,10 +16,10 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x9f}
+s.listed_series={SET_PERFORMAPAL}
 s.listed_names={id}
 function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsSummonPlayer(tp) and c:IsSetCard(0x9f) and not c:IsCode(id)
+	return c:IsFaceup() and c:IsSummonPlayer(tp) and c:IsSetCard(SET_PERFORMAPAL) and not c:IsCode(id)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

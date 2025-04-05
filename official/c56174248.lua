@@ -1,4 +1,5 @@
 --魔導鬼士 ディアール
+--Prophecy Destroyer
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -12,9 +13,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x106e}
+s.listed_series={SET_SPELLBOOK}
 function s.rfilter(c)
-	return c:IsSetCard(0x106e) and c:IsSpell() and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(SET_SPELLBOOK) and c:IsSpell() and c:IsAbleToRemoveAsCost()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.rfilter,tp,LOCATION_GRAVE,0,3,nil) end

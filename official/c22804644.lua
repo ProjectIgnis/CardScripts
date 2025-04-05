@@ -1,4 +1,5 @@
 --デス・ウイルス・ドラゴン
+--Doom Virus Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -31,7 +32,7 @@ function s.filter(c)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local conf=Duel.GetFieldGroup(tp,0,LOCATION_MZONE+LOCATION_HAND)
+	local conf=Duel.GetFieldGroup(tp,0,LOCATION_MZONE|LOCATION_HAND)
 	if #conf>0 then
 		Duel.ConfirmCards(tp,conf)
 		local dg=conf:Filter(s.filter,nil)
@@ -44,7 +45,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_DRAW)
 	e1:SetOperation(s.desop)
-	e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,3)
+	e1:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN,3)
 	Duel.RegisterEffect(e1,tp)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -52,7 +53,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCountLimit(1)
 	e2:SetCondition(s.turncon)
 	e2:SetOperation(s.turnop)
-	e2:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,3)
+	e2:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN,3)
 	Duel.RegisterEffect(e2,tp)
 	e2:SetLabelObject(e1)
 	local descnum=tp==c:GetOwner() and 0 or 1
@@ -64,7 +65,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetLabelObject(e2)
 	e3:SetOwnerPlayer(tp)
 	e3:SetOperation(s.reset)
-	e3:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,3)
+	e3:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN,3)
 	c:RegisterEffect(e3)
 end
 function s.reset(e,tp,eg,ep,ev,re,r,rp)
@@ -80,7 +81,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ShuffleHand(ep)
 end
 function s.turncon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.turnop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=e:GetLabel()

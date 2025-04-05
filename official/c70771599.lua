@@ -1,4 +1,5 @@
 --覇王眷竜 クリアウィング
+--Supreme King Dragon Clear Wing
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -41,7 +42,7 @@ function s.matfilter(c,val,sc,sumtype,tp)
 	return c:IsAttribute(ATTRIBUTE_DARK,sc,sumtype,tp) and c:IsType(TYPE_PENDULUM,sc,sumtype,tp)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return e:GetHandler():IsSynchroSummoned()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
@@ -76,8 +77,8 @@ function s.ddop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,2,false,aux.ReleaseCheckMMZ,nil,0x20f8) end
-	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,2,2,false,aux.ReleaseCheckMMZ,nil,0x20f8)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,2,false,aux.ReleaseCheckMMZ,nil,SET_SUPREME_KING_DRAGON) end
+	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,2,2,false,aux.ReleaseCheckMMZ,nil,SET_SUPREME_KING_DRAGON)
 	Duel.Release(g,REASON_COST)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

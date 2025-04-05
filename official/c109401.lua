@@ -1,7 +1,6 @@
 --闇次元の戦士
 --Dark Dimension Soldier
 --Scripted by DyXel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Synchro Summon.

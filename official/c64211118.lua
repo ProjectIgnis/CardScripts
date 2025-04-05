@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetHintTiming(TIMING_DAMAGE_STEP)
 	e2:SetCountLimit(1,id)
-	e2:SetCondition(s.gycon)
+	e2:SetCondition(aux.StatChangeDamageStepCondition)
 	e2:SetTarget(s.gytg)
 	e2:SetOperation(s.gyop)
 	c:RegisterEffect(e2)
@@ -36,26 +36,23 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==1-tp and re:IsActiveType(TYPE_MONSTER) 
+	return rp==1-tp and re:IsMonsterEffect() 
 		and Duel.IsChainDisablable(ev) and Duel.IsBattlePhase()
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)
 	Duel.NegateEffect(ev)
 end
-function s.gycon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
 function s.gyfilter(c)
 	return c:IsRace(RACE_CYBERSE) and c:IsAbleToGrave()
 end
 function s.gytg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.gyfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK+LOCATION_EXTRA)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.gyfilter,tp,LOCATION_DECK|LOCATION_EXTRA,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK|LOCATION_EXTRA)
 end
 function s.gyop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local tc=Duel.SelectMatchingCard(tp,s.gyfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,1,nil):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.gyfilter,tp,LOCATION_DECK|LOCATION_EXTRA,0,1,1,nil):GetFirst()
 	if tc and Duel.SendtoGrave(tc,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_GRAVE)
 		and c:IsRelateToEffect(e) and c:IsFaceup() then
 		--Gain Attribute
@@ -65,7 +62,7 @@ function s.gyop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetCode(EFFECT_ADD_ATTRIBUTE)
 		e1:SetValue(tc:GetAttribute())
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 		--Increase ATK
 		local e2=Effect.CreateEffect(c)
@@ -74,9 +71,9 @@ function s.gyop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 		e2:SetRange(LOCATION_MZONE)
 		e2:SetValue(2500)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e2)
-	end	
+	end
 end
 function s.raval(e,c)
 	local att=e:GetHandler():GetAttribute()

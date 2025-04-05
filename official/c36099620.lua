@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_UPDATE_ATTACK)
 	e3:SetRange(LOCATION_FZONE)
 	e3:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x38))
+	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_LIGHTSWORN))
 	e3:SetValue(s.atkval)
 	c:RegisterEffect(e3)
 	--Destroy replace
@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desrepop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x38}
+s.listed_series={SET_LIGHTSWORN}
 s.counter_place_list={0x5}
 function s.atkval(e,c)
 	return e:GetHandler():GetCounter(0x5)*100

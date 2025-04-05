@@ -75,7 +75,7 @@ function s.efop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.xyzcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
+	return e:GetHandler():IsXyzSummoned()
 end
 function s.xyzfilter(c)
 	return c:IsSetCard(SET_LYRILUSC) and c:IsMonster()

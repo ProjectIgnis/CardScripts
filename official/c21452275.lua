@@ -1,4 +1,5 @@
 --アロマポット
+--Aroma Jar
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip
@@ -29,7 +30,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 end
 function s.indcon(e)
 	return e:GetHandler():GetFlagEffect(id)~=0

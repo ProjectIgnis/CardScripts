@@ -72,7 +72,7 @@ function s.thmatop(e,tp,eg,ep,ev,re,r,rp)
 	local sc=Duel.SelectMatchingCard(tp,s.thmatfilter,tp,LOCATION_DECK,0,1,1,nil,c,tp,relation_chk):GetFirst()
 	if not sc then return end
 	aux.ToHandOrElse(sc,tp,
-		function() relation_chk and sc:IsCanBeXyzMaterial(c,tp,REASON_EFFECT) end,
+		function() return relation_chk and sc:IsCanBeXyzMaterial(c,tp,REASON_EFFECT) end,
 		function() Duel.Overlay(c,sc) end,
 		aux.Stringid(id,3)
 	)

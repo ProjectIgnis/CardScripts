@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.discon)
 	e2:SetTarget(s.distg)
 	e2:SetOperation(s.disop)
-	c:RegisterEffect(e2)	
+	c:RegisterEffect(e2)
 	--Special Summon
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))

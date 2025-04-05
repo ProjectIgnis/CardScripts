@@ -1,4 +1,4 @@
---Japanese name
+--布都御魂之巳剣
 --Futsu no Mitama no Mitsurugi
 --scripted by Naim
 local s,id=GetID()

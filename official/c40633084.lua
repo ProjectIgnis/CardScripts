@@ -1,4 +1,4 @@
---
+--騎甲虫歩兵分隊
 --Beetrooper Squad
 --scripted by pyrQ
 local s,id=GetID()
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_names={64213018}
+s.listed_names={64213018} --"Beetrooper Token"
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(0)
 	if chk==0 then return true end

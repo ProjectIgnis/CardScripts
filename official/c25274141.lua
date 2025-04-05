@@ -1,4 +1,4 @@
---緊急ダイヤ	
+--緊急ダイヤ
 --Urgent Schedule
 --Scripted by AlphaKretin
 local s,id=GetID()

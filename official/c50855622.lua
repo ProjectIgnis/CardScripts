@@ -1,4 +1,4 @@
---
+--超騎甲虫アブソリュート・ヘラクレス
 --Ultra Beetrooper Absolute Hercules
 --Scripted by Zefile
 local s,id=GetID()

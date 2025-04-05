@@ -55,7 +55,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 			local ec=eg:Select(tp,1,1,nil):GetFirst()
-			if Duel.Equip(tp,ec,tc) then		
+			if Duel.Equip(tp,ec,tc) then
 				--Equip limit
 				local e1=Effect.CreateEffect(e:GetHandler())
 				e1:SetType(EFFECT_TYPE_SINGLE)
@@ -92,7 +92,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local oc=g:GetNext()
 	if oc==e:GetLabelObject() then tc,oc=oc,tc end
 	if not (tc:IsFaceup() and tc:IsControler(tp)) then return end
-	if Duel.Equip(tp,oc,tc) then		
+	if Duel.Equip(tp,oc,tc) then
 		--Equip limit
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

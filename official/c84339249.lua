@@ -41,7 +41,7 @@ end
 function s.indestg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(aux.NOT(Card.IsHasEffect),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,EFFECT_INDESTRUCTABLE_BATTLE) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_APPLYTO)
-	Duel.SelectTarget(tp,aux.NOT(Card.IsHasEffect),tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,EFFECT_INDESTRUCTABLE_BATTLE)	
+	Duel.SelectTarget(tp,aux.NOT(Card.IsHasEffect),tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,EFFECT_INDESTRUCTABLE_BATTLE)
 end
 function s.indesop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

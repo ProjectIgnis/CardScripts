@@ -1,4 +1,4 @@
---
+--斬機マルチプライヤー
 --Mathmech Multiplication
 --Scripted by Naim
 local s,id=GetID()

@@ -2,9 +2,8 @@
 --Chronomaly Crystal Chrononaut
 local s,id=GetID()
 function s.initial_effect(c)
-	--Must be properly summoned before reviving
-	c:EnableReviveLimit()	
-	--Xyz summon procedure
+	c:EnableReviveLimit()
+	--Xyz Summon procedure: 2 Level 3 monsters
 	Xyz.AddProcedure(c,nil,3,2)
 	--When targeted for attack, make itself unable to be destroyed by battle or card effect
 	local e1=Effect.CreateEffect(c)

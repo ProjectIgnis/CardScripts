@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.negcon)
 	e1:SetTarget(s.negtg)
 	e1:SetOperation(s.negop)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 	--Special Summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))

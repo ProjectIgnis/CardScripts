@@ -73,7 +73,7 @@ function s.gyop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetValue(2500)
 		e2:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e2)
-	end	
+	end
 end
 function s.raval(e,c)
 	local att=e:GetHandler():GetAttribute()

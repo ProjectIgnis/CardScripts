@@ -1,4 +1,4 @@
---
+--光の継承
 --Heritage of the Light
 --Scripted by Eerie Code
 local s,id=GetID()

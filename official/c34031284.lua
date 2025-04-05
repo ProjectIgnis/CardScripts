@@ -86,7 +86,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetReset(RESET_PHASE|PHASE_END)
 	e2:SetTargetRange(1,0)
-	Duel.RegisterEffect(e2,tp)	
+	Duel.RegisterEffect(e2,tp)
 end
 function s.splimit(e,c)
 	return not c:IsType(TYPE_FUSION) and c:IsLocation(LOCATION_EXTRA)

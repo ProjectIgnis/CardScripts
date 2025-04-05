@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e2:SetCode(EVENT_TO_GRAVE)
 	e2:SetOperation(s.regop)
-	c:RegisterEffect(e2)	
+	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_ALBAZ}
 s.listed_series={SET_FUSION}

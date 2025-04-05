@@ -1,4 +1,4 @@
---
+--ペンドラザクション
 --Pendransaction
 --Scripted by Eerie Code
 local s,id=GetID()
@@ -42,7 +42,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetRange(LOCATION_MZONE)
 		e2:SetReset(RESETS_STANDARD_DISABLE_PHASE_END,2)
 		e2:SetValue(1)
-		c:RegisterEffect(e2)		
+		c:RegisterEffect(e2)
 	end
 	--Banish 1 card the opponent controls
 	if val>=10 then

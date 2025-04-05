@@ -43,7 +43,7 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 		--Lizard check
 		local e2=aux.createContinuousLizardCheck(e:GetHandler(),LOCATION_MZONE,s.lizfilter)
 		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
-		token:RegisterEffect(e2,true)		
+		token:RegisterEffect(e2,true)
 	end
 	Duel.SpecialSummonComplete()
 end

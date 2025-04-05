@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
 	e2:SetCountLimit(1)
 	e2:SetTarget(s.target)
-	c:RegisterEffect(e2)	
+	c:RegisterEffect(e2)
 end
 s.listed_series={SET_CYBERDARK}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

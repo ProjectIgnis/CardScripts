@@ -1,4 +1,4 @@
---
+--リブロマンサー・ミスティガール
 --Libromancer Mystigirl
 --scripted by Naim
 local s,id=GetID()

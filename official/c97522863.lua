@@ -1,4 +1,4 @@
---Japanese name
+--刻印を持つ者
 --The Man with the Mark
 --scripted by Naim
 local s,id=GetID()

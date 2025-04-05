@@ -1,4 +1,4 @@
---
+--天威龍－ヴィシュダ
 --Tenyi Spirit - Vishuda
 --Scripted by Hatter
 local s,id=GetID()

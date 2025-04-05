@@ -2,10 +2,10 @@
 --Sunavalon Dryas
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
 	c:EnableReviveLimit()
+	--Link Summon procedure: 1 Level 4 or lower Plant monster
 	Link.AddProcedure(c,s.matfilter,1,1)
-	--search	
+	--Add 1 "Sunvine" Spell/Trap from your Deck to your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.valcheck)
 	e2:SetLabelObject(e1)
 	c:RegisterEffect(e2)
-	--cannot be atk
+	--Cannot be targeted for attacks
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetValue(1)
 	c:RegisterEffect(e3)
-	--spsummon
+	--Gain LP equal to the damage you take, and if you do, Special Summon 1 "Sunvine" monster from your Extra Deck
 	local e4=Effect.CreateEffect(c)
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -44,6 +44,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={SET_SUNVINE}
+s.listed_names={27520594} --"Sunseed Genius Loci" 
 function s.matfilter(c,lc,sumtype,tp)
 	return c:IsRace(RACE_PLANT,lc,sumtype,tp) and c:IsLevelBelow(4)
 end

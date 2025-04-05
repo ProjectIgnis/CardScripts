@@ -43,7 +43,7 @@ function s.initial_effect(c)
 	e4:SetCost(s.descost)
 	e4:SetTarget(s.destg)
 	e4:SetOperation(s.desop)
-	c:RegisterEffect(e4)	
+	c:RegisterEffect(e4)
 end
 s.listed_series={SET_SUNAVALON}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
@@ -90,7 +90,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(lk)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,dg,lk,0,0)
 end
-function s.desop(e,tp,eg,ep,ev,re,r,rp)	
+function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectMatchingCard(tp,nil,tp,0,LOCATION_ONFIELD,1,e:GetLabel(),nil)
 	if #g>0 then

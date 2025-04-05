@@ -34,7 +34,6 @@ function s.initial_effect(c)
 	e3:SetTarget(s.destg)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
-	
 	--destroy replace
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
@@ -42,7 +41,6 @@ function s.initial_effect(c)
 	e4:SetTarget(s.reptg)
 	e4:SetOperation(s.repop)
 	c:RegisterEffect(e4)
-	
 end
 function s.aclimit(e,re,tp)
 	return re:IsHasType(EFFECT_TYPE_ACTIVATE)

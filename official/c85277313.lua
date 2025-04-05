@@ -1,4 +1,4 @@
---
+--ティスティナの胎動
 --Signs of the Tistina
 --Scripted by Hatter
 local s,id=GetID()

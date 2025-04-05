@@ -1,4 +1,4 @@
---Japanese name
+--古代亀の呪い
 --Curse of the Ancient Turtle
 --scripted by Naim
 local s,id=GetID()

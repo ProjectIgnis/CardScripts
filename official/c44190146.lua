@@ -107,7 +107,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummonComplete()
 	end
 end
-	
 function s.rcon(e,tp,eg,ep,ev,re,r,rp)
 	e:GetLabelObject():GetLabelObject():Merge(re:GetHandler():GetOverlayGroup())
 	return false

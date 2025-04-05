@@ -1,9 +1,9 @@
---
+--騎甲虫スカウト・バギー
 --Beetrooper Scout Buggy
 --Scripted by DyXel
 local s,id=GetID()
 function s.initial_effect(c)
-	--Can only Special Summon Insect monsters.
+	--You cannot Special Summon monsters, except Insect monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetRange(LOCATION_MZONE)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(function(_,c,_,_,_)return not c:IsRace(RACE_INSECT)end)
 	c:RegisterEffect(e1)
-	--Special Summon.
+	--Special Summon 1 "Beetrooper Scout Buggy" from your hand, Deck, or GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)

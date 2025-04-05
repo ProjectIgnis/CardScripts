@@ -1,4 +1,4 @@
---
+--ティスティナの落とし仔
 --Fallen of the Tistina
 --Scripted by Hatter
 local s,id=GetID()

@@ -1,7 +1,6 @@
 --覇蛇大公ゴルゴンダ
 --Supreme Sovereign Serpent of Golgonda
 --Logical Nonsense
---Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon itself from hand or GY
@@ -35,16 +34,12 @@ function s.initial_effect(c)
 	e3:SetOperation(s.repop)
 	c:RegisterEffect(e3)
 end
-	--Specifically lists "Great Grand Sea – Gold Golgonda"
-s.listed_names={60884672}
-	
-	--Activation legality
+s.listed_names={60884672} --"Great Grand Sea – Gold Golgonda"
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
-	--Special summon itself from hand or GY
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 then
@@ -58,17 +53,14 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1,true)
 	end
 end
-	--Check for "Great Grand Sea – Gold Golgonda" on the field
 function s.atkcon(e)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,60884672),0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 		or Duel.IsEnvironment(60884672)
 end
-	--Check for "Great Grand Sea – Gold Golgonda" being destroyed
 function s.repfilter(c,tp,rp)
 	return c:IsFaceup() and c:IsCode(60884672) and c:IsOnField()
 		and not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_EFFECT)
 end
-	--Activation legality
 function s.rmfilter(c)
 	return c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
@@ -86,7 +78,6 @@ function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	return false
 end
-	--Banish 1 card from GY as cost
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,1-tp,id)
 	local tc=e:GetLabelObject()

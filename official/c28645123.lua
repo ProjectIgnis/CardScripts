@@ -2,7 +2,7 @@
 --A.I. Challenge You
 --Scripted by Eerie Code
 local s,id=GetID()
-function s.initial_effect(c)	
+function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,1))
@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e3:SetTargetRange(0,1)
 	e3:SetValue(1)
 	e3:SetCondition(s.actcon)
-	c:RegisterEffect(e3)	
+	c:RegisterEffect(e3)
 	--spsummon
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,0))

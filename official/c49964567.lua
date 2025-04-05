@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.trgtfilter(c,tp)
-	return c:IsFaceup() and Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_MZONE,0,1,c)	
+	return c:IsFaceup() and Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_MZONE,0,1,c)
 end
 function s.tgfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_PLANT) and c:IsAbleToGrave()

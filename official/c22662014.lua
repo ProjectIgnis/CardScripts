@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCost(s.setcost)
 	e2:SetOperation(s.setop)
-	c:RegisterEffect(e2)	
+	c:RegisterEffect(e2)
 end
 s.listed_series={SET_ATTRACTION}
 function s.costfilter(c)

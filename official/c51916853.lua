@@ -1,4 +1,4 @@
---
+--マジカル・ハウンド
 --Magical Hound
 --Scripted by Hel
 local s,id=GetID()

@@ -30,7 +30,6 @@ function s.initial_effect(c)
 	e3:SetTargetRange(1,0)
 	e3:SetTarget(s.sumlimit)
 	c:RegisterEffect(e3)
-	
 	--ClockLizard check
 	aux.addContinuousLizardCheck(c,LOCATION_SZONE,s.lizfilter)
 end

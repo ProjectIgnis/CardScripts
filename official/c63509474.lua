@@ -71,5 +71,4 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 						Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP) end,
 						aux.Stringid(id,2))
 		end
-	
 end

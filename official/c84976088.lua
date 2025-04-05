@@ -46,6 +46,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 			e1:SetValue(LOCATION_REMOVED)
 			c:RegisterEffect(e1,true)
-		end		
+		end
 	end
 end

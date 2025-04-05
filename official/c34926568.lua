@@ -1,4 +1,4 @@
---Japanese name
+--守護獣セルケト
 --Merciless Scorpion of Serket
 --Scripted by The Razgriz
 local s,id=GetID()

@@ -77,7 +77,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_ATTACK)
 		e1:SetReset(reset)
-		tc:RegisterEffect(e1)		
+		tc:RegisterEffect(e1)
 		--Cannot activate its effect
 		local e2=e1:Clone()
 		e2:SetDescription(3302)

@@ -72,7 +72,7 @@ function s.atkfilter(c)
 		return c:IsLevelAbove(5)
 	else
 		local summon_types={SUMMON_TYPE_RITUAL,SUMMON_TYPE_FUSION,SUMMON_TYPE_SYNCHRO,SUMMON_TYPE_XYZ}
-		return c:GetFlagEffect(id)>0 and c:IsSummonType(table.unpack(summon_types))		
+		return c:GetFlagEffect(id)>0 and c:IsSummonType(table.unpack(summon_types))
 	end
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)

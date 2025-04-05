@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_SPECIAL_SUMMON)
-	e3:SetType(EFFECT_TYPE_IGNITION)	
+	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,{id,1})
 	e3:SetTarget(s.sptg)
@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={18189187,CARD_DREAM_MIRROR_JOY,CARD_DREAM_MIRROR_TERROR}
-s.lsited_series={0x131}
+s.listed_series={SET_DREAM_MIRROR}
 function s.thfilter(c)
 	return c:IsCode(18189187) and c:IsAbleToHand()
 end

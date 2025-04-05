@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e3:SetCountLimit(1,{id,1})
 	e3:SetTarget(s.nmtg)
 	e3:SetOperation(s.nmop)
-	c:RegisterEffect(e3)	
+	c:RegisterEffect(e3)
 end
 s.listed_series={SET_CIPHER}
 function s.lvfilter(c,e)

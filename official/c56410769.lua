@@ -1,4 +1,4 @@
---Japanese name
+--波紋鳥
 --Ripple Bird
 --scripted by Naim
 local s,id=GetID()

@@ -1,4 +1,4 @@
---
+--リブロマンサー・リライジング
 --Libromancer Bonded
 --scripted by Naim
 local s,id=GetID()
@@ -6,7 +6,8 @@ function s.initial_effect(c)
 	Ritual.AddProcGreater({handler=c,filter=s.ritualfil,stage2=s.stage2})
 end
 s.listed_series={SET_LIBROMANCER}
-s.fit_monster={88106656,45001322}
+s.fit_monster={88106656,45001322} --"Libromancer Fireburst", "Libromancer Firestarter"
+s.listed_names={88106656,45001322} --"Libromancer Fireburst", "Libromancer Firestarter"
 function s.ritualfil(c)
 	return c:IsSetCard(SET_LIBROMANCER) and c:IsRitualMonster()
 end

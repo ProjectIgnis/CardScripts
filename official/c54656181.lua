@@ -1,4 +1,4 @@
---
+--Ｃ戦場の指揮官 コロネル
 --Colonel on C-String
 --scripted by Naim
 local s,id=GetID()

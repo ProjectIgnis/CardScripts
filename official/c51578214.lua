@@ -1,4 +1,4 @@
---
+--騎甲虫アサルト・ローラー
 --Beetrooper Assault Roller
 --Scripted by Zefile
 local s,id=GetID()

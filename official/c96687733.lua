@@ -1,4 +1,4 @@
---Japanese name
+--神殿の守護神
 --Defense of the Temple
 --scripted by Naim
 local s,id=GetID()

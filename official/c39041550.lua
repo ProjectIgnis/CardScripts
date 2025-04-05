@@ -1,4 +1,4 @@
---
+--騎甲虫スケイル・ボム
 --Beetrooper Scale Bomber
 --Scripted by DyXel
 local s,id=GetID()

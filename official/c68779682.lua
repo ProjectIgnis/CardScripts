@@ -60,7 +60,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCode(EFFECT_NO_EFFECT_DAMAGE)
 	e2:SetReset(RESET_PHASE|PHASE_END,ct)
 	Duel.RegisterEffect(e2,tp)
-	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,1),nil)	
+	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,1),nil)
 end
 function s.damval(e,re,val,r,rp,rc)
 	if rp==e:GetHandlerPlayer() and (r&REASON_EFFECT)~=0 then return 0

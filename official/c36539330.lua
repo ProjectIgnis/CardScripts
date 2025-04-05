@@ -1,4 +1,4 @@
---
+--ジャブィアント・パンダ
 --Jabbing Panda
 --Scripted by Hel
 local s,id=GetID()

@@ -52,7 +52,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 	local e6=e5:Clone()
 	e6:SetCode(EVENT_SPSUMMON_SUCCESS)
-	c:RegisterEffect(e6)	
+	c:RegisterEffect(e6)
 end
 s.listed_series={SET_GHOTI}
 function s.filter(c)

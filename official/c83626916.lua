@@ -1,4 +1,4 @@
---Japanese name
+--異次元ポスト
 --D.D. Post
 --scripted by Naim
 local s,id=GetID()

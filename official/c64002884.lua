@@ -1,4 +1,4 @@
---
+--神鳥の排撃
 --Simorgh Repulsion
 --scripted by Larry126
 local s,id=GetID()

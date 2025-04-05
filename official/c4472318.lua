@@ -1,4 +1,4 @@
---
+--岩竜ベアロック
 --Bayerock Dragon
 --scripted by Naim
 local s,id=GetID()

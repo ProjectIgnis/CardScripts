@@ -50,7 +50,7 @@ function s.disfilter(c,e)
 	return c:IsNegatable() and c:IsCanBeEffectTarget(e)
 end
 function s.cfilter(c,tg,lg)
-	return (c:IsSetCard(SET_WORLD_LEGACY) or c:IsSetCard(SET_CRUSADIA)) and lg:IsContains(c)
+	return c:IsSetCard({SET_WORLD_LEGACY,SET_CRUSADIA}) and lg:IsContains(c)
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tg=Duel.GetMatchingGroup(s.disfilter,tp,0,LOCATION_ONFIELD,nil,e)
@@ -69,7 +69,7 @@ end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and ((tc:IsFaceup() and not tc:IsDisabled()) or tc:IsType(TYPE_TRAPMONSTER)) and tc:IsRelateToEffect(e) then
+	if ((tc:IsFaceup() and not tc:IsDisabled()) or tc:IsType(TYPE_TRAPMONSTER)) and tc:IsRelateToEffect(e) then
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

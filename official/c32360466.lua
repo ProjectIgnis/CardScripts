@@ -4,6 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_TOGRAVE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -17,7 +18,7 @@ function s.filter1(c)
 	return c:IsRace(RACE_WARRIOR) and c:IsAbleToHand()
 end
 function s.filter2(c)
-	return c:IsSetCard(SET_BLACK_LUSTER_SOLDIER) or c:IsSetCard(SET_GAIA_THE_FIERCE_KNIGHT)
+	return c:IsSetCard({SET_BLACK_LUSTER_SOLDIER,SET_GAIA_THE_FIERCE_KNIGHT})
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.filter1,tp,LOCATION_DECK,0,nil)

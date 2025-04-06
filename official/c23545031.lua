@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_AQUA+RACE_FISH+RACE_SEASERPENT),2,2)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_AQUA|RACE_FISH|RACE_SEASERPENT),2,2)
 	c:EnableReviveLimit()
 	--atk/def
 	local e1=Effect.CreateEffect(c)

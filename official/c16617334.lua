@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetCondition(s.condition2)
+	e2:SetCondition(function() return Duel.IsMainPhase() end)
 	e2:SetCost(Cost.SelfDiscard)
 	e2:SetTarget(s.target2)
 	e2:SetOperation(s.operation2)
@@ -47,11 +47,8 @@ function s.damcon(e,re,val,r,rp,rc)
 	if cid==e:GetLabel() then return 0 end
 	return val
 end
-function s.condition2(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsMainPhase()
-end
 function s.filter(c)
-	return c:IsFaceup() and (c:IsSetCard(SET_PERFORMAPAL) or c:IsSetCard(SET_ODD_EYES))
+	return c:IsFaceup() and c:IsSetCard({SET_PERFORMAPAL,SET_ODD_EYES})
 end
 function s.target2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsOnField() and s.filter(chkc) end

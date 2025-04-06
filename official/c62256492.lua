@@ -57,7 +57,7 @@ function s.atkval(e,c)
 	return ct*300
 end
 function s.indtg(e,c)
-	return c:IsFaceup() and (c:IsSetCard(SET_CHARMER) or c:IsSetCard(SET_FAMILIAR_POSSESSED))
+	return c:IsFaceup() and c:IsSetCard({SET_CHARMER,SET_FAMILIAR_POSSESSED})
 end
 function s.cfilter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:GetBaseAttack()==1850 and c:IsRace(RACE_SPELLCASTER)

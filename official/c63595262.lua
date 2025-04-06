@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,e,tp)
-	return c:IsFaceup() and c:IsLevelBelow(5) and c:IsRace(RACE_BEAST+RACE_WINGEDBEAST)
+	return c:IsFaceup() and c:IsLevelBelow(5) and c:IsRace(RACE_BEAST|RACE_WINGEDBEAST)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

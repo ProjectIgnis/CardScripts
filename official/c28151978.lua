@@ -70,7 +70,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.synlimit(e,c)
 	if not c then return false end
-	return not c:IsAttribute(ATTRIBUTE_WIND) or not c:IsRace(RACE_DRAGON+RACE_MACHINE)
+	return not c:IsAttribute(ATTRIBUTE_WIND) or not c:IsRace(RACE_DRAGON|RACE_MACHINE)
 end
 function s.rmcon(e)
 	local c=e:GetHandler()

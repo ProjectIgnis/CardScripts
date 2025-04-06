@@ -33,33 +33,27 @@ function s.thfilter(c)
 	return c:IsMonster() and c:ListsCode(CARD_SANCTUARY_SKY) and c:IsAbleToHand()
 end
 function s.acthtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then
-		return Duel.IsExistingMatchingCard(s.acfilter,tp,LOCATION_DECK,0,1,nil,tp)
-			or Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil)
-	end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.acfilter,tp,LOCATION_DECK,0,1,nil,tp)
+		or Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_RECOVER,nil,1,tp,500)
 end
 function s.lpfilter(c)
-	return c:IsFaceup() and (c:IsSetCard(SET_THE_AGENT) or c:IsSetCard(SET_HYPERION))
+	return c:IsFaceup() and c:IsSetCard({SET_THE_AGENT,SET_HYPERION})
 end
 function s.acthop(e,tp,eg,ep,ev,re,r,rp)
-	local ac=Duel.IsExistingMatchingCard(s.acfilter,tp,LOCATION_DECK,0,1,nil,tp)
-	local th=Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil)
-	--Choose effect to apply
-	local op
-	if ac and th then
-		op=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))
-	elseif ac then 
-		op=Duel.SelectOption(tp,aux.Stringid(id,0))
-	elseif th then
-		op=Duel.SelectOption(tp,aux.Stringid(id,1))+1 
-	end
-	--Apply chosen effect
+	local b1=Duel.IsExistingMatchingCard(s.acfilter,tp,LOCATION_DECK,0,1,nil,tp)
+	local b2=Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil)
+	local op=Duel.SelectEffect(tp,
+		{b1,aux.Stringid(id,0)},
+		{b2,aux.Stringid(id,1)})
+	e:SetLabel(op)
 	local gainlp=nil
-	if op==0 then
+	if op==1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 		local tc=Duel.SelectMatchingCard(tp,s.acfilter,tp,LOCATION_DECK,0,1,1,nil,tp):GetFirst()
 		if tc then gainlp=Duel.ActivateFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp) end
-	elseif op==1 then
+	elseif op==2 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 		if #g>0 then

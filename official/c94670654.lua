@@ -44,7 +44,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function s.thfilter(c)
-	return (c:IsSetCard(SET_NINJA) or c:IsSetCard(SET_NINJITSU_ART)) and c:IsFaceup() and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard({SET_NINJA,SET_NINJITSU_ART}) and c:IsFaceup() and not c:IsCode(id) and c:IsAbleToHand()
 		and (c:IsLocation(LOCATION_GRAVE) or c:GetSequence()<5)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

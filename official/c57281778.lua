@@ -17,7 +17,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local t=Duel.GetAttackTarget()
 	if ev==1 then t=Duel.GetAttacker() end
 	e:SetLabelObject(t)
-	return t and t:IsRace(RACE_SPELLCASTER+RACE_WARRIOR)
+	return t and t:IsRace(RACE_SPELLCASTER|RACE_WARRIOR)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetLabelObject():IsRelateToBattle() end

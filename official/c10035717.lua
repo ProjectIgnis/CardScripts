@@ -25,7 +25,7 @@ function s.adcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsTurnPlayer(tp)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsRace(RACE_MACHINE+RACE_WARRIOR) and c:IsDefenseAbove(0)
+	return c:IsFaceup() and c:IsRace(RACE_MACHINE|RACE_WARRIOR) and c:IsDefenseAbove(0)
 end
 function s.adtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end

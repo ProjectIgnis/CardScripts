@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--search
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,1))
+	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_DESTROY)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_BATTLE_DESTROYING)
@@ -38,7 +38,7 @@ function s.ffilter(c,fc,sumtype,tp)
 	return c:IsType(TYPE_EFFECT,fc,sumtype,tp) and c:IsLevelBelow(4)
 end
 function s.atkfilter(c)
-	return c:IsFaceup() and (c:IsSetCard(SET_NEO_SPACIAN) or c:IsSetCard(SET_HERO)) and c:IsMonster()
+	return c:IsFaceup() and c:IsSetCard({SET_NEO_SPACIAN,SET_HERO}) and c:IsMonster()
 end
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(s.atkfilter,c:GetControler(),LOCATION_GRAVE,0,nil)*100

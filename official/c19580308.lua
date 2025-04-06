@@ -16,17 +16,14 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_DD,SET_DARK_CONTRACT}
 s.listed_names={id}
-function s.cfilter(c,ft)
-	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and (c:IsSetCard(SET_DD) or c:IsSetCard(SET_DARK_CONTRACT))
-		and not c:IsCode(id) and c:IsAbleToGraveAsCost() and (ft>0 or c:GetSequence()<5)
+function s.cfilter(c,tp)
+	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsSetCard({SET_DD,SET_DARK_CONTRACT})
+		and not c:IsCode(id) and c:IsAbleToGraveAsCost() and Duel.GetMZoneCount(tp,c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local loc=LOCATION_HAND|LOCATION_ONFIELD
-	if ft==0 then loc=LOCATION_MZONE end
-	if chk==0 then return ft>-1 and Duel.IsExistingMatchingCard(s.cfilter,tp,loc,0,1,nil,ft) end
+	if chk==0 then return and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND|LOCATION_ONFIELD,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,loc,0,1,1,nil,ft)
+	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND|LOCATION_ONFIELD,0,1,1,nil,tp)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

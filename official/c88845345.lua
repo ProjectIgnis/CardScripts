@@ -18,7 +18,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE) and e:GetHandler():IsReason(REASON_BATTLE)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsLevelBelow(3) and c:IsRace(RACE_BEAST+RACE_BEASTWARRIOR+RACE_WINGEDBEAST) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsLevelBelow(3) and c:IsRace(RACE_BEAST|RACE_BEASTWARRIOR|RACE_WINGEDBEAST) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and s.filter(chkc) end

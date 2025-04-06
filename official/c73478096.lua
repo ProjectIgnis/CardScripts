@@ -27,7 +27,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_PHOTON,SET_GALAXY}
 function s.spconfilter(c)
-	return c:IsFaceup() and (c:IsSetCard(SET_PHOTON) or c:IsSetCard(SET_GALAXY)) and c:IsMonster()
+	return c:IsFaceup() and c:IsSetCard({SET_PHOTON,SET_GALAXY}) and c:IsMonster()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

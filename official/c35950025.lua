@@ -26,7 +26,7 @@ end
 s.listed_series={SET_PHOTON,SET_GALAXY}
 s.listed_names={CARD_GALAXYEYES_P_DRAGON}
 function s.cfilter(c)
-	return c:IsFaceup() and (c:IsSetCard(SET_PHOTON) or c:IsSetCard(SET_GALAXY))
+	return c:IsFaceup() and c:IsSetCard({SET_PHOTON,SET_GALAXY})
 end
 function s.ntcon(e,c,minc)
 	if c==nil then return true end

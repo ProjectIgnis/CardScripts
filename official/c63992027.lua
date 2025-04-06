@@ -4,6 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -21,7 +22,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tg:IsExists(Card.IsControler,1,nil,1-tp)
 end
 function s.filter(c,e,tp)
-	return c:IsFaceup() and c:IsType(TYPE_XYZ) and (c:IsSetCard(SET_GALAXY_EYES) or c:IsSetCard(SET_CIPHER)) and c:GetOverlayCount()>0
+	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard({SET_GALAXY_EYES,SET_CIPHER}) and c:GetOverlayCount()>0
 		and (not e or Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c))
 end
 function s.spfilter(c,e,tp,ec)

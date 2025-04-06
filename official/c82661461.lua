@@ -65,8 +65,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tgfilter(c)
-	return c:IsAbleToGrave() and (c:IsSetCard(SET_PERFORMAPAL) or c:IsSetCard(SET_ODD_EYES)) and c:IsMonster()
-		and not c:IsCode(id)
+	return c:IsAbleToGrave() and c:IsSetCard({SET_PERFORMAPAL,SET_ODD_EYES}) and c:IsMonster() and not c:IsCode(id)
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -75,8 +74,7 @@ end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
-	local tc=g:GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
 	if tc and Duel.SendtoGrave(tc,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_GRAVE)
 		and c:IsRelateToEffect(e) then
 		--Change this card's Level

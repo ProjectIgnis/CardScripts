@@ -36,7 +36,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_HAND)
 end
 function s.tdfilter(c,e)
-	return c:IsAbleToDeck() and c:IsRace(RACES_BEAST_BWARRIOR_WINGB+RACE_INSECT+RACE_PLANT) and c:IsCanBeEffectTarget(e)
+	return c:IsAbleToDeck() and c:IsRace(RACES_BEAST_BWARRIOR_WINGB|RACE_INSECT|RACE_PLANT) and c:IsCanBeEffectTarget(e)
 end
 function s.rescon(sg,e,tp,mg)
 	return sg:GetClassCount(Card.GetRace)==#sg
@@ -65,7 +65,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return (c:IsSetCard(SET_MYSTICAL_BEAST_OF_THE_FOREST) or c:IsSetCard(SET_MYSTICAL_SPIRIT_OF_THE_FOREST)) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard({SET_MYSTICAL_BEAST_OF_THE_FOREST,SET_MYSTICAL_SPIRIT_OF_THE_FOREST}) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

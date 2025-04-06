@@ -20,7 +20,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.etarget(e,c)
-	return (c:GetOriginalRace()&RACE_MACHINE+RACE_ROCK)~=0
+	return (c:GetOriginalRace()&RACE_MACHINE|RACE_ROCK)~=0
 end
 function s.efilter(e,te,c)
 	return te:IsMonsterEffect() and te:GetOwner()~=c

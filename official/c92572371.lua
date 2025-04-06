@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_FIRE_FIST,SET_FIRE_FORMATION}
 function s.cfilter(c)
-	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and (c:IsSetCard(SET_FIRE_FIST) or c:IsSetCard(SET_FIRE_FORMATION)) and c:IsAbleToGraveAsCost()
+	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsSetCard({SET_FIRE_FIST,SET_FIRE_FORMATION}) and c:IsAbleToGraveAsCost()
 end
 function s.mzfilter(c)
 	return c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5

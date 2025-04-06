@@ -30,7 +30,7 @@ function s.filter(c,tp)
 	return c:IsSetCard(SET_SYNCHRON) and c:IsMonster() and c:IsControler(tp) and c:IsLocation(LOCATION_GRAVE)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.filter,1,nil,tp) and r==REASON_SYNCHRO and re:GetHandler():IsRace(RACE_WARRIOR+RACE_MACHINE)
+	return eg:IsExists(s.filter,1,nil,tp) and r==REASON_SYNCHRO and re:GetHandler():IsRace(RACE_WARRIOR|RACE_MACHINE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

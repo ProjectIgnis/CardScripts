@@ -23,7 +23,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_NINJA,SET_NINJITSU_ART}
 function s.cfilter(c)
-	return (c:IsSetCard(SET_NINJA) or c:IsSetCard(SET_NINJITSU_ART)) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsSetCard({SET_NINJA,SET_NINJITSU_ART}) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil) end
@@ -49,7 +49,7 @@ function s.limit(c)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsFacedown() then
+	if tc:IsRelateToEffect(e) and tc:IsFacedown() then
 		Duel.ConfirmCards(tp,tc)
 		Duel.BreakEffect()
 		if tc:IsAbleToDeck() then

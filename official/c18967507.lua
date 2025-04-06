@@ -18,8 +18,8 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
-	e2:SetTarget(Cyberdark.EquipTarget(aux.FilterBoolFunction(Card.IsRace,RACE_DRAGON+RACE_MACHINE),false,false))
-	e2:SetOperation(Cyberdark.EquipOperation(aux.FilterBoolFunction(Card.IsRace,RACE_DRAGON+RACE_MACHINE),s.equipop,false))
+	e2:SetTarget(Cyberdark.EquipTarget(aux.FilterBoolFunction(Card.IsRace,RACE_DRAGON|RACE_MACHINE),false,false))
+	e2:SetOperation(Cyberdark.EquipOperation(aux.FilterBoolFunction(Card.IsRace,RACE_DRAGON|RACE_MACHINE),s.equipop,false))
 	c:RegisterEffect(e2)
 	aux.AddEREquipLimit(c,nil,s.eqval,s.equipop,e2)
 	--Negate
@@ -38,7 +38,7 @@ function s.initial_effect(c)
 end
 s.material_setcode={SET_CYBER,SET_CYBERDARK}
 function s.eqval(ec,c,tp)
-	return ec:IsControler(tp) and ec:IsRace(RACE_DRAGON+RACE_MACHINE)
+	return ec:IsControler(tp) and ec:IsRace(RACE_DRAGON|RACE_MACHINE)
 end
 function s.matfilter(c,fc,sumtype,tp)
 	return c:IsType(TYPE_EFFECT,fc,sumtype,tp) and c:IsSetCard(SET_CYBERDARK,fc,sumtype,tp)

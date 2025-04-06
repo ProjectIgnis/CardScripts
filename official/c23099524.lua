@@ -60,7 +60,7 @@ function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(s.atkfilter,e:GetHandlerPlayer(),LOCATION_ONFIELD|LOCATION_GRAVE,LOCATION_ONFIELD|LOCATION_GRAVE,nil)*300
 end
 function s.thcfilter(c)
-	return c:IsRace(RACE_FAIRY+RACE_FIEND+RACE_REPTILE)
+	return c:IsRace(RACE_FAIRY|RACE_FIEND|RACE_REPTILE)
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.thcfilter,1,false,nil,nil) end

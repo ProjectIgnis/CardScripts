@@ -59,8 +59,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Locked into machine and psychic monsters for extra deck
 function s.splimit(e,c)
-	return not c:IsRace(RACE_MACHINE+RACE_PSYCHIC) and c:IsLocation(LOCATION_EXTRA)
+	return not c:IsRace(RACE_MACHINE|RACE_PSYCHIC) and c:IsLocation(LOCATION_EXTRA)
 end
 function s.lizfilter(e,c)
-	return not c:IsOriginalRace(RACE_MACHINE+RACE_PSYCHIC)
+	return not c:IsOriginalRace(RACE_MACHINE|RACE_PSYCHIC)
 end

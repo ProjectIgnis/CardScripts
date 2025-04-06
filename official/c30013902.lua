@@ -5,6 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
@@ -15,6 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--special summon copy from extra
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -42,7 +44,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function s.filter1(c,e,tp)
-	return c:IsLinkMonster() and c:IsLinkBelow(2) and c:IsLinked() and (c:IsSetCard(SET_SUNAVALON) or c:IsSetCard(SET_SUNVINE))
+	return c:IsLinkMonster() and c:IsLinkBelow(2) and c:IsLinked() and c:IsSetCard({SET_SUNAVALON,SET_SUNVINE})
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,c:GetCode())
 end
 function s.filter2(c,e,tp,code)
@@ -59,7 +61,7 @@ end
 function s.spexop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and Duel.GetLocationCountFromEx(tp)>0 then
+	if tc:IsRelateToEffect(e) and Duel.GetLocationCountFromEx(tp)>0 then
 		local code=tc:GetCode()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sc=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,code):GetFirst()

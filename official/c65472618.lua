@@ -74,7 +74,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.thfilter(c)
-	return c:IsAttackBelow(2000) and c:IsRace(RACE_WARRIOR+RACE_SPELLCASTER) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsAttackBelow(2000) and c:IsRace(RACE_WARRIOR|RACE_SPELLCASTER) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil)

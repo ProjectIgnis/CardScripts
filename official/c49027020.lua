@@ -33,11 +33,11 @@ function s.initial_effect(c)
 	e3:SetOperation(s.rmop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={12801833}
+s.listed_names={12801833} --"Traptrip Garden"
 s.listed_series={SET_HOLE,SET_TRAP_HOLE}
 function s.immfilter(e,te)
 	local c=te:GetOwner()
-	return c:IsNormalTrap() and (c:IsSetCard(SET_HOLE) or c:IsSetCard(SET_TRAP_HOLE))
+	return c:IsNormalTrap() and c:IsSetCard({SET_HOLE,SET_TRAP_HOLE})
 end
 function s.thfilter(c)
 	return c:IsCode(12801833) and c:IsAbleToHand()

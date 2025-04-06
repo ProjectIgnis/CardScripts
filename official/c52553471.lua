@@ -22,7 +22,7 @@ function s.tgfilter(c,tp)
 end
 function s.cfilter(c,tc,tp)
 	if c:IsCode(tc:GetCode(nil,SUMMON_TYPE_FUSION,tp)) then return false end
-	return c:IsMonster() and (c:IsSetCard(SET_ELEMENTAL_HERO) or c:IsSetCard(SET_NEO_SPACIAN) or c:IsLevel(10)) and not c:IsPublic()
+	return c:IsMonster() and (c:IsSetCard({SET_ELEMENTAL_HERO,SET_NEO_SPACIAN}) or c:IsLevel(10)) and not c:IsPublic()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.tgfilter(chkc,tp) end

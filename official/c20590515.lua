@@ -40,7 +40,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
 		or not Duel.IsPlayerCanSpecialSummonMonster(tp,id,SET_ELDLIXIR,TYPE_MONSTER|TYPE_NORMAL,500,1800,5,RACE_ZOMBIE,ATTRIBUTE_LIGHT) then return end
-	c:AddMonsterAttribute(TYPE_NORMAL+TYPE_TRAP)
+	c:AddMonsterAttribute(TYPE_NORMAL|TYPE_TRAP)
 	Duel.SpecialSummonStep(c,1,tp,tp,true,false,POS_FACEUP)
 	c:AddMonsterAttributeComplete()
 	Duel.SpecialSummonComplete()

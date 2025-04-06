@@ -4,6 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_FLUFFAL,SET_FRIGHTFUR}
 function s.filter(c,e,tp)
-	return (c:IsSetCard(SET_FLUFFAL) or c:IsSetCard(SET_FRIGHTFUR)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard({SET_FLUFFAL,SET_FRIGHTFUR}) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc,e,tp) end

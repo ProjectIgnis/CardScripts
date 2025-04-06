@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c,tc)
-	return c:IsRace(RACE_DRAGON+RACE_FIEND) and c:IsAttribute(ATTRIBUTE_DARK)
+	return c:IsRace(RACE_DRAGON|RACE_FIEND) and c:IsAttribute(ATTRIBUTE_DARK)
 		and c:IsSynchroSummonable(tc)
 end
 function s.spfilter(c,e,tp)

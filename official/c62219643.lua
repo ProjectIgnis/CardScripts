@@ -31,7 +31,7 @@ end
 --"Shiranui" + "Mayakashi"
 s.listed_series={SET_SHIRANUI,SET_MAYAKASHI}
 function s.cfilter(c)
-	return (c:IsSetCard(SET_SHIRANUI) or c:IsSetCard(SET_MAYAKASHI)) and (c:IsType(TYPE_SYNCHRO) or c:IsType(TYPE_LINK))
+	return c:IsSetCard({SET_SHIRANUI,SET_MAYAKASHI}) and (c:IsType(TYPE_SYNCHRO) or c:IsType(TYPE_LINK))
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil) end
@@ -63,7 +63,7 @@ function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		Duel.SendtoGrave(tc,REASON_EFFECT|REASON_RETURN)
 	end
 end

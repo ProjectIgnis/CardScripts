@@ -58,7 +58,7 @@ end
 	--Detach 2 materials as cost
 	--Check for level 4 plant/insect monster
 function s.spfilter(c,e,tp)
-	return c:IsLevel(4) and c:IsRace(RACE_PLANT+RACE_INSECT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevel(4) and c:IsRace(RACE_PLANT|RACE_INSECT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 	--Activation legality
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -41,7 +41,7 @@ function s.atkcon(e)
 	return Duel.GetTurnPlayer()==e:GetHandlerPlayer()
 end
 function s.atkval(e,c)
-	return Duel.GetMatchingGroupCount(Card.IsRace,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil,RACE_FAIRY+RACE_FIEND)*300
+	return Duel.GetMatchingGroupCount(Card.IsRace,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil,RACE_FAIRY|RACE_FIEND)*300
 end
 function s.gycon(e,tp,eg,ep,ev,re,r,rp)
 	return aux.bdcon(e,tp,eg,ep,ev,re,r,rp) and e:GetHandler():IsFusionSummoned()

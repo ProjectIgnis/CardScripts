@@ -4,6 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_GALAXY_EYES,SET_CIPHER}
 function s.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_XYZ) and (c:IsSetCard(SET_GALAXY_EYES) or c:IsSetCard(SET_CIPHER))
+	return c:IsFaceup() and c:IsType(TYPE_XYZ) and (c:IsSetCard({SET_GALAXY_EYES,SET_CIPHER}))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end

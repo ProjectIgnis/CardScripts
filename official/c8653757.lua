@@ -27,7 +27,7 @@ end
 s.listed_names={CARD_GALAXYEYES_P_DRAGON}
 s.listed_series={SET_PHOTON,SET_GALAXY}
 function s.filter(c,ft,tp)
-	return (c:IsSetCard(SET_PHOTON) or c:IsSetCard(SET_GALAXY)) and c:IsSpellTrap() and c:IsType(TYPE_CONTINUOUS)
+	return c:IsSetCard({SET_PHOTON,SET_GALAXY}) and c:IsContinuousSpellTrap()
 		and (c:IsAbleToHand() or (ft>0 and not c:IsForbidden() and c:CheckUniqueOnField(tp)))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

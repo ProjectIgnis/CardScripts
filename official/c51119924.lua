@@ -19,7 +19,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST|REASON_DISCARD)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsRace(RACE_WARRIOR+RACE_SPELLCASTER) and c:IsControlerCanBeChanged()
+	return c:IsFaceup() and c:IsRace(RACE_WARRIOR|RACE_SPELLCASTER) and c:IsControlerCanBeChanged()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.filter(chkc) end
@@ -30,7 +30,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsRace(RACE_WARRIOR+RACE_SPELLCASTER) then
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsRace(RACE_WARRIOR|RACE_SPELLCASTER) then
 		Duel.GetControl(tc,tp,PHASE_END,1)
 	end
 end

@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsControler(tp) and c:IsRace(RACE_FISH+RACE_SEASERPENT+RACE_AQUA)
+	return c:IsFaceup() and c:IsControler(tp) and c:IsRace(RACE_FISH|RACE_SEASERPENT|RACE_AQUA)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

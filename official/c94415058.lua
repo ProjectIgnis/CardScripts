@@ -60,7 +60,7 @@ function s.aclimit(e,re,tp)
 	return re:IsSpellEffect() and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function s.scfilter(c)
-	return c:IsSetCard(SET_MAGICIAN) or c:IsSetCard(SET_ODD_EYES)
+	return c:IsSetCard({SET_MAGICIAN,SET_ODD_EYES})
 end
 function s.sccon(e)
 	return not Duel.IsExistingMatchingCard(s.scfilter,e:GetHandlerPlayer(),LOCATION_PZONE,0,1,e:GetHandler())

@@ -35,7 +35,7 @@ end
 s.listed_series={SET_DRAGUNITY}
 s.listed_names={62265044}
 function s.matfilter(c,sc,st,tp)
-	return c:IsRace(RACE_DRAGON+RACE_WINGEDBEAST,sc,st,tp) and not c:IsType(TYPE_TOKEN,sc,st,tp)
+	return c:IsRace(RACE_DRAGON|RACE_WINGEDBEAST,sc,st,tp) and not c:IsType(TYPE_TOKEN,sc,st,tp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLinkSummoned()
@@ -63,7 +63,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.seqcfilter,1,nil,tp,lg)
 end
 function s.filter(c,e,tp)
-	return c:IsRace(RACE_DRAGON+RACE_WINGEDBEAST) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsRace(RACE_DRAGON|RACE_WINGEDBEAST) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

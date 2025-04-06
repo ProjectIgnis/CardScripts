@@ -12,5 +12,5 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.target(e,c)
-	return c:IsRace(RACE_FISH+RACE_SEASERPENT+RACE_AQUA)
+	return c:IsRace(RACE_FISH|RACE_SEASERPENT|RACE_AQUA)
 end

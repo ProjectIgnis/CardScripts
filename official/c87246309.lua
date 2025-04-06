@@ -31,7 +31,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_FLUFFAL,SET_EDGE_IMP,SET_FRIGHTFUR}
 function s.thfilter(c)
-	return (c:IsSetCard(SET_FLUFFAL) or c:IsSetCard(SET_EDGE_IMP)) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard({SET_FLUFFAL,SET_EDGE_IMP}) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end

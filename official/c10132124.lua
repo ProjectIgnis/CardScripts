@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 function s.spfilter(c,tp)
 	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousLocation(LOCATION_MZONE)
-		and c:IsPreviousControler(tp) and c:IsRace(RACE_FISH+RACE_SEASERPENT+RACE_AQUA)
+		and c:IsPreviousControler(tp) and c:IsRace(RACE_FISH|RACE_SEASERPENT|RACE_AQUA)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.spfilter,1,nil,tp)

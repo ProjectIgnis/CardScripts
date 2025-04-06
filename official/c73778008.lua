@@ -15,5 +15,5 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.atkup(e,c)
-	return Duel.GetMatchingGroupCount(Card.IsRace,c:GetControler(),LOCATION_GRAVE,0,nil,RACE_FISH+RACE_SEASERPENT+RACE_AQUA)*500
+	return Duel.GetMatchingGroupCount(Card.IsRace,c:GetControler(),LOCATION_GRAVE,0,nil,RACE_FISH|RACE_SEASERPENT|RACE_AQUA)*500
 end

@@ -31,11 +31,10 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_BLACK_LUSTER_SOLDIER,SET_GAIA_THE_FIERCE_KNIGHT}
 function s.atkcon1(e,tp,eg,ep,ev,re,r,rp)
-	local ph=Duel.GetCurrentPhase()
 	return Duel.IsBattlePhase() and aux.StatChangeDamageStepCondition()
 end
 function s.atkfilter(c)
-	return c:IsFaceup() and (c:IsSetCard(SET_BLACK_LUSTER_SOLDIER) or c:IsSetCard(SET_GAIA_THE_FIERCE_KNIGHT))
+	return c:IsFaceup() and c:IsSetCard({SET_BLACK_LUSTER_SOLDIER,SET_GAIA_THE_FIERCE_KNIGHT})
 end
 function s.atktg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.atkfilter(chkc) end
@@ -45,7 +44,7 @@ function s.atktg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD&~(RESET_LEAVE|RESET_TODECK|RESET_TEMP_REMOVE|RESET_REMOVE|RESET_TOGRAVE)|RESET_PHASE|PHASE_END,0,1)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

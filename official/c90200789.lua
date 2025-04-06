@@ -30,7 +30,7 @@ function s.filter2(c,lv1,slv)
 	return c:IsFaceup() and lv2>0 and lv1+lv2>=slv
 end
 function s.spfilter(c,e,tp,lv)
-	return c:IsRace(RACE_DRAGON+RACE_DINOSAUR+RACE_SEASERPENT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and (not lv or c:IsLevelBelow(lv))
+	return c:IsRace(RACE_DRAGON|RACE_DINOSAUR|RACE_SEASERPENT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and (not lv or c:IsLevelBelow(lv))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

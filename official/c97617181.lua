@@ -4,6 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -27,9 +28,9 @@ function s.initial_effect(c)
 	e4:SetTarget(s.desreptg)
 	e4:SetOperation(s.desrepop)
 	c:RegisterEffect(e4)
-	--leave
+	--The equipped monster's ATK becomes 0
 	local e5=Effect.CreateEffect(c)
-	e5:SetDescription(aux.Stringid(id,0))
+	e5:SetDescription(aux.Stringid(id,1))
 	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e5:SetCode(EVENT_LEAVE_FIELD)
 	e5:SetCondition(s.atkcon)
@@ -38,7 +39,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_PHOTON,SET_GALAXY}
 function s.spfilter(c,e,tp)
-	return (c:IsSetCard(SET_PHOTON) or c:IsSetCard(SET_GALAXY)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard({SET_PHOTON,SET_GALAXY}) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end

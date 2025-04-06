@@ -1,9 +1,10 @@
 --オービタル７
 --Orbital 7
 local s,id=GetID()
+local COUNTER_YOU_GOT_IT_BOSS=0x2c
 function s.initial_effect(c)
 	--Can hold You Got It Boss! counters
-	c:EnableCounterPermit(0x2c)
+	c:EnableCounterPermit(COUNTER_YOU_GOT_IT_BOSS)
 	--Place 1 You Got It Boss! counter on itselef
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -14,8 +15,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--Make its ATK become 2000
 	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_ATKCHANGE)
 	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetCategory(CATEGORY_ATKCHANGE)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCost(s.atkcost)
@@ -35,17 +36,17 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_PHOTON,SET_GALAXY}
-s.counter_place_list={0x2c}
+s.counter_place_list={COUNTER_YOU_GOT_IT_BOSS}
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
-		c:AddCounter(0x2c,1)
+		c:AddCounter(COUNTER_YOU_GOT_IT_BOSS,1)
 	end
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ct=e:GetHandler():GetCounter(0x2c)
-	if chk==0 then return ct>0 and e:GetHandler():IsCanRemoveCounter(tp,0x2c,ct,REASON_COST) end
-	e:GetHandler():RemoveCounter(tp,0x2c,ct,REASON_COST)
+	local ct=e:GetHandler():GetCounter(COUNTER_YOU_GOT_IT_BOSS)
+	if chk==0 then return ct>0 and e:GetHandler():IsCanRemoveCounter(tp,COUNTER_YOU_GOT_IT_BOSS,ct,REASON_COST) end
+	e:GetHandler():RemoveCounter(tp,COUNTER_YOU_GOT_IT_BOSS,ct,REASON_COST)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetAttack()~=2000 end
@@ -84,7 +85,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoGrave(e:GetHandler(),REASON_EFFECT)
 end
 function s.filter(c)
-	return (c:IsSetCard(SET_PHOTON) or c:IsSetCard(SET_GALAXY)) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard({SET_PHOTON,SET_GALAXY}) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc) end

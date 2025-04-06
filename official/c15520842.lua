@@ -1,10 +1,10 @@
 --フォトン・ハンド
 --Photon Hand
---
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_CONTROL)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -19,7 +19,7 @@ end
 s.listed_series={SET_PHOTON,SET_GALAXY}
 s.listed_names={CARD_GALAXYEYES_P_DRAGON}
 function s.cfilter(c)
-	return c:IsFaceup() and (c:IsSetCard(SET_PHOTON) or c:IsSetCard(SET_GALAXY))
+	return c:IsFaceup() and c:IsSetCard({SET_PHOTON,SET_GALAXY})
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)

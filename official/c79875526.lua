@@ -33,7 +33,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_CYBER}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(SET_CYBER) and c:IsRace(RACE_DRAGON+RACE_MACHINE)
+	return c:IsFaceup() and c:IsSetCard(SET_CYBER) and c:IsRace(RACE_DRAGON|RACE_MACHINE)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -60,14 +60,14 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e1)
 end
 function s.eqlimit(e,c)
-	return c:IsSetCard(SET_CYBER) and c:IsRace(RACE_DRAGON+RACE_MACHINE)
+	return c:IsSetCard(SET_CYBER) and c:IsRace(RACE_DRAGON|RACE_MACHINE)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsPreviousLocation(LOCATION_SZONE) and not c:IsReason(REASON_LOST_TARGET)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(SET_CYBER) and c:IsRace(RACE_DRAGON+RACE_MACHINE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_CYBER) and c:IsRace(RACE_DRAGON|RACE_MACHINE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()

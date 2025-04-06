@@ -14,13 +14,13 @@ function s.initial_effect(c)
 end
 function s.cfilter(c)
 	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)
-		and c:IsRace(RACE_FISH+RACE_SEASERPENT+RACE_AQUA)
+		and c:IsRace(RACE_FISH|RACE_SEASERPENT|RACE_AQUA)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil)
 end
 function s.spfilter(c,e,tp)
-	return c:IsLevelBelow(3) and c:IsRace(RACE_FISH+RACE_SEASERPENT+RACE_AQUA) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevelBelow(3) and c:IsRace(RACE_FISH|RACE_SEASERPENT|RACE_AQUA) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

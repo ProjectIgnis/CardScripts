@@ -28,7 +28,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_PERFORMAGE,SET_PERFORMAPAL}
 function s.target(e,c)
-	return c:IsSetCard(SET_PERFORMAGE) or c:IsSetCard(SET_PERFORMAPAL)
+	return c:IsSetCard({SET_PERFORMAGE,SET_PERFORMAPAL})
 end
 function s.indct(e,re,r,rp)
 	if (r&REASON_BATTLE+REASON_EFFECT)~=0 then

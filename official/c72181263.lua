@@ -39,8 +39,7 @@ function s.desfilter1(c,e)
 	return c:IsSpellTrap() and c:IsCanBeEffectTarget(e)
 end
 function s.desfilter2(c,e,tp)
-	return c:IsFaceup() and (c:IsSetCard(SET_DD) or c:IsSetCard(SET_DARK_CONTRACT)) and c:IsControler(tp)
-		and c:IsCanBeEffectTarget(e)
+	return c:IsFaceup() and c:IsSetCard({SET_DD,SET_DARK_CONTRACT}) and c:IsControler(tp) and c:IsCanBeEffectTarget(e)
 end
 function s.rescon(sg,e,tp,mg)
 	return sg:IsExists(s.desfilter1,1,nil,e) and sg:IsExists(s.desfilter2,1,e:GetHandler(),e,tp)

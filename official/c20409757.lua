@@ -68,7 +68,7 @@ function s.aclimit(e,re,tp)
 	return re:IsTrapEffect() and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function s.slfilter(c)
-	return c:IsSetCard(SET_MAGICIAN) or c:IsSetCard(SET_ODD_EYES)
+	return c:IsSetCard({SET_MAGICIAN,SET_ODD_EYES})
 end
 function s.slcon(e)
 	return not Duel.IsExistingMatchingCard(s.slfilter,e:GetHandlerPlayer(),LOCATION_PZONE,0,1,e:GetHandler())

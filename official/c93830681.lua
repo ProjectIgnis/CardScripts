@@ -18,7 +18,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttackTarget()
-	return at and at:IsControler(tp) and at:IsFaceup() and at:IsRace(RACE_FISH+RACE_SEASERPENT+RACE_AQUA)
+	return at and at:IsControler(tp) and at:IsFaceup() and at:IsRace(RACE_FISH|RACE_SEASERPENT|RACE_AQUA)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tg=Duel.GetAttacker()

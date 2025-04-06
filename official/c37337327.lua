@@ -32,7 +32,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_JUNK}
 function s.matfilter(c,lc,sumtype,tp)
-	return c:IsType(TYPE_EFFECT,lc,sumtype,tp) and c:IsRace(RACE_WARRIOR+RACE_MACHINE,lc,sumtype,tp)
+	return c:IsType(TYPE_EFFECT,lc,sumtype,tp) and c:IsRace(RACE_WARRIOR|RACE_MACHINE,lc,sumtype,tp)
 end
 function s.lcheck(g,lc,sumtype,tp)
 	return g:IsExists(Card.IsType,1,nil,TYPE_TUNER,lc,sumtype,tp)

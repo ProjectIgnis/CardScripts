@@ -5,6 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_REMOVE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
@@ -23,7 +24,7 @@ function s.spcheck(sg,tp,exg,dg)
 	return dg:IsExists(aux.TRUE,1,sg)
 end
 function s.cfilter(c)
-	return c:IsSetCard(SET_ORCUST) or c:IsSetCard(SET_WORLD_LEGACY)
+	return c:IsSetCard({SET_ORCUST,SET_WORLD_LEGACY})
 end
 function s.filter(c,e)
 	return c:IsAbleToRemove() and c:IsCanBeEffectTarget(e)

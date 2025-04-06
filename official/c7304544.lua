@@ -27,7 +27,7 @@ function s.filter(c)
 	return c:IsSpellTrap() or (c:IsCode(id) and c:IsFaceup())
 end
 function s.filter2(c)
-	return c:IsMonster() and not c:IsRace(RACE_PLANT+RACE_BEAST)
+	return c:IsMonster() and not c:IsRace(RACE_PLANT|RACE_BEAST)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer() and not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_ONFIELD,0,1,nil) 

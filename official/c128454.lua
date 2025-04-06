@@ -17,7 +17,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_PERFORMAPAL,SET_MAGICIAN}
 function s.thfilter(c)
-	return ((c:IsLocation(LOCATION_PZONE) and (c:IsSetCard(SET_PERFORMAPAL) or c:IsSetCard(SET_MAGICIAN)))
+	return ((c:IsLocation(LOCATION_PZONE) and c:IsSetCard({SET_PERFORMAPAL,SET_MAGICIAN}))
 		or (c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsType(TYPE_PENDULUM))) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

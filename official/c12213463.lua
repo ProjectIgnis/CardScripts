@@ -41,7 +41,7 @@ s.listed_names={id}
 s.listed_series={SET_ROSE_DRAGON}
 --Check for plant/dragon tuner monster
 function s.filter1(c)
-	return c:IsFaceup() and c:IsRace(RACE_PLANT+RACE_DRAGON) and c:IsType(TYPE_TUNER)
+	return c:IsFaceup() and c:IsRace(RACE_PLANT|RACE_DRAGON) and c:IsType(TYPE_TUNER)
 end
 --Does something that fits "filter" exist
 function s.sscon(e,tp,eg,ep,ev,re,r,rp)

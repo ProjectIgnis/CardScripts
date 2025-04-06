@@ -25,7 +25,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_PERFORMAPAL,SET_ODD_EYES}
 function s.filter(c)
-	return (c:IsSetCard(SET_PERFORMAPAL) or c:IsSetCard(SET_ODD_EYES)) and c:IsMonster()
+	return c:IsSetCard({SET_PERFORMAPAL,SET_ODD_EYES}) and c:IsMonster()
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,e:GetHandler()) end

@@ -18,7 +18,7 @@ end
 s.listed_names={CARD_NEOS}
 s.listed_series={SET_ELEMENTAL_HERO,SET_NEO_SPACIAN}
 function s.spfilter(c,e,tp)
-	return c:IsLevelBelow(7) and (c:IsSetCard(SET_ELEMENTAL_HERO) or c:IsSetCard(SET_NEO_SPACIAN))
+	return c:IsLevelBelow(7) and c:IsSetCard({SET_ELEMENTAL_HERO,SET_NEO_SPACIAN})
 		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

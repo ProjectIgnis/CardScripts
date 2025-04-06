@@ -33,7 +33,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,1),nil)
 end
 function s.spfilter(c,e,tp)
-	return c:IsLevelBelow(4) and (c:IsSetCard(SET_PHOTON) or c:IsSetCard(SET_GALAXY)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevelBelow(4) and c:IsSetCard({SET_PHOTON,SET_GALAXY}) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

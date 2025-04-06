@@ -20,10 +20,10 @@ function s.counterfilter(c)
 	return c:IsRace(RACE_MACHINE) or c:GetSummonLocation()~=LOCATION_EXTRA
 end
 function s.cfilter(c)
-	return c:IsRace(RACE_DRAGON+RACE_MACHINE) and c:IsSetCard(SET_CYBER) and c:IsAbleToGraveAsCost()
+	return c:IsRace(RACE_DRAGON|RACE_MACHINE) and c:IsSetCard(SET_CYBER) and c:IsAbleToGraveAsCost()
 end
 function s.thfilter(c)
-	return c:IsRace(RACE_DRAGON+RACE_MACHINE) and c:IsSetCard(SET_CYBER) and c:IsAbleToHand()
+	return c:IsRace(RACE_DRAGON|RACE_MACHINE) and c:IsSetCard(SET_CYBER) and c:IsAbleToHand()
 end
 function s.check(sg,e,tp,mg)
 	return sg:GetClassCount(Card.GetAttribute)==2 and sg:GetClassCount(Card.GetLocation)==2

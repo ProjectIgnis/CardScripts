@@ -2,8 +2,9 @@
 --Crystal Rose
 local s,id=GetID()
 function s.initial_effect(c)
-	--to grave
+	--Send 1 "Gem-Knight"/"Melodious" monster from your hand/Deck to the GY, and if you do, this card's name becomes the sent monster's name
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOGRAVE)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
@@ -11,8 +12,9 @@ function s.initial_effect(c)
 	e1:SetTarget(s.tgtg)
 	e1:SetOperation(s.tgop)
 	c:RegisterEffect(e1)
-	--spsummon
+	--Special Summon this card in Defense Position
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
@@ -24,7 +26,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_GEM_KNIGHT,SET_MELODIOUS}
 function s.filter(c)
-	return (c:IsSetCard(SET_GEM_KNIGHT) or c:IsSetCard(SET_MELODIOUS)) and c:IsMonster() and c:IsAbleToGrave()
+	return c:IsSetCard({SET_GEM_KNIGHT,SET_MELODIOUS}) and c:IsMonster() and c:IsAbleToGrave()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK|LOCATION_HAND,0,1,nil) end
@@ -33,8 +35,7 @@ end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK|LOCATION_HAND,0,1,1,nil)
-	local tc=g:GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK|LOCATION_HAND,0,1,1,nil):GetFirst()
 	if tc and Duel.SendtoGrave(tc,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_GRAVE)
 		and c:IsRelateToEffect(e) and c:IsFaceup() then
 		local e1=Effect.CreateEffect(c)

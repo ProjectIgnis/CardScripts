@@ -34,7 +34,7 @@ function s.filter1(c,e,tp,eg,ep,ev,re,r,rp)
 end
 function s.filter2(c,e,tp,eg,ep,ev,re,r,rp)
 	local te=c:CheckActivateEffect(false,false,false)
-	if c:IsSpell() and not c:IsType(TYPE_EQUIP+TYPE_CONTINUOUS) and te then
+	if c:IsSpell() and not c:IsType(TYPE_EQUIP|TYPE_CONTINUOUS) and te then
 		if c:IsSetCard(SET_RANK_UP_MAGIC) then
 			local tg=te:GetTarget()
 			return not tg or tg(e,tp,eg,ep,ev,re,r,rp,0)

@@ -46,5 +46,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tgtg(e,c)
-	return c:IsFaceup() and c:IsSpellTrap() and (c:IsSetCard(SET_SUNAVALON) or c:IsSetCard(SET_SUNVINE))
+	return c:IsFaceup() and c:IsSpellTrap() and c:IsSetCard({SET_SUNAVALON,SET_SUNVINE})
 end

@@ -30,8 +30,8 @@ function s.chk(c,sg)
 	return c:IsRace(RACE_DRAGON) and sg:IsExists(Card.IsRace,1,c,RACE_FIEND)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsRace,2,true,s.spcheck,e:GetHandler(),RACE_DRAGON+RACE_FIEND) end
-	local sg=Duel.SelectReleaseGroupCost(tp,Card.IsRace,2,2,true,s.spcheck,e:GetHandler(),RACE_DRAGON+RACE_FIEND)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsRace,2,true,s.spcheck,e:GetHandler(),RACE_DRAGON|RACE_FIEND) end
+	local sg=Duel.SelectReleaseGroupCost(tp,Card.IsRace,2,2,true,s.spcheck,e:GetHandler(),RACE_DRAGON|RACE_FIEND)
 	Duel.Release(sg,REASON_COST)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

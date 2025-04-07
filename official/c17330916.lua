@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCost(s.reg)
 	c:RegisterEffect(e1)
-	--scale
+	--This card's Pendulum Scale becomes 4
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_CHANGE_LSCALE)
@@ -24,17 +24,17 @@ function s.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_CHANGE_RSCALE)
 	c:RegisterEffect(e3)
-	--lvdown
+	--Reduce the Levels of monsters in your hand by 1
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_HAND)
 	e4:SetCountLimit(1)
-	e4:SetCost(s.lvcost)
+	e4:SetCost(Cost.SelfDiscard)
 	e4:SetTarget(s.lvtg)
 	e4:SetOperation(s.lvop)
 	c:RegisterEffect(e4)
-	--to hand
+	--Add 1 Level 4 or lower "Performapal" monster from your Deck to your hand
 	local e5=Effect.CreateEffect(c)
 	e5:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e5:SetType(EFFECT_TYPE_IGNITION)
@@ -64,7 +64,6 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if #g>0 then
@@ -72,12 +71,8 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-function s.lvcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_DISCARD)
-end
 function s.filter(c)
-	return (c:IsSetCard(SET_PERFORMAPAL) or c:IsSetCard(SET_ODD_EYES)) and c:IsMonster() and c:IsLevelAbove(2)
+	return c:IsSetCard({SET_PERFORMAPAL,SET_ODD_EYES}) and c:IsMonster() and c:IsLevelAbove(2)
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
@@ -92,8 +87,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ConfirmCards(1-tp,g)
 	Duel.ShuffleHand(tp)
 	local hg=Duel.GetMatchingGroup(s.afilter,tp,LOCATION_HAND,0,nil,g:GetFirst():GetCode())
-	local tc=hg:GetFirst()
-	for tc in aux.Next(hg) do
+	for tc in hg:Iter() do
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)

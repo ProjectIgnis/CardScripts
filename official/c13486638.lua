@@ -32,7 +32,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return #g>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVEXYZ)
 	local sc=g:Select(tp,1,1,nil):GetFirst()
-	if sc:IsSetCard(SET_XYZ_DRAGON) or sc:IsSetCard(SET_THE_PHANTOM_KNIGHTS) or sc:IsSetCard(SET_RAIDRAPTOR) then
+	if sc:IsSetCard({SET_XYZ_DRAGON,SET_THE_PHANTOM_KNIGHTS,SET_RAIDRAPTOR}) then
 		e:SetLabel(1)
 	else
 		e:SetLabel(0)

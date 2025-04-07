@@ -34,7 +34,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPendulumSummoned() or e:GetHandler():IsPreviousLocation(LOCATION_DECK)
 end
 function s.filter(c)
-	return c:IsFaceup() and (c:IsSetCard(SET_YANG_ZING) or c:IsSetCard(SET_ZEFRA)) and not c:IsType(TYPE_TUNER) and not c:IsCode(id)
+	return c:IsFaceup() and c:IsSetCard({SET_YANG_ZIN,SET_ZEFRA}) and not c:IsType(TYPE_TUNER) and not c:IsCode(id)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end

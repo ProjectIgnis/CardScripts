@@ -41,7 +41,7 @@ function s.xyzop(e,tp,chk)
 	return true
 end
 function s.thfilter(c)
-	return (c:IsSetCard(SET_SPRINGANS) or c:IsSetCard(SET_THERION)) and c:IsAbleToHand()
+	return c:IsSetCard({SET_SPRINGANS,SET_THERION}) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

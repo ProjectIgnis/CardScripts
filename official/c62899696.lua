@@ -30,8 +30,7 @@ function s.smcon(e)
 	return e:GetHandler():GetFlagEffect(id)==0
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsTurnPlayer(tp)
-		and (Duel.GetCurrentPhase()&PHASE_MAIN1|PHASE_MAIN2)>0
+	return Duel.IsTurnPlayer(tp) and Duel.IsMainPhase()
 end
 function s.filter(tc,c,tp)
 	if not tc:IsFaceup() or not tc:IsCanBeSynchroMaterial() then return false end

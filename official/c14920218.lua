@@ -36,7 +36,7 @@ function s.pcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_PZONE,0,1,e:GetHandler(),SET_MAGICIAN)
 end
 function s.pfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_PENDULUM) and (c:IsSetCard(SET_MAGICIAN) or c:IsSetCard(SET_ODD_EYES)) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsType(TYPE_PENDULUM) and c:IsSetCard({SET_MAGICIAN,SET_ODD_EYES}) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.ptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.pfilter,tp,LOCATION_EXTRA,0,1,nil) end

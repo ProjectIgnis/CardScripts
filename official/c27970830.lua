@@ -64,7 +64,7 @@ function s.cost1(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RemoveCounter(tp,1,0,COUNTER_BUSHIDO,2,REASON_COST)
 end
 function s.filter1(c)
-	return c:IsFaceup() and (c:IsSetCard(SET_SIX_SAMURAI) or c:IsSetCard(SET_SHIEN)) and c:IsType(TYPE_EFFECT)
+	return c:IsFaceup() and c:IsSetCard({SET_SIX_SAMURAI,SET_SHIEN}) and c:IsType(TYPE_EFFECT)
 end
 function s.tg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter1(chkc) end

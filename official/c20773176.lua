@@ -29,12 +29,12 @@ end
 s.listed_series={SET_NEKROZ,SET_ZEFRA}
 s.listed_names={id}
 function s.splimit(e,c,sump,sumtype,sumpos,targetp)
-	if c:IsSetCard(SET_NEKROZ) or c:IsSetCard(SET_ZEFRA) then return false end
+	if c:IsSetCard({SET_NEKROZ,SET_ZEFRA}) then return false end
 	return (sumtype&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
 function s.filter(c,tp)
 	return c:IsReason(REASON_BATTLE|REASON_EFFECT)
-		and (c:IsSetCard(SET_NEKROZ) or c:IsSetCard(SET_ZEFRA)) and not c:IsCode(id)
+		and c:IsSetCard({SET_NEKROZ,SET_ZEFRA}) and not c:IsCode(id)
 		and c:IsPreviousControler(tp)
 		and ((c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP))
 		or c:IsPreviousLocation(LOCATION_PZONE))

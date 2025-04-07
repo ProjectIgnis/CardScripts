@@ -48,7 +48,7 @@ function s.hspop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsTurnPlayer(1-tp) and Duel.GetCurrentPhase()&PHASE_MAIN1|PHASE_MAIN2~=0 and e:GetHandler():IsAbleToRemove(tp)
+	return Duel.IsTurnPlayer(1-tp) and Duel.IsMainPhase() and e:GetHandler():IsAbleToRemove(tp)
 end
 function s.spfilter(c,e,tp)
 	return c:IsRace(RACE_ZOMBIE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

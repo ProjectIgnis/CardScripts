@@ -43,7 +43,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tohand_chk=Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,101301054),tp,LOCATION_ONFIELD,0,1,nil)
 	local hint_desc=tohand_chk and aux.Stringid(id,2) or HINTMSG_TOFIELD
 	Duel.Hint(HINT_SELECTMSG,tp,hint_desc)
-	local sc=Duel.SelectMatchingCard(tp,s.plthfilter,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil,tohand_chk):GetFirst()
+	local sc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.plthfilter),tp,LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil,tohand_chk):GetFirst()
 	if not sc then return end
 	if sc:IsCode(101301054) then
 		if not tohand_chk then
